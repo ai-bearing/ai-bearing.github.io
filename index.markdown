@@ -23,7 +23,7 @@ I am a math and econ student at Occidental College. I'm going to be using this w
 
 ## [Class Notes](classnotes.md)
 
-## [Microblog](blog.md)
+## [Microblog](microblog.md)
 
 ## [Articles for *The Occidental*](https://theoccidentalnews.com/author/iyera)
 
