@@ -475,6 +475,57 @@
   \begin{problem}{Edge Covers}
     An \textbf{edge cover} is a set of edges $A$ such that every vertex is incident to some edge in $A$. If $A$ is an edge cover, then $\bigcup_{e\in A} e = V(G)$.\\
 
-    The \textbf{edge cover number} is the size of a minimum edge cover of $G$. It is denoted $\beta'(G)$ (or $\rho(G)$).
+    The \textbf{edge cover number} is the size of a minimum edge cover of $G$. It is denoted $\beta'(G)$.\\
+
+    But first, we can see a relationship between vertex covers and independent sets as follows, where the top graph shows the minimum vertex cover and the bottom graph shows the maximum independent set.
+    \begin{center}
+      \includegraphics[width=10cm]{vertex-cover-independent-set}
+    \end{center}
+    Similarly, we can see a relationship between minimum edge covers and maximum matchings.
+    \begin{center}
+      \includegraphics[width=10cm]{edge-cover-maximum-matching}
+    \end{center}
+  \end{problem}
+  \begin{problem}{Theorems and Lemmas}
+    Following from the previous result regarding independent sets and vertex covers, we might be able to state the following propostions:
+    \begin{problem}{Lemma 3.1.21}
+      In a graph $G$, $S\subseteq V(G)$ is an independent set if and only if $\overline{S}$ is a vertex cover. Therefore, we get the following result:
+      \[
+        \alpha(G) + \beta(G) = n(G)
+      \] 
+      \tcblower
+      \begin{description}
+        \item[] $S$ is an independent set.
+        \item[$\Leftrightarrow$] $\forall u,v\in S, u\not\leftrightarrow v$.
+        \item[$\Leftrightarrow$] $\forall e\in e(G)$, both endpoints of $e$ are not in $S$.
+        \item[$\Leftrightarrow$] Both endpoints of $e$ are in $\overline{S}$.
+        \item[$\Leftrightarrow$] $\overline{S}$ is a vertex cover.
+      \end{description}
+      Thus, if $S$ is a maximum independent set, then $\overline{S}$ is a minimum vertex cover, and since $|S| + |\overline{S}| = n(G)$, this means $\alpha(G) + \beta(G) = S$.
+    \end{problem}
+    \begin{problem}{Theorem 3.1.22}
+      If $G$ is a graph without isolated vertices, then $\alpha'(G) + \beta'(G) = n(G)$. (i.e., if $G$ is a graph without isolated vertices, then the size of a minimum edge cover summed with the size of the maximum matching equals the number of vertices in $G$).
+      \tcblower
+      We will prove the forward direction first, as follows:\\
+
+      Let $M$ be a maximum matching, and let $A = V(M)$ and $B = \overline{A}$. Since $M$ is a maximum matching, $\not\exists e\in E(G)$ such that $e$ connects two edges in $B$ (or else you could simply add it to the matching). Additionally, since there are no isolated vertices in $G$, $\forall v\in B, \exists w\in A$ such that $v\leftrightarrow w$. \\
+
+      Select one edge such that $e = vw$ for each $v\in B$, and let the set of these edges be $N$. Then, $C = M\cup N$ is an edge cover, as every vertex in $A$ is covered by $M$, and every vertex in $B$ is covered by $N$. So, we have the following:
+      \begin{align*}
+        |M| + |C| &= |M| + (|M| + |N|) \tag*{Since $M$ and $N$ are disjoint}\\
+            &= \left(\frac{|A|}{2}\right) + \left(\frac{|A|}{2} + |B|\right) \tag*{By the definition of $M$ and $N$}\\
+            &= n(G)
+      \end{align*}
+      So, we have that $|M| + |C| = n(G) \geq \alpha'(G) + \beta'(G)$.\\
+
+      \vspace{10pt}
+      Now, we will prove the reverse direction:\\
+      
+      Let $C$ be a minimum edge cover. The components of $C$ are stars (there are no cycles or copies of $P_4$). Let $M$ be a matching formed by taking one edge from each edge in each component of $C$. Assign each ``center'' vertex in with an edge from $M$ and assign each ``leaf'' edge with an edge from $C$.\\
+
+      Each vertex in $V(G)$ appears exactly once in each star, we have that $n(G) = |M| + |C|$. So, since $|C| = \beta'(G)$ and $|M| \leq \alpha'(G)$, we have that $|M| + |C| = n(G) \leq \alpha'(G) + \beta'(G)$.\\
+
+      Since $n(G) \geq \alpha'(G) + \beta'(G)$ and $n(G) \leq \alpha'(G) + \beta'(G)$, we have that $n(G) = \alpha'(G) + \beta'(G)$.
+    \end{problem}
   \end{problem}
 \end{document}
