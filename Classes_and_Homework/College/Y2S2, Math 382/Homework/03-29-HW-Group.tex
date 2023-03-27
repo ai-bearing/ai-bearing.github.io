@@ -1,0 +1,117 @@
+\documentclass[10pt]{extarticle}
+\title{}
+\author{Avinash Iyer}
+\date{}
+\usepackage[shortlabels]{enumitem}
+
+%font setup
+%
+\usepackage{newpxtext,eulerpx}
+
+%paper setup
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage{fancyhdr}
+
+%symbols
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{gensymb}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+%chemistry stuff
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig}
+
+%plotting
+\usepackage{pgfplots}
+\usepackage{tikz}
+\tikzset{middleweight/.style={pos = 0.5, fill=white}}
+\tikzset{weight/.style={pos = 0.5, fill = white}}
+\tikzset{lateweight/.style={pos = 0.75, fill = white}}
+\tikzset{earlyweight/.style={pos = 0.25, fill=white}}
+
+%\usepackage{natbib}
+
+%graphics stuff
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+%code stuff
+%when using minted, make sure to add the -shell-escape flag
+%you can use lstlisting if you don't want to use minted
+%\usepackage{minted}
+%\usemintedstyle{pastie}
+%\newminted[javacode]{java}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+%\newminted[cppcode]{cpp}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+
+\usepackage{listings}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=Java,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+% text + color boxes
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\newtcolorbox{problem}[1]{colback = white, title = {#1}, breakable}
+\newtcolorbox{solution}{colback = white, colframe = black!75!white, title = Solution, breakable}
+%including PDFs
+\usepackage{pdfpages}
+\setlength{\parindent}{0pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Ling Chen, Avinash Iyer, Nora Manukyan, Vincent Ng}
+\begin{document}{
+  \begin{problem}{Problem 1}
+    Let $G = (X,E,Y)$ be a bipartite graph, and let $d\in \mathbb{N}$ be a fixed constant. Show that if $|N(S)| \geq |S|-d$ for every $S\subseteq X$, then $G$ contains a matching of cardinality $|X|-d$.
+    \tcblower
+    We add $d$ vertices to the $Y$ partition such that $|N(S)| + d \geq |S|$ for all $S\subseteq X$. Then, we will create an edge between every vertex $x\subseteq X$ and every auxiliary vertex. Let $G' = (X,E',Y')$ denote this new graph.\\
+
+    Let $S'\subseteq X$ be a set that contains all vertices of $X$ --- then, $N(S') \subseteq Y'$ must be of cardinality at least $|S'|$. So, for all $S'\subseteq X$, it follows that $|N(S')| \geq |S'|$, so $G'$ has an $X$-perfect matching by Hall's Theorem.\\
+
+    Since there is a matching in $G'$ that saturates every vertex in $X$, this matching maps every $x\in X$ to every $y'\in Y'$. We remove $d$ edges from the matching, corresponding to the $d$ auxiliary vertices in $Y'$. Thus, $G$ has a matching of $|X|-d$ edges.
+  \end{problem}
+  \begin{problem}{3.1.25}
+    A doubly stochastic matrix $Q$ is a nonnegative real matrix in which every row and column sums to one. Prove that a doubly stochastic matrix $Q$ can be expressed as a convex combination of permutation matrices --- i.e., there exist permutation matrices $P_1,\dots,P_m$ and \textit{nonnegative} real coefficients $c_1,\dots,c_m$ such that $Q = c_1P_1 + c_2P_2 + \dots + c_mP_m$, where $\sum_{i = 1}^{m} c_i = 1$.
+    \tcblower
+    We will prove via induction as follows:
+    \begin{description}[font = \normalfont\scshape]
+      \item[Base Case] If $Q$ is a permutation matrix itself, then it is a doubly stochastic matrix and satisfies the base case.
+      \item[Inductive Step] Suppose that $Q$ is a $m\times m$ matrix with at least $m+1$ nonzero entries. Let $G$ represent a bipartite graph, where $I$ represents the set of $m$ rows, and $J$ represents the set of $m$ columns. Each nonzero entry in $(i,j)$ represents an edge between the $i$th vertex in $I$ and the $j$th vertex in $J$.\\
+
+        Let $S\subseteq I$ and $|S| = d$ for some $d\in \mathbb{N}$. Then, $N(S) \subseteq J$ represents the columns of at least one nonzero entry for each of the rows in $S$. The sum of each of these rows is $1$, meaning the sum of the rows in $S$ is $d$.\\
+
+        Each column sums to maximum $1$, meaning $|S| \leq |N(S)|$, satisfying the condition for Hall's Theorem. Since $|I| = |J|$, the graph has a perfect matching, meaning we can find a permutation matrix $P_1$ and a positive number $c_1$. By the inductive hypothesis, $Q - c_1P_1 = c_2P_2+\dots+c_mP_m$, so $Q = c_1P_1 + c_2P_2 + \dots + c_mP_m$.
+    \end{description}
+  \end{problem}
+  \begin{problem}{3.1.29}
+    Use the König-Egerváry theorem to prove that every bipartite graph $G$ has a matching of size at least $e(G)/\Delta(G)$. Use this to conclude that every subgraph of $K_{n,n}$ with more than $(k-1)n$ has a matching of size at least $k$.
+    \tcblower
+    Let $G$ be bipartite. Then, from the König-Egerváry theorem, we know that $\alpha'(G) = \beta(G)$.\\
+
+    Let $Q$ represent the minimum vertex cover, meaning $|Q| = \beta(G)$. Every edge is incident on some vertex $v\in Q$, and the upper bound on $d(v)$ is $\Delta(G)$. This means that $|Q|\Delta(G) \geq e(G)$ (assuming that there would be double counting in $|Q|\Delta(G)$). So, $\beta(G)\Delta(G) \geq n(G)$. Therefore, $\beta(G) \geq \frac{n(G)}{\Delta(G)}$. So, $\alpha'(G) \geq \frac{n(G)}{\Delta(G)}$, as $\alpha'(G) = \beta(G)$.
+  \end{problem}
+}\end{document}
