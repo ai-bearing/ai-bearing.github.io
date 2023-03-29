@@ -13,6 +13,8 @@ This class has both individual and group homeworks — I have included the indiv
 
 - [Solutions up to Midterm 1](https://ai-bearing.github.io/Classes_and_Homework/College/Y2S2, Math 382/midterm review/homeworks_to_midterm_1.pdf)
 
+- [Section 2.3, Individual](https://ai-bearing.github.io/Classes_and_Homework/College/Y2S2, Math 382/Homework/03-24-HW-Individual.pdf)
+
 ## Intermediate Macroeconomics
 ### Problem Sets
 Every time we do a problem set, we also have to self-correct it.
