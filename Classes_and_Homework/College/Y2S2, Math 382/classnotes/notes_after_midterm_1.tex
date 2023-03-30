@@ -503,7 +503,7 @@
       \end{description}
       Thus, if $S$ is a maximum independent set, then $\overline{S}$ is a minimum vertex cover, and since $|S| + |\overline{S}| = n(G)$, this means $\alpha(G) + \beta(G) = S$.
     \end{problem}
-    \begin{problem}{Theorem 3.1.22}
+    \begin{problem}{Theorem 3.1.22 (Gallai's Theorem)}
       If $G$ is a graph without isolated vertices, then $\alpha'(G) + \beta'(G) = n(G)$. (i.e., if $G$ is a graph without isolated vertices, then the size of a minimum edge cover summed with the size of the maximum matching equals the number of vertices in $G$).
       \tcblower
       We will prove the forward direction first, as follows:\\
@@ -526,6 +526,11 @@
       Each vertex in $V(G)$ appears exactly once in each star, we have that $n(G) = |M| + |C|$. So, since $|C| = \beta'(G)$ and $|M| \leq \alpha'(G)$, we have that $|M| + |C| = n(G) \leq \alpha'(G) + \beta'(G)$.\\
 
       Since $n(G) \geq \alpha'(G) + \beta'(G)$ and $n(G) \leq \alpha'(G) + \beta'(G)$, we have that $n(G) = \alpha'(G) + \beta'(G)$.
+    \end{problem}
+    \begin{problem}{Corollary 3.1.24}
+      If $G$ is a bipartite graph with no isolated vertices, then $\alpha(G) = \beta'(G)$.
+      \tcblower
+      We previously showed that $\alpha(G) + \beta(G) = n(G)$ and $\alpha'(G) + \beta'(G) = n(G)$, and by the König-Egerváry theorem, we know that $\alpha'(G) = \beta(G)$ in bipartite graphs with non-isolated vertices, so $\alpha(G) + \beta(G) - \beta(G) = \alpha'(G) - \alpha'(G) + \beta'(G)$, so $\alpha(G) = \beta'(G)$.
     \end{problem}
   \end{problem}
   \begin{problem}{Hungarian Method for Maximum Matchings}
@@ -558,5 +563,12 @@
         \draw[very thick] (4,1) -- (2,0);
       \end{tikzpicture}
     \end{center}
+    We will find the maximum matching by creating a ``Hungarian Forest'' as follows:
+    \begin{description}[font=\normalfont\scshape]
+      \item[Initialization] In our graph, we set $X_0 = \{x_1,x_2,x_4\}$ and $Y_0 = \{y_2,y_4,y_5,y_6\}$, where $X_0 \cup Y_0$ are the set of $M$-unsaturated vertices in $G$.
+      \item[Iteration] Set $X_1 = X_0$ and $Y_1 = N(X_1)$. Then, we do $X_2 = N_M(X_1)$, and $Y_2 = N(X_2) - Y_1$, and so on. The general case is $X_n = N_M(Y_{n-1})$, and $Y_n = N(X_n) - Y_{n-1}$.
+      \item[End condition] If $X_n$ or $Y_n$ are empty, then we stop the algorithm.
+    \end{description}
+    Let $Y^* = \bigcup Y_i$ (the vertices of $Y$ that are in our Hungarian Forest)
   \end{problem}
 \end{document}
