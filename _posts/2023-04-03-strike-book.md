@@ -32,3 +32,6 @@ One Point: The demographic and socioeconomic changes in New York led to, simulta
 > By the mid-1960s, then, Ocean Hill–Brownsville symbolized the isolation of dozens of poor black communities throughout New York City: geographically segregated, economically stagnant, politically weak, and educationally marginalized. 
 
 > The crucial role education would play as a means of advancement—as a commodity—in the city’s new economy was lost on neither blacks nor whites. Black leaders understood that education provided the only opportunity for their people to break out of their isolation in city life. Middle-class whites viewed it as the key element in their own enhanced status.
+
+## Chapter 2: The Rise of "Community"
+(Notetaker's commentary: I am very interested in this idea and its controversies)
