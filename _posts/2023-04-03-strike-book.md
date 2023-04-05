@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Book Notes: *The Strike that Changed New York*"
+title: "Book Notes: The Strike that Changed New York"
 permalink: "/posts/strike_changed_ny.html"
 ---
 I'm going to be using this place to store my outline for a reading assignment for one of my classes, where I'm reading *The Strike that Changed New York*, about the Ocean Hill-Brownsville crisis.
@@ -25,3 +25,10 @@ I'm going to be using this place to store my outline for a reading assignment fo
 > The road leading to Rhody McCoy’s letter to Fred Nauman began with the creation of these racial worlds, and these two New Yorks.
 
 ## Chapter 1: Two New Yorks
+One Point: The demographic and socioeconomic changes in New York led to, simultaneously, intense segregation and strengthening labor-government relations. These factors provide the backdrop for the Ocean Hill-Brownsville controversy.
+
+> In a typical graduating class, only 2 percent went on to one of the city’s specialized high schools, which required applicants to pass written entrance examinations and served as feeders to major universities and the city colleges.
+
+> By the mid-1960s, then, Ocean Hill–Brownsville symbolized the isolation of dozens of poor black communities throughout New York City: geographically segregated, economically stagnant, politically weak, and educationally marginalized. 
+
+> The crucial role education would play as a means of advancement—as a commodity—in the city’s new economy was lost on neither blacks nor whites. Black leaders understood that education provided the only opportunity for their people to break out of their isolation in city life. Middle-class whites viewed it as the key element in their own enhanced status.
