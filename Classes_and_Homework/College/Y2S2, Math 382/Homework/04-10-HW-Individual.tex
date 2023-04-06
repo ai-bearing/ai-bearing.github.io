@@ -1,4 +1,4 @@
-\documentclass[8pt]{extarticle}
+\documentclass[10pt]{extarticle}
 \title{}
 \author{Avinash Iyer}
 \date{}
@@ -84,8 +84,8 @@
 \fancyhf{}
 \rhead{Avinash Iyer}
 \lhead{Homework Section 3.3, Individual}
-\begin{document}{
-  \begin{problem}{Our Hungarian Method, Example}
+\begin{document}
+  \begin{problem}{Our Hungarian Method}
     Use ``Our Hungarian Method'' to find a maximum matching in the bipartite graph below:
     \begin{center}
       \begin{tikzpicture}
@@ -124,7 +124,388 @@
         \draw (2,1) -- (5,0);
         \draw (2,1) -- (7,0);
 
+        \draw (3,1) -- (1,0);
+        \draw (3,1) -- (3,0);
+        \draw [very thick] (3,1) -- (5,0);
+        \draw (3,1) -- (7,0);
+
+        \draw (4,1) -- (3,0);
+
+        \draw (5,1) -- (5,0);
+        \draw [very thick] (5,1) -- (6,0);
+
+        \draw (6,1) -- (5,0);
+        \draw (6,1) -- (6,0);
+
+        \draw[very thick](7,1) -- (3,0);
+        \draw (7,1) -- (5,0);
+        \draw (7,1) -- (6,0);
+
+      \end{tikzpicture}
+    \end{center}
+    \tcblower
+    \begin{description}[font=\scshape]
+      \item[Run \#1]
+      \item[Vertices Not Saturated]
+    \end{description}
+    \begin{align*}
+      X_0 &= \{4,6\}\\
+      Y_0 &= \{d,g\}
+    \end{align*}
+    \begin{description}[font=\scshape]
+      \item[Hungarian Forest]
+    \end{description}
+    \begin{center}
+      \begin{tikzpicture}[scale = 0.5]
+        \node[anchor = south] at (1,0) {\tiny $4$};
+        \filldraw (1,0) circle (2pt);
+        \node[anchor = south] at (2,0) {\tiny $c$};
+        \filldraw (2,0) circle (2pt);
+        \draw (1,0) -- (2,0);
+
+        \node[anchor = south] at (3,0) {\tiny $7$};
+        \filldraw (3,0) circle (2pt);
+        \draw[very thick] (2,0) -- (3,0);
+      \end{tikzpicture}\\
+      \vspace{10pt}
+      \begin{tikzpicture}[scale = 0.5]
+        \node[anchor = south] at (1,0) {\tiny $6$};
+        \node[anchor = south] at (2,1) {\tiny $e$};
+        \node[anchor = north] at (2,-1) {\tiny $f$};
+        \filldraw (1,0) circle (2pt)
+                  (2,1) circle (2pt)
+                  (2,-1) circle (2pt);
+        \draw (1,0) -- (2,1);
+        \draw (1,0) -- (2,-1);
+        
+        \node[anchor = south] at (3,1) {\tiny $3$};
+        \node[anchor = north] at (3,-1) {\tiny $5$};
+        \filldraw (3,1) circle (2pt)
+                  (3,-1) circle (2pt);
+        \draw [very thick] (2,1) -- (3,1);
+        \draw [very thick] (2,-1) -- (3,-1);
+
+        \filldraw (4,2) circle (2pt)
+                  (4,1) circle (2pt)
+                  (4,0) circle (2pt);
+        \node[anchor = south] at (4,2){\tiny $a$};
+        \node[anchor = south] at (4,1) {\tiny $c$};
+        \node[anchor = north] at (4,0) {\tiny $g$};
+        \draw (3,1) -- (4,2);
+        \draw (3,1) -- (4,1);
+        \draw (3,1) -- (4,0);
+
+        \filldraw (5,2) circle (2pt)
+                  (5,1) circle (2pt);
+        \node[anchor = south] at (5,2) {\tiny $2$};
+        \node[anchor = south] at (5,1) {\tiny $7$};
+        \draw[very thick] (4,2) -- (5,2);
+        \draw[very thick] (4,1) -- (5,1);
+      \end{tikzpicture}
+    \end{center}
+    \begin{description}[font=\scshape]
+      \item[Flip Augmenting Path]
+    \end{description}
+    \begin{center}
+      \begin{tikzpicture}
+        %drawing points
+        \filldraw (1,1) circle (2pt)
+                  (2,1) circle (2pt)
+                  (3,1) circle (2pt)
+                  (4,1) circle (2pt)
+                  (5,1) circle (2pt)
+                  (6,1) circle (2pt)
+                  (7,1) circle (2pt);
+        \filldraw (1,0) circle (2pt)
+                  (2,0) circle (2pt)
+                  (3,0) circle (2pt)
+                  (4,0) circle (2pt)
+                  (5,0) circle (2pt)
+                  (6,0) circle (2pt)
+                  (7,0) circle (2pt);
+
+        % drawing labels
+        \foreach \i in {1,2,...,7}[
+          \node[anchor = south] at (\i,1.1){$\i$};
+        ]
+        \foreach \i\j in {1/a,2/b,3/c,4/d,5/e,6/f,7/g}[
+          \node[anchor = north] at (\i,-0.1){$\j$};
+        ]
+        %drawing lines
+        \draw (1,1) -- (1,0);
+        \draw[very thick] (1,1) -- (2,0);
+        \draw (1,1) -- (3,0);
+        \draw (1,1) -- (4,0);
+
+        \draw[very thick] (2,1) -- (1,0);
+        \draw (2,1) -- (2,0);
+        \draw (2,1) -- (4,0);
+        \draw (2,1) -- (5,0);
+        \draw (2,1) -- (7,0);
+
+        \draw (3,1) -- (1,0);
+        \draw (3,1) -- (3,0);
+        \draw (3,1) -- (5,0);
+        \draw [very thick] (3,1) -- (7,0);
+
+        \draw (4,1) -- (3,0);
+
+        \draw (5,1) -- (5,0);
+        \draw [very thick] (5,1) -- (6,0);
+
+        \draw[very thick] (6,1) -- (5,0);
+        \draw (6,1) -- (6,0);
+
+        \draw[very thick](7,1) -- (3,0);
+        \draw (7,1) -- (5,0);
+        \draw (7,1) -- (6,0);
+      \end{tikzpicture}
+    \end{center}
+    \begin{description}[font=\scshape]
+      \item[Run \#2]
+      \item[Vertices Not Saturated]
+    \end{description}
+    \begin{align*}
+      X_0 &= \{4\}\\
+      Y_0 &= \{d\}
+    \end{align*}
+    \begin{description}
+      \item[Hungarian Forest]
+    \end{description}
+    \begin{center}
+      \begin{tikzpicture}[scale = 0.5]
+        \node[anchor = south] at (1,0) {\tiny $4$};
+        \filldraw (1,0) circle (2pt);
+        \node[anchor = south] at (2,0) {\tiny $c$};
+        \filldraw (2,0) circle (2pt);
+        \draw (1,0) -- (2,0);
+
+        \node[anchor = south] at (3,0) {\tiny $7$};
+        \filldraw (3,0) circle (2pt);
+        \draw[very thick] (2,0) -- (3,0);
+
+        \filldraw (4,1) circle (2pt)
+                  (4,-1) circle (2pt);
+        \node[anchor = south] at (4,1) {\tiny $e$};
+        \node[anchor = north] at (4,-1) {\tiny $f$};
+        \draw (3,0) -- (4,1);
+        \draw (3,0) -- (4,-1);
+        \filldraw (5,1) circle (2pt)
+                  (5,-1) circle (2pt);
+        \node[anchor = south] at (5,1) {\tiny $6$};
+        \node[anchor = north] at (5,-1) {\tiny $5$};
+        \draw[very thick] (4,1) -- (5,1);
+        \draw[very thick] (4,-1) -- (5,-1);
+      \end{tikzpicture}
+    \end{center}
+    \begin{description}[font=\scshape]
+      \item[End Algorithm] Since our Hungarian Forest has no $M$-augmenting path, the following matching is a maximum matching in the graph.
+    \end{description}
+    \begin{center}
+      \begin{tikzpicture}
+        %drawing points
+        \filldraw (1,1) circle (2pt)
+                  (2,1) circle (2pt)
+                  (3,1) circle (2pt)
+                  (4,1) circle (2pt)
+                  (5,1) circle (2pt)
+                  (6,1) circle (2pt)
+                  (7,1) circle (2pt);
+        \filldraw (1,0) circle (2pt)
+                  (2,0) circle (2pt)
+                  (3,0) circle (2pt)
+                  (4,0) circle (2pt)
+                  (5,0) circle (2pt)
+                  (6,0) circle (2pt)
+                  (7,0) circle (2pt);
+
+        % drawing labels
+        \foreach \i in {1,2,...,7}[
+          \node[anchor = south] at (\i,1.1){$\i$};
+        ]
+        \foreach \i\j in {1/a,2/b,3/c,4/d,5/e,6/f,7/g}[
+          \node[anchor = north] at (\i,-0.1){$\j$};
+        ]
+        %drawing lines
+        \draw (1,1) -- (1,0);
+        \draw[very thick] (1,1) -- (2,0);
+        \draw (1,1) -- (3,0);
+        \draw (1,1) -- (4,0);
+
+        \draw[very thick] (2,1) -- (1,0);
+        \draw (2,1) -- (2,0);
+        \draw (2,1) -- (4,0);
+        \draw (2,1) -- (5,0);
+        \draw (2,1) -- (7,0);
+
+        \draw (3,1) -- (1,0);
+        \draw (3,1) -- (3,0);
+        \draw (3,1) -- (5,0);
+        \draw [very thick] (3,1) -- (7,0);
+
+        \draw (4,1) -- (3,0);
+
+        \draw (5,1) -- (5,0);
+        \draw [very thick] (5,1) -- (6,0);
+
+        \draw[very thick] (6,1) -- (5,0);
+        \draw (6,1) -- (6,0);
+
+        \draw[very thick](7,1) -- (3,0);
+        \draw (7,1) -- (5,0);
+        \draw (7,1) -- (6,0);
       \end{tikzpicture}
     \end{center}
   \end{problem}
-}\end{document}
+  \begin{problem}{3.3.1}
+    Determine whether the following graph has a $1$-factor.
+    \begin{center}
+      \begin{tikzpicture}
+        \filldraw (0,0) circle (2pt)
+                  (0,2) circle (2pt)
+                  (2,-2) circle (2pt)
+                  (-2,-2) circle (2pt)
+                  (0,1) circle (2pt)
+                  (1,-1) circle (2pt)
+                  (-1,-1) circle (2pt)
+                  (1,0) circle (2pt)
+                  (-1,0) circle (2pt)
+                  (0,-2) circle (2pt);
+        \draw (0,2) -- (1,0) -- (2,-2) -- (0,-2) -- (-2,-2) -- (-1,0) -- cycle;
+        \draw (0,0) -- (0,2);
+        \draw (0,0) -- (-2,-2);
+        \draw (0,0) -- (2,-2);
+      \end{tikzpicture}
+    \end{center}
+      \tcblower
+      By letting $S$ be the following set of vertices, we find that the graph does not satisfy Tutte's Condition, meaning there is no $1$-factor in the graph:
+      \begin{center}
+      \begin{tikzpicture}
+        \filldraw (0,0) circle (2pt)
+                  (0,2) circle (2pt)
+                  (2,-2) circle (2pt)
+                  (-2,-2) circle (2pt)
+                  (0,1) circle (2pt)
+                  (1,-1) circle (2pt)
+                  (-1,-1) circle (2pt)
+                  (1,0) circle (2pt)
+                  (-1,0) circle (2pt)
+                  (0,-2) circle (2pt);
+          \draw (0,2) circle (5pt)
+          (-2,-2) circle (5pt)
+          (2,-2) circle (5pt);
+        \draw (0,2) -- (1,0) -- (2,-2) -- (0,-2) -- (-2,-2) -- (-1,0) -- cycle;
+        \draw (0,0) -- (0,2);
+        \draw (0,0) -- (-2,-2);
+        \draw (0,0) -- (2,-2);
+      \end{tikzpicture}
+    \end{center}
+  \end{problem}
+  \begin{problem}{3.3.2}
+    Exhibit a maximum matching in the graph below, and use a result in this section to give a short proof that it has no larger matching.
+    \begin{center}
+      \begin{tikzpicture}
+        \filldraw (0,0) circle (2pt)
+                  (0,1) circle (2pt)
+                  (0,2) circle (2pt)
+                  (0,3) circle (2pt)
+                  (0,-1) circle (2pt)
+                  (0,-2) circle (2pt)
+                  (0,-3) circle (2pt)
+                  (1,0) circle (2pt)
+                  (2,0) circle (2pt)
+                  (-1,0) circle (2pt)
+                  (-2,0) circle (2pt)
+                  (-4,0) circle (2pt)
+                  (4,0) circle (2pt)
+                  (3,-1) circle (2pt)
+                  (3,-2) circle (2pt)
+                  (3,2) circle (2pt)
+                  (-3,-2) circle (2pt)
+                  (-3,2) circle (2pt);
+
+        \draw (0,0) -- (-1,0);
+        \draw (-3,2) -- (-1,0) -- (-3,-2) -- cycle;
+        \draw (-3,2) -- (-2,0) -- (-3,-2) -- cycle;
+        \draw (0,0) -- (1,0);
+        \draw (3,2) -- (1,0) -- (3,-2) -- cycle;
+        \draw (3,2) -- (2,0) -- (3,-2) -- cycle;
+
+        \draw (4,0) -- (3,-1) -- (2,0);
+        \draw (4,0) -- (3,-2);
+        \draw (4,0) -- (2,0);
+        \draw (4,0) -- (3,2);
+        
+        \draw (3,2) -- (0,2) -- (-3,2);
+        \draw (3,2) -- (0,1) -- (-3,2);
+        \draw (3,2) -- (0,3) -- (-3,2);
+
+        \draw (3,-2) -- (0,-2) -- (-3,-2);
+        \draw (3,-2) -- (0,-1) -- (-3,-2);
+        \draw (3,-2) -- (0,-3) -- (-3,-2);
+        
+        \draw (-3,2) -- (-4,0) -- (-3,-2);
+      \end{tikzpicture}
+    \end{center}
+    \tcblower
+    \begin{center}
+      \begin{tikzpicture}
+        \filldraw (0,0) circle (2pt)
+                  (0,1) circle (2pt)
+                  (0,2) circle (2pt)
+                  (0,3) circle (2pt)
+                  (0,-1) circle (2pt)
+                  (0,-2) circle (2pt)
+                  (0,-3) circle (2pt)
+                  (1,0) circle (2pt)
+                  (2,0) circle (2pt)
+                  (-1,0) circle (2pt)
+                  (-2,0) circle (2pt)
+                  (-4,0) circle (2pt)
+                  (4,0) circle (2pt)
+                  (3,-1) circle (2pt)
+                  (3,-2) circle (2pt)
+                  (3,2) circle (2pt)
+                  (-3,-2) circle (2pt)
+                  (-3,2) circle (2pt);
+
+        \draw [very thick](0,0) -- (-1,0);
+        \draw (-3,2) -- (-1,0);
+        \draw(-1,0) -- (-3,-2);
+        \draw (-3,-2) -- (-3,2);
+        \draw (-3,2) -- (-2,0);
+        \draw (-2,0) -- (-3,-2);
+        \draw (0,0) -- (1,0);
+        \draw [very thick] (3,2) -- (1,0);
+        \draw (1,0) -- (3,-2);
+        \draw (3,-2) -- (3,2);
+        \draw (3,2) -- (2,0);
+        \draw (2,0) -- (3,-2);
+        \draw (4,0) -- (3,-1);
+        \draw[very thick] (3,-1) -- (2,0);
+        \draw[very thick] (4,0) -- (3,-2);
+        \draw (4,0) -- (2,0);
+        \draw (4,0) -- (3,2);
+        
+        \draw (3,2) -- (0,2);
+        \draw (0,2) -- (-3,2);
+        \draw (3,2) -- (0,1);
+        \draw [very thick](0,1) -- (-3,2);
+        \draw(3,2) -- (0,3);
+        \draw (0,3) -- (-3,2);
+
+
+        \draw (3,-2) -- (0,-2);
+        \draw (0,-2) -- (-3,-2);
+
+        \draw (3,-2) -- (0,-1);
+        \draw[very thick] (0,-1) -- (-3,-2);
+
+        \draw (3,-2) -- (0,-3);
+        \draw (0,-3) -- (-3,-2);
+        \draw (-3,2) -- (-4,0);
+        \draw (-4,0) -- (-3,-2);
+      \end{tikzpicture}
+    \end{center}
+  \end{problem}
+\end{document}
