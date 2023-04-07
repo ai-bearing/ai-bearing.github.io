@@ -772,5 +772,25 @@
     A \textbf{factor} of a graph is a spanning subgraph of $G$, and a $k$-factor is a spanning, $k$-regular subgraph of $G$. Note that a $1$-factor is essentially a perfect matching, but a matching is a set of edges while a factor is a graph. If $M$ is a matching in $G$, then $H = (V,M)$ is a $1$-factor.\\
 
     A graph $G$ has a $1$-factor if and only if $q(G-S) \leq |S|$ for all $S\subseteq V$. A graph satisfies Tutte's Condition if $\forall S\subseteq V, q(G-S) \leq |S|$.
+    \tcblower
+    \begin{description}[font=\normalfont\scshape]
+      \item[($\Rightarrow$)] To prove the forward direction, we know that the odd components of $G-S$ must have vertices matched to distinct vertices in $S$ --- this is because in any maximum matching within an odd component of $G-S$, there must be one vertex remaining, and since $G$ has a $1$-factor, each of these spare vertices must be matched to a vertex in $S$.\\
+      \item[($\Leftarrow$)] To prove the reverse direction, we will do so by contradiction. When we add an edge between two components of $G-S$, the number of \textit{odd} components does not increase. So, Tutte's condition is preserved by the addition of edges, meaning that if $G' = G + e$, then $q(G'-S) \leq q(G-S) \leq |S|$, because we are assuming $q(G-S) \leq |S|$, and $q(G'-S) \leq q(G-S)$.\\
+
+        Additionally, if $G' = G + e$ has no $1$-factor, then $G$ has no $1$-factor (since $q(G-S) \geq q(G'-S) > |S|$ in that scenario).\\
+
+        So, if there exists a simple graph $G$ does not have a $1$-factor and satisfies Tutte's condition, the theorem does not hold, nor does it hold if $G$ would have a $1$ factor upon adding an edge (or else $G$ would have a $1$-factor). Assume toward contradiction that $G$ is a graph such that these conditions hold
+    \end{description}
+  \end{problem}
+  \begin{problem}{Corollary 3.3.7}
+    The Berge-Tutte formula for the largest number of vertices saturated by a matching in $G$ is as follows.
+    \[
+      \underset{S\subseteq V(G)}{\min}\{n(G) - d(S)\}
+    \] 
+    where $d(S) = q(G-S) - |S|$.
+    \tcblower
+    If $G$ has a perfect matching, then every unmatched vertex in a component of $G-S$ is matched to a vertex in $S$, meaning that $d(S) = 0$. If $G$ does not have a perfect matching, then the meaning of minimization of $q(G - S) - |S|$ finds the excess number of vertices in $S$ that cannot be matched to the odd components in $G-S$. Therefore, we have found a lowest bound for the number of vertices in the maximum matching.\\
+
+    Let $d = \max\{q(G-S) - |S|\}$. If $S = \emptyset$, then $d \geq 0$. Let $G' = G \vee K_d$ (the join of $G$ to a complete graph on $d$ vertices). Since $d(S)$ has the same parity as $n(G)$, we know that $n(G')$ is even. If $G'$ satisfies Tutte's condition, then we know that $G'$ has a perfect matching --- by deleting $d$ vertices, we obtain a matching of our desired size in $G$ because deleting the $d$ added vertices eliminates edges that saturate at most $d$ vertices in $G$.
   \end{problem}
 \end{document}
