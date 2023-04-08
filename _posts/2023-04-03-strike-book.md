@@ -31,7 +31,18 @@ One Point: The demographic and socioeconomic changes in New York led to, simulta
 
 > By the mid-1960s, then, Ocean Hill–Brownsville symbolized the isolation of dozens of poor black communities throughout New York City: geographically segregated, economically stagnant, politically weak, and educationally marginalized. 
 
-> The crucial role education would play as a means of advancement—as a commodity—in the city’s new economy was lost on neither blacks nor whites. Black leaders understood that education provided the only opportunity for their people to break out of their isolation in city life. Middle-class whites viewed it as the key element in their own enhanced status.
+> The crucial role education would play as a means of advancement — as a commodity — in the city’s new economy was lost on neither blacks nor whites. Black leaders understood that education provided the only opportunity for their people to break out of their isolation in city life. Middle-class whites viewed it as the key element in their own enhanced status.
 
 ## Chapter 2: The Rise of "Community"
 (Notetaker's commentary: I am very interested in this idea and its controversies)
+One Point: "Community" has undergone a full circle transition from being about maintaining segregation to the era of Ocean Hill-Brownsville community control (among leftists), back to the conservative fight against busing and school integration.
+
+> But Linda Brown had asked only to attend her neighborhood school in Topeka; de facto residential segregation in New York made the achievement of Brown’s objectives immensely more complicated. The idea that black children—no matter where they actually lived—needed to attend school with white children in order to receive equal edu- cational opportunity, became the central tenet of civil rights activists in New York, including [Kenneth] Clark himself, a City College professor.
+
+> [Milton Galamison] demanded that blacks and whites be placed in physical prox- imity to each other, both in the city’s schools, and—just as important in view of the prevalent system of "tracking" that separated out "slow" black pupils—in the classrooms themselves. Ultimately, he wished to see the ratio of blacks to whites in each of New York’s individual school districts correspond to that in the city school system as a whole.
+
+> Other PAT-ers cited economic concerns, worrying aloud about the consequences of a large influx of black children into their schools: "Eight years ago, we paid $12,000 for this house. We scraped together every penny we had… My husband and me, we worked hard to get it and it’s all we have. And now if the Negroes start coming, it won’t be worth a cent."
+
+> New York’s school integration activists embraced community control, in large measure, because of PAT’s success with it. During PAT’s heyday between 1963 and 1965, these activists had been forced by practical necessity to rely on the force of centralized authority—the Board of Education—to realize their goals.
+
+> The idea of "community" — black community — was a perfect vehicle to express both disgust with white New York and faith in the political, economic, and cultural regeneration of black New York. But the shift from integration to "community" carried with it a potential conundrum for blacks and progressive whites, one whose ironies appeared lost on Galamison, EQUAL, and other critics of PAT and the "neighborhood school."
