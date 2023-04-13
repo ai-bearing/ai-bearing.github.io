@@ -15,6 +15,7 @@ This class has both individual and group homeworks — I have included the indiv
 
 - [Section 2.3, Individual](https://ai-bearing.github.io/Classes_and_Homework/College/Y2S2, Math 382/Homework/03-24-HW-Individual.pdf)
 - [Section 3.1, Individual](https://ai-bearing.github.io/Classes_and_Homework/College/Y2S2, Math 382/Homework/03-29-HW-Individual.pdf)
+- [Section 3.3, Individual](https://ai-bearing.github.io/Classes_and_Homework/College/Y2S2, Math 382/Homework/04-10-HW-Individual.pdf)
 
 ## Intermediate Macroeconomics
 ### Problem Sets
