@@ -12,7 +12,7 @@ The nexus with education and equity is multiple-fold:
 - Given the effects of poverty (which is exacerbated by high cost of living) on student outcomes, and the effects of household overcrowding, it would be worthy for policymakers to focus on housing costs if they desire improving student outcomes and reducing poverty.
 - There is ample evidence that Los Angeles is dealing with a shortage of housing — [job growth outpaces housing growth](https://laist.com/news/housing-homelessness/housing-jobs-los-angeles-california-stessa-rhna-housing-element), [rents over time](https://www.zumper.com/rent-research/los-angeles-ca), and [high rates of household overcrowding](https://www.latimes.com/california/story/2022-10-19/los-angeles-history-overcrowding-united-states)
 - Additionally, we can see that land use policy plays a significant role in housing costs — an [entitled lot](https://therealdeal.com/la/2018/09/07/a-market-grows-for-entitled-la-properties/) in Los Angeles fetched a [large premium](https://therealdeal.com/la/2018/09/07/a-market-grows-for-entitled-la-properties/) after it was entitled.
-- Land use policy is also particularly effective because local governments are in charge of it, as opposed to state and federal governments, who have more effect on safety net policy. There is much research showing that [land use rules affect housing costs](https://ternercenter.berkeley.edu/research-and-policy/land-use-politics-housing-costs-and-segregation-in-california-cities/), and that
+- Land use policy is also particularly effective because local governments are in charge of it, as opposed to state and federal governments, who have more effect on safety net policy. There is much research showing that [land use rules affect housing costs](https://ternercenter.berkeley.edu/research-and-policy/land-use-politics-housing-costs-and-segregation-in-california-cities/).
 
 ## Focuses and Case Studies
 
@@ -28,7 +28,7 @@ It's important that, whenever a pilot is started, we look at the effect on stude
 - Effect on students in poverty in the schools during and after the policy change.
 - Effect on students who moved out after the policy change.
 
-Luckily, state housing laws provide some measure of assurance that this kind of data collection can be done — namely, Senate Bill 330 maintains that any tenants who are displaced in the process of construction are entitled to return to a new unit of comparable quality in the new building. 
+Luckily, state housing laws provide some measure of assurance that this kind of data collection can be done — namely, Senate Bill 330 maintains that any tenants who are displaced in the process of construction are entitled to return to a new unit of comparable quality and rent in the new building. 
 
 Upon identification of census tracts with the above characteristics, we recommend looking into student outcomes after implementing the treatment policy in a 5 mile radius.
 ## Eventual Goal
