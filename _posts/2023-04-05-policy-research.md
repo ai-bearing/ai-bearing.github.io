@@ -31,7 +31,9 @@ It's important that, whenever a pilot is started, we look at the effect on stude
 Luckily, state housing laws provide some measure of assurance that this kind of data collection can be done — namely, Senate Bill 330 maintains that any tenants who are displaced in the process of construction are entitled to return to a new unit of comparable quality and rent in the new building. 
 
 Upon identification of census tracts with the above characteristics, we recommend looking into student outcomes after implementing the treatment policy in a 5 mile radius.
+
 ## Eventual Goal
+
 The eventual goal is to lift the vast majority of zoning restrictions, with the aim of using these levers to improve student outcomes. The concept of a city without a comprehensive zoning code (or a very liberal zoning code) is not alien — the city of Houston does not have a comprehensive city-wide zoning code, for example. While there is a mandated general plan in Los Angeles, this does not entail maintaining density and use restrictions to the extent that Los Angeles [chooses to do](https://belonging.berkeley.edu/single-family-zoning-greater-los-angeles).
 
 We will use the case studies to understand the effects of zoning reform on student outcomes, and use these studies to inform future policies. Importantly, it is paramount to study thoroughly — we must examine one set of students' outcomes through time, ideally tracking via some particular method, in order to truly get a full picture of the effects on student outcomes.
