@@ -13,7 +13,9 @@ The nexus with education and equity is multiple-fold:
 - There is ample evidence that Los Angeles is dealing with a shortage of housing — [job growth outpaces housing growth](https://laist.com/news/housing-homelessness/housing-jobs-los-angeles-california-stessa-rhna-housing-element), [rents over time](https://www.zumper.com/rent-research/los-angeles-ca), and [high rates of household overcrowding](https://www.latimes.com/california/story/2022-10-19/los-angeles-history-overcrowding-united-states)
 - Additionally, we can see that land use policy plays a significant role in housing costs — an [entitled lot](https://therealdeal.com/la/2018/09/07/a-market-grows-for-entitled-la-properties/) in Los Angeles fetched a [large premium](https://therealdeal.com/la/2018/09/07/a-market-grows-for-entitled-la-properties/) after it was entitled.
 - Land use policy is also particularly effective because local governments are in charge of it, as opposed to state and federal governments, who have more effect on safety net policy. There is much research showing that [land use rules affect housing costs](https://ternercenter.berkeley.edu/research-and-policy/land-use-politics-housing-costs-and-segregation-in-california-cities/), and that
+
 ## Focuses and Case Studies
+
 Every policy must be piloted, so, we will try to focus on educational outcomes in areas with the following characteristics:
 - High poverty
 - High population density
