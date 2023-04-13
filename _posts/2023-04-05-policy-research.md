@@ -4,7 +4,9 @@ title: "Policy Proposal, Research, and Sources"
 permalink: "/posts/policy_proposal.html"
 ---
 For one of my classes, I'm working on writing a policy proposal related to education and equity, so I'm focusing on housing policy (and how it feeds back into education).
+
 ## Research
+
 The nexus with education and equity is multiple-fold:
 - According to a study by the [Urban Institute](https://pubmed.ncbi.nlm.nih.gov/27103537/), *controlling for socioeconomic status*, household overcrowding in adolescence has a negative effect on student outcomes.
 - Almost [30%](https://www.ppic.org/publication/geography-of-child-poverty-in-california/) of children in Los Angeles County are in poverty — and safety net expansions (regardless of level of government) are less effective in areas with high housing costs.
