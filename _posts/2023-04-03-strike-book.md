@@ -78,4 +78,11 @@ One Point: Ocean Hill-Brownsville led to a realignment away from class and Jewis
 One Point: The emergence of a divide between African American Teachers (under the ATA) and the UFT went deeper than simple union disputes, but rather to the core of the idea between the "culture of poverty" and the idea that rebellion against white societal expectations was necessary for the advancement of the black poor.
 
 ## Chapter 8: After the Crisis
-One Point: In a cruel (and expected) twist of fate, the advocates of community control among black communities had their cause co-opted by middle class and affluent whites, especially rising after decentralization in the 1960s and 70s.
+One Point: In a cruel (and expected) twist of fate, the advocates of community control among black communities had their cause co-opted by middle class and affluent whites, especially rising after decentralization in the 1960s and 70s. This culminated in the rise of Ed Koch and the effective end of liberal, pluralist New York in favor of racial factionalism.
+
+> Perhaps the most important service white New Yorkers can perform for the city and for themselves is to allow blacks to carve out their own definition of what it means to be black and middle-class. Whites must accept the possibility that this definition will be different, perhaps substantially so, from theirs.
+
+> It is also unrealistic for both blacks and whites to put their faith, as some contemporary critics, activists, and historians appear to do, in the disappearance of the category of "whiteness" itself as a solution to the city’s and the nation’s racial problems.
+
+## Chapter 9: Ocean Hill-Brownsville, New York, America
+One Point: Ocean Hill-Brownsville was only one example of the greater shift going on in broader American culture — whites and blacks realized that they lived in stark contrast, and even though there was nominal equality before the law, realistically there was not much.
