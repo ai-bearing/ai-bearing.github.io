@@ -46,3 +46,36 @@ One Point: "Community" has undergone a full circle transition from being about m
 > New York’s school integration activists embraced community control, in large measure, because of PAT’s success with it. During PAT’s heyday between 1963 and 1965, these activists had been forced by practical necessity to rely on the force of centralized authority—the Board of Education—to realize their goals.
 
 > The idea of "community" — black community — was a perfect vehicle to express both disgust with white New York and faith in the political, economic, and cultural regeneration of black New York. But the shift from integration to "community" carried with it a potential conundrum for blacks and progressive whites, one whose ironies appeared lost on Galamison, EQUAL, and other critics of PAT and the "neighborhood school."
+
+## Chapter 3: "White" Values, "Black" Values
+One Point: Disillusionment with the "liberal" or "moderate" approach toward civil rights led to the emergence of a contingent focused on bringing African-American community self-determination and control as opposed to assimilation into white society. This coincided with the assimilation of Jews into whiteness, as the dividing lines in NYC switched from Jews vs. Catholics to White vs. Black.
+
+> This UFT-endorsed "moderate" pluralism would be exemplified during the Ocean Hill–Brownsville crisis itself by a social studies lesson given at JHS 271 by a white teacher, R. J. Papaleo—one that was disrupted by African-American Teachers Association leader Leslie Campbell. The plan for the lesson asked: "How is America divided on the question of civil rights?" It divided a hypo- thetical "American Highway" into three lanes—two narrow ones for left- and right-wing "extremists," and a wide "center lane." Discussion questions included "What happens to America when either the right or left lane becomes more crowded?," and "Why is the key to peace and happiness found in observing moderation in things?"
+
+> The culture of the white majority of the UFT in the 1960s was, to a large de- gree, a reflection of that of the white middle class in New York City as a whole. Both were built around conceptions of individualism, marketplace competition, and objective merit, a critical view of lower-class black cultural expressions, and a moderate pluralism featuring a cautious endorsement of group distinctiveness bounded by a common cultural framework.
+
+> As early as 1963, Kenneth Clark was taking the culture of poverty, and the related concept of cultural deprivation, to task. There were no "culturally deprived" children, he wrote, only "children who are being denied their rights as human beings... deliberately and chronically victimized by the larger societyi n general and by educational institutions, specifically."
+
+> Even successful black students, [Charles Hamilton] argued, were "permanently crippled, psychologically, while at the same time measuring up to criteria others have decided are the major determinants for 'achievement.'" He called for the replacement of a white middle-class educational structure based "solely on the acquisition of verbal skills" by one based on black "normative values," which he defined as "color consciousness, not color-blindness, group cohesion, not individualism [and] respect for Afro-American culture, not assumption of white, western cultural superiority."
+
+> Thus, beginning in the mid-1960s, black intellectuals in New York, aided by a small but influential group of sympathetic whites, sought to link a series of attributes — competition, individualism, and materialism — specifically to the white middle class. In the context of the New York City public education system and the fight for community control, black activists and their white allies associated these same attributes, which they viewed as shallow and fraudulent, with white UFT teachers.
+
+## Chapter 4: The Community Control Experiment
+
+One Point: After decentralization, tensions between the UFT and Rhody McCoy, who was in charge of the Ocean Hill-Brownsville experiment, increased, with many of these tensions coming about through the actions of schoolchildren.
+
+## Chapter 5: The Strikes
+One Point: Rhody McCoy, after pretextually dismissing Fred Nauman and 18 other white staff from Ocean Hill-Brownsville schools, tries to come up with post hoc reasons for their dismissal, while UFT leader Albert Shanker starts organizing a strike.
+
+## Chapter 6: The Third Strike and Beyond
+One Point: Ocean Hill-Brownsville led to a realignment away from class and Jewish-Catholic divisions towards race and Black-White divisions. Afterwards, with "decentralization" as opposed to community control, the UFT retained its tight grip on the school system in New York.
+
+> New York, as Ocean Hill–Brownsville had shown so dramatically, was not so much a city of bosses and workers as it was one of blacks and whites.
+
+> Despite the absorption by the system as a whole of much of the philosophical underpinnings of the Ocean Hill–Brownsville experiment, achieve- ment levels for black public school students, as measured both by standardized test scores and by classroom performance, declined throughout the 1970s, 1980s, and 1990s.
+
+## Chapter 7: Culture War
+One Point: The emergence of a divide between African American Teachers (under the ATA) and the UFT went deeper than simple union disputes, but rather to the core of the idea between the "culture of poverty" and the idea that rebellion against white societal expectations was necessary for the advancement of the black poor.
+
+## Chapter 8: After the Crisis
+One Point: In a cruel (and expected) twist of fate, the advocates of community control among black communities had their cause co-opted by middle class and affluent whites, especially rising after decentralization in the 1960s and 70s.
