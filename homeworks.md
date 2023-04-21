@@ -34,6 +34,8 @@ Every time we do a problem set, we also have to self-correct it.
   - [Problem Set 6, graded](https://ai-bearing.github.io/Classes_and_Homework/College/Y2S2, Econ 251/problemsets/problem_set_6_graded.pdf)
 - [Problem Set 7](https://ai-bearing.github.io/Classes_and_Homework/College/Y2S2, Econ 251/problemsets/problem_set_7.pdf)
   - Note: I did not self-correct this problem set on my iPad.
+- [Problem Set 8](https://ai-bearing.github.io/Classes_and_Homework/College/Y2S2, Econ 251/problemsets/problem_set_8.pdf)
+  - Note: I did not get this problem set self-corrected.
 
 ### Midterm Review
 - [Midterm 1 Review](https://ai-bearing.github.io/Classes_and_Homework/College/Y2S2, Econ 251/midtermreview/midterm_1_review.pdf)
