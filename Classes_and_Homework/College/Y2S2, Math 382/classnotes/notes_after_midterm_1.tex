@@ -931,4 +931,75 @@
 
     Thus, $\delta(G) > |S|\delta(G) - |S|(|S| - 1)$
   \end{problem}
+\section*{4.3}%
+  \begin{problem}{Network Flow}
+    A \textit{network} is a directed graph with nonnegative capacity $c(e)$ on each edge $e$, a source vertex $s$, and a sink vertex $t$. A flow $f(e)$ assigns a value to each edge. We write $f^+(v)$ for the total flow on edges leaving $v$ and $f^-(v)$ for the total flow on edges entering $v$.\\
+
+    A flow if feasible if it satisfies the following constraints:
+    \begin{description}[font=\normalfont\scshape]
+      \item[Capacity constraint:] $0\leq f(e) \leq c(e)$
+      \item[Conservation constraint:] $f^+(v) = f^-(v)$ for each vertex $v\notin\{s,t\}$
+    \end{description}
+
+    The value, $\textrm{val}(f)$, is the net flow $f^-(t) - f^+(t)$ into the sink. The maximum flow is a feasible flow of maximum value.\\
+
+    When $f$ is feasible, a $f$-augmenting path is a source to sink path $P$ in $G$ such that for each $e\in E(P)$:
+    \begin{itemize}
+      \item If $P$ follows $e$ in the forward direction, then $f(e) < c(e)$.
+      \item If $P$ follows $e$ in the backward direction, then $f(e) > 0$.
+    \end{itemize}
+    Let $\epsilon(e) = c(e) - f(e)$ when $e$ is forward on $P$ and $\epsilon(e) = f(e)$ when $e$ is backward on $P$. The tolerance of $P$ is $\min_{e\in E(P)} \epsilon(e)$.\\
+    \begin{problem}{Lemma 4.3.5}
+      If $P$ is a $f$-augmenting path with tolerance $z$, then changing the flow by $+z$ on foward edges in $P$ and by $-z$ on backward edges in $P$, then we yield a new flow $f'$ with $\textrm{val}(f') = \textrm{val}(f) + z$.
+      \tcblower
+      The definition of tolerance ensures that $0 \leq f'(e) \leq c(e)$ for every edge $e$, meaning that the capacity constraint holds.\\
+
+      The edges of $P$ incident to an internal vertex occur either as $(+,+), (-,+),(+,-),(-,-)$. In each case, the change to the flow into and out of $v$ remains the same, so the net flow remains $0$.\\
+
+      Finally, the net flow into $t$ increases by $z$.
+    \end{problem}
+    A source/sink cut, $[S,T]$ consists of the edges from a source set $S$ and a sink set $T$, where $s\in S$ and $t\in T$. The capacity of the cut is denoted $\textrm{cap}(S,T)$ and sum of the capacities of the edges of $[S,T]$.\\
+
+    Given a set of vertices $U$, let $f^+(U)$ denote the total flow on edges leaving $U$ and $f^-(U)$ denote the total flow on edges entering $U$. The net flow out of $U$ is $f^+(U) - f^-(U)$.
+    \begin{problem}{Lemma 4.3.7}
+      If $U$ is a set of vertices in a network, then the net flow out of $U$ is the sum of net flows out of the nodes of $U$. In particular, if $f$ is a feasible flow and $[S,T]$ is a source/sink cut, then the net flow out of $S$ is equal to the net flow into $T$, which is equal to $\textrm{val}(f)$.
+      \tcblower
+      Our claim is equivalent to the following:
+      \[
+        f^+(U) - f^-(U) = \sum_{v\in U} [f^+(v) - f^-(v)]
+      \]
+      We will work in three cases:
+      \begin{description}[font=\normalfont\scshape]
+        \item[$x,y\in U$:] In this case, $f(xy)$ is not counted on the left side. On the right side, $f(xy)$ contributes positively via $f^+(x)$ and contributes negatively via $f^-(y)$, which are equivalent, meaning that, in this scenario, they are equivalent.
+        \item[$x,y\notin U$:] In this case, $f(xy)$ contributes to neither side, so they are equivalent once more.
+        \item[$xy\in U,\overline{U}$:] In this case, $f(xy)$ contributes positively on both sides.
+        \item[$xy\in \overline{U},U$:] In this case, $f(xy)$ contributes negatively on both sides.
+      \end{description}
+      Summing over all edges, we get equality.\\
+
+      When $[S,T]$ is a source/sink cut, and $f$ is a feasible flow, then the net flow from vertices in $S$ sums to $f^+(s) - f^-(s)$ (as every interior node has net flow of $0$), and net flow of nodes from $T$ sums to $f^+(t) - f^-(t)$, which equals $-\textrm{val}(f)$. Hence, the net flow across any source/sink cut equals both the net flow out of $s$ and the net flow into $t$.
+    \end{problem}
+    \begin{problem}{Corollary 4.3.8}
+      If $f$ is feasible and $[S,T]$ is a source/sink cut, then $\textrm{val}(f) \leq \textrm{cap}(S,T)$.
+      \tcblower
+      By the previous lemma, we know that $\textrm{val}(f) = f^+(S) - f^-(S) \leq f^+(S)$, since the flow into $S$ is no less than $0$. Since the capacity constraint requires $f^+(S) \leq \textrm{cap}(S,T)$, we get that $\textrm{val}(f) \leq \textrm{cap}(S,T)$.
+    \end{problem}
+  \end{problem}
+  \begin{problem}{Ford-Fulkerson Algorithm}
+    Among all source-sink cuts, the one with minimum capacity yields the maximum bound on flow. This is the \textit{minimum cut} problem. The max flow and min cut problems are dual optimization problems.\\
+
+    Given a flow with value $\alpha$ and a cut with value $\alpha$, corollary $4.3.8$ proves that the cut is a minimum cut and the flow is a maximum flow. The Ford-Fulkerson algorithm finds augmenting paths to increase the flow value. If it does not find any larger flow, then it finds a cut with the same capacity as this flow.
+
+    \begin{description}[font=\normalfont\scshape]
+      \item[Input] A feasible flow $f$ into a network.
+      \item[Output] An $f$-augmenting path or a cut with capacity $\textrm{val}(f)$.
+      \item[Idea] Find the nodes reachable from $s$ by paths with positive tolerance. Reaching $t$ completes an $f$-augmenting path. During the search, $R$ is the set of nodes reached and $S\subseteq R$ is the set of nodes searched.
+      \item[Initialization] $R = \{s\}$, $S = \emptyset$
+      \item[Iteration] Choose $v\in R-S$. For each exiting edge $vw$ with $f(vw) < c(vw)$, and $w\notin R$, add $w$ to $R$. For each entering edge $uv$ with $f(uv)>0$, and $u\notin R$, add $u$ to $R$.\\
+
+        Label each vertex added to $R$ as ``reached'' and record $v$ as the vertex reaching it. After exploring all edges at $v$, add $v$ to $S$.\\
+
+        If $t$ is reached, then trace the path reaching $t$ to report an $f$-augmenting path, and terminate. If $R = S$, then return $[S,\overline{S}]$ and terminate. Otherwise, iterate.
+    \end{description}
+  \end{problem}
 \end{document}
