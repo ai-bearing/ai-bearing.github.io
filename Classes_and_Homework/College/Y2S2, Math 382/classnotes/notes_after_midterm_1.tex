@@ -1001,5 +1001,28 @@
 
         If $t$ is reached, then trace the path reaching $t$ to report an $f$-augmenting path, and terminate. If $R = S$, then return $[S,\overline{S}]$ and terminate. Otherwise, iterate.
     \end{description}
+    Crucially, the Ford-Fulkerson algorithm works best with rational capacities and flows, or else the algorithm will iterate forever.
+  \end{problem}
+  \begin{problem}{Theorem 4.3.11: Max Flow-Min Cut}
+    In every network, the maximum value of a feasible flow equals the minimum capacity of a source/sink cut.
+    \tcblower
+    In the max flow problem, the zero flow ($\forall e, f(e) = 0$) is always a feasible flow. Afterwards, we apply the Ford-Fulkerson algorithm, adding vertices to $S$ at most once, and terminating either when $t\in R$ or when $S = R$.\\
+
+    If $t\in R$, we have an $f$-augmenting path, and increase the flow value. After repeating the Ford-Fulkerson algorithm, when the capacities are rational, each augmentation increases the flow by a multiple of $1/a$ where $a$ is the LCM of the denominators. After finitely many repetitions of the algorithm, the capacity of the cut is reached, and our algorithm terminates with $S=R$.\\
+
+    When we terminate with $S=R$, we claim that, for $T = \overline{S}$, this is a $[S,T]$ cut with capacity $\textrm{val}(f)$ for $f$ as the present flow. Because $s\in S$ and $t\notin S = R$, the algorithm termination, this termination step is a cut. Additionally, since applying the labeling algorithm introduces no vertex in $T$ to $R$, no edge from $S$ to $T$ has excess capacity, and no edge from $T$ to $S$ has nonzero flow in $f$. So, $f^+(S) = \textrm{cap}(S,T)$ and $f^-(S) = 0$, meaning $\textrm{val}(f) = \textrm{cap}(S,T)$.
+  \end{problem}
+  \begin{problem}{Ford-Fulkerson Algorithm Example}
+    To use the Ford-Fulkerson algorithm on paper, we do the following:
+    \begin{itemize}
+      \item Identify an $f$-augmenting path from $s$ to $t$.
+      \item Add the tolerance along each edge of the path.
+      \item Mark any edges where the flow is equal to the capacity as ``full.''
+      \item Continue until you cannot find any $f$-augmenting paths from $s$ to $t$.
+    \end{itemize}
+    We can see an example of a completed Ford-Fulkerson algorithm:
+    \begin{center}
+      \includegraphics[width=\textwidth]{MaxFlowMinCutExample}
+    \end{center}
   \end{problem}
 \end{document}
