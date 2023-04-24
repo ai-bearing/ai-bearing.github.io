@@ -931,6 +931,41 @@
 
     Thus, $\delta(G) > |S|\delta(G) - |S|(|S| - 1)$
   \end{problem}
+  \begin{problem}{Bonds and Blocks}
+    A \textit{bond} is a minimal nonempty edge cut. For example:
+    \begin{center}
+      \includegraphics[width=10cm]{minimal_edge_cut_example}
+    \end{center}
+    \begin{problem}{Proposition 4.1.15}
+      If $G$ is a connected graph, then an edge cut $F$ is a bond if and only if $G-F$ has exactly two components.
+      \tcblower
+      \begin{description}[font=\normalfont\scshape]
+        \item[$(\Leftarrow)$] Suppose $G-F$ has exactly two components, $H_1$ and $H_2$, where $F = [V(H_1),V(H_2)]$. If we add back any edge from $F$, then the resulting graph will be connected. If we take any $F'\subset F$, we can see that $G-F'$ is connected. Therefore, $F$ is the minimal edge cut.
+        \item[$(\Rightarrow)$] Let $F$ be a bond. We will prove via contrapositive. If $G-F$ has more than two components, then for the edge cut $F = [S,\overline{S}]$, we find that $G-F$ will contain components $H_1$, $H_2$, and $H_3$. 
+      \end{description}
+    \end{problem}
+    A \textit{block} is a maximal connected subgraph of $G$ that has no cut-vertex within itself. In other words, if $H$ is a block in $G$, then $H$ \textit{may} contain a cut-vertex in $G$, but will not contain a cut-vertex in $H$. 
+    \begin{center}
+      \includegraphics[width=10cm]{blocks}
+    \end{center}
+    In $G$, the blocks of $G$ are:
+    \begin{itemize}
+      \item isolated vertices
+      \item cut-edges
+      \item maximal 2-connected subgraphs
+    \end{itemize}
+    \begin{problem}{Proposition 4.1.19}
+      Two blocks in a graph share at most one vertex.
+      \tcblower
+      Suppose toward contradiction that there are two blocks $B_1$ and $B_2$ such that $|V(B_1) \cap V(B_2)| = 2$. We will show that $B_1\cup B_2$ contains no cut-vertex, meaning neither $B_1$ nor $B_2$ is maximal. Delete an arbitrary vertex from $B_1 \cup B_2$. Then, $B_1 - v$ and $B_2 - v$ are still connected, as they still share at least one vertex in common.
+    \end{problem}
+    The \textit{block graph} of $G$ is a bipartite graph $H$ with bipartition $A\cup \mathcal{B}$, where $A$ is the set of cut-vertices and $\mathcal{B}$ is the set of all blocks in $G$. The edges are defined as $a\in A$ is adjacent to $B_i\in \mathcal{B}$ if and only if $a\in B_i$.\\
+
+    To find the blocks (and the resulting block graph), we start at a vertex and travel along the neighbors until no edges are above the ``parent'' vertex. Including the parent, this creates a block, and we delete the block save for the parent vertex.
+    \begin{center}
+      \includegraphics[width=\textwidth]{block_algorithm}
+    \end{center}
+  \end{problem}
 \section*{4.3}%
   \begin{problem}{Network Flow}
     A \textit{network} is a directed graph with nonnegative capacity $c(e)$ on each edge $e$, a source vertex $s$, and a sink vertex $t$. A flow $f(e)$ assigns a value to each edge. We write $f^+(v)$ for the total flow on edges leaving $v$ and $f^-(v)$ for the total flow on edges entering $v$.\\
