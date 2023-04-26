@@ -966,6 +966,46 @@
       \includegraphics[width=\textwidth]{block_algorithm}
     \end{center}
   \end{problem}
+\section*{4.2}%
+\begin{problem}{Definitions}
+  Two paths from $u$ to $v$ are \textit{internally disjoint} if they have no common internal vertex. That is, $P_1 \cap P_2 = \{u,v\}$.
+  \begin{problem}{Whitney's Theorem}
+    A graph $G$ with at least three vertices is $2$-connected if and only if for each pair $u,v\in V(G)$, there exist internally disjoint $u,v$-paths.
+    \tcblower
+    \begin{description}[font=\normalfont\scshape]
+      \item[$(\Leftarrow)$] If every pair of vertices has at least two internally disjoint paths between them, then we cannot disconnect $G$ by deleting only one vertex. Therefore, $G$ is $2$-connected.
+      \item[$(\Rightarrow)$] Suppose $G$ is $2$-connected. Let $u,v\in V(G)$. We will proceed via induction.
+        \begin{description}[font=\normalfont\scshape]
+          \item[Basis: $d(u,v) = 1$:] If we delete the edge $uv$, then since $\kappa'(G) \geq \kappa(G) \geq 2$, we know that $G-uv$ is still connected, meaning $\exists$ a $u,v$ path $P$ in $G - uv$, so $P$ and $uv$ form an internally disjoint $u,v$ path.
+          \item[Inductive Hypothesis:] If $d(x,y) < k$ for $k\geq 2$, then $\exists$ internally disjoint $x,y$-paths.
+          \item[Proof:] We will start by showing that if $d(u,v) = k$, then $\exists$ internally disjoint $u,v$ paths. Let $w$ be adjacent to $v$. Thus, $d(u,w) = k-1$. By the inductive hypothesis, $\exists$ internally disjoint $u,w$ paths, $P_1$ and $P_2$.\\
+
+            WLOG, suppose $P_2$ contains $wv$. If $v\in V(P_1) \cup V(P_2)$. Then, we can create the internally disjoint paths $P_1' = P_1 + wv$ and $P_2' = P_2 - wv$.\\
+
+            Suppose $v\notin V(P_1) \cup V(P_2)$. Delete $w$. Then, since $G$ is $2$-connected by our assumption, there must exist a $u,v$ path $R$ in $G-w$. Let $x$ be the last vertex of $R$ that is also in $V(P_1) \cup V(P_2)$. WLOG, let $x\in V(P_2)$. To create $P_2'$, we follow $P_2$ to $x$, then $R$ from $x$ to $v$. To create $P_1'$, follow $P_1$ from $u$ to $w$, then add $wv$. These two paths are internally disjoint.
+        \end{description}
+    \end{description}
+  \end{problem}
+  The \textit{expansion lemma} is as follows: If $G$ is a $k$-connected graph, and $G'$ is obtained from $G$ by adding $y$ with at least $k$ neighbors in $G$, then $G'$ is $k$-connected. In the opposite direction, this means that if we delete $S\subseteq G'$ such that $|S| \leq k-1$, $G'-S$ is still connected.
+  \begin{description}[font=\normalfont\scshape]
+    \item[Case 1: $S\subseteq V(G)$]. Since $G$ is $k$-connected and $|S| \leq k-1$, $G-S$ is connected. Since $N(y) \geq k$, $N(y)-S \neq \emptyset$, so $G'-S$ is connected.
+    \item[Case 2: $y\in S$] We know that $G'-S$ is thus equivalent to $G-S$, which we had shown previously is connected, meaning $G'-S$ is connected.
+  \end{description}
+  \begin{problem}{Some Equivalences}
+    For a graph $G$ with at least three vertices, the following are equivalent:
+    \begin{enumerate}[(a)]
+      \item $G$ is connected and has no cut-vertex.
+      \item $\forall x,y\in V(G)$, there are internally disjoint $x,y$ paths.
+      \item $\forall x,y\in V(G)$, there is a cycle through $x$ and $y$.
+      \item $\delta(G) \geq 1$ and every pair of edges in $G$ lies on a common cycle.
+    \end{enumerate}
+    \tcblower
+    \begin{description}[font=\normalfont]
+      \item[(a) $\Leftrightarrow$ (b):] This is Whitney's Theorem.
+      \item[(b) $\Leftrightarrow$ (c):] Internally disjoint $x,y$ paths can create a cycle by following $P_1$ from $x$ to $y$, then follow $P_2$ from $y$ to $x$ for internally disjoint $P_1$ and $P_2$. In the opposite direction, for a cycle through $x$ and $y$, there are necessarily two internally disjoint paths between $x$ and $y$.
+    \end{description}
+  \end{problem}
+\end{problem}
 \section*{4.3}%
   \begin{problem}{Network Flow}
     A \textit{network} is a directed graph with nonnegative capacity $c(e)$ on each edge $e$, a source vertex $s$, and a sink vertex $t$. A flow $f(e)$ assigns a value to each edge. We write $f^+(v)$ for the total flow on edges leaving $v$ and $f^-(v)$ for the total flow on edges entering $v$.\\
