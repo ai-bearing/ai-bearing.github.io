@@ -19,8 +19,6 @@ I am a math and econ student at Occidental College. I'm going to be using this w
 - Economics
 - Urban Planning (and its interactions with economics)
 
-## [What I'm reading](https://aiyer.notion.site/30eab91bd1ac46b5890bf3f44e24dd9b?v=e2eb4a06677b4cc3aa410c9d7bf6212d)
-
 ## [Class Notes](classnotes.md)
 
 ## [Articles for *The Occidental*](https://theoccidentalnews.com/author/iyera)
