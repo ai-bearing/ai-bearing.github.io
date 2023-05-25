@@ -31,6 +31,7 @@ Of course, I strongly disagree with the idea that the 30 year mortgage is a "ben
 Finally, the 30 year mortgage and rent control provide greater benefits to the rich within their respective cohort, because the rich tend to stay in one unit for a longer period of time compared to the poor. Since renters are poorer than homeowners, rent control is generally less likely to be regressive on net than homeownership subsidies, but the same principle still applies.
 
 ---
+
 So, seeing as I'm very critical of the argument within Mark Paul's piece, what is the solution? Well, he states the correct answer at the end:
 > To truly transform the housing sector, the United States will need to embrace complementary policies to increase the number of affordable and market-rate housing units, encourage more construction and density through changes to zoning laws, and build millions of units of [social housing](https://theappeal.org/wp-content/uploads/2020/12/the-case-for-social-housing-2.pdf)—high-quality public housing for people across the income spectrum.
 
