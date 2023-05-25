@@ -13,7 +13,6 @@ To counter the first argument, Paul points to research that shows that rent cont
 > rent control *increased* housing supply (though this was largely attributed to landlords slicing up larger units into smaller ones)
 
 Note here that Paul suggests that rent control led to increased housing supply (to back up his argument), but points to *a* misallocation effect (large units being chopped up into smaller ones) to support it. If the policy reduces the supply of 3 bedrooms and increases the supply of one bedrooms, then it does reduce supply (since 3 and 1 beds are not necessarily substitutes).[^1] Now, of course there is greater supply and misallocation effects from zoning laws, but this is still a misallocation effect that would still have existed in the absence of zoning laws.
-[^1]: Weak rent controls (such as CPI + 5%) are not likely to impact allocation or supply that much, as investors generally account for rent increases far lower than these anti-gouging limits when making their decision to build.
 
 Similarly, Paul also argues the following:
 > Although it is true that rent control creates “winners” (current tenants) and “losers” (landlords seeking to raise rents), this is no “deadweight loss”
@@ -36,3 +35,4 @@ So, seeing as I'm very critical of the argument within Mark Paul's piece, what i
 > To truly transform the housing sector, the United States will need to embrace complementary policies to increase the number of affordable and market-rate housing units, encourage more construction and density through changes to zoning laws, and build millions of units of [social housing](https://theappeal.org/wp-content/uploads/2020/12/the-case-for-social-housing-2.pdf)—high-quality public housing for people across the income spectrum.
 
 The way cars, food, and technology are affordable is through mass production — and similarly, housing stability (should one desire it) is cheaper through mass production. If rents are stable (or downward trending) in the long term, it's more likely that a tenant is able to demand a lease for a longer term, which is yet another guarantee of stability. This is why building tons of housing through lifting zoning laws is the best guarantee of housing stability, not mere rent control.
+[^1]: Weak rent controls (such as CPI + 5%) are not likely to impact allocation or supply that much, as investors generally account for rent increases far lower than these anti-gouging limits when making their decision to build.
