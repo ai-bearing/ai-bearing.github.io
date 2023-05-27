@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Rent control is still flawed"
+subtitle: "Hard price controls still do what they are expected to do"
 permalink: "/posts/mortgages_and_rent_control.html"
 ---
 Mark Paul had a [recent article](https://prospect.org/infrastructure/housing/2023-05-16-economists-hate-rent-control/) at The American Prospect where he discusses why economists are wrong about rent control. It includes some cool and interesting empirical studies that show that the arguments by some of rent control's detractors are, if not wrong, then overstated. I think that Paul is largely wrong — this doesn't mean that rent control is never a good idea, nor that political expediency doesn't demand rent control, but that the arguments he makes are lacking in some rigor. 
