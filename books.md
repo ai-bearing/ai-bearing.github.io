@@ -9,6 +9,43 @@ I'm going to be using this place to host the books I read over summer, as well a
 ## Arbitrary Lines
 ### Nolan Gray
 
+Nolan Gray is a friend of mine, but despite that, I ended up having to wait quite a bit before I was able to get my hands on a copy and read the book. However, the book did not disappoint — it is very readable, approachable, and provides both a great template for understanding one of the most impactful parts of our lives (where and how we live), and an excellent argument for abolishing zoning entirely.
+
+To start, what is zoning? Zoning is, essentially, land use regulations that control the use (commercial, industrial, or residential) and density (single-family, duplex, apartment, etc.) of new buildings. Zoning also mandates setbacks from lot lines, minimum lot sizes, and minimum parking requirements. It doesn't control the demarcation of neighborhoods, nor does it control noise impacts or other externalities directly. Ostensibly this system is meant to "rationalize" land use, but Gray posits that zoning leads to segregation, car dependence, and makes us all poorer in the process.
+
+How might these rules do so? Well, let's start with zoning's origin. The first zoning code was adopted in New York City in 1916, one year after T. Coleman Du Pont built the Equitable Building on Broadway in Manhattan. While the Equitable Building is unobjectionable on its face, it included 1.2 million square feet of office space, putting downward pressure on commercial rents in the area. Additionally, Fifth Avenue merchants were mad about encroachment of loft factories, not because of any perceived nuisances, but out of the belief that Eastern European and Jewish factory workers would scare off their posh clientele. These proverbial bootleggers allied with the erstwhile central planners of the Progressive Era to push for the creation of zoning.
+
+However, the New York City zoning code was not the one that served as the template for modern zoning, but rather Berkeley's zoning code, which was pushed for by industrialists (who wanted to guarantee their investments wouldn't face lawsuits by irked neighbors) and racists (who didn't want Chinese laundries and a Black dance hall opening in their white neighborhoods). The Supreme Court gave its blessing to zoning in the 1926 decision in *Euclid v. Ambler*, where the Ambler realty company tried and failed to sue the city of Euclid, Ohio, when it zoned their land for industrial use. In the majority decision, Justice Sutherland called apartment buildings "mere parasites," thereby informing the primary use of zoning laws — economic segregation.
+
+Zoning increases housing costs in three primary ways:
+1. It reduces the supply of housing by restricting new construction directly.
+2. It mandates that the housing that is produced be more expensive than it might have been otherwise.
+3. It leads to investment uncertainty — in cities with extremely restrictive zoning, rezonings require a discretionary permitting process, which increases the risk of housing construction.
+
+Reductions in housing supply make us poorer by locking people out of high-powered metro areas — San Jose, for example, is home to some of the highest wage industries in the country, but because housing cost increases are even higher than the respective wage increases, there is an *outflow* out of San Jose and similar metro areas. This isn't normal — until 1980, incomes between different regions of the United States were converging due to an inflow of workers to higher wage areas, but now, moving from Orlando to San Jose doesn't pencil out.
+
+In the aggregate, the inability for workers to move to where they command the highest wage yields losses measuring in the trillions of dollars (with a T). According to Hsieh and Moretti (2019), if zoning in New York, San Francisco, and San Jose was at the median American level, the average worker would make thousands of dollars more.
+
+In addition to making us all poorer, zoning also leads to segregation and sprawl. Mandating single uses, single-family living, large lots, and parking not only leads to needing to drive everywhere, but the expensive housing locks out poorer African Americans and Hispanics from the highest opportunity neighborhoods. Despite measurable improvements in race relations since 1970, segregation remains stubborn as ever, thanks to zoning. Gray goes so far as to call zoning "American apartheid," for its deleterious effects on racial integration to this day.
+
+The fundamental flaw of zoning as practiced by city planners in the modern day is the fatal conceit of all city planners — they cannot rationally plan every land use. Markets for land and labor are the fundamental determinants of a city's form, not what a land use planner believes is the case. The primary method of the land use planner, zoning, has led to immense costs with few, if any, benefits.
+
+Gray offers some examples of moving towards a less terrible zoning:
+- Allowing accessory dwelling units (such as in Fayetteville and California)
+- State pre-emption of zoning laws (such as California and Arkansas)
+- Uniform zoning codes (as in Japan)
+
+However, Gray believes that city planners must go fully beyond zoning. If it has such great costs and so few benefits, why not abolish fully? Of course, this doesn't mean the end of city planning — planners still need to mediate conflicts, regulate externalities, and plan street networks. For those who believe that the city sans zoning would be a chaotic failure, Gray offers Houston as a prime example.
+
+Houston, unlike other cities, put zoning up to a vote — and it failed all three times. In place of zoning, Houston allows neighborhoods to come together and, with a supermajority vote, implement their own land use regulations for the neighborhood. Gray believes deed restrictions are an acceptable solution for a few reasons:
+- They apply within a small portion of the city.
+- They require more thought than zoning laws, because property owners will try to maximize their values and choose land use regulations that are most acceptable to the market.
+- Deed restrictions are subject to regular review, unlike the zoning code.
+
+However, Houston obviously isn't perfect — they still have height limits, parking minimums, and built large urban freeways. However, their system of land use regulation is still more geared towards mitigating real impacts, rather than blunt aesthetics or class segregation.
+
+Gray knows that his proposal wouldn't solve every problem, but he believes it is a necessary move towards a more equitable, sustainable, and affordable city, and I tend to agree. Hopefully policymakers will see the light soon enough.
+
 ## Remaking the American Dream
 ### Vinit Mukhija
 
