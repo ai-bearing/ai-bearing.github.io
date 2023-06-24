@@ -1,0 +1,28 @@
+---
+layout: post
+title: "Why I am not a nationalist"
+subtitle: "What makes a country great?"
+permalink: "/posts/currency_exchanges_imports.html"
+---
+
+The United States, and much of the developed world for that matter, is going through a bit of a "nationalist moment." Ulf Kristersson in Sweden, Marine Le Pen in France, AMLO in Mexico, and, of course, Donald Trump in the United States. However, even with Donald Trump out of office, there is still a significant rhetorical turn against globalization, immigration, and trade in the United States. This trend is, for lack of a better word, discouraging. I mostly reject many of the main tenets of nationalism (especially of the American variety), and economic nationalism specifically is, in my view, a road to ruin.
+
+---
+
+The "nation" in nationalism is something particularly specific — nations are groups of people with a common heritage, generally ethnicity. Of course, we run into a very big problem in the United States, which is that the United States doesn't have a common ethnicity. The largest group, White Non-Hispanic People, makes up about 57% of the population, and in that, there are many different ethnicities such as Irish, Italians, Jews, and Anglos.
+
+Alternatively, one might point to a common civic heritage, rebadging this as "civic nationalism." However, creating a national identity out of the cloth in this manner yields a significant problem: who is "in" and "out" of this civic body from which a nation is being created. Black Americans were not, for the longest time, considered part of this American "nation," having been disenfranchised and forcefully segregated. It is well within reason that an attempt to revive "civic nationalism" will yet again draw similar lines.
+
+Nationalism, in its past and its present, has also been used to justify great horrors. The reason the Nazis were "national socialists" was that they were nationalists. Genocides such as that in the late Ottoman Empire against Assyrians, Greeks, and Armenians was justified on nationalistic grounds. In India, Hindu nationalists have started using the euphemism of "bulldozer politics" to describe their agenda of pillaging Muslim-majority areas during state-sanctioned pogroms. Some of the most brutal dictators and wannabe dictators have justified their heinous actions by invoking the nation, such as Viktor Orban, Narendra Modi, and Vladimir Putin.
+
+The gish gallop of nationalism, once it is done with its charade of "civic nationalism," enters into arguing that they simply want the best for the populace. However, this is an extremely murky idea. What is good for the domestic firm is bad for the domestic consumer, but nationalists, rather than acknowledge this fundamental tension and attempt to resolve it, suggest that what is good for the domestic firm is actually secretly good for the consumer because it helps solidify the nation.
+
+Hence, the tendency towards economically illiterate protectionism and immigration restrictions. The nationalist argues that immigration "dilutes" workers — however, immigrants come based on the demand for their services, meaning that immigrants tend to be *complements* to domestic workers (after all, it isn't easy to leave one's homeland), rather than substitutes. There are a [myriad](https://www.aspeninstitute.org/blog-posts/open-borders-for-inclusive-prosperity/) of economic benefits from free migration — so many, in fact, that we could capture even a small fraction of these gains and distribute them as compensation.
+
+In a different case, the nationalist think tank American Compass [proposed](https://americancompass.org/policy-brief-the-global-tariff/) a "global tariff" that would constantly ratchet upward until the trade deficit was eliminated. This is a comically bad idea — when consumers pay more for imports (thus buying fewer of them), this means that foreigners have fewer dollars, meaning the price of dollars in foreign currency goes up. Since the dollar strengthens, this means exports also go down, meaning that the overall balance of trade doesn't change. However, this policy does impoverish the local populace with little benefit.
+
+Nationalists, faced with the reality that their policies make the populace poor, do their gish gallop to culture, saying that we need nationalism to protect traditions. However, culture is downstream of economics — the places that are most vibrant with culture in the United States, such as Los Angeles and New York, are the places with the most openness to the world, and, coincidentally, some of the richest places. Unless one's idea of culture is so vapid as to be "a bunch of white people doing anything," it is evidently clear that economic prosperity begets greater culture, and poverty does not.
+
+I'm not delusional; I know that nationalism is extremely popular. Economic nationalism is probably the only belief that unifies both the Democratic and Republican party today, and nationalists the world over have won far more than they have lost. However, I do have trust that, especially in America, nationalism does not need to succeed in the end. After Donald Trump's election in 2016, we saw a large rise in support for immigration, and in a time of inflation, the average person starts caring much more about the affordability of goods and services, no matter their origin.
+
+We cannot let nationalism win. The last time we did, we saw unspeakable atrocities inflicted upon marginalized people the world over. While nationalism is on the rise currently, it's important to remember that we can beat it. The unified, open, globalized world is one that has helped ordinary people by far the most, and I think deep down, nationalists know that.
