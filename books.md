@@ -34,6 +34,11 @@ England masterfully documents the influence that the Georgists had at nearly eve
 
 Just as Henry George's ideas spanned the political spectrum, from opposition to price regulation to socialization of land, so too did his disciples and philosophical descendants. However, throughout this process, it's important to remember that the fundamental belief George had was not in simply land value taxation, but liberal-democratic urban governance and its role in improving the lives of ordinary people. That is probably the most important takeaway from this history of Henry George.
 
+## Paved Paradise
+### Henry Grabar
+
+![Paved Paradise](/assets/pavedparadise.png)
+
 ## Arbitrary Lines
 ### Nolan Gray
 
