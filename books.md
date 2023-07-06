@@ -37,8 +37,6 @@ Just as Henry George's ideas spanned the political spectrum, from opposition to 
 ## Paved Paradise
 ### Henry Grabar
 
-![Paved Paradise](/assets/pavedparadise.png)
-
 ## Arbitrary Lines
 ### Nolan Gray
 
