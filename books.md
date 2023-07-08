@@ -5,6 +5,12 @@ permalink: "/book_reviews"
 ---
 
 I'm going to be using this place to host the books I read over summer, as well as including some reviews/overviews. Enjoy!
+<details>
+ <summary> *Land and Liberty: Henry George and the Making of Modern Liberalism*, Christopher England </summary>
+
+ Test
+
+</details>
 
 ## Land and Liberty: Henry George and the Making of Modern Liberalism
 ### Christopher England
