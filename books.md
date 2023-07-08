@@ -6,14 +6,7 @@ permalink: "/book_reviews"
 
 I'm going to be using this place to host the books I read over summer, as well as including some reviews/overviews. Enjoy!
 <details>
- <summary> *Land and Liberty: Henry George and the Making of Modern Liberalism*, Christopher England </summary>
-
- Test
-
-</details>
-
-## Land and Liberty: Henry George and the Making of Modern Liberalism
-### Christopher England
+ <summary> <em>Land and Liberty: Henry George and the Making of Modern Liberalism</em>, Christopher England </summary>
 
 Christopher England, a historian at Georgetown University, wrote an excellent history of the influence of Henry George, starting through the mid-1800s, during the time of slavery's abolition and the restructuring of the American economy during the post-civil war industrialization. England masterfully documents the influence that the seminal thinker of this time period, Henry George, had throughout the political system.
 
@@ -40,8 +33,10 @@ England masterfully documents the influence that the Georgists had at nearly eve
 
 Just as Henry George's ideas spanned the political spectrum, from opposition to price regulation to socialization of land, so too did his disciples and philosophical descendants. However, throughout this process, it's important to remember that the fundamental belief George had was not in simply land value taxation, but liberal-democratic urban governance and its role in improving the lives of ordinary people. That is probably the most important takeaway from this history of Henry George.
 
-## Paved Paradise
-### Henry Grabar
+</details>
+
+<details>
+ <summary> <em>Paved Paradise</em>, Henry Grabar
 
 Henry Grabar's *Paved Paradise* is an excellent overview of the many ways that parking, quite literally, rules everything around us. From housing to transportation to the very urban form we live in, the ever longing quest to park our cars has shaped the trajectory of the entire world. And, Grabar argues, in a negative direction.
 
@@ -64,8 +59,10 @@ However, parking policies have much more of an impact than the humble pricing of
 
 Fundamentally, Grabar's book is an optimistic one. We know now what the planners of the past did not — we understand the value of urban space, and understand that, if we actually see it for what it is, maybe we won't use it for so much car parking. I tend to agree; it's time to see what we can really do with our cities once they are liberated of the burden to provide so much parking.
 
-## Arbitrary Lines
-### Nolan Gray
+</details>
+
+<details>
+ <summary> <em>Arbitrary Lines</em>, Nolan Gray
 
 Nolan Gray is a friend of mine, but despite that, I ended up having to wait quite a bit before I was able to get my hands on a copy and read the book. However, the book did not disappoint — it is very readable, approachable, and provides both a great template for understanding one of the most impactful parts of our lives (where and how we live), and an excellent argument for abolishing zoning entirely.
 
@@ -104,8 +101,11 @@ However, Houston obviously isn't perfect — they still have height limits, park
 
 Gray knows that his proposal wouldn't solve every problem, but he believes it is a necessary move towards a more equitable, sustainable, and affordable city, and I tend to agree. Hopefully policymakers will see the light soon enough.
 
-## Remaking the American Dream
-### Vinit Mukhija
+</details>
+
+<details>
+ <summary> <em>Remaking the American Dream</em>, Vinit Mukhija
+
 
 I thought this book was very interesting because it fused two of my favorite ideas: zoning and emergent order. Mukhija weaves various scholars' work, including his own, to paint a fascinating picture of Los Angeles as a city that, while on its surface a single-family home paradise, is in actuality a hotbed of emergent development patterns. A lot of Mukhija's work is centered around accessory dwelling units, or ADUs, and specifically the unpermitted kind.
 
@@ -116,3 +116,5 @@ One of Mukhija's main points of emphasis is that in responding to the proliferat
 I think my main point of contention with the central thrust of the book is my general distrust of local governments and "public input" mechanisms in being able to implement broadly-accessible and equitable reforms. Mukhija is a big proponent of using public discussion to guide policy in the book, and I'm not sure that's a very effective idea — many of the best policies come about through observation of informality, but not through public discussion/community input style events. Informal housing provides an opportunity to see where the market is heading — and allows policymakers to get ahead of the market. It doesn't really matter what the community input is on such a proposal, because after a certain point, the market has spoken for itself.
 
 However, despite that main flaw I saw in it, *Remaking the American Dream* is an excellent book that serves a valuable entry into the discourse. I believe its call to action is best summarized as "let informality guide your policymaking."
+
+</details>
