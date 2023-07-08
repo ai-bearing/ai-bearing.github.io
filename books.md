@@ -36,7 +36,7 @@ Just as Henry George's ideas spanned the political spectrum, from opposition to 
 </details>
 
 <details>
- <summary> <em>Paved Paradise</em>, Henry Grabar
+ <summary> <em>Paved Paradise</em>, Henry Grabar</summary>
 
 Henry Grabar's *Paved Paradise* is an excellent overview of the many ways that parking, quite literally, rules everything around us. From housing to transportation to the very urban form we live in, the ever longing quest to park our cars has shaped the trajectory of the entire world. And, Grabar argues, in a negative direction.
 
@@ -62,7 +62,7 @@ Fundamentally, Grabar's book is an optimistic one. We know now what the planners
 </details>
 
 <details>
- <summary> <em>Arbitrary Lines</em>, Nolan Gray
+ <summary> <em>Arbitrary Lines</em>, Nolan Gray</summary>
 
 Nolan Gray is a friend of mine, but despite that, I ended up having to wait quite a bit before I was able to get my hands on a copy and read the book. However, the book did not disappoint — it is very readable, approachable, and provides both a great template for understanding one of the most impactful parts of our lives (where and how we live), and an excellent argument for abolishing zoning entirely.
 
@@ -104,7 +104,7 @@ Gray knows that his proposal wouldn't solve every problem, but he believes it is
 </details>
 
 <details>
- <summary> <em>Remaking the American Dream</em>, Vinit Mukhija
+ <summary> <em>Remaking the American Dream</em>, Vinit Mukhija</summary>
 
 
 I thought this book was very interesting because it fused two of my favorite ideas: zoning and emergent order. Mukhija weaves various scholars' work, including his own, to paint a fascinating picture of Los Angeles as a city that, while on its surface a single-family home paradise, is in actuality a hotbed of emergent development patterns. A lot of Mukhija's work is centered around accessory dwelling units, or ADUs, and specifically the unpermitted kind.
