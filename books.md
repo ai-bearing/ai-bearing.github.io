@@ -6,6 +6,9 @@ permalink: "/book_reviews"
 
 I'm going to be using this place to host the books I read over summer, as well as including some reviews/overviews. Enjoy!
 <details>
+<summary> <em>Why It's OK To Make Bad Choices</em>, William Glod</summary>
+</details>
+<details>
  <summary> <em>Land and Liberty: Henry George and the Making of Modern Liberalism</em>, Christopher England </summary>
 
 <p>Christopher England, a historian at Georgetown University, wrote an excellent history of the influence of Henry George, starting through the mid-1800s, during the time of slavery's abolition and the restructuring of the American economy during the post-civil war industrialization. England masterfully documents the influence that the seminal thinker of this time period, Henry George, had throughout the political system.</p>
