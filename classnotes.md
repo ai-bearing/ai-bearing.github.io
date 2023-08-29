@@ -5,6 +5,10 @@ permalink: /classnotes.html
 ---
 Here are the various class notes I have written up so far.
 
+## Fall 2023
+### Game Theory
+- [Full Notes](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S1, Econ 305/game_theory_notes.pdf)
+
 ## Spring 2023
 ### Graph Theory
 - [Notes up to Midterm 1: 1.1–2.1](https://ai-bearing.github.io/Classes_and_Homework/College/Y2S2, Math 382/midterm review/midterm_1_review.pdf)
