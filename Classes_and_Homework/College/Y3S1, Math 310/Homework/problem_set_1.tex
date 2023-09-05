@@ -97,14 +97,18 @@
     \rule{\textwidth}{0.4pt}
     Let $k$ be surjective.
     \begin{align*}
-      k\circ k^{-1}(F) &= F \tag*{definition of surjection}\\
-      (k\circ k^{-1}) \circ k(F) &= k(F) \tag*{apply $k$ on the right} \\
-      k\circ (k^{-1} \circ k) (F) &= k(F) \tag*{associative property}
+      k(F) &= F \tag*{definition of surjection}\\
+      \textrm{card}(k(F)) &= \textrm{card}(F) \tag*{cardinality definition}
     \end{align*}
-    Therefore, $k^{-1}\circ k = \textrm{id}_F$, meaning $k$ is injective.
+    Therefore, $k$ is injective, as $F$ is finite.
   \end{problem}
   \begin{problem}{Problem 2}
-    Prove that a set $A$ is infinite if and only if there is a non-surjective injection $f:A\rightarrow A$.
+    Prove that a set $A$ is infinite if and only if there is a non-surjective injection $f:A\xhookrightarrow{} A$.
+    \tcblower
+    \begin{description}[font=\normalfont]
+      \item[$(\Rightarrow)$] Let $A$ be infinite. Then, $\exists i: \mathbb{N}\xhookrightarrow{} A$; $\forall n\in \mathbb{N}, a_n:=i(n)$. Let $f: A\rightarrow A$, $f(a_i) = a_{i+1}$. Then, for $a_{i_1} \neq a_{i_2}$, $f(a_{i_1}) = a_{i_1 + 1} \neq f(a_{i_2}) = a_{i_2 + 1}$. Therefore, $f$ is injective.
+      \item[$(\Leftarrow)$] Suppose $A$ is finite. Then, by the result in Problem $1$, $\forall f: A\xhookrightarrow{} A$, $f$ must be surjective.
+    \end{description}
   \end{problem}
   \begin{problem}{Problem 3}
     Let $A$, $B$, and $C$ be sets and suppose $\textrm{card}(A) < \textrm{card}(B) \leq \textrm{card}(C)$. Prove that $\textrm{card}(A) < \textrm{card}(C)$.
@@ -112,22 +116,27 @@
   \begin{problem}{Problem 4}
     If $A\subseteq B$ is an inclusion of sets with $A$ countable and $B$ uncountable, show that $B\setminus A$ is uncountable.
     \tcblower
-    Let $A$ be countable. Then, $A = \emptyset$, $A$ is finite, or $\exists f: \mathbb{N}\mapsto A$.\\
+    Suppose toward contradiction that $B\setminus A$ is countable.\\
 
-    Let $g: B\rightarrow \mathbb{N}$. By the definition of countability, $g$ is not injective.\\
+    Then, $A\cup (B\setminus A)$ must be countable, by union of countable sets.\\
 
-    Let $k: B\setminus A \rightarrow \mathbb{N}$. We will show that for the above three cases, $k$ is not injective.
-    \begin{description}
-      \item[Case 1] If $A$ is the empty set, then we know that $B\setminus A = B$, and since $g$ is not injective, $k$ must not be injective.
-      \item[Case 2] Let $L = \{1,2,\dots,n\}$ where $n$ is the cardinality of $A$. Since $A$ is finite, $\exists h:A\rightarrow L$. Let $s: \mathbb{N}\setminus L \rightarrow \mathbb{N},~s(l) = l + (n+1)$. Finally, let $t: B\setminus A \rightarrow \mathbb{N}\setminus L$. $s$ is a bijection (as it is a linear function), and $t$ is not injective, as $\textrm{card}(B\setminus A) = \textrm{card}(B) - n$. Thus, $s\circ t$ is not injective, so $B\setminus A$ is not countable.
-      \item[Case 3] 
-    \end{description}
+    However, $A\cup (B\setminus A) = B$, and $B$ is uncountable, meaning that $B\setminus A$ must be uncountable.
   \end{problem}
   \begin{problem}{Problem 5}
     Is the set $\{x\in\mathbb{R} \mid x>0~\textrm{and}~x^2\in\mathbb{Q}\}$ countable?
+    \tcblower
+    Let $q: \mathbb{Q} \rightarrow \mathbb{N}$ be the enumeration of the rationals; let $f:\{x\in\mathbb{R} \mid x>0~\textrm{and}~x^2\in\mathbb{Q}\}$ be defined as $f(x) = q\left(x^2\right)$.\\
+
+    $x>0 \longrightarrow t(x) = x^2$ is a bijection; $\mathbb{Q}$ countable $\longrightarrow$ $q$ is a bijection; $f = q\circ t \longrightarrow f$ is a bijection, and thus $\{x\in\mathbb{R}\mid x>0~\textrm{and}~x^2\in\mathbb{Q}\}$ is countable.
   \end{problem}
   \begin{problem}{Problem 6}
     Consider the set $\mathcal{F}(\mathbb{N})$ of all finite subsets of $\mathbb{N}$. Is $\mathcal{F}(\mathbb{N})$ countable?
+    \tcblower
+    Let $f: \mathcal{F} \rightarrow \mathbb{N}$ be defined as follows, where $p_n$ denotes the $n$th prime number.
+    \[
+      f(\{a_1,a_2,\dots,a_n\}) = p_1^{a_1}\cdot p_2^{a_2}\cdots p_{n}^{a_n}
+    \] 
+    By the fundamental theorem of arithmetic, every natural number is equal to a unique product of powers of prime numbers, meaning that $f$ is injective, so $\mathcal{F}$ is countable.
   \end{problem}
   \begin{problem}{Problem 7}
     Let $k\in\mathbb{N}$.
@@ -136,6 +145,34 @@
       \item Show that the set $\mathbb{N}^{\infty} := \{(n_k)_{k\geq 1}\mid n_k\in \mathbb{N}\}$ consisting of all sequences of natural numbers is uncountable.
       \item Prove that the set of \textbf{finitely-supported} natural sequences $c_c(\mathbb{N}) := \{(n_k)_{k\geq 1} \mid n_k\in\mathbb{N}, n_k=0~\text{for all but finitely many }k\}$ is countable.
     \end{enumerate}
+    \tcblower
+    \begin{problem}{(i)}
+      Let $f: \mathbb{N}^k \rightarrow \mathbb{N}$ be defined as follows, where $p_n$ denotes the $n$th prime number in the sequence $\{2,3,5,\dots\}$
+      \[
+        f((a_1,a_2,\dots,a_k)) = p_1^{a_1}\cdot p_2^{a_2}\cdots p_k^{a_k}
+      \] 
+      By the fundamental theorem of arithmetic, every natural number is equal to a unique product of powers of prime numbers, so $f: \mathbb{N}^k \rightarrow \mathbb{N}$ is an injection, meaning $\mathbb{N}^k$ is countable
+    \end{problem}
+    \begin{problem}{(ii)}
+      Suppose toward contradiction that the set of all sequences of natural numbers is countable: $f:A_n \rightarrow \mathbb{N}$ is surjective.
+      \begin{align*}
+        A_1 &= \{a_{11},a_{12},a_{13},\dots\}\\
+        A_2 &= \{a_{21},a_{22},a_{23},\dots\}\\
+            &\vdots
+      \end{align*}
+      Create a new sequence $N$ defined as follows:
+      \begin{align*}
+        n_{k} &= a_{kk} + 1
+      \end{align*}
+      Since $f$ is surjective, $\exists A_m = \{a_{m1},a_{m2},\dots,a_{mm},\dots\} = \{n_{1},n_{2},\dots,n_{m}\}$. However, since by definition, $n_m \neq a_{mm}$, $f$ must not be surjective. Thus, $\mathbb{N}^{\infty}$ is not countable.
+    \end{problem}
+    \begin{problem}{(iii)}
+      Let $f: c_c(\mathbb{N}) \rightarrow \mathbb{N}$ be defined as follows, where $p_n$ denotes the $n$th prime number:
+      \[
+        f(\{n_1,n_2,\dots,n_k\}) = p_1^{n_1}\cdot p_2^{n_2}\cdots p_{k}^{n_k}
+      \] 
+      Since every natural number is represented uniquely by a product of powers of primes by the fundamental theorem of arithmetic, $f$ is injective, meaning $c_c(\mathbb{N})$ is countable.
+    \end{problem}
   \end{problem}
   \begin{problem}{Problem 8}
     Let $f:\mathbb{R} \rightarrow \mathbb{R}$ be a function that sends rational numbers to irrational numbers and irrational numbers to rational numbers. Prove that the range $\textrm{ran}(f)$ cannot contain any interval.
@@ -146,8 +183,21 @@
       \mathcal{P} := \left\{\sum_{k=0}^{n}a_kx^k \mid n\subseteq \mathbb{N}_0,a_k\in\mathbb{Q}\right\}
     \] 
     consisting of all polynomials with rational coefficients, is countable.
+    \tcblower
+    Let $q: \mathbb{Q} \rightarrow \mathbb{N}$ be the enumeration of the rationals, and let $p_n$ denote the $n$th element in the sequence of prime numbers, where $p_1 = 2, p_2 = 3$, etc.\\
+
+    Let $f: \mathcal{P} \rightarrow \mathbb{N}^k$ be defined as follows:
+
+    \[
+      f(a_0 + a_1x + a_2x^2 + \cdots + a_kx^k + \cdots) = (q(a_0),q(a_1),\dots,q(a_k),\dots)
+    \] 
+    Since $\mathbb{Q}$ is countable, $\forall a\in \mathbb{Q},~q(a)\in \mathbb{N}$, so the output of $f$ is a bijection to $\mathbb{N}^k$, meaning $\mathcal{P}$ is countable.
   \end{problem}
   \begin{problem}{Problem 10}
     A real number $t$ is called \textbf{algebraic} if there is a nonzero polynomial $p$ with rational coefficients such that $p(t) = 0$. If $t\in \mathbb{R}$ is not algebraic, then it is called \textbf{transcendental}. For example, $\sqrt{2}$ is algebraic, but $\pi$ is transcendental. Show that the set of algebraic numbers is countable, and conclude that there are uncountably many transcendental numbers.
+    \tcblower
+    Because $\mathcal{P}$ is countable, and there are $k$ roots in a $k$-degree polynomial, there are a countable number of polynomial roots, so the algebraic numbers are rational.\\
+
+    Since $\mathbb{R}$ is uncountable, $\mathbb{R}\setminus\mathbb{A}$ is uncountable as shown by a previous result.
   \end{problem}
 }\end{document}
