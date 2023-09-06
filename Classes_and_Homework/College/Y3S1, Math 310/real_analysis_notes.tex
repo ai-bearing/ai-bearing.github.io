@@ -15,7 +15,7 @@
 
 %symbols
 \usepackage{amsmath}
-\usepackage{amsfonts}
+\usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{hyperref}
 \usepackage{gensymb}
@@ -83,7 +83,7 @@
 \fancyhf{}
 \rhead{Avinash Iyer}
 \lhead{Math 310: Class Notes}
-\begin{document}{
+\begin{document}
   \begin{problem}{Introduction: naive set theory}
     \begin{align*}
       \mathbb{N} &= \{1,2,3,\dots,\}\\
@@ -291,4 +291,118 @@
       This implies that $\sigma_m(m) = \tau(m)$, which is definitionally not true, which is our contradiction.
     \end{problem}
   \end{problem}
-}\end{document}
+  \begin{problem}{Comparing Cardinalities}
+    \begin{itemize}
+      \item $\textrm{card}(A) \leq \text{card}(B) \Rightarrow \exists f: A\xhookrightarrow{} B$ 
+      \item $\text{card}(A) < \text{card}(B) \Rightarrow \text{card}(A) \leq \text{card}(B), \text{card}(A) \neq \textrm{card}(B)$
+    \end{itemize}
+    For example, $X\subseteq Y \Rightarrow \text{card}(X) \leq \text{card}(Y)$ because $i: X\xhookrightarrow{} Y, i(x) = x$ is an injection.\\
+
+    \begin{problem}{Transitive Property}
+      If $\text{card}(A) \leq \text{card}(B) \leq \text{card}(C)$, then $\text{card}(A) \leq \text{card}(C)$.
+      \tcblower
+      The composition of two injective functions is injective.
+    \end{problem}
+    \begin{problem}{Canonical Set Comparisons}
+      Via the inclusion map, we know the following:
+      \[
+        \text{card}(\mathbb{N}) \leq \text{card}(\mathbb{Z}) \leq \text{card}(\mathbb{Q}) \leq \text{card}(\mathbb{R})
+      \] 
+    \end{problem}
+    \begin{problem}{Cantor-Schröder-Bernstein}
+      For any set $A$, $\text{card}(A) < \text{card}(\mathcal{P}(A))$.
+      \tcblower
+      Let us construct a function: $f: A \rightarrow \mathcal{P}(A)$, where $a \mapsto \{a\}$.\\
+
+      $f$ is injective, as if $\{a\} = \{a'\}$, $a = a'$. So, $\text{card}(A) \leq \text{card}(\mathcal{P}(A))$.
+      \begin{description}
+        \item[Claim] $\not\exists g: A\rightarrow \mathcal{P}(A)$, $g$ is surjective.
+      \end{description}
+      Suppose toward contradiction that such a $g$ exists. Consider $S: \{a\in A \mid a\notin g(a)\}$.\\
+
+      Since $g$ is onto, $\exists a_0\in A$ with $g(a_0) = S$. $a_0 \in g(a_0) \Leftrightarrow a_0\in S \Leftrightarrow a_0\notin g(a_0)$. $\bot$
+    \end{problem}
+    \begin{problem}{Equivalent Propositions}
+      \begin{enumerate}[(i)]
+        \item $\text{card}(A) \leq \text{card}(B)$
+        \item $\exists f: A\xhookrightarrow{} B$
+        \item $\exists g: B\rightarrow A$, $g$ surjection.
+      \end{enumerate}
+      \tcblower
+      By definition, (i) $\Leftrightarrow$ (ii).
+      \begin{description}[font=\normalfont]
+        \item[(ii) $\Rightarrow$ (iii)] If $f: A\xhookrightarrow{} B$, $f$ is left-invertible, and thus $\exists g: B\rightarrow A$ with $g\circ f = id_A$. So, $g$ is right-invertible, so $g$ is surjective.
+        \item[(iii) $\Rightarrow$ (ii)] If $g: B \rightarrow A$ is surjective, then $g$ is right-invertible, so $\exists f: A\rightarrow B$ such that $g\circ f = id_B$. So, $f$ is left-invertible, so $f$ is injective.
+      \end{description}
+    \end{problem}
+    \begin{problem}{Corollary}
+      If $f: A\rightarrow B$ is any map, $\text{card}(f(A)) \leq \text{card}(A)$.
+      \tcblower
+      Consider $g: A\rightarrow f(A)$, where $g(a) = f(a)$. So, $g$ is onto, so $\exists$ an injection $f(A) \xhookrightarrow{} A$.
+    \end{problem}
+    \begin{problem}{More Cardinality of Canonical Sets}
+      Consider the map $q: \mathbb{Z} \times \mathbb{N} \rightarrow \mathbb{Q}, q(m,n) = \frac{m}{n}$. This map is \textit{not} injective, as $2/4 = 1/2$. However, it is surjective, meaning $\text{card}(\mathbb{Q}) \leq \text{card}(\mathbb{Z} \times \mathbb{N})$.\\
+
+      Earlier, we showed that $\exists h: \mathbb{Z} \leftrightarrow \mathbb{N}$. Consider $H: \mathbb{Z} \times \mathbb{N} \rightarrow \mathbb{N} \times\mathbb{N}$, defined as $H(m,n) = (h(m),n)$. 
+      \begin{description}
+        \item[Claim] $H$ is a bijection.
+        \item[Proof of Injection] If $H(m_1,n_1) = H(m_2,n_2)$, then $h(m_1) = h(m_2)$, and $n_1 = n_2$, and since $h$ is bijective, $m_1 = m_2$, and $n_1 = n_2$, so $(m_1,n_1) = (m_2,n_2)$.
+        \item[Proof of Surjection] Let $(k,\ell)\in \mathbb{N} \times \mathbb{N}$. We want to find $(m,n)\in \mathbb{Z}\times \mathbb{N}$ such that $H(m,n) = (k,\ell)$. Set $n = \ell$, and since $h$ is surjective, set $m\in \mathbb{Z}$ such that $h(m) = k$.
+      \end{description}
+      Therefore $\text{card}(\mathbb{Z} \times \mathbb{N}) = \text{card}(\mathbb{N}\times \mathbb{N})$.\\
+
+      We claim that $\text{card}(\mathbb{N} \times \mathbb{N}) = \text{card}(\mathbb{N})$. First, we need to find $\varphi: \mathbb{N}\times \mathbb{N} \xhookrightarrow{} \mathbb{N}$. Consider $\varphi(m,n) = 2^m\cdot 3^n$. By the Fundamental Theorem of Arithmetic, $\varphi$ is injective.\\
+
+      Bringing together our inequalities, we have:
+      \begin{align*}
+        \text{card}(\mathbb{N}) &\leq \text{card}(\mathbb{Q})\\
+                                &\leq \text{card}(\mathbb{Z}\times \mathbb{N})\\
+                                &=\text{card}(\mathbb{N}\times \mathbb{N})\\
+                                &\leq \text{card}(\mathbb{N})
+      \end{align*}
+    \end{problem}
+    \begin{problem}{Cardinality Rules}
+      \begin{enumerate}[(i)]
+        \item $\text{card}(A) \leq \text{card}(A)$ (Reflexivity)
+        \item $\text{card}(A)\leq \text{card}(B) \leq \text{card}(C)\Rightarrow \text{card}(A) \leq \text{card}(C)$ (Transitivity)
+        \item $\text{card}(A) \leq \text{card}(B)$ and $\text{card}(B) \leq \text{card}(A) \Rightarrow \text{card}(A) = \text{card}(B)$ (Cantor-Schröder-Bernstein)
+        \item Either $\text{card}(A) \leq \text{card}(B)$ or $\text{card}(B) \leq \text{card}(A)$.
+      \end{enumerate}
+      \tcblower
+      \begin{description}
+        \item[Proof of (iii)] We have injections $f: A\xhookrightarrow{}B$ and $g:B\xhookrightarrow{} A$.\\
+
+          Let $A_0 \setminus \textrm{ran}(g)$. Let $A_1 = g\circ f(A_0)$. Note that $A_0 \cap A_1 = \emptyset$. Let $A_2 = g\circ f(A_1)$. Note that $A_0\cap A_2 =\emptyset$.
+          \begin{description}
+            \item[Claim] We claim $A_1 \cap A_2 = \emptyset$. If $\exists z\in A_1\cap A_2$, then $z = g(f(x_0))$ for some $x_0 \in A_0$, and $z = g(f(x_1))$ where $x_1\in A_1$. However, $g$ and $f$ are injective, so $g\circ f$ is injective, so $x_0 = x_1$, but $A_0\cap A_1$. $\bot$
+          \end{description}
+          We let $A_n = g\circ f(A_{n-1})$ for arbitrary $n$, and $A_{\infty} = \bigcup_{n\geq 0} A_n$. If $a\notin A_{\infty}$, then $a\notin A_0$, so $a\in \textrm{ran}(g)$. Define $h: A\rightarrow B$.
+          \[
+            h(x) = \begin{cases}
+              f(x) & x\in A_{\infty}\\
+              y_x & x\notin A_{\infty}
+            \end{cases}
+          \] 
+          Where $y_x$ is the unique element in $B$ with $g(y_x) = x$.
+          \begin{description}
+            \item[Claim] We claim $h$ is the desired bijection.
+            \item[Proof of Injection] Suppose $h(x_1) = h(x_2)$.\\
+
+              If $x_1,x_2\in A_{\infty}$, then by the definition of $H$, $f(x_1) = f(x_2)$, $f$ is injective, so $x_1 = x_2$.\\
+
+              Suppose $x_1,x_2\notin A_{\infty}$. Then, by definition, $h(x_1) = y_{x_1}$ and $h(x_2) = y_{x_2}$, then $g(y_{x_1}) = g(y_{x_2})$, so $x_1 = x_2$.\\
+
+              WLOG, suppose $x_1\in A_{\infty}$, and $x_2 \notin A_{\infty}$. $h(x_1) = f(x_1) = h(x_2) = y_{x_2}$. Then, $g(f(x_1))\in A_{\infty} = g(y(x_2)) = x_2\notin A_{\infty}$. This case is not possible.\\
+
+              Thus, $h$ is injective.
+            \item[Proof of Surjection] Let $y\in B$. Set $x := g(y)$.\\
+
+              Suppose $x\notin A_{\infty}$. Then, $h(x) = y_x$, where $y_x$ is the unique element in $B$ with $g(y_x)=x=g(y)$, so $y = y_x$, so $h(x) = y$.\\
+
+              If $x\in A_{\infty}$. We know that $x\notin A_0$, as $x\in \textrm{ran}(g)$. So, $x = g(f(z))$ for some $z\in A_{m-1}$. Since $g$ is injective, $y = f(z),~z\in A_{\infty}$. Thus, $h(z) = f(z) = y$.
+          \end{description}
+      \end{description}
+    \end{problem}
+      Therefore, we have $\text{card}(\mathbb{Q}) = \text{card}(\mathbb{N})$.
+  \end{problem}
+\end{document}
