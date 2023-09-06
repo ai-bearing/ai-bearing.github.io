@@ -1,4 +1,4 @@
-\documentclass[8pt]{extarticle}
+\documentclass[10pt]{extarticle}
 \title{}
 \author{Avinash Iyer}
 \date{}
@@ -6,7 +6,7 @@
 
 %font setup
 %
-\usepackage{newpxtext,eulerpx}
+%\usepackage{newpxtext,eulerpx}
 
 %paper setup
 \usepackage{geometry}
@@ -15,6 +15,7 @@
 
 %symbols
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{mathtools}
 \usepackage{hyperref}
 \usepackage{gensymb}
@@ -71,7 +72,7 @@
 	tabsize=3
 }
 % text + color boxes
-\usepackage{tcolorbox}
+\usepackage[most]{tcolorbox}
 \tcbuselibrary{breakable}
 \newtcolorbox{problem}[1]{colback = white, title = {#1}, breakable}
 \newtcolorbox{solution}{colback = white, colframe = black!75!white, title = Solution, breakable}
@@ -165,6 +166,66 @@
           Given a complete graph on $n$ vertices, $K_n$, partition its edges into as few complete graphs as possible.
       \end{quote}
       The answer for this is $n-1$, with a proof in linear algebra. However, there is no graph theory-specific proof for this question.
+    \end{problem}
+  \end{problem}
+  \begin{problem}{Light Cycles}
+    \begin{tcbraster}[raster columns = 1,colframe = black!75!white,colback=white]
+      \tcbincludepdf{images/road_problem.pdf}
+    \end{tcbraster}
+  \end{problem}
+  \begin{problem}{Diestel book: Overview}
+    A \textbf{graph} is an ordered pair $G = (V,E)$ of sets such that $\forall e\in E,~e=\{v,w\}$ for some $v,w\in V$.
+    \begin{problem}{Paths and Cycles}
+      A graph $H$ is a \textbf{subgraph} of a graph $G$ if $V(H) \subseteq V(G)$ and $E(H) \subseteq E(G)$. \\
+
+      A \textbf{path} is a subgraph $P$ of $G$ such that $V(P) = \{v_0,\dots,v_k\}$ and $E(P) = \{v_0v_1,\dots,v_{k-1}v_k\}$. We say the \textbf{length} of $P$ is equal to $|E(P)|$.\\
+
+      If $v_kv_0\in E(G)$, then $C = P + v_kv_0$ is a \textbf{cycle}. $V(C) = V(P)$ and $E(C) = E(P) \cup \{v_0v_k\}$.\\
+
+      \textbf{Abbreviations}: $P = v_0\dots v_k$, and $C = v_0\dots v_kv_0$
+    \end{problem}
+    \begin{problem}{Degree, Order, and Size}
+      Given $v\in V(G)$, the \textbf{degree} of $v$ $d(v) = |\{vw \mid v\in E(G)\}|$. The edge $vw$ is \textbf{incident} to $v$.\\
+
+      The \textbf{order} of $G$ is $|V(G)|$, or $|G|$, and the \textbf{size} of $G$ is $|E(G)|$, or $||G||$.
+    \end{problem}
+    \begin{problem}{Hamiltonian Cycles}
+      A cycle $C\subseteq G$ is \textbf{Hamiltonian} if $V(C) = V(G)$. A graph is Hamiltonian if it contains a Hamiltonian cycle.
+      \begin{center}
+        \includegraphics[width=0.75\textwidth]{hamiltonian}
+      \end{center}
+      For example, $G_1$ has a Hamiltonian cycle $\{1,2,4,5,6,3,1\}$, while $G_2$ does not have one as the stray vertex cannot be reached without going over an edge.\\
+
+      For example, the Knight's Tour (where you visit every square on a chess board) involves finding a particular kind of Hamiltonian cycle. 
+    \end{problem}
+    \begin{problem}{Dirac's Theorem}
+      If $G$ is a graph of order $\geq 3$ such that every vertex has degree $\geq \left\lceil\frac{|G|}{2}\right\rceil$, then $G$ is Hamiltonian.
+      \tcblower
+      Let $P$ be a path in $G$ with maximum length (i.e., \textit{a} longest path).
+      \textbf{Outline:}
+      \begin{description}
+        \item[Step 1] Show that $|V(P)| > \frac{|G|}{2}$
+        \item[Step 2] Show $\exists C\subseteq G$ such that $V(C) = V(P)$.
+        \item[Step 3] Show that $C$ is a Hamiltonian cycle.
+      \end{description}
+      \begin{description}
+        \item[Step 1] Left as an exercise for the reader.
+        \item[Step 2] Let $P=v_0\dots v_k$. It suffices to show that $\exists j\in \{2,\dots,k\}$ such that $v_1\leftrightarrow v_j$ and $v_{j-1} \leftrightarrow v_k$. Since $P$ has maximum length, $v_1$ has no neighbor outside $P$. Similarly, $v_k$. However, every vertex has degree at least $2$, meaning $v_1$ must have a neighbor in $P$. Suppose toward contradiction that $\not\exists j-1$ such that $v_{j-1} \leftrightarrow v_k$. Then, $N = \{v_{2-1},\dots,v_{k-1-1}\}\geq \frac{n}{2}$ are not neighbors of $v_k$. This means $k\leq n$, so $v_k$ has $k-1-N$ neighbors, implying $d(v_k) < \frac{n}{2}$, which is our contradiction.
+      \end{description}
+    \end{problem}
+    \begin{problem}{Ore's Theorem}
+      If $|G| \geq 3$ and $\forall v,w\in V(G)$ where $v \not\leftrightarrow w$ and $d(v) + d(w) \geq n$, then $G$ is Hamiltonian.
+      \tcblower
+      We can use Ore's Theorem to prove Dirac's Theorem.
+    \end{problem}
+    \begin{problem}{Vertex Deletion}
+      Let $v\in G$. Then, $G-v$ is the subgraph of $G$ with vertices $V(G)\setminus \{v\}$, and edges $E(G)\setminus \{vw\mid vw\in E(G)\}$.
+    \end{problem}
+    \begin{problem}{Theorem 6.4}
+      Let $v_1,\dots,v_k\in V(G)$. Then, $G-v_1-v_2-\cdots-v_k$ has at most $k$ components.
+      \begin{problem}{Connectedness}
+        A graph $G$ is \textbf{connected} if $\forall v,w\in V(G)$, $\exists P: v\dots w$.
+      \end{problem}
     \end{problem}
   \end{problem}
 }\end{document}
