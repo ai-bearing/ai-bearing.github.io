@@ -87,6 +87,7 @@
 \newcommand{\ran}{\text{ran}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
 \newcommand{\R}{\mathbb{R}}
 \begin{document}
   \begin{problem}{Introduction: naive set theory}
@@ -409,5 +410,83 @@
       \end{description}
     \end{problem}
       Therefore, we have $\text{card}(\mathbb{Q}) = \text{card}(\mathbb{N})$.
+  \end{problem}
+  \begin{problem}{Countability}
+    A set $X$ is \textit{countable} if $\exists f: x\hookrightarrow \N$ ($\card(X) \leq\card(\N)$). $\card(\N) = \aleph_0$. If $X$ is countable and infinite, $X$ is \textit{denumerable}.
+    \begin{problem}{Corollary to Cantor-Schröder-Bernstein}
+      If $X$ is denumerable, then $\card(X) = \aleph_0$.
+      \tcblower
+      Since $X$ is infinite, $\exists f: \N\hookrightarrow X$. Since $X$ is countable, $\exists g: X\hookrightarrow \N$. By Cantor-Schröder-Bernstein, $\card(X) = \card(\N)$, so $\card(X) = \aleph_0$.
+    \end{problem}
+    Thus, we have: 
+    \[
+      \card(\N) = \card(\Z) = \card(\Q)
+    \] 
+    (as shown earlier)
+    \begin{problem}{Countability under Union}
+      The countable union of countable sets is countable. If $I$ is a countable indexing set and for each $i\in I$, $A_i$ is countable, then $\bigcup\limits_{i\in I} A_i$ is countable.
+      \tcblower
+      Since each $A_i$ is countable, $\exists \pi_i: \N \twoheadrightarrow A_i$. Consider the function
+      \[
+        \pi: I\times\N \rightarrow \bigcup_{i\in I}A_i
+      \] 
+      defined as $\pi(i,j) = \pi_i(j)$.
+      \begin{description}
+        \item[Claim 1] $\pi$ is a surjection.
+        \item[Proof 1] Let $x\in \bigcup_{i\in I}A_i$. $\exists i_0$ such that $x\in A_{i_0}$. Since $\pi_{i_0}$ is surjective, $\exists k\in \N$ with $\pi_{i_0}(k) = x$. $\pi_{i_0}(k) = \pi(i_0,k)$. Therefore, $\pi$ is surjective.
+        \item[Claim 2] $I\times\N$ is countable.
+        \item[Proof 2] We know $\exists f: I\hookrightarrow\N$ since $I$ is countable. Thus, $g:I\times\N\hookrightarrow\N\times\N$, $(i,n)\mapsto (f(i),n)$. Recall, $\N\times\N\hookrightarrow \N$, $(m,n)\mapsto 2^m\cdot3^n$ is an injection. By composing these maps, $I\times\N\hookrightarrow\N$. Since $\pi$ is onto, and $I\times\N$ is countable, $\bigcup_{i\in I} A_i$ is countable.
+      \end{description}
+    \end{problem}
+  \end{problem}
+  \begin{problem}{Continuum Hypothesis}
+    We saw that $\card(\N) < \card(\mathcal{P}(\N)) = \card(2^{\N})$, where $2^\N\{f\mid f:\N\rightarrow\{0,1\}\}$.
+    \begin{description}
+      \item[Theorem] $\card(\R) = \card(I)=\card(2^{\N})$, where $I$ is any non-degenerate interval.
+    \end{description}
+    \tcblower
+    \begin{description}
+      \item[Lemma 1] $\card([0,1]) \leq \card(2^{\N})$.
+      \item[Proof 1] Every $t\in [0,1]$ has a binary expansion.
+        \[
+          t = \sum_{k = 1}^{\infty} \frac{\sigma_k}{2^k}
+        \] 
+        where $\sigma_k \in \{0,1\}$. \\
+
+        Consider $2^{\N} \xrightarrow{\varphi} [0,1]$, defined as $\displaystyle \phi(f) = \sum_{k=1}^{\infty}\frac{f(k)}{2^k}$. Set $f: \N \rightarrow \{0,1\}$, $f(k) = \sigma_k$.\\
+
+          Therefore, $\varphi$ is surjective, so $\exists \{0,1\}\hookrightarrow 2^{\N}$, so $\card([0,1]) \leq 2^{\N}$
+        \item[Lemma 2] $\card([0,1]) = \card(\R)$.
+        \item[Proof 2] We have $[0,1]\xhookrightarrow{i} \R$ via inclusion, so $\card([0,1])\leq \card(\R)$.\\
+
+          Also, $\card(\R) = \card((0,1)) \leq \card([0,1])$, so by Cantor-Schröder-Bernstein, $\card(\R) = \card([0,1])$.
+        \item[Lemma 3] Any two non-degenerate intervals $I$ and $J$ have the same cardinality. 
+        \item[Proof 3] We can create injections $I\hookrightarrow J$ and vice-versa.
+        \item[Lemma 4] $\card(2^{\N}) \leq \card([0,1])$.
+        \item[Proof 4] $\psi: 2^{\N} \rightarrow [0,1]$. Where $\psi(f) = \sum_{k = 1}^{\infty}\frac{f(k)}{3^k}$.\\
+
+          $\psi$ is well-defined:
+          \[
+            0\leq \sum_{k=1}^{\infty}\frac{f(k)}{3^k} \leq \sum_{k=1}^{\infty}\frac{1}{3^k} \leq \frac{1}{2} \leq 1
+          \] 
+          We claim $\psi$ is injective. Suppose $f\neq g$ in $2^{\N}$. Let $k_0 = \min\{k\mid f(k) \neq g(k)\}$. WLOG, $f(k_0) = 0, g(k_0) = 1$. Let $t_f = \sum_{k>k_0}^{\infty}\frac{f(k)}{3^k}$, $t_g = \sum_{k>k_0}^{\infty}\frac{g(k)}{3^k}$.\\
+
+          Therefore, $\psi(f) = \sum_{k = 1}^{k_0-1}\frac{f(k)}{3^k} + 0 + t_f$, and $\psi(g) = \sum_{k=1}^{k_0-1} + \frac{1}{3^{k_0}} + t_g$.\\
+
+          Suppose toward contradiction $\psi(f) = \psi(g)$. Then, $t_f = \frac{1}{3^{k_0}} + t_g$, or $t_f - t_g = \frac{1}{3^{k_0}}$.
+          \begin{align*}
+            |t_f-t_g| &= |\sum_{k>k_0}\frac{f(k)}{3^k} - \sum_{k>k_0}\frac{g(k)}{3^k}|\\
+                      &\leq \sum_{k>k_0}\frac{|f(k)-g(k)|}{3^k}\\
+                      &\leq \sum_{k>k_0}\frac{1}{3^{k}}\\
+                      &= \frac{(1/3)^{k_0+1}}{1-(1/3)}\\
+                      &= \frac{1}{2}\cdot\frac{1}{3^{k_0}}
+          \end{align*}
+          $\bot$
+    \end{description}
+    We have thus shown:
+    \[
+      \card(\R) = \card([0,1]) = \card(2^{\N})
+    \] 
+    We know that \[\aleph_0 = \card(\N) = \card(\Q) = \card(\Z) < 2^{\aleph_0} = \card(2^{\N}) = \card(\R) = \card(I)\] However, the existence of an infinity with cardinality strictly greater than $\aleph_0$ and strictly less than $2^{\aleph_0}$ is an axiom (i.e., it can be an assumption or not).
   \end{problem}
 \end{document}
