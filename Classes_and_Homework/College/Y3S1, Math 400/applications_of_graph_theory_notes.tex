@@ -15,7 +15,7 @@
 
 %symbols
 \usepackage{amsmath}
-\usepackage{amsfonts}
+\usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{hyperref}
 \usepackage{gensymb}
@@ -209,12 +209,13 @@
         \item[Step 3] Show that $C$ is a Hamiltonian cycle.
       \end{description}
       \begin{description}
-        \item[Step 1] Left as an exercise for the reader.
-        \item[Step 2] Let $P=v_0\dots v_k$. It suffices to show that $\exists j\in \{2,\dots,k\}$ such that $v_1\leftrightarrow v_j$ and $v_{j-1} \leftrightarrow v_k$. Since $P$ has maximum length, $v_1$ has no neighbor outside $P$. Similarly, $v_k$. However, every vertex has degree at least $2$, meaning $v_1$ must have a neighbor in $P$. Suppose toward contradiction that $\not\exists j-1$ such that $v_{j-1} \leftrightarrow v_k$. Then, $N = \{v_{2-1},\dots,v_{k-1-1}\}\geq \frac{n}{2}$ are not neighbors of $v_k$. This means $k\leq n$, so $v_k$ has $k-1-N$ neighbors, implying $d(v_k) < \frac{n}{2}$, which is our contradiction.
+        \item[Step 1] Let $P = (v_1,v_2,\dots,v_k)$ be a path in $G$ with maximum length. Suppose toward contradiction that $|P| < n/2$, meaning $k< n/2$. Then, $\nexists v_i$ such that $v_i$ is connected to any of $v_1,\dots,v_k$, or else we would be able to extend $P$. Thus, $\forall v\in \{v_1,\dots,v_k\}$, $v$ is only adjacent to other members in $v_1,\dots,v_k$. However, this means that the maximum value $v$ can take is $k-1$, and since $k < n/2$, this means $k-1 < n/2$, or that $v$ would not satisfy one of the conditions of $G$. $\bot$
+        \item[Step 2] Let $P=v_0\dots v_k$. It suffices to show that $\exists j\in \{2,\dots,k\}$ such that $v_1\leftrightarrow v_j$ and $v_{j-1} \leftrightarrow v_k$. Since $P$ has maximum length, $v_1$ has no neighbor outside $P$ (or else $P$ could be extended). Similarly, $v_k$ has no neighbor outside $P$. However, every vertex has degree at least $2$, meaning $v_1$ must have a neighbor in $P$. Suppose toward contradiction that $\nexists j-1$ such that $v_{j-1} \leftrightarrow v_k$. Then, $N = \{v_{2-1},\dots,v_{k-1-1}\}\geq \frac{n}{2}$ are not neighbors of $v_k$. This means $k\leq n$, so $v_k$ has $k-1-N$ neighbors, implying $d(v_k) < \frac{n}{2}$, which is our contradiction.
+        \item[Step 3] Let $P$ is a path of maximum length in $G$, and $C$ be a cycle in $G$ such that $V(C) = V(P)$. Suppose toward contradiction that $|P| < n$. Then, $\exists v\in G$ such that $v\notin P$. Since $d(v) \geq \frac{n}{2}$, $v$ is adjacent to at least one vertex $w\in P$ (as there are not enough vertices outside $P$ for $v$ to be adjacent to). Let $C = (v_{i_1},\dots,v_{i_k},v_{i_1})$. WLOG, $v$ is adjacent to $v_{i_1}$. Then, $P' = v,v_{i_1},\dots,v_{i_k}$ is a path that is longer than $P$, which is a contradiction.
       \end{description}
     \end{problem}
     \begin{problem}{Ore's Theorem}
-      If $|G| \geq 3$ and $\forall v,w\in V(G)$ where $v \not\leftrightarrow w$ and $d(v) + d(w) \geq n$, then $G$ is Hamiltonian.
+      If $|G| \geq 3$ and $\forall v,w\in V(G)$ where $v \nleftrightarrow w$ and $d(v) + d(w) \geq n$, then $G$ is Hamiltonian.
       \tcblower
       We can use Ore's Theorem to prove Dirac's Theorem.
     \end{problem}
@@ -226,6 +227,37 @@
       \begin{problem}{Connectedness}
         A graph $G$ is \textbf{connected} if $\forall v,w\in V(G)$, $\exists P: v\dots w$.
       \end{problem}
+    \end{problem}
+  \end{problem}
+  \begin{problem}{Distinct Representatives}
+    Suppose we want to pick one student representative from every Oxy math class. No student should be chosen more than once. Say there are $n$ classes: $c_1,\dots,c_n$, where $c_i = \{s_1,\dots,s_{k_i}\}$, where $1\leq i \leq n$.\\
+
+    Obviously, there must be at least $n$ students in all classes combined: i.e.,
+    \begin{align*}
+      \left|\bigcup c_i\right| &\geq n
+    \end{align*}
+    However, this goes deeper:
+    \begin{align*}
+      |c_1 \cup c_2| &\geq 2\\
+      |c_3 \cup c_5 \cup c_6| &\geq 3\\
+                              &\vdots\\
+      |c_{i_1} \cup \cdots \cup c_{i_r}| &\geq r~\forall r\tag*{(*)}
+    \end{align*}
+    Obviously, condition (*) is necessary.\\
+
+    We want $c_i$ and $c_j$ to be distinct, (even when they are equal as sets).\\
+
+    Let $Z = (c_1,\dots,c_n)$ be a finite sequence. Then, $(c_{i_1},\dots,c_{i_k})$ is a subsequence of $Z$ if $i_1<\dots,i_k$.
+    \begin{problem}{Hall's Theorem}
+      Let $Z = (c_1,\dots,c_n)$ be a sequence of sets $c_i$. Suppose that for every subsequence $Y$ of $Z$ with $Y = (c_{i_1},\dots,c_{i_k})$ such that $|c_{i_1} \cup \cdots \cup c_{i_k}| \geq k$. Then, $\exists$ pairwise distinct $s_1,\dots,s_n$ with $s_i\in c_i$.
+      \begin{description}
+        \tiny
+        \item[Note] (*) is a sufficient condition
+      \end{description}
+    \end{problem}
+      Informally, we can restate the premise as follows: Let $G$ be a bipartite graph. One set of vertices $c_1,\dots,c_n$, is the classes, and the other set $s_1,\dots,s_m$ is the set of all students. Each vertex $c_i$ is connected by edges to its students.
+    \begin{problem}{Hall's Theorem (In Graphs)}
+      Let $G$ be a bipartite graph on vertices $C\sqcup S$, where $C = \{c_1,\dots,c_n\}$ and $S = \{s_1,\dots,s_m\}$. Then, $G$ has a matching (i.e., a set of pairwise disjoint edges) if and only if $\forall r~1\leq r\leq n$, any $r$ vertices in $C$ are connected to at least $r$ vertices in $S$.
     \end{problem}
   \end{problem}
 }\end{document}
