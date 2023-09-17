@@ -1,0 +1,139 @@
+\documentclass[8pt]{extarticle}
+\title{}
+\author{Avinash Iyer}
+\date{}
+\usepackage[shortlabels]{enumitem}
+
+%font setup
+%
+%\usepackage{newpxtext,eulerpx}
+
+%paper setup
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage{fancyhdr}
+
+%symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{gensymb}
+\usepackage{multirow,array}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+%chemistry stuff
+\usepackage[version=4]{mhchem}
+\usepackage{chemfig}
+
+%plotting
+\usepackage{pgfplots}
+\usepackage{tikz}
+\tikzset{middleweight/.style={pos = 0.5, fill=white}}
+\tikzset{weight/.style={pos = 0.5, fill = white}}
+\tikzset{lateweight/.style={pos = 0.75, fill = white}}
+\tikzset{earlyweight/.style={pos = 0.25, fill=white}}
+
+%\usepackage{natbib}
+
+%graphics stuff
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+%code stuff
+%when using minted, make sure to add the -shell-escape flag
+%you can use lstlisting if you don't want to use minted
+%\usepackage{minted}
+%\usemintedstyle{pastie}
+%\newminted[javacode]{java}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+%\newminted[cppcode]{cpp}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+
+%\usepackage{listings}
+%\usepackage{color}
+%\definecolor{dkgreen}{rgb}{0,0.6,0}
+%\definecolor{gray}{rgb}{0.5,0.5,0.5}
+%\definecolor{mauve}{rgb}{0.58,0,0.82}
+%
+%\lstset{frame=tb,
+%	language=Java,
+%	aboveskip=3mm,
+%	belowskip=3mm,
+%	showstringspaces=false,
+%	columns=flexible,
+%	basicstyle={\small\ttfamily},
+%	numbers=none,
+%	numberstyle=\tiny\color{gray},
+%	keywordstyle=\color{blue},
+%	commentstyle=\color{dkgreen},
+%	stringstyle=\color{mauve},
+%	breaklines=true,
+%	breakatwhitespace=true,
+%	tabsize=3
+%}
+% text + color boxes
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{breakable}
+\newtcolorbox{problem}[1]{colback = white, title = {#1}, breakable}
+\newtcolorbox{solution}{colback = white, colframe = black!75!white, title = Solution, breakable}
+%including PDFs
+%\usepackage{pdfpages}
+\setlength{\parindent}{0pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Math 400: Homework 3}
+\newcommand{\card}{\text{card}}
+\newcommand{\ran}{\text{ran}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\begin{document}
+  \begin{problem}{3}
+    In a collection $\{S_1,S_2,\dots,s_n\}$ of $n\geq 2$ nonempty sets, no two sets have the same number of elements. Show that this collection has a system of distinct representatives
+    \begin{enumerate}[(a)]
+      \item by using Hall's Theorem
+      \item without using Hall's Theorem
+    \end{enumerate}
+    \tcblower
+    \begin{problem}{(a)}
+      Since no two sets have the same number of elements, this must means that for $i\neq j$, $|S_i \cup S_j| > |S_i|$, assuming without loss of generality that $|S_i| > |S_j|$.\\
+
+      Therefore, it must be the case that
+      \[
+        \left|\bigcup_{i=1}^{k} S_i\right| > |S_k|
+      \]
+      Assuming without loss of generality that $S_k$ is the set of largest cardinality in the collection. Therefore, by Hall's Theorem, there must be a system of distinct representatives.
+    \end{problem}
+    \begin{problem}{(b)}
+      We can choose a system of distinct representatives by taking $s_1\in S_1$, $s_2 \in S_2-S_1$, $s_3\in S_3 - (S_2 \cup S_1)$, etc., assuming without loss of generality that $|S_1| < |S_2| < \cdots < |S_n|$. Since $s_i$ must exist for each $S_i$, and is unique to that particular $S_i$, the set $\{s_i\}$ must be a system of distinct representatives.
+    \end{problem}
+  \end{problem}
+  \begin{problem}{4}
+    Let $\{S_1,S_2,S_3,S_4,S_5\}$ be a collection of five nonempty finite sets. For each integer $1\leq k\leq 5$, there exists $k$ of these subsets whose union contains at least $k$ elements. Does this collection of sets have a system of distinct representatives?
+    \tcblower
+    Not necessarily --- the condition for Hall's Theorem is that \textit{every} set of subsets has a union that contains at least $k$ elements. There could be a set of $k$ subsets such that their union has fewer than $k$ elements.
+  \end{problem}
+  \begin{problem}{5}
+    A high school has openings for six teachers, with one teacher needed for each of these areas: mathematics ($M$), chemistry ($C$), physics ($P$), biology ($B$), psychology ($S$), and ecology ($E$). In order for a teacher to be hired in any particular area, they must have either majored or minored in that subject. There are six applicants for these positions, namely Mr. Arrowsmith (physics, chemistry), Mr. Beckman (biology, physics, psychology, ecology), Miss Chase (chemistry, mathematics, physics), Mrs. Deerfield (chemistry, biology, psychology, ecology), Mr. Evans (chemistry, mathematics), and Ms. Form (mathematics, physics). What is the largest number of applicants the school can hire?
+    \tcblower
+    The sets are constituted as follows:
+    \begin{itemize}
+      \item $M = \{c,e,f\}$
+      \item $C = \{a,c,d,e\}$
+      \item $P = \{a,b,c,f\}$
+      \item $B = \{b,d\}$
+      \item $S = \{b,d\}$
+      \item $E = \{b,d\}$
+    \end{itemize}
+    Since $B\cup S\cup E$ contains $2$ elements, we cannot find a full system of distinct representatives. However, we can find one for five subjects: $b\in B, d\in S,a\in P,c\in C,f\in M$.
+  \end{problem}
+  \begin{problem}{6}
+    Two young children have been given 100 cards. On the top half of each card is a circle and on the bottom half is a square. Each child has a box of ten crayons, each crayon a different color. One child colors the inside of all 100 circles, ten circles with each of ten colors. All 100 cards are mixed up and given to the other child, who then colors the inside of all 100 squares, ten squares with each color. Show that no matter how this is done, the 100 cards can be divided in to ten groups of ten cards each, where in each group the circles are colored differently and the squares are colored differently.
+    \tcblower
+    I don't know how to do this problem.
+  \end{problem}
+\end{document}
