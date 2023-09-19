@@ -260,4 +260,76 @@
       Let $G$ be a bipartite graph on vertices $C\sqcup S$, where $C = \{c_1,\dots,c_n\}$ and $S = \{s_1,\dots,s_m\}$. Then, $G$ has a matching (i.e., a set of pairwise disjoint edges) if and only if $\forall r~1\leq r\leq n$, any $r$ vertices in $C$ are connected to at least $r$ vertices in $S$.
     \end{problem}
   \end{problem}
+  \begin{problem}{Proof of Hall's Theorem}
+    \begin{description}
+      \item[Base Case:] The theorem holds for $n=1$. $S_1 \neq \emptyset$ by the theorem's hypothesis, as if $Y := (S_1)$, then $\left|\bigcup_{S\in Y}S\right| \geq 1$, so $|S_1| \geq 1$.
+      \item[Induction Hypothesis] Assume the theorem holds for $n-1$ and every $m < n-1$. We will show the theorem holds for $n$
+      \item[Proof]\hfill
+        \begin{description}[font=\normalfont\scshape]
+          \item[Case 1:] Assume every proper subsequence $Y$ of $Z$ is loose. Let $x_1 \in S_1$ ($S_1\neq \emptyset$ as proved in the base case). Let $S_i' = S_i \setminus \{x_1\}$, where $2\leq i \leq n$. Let $Z' = (S_2',\dots,S_n')$.\\
+
+            Let $Y'$ be a subsequence of $Z'$. We want to show that
+            \[
+              \left|\bigcup+{S_i'\in Y'} S_i' \right| \geq |Y'|
+            \] 
+            We know that $Y$ consists of all $S_i$ such that $S_i'\in Y'$. Since $Y$ is loose (as $S_1\notin Y$), and $\left|\bigcup_{S_i\in Y}S_i\right| \geq |Y|$.
+            \begin{align*}
+              \left|\bigcup_{S_i'\in Y'}S_i'\right| &\geq \left|\bigcup_{S_i\in Y}S_i\right|-1\\
+              &> |Y| - 1\\
+              &\geq |Y|\\
+              &= |Y'|
+            \end{align*}
+          \item[Case 2:] Suppose $\exists$ a tight proper subsequence of $Z$, $Y$. Without loss of generality, $Y = (S_1,\dots,S_m)$, where $1\leq m < n$. Since $Y$ satisfies the theorem hypothesis, and $m < n$, so the induction hypothesis must hold.\\
+
+            For $m+1 \leq k \leq n$, let $S_k' = S_k \setminus \{x_1,\dots,x_m\}$. Let $Z' = (S_{m+1}',\dots,S_n')$. Let $Y'$ be any subsequence of $Z'$. We want to show that $\left|\bigcup_{S_i'\in Y'} S_i'\right| \geq |Y'|$.\\
+
+            We know that
+            \begin{align*}
+              \shortintertext{Let $W = \left(S_1,\dots,S_m,\underbrace{S_i}_{S_i'\in Y'}\right)$}\\
+              \left|\bigcup_{S_i\in W}S_i\right| &\geq |W| = |Y'| + m\\
+              \left|\bigcup_{S_i'\in Y'}S_i'\right| &= \left|\bigcup_{S_i' \in Y'} S_i \setminus \{x_1,\dots,x_m\}\right|\\
+                                                    &= \left|\bigcup_{S_i' \in Y'} S_i\right| - m
+            \end{align*}
+        \end{description}
+    \end{description}
+  \end{problem}
+  \begin{problem}{$k$-factorable Graphs}
+    Let $H$ be a subgraph of $G$. Let $k\in\mathbb{Z}^+$. $H$ is a $k$-factor of $G$ if
+    \begin{enumerate}[(i)]
+      \item $H$ is $k$-regular (i.e., every vertex of $H$ is of degree $k$)
+      \item $V(H) = V(G)$ ($H$ is a spanning subgraph)
+    \end{enumerate}
+    $k$-factors are not necessarily connected subgraphs.\\
+
+    A graph $G$ is $k$-factorable if its edges can be partitioned $k$-factors of $G$. If $G$ has $k$-factors $H_1,\dots,H_m$ such that $\{E(H_1),\dots,E(H_m)\}$ is a partition of $E(G)$.\\
+
+    For example, $K_4$ is $1$-factorable.
+    \begin{center}
+      \begin{tikzpicture}
+        \filldraw (0,0) circle (2pt)
+              (1,0) circle (2pt)
+              (0,1) circle (2pt)
+              (1,1) circle (2pt);
+        \draw (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+        \draw (0,0) -- (1,1);
+        \draw (1,0) -- (0,1);
+      \end{tikzpicture}
+    \end{center}
+    \begin{problem}{$1$-factorability of $K_n$}
+      $K_n$ is $1$-factorable if and only if $n$ is even.
+      \tcblower
+      \begin{description}
+        \item[$(\Rightarrow)$] The proof is trivial.
+        \item[$(\Leftarrow)$] Number the vertices of $K_n$. Redraw the graph such that vertex $1$ is in the center of a $n-1$-gon. Connect vertex $1$ to vertex $2$, and draw all the edges that are perpendicular to this edge. Let this $1$-factor be denoted $H_1$.\\
+
+          Connect vertex $1$ to vertex $3$, and draw the edges perpendicular to that edge. This $1$-factor is denoted $H_2$.\\
+
+          Continue until we finish connecting vertex $1$ to vertex $10$, and $H_1,\dots,H_{10}$ must partition the edges of $K_n$.
+      \end{description}
+    \end{problem}
+    \begin{problem}{$2$-factorability of Graphs}
+      A graph $G$ is $2$-factorable if and only if $G$ $k$-regular for some even integer $k$.
+    \end{problem}
+    An edge $vw$ of $G$ is a \textit{bridge} if $v$ and $w$ are in different components of $G-vw$.
+  \end{problem}
 }\end{document}
