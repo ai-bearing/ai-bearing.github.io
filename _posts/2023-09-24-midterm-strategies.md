@@ -15,6 +15,6 @@ Midterms are coming up! My first one is on Thursday, September 28, in Game Theor
 
 ## Proving a Strategy is a (Pure Strategy) Nash Equilibrium
 
-**The** formula for if a strategy profile \(s^*\) is a Nash equilibrium is $$v_{i}(s_{i}^*,s_{-i}^*) \geq v_{i}(s_{i}',s_{-i}^*)$$ for all \(s_i' \neq s_{i}^*\). A Nash equilibrium will always survive IESDS, but the strategies that survive IESDS are not necessarily Nash equilibria.
+**The** formula for if a strategy profile \(s^*\) is a Nash equilibrium is $$v_{i}(s_{i}^*,s_{-i}^*) \geq v_{i}(s_{i}',s_{-i}^*)$$ for all $$s_i' \neq s_{i}^*$$. A Nash equilibrium will always survive IESDS, but the strategies that survive IESDS are not necessarily Nash equilibria.
 
 In Nash equilibrium, no player is made better off (i.e., they stay at the same level or worse) when they deviate.
