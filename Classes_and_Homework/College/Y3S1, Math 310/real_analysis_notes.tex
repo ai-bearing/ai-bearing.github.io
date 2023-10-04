@@ -1,4 +1,4 @@
-\documentclass[8pt]{extarticle}
+\documentclass[10pt]{extarticle}
 \title{}
 \author{Avinash Iyer}
 \date{}
@@ -84,7 +84,7 @@
 \rhead{Avinash Iyer}
 \lhead{Math 310: Class Notes}
 \newcommand{\card}{\text{card}}
-\newcommand{\ran}{\text{ran}}
+\newcommand{\ran}{\text{Ran}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\Z}{\mathbb{Z}}
@@ -104,7 +104,7 @@
 
     A relation $f\subseteq X\times Y$ is a function from $X$ to $Y$ such that $\forall x\in X$, $\exists!y\in Y$ such that $(x,y) \in f$. We write $f(x) = y$, and denote $f$ as $f:X\rightarrow Y$.\\
 
-    $X$ is the \textbf{domain} of $f$ and $Y$ is the \textbf{codomain}. The range $\textrm{ran}(f) = \{f(x)\mid x\in X\}\subseteq Y$. \\
+    $X$ is the \textbf{domain} of $f$ and $Y$ is the \textbf{codomain}. The range $\textrm{Ran}(f) = \{f(x)\mid x\in X\}\subseteq Y$. \\
 
     The graph of a function $\textrm{Graph}(f) = \{(x,f(x))\mid x\in X\} \subseteq X\times Y$.
     \begin{problem}{Examples}
@@ -1489,14 +1489,211 @@
       \end{align*}
     \end{problem}
   \end{problem}
-  \begin{problem}{Convergent Sequences}
-    A real sequence $(x_n)_n$ converges to a number $x$ if 
+  \begin{problem}{Monotonicity}
+    A sequence $(x_n)_n$ is \textbf{increasing} if
     \begin{align*}
-      \left(\forall \varepsilon > 0\right)\left(\exists N_{\varepsilon}\in\N\right) \ni |x_n-x| < \varepsilon
+      x_1 \leq x_2 \leq \cdots~\forall n
     \end{align*}
-    A sequence $(x_n)_n$ in a metric space $(X,d)$ converges to a point $x$ if
+    and is \textbf{decreasing} if
     \begin{align*}
-      \left(\forall \varepsilon > 0\right)\left(\exists N_{\varepsilon}\in\N\right) \ni d(x_n,x) < \varepsilon
+      x_1 \geq x_2 \geq \cdots~\forall n
+    \end{align*}
+    The sequence is \textit{eventually} increasing if $\exists m\in \N \ni x_n \leq x_{n+1}$ for $n > m$.\\
+
+    Similarly, the sequence is eventually decreasing if $\exists m\in\N \ni x_n \geq x_{n+1}$ for $n > m$.\\
+
+    A sequence that is increasing or decreasing is \textbf{monotone} (or eventually monotone).\\
+
+    \begin{problem}{Example}
+      The sequence
+      \begin{align*}
+        a_1 &= 1\\
+        a_{n+1} &= \frac{1}{2}a_n + 2
+      \end{align*}
+      is increasing and bounded above.
+      \tcblower
+      We will prove the first statement via induction:
+      \begin{description}
+        \item[Base:] $a_1 = 1$, $a_2 = \frac{1}{2} + 2 = \frac{5}{2} \geq 1$
+        \item[Inductive Hypothesis] $a_n \leq a_{n+1} \Rightarrow a_{n+1} \leq a_{n+1}$
+        \item[Proof:]
+          \begin{align*}
+            a_{n} &\leq a_{n+1}\\
+            \frac{1}{2}a_n &\leq \frac{1}{2}a_{n+1}\\
+            \frac{1}{2}a_n + 2 &\leq \frac{1}{2}a_{n+1} + 2\\
+            a_{n+1} &\leq a_{n+2}
+          \end{align*}
+      \end{description}
+      To prove the sequence is bounded above, we do the following:
+      \begin{align*}
+        a_1 = 1 &\leq 4\\
+        \frac{1}{2}a_1 &\leq 2\\
+        \frac{1}{2}a_1 + 2 &\leq 2\\
+        a_{2} &\leq 4
+      \end{align*}
+      We claim that $\forall n,~a_n \leq 4 \Rightarrow a_{n+1} \leq 4$, as we have shown the base case.
+      \begin{align*}
+        a_{n} &\leq 4\\
+        \frac{1}{2}a_n &\leq 2\\
+        \frac{1}{2}a_n + 2 &\leq 4\\
+        a_{n+1} &\leq 4
+      \end{align*}
+    \end{problem}
+  \end{problem}
+  \begin{problem}{Convergence of Sequences}
+    Let $L\in\R$, $\varepsilon > 0$. Then, the $\varepsilon$\textbf{-neighborhood} of $L$ is $(L-\varepsilon, L+\varepsilon) = V_{\varepsilon}(L)$.
+    \begin{align*}
+      x\in V_{\varepsilon}(L)\\
+      \Leftrightarrow\\
+      |x-L| < \varepsilon\\
+      L-\varepsilon < x < L+\varepsilon
+    \end{align*}
+    With this in mind, we know the following:
+    \begin{problem}{Definition of Convergence}
+      A real sequence $(x_n)_n$ converges to a number $x$ if 
+      \begin{align*}
+        \left(\forall \varepsilon > 0\right)\left(\exists N_{\varepsilon}\in\N\right) \ni n\geq N \Rightarrow |x_n-x| < \varepsilon
+      \end{align*}
+      If no such $L$ exists, then $(x_n)_n$ is said to \textbf{diverge}.\\
+
+      A sequence $(x_n)_n$ in a metric space $(X,d)$ converges to a point $x$ if
+      \begin{align*}
+        \left(\forall \varepsilon > 0\right)\left(\exists N_{\varepsilon}\in\N\right) \ni d(x_n,x) < \varepsilon
+      \end{align*}
+    \end{problem}
+    Essentially, we want to show that there always exists an $N$ such that the $N$th tail (i.e., $x_{N}, x_{N+1},\cdots$) are within $\varepsilon$ of $L$ for any $\varepsilon$.\\
+
+    \begin{description}
+      \small
+      \item[Note:] $N$ usually depends on $\varepsilon$ (the smaller the $\varepsilon$, the larger the $N$).
+    \end{description}
+    \begin{problem}{Convergence Proof}
+      \begin{align*}
+        \left(\frac{1}{n}\right)_{n} \xrightarrow{n\rightarrow\infty} 0
+      \end{align*}
+      \tcblower
+      We know that
+      \begin{align*}
+        |x_n - L| &= \left|\frac{1}{n}\right|
+      \end{align*}
+      Given $\varepsilon > 0$, we want $\frac{1}{n} < \varepsilon$, meaning $n > \frac{1}{\varepsilon}$.
+      \begin{description}
+        \item[Proof:] Let $\varepsilon > 0$. By the Archimedean property corollary, find $N\in\N$ large such that $\frac{1}{N} < \varepsilon$.
+          \begin{align*}
+            n &\geq N\\
+            \frac{1}{n} &\leq \frac{1}{N}\\
+                        &< \varepsilon\\
+            \shortintertext{so, if $n\geq N$, then}
+            |x_n - L| &= \left|\frac{1}{n}\right|\\
+                      &= \frac{1}{n}\\
+                      &< \varepsilon
+          \end{align*}
+      \end{description}
+    \end{problem}
+    \begin{problem}{Convergence Proof 2}
+      Show that
+      \begin{align*}
+        \left(\frac{5n-1}{3-n}\right)_{n\geq 4} \xrightarrow{n\rightarrow\infty} -5
+      \end{align*}
+      \tcblower
+      \begin{align*}
+        |x_n - L| &= \left|\frac{5n-1}{3-n} + 5\right|\\
+                  &= \frac{14}{|3-n|}\\
+                  &= \frac{14}{n-3}
+                  &< \varepsilon\\
+        \frac{14}{n-3} &< \varepsilon\\
+        n > \frac{14}{\varepsilon} + 3
+      \end{align*}
+      \begin{description}
+        \item[Proof:] Let $\varepsilon > 0$. Find $N' \in\N$ so large that $\frac{1}{N'} < \frac{\varepsilon}{14}$ (which exists by the Archimedean property corollary). Let $N = N' + 3$. If $n \geq N$, then
+          \begin{align*}
+            n-3 &\geq \frac{1}{N'}\\
+            \frac{1}{n-3} &\leq \frac{1}{N'}\\
+                          &< \frac{\varepsilon}{14}\\
+                          \shortintertext{whence}
+            |x_n - L| &= \frac{14}{n-3}\\
+                      &< \frac{14\varepsilon}{14}\\
+                      &= \varepsilon
+          \end{align*}
+      \end{description}
+    \end{problem}
+  \end{problem}
+  \begin{problem}{Sequences and their Limits, cont'd}
+    \begin{problem}{Convergence and Distance}
+      Let $(X,d)$ be a metric space, and let $(x_n)_n$ be a sequence in the metric space. The following are equivalent:
+      \begin{enumerate}[(i)]
+        \item $(x_n)_n\rightarrow x$
+        \item $\left(d(x_n,x)\right)_n \rightarrow 0$
+      \end{enumerate}
+      \tcblower
+      \begin{description}[font=\normalfont]
+        \item[(i) $\Rightarrow$ (b)] Let $\varepsilon > 0$. Find $N_{\varepsilon}\in\N$ so large such that $d(x_n,x) < \varepsilon$ whenever $n \geq N_{\varepsilon}$.\\
+
+          So, $|d(x_n,x)-0| = d(x_n,x) < \varepsilon$ for all $\varepsilon > 0$. Whence, $\left(d(x_n,x)\right)_n \rightarrow 0$.
+        \item[(ii) $\Rightarrow$ (i)] This direction is similar.
+      \end{description}
+    \end{problem}
+    In $\R$, this implies that
+    \begin{align*}
+      (x_n)_n \rightarrow x\\
+      \Leftrightarrow\\
+      (|x_n -x|)_n \rightarrow 0
+    \end{align*}
+    \begin{problem}{Comparison Proposition}
+      Let $(X,d)$ be a metric space and let $x\in X$, and suppose $(x_n)_n$ is a sequence in $X$.\\
+
+      If $\exists c\geq 0$, $m\in\N$, and a sequence $(a_n)_n\in\R^+$ with $(a_n)_n \rightarrow 0$ and $d(x_n,x) \leq c a_n~\forall n > m$. Then, $(x_n)_n\rightarrow x$.
+      \tcblower
+      Let $\varepsilon > 0$. Note that $\frac{\varepsilon}{c} > 0$.\\
+
+      Find $N_1\in \N$ large such that $n \geq N_1 \Rightarrow |a_n - 0| < \frac{\varepsilon}{c}$, which is always possible since $(a_n)_n \rightarrow 0$.\\
+
+      Let $N = \max(N_1,m)$. Then, $n \geq N\Rightarrow n\geq N_1$ and $n\geq m$. So,
+      \begin{align*}
+        d(x_n,x) \leq ca_n\\
+        &< c\frac{\varepsilon}{c}
+        &=\varepsilon
+      \end{align*}
+      so, $n\geq N \Rightarrow d(x_n,x) < \varepsilon$, whence $(x_n)_n \rightarrow x$
+    \end{problem}
+    \begin{problem}{Comparison Proposition, Example}
+      Prove
+      \begin{align*}
+        \left(\frac{\sin(n^2-1)}{n^2 + 3}\right)_n \rightarrow 0
+      \end{align*}
+      \tcblower
+      \begin{align*}
+        \left|\frac{\sin(n^2 - 1)}{n^2 + 3} - 0\right| &= \frac{|\sin(n^2 - 1)|}{n^2 + 3}\\
+                                                       &\leq \frac{1}{n^2 + 3}\\
+                                                       &\leq \frac{1}{n^2}\\
+                                                       &\leq \frac{1}{n}
+      \end{align*}
+      We know that $a_n = \frac{1}{n}$ converges to $0$. So, by our comparison proposition, we are done.
+      \begin{problem}{Comparison Proposition, Example}
+        Prove
+        \begin{align*}
+          \left(\frac{1}{2^n}\right)_n \rightarrow 0
+        \end{align*}
+        \tcblower
+        \begin{align*}
+          2^n &= (1+1)^n\\
+              &\geq 1+n\tag*{Bernoulli's Inequality}
+              &>n\\
+              \shortintertext{so,}
+          \frac{1}{2^n} &< \frac{1}{n}
+        \end{align*}
+        Since $a_n = \frac{1}{n}$ converges, we know that $\frac{1}{2^n}$ must converge.
+      \end{problem}
+    \end{problem}
+  \end{problem}
+  \begin{problem}{Sequence Divergence}
+    A sequence $(x_n)_n$ is \textbf{divergent} if it does not converge. $(x_n)_n \rightarrow 0$ if and only if
+    \begin{align*}
+      (\forall \varepsilon > 0)(\exists N_{\varepsilon} \in \N) \ni (\forall n\geq N_{\varepsilon}) d(x_n,x) < \varepsilon
+    \end{align*}
+    So, $(x_n)_n$ diverges if and only if
+    \begin{align*}
+      (\exists \varepsilon_0 > 0)(\forall N\in\N) (\exists n\geq N) \rightarrow d(x_n,x)\geq \varepsilon_0
     \end{align*}
   \end{problem}
 \end{document}

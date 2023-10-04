@@ -84,7 +84,7 @@
 \fancyhf{}
 \rhead{Avinash Iyer}
 \lhead{Math 400: Class Notes}
-\begin{document}{
+\begin{document}
   \begin{problem}{Graphs and the Three Utilities Problem}
     We can imagine trying to connect three houses below with three utilities without the utility lines crossing.
     \begin{center}
@@ -352,4 +352,69 @@
     \end{problem}
     An edge $vw$ of $G$ is a \textit{bridge} if $v$ and $w$ are in different components of $G-vw$.
   \end{problem}
-}\end{document}
+  \begin{problem}{Chinese Postman Problem}
+    \begin{itemize}
+      \item A \textbf{walk} is a sequence $(v_1,\dots,v_k)$ of vertices such that $\exists v_{i}v_{i+1}\in E(G)$.
+      \item A \textbf{trail} is a walk that does not repeat edges.
+      \item A \textbf{path} is a trail that does not repeat vertices.
+      \item A closed path is a \textbf{cycle}, and a closed trail is a \textbf{circuit}.
+    \end{itemize}
+    A courier wants to deliver the mail on every street in a neighborhood. The goal is to minimize the number of streets to repeat.\newline
+
+    We can represent this by letting vertices be intersections and edges to be streets. The goal is to create a closed walk with as few edges repeated as possible.
+    \begin{itemize}
+      \item A closed walk that minimizes the number of repeated edges is an \textit{Eulerian} walk.
+    \end{itemize}
+    \begin{problem}{Finding an Eulerian closed walk:}
+      \begin{enumerate}[(1)]
+        \item Let $v_1,\dots,v_{2k}$ be all the odd vertices.
+        \item Let $G' = G + v_1v_2 + v_3v_4 + \cdots + v_{2k-1}v_{2k}$.
+        \item Every vertex in $G'$ has even degree, so $G'$ contains within it an Eulerian circuit $C$.
+        \item $C$ contains every edge $v_1v_2,\dots,v_{2k-1}v_{2k}$. Replace each edge $v_{i}v_{i+1}$ in this set with a shortest path in $G$ from $v_i$ to $v_{i+1}$. This gives a closed walk in $G$ that contains all edges.
+        \item Do steps (1)--(4) for all possible pairings of the odd vertices, and choose the shortest walk.
+      \end{enumerate}
+    \end{problem}
+    We can do the same problem on a weighted graph, where each edge is assigned a weight in a real number. In this case, an Eulerian closed walk is a closed walk that contains all edges and minimizes the total weight.
+  \end{problem}
+  \begin{problem}{Graph Decomposition}
+    Let $a_1,\dots,a_n$ be distinct items. A \textbf{Steiner Triple System} on $a_1,\dots,a_n$ is a set $S$ of triples $\{a,b,c\} \subseteq \{a_1,\dots,a_n\}$, such that every pair $\{a_i,a_j\}$, $i\neq j$ is a subset of exactly one element of $S$.\newline
+
+    \begin{problem}{Example}
+      $n=4$, $a_1,\dots,a_4$ are distinct.\newline
+
+      Let
+      \begin{align*}
+        S &= \left\{\{a_1,a_2,a_3\},\{a_1,a_3,a_4\}\right\}
+      \end{align*}
+      Is $S$ a Steiner Triple System on $a_1,\dots,a_4$?
+      \tcblower
+      $S$ is not a Steiner Triple System. $\{a_2,a_4\}$ is not a subset of any element of $S$, and $\{a_1,a_3\}$ appear in both elements.
+    \end{problem}
+    Represent each $a_i$ as a vertex, each pair $a_ia_j$ as an edge, then a STS corresponds to $K_n$ with $E(K_n)$ partitioned into $3$-cycles.
+    \begin{problem}{Partitioning into $3$-cycles}
+      $K_n$ can be decomposed into $3$-cycles if and only if $n \equiv 1\mod 6$ or $n \equiv 3\mod 6$.
+    \end{problem}
+  \end{problem}
+  \begin{problem}{Decomposing into Trails}
+    Let $G$ be a connected graph with exactly four odd vertices. Show that $G$ decomposes into two trails, $T_1$ and $T_2$. Furthermore, $T_1$ and $T_2$ contain exactly two of the odd vertices.
+    \tcblower
+    Let $a,b,c,d$ be the odd vertices. Let $G' = G + ab + cd$. In $G'$, every vertex has even degree, so $G'$ has an Eulerian circuit $C$.\newline
+
+    \begin{align*}
+      C = a\underbrace{b,\dots,c}_{T_1}\underbrace{d,\dots,a}_{T_2}
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Trail Decomposition, Even Length}
+    Find $T_1'$ and $T_2'$ such that $T_1'$ and $T_2'$ are of even length, given the same conditions as the previous problem.
+    \tcblower
+    We know that $G$ has even size, and
+    \begin{align*}
+      |T_1| + |T_2| = |G|
+    \end{align*}
+    If $T_1$ and $T_2$ are of even length, then $T_1' = T_1$ and $T_2' = T_2$, and we are done.\newline
+
+    Suppose $T_1$ and $T_2$ are both of odd length. If $T_1$ and $T_2$ do not share any vertices, $V(T_1) \sqcup V(T_2) = V(G)$, meaning $G$ is disconnected.\newline
+
+    Let $v \in V(T_1) \cap V(T_2)$. $T_1$ is from $b$ to $v$ to $c$, $T_2$ is from $d$ to $v$ to $a$. Let $T_i = R_i \cup S_i$. 
+  \end{problem}
+\end{document}
