@@ -1,4 +1,4 @@
-\documentclass[10pt]{extarticle}
+\documentclass[8pt]{extarticle}
 \title{}
 \author{Avinash Iyer}
 \date{}
@@ -99,12 +99,12 @@
       \item $\displaystyle \left(\frac{\sqrt{n}}{n+1}\right)_n \rightarrow 0$
       \item $\displaystyle \left(\frac{(-1)^n}{\sqrt{n+7}}\right)_n \rightarrow 0$
       \item $\displaystyle \left(n^kb^n\right)_n \rightarrow 0$ where $0\leq b < 1$ and $k\in\N$
-      \item $\displaystyle \left(\frac{2^{n+1}+3^{n+1}}{2^n + 3^n}\right)_n \rightarrow 1/3$
+      \item $\displaystyle \left(\frac{2^{n+1}+3^{n+1}}{2^n + 3^n}\right)_n \rightarrow 3$
     \end{enumerate}
     \tcblower
     \begin{problem}{(i)}
      We need to show that
-      \[(\forall \varepsilon > 0)(\exists N\in\N) \ni n > N \Rightarrow \left|\frac{2n}{n+2} - 2\right| < \varepsilon\]
+      \[(\forall \varepsilon > 0)(\exists N\in\N) \ni n \geq N \Rightarrow \left|\frac{2n}{n+2} - 2\right| < \varepsilon\]
       \begin{description}
         \item[Preliminary Work] 
           \begin{align*}
@@ -112,7 +112,7 @@
             2n &> (2n - \varepsilon n) - 2\varepsilon + 4\\
             n &> \frac{4-2\varepsilon}{\varepsilon}
           \end{align*}
-        \item[Proof] Let $\displaystyle N = \left\lceil\frac{4-2\varepsilon}{\varepsilon}\right\rceil$. Then,
+        \item[Proof] Let $\varepsilon > 0,~\displaystyle N = \left\lceil\frac{4-2\varepsilon}{\varepsilon}\right\rceil$. Then,
           \begin{align*}
             n &> \frac{4-2\varepsilon}{\varepsilon}\\
             \varepsilon n &> 4-2\varepsilon\\
@@ -130,26 +130,20 @@
         (\forall \varepsilon > 0)(\exists N\in \N) \ni n > N \rightarrow \left|\left(\frac{\sqrt{n}}{n + 1}\right)\right| < \varepsilon
       \end{align*}
       \begin{description}
-        \item[Preliminary Work]
+        \item[Preliminary Work] We will show that $\displaystyle\left(\frac{1}{\sqrt{n}}\right)_n\rightarrow 0$. Let $\varepsilon > 0$ and $\displaystyle N = 1 + \left\lceil \frac{1}{\varepsilon^2}\right\rceil$. Then,
           \begin{align*}
-            \frac{\sqrt{n}}{n+1}&<\frac{\sqrt{n}}{n} \\
-                                &< \varepsilon\\
-            \frac{1}{\sqrt{n}} &< \varepsilon\\
-            n &> \frac{1}{\varepsilon^2}
-          \end{align*}
-        \item[Proof] Let $\displaystyle N = \left\lceil\frac{1}{\varepsilon^2}\right\rceil$. Then,
-          \begin{align*}
+            n &\geq N\\
             n &> \frac{1}{\varepsilon^2}\\
-            \frac{1}{\sqrt{n}} &< \varepsilon\\
-            \frac{\sqrt{n}}{n+1} &< \frac{\sqrt{n}}{n}\\
-                                 &< \varepsilon
+            \frac{1}{\sqrt{n}} &< \varepsilon \\
+            \left|\frac{1}{\sqrt{n}} - 0\right| &< \varepsilon
           \end{align*}
+        \item[Proof] We know that $\forall n, \frac{\sqrt{n}}{n+1} > 0$ and $\frac{\sqrt{n}}{n+1} < \frac{1}{\sqrt{n}}$. Since we showed earlier that $\frac{1}{\sqrt{n}} \rightarrow 0$, it must be the case that $\frac{\sqrt{n}}{n+1} \rightarrow 0$.
       \end{description}
     \end{problem}
     \begin{problem}{(iii)}
       We need to show that
       \begin{align*}
-        (\forall \varepsilon > 0)(\exists N \in \N) \ni n > N \Rightarrow \left|\frac{(-1)^n}{\sqrt{n+7}}\right| < \varepsilon
+        (\forall \varepsilon > 0)(\exists N \in \N) \ni n \geq N \Rightarrow \left|\frac{(-1)^n}{\sqrt{n+7}}\right| < \varepsilon
       \end{align*}
       \begin{description}
         \item[Preliminary Work]
@@ -158,7 +152,7 @@
             \frac{1}{\varepsilon} & < \sqrt{n+7}\\
             n &> \frac{1}{\varepsilon^2} - 7 
           \end{align*}
-        \item[Proof] Let $\displaystyle N =  \left\lceil\frac{1}{\varepsilon^2}\right\rceil-7$. Then,
+        \item[Proof] Let $\varepsilon > 0,~\displaystyle N =  \left\lceil\frac{1}{\varepsilon^2}\right\rceil-7$. Then,
           \begin{align*}
             n &> \frac{1}{\varepsilon^2} - 7\\
             n + 7 &> \frac{1}{\varepsilon^2}\\
@@ -169,33 +163,157 @@
       \end{description}
     \end{problem}
     \begin{problem}{(iv)}
-      We need to show that
+      If $b = 0$, then $n^kb^n = 0 \rightarrow 0$.\newline
+
+      Let $0 < b < 1$. To show that $(n^kb^n)_n \rightarrow 0$, we will find what the ratio of consecutive terms tends toward:
       \begin{align*}
-        (\forall \varepsilon > 0)(\exists N\in\N) \ni n > N \rightarrow \left|n^kb^n\right| < \varepsilon
+        \frac{a_{n+1}}{a_n} &= \frac{(n+1)^kb^{n+1}}{n^kb^n}\\
+                            &= b\left(\frac{n+1}{n}\right)^k
+      \end{align*}
+      We claim that $\left(\frac{n+1}{n}\right)^k \rightarrow 1$. For this, we need to show that
+      \begin{align*}
+        (\forall \varepsilon > 0)(\exists N\in\N)\ni n\geq N \Rightarrow \left|\left(\frac{n+1}{n}\right)^k - 1 \right| < \varepsilon
       \end{align*}
       \begin{description}
         \item[Preliminary Work]
           \begin{align*}
-            n^kb^n & < \varepsilon \\
-            b^n &< \frac{\varepsilon}{n^k}\\
-            n &< \frac{\ln \varepsilon - k\ln n}{\ln b}\\
-            n\ln b &> \ln \varepsilon - k\ln n\\
-            k\ln n + n\ln b &> \ln\varepsilon\\
-            kn + n\ln b &> k\ln n + n\ln b\\
-                        &> \ln\varepsilon\\
-            n &> \frac{\ln \varepsilon}{k + \ln b}
+            \left|\left(1 + \frac{1}{n}\right)^k - 1 \right| &< \varepsilon\\
+            \left(1+\frac{1}{n}\right)^k &< \varepsilon + 1\\
+            1 + \frac{1}{n} &< \left(\varepsilon + 1\right)^{1/k}\\
+            n &> \frac{1}{\left(\varepsilon + 1\right)^{1/k} -1}
           \end{align*}
-        \item[Proof] Let $k\in\N$ and $0\leq b < 1$. For the trivial case $b = 0$, let $N = 1$. Then, $|(1)(0)| < \varepsilon~\forall \varepsilon > 0$. Otherwise, let $\displaystyle N = \left\lceil\frac{\ln\varepsilon}{k + \ln b}\right\rceil$
+        \item[Proof] Let $\varepsilon > 0$. Let $\displaystyle N = \left\lceil \frac{1}{\left(\varepsilon + 1\right)^{1/k}-1}\right\rceil + 1$. Then, for $n\geq N$, we have
           \begin{align*}
-            n &> \frac{\ln\varepsilon}{k + \ln b}\\
-            kn + n\ln b &> \ln\varepsilon\\
-            kn &> \ln\varepsilon - n\ln b\\
-            \frac{k\ln n}{\ln b}<\frac{kn}{\ln b} &< \frac{\ln\varepsilon - n\ln b}{\ln b}\tag*{since $\ln b < 0$}\\
-            \log_b\left(n^k\right) &< \log_b\left(\frac{\varepsilon}{b^n}\right)\\
-            n^k &< \frac{\varepsilon}{b^n}\\
-            b^n n^k &< \varepsilon
+            n &> \frac{1}{\left(\varepsilon + 1\right)^{1/k}-1}\\
+            (\varepsilon + 1)^{1/k} &> 1 + \frac{1}{n}\\
+            \left(1 + \frac{1}{n}\right)^{k} - 1 &< \varepsilon
           \end{align*}
+          whence $\displaystyle\left|\left(\frac{n+1}{n}\right)^{k} - 1\right| = \left(1 + \frac{1}{n}\right)^{k} - 1$. 
+      \end{description}
+      Therefore, since $\displaystyle \left(\frac{n+1}{n}\right)^k \rightarrow 1$, the ratio converges to $b < 1$, meaning $n^kb^n \rightarrow 0$.
+    \end{problem}
+    \begin{problem}{(v)}
+      \begin{description}
+        \item[Preliminary Work]
+          \begin{align*}
+            \left|\frac{2^{n+1} + 3^{n+1}}{2^n + 3^n} - 3 \right| &< \varepsilon\\
+            3 - \frac{2^{n+1} + 3^{n+1}}{2^n + 3^n} &< \varepsilon\\
+            \frac{3(2^n + 3^n) - 2^{n+1} - 3^{n+1}}{2^n + 3^n} &< \varepsilon\\
+            \frac{2^n}{2^n + 3^n} &< \varepsilon\\
+            2^n &< (2^n + 3^n)\varepsilon\\
+            (1-\varepsilon)2^n &< \varepsilon \cdot 3^n\\
+            \frac{1-\varepsilon}{\varepsilon} &< \left(\frac{3}{2}\right)^n\\
+            n &> \frac{\ln(1-\varepsilon) - \ln\varepsilon}{\ln 3 - \ln 2}
+          \end{align*}
+        \item[Proof] Let $\varepsilon > 0$ and $\displaystyle N = \left\lceil \frac{\ln(1-\varepsilon) - \ln\varepsilon}{\ln 3 - \ln 2}\right\rceil + 1$. Then, for $n\geq N$, we have
+          \begin{align*}
+            n &> \frac{\ln(1-\varepsilon) - \ln\varepsilon}{\ln 3 - \ln 2}\\
+            n\ln \left(\frac{3}{2}\right) &> \ln \left(\frac{1-\varepsilon}{\varepsilon}\right)\\
+            \frac{3^n}{2^n} &> \frac{1-\varepsilon}{\varepsilon}\\
+            \varepsilon (3^n + 2^n) &> 2^n\\
+            \frac{2^n}{2^n + 3^n} &< \varepsilon
+          \end{align*}
+          whence $\displaystyle\left|\frac{2^{n+1} + 3^{n+1}}{2^n + 3^n} - 3\right| = \frac{2^n}{2^n + 3^n}$.
       \end{description}
     \end{problem}
+  \end{problem}
+  \begin{problem}{Problem 2}
+    Show that the sequence $(\cos(n))_n$ does not converge.
+  \end{problem}
+  \begin{problem}{Problem 3}
+    If $(x_n)_n$ is a real sequence converging to $x$, show that
+    \begin{align*}
+      (|x_n|)_n \rightarrow |x|
+    \end{align*}
+    Is the converse true?
+    \tcblower
+    If $(x_n)_n \rightarrow x$, then $|x_n - x| \rightarrow 0$. So
+    \begin{align*}
+      \left||x_n|-|x|\right| &\leq |x_n - x| \tag*{Reverse Triangle Inequality}\\
+                  &\rightarrow 0
+    \end{align*}
+    So, $|x_n| \rightarrow |x|$.\newline
+
+    The converse is not true. For example, the sequence $\left(|(-1)^n|\right)_n \rightarrow 1$, but $\left((-1)^n\right)_n$ does not converge.
+  \end{problem}
+  \begin{problem}{Problem 4}
+    If $(x_n)_n$ is a real sequence converging to $x > 0$, show that there is an $N\in\N$ and $c > 0$ such that
+    \begin{align*}
+      x_n \geq c~\forall n\geq N
+    \end{align*}
+    \tcblower
+    Since $(x_n)_n \rightarrow x$, we know that $(\forall \varepsilon > 0)(\exists N\in\N)$ such that $n\geq n \rightarrow x_n\in V_{\varepsilon}(x)$.\newline
+
+    In particular, let $\varepsilon_0 = \frac{|0-x|}{3}$, $c = \frac{x}{3} < x$, and $\varepsilon_1$ small such that $V_{\varepsilon_1}(c) \cap V_{\varepsilon_0}(x) = \emptyset$.\newline
+
+    Then, $\exists N\in\N$ such that $n\geq N \Rightarrow x_n\in V_{\varepsilon_0}(x) > c$.
+  \end{problem}
+  \begin{problem}{Problem 5}
+    If $(x_n)_n$ is a real sequence of positive terms converging to $x$, show that $x \geq 0$ and 
+    \begin{align*}
+      \left(\sqrt{x_n}\right)_n &\rightarrow \sqrt{x}
+    \end{align*}
+    \tcblower
+    \begin{problem}{$x \geq 0$}
+      Suppose toward contradiction that $x < 0$. Let $\varepsilon = \frac{|0-x|}{2}$. Since $x_n \rightarrow x$, $\exists N\in \N$ large such that $x_n\in V_{\varepsilon}(x)$ for $n\geq N$. However, $\forall \ell\in V_{\varepsilon}(x)$, $\ell < 0$, meaning that $x_n < 0$ for large $n$. $\bot$
+    \end{problem}
+    \begin{problem}{$\left(\sqrt{x_n}\right)_n\rightarrow \sqrt{x}$}
+      \begin{description}
+        \item[Case 1:] Suppose $x = 0$. Let $\varepsilon > 0$. Then,
+          \begin{align*}
+            |x_n - 0| &< \varepsilon^2\\
+            x_n &< \varepsilon^2\\
+            \sqrt{x_n} &< \varepsilon\\
+            |\sqrt{x_n} - 0| &< \varepsilon
+          \end{align*}
+          So, $\sqrt{x_n} \rightarrow 0$.
+        \item[Case 2:] Suppose $x > 0$. Let $\varepsilon > 0$. Then,
+          \begin{align*}
+            \left|\sqrt{x_n} - \sqrt{x}\right| &= \left|\frac{x_n - x}{\sqrt{x_n} + \sqrt{x}}\right|\\
+                                               &= \frac{1}{\sqrt{x_n}+\sqrt{x}}|x_n - x|\\
+                                               &\leq \frac{1}{\sqrt{x}}|x_n - x|\\
+                                               &\rightarrow 0
+          \end{align*}
+          Therefore, $|\sqrt{x_n}-\sqrt{x}| \rightarrow 0$, so $\sqrt{x_n}\rightarrow x$
+      \end{description}
+    \end{problem}
+  \end{problem}
+  \begin{problem}{Problem 6}
+    If $(x_n)_n$ and $(y_n)_n$ are sequences with $(x_n)_n \rightarrow 0$ and $(y_n)_n$ bounded. Show that
+    \begin{align*}
+      (x_ny_n)_n \rightarrow 0
+    \end{align*}
+    \tcblower
+    Let $y\in\R$ be an upper bound on $\left(y_n\right)_n$. Then,
+    \begin{align*}
+      |x_ny_n| &\leq |x_n||y|\\
+               &\rightarrow 0
+    \end{align*}
+    Therefore, $x_ny_n \rightarrow 0$.
+  \end{problem}
+  \begin{problem}{Problem 7}
+    If $(x_n)_n$ is a sequence of positive terms such that
+    \begin{align*}
+      \left(\frac{x_{n+1}}{x_n}\right)_n \xrightarrow{} L > 1,
+    \end{align*}
+    show that $(x_n)_n$ is not bounded, and thus not convergent. If $L = 1$, can we make any conclusions?
+    \tcblower
+    Suppose toward contradiction that $(x_n)_n$ is bounded. Then, $\exists y$ such that
+    \begin{align*}
+      |x_n| &< y~\forall n\\
+      \shortintertext{so,}
+      \frac{x_{n+1}}{x_n} &< 1~\forall n
+    \end{align*}
+    However, this means $L < 1$. $\bot$.\newline
+
+    If $L = 1$, we cannot make any conclusions about the nature of the sequence.
+  \end{problem}
+  \begin{problem}{Problem 8}
+    Let $a,b$ be positive numbers. Show that
+    \begin{align*}
+      \left((a^n + b^n)^{1/n}\right)_n \rightarrow \max\{a,b\}
+    \end{align*}
+    \tcblower
+
   \end{problem}
 \end{document}

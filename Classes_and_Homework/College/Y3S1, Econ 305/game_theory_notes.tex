@@ -724,4 +724,114 @@
       \tcbincludepdf{images/activity_7.pdf}
     \end{tcbraster}
   \end{problem}
+  \begin{problem}{Equilibrium in Extensive Form Games}
+    \begin{itemize}
+      \item A Nash equilibrium is still a strategy profile in which no player has a unilateral profitable deviation.
+      \item The Nash Equilibrium of an extensive form game are the Nash equilibria of the game's normal form representation.
+      \item We can apply the methods from the first third of the course to find the Nash equilibrium.
+    \end{itemize}
+    In the entry game, we have the following normal form:
+    \begin{center}
+      \renewcommand{\arraystretch}{1.5}
+      \begin{tabular}{c|c|c|}
+        \multicolumn{1}{c}{} & \multicolumn{1}{c}{Out} & \multicolumn{1}{c}{In}\\
+        \cline{2-3}
+        Fight & $2,0$ & $-1,-1$\\
+        \cline{2-3}
+        Acquiesce & $2,0$ & $1,1$\\
+        \cline{2-3}
+      \end{tabular}
+    \end{center}
+    There are an infinite number of Nash equilibria:
+    \begin{itemize}
+      \item $(F,O)$: the challenger will stay out if it thinks the incumbent will fight; however, the challenger can call Firm 1's bluff and enter the market.
+      \item $(A,I)$: if the challenger enters the market, Firm 1 will acquiesce.
+      \item $(pF + (1-p)A, O)$ for $p \geq 1/2$: Firm 1 needs to mix between fight and acquiesce such that Firm 2 stays out.
+    \end{itemize}
+    Given the fact that $(F,O)$ is not a credible threat, we need a better concept for equilibrium that rules out non-credible threats.\newline
+
+    For another example of a non-credible threat, consider Stackelberg Competition:
+    \begin{itemize}
+      \item Firm 1 chooses $q_1 \in [0,1]$
+      \item Firm 2 sees $q_1$, then chooses $q_2\in[0,1]$
+      \item Let $c_1(q_1) = c_2(q_2) = 0$, and $P(q_1,q_2) = 1-q_1-q_2$
+      \item We claim that for any $q_1' = [0,1]$, the game has a Nash equilibrium in which firm 1 produces $q_1'$.
+        \begin{align*}
+          s_2(q_1) &= \begin{cases}
+            \frac{1-q_1'}{2}&q_1=q_1'\\
+            1-q_1 & q_1\neq q_1'
+          \end{cases}
+        \end{align*}
+        \begin{description}
+          \small
+          \item[Note:] The Nash equilibrium must be one for the game's strategy profile.
+        \end{description}
+        \begin{itemize}
+          \item If firm $1$ plays $q_1'$, then player $2$ plays its best response (anything off the equilibrium path).
+          \item Given firm 2's strategy, firm $1$ makes positive profit by playing $q_1'$, or else firm $2$ floods the market, pushing the price to zero and yielding zero profits.
+          \item This is a Nash equilibrium --- however, the second part of this statement is non-credible.
+        \end{itemize}
+    \end{itemize}
+  \end{problem}
+  \begin{problem}{Subgame Perfect Equilibrium}
+    A \textbf{subgame} of an extensive form game has the following properties:
+    \begin{itemize}
+      \item Begins at a decision node $n$ that is a singleton information set.
+      \item Includes \textit{all} the decision and terminal nodes following $n$ in the game tree.
+      \item Does not ``cut through'' any information sets (drawing a circle around the subgame doesn't cut a dashed line)
+    \end{itemize}
+    The game is always a subgame of itself.\\
+
+    A strategy profile $s^*$ is a \textit{subgame perfect equilibrium} if it is a Nash equilibrium of every subgame. It's important to remember that the payoffs in equilibrium are \textit{not} a SPE; only the strategy profile.
+    \begin{itemize}
+      \item Every SPE is a Nash equilibrium because the game is a subgame of itself.
+      \item SPE is a refinement of Nash equilibrium because it is a subset of the set of Nash equilibria.
+    \end{itemize}
+    \begin{center}
+      \begin{tikzpicture}
+        \draw (0,0) circle (5cm);
+        \draw (0,0) circle (4cm);
+        \draw (0,0) circle (2cm);
+        \draw (0,0) circle (1cm);
+        \node[anchor = north] at (0,4.75) {$S$};
+        \node[anchor = south] at (0,3) {\small Survives IESDS};
+        \node[anchor = south] at (0,1) {\tiny Nash equilibrium};
+        \node[anchor = north] at (0,0) {\tiny SPE};
+      \end{tikzpicture}
+    \end{center}
+    In the Entry game, for example, there are an infinite number of Nash equilibria, but there is only one SPE: $(A,I)$, as it is the Nash equilibrium of the subgame starting from the ``in'' node.\\
+
+    In Stackelberg Competition, we claim that the unique $SPE$ is $s_1^* = \frac{1}{2}$ and $s_2^*(q_1) = \frac{1-q_1}{2}$.
+    \begin{description}
+      \small
+      \item[Note:] It would be wrong to write the proposed SPE as $(s_1^*,s_2^*) = (1/2,1/4)$, even though this is the outcome along the equilibrium path. Recall that a strategy is a complete contingent plan --- player 2's strategy has to be contingent on what player 1 does.
+    \end{description}
+    The subgames of Stackelberg competition are the game itself and the proper subgame that follows each possible choice of $q_1$. In each proper subgame, we have a $1$-player game, so the Nash equilibrium is equivalent to maximizing profit.
+    \begin{align*}
+      s_2^*(q_1) &= \max_{q_2}q_2(1-q_1-q_2)\\
+                 &= \frac{1-q_1}{2}
+    \end{align*}
+    The Nash equilibrium of the entire game requires firm $1$ to best respond to firm $2$:
+    \begin{align*}
+      s_1^* &= \max_{q_1}q_1(1-q_1-s_2^*(q_1))\\
+            &= 1/2
+    \end{align*}
+    \begin{description}
+      \small
+      \item[Note:] Firm 1 produces more than firm 2 and has higher profits --- this is emblematic of the first mover advantage. Firm 1 can find firm 2's best response function, then use that information to determine their own best response, as opposed to the Cournot game in which firm 1 and 2 have the same amount of information.
+    \end{description}
+  \end{problem}
+  \begin{problem}{Backward Induction and Existence}
+    The previous two examples show how to do \textit{backward induction}, in which we can solve finite extensive form games by starting at the subgames furthest down the game tree and moving backwards, finding the Nash equilibria in each subgame.\newline
+    
+    Every \textit{finite} (finite number of terminal nodes) extensive form game of perfect information has a \textit{pure strategy} SPE; generically, this SPE is unique.
+    \begin{itemize}
+      \item You solve the last rounds of the game, then replace these subgames with the outcome of the Nash equilibrium, and repeat the procedure.
+    \end{itemize}
+    Every finite extensive form game (not necessarily of perfect information) has a SPE.
+    \begin{itemize}
+      \item The refinement of Nash equilibrium is not too strong in the sense that a SPE always exists.
+      \item Each subgame has a Nash equilibrium due to the Nash existence result.
+    \end{itemize}
+  \end{problem}
 \end{document}
