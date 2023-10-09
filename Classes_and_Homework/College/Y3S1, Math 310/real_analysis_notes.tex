@@ -1956,8 +1956,11 @@
       \begin{align*}
         \frac{1}{b^n} &= (1 + d)^n\\
                       &\geq \frac{n(n-1)}{2}d^2
-                      \shortintertext{to be continued...}
+        \frac{2}{d^2(n)(n-1)} &\geq b^n\\
+        nb^n &\leq \frac{2}{d^2(n-1)}\\
+             &\rightarrow 0 \tag*{by previous corollary}
       \end{align*}
+      Therefore, $(nb^n)_n \rightarrow 0$.
     \end{problem}
   \end{problem}
   \begin{problem}{Boundedness and Convergence}
@@ -2010,8 +2013,161 @@
                                                  &\leq |z_n - z|\frac{2}{|z|^2}\\
                                                  &\rightarrow 0
         \end{align*}
-        So, $|\frac{1}{z_n} - \frac{1}{z}| \rightarrow 0$, so $\frac{1}{z_n} \rightarrow \frac{1}{z}$
+        So, $\left|\frac{1}{z_n} - \frac{1}{z}\right| \rightarrow 0$, so $\frac{1}{z_n} \rightarrow \frac{1}{z}$
     \end{description}
+  \end{problem}
+  \begin{problem}{Ordering of Limits}
+    Let $(x_n)_n \rightarrow x$ and $(y_n)_n \rightarrow y$. If $x_n \leq y_n$ for all $n$, then $x \leq y$.
+    \tcblower
+    Suppose toward contradiction that $x > y$.\\
+    
+    Let $\varepsilon = \frac{x-y}{2}$.\\
 
+    So, $\exists N_1\in\N$ such that $n\geq N_1 \Rightarrow y_n\in V_{\varepsilon}(y)$, and $\exists N_2\in\N$ such that $n\geq N_2 \Rightarrow x_n\in V_{\varepsilon}(x)$.\\
+    
+    Let $N = \max\{N_1,N_2\}$. Then, $x_N\in V_{\varepsilon}(x)$ and $y_N\in V_{\varepsilon}(y)$. But that means $x_N > y_N$. $\bot$
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    In particular, if $(x_n)_n \rightarrow x$, and $a \leq x_n \leq b$, then $a\leq x \leq b$.
+  \end{problem}
+  \begin{problem}{Squeeze Theorem}
+    Let $(x_n)_n \rightarrow x$, $(y_n)_n\rightarrow y$, and $(z_n)_n \rightarrow z$, where $x_n \leq y_n \leq z_n$ for all $n$.\\
+
+    If $L = x = z$, then $y = L$.
+    \tcblower
+    Let $\varepsilon > 0$. Find $N_1,N_2\in\N$ such that $n\geq N_1 \Rightarrow V_{\varepsilon}(L)$, and $n\geq N_{2} \Rightarrow V_{\varepsilon}(L)$.\\
+
+    Let $N = \max\{N_1,N_2\}$. Then, $n\geq N \Rightarrow x_n,z_n\in V_{\varepsilon}(L)$. Thus,
+    \begin{align*}
+      L-\varepsilon < x_n \leq y_n \leq z_n < L + \varepsilon
+    \end{align*}
+    so $y_n\in V_{\varepsilon}(L)$, so $(y_n)_n \rightarrow L$.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    For example, let $a_n = \frac{\sin(n)}{n}$. Then, since
+    \begin{align*}
+      -\frac{1}{n} \leq \frac{\sin(n)}{n} \leq \frac{1}{n}
+    \end{align*}
+    and both sides of the inequality go to zero, $a_n \rightarrow 0$\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    As another example, consider $a_n = \left(2^n + 3^n\right)^{1/n}$. Then,
+    \begin{align*}
+      3^n \leq 2^n + 3^n \leq 2\cdot 3^n\\
+      3 \leq \left(2^n + 3^n\right)^{1/n} \leq 2^{1/n}\cdot 3
+    \end{align*}
+    Since $2^{1/n} \rightarrow 1$, we have $a_n \rightarrow 3$.
+  \end{problem}
+  \begin{problem}{Ratio Test}
+    Let $\left(x_n\right)$ be a sequence of strictly positive numbers, with $\left(\frac{x_{n+1}}{x_n}\right)_n \rightarrow r < 1$. Then, $(x_n)_n \rightarrow 0$.
+    \tcblower
+    Since $r < 1$, then $1-r > 0$. Let $\rho = r + \frac{1-r}{2}$, and $\varepsilon = \rho - r = \frac{1-r}{2}$.\\
+
+    Since the sequence converges, $\exists N\in\N$ such that for $n\geq N$,
+    \begin{align*}
+      \left|\frac{x_{n+1}}{x_n} - r \right| &< \varepsilon\\
+      \frac{x_{n+1}}{x_n} &< \rho\\
+      x_{n+1} &< \rho x_n
+    \end{align*}
+    In particular, $x_{N+1} < \rho x_N$, and $x_{N+2} < \rho x_{N+1} < \rho^2 x_N$. Inductively, one can show that $\forall k\geq 1,~x_{N+k} < \rho^{k}x_{N}$.
+    \begin{align*}
+      0 < x_{N + k} < \rho^{k}x_{N}
+    \end{align*}
+    In particular, as $k \rightarrow \infty$, both sides of the inequality go to $0$, implying that $x_{n}\rightarrow 0$
+  \end{problem}
+  \begin{problem}{Monotone Convergence Theorem}
+    Let $(x_n)_n$ be a monotone sequence. Then, $(x_n)_n$ is convergent if and only if it is bounded.
+    \begin{enumerate}[(a)]
+      \item If $(x_n)_n$ is increasing and bounded above, then $(x_n)_n \rightarrow \sup(\{x_n\mid n\in\N\})$.
+      \item If $(x_n)_n$ is decreasing and bounded below, then $(x_n)_n \rightarrow \sup(\{x_n\mid n\in\N\})$.
+    \end{enumerate}
+    \tcblower
+    We have already shown that all convergent sequences are bounded.\\
+
+    Assume that $(x_n)_n$ is monotonic and bounded.
+    \begin{description}
+      \item[Case 1:] Suppose $(x_n)_n$ is increasing. Let $\sup\{x_n\mid n\in\N\} := u$. We claim that $(x_n)_n \rightarrow u$.\\
+
+        Let $\varepsilon > 0$. By the definition of supremum, $\exists N\in\N$ such that $u-\varepsilon < x_{N}$. Note that $\forall n\geq N$, $u-\varepsilon < x_N \leq x_n \leq u$.\\
+
+        Therefore, if $n\geq N$, then $|x_n - u| < \varepsilon$.
+      \item[Case 2:] Suppose $(x_n)_n$ is decreasing. Let $\ell := \inf\{x_n\mid n\in\N\}$. We claim that $(x_n)_n \rightarrow \ell$.\\
+
+        Let $\varepsilon > 0$. By the definition of infimum, $\exists N\in\N$ such that $\ell + \varepsilon > x_N$. Additionally, $\forall n \geq N$, $\ell \leq x_n \leq x_N < \ell + \varepsilon$.\\
+
+        Therefore, if $n \geq N$, $|x_n - \ell| < \varepsilon$.
+    \end{description}
+  \end{problem}
+  \begin{problem}{Applications of the Monotone Convergence Theorem}
+    \begin{problem}{Lemma}
+      If $(x_n)_n$ is a convergent sequence, and $m\in\N$, the $m$-th tail, $x_{(m)} = (x_{m+k})_{k=1}^{\infty}$ is also convergent. If $(x_n)_n \rightarrow L$ then $x_{(m)}\rightarrow L$.
+      \tcblower
+      Let $\varepsilon > 0$. Find $N\in\N$ such that $n\geq N \Rightarrow |x_n - L| < \varepsilon$. If $k \geq N$, then $m + k \geq N$, so $|x_{m+k}-L| < \varepsilon$.\\
+
+      Thus, $\left(x_{m+k}\right)_k \rightarrow L$
+    \end{problem}
+    Consider the inductively defined sequence
+    \begin{align*}
+      x_{1} &= 8\\
+      x_{n+1} &= \frac{1}{2}x_n + 2\\
+      (x_n)_n &= (8,6,5,9/2,17/4,\dots)
+    \end{align*}
+    We claim that $x_n \geq 4~\forall n$.
+    \begin{align*}
+      x_1 &= 8 \geq 4
+    \end{align*}
+    Suppose $x_k \geq 4$. We will show that $x_{k+1} \geq 4$.
+    \begin{align*}
+      x_{k + 1} &= \frac{1}{2}x_k + 2\\
+                &\geq \frac{1}{2}(4) + 2\\
+                &= 4
+    \end{align*}
+    Therefore, $(x_n)_n$ is bounded below by $4$.\\
+
+    We claim that $(x_n)_n$ is decreasing. $\forall n\in\N$,
+    \begin{align*}
+      x_{n+1} &\leq x_n
+      \Leftrightarrow \\
+      \frac{1}{2}x_n + 2 &\leq x_n\\
+      \Leftrightarrow
+      4 &\leq x_n
+    \end{align*}
+    By the monotone convergence theorem, we know that $(x_n)_n\rightarrow L$.\\
+
+    To find $L$, we use the recursive relationship and the lemma.
+    \begin{align*}
+      x_{n+1} &= \left(\frac{1}{2}x_n + 2\right)_{n=1}^{\infty}\\
+      L &= \frac{1}{2}L + 2\\
+      L &= 4
+    \end{align*}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    Consider the following sequence
+    \begin{align*}
+      x_1 &= 1\\
+      x_2 &= 1 + \frac{1}{4}\\
+      x_3 &= 1 + \frac{1}{4} + \frac{1}{9}\\
+      x_{k} &= \sum_{k=1}^{n} \frac{1}{k^2}
+    \end{align*}
+    We will show that $(x_n)_n$, the sequence of partial sums, converges.\\
+
+    Clearly, these partial sums form an increasing sequence. We only need to show that the sequence is bounded above.
+    \begin{align*}
+      k^2 &\geq k(k-1)\tag*{$k\geq 2$}\\
+      \frac{1}{k^2} &\leq \frac{1}{k(k-1)}\\
+                    &= \frac{1}{k-1}-\frac{1}{k}\\
+      \sum_{k=2}^{n} \frac{1}{k^2} &\leq \sum_{k=2}^{n} \left(\frac{1}{k-1}-\frac{1}{k}\right)\\
+      \sum_{k=1}^{n} \frac{1}{k^2} &\leq 1 + \sum_{k=2}^{n} \left(\frac{1}{k-1}-\frac{1}{k}\right)\\
+      \shortintertext{But}
+      1 + \sum_{k=2}^{n} \left(\frac{1}{k-1}-\frac{1}{k}\right) &= 2 - \frac{1}{n}\\
+      \shortintertext{so, we have}
+      \sum_{k=1}^{n} \frac{1}{k^2} &\leq 2-\frac{1}{n}\\
+                                   &< 2
+    \end{align*}
+    So, $(x_n)_n$ is bounded above.
   \end{problem}
 \end{document}

@@ -1,4 +1,4 @@
-\documentclass[8pt]{extarticle}
+\documentclass[10pt]{extarticle}
 \title{}
 \author{Avinash Iyer}
 \date{}
@@ -219,6 +219,31 @@
   \end{problem}
   \begin{problem}{Problem 2}
     Show that the sequence $(\cos(n))_n$ does not converge.
+    \tcblower
+    We will show that $(\cos(n))_n$ does not converge to $L$ for any $L \in\R$
+    \begin{description}
+      \item[Case 1:] Suppose $L > 1$. Set $\varepsilon_0 = \frac{L-1}{2}$. Then, for any $N\in\N$, let $n = N$.
+        \begin{align*}
+          |\cos(n) - L| &= L - \cos(n)\\
+                        &\geq L-1\\
+                        &> \frac{L-1}{2}\\
+                        &= \varepsilon_0
+        \end{align*}
+      \item[Case 2:] Suppose $L < -1$. Set $\varepsilon_0 = \frac{1-L}{2}$. Then, for any $N\in\N$, let $n = N$.
+        \begin{align*}
+          |\cos(n) - L| &= \cos(n) - L\\
+                        &\geq 1 - L\\
+                        &> \frac{1-L}{2}\\
+                        &=\varepsilon_0
+        \end{align*}
+      \item[Case 3:] Suppose $L = 0$. Set $\varepsilon_0 = 1/2$. Given any $N\in\N$, find $n \geq N$ with $\cos(n) \geq 1/2$. Then, $|\cos(n) - 0| \geq \varepsilon_0$.
+      \item[Case 4:] Suppose $0 < L < 1$. Set $\varepsilon_0 = L/2$. Given any $N\in\N$, we want to find $n\geq N$ such that $\cos(n) < 0$.\\
+
+        Find $k$ large such that $N < \frac{(4k+1)\pi}{2}$, which is always possible by the Archimedean property. Then, $N < \frac{(4k+1)\pi}{2} < \frac{(4k+3)\pi}{2}$. So, we find $n = \left\lceil \frac{(4k+1)\pi}{2}\right\rceil$, meaning $\cos(n) < 0$, so $|L - \cos(n)| \geq \varepsilon_0$.
+      \item[Case 5:] Suppose $-1 < L < 0$. Set $\varepsilon_0 = -L/2$. Given any $N\in\N$, we want to find $n\geq N$ such that $\cos(n) > 0$.\\
+
+        Find $k$ large such that $N < \frac{(4k-1)\pi}{2}$. This is always possible by the Archimedean property. Then, $N < \frac{(4k-1)\pi}{2} < \frac{(4k+1)\pi}{2}$. So, we find $n = \left\lceil \frac{(4k-1)\pi}{2}\right\rceil$, meaning $\cos(n) > 0$, so $|L-\cos(n)| \geq \varepsilon_0$.
+    \end{description}
   \end{problem}
   \begin{problem}{Problem 3}
     If $(x_n)_n$ is a real sequence converging to $x$, show that
@@ -298,15 +323,23 @@
     \end{align*}
     show that $(x_n)_n$ is not bounded, and thus not convergent. If $L = 1$, can we make any conclusions?
     \tcblower
-    Suppose toward contradiction that $(x_n)_n$ is bounded. Then, $\exists y$ such that
+    Since $L > 1$, $L = 1 + a$. Let $\varepsilon = \frac{a}{2}$. Then,
     \begin{align*}
-      |x_n| &< y~\forall n\\
-      \shortintertext{so,}
-      \frac{x_{n+1}}{x_n} &< 1~\forall n
+      \left|\frac{x_{n+1}}{x_n} - (1+a)\right| &< \varepsilon\\
+      1 + \frac{a}{2} < \frac{x_{n+1}}{x_n} &< 1 + \frac{3a}{2}\\
+      \shortintertext{so, $\forall n\in\N$,}
+      x_{n+1} &> x_n \left(1 + \frac{a}{2}\right)\\
+      x_{n+2} &> x_{n+1}\left(1 + \frac{a}{2}\right)\\
+              &> x_n \left(1 + \frac{a}{2}\right)^2\\
+              &\geq x_n \left(1 + \frac{(2)a}{2}\right) \tag*{Bernoulli's Inequality}\\
+              \shortintertext{Inductively, we have}
+      x_{n+k} &> x_n \left(1 + \frac{(k)a}{2}\right)
     \end{align*}
-    However, this means $L < 1$. $\bot$.\newline
-
-    If $L = 1$, we cannot make any conclusions about the nature of the sequence.
+    Since $\left(1 + \frac{(k)a}{2}\right)_k \rightarrow \infty$ and $x_n > 0~\forall n\in\N$, we have that $\left(x_{n}\right)_n$ goes to infinity, meaning it is not bounded.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    If $L = 1$, we cannot make any conclusions as to the boundedness or convergence of the sequence.
   \end{problem}
   \begin{problem}{Problem 8}
     Let $a,b$ be positive numbers. Show that
@@ -314,6 +347,41 @@
       \left((a^n + b^n)^{1/n}\right)_n \rightarrow \max\{a,b\}
     \end{align*}
     \tcblower
+    Suppose $a = b$. Then,
+    \begin{align*}
+      \left(a^n + b^n\right)^{1/n} &= (2\cdot a^n)^{1/n}\\
+                                   &= 2^{1/n}a\\
+                                   &\rightarrow a \tag*{sequence of roots converges to $1$}\\
+                                   &= \max\{a,b\}
+    \end{align*}
+    Otherwise, without loss of generality, let $a > b$. Then,
+    \begin{align*}
+      b^n < a^n &< a^n + b^n < 2\cdot a^n\\
+      b < a &< \left(a^n + b^n\right)^{1/n} < 2^{1/n} a\\
+            &\rightarrow\\
+      b < a &< \left(a^n + b^n\right)^{1/n} < a \tag*{sequence of roots converges to $1$}
+    \end{align*}
+    So, by the squeeze theorem, $\left(a^n + b^n\right)^{1/n}\rightarrow a = \max\{a,b\}$.
+  \end{problem}
+  \begin{problem}{Problem 9}
+    Let $(x_n)_n$ be a sequence of positive terms such that
+    \begin{align*}
+      \left(x_n^{1/n}\right)_n \rightarrow L < 1
+    \end{align*}
+    Prove that $(x_n)_n \rightarrow 0$. If $L = 1$, can we make any conclusion? What about $L > 1$?
+    \tcblower
+    Let $\rho = L + \frac{1-L}{2}$, and $\varepsilon = \rho - L = \frac{1-L}{2}$.\\
 
+    Since $\left(x_n^{1/n}\right)_{n}$ converges, we know that
+    \begin{align*}
+      \left|(x_n)^{1/n} - L\right| &< \varepsilon \\
+      \left(x_n\right)^{1/n} &< \rho\\
+      x_n &< \rho^{n}
+    \end{align*}
+    Since $\rho < 1$, and as $n\rightarrow\infty$, $\rho^{n} \rightarrow 0$, therefore we know $\left(x_n\right)_n\rightarrow 0$.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    We can't make any conclusions if $L = 1$, and if $L > 1$, we can assume that $(x_n)_n$ diverges, as we showed in the previous case with the ratio test.
   \end{problem}
 \end{document}
