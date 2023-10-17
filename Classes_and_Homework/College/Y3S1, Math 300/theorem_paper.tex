@@ -99,16 +99,43 @@
   \end{center}
   \section*{Abstract}%
   In this paper, I introduce the concept of metric spaces (including the definition of distance metrics, open sets, and continuity), topologies on sets, and homeomorphisms. With this knowledge, we can prove that two particular topologies on $\R^2$ are homeomorphic.
-  \section*{Sets and Metrics}%
-  Consider a set $X$. If we let $a,b\in X$, we might ask what the ``distance'' between $a$ and $b$, as doing so might help tease out properties of $X$. We want the distance function to be defined for every pair of points, and to yield a positive number.
-  \[
+  \section*{Metric on $\R$ and $\R^2$}%
+  Consider a set $X$, with $a,b\in X$. It's often useful to consider the idea of a distance between $a$ and $b$, $d(a,b)$. This distance function must map every pair of points to some positive number.
+  \begin{align*}
     d: X\times X \rightarrow \R^+
-  \]
-  In order to maintain a coherent idea of distance, we also need the following to hold:
+  \end{align*}
+  Additionally, it has to have the following properties:
   \begin{itemize}
+    \item Zero distance property: $d(a,a) = 0$ and if $d(a,b) = 0$, then $a = b$.
     \item Commutativity: $d(a,b) = d(b,a)$.
-    \item Zero distance condition: $d(x,x) = 0$, and if $d(a,b) = 0$, then $a = b$.
-    \item Triangle inequality: $d(x,z) \leq d(x,y) + d(y,z)$. This property is important as it means that two points have arbitrarily small distance if they have arbitrarily small distance with any intermediate point.
+    \item Triangle Inequality: $d(x,z) = d(x,y) + d(y,z)$.
   \end{itemize}
-  We now have a well-defined distance metric. Every pair of points must have a unique distance, and no pair of points can map to two distance points. We call $X$ equipped with $d: X\times X \rightarrow \R$ a \textbf{metric space}.
+  This defines a \textbf{distance metric} on $X$. For instance, for $x,y\in\R^n$, we define the \textbf{Euclidean metric} as follows:
+  \begin{align*}
+    d(x,y) = \left(\sum_{i=1}^{n}(x_i-y_i)^2\right)^{1/2}
+  \end{align*}
+  In $\R^1 = \R$, this is equivalent to $|x-y|$.
+  \section*{Open Balls and Open Sets}%
+  In $\R^n$ with the Euclidean metric, we define the \textbf{open ball} of radius $\varepsilon > 0$ about the point $x$ as follows:
+  \begin{align*}
+    V_{\varepsilon} &= \left\{p \mid d(x,p) < \varepsilon\right\}
+  \end{align*}
+  In $\R$, this equivalent to the open interval $(x-\varepsilon,x+\varepsilon)$.\\
+
+  In $A\subseteq X$, if $\forall x\in A,~\exists \varepsilon > 0$ such that $V_{\varepsilon}(x)\subseteq A$, then $A$ is an \textbf{open set}. If $A = \emptyset$ or $A = X$, then $A$ is open.\\
+
+  Suppose $A$ and $B$ are open sets in a metric space $X$. We claim that $A\cap B$ and $A\cup B$ are open sets in $X$. Let $a\in A$ and $b\in B$.\\
+
+  Then, $\exists \varepsilon_a>0$ such that $V_{\varepsilon_a}(a)\subseteq A$, meaning that $V_{\varepsilon_a}(a)\subseteq A\cup B$, and similarly for $b$ and $\varepsilon_b$.\\
+
+  If $A = \emptyset$, then $A\cap B = \emptyset$, meaning $A\cap B$ is open. Otherwise, suppose $A\cap B \neq \emptyset$. Let $x\in A\cap B$, meaning $x\in A$ and $x\in B$. So, $\exists \varepsilon_1>0$ such that $V_{\varepsilon_1}(x)\in A$.\\
+
+  Specifically, define $\varepsilon_1$ to be the maximum such value. Similarly, $\exists \varepsilon_2 > 0$ such that $V_{\varepsilon_2}(x)\in B$, where $\varepsilon_2$ is the maximum such value. Let $\varepsilon = \min\{\varepsilon_1,\varepsilon_2\}$ Then, $V_{\varepsilon} \subseteq V_{\varepsilon_1}$ and $V_{\varepsilon} \subseteq V_{\varepsilon_2}$, meaning $V_{\varepsilon} \subseteq A$ and $V_{\varepsilon}\subseteq B$, so $V_{\varepsilon} \subseteq A\cap B$.
+  \section*{Continuity}%
+  We can consider functions between metric spaces. For $f: X \rightarrow Y$ where $X$ and $Y$ are metric spaces.If $f$ is continuous, then $\forall \varepsilon > 0, \exists \delta > 0$ such that for $x_1,x_2\in X$,\[d(f(x_1),f(x_2)) < \varepsilon \Rightarrow d(x_1,x_2) < \delta\]. Alternatively, $\forall\varepsilon > 0$, if $f(x_2)\in V_{\varepsilon}(x_1)$, then $\exists \delta > 0$ such that $x_2\in V_{\delta}(x_1)$.\\
+
+  We claim that $f:X\rightarrow Y$ is a continuous function if and only if the preimage of every open set in $Y$ is open in $X$.
+  \begin{description}
+    \item[$(\Rightarrow)$] Let $f: X\rightarrow Y$ be continuous, and let $B\subseteq Y$. We claim that $f^{-1}(B) = \{x\mid f(x) \in B\}$ is open. Let $f(b)\in B$. Then, since $B$ is open, $\exists \varepsilon > 0$ such that $V_{\varepsilon}(f(b)) \subseteq B$. Since $f$ is continuous, $\forall f(x)\in V_{\varepsilon}(f(b))$, $\exists \delta$ such that $x\in V_{\delta}(b)$. 
+  \end{description}
 \end{document}
