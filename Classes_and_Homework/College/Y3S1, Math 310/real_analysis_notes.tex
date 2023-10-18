@@ -2632,7 +2632,7 @@
                      &< \varepsilon/2 + \varepsilon/2\\
                      &= \varepsilon
         \end{align*}
-      \item[$(2)\Rightarrow(1)$] If $(x_n)_n$ is Cauchy, then $(x_n)_n$ is bounded.\\
+      \item[$(2)\Rightarrow(1)$] If $(x_n)_n$ is Cauchy, then $(x_n)_n$ converges.\\
 
         By Bolzano-Weierstrass, $(x_n)_n$ admits a convergent subsequence, so by our previous lemma, $(x_n)_n$ must converge.
     \end{description}
@@ -2640,5 +2640,149 @@
       \small
       \item[Note:] To show $(2) \Rightarrow (1)$, we used Bolzano-Weierstrass, which requires the monotone convergence theorem, which itself requires the completeness axiom. This is why we cannot show $(2) \Rightarrow (1)$ converges.
     \end{description}
+  \end{problem}
+  \begin{problem}{Complete Metric Spaces}
+    A metric space $(X,d)$ is \textbf{complete} if every Cauchy sequence converges.
+    \begin{description}
+      \small
+      \item[Remark:] All convergent sequences are Cauchy, and all Cauchy sequences are bounded. We showed that $\R$ under the absolute value metric is complete.
+    \end{description}
+    $\Q$ under $d(s,t) = |s-t|$ is not complete; similarly, $A = (0,1)$ under the metric inherited from $R$ is not complete; $x_n = \frac{1}{n}$ is Cauchy but not convergent in $A$.
+  \end{problem}
+  \begin{problem}{Finding Cauchy Sequences and Convergence in $\R$}
+    Consider the harmonic sequence
+    \begin{align*}
+      h_n = \sum_{k=1}^{n}\frac{1}{k}
+    \end{align*}
+    We claim that $h_n$ is not convergent.\\
+
+    Let $p > q$. Then,
+    \begin{align*}
+      \left|h_p-h_q\right| &= \left|\sum_{1}^{p}\frac{1}{k} - \sum_{1}^{q}\frac{1}{k}\right|\\
+                           &= \frac{1}{q+1} + \frac{1}{q+2} + \cdots + \frac{1}{p}\\
+                           &\geq \frac{1}{p} + \frac{1}{p} + \cdots + \frac{1}{p}\\
+                           &= \frac{p-q}{p} \\
+                           &= 1-\frac{q}{p}\\
+                           \shortintertext{set $p = 2q$:}
+      \left|h_{2q}-h_q\right| &\geq 1\frac{q}{2q}\\
+                              &= 1/2
+    \end{align*}
+    Therefore, $h_n$ is not Cauchy, and thus not convergent.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    Consider a sequence of partial sums
+    \begin{align*}
+      x_n &= \sum_{k=0}^{n} \frac{(-1)^k}{k!}
+    \end{align*}
+    We claim that $(x_n)_n$ is Cauchy, and thus convergent. Let $p > q$. Then, we have
+    \begin{align*}
+      \left|x_p-x_q\right| &= \left|\sum_{k=q+1}^{p}\frac{(-1)^k}{k!}\right|\\
+                           &\leq \sum_{k=q+1}^{p}\frac{1}{k!}\\
+                           &\leq \sum{k=q+1}^{p}\frac{1}{2^{k-1}}\\
+                           &= \frac{1}{2^q} + \frac{1}{2^{q+1}} + \cdots + \frac{1}{2^{p-1}}\\
+                           &= \frac{1}{2^q}\left(1 + \frac{1}{2} + \cdots + \frac{1}{2^{p-q-1}}\right)\\
+                           &\leq \frac{1}{2^{q-1}}
+    \end{align*}
+    Given $\varepsilon > 0$, choose $N$ large such that $\displaystyle \frac{1}{2^{N-1}} < \varepsilon$. When $p > q > N$, then $\displaystyle|x_p-x_q| \leq \frac{1}{2^{q-1}} \leq \frac{1}{2^{N-1}} < \varepsilon$.\\
+
+    Thus, the sequence is convergent.
+  \end{problem}
+  \begin{problem}{Contractive Sequences}
+    A sequence $(x_n)_n$ in a metric space $(X,d)$ is \textbf{contractive} if
+    \begin{align*}
+      \exists 0 < \rho < 1 \ni d(x_{n+1},x_n) \leq \rho d(x_{n},x_{n-1}) \tag*{$\forall n\geq 1$}
+    \end{align*}
+    In $\R$, the definition is
+    \begin{align*}
+      |x_{n+1}-x_n| \leq \rho |x_n - x_{n-1}|
+    \end{align*}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    We claim that every contractive sequence is Cauchy.\\
+
+    From examination, we arrive at the following:
+    \begin{align*}
+      |x_{n} - x_{n-1}| \leq \rho^{n-2}|x_{2}-x_{1}| \tag*{($\ast$)}
+    \end{align*}
+    If $p > q$, then
+    \begin{align*}
+      |x_{p}-x_{q}| &= |x_{p}-x_{p-1} + x_{p-1}-x_{p-1} + \cdots + x_{q+1}-x_q|\\
+                    &\leq |x_p-x_{p-1}| + \cdots + |x_{q+1}-x_q|\tag*{Triangle Inequality}\\
+                    &\leq |x_2-x_1| \left(\rho^{p-2} + \rho^{p-3} + \cdots + \rho^{q-1}\right)\\
+                    &= |x_2-x_1| \rho^{q-1} \left(1 + \rho + \rho^2 + \cdots + \rho^{p-q-1}\right)\\
+                    &= |x_2-x_1|\rho^{q-1}\frac{1-\rho^{p-q}}{1-x}\tag*{Finite Geometric Sequence}\\
+                    &\leq |x_{2}-x_1| \frac{\rho^{q-1}}{1-\rho}
+    \end{align*}
+    Given $\varepsilon > 0$, we can find $N$ large such that 
+    \begin{align*}
+      q\geq N \Rightarrow |x-2-x_1| \frac{\rho^{q-1}}{1-\rho} < \varepsilon
+    \end{align*}
+    Thus, $p > q \geq N \Rightarrow |x_p-x_q| < \varepsilon$.
+  \end{problem}
+  \begin{problem}{Application of Contractive Sequences}
+    Consider $(f_n)_n$ defined as follows:
+    \begin{align*}
+      f_0 = 1\\
+      f_1 &= 1\\
+      f_{n+1} &= f_n + f_{n-1}
+    \end{align*}
+    Consider $x_n$ defined as follows:
+    \begin{align*}
+      x_n &= \frac{f_{n+1}}{f_n}
+    \end{align*}
+    We can rewrite $x_n$ as:
+    \begin{align*}
+      x_n &= \frac{f_n + f_{n-1}}{f_n}\\
+          &= 1 + \frac{f_{n-1}}{f_n}\\
+          &= 1 + \frac{1}{\frac{f_n}{f_{n-1}}}\\
+          &= 1 + \frac{1}{x_{n-1}}
+    \end{align*}
+    We claim that $3/2 \leq x_n \leq 2~\forall n\geq 2$.
+    \begin{align*}
+      x_2 &= 2\\
+      \shortintertext{Inductive Hypothesis: suppose $3/2 \leq x_n \leq 2$}:
+      \frac{3}{2} \leq x_n \leq 2\\
+      \frac{2}{3} \geq \frac{1}{x_n} \geq \frac{3}{2}\\
+      2 \geq \frac{5}{3} \geq 1 + \frac{1}{x_n} \geq \frac{3}{2}
+    \end{align*}
+    We now claim that $(x_n)_n$ is contractive.
+    \begin{align*}
+      \left|x-{n+1}-x_n\right| &= \left|\left(1+\frac{1}{x_n}\right) - \left(1 + \frac{1}{x_{n-1}}\right)\right|\\
+                               &= \left|\frac{1}{x_{n}} - \frac{1}{x_{n-1}}\right|\\
+                               &= \left|\frac{x_{n-1}-x_{n}}{x_{n-1}x_{n}}\right|\\
+                               &\leq \frac{4}{9} |x_{n}-x_{n-1}|
+    \end{align*}
+    Therefore, $\rho = \frac{4}{9}$ is our constant of contraction. Thus, $(x_n)_n$ is Cauchy, so it converges in $\R$.
+    \begin{align*}
+      x_{n+1} &= 1 + \frac{1}{x_{n}}\tag{$n \rightarrow \infty,~x_n \rightarrow \varphi$}\\
+      \varphi &= 1 + \frac{1}{\varphi}\\
+      \varphi^2 - \varphi - 1 &= 0\\
+      \varphi &= \frac{1 + \sqrt{5}}{2}
+    \end{align*}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    Let $x_1 = 0$, $x_2 = 1$, and
+    \begin{align*}
+      x_{n+1} &= \frac{1}{2}(x_n + x_{n-1})\\
+      (x_n)_n &= \left(0,1,1/2,3/4,5/8,11/16,21/32,\dots\right)
+    \end{align*}
+    While the sequence is not monotone, we can show that the sequence is contractive.
+    \begin{align*}
+      |x_{n+1}-x_n| &= \left|\frac{1}{2}\left(x_{n}+x_{n-1}\right) - x_n\right|\\
+                    &= \left|\frac{1}{2}\left(x_{n-1}-x_n\right)\right|\\
+                    &= \frac{1}{2}|x_n-x_{n-1}|
+    \end{align*}
+    Since the constant of contraction is equal to $1/2$, this sequence is Cauchy, and thus converges in the real numbers.\\
+
+    Since $(x_n)_n\rightarrow x$, every subsequence converges to $x$. Therefore, $(x_{2k+1})_k\rightarrow x$.
+    \begin{align*}
+      x_{2k+1} &= \sum_{j=1}^{k} \frac{1}{2^{2j-1}}\\
+               &= 2 \sum_{j=1}^{k}\frac{1}{4^j}\\
+               &= 2 \frac{1-\frac{1}{4^{k+1}}}{1-\frac{1}{4}}\\
+               &= \frac{2}{3} \tag*{$k\rightarrow\infty$}
+    \end{align*}
   \end{problem}
 \end{document}
