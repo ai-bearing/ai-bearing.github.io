@@ -74,8 +74,11 @@
 % text + color boxes
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{breakable}
-\newtcolorbox{problem}[1]{colback = white, title = {#1}, breakable}
-\newtcolorbox{solution}{colback = white, colframe = black!75!white, title = Solution, breakable}
+\tcbuselibrary{skins}
+\newtcolorbox{problem}[1]{colback=white,enhanced,title={\small #1},
+          attach boxed title to top center=
+{yshift=-\tcboxedtitleheight/2},
+boxed title style={size=small,colback=black!60!white}, breakable}
 %including PDFs
 \usepackage{pdfpages}
 \setlength{\parindent}{0pt}
@@ -941,6 +944,76 @@
     \end{itemize}
   \end{problem}
   \begin{problem}{Repeated Games and SPE Activity}
-    
+    \begin{tcbraster}[raster columns = 1,colframe = black!75!white,colback=white]
+      \tcbincludepdf{images/activity_10.pdf}
+    \end{tcbraster}
+  \end{problem}
+  \begin{problem}{Finitely Repeated Games: Unique Nash Equilibria}
+    We find the SPE in a finitely repeated game via backward induction, as we would for a normal extensive-form game.\\
+
+    In the finitely repeated Prisoner's Dilemma has a unique SPE in which each player's \textit{strategy} is to choose $F$ in each period, regardless of the history.\\
+
+    The finite repetition of a stage game $G$ that has a unique Nash equilibrium gives a unique SPE in which players play the Nash equilibrium in every stage, \textit{regardless of what happened prior.}
+  \end{problem}
+  \begin{problem}{Finitely Repeated Games: Multiple Nash Equilibria}
+    Consider the game where the following stage game is repeated twice:
+    \begin{center}
+      \renewcommand{\arraystretch}{1.5}
+      \begin{tabular}{c|c|c|c|}
+        \multicolumn{1}{c}{} & \multicolumn{1}{c}{$L$}& \multicolumn{1}{c}{$C$}& \multicolumn{1}{c}{$R$}\\
+        \cline{2-4}
+        $T$ & $1,1$ & $5,0$ & $0,0$\\
+        \cline{2-4}
+        $M$ & $0,5$ & $4,4$ & $0,0$\\
+        \cline{2-4}
+        $B$ & $0,0$ & $0,0$ & $3,3$\\
+        \cline{2-4}
+      \end{tabular}
+    \end{center}
+    To solve for the SPE of this game, we have to apply backward induction.\\
+
+    In the second round, a Nash equilibrium must be played, so we start by finding the Nash equilibria of the stage game.
+    \begin{itemize}
+      \item $M$ is strictly dominated by a combination of $T$ and $B$.
+      \item $C$ is strictly dominated by a combination of $L$ and $R$.
+    \end{itemize}
+    \begin{center}
+      \renewcommand{\arraystretch}{1.5}
+      \begin{tabular}{c|c|c|c|}
+        \multicolumn{1}{c}{} & \multicolumn{1}{c}{$L$}& \multicolumn{1}{c}{$\xcancel{C}$}& \multicolumn{1}{c}{$R$}\\
+        \cline{2-4}
+        $T$ & $1,1$ & $\xcancel{5,0}$ & $0,0$\\
+        \cline{2-4}
+        $\xcancel{M}$ & $\xcancel{0,5}$ & $\xcancel{4,4}$ & $\xcancel{0,0}$\\
+        \cline{2-4}
+        $B$ & $0,0$ & $\xcancel{0,0}$ & $3,3$\\
+        \cline{2-4}
+      \end{tabular}
+    \end{center}
+    \begin{itemize}
+      \item Therefore, we have three Nash equilibria:
+        \begin{itemize}
+          \item $(T,L)$ with payoff $(1,1)$
+          \item $(B,R)$ with payoff $(3,3)$
+          \item $(3/4T + 1/4B,3/4L + 1/4R)$ with payoff $(3/4,3/4)$
+        \end{itemize}
+      \item Example SPE: play a Nash equilibrium in the stage game in period $1$, and any Nash equilibrium of the stage game in period $2$, regardless of the history.
+      \item However, we can also achieve outcomes in the first stage that are not Nash equilibria of the stage game by using the Nash equilibria in the second stage as reward and punishment.
+      \item The following is a SPE where $(M,C)$ is played in the first stage:
+        \begin{align*}
+          (s_1,s_2) &= \begin{cases}
+            (M,C) & \text{in stage 1}\\
+            (B,R) & \text{in stage 2 if $(M,C)$ in stage 1}\\
+            (T,L) & \text{in stage 2 otherwise}
+          \end{cases}
+        \end{align*}
+      \item We can see that this is a SPE as we play a Nash equilibrium in every proper subgame; we can also see that player 1 and player 2 both have no profitable deviation (if player 1 plays $T$ in stage 1, their total payoff is $6$, as compared to $7$ in this strategy profile).
+      \item This exhibits the primary function of multiple Nash equilibria in a repeated stage game: using them as rewards and punishments for cooperation/non-cooperation.
+    \end{itemize}
+  \end{problem}
+  \begin{problem}{Finitely Repeated Game}
+    \begin{tcbraster}[raster columns = 1,colframe = black!75!white,colback=white]
+      \tcbincludepdf{images/activity_11.pdf}
+    \end{tcbraster}
   \end{problem}
 \end{document}
