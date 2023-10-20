@@ -1,4 +1,4 @@
-\documentclass[8pt]{extarticle}
+\documentclass[10pt]{extarticle}
 \title{}
 \author{Avinash Iyer}
 \date{}
@@ -75,8 +75,11 @@
 % text + color boxes
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{breakable}
-\newtcolorbox{problem}[1]{colback = white, title = {#1}, breakable}
-\newtcolorbox{solution}{colback = white, colframe = black!75!white, title = Solution, breakable}
+\tcbuselibrary{skins}
+\newtcolorbox{problem}[1]{colback=white,enhanced,title={\small #1},
+          attach boxed title to top center=
+{yshift=-\tcboxedtitleheight/2},
+boxed title style={size=small,colback=black!60!white}, breakable}
 %including PDFs
 %\usepackage{pdfpages}
 \setlength{\parindent}{0pt}
@@ -94,5 +97,183 @@
 \begin{document}
   \begin{problem}{Problem 1}
     Let $x_1 = 1$ and inductively set $x_{n+1} = \sqrt{2 + x_n}$. Show that $(x_n)_n$ converges and find its limit.
+    \tcblower
+    We claim that $(x_n)_n$ is bounded above by $2$ and monotone increasing.\\
+
+    Base case, we have $x_1 = 1 \leq 2$. Inductively assume that $x_n \leq 2$.
+    \begin{align*}
+      x_{n+1} &= \sqrt{2 + x_n}\\
+              &\leq \sqrt{2 + 2}\\
+              &\leq 2
+    \end{align*}
+    Similarly, we know that $\forall 0 \leq x \leq 2$, it is the case that $x^2 \leq 2 + x$, as $x^2 - x - 2 \leq 0 \Rightarrow -1 \leq 0 \leq x \leq 2$. Therefore, $\forall n\in\N$,
+    \begin{align*}
+      x_{n} &\leq \sqrt{2 + x_n}\\
+            &= x_{n+1}
+    \end{align*}
+    Therefore, since the sequence is monotone increasing and bounded above, the sequence is convergent. Specifically, we know that $(x_{n})_n \rightarrow x$ and $(x_{n+1})_n \rightarrow x$, so
+    \begin{align*}
+      x &= \sqrt{2 + x}\\
+      x^2 - x - 2 &= 0\\
+      x &= 2
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Problem 2}
+    Does the following sequence converge?
+    \begin{align*}
+      x_n := \sum_{k=n+1}^{2n}\frac{1}{k}
+    \end{align*}
+    \tcblower
+    Listing out terms, we have:
+    \begin{align*}
+      x_1 &= \frac{1}{2} \geq \frac{1}{2}\\
+      x_2 &= \frac{1}{3} + \frac{1}{4} \geq x_1\\
+      x_3 &= \frac{1}{4} + \frac{1}{5} + \frac{1}{6} \geq x_2\\
+      x_4 &= \frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8} \geq x_3
+    \end{align*}
+    Using the contractive test, we have:
+    \begin{align*}
+      \left|x_{n+1} - x+n\right| &\leq \rho \left|x_{n} - x_{n-1}\right|\\
+      \left|\frac{1}{(2n+2)(2n+1)}\right| &\leq \rho \left|\frac{1}{(2n)(2n-1)}\right|\\
+      \frac{(2n)(2n-1)}{(2n+2)(2n+1)} &\leq \rho
+    \end{align*}
+    Since $\rho$ cannot be constant, we have no constant of contraction, meaning the sequence is not Cauchy and thus not convergent.
+  \end{problem}
+  \begin{problem}{Problem 3}
+    Let $(f_n)_n$ denote the Fibonacci sequence and let
+    \begin{align*}
+      x_n := \frac{f_{n+1}}{f_n}.
+    \end{align*}
+    Given that $(x_n)_n$ converges, find its limit.
+    \tcblower
+    \begin{align*}
+      x_n &= \frac{f_{n+1}}{f_n}\\
+          &= \frac{f_{n} + f_{n-1}}{f_n}\\
+          &= 1 + \frac{f_{n-1}}{f_n}\\
+          &= 1 + \frac{1}{\frac{f_{n}}{f_{n-1}}}\\
+          &= 1 + \frac{1}{x_{n-1}}\\
+          \shortintertext{As $(x_n)_n \rightarrow x$, $(x_{n-1})_n\rightarrow x$, so}
+      x &= 1 + \frac{1}{x}\\
+      x^2 - x - 1 &= 0\\
+      x &= \frac{1 + \sqrt{5}}{2}
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Problem 4}
+    If $(x_n)_n$ is an unbounded sequence of real numbers, show that there is a sequence $(x_{n_k})_k$ such that
+    \begin{align*}
+      \left(\frac{1}{x_{n_k}}\right)_k \xrightarrow{x\rightarrow\infty} 0.
+    \end{align*}
+    \tcblower
+    Since $(x_n)_n$ is not bounded, it is not convergent --- as $(x_n)_n$ is not convergent, it is not Cauchy. Set $\varepsilon_0 = 2$. Then, $\exists n_1 > 1$ such that
+    \begin{align*}
+      |x_{n_1} - x_1| &\geq \varepsilon_0\\
+      \shortintertext{Similarly, $\exists n_2 > 0$ such that}
+      |x_{n_2} - x_{n_1}| &\geq \varepsilon_0\\
+      \shortintertext{Inductively, we have that $\forall k\in\N,\exists n_k > n_{k-1}$ such that}
+      |x_{n_k} - x_{n_{k-1}}| &\geq \varepsilon_0
+      \shortintertext{Therefore, $\left|x_{n_k}\right| > \left|x_{n_{k-1}}\right|$, so}
+      \left(\frac{1}{\left|x_{n_k}\right|}\right)_{k} &\rightarrow 0
+    \end{align*}
+    as the given subsequence is monotone decreasing bounded below by zero.
+  \end{problem}
+  \begin{problem}{Problem 5}
+    Suppose that every subsequence of a sequence $(x_n)_n$ has a subsequence that converges to 0. Show that $(x_n)_n \rightarrow 0$.
+    \tcblower
+    Every subsequence of $(x_n)_n$ has a subsequence that converges to zero --- in particular, this means the sequence $(x_n)_n$ has a subsequence that converges to zero.
+    \begin{align*}
+      (x_{n_{k}})_k &= (x_{n_1},x_{n_2},\dots)\\
+      \shortintertext{consider the subsequence excluding this sequence:}
+      (x_{n})_n \setminus (x_{n_k})_k &= (x_1,x_2,\dots,x_{n_1-1},x_{n_1+1},\dots)\\
+      \shortintertext{This subsequence admits a subsequence that converges to zero:}
+      (x_{m_k})_k &= (x_{m_1},x_{m_2},\dots)
+    \end{align*}
+    Inductively, via this process, we can assign every element of $(x_n)_n$ to a subsequence that converges to zero; therefore, $(x_n)_n$ must converge to zero.
+  \end{problem}
+  \begin{problem}{Problem 6}
+    Let $(I_n)_n$ be a nested sequence of closed and bounded intervals. For each $n\in\N$ let $x_n\in I_n$. Use the Bolzano-Weierstrass Theorem for the sequence $(x_n)_n$ to give a proof of the Nested Intervals Property.
+    \tcblower
+    We have that
+    \begin{align*}
+      x_1 &\in [a_1,b_1]\\
+      x_2 &\in [a_2,b_2]\subseteq [a_1,b_1]\\
+       &\vdots \\
+      x_n&\in [a_n,b_n] \subseteq [a_1,b_1]
+    \end{align*}
+    So, as $a_1\leq x_n\leq b_1$, we have that $\exists n_k$ such that
+    \begin{align*}
+      \left(x_{n_k}\right)_k \rightarrow x
+    \end{align*}
+    for some $x$. However, as $k\rightarrow\infty$, this means $n\rightarrow\infty$, or equivalently, we have that
+    \begin{align*}
+      x\in\bigcap_{n=1}^{\infty} I_n,
+    \end{align*}
+    meaning $\bigcap_{n=1}^{\infty}I_n\neq\emptyset$.
+  \end{problem}
+  \begin{problem}{Problem 7}
+    If $(x_n)_n$ is a bounded sequence and $s:= \sup_{n}{x_n}$ such that $s\notin \{x_n\mid n\geq 1\}$, show that there is a subsequence $\left(x_{n_k}\right)_k$ that converges to $s$.
+    \tcblower
+    We know that since $(x_n)_n$ is bounded, $\exists (n_k)_k$ such that $\left(x_{n_k}\right)_k$ is monotone.\\
+
+    Suppose that $\left(x_{n_k}\right)_k$ is monotone decreasing. This means $\left(x_{n_k}\right)_k\rightarrow \inf\left(x_{n_k}\right)$. However, this means $x_{n_1} \leq x_{n_2}\leq \cdots$, meaning any upper bound on this sequence must be in the set of $x_n$, including the supremum.\\
+
+    Therefore, the monotone subsequence must be a monotone increasing subsequence. Let $\varepsilon > 0$. By the definition of supremum, $\exists n'\in \N$ such that $x_{n'} > s - \varepsilon$, and 
+    \begin{align*}
+      s \geq \cdots \geq x_{n'+1} \geq x_{n'} \geq s - \varepsilon
+    \end{align*}
+    We let our subsequence be the $n'$ tail of $x_n$, and we have found a subsequence that converges to $s$.
+  \end{problem}
+  \begin{problem}{Problem 8}
+    Let $(x_n)_n$ and $(y_n)_n$ be bounded sequences. Show that
+    \begin{align*}
+      \limsup \left(\left(x_n + y_n\right)_n\right) \leq \limsup\left(x_n\right)_n + \limsup\left(y_n\right)_n
+    \end{align*}
+    \tcblower
+    We have shown that
+    \begin{align*}
+      \sup(x_n + y_n)_n &\leq \sup(x_n)_n + \sup(y_n)_n
+    \end{align*}
+    Additionally, we know that the sequences of these suprema are related by the following:
+    \begin{align*}
+      \left(\sup_{n\geq m}\left(x_n + y_n\right)_n\right)_m &\leq \left(\sup_{n\geq m}\left(x_n\right)_n + \sup_{n\geq m}\left(y_n)_n\right)\right)_m\\
+                                                            &= \left(\sup_{n\geq m}\left(x_n\right)_n\right)_m + \left(\sup_{n\geq m}\left(y_n\right)_n\right)_m
+    \end{align*}
+    Therefore,
+    \begin{align*}
+      \inf_m\left(\sup_{n\geq m}\left(x_n + y_n\right)_n\right)_m &\leq \inf_m\left(\sup_{n\geq m}\left(x_n\right)_n\right)_m + \inf_m\left(\sup_{n\geq m}\left(y_n\right)_n\right)_m
+    \end{align*}
+    So
+    \begin{align*}
+      \limsup\left(x_n + y_n\right)_n &\leq \limsup\left(x_n\right)_n + \limsup\left(y_n\right)_n
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Problem 9}
+    Let $(x_n)_n$ be a bounded sequence. Show that
+    \begin{align*}
+      \liminf(x_n)_n &= \sup \left\{t\mid t\in\R,~\{n\mid x_{n}<t\}\text{ is finite} \right\}
+    \end{align*}
+    \tcblower
+    By the definition of $\liminf(x_n)_n$, we have
+    \begin{align*}
+      \liminf(x_n)_n &= \sup{m\geq 1}\left(\inf_{n\geq m}(x_n)_n\right)_m,\\
+      \shortintertext{The parenthetical on the right is equivalent to:}
+      \inf_{n\geq m}(x_n)_n &= \max\left\{t \mid x_{n} \geq t\right\} \tag*{$\forall n\geq m$}\\
+      \shortintertext{or, alternatively}
+                            &= \sup\left\{t \mid x_{n} < t\right\} \tag*{$\forall n < m$}\\
+                            \shortintertext{which is equivalent to the following statement}
+      \liminf(x_n)_n &= \sup\left\{t\mid \{n\mid x_{n} < t\}\text{ is finite}\right\}
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Problem 10}
+    Let $(x_n)_n$ be a bounded sequence. Show that
+    \begin{align*}
+      \liminf(-x_n)_n &= -\limsup(x_n)_n
+    \end{align*}
+    \tcblower
+    \begin{align*}
+      \liminf(-x_n)_n &= \sup_{m\geq 1}\left(\inf_{n\geq m}(-x_n)_n\right)_m\\
+                      &= \sup_{m\geq 1}\left(-\sup_{n\geq m}(x_n)_n\right)_m\\
+                      &= -\inf_{m\geq 1}\left(\sup_{n\geq m}(x_n)_n\right)_m\\
+                      &=-\limsup(x_n)_n
+    \end{align*}
   \end{problem}
 \end{document}
