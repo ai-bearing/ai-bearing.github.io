@@ -5,7 +5,8 @@
 \usepackage[shortlabels]{enumitem}
 
 %font setup
-%
+% sans serif font:
+\usepackage{cmbright}
 %\usepackage{newpxtext,eulerpx}
 
 %paper setup
@@ -17,7 +18,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathtools}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{gensymb}
 
 \usepackage[T1]{fontenc}
@@ -75,8 +76,11 @@
 % text + color boxes
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{breakable}
-\newtcolorbox{problem}[1]{colback = white, title = {#1}, breakable}
-\newtcolorbox{solution}{colback = white, colframe = black!75!white, title = Solution, breakable}
+\tcbuselibrary{skins}
+\newtcolorbox{problem}[1]{colback=white,enhanced,title={\small #1},
+          attach boxed title to top center=
+{yshift=-\tcboxedtitleheight/2},
+boxed title style={size=small,colback=black!60!white}, breakable}
 %including PDFs
 \usepackage{pdfpages}
 \setlength{\parindent}{0pt}
@@ -695,8 +699,65 @@
       y &=2- \frac{2}{3}z\\
       V &= \int_{0}^{3}\int_{0}^{2-\frac{2z}{3}}\int_{0}^{1-\frac{1}{2}y - \frac{1}{3}z}1~dx~dy~dz\\
         &= \int_{0}^{3}\int_{0}^{2-\frac{2z}{3}}\left(1-\frac{1}{2}y-\frac{1}{3}z\right) dy~dz\\
-        &= \int_{0}^{3}2-\frac{2z}{3}-\frac{\left(2-\frac{2z}{3}\right)^2}{4}-\frac{\left(2-\frac{2z}{3}\right)z}{4}~dz\\
-        &= 1
+        &= \int_{0}^{3}2-\frac{2z}{3}-\frac{\left(2-\frac{2z}{3}\right)^2}{4}-\frac{\left(2-\frac{2z}{3}\right)z}{3}~dz\\
+        \shortintertext{$u$ substitution:}
+      u &= 2-\frac{2z}{3}\\
+      z &= \frac{3(u-2)}{-2}\\
+      dz &= -\frac{3}{2}du\\
+         &= \int_{2}^{0} \left(u - \frac{u^2}{4} - \frac{3u(u-2))}{-6} \right)\left(-\frac{3}{2}du\right)\\
+         &= \int_{2}^{0} \frac{u^2}{4}\\
+         &= -\frac{3}{2}\int_{2}^{0}\frac{u^2}{4}\\
+         &= -\frac{3}{2}\frac{u^3}{12}\biggr\vert_{2}^{0}\\
+         &= 1
+    \end{align*}
+  \end{problem}
+  \begin{problem}{The Jacobian}
+    Let $f_1(x_1,\dots,x_n),\dots,f_{n}(x_1,\dots,x_n)$ be differentiable.
+    \begin{align*}
+      J &= \begin{bmatrix}\frac{\partial f_1}{\partial x_1} & \frac{\partial f_1}{\partial x_2} & \cdots & \frac{\partial f_1}{\partial x_n}\\\frac{\partial f_2}{\partial x_1} & \frac{\partial f_2}{\partial x_2} & \cdots & \frac{\partial f_2}{\partial x_n}\\ \vdots & \vdots & \ddots & \vdots \\ \frac{\partial f_n}{\partial x_1} & \frac{\partial f_n}{\partial x_2} & \cdots & \frac{\partial f_n}{\partial x_n}\end{bmatrix}
+    \end{align*}
+    If we seek to enact a change of variables, we compute $\det{J}$.\\
+
+    For example, let $x = r\cos \theta = x(r,\theta)$, $y = r\sin\theta = y(r,\theta)$.
+    \begin{align*}
+      J &= \begin{bmatrix}\frac{\partial x}{\partial r} & \frac{\partial x}{\partial \theta}\\ \frac{\partial y}{\partial r}&\frac{\partial y}{\partial theta}\end{bmatrix}\\
+        &=\begin{bmatrix}\cos\theta & -r\sin\theta\\ \sin\theta&r\cos\theta\end{bmatrix}\\
+      \det J &= \begin{vmatrix}\cos\theta & -r\sin\theta\\ \sin\theta&r\cos\theta\end{vmatrix}\\
+             &= r
+    \end{align*}
+    Consider a circle of radius $5$. We will integrate $f(x,y) = x^2 + y$ over this circle.
+    \begin{description}
+      \item[(1): Cartesian]
+    \end{description}
+    \begin{align*}
+      \int_{A} f(x,y) dA &= \int_{-5}^{5} \int_{-\sqrt{25-x^2}}^{\sqrt{25-x^2}}\left(x^2 + y\right)~dy~dx\\
+                         &= \int_{-5}^{5} \left(x^2y + \frac{y^2}{2}\biggr\vert_{y=\sqrt{25-x^2}}^{y=\sqrt{25-x^2}}\right)~dx\\
+                         &=\int_{-5}^{5} 2x^2\sqrt{25-x^2}~dx\\
+                         &\vdots
+    \end{align*}
+    \begin{description}
+      \item[(2): Polar]
+    \end{description}
+    \begin{align*}
+      \int_{A}f(r,\theta)~dr~d\theta &= \int_{A}f(r,\theta)\left(\begin{vmatrix}\cos\theta & -r\sin\theta\\ \sin\theta&r\cos\theta\end{vmatrix}\right)~dr~d\theta\\
+                                     &= \int_{0}^{2\pi}\int_{0}^{5}\left(r^2\cos^2\theta + r\sin\theta\right)(r)~dr~d\theta\\
+                                     &=\int_{0}^{2\pi}\int_{0}^{5}r^3\cos^2\theta~dr~d\theta + \int_{0}^{2\pi}\int_{0}^{5}r^2\sin\theta~dr~d\theta\\
+                                     &= \left(\int_{0}^{2\pi}\cos^2\theta~d\theta\right)\left(\int_{0}^{5}r^3~dr\right) + \left(\int_{0}^{2\pi}\sin\theta~d\theta\right)\left(\int_{0}^{5}r^2~dr\right)\\
+                                     &= \frac{625}{4}\left(\int_{0}^{2\pi}\cos^2\theta~d\theta\right)\\
+                                     &= \frac{625\pi}{4}
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Cylindrical Coordinates}
+    We can define a new coordinate base as follows:
+    \begin{align*}
+      x &= r\cos \theta\\
+      y &= r\sin\theta\\
+      z &= z
+    \end{align*}
+    Thus, any integral over the cylinder has the following form:
+    \begin{align*}
+      \int_{V}f(x,y,z)~dV &= \int_{V} f(r,\theta,z)\begin{vmatrix}\cos\theta & -r\sin\theta & 0\\ \sin\theta &r\cos\theta & 0 \\  0 & 0 & 1\end{vmatrix}~dr~d\theta~dz\\
+                          &= \int_{V}f(r,\theta,z)r~dr~d\theta~dz
     \end{align*}
   \end{problem}
 \end{document}
