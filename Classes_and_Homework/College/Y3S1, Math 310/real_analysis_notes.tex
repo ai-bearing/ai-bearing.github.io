@@ -7,6 +7,7 @@
 %font setup
 %
 %\usepackage{newpxtext,eulerpx}
+\usepackage{cmbright}
 
 %paper setup
 \usepackage{geometry}
@@ -74,8 +75,11 @@
 % text + color boxes
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{breakable}
-\newtcolorbox{problem}[1]{colback = white, title = {#1}, breakable}
-\newtcolorbox{solution}{colback = white, colframe = black!75!white, title = Solution, breakable}
+\tcbuselibrary{skins}
+\newtcolorbox{problem}[1]{colback=white,enhanced,title={\small #1},
+          attach boxed title to top center=
+{yshift=-\tcboxedtitleheight/2},
+boxed title style={size=small,colback=black!60!white}, breakable}
 %including PDFs
 \setlength{\parindent}{0pt}
 
@@ -2713,11 +2717,11 @@
                     &\leq |x_2-x_1| \left(\rho^{p-2} + \rho^{p-3} + \cdots + \rho^{q-1}\right)\\
                     &= |x_2-x_1| \rho^{q-1} \left(1 + \rho + \rho^2 + \cdots + \rho^{p-q-1}\right)\\
                     &= |x_2-x_1|\rho^{q-1}\frac{1-\rho^{p-q}}{1-x}\tag*{Finite Geometric Sequence}\\
-                    &\leq |x_{2}-x_1| \frac{\rho^{q-1}}{1-\rho}
+                    &\leq |x_2 - x_1| \frac{\rho^{q-1}}{1-\rho}
     \end{align*}
     Given $\varepsilon > 0$, we can find $N$ large such that 
     \begin{align*}
-      q\geq N \Rightarrow |x-2-x_1| \frac{\rho^{q-1}}{1-\rho} < \varepsilon
+      q\geq N \Rightarrow |x_2-x_1| \frac{\rho^{q-1}}{1-\rho} < \varepsilon
     \end{align*}
     Thus, $p > q \geq N \Rightarrow |x_p-x_q| < \varepsilon$.
   \end{problem}
@@ -2838,7 +2842,7 @@
         \end{description}
     \end{description}
   \end{problem}
-  \begin{problem}{Quotients}
+  \begin{problem}{Comparison Test}
     Let $(x_n)_n$ and $(y_n)_n$ be sequences with $x_n > 0$ and $y_n > 0$. Suppose that 
     \begin{align*}
       \left(\frac{x_n}{y_n}\right)_n \rightarrow L > 0
@@ -2866,6 +2870,193 @@
       \frac{x_n}{y_n} &= \frac{\sqrt{4n^2-3n+1}}{n}\\
                       &= \sqrt{4 - \frac{3}{n} + \frac{1}{n^2}}\\
                       &\rightarrow 2 \geq 0
+    \end{align*}
+    Since $y_n$ is properly divergent to $+\infty$, so too is $x_n$.
+  \end{problem}
+  \begin{problem}{Introduction to Infinite Series}
+    An \textbf{infinite series} is a sequence of partial sums $s_n$, where $s_n$ is formed from $x_k$ as follows:
+    \begin{align*}
+      s_n &= \sum_{k=1}^{n} x_k\\
+      \shortintertext{alternatively,}
+      s_1 &= x_1\\
+      s_{n} &= s_{n-1} + x_n
+    \end{align*}
+    The limit of the sequence $(s_n)_n$ is the value of
+    \begin{align*}
+      \sum_{n=1}^{\infty}x_n
+    \end{align*}
+    The infinite series converges to $s$ if $(s_n)_n \rightarrow s$.\\
+
+    If $(s_n)_n$ diverges, then so too does the series. If $(s_n)_n$ is properly divergent to $\pm \infty$, then we write that the series is equal to $\pm\infty$.
+  \end{problem}
+  \begin{problem}{Series of Positive Terms}
+    Let $(x_k)_k$ be a sequence of positive terms. The following are equivalent:
+    \begin{enumerate}[(a)]
+      \item $\sum x_k$ converges.
+      \item The sequence of partial sums $(s_n)_n$ is bounded above.
+      \item A subsequence of the sequence of partial sums $(s_{n_j})_j$ is bounded above.
+    \end{enumerate}
+    \begin{description}
+      \item[Proof:] \hfill
+      \item[$(1) \Rightarrow (2)$:] $\sum x_k$ is convergent $\Rightarrow$ $(s_n)_n$ is convergent $\Rightarrow$ $(s_n)_n$ is bounded.
+      \item[$(2) \Rightarrow (3)$:] If $(s_n)_n$ is bounded, so is any subsequence $(s_{n_j})_j$.
+      \item[$(3) \Rightarrow (2)$:] Suppose $s_{n_j} \leq c$. If $m$ is arbitrary, $\exists j$ such that $n_j \geq m$. Take $j = m$. Then, $s_{m} \leq s_{n_j} \leq c$. Therefore, $(s_n)_n$ is bounded above.
+      \item[$(2) \Rightarrow (1)$] Let $(s_n)_n$ be bounded above. We know that $(s_n)_n$ is increasing as $x_k \geq 0$. By the Monotone Convergence theorem, $(s_n)_n$ converges, meaning $\sum x_k$ converges.
+    \end{description}
+  \end{problem}
+  \begin{problem}{Corollary to Series of Positive Terms}
+    Let $(x_k)_k$ be a sequence with $x_k \geq 0$. Then,
+    \begin{align*}
+      \sum x_k \text{ properly diverges} \Leftrightarrow (s_n)_n \text{ is unbounded}
+    \end{align*}
+    Recall that for $x_k = 1/k$, we proved that $(s_n)_n$ is unbounded, and also that $(s_n)_n$ is not cauchy, meaning $\sum_{k=1}^{\infty}1/k$ is properly divergent.\\
+    
+    Additionally, we saw that for $x_k = 1/k^2$, $(s_n)_n$ is increasing and bounded above.
+    \begin{align*}
+      s_n &= \sum_{k=1}^{n}\frac{1}{k^2}\\
+          &\leq 1 + \sum_{k=2}^{n}\frac{1}{k(k-1)}\\
+          &= 1 + \sum_{k=2}^{n}\frac{1}{k} - \frac{1}{k-1}\\
+          &= 2 - \frac{1}{n}
+    \end{align*}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    Let $b\in\R$. Let $x_k = b^k$. Then, we have
+    \begin{align*}
+      s_n &= \sum_{k=0}^{n}b^k\\
+          &= \frac{1-b^{n+1}}{1-b} \tag*{$b\neq 1$}
+    \end{align*}
+    Therefore, we know the end behavior of the series:
+    \begin{align*}
+      \lim_{n\rightarrow\infty} s_n &= \lim_{n\rightarrow\infty} \frac{1-b^{n+1}}{1-b}\\
+                                    &= \frac{1}{1-b} \left(1-b\lim_{b\rightarrow\infty}b^{n}\right)\\
+                                    &= \begin{cases}
+                                      \frac{1}{1-b} & |b| < 1\\
+                                      \text{diverges} & |b| > 1
+                                    \end{cases}
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Series Comparison Test}
+    Let $0 \leq x_k \leq y_k$.
+    \begin{itemize}
+      \item If $\sum y_k$ converges, then so too does $\sum x_k$
+      \item If $\sum x_k$ diverges, then so too does $\sum y_k$.
+    \end{itemize}
+    \begin{description}
+      \item[Proof:]\hfill
+      \item[$(\Rightarrow)$] If $\sum y_k$ converges, then $t_n = \sum_{k=1}^{n}y_k$ is bounded.\\
+
+        Setting $s_n = \sum_{k=1}^{n}x_k$, we see that $0 \leq s_n \leq t_n$. Seeing as $t_n$ is bounded, so too is $s_n$. Therefore, $\sum x_k$ is convergent.
+    \end{description}
+    For example, consider the series
+    \begin{align*}
+      \sum \frac{1}{k^2 + k}
+    \end{align*}
+    Since $\frac{1}{k^2} \geq \frac{1}{k^2 + k}$, we know that, seeing as $\frac{1}{k^2}$ converges, so does $\frac{1}{k^2 + k}$.
+  \end{problem}
+  \begin{problem}{Limit Comparison Test}
+    Let $x_k$ and $y_k$ be strictly positive sequences. Suppose that
+    \begin{align*}
+      \lim_{k\rightarrow\infty}\frac{x_k}{y_k} = L
+    \end{align*}
+    \begin{enumerate}[(a)]
+      \item If $L > 0$, then $\sum x_k$ converges if and only if $\sum y_k$ converges.
+      \item If $L = 0$, then $\sum y_k$ converges $ \Rightarrow$  $\sum x_k$ converges.
+    \end{enumerate}
+    \begin{description}
+      \item[Proof:]\hfill
+      \item[{\normalfont (a)}] Since
+        \begin{align*}
+          \frac{x_k}{y_k} \rightarrow L
+        \end{align*}
+        Set $\varepsilon = L$. We know $\exists K$ such that $k\geq K \Rightarrow y_k \leq \frac{2}{L}x_k$. Let $s_n = \sum_{k=1}^{n}x_k$ and $t_n = \sum_{k=1}^{n}y_k$. Then,
+        \begin{align*}
+          t_n &= \sum_{k=1}^{K-1}y_k + \sum_{k=K}^{n}\\
+              &\leq t_{K-1} + \frac{2}{L} \sum_{k=K}^{n}\\
+              &\leq t_{K-1} + \frac{2}{L} s_n\\
+              &\leq t_{K-1} + c,
+        \end{align*}
+        implying that $t_n$ is bounded, so $\sum y_k$ converges.
+      \item[{\normalfont (b)}] Since
+        \begin{align*}
+          \frac{x_k}{y_k} \rightarrow 0,
+        \end{align*}
+        $\exists K$ such that $\frac{x_k}{y_k} \leq 1$ $\forall k \geq K$, meaning $x_k < y_k$ $\forall k \geq K$.\\
+
+        Letting $s_n = \sum_{k=1}^{n}x_k$ and $t_n = \sum_{k=1}^{n} y_k$. Thus,
+        \begin{align*}
+          s_n &= \sum_{k=1}^{K-1}x_k + \sum_{k=K}^{n} x_k\\
+              &= s_{K-1} + \sum_{k=K}^{n}y_k\\
+              &\leq s_{K-1} + t_n\\
+              &\leq s_{K-1} + c
+        \end{align*}
+        Thus, $s_n$ is bounded, meaning $\sum x_k$ is convergent.
+    \end{description}
+  \end{problem}
+  \begin{problem}{Limit Comparison Test Examples}
+    Consider
+    \begin{align*}
+      \sum_{n=2}^{\infty}\frac{1}{\sqrt{n^2 -1}}
+    \end{align*}
+    Letting $x_n = \frac{1}{\sqrt{n^2 - 1}}$, and $y_n = \frac{1}{n}$, we have
+    \begin{align*}
+      \frac{x_n}{y_n} &= \frac{n}{\sqrt{n^2 - 1}}\\
+                      &\rightarrow 1 > 0
+    \end{align*}
+    Since $\sum y_n$ diverges, so too does $\sum x_n$.
+  \end{problem}
+  \begin{problem}{$n$th Term Divergence Test}
+    If $\sum x_k$ is convergent, then $(x_k)_k \rightarrow 0$. Conversely, if $(x_k)_k \nrightarrow 0$, then $\sum x_k$ diverges.
+    Recall that $s_n = s_{n-1} + x_n$. If $\sum x_k$ converges, then $(s_n)_n \rightarrow 0$. So,
+    \begin{align*}
+      x_n &= s_n - s_{n-1}\\
+      (s_n)_n &\rightarrow s\\
+      x_n &\rightarrow s - s\\
+          &= 0
+    \end{align*}
+    For example, we can find that
+    \begin{align*}
+      \sum_{k=1}^{\infty}\frac{1}{\arctan{k}}
+    \end{align*}
+    diverges, as $\lim_{k\rightarrow\infty}\frac{1}{\arctan{k}} = \frac{2}{\pi} \neq 0$
+  \end{problem}
+  \begin{problem}{Cauchy Condensation Test}
+    Let $(x_k)_k$ be a decreasing sequence of positive numbers. Then,
+    \begin{align*}
+      \sum_{k}x^k \text{ converges } \Leftrightarrow \sum_{k} 2^kx_{2^k} \text{ converges}
+    \end{align*}
+    \tcblower
+    Look at the partial sum $s_{2^n}$,
+    \begin{align*}
+      s_{2^n} &= \sum_{k=1}^{2^n}x_k\\
+              &= x_1 + (x_{2} + x_3) + (x_4 + x_5 + x_6 + x_7) + (x_8 + \cdots + x_15) + \cdots + \left(x_{2^{n-1}} + \cdots + x_{2^{n}-1}\right) + x_{2^n}\\
+              &\leq x_1 + 2x_2 + 4 x_4 + \cdots + 2^{n-1}x_{2^{n-1}} + x_{2^n}\\
+              &= \sum_{k=1}^{n-1}2^kx_{2^k} + x_{2^n}
+    \end{align*}
+    If $\sum_{k}2^kx_{2^k}$ converges, then its partial sums are bounded, and we have that $x_{2^n} \rightarrow 0$. Then, $s_{2^n}$ is bounded, and thus $\sum x_k$ converges.
+    \begin{align*}
+      2 s_{2^n} &= \sum_{k=1}^{2^n}x_k\\
+              &= x_1 + (x_{2} + x_3) + (x_4 + x_5 + x_6 + x_7) + (x_8 + \cdots + x_15) + \cdots + \left(x_{2^{n-1}} + \cdots + x_{2^{n}-1}\right) + x_{2^n} \\
+              &+ x_1 + (x_{2} + x_3) + (x_4 + x_5 + x_6 + x_7) + (x_8 + \cdots + x_15) + \cdots + \left(x_{2^{n-1}} + \cdots + x_{2^{n}-1}\right) + x_{2^n} \\
+              &= \left(x_1 + x_1\right) + \left(x_2 + x_2\right) + (x_3 + x_3 + x_4 + x_4) + \cdots (x_{2^{n-1}} + x_{2^{n-1}} + \cdots + x_{2^n} + x_{2^n})\\
+              &\geq x_1 + 2x_2 + 4x_4 + \cdots + 2^nx_{2^n}\\
+              &= \sum_{k=0}^{n}2^kx_{2^k}
+              \shortintertext{therefore, we get that}
+      \frac{1}{2}\sum_{k=0}^{n}2^ka_{2^k} &\leq s_{2^n}
+    \end{align*}
+    If $\sum x_k$ converges, then $s_n$ is bounded, so $s_{2^n}$ is bounded, so $\sum_{k=0}^{n}2^kx_{2^k}$ is bounded, so the series $\sum_{k=0}^{n}2^kx_{2^k}$ is convergent.
+  \end{problem}
+  \begin{problem}{$p$ series}
+    Consider the series
+    \begin{align*}
+      \sum_{n=1}^{\infty}\frac{1}{n^p} \tag*{$p\in\R$}
+    \end{align*}
+    By the Cauchy Condensation Test, we see that the series converges if and only if the following series converges:
+    \begin{align*}
+      \sum_{n=1}^{\infty}\frac{2^n}{2^{np}} &= \sum_{n=1}^{\infty}\left(\frac{1}{2^{np-1}}\right)^n\\
+                                            &\Leftrightarrow \frac{1}{2^{p-1}} < 1\\
+                                            &\Leftrightarrow 2^{p-1} > 1\\
+                                            &\Leftrightarrow p > 1
     \end{align*}
   \end{problem}
 \end{document}
