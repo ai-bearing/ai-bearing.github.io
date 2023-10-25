@@ -13,6 +13,7 @@
 \geometry{letterpaper, portrait, margin=1in}
 \usepackage{fancyhdr}
 
+\usepackage{cmbright}
 %symbols
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -74,8 +75,11 @@
 % text + color boxes
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{breakable}
-\newtcolorbox{problem}[1]{colback = white, title = {#1}, breakable}
-\newtcolorbox{solution}{colback = white, colframe = black!75!white, title = Solution, breakable}
+\tcbuselibrary{skins}
+\newtcolorbox{problem}[1]{colback=white,enhanced,title={\small #1},
+          attach boxed title to top center=
+{yshift=-\tcboxedtitleheight/2},
+boxed title style={size=small,colback=black!60!white}, breakable}
 %including PDFs
 \usepackage{pdfpages}
 \setlength{\parindent}{0pt}
@@ -376,6 +380,19 @@
     \end{problem}
     We can do the same problem on a weighted graph, where each edge is assigned a weight in a real number. In this case, an Eulerian closed walk is a closed walk that contains all edges and minimizes the total weight.
   \end{problem}
+  \begin{problem}{Proof of Euler's Theorem}
+    Let $G$ be a connected graph such that every vertex has even degree.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    Let $v\in V(G)$. Since $G$ is connected, $d(v) \neq 0$. Therefore, $\exists$ an edge incident on $v$. Therefore, $v$ is in some trail, meaning $\{T\mid \text{trail containing $v$}\} \neq \emptyset$, and is finite.\\
+
+    Pick $T_0$ containing $v$ such that $T_0$ is non-extendible; i.e., $\nexists T'$ such that $T_0\subset T'$.
+    \begin{description}
+      \item[Claim] $T_0$ is a circuit.
+    \end{description}
+    Let $T_0 = (v_1,\dots,v_n)$. Suppose toward contradiction that $v_1 \neq v_n$. There must be an odd number of edges incident to $v_1$ in $T_0$, since, if $v_1v_2\in T_0$, for each $1 < j < n$ such that $v_1 = v_j$, then $v_{j-1}v_j$ and $v_{j}v_{j+1}$ are incident to $v_1$. But, $d(v_1)$ is even --- so, $\exists e = v_1w\in E(G)$ such that $e\notin T_0$. Then, $T_0$ can be extended to $(w,v_1,\dots,v_n)$. $\bot$
+  \end{problem}
   \begin{problem}{Graph Decomposition}
     Let $a_1,\dots,a_n$ be distinct items. A \textbf{Steiner Triple System} on $a_1,\dots,a_n$ is a set $S$ of triples $\{a,b,c\} \subseteq \{a_1,\dots,a_n\}$, such that every pair $\{a_i,a_j\}$, $i\neq j$ is a subset of exactly one element of $S$.\newline
 
@@ -416,5 +433,28 @@
     Suppose $T_1$ and $T_2$ are both of odd length. If $T_1$ and $T_2$ do not share any vertices, $V(T_1) \sqcup V(T_2) = V(G)$, meaning $G$ is disconnected.\newline
 
     Let $v \in V(T_1) \cap V(T_2)$. $T_1$ is from $b$ to $v$ to $c$, $T_2$ is from $d$ to $v$ to $a$. Let $T_i = R_i \cup S_i$. 
+  \end{problem}
+  \begin{problem}{Directed Graphs}
+    A \textbf{directed graph} (also known as an oriented graph or digraph) is one which holds an arrow on every edge.
+    \begin{center}
+      \includegraphics[width=0.5\textwidth]{images/digraph.png}
+    \end{center}
+    \begin{description}
+      \item[Definition 1:] A directed graph is a pair $(V,E)$, where $E\subseteq V\times V$. (\textasteriskcentered)
+      \item[Definition 2:] Let $G$ be a graph. Let $f: E \rightarrow V\times V$ such that for each edge $e = \{v,w\}\in E(G)$, $f(e) = (v,w)$ or $(w,v)$. Then, $(G,f)$ is a directed graph.
+    \end{description}
+    A \textbf{tournament} is a directed complete graph.\\
+
+    A \textbf{directed path} in a directed graph $G$ is a sequence of vertices $(v_1,\dots,v_n)$ where $(v_i,v_{i+1})\in E(G)$, where $i = 1,2,\dots,n-1$. A \textbf{directed cycle} is a directed path $(v_1,\dots,v_n)$ such that $v_n = v_1$.\\
+
+    A directed graph is \textbf{strongly oriented} if $\forall v,w\in V(G)$, $\exists$ a directed path from $v$ to $w$ and a directed path from $w$ to $v$.\\
+
+    If a graph is strongly connected, then $G$ is connected and bridgeless. 
+  \end{problem}
+  \begin{problem}{Robin's Theorem}
+    Every connected bridgeless graph has a strong orientation.
+  \end{problem}
+  \begin{problem}{Theorem 9.2}
+    Every tournament has a directed Hamiltonian path.
   \end{problem}
 \end{document}
