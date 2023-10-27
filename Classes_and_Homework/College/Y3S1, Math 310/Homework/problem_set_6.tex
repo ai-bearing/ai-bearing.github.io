@@ -115,18 +115,93 @@ boxed title style={size=small,colback=black!60!white}, breakable}
   \begin{problem}{Problem 2}
     Let $(x_k)_k$ be a sequence of strictly positive numbers. Show the following:
     \begin{enumerate}[(i)]
-      \item If $\limsup_{n\rightarrow\infty}\frac{x_{k+1}}{x_k} < 1$, then $\sum_{k}x_k$ converges.
-      \item If $\liminf_{n\rightarrow\infty}\frac{x_{k+1}}{x_k} > 1$, then $\sum_k x_k$ diverges.
+      \item If $\limsup_{k\rightarrow\infty}\frac{x_{k+1}}{x_k} < 1$, then $\sum_{k}x_k$ converges.
+      \item If $\liminf_{k\rightarrow\infty}\frac{x_{k+1}}{x_k} > 1$, then $\sum_k x_k$ diverges.
     \end{enumerate}
+    \tcblower
+    \begin{problem}{(a)}
+      Let $\varepsilon > 0$.
+      \begin{align*}
+        \limsup_{k\rightarrow\infty} \frac{x_{k+1}}{x_k} &:= u < 1\\
+                                                         &= \inf_{n\geq 1}\left(\sup_{k\geq n}\frac{x_{k+1}}{x_k}\right)\\
+        \shortintertext{By the definition of $\inf$, we have that $\exists N\in N$ large such that}
+        \sup_{k\geq N}\frac{x_{k+1}}{x_k} &< u + \varepsilon.\\
+        \shortintertext{By the definition of $\sup$, we have that $\forall k \geq N$,}
+        \frac{x_{k+1}}{x_k} &< u + \varepsilon\\
+        x_{k+1} &< (u + \varepsilon) x_k.\\
+        \shortintertext{Inductively on $x_k$, we have that}
+        x_{k + m} &< (L + \varepsilon)^{m}x_k,\\
+        \shortintertext{and series-wise, we have}
+        \sum_{k=N}^{\infty}x_k &< x_N \sum_{m=1}^{\infty}(u + \varepsilon)^m.\\
+        \shortintertext{For sufficiently small $\varepsilon$, the sum on the right-hand side converges, implying that the sum on the left-hand side must converge. Therefore,}
+        \sum_{k=1}^{\infty}x_k &= \sum_{k=1}^{N-1}x_k + \sum_{k=N}^{\infty}x_k\\
+                               &< \sum_{k=1}^{N-1}x_k + x_n\sum_{m=1}^{\infty}(u + \varepsilon)^m,
+        \shortintertext{meaning that $\sum_k x_k$ is bounded above by a convergent series, so it is convergent.}
+      \end{align*}
+    \end{problem}
+    \begin{problem}{(b)}
+      Let $\varepsilon > 0$.
+      \begin{align*}
+        \liminf_{k\rightarrow\infty}\frac{x_{k+1}}{x_k} &:= \ell > 1\\
+                                                        &= \sup_{n\geq 1}\left(\inf_{k\geq n}\frac{x_{k+1}}{x_k}\right)\\
+        \shortintertext{By the definition of $\sup$, we have that for large $N\in\N$, and for $k\geq N$,}
+        \inf_{k\geq n} \frac{x_{k+1}}{x_k} &> \ell - \varepsilon.\\
+        \shortintertext{By the definition of $\inf$, we also have that}
+        \frac{x_{k+1}}{x_k} &>\ell - \varepsilon\\
+        x_{k+1} &> (\ell - \varepsilon)x_k\\
+        \shortintertext{Inductively, we have that}
+        x_{k+m} &> (\ell - \varepsilon)^m x_k,\\
+        \shortintertext{and via series, we have}
+        \sum_{k=N}^{\infty}x_k &>x_N \sum_{m=1}^{\infty}(\ell - \varepsilon)^m.
+        \shortintertext{For sufficiently small $\varepsilon$, the sum on the right-hand side diverges. Therefore,}
+        \sum_{k=1}^{\infty}x_k &= \sum_{k=1}^{N-1}x_k + \sum_{k=N}^{\infty}x_k\\
+                               &> x_N\sum_{k=1}^{\infty}(\ell - \varepsilon)^m + \sum_{k=1}^{N-1}x_k,\\
+        \shortintertext{and since $\sum_k x_k$ is bounded below by a divergent series, the sum diverges.}
+      \end{align*}
+    \end{problem}
   \end{problem}
   \begin{problem}{Problem 3}
     Consider the sequence of functions
     \begin{align*}
-      f_n: R\rightarrow \R;\\
-      f_n(x) = \arctan(nx)
+      f_n&: \R\rightarrow \R;\\
+      f_n(x) &= \arctan(nx)
     \end{align*}
     \begin{enumerate}[(i)]
-      \item Show that $(f_n)_n \rightarrow \frac{\pi}{2}$
+      \item Show that $(f_n)_n \rightarrow \frac{\pi}{2}\text{sgn}$ point-wise.
+      \item Show that the convergence in (i) is nonuniform on $(0,\infty)$.
+      \item Show that the convergence in (i) is uniform on $[a,\infty)$ for a fixed $a > 0$.
     \end{enumerate}
+    \tcblower
+    \begin{problem}{(i)}
+      Let $\varepsilon > 0$. We know that, $\exists N \in N$ such that $\forall n \geq N,~|\arctan(n) - \pi/2| < \varepsilon$.
+      \begin{description}
+        \item[Case 1:] Let $x = 0$. Then,
+          \begin{align*}
+            \arctan(nx) &= 0\tag*{$\forall n \geq 1$}\\
+          \end{align*}
+        \item[Case 2:] Let $x > 0$. Then, set $N' = \lceil N/x\rceil$. So, for $n'\geq N'$, we have 
+          \begin{align*}
+            \left|\arctan(nx) - \pi/2\right| &= \left|\arctan(n') - \pi/2\right|\\
+                                  &< \varepsilon
+          \end{align*}
+          implying that $\arctan(nx) \rightarrow \pi/2$ when $x > 0$.
+        \item[Case 3:] Let $x < 0$. Then, set $x^{\ast} = -x$, and we have the same result as in Case 2, where $\arctan(nx^{\ast}) \rightarrow \pi/2$.\\
+
+          Since $\arctan(nx^{\ast}) = \arctan(n(-x)) = -\arctan(nx)$, we have that $\arctan(nx) \rightarrow -\pi/2$.
+      \end{description}
+    \end{problem}
+    \begin{problem}{(ii)}
+      Let $(x_k)_k = \frac{1}{k}$ and $n_k = k$. Set $\varepsilon_0 = \frac{\pi}{4}$. Then, we have that
+      \begin{align*}
+        \left|\arctan(n_kx_k) - \pi/2\right| &= \left|\arctan\left(k\frac{1}{k}\right) - \frac{\pi}{2}\right|\\
+                                             &= \left|\arctan(1)-\frac{\pi}{2}\right|\\
+                                             &= \left|\frac{\pi}{4}-\frac{\pi}{2}\right|\\
+                                             &=\frac{\pi}{4}\\
+                                             &\geq \varepsilon.
+      \end{align*}
+    \end{problem}
+    \begin{problem}{(iii)}
+      
+    \end{problem}
   \end{problem}
 \end{document}

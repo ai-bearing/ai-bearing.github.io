@@ -72,6 +72,7 @@
 %	breakatwhitespace=true,
 %	tabsize=3
 %}
+\renewcommand{\mathbf}[1]{\mathbold{#1}}
 % text + color boxes
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{breakable}
@@ -3212,5 +3213,143 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
                                           \shortintertext{therefore,}
       \sup_{x\in[a,\infty)}\left|g_{n}(x)-\mathbf{0}(x)\right| &\leq \frac{1}{na}
     \end{align*}
+  \end{problem}
+  \begin{problem}{Further Examining Pointwise and Uniform Convergence}
+    Consider the family of functions
+    \begin{align*}
+      f_n&: [0,\infty) \rightarrow \R\\
+      f_n(x) &= e^{-nx}
+    \end{align*}
+    Upon examination, we can see that:
+    \begin{align*}
+      f_n \xrightarrow{\text{p.w.}} \delta_0 = \mathbf{1}_{\{0\}}.
+    \end{align*}
+    However, the convergence is \textit{not} uniform.\\
+
+    Let $(x_k)_k = \frac{1}{k}$ and $n_k = k$. Then, setting $\varepsilon_0 = e^{-1}$
+    \begin{align*}
+      \left|f_{n_k}(x_k) - \delta_0(x_k)\right| &= \left|f_k\left(\frac{1}{k}\right)\right|\\
+                                                &= e^{-1}\\
+                                                &\geq \varepsilon_0
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Uniform Norm}
+    For $f\in \mathcal{F}(\Omega,\R)$, the \textbf{uniform norm} or \textbf{infinity norm} is defined as:
+    \begin{align*}
+      \left\Vert f \right\Vert_{u} &= \sup_{x\in\Omega}\left|f(x)\right|.
+    \end{align*}
+    Importantly, the value of the uniform norm is dependent on $\Omega$.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    The uniform norm satisfies the rules we desire of any other norm:
+    \begin{itemize}
+      \item Scalar multiplication: $\forall t\in\R$, $\Vert tf\Vert_u = |t|\Vert f \Vert_u$
+      \item Triangle Inequality: $\Vert f + g \Vert_u \leq \Vert f \Vert_u + \Vert g \Vert_u$
+      \item Zero Property: $\Vert f\Vert_u = 0 \Leftrightarrow f = \mathbf{0}_{\R}$
+      \item Algebraic Property: $\Vert fg\Vert_u \leq \Vert f\Vert_u \cdot \Vert g \Vert_u$.
+    \end{itemize}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    \begin{align*}
+      \ell_{\infty}(\Omega) = \left\{f\in\mathcal{F}(\Omega,\R)\mid \Vert f \Vert_u < \infty\right\}
+    \end{align*}
+    is a normed vector space.
+  \end{problem}
+  \begin{problem}{A Different Definition of Uniform Convergence}
+    Given $(f_k)_k,~f \in \ell_{\infty}(\Omega)$, we have
+    \begin{align*}
+      (f_k)_k \xrightarrow{\text{uniformly}} f \Leftrightarrow \left(\Vert f_k - f \Vert_u\right)_k \rightarrow 0
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Applying The New Definition}
+    Let
+    \begin{align*}
+      g_n&: [0,1] \rightarrow \R\\
+      g_n(x) &= x^n(1-x)
+    \end{align*}
+    Clearly, $(g_n)_n$ belongs to $\ell_{\infty}([0,1])$. We can see that
+    \begin{align*}
+      (g_n)_n \xrightarrow{\text{p.w.}} \mathbf{0}
+    \end{align*}
+    To show that the convergence is uniform, we must find 
+    \begin{align*}
+      \Vert g_n - \mathbf{0}\Vert_u \xrightarrow{n\rightarrow\infty} \mathbf{0},\\
+    \end{align*}
+    or
+    \begin{align*}
+      \sup_{x\in[0,1]}x^n(1-x)&\rightarrow 0\\
+      \frac{d}{dx}(x^n(1-x)) &= nx^{n-1} - (n+1)x^n\\
+      nx^{n-1} &= (n+1)x^n\\
+      x &= \frac{n}{n+1}\\
+      \sup_{x\in[0,1]}x^n(1-x) &= \left(\frac{n}{n+1}\right)^n\left(1-\frac{n}{n+1}\right)\\
+                               &= \frac{1}{(1+1/n)^n}\left(\frac{1}{n+1}\right)\\
+                               &\rightarrow 0
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Root Test and Series Convergence}
+    Let
+    \begin{align*}
+      \limsup_{k\rightarrow\infty}|x_k|^{1/k} = \rho.
+    \end{align*}
+    If $\rho < 1$, then $\sum_k x_k$ converges absolutely. If $\rho > 1$, then $\sum_k x_k$ diverges.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    Suppose $\rho < 1$. Let $\rho < r < 1$. By property of $\inf$, $\exists N\in \N$ large such that $r \geq \sup_{k\geq N}|x_k|^{1/k}$.\\
+
+    Therefore, $\forall k\geq N$, we have
+    \begin{align*}
+      x_k^{1/k} &\leq r\\
+      x_k &\leq r^k \tag*{$\forall k \geq N$}\\
+      \shortintertext{Therefore,}
+      \sum_k x^k &\leq \underbrace{\sum_{k=1}^{N-1} + \sum_{k\geq N}r^k}_{\text{converges: $r < 1$}}
+    \end{align*}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    If $\limsup |x_k|^{1/k} = \rho > 1$, we can find a subsequence $\left(x_{k_\ell}\right)^{1/{k_\ell}} \xrightarrow{\ell\rightarrow\infty} \rho$. We cannot have $\left((x_k)_k\right)^{1/k} \rightarrow 0$. Thus, the series diverges.
+  \end{problem}
+  \begin{problem}{Absolute Convergence}
+    A series $\sum_k x_k$ converges absolutely if $\sum_k |x_k|$ converges. If a series converges absolutely, then it always converges.
+    \tcblower
+    Let $s_n = \sum_{k=1}^{n}x_k$, $t_n = \sum_{k=1}^{n}|x_k|$. Let $m > n$. Then,
+    \begin{align*}
+      \left|s_m - s_n\right| &= \left|\sum_{k=n+1}^{m}x_k\right|\\
+                             &\leq \sum_{k=n+1}^{m}|x_k|\tag*{Triangle Inequality}\\
+                             &= |t_m - t_n|
+    \end{align*}
+    By assumption, $(t_n)_n$ converges, and thus is Cauchy. By the above inequality, $(s_n)_n$ is Cauchy, and thus convergent.
+  \end{problem}
+  \begin{problem}{Series of Functions}
+    Given a sequence of functions $(f_k)_k \in \mathcal{F}(\Omega,\R)$, we say that the series
+    \begin{align*}
+      \sum_{k}f_k
+    \end{align*}
+    converges pointwise to $f$ in $\mathcal{F}(\Omega,\R)$ if
+    \begin{align*}
+      s_n = \left(\sum_{k=1}^{n}f_k\right)_n
+    \end{align*}
+    converges to $f$ pointwise.
+    \begin{align*}
+      \sum_{k=1}^{\infty}f_k(x) &= f(x) \tag*{$\forall x\in\Omega$}
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Pointwise Convergence of Series of Functions, Example}
+    Let $f_k: (-1,1) \rightarrow \R$, where $f_k = x^k$. Then,
+    \begin{align*}
+      \sum_{k=0}^{\infty}f_k \rightarrow f(x) = \frac{1}{1-x}
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Uniform Convergence of Series}
+    $\sum f_k$ converges to $f$ \textbf{uniformly} if
+    \begin{align*}
+      s_n &= \left(\sum_{k=1}^{n} f_k\right)_n
+    \end{align*}
+    converges to $f$ uniformly.
+  \end{problem}
+  \begin{problem}{Uniform Convergence of Series}
+    Does $\sum_{k=0}^{\infty} x_k$ converge to $f(x) = \frac{1}{1-x}$ uniformly on $(-1,1)$?
   \end{problem}
 \end{document}
