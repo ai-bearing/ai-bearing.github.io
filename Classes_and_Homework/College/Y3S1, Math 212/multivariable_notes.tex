@@ -74,6 +74,7 @@
 	tabsize=3
 }
 % text + color boxes
+\renewcommand{\mathbf}[1]{\mathbold{#1}}
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{breakable}
 \tcbuselibrary{skins}
@@ -758,6 +759,42 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     \begin{align*}
       \int_{V}f(x,y,z)~dV &= \int_{V} f(r,\theta,z)\begin{vmatrix}\cos\theta & -r\sin\theta & 0\\ \sin\theta &r\cos\theta & 0 \\  0 & 0 & 1\end{vmatrix}~dr~d\theta~dz\\
                           &= \int_{V}f(r,\theta,z)r~dr~d\theta~dz
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Spherical Coordinates}
+    If we have spherical symmetry, we will need to include a second angle $\varphi$, relative to the positive $z$ axis:
+    \begin{align*}
+      x &= \rho\cos\theta\sin\varphi\\
+      y &= \rho\sin\theta\sin\varphi\\
+      z &= \rho\cos\varphi\\
+      J &= \begin{vmatrix}
+        \frac{\partial x}{\partial \rho} & \frac{\partial x}{\partial \theta} & \frac{\partial x}{\partial \varphi}\\
+        \frac{\partial y}{\partial \rho} & \frac{\partial y}{\partial \theta} & \frac{\partial y}{\partial \varphi}\\
+        \frac{\partial z}{\partial \rho} & \frac{\partial z}{\partial \theta} & \frac{\partial z}{\partial \varphi}
+      \end{vmatrix}\\
+        &= \rho^2\sin \varphi
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Integrating with Spherical and Cylindrical Coordinates}
+    Consider a cylinder defined by $z\in [0,4]$ and $r = 1$, and a half-sphere defined by $r = 1$ and $\varphi\in [0,\pi/2]$, located on ``top'' of the cylinder. We want to find 
+    \begin{align*}
+      \int_{V}f(x,y,z)~dV &= \int_{V_1}f(x,y,z)~dV_1+ \int_{V_2}f(x,y,z)~dV_2
+    \end{align*}
+    where $f(x,y,z = z)$. Then,
+    \begin{align*}
+      \int_{V}z~dV &= \int_{V_1}(z)rdr~d\theta~dz + \int_{V_2}(z)(\rho^2\sin\varphi)d\rho~d\theta~d\varphi\\
+      I_c &= \int_{0}^{4}\int_{0}^{2\pi}\int_{0}^{1}(z)(r)dr~d\theta~dz\\
+          &= \int_{0}^{4}\int_{0}^{2\pi}\left(\frac{z}{2}r^2\biggr\vert_{0}^{1}\right)~d\theta~dz\\
+          &= \int_{0}^{4}\int_{0}^{2\pi}\frac{z}{2}~d\theta~dz\\
+          &= \int_{0}^{4} \pi z~dz\\
+          &= 8\pi\\
+      I_s &= \int_{0}^{\pi/2}\int_{0}^{2\pi}\int_{0}^{1} (4+\cos\varphi)(r^2\sin\varphi)d\rho~d\theta~d\varphi\\
+          &= 2\pi\int_{0}^{\pi/2}\int_{0}^{1}(4 + \cos\varphi)(r^2\sin\varphi)d\rho~d\varphi\\
+          &= 2\pi\int_{0}^{1}r^2~dr\int_{0}^{\pi/2}4\sin\varphi + \cos\varphi\sin\varphi~d\varphi\\
+          &= \frac{2\pi}{3}\frac{9}{2}\\
+          &= 3\pi\\
+      I &= I_c + I_s\\
+        &= 11\pi
     \end{align*}
   \end{problem}
 \end{document}
