@@ -3350,6 +3350,126 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
     converges to $f$ uniformly.
   \end{problem}
   \begin{problem}{Uniform Convergence of Series}
-    Does $\sum_{k=0}^{\infty} x_k$ converge to $f(x) = \frac{1}{1-x}$ uniformly on $(-1,1)$?
+    We know that $\sum_{k=0}^{\infty} x_k$ converges pointwise to $s(x) = \frac{1}{1-x}$ on $(-1,1)$. Does it converge \textit{uniformly} on the same interval?
+    \tcblower
+    \textbf{Claim:} The convergence is not uniform on $(-1,1)$, but convergence is uniform on $[a,b]$, where $-1 < a \leq b < 1 $.\\
+
+    Let $s_n(x) = \sum_{k=0}^{n}x^k$.
+    \begin{align*}
+      |s_n(x) - s(x)| &= \left\vert\frac{1-x^{n+1}}{1-x} - \frac{1}{1-x}\right\vert\\
+                      &= \frac{|x|^{n+1}}{1-x}\\
+      \shortintertext{Let $c = \max\{|a|,|b|\} < 1$}
+                      &\leq \frac{c^{n+1}}{1-b}\tag*{$\forall a \leq x \leq b$}\\
+      \sup_{x\in[a,b]}|s_n(x) - s(x)| &\leq \frac{c^{n+1}}{1-b}\\
+                                      &\rightarrow 0
+    \end{align*}
+    To show non-uniform convergence on $(-1,1)$, let $x_{\ell} = 1 - \frac{1}{\ell}$, and let $n_{\ell} = \ell$.
+    \begin{align*}
+      \left|s_{n_{\ell}}(x_{\ell}) - s(x_{\ell})\right| &= \frac{\left(1-\frac{1}{\ell}\right)^{\ell+1}}{\frac{1}{\ell}}\\
+                                                        &= \ell\left(1-\frac{1}{\ell}\right)^{\ell}\left(1-\frac{1}{\ell}\right)\\
+                                                        &= (\ell - 1)\left(1-\frac{1}{\ell}\right)^{\ell}\\
+                                                        &\rightarrow \infty\\
+      \shortintertext{since $\left(1-\frac{1}{\ell}\right)^{\ell}\rightarrow \frac{1}{e}$.}
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Weierstrass $M$-test}
+    Consider a sequence of functions $(f_k)_k$ in $\ell_{\infty}(\Omega)$, where $\Omega \subseteq \R$.\\
+
+    If $\sum_{k=1}^{\infty}\Vert f\Vert_u$ converges, then $\sum_{k} f_k$ converges uniformly and absolutely on $\Omega$.
+    \tcblower
+    Set $M_k = \Vert f_k \Vert_u$. Given $\varepsilon > 0$, $\exists N \in \N$ such that
+    \begin{align*}
+      \sum_{n+1}^{m} M_k < \varepsilon \tag*{$\forall m > n \geq N$}
+    \end{align*}
+    since $\sum_{k=1}^{\infty}M_k$ is convergent, and thus Cauchy.\\
+
+    Let $s_n(x) = \sum_{k=1}^{n} f_k(x)$. So,
+    \begin{align*}
+      |s_n(x) - s_m(x)| &= \left|\sum_{k=n+1}^{m}f_k(x)\right|\\
+                        &\leq \sum_{k=n+1}^{m}|f_k(x)|\\
+                        &\leq \sum_{k=n+1}^{m}M_k \\
+                        &< \varepsilon \tag*{whenever $m > n \geq N$}
+    \end{align*}
+    For every $x\in\Omega$, $s_n(x)$ is Cauchy. So, $\forall x\in\Omega$, $s(x) := \lim s_n(x)$ exists.\\
+
+    Additionally, $\forall x\in\Omega$,
+    \begin{align*}
+      |s_m(x) - s_n(x)| &< \varepsilon. \\
+      \shortintertext{Let $m\rightarrow\infty$. Then,}
+      |s(x) - s_n(x)| &< \varepsilon \tag*{$\forall x\in\Omega,~\forall n\geq N$}\\
+      \sup_{x\in\Omega}|s(x) - s_n(x)| &< \varepsilon. \tag*{$\forall n \geq N$}
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Weierstrass $M$-test Examples}
+    Consider
+    \begin{align*}
+      \sum_{k=1}^{\infty}\frac{1}{x^2 + k^2},
+    \end{align*}
+    where $f_k: \R \rightarrow \R$. Then, $\Vert f_k \Vert_u \leq \frac{1}{k^2}$. So,
+    \begin{align*}
+      \sum \Vert f_k \Vert_u &\leq \sum \frac{1}{k^2}\\
+                             &< \infty.
+    \end{align*}
+    Thus, $\sum \frac{1}{x^2 + k^2}$ converges absolutely and uniformly.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    \begin{align*}
+      \sum_{k=0}^{\infty}\frac{x^k}{k!}
+    \end{align*}
+    converges $\forall x\in\R$, and converges \textit{uniformly} on any closed and bounded interval $[a,b]$.
+  \end{problem}
+  \begin{problem}{Power Series}
+    A \textbf{power series} \textit{centered} at $c$ in $\R$ is a formal series of functions
+    \begin{align*}
+      \sum_{k=0}^{\infty} a_k(x-c)^k.
+    \end{align*}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    We want to examine such things as the convergence and the uniformity of such convergence.\\
+
+    Given $\sum a_k(x-c)^k$, set $\rho = \limsup|a_k|^{1/k}$ and $r = 1/\rho$.
+  \end{problem}
+  \begin{problem}{Cauchy-Hadamard Theorem}
+    A power series
+    \begin{align*}
+      \sum_{k=1}^{\infty} a_k(x-c)^k
+    \end{align*}
+    converges absolutely on $(c-r,c+r)$, diverges on $\overline{[c-r,c+r]}$, and uniformly convergent on $[a,b],~c-r < a \leq b < c + r$.
+    \tcblower
+    Let $\sum_{k=1}^{\infty} a_k(x-c)^k$, where $x_k = a_k(x-c)^k$.
+    \begin{align*}
+      |x_k|^{1/k} &= |a_k|^{1/k}|x-c|\\
+      \shortintertext{Root test:}
+      \limsup_{k\rightarrow\infty}|x_k|^{1/k} &= |x-c|\limsup_{k\rightarrow\infty}|a_k|^{1/k}\\
+                                              &= |x-c|\rho\\
+                                              \shortintertext{Absolute Convergence:}
+      |x-c|\rho &< 1\\
+      |x-c| &< \frac{1}{\rho}\\
+      \shortintertext{Divergence:}
+      |x-c| \rho &> 1\\
+      |x-c| &> \frac{1}{\rho}
+    \end{align*}
+    Let $[a,b] \subset (c-r,c+r)$. Set $d = \max\{|a-c|,|b-c|\}$. So, 
+    \begin{align*}
+      |s_m(x) - s_n(x)| &= \left|\sum_{k=n+1}^{m}a_k(x-c)^k\right|\\
+                        &\leq \sum_{k=n+1}^{m}|a_k||x-c|^k\\
+                        &\leq \sum_{k=n+1}^{m}|a_k||d|^k\\
+    \intertext{we know that $d < r \Rightarrow d/r < 1 \Rightarrow d\rho < 1 \Rightarrow \rho < 1/d$. Pick $\rho < p < 1/d$. So, $\exists N\in\N$ with}
+      \sup_{k\geq N}|a_k|^{1/k} &< p\\
+      |a_k| &< p^k\\
+      \intertext{So, if $m > n \geq N$, we have}
+      |s_m(x)- s_n(x)| &\leq \sum_{n+1}^{m}(rd)^k\\
+      \sup_{x\in[a,b]}|s_m(x) - s_n(x)| &\leq \sum_{n+1}^{m}(rd)^k\\
+      \shortintertext{Given $\varepsilon > 0$, find $N_1\in\N$ with $m > n \geq N_1$ meaning}
+      \sup_{x\in[a,b]}|s_m(x) - s_n(x)| &\leq \sum_{n+1}^{m}(rd)^k\\
+                                        &< \varepsilon
+                                        \shortintertext{Let $K = \max\{N,N_1\}$. With $m > n \geq K$, we have}
+      \sup_{x\in[a,b]}|s_m(x) - s_n(x)| &< \varepsilon
+      \shortintertext{Letting $m\rightarrow\infty$, we have}
+      \sup_{x\in[a,b]}|s(x)-s_n(x)| < \varepsilon.
+    \end{align*}
+    So, $(s_n(x))_n \rightarrow s(x)$ uniformly on $[a,b]$.
   \end{problem}
 \end{document}
