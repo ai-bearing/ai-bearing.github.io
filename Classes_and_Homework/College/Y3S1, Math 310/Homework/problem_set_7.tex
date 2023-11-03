@@ -1,0 +1,142 @@
+\documentclass[10pt]{extarticle}
+\title{}
+\author{}
+\date{}
+\usepackage[shortlabels]{enumitem}
+
+
+%paper setup
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage{fancyhdr}
+% sans serif font:
+\usepackage{cmbright}
+%symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage{gensymb}
+\usepackage{multirow,array}
+\usepackage{multicol}
+
+\newtheorem*{remark}{Remark}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+%chemistry stuff
+%\usepackage[version=4]{mhchem}
+%\usepackage{chemfig}
+
+%plotting
+\usepackage{pgfplots}
+\usepackage{tikz}
+\tikzset{middleweight/.style={pos = 0.5}}
+%\tikzset{weight/.style={pos = 0.5, fill = white}}
+%\tikzset{lateweight/.style={pos = 0.75, fill = white}}
+%\tikzset{earlyweight/.style={pos = 0.25, fill=white}}
+
+%\usepackage{natbib}
+
+%graphics stuff
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage[style=numeric, backend=biber]{biblatex} % Use the numeric style for Vancouver
+\addbibresource{the_bibliography.bib}
+%code stuff
+%when using minted, make sure to add the -shell-escape flag
+%you can use lstlisting if you don't want to use minted
+%\usepackage{minted}
+%\usemintedstyle{pastie}
+%\newminted[javacode]{java}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+%\newminted[cppcode]{cpp}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+
+%\usepackage{listings}
+%\usepackage{color}
+%\definecolor{dkgreen}{rgb}{0,0.6,0}
+%\definecolor{gray}{rgb}{0.5,0.5,0.5}
+%\definecolor{mauve}{rgb}{0.58,0,0.82}
+%
+%\lstset{frame=tb,
+%	language=Java,
+%	aboveskip=3mm,
+%	belowskip=3mm,
+%	showstringspaces=false,
+%	columns=flexible,
+%	basicstyle={\small\ttfamily},
+%	numbers=none,
+%	numberstyle=\tiny\color{gray},
+%	keywordstyle=\color{blue},
+%	commentstyle=\color{dkgreen},
+%	stringstyle=\color{mauve},
+%	breaklines=true,
+%	breakatwhitespace=true,
+%	tabsize=3
+%}
+% text + color boxes
+\renewcommand{\mathbf}[1]{\mathbold{#1}}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{breakable}
+\tcbuselibrary{skins}
+\newtcolorbox{problem}[1]{colback=white,enhanced,title={\small #1},
+          attach boxed title to top center=
+{yshift=-\tcboxedtitleheight/2},
+boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
+%including PDFs
+%\usepackage{pdfpages}
+\setlength{\parindent}{0pt}
+\usepackage{cancel}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Math 310: Problem Set 7}
+\newcommand{\card}{\text{card}}
+\newcommand{\ran}{\text{ran}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\begin{document}
+  \begin{problem}{Problem 1}
+    Let $D\subseteq \R$ and $c\in\R$. Show that the following are equivalent:
+    \begin{enumerate}[(i)]
+      \item $c$ is a limit point of $D$.
+      \item There is a sequence $(x_n)_n$ in $D\setminus \{c\}$ with $(x_n)_n \rightarrow c$.
+    \end{enumerate}
+    \tcblower
+    \begin{description}
+      \item[$(\Rightarrow)$] Let $c$ be a limit point of $D$. Then, taking $\delta_n = 1/n$, let $x_n \in \dot{V}_{\delta_n}(c)$. Then, $(x_n)_n \rightarrow c$.
+      \item[$(\Leftarrow)$] Let $(x_n)_n$ be a sequence in $D \setminus \{c\}$ with $(x_n)_n \rightarrow c$.\\
+
+        Then, $\forall \varepsilon > 0$, $\exists N\in \N$ with, $ \forall n\geq N$, $|x_n - c| < \varepsilon$. Thus, $\forall \varepsilon > 0$, $\exists x_n$ such that $x_n \in \dot{V}_{\varepsilon}(c)$. Thus, $c$ is a limit point.
+    \end{description}
+  \end{problem}
+  \begin{problem}{Problem 2}
+    Show that $f$ can have at most one limit at $c$.
+    \tcblower
+    Suppose toward contradiction that $\lim_{x\rightarrow c}f(x) = L_1$ and $\lim_{x\rightarrow c}f(x) = L_2$, where $L_1 \neq L_2$. Then, $\exists \varepsilon_{0} > 0$ such that $V_{\varepsilon}(L_1) \cap V_{\varepsilon}(L_2) = \emptyset$.\\
+
+    Let $\delta_1$ be such that $|x - c| < \delta_1 \Rightarrow |f(x) - L_1| < \varepsilon_{0}$, and $\delta_2$ be such that $|x-c| < \delta_2 \Rightarrow |f(x) - L_2| < \varepsilon_0$. Set $\delta = \min(\delta_1,\delta_2)$.\\
+
+    Then, $|x-c| < \delta \Rightarrow |f(x) - L_1| < \varepsilon_0$ and $|x-c| < \delta \Rightarrow |f(x) - L_2| < \varepsilon_0$. So, $\exists k$ such that $f(k)\in V_{\varepsilon}(L_1)$ and $f(k)\in V_{\varepsilon}(L_2)$. $\bot$
+  \end{problem}
+  \begin{problem}{Problem 3}
+    Show that the following are equivalent:
+    \begin{enumerate}[(i)]
+      \item $\lim_{x\rightarrow c} f(x) = L$
+      \item For every sequence $(x_n)_n$ in $D\setminus \{c\}$ such that $(x_n)_n \rightarrow c$, we have $(f(x_n))_n \rightarrow L$. 
+    \end{enumerate}
+    \tcblower
+    \begin{description}
+      \item[$(\Rightarrow)$] Let $\lim_{x\rightarrow c} f(x) = L$. Then, $\forall \varepsilon > 0$, $\exists \delta > 0$ such that $|x-c| < \delta \Rightarrow |f(x) - L| < \varepsilon$.\\
+
+        So, $\forall \varepsilon > 0$, $\exists f(x_k) \in V_{\varepsilon}(L)$, such that $x_k\in \dot{V}_{\varepsilon}(c)$. So, we have a sequence $(x_n)_n \rightarrow c$ defined by $\delta(\varepsilon, c)$, where $\left(f(x_n)\right)_n \rightarrow L$.
+      \item[$(\Leftarrow)$] Suppose that for every sequence in $D\setminus \{c\}$ where $(x_n)_n \rightarrow c$, we have $(f(x_n))_n \rightarrow L$.\\
+
+        Then, $\forall \delta > 0$, $\exists N_1 \in \N$ such that $n_1 \geq N_1 \Rightarrow \left|x_{n_1} - c\right| < \delta$. Additionally, $\forall \varepsilon > 0$, $\exists N_2 \in \N$ such that $n_2 \geq N_2 \Rightarrow \left|f\left(x_{n_2}\right) - L\right| < \varepsilon$. Let $N = \max(N_1,N_2)$.\\
+
+        Then, $\forall \varepsilon > 0$, we have a $\delta > 0,$ such that for all $n\geq N \Rightarrow \left|x_n - c\right| < \delta,~\left|f(x_n) - L\right| < \varepsilon$. Thus, $\lim_{x\rightarrow c}f(x) = L$.
+    \end{description}
+  \end{problem}
+\end{document}
