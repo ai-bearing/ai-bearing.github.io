@@ -35,6 +35,7 @@
 \tikzset{weight/.style={pos = 0.5, fill = white}}
 \tikzset{lateweight/.style={pos = 0.75, fill = white}}
 \tikzset{earlyweight/.style={pos = 0.25, fill=white}}
+\usetikzlibrary{intersections}
 \usepackage{multicol}
 %\usepackage{natbib}
 
@@ -3710,5 +3711,205 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
         \end{align*}
         so $f(x_n)_n \rightarrow L$.
     \end{description}
+  \end{problem}
+  \begin{problem}{Trigonometric Limits}
+    \begin{center}
+\begin{tikzpicture}
+[scale=3,line cap=round,
+% Styles
+axes/.style=,
+important line/.style={very thick},
+information text/.style={rounded corners,fill=red!10,inner sep=1ex}]
+% Colors
+\colorlet{anglecolor}{green!50!black}
+\colorlet{sincolor}{red}
+\colorlet{tancolor}{orange!80!black}
+\colorlet{coscolor}{blue}
+% The graphic
+\draw[help lines,step=0.5cm] (-1.4,-1.4) grid (1.4,1.4);
+\draw (0,0) circle [radius=1cm];
+\begin{scope}[axes]
+\draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$} coordinate(x axis);
+\draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$} coordinate(y axis);
+\foreach \x/\xtext in {-1, -.5/-\frac{1}{2}, 1}
+\draw[xshift=\x cm] (0pt,1pt) -- (0pt,-1pt) node[below,fill=white] {$\xtext$};
+\foreach \y/\ytext in {-1, -.5/-\frac{1}{2}, .5/\frac{1}{2}, 1}
+\draw[yshift=\y cm] (1pt,0pt) -- (-1pt,0pt) node[left,fill=white] {$\ytext$};
+\end{scope}
+\filldraw[fill=green!20,draw=anglecolor] (0,0) -- (3mm,0pt)
+arc [start angle=0, end angle=30, radius=3mm];
+\draw (15:2mm) node[anglecolor] {$\alpha$};
+\draw[important line,sincolor]
+(30:1cm) -- node[left=1pt,fill=white] {$\sin \alpha$} (30:1cm |- x axis);
+\draw[important line,coscolor]
+(30:1cm |- x axis) -- node[below=2pt,fill=white] {$\cos \alpha$} (0,0);
+\path [name path=upward line] (1,0) -- (1,1);
+\path [name path=sloped line] (0,0) -- (30:1.5cm);
+\draw [name intersections={of=upward line and sloped line, by=t}]
+[very thick,orange] (1,0) -- node [right=1pt,fill=white]
+{$\displaystyle \tan \alpha \color{black}=
+\frac{{\color{red}\sin \alpha}}{\color{blue}\cos \alpha}$} (t);
+\draw (0,0) -- (t);
+\end{tikzpicture}
+    \end{center}
+    We know that
+    \begin{align*}
+      0 \leq \sin(x) \leq x
+    \end{align*}
+    so as $x\rightarrow 0^+$, $\sin(x) \rightarrow 0$. Similarly, if $x\rightarrow 0^{-}$, then
+    \begin{align*}
+      \lim_{x\rightarrow 0^{-}}\sin(x) &= \lim_{y\rightarrow 0^{+}} \sin(-y)\\
+                                       &= -\lim_{y\rightarrow 0^{+}}\sin(y)\\
+                                       &= 0
+    \end{align*}
+    and
+    \begin{align*}
+      \lim_{x\rightarrow 0^+} \cos(x) &= \lim_{x\rightarrow 0^{+}} \sqrt{1-\sin^2(x)}\\
+                                      &= 1\\
+      \lim_{x\rightarrow 0^{-}} \cos(x) &= \lim_{y\rightarrow 0^{+}} \cos(-y)\\
+                                        &= \lim_{y\rightarrow 0^{+}}\cos(y)\\
+                                        &= 1
+    \end{align*}
+    \begin{description}
+      \item[Claim:] 
+        \begin{align*}
+          \lim_{x\rightarrow 0}\frac{\sin(x)}{x} &= 1
+        \end{align*}
+      \item[Proof:] Let $x\rightarrow 0$
+        \begin{align*}
+          \frac{\sin(x)}{2} \leq \frac{x}{2} &\leq \frac{\tan(x)}{2}\\
+          0 \leq \frac{\sin(x)}{x} &\leq 1\\
+          \cos(x) &\leq \frac{\sin(x)}{x}\\
+          \cos(x) \leq \frac{\sin(x)}{x} &\leq 1\\
+          1 \leq \frac{\sin(x)}{x} &\leq 1
+        \end{align*}
+    \end{description}
+  \end{problem}
+  \begin{problem}{Strictly Positive Limits}
+    Let $D\subseteq \R$, $f:D\rightarrow \R$. Let $c$ be a cluster point of $D$. If $\lim_{x\rightarrow c}f(x) = L > 0$, then $\exists \delta > 0$ and $\exists t > 0$ such that $f(x) > t$ for $x\in \dot{V}_{\delta}(c) \cap D$.
+    \tcblower
+    Let $\varepsilon = \frac{L}{2}$. Then, $V_{\varepsilon} = (L/2,3L/2)$. So, $\exists \delta > 0$ such that $x\in \dot{V}_{\delta}(c) \Rightarrow f(x) \in V_{\varepsilon}(L)$. Set $t = L/2$.
+  \end{problem}
+  \begin{problem}{One-Sided Limits}
+    Let $f: D\rightarrow \R$.\\
+    
+    \textbf{Cluster Points:}
+    \begin{enumerate}[(i)]
+      \item A number $c\in D$ is a right cluster point if $\forall \delta > 0$, $\exists x\in (c,c+\delta) \cap D$
+      \item A number $c\in D$ is a left cluster point if $\forall \delta > 0$, $\exists x\in (c-\delta,c) \cap D$.
+    \end{enumerate}
+    \textbf{Limits:}
+    \begin{enumerate}[(i)]
+      \item $\displaystyle \lim_{x\rightarrow c^{+}} f(x) = L \xLeftrightarrow{\text{def}}$
+        \begin{align*}
+          (\forall \varepsilon > 0)(\exists \delta > 0) \ni x\in (c,c+\delta)\cap D \Rightarrow f(x)\in V_{\varepsilon}(L)
+        \end{align*}
+      \item $\displaystyle \lim_{x\rightarrow c^{-}} f(x) = L \xLeftrightarrow{\text{def}}$
+        \begin{align*}
+          (\forall \varepsilon > 0)(\exists \delta > 0) \ni x\in (c-\delta,c) \cap D \Rightarrow f(x)\in V_{\varepsilon}(L)
+        \end{align*}
+    \end{enumerate}
+    \textbf{Sequential Definition:}
+    \begin{enumerate}[(i)]
+      \item Let $c$ be a right cluster point of $D$. $\lim_{x\rightarrow c^{+}} f(x) = L$ if and only if $\forall (x_n)_n \in D\cap (c,\infty)$ with $(x_n)_n \rightarrow c$, we have $(f(x_n))_n \rightarrow L$
+      \item Let $c$ be a left cluster point of $D$. $\lim_{x\rightarrow c^{-}} f(x) = L$ if and only if $\forall (x_n)_n \in (-\infty,c) \cap D$ with $(x_n)_n \rightarrow c$, we have $(f(x_n))_n \rightarrow L$.
+    \end{enumerate}
+  \end{problem}
+  \begin{problem}{}
+    Let $f:D\rightarrow \R$. Let $c$ be a cluster point of $D$.
+    \begin{align*}
+      \lim_{x\rightarrow c}f(x) = L \Leftrightarrow \lim_{x\rightarrow c^{-}}f(x) = \lim_{x\rightarrow c^{+}}f(x) = L
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Infinite Limits}
+    Let $f: D\rightarrow \R$, and $c$ be a limit point of $D$. Then,
+    \begin{align*}
+      \lim_{x\rightarrow c}f(x) = \infty \xLeftrightarrow{\text{def}} (\forall M \geq 0)(\exists \delta > 0) \ni x\in \dot{V}_{\delta}(c)\cap D \Rightarrow f(x) \geq M
+    \end{align*}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    We can also define
+    \begin{align*}
+      \lim_{x\rightarrow c}f(x) &= -\infty\\
+      \lim_{x\rightarrow c^{\pm}}f(x) &= \pm \infty\\
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Infinite Limits, Example}
+    \begin{align*}
+      \lim_{x\rightarrow 1^{-}}\frac{1}{1-x} &= -\infty
+    \end{align*}
+    \begin{description}
+      \item[Proof:] Let $M\geq 0$ be large. We want $f(x) \geq M$.
+        \begin{align*}
+          \frac{1}{1-x} &\geq M\\
+          1-x &\leq \frac{1}{M}\\
+          x &\geq 1-\frac{1}{M}
+        \end{align*}
+        Set $\delta = \frac{1}{M}$. If $x\in (1-\delta,1)$, then $x\geq 1-\frac{1}{M}$. So, by our work above, $f(x) \geq M$.
+    \end{description}
+  \end{problem}
+  \begin{problem}{Limits at Infinity}
+    Let $f: [a,\infty) \rightarrow \R$, $L\in\R$. Then,
+    \begin{align*}
+      \lim_{x\rightarrow \infty}f(x) = L \xLeftrightarrow{\text{def}} (\forall \varepsilon > 0)(\exists K \geq a) \ni x\geq K \Rightarrow f(x)\in V_{\varepsilon}(L)
+    \end{align*}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    Similarly, we can define for $f: (-\infty,b] \rightarrow \R$, $L\in \R$
+    \begin{align*}
+      \lim_{x\rightarrow -\infty} f(x) = L \xLeftrightarrow{\text{def}} (\forall \varepsilon > 0)(\exists K\leq b) \ni x\leq K \Rightarrow f(x)\in V_{\varepsilon}(L)
+    \end{align*}
+    and for $f: [a,\infty)$ where
+    \begin{align*}
+      \lim_{x\rightarrow\infty}f(x) = \infty \xLeftrightarrow{\text{def}} (\forall M \geq 0)(\exists K\geq a) \ni x\geq K \Rightarrow f(x) \geq M
+    \end{align*}
+    and the respective sequential definitions.
+  \end{problem}
+  \begin{problem}{Limits at Infinity, Example}
+    Let $n\in \N$.
+    \begin{align*}
+      \lim_{x\rightarrow\infty}x^{n} = \infty
+    \end{align*}
+    \tcblower
+    \begin{description}
+      \item[Proof:] Let $M$ be large. We want $x^{n} \geq M$. Then, $x\geq M^{1/n}$. Set $K = M^{1/n}$.
+    \end{description}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    \begin{align*}
+      \lim_{x\rightarrow -\infty}x^{n} &= \begin{cases}
+        +\infty,&n = 2k\\
+        -\infty,& n= 2k+1
+      \end{cases}
+    \end{align*}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    \begin{align*}
+      p(x) &= \sum_{k=1}^{n}a_kx^k\\
+      \lim_{x\rightarrow\infty}p(x) &= \begin{cases}
+        +\infty,&a_n > 0\\
+        -\infty&a_n < 0
+      \end{cases}
+    \end{align*}
+    Let $g(x) = x^n$.
+    \begin{align*}
+      \frac{p(x)}{g(x)} &= a_n + a_{n-1}\frac{1}{x} + \cdots + a_{0}\frac{1}{x^n}\\
+      \lim_{x\rightarrow\infty}\frac{p(x)}{g(x)} &= a_n
+    \end{align*}
+    \begin{problem}{Lemma}
+      If $f,g: [a,\infty)\rightarrow \R$, and $g(x) > 0$. If
+      \begin{align*}
+        \lim_{x\rightarrow \infty}\frac{f(x)}{g(x)} &= L \neq 0
+      \end{align*}
+      \begin{enumerate}[(1)]
+        \item If $L > 0$, then $\lim_{x\rightarrow\infty} f(x) = \infty \Leftrightarrow \lim_{x\rightarrow\infty}g(x) = \infty$
+        \item If $L < 0$, then $\lim_{x\rightarrow\infty} f(x)= -\infty \Leftrightarrow \lim_{x\rightarrow\infty}g(x) = +\infty$
+      \end{enumerate}
+    \end{problem}
+    Apply the lemma to $p(x),~x^n$.
   \end{problem}
 \end{document}
