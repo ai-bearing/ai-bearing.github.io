@@ -3814,7 +3814,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
       \item Let $c$ be a left cluster point of $D$. $\lim_{x\rightarrow c^{-}} f(x) = L$ if and only if $\forall (x_n)_n \in (-\infty,c) \cap D$ with $(x_n)_n \rightarrow c$, we have $(f(x_n))_n \rightarrow L$.
     \end{enumerate}
   \end{problem}
-  \begin{problem}{}
+  \begin{problem}{Limit Equality}
     Let $f:D\rightarrow \R$. Let $c$ be a cluster point of $D$.
     \begin{align*}
       \lim_{x\rightarrow c}f(x) = L \Leftrightarrow \lim_{x\rightarrow c^{-}}f(x) = \lim_{x\rightarrow c^{+}}f(x) = L
@@ -4052,5 +4052,92 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
   \end{problem}
   \begin{problem}{Jump Discontinuities}
     Suppose $\lim_{x\rightarrow c^-}f(x) = L$, $\lim_{x\rightarrow c^+} f(x) = R$. If $L \neq R$, then $x = c$ is a jump discontinuity.
+  \end{problem}
+  \begin{problem}{Lipschitz Functions}
+    A function $f: D\rightarrow \R$ is called Lipschitz if $\exists c \geq 0$ with 
+    \begin{align*}
+      |f(x) - f(y)| \leq c|x-y| \tag*{$\forall x,y\in D$}
+    \end{align*}
+    The linear function $f(x) = ax + b$ is a Lipschitz function. Additionally, if $T: \R^n \rightarrow \R^m$ is linear, then $\Vert T(\vec{v}) - T(\vec{w})\Vert \leq c\Vert \vec{v}-\vec{w}\Vert$ for any norm on $\R^n$ and $\R^m$.
+    \begin{itemize}
+      \item If $c < 1$, then $f$ is a contraction.
+      \item If $c = 1$ and $|f(x) - f(y)| = |x-y|$, $f$ is called an isometry.
+    \end{itemize}
+    Lipschitz functions are on their domain:
+    \begin{description}
+      \item[Proof:] Let $c\in D$, let $\varepsilon > 0$. Set $\delta = \varepsilon/c$.
+        \begin{align*}
+          |x-c| &< \delta\\
+          |f(x) - f(c)| &\leq c|x-c|\\
+          |f(x) - f(c)| &< c\delta\\
+                        &= \varepsilon
+        \end{align*}
+    \end{description}
+    If $f(x) = \sin(x)$, then
+    \begin{align*}
+      |\sin(x) - \sin(y)| &= \left|2\sin\left(\frac{1}{2}(x-y)\right)\cos\left(\frac{1}{2}(x+y)\right)\right|\\
+                          &\leq 2\frac{1}{2}|x-y|\\
+                          &= |x-y|
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Equality over a Dense Subset}
+    Let $f,g: \R\rightarrow\R$ be continuous. Let $E\subseteq \R$. If $f(x) = g(x)~\forall x\in E$, then $f = g$.
+    \tcblower
+    Let $t\in\R$. Since $E$ is dense, $\exists (x_n)_n \in E$ such that $(x_n)_n \rightarrow t$. So, $(f(x_n))_n \rightarrow t$ because $f$ is continuous, and $(g(x_n))_n \rightarrow g(t)$ because $g$ is continuous.\\
+
+    However, since $f(x_n) = g(x_n)~\forall x_n$, it must be the case that $f(t) = g(t)$.
+  \end{problem}
+  \begin{problem}{Boundedness over a Dense Subset}
+    Let $f: \R \rightarrow \R$ be continuous. Suppose $f\vert_{E}$ is bounded. That is, $\exists c$ such that
+    \begin{align*}
+      |f(x)| \leq c.\tag*{$\forall x\in E$}
+    \end{align*}
+    Then, $f$ is bounded.
+    \tcblower
+    Let $t\in \R$. Since $E$ is dense, $\exists (x_n)_n \in E$ such that $(f(x_n))_n \rightarrow t$. Then,
+    \begin{align*}
+      |f(x_n)_n| &\leq c,
+    \end{align*}
+    meaning that $f(t) \leq c$.
+  \end{problem}
+  \begin{problem}{Strictly Positive Continuity}
+    If $f$ is continuous at $x=c$ and $f(c) > 0$, then $\exists \delta > 0$ and $\exists m > 0$ with $f(x) \leq m$ $\forall x \in V_{\delta}(c)$. Similarly for the negative case.
+    \tcblower
+    Let $\varepsilon = f(c) / 2 > 0$. Then, $\exists \delta > 0$ such that $\forall x\in V_{\delta}(c)$, $f(x)\in V_{\varepsilon}(f(c)) = (f(c)/2,3f(c)/2)$. Set $m = f(c)/2$. 
+  \end{problem}
+  \begin{problem}{Continuity Under Operations}
+    Let $f,g: D\rightarrow \R$, $c\in D$.
+    \begin{enumerate}[(1)]
+      \item If $f,g$ are continuous at $x = c$, then $f\pm g$ are continuous at $x=c$. Similarly, if $f,g$ are continuous on $D$, then $f\pm g$ is continuous on $D$.
+      \item Let $\alpha \in \R$. If $f$ is continuous at $x=c$ or on $D$, then $\alpha f$ is continuous at $x=c$ or $D$ respectively.
+      \item If $f,g$ are continuous at $x=c$ or on $D$, then $f\cdot g$ is continuous on $x=c$ or $D$ respectively.
+      \item If $f,g$ are continuous at $x=c$, and $g(c) \neq 0$, then $\frac{f}{g}$ is continuous at $c$. Likewise, if $f,g$ are continuous on $D$ and $g(x)\neq 0$ $\forall x\in D$, then $\frac{f}{g}$ is continuous.
+      \item If $g$ is continuous at $x=c$ and $f$ is continuous at $d=g(c)$, then $f\circ g$ is continuous at $x=c$. If $\text{ran}(g) \subseteq \text{dom}(f)$, with $f,g$ continuous on their domain, then $f\circ g$ is continuous.
+    \end{enumerate}
+    \tcblower
+    \begin{description}[font=\normalfont]
+      \item[Remark on (4):] If $g(c) \neq 0$, then $g\neq 0$ on a $\delta$-neighborhood of $c$.
+      \item[Proof of (5):] Let $(x_n)_n \rightarrow c$. Then, $g(x_n)_n \rightarrow g(c)$. So, $(f(g(x_n)))_n \rightarrow f(g(c))$.
+    \end{description}
+  \end{problem}
+  \begin{problem}{Further Operations}
+    \begin{enumerate}[(1)]
+      \item If $f: D\rightarrow \R$ is continuous, and $f(x) \geq 0$ on $D$, then $\sqrt{f(x)}$ is continuous on $D$.
+      \item If $f: D\rightarrow \R$ is continuous on $D$, then $|f(x)|$ is continuous.
+      \item Polynomials and Rational functions are continuous on their domain.
+      \item If $f(x),g(x)$ are continuous, then $h(x) = \max(f(x),g(x))$ and $k(x) = \min(f(x),g(x))$.
+    \end{enumerate}
+  \end{problem}
+  \begin{problem}{Fundamental Theorem of Continuous Functions on $[a,b]$}
+    \begin{description}
+      \item[Boundedness Theorem:] If $f: [a,b] \rightarrow \R$ is continuous, then $\Vert f \Vert_{u} < \infty$.\\
+        \vspace{4pt}
+        \rule{0.95\textwidth}{0.4pt}
+        \vspace{4pt}
+        
+        Suppose it is not the case. Given any $n\geq 1$, $\exists x_n\in [a,b]$ with $|f(x_n)|\leq n$. We thus have a sequence $(x_n)_n\in [a,b]$.\\
+
+        By Bolzano-Weierstrass, $\exists (x_{n_k})_k \rightarrow x\in [a,b]$. So, $f(x_{n_k})\rightarrow f(x)$. In particular, $(f(x_{n_k}))_k$ is bounded; however, $f(x_{n_k})\geq k$. $\bot$
+    \end{description}
   \end{problem}
 \end{document}
