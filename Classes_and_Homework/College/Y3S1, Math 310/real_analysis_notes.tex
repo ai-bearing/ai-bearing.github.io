@@ -4131,13 +4131,55 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
   \begin{problem}{Fundamental Theorem of Continuous Functions on $[a,b]$}
     \begin{description}
       \item[Boundedness Theorem:] If $f: [a,b] \rightarrow \R$ is continuous, then $\Vert f \Vert_{u} < \infty$.\\
-        \vspace{4pt}
-        \rule{0.95\textwidth}{0.4pt}
-        \vspace{4pt}
-        
-        Suppose it is not the case. Given any $n\geq 1$, $\exists x_n\in [a,b]$ with $|f(x_n)|\leq n$. We thus have a sequence $(x_n)_n\in [a,b]$.\\
+
+        \textbf{Proof:} Suppose it is not the case. Given any $n\geq 1$, $\exists x_n\in [a,b]$ with $|f(x_n)|\leq n$. We thus have a sequence $(x_n)_n\in [a,b]$.\\
 
         By Bolzano-Weierstrass, $\exists (x_{n_k})_k \rightarrow x\in [a,b]$. So, $f(x_{n_k})\rightarrow f(x)$. In particular, $(f(x_{n_k}))_k$ is bounded; however, $f(x_{n_k})\geq k$. $\bot$
+        \begin{description}
+          \small
+          \item[Note:] It is possible for $f$ to be bounded on an infinite interval where it does not attain the supremum or infimum. 
+        \end{description}
+    \end{description}
+    Let $f: D\rightarrow \R$.
+    \begin{enumerate}[(1)]
+      \item $f$ has an absolute maximum on $D$ if $\exists x_M\in D$ with $f(x) \leq f(x_M)~\forall x\in D$. Notably, this means $\sup_{x\in D}f(x) = f(x_M)$.
+      \item $f$ has an absolute minimum on $D$ if $\exists x_m\in D$ with $f(x_m)\leq f(x)~\forall x\in D$. Notably, this means $\inf_{x\in D} f(x) = f(x_m)$.
+    \end{enumerate}
+    \begin{description}
+      \item[Extreme Value Theorem (EVT):] If $f: [a,b] \rightarrow \R$ is continuous, then $f$ admits an absolute minimum and absolute maximum.\\
+
+        \textbf{Proof:} We know that $\sup_{x\in[a,b]}f(x) = u < \infty$ by the boundedness theorem. For each $n\in \N$, $\exists x_n\in [a,b]$ such that
+        \begin{align*}
+          u-\frac{1}{n} < f(x_n) &\leq u.
+        \end{align*}
+        Thus, there is a sequence $(x_n)_n \in [a,b]$ --- by Bolzano-Weierstrass, $\exists (x_{n_k})_k \rightarrow x^{\ast}$ for some $x^{\ast}\in [a,b]$. So, for each $k$,
+        \begin{align*}
+          u-\frac{1}{n_k} < f(x_{n_k}) &\leq u\\
+          u < f(x^{\ast}) &\leq u. \tag*{since $f$ is continuous}
+        \end{align*}
+        So, by the squeeze theorem, $f(x^{\ast}) = u$ is our absolute max.
+      \item[Corollary to the Extreme Value Theorem:] If $f: [a,b]\rightarrow \R$ is continuous with $f(x) > 0~\forall x\in [a,b]$, then $\exists \alpha > 0$ such that $f(x) \geq \alpha~\forall x\in [a,b]$.\\
+
+        \textbf{Proof:} By the previous theorem, we know $\exists x_m\in [a,b]$ such that $f(x) \geq f(x_m)~\forall x\in [a,b]$. But $\alpha:= f(x_m) > 0$ by definition.
+      \item[Location of Roots:] We will use this to prove the Intermediate Value Theorem. Let $f: [a,b] \rightarrow \R$ be continuous, Suppose $f(a) < 0$ and $f(b) > 0$, or $f(a) > 0$ and $f(b) < 0$. Then, $\exists c\in (a,b)$ such that $f(c) = 0$.\\
+
+        \textbf{Proof:} Assume $f(a) < 0$ and $f(b) > 0$. Let $N = \{x\in [a,b] \mid f(x) \geq 0\}$. Since $b\in N$, $N\neq \emptyset$. Let $z = \inf{N}$. We claim that $f(z) = 0$.\\
+
+        We know that $\exists (x_n)_n \in N$ with $x_n \rightarrow z$. Since $(x_n)_n \in N$, $f(x_n) \geq 0~\forall n\geq 1$. However, $f(x_n) \rightarrow f(z)$ since $f$ is continuous. So, $f(z) \geq 0$.\\
+
+        Suppose toward contradiction that $f(z) > 0$. So, $\exists \delta > 0$ such that $f(x) \geq \frac{f(z)}{2}$ on $(z-\delta,z+\delta)$. Then, $z-\frac{\delta}{2}\in N$. $\bot$
+      \item[Intermediate Value Theorem (IVT):] Let $f: I \rightarrow \R$, where $I$ is any interval. Suppose $\exists x_1,x_2\in I$ and $k\in \R$, with $f(x_1) < k < f(x_2)$. Then, $\exists \xi$ strictly between $x_1$ and $x_2$, with $f(\xi) = k$.\\
+
+        \textbf{Proof:} Clearly, $x_1 \neq x_2$. Suppose $x_1 < x_2$. Consider $g: [x_1,x_2] \rightarrow \R$, $g(x) = f(x) - k$. So, $g$ is continuous (as $f$ is continuous), and $g(x_1) = f(x_1) - k < 0$, and $g(x_2) = f(x_2) - k > 0$. Thus, $\exists \xi \in [x_1,x_2]$ with $g(\xi) = 0$, whence $f(\xi) = k$.
+      \item[Corollary to IVT and EVT:] Let $f: [a,b]\rightarrow \R$ be continuous. If $\inf_{[a,b]} f \leq k\leq \sup_{[a,b]} f$, then $\exists c\in [a,b]$ with $f(c) = k$.\\
+
+        \textbf{Proof:} We know that by EVT, $\exists x_m,x_M$ with $\inf_{[a,b]} f = f(x_m)$ and $\sup_{[a,b]} f = f(x_M)$. So, $f(x_m) \leq k \leq f(x_M)$. Apply IVT.
+      \item[Preservation of Intervals 1:] If $f:[a,b]\rightarrow \R$ is continuous, then $f([a,b]) = [c,d]$.\\
+
+        \textbf{Proof:} Set $c = \inf_{[a,b]} f$ and $d = \inf_{[c,d]} f$. By definition, $c\leq f(x) \leq d$, meaning $f([a,b])\subseteq [c,d]$. By the previous corollary, if $k\in [c,d]$, then $\exists \xi \in [a,b]$ with $f(\xi)= k$. Thus, $[c,d] \subseteq f([a,b])$.
+      \item[Preservation of Intervals 2:] Let $I$ be any interval, and $f: I\rightarrow \R$ continuous. Then, $f(I)$ is an interval.\\
+
+        \textbf{Proof:} Let $\alpha,\beta \in f(I)$. WLOG, $\alpha < \beta$. We will show that $[\alpha,\beta]\in f(I)$. Say $f(a) = \alpha$ and $f(b) = \beta$ for some $a,b\in I$. Note that $a\neq b$. Let $\alpha < k < \beta$. By IVT, $\exists \xi$ strictly between $a$ and $b$ with $f(\xi) = k$. If $a < b$, then $[a,b]\subseteq I$, and if $b < a$, then $[b,a] \subseteq I$. Thus, $\xi\in I$.
     \end{description}
   \end{problem}
 \end{document}
