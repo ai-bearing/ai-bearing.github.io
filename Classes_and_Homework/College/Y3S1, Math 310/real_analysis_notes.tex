@@ -4182,4 +4182,141 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
         \textbf{Proof:} Let $\alpha,\beta \in f(I)$. WLOG, $\alpha < \beta$. We will show that $[\alpha,\beta]\in f(I)$. Say $f(a) = \alpha$ and $f(b) = \beta$ for some $a,b\in I$. Note that $a\neq b$. Let $\alpha < k < \beta$. By IVT, $\exists \xi$ strictly between $a$ and $b$ with $f(\xi) = k$. If $a < b$, then $[a,b]\subseteq I$, and if $b < a$, then $[b,a] \subseteq I$. Thus, $\xi\in I$.
     \end{description}
   \end{problem}
+  \begin{problem}{Uniform Continuity}
+    A function $f: D\rightarrow \R$ is \textbf{uniformly continuous} on $D$ if
+    \begin{align*}
+      (\forall \varepsilon > 0)(\exists \delta > 0) \ni u,v\in D,~|u-v| < \delta \Rightarrow |f(u)-f(v)| < \varepsilon
+    \end{align*}
+    Uniform continuity is different from continuity in that $f$ is continuous at a point $x=c$ if
+    \begin{align*}
+      (\forall \varepsilon > 0)(\exists \delta > 0) \ni |x-c| < \delta \Rightarrow |f(x)-f(c)| < \varepsilon.
+    \end{align*}
+    In (non-uniform) continuity, $\delta = \delta(\varepsilon,c)$.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    For example, if $f(x) = \frac{1}{x}$ and $D = (0,\infty)$, we will show that $f$ is continuous at $x=c > 0$.
+    \begin{align*}
+      |f(x)-f(c)| &= \left|\frac{1}{x} - \frac{1}{c}\right|\\
+                  &= \frac{1}{c}\frac{1}{x}|x-c|
+                  \shortintertext{if $0 < \delta < c/2$ and $|x-c| < \delta$, then $x\geq c/2$. Thus,}
+      |f(x) - f(c)| &= \frac{1}{c}\frac{2}{c}|x-c|\\
+                    &= \frac{2}{c^2}|x-c|.
+                    \shortintertext{Given $\varepsilon > 0$, pick $\delta = \frac{1}{2}\min\left(\frac{c}{2},\frac{2}{c^2}\varepsilon\right)$. Thus, if $|x-c| < \delta$, then $|f(x)-f(c)| < \varepsilon$}
+    \end{align*}
+    Specifically, we can see that on this domain, we require that $\delta$ be a function of $\varepsilon$ and $c$.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    However, if we look at $f(x) = \frac{1}{x}$ on $[1,\infty)$, we can see that for $u,v \geq 1$,
+    \begin{align*}
+      |f(u)-f(v)| &= \left|\frac{1}{u}-\frac{1}{v}\right|\\
+                  &= \frac{1}{uv}|v-u|\\
+                  &\leq |v-u|
+                  \shortintertext{Given $\varepsilon > 0$, set $\delta = \varepsilon$. If $|u-v| < \delta$, then $|f(u)-f(v)| < \varepsilon$.}
+    \end{align*}
+    Here, we see that $\delta = \delta(\varepsilon)$.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    We will show that $f(x) = x^2$ is uniformly continuous on $[1,4]$.
+    \begin{align*}
+      |f(u) - f(v)| &= |u^2 - v^2|\\
+                    &= |u-v||u+v|\\
+                    &\leq |u-v|\left(|u| + |v|\right)\tag*{Triangle Inequality}\\
+                    &\leq 8|u-v|
+    \end{align*}
+    Given $\varepsilon > 0$, set $\delta = \varepsilon/8$. Whenever $u,v\in [1,4]$, with $|u-v| < \delta$, then $|f(u)-f(v)| < \varepsilon$
+  \end{problem}
+  \begin{problem}{Lipschitz and Uniform Continuity}
+    If $f: D\rightarrow \R$ is Lipschitz, then $f$ is uniformly continuous.
+    \tcblower
+    If $f: D\rightarrow \R$ is Lipschitz, then $\exists c > 0$ such that $\forall u,v\in D$,
+    \begin{align*}
+      |f(u) - f(v)| &\leq c|x-y|.
+    \end{align*}
+    Given $\varepsilon > 0$, set $\delta = \frac{\varepsilon}{c}$. Whenever $|u-v| < \delta$, then $|f(x) - f(y)| < \varepsilon$.
+  \end{problem}
+  \begin{problem}{Uniform Continuity and Continuity}
+    If $f: D\rightarrow \R$ is uniformly continuous, then $f$ is continuous on $D$.
+    \tcblower
+    Let $c\in D$. Given $\varepsilon > 0$, by uniform continuity, $\exists \delta > 0$ such that 
+    \begin{align*}
+      |u-v| < \delta &\Rightarrow |f(u)-f(v)| < \varepsilon\\
+      |x-c| < \delta &\Rightarrow |f(x)-f(c)| < \varepsilon
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Negating Uniform Continuity}
+    The following are equivalent for $f: D\rightarrow \R$
+    \begin{enumerate}[(i)]
+      \item $f$ is \textit{not} uniformly continuous
+      \item $\exists \varepsilon_0$ such that $\forall \delta > 0$, $\exists u_{\delta},v_{\delta}$ such that $|u_{\delta}-v_{\delta}| < \delta$ and $|f(u_{\delta}) - f(v_{\delta})| > \varepsilon$
+      \item $\exists \varepsilon_0$ such that $\exists (u_n)_n,(v_n)_n\in D$ with $\left(u_n - v_n\right)_n \rightarrow 0$ and $|f(u_n) - f(v_n)| \geq \varepsilon_0$
+    \end{enumerate}
+    \tcblower
+    \begin{description}[font=\normalfont]
+      \item[(i) $\Leftrightarrow$ (ii):] Negating definition.
+      \item[(ii) $\Rightarrow$ (iii):] Set $\delta_n = 1/n$ in (ii). Given $\delta_n$, it must be the case that
+        \begin{align*}
+          |u_n - v_n| &< \frac{1}{n}\\
+          \shortintertext{so $(u_n - v_n)_n \rightarrow 0$, and}
+          |f(u_n) - f(v_n)| &\geq \varepsilon_0.
+        \end{align*}
+      \item[(iii) $\Rightarrow$ (ii):] Let $\delta > 0$. Then, $\exists N\in \N$ large such that $|u_N - v_N| < \delta$, by the definition of sequence convergence. Set $u_{\delta} = u_N$ and $v_{\delta} = v_N$.
+    \end{description}
+  \end{problem}
+  \begin{problem}{Showing Non-Uniform Continuity}
+    We will show that $f(x) = \frac{1}{x}$ is not uniformly continuous on $(0,1)$.\\
+
+    Set $u_n = 1/n$, and $v_n = \frac{1}{n+1}$. Then,
+    \begin{align*}
+      |f(u) - f(v)| &= |n-(n+1)|\\
+                    &= 1\\
+                    &=\varepsilon_0\\
+      |u_n - v_n| &= \left|\frac{1}{n} - \frac{1}{n+1}\right|\\
+                  &= \frac{1}{n(n+1)}\\
+                  &\rightarrow 0
+    \end{align*}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    Consider $f(x) = x^2$ on $[0,\infty)$. We will show that $f$ is not uniformly continuous.\\
+
+    Let $u_n = n$ and $v_n = n + \frac{1}{n}$. Clearly, $(u_n - v_n)_n \rightarrow 0$.
+    \begin{align*}
+      |f(u_n) - f(v_n)| &= \left|n^2 - \left(n+\frac{1}{n}\right)^2\right|\\
+                        &= \left|n^2 - n^2 - 2 - \frac{1}{n^2}\right|\\
+                        &= 2 + \frac{1}{n^2}\\
+                        &\geq 2
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Uniform Continuity Theorem}
+    If $f: [a,b] \rightarrow \R$ is continuous, then $f$ is uniformly continuous.
+    \tcblower
+    Suppose toward contradiction that $f$ is not uniformly continuous. Then, $\exists (u_n)_n,(v_n)_n\in [a,b]$ and $\varepsilon_0 > 0$ such that $(u_n - v_n)_n \rightarrow 0$ and $|f(u_n)-f(v_n)| \geq \varepsilon>0$.\\
+
+    Since $(u_n)_n$ is bounded, $\exists n_k$ such that $(u_{n_k})_k \rightarrow z$ by the Bolzano-Weierstrass. We claim that $(v_{n_k})_k \rightarrow z$:
+    \begin{align*}
+      \left|v_{n_k} - z\right| &= \left|v_{n_k} - u_{n_k} + u_{n_k} - z\right|\\
+                               &\leq \left|v_{n_k} - u_{n_k}\right| + \left|u_{n_k} - z\right|\\
+                               &\rightarrow 0.
+    \end{align*}
+    So,
+    \begin{align*}
+      0 < \varepsilon_0 &\leq |f(u_{n_k}) - f(v_{n_k})|\\
+                    &\rightarrow 0
+    \end{align*}
+    since $(f(u_k))_k \rightarrow f(z)$ and $\left(f(v_k)\right)_k \rightarrow f(z)$.
+  \end{problem}
+  \begin{problem}{Uniform Continuity and Lipschitz (or lack thereof)}
+    The function $f(x) = \sqrt{x}$ on $[0,1]$ is uniformly continuous. However, $f(x) = \sqrt{x}$ is not Lipschitz:\\
+
+    Suppose toward contradiction that $f$ is Lipschitz.
+    \begin{align*}
+      |f(x) - f(y)| &\leq c|x-y| \tag*{$\forall x,y\in [0,1]$}\\
+      \shortintertext{Take $y = 0$.}
+      \sqrt{x} &\leq cx\\
+      0 < \frac{1}{c} &\leq \sqrt{x}
+    \end{align*}
+  \end{problem}
 \end{document}
