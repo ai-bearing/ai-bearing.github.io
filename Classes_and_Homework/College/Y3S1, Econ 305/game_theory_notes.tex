@@ -1396,4 +1396,101 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
       \tcbincludepdf{images/activity_14.pdf}
     \end{tcbraster}
   \end{problem}
+  \begin{problem}{Auctions}
+    There are different classes of auctions:
+    \begin{itemize}
+      \item Open Auctions: bidders observe a dynamic price process
+        \begin{itemize}
+          \item English Auction: Ascending price until the bidding stops
+          \item Dutch Auction: Descending price until the bidding starts
+        \end{itemize}
+      \item Sealed-Bid Auctions: bidders submit bids without knowing bids of opponents
+        \begin{itemize}
+          \item First-price: Highest bid wins and pays highest price
+          \item Second-price: Highest bid wins and pays second-highest price
+        \end{itemize}
+      \item Valuation
+        \begin{itemize}
+          \item Private Value: only care about the consumption benefit
+          \item Common Value: value depends on the types of other participants
+        \end{itemize}
+    \end{itemize}
+  \end{problem}
+  \begin{problem}{Bayesian Nash Equilibrium: Private Value First-Price Sealed-Bid Auction}
+    \begin{align*}
+      v_i(b_i,b_j;\theta_i) &= \begin{cases}
+        \theta_i - b_i & b_i > b_j\\
+        \frac{1}{2}(\theta_i - b_i) & b_i = b_j\\
+        0 & b_i < b_j
+      \end{cases}
+    \end{align*}
+    \begin{itemize}
+      \item Each player has an independent valuation $\theta_i$, and believes the valuation of their rival is uniform on $[0,1]$.
+      \item This game has both continuous actions and continuous types.
+      \item Lowering bid increases net payoff margin, but lowers chance of winning, and chance of winning depends on beliefs about the other's bid.
+    \end{itemize}
+    \textbf{Claim:} The unique BNE is $s_{i}^{\ast} = \frac{\theta_i}{2}$.\\
+
+    We will simplify our job by guessing that $s_i^{\ast}(\theta_i) = k\theta_i + c$. This is a symmetric BNE.
+    \begin{itemize}
+      \item Guess that other player(s) are playing the optimal bid.
+      \item Find best response bid of player $i$ given the previous assumption.
+      \item \textbf{Do not assume yet anything about your bid.}
+    \end{itemize}
+    \begin{align*}
+      s_i^{\ast}(\theta_i) &= \arg\max_{b_i}\left((\theta_i-b_i)P(s_{j}^{\ast} < b_i)\right)\\
+                           &= \arg\max_{b_i}\left((\theta_i - b_i)P(k\theta_j + c < b_i)\right)\\
+                           &= \arg\max_{b_i}\left((\theta_i - b_i)P\left(\theta_j < \frac{b_i-c}{k}\right)\right)\\
+                           &= \arg\max_{b_i}\left((\theta_i - b_i)\left(\frac{b_i-c}{k}\right)\right)\\
+     \shortintertext{First-order condition (derivative with respect to $b_i$):}
+      0 &= (\theta_i - b_i) \frac{1}{k} - \frac{b_i - c}{k}\\
+      s_{i}^{\ast} &= \frac{\theta_i+c}{2}\\
+      \shortintertext{Since $k\theta_i + c = \theta_i/2 + c/2$ for all $\theta_i$, when $\theta_i = 0$, we must have $c = 0$ and thus $k = \frac{1}{2}$.}
+      s_{i}^{\ast}(\theta_i) &= \frac{1}{2}\theta_i
+    \end{align*}
+    In the $n$-bidder case, we have the following strategy:
+    \begin{align*}
+      s_{i}^{\ast}(\theta_i) &= \frac{n-1}{n}\theta_i,
+    \end{align*}
+    seeing as an increased number of bidders yields increased competition, meaning players have to make higher bids.\\
+    
+    This auction is strategically equivalent to the Dutch auction --- same normal form and same BNE --- since players decide whether to wait for a lower price and potentially lose out on winning.
+  \end{problem}
+  \begin{problem}{Private Value Second-Price Sealed-Bid Auction (or Vickrey Auction)}
+    In the second-price auction with private values, bidding one's own valuation is a \textit{weakly dominant} strategy.
+    \begin{itemize}
+      \item This means that no matter what the other players do, you can never do worse by bidding your own valuation.
+      \item Since a player's bid does not determine the price they pay and only determines the probability of winning, there is no reason to reduce bid (as in the case of of a first price auction).
+      \item We don't even need to know the distribution of other types.
+      \item Private values can even be correlated, and bidding type is still the weakly dominant strategy.
+      \item The truthful bidding strategy $s_i^{\ast}(\theta_i) = \theta_i$ is the unique \textit{symmetric} BNE (there are asymmetric BNE).
+    \end{itemize}
+    In the English auction, it is also a weakly dominant strategy to stay in the game until price equals valuation --- thus, the English auction and the Private Value Second Price Sealed-Bid Auction have the same BNE.
+  \end{problem}
+  \begin{problem}{Revenue Equivalence}
+    As a seller, we would want to ask which auctions generate the highest expected revenue.\\
+
+    Based on our previous results, expected revenues should be equal in the first-price sealed-bid and Dutch auctions, and the second-price sealed-bid and English auctions.\\
+
+    However, these auctions have the same expected revenue!
+    \begin{itemize}
+      \item With $2$ players, the expected max is $2/3$ and the expected min is $1/3$.
+      \item In a first-price auction, winner bids $1/3$ and pays $1/3$.
+      \item In a second-price auction, winner bids $2/3$ and pays other player's value, $1/3$.
+    \end{itemize}
+    \begin{description}
+      \item[Revenue Equivalence Theorem:] Suppose $n$ risk-neutral bidders each have an independent private valuation $\theta_i$ drawn from a probability density $f_i(\cdot) > 0$. Then, all auctions in which the bidder with the
+        \begin{itemize}
+          \item the highest type wins, and
+          \item lowest type has expected payoff of zero
+        \end{itemize}
+        generate the same expected revenue.
+    \end{description}
+    Notice that this does not say that revenue is maximized --- optimal auctions require prohibiting bidders from making certain bids (and sellers from setting reserve prices).
+  \end{problem}
+  \begin{problem}{Auction Activity}
+    \begin{tcbraster}[raster columns = 2, sharp corners, colframe = black!75!white,colback=white]
+      \tcbincludepdf{images/activity_15.pdf}
+    \end{tcbraster}
+  \end{problem}
 \end{document}
