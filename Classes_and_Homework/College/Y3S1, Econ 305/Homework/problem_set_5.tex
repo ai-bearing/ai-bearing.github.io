@@ -101,18 +101,152 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 \newcommand{\R}{\mathbbm{R}}
 \begin{document}
   \begin{problem}{Conquering an Island}
-    Two opposed armies are ready to conquer an island. Each army's general can choose to either attack $(A)$ not attack $(N)$. In addition, each army is either strong or weak, and there is common knowledge that these two events are equally likely and independent. The island is worth $M$ if captured and it is captured either by attacking when its opponent is not or by attacking when its rival does if its own army is strong and the rival is weak. 
+    Two opposed armies are ready to conquer an island. Each army's general can choose to either attack $(A)$ not attack $(N)$. In addition, each army is either strong or weak, and there is common knowledge that these two events are equally likely and independent. The island is worth $M$ if captured and it is captured either by attacking when its opponent is not or by attacking when its rival does if its own army is strong and the rival is weak. If two armies of equal strength both attack, neither captures the island. An army has a cost of fighting, $s$ if strong and $w > s$ if weak ($M > 2w$). There is no cost of attacking if the rival does not. Find all of the pure strategy Bayesian Nash equilibria.
     \tcblower
+    Without loss of generality, we will analyze Player $1$'s payoffs.
+    \begin{description}
+      \item[Strong Army Strategies:]\hfill
+        \begin{description}
+          \item[Not Attack:]
+            \begin{align*}
+              E\left(v_1(N,s_2^{\ast}(\theta_2);S,\theta_2)\right) &= 0
+            \end{align*}
+          \item[Attack, Opponent Attacks:]
+            \begin{align*}
+              E\left(v_1(A,A;S,\theta_2)\right) &= P(\theta_2 = S)v_1(A,A,;S,\theta_2) + P(\theta_2 = W)v_1(A,A;S,\theta_2)\\
+                                                &= \frac{1}{2}(-s) + \frac{1}{2}(M-s)\\
+                                                &= \frac{1}{2}M - s\\
+                                                &> 0
+            \end{align*}
+          \item[Attack, Opponent Does Not Attack:]
+            \begin{align*}
+              E\left(v_1(A,N;S,\theta_2)\right) &= M\\
+                                                &> 0
+            \end{align*}
+        \end{description}
+        Therefore, a strong army's dominant strategy is to Attack.
+      \item[Weak Army Strategies:]
+        \begin{description}
+          \item[Not Attack:]
+            \begin{align*}
+              E\left(v_1(N,s_2^{\ast}(\theta_2);W,\theta_2)\right) &= 0
+            \end{align*}
+          \item[Attack, Opponent Attacks:]
+            \begin{align*}
+              E\left(v_1(A,A;W,\theta_2)\right) &= -w\\
+                                                &< 0\\
+                                                \shortintertext{meaning}
+              BR_i(A;W,\theta_2) &= N
+            \end{align*}
+          \item[Attack, Opponent Does Not Attack:]
+            If opponent does not attack, this means opponent must be of type $W$; a player of type $S$ always attacks.
+            \begin{align*}
+              E\left(v_1(A,N;W,W)\right) &= M\\
+                                         &> 0\\
+                                         \shortintertext{meaning}
+              BR_i(N; W,W) &= A
+            \end{align*}
+        \end{description}
+    \end{description}
+    Since the best response functions are symmetric with respect to each other, this means the pure strategy Bayesian Nash equilibria are:
+    \begin{itemize}
+      \item $((A,A),(A,N))$
+      \item $((A,N),(A,A))$
+    \end{itemize}
     % Iterated dominance: find dominant strategy for particular type, then find expected payoffs for other type given dominant strategy.
   \end{problem}
   \begin{problem}{Matching Pennies, Revisited}
+    Consider the modified version of Matching Pennies shown below. The players derive extra utility from playing Heads regardless of whether they win or lose. Player $1$ gets extra utility $a$ from playing Heads and player $2$ gets extra utility $b$ from playing heads. Assume that $a$ and $b$ are private information independently drawn from the uniform distribution on $[0,1]$.
+    \begin{center}
+      \begin{tabular}{c|c|c|}
+        \multicolumn{1}{c}{} & \multicolumn{1}{c}{$H$} & \multicolumn{1}{c}{$T$}\\
+        \cline{2-3}
+        $H$ & $1 + a, -1 + b$ & $-1 + a,1$\\
+        \cline{2-3}
+        $T$ & $-1,1+b$ & $1,-1$\\
+        \cline{2-3}
+      \end{tabular}
+    \end{center}
+    \tcblower
+    \begin{problem}{(a)}
+      Find a Bayesian Nash equilibrium of this game.
+      \tcblower
+      \begin{description}
+        \item[Cutoff Strategies:]
+          \begin{align*}
+            s_1^{\ast}(a) &= \begin{cases}
+              H & a\geq a^{\ast}\\
+              T & a < a^{\ast}
+            \end{cases}\\
+              s_2^{\ast}(b) &= \begin{cases}
+                H & b\geq b^{\ast}\\
+                T & b < b^{\ast}
+              \end{cases}
+          \end{align*}
+        \item[Indifference Condition for Player 1:]
+          \begin{align*}
+            Ev_{1}(H,s_2^{\ast}(\theta_2);\theta_1^{\ast},\theta_2) &= Ev_{1}(T,s_2^{\ast}(\theta_2);\theta_1^{\ast},\theta_2)\\
+            (1+a^{\ast})(1-b^{\ast}) + (-1+a^{\ast})(b^{\ast}) &= (-1)(1-b^{\ast}) + (1)(b^{\ast})
+          \end{align*}
+        \item[Indifference Condition for Player 2:]
+          \begin{align*}
+            Ev_{2}(s_1^{\ast}(\theta_1),H;\theta_1^{\ast},\theta_2) &= Ev_{1}(s_1^{\ast}(\theta_1),T;\theta_1^{\ast},\theta_2)\\
+            (-1+b^{\ast})(1-a^{\ast}) + (1+b^{\ast})(a^{\ast}) &= (1)(1-a^{\ast}) + (-1)(a^{\ast})
+          \end{align*}
+        \item[Solution to System:]
+          \begin{align*}
+            1 + a^{\ast} - b^{\ast} - a^{\ast}b^{\ast} + a^{\ast}b^{\ast} - b^{\ast} &= 2b^{\ast} - 1\tag*{Player 1 Indifference Condition}\\
+            4b^{\ast} - 2 &= a^{\ast}\\
+            a^{\ast} + a^{\ast}b^{\ast} - 1 + a^{\ast} - a^{\ast}b^{\ast} + b^{\ast} &= 1-2a^{\ast}\tag*{Player 2 Indifference Condition}\\
+            b^{\ast} &= 1-4a^{\ast}\\
+            1-4(4b^{\ast} - 2) &= b^{\ast}\\
+            b^{\ast} &= \frac{10}{17}\\
+            a^{\ast} &= \frac{6}{17}
+          \end{align*}
+      \end{description}
+      Therefore, the Bayesian Nash equilibrium is:
+      \begin{align*}
+        s_1^{\ast}(a) &= \begin{cases}
+          H & a\geq \frac{6}{17}\\
+          T & a < \frac{6}{17}
+        \end{cases}\\
+          s_2^{\ast}(b) &= \begin{cases}
+            H & b\geq \frac{10}{17}\\
+            T & b < \frac{10}{17}
+          \end{cases}
+      \end{align*}
+    \end{problem}
+    \begin{problem}{(b)}
+      The probability that player $1$ plays $T$ in the BNE is $\frac{6}{17}$ and the probability that player $2$ plays $T$ in the BNE is $\frac{10}{17}$.
+    \end{problem}
+    \begin{problem}{(c)}
+      We would expect the probabilities to approach the mixed strategy Nash equilibrium of the regular matching pennies game, which are $\frac{1}{2}$ and $\frac{1}{2}$ respectively.
+    \end{problem}
     %Cutoff strategies: guess strategy of player 1 as function of type is action 1 if type is at least one cutoff, other action if type is less than cutoff; type = cutoff is the indifference condition — indifference condition is expected payoff to player 1 of action 1 at  = expected payoff
-    \begin{description}
-      \item[Indifference Condition for Player 1:]
-        \begin{align*}
-          Ev_{1}(H,s_2^{\ast}(\theta_2);\theta_1^{\ast},\theta_2) &= Ev_{1}(T,s_2^{\ast}(\theta_2);\theta_1^{\ast},\theta_2)
-        \end{align*}
-    \end{description}
+  \end{problem}
+  \begin{problem}{Final Times}
+    Consider the following model of Prof. Brandon Lehr and Prof. Andy Jalil choosing dates for the 305 and 251 final exams, respectively. Each exam will either be on Tuesday or on Friday. The exam dates are chosen by Brandon and Andy simultaneously; they send messages of either Tuesday or Friday to the final exam office, which schedules each exam on the requested date.\\
+
+    Brandon and Andy, however, like to have the exam on different days because they share some of the same students. Specifically, they get $1$ util if the exams are on different dates. However, both prefer to have their exam on Tuesday. Brandon gets extra utility $\theta_B$ from holding his exam on Tuesday and Andy gets extra utility $\theta_A$ from holding his exam on Tuesday. Suppose that $\theta_B$ and $\theta_A$ are private information, uniformly distributed on $[0, \overline{\theta}]$.
+    \begin{center}
+      \renewcommand{\arraystretch}{1.5}
+      \begin{tabular}{c|c|c|}
+        \multicolumn{1}{c}{} & \multicolumn{1}{c}{Tuesday} & \multicolumn{1}{c}{Friday}\\
+        \cline{2-3}
+        Tuesday & $\theta_B,\theta_A$ & $1 + \theta_B,1$\\
+        \cline{2-3}
+        Friday & $1,1+\theta_A$ & $0,0$\\
+        \cline{2-3}
+      \end{tabular}
+    \end{center}
+    \tcblower
+    \begin{problem}{(a)}
+      Find a symmetric pure strategy Bayesian Nash equilibrium of this game.
+      \tcblower
+      \begin{description}
+        \item[Cutoff Strategy:]
+      \end{description}
+    \end{problem}
   \end{problem}
   \begin{problem}{Risk-Averse Bidders}
     Symmetric Bayesian Nash Equilibrium: $s_i^{\ast}(\theta_i) = k\theta_i + c$.
