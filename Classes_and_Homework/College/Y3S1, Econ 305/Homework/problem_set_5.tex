@@ -158,6 +158,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   \begin{problem}{Matching Pennies, Revisited}
     Consider the modified version of Matching Pennies shown below. The players derive extra utility from playing Heads regardless of whether they win or lose. Player $1$ gets extra utility $a$ from playing Heads and player $2$ gets extra utility $b$ from playing heads. Assume that $a$ and $b$ are private information independently drawn from the uniform distribution on $[0,1]$.
     \begin{center}
+      \renewcommand{\arraystretch}{1.5}
       \begin{tabular}{c|c|c|}
         \multicolumn{1}{c}{} & \multicolumn{1}{c}{$H$} & \multicolumn{1}{c}{$T$}\\
         \cline{2-3}
@@ -245,6 +246,84 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
       \tcblower
       \begin{description}
         \item[Cutoff Strategy:]
+          \begin{align*}
+            s_{B}^{\ast}(\theta_B) &= \begin{cases}
+              T & \theta_{B} \geq \theta_B^{\ast}\\
+              F & \theta_{B} < \theta_{B}^{\ast}
+            \end{cases}\\
+              s_{A}^{\ast}(\theta_A) &= \begin{cases}
+                T & \theta_{A} \geq \theta_{A}^{\ast}\\
+                F & \theta_{A} < \theta_{A}^{\ast}
+              \end{cases}
+          \end{align*}
+        \item[Indifference Condition for Player B:]
+          \begin{align*}
+            Ev_A(T,s_{A}^{\ast}(\theta_A);\theta_B^{\ast},\theta_A) &= Ev_A(F,s_{A}^{\ast}(\theta_A);\theta_B^{\ast},\theta_A)\\
+            \theta_B^{\ast}\frac{1}{ \overline{\theta} }( \overline{\theta}-\theta_A^{\ast}) + (1+\theta_B^{\ast})\frac{1}{ \overline{\theta} }(\theta_A^{\ast}) &= (1) \frac{1}{ \overline{\theta} }( \overline{\theta}-\theta_A^{\ast})
+          \end{align*}
+        \item[Indifference Condition for Player A:]
+          \begin{align*}
+            Ev_A(s_{B}^{\ast}(\theta_{B}),T;\theta_B,\theta_A^{\ast}) &= Ev_A(s_{B}^{\ast}(\theta_{B}),F;\theta_B,\theta_A^{\ast})\\
+            \theta_{A}^{\ast}\frac{1}{ \overline{\theta} }( \overline{\theta}-\theta_{B}^{\ast}) + (1+\theta_A^{\ast})\frac{1}{ \overline{\theta}}(\theta_B^{\ast}) &= (1)\frac{1}{\overline{\theta}}(\overline{\theta}-\theta_B^{\ast})
+          \end{align*}
+        \item[Solution to System:]
+          \begin{align*}
+            \theta_B^{\ast}\frac{1}{ \overline{\theta} }( \overline{\theta}-\theta_A^{\ast}) + (1+\theta_B^{\ast})\frac{1}{ \overline{\theta} }(\theta_A^{\ast}) &= (1) \frac{1}{ \overline{\theta} }( \overline{\theta}-\theta_A^{\ast}) \tag*{Player A Indifference Condition}\\
+            \theta_{A}^{\ast}\frac{1}{ \overline{\theta} }( \overline{\theta}-\theta_{B}^{\ast}) + (1+\theta_A^{\ast})\frac{1}{ \overline{\theta}}(\theta_B^{\ast}) &= (1)\frac{1}{\overline{\theta}}(\overline{\theta}-\theta_B^{\ast})\tag*{Player B Indifference Condition}\\
+            \overline{\theta}\theta_B^{\ast} - \theta_{B}^{\ast}\theta_{A}^{\ast} + \theta_{A}^{\ast} + \theta_{A}^{\ast}\theta_{B}^{\ast} &= \overline{\theta} - \theta_{A}^{\ast}\\
+            \theta_{B}^{\ast} &= 1-\frac{2\theta_{A}^{\ast}}{ \overline{\theta} }\\
+            \theta_{A}^{\ast}\overline{\theta} - \theta_{B}^{\ast}\theta_{A}^{\ast} + \theta_{B}^{\ast} + \theta_{A}^{\ast}\theta_{B}^{\ast} &= \overline{\theta} - \theta_{B}^{\ast}\\
+            \theta_{A}^{\ast} &= 1-\frac{2\theta_{B}^{\ast}}{\overline{\theta}}\\
+            \theta_{B}^{\ast} &= 1 - \frac{2\left(1 - \frac{2\theta_{B}^{\ast}}{\overline{\theta}}\right)}{\overline{\theta}}\\
+            \overline{\theta}\theta_{B}^{\ast} &= \overline{\theta} - 2 + \frac{2\theta_{B}^{\ast}}{\overline{\theta}}\\
+            \frac{ \theta_{B}^{\ast}\left(\overline{\theta}^2 - 2\right) }{ \overline{\theta} }&= \overline{\theta} - 2\\
+            \theta_{B}^{\ast} &= \frac{\overline{\theta}\left(\overline{\theta} - 2\right)}{\overline{\theta}^2 - 2}\\
+            \theta_{A}^{\ast} &= \frac{\overline{\theta}^{2}-2 \overline{\theta} + 4}{\overline{\theta}^{2} - 2}
+          \end{align*}
+      \end{description}
+    \end{problem}
+    \begin{problem}{(b)}
+      What does Harsanyi's theorem say about the equilibria of this game when $\overline{\theta}$ is small?
+      \tcblower
+      As $\overline{\theta}$ becomes small, the Bayesian Nash equilibrium of the game approaches the mixed strategy Nash equilibrium.
+    \end{problem}
+  \end{problem}
+  \begin{problem}{Trading Places}
+    Two players, $1$ and $2$, each own a house. Each player $i$ values their own house at $v_i$. The value of player $i$'s house to the other player is $\frac{3}{2}v_i$. Each player knows $v_i$ to themselves, but not the value of the other player's house. The values $v_i$ are drawn independently from $[0,1]$ with uniform distribution.
+    \tcblower
+    \begin{problem}{(a)}
+      Suppose players announce simultaneously whether they want to exchange their houses. If both players agree to an exchange, the exchange takes place. Otherwise no exchange takes place. Find a Bayesian Nash equilibrium of this game in pure strategies in which each player $i$ accepts an exchange if and only if the value $v_i$ does not exceed some threshold $\theta_{i}$.
+      \tcblower
+      The simultaneous exchange game has the structure below, where $E$ denotes ``exchange'' and $D$ denotes ``don't exchange.'
+      \begin{center}
+        \renewcommand{\arraystretch}{1.65}
+        \begin{tabular}{c|c|c|}
+          \multicolumn{1}{c}{} & \multicolumn{1}{c}{$E$} & \multicolumn{1}{c}{$D$}\\
+          \cline{2-3}
+          $E$ & $\frac{3}{2}v_2 - v_1,\frac{3}{2}v_1 - v_2$ & $v_1,v_2$\\
+          \cline{2-3}
+          $D$ & $v_1,v_2$ & $v_1,v_2$\\
+          \cline{2-3}
+        \end{tabular}
+      \end{center}
+      Let $\theta_i \in [0,\overline{\theta}]$
+      \begin{description}
+        \item[Cutoff Strategy:]
+          \begin{align*}
+            s_{i}^{\ast}(v_i) &= \begin{cases}
+              D & v_i \geq \theta_i\\
+              E & v_i < \theta_i
+            \end{cases}
+          \end{align*}
+        \item[Indifference Condition for Player 1:]
+          \begin{align*}
+            Ev_{1}(D,s_2^{\ast}(v_2);\theta_1,v_2) &= Ev_1(E,s_2^{\ast}(v_2);\theta_1,v_2)\\
+            \theta_1 &= \frac{\theta_2}{\overline{\theta}}\left(\frac{3}{2}v_2 - \theta_1\right) + \left(1 - \frac{\theta_2}{\overline{\theta}}\right)\theta_1
+          \end{align*}
+        \item[Indifference Condition for Player 2:]
+          \begin{align*}
+            Ev_2(s_1^{\ast}(v_1),D;v_1,v_2) &= Ev_2(s_1^{\ast}(v_1))
+          \end{align*}
       \end{description}
     \end{problem}
   \end{problem}
