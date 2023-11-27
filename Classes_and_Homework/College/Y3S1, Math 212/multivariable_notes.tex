@@ -1077,14 +1077,14 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     \begin{enumerate}[(1)]
       \item $S_1$: $x=0$, $y,z\geq 0$; $\hat{n} = \begin{pmatrix}-1\\0\\0\end{pmatrix}$; Flux = $0$
       \item $S_2$: $y=0$, $x,z\geq 0$; $\hat{n} = \begin{pmatrix}0\\-1\\0\end{pmatrix}$; Flux = $0$
-      \item $S_3$: $z=0$, $x,y \geq 0$; $\hat{n} = \begin{pmatrix}0\\0\\-1\end{pmatrix}$; Flux = $\frac{1}{2}$
+      \item $S_3$: $z=0$, $x,y \geq 0$; $\hat{n} = \begin{pmatrix}0\\0\\-1\end{pmatrix}$; Flux = $-\frac{1}{2}$
       \item $S_4$: $x+y+z = 1$; $\hat{n} = \frac{\sqrt{3}}{3} \begin{pmatrix}1\\1\\1\end{pmatrix}$; Flux = $\sqrt{3}/3 \cdot \sqrt{3}/2 = 1/2$
     \end{enumerate}
     Therefore, total flux is $0$.
   \end{problem}
   \begin{problem}{Surface Integrals, Cont'd}
     \begin{align*}
-      \int_{S} F\cdot d\vec{A} &= \int_{S} \vec{F} \cdot \hat{n} dA
+      \int_{S} F\cdot d\vec{A} &= \int_{S} \vec{F} \cdot \hat{n}~dA
     \end{align*}
     To find $\hat{n}$, we take $\vec{v} \times \vec{w}$, where $\vec{v}$ and $\vec{w}$ are tangent to the surface. Therefore, we have
     \begin{align*}
@@ -1098,7 +1098,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     \end{align*}
     So, we have
     \begin{align*}
-      \int_{S} F\cdot d\vec{A} &= \int_{S} \vec{F} \cdot \hat{n} dA\\
+      \int_{S} F\cdot d\vec{A} &= \int_{S} \vec{F} \cdot \hat{n}~dA\\
                                &= \int_{x_0}^{x_1}\int_{y_0}^{y_1} \vec{F}(x,y,z) \cdot\begin{pmatrix}-\frac{\partial f}{\partial x} \\ -\frac{\partial f}{\partial y} \\ 1\end{pmatrix}~dy~dx
     \end{align*}
     Let
@@ -1125,10 +1125,50 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
       \int_{S_3}\vec{F} \cdot d\vec{A} &= \frac{1}{12}
     \end{align*}
   \end{problem}
+  \begin{problem}{Flux Integral Through Cylinder}
+    Consider $\vec{F}(x,y,z)$ along a cylinder of radius $r$ along the $z$ axis.\\
+
+    We want to find $\hat{n}~dA$ at $(x,y,z)$. Recall that in cylindrical coordinates, $x = r\cos\theta$, $y = r\sin\theta$, and $z = z$. Therefore,
+    \begin{align*}
+      \vec{n} &= \begin{pmatrix}x\\y\\z\end{pmatrix}\\
+              &= \begin{pmatrix}r\cos\theta\\r\sin\theta\\0\end{pmatrix}\\
+      \hat{n} &= \begin{pmatrix}\cos\theta\\\sin\theta\\0\end{pmatrix}\\
+      \Vert d\vec{A}\Vert &= r d\theta dz
+    \end{align*}
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+    Let
+    \begin{align*}
+      \vec{F}(x,y,z) &= \begin{pmatrix}x^2\\y^2\\xy\end{pmatrix}
+    \end{align*}
+    along the cylinder with radius $r$ and height $h$. Then,
+    \begin{align*}
+      \int \vec{F}\cdot d\vec{A} &= \bigint \begin{pmatrix}x^2\\y^2\\xy\end{pmatrix}\cdot \begin{pmatrix}\cos\theta \\ \sin\theta \\ 0\end{pmatrix} r~d\theta~dz\\
+                                 &= \int r^3(\sin\theta + \cos\theta)(1-\sin\theta\cos\theta)~d\theta~dz\\
+                                 &= r^3\int_{0}^{h}\int_{0}^{2\pi} (\sin\theta + \cos\theta)(1-\sin\theta\cos\theta)~d\theta~dz\\
+                                 &= r^3h\int_{0}^{2\pi}(\sin\theta + \cos\theta)(1-\sin\theta\cos\theta)~d\theta\\
+                                 &= r^3h\int_{0}^{2\pi}(\cos\theta + \sin\theta - \sin^2\theta\cos\theta - \cos^2\theta\sin\theta)~d\theta\\
+                                 &= r^3h\left(\int_{0}^{2\pi}\cos\theta~d\theta + \int_{0}^{2\pi}\sin\theta + -\int_{0}^{2\pi}\sin^2\theta\cos\theta~d\theta - \int_{0}^{2\pi}\cos^2\theta\sin\theta~d\theta\right)\\
+                                 &= 0
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Stokes' Theorem}
+    Recall the Divergence Theorem:
+    \begin{align*}
+      \iiint_{V} \nabla \cdot \vec{F} &= \oiint_S \vec F \cdot d\vec{S}
+    \end{align*}
+    We can expand this to curl as well:
+    \begin{align*}
+      \iint_{S} \nabla \times \vec{F} &= \oint_{C} \vec{F} \cdot d\vec{r}
+    \end{align*}
+  \end{problem}
   \begin{problem}{$\nabla$ Operator, Expanded}
     \begin{align*}
-      \nabla \cdot (\nabla \times f) &= 0\\
-      \nabla \times (\nabla f) &= 0
+      \nabla \cdot (\nabla f) &= \begin{pmatrix}\frac{\partial}{\partial x}\\\frac{\partial}{\partial y}\\\frac{\partial}{\partial z}\end{pmatrix}\cdot \begin{pmatrix}\frac{\partial f}{\partial x}\\\frac{\partial f}{\partial y}\\\frac{\partial f}{\partial z}\end{pmatrix}\\
+                              &= \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2} + \frac{\partial^2f}{\partial z^2}\\
+                              &= \nabla^2 f\\
+      \nabla(\nabla \cdot \vec{f}) &= \begin{pmatrix}\frac{\partial}{\partial x}\\\frac{\partial}{\partial y}\\\frac{\partial}{\partial z}\end{pmatrix} \left(\frac{\partial F_1}{\partial x} + \frac{\partial F_2}{\partial y} + \frac{\partial F_3}{\partial z}\right)
     \end{align*}
   \end{problem}
 \end{document}
