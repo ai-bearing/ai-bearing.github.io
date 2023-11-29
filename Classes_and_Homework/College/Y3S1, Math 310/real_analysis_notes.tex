@@ -19,7 +19,7 @@
 \usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{bbm}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{gensymb}
 
 \usepackage[T1]{fontenc}
@@ -97,16 +97,18 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
 \newcommand{\Z}{\mathbbm{Z}}
 \newcommand{\R}{\mathbbm{R}}
 \newcommand{\F}{\mathbbm{F}}
+\setcounter{secnumdepth}{0}
 \begin{document}
-\section*{Set Theory}%
-  \begin{problem}{Naive Set Theory}
+\tableofcontents
+\section{Set Theory}%
+\subsection{Naive Set Theory}%
     \begin{align*}
       \mathbbm{N} &= \{1,2,3,\dots,\}\\
       \mathbbm{Z} &= \{0,\pm1,\pm2,\dots,\} \\
       \mathbbm{Z}_+ &= \{0,1,2,\dots,\}\\
-      \mathbbm{Q} &= \left\{\frac{a}{b} \mid a,b\in\mathbb{Z},b\neq 0\right\}\\
-      \mathbbm{C} &= \{a+bi \mid a,b\in \mathbb{R}\}\\
-      \mathbbm{C}_q &= \{a+bi \mid a,b\in \mathbb{Q}\}
+      \mathbbm{Q} &= \left\{\frac{a}{b} \mid a,b\in\mathbbm{Z},b\neq 0\right\}\\
+      \mathbbm{C} &= \{a+bi \mid a,b\in \mathbbm{R}\}\\
+      \mathbbm{C}_q &= \{a+bi \mid a,b\in \mathbbm{Q}\}
     \end{align*}
     Recall: given sets $X$ and $Y$, a relation from $X$ to $Y$ is a subset of $X\times Y$, where $\times$ denotes the cartesian product of $X$ and $Y$.\\
 
@@ -115,59 +117,58 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
     $X$ is the \textbf{domain} of $f$ and $Y$ is the \textbf{codomain}. The range $\text{Ran}(f) = \{f(x)\mid x\in X\}\subseteq Y$. \\
 
     The graph of a function $\text{Graph}(f) = \{(x,f(x))\mid x\in X\} \subseteq X\times Y$.
-    \begin{problem}{Examples}
+    \subsubsection{Function Examples}%
+    Identity Function:
       \[\text{id}_x: X\rightarrow X, \text{id}_X(x) = x\]
-      This is the identity function.\\
-
       The Characteristic Function: If $A\subseteq X$
-      \[\mathbbm{1}_A: X\rightarrow \mathbb{R}, ~\mathbbm{1}_A(x) = \begin{cases}
+      \[\mathbbm{1}_A: X\rightarrow \mathbbm{R}, ~\mathbbm{1}_A(x) = \begin{cases}
         1,&x\in A\\
         0,&x\notin A
       \end{cases}\]
-    \end{problem}
-    \begin{problem}{Algebra of Functions}
-      Let $X$ be any set, and $\mathcal(X;\mathbb{R}) = \{f:X\rightarrow \mathbb{R}\}$ represent the function space of $X$ with codomain $\mathbb{R}$.\\
+  \subsection{Function Operations}%
+      Let $X$ be any set, and $\mathcal(X;\mathbbm{R}) = \{f:X\rightarrow \mathbbm{R}\}$ represent the function space of $X$ with codomain $\mathbbm{R}$.
+    \begin{description}
+      \item[Addition:] Let $f,g\in \mathcal{F}(X;\mathbbm{R})$. Then, $(f+g)(x) = f(x) + g(x)$, and $(f\cdot g)(x) = f(x)\cdot g(x)$.
+      \item[Scalar Multiplication:]If $t\in \mathbbm{R}$, then $(tf)(x) = tf(x)$.
+      \item[Function Multiplication:] If $g(x)\neq 0\forall x\in X$, then $\left(\frac{f}{g}\right)(x) := \frac{f(x)}{g(x)}$.
+      \item[Composition:] If $f:X\rightarrow Y$ and $g:Y\rightarrow Z$ are functions, then $g\circ f(x) = g(f(x))$.
+    \end{description}
+    \subsection{Injective, Surjective, Bijective}%
+      A function $f:X\rightarrow Y$ is a \textbf{injective} map, then, if $f(x_1) = f(x_2)$, then $x_1 = x_2$.For example, the shift map $S:\mathbbm{N} \rightarrow \mathbbm{N},~S(n) = n+1$ is injective.\\
 
-      Let $f,g\in \mathcal{F}(X;\mathbb{R})$. Then, $(f+g)(x) = f(x) + g(x)$, and $(f\cdot g)(x) = f(x)\cdot g(x)$.\\
-
-      If $t\in \mathbb{R}$, then $(tf)(x) = tf(x)$ (scalar multiplication). If $g(x)\neq 0\forall x\in X$, then $\left(\frac{f}{g}\right)(x) := \frac{f(x)}{g(x)}$.\\
-
-      Finally, we have composition. If $f:X\rightarrow Y$ and $g:Y\rightarrow Z$ are functions, then $g\circ f(x) = g(f(x))$.
-    \end{problem}
-    \begin{problem}{Injective, Subjective, and Bijective}
-      A function $f:X\rightarrow Y$ is a \textbf{injective} map, then, if $f(x_1) = f(x_2)$, then $x_1 = x_2$.For example, the shift map $S:\mathbb{N} \rightarrow \mathbb{N},~S(n) = n+1$ is injective.\\
-
-      Any strictly increasing function $f:I\rightarrow \mathbb{R}$, where $I$ is any interval, is injective.\\
+      Any strictly increasing function $f:I\rightarrow \mathbbm{R}$, where $I$ is any interval, is injective.\\
 
       A function $f$ is \textbf{surjective} if $\forall y\in Y, \exists x\in X$ such that $f(x) = y$.\\
 
-      Consider the function $f:\mathbb{R} \rightarrow \mathbb{R},~f(x) = x^3-2x+1$. We can show that this function is surjective because $\lim_{x\rightarrow \infty}f(x) = \infty$, $\lim_{x\rightarrow -\infty} f(x) = -\infty$. Due to the intermediate value theorem, we get that $\text{ran}(f) = \mathbb{R}$.\\
+      Consider the function $f:\mathbbm{R} \rightarrow \mathbbm{R},~f(x) = x^3-2x+1$. We can show that this function is surjective because $\lim_{x\rightarrow \infty}f(x) = \infty$, $\lim_{x\rightarrow -\infty} f(x) = -\infty$. Due to the intermediate value theorem, we get that $\text{ran}(f) = \mathbbm{R}$.\\
 
       $f$ is \textbf{bijective} if it is injective and surjective.
-    \end{problem}
-    \begin{problem}{Invertibility}
+    \subsection{Invertibility}%
       Let $f:X\rightarrow Y$ be a function. $f$ is \textbf{left-invertible} if $\exists g:Y\rightarrow X$ such that $g\circ f = \text{id}_X$. $f$ is \textbf{right-invertible} if $\exists h:Y\rightarrow X$ such that $f\circ h = \text{id}_Y$.\\
 
       $f$ is \textbf{invertible} if $\exists k:Y\rightarrow X$ such that $f\circ k = \text{id}_Y$ and $k\circ f = \text{id}_X$.\\
 
       For example, the function $\text{Sin}(x)$ defined as $\sin(x)$ restricted to $[-\pi/2,\pi/2]$ has an inverse, $\arcsin(x):[-1,1] \rightarrow [-\pi/2,\pi/2]$.
-    \end{problem}
-  \end{problem}
-  \begin{problem}{Invertibility Definition}
-    $f$ is invertible if and only if $f$ is left and right invertible.
-    \tcblower
+      \subsubsection{Definition of Invertibility}%
+    $f$ is invertible if and only if $f$ is left and right invertible.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
       Forward direction: This is via the definition of invertibility.\\
 
-      Reverse direction: Suppose $g$ is a left-inverse of $f$, and $h$ is a right-inverse of $f$. Therefore, $g\circ f = \text{id}_X$, and $f\circ h = \text{id}_Y$. Observe that $g = g\circ \text{id}_Y$. Therefore, $g = g\circ(f\circ h)$. Via associativity, $g = (g\circ f)\circ h = \text{id}_X \circ h = h$.
-  \end{problem}
-  \begin{problem}{Injection and Surjection Invertibility}
+      Reverse direction: Suppose $g$ is a left-inverse of $f$, and $h$ is a right-inverse of $f$. Therefore, $g\circ f = \text{id}_X$, and $f\circ h = \text{id}_Y$. Observe that $g = g\circ \text{id}_Y$. Therefore, $g = g\circ(f\circ h)$. Via associativity, $g = (g\circ f)\circ h = \text{id}_X \circ h = h$.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \subsubsection{Injection and Surjection Invertibility}%
     If $f:X\rightarrow Y$ is a function:
     \begin{enumerate}
       \item $f$ is injective $\Leftrightarrow$ $f$ is left-invertible.
       \item $f$ is surjective $\Leftrightarrow$ $f$ is right-invertible.
       \item $f$ is bijective $\Leftrightarrow$ $f$ is invertible.
     \end{enumerate}
-    \tcblower
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
     We will prove the first proposition in the forward direction. Suppose $f$ is injective. Given $y\in \text{ran}(f)$, we know that $\exists! x_y\in X$ such that $f(x_y) = Y$, by the definition of injective.\\
 
     Let $g:Y\rightarrow X$. We will define $g$ as follows:
@@ -177,63 +178,77 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
         x_0 & y\notin \text{ran}(f)
       \end{cases}
     \] 
-    Where $x_0$ is an arbitrary point in $X$. We can see that $g\circ f = \text{id}_X$.
-  \end{problem}
-  \section*{Cardinality and Countability}%
-  \begin{problem}{Cardinality and Finitude}
-    Which set is ``larger,'' $\{1,2,3\}$ or $\{1,2,3,4\}$? $\mathbb{N}$ or $\mathbb{N}_0$? $\mathbb{Z}$ or $\mathbb{Q}$?\\
+    Where $x_0$ is an arbitrary point in $X$. We can see that $g\circ f = \text{id}_X$.\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+  \section{Cardinality and Countability}%
+  \subsection{Introduction to Cardinality}%
+    Which set is ``larger,'' $\{1,2,3\}$ or $\{1,2,3,4\}$? $\mathbbm{N}$ or $\mathbbm{N}_0$? $\mathbbm{Z}$ or $\mathbbm{Q}$?\\
 
-    In order to prove that one set is ``the same size'' as the other, we can create pairs. For two sets $A$ and $B$, we can show that $A$ is the same size as $B$ by creating a function. For example, to show that $\mathbb{N}$ and $\mathbb{N}_0$ have the same size, we create $s:\mathbb{N} \rightarrow \mathbb{N}_0$, $s(n) = n+1$.
-
-    \begin{problem}{Cardinality}
+    In order to prove that one set is ``the same size'' as the other, we can create pairs. For two sets $A$ and $B$, we can show that $A$ is the same size as $B$ by creating a function. For example, to show that $\mathbbm{N}$ and $\mathbbm{N}_0$ have the same size, we create $s:\mathbbm{N} \rightarrow \mathbbm{N}_0$, $s(n) = n+1$.
+  \subsection{Equivalent Cardinality}%
       Sets $A$ and $B$ have the same \textbf{cardinality} if $\exists$ bijection $f:A\rightarrow B$. We write $\text{card}(A) = \text{card}(B)$.
-    \end{problem}
-    \begin{problem}{Equivalent Cardinalities of Intervals}
-      Given $a<b$ and $c<d$, we know that $\text{card}\left([a,b]\right) = \text{card}\left([c,d]\right)$.
-      \tcblower
-      We can create a linear function from $[a,b]$ to $[c,d]$, and since linear functions are bijections, we know that $\text{card}\left([a,b]\right) = \text{card}\left([c,d]\right)$.
-    \end{problem}
-    \begin{problem}{Intervals and Real Numbers}
+      \subsubsection{Equivalent Cardinalities of Intervals}%
+      Given $a<b$ and $c<d$, we know that $\text{card}\left([a,b]\right) = \text{card}\left([c,d]\right)$.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
+      We can create a linear function from $[a,b]$ to $[c,d]$, and since linear functions are bijections, we know that $\text{card}\left([a,b]\right) = \text{card}\left([c,d]\right)$.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \subsubsection{Intervals and Real Numbers}%
       \[
-        \text{card}\left((0,1)\right) = \text{card}(\mathbb{R})
+        \text{card}\left((0,1)\right) = \text{card}(\mathbbm{R})
       \] 
-      \tcblower
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
       \begin{itemize}
-        \item $\tan: (-\pi/2,\pi/2) \rightarrow \mathbb{R}$ is a bijection:
+        \item $\tan: (-\pi/2,\pi/2) \rightarrow \mathbbm{R}$ is a bijection:
           \begin{itemize}
             \item $\tan$ is strictly increasing (and thus injective)
             \item $\lim_{x\rightarrow\infty} \tan(x) = \infty$ and $\lim_{x\rightarrow -\infty}\tan(x) = -\infty$, and by intermediate value theorem, $\tan$ is surjective
           \end{itemize}
         \item $\ell: (0,1) \rightarrow (-\pi/2,\pi/2)$ is a bijection as it is a linear function between two intervals.
-        \item Therefore, our bijection is $\tan \circ \ell: (0,1) \rightarrow \mathbb{R}$.
+        \item Therefore, our bijection is $\tan \circ \ell: (0,1) \rightarrow \mathbbm{R}$.
       \end{itemize}
-    \end{problem}
-    \begin{problem}{Finitude}
-      A set $F$ is \textbf{finite} if $F$ is empty or $\exists n\in \mathbb{N}$ such that $\text{card}(F) = \text{card}\left(\{1,2,\dots,n\}\right)$. A non-finite set is called infinite.
-      \tcblower
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+    \subsection{Finitude and Infinitude}%
+      A set $F$ is \textbf{finite} if $F$ is empty or $\exists n\in \mathbbm{N}$ such that $\text{card}(F) = \text{card}\left(\{1,2,\dots,n\}\right)$. A non-finite set is called infinite.\\
+
       We can \textsl{enumerate} $F$ by creating a function $\sigma: \{1,2,\dots,n\}\rightarrow F$, such that $x_j = \sigma(j)$ for $F = \{x_1,x_2,\dots,x_n\}$.
-    \end{problem}
-    \begin{problem}{Inequality of Finite Sets}
-      If $m\neq n$, then $\text{card}\{1,2,\dots,m\} = \text{card}\{1,2,\dots,n\}$.
-      \tcblower
+      \subsubsection{Inequality of Finite Sets}%
+      If $m\neq n$, then $\text{card}\{1,2,\dots,m\} = \text{card}\{1,2,\dots,n\}$.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
       WLOG, suppose $m>n$.\\
 
       Suppose toward contradiction that $f: \{1,2,\dots,m\} \rightarrow \{1,2,\dots,n\}$ is our bijection. This means there are $m$ ``pigeons'' and $n$ ``holes.''\\
 
-      One hole, $j$, must contain at least two pigeons (i.e., $f(i) = f(k) = j$ for some $i\neq k\in \{1,2,\dots,m\}$). Since $f$ is assumed to be injective, this is a contradiction.
-    \end{problem}
-    \begin{problem}{Infinitude of the Naturals}
-      $\mathbb{N}$ is infinite.
-      \tcblower
-      Suppose toward contradiction that $\mathbb{N}$ is finite. Thus, $\exists m\in \mathbb{N}$ such that $f:\mathbb{N} \rightarrow \{1,2,\dots,m\}$ is a bijection.\\
+      One hole, $j$, must contain at least two pigeons (i.e., $f(i) = f(k) = j$ for some $i\neq k\in \{1,2,\dots,m\}$). Since $f$ is assumed to be injective, this is a contradiction.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \subsubsection{Infinitude of the Naturals}%
+      $\mathbbm{N}$ is infinite.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
+      
+      Suppose toward contradiction that $\mathbbm{N}$ is finite. Thus, $\exists m\in \mathbbm{N}$ such that $f:\mathbbm{N} \rightarrow \{1,2,\dots,m\}$ is a bijection.\\
 
-      Consider the inclusion $i: \{1,2,\dots,m+1\}\rightarrow \mathbb{N}$. $i$ is injective.\\
+      Consider the inclusion $i: \{1,2,\dots,m+1\}\rightarrow \mathbbm{N}$. $i$ is injective.\\
 
-      Then, $f\circ i: \{1,2,\dots,m+1\} \rightarrow \{1,2,\dots,m\}$ is an injection, but by the pigeonhole principle, this cannot be. Therefore, we have reached a contradiction.
-    \end{problem}
-    \begin{problem}{Proposition}
-      If $A$ is infinite, $\exists i: \mathbb{N} \xhookrightarrow{} A$.
-      \tcblower
+      Then, $f\circ i: \{1,2,\dots,m+1\} \rightarrow \{1,2,\dots,m\}$ is an injection, but by the pigeonhole principle, this cannot be. Therefore, we have reached a contradiction.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \subsubsection{Infinitude of a Set}%
+      If $A$ is infinite, $\exists i: \mathbbm{N} \xhookrightarrow{} A$.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
       $\exists a_1\in A$, as $A\neq \emptyset$.\\
 
       $A\setminus \{a_1\} \neq \emptyset$, so $\exists a_2 \in A\setminus \{a_1\}$.\\
@@ -244,15 +259,19 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
 
       We thus get a sequence $\{a_1,a_2,\dots\}$ of distinct elements of $A$.\\
 
-      Consider $f:\mathbb{N} \rightarrow A$, $f(n) = a_n$. $f$ is injective as $a_n$ are distinct.
-    \end{problem}
-    \begin{problem}{Cardinality of Integers and Natural Numbers}
+      Consider $f:\mathbbm{N} \rightarrow A$, $f(n) = a_n$. $f$ is injective as $a_n$ are distinct.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+    \subsection{Integers and Power Sets}%
+    \subsubsection{Cardinality of Integers and Natural Numbers}%
       \[
-        \text{card}(\mathbb{Z}) = \text{card}(\mathbb{N})
+        \text{card}(\mathbbm{Z}) = \text{card}(\mathbbm{N})
       \] 
-      \tcblower
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
       \[
-        f:\mathbb{Z} \rightarrow \mathbb{N}
+        f:\mathbbm{Z} \rightarrow \mathbbm{N}
       \] 
       \begin{align*}
         f(m) &= \begin{cases}
@@ -260,18 +279,21 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
           -2m & m<0
         \end{cases}
       \end{align*}
-      $f$ is a bijection as $g:\mathbb{N} \rightarrow \mathbb{Z},~g(n) = (-1)^{n+1}\left\lfloor \frac{n}{2}\right\rfloor$ is the inverse of $f$.
-    \end{problem}
-    \begin{problem}{Power Set}
-      Given any set $X$, $\mathcal{P}(X) = \{A \mid A\subseteq X\}$ is the \textbf{power set} of $X$.\\
-
-      $2^X:= \{f\mid f:X\rightarrow \{0,1\}\}$.
-    \end{problem}
-    \begin{problem}{Power Set and $2^{X}$}
+      $f$ is a bijection as $g:\mathbbm{N} \rightarrow \mathbbm{Z},~g(n) = (-1)^{n+1}\left\lfloor \frac{n}{2}\right\rfloor$ is the inverse of $f$.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
+      Given any set $X$, $\mathcal{P}(X) = \{A \mid A\subseteq X\}$ is the \textbf{power set} of $X$.
+      \begin{align*}
+        2^X:= \{f\mid f:X\rightarrow \{0,1\}\}.
+      \end{align*}
+      \subsubsection{Power Set and $2^{X}$}%
       \[
         \text{card}(\mathcal{P}(X)) = \text{card}(2^X)
       \] 
-      \tcblower
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
       Let $\varphi: \mathcal{P}(X) \rightarrow 2^X$.\\
 
       For $A\subseteq X$, put $\varphi(A) := \mathbbm{1}_A$.\\
@@ -280,112 +302,92 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
 
       Then, $\psi\circ\varphi(A) = \psi(\mathbbm{1}_A) = \mathbbm{1}^{-1}(\{1\}) = A$,\\
 
-      and, we claim $\varphi(\psi(f)) = \varphi(f^{-1}(\{1\})) = \mathbbm{1}_{f^{-1}(\{1\})} = f$.
-    \end{problem}
-    \begin{problem}{Cantor's Theorem}
+      and, we claim $\varphi(\psi(f)) = \varphi(f^{-1}(\{1\})) = \mathbbm{1}_{f^{-1}(\{1\})} = f$.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+    \subsubsection{Cantor's Theorem}%
       \[
-        \nexists~\text{surjection}~\mathbb{N}\rightarrow (0,1)
+        \nexists~\text{surjection}~\mathbbm{N}\rightarrow (0,1)
       \] 
-      \tcblower
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
       Fact from calculus: $\forall \sigma\in (0,1)$, $\sigma$ can be written uniquely as a decimal expansion.
       \[
         \sigma = \sum_{k=1}^{\infty} \frac{\sigma_k}{10^k}
       \] 
       Where $\sigma_k\in \{0,1,\dots,9\}$ and not terminating in $9$s.\\
 
-      Suppose toward contradiction that $\exists r:\mathbb{N} \rightarrow (0,1)$ that is a surjection. Write $r(n) = 0.\sigma_1(n)\sigma_2(n)\sigma_3(n)\dots$, and $\sigma_j(n) \in \{0,1,\dots,9\}$, and not terminating in $9$s.\\
+      Suppose toward contradiction that $\exists r:\mathbbm{N} \rightarrow (0,1)$ that is a surjection. Write $r(n) = 0.\sigma_1(n)\sigma_2(n)\sigma_3(n)\dots$, and $\sigma_j(n) \in \{0,1,\dots,9\}$, and not terminating in $9$s.\\
 
-      Consider $\tau: \mathbb{N} \rightarrow \{0,1,\dots,9\}$:
+      Consider $\tau: \mathbbm{N} \rightarrow \{0,1,\dots,9\}$:
       \[
         \tau(n) = \begin{cases}
           3 & \sigma_n(n) = 2\\
           2 & \sigma_n(n) \neq 2
         \end{cases}
       \]
-      Let $\tau = 0.\tau(1)\tau(2)\tau(3)\dots$. Since $r$ is surjective, $\exists m\in \mathbb{N}$ such that $r(m) = 0.\sigma_1(m)\sigma_2(m)\dots \sigma_m(m)\dots = \tau = 0.\tau(1)\tau(2)\dots\tau(m)\dots$.\\
+      Let $\tau = 0.\tau(1)\tau(2)\tau(3)\dots$. Since $r$ is surjective, $\exists m\in \mathbbm{N}$ such that $r(m) = 0.\sigma_1(m)\sigma_2(m)\dots \sigma_m(m)\dots = \tau = 0.\tau(1)\tau(2)\dots\tau(m)\dots$.\\
 
-      This implies that $\sigma_m(m) = \tau(m)$, which is definitionally not true, which is our contradiction.
-    \end{problem}
-  \end{problem}
-  \begin{problem}{Comparing Cardinalities}
+      This implies that $\sigma_m(m) = \tau(m)$, which is definitionally not true, which is our contradiction.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+    \subsection{Comparing Cardinality}%
     \begin{itemize}
       \item $\text{card}(A) \leq \text{card}(B) \Rightarrow \exists f: A\xhookrightarrow{} B$ 
       \item $\text{card}(A) < \text{card}(B) \Rightarrow \text{card}(A) \leq \text{card}(B), \text{card}(A) \neq \text{card}(B)$
     \end{itemize}
     For example, $X\subseteq Y \Rightarrow \text{card}(X) \leq \text{card}(Y)$ because $i: X\xhookrightarrow{} Y, i(x) = x$ is an injection.\\
 
-    \begin{problem}{Transitive Property}
-      If $\text{card}(A) \leq \text{card}(B) \leq \text{card}(C)$, then $\text{card}(A) \leq \text{card}(C)$.
-      \tcblower
-      The composition of two injective functions is injective.
-    \end{problem}
-    \begin{problem}{Canonical Set Comparisons}
+    Since the composition of two injective functions is injective, if $\text{card}(A) \leq \text{card}(B) \leq \text{card}(C)$, then $\text{card}(A) \leq \text{card}(C)$.
+
       Via the inclusion map, we know the following:
       \[
-        \text{card}(\mathbb{N}) \leq \text{card}(\mathbb{Z}) \leq \text{card}(\mathbb{Q}) \leq \text{card}(\mathbb{R})
+        \text{card}(\mathbbm{N}) \leq \text{card}(\mathbbm{Z}) \leq \text{card}(\mathbbm{Q}) \leq \text{card}(\mathbbm{R})
       \] 
-    \end{problem}
-    \begin{problem}{Cardinality of the Power Set}
-      For any set $A$, $\text{card}(A) < \text{card}(\mathcal{P}(A))$.
-      \tcblower
+      \subsubsection{Cardinality of the Power Set}%
+      For any set $A$, $\text{card}(A) < \text{card}(\mathcal{P}(A))$.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
       Let us construct a function: $f: A \rightarrow \mathcal{P}(A)$, where $a \mapsto \{a\}$.\\
 
       $f$ is injective, as if $\{a\} = \{a'\}$, $a = a'$. So, $\text{card}(A) \leq \text{card}(\mathcal{P}(A))$.
       \begin{description}
-        \item[Claim] $\not\exists g: A\rightarrow \mathcal{P}(A)$, $g$ is surjective.
+        \item[Claim:] $\not\exists g: A\rightarrow \mathcal{P}(A)$, $g$ is surjective.
       \end{description}
       Suppose toward contradiction that such a $g$ exists. Consider $S: \{a\in A \mid a\notin g(a)\}$.\\
 
-      Since $g$ is onto, $\exists a_0\in A$ with $g(a_0) = S$. $a_0 \in g(a_0) \Leftrightarrow a_0\in S \Leftrightarrow a_0\notin g(a_0)$. $\bot$
-    \end{problem}
-    \begin{problem}{Equivalent Propositions}
+      Since $g$ is onto, $\exists a_0\in A$ with $g(a_0) = S$. $a_0 \in g(a_0) \Leftrightarrow a_0\in S \Leftrightarrow a_0\notin g(a_0)$. $\bot$\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \subsubsection{Equivalent Cardinality Comparisons}%
       \begin{enumerate}[(i)]
         \item $\text{card}(A) \leq \text{card}(B)$
         \item $\exists f: A\xhookrightarrow{} B$
         \item $\exists g: B\rightarrow A$, $g$ surjection.
       \end{enumerate}
-      \tcblower
-      By definition, (i) $\Leftrightarrow$ (ii).
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
       \begin{description}[font=\normalfont]
         \item[(ii) $\Rightarrow$ (iii)] If $f: A\xhookrightarrow{} B$, $f$ is left-invertible, and thus $\exists g: B\rightarrow A$ with $g\circ f = id_A$. So, $g$ is right-invertible, so $g$ is surjective.
         \item[(iii) $\Rightarrow$ (ii)] If $g: B \rightarrow A$ is surjective, then $g$ is right-invertible, so $\exists f: A\rightarrow B$ such that $g\circ f = id_B$. So, $f$ is left-invertible, so $f$ is injective.
       \end{description}
-    \end{problem}
-    \begin{problem}{Corollary}
-      If $f: A\rightarrow B$ is any map, $\text{card}(f(A)) \leq \text{card}(A)$.
-      \tcblower
-      Consider $g: A\rightarrow f(A)$, where $g(a) = f(a)$. So, $g$ is onto, so $\exists$ an injection $f(A) \xhookrightarrow{} A$.
-    \end{problem}
-    \begin{problem}{More Cardinality of Canonical Sets}
-      Consider the map $q: \mathbb{Z} \times \mathbb{N} \rightarrow \mathbb{Q}, q(m,n) = \frac{m}{n}$. This map is \textsl{not} injective, as $2/4 = 1/2$. However, it is surjective, meaning $\text{card}(\mathbb{Q}) \leq \text{card}(\mathbb{Z} \times \mathbb{N})$.\\
-
-      Earlier, we showed that $\exists h: \mathbb{Z} \leftrightarrow \mathbb{N}$. Consider $H: \mathbb{Z} \times \mathbb{N} \rightarrow \mathbb{N} \times\mathbb{N}$, defined as $H(m,n) = (h(m),n)$. 
-      \begin{description}
-        \item[Claim] $H$ is a bijection.
-        \item[Proof of Injection] If $H(m_1,n_1) = H(m_2,n_2)$, then $h(m_1) = h(m_2)$, and $n_1 = n_2$, and since $h$ is bijective, $m_1 = m_2$, and $n_1 = n_2$, so $(m_1,n_1) = (m_2,n_2)$.
-        \item[Proof of Surjection] Let $(k,\ell)\in \mathbb{N} \times \mathbb{N}$. We want to find $(m,n)\in \mathbb{Z}\times \mathbb{N}$ such that $H(m,n) = (k,\ell)$. Set $n = \ell$, and since $h$ is surjective, set $m\in \mathbb{Z}$ such that $h(m) = k$.
-      \end{description}
-      Therefore $\text{card}(\mathbb{Z} \times \mathbb{N}) = \text{card}(\mathbb{N}\times \mathbb{N})$.\\
-
-      We claim that $\text{card}(\mathbb{N} \times \mathbb{N}) = \text{card}(\mathbb{N})$. First, we need to find $\varphi: \mathbb{N}\times \mathbb{N} \xhookrightarrow{} \mathbb{N}$. Consider $\varphi(m,n) = 2^m\cdot 3^n$. By the Fundamental Theorem of Arithmetic, $\varphi$ is injective.\\
-
-      Bringing together our inequalities, we have:
-      \begin{align*}
-        \text{card}(\mathbb{N}) &\leq \text{card}(\mathbb{Q})\\
-                                &\leq \text{card}(\mathbb{Z}\times \mathbb{N})\\
-                                &=\text{card}(\mathbb{N}\times \mathbb{N})\\
-                                &\leq \text{card}(\mathbb{N})
-      \end{align*}
-    \end{problem}
-  \end{problem}
-    \begin{problem}{Cardinality Rules}
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
+      From the above, we can see that, if $f: A\rightarrow B$ is any map, $\text{card}(f(A)) \leq \text{card}(A)$, by considering $g: A\rightarrow f(A)$ defined as $g(a) = f(a)$, which is onto, meaning $\exists$ an injection $f(A) \hookrightarrow A$.
+      \subsubsection{Cardinality Rules}%
       \begin{enumerate}[(i)]
         \item $\text{card}(A) \leq \text{card}(A)$ (Reflexivity)
         \item $\text{card}(A)\leq \text{card}(B) \leq \text{card}(C)\Rightarrow \text{card}(A) \leq \text{card}(C)$ (Transitivity)
         \item $\text{card}(A) \leq \text{card}(B)$ and $\text{card}(B) \leq \text{card}(A) \Rightarrow \text{card}(A) = \text{card}(B)$ (Cantor-Schröder-Bernstein)
         \item Either $\text{card}(A) \leq \text{card}(B)$ or $\text{card}(B) \leq \text{card}(A)$.
       \end{enumerate}
-      \tcblower
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
       \begin{description}
         \item[Proof of (iii)] We have injections $f: A\xhookrightarrow{}B$ and $g:B\xhookrightarrow{} A$.\\
 
@@ -419,21 +421,48 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
               If $x\in A_{\infty}$. We know that $x\notin A_0$, as $x\in \text{ran}(g)$. So, $x = g(f(z))$ for some $z\in A_{m-1}$. Since $g$ is injective, $y = f(z),~z\in A_{\infty}$. Thus, $h(z) = f(z) = y$.
           \end{description}
       \end{description}
-    \end{problem}
-  \begin{problem}{Countability}
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \subsubsection{Cardinality of Canonical Sets}%
+      Consider the map $q: \mathbbm{Z} \times \mathbbm{N} \rightarrow \mathbbm{Q}, q(m,n) = \frac{m}{n}$. This map is \textsl{not} injective, as $2/4 = 1/2$. However, it is surjective, meaning $\text{card}(\mathbbm{Q}) \leq \text{card}(\mathbbm{Z} \times \mathbbm{N})$.\\
+
+      Earlier, we showed that $\exists h: \mathbbm{Z} \leftrightarrow \mathbbm{N}$. Consider $H: \mathbbm{Z} \times \mathbbm{N} \rightarrow \mathbbm{N} \times\mathbbm{N}$, defined as $H(m,n) = (h(m),n)$. 
+      \begin{description}
+        \item[Claim] $H$ is a bijection.
+        \item[Proof of Injection] If $H(m_1,n_1) = H(m_2,n_2)$, then $h(m_1) = h(m_2)$, and $n_1 = n_2$, and since $h$ is bijective, $m_1 = m_2$, and $n_1 = n_2$, so $(m_1,n_1) = (m_2,n_2)$.
+        \item[Proof of Surjection] Let $(k,\ell)\in \mathbbm{N} \times \mathbbm{N}$. We want to find $(m,n)\in \mathbbm{Z}\times \mathbbm{N}$ such that $H(m,n) = (k,\ell)$. Set $n = \ell$, and since $h$ is surjective, set $m\in \mathbbm{Z}$ such that $h(m) = k$.
+      \end{description}
+      Therefore $\text{card}(\mathbbm{Z} \times \mathbbm{N}) = \text{card}(\mathbbm{N}\times \mathbbm{N})$.\\
+
+      We claim that $\text{card}(\mathbbm{N} \times \mathbbm{N}) = \text{card}(\mathbbm{N})$. First, we need to find $\varphi: \mathbbm{N}\times \mathbbm{N} \xhookrightarrow{} \mathbbm{N}$. Consider $\varphi(m,n) = 2^m\cdot 3^n$. By the Fundamental Theorem of Arithmetic, $\varphi$ is injective.\\
+
+      Bringing together our inequalities, we have:
+      \begin{align*}
+        \text{card}(\mathbbm{N}) &\leq \text{card}(\mathbbm{Q})\\
+                                &\leq \text{card}(\mathbbm{Z}\times \mathbbm{N})\\
+                                &=\text{card}(\mathbbm{N}\times \mathbbm{N})\\
+                                &\leq \text{card}(\mathbbm{N})
+      \end{align*}
+      \subsection{Countability and the Continuum Hypothesis}%
     A set $X$ is \textsl{countable} if $\exists f: x\hookrightarrow \N$ ($\card(X) \leq\card(\N)$). $\card(\N) = \aleph_0$. If $X$ is countable and infinite, $X$ is \textit{denumerable}.
-    \begin{problem}{Corollary to Cantor-Schröder-Bernstein}
-      If $X$ is denumerable, then $\card(X) = \aleph_0$.
-      \tcblower
-      Since $X$ is infinite, $\exists f: \N\hookrightarrow X$. Since $X$ is countable, $\exists g: X\hookrightarrow \N$. By Cantor-Schröder-Bernstein, $\card(X) = \card(\N)$, so $\card(X) = \aleph_0$.
-    \end{problem}
+    \subsubsection{Corollary to Cantor-Schröder-Bernstein}%
+      If $X$ is denumerable, then $\card(X) = \aleph_0$.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
+      Since $X$ is infinite, $\exists f: \N\hookrightarrow X$. Since $X$ is countable, $\exists g: X\hookrightarrow \N$. By Cantor-Schröder-Bernstein, $\card(X) = \card(\N)$, so $\card(X) = \aleph_0$.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
     Thus, we have: 
     \[
       \card(\N) = \card(\Z) = \card(\Q)
     \] 
-    \begin{problem}{Countability under Union}
-      The countable union of countable sets is countable. If $I$ is a countable indexing set and for each $i\in I$, $A_i$ is countable, then $\bigcup\limits_{i\in I} A_i$ is countable.
-      \tcblower
+    \subsubsection{Countability under Union}%
+      The countable union of countable sets is countable. If $I$ is a countable indexing set and for each $i\in I$, $A_i$ is countable, then $\bigcup\limits_{i\in I} A_i$ is countable.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
       Since each $A_i$ is countable, $\exists \pi_i: \N \twoheadrightarrow A_i$. Consider the function
       \[
         \pi: I\times\N \rightarrow \bigcup_{i\in I}A_i
@@ -445,14 +474,16 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
         \item[Claim 2] $I\times\N$ is countable.
         \item[Proof 2] We know $\exists f: I\hookrightarrow\N$ since $I$ is countable. Thus, $g:I\times\N\hookrightarrow\N\times\N$, $(i,n)\mapsto (f(i),n)$. Recall, $\N\times\N\hookrightarrow \N$, $(m,n)\mapsto 2^m\cdot3^n$ is an injection. By composing these maps, $I\times\N\hookrightarrow\N$. Since $\pi$ is onto, and $I\times\N$ is countable, $\bigcup_{i\in I} A_i$ is countable.
       \end{description}
-    \end{problem}
-  \end{problem}
-  \begin{problem}{Continuum Hypothesis}
-    We saw that $\card(\N) < \card(\mathcal{P}(\N)) = \card(2^{\N})$, where $2^\N\{f\mid f:\N\rightarrow\{0,1\}\}$.
-    \begin{description}
-      \item[Theorem] $\card(\R) = \card(I)=\card(2^{\N})$, where $I$ is any non-degenerate interval.
-    \end{description}
-    \tcblower
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \subsubsection{Continuum Hypothesis}%
+      \begin{align*}
+        \card(\R) = \card(I) = \card(2^{\N}), 
+      \end{align*}
+      where $I$ is any non-degenerate interval.\\
+      \vspace{4pt}
+      \rule{\textwidth}{0.4pt}
+      \vspace{4pt}
     \begin{description}
       \item[Lemma 1] $\card([0,1]) \leq \card(2^{\N})$.
       \item[Proof 1] Every $t\in [0,1]$ has a binary expansion.
@@ -495,9 +526,11 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
     \[
       \card(\R) = \card([0,1]) = \card(2^{\N})
     \] 
-    We know that \[\aleph_0 = \card(\N) = \card(\Q) = \card(\Z) < 2^{\aleph_0} = \card(2^{\N}) = \card(\R) = \card(I)\] However, the existence of an infinity with cardinality strictly greater than $\aleph_0$ and strictly less than $2^{\aleph_0}$ is an axiom (i.e., it can be an assumption or not).
-  \end{problem}
-  \section*{Field Ordering}%
+    We know that \[\aleph_0 = \card(\N) = \card(\Q) = \card(\Z) < 2^{\aleph_0} = \card(2^{\N}) = \card(\R) = \card(I)\] However, the existence of an infinity with cardinality strictly greater than $\aleph_0$ and strictly less than $2^{\aleph_0}$ is an axiom (i.e., it can be an assumption or not).\\
+    \vspace{4pt}
+    \rule{\textwidth}{0.4pt}
+    \vspace{4pt}
+  \section{Field Ordering}%
   \begin{problem}{Ordering}
     Let $X$ be a non-empty set. A relation on $X$ is a subset of $X\times X$.
     \begin{itemize}
@@ -802,7 +835,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
       If $a\geq 0$ and $a\neq 0$, then $a > 0$. So, we have that $\frac{1}{2}a < a$. Let $\varepsilon = \frac{1}{2}a$. We also have that $a \leq \varepsilon = \frac{1}{2}a < a$, so $a<a$. $\bot$
     \end{problem}
   \end{problem}
-  \section*{Important Inequalities}%
+  \section{Important Inequalities}%
   \begin{problem}{Arithmetic and Geometric Means}
     Given $a_1,a_2,\dots,a_n\in \R^+$:
     \begin{description}
@@ -895,7 +928,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
                          \shortintertext{we take square roots to get our end result}
     \end{align*}
   \end{problem}
-  \section*{Metrics, Norms, and Bounds}%
+  \section{Metrics, Norms, and Bounds}%
   \begin{problem}{Metrics and Norms on $\R^n$}
     Consider $|\cdot|: \R \rightarrow \R$, defined as follows:
     \[
@@ -1140,7 +1173,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
     \end{align*}
     is the \textbf{unit square}.
   \end{problem}
-  \section*{Supremum, Infimum, and Completeness}%
+  \section{Supremum, Infimum, and Completeness}%
   \begin{problem}{Finding a Supremum}
     Let $0\neq A\subseteq \R$. Let $u\in\R$ be an upper bound for $A$. The following are equivalent:
     \begin{enumerate}[(i)]
@@ -1296,7 +1329,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
       \item[Remark:] If we had set $S' = \{t'\in \Q\mid t^2 < 2,~t > 0\}$, we would have still obtained $\sup(S') = \sqrt{2}$. This means that $\Q$ is \textsl{not} complete.
     \end{description}
   \end{problem}
-  \section*{Intervals in $\R$}%
+  \section{Intervals in $\R$}%
   \begin{problem}{Intervals and Nested Intervals}
     (*) Given any interval $I$, if $x_1,x_2\in I$, with $x_1 < x_2$, then $[x_1,x_2]\in I$.\\
 
@@ -1396,7 +1429,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
 
     Therefore, $\exists \xi\in \bigcap I_n \subseteq [0,1]$. However, $\xi \notin \{t_1,t_2,\dots\}$. $\bot$
   \end{problem}
-  \section*{Sequences and Convergence}%
+  \section{Sequences and Convergence}%
   \begin{problem}{Sequences in Metric Spaces}
     A sequence in a metric space $M$ is a map
     \begin{align*}
@@ -2294,7 +2327,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
 
     Thus, $(h_n)_n$ diverges to infinity.
   \end{problem}
-  \section*{Subsequences and Bolzano-Weierstrass}%
+  \section{Subsequences and Bolzano-Weierstrass}%
   \begin{problem}{Natural Sequences}
     A \textbf{natural sequence} is a strictly increasing sequence of natural numbers, $(n_{k})_{k=1}^{\infty}$
     \begin{align*}
@@ -2421,7 +2454,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
     \tcblower
     Since $(x_n)_n$ admits a monotone subsequence, and $(x_{n_k})_k$ is bounded as $(x_n)_n$ is bounded, this monotone, bounded subsequence must converge by the monotone convergence theorem.
   \end{problem}
-  \section*{Limit Superior and Limit Inferior}%
+  \section{Limit Superior and Limit Inferior}%
   
   \begin{problem}{Limit Superior and Limit Inferior}
     Let $X = (x_n)_n$ be a bounded real sequence. By Bolzano-Weierstrass, $(x_n)_n$ admits at least one convergent subsequence.\\
@@ -2564,7 +2597,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
     \vspace{4pt}
     \textbf{Exercise:} Show that $\inf\overline{X} = \ell$.
   \end{problem}
-  \section*{Cauchy and Contractive Sequences}%
+  \section{Cauchy and Contractive Sequences}%
   \begin{problem}{Cauchy Sequences}
     A sequence $(x_n)_n$ in a metric space $(X,d)$ is Cauchy if 
     \begin{align*}
@@ -2800,7 +2833,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
                &= \frac{2}{3} \tag*{$k\rightarrow\infty$}
     \end{align*}
   \end{problem}
-  \section*{Sequence Divergence}%
+  \section{Sequence Divergence}%
   \begin{problem}{Properly Divergent Sequences}
     Let $(x_n)_n$ be a real sequence. $(x_n)_n$ \textsl{properly} diverges to $+\infty$ if
     \begin{align*}
@@ -2885,7 +2918,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
     \end{align*}
     Since $y_n$ is properly divergent to $+\infty$, so too is $x_n$.
   \end{problem}
-  \section*{Series Convergence and Divergence}%
+  \section{Series Convergence and Divergence}%
   \begin{problem}{Introduction to Infinite Series}
     An \textbf{infinite series} is a sequence of partial sums $s_n$, where $s_n$ is formed from $x_k$ as follows:
     \begin{align*}
@@ -3072,7 +3105,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
                                             &\Leftrightarrow p > 1
     \end{align*}
   \end{problem}
-  \section*{Sequences and Series of Functions}%
+  \section{Sequences and Series of Functions}%
   \begin{problem}{Pointwise Convergence Definition}
     Fix a nonempty set $\Omega$. Then,
     \begin{align*}
@@ -3485,7 +3518,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
     \end{align*}
     So, $(s_n(x))_n \rightarrow s(x)$ uniformly on $[a,b]$.
   \end{problem}
-  \section*{Limits}%
+  \section{Limits}%
   \begin{problem}{Limit Points}
     Recall: If $c\in\R$, and $\delta > 0$, then $V_{\delta}(x) = (c-\delta, c+\delta)$.\\
 
@@ -3928,7 +3961,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
     \end{problem}
     Apply the lemma to $p(x),~x^n$.
   \end{problem}
-  \section*{Continuity and Uniform Continuity}%
+  \section{Continuity and Uniform Continuity}%
   \begin{problem}{Continuity}
     Let $D\subseteq \R$, $f: D\rightarrow \R$. Let $c\in D$. The function $f$ is continuous at $c$ if
     \begin{align*}
@@ -4688,7 +4721,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
     \end{enumerate}
     We define the unique values as $x^{m/n}$.
   \end{problem}
-  \section*{Derivatives}%
+  \section{Derivatives}%
   \begin{problem}{Differentiation}
     In this context, $I$ always refers to an interval, and $c\in I$.\\
     \vspace{4pt}
