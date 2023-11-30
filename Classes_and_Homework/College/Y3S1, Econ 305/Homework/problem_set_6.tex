@@ -1,0 +1,179 @@
+\documentclass[8pt]{extarticle}
+\title{}
+\author{}
+\date{}
+\usepackage[shortlabels]{enumitem}
+
+
+%paper setup
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage{fancyhdr}
+% sans serif font:
+\usepackage{cmbright}
+%symbols
+\usepackage{amsmath}
+\usepackage{bigints}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+\usepackage[hidelinks]{hyperref}
+\usepackage{gensymb}
+\usepackage{multirow,array}
+\usepackage{multicol}
+
+\newtheorem*{remark}{Remark}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+%chemistry stuff
+%\usepackage[version=4]{mhchem}
+%\usepackage{chemfig}
+
+%plotting
+\usepackage{pgfplots}
+\usepackage{tikz}
+\tikzset{middleweight/.style={pos = 0.5}}
+%\tikzset{weight/.style={pos = 0.5, fill = white}}
+%\tikzset{lateweight/.style={pos = 0.75, fill = white}}
+%\tikzset{earlyweight/.style={pos = 0.25, fill=white}}
+
+%\usepackage{natbib}
+
+%graphics stuff
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage[style=numeric, backend=biber]{biblatex} % Use the numeric style for Vancouver
+\addbibresource{the_bibliography.bib}
+%code stuff
+%when using minted, make sure to add the -shell-escape flag
+%you can use lstlisting if you don't want to use minted
+%\usepackage{minted}
+%\usemintedstyle{pastie}
+%\newminted[javacode]{java}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+%\newminted[cppcode]{cpp}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+
+%\usepackage{listings}
+%\usepackage{color}
+%\definecolor{dkgreen}{rgb}{0,0.6,0}
+%\definecolor{gray}{rgb}{0.5,0.5,0.5}
+%\definecolor{mauve}{rgb}{0.58,0,0.82}
+%
+%\lstset{frame=tb,
+%	language=Java,
+%	aboveskip=3mm,
+%	belowskip=3mm,
+%	showstringspaces=false,
+%	columns=flexible,
+%	basicstyle={\small\ttfamily},
+%	numbers=none,
+%	numberstyle=\tiny\color{gray},
+%	keywordstyle=\color{blue},
+%	commentstyle=\color{dkgreen},
+%	stringstyle=\color{mauve},
+%	breaklines=true,
+%	breakatwhitespace=true,
+%	tabsize=3
+%}
+% text + color boxes
+\renewcommand{\mathbf}[1]{\mathbbm{#1}}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{breakable}
+\tcbuselibrary{skins}
+\newtcolorbox{problem}[1]{colback=white,enhanced,title={\small #1},
+          attach boxed title to top center=
+{yshift=-\tcboxedtitleheight/2},
+boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
+%including PDFs
+%\usepackage{pdfpages}
+\setlength{\parindent}{0pt}
+\usepackage{cancel}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Econ 305: Problem Set 6}
+\newcommand{\card}{\text{card}}
+\newcommand{\ran}{\text{ran}}
+\newcommand{\N}{\mathbbm{N}}
+\newcommand{\Q}{\mathbbm{Q}}
+\newcommand{\Z}{\mathbbm{Z}}
+\newcommand{\R}{\mathbbm{R}}
+\setcounter{secnumdepth}{0}
+\begin{document}
+  \begin{problem}{More Limit Pricing}
+    An incumbent firm (player 1) is either a low-cost type $\theta_1 = \theta_L$ or a high cost type $\theta_1 = \theta_H$, each with equal probability. In period $t=1$, the incumbent is a monopolist and sets one of two prices, $p_L$ or $p_H$, and its profits in this period depend on its type and the price it chooses, given by the following table:
+    \begin{center}
+      \begin{tabular}{ccc}
+        Type & Profit from $p_L$ & Profit from $p_H$\\
+        \hline
+        $\theta_L$ & $6$ & $8$\\
+        $\theta_H$ & $1$ & $5$
+      \end{tabular}
+    \end{center}
+    After observing the period $t=1$ price, a potential entrant (player 2), which does not know the incumbent's type but knows the distribution of types, can choose to either enter the market ($E$), or stay out ($O$) in period $t=2$. The payoffs of both players in period $2$ depend on the entrant's choice and on the incumbent's type and are given by the following table:
+    \begin{center}
+      \begin{tabular}{cccc}
+        Incumbent's type & Entrant's choice & Incumbent's payoff & Entrant's payoff\\
+        \hline
+        $\theta_L$ & $E$ & $0$ & $-2$\\
+        $\theta_L$ & $O$ & $8$ & $0$\\
+        $\theta_H$ & $E$ & $0$ & $1$\\
+        $\theta_H$ & $O$ & $5$ & $0$
+      \end{tabular}
+    \end{center}
+    At the beginning of the game the incumbent discounts profits for period $t=2$ using a discount factor $\delta \leq 1$.
+    \begin{problem}{(a)}
+      Draw the extensive-form game tree.
+      \tcblower
+    \begin{center}
+      \small
+      \begin{tikzpicture}[scale=0.75]
+        \draw (-5,5) -- (5,5);
+        \draw (-5,-5) -- (5,-5);
+        \draw (6,6) --node[pos=0.5,anchor=south]{$E$} (5,5);
+        \draw (6,4) -- node[pos=0.5,anchor=north]{$O$}(5,5);
+        \draw (-6,6) -- node[pos=0.5,anchor=south]{$E$}(-5,5);
+        \draw (-6,4) -- node[pos=0.5,anchor=north]{$O$}(-5,5);
+        \draw (-6,-4) -- node[anchor=south,pos=0.5]{$E$}(-5,-5);
+        \draw (-6,-6) -- node[anchor=north,pos=0.5]{$O$}(-5,-5);
+        \draw (6,-4) -- node[anchor=south,pos=0.5]{$E$}(5,-5);
+        \draw (6,-6) -- node[anchor=north,pos=0.5]{$O$}(5,-5);
+        \filldraw (-5,5) circle (2pt)
+          (-5,-5) circle (2pt)
+          (5,5) circle (2pt)
+          (5,-5) circle (2pt)
+          (0,5) circle (2pt)
+          (0,-5) circle (2pt)
+          (0,0) circle (2pt);
+        \draw[thick] (0,5) -- (0,-5);
+        \node[anchor = east] at (0,0) {$N$};
+        \node[anchor = east] at (0,2.5) {$0.5$};
+        \node[anchor = east] at (0,-2.5) {$0.5$};
+        \node[anchor = north] at (0,-5) {$\theta_H$};
+        \node[anchor = south] at (0,5) {$\theta_L$};
+        \draw[dashed] (-5,-5) -- (-5,5);
+        \draw[dashed] (5,-5) -- (5,5);
+        \node[anchor = west] at (5,0) {$2$};
+        \node[anchor = east] at (-5,0) {$2$};
+        \node[anchor = south] at (2.5,5) {$p_H$};
+        \node[anchor = south] at (-2.5,5) {$p_L$};
+        \node[anchor = north] at (2.5,-5) {$p_H$};
+        \node[anchor = north] at (-2.5,-5) {$p_L$};
+        \node[anchor = west] at (6,6){$8,-2$};
+        \node[anchor = west] at (6,4){$8+8\delta,0$};
+        \node[anchor = west] at (6,-4){$5,1$};
+        \node[anchor = west] at (6,-6){$5+5\delta,0$};
+        \node[anchor = east] at (-6,-6){$1+5\delta,0$};
+        \node[anchor = east] at (-6,-4){$1,1$};
+        \node[anchor = east] at (-6,4){$6+8\delta,0$};
+        \node[anchor = east] at (-6,6){$6,-2$};
+      \end{tikzpicture}
+    \end{center}
+    \end{problem}
+    \begin{problem}{(b)}
+      For $\delta = 1$ find a pooling perfect Bayesian equilibrium of the game in which both types of player $1$ choose $p_L$ in period $t=1$.
+      %prevent a deviation after finding best responses
+    \end{problem}
+  \end{problem}
+\end{document}
