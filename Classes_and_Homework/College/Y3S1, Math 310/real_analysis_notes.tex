@@ -770,7 +770,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
     \begin{align*}
       \left|\sum_{j=1}^{n}a_jb_j\right| &\leq \left(\sum_{j=1}^{n}a_j^2\right)^{1/2}\left(\sum_{j=1}^{n}b_j^2\right)^{1/2}
     \end{align*}
-    In linear algebra language, this is equivalent to $|\vec{v}\cdot\vec{w}|\leq \lVert \vec{v}\rVert \cdot \lVert\vec{w}\rVert$.\\
+    In linear algebra language, this is equivalent to $\Vert\vec{v}\cdot\vec{w}\Vert\leq \lVert \vec{v}\rVert \cdot \lVert\vec{w}\rVert$.\\
 
     \textbf{Proof:} Consider $f:\R\Rightarrow \R$
     \begin{align*}
@@ -850,7 +850,7 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
         Since $|\ell| \leq c$, and $-|\ell| \leq x$, we get that $-x \leq |\ell| \leq c$.\\
 
         Since $x\leq c$ and $-x\leq c$, $|x| \leq c$.
-      \item[$(\Leftarrow)$] If such a $c$ exists, then $|x| \leq c$ if and only if $-c \leq x \leq c$. Thus, $-c$ is the lower bound and $c$ is the upper bound.
+      \item[$(\Leftarrow)$] If such a $c$ exists, then $|x| \leq c$ if and only if $-c \leq x \leq c$. Thus, $-c$ is a lower bound and $c$ is a upper bound.
     \end{description}
     \subsubsection{Bounded Functions}%
       Let $D$ be any set. A function $f: D\rightarrow \R$ is bounded if $\ran(D)\subseteq \R$ is bounded.
@@ -4523,4 +4523,142 @@ boxed title style={size=small,colback=black!60!white},sharp corners, breakable}
     \textbf{Solution:} Without loss of generality, $f(a) < 0$ and $f(b) > 0$. By the intermediate value theorem, $\exists z\in (a,b)$ with $f(z) = 0$. \\
 
     Suppose toward contradiction $\exists z'\in (a,b)$ with $z'\neq z$. Use Rolle's theorem on $[z,z']$ or $[z',z]$.
+  \subsection{Mean Value Theorem}%
+  \textbf{Statement:} Let $f: [a,b]\rightarrow \R$ be continuous on $[a,b]$ and differentiable on $(a,b)$. Then, $\exists c\in (a,b)$ with
+  \begin{align*}
+    f'(c) &= \frac{f(b)-f(a)}{b-a}
+  \end{align*}
+  \textbf{Proof:} Consider the function $g: [a,b]\rightarrow \R$ given by
+  \begin{align*}
+    g(x) &= f(x) - \ell(x)\\
+    \ell(x) &= f(a) + \frac{f(b)-f(a)}{b-a}(x-a).
+    \shortintertext{Since $g$ is continuous on $[a,b]$ and differentiable on $(a,b)$, and}
+    g(a) &= 0\\
+    g(b) &= 0,
+    \shortintertext{by Rolle's Theorem there must be a point $c\in (a,b)$ with}
+    g'(c) &= 0,
+    \shortintertext{so,}
+    g'(c) &= f'(c) - \frac{f(b)-f(a)}{b-a}\\
+    f'(c) &= \frac{f(b)-f(a)}{b-a}
+  \end{align*}
+  \subsubsection{Corollary to the Mean Value Theorem: Constant Functions}%
+  \textbf{Statement:} If $f:[a,b]\rightarrow \R$ is continuous on $[a,b]$ and differentiable on $(a,b)$, and $f'(x) = 0,~\forall x\in (a,b)$, then $f$ is constant.\\
+
+  \textbf{Proof:} Let $x_1, x_2\in [a,b]$, with $x_1 < x_2$.\\
+
+  Then, applying the Mean Value Theorem on $[x_1,x_2]$, we get that $\exists c\in (x_1,x_2)$ with $0 = f'(c) = \frac{f(x_2)-f(x_1)}{x_2-x_1}$, implying $f(x_2) = f(x_1)$.
+  \subsubsection{Corollary to the Mean Value Theorem: Identical Derivatives}%
+  \textbf{Statement:} Let $f,g: [a,b]\rightarrow \R$ be continuous on $[a,b]$ and differentiable on $(a,b)$, with $f'(x) = g'(x)$ on $(a,b)$. Then, $f = g + k$ for some $k\in\R$.\\
+
+  \textbf{Proof:} Apply the constant functions corollary to $h = f-g$.
+  \subsubsection{Corollary to the Mean Value Theorem: Increasing Functions}%
+  \textbf{Statement:} Let $I$ be any interval with $f: I\rightarrow \R$ differentiable on the interval.
+  \begin{enumerate}[(i)]
+    \item $f$ is increasing on $I$ $\Leftrightarrow$ $f'(x) \geq 0$ $\forall x\in I$
+    \item $f$ is decreasing on $I$ $\Leftrightarrow$ $f'(x) \leq 0$ $\forall x\in I$
+    \item $f'(x) > 0$ on $I$ $\Rightarrow$ $f$ is strictly increasing on $I$
+    \item $f'(x) < 0$ on $I$ $\Rightarrow$ $f$ is strictly decreasing on $I$
+  \end{enumerate}
+  \begin{description}
+    \item[Proof of (i):]\hfill
+      \begin{description}
+        \item[$(\Rightarrow)$] Let $c\in I$. If $x < c$, then
+          \begin{align*}
+            \frac{f(x)-f(c)}{x-c} &\geq 0,
+          \end{align*}
+          and if $x > c$, then
+          \begin{align*}
+            \frac{f(x)-f(c)}{x-c} &\geq 0.
+          \end{align*}
+          Therefore,
+          \begin{align*}
+            f'(c) &= \lim_{x\rightarrow c} \frac{f(x)-f(c)}{x-c}\\
+                  &\geq 0
+          \end{align*}
+        \item[$(\Leftarrow)$] Let $x_1,x_2\in I$, $x_1 < x_2$. Apply the Mean Value Theorem on $[x_1,x_2]$. Then,
+          \begin{align*}
+            f'(c) &= \frac{f(x_2)-f(x_1)}{x_2-x_1} \tag*{$c\in(x_1,x_2)$}
+            \shortintertext{Assuming $f'(c) \geq 0$,}
+            0 &\leq f(x_2)-f(x_1)\\
+            f(x_1) &\leq f(x_2)
+          \end{align*}
+      \end{description}
+  \end{description}
+  \subsubsection{Using Mean Value Theorem for Inequalities: Lipschitz}%
+  \textbf{Problem:}
+  \begin{align*}
+    |\cos(x)-\cos(y)| &\leq |x-y| \tag*{$\forall x,y\in\R$}
+  \end{align*}
+  \textbf{Solution:} Let $x < y$. Apply the Mean Value Theorem to $[x,y]$. Then, $\exists c\in (x,y)$ with
+  \begin{align*}
+    \sin(c) &= \frac{\cos(y)-\cos(x)}{y-x}\\
+    \left|\frac{\cos(y)-\cos(x)}{y-x}\right| &= |\sin(c)|\\
+                                             &\leq 1\\
+    |\cos(y)-\cos(x)| &\leq |y-x|
+  \end{align*}
+  \subsubsection{Using Mean Value Theorem for Inequalities: Logarithms}%
+  Assume the existence of $L: (0,\infty)\rightarrow \R$, with
+  \begin{itemize}
+    \item $L(1) = 0$
+    \item $L'(x) = \frac{1}{x}$
+  \end{itemize}
+  \begin{align*}
+    L(x) &= \int_{1}^{x}\frac{1}{t}dt
+  \end{align*}
+  \textbf{Problem:} Show
+  \begin{align*}
+    \frac{x-1}{x} \leq L(x) \leq x-1 \tag*{for $x\geq 1$}
+  \end{align*}
+  \textbf{Solution:} For $x = 1$, $\frac{x-1}{x} = L(x) = x-1 = 0$.\\
+
+  For $x > 1$, apply the Mean Value Theorem to $[1,x]$. Then, for some $c\in (x,1)$
+  \begin{align*}
+    \frac{L(x)-L(1)}{x-1} &= L'(c)\\
+    \frac{L(x)}{x-1} &= \frac{1}{c}\\
+                     &< x-1\\
+    L(x) &< x-1
+    \shortintertext{Also,}
+    \frac{L(x)}{x-1} &> \frac{1}{x} \tag*{$c < x$}\\
+    L(x) &> \frac{x-1}{x}
+  \end{align*}
+  \subsubsection{Using Mean Value Theorem for Inequalities: Extension of Bernoulli's Inequality}%
+  \textbf{Statement:} Let $r \in \Q$, $r \geq 1$, $x > -1$. Then,
+  \begin{align*}
+    (1+x)^{r} &\geq 1 + rx
+  \end{align*}
+  \textbf{Proof:} Consider $h(x) = (1+x)^{r}$ defined on $[-1,\infty)$.\\
+  If $x = 0$, we are done. Otherwise, let $x > 0$. Apply the Mean Value Theorem on $[0,x]$. So, for some $c\in (0,x)$,
+  \begin{align*}
+    \frac{h(x)-h(0)}{x-0} &= h'(c)\\
+    \frac{(1+x)^r-1}{x} &= r(1+c)^{r-1}\\
+                        &\geq r\\
+    (1+x)^{r} &\geq rx +1
+  \end{align*}
+  Let $x\in (-1,0)$. Apply the Mean Value Theorem to $[x,0]$. So, for some $c\in (x,0)$,
+  \begin{align*}
+    \frac{h(0)-h(x)}{0-x} &= h'(c)\\
+    \frac{1-(1+x)^r}{-x} &= r(1+c)^{r-1}\\
+                         &\leq r\\
+    1-(1+x)^r &\leq -rx\\
+    1+rx &\leq (1+x)^{r}
+  \end{align*}
+  \begin{description}
+    \small
+    \item[Remark:] Bernoulli's Inequality works for $\alpha \geq 1$ where $\alpha\in\R$, and $x > -1$.
+  \end{description}
+  \subsection{First Derivative Test}%
+  \textbf{Statement:} Let $f: [a,b]\rightarrow \R$ be continuous on $[a,b]$, $c\in (a,b)$. Assume $f$ is differentiable on $(a,b) \setminus c$.
+  \begin{enumerate}[(1)]
+    \item If $\exists \delta>0$ with $f'(x) \geq 0$ on $(c-\delta,c)$ and $f'(x) \leq 0$ on $(c,c+\delta)$, then $f(c)$ is a local maximum.
+    \item If $\exists \delta>0$ with $f'(x) \leq 0$ on $(c-\delta,c)$ and $f'(x) \geq 0$ on $(c,c+\delta)$, then $f(c)$ is a local minimum.
+  \end{enumerate}
+  \begin{description}
+    \item[Proof of (1):] Let $x\in (c-\delta,c)$. Apply the Mean Value Theorem to $[x,c]$. So, $\exists \xi\in(x,c)$ with $f'(\xi) = \frac{f(c)-f(x)}{c-x}$. Since $\xi\in (c-\delta,c)$, $f'(\xi) \geq 0$.\\
+
+      Since $c-x > 0$, we have $f(c)-f(x) \geq 0$, so $f(c) \geq f(x)$.\\
+
+      Let $x\in (c,c+\delta)$. Apply the Mean Value Theorem to $[c,x]$, $\dots$\\
+
+      Thus, $f(c)$ is a local maximum on $V_{\delta}(c)$.
+  \end{description}
 \end{document}

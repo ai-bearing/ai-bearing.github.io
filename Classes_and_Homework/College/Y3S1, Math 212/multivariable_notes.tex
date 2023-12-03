@@ -114,8 +114,8 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     \] 
     \begin{description}[font=\normalfont\scshape]
       \item[Domain:]  $\{(x,y)\mid \exists f(x,y)\}$
-      \item[Range:] $\{f(x,y) \mid (x,y)\in \textrm{Dom}(f)\} = \mathbb{R}$
-      \item[Graph:] $\textrm{Graph}(f) = \{x,y.f(x,y) \mid x,y\in \textrm{Dom}(f)\}$. For example, $(1,3,4)\notin \textrm{Graph}(f)$ since $1^2-3^2 \neq 4$.
+      \item[Range:] $\{f(x,y) \mid (x,y)\in \text{Dom}(f)\} = \mathbb{R}$
+      \item[Graph:] $\text{Graph}(f) = \{x,y.f(x,y) \mid x,y\in \text{Dom}(f)\}$. For example, $(1,3,4)\notin \text{Graph}(f)$ since $1^2-3^2 \neq 4$.
     \end{description}
   \end{problem}
   \begin{problem}{Examples}
@@ -1135,9 +1135,9 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
       \hat{n} &= \begin{pmatrix}\cos\theta\\\sin\theta\\0\end{pmatrix}\\
       \Vert d\vec{A}\Vert &= r d\theta dz
     \end{align*}
-    \vspace{4pt}
-    \rule{\textwidth}{0.4pt}
-    \vspace{4pt}
+    \begin{center}
+      \rule{\textwidth}{0.4pt}
+    \end{center}
     Let
     \begin{align*}
       \vec{F}(x,y,z) &= \begin{pmatrix}x^2\\y^2\\xy\end{pmatrix}
@@ -1156,7 +1156,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   \begin{problem}{Stokes' Theorem}
     Recall the Divergence Theorem:
     \begin{align*}
-      \iiint_{V} \nabla \cdot \vec{F} &= \oiint_S \vec F \cdot d\vec{S}
+      \iiint_{V} \nabla \cdot \vec{F} &= \oiint_S \vec F \cdot d\vec{A}
     \end{align*}
     We can expand this to curl as well:
     \begin{align*}
@@ -1173,6 +1173,44 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
                                     \frac{\partial^2F_1}{\partial x \partial y} + \frac{\partial ^2F_2}{\partial y^2} + \frac{\partial^2 F_3}{\partial y \partial z}\\
                                     \frac{\partial^2F_1}{\partial x \partial z} + \frac{\partial ^2F_2}{\partial y \partial z} + \frac{\partial^2 F_3}{\partial z^2}
                                    \end{pmatrix}
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Unifying Vector Field Integrals}
+    \begin{description}
+      \item[Stokes's Theorem]
+        \begin{align*}
+          \oiint_{S}\nabla \times \vec{F} \cdot d\vec{A} &= \int_{C}\vec{F} \cdot d\vec{r}
+        \end{align*}
+      \item[Divergence Theorem]
+        \begin{align*}
+          \iiint_{V} \nabla \cdot \vec{F} dV &= \oiint_{S} \vec{F} \cdot d\vec{A}
+        \end{align*}
+      \item[Fundamental Theorem of Line Integrals]
+        \begin{align*}
+          \int_{a}^{b}\nabla \phi dt &= \phi(b) - \phi(a)
+        \end{align*}
+    \end{description}
+  \end{problem}
+  \begin{problem}{Using Stokes's Theorem}
+    Consider the vector field
+    \begin{align*}
+      \vec{F} &= \begin{pmatrix}x-y\\y\\z-3x\end{pmatrix}
+    \end{align*}
+    We want to compute the integral $\int_{S} \nabla \times \vec{F} \cdot d\vec{A}$, where $S$ is the tetrahedron defined by $(0,0,0),(1,0,0),(0,2,0),(0,0,3)$.
+    \begin{itemize}
+      \item $S_1: x=0$, $\displaystyle\hat{n} = \begin{pmatrix}-1\\0\\0\end{pmatrix}$, $\int_{S_1}\nabla\times\vec{F}\cdot \hat{n} dA = 0$
+      \item $S_2: y=0$, $\displaystyle\hat{n} = \begin{pmatrix}0\\-1\\0\end{pmatrix}$, $\int_{S_2}\nabla\times\vec{F}\cdot\vec{n} dA = -9/2$
+      \item $S_3: z=0$, $\displaystyle\hat{n} = \begin{pmatrix}0\\0\\-1\end{pmatrix}$, $\int_{S_3}\nabla\times\vec{F}\cdot\hat{n}dA = -1$
+      \item $S_4: 6x + 3y + 2z = 6$, $\displaystyle\hat{n} = \begin{pmatrix}3\\3/2\\1\end{pmatrix}$, $\int_{S_4}\nabla\times\vec{F}\cdot\hat{n}dA = 11/2$
+    \end{itemize}
+    Therefore, $\int_{S} \nabla \times \vec{F} \cdot d\vec{A} = 0$.\\
+
+    However, we can find it in a different way.
+    \begin{align*}
+      \int_{C_3}\vec{F} \cdot d\vec{r} &= \int_{S_3}\nabla \times \vec{F}\cdot d\vec{A}\\
+                                       &= -\left(\int_{S_1}\nabla \times \vec{F}\cdot d\vec{A} + \int_{S_2}\nabla \times \vec{F}\cdot d\vec{A} + \int_{S_4}\nabla \times \vec{F}\cdot d\vec{A}\right)\\
+      \int_{S_3}\nabla \times \vec{F}\cdot d\vec{A} &= -\left(\int_{S_1}\nabla \times \vec{F}\cdot d\vec{A} + \int_{S_2}\nabla \times \vec{F}\cdot d\vec{A} + \int_{S_4}\nabla \times \vec{F}\cdot d\vec{A}\right)\\
+      0 &= \int_{S} \nabla \times \vec{F} d\vec{A}
     \end{align*}
   \end{problem}
 \end{document}
