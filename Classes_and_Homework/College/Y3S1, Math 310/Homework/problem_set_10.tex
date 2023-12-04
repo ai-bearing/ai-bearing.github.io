@@ -1,0 +1,143 @@
+\documentclass[8pt]{extarticle}
+\title{}
+\author{}
+\date{}
+\usepackage[shortlabels]{enumitem}
+
+
+%paper setup
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage{fancyhdr}
+% sans serif font:
+\usepackage{cmbright}
+%symbols
+\usepackage{amsmath}
+\usepackage{bigints}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+\usepackage[hidelinks]{hyperref}
+\usepackage{gensymb}
+\usepackage{multirow,array}
+\usepackage{multicol}
+
+\newtheorem*{remark}{Remark}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+%chemistry stuff
+%\usepackage[version=4]{mhchem}
+%\usepackage{chemfig}
+
+%plotting
+\usepackage{pgfplots}
+\usepackage{tikz}
+\tikzset{middleweight/.style={pos = 0.5}}
+%\tikzset{weight/.style={pos = 0.5, fill = white}}
+%\tikzset{lateweight/.style={pos = 0.75, fill = white}}
+%\tikzset{earlyweight/.style={pos = 0.25, fill=white}}
+
+%\usepackage{natbib}
+
+%graphics stuff
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage[style=numeric, backend=biber]{biblatex} % Use the numeric style for Vancouver
+\addbibresource{the_bibliography.bib}
+%code stuff
+%when using minted, make sure to add the -shell-escape flag
+%you can use lstlisting if you don't want to use minted
+%\usepackage{minted}
+%\usemintedstyle{pastie}
+%\newminted[javacode]{java}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+%\newminted[cppcode]{cpp}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+
+%\usepackage{listings}
+%\usepackage{color}
+%\definecolor{dkgreen}{rgb}{0,0.6,0}
+%\definecolor{gray}{rgb}{0.5,0.5,0.5}
+%\definecolor{mauve}{rgb}{0.58,0,0.82}
+%
+%\lstset{frame=tb,
+%	language=Java,
+%	aboveskip=3mm,
+%	belowskip=3mm,
+%	showstringspaces=false,
+%	columns=flexible,
+%	basicstyle={\small\ttfamily},
+%	numbers=none,
+%	numberstyle=\tiny\color{gray},
+%	keywordstyle=\color{blue},
+%	commentstyle=\color{dkgreen},
+%	stringstyle=\color{mauve},
+%	breaklines=true,
+%	breakatwhitespace=true,
+%	tabsize=3
+%}
+% text + color boxes
+\renewcommand{\mathbf}[1]{\mathbbm{#1}}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{breakable}
+\tcbuselibrary{skins}
+\newtcolorbox{problem}[1]{colback=white,enhanced,title={\small #1},
+          attach boxed title to top center=
+{yshift=-\tcboxedtitleheight/2},
+boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
+%including PDFs
+%\usepackage{pdfpages}
+\setlength{\parindent}{0pt}
+\usepackage{cancel}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Math 310: Problem Set 10}
+\newcommand{\card}{\text{card}}
+\newcommand{\ran}{\text{ran}}
+\newcommand{\N}{\mathbbm{N}}
+\newcommand{\Q}{\mathbbm{Q}}
+\newcommand{\Z}{\mathbbm{Z}}
+\newcommand{\R}{\mathbbm{R}}
+\setcounter{secnumdepth}{0}
+\begin{document}
+  \begin{problem}{Problem 1}
+    Using the definition of the derivative find $f'(c)$ where $c\in\R$ and $f(x) = \frac{1}{x}$.
+    \tcblower
+    \begin{align*}
+      f'(c) &= \lim_{x\rightarrow c}\frac{\frac{1}{x}-\frac{1}{c}}{x-c}\\
+            &= \lim_{x\rightarrow c}\frac{c-x}{(xc)(x-c)}\\
+            &= \lim_{x\rightarrow c}\frac{-1}{xc}\\
+            &= -\frac{1}{x^2}\tag*{$c\neq 0$}
+    \end{align*}
+  \end{problem}
+  \begin{problem}{Problem 2}
+    Let $n\in\N$ and consider the function
+    \begin{align*}
+      f(x) &= \begin{cases}
+        x^n,&x > 0\\
+        0,&x \leq 0
+      \end{cases}.
+    \end{align*}
+    For which values of $n$ is $f$ differentiable at $x=0$.
+    \tcblower
+    We have that on $(0,\infty)$, $f(x) = x^n$, meaning $f'(x)$ on $(0,\infty)$ is $nx^{n-1}$. Therefore, as $(x_n)_n\rightarrow 0$ for $x_n\in (0,\infty)$, $\left(\frac{f(x_n) - f(0)}{x_n - 0}\right)_n \rightarrow 0$, taking $f(0)$ as given above, assuming $n > 1$ --- otherwise, $\lim_{x\rightarrow 0^{+}}\frac{f(x)-f(0)}{x-0} = 1$.
+  \end{problem}
+  \begin{problem}{Problem 3}
+    Consider the function
+    \begin{align*}
+      f(x) &= \begin{cases}
+        x^2,&x\in \Q\\
+        0,&x\notin \Q
+      \end{cases}.
+    \end{align*}
+    Show that $f$ is differentiable at $x=0$ and find $f'(0)$.
+    \tcblower
+    Let $(x_n)_n\rightarrow 0$, $x_n\neq 0$. Let $(x_{n_k})_k$ denote the sequence of irrational values of $x_n$, and let $(x_{m_l})_l$ denote the sequence of rational values of $x_n$. Then, $(f(x_n))_n \rightarrow 0$, regardless of whether $x_n \in (x_{m_l})_l$ or $x_n \in (x_{n_k})_k$. So, having established that the limit exists, we find that
+    \begin{align*}
+      f'(0) &= \lim_{x\rightarrow 0}\frac{x^2 - 0^2}{x-0}\\
+            &= \lim_{x\rightarrow 0}x \\
+            &= 0
+    \end{align*}
+  \end{problem}
+\end{document}
