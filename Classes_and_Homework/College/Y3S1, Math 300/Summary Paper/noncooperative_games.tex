@@ -92,12 +92,13 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 %\fancyhf{}
 %\rhead{Avinash Iyer}
 %\lhead{}
+\usepackage{bbm}
 \newcommand{\card}{\text{card}}
 \newcommand{\ran}{\text{ran}}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbbm{N}}
+\newcommand{\Q}{\mathbbm{Q}}
+\newcommand{\Z}{\mathbbm{Z}}
+\newcommand{\R}{\mathbbm{R}}
 \usepackage{setspace}
 \begin{document}
 \doublespacing
@@ -134,24 +135,27 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 
   A \textit{payoff function} assigns each player a payoff based on their pure strategy in relation to the strategy profile. The payoff of a player's mixed strategy is the expected value of the pure strategies, weighted by the probability distribution placed on the pure strategies within the mixed strategy.\\
 
-  Nash refers to a strategy profile ``counter[ing]'' another in the paper as a mixed strategy for a certain player that maximizes expected payoff holding the other $n-1$ strategies in the $n$-tuple; in most modern game theory textbooks, this is known as a best response,\supercite{tadelis_game_2023} which is what I will refer to it as.\\
+  Nash refers to a strategy profile ``counter[ing]'' another in the paper as a mixed strategy for a certain player that maximizes expected payoff holding the other $n-1$ strategies in the $n$-tuple; in most modern game theory textbooks, this is known as a \textit{best response},\supercite{tadelis_game_2023} which is what I will refer to it as.\\
 
-  Just as with the prisoner's dilemma, we view an equilibrium in a game as one where no player is better off from changing their strategy. Equivalently, this means every player is engaged in the best response to every other player's strategy --- in the language of functions, this means that a map from the set defined by all the strategy profiles to the space defined by the best responses to each strategy profile contains a fixed point (where a strategy is best-responding to itself). In the paper, Nash showed that the definition of an $n$-person game made it that such a fixed point must exist, by using Kakutani's Fixed Point Theorem.\\
+  Just as with the prisoner's dilemma, we view an equilibrium in a game as one where no player is better off from changing their strategy. Equivalently, this means every player is engaged in the best response to every other player's strategy --- in the language of functions, this means that a map from the set defined by all the strategy profiles to the space defined by the best responses to each strategy profile contains a fixed point (where a strategy is best-responding to itself). In the paper, Nash showed that the definition of an $n$-person game made it that such a fixed point must exist.\\
 
-  Kakutani's Fixed Point Theorem expands upon Brouwer's Fixed Point Theorem, which states that a continuous function from a closed unit ball (i.e., $\{x\mid d(x,p) \leq 1\}$) to itself must contain a fixed point.\supercite{brouwer_fixed_point} Specifically, Kakutani's fixed point theorem states that a continuous \textit{correspondence} that has a \textit{convex} image, and a convex, \textit{compact} domain must have a fixed point.\supercite{kakutani_fixed_point}
-  \begin{description}
+  The most famous example of a theorem about fixed points is Brouwer's Fixed Point Theorem, which states that a continuous mapping from a closed unit ball in a metric space, $\{x\mid d(x,p)\leq 1\}$ to itself must contain a point where $f(x) = x$. However, rather than using Brouwer's Fixed Point Theorem, Nash used an expansion of it known as Kakutani's fixed point theorem. Kakutani's Fixed Point Theorem requires understanding correspondences, convexity, and compactness in a set.
+  \begin{description}[font=\normalfont]
     \item[Correspondence:] A correspondence is a map from elements of a set $D$ to the power set, $\mathcal{P}(D)$.
     \item[Convex:] A convex set $S$ is a set where, if $p$ and $q$ are elements of $S$, then any linear combination $tp + (1-t)q$ where $0\leq t \leq 1$ is an element of $S$.\supercite{convex_definition}
-    \item[Compact:] For our purposes, this means a set that is closed and bounded (i.e., there is an ``edge'' to it).
+    \item[Compact:] In $\R^n$, this is a set that is closed and bounded.
   \end{description}
-  In the set defined by the strategy profiles of each player, we can see that the set is compact --- the set of all mixed strategy profiles is bounded by the various pure strategy profiles, and every strategy profile in which every player plays a pure strategy is part of the set of strategy profiles. Additionally, by the definition of mixed strategies, linear combinations of pure strategies are part of the set of strategy profiles, meaning the set is convex. The payoff function is also defined over all mixed strategy profiles, meaning that the mapping from strategy profiles to the best responses is continuous.\\
+  
+  Kakutani's Fixed Point Theorem states that any continuous correspondence from a compact, convex set to a convex set has a fixed point. To see how every game has a fixed point according to this theorem, we need to analyze the features of the correspondence between mixed strategy profiles and best responses.\\
 
-  By the definition of best response, it must be the case that if $p$ is a strategy profile, and $q_1,q_2,\dots,q_n$ are best responses, the payoff to player $i$ from $q_1,\dots,q_n$ is identically maximal, meaning that a linear combination of these best responses is also a best response. Thus, the set of best responses is convex.\\
+  In the set of mixed strategy profiles, we can see that the set is bounded by the set of pure strategy profiles. Since every pure strategy profile is a mixed strategy profile (with a full probability weight on one strategy), we can also see that the set is closed, meaning that the set of mixed strategy profiles is convex. Additionally, any linear combination of mixed strategy profiles is also a mixed strategy profile, since the process of creating a linear combination merely shifts the probability distribution of the mixed strategies.\\
 
-  So, by Kakutani's Fixed Point Theorem, it must be the case that there is a fixed point, or equilibrium point --- a strategy profile in which every player is playing their best response to every other player.
+  By the definition of best response, it must be the case that if $p$ is a strategy profile, and $q_{i,1},q_{i,2},\dots,q_{i,n}$ are best responses, the payoff to player $i$ from $q_1,\dots,q_n$ is identically maximal, meaning that a linear combination of these best responses is also a best response. Thus, the set of best responses is convex.\\
+
+  So, by Kakutani's Fixed Point Theorem, it must be the case that there is a fixed point, or equilibrium point --- a mixed strategy profile in which every player is playing their best response to every other player.
   \section*{Significance}%
   Nash's finding in the PNAS paper, further developed in his Ph.D. thesis, helped set the stage for further developments in the field of game theory. The idea of a ``Nash Equilibrium,'' which is the equilibrium point shown to exist above, is used heavily in the field of industrial organization to understand market entry and pricing decisions, as well as in modeling interactions in international relations.\\
 
-  However, at the same time, Nash equilibria are not the end-all and be-all of modeling games. Further along in the development of game theory, mathematical economists such as Reinhard Selten and John Harsanyi refined the concept of Nash equilibrium to applications within dynamic games (where players do not engage in their actions simultaneously) of complete and incomplete information.\supercite{nash_selten_harsanyi_nobel} However, it was Nash that set the stage for the development of the discipline of game theory into what it is now through his groundbreaking mathematical work.
+  However, at the same time, Nash equilibria are not the end-all and be-all of modeling games. Further along in the development of game theory, mathematical economists such as Reinhard Selten and John Harsanyi refined the concept of Nash equilibrium to applications within sequential games of complete and incomplete information.\supercite{nash_selten_harsanyi_nobel} However, it was Nash that set the stage for the development of the discipline of game theory into what it is now through his groundbreaking mathematical work.
   \printbibliography
 \end{document}
