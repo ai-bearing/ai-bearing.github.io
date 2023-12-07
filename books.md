@@ -52,7 +52,7 @@ I'm going to be using this place to host the books I read over summer, as well a
 
 <p>The central problem that cities faced was their inability to see just how valuable the land they used for parking was. The best example of this might be when Chicago sold off their parking meters for a 75 year lease — only for $1 Billion in the face of a budget crisis. However, as soon as they did, the consortium of banks and sovereign wealth funds that purchased the meters immediately increased parking rates, and making a giant return on their investment. Though it was easier to find a parking spot in Chicago now with a properly priced curb, it came at a giant opportunity cost within the city budget. All that meter revenue was no longer in public hands.</p>
 
-<p>Grabar also chronicles the rocket to stardom of Donald Shoup — a slightly eccentric urban planner at UCLA who wrote [The High Cost of Free Parking](https://www.amazon.com/High-Cost-Free-Parking-Updated/dp/193236496X). His followers, known as "Shoupistas," started taking city governments and city planning departments by storm, demanding the three main recommendations that Shoup makes in the book:</p>
+<p>Grabar also chronicles the rocket to stardom of Donald Shoup — a slightly eccentric urban planner at UCLA who wrote <a href="https://www.amazon.com/High-Cost-Free-Parking-Updated/dp/193236496X">The High Cost of Free Parking</a>. His followers, known as "Shoupistas," started taking city governments and city planning departments by storm, demanding the three main recommendations that Shoup makes in the book:</p>
 <ul>
 <li>Charging a market-clearing price for street parking.</li>
 <li>Removing mandatory parking minimums.</li>
