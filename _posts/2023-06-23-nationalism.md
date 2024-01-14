@@ -7,8 +7,6 @@ permalink: "/posts/currency_exchanges_imports.html"
 
 The United States, and much of the developed world for that matter, is going through a bit of a "nationalist moment." Ulf Kristersson in Sweden, Marine Le Pen in France, AMLO in Mexico, and, of course, Donald Trump in the United States. However, even with Donald Trump out of office, there is still a significant rhetorical turn against globalization, immigration, and trade in the United States. This trend is, for lack of a better word, discouraging. I mostly reject many of the main tenets of nationalism (especially of the American variety), and economic nationalism specifically is, in my view, a road to ruin.
 
----
-
 The "nation" in nationalism is something particularly specific — nations are groups of people with a common heritage, generally ethnicity. Of course, we run into a very big problem in the United States, which is that the United States doesn't have a common ethnicity. The largest group, White Non-Hispanic People, makes up about 57% of the population, and in that, there are many different ethnicities such as Irish, Italians, Jews, and Anglos.
 
 Alternatively, one might point to a common civic heritage, rebadging this as "civic nationalism." However, creating a national identity out of the cloth in this manner yields a significant problem: who is "in" and "out" of this civic body from which a nation is being created. Black Americans were not, for the longest time, considered part of this American "nation," having been disenfranchised and forcefully segregated. It is well within reason that an attempt to revive "civic nationalism" will yet again draw similar lines.
