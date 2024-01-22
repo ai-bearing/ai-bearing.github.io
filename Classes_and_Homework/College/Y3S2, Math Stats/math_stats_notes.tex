@@ -101,5 +101,48 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 \newcommand{\R}{\mathbbm{R}}
 \setcounter{secnumdepth}{0}
 \begin{document}
+\section{$T$ and $F$ Distributions}%
+  The purpose of both of these distributions is to allow for inferences about $\mu$ and $\sigma$ in an unknown distribution. Both are quotients of known distributions.\\
+\subsubsection{Preliminaries}%
+  \begin{description}
+    \item[Sample Mean:] Let $Y_1,\dots,Y_n$ be a random, independent sample from a distribution with mean $\mu$ and variance $\sigma^2$. Then,
+      \begin{align*}
+        \overline{Y} &= \frac{1}{n}\sum_{i=1}^{n}Y_i \tag*{Sample Mean}
+      \end{align*}
+      is a distribution with mean $\overline{\mu} = \mu$ and variance $\overline{\sigma}^2 = \frac{\sigma^2}{n}$. If the underlying distribution is a normal distribution, then $\frac{\overline{Y}-\mu}{\sigma/\sqrt{n}}$ is a \textit{standard} normal distribution.
+    \item[Sample Variance:] The \textit{sample variance} is defined as
+      \begin{align*}
+        S^2 &= \frac{1}{n-1}\sum_{i=1}^{n}(Y_i-\overline{Y})^2.\tag*{Sample Variance}
+      \end{align*}
+      It is important to note that the sample variance is found for samples drawn from a distribution; for population standard deviation/variance, we use $n$ instead of $n-1$ in the denominator.\\
 
+      When $Y_i$ is a normal distribution, then $\frac{(n-1)S^2}{\sigma^2}$ is a $\chi^2$ distribution with $n-1$ df --- $S^2$ and $\overline{Y}$ are independent.
+  \end{description}
+\subsubsection{Definition of $T$ Distribution}%
+  Let $Z$ be a standard normal distribution, $W$ be $\chi^2$ with $\nu$ df, and $Z$ and $W$ be independent. Then,
+  \begin{align*}
+    T &= \frac{Z}{\sqrt{W/\nu}}
+  \end{align*}
+  has a $T$ distribution with $\nu$ df.
+  \begin{description}
+    \item[Creating a $T$ Distribution:] Let $Y_i$ be sampled from a normal distribution with mean $\mu$ and standard deviation $\sigma$.\\
+      
+      Then, $Z = \frac{\overline{Y}-\mu}{\sigma/\sqrt{n}}$ is a standard normal distribution, and $W = \frac{(n-1)S^2}{\sigma^2}$ is $\chi^2$ with $n-1$ df.\\
+
+      So,
+      \begin{align*}
+        T &= \frac{Z}{\sqrt{W/(n-1)}}\\
+          &= \frac{(\overline{Y}-\mu)\sqrt{n}}{\sigma}\sqrt{\frac{(n-1)\sigma^2}{S^2}}\\
+          &= \frac{(\overline{Y}-\mu)\sqrt{n}}{S}
+      \end{align*}
+      has a $T$ distribution with $n-1$ df.
+    \item[$T$ Distribution:] Let $Y_1,\dots,Y_6$ be samples from a normal distribution with unknown $\mu$, $\sigma$. Estimate $P(|\overline{Y}-\mu|<(2S/\sqrt{n}))$.\\
+
+      Thus, we have
+      \begin{align*}
+        P\left(|\overline{Y}-\mu| \leq \frac{2S}{\sqrt{n}}\right) &= P\left(-2\leq \frac{\sqrt{n}(\overline{Y}-\mu)}{S}\leq 2\right)\\
+                                                                  &= P(-2 \leq T \leq 2)
+      \end{align*}
+      Thus, for $n=6$, we have that our random variable $T$ has 5 df. By looking at a $T$ distribution table, we can find that $P \approx 0.9$. We can also use R.
+  \end{description}
 \end{document}
