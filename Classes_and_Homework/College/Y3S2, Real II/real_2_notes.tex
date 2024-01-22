@@ -1,0 +1,197 @@
+\documentclass[8pt]{extarticle}
+\title{}
+\author{}
+\date{}
+\usepackage[shortlabels]{enumitem}
+
+
+%paper setup
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage{fancyhdr}
+% sans serif font:
+\usepackage{cmbright}
+%symbols
+\usepackage{amsmath}
+\usepackage{bigints}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+\usepackage[hidelinks]{hyperref}
+\usepackage{gensymb}
+\usepackage{multirow,array}
+\usepackage{multicol}
+
+\newtheorem*{remark}{Remark}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+%chemistry stuff
+%\usepackage[version=4]{mhchem}
+%\usepackage{chemfig}
+
+%plotting
+\usepackage{pgfplots}
+\usepackage{tikz}
+\tikzset{middleweight/.style={pos = 0.5}}
+%\tikzset{weight/.style={pos = 0.5, fill = white}}
+%\tikzset{lateweight/.style={pos = 0.75, fill = white}}
+%\tikzset{earlyweight/.style={pos = 0.25, fill=white}}
+
+%\usepackage{natbib}
+
+%graphics stuff
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage[style=numeric, backend=biber]{biblatex} % Use the numeric style for Vancouver
+\addbibresource{the_bibliography.bib}
+%code stuff
+%when using minted, make sure to add the -shell-escape flag
+%you can use lstlisting if you don't want to use minted
+%\usepackage{minted}
+%\usemintedstyle{pastie}
+%\newminted[javacode]{java}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+%\newminted[cppcode]{cpp}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+
+%\usepackage{listings}
+%\usepackage{color}
+%\definecolor{dkgreen}{rgb}{0,0.6,0}
+%\definecolor{gray}{rgb}{0.5,0.5,0.5}
+%\definecolor{mauve}{rgb}{0.58,0,0.82}
+%
+%\lstset{frame=tb,
+%	language=Java,
+%	aboveskip=3mm,
+%	belowskip=3mm,
+%	showstringspaces=false,
+%	columns=flexible,
+%	basicstyle={\small\ttfamily},
+%	numbers=none,
+%	numberstyle=\tiny\color{gray},
+%	keywordstyle=\color{blue},
+%	commentstyle=\color{dkgreen},
+%	stringstyle=\color{mauve},
+%	breaklines=true,
+%	breakatwhitespace=true,
+%	tabsize=3
+%}
+% text + color boxes
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{breakable}
+\tcbuselibrary{skins}
+\newtcolorbox{problem}[1]{colback=white,enhanced,title={\small #1},
+          attach boxed title to top center=
+{yshift=-\tcboxedtitleheight/2},
+boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
+%including PDFs
+%\usepackage{pdfpages}
+\setlength{\parindent}{0pt}
+\usepackage{cancel}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Real Analysis II: Class Notes}
+\newcommand{\card}{\text{card}}
+\newcommand{\ran}{\text{ran}}
+\newcommand{\N}{\mathbbm{N}}
+\newcommand{\Q}{\mathbbm{Q}}
+\newcommand{\Z}{\mathbbm{Z}}
+\newcommand{\R}{\mathbbm{R}}
+\setcounter{secnumdepth}{0}
+\begin{document}
+\section{Normed Vector Spaces}%
+\subsection{Vector Spaces}%
+Throughout, $\mathbbm{F} = \R$ or $\mathbbm{C}$. A \textbf{vector space} over $\mathbbm{F}$ is a nonempty set $V$ equipped with two operations: vector addition and scalar multiplication.
+\begin{align*}
+  V\times V \xrightarrow{+} V\\
+  (v,w)\mapsto v+w
+  F\times V \rightarrow V\\
+  (\alpha,v)\mapsto \alpha v
+\end{align*}
+The vector space is an Abelian group, where $u,v,w\in V$ and $\alpha,\beta\in \mathbbm{F}$, we have:
+\begin{enumerate}[(i)]
+  \item $u+(v+w) = (u+v)+w$
+  \item $\exists 0_v\in V$ with $\forall v\in V,~0_v + v = v + 0_v = v$
+  \item $(\forall v\in V)(\exists w\in V)$ with $v+w = 0_v$ --- 
+  \item $\forall v,w\in V,~v+w = w+v$
+  \item $\alpha(v+w) = \alpha v + \alpha w,~(\alpha + \beta)v = \alpha v + \beta v$
+  \item $\alpha(\beta w) = (\alpha\beta)w$
+  \item $1\cdot v = v$
+\end{enumerate}
+\textbf{Remarks:}
+\begin{enumerate}[(a)]
+  \item $0_v$ is unique and known as the zero vector.
+  \item The vector $w$ in (iii) is unique, and denoted $-v$.
+  \item $0\cdot v = 0_v$
+  \item $(-1)\cdot v = -v$
+  \item Property (iv) follows from all the other axioms.
+  \item For $n\in\N$, $n\cdot v = \underbrace{v+v+\cdots+v}_{n~\text{times}}$
+\end{enumerate}
+\subsection{Subspaces}%
+Let $V$ be a vector space over $\mathbbm{F}$. A \textbf{subspace} is a nonempty subset $W\subseteq V$ satisfying the following:
+\begin{enumerate}[(i)]
+  \item $w\in W,\alpha\in \mathbbm{F}\rightarrow \alpha w \in W$.
+  \item $w_1,w_2\in W \Rightarrow w_1 + w_2\in W$.
+\end{enumerate}
+\begin{description}
+  \item[Remark:] $0_v$ is always a member of any subspace; a subspace is also a vector space.
+\end{description}
+\subsubsection{Proposition: Intersection of Subspaces}%
+If $\{W_i\}_{i\in I}$ is a family of subspaces of $V$, then, $\bigcap W_i$ is a subspace of $V$.
+\subsubsection{Proposition: Union of Subspaces}%
+It is not the case that the union of subspaces of $V$ also a subspace. For example, consider $\R^2$ with the traditional vector space operations:
+\begin{align*}
+  \begin{pmatrix}x\\y\end{pmatrix} + \begin{pmatrix}x'\\y'\end{pmatrix} &= \begin{pmatrix}x+x'\\y+y'\end{pmatrix}\\
+  \alpha \begin{pmatrix}x\\y\end{pmatrix} &= \begin{pmatrix}\alpha x\\\alpha y\end{pmatrix}
+\end{align*}
+If $W_1,W_2\in V$ are subspaces such that $W_1 \cup W_2$ is a subspace, then $W_1\subseteq W_2$ or $W_2\subseteq W_1$.
+\subsubsection{Generated Subspaces}%
+Let $S\subseteq V$ be any subset of a vector space $V$. Then,
+\begin{align*}
+  \text{span}(S) &= \left\{\sum_{j=1}^{n}\alpha_jv_j\mid \alpha_1,\dots,\alpha_n\in \mathbbm{F},v_1,\dots,v_n\in S\right\}
+\end{align*}
+\begin{description}
+  \item[Remarks:]\hfill
+    \begin{itemize}
+      \item $\text{span}(S)\subseteq V$ is a subspace.
+      \item $\text{span}(S) = \bigcap W$, where $S\subseteq W$ and $W\subseteq V$ is a subspace. Thus, $\text{span}(S)$ is the ``smallest'' subspace containing $S$, or the subspace generated by $S$.
+    \end{itemize}
+\end{description}
+\subsubsection{Proposition: Quotient Group on Vector Space}%
+Let $V$ be a vector space, and let $W\subseteq V$ is a subspace. Define $u\sim_{W} v\leftrightarrow u-v\in W$.
+\begin{enumerate}[(1)]
+  \item $\sim_W$ is an equivalence relation.
+  \item If $[v]_W$ denotes the equivalence class of $v$, then $[v]_W = v+W = \{v+w|w\in W\}$.
+  \item $V/W:= \{[v]_W|v\in V\}$ is a vector space with $[v_1]_W + [v_2]_W = [v_1+v_2]_W$ and $\alpha[v]_W = [\alpha v]_W$.
+\end{enumerate}
+\begin{description}
+  \item[Proof of (1):]\hfill
+    \begin{itemize}
+      \item Reflexive: $u\sim_W u$, since $u-u = 0\in W$.
+      \item Transitive: Suppose $u\sim_W v$, and $v\sim_W z$. Then, $u-v\in W$, and $v-z\in W$. So, $(u-v) + (v-z)\in W$, so $u-z\in W$. Whence, $u\sim_W z$.
+      \item Symmetric: If $u\sim_W v$, then $u-v\in W$, so $-1\cdot(u-v)\in W$, so $v-u\in W$. Whence, $v\sim_W u$.
+    \end{itemize}
+  \item[Proof of (2):]
+    \begin{align*}
+      [v]_W &= \{u\in V\mid u\sim_W v\}\\
+            &= \{u\in V\mid u-v\in W\}\\
+            &= \{u\in V\mid u = v+w~\text{some $w\in W$}\}\\
+            &= \{v+w\mid w\in W\}\\
+            &= v+W
+    \end{align*}
+  \item[Proof of (3):] Prove that the operation is well-defined.
+\end{description}
+\subsection{Bases}%
+Let $V$ be a vector space and $S\subseteq V$ be a subset.
+\begin{enumerate}[(1)]
+  \item $S$ is said to be spanning for $V$ if $\text{span}(S) = V$.
+  \item $S$ is linearly independent if, for $\sum_{j=1}^{n}\alpha_jv_j = 0_v$ with $\alpha_1,\dots,\alpha_n\in \mathbbm{F}$, $v_1,\dots,v_n\in S$, then $\alpha_1=\alpha_2 = \cdots = \alpha_n = 0$.
+  \item $S$ is a basis for $V$ if $S$ is linearly independent and spanning for $V$.
+\end{enumerate}
+\subsubsection{Proposition: Existence of Basis}%
+Every vector space admits a basis. If $S\subseteq V$ is linearly independent, $\exists B\subseteq V$ such that $B$ is a basis and $S\subseteq V$.
+\begin{description}
+  \item[Zorn's Lemma:]
+\end{description}
+\end{document}
