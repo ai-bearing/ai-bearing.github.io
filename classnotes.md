@@ -4,6 +4,8 @@ title: "Class Notes"
 permalink: /classnotes.html
 ---
 Here are the class notes I have written up so far.
+## Spring 2024
+###[Real Analysis II](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S2, Real II/real_2_notes.pdf)
 
 ## Fall 2023
 ### [Math 212: Multivariable Calculus](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S1, Math 212/multivariable_notes.pdf)
