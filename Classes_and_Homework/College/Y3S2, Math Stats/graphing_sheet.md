@@ -3,6 +3,8 @@ title: "Stats Note Sheet"
 format: 
   html:
     keep-md: true
+    embed-resources: true
+    self-contained-math: true
 ---
 
 
@@ -27,7 +29,7 @@ normdist
 :::
 :::
 
-$T$ Distribution:
+T Distribution:
 
 ::: {.cell}
 
@@ -43,7 +45,7 @@ tdist
 :::
 
 
-Plotting $T$ and Normal Distribution:
+Plotting T and Normal Distribution (Standard Normal in Red, T in Blue):
 
 ::: {.cell}
 
@@ -57,8 +59,4 @@ bothdist
 ::: {.cell-output-display}
 ![](graphing_sheet_files/figure-html/unnamed-chunk-4-1.png){width=672}
 :::
-
-```{.r .cell-code}
-#Standard Normal distribution in red, T distribution in blue
-```
 :::
