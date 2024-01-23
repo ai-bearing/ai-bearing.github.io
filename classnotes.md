@@ -7,6 +7,7 @@ Here are the class notes I have written up so far.
 ## Spring 2024
 ### [Real Analysis II](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S2, Real II/real_2_notes.pdf)
 ### [Mathematical Statistics](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S2, Math Stats/math_stats_notes.pdf)
+[Graphing Sheet](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S2, Math Stats/graphing_sheet.md)
 ### [Complex Analysis](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S2, Complex/complex_analysis_notes.pdf)
 
 ## Fall 2023
