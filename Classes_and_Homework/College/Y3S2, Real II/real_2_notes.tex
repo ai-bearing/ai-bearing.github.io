@@ -190,8 +190,95 @@ Let $V$ be a vector space and $S\subseteq V$ be a subset.
   \item $S$ is a basis for $V$ if $S$ is linearly independent and spanning for $V$.
 \end{enumerate}
 \subsubsection{Proposition: Existence of Basis}%
-Every vector space admits a basis. If $S\subseteq V$ is linearly independent, $\exists B\subseteq V$ such that $B$ is a basis and $S\subseteq V$.
+Every vector space admits a basis. If $B_0\subseteq V$ is linearly independent, $\exists B\subseteq V$ such that $B$ is a basis and $B \supseteq B_0$.
 \begin{description}
-  \item[Zorn's Lemma:]
+  \item[Background:] A relation on a set $X$ is a subset $R\subseteq X\times X$. If $R$ is reflexive ($x\sim x$), transitive ($x\sim y,y\sim z \rightarrow x\sim z$), and antisymmetric ($x\sim y, y\sim x \rightarrow x=y$), then $R$ is an ordering, and we write $x\leq y$.\\
+
+    If $\leq$ is an ordering of $X$ such that $\forall x,y\in X,~x\leq y$ or $y\leq x$, then $\leq$ is a total (or linear) ordering.\\
+
+    Let $\leq$ be an ordering of $X$, let $Y\subseteq X$. An upper bound for $Y$ is an element $u\in X$ such that $y\leq u$ $\forall y\in Y$. A maximal element in $X$ is an element $m\in X$ such that $x\in X,~x \geq m \rightarrow x=m$.
+  \item[Example:] $\N$ under the division ordering defines $a\leq b \Leftrightarrow a|b$. If we want to find the maximal elements of $A = \{2,6,9,12\}$, we would see that they are $9$ and $12$ (since no element of $A$ can be divided by $9$ and $12$). Meanwhile, $\N$ itself has no maximal elements.\\
+
+    This leads us to ask: given an ordered set, $(X,\leq)$, does $X$ admit maximal elements.
+  \item[Zorn's Lemma (or Axiom):] Let $(X,\leq)$ be an ordered set. Suppose that every totally ordered subset, $Y\subseteq X$ has an upper bound in $X$. Then, $X$ admits at least one maximal element.\\
+
+    The proof of Zorn's Lemma relies on the Axiom of Choice (and Zorn's Lemma is equivalent to the Axiom of Choice).
+  \item[Proof:] Let $X = \{D\mid B_0 \subseteq D \subseteq V\}$ with $D$ linearly independent. Since $B_0\subseteq X$, $X \neq \emptyset$. Define $D,E\in X$, $D\leq E \Leftrightarrow D\subseteq E$. We will show that $X$ has a maximal element.\\
+
+    Consider any totally ordered subset, $Y = \{D_i\}_{i\in I}$. Consider $D = \bigcup D_i$. Clearly, $B_0\subseteq D\subseteq V$. Suppose $\sum \alpha_kv_k = 0_v$ with $v_1,\dots,v_n \in D$. Therefore, $\exists D_j$ with $v_1,\dots,v_n\in D_j$ because $Y$ is totally ordered. However, by definition, $D_j$ is a linearly independent set --- therefore, $\alpha_k = 0$. Thus, $D$ is linearly independent.\\
+
+    Since $D$ is linearly independent, and $B_0\subseteq D$, it must be the case that $D\in X$. $D$ is also an upper bound for $Y$. So, by Zorn's Lemma, $X$ has a maximal element, $B$.\\
+
+    So, $B_0\subseteq B \subseteq V$, $B$ is independent, and $B$ is maximal in $X$. We claim that $B$ is a basis for $V$. Suppose toward contradiction that $\exists v \in V$ such that $v\notin \text{span}(B)$. Consider $B' = B \cup \{v\}$.\\
+
+    Then, $B_0\subseteq B'$, and $B'$ is linearly independent --- if $\sum \alpha_kv_k + \alpha v = 0$, where $v_1,\dots,v_n\in B$, then either:
+    \begin{itemize}
+      \item If $\alpha = 0$, then $\alpha_kv_k = 0 \Rightarrow \alpha_k = 0$.
+      \item If $\alpha \neq 0$, then $\sum\alpha_kv_k = -\alpha v$, which means $v\in \text{span}(B)$. $\bot$
+    \end{itemize}
+    Thus, we have a linearly independent set, $B'$, with $B\subseteq B'$, and $B_0\subseteq B'$. Therefore, $B'\in X$. However, this contradicts the maximality of $B$. Therefore, $\text{span}(B) = V$, and $B$ is a basis for $V$.
 \end{description}
+\subsection{Examples: Vector Spaces}%
+\begin{enumerate}[(1)]
+  \item $n$-Dimensional Vectors:
+    \begin{align*}
+      \mathbbm{F}^n &= \left\{ \begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix} \mid x_j\in \mathbbm{F}\right\}\\
+      \begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix} + \begin{pmatrix}y_1\\\vdots\\y+n\end{pmatrix} &= \begin{pmatrix}x_1+y+1\\\vdots\\x_n + y+n\end{pmatrix}\\
+      \alpha \begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix} &= \begin{pmatrix}\alpha x_1\\\vdots\\\alpha x_n\end{pmatrix}\\
+      B &= \{e_1,\dots,e_n\}\\
+      \shortintertext{where $e_i$ denotes the unit vector at position $i$.}
+    \end{align*}
+  \item $m\times n$ Matrices:
+    \begin{align*}
+      \mathbbm{M}_{m,n}(\mathbbm{F}) &= \left\{ \begin{pmatrix}a_{11} & \cdots & a_{1n}\\\vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mn}\end{pmatrix}\mid a_{ij}\in \mathbbm{F}\right\}\\
+      (a_{ij}) + (b_{ij}) &= (a_{ij} + b_{ij})\\
+      \alpha(a_{ij}) &= (\alpha a_{ij})\\
+      B &= \{e_{ij}\}\\
+      \shortintertext{where $e_{ij}$ denotes a matrix of $0$ everywhere except column $i$ and row $j$.}
+    \end{align*}
+  \item Functions with domain $\Omega$:
+    \begin{align*}
+      \mathcal{F}(\Omega,\mathbbm{F}) &= \{f\mid f: \Omega \rightarrow \mathbbm{F}\}\\
+      (f+g)(x) &= f(x) + g(x)\\
+      (\alpha f)(x) &= \alpha f(x)
+    \end{align*}
+  \item Bounded functions with domain $\Omega$:
+    \begin{align*}
+      \ell_{\infty}(\Omega,\mathbbm{F}) &= \{f\in \mathcal{F}(\Omega,\mathbbm{F}) \mid \Vert f\Vert_u \leq \infty\}\\
+      \Vert f\Vert_u &= \sup_{x\in\Omega}|f(x)|
+    \end{align*}
+    Exercises:
+    \begin{itemize}
+      \item Triangle Inequality: $\Vert f+g\Vert_u \leq \Vert f\Vert_u + \Vert g\Vert_u$
+      \item Scalar Multiplication/Absolute Homogeneity: $\Vert \alpha f\Vert_u = |\alpha| \Vert f\Vert_u$
+      \item Positive Definite: $\Vert f\Vert_u = 0 \Rightarrow f = 0$
+    \end{itemize}
+    \begin{description}
+      \item[Proof of Triangle Inequality:] Given $x\in\Omega$,
+        \begin{align*}
+          |(f+g)(x)| &= |f(x) + g(x)|\\
+                     &\leq |f(x)| + |g(x)|\\
+                     &\leq \Vert f\Vert_u + \Vert g \Vert_u\\
+                     \shortintertext{Therefore,}
+          \sup|(f+g)(x)| &\leq \Vert f\Vert_u + \Vert g\Vert_u\\
+          \Vert f+g\Vert_u &\leq \Vert f\Vert_u + \Vert g\Vert_u
+        \end{align*}
+    \end{description}
+  \item Continuous functions on closed and bounded intervals:
+    \begin{align*}
+      C([a,b],\mathbbm{F}) &= \{f: [a,b]\rightarrow \mathbbm{F}\mid f~\text{continuous}\}
+    \end{align*}
+    Check that $C([a,b],\mathbbm{F}) \subseteq \ell_{\infty}([a,b],\mathbbm{F})$ is a subspace.
+  \item Let $f:[a,b]\rightarrow \R$ be any function. Let $\mathcal{P}: a = x_0 < x_1< x_2 < \cdots < x_n = b$.
+    \begin{align*}
+      \text{var}(f;\mathcal{P}) &:= \sum_{k=1}^{n} |f(x_k)-f(x_{k-1})|\\
+      \text{var}(f) &= \sup_{\mathcal{P}} \text{var}(f;\mathcal{P})\\
+      \text{BV}([a,b]) &= \{f:[a,b]\rightarrow \R\mid \text{var}(f) < \infty\}\\
+      \Vert f\Vert_{\text{BV}} &= |f(a)| + \text{var}(f)
+    \end{align*}
+    $\text{BV}([a,b])$ is a vector space. 
+    \begin{description}
+      \item[Question:] Is $\mathbbm{1}_{\Q} \in \text{BV}([0,1])$?
+    \end{description}
+\end{enumerate}
 \end{document}
