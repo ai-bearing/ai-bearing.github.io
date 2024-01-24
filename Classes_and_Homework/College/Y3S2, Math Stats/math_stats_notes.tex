@@ -103,7 +103,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 \begin{document}
 \section{$T$ and $F$ Distributions}%
   The purpose of both of these distributions is to allow for inferences about $\mu$ and $\sigma$ in an unknown distribution. Both are quotients of known distributions.\\
-\subsubsection{Preliminaries}%
+\subsection{Preliminaries}%
   \begin{description}
     \item[Sample Mean:] Let $Y_1,\dots,Y_n$ be a random, independent sample from a distribution with mean $\mu$ and variance $\sigma^2$. Then,
       \begin{align*}
@@ -118,7 +118,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 
       When $Y_i$ is a normal distribution, then $\frac{(n-1)S^2}{\sigma^2}$ is a $\chi^2$ distribution with $n-1$ df --- $S^2$ and $\overline{Y}$ are independent.
   \end{description}
-\subsubsection{Definition of $T$ Distribution}%
+\subsection{Definition of $T$ Distribution}%
   Let $Z$ be a standard normal distribution, $W$ be $\chi^2$ with $\nu$ df, and $Z$ and $W$ be independent. Then,
   \begin{align*}
     T &= \frac{Z}{\sqrt{W/\nu}}
@@ -145,4 +145,53 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
       \end{align*}
       Thus, for $n=6$, we have that our random variable $T$ has 5 df. By looking at a $T$ distribution table, we can find that $P \approx 0.9$. We can also use R.
   \end{description}
+\subsection{Definition of $F$ Distribution}%
+  Let $W_1$ and $W_2$ be independent $\chi^2$ distributions with $\nu_1$ and $\nu_2$ df respectively. Then, the $F$ distribution with $\nu_1$ numerator df and $\nu_2$ denominator df is found as follows:
+  \begin{align*}
+    F &= \frac{W_1/\nu_1}{W_2/\nu_2}
+  \end{align*}
+  \begin{description}
+    \item[Simplifying an $F$ Distribution:] Let $n_1$ samples be drawn from normal distribution with mean $\mu_1$ and variance $\sigma_1^2$, and $n_2$ samples be drawn from normal distribution with mean $\mu_2$ and variance $\sigma_2^2$. Both distributions are independent.\\
+
+      From each of these samples, we find the sample variance, and create $\chi^2$ distributions with their respective df.
+      \begin{align*}
+        W_1 &= \frac{(n_1-1)S_1^2}{\sigma_1^2}\\
+        W_2 &= \frac{(n_2-2)S_2^2}{\sigma_2^2}
+      \end{align*}
+      Therefore, we have
+      \begin{align*}
+        F &= \frac{W_1/(n_1-1)}{W_2/(n_2-1)}\\
+          &= \frac{(n_1-1)S_1^2}{\sigma_1^2(n_1-1)} \frac{\sigma_2^2(n_2-1)}{(n_2-1)S_2^2}\\
+          &= \frac{\sigma_2^2}{\sigma_1^2}\frac{S_1^2}{S_2^2}
+      \end{align*}
+      as an $F$ distribution with $n_1-1$ numerator df and $n_2-1$ denominator df.
+    \item[Applying the $F$ Distribution:] Let $n_1=6$ and $n_2=10$ be two samples from independent normal distributions with the same $\sigma^2$. Find $b$ such that $P \left(\frac{S_1^2}{S_2^2} \leq b\right) = 0.95$.
+      \begin{align*}
+        \frac{S_1^2}{S_2^2} &= \frac{S_1^2/\sigma^2}{S_2^2/\sigma^2}\\
+      \end{align*}
+      The given $F$ distribution has $5$ numerator df and $9$ denominator df. Therefore, we want to find $0.95 = P(F_{5,9} < b)$, or find the $0.95$ quantile; in R, we find this with the \texttt{qt} function.
+  \end{description}
+  \subsection{Normal Approximation of Binomial}%
+  Recall that a binomial distribution $Y$ with $n$ trials and $p$ probability of success has probabilities found below:
+  \begin{align*}
+    P(Y\leq \ell) &= \sum_{k=0}^{\ell} {n\choose k}p^k (1-p)^{n-k}.
+  \end{align*}
+  For very large $n$, this sum is hard to calculate. We could approximate with the Poisson distribution, but this still requires a lot of calculations and large factorial values. Instead, we will try the following:
+    \begin{align*}
+      X_i &= \begin{cases}
+        1 & \text{$i$ trial success}\\
+        0 & \text{$i$ trial failure}
+      \end{cases}\\
+        E(X_i) &= p\\
+        E(X_i^2) &= p\\
+        V(X_i) &= p(1-p)\\
+        \overline{X} &= \frac{1}{n}\sum_{i=1}^{n}X_i = \frac{Y}{n}\\
+        E(\overline{X}) &= p\\
+        V(\overline{X}) &= \frac{p(1-p)}{n}
+    \end{align*}
+    By the Central Limit Theorem, we approximate $\overline{X}$ as a normal distribution with mean $p$ and standard deviation $\sqrt{\frac{p(1-p)}{n}}$.\\
+
+    Alternatively, we can create, for large fixed $n$, $Y = n\overline{X}$ with mean $np$ and standard deviation $\sqrt{np(1-p)}$.\\
+
+    For example, consider $p=0.5$, $n=100$, $Y = $ number of successes. To find $P\left(\frac{Y}{n} > 0.55\right)$. By the Central Limit Theorem, this is approximately a normal distribution with mean $0.5$ and standard deviation $0.05$. 
 \end{document}

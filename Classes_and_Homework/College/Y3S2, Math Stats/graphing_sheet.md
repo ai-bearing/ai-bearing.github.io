@@ -60,3 +60,19 @@ bothdist
 ![](graphing_sheet_files/figure-html/unnamed-chunk-4-1.png){width=672}
 :::
 :::
+
+
+Plotting F Distribution:
+
+::: {.cell}
+
+```{.r .cell-code}
+fdist <- ggplot(data.frame(x=c(0,5)),aes(x=x)) + 
+  stat_function(fun=df, args=list(7,5))
+fdist
+```
+
+::: {.cell-output-display}
+![](graphing_sheet_files/figure-html/unnamed-chunk-5-1.png){width=672}
+:::
+:::
