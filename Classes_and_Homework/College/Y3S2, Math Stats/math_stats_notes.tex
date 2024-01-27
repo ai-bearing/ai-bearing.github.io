@@ -1,4 +1,4 @@
-\documentclass[8pt]{extarticle}
+\documentclass[10pt]{extarticle}
 \title{}
 \author{}
 \date{}
@@ -101,7 +101,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 \newcommand{\R}{\mathbbm{R}}
 \setcounter{secnumdepth}{0}
 \begin{document}
-\section{$T$ and $F$ Distributions}%
+\section{Distributions: $T$, $F$, and Normal Approximation}%
   The purpose of both of these distributions is to allow for inferences about $\mu$ and $\sigma$ in an unknown distribution. Both are quotients of known distributions.\\
 \subsection{Preliminaries}%
   \begin{description}
@@ -193,5 +193,35 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 
     Alternatively, we can create, for large fixed $n$, $Y = n\overline{X}$ with mean $np$ and standard deviation $\sqrt{np(1-p)}$.\\
 
-    For example, consider $p=0.5$, $n=100$, $Y = $ number of successes. To find $P\left(\frac{Y}{n} > 0.55\right)$. By the Central Limit Theorem, this is approximately a normal distribution with mean $0.5$ and standard deviation $0.05$. 
+    For example, consider $p=0.5$, $n=100$, $Y = $ number of successes. To find $P\left(\frac{Y}{n} > 0.55\right)$. By the Central Limit Theorem, this is approximately a normal distribution with mean $0.5$ and standard deviation $0.05$.
+    \begin{description}
+      \item[Applying Central Limit Theorem:] Let $Y$ be a binomial distribution with $n=25$ and $p=0.4$. Then, $\mu = np = 10$, and standard deviation $\sigma = \sqrt{\frac{p(1-p)}{n}} = 5\sqrt{0.24}$.\\
+
+        To find $P(Y\leq 8)$, we can potentially approximate with $P(X\leq 8.5)$ --- the reason we use $8.5$ instead of $8$ is due to the fact that $n$ may not be large enough, a process known as the continuity correction.\\
+
+        Using standardization (or R), we find that this probability is approximately $0.269$.\\
+
+        The actual probability $P(Y\leq 8)$ is found as below:
+        \begin{align*}
+          P(Y\leq 8) &= \sum_{k=0}^{8} {25\choose k}(0.4)^k(0.6)^{1-k}\\
+                     &= 0.274
+        \end{align*}
+    \end{description}
+    The normal approximation for the binomial is adequate when $p \pm 3\sqrt{\frac{p(1-p)}{n}}\in (0,1)$. Essentially, the binomial trial needs to have an adequate sample size such that the ``spread'' is small. This is equivalent to $n \geq 9\frac{\max(p,1-p)}{\min(p,1-p)}$.
+  \section{Estimators}%
+  Let $Y$ be a random variable with an \textit{unknown} distribution.
+  \begin{description}
+    \item[Parameter:] Feature of $Y$'s distribution that are not computable from samples.
+    \item[Examples of Parameters:] $\mu$, $\sigma$, $m'_k$, interval $(a,b) \ni P(y\in I) = 0.95$.
+    \item[Statistic:] Random variable that is computable from samples.
+    \item[Examples of Statistics:] sample mean, $\overline{Y}$, sample variance, $S^2$, $Y_{(i)}$.
+    \item[Estimator:] a statistic intended to approximate a parameter. A point estimator estimates a single value.
+    \item[Examples of Estimators:] $\overline{Y}$ as an estimator for $\mu$, and $S^2$ as an estimator of $\sigma^2$.
+  \end{description}
+  \subsection{Two Measures of Goodness of Point Estimators}%
+  We want to find $\theta$, a constant parameter of the underlying distribution --- $\hat{\theta}$ is a random variable.\\
+
+  If $E(\hat{\theta})$ is close to $\theta$, we can say that $\hat{\theta}$ is a good estimator --- more precisely, we define the bias $B(\hat{\theta}) = E(\hat{\theta})-\theta$, and if $B(\hat{\theta}) = 0$, then $\hat{\theta}$ is an unbiased estimator.\\
+
+  In addition to minimizing bias, to see whether or not an estimator is good requires minimizing the variance of the estimator --- the mean squared estimator $\text{MSE}(\hat{\theta}) = V(\hat{\theta}) + B(\hat{\theta})^2$
 \end{document}
