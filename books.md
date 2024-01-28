@@ -4,7 +4,7 @@ title: "Books and Reviews"
 permalink: "/book_reviews"
 ---
 
-I'm going to be using this place to host the books I read over summer, as well as including some reviews/overviews. Enjoy!
+I have extensive reviews of books I read over Summer 2023 here, but I also have a [goodreads](https://www.goodreads.com/user/show/172155763-avinash-iyer) which I am using to track book progress in 2024.
 <details>
  <summary> <em>Land and Liberty: Henry George and the Making of Modern Liberalism</em>, Christopher England </summary>
 
