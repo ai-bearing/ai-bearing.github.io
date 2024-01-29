@@ -218,10 +218,45 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     \item[Estimator:] a statistic intended to approximate a parameter. A point estimator estimates a single value.
     \item[Examples of Estimators:] $\overline{Y}$ as an estimator for $\mu$, and $S^2$ as an estimator of $\sigma^2$.
   \end{description}
-  \subsection{Two Measures of Goodness of Point Estimators}%
+  \subsection{Bias and Mean Square Error of Estimators}%
   We want to find $\theta$, a constant parameter of the underlying distribution --- $\hat{\theta}$ is a random variable.\\
 
   If $E(\hat{\theta})$ is close to $\theta$, we can say that $\hat{\theta}$ is a good estimator --- more precisely, we define the bias $B(\hat{\theta}) = E(\hat{\theta})-\theta$, and if $B(\hat{\theta}) = 0$, then $\hat{\theta}$ is an unbiased estimator.\\
 
-  In addition to minimizing bias, to see whether or not an estimator is good requires minimizing the variance of the estimator --- the mean squared estimator $\text{MSE}(\hat{\theta}) = V(\hat{\theta}) + B(\hat{\theta})^2$
+  In addition to minimizing bias, to see whether or not an estimator is good requires minimizing the variance of the estimator --- the mean squared estimator $\text{MSE}(\hat{\theta}) = V(\hat{\theta}) + B(\hat{\theta})^2$. Notice that for an \textit{unbiased} estimator, $\text{MSE}(\hat{\theta}) = V(\hat{\theta})$.
+  \begin{description}
+    \item[Exercise 8.12:] Let $\theta$ be the true voltage of some electronic device. The voltage test has results uniformly distributed over $[\theta,\theta + 1]$. There are $n$ tests, $Y_1,\dots,Y_n$. Evaluate $\overline{Y}$ as an estimator for $\theta$.
+    \item[Solution:] Since the voltage is uniformly distributed over $[\theta,\theta + 1]$, we have that $Y_i$ is uniform on $[\theta,\theta + 1]$. Therefore, $E(Y_i) = \theta + 0.5$, and $V(Y_i) = \frac{1}{12}$.\\
+
+      Therefore, $E(\overline{Y}) = \theta + 0.5$, and $V(\overline{Y}) = \frac{1}{12n}$, meaning $\text{MSE}(\hat{\theta}) = \frac{1}{12n} + \frac{1}{4}$.\\
+
+      If we want an unbiased estimator for $\theta$, we take $\hat{\theta} = \overline{Y} - \frac{1}{2}$. Then,
+      $E(\hat{\theta}) = E(\overline{Y}) - E(1/2) - \theta = 0$. By shifting this estimator, our new MSE is $\frac{1}{12n}$.
+    \item[Example 8.1:] We will compare the two estimators of $\sigma^2$: sample variance and population variance.
+      \begin{align*}
+        S^2 &= \frac{1}{n-1}\sum_{i=1}^{n}(Y_i-\overline{Y})^2\\
+        {S'}^2 &= \frac{1}{n}\sum_{i=1}^{n}(Y_i - \overline{Y})^2
+      \end{align*}
+    \item[Solution:] Recall $V(X) = E(X^2) - (E(X))^2$. Therefore, $E(X^2) = V(X) + (E(X))^2$.
+      \begin{align*}
+        E(Y_i^2) &= V(Y_i) + \left(E(Y_i)\right)^2\\
+                 &= \sigma^2 + \mu^2\\
+        E(\overline{Y}^2) &= V(\overline{Y}) + \left(E(\overline{Y})\right)^2\\
+                          &= \frac{\sigma^2}{n} + \mu^2\\
+                          \shortintertext{Notice that}
+        \sum (Y_i-\overline{Y})^2 &= \sum(Y_i^2 - 2Y_i\overline{Y} + \overline{Y}^2)\\
+                                  &= \sum Y_i^2 - 2\overline{Y}\sum Y_i + \sum \overline{Y}^2\\
+                                  &= \sum Y_i^2 -2n\overline{Y}^2+ n\overline{Y}^2\\
+                                  &= \sum_{Y_i}^2 - n\overline{Y}^2\\
+        E\left(\sum (Y_i-\overline{Y})^2\right) &= E(\sum Y_i^2) - nE(\overline{Y}^2)\\
+                                                &= n(\sigma^2 + \mu^2) - n\left(\frac{\sigma^2}{n} + \mu^2\right)\\
+                                                &= (n-1)\sigma^2\\
+        B({S'}^2) &= \frac{1}{n}(n-1)\sigma^2 - \sigma^2\\
+                  &= -\frac{1}{n}\sigma^2 \neq 0\\
+        B(S^2) &= \frac{1}{n--1}(n-1)\sigma^2 - \sigma^2\\
+               &= 0
+      \end{align*}
+      ${S'}^{2}$ is known as the \textit{biased sample variance}, while $S^2$ is the unbiased sample variance.
+  \end{description}
+  The standard error $\sigma_{\hat{\theta}} = \sqrt{V(\hat{\theta})}$. If $\hat{\theta}$ is unbiased, then $\sigma_{\hat{\theta}} = \sqrt{\text{MSE}(\hat\theta)}$
 \end{document}

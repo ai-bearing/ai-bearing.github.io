@@ -131,6 +131,9 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   \end{description}
   \section{Problem 3}%
   Let $V$ be a vector space with subspaces $W_i\subseteq V$ for $i=1,2$. If $W_1\cup W_2\subseteq V$ is a subspace, show that $W_1\subseteq W_2$ or $W_2\subseteq W_1$.
+  \begin{description}
+    \item[Proof:] Suppose $W_1\nsubseteq W_2$. Thus, $\exists u\in W_1$ such that $u\notin W_2$. Since $W_1$ is a subspace, it is not empty, and thus $\exists w\in W_1$. Since $W_1\cup W_2$ is a subspace, and $u,w\in W_1\cup W_2$, $u+w\in W_1\cup W_2$. Additionally, $u+w\notin W_2$, as if it were the case, then $u+w-w\in W_2$, meaning $u\in W_2$, violating one of our assumptions. Therefore, $u+w\in W_1$, meaning $W_2\subseteq W_1$. 
+  \end{description}
   \section{Problem 4}%
     Let $V$ be a vector space over $\mathbbm{F}$ and suppose $W\subseteq V$ is a subspace.
     \begin{enumerate}[(i)]
@@ -177,6 +180,49 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     \Vert a\Vert_{\text{op}} &:= \sup_{\xi\in B_{\ell_2}^n}\Vert a\xi\Vert_{\ell_2^{m}}.
   \end{align*}
   Show that $\Vert \cdot \Vert_{\text{op}}$ is a norm on $\mathbbm{M}_{m,n}(\mathbbm{C})$. This is the operator norm.
+  \section{Problem 8}%
+  If $f: [a,b]\rightarrow\R$ is any function and $\mathcal{P} = \{a=x_0<x_1<x_2 < \cdots < x_{n-1} < x_n = b\}$ is a partition of $[a,b]$, we define the variation of $f$ on $\mathcal{P}$ as
+  \begin{align*}
+    \text{Var}(f;\mathcal{P}) = \sum_{k=1}^{n}|f(x_k)-f(x_{k-1})|.
+  \end{align*}
+  We say that $f$ is of bounded variation if
+  \begin{align*}
+    \text{Var}(f) = \sup_{\mathcal{P}}\text{Var}(f;\mathcal{P}) < \infty,
+  \end{align*}
+  where the supremum runs over all partitions of $[a,b]$. We define the space of all functions of bounded variation
+  \begin{align*}
+    \text{BV}([a,b]) := \{f:[a,b]\rightarrow\R\mid \text{Var}(f)<\infty\}
+  \end{align*}
+  \begin{enumerate}[(i)]
+    \item Is the function $\mathbb{1}_{\Q}: [0,1]\rightarrow \R$ of bounded variation?
+      \begin{description}
+        \item[Proof:] The answer is no, $\mathbb{1}_{\Q}$ is not of bounded variation. Define $\mathcal{P}$ to be a partition where each alternating member of the partition is, respectfully, a member of $\Q$ and $\R\setminus\Q$. Since both $\Q$ and $\R\setminus\Q$ are dense in $[0,1]$, this partition is valid. However, the variation of $\mathbb{1}_{\Q}$ over this partition is infinite, as there are infinitely many rational and irrational numbers in the space, and the difference between the image of each element of the infinite partition is $1$, meaning the sum is infinite.
+      \end{description}
+    \item Show that $\text{BV}([a,b])\subseteq \ell_{\infty}([a,b])$ is a subspace.
+      \begin{description}
+        \item[Proof:] We will show that $\text{BV}\subseteq \ell_{\infty}$, and that any linear combination $f,g\in \text{BV}([a,b])$ is an element of $\text{BV}([a,b])$.\\
+
+          To show $\text{BV}([a,b])\subseteq \ell_{\infty}([a,b])$, observe that for $x\in [a,b]$,
+          \begin{align*}
+            |f(x)| &= |f(x)-f(a) + f(a)|\\
+                   &\leq |f(x)-f(a)| + |f(a)|\\
+                   &\leq \text{Var}(f) + |f(a)|,\\
+           \shortintertext{meaning $|f(x)|$ is bounded above, so}
+           \sup_{x\in[a,b]}|f(x)| < \infty.
+          \end{align*}
+          Let $f,g\in \text{BV}([a,b])$ and let $\alpha,\beta \in \R$. Then,
+          \begin{align*}
+            \text{Var}(\alpha f + \beta g;\mathcal{P}) &= \sum_{k=1}^{n}|(\alpha f(x_k) + \beta g(x_k)) - (\alpha f(x_{k-1}) + \beta g(x_{k-1}))|\\
+                                                       &\leq\sum_{k=1}^{n}|\alpha f(x_k)-\alpha f(x)| + \sum_{k=1}^{n}|\beta g(x_k)-\beta g(x_{k-1})|\\
+                                                       &= |\alpha|\sum_{k=1}^{n}|f(x_k)-f(x_{k-1})| + |\beta|\sum_{k=1}^{n}|g(x_k) - g(x_{k-1})|\\
+                                                       &\leq |\alpha|\text{Var}(f) + |\beta|\text{Var}(g),\\
+                                                       \shortintertext{meaning}
+            \text{Var}(\alpha f + \beta g) &\leq |\alpha|\text{Var}(f) + |\beta|\text{Var}(g),
+          \end{align*}
+          meaning $\alpha f + \beta g\in \text{BV}([a,b])$.
+      \end{description}
+    \item Show that $\Vert f\Vert_{\text{BV}} := |f(a)| + \text{Var}(f)$ defines a norm on $\text{BV}([a,b])$.
+  \end{enumerate}
   \section{Problem 9}%
   Given any function $f: [0,1]\rightarrow \mathbbm{C}$, we define
   \begin{align*}
