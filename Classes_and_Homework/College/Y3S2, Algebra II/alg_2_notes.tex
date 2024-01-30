@@ -99,6 +99,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 \newcommand{\Q}{\mathbbm{Q}}
 \newcommand{\Z}{\mathbbm{Z}}
 \newcommand{\R}{\mathbbm{R}}
+\newcommand{\C}{\mathbbm{C}}
 \setcounter{secnumdepth}{0}
 \begin{document}
   \section{Motivation and Introduction}%
@@ -356,4 +357,216 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   Define $\varphi_a: R\setminus\{0_R\} \rightarrow R\setminus\{0_R\}$, $b\mapsto ab$. If $\varphi_a(b) = \varphi_a(c)$, then $ab = ac$, and by our previous result, $b=c$ --- therefore, $\varphi_a$ is injective.\\
 
   Since $R\setminus \{0_R\}$ is finite, and $\varphi_a$ is injective, then $\varphi_a$ is surjective. In particular, this means $\exists b\in R\setminus\{0_R\}$ with $\varphi_a(b) = 1_R$; therefore, $ab = 1_R$. Since $R$ is commutative, $ba = 1_R$, so $b = a^{-1}$.
+  \subsubsection{Examples of Abstract Rings}%
+  
+  \subsubsection{Ring of Integers in a Field}%
+  Let $d\in \Z$, $d$ is square-free (there is no square that divides $d$). Set $\Q(\sqrt{d}) = \{a + b\sqrt{d}\mid a,b\in\Q\} \subseteq \C$. This is a field (can be verified as a subfield of $\C$).\\
+
+  We can define
+  \begin{align*}
+    \mathcal{O}_{\Q\left(\sqrt{d}\right)} &= \begin{cases}
+      \Z[\sqrt{d}] = \{a + b\sqrt{d}\mid a,b\in\Z\} & d \equiv 2,3\mod 4\\
+      \Z\left[\frac{1 + \sqrt{d}}{2}\right] = \{a + b\left(\frac{1+\sqrt{d}}{2}\right)\mid a,b\in\Z\} & d\equiv 1\mod 4
+    \end{cases}.
+  \end{align*}
+  Then, $\mathcal{O}_{\Q(\sqrt{d})}$ is a subring of $\Q(\sqrt{d})$. This is known as the ring of integers of $\Q(\sqrt{d})$. This set behaves in $\Q(\sqrt{d})$ the same say that $\Z$ does inside $\Q$. The set $\mathcal{O}_{\Q(\sqrt{d})}$ is the collection of all roots in $\Q(\sqrt{d})$ of monic (coefficient of highest degree is 1) polynomials with coefficients in $\Z$.\\
+
+  For example, if $d = -1$, defining $\Q(i)$, then we can verify that $\Z[i]$ is a root of a monic polynomial with coefficients in $\Z$.
+  \subsubsection{Ring of Matrices}%
+  Let $R$ be a ring. Then,
+  \begin{align*}
+    \text{Mat}_{n}(R) &= \{\text{$n\times n$ matrices with entries in $R$}\}
+  \end{align*}
+  is a ring under matrix addition and multiplication.
+  \subsubsection{Ring of Functions}%
+  Let $L^{1}(\R)$ be all functions $f: \R\rightarrow\R$ such that
+  \begin{align*}
+    \int_{\R}|f(x)|dx
+  \end{align*}
+  exists. The set $L^{1}(\R)$ is a ring under pointwise addition and convolution, where convolution is defined as
+  \begin{align*}
+    \left(f\ast g\right)(x) &= \int_{\R}f(x-y)g(y)dy.
+  \end{align*}
+  This is a commutative ring without identity.
+  \subsubsection{Group Ring}%
+  Let $K$ be a field and $G$ a group. Set $K[G]$ to be all formal linear combinations of the form
+  \begin{align*}
+    \alpha = \sum_{x\in G} a_x x,
+  \end{align*}
+  with $a_x\in K$, $x\in G$, with $a_x = 0$ for all but finitely many $x$.\\
+
+  Given
+  \begin{align*}
+    \alpha &= \sum_{x\in G}a_x x\\
+    \alpha &= \sum_{y\in G}b_y y,
+  \end{align*}
+  define
+  \begin{align*}
+    \alpha + \beta &= \sum_{x\in G}(a_x + b_x) x\\
+    \alpha\beta &= \sum_{x\in G}\sum_{y\in G}a_xb_yxy\\
+                &= \sum_{z\in G}\left(\sum_{xy=z}a_xb_y\right)z.
+  \end{align*}
+  This is a ring under these operations, known as the group ring. It is commutative if and only if $G$ is abelian.
+  \subsubsection{Polynomials under a Ring}%
+  Let $R$ be a ring. Set
+  \begin{align*}
+    R[x] = \left\{\sum_{i=1}^{n}a_ix^i\mid a_i\in R,n\in \Z_{\geq 0}\right\}
+  \end{align*}
+  to be the all polynomials with coefficients in $R$. This is a ring under polynomial addition and multiplication. If $R$ is commutative, then $R[x]$ is commutative.\\
+
+  \subsubsection{Proposition: Polynomial Properties}%
+  Let $R$ be an integral domain, with $p(x),q(x)\in R[x]\setminus\{0\}$. Then:
+  \begin{enumerate}[(1)]
+    \item $\text{deg}(p(x)q(x)) = \text{deg}(p(x)) + \text{deg}(q(x))$
+    \item $R[x]^{\times} = R^{\times}$
+    \item $R[x]$ is an integral domain.
+  \end{enumerate}
+  \begin{description}
+    \item[Proof of (1):] Let
+      \begin{align*}
+        p(x) &= a_mx^m + \cdots + a_1x + a_0\\
+        q(x) &= b_nx^n + \cdots + b_1x + b_0
+      \end{align*}
+      with $a_m,b_n\neq 0$ --- $\text{deg}(p) = m$ and $\text{deg}(q) = n$. Then,
+      \begin{align*}
+        p(x)q(x) = a_mb_nx^{m+n} + \text{lower degree terms},
+      \end{align*}
+      and since $a_mb_n\neq 0$ as $R$ is an integral domain with $a_m,b_n\neq 0$, $\text{deg}(pq) = m+n$.
+  \end{description}
+  \subsection{Ring Homomorphism}%
+  Let $R$ and $S$ be rings. A ring homomorphism between $R$ and $S$ is a map $\varphi: R\rightarrow S$ that satisfies the following properties for all $r_1,r_2\in R$:
+  \begin{enumerate}[(1)]
+    \item $\displaystyle\varphi\left(r_1 +_{\tiny R} r_2\right) = \varphi(r_1) +_{\tiny S} \varphi(r_2)$
+    \item $\displaystyle\varphi \left(r_1 \cdot_{\tiny R} r_2\right) = \varphi(r_1) \cdot_{\tiny S} \varphi(r_2)$
+  \end{enumerate}
+  The kernel of a ring homomorphism $\varphi$ is given by
+  \begin{align*}
+    \ker(\varphi): \{r\in R\mid \varphi(r) = 0_S\}
+  \end{align*}
+  A bijective ring homomorphism is called an isomorphism. If there exists such a bijection between $R$ and $S$, we say $R$ and $S$ are isomorphic.\\
+
+  If $\varphi$ is an isomorphism, we write
+  \begin{align*}
+    \varphi: R\xrightarrow{\simeq}S
+  \end{align*}
+  \subsection{Examples: Ring Homomorphisms}%
+  \subsubsection{Not a Ring Homomorphism}%
+  Let $R = \Z$ and $S = 2\Z$. Define
+  \begin{align*}
+    \varphi: \Z&\rightarrow 2\Z\\
+    n&\mapsto 2n.
+  \end{align*}
+  Let $m,n\in\Z$. We have
+  \begin{align*}
+    \varphi(m+n) &= 2(m+n)\\
+                 &= 2m + 2n\\
+                 &= \varphi(m) + \varphi(n).
+  \end{align*}
+  However,
+  \begin{align*}
+    \varphi(mn) &= 2(mn)\\
+    \varphi(m)\varphi(n) &= 4(mn).
+  \end{align*}
+  \subsubsection{Homomorphism between Integers and Integers Modulo $n$}%
+  Consider $R = \Z$ and $S = \Z/n\Z$. Define
+  \begin{align*}
+    \varphi:\Z&\rightarrow \Z/n\Z\\
+    a&\mapsto [a]_{n}.
+  \end{align*}
+  Let $a,b\in\Z$. We have
+  \begin{align*}
+    \varphi(a+b) &= [a+b]_{n}\\
+                 &= [a]_{n} + [b]_n\\
+                 &= \varphi(a) + \varphi(b).
+  \end{align*}
+  Additionally, we have
+  \begin{align*}
+    \varphi(ab) &= [ab]_n\\
+                &= [a]_n[b]_n\\
+                &= \varphi(a)\varphi(b).
+  \end{align*}
+  So, $\varphi$ is a ring homomorphism. Note that
+  \begin{align*}
+    \ker(\varphi) &= \{a\in \Z\mid \varphi(a) = [0]_n\}\\
+                  &= \{a\in \Z\mid [a]_n = [0]_n\}\\
+                  &= \{a\in \Z\mid n | a\}\\
+                  &= n\Z.
+  \end{align*}
+  \subsubsection{Homomorphism Between the Polynomials and Reals}%
+  Let $S = \R[x]$ and $T = \R$. Define
+  \begin{align*}
+    \varphi_{a}: \R[x]&\rightarrow \R\\
+    f&\mapsto f(a)\\
+  \end{align*}
+  Let $f(x),g(x) = \R[x]$. Then,
+  \begin{align*}
+    \varphi_a(f(x) + \varphi(g)(x)) &= \varphi_a((a_0 + b_0) + \cdots + (a_m + b_m)x^m + b_{m+1}x^{m+1} + \cdots b_nx^n)\\
+                                    &= (a_0 + b_0) + \cdots + (a_m + b_m)a^m + b_{m+1}a^{m+1} + \cdots + b_na^n\\
+                                    &= \varphi_a(f(x)) + \varphi_a(g(x)).
+  \end{align*}
+  Similarly, we can verify that $\varphi_a(f(x)g(x)) = \varphi_a(f(x))\varphi_a(g(x))$. So, $\varphi_a$ is a ring homomorphism. Note that
+  \begin{align*}
+    \ker(\varphi_a) &= \{f(x)\in \R[x]\mid f(a) = 0\}\\
+                    &= \{f(x)\in \R[x]\mid (x-a)|f(x)\}\\
+                    &= (x-a)\R[x]
+  \end{align*}
+  \subsubsection{Homomorphism between Matrices}%
+  Define
+  \begin{align*}
+    R &= \left\{ \begin{bmatrix}a&b\\0&d\end{bmatrix}\in \text{Mat}_{2}(\R)\right\}\\
+    S &= \R,
+  \end{align*}
+  and
+  \begin{align*}
+    \varphi:R&\rightarrow S\\
+    \begin{bmatrix}a&b\\0&d\end{bmatrix}&\mapsto a.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \varphi \left(\begin{bmatrix}a_1&b_1\\0&d_1\end{bmatrix}+\begin{bmatrix}a_2&b_2\\0&d_2\end{bmatrix}\right) &= \varphi \left(\begin{bmatrix}a_1+a_2&b_1+b_2\\0&d_1+d_2\end{bmatrix}\right)\\
+                                    &= a_1 + a_2\\
+                                    &= \varphi \left(\begin{bmatrix}a_1&b_1\\0&d_1\end{bmatrix}\right) + \varphi \left(\begin{bmatrix}a_2&b_2\\0&d_2\end{bmatrix}\right),
+  \end{align*}
+  and
+  \begin{align*}
+    \varphi \left(\begin{bmatrix}a_1&b_1\\0&d_1\end{bmatrix}\begin{bmatrix}a_2&b_2\\0&d_2\end{bmatrix}\right) &= \varphi \left(\begin{bmatrix}a_1a_2&a_1b_2 + b_1d_2\\0&d_1d_2\end{bmatrix}\right)\\
+                                    &= a_1 a_2\\
+                                    &= \varphi \left(\begin{bmatrix}a_1&b_1\\0&d_1\end{bmatrix}\right)  \varphi \left(\begin{bmatrix}a_2&b_2\\0&d_2\end{bmatrix}\right).
+  \end{align*}
+  So $\varphi$ is a ring homomorphism that is surjective but not injective. Note
+  \begin{align*}
+    \ker(\varphi) &= \left\{ \begin{bmatrix}0&b\\0&d\end{bmatrix}\mid b,d\in\R\right\}.
+  \end{align*}
+  \subsubsection{Proposition: Fundamental Theorem of Ring Homomorphisms}%
+  Let $\varphi: R\rightarrow S$ be a ring homomorphism.
+  \begin{enumerate}[(1)]
+    \item The image of $\varphi$, $\varphi(R) = \{s\in S\mid s = \varphi(r)\text{ for some }r\in R\}$, is a subring of $S$.
+    \item The kernel, $\ker(\varphi)$, is a subring of $R$.\\
+
+      Additionally, for any $r\in R$, and $a\in \ker(\varphi)$, $ar\in \ker(\varphi)$ and $ra\in \ker(\varphi)$.
+  \end{enumerate}
+  \begin{description}
+    \item[Proof of (2):] To show $\ker(\varphi)$ is a subring, we must show that $\ker(\varphi)$ is non-empty, closed under subtraction, and closed under multiplication.\\
+
+      First, since $\varphi(0_R) = 0_S$ (verify this), $\ker(\varphi)$ is non-empty.\\
+
+      Let $a,b\in\ker(\varphi)$. We have
+      \begin{align*}
+        \varphi(a-b) &= \varphi(a + (-b))\\
+                     &= \varphi(a) + \varphi(-b)\\
+                     &= \varphi(a)-\varphi(b) \tag*{check $\varphi(-b) = -\varphi(b)$}\\
+                     &= 0_S - 0_S\\
+                     &= 0_S.
+      \end{align*}
+      Thus, $a-b\in\ker(\varphi)$, and $\ker(\varphi)$ is closed under subtraction.\\
+
+      To show $\ker(\varphi)$ is closed under multiplication, we will prove the general case. Let $a\in\ker(\varphi)$ and $r\in R$. We have
+      \begin{align*}
+        \varphi(ra) &= \varphi(r)\varphi(a)\\
+                    &= \varphi(r)0_S\\
+                    &= 0_S.
+      \end{align*}
+      Similarly, $\varphi(ar) = 0_S$. So, $ar,ra\in\ker(\varphi)$.
+  \end{description}
+  The stronger condition that we found for $\ker(\varphi)$ (closed under multiplication of all elements of the ring, not merely those from the subring) forms what we call an ideal.
 \end{document}
