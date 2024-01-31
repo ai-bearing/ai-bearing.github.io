@@ -101,7 +101,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 \newcommand{\R}{\mathbbm{R}}
 \setcounter{secnumdepth}{0}
 \begin{document}
-\section{Distributions: $T$, $F$, and Normal Approximation}%
+\section{Distributions and Estimates}%
   The purpose of both of these distributions is to allow for inferences about $\mu$ and $\sigma$ in an unknown distribution. Both are quotients of known distributions.\\
 \subsection{Preliminaries}%
   \begin{description}
@@ -259,4 +259,65 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
       ${S'}^{2}$ is known as the \textit{biased sample variance}, while $S^2$ is the unbiased sample variance.
   \end{description}
   The standard error $\sigma_{\hat{\theta}} = \sqrt{V(\hat{\theta})}$. If $\hat{\theta}$ is unbiased, then $\sigma_{\hat{\theta}} = \sqrt{\text{MSE}(\hat\theta)}$
+  \subsection{Errors and Confidence Intervals}%
+  \begin{description}
+    \item[Error of Estimation:] The error of estimation is $\varepsilon = |\hat{\theta} - \theta|$. Notice that while $\theta$ is a fixed value, $\varepsilon$ is a random variable.\\
+
+      We say $\hat{\theta}$ is a ``good'' estimator if there is a high probability that $\varepsilon$ is small. Specifically, $\varepsilon$ being small often means $\exists b$ such that $\varepsilon < b$ --- alternatively, $|\hat{\theta} - \theta| < b$, meaning $\theta -b < \hat{\theta} < \theta + b$, so $\hat{\theta}\in (\theta-b,\theta + b)$.\\
+
+      We often set $b$ to be $2\sigma_{\hat{\theta}}$, or $2\cdot\text{SE}(\hat{\theta})$.\\
+
+      When $\hat{\theta}$ is unbiased, $\mu_{\hat{\theta}} = E(\hat{\theta}) = \theta$. So, the $2\sigma_{\hat{\theta}}$ interval about $\theta$ is the same as the $2\sigma_{\hat{\theta}}$ about $\hat{\theta}$.\\
+
+      Finally, $\hat{\theta}$ often, but not always, has an approximate normal distribution. Therefore, the probability that $\hat{\theta}$ is within $2\sigma_{\hat{\theta}}$ of $\mu_{\hat{\theta}}$ is approximately 0.95. Specifically, $P(|\hat{\theta} - \mu_{\hat{\theta}}| < 2\sigma_{\hat{\theta}})$.\\
+
+      Recall that Chebyshev's Theorem states that $P(|\hat{\theta} - -\mu_{\hat{\theta}}| < 2\sigma_{\hat{\theta}}) \geq 1-\frac{1}{2^2} = 0.75$.
+    \item[Example 8.3:] Suppose there are two types of tire. $n_1 = n_2 = 100$ of each type, with $Y_1 = Y_2 = $ miles tire lasts. $\overline{Y}_{1} = 26400$ miles while $\overline{Y}_2 = 25100$ miles. $S^2_{1} = 144000000$ and $S_2^{2} = 196000000$.\\
+
+      Let's try to estimate how much longer tire 1 lasts than tire 2. First, we will use an unbiased estimator for the mean (sample mean).
+      \begin{align*}
+        \mu_{Y_1-Y_2} &= \mu_{Y_1} - \mu_{Y_2}\\
+                      &\approx \overline{Y}_1 - \overline{Y}_2\\
+                      &= 1300\\
+        \sigma_{\overline{Y}_1-\overline{Y}_2} &= \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}} \tag*{Table 8.1}\\
+                                               &\approx \sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}} \tag*{$S^2$ an unbiased estimator for $\sigma^2$}\\
+                                               &= 184.4
+      \end{align*}
+      Therefore, the difference in the life expectancy between the types is about $1300$ miles, and there is approximately probability 0.95 chance that the life expectancy is within 368.8 miles of 1300.\\
+
+      The interval $[1300-368.8,1300+368.6]$ is called an interval estimator or confidence interval, expressed as $[\hat{\theta}_{L},\hat{\theta}_{H}]$.
+      \begin{itemize}
+        \item $\hat{\theta}_{L}$: lower confidence limit, a left endpoint estimator.
+        \item $\hat{\theta}_{U}$: upper confidence limit, a right endpoint estimator.
+      \end{itemize}
+    \item[Example 8.4:] One sample, $Y$, from exponential distribution with PDF
+      \begin{align*}
+        f(y) &= \begin{cases}
+          \frac{1}{\theta}e^{-y/\theta}& y\in[0,\infty)\\
+          0 & y\in(-\infty,0)
+        \end{cases}
+      \end{align*}
+      To estimate $\theta$, we would prefer a PDF without $\theta$. Let
+      \begin{align*}
+        U &= \frac{Y}{\theta}\tag*{pivotal quantity}\\
+          F_{U}(u) &= P(U\leq u)\\
+               &= P(Y/\theta \leq u)\\
+               &= F_{Y}(u\theta)\\
+               &= 1-e^{-u}\\
+        f(u) &= \begin{cases}
+          e^{-u}& u\in[0,\infty)\\
+          0 & u\in(-\infty,0)
+        \end{cases}\\
+      \end{align*}
+      We want $a,b$ such that $P(a\leq\theta\leq b) = 0.9$. Pick $c,d$ such that $P(c\leq U \leq d) = 0.9$.\\
+
+      By integrating, we find $c = -\ln(0.95) = 0.051$, and $d = 2.996$. Now,
+      \begin{align*}
+        0.9 &= P(0.051 \leq U \leq 2.996)\\
+            &= P(0.051 \leq Y/\theta \leq 2.996)\\
+            &= P(0.051/Y \leq 1/\theta \leq 2.996/\leq)\\
+            &= P(Y/2.996 \leq \theta \leq Y/0.051).
+      \end{align*}
+      meaning that for $Y=2$, there is a probability 0.9 that $\theta\in [0.668,39]$.
+  \end{description}
 \end{document}
