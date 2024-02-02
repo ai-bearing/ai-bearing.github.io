@@ -320,4 +320,48 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
       \end{align*}
       meaning that for $Y=2$, there is a probability 0.9 that $\theta\in [0.668,39]$.
   \end{description}
+  \subsubsection{Common Confidence Intervals}%
+  Last time, we used the method of pivots to find a confidence interval for $\theta$:
+  \begin{enumerate}[(1)]
+    \item find a confidence interval for pivotal quantity,
+    \item solve for $\theta$.
+  \end{enumerate}
+  Today, we will identify some parameters with the same pivotal quantity, meaning we can find a confidence interval directly instead of using the method of pivots.\\
+
+  The larger the sample size, the smaller the confidence interval, meaning the more accurate our approximation. However, we cannot just sample however many people as we want --- we need to find the minimum number necessary to satisfy a certain confidence interval.\\
+
+  Table 8.1 discusses the various features we would like to suss out from a sampling distribution, such as $\mu$, $\mu_1 - \mu_2$ from any distribution, and $p$, and $p_1 - p_2$ from a binomial distribution.\\
+
+  All estimators in Table 8.1 are unbiased and approximately normal. The latter feature is that which we will use in large-sample confidence intervals. We can let
+  \begin{align*}
+    Z &= \frac{\hat{\theta} - \theta}{\sigma_{\hat{\theta}}}
+  \end{align*}
+  then be a pivotal quantity. $Z$ is an approximately standard normal distribution.\\
+
+  Since an unbiased estimator $\hat{\theta}$ for $\theta$ has an approximately normal distribution, and $\sigma_{\hat{\theta}}$ can be estimated from known quantities, we can find a confidence interval with coefficient $1-\alpha$.\\
+
+  Considering $Z$, the standard normal (approximate) distribution, we find a central confidence interval by placing $\alpha/2$ in each tail, with the endpoints of the interval at $\pm z_{\alpha/2}$. Then, using R or a table, we find $z_{\alpha/2}$, and
+  \begin{align*}
+    1-\alpha &= P(-z_{\alpha/2} \leq z \leq z_{\alpha/2})\\
+             &= P\left(-z_{\alpha/2} \leq \frac{\hat{\theta} - \theta}{\sigma_{\hat{\theta}}}\right)\\
+             &\vdots\\
+             &= P(\hat{\theta} - z_{\alpha/2}\sigma_{\hat{\theta}} \leq \theta \leq \hat{\theta} + z_{\alpha/2}\sigma_{\hat{\theta}})
+  \end{align*}
+  Therefore, $\hat{\theta} - z_{\alpha/2}\sigma_{\hat{\theta}}$ is the lower confidence limit and $\hat{\theta} + z_{\alpha/2}\sigma_{\hat{\theta}}$ is the higher confidence limit.
+  \begin{description}
+    \item[Example 8.8] Comparing samples $A$ and $B$, where $n_1 = 50$ for $A$, 12 fail, and $n_2 = 60$ for $B$, where 12 fail. We want to find a $0.98$ confidence interval for $p_1 - p_2$. If this CI contains $0$, then we see that $A$ and $B$ last approximately the same time.\\
+
+      Therefore,
+      \begin{align*}
+        \hat{\theta} &= \hat{p}_1 - \hat{p}_2\\
+                     &= \frac{Y_1}{n_1}-\frac{Y_2}{n_2}\\
+                     &= \frac{12}{50}-\frac{12}{60}\\
+                     &= 0.04\\
+        z_{\alpha/2} &= 2.33\\
+        \sigma_{\hat{\theta}} &= \sqrt{\frac{p_1(1-p_1)}{n_1} + \frac{p_2(1-p_2)}{n_2}}\\
+                              &\approx \sqrt{\frac{\hat{p_1}(1-\hat{p_1})}{n_1} + \frac{\hat{p_2}(1-\hat{p_2})}{n_2}}\\
+                              &\approx 0.079
+      \end{align*}
+      Therefore, the $0.98$ confidence interval for $p_1-p_2$ is $[-0.145,0.225]$, which contains zero, implying that we can assume $A$ and $B$ fail at similar rates with probability $0.98$.
+  \end{description}
 \end{document}

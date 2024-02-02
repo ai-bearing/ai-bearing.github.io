@@ -17,7 +17,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{mathtools}
-\usepackage{bbm}
+\usepackage{bbold}
 \usepackage[hidelinks]{hyperref}
 \usepackage{gensymb}
 \usepackage{multirow,array}
@@ -77,7 +77,7 @@
 %	tabsize=3
 %}
 % text + color boxes
-\renewcommand{\mathbf}[1]{\mathbbm{#1}}
+\renewcommand{\mathbf}[1]{\mathbb{#1}}
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{breakable}
 \tcbuselibrary{skins}
@@ -95,11 +95,11 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 \lhead{Complex Analysis: Class Notes}
 \newcommand{\card}{\text{card}}
 \newcommand{\ran}{\text{ran}}
-\newcommand{\N}{\mathbbm{N}}
-\newcommand{\Q}{\mathbbm{Q}}
-\newcommand{\Z}{\mathbbm{Z}}
-\newcommand{\R}{\mathbbm{R}}
-\newcommand{\C}{\mathbbm{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
 \setcounter{secnumdepth}{0}
 \begin{document}
 \section{Complex Numbers}%
@@ -300,5 +300,65 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   \end{itemize}
   For example, $A = \emptyset$ is open, by vacuous truth, so $\overline{A} = \C$ is closed. Similarly, since $\C$ is open, $\emptyset$ is closed.\\
 
-  Meanwhile, $A = \{x + iy\mid -1\leq x < 1\}$ is neither open nor closed.
+  Meanwhile, $A = \{x + iy\mid -1\leq x < 1\}$ is neither open nor closed.\\
+  \subsubsection{Limits}%
+  Let $A\subseteq \C$, $f: A\rightarrow \C$, $z_0\in \C$. Then,
+  \begin{align*}
+    \lim_{z\rightarrow z_{0}}f(z) = \ell
+  \end{align*}
+  means both of the following hold:
+  \begin{enumerate}[(i)]
+    \item for some $r > 0$, $D(z_{0};r)\setminus\{z_0\}\subseteq \text{dom}(f)$,
+    \item $\forall \varepsilon > 0$, $\exists \delta > 0$ such that $f(D(z_0;\delta)\setminus \{z_0\}) \subseteq D(\ell;\varepsilon)$.
+  \end{enumerate}
+  For example, if
+  \begin{align*}
+    f(z) &= \begin{cases}
+      z & z\in \C\setminus\R\\
+      3i & z\in\R
+    \end{cases}
+  \end{align*}
+  Then, $\lim_{z\rightarrow 0}f(z)$ does not exist, as there is no $\ell$ that satisfies both conditions. Specifically, if $\ell = 3i$, and we set $\varepsilon = 1$, then a disc of any radius around $0$ has some $z\in \C\setminus\R$ that maps to itself. Similarly, if we set $\ell = 0$, then there is a real number in a disc of any radius around $0$.
+  \begin{description}
+    \item[Note:] $f$ does not have to be defined at $z_0$ for the limit to be defined at $z_0$.
+  \end{description}
+  Let $A\subseteq \C$ be open, $f: A\rightarrow\C$, and $z_0\in A$. We say $f$ is continuous at $z_0$ if $\lim_{z\rightarrow z_{0}}f(z) = f(z_0)$. We say $f$ is continuous on $A$ if $\forall z_0\in A$, $f$ is continuous at $z_0$.\\
+
+  We will show that $f: \C\rightarrow\C$, $z\mapsto 3z$ is continuous. 
+  \begin{description}
+    \item[Scratch Work:] We want $\delta$ such that $f(D(z_0;\delta))\subseteq D(3z_0;\varepsilon)$. Let $z\in D(z_0;\delta)$, meaning $f(z) = 3z$. We want $3z \in D(3z_0;\varepsilon)$, meaning we want $|3z-3z_0| < \varepsilon$, or $|z-z_0| < \frac{\varepsilon}{3}$.
+    \item[Proof:] Let $\varepsilon > 0$. Set $\delta = \frac{\varepsilon}{3}$. We show $f(D(z_0;\delta))\subseteq D(f(z_0);\varepsilon)$. Let $z\in D(z_0;\delta)$. Then, $|z-z_0| < \delta=\varepsilon/3$, meaning $3|z-z_0| < \varepsilon$, meaning $|3z-3z_0| < \varepsilon$, so $|f(z)-f(z_0)| < \varepsilon$. Therefore, $f(z)\in D(f(z_0);\varepsilon)$. Since $f$ is continuous at arbitrary $z_0$, $f$ is continuous on $\C$.
+  \end{description}
+  \subsubsection{Sequences}%
+  A sequence $z_1,z_2,\dots \in \C$. A sequence converges to $z_0\in\C$ if 
+  \begin{align*}
+    (\forall \varepsilon > 0)(\exists M\in \N) \ni \forall z_{n > M},~|z_n-z_0| < \varepsilon
+  \end{align*}
+  In words, for any radius around $z_0$, we can find $z_n$ arbitrarily close to $z_0$ for sufficiently large $n$. We write $z_n\rightarrow z_0$ if this is the case.\\
+
+  Let $f: \C\rightarrow\C$. Then, $f$ is continuous on $\C$ if and only if the following equivalent conditions are met:
+  \begin{enumerate}[(i)]
+    \item the inverse image of every open set is open ($f^{-1}(B):=\{a\in \C\mid f(a)\in B\}$);
+    \item the inverse image of every closed set is closed;
+    \item for every sequence $(z_n)_n$ such that $(z_n)_n\rightarrow z_0$, $f(z_n)\rightarrow f(z_0)$.
+  \end{enumerate}
+  Let
+  \begin{align*}
+    f(z) &= \begin{cases}
+      0&z=0\\
+      1 & z\neq 0
+    \end{cases}.
+  \end{align*}
+  This function is not continuous. We will check that (i)--(iii) fail.
+  \begin{enumerate}[(i)]
+    \item Let $B = D(0;1)$. Then, $f^{-1}(B) = \{0\}$, which is not open set.
+    \item Let $B = \text{cl}(D(1;0.5))$. Then, $f^{-1}(B) = \C\setminus\{0\}$, which is not closed.
+    \item Let $z_n = \frac{1}{n}$. Then, $(z_n)_n\rightarrow 0$, but $f(z_n) = 1$ for all $n$, meaning $f(z_n)\rightarrow 1\neq f(0)$.
+  \end{enumerate}
+  \subsubsection{Connected Sets}%
+  Let $a,b\in\C$. A path from $a$ to $b$ is a continuous function $p:[0,1]\rightarrow \C$ such that $p(0) = a$ and $p(1) = b$. Let $S\subseteq \C$. If $p([0,1])\subseteq S$, then $p$ is a path in $S$.\\
+
+  We say $S$ is \textit{path-connected} if for any $s,t\in S$, there is a path in $S$ from $s$ to $t$.\\
+
+  Every set that is path-connected is connected, but not necessarily the other way around.
 \end{document}
