@@ -99,6 +99,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\iprod}[2]{\left\langle #1,#2\right\rangle}
 \setcounter{secnumdepth}{0}
 \begin{document}
 \section{Normed Vector Spaces}%
@@ -495,5 +496,156 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
                                                        &\leq \Vert (a_k)_k\Vert_p + \Vert(b_k)_k\Vert_{p}.
     \end{align*}
     Taking the limit as $n\rightarrow\infty$ (by the definition of an infinite series), we find that $\Vert (a_k)_k + (b_k)_k\Vert_p \leq \Vert (a_k)_k\Vert_p + \Vert (b_k)_k\Vert_p$.
+  \item $\text{BV}([a,b]) = \{f: [a,b]\rightarrow \R\mid \text{Var}(f) < \infty\}$ with the norm $\Vert f \Vert_{\text{BV}} = |f(a)| + \text{Var}(f)$ is a normed space:
+    \begin{align*}
+      \Vert f \Vert_{\text{BV}} &= 0\\
+      |f(a)| &= 0\\
+      \text{Var}(f) &= 0\\
+      \shortintertext{given $t\in (a,b]$, look at the partition $a < t \leq b$. Then,}
+      \text{Var}(f) &\geq |f(t)-f(a)| + |f(b)-f(t)|\\
+      f(t) &= 0\\
+      f &= \mathbb{0}_f.
+    \end{align*}
+  \item $\mathbb{M}_{m,n}(\mathbb{F})$ with
+    \begin{align*}
+      \Vert a \Vert_{\text{op}} &= \sup_{\Vert \xi \Vert_{\ell_{2}^{n}} \leq 1} \Vert a\xi \Vert_{\ell_{2}^{m}}
+    \end{align*}
+    is a normed vector space. If $\Vert a \Vert_{\text{op}} = 0$, then
+    \begin{align*}
+      ae_j &= 0 \tag*{$\forall j \in \{1,\dots,n\}$.}\\
+      \shortintertext{take the dot product with $i\neq j$}
+      ae_{j}\cdot e_{i} &= a_{ij}\\
+                        &= 0\\
+                        \shortintertext{so $a_{ij} = 0$ for all $a_{ij}$, so $a$ is the $\mathbb{0}$ matrix.}
+    \end{align*}
+  \item Let $V,W$ be vector spaces over $\mathbb{F}$. Then, $\mathcal{L}(V,W) = \{T\mid T:V\rightarrow W\text{ linear}\}$, where $T(\alpha v_1 + \beta v_2) = \alpha T(v_1) + \beta T(v_2)$.\\
+
+    $\mathcal{L}(V,W)$ is a vector space with operations
+    \begin{align*}
+      (T+S)(v) &= T(v) + S(v)\\
+      (\alpha T)(v) &= \alpha T(v).
+    \end{align*}
+    \begin{description}
+      \item[Notation:] $\mathcal{L}(V) := \mathcal{L}(V,V)$ is all linear operators on $V$. $\mathcal{L}(V,\mathbb{F}) = V'$ is all linear functionals.
+    \end{description}
+    Suppose $V$ and $W$ are normed vector spaces. If $T: V\rightarrow W$, set
+    \begin{align*}
+      \Vert T\Vert_{\text{op}} &:= \sup_{\Vert v \Vert_{v}\leq 1}\Vert T(v)\Vert_{W},\\
+      \mathbb{B}(V,W) &= \{T\in \mathcal{L}(V,W) \mid \Vert T \Vert_{op}\leq \infty\},
+    \end{align*}
+    where $\mathbb{B}(V,W)$ is referred to as the set of all bounded linear maps from $V$ to $W$. $\mathbb{B}(V,W)$ with $\Vert \cdot \Vert_{\text{op}}$ is a normed space.
+    \begin{itemize}
+      \item Homogeneity:
+        \begin{align*}
+          \Vert \alpha T \Vert_{\text[op]} &= \sup_{\Vert v \Vert_{V} \leq 1} \Vert \alpha T(v)\Vert_{W}\\
+                                           &= \sup_{\Vert v \Vert_{V}\leq 1} |\alpha|\Vert T(v)\Vert_{W}\\
+                                           &= |\alpha|\sup_{\Vert v \Vert_{V}\leq 1}\Vert T(v)\Vert_{W}\\
+                                           &= |\alpha|\Vert T\Vert_{\text{op}}.
+        \end{align*}
+      \item Triangle Inequality: for $\Vert v \Vert_{V}\leq 1$,
+        \begin{align*}
+          \Vert \left(T + S\right)(v)\Vert_{W} &= \Vert T(v) + S(v)\Vert_{W}\\
+                                               &\leq \Vert T(v)\Vert_{W} + \Vert S(v)\Vert_{W}\\
+                                               &\leq \Vert T \Vert_{\text{op}} + \Vert S \Vert_{\text{op}}\\
+                                               \shortintertext{so}
+          \Vert T+S\Vert_{\text{op}} &= \sup_{\Vert v \Vert\leq 1}\Vert T+S(v)\Vert\\
+                                     &\leq \Vert T \Vert_{\text{op}} + \Vert S \Vert_{\text{op}}
+        \end{align*}
+      \item Positive Definite: If $\Vert T \Vert_{\text{op}} = 0$, then $T(v) = 0$ for all $v\in V$, $\Vert v \Vert\leq 1$.\\
+
+        Let $v\in V$, $v\neq 0$. Then, $\frac{v}{\Vert v \Vert}\in B_V.$
+        \begin{align*}
+          T\left(\frac{v}{\Vert v\Vert}\right) &= 0\\
+          \frac{1}{\Vert v \Vert}T(v) &= 0\\
+          T(v) &= 0
+        \end{align*}
+    \end{itemize}
+    \begin{description}
+      \item[Special Cases:] $\mathbb{B}(V) = \mathbb{B}(V,V)$, $V^{\ast} = \mathbb{B}(V,\mathbb{F})$.
+      \item[Exercise:] $\mathcal{L}(\mathbb{F}^n,\mathbb{F}^m) = \mathbb{B}(\ell_{2}^{n},\ell_{2}^{m}).$
+    \end{description}
+    \item Inner Product Spaces (expanded upon below).
 \end{enumerate}
+  \subsubsection{Inner Product Spaces}%
+  An inner product on a vector space $V$ is a pairing 
+  \begin{align*}
+    V \times V \xrightarrow{\langle\cdot,\cdot\rangle} \mathbb{F}
+  \end{align*}
+  that satisfies
+  \begin{enumerate}[(i)]
+    \item $\displaystyle \langle v_1+v_2,w\rangle = \langle v_1,w\rangle + \langle v_2,w\rangle$, $\langle \alpha v,w\rangle = \alpha \langle v,w\rangle$.
+    \item $\langle v,w\rangle = \overline{\langle w,v\rangle}$
+    \item $\langle v,v\rangle \geq 0$.
+    \item If $\langle v,v\rangle = 0$, then $v = 0$.
+  \end{enumerate}
+  The pair $(V,\langle\cdot,\cdot\rangle)$ is known as an inner product space.
+  \begin{description}
+    \item[Remarks:] $\langle v,w_1+w_2\rangle = \langle v,w_1\rangle + \langle v,w_2\rangle$, $\langle v,\alpha w \rangle = \overline{\alpha}\langle v,w\rangle$.
+  \end{description}
+  If $\langle\cdot,\cdot\rangle$ is an inner product on a linear space $V$, then set 
+  \begin{align*}
+    \Vert v\Vert_{2} &:= \Vert v,v\Vert^{1,2}.
+  \end{align*}
+  \begin{description}
+    \item[Exercise:] $\Vert \alpha v \Vert_{2} = |\alpha|\Vert v_2\Vert$, $\Vert v \Vert_2 = 0 \Rightarrow v = 0$.
+  \end{description}
+  $v,w\in (V,\langle,\cdot,\cdot\rangle)$ are \textit{orthogonal} if $\langle v,w\rangle = 0$.\\
+
+  The Pythagoran theorem states that for $v_1,\dots,v_n\in V$ mutually orthogonal, then
+  \begin{align*}
+    \left\Vert\sum_{i=1}^{n}v_i\right\Vert^{2} &= \sum_{j=1}^{n}\Vert v_j\Vert^2.
+  \end{align*}
+  For two vectors $v,w\in V$, $P_{w}(v) = \frac{\langle v,w\rangle}{\langle w,w\rangle}w$.
+  \begin{description}
+    \item[Exercise:] Check that $\iprod{P_{w}(v)}{v-P_{w}(v)}$, meaning
+      \begin{align*}
+        \Vert v \Vert^2 &= \Vert P_w(v)\Vert^2 + \Vert v-P_{w}(v)\Vert ^2
+      \end{align*}
+    \item[Cauchy-Schwarz Inequality:] In any inner product space,
+      \begin{align*}
+        |\iprod{v}{w}| &\leq \Vert v \Vert \cdot \Vert w \Vert.
+      \end{align*}
+    \item[Proof of Cauchy-Schwarz:] From the exercise,
+      \begin{align*}
+        \Vert v \Vert &\geq \Vert P_w(v)\Vert\\
+        \Vert v \Vert &\geq \left\Vert \frac{\iprod{v}{w}}{\iprod{w}{w}}w\right\Vert\\
+                      &= \frac{|\iprod{v}{w}|}{\Vert w \Vert^2}\Vert w \Vert\\
+                      \shortintertext{therefore,}
+        \Vert v \Vert \Vert w \Vert &\geq |\iprod{v}{w}|
+      \end{align*}
+  \end{description}
+  The triangle inequality follows from the Cauchy-Schwarz inequality.
+  \begin{description}
+    \item[Proof of Triangle Inequality:]
+      \begin{align*}
+        \Vert v + w \Vert_2^2 &= \iprod{v+w}{v+w}\\
+                              &= \iprod{v}{v} + \iprod{v}{w} + \iprod{w}{v} + \vert{w}{w}\\
+                              &= \Vert v \Vert^2 + \Vert w \Vert^2 + \iprod{v}{w} + \overline{\iprod{v}{w}}\\
+                              &= \Vert v \Vert^2 + \Vert w \Vert^2 + 2\text{Re}\iprod{v}{w}\\
+                              &\leq \Vert v\Vert^2 + \Vert w \Vert^2 + 2|\iprod{v}{w}|\\
+                              &\leq \Vert v \Vert^2 + \Vert w \Vert^2 + 2\Vert v \Vert\Vert w \Vert\tag*{Cauchy-Schwarz Inequality}\\
+                              &= \left(\Vert v \Vert + \Vert w \Vert\right)^2.
+      \end{align*}
+      Take square roots on both sides.
+  \end{description}
+  \begin{enumerate}[(1)]
+    \item $\ell_{2}^{n}=\mathbb{F}^n$ with
+      \begin{align*}
+        \iprod{ \begin{bmatrix}x_1\\\vdots\\x_n\end{bmatrix} }{ \begin{bmatrix}y_1\\\vdots\\y_n\end{bmatrix} } &= \sum_{i=1}^{n}x_i\overline{y_i}.
+      \end{align*}
+      Cauchy-Schwarz is found as
+      \begin{align*}
+        \left|\sum_{j=1}^{n}x_j\overline{y_j}\right| &\leq \left(\sum_{j=1}^{n}|x_j|^2\right)^{1/2}\left(\sum_{j=1}^{n}|y_j|^2\right)^{1/2}.
+      \end{align*}
+    \item $\ell_2$ with
+      \begin{align*}
+        \iprod{(a_j)_j}{(b_j)_{j}} &= \sum_{j=1}^{\infty}a_j\overline{b}_j.
+      \end{align*}
+      We can see that for any finite $n$, the Cauchy-Schwarz inequality in $\ell_{2}^{n}$ states
+      \begin{align*}
+        \left|\sum_{j=1}^{n} a_j\overline{b_j}\right| &\leq \left(\sum_{j=1}^{n}|a_j|^2\right)^{1/2} \left(\sum_{j=1}^{n}|b_j|^2\right)^{1/2}\\
+                                                      &\leq \left(\sum_{j=1}^{\infty}|a_j|^2\right)^{1/2}\left(\sum_{j=1}^{\infty}|b_j|^2\right)^{1/2}.
+      \end{align*}
+    Taking the limit as $n\rightarrow\infty$, we see that $\iprod{(a_j)_j}{(b_j)_j}$ is convergent.
+  \end{enumerate}
 \end{document}
