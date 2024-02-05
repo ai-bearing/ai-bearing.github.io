@@ -364,4 +364,36 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
       \end{align*}
       Therefore, the $0.98$ confidence interval for $p_1-p_2$ is $[-0.145,0.225]$, which contains zero, implying that we can assume $A$ and $B$ fail at similar rates with probability $0.98$.
   \end{description}
+  \subsection{Selecting Sample Size}%
+  We will select $n$ by guesstimating things. Recall that for the estimators in Table 8.1, the confidence interval for $1-\alpha$ is $\hat{\theta} \pm z_{\alpha/2}\sigma_{\hat{\theta}}$.
+  \begin{description}
+    \item[Example 1:] Use $\overline{Y}$ to estimate $\mu$ of yield $Y$ tons. We want a 0.95 confidence interval with radius $5$ tons. Therefore, we want to find $n$ for this radius.\\
+
+      By the central limit theorem, we know that $\overline{Y}$ is approximately normal with mean $\mu$ and standard deviation $\sigma/\sqrt{n}$. Therefore, $\overline{Y}$ is within $2\sigma_{\overline{Y}}$ with probability 0.95, meaning $z_{\alpha/2} = 2$.\\
+
+      We want $z_{\alpha/2} \sigma_{\hat{\theta}} = 5$. Therefore, $n = \frac{4\sigma^2}{25}$. However, we also do not know $\sigma$. If we had a sample, we could use $\sigma^2 \approx S^2$. However, we want to find $n$, we do not have a sample.\\
+
+      Suppose we have an idea of the range of $Y$, approximately $84$. Then, $\sigma \approx 21$, as the range is approximately $4\sigma$, so $n\approx 71$.\\
+
+      The results suggest that if we took 71 samples, there is a 95\% confidence that the samples will be within 5 tons of the true mean. Note that $\overline{Y}$ will likely have an error much lower than $5$.
+      \begin{enumerate}[(1)]
+        \item If this 0.95 confidence interval is a true 0.95 confidence interval, then there is a 0.68 probability that our sample mean will be within one standard deviation, or an error of 2.5 tons.
+        \item There is a probability that $\sigma$ is \textit{smaller} than 1/4 of the range.
+      \end{enumerate}
+    \item[Example 2:] Suppose there is a new drug with effects $A$ or $B$. We will use the sample probability to estimate the real probability of $A$, $\hat{p} = \frac{Y}{n}$. To get the drug approved by the FDA, we require a 0.90 confidence interval of the effect being within $0.04$. We want to find a valid clinical trial size if $p\approx 0.6$, or if we have no knowledge of $p$.\\
+
+      Since we want a 0.9 confidence interval, we find $z_{\alpha/2} = z_{0.05} = 1.645$. Then, $\sigma_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}$, so $1.645\sigma_{\hat{p}} = 0.04$, so $n = 406$.\\
+
+      For $p$ unknown, we have $p\approx 0.05$ to maximize $p(1-p)$, so there $n=423$.
+    \item[Example 3:] We have two methods of training, creatively named method 1 and method 2, with $n_1$ and $n_2$ trainees in each method respectively. We want a 0.95 confidence interval that the difference between $\overline{Y}_{1}$ and $\overline{Y}_{2}$, the sample mean of the average times, is within 1 minute of the true mean. We expect the range of $Y_1$ and $Y_2$ to be about $8$ minutes.\\
+
+      We have $1-\alpha = 0.95$, meaning $z_{\alpha/2} = z_{0.025} = 1.96$. We find
+      \begin{align*}
+        1.96 \sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n}} &= 1\\
+        \sigma_1^2 = \sigma_2^2 &= \sigma^2\\
+        \sigma &\approx \frac{8}{4}\\
+        n_1 = n_2 &= n
+      \end{align*}
+      Solving for $n$, we find $n \approx 31$.
+  \end{description}
 \end{document}
