@@ -100,6 +100,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\iprod}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
 \setcounter{secnumdepth}{0}
 \begin{document}
 \section{Normed Vector Spaces}%
@@ -647,5 +648,173 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
                                                       &\leq \left(\sum_{j=1}^{\infty}|a_j|^2\right)^{1/2}\left(\sum_{j=1}^{\infty}|b_j|^2\right)^{1/2}.
       \end{align*}
     Taking the limit as $n\rightarrow\infty$, we see that $\iprod{(a_j)_j}{(b_j)_j}$ is convergent.
+    \item $C([a,b])$ with
+      \begin{align*}
+        \iprod{f}{g} &= \int_{a}^{b}f(x)\overline{g(x)}dx.
+      \end{align*}
+    \item Let $V = \mathbb{M}_{n}(\mathbb{C})$.\\
+
+      Recall that if
+      \begin{align*}
+        a &= (a_{ij})_{i,j},
+      \end{align*}
+      then
+      \begin{align*}
+        a^{\ast} &= (\overline{a_{ji}})_{i,j}.
+      \end{align*}
+      Let $\text{Tr}:\mathbb{M}_{n}(\mathbb{C}) \rightarrow \mathbb{C}$, $\text{Tr}((a_{ij})) = \sum_{i=1}^{n}a_{ii}$.
+      \begin{itemize}
+        \item $\text{Tr}(I_{n}) = n$
+        \item $\text{Tr}(a + \alpha b) = \text{Tr}(a) + \alpha\text{Tr}(b)$
+        \item $\text{Tr}(ab) = \text{Tr}(ba)$
+      \end{itemize}
+      Then, if $\text{Tr}(a^{\ast}a) = 0$, then $a = \mathbb{0}_{\mathbb{M}_n}$.
+      \begin{align*}
+        a^{\ast}a &= (\overline{a_{ji}})_{i,j}(a_{ij})_{i,j}\\
+                  &= \left(\sum_{k=1}^{n}\overline{ki}a_{kj}\right)_{i,j}\\
+        \text{Tr}(a^{\ast}a) &= \sum_{i=1}^{n}\sum_{k=1}^{n}\overline{a_{ki}}a_{ki}\\
+                             &= \sum_{i,k=1}^{n}|a_{ki}|^{2}\\
+                             &= \sum_{i,j=1}^{n}|a_{ij}|^{2}.
+      \end{align*}
+      If $\text{Tr}(a^{\ast}a) = 0$, then $a_{ij} = 0$ for all $i,j$.\\
+
+      We define
+      \begin{align*}
+        \iprod{a}{b}_{\text{HS}} &= \text{Tr}(b^{\ast}a).
+      \end{align*}
+      \begin{enumerate}[(i)]
+        \item $(b_1 + b_2)^{\ast} = b_1^{\ast} + b_2^{\ast}$
+        \item $(\alpha b)^{\ast} = \overline{\alpha}b^{\ast}$
+        \item $(b_1b_2)^{\ast} = b_2^{\ast}b_1^{\ast}$
+        \item $b^{\ast\ast} = b$
+      \end{enumerate}
+      The norm is defined as
+      \begin{align*}
+        \norm{a}_{\text{HS}} &= \iprod{a}{a}^{1/2}\\
+                             &= \text{Tr}(a^{\ast}a)^{1/2}\\
+                             &= \left(\sum_{i,j=1}^{n}|a_{ij}|^2\right)^{1/2}
+      \end{align*}
+  \end{enumerate}
+  \section{Metric Spaces}%
+  We looked at normed spaces, where we attach a length $\norm{v}$ to very vector $v$. We can also speak of the distance between two vectors, defined as $d(v,w) = \norm{v-w}$.\\
+
+  Notice that the following hold:
+  \begin{itemize}
+    \item $d(v,w) \geq 0$
+    \item 
+      \begin{align*}
+        d(v,w) &= \norm{v-w}\\
+               &= \norm{(-1)(w-v)}\\
+               &= |-1|\norm{w-v}\\
+               &= \norm{w-v}
+      \end{align*}
+    \item 
+      \begin{align*}
+        d(u,w) &= \norm{u-w}\\
+               &= \norm{u-v+v-w}\\
+               &\leq \norm{u-v} + \norm{v-w}\\
+               &= d(u,v) + d(v,w).
+      \end{align*}
+    \item $d(v,v) = \norm{v-v} = 0$. If $d(v,w) = 0$, then $\norm{v-w} = 0$, so $v-w = \mathbb{0}$, so $v = w$.
+  \end{itemize}
+  In Real Analysis I, we studied the properties (such as convergence, limits, and continuity) of a particular normed vector space, namely $(\R,|\cdot|)$. We will expand these concepts to all metric spaces.\\
+
+  \subsection{Definition of a Metric Space}%
+  Let $X$ be a non-empty set. A \textbf{metric} on $X$ is a map
+  \begin{align*}
+    d: X\times X \rightarrow \R^{+}\\
+    (x,y)\mapsto d(x,y)\geq 0
+  \end{align*}
+  such that
+  \begin{enumerate}[(i)]
+    \item Symmetry: $d(x,y) = d(y,x)$ for all $x,y\in X$.
+    \item Triangle Inequality: $d(x,z) \leq d(x,y) + d(y,z)$ for all $x,y,z\in X$.
+    \item Zero Distance: $d(x,x) = 0$
+    \item Definite: $d(x,y) = 0 \Rightarrow x = y$
+  \end{enumerate}
+  If $d$ satisfies (i), (ii), and (iii), then $d$ is called a semi-metric. If $d$ satisfies (iv) as well, then $d$ is a metric.\\
+
+  If $d$ is a (semi-)metric on $X$, the pair $(X,d)$ is called a (semi-)metric space.\\
+
+  Two metrics, $d$ and $\rho$, on $X$, are equivalent if $\exists c_1,c_2 \geq 0$ such that $d(x,y) \leq c_1\rho(x,y)$ and $\rho(x,y) \leq c_2 d(x,y)$ for all $x,y$.
+  \subsection{Examples of Metric Spaces}%
+  \begin{enumerate}[(1)]
+    \item Discrete Metric:
+      \begin{align*}
+        d(x,y) &= \begin{cases}
+          1 & x\neq y\\
+          0 & x=y
+        \end{cases}
+      \end{align*}
+      for $X$ any set.
+    \item Hamming distance: between two bit strings of equal length. Let
+      \begin{align*}
+        X &= \{0,1\}^{n}\\
+          &= \{0,1\} \underbrace{\times \cdots \times }_{\text{$n$ times}}\{0,1\}\\
+        d_{H}((x_j)_{1}^{n},(y_j)_{1}^{n}) &= \left|\{j\mid x_j\neq y_j\}\right|.
+      \end{align*}
+    \item Any normed space $(V,\norm{\cdot})$ is a metric space.
+      \begin{align*}
+        d(v,w) &= \norm{v-w}.
+      \end{align*}
+      \begin{description}
+        \item[Exercise:] Show that if two norms are equivalent, their induced metrics are equivalent.
+      \end{description}
+    \item Subset of Metric Space: If $(X,d)$ is a metric space, and $Y\subseteq X$ is non-empty. Then, $(Y,d)$ is a metric space.
+    \item Paris metric: let $(X,\rho)$ be a metric space. Let $p\in X$ be a fixed point.
+      \begin{align*}
+        \rho(x,y) &:= \begin{cases}
+          0 & x=y\\
+          \rho(x,p) + \rho(p,y) & x\neq y
+        \end{cases}
+      \end{align*}
+    \item Bounded metric: Let $\rho$ be a (semi-)metric on $X$. Set
+      \begin{align*}
+        d(x,y) &= \frac{\rho(x,y)}{1 + \rho(x,y)}.
+      \end{align*}
+      We claim that $d$ is a (semi-)metric. Notice that $0\leq d(x,y) \leq 1$.
+      \begin{description}
+        \item[Proof:] Clearly, $d(x,y) = d(y,x)$. Additionally, $d(x,x) = 0$. If $d(x,y) = 0$ and $\rho$ is a metric, then $\rho(x,y) = 0$, so $x = y$.\\
+
+          To show the triangle inequality, we examine the function
+          \begin{align*}
+            f(t) &= \frac{t}{1+t}\\
+            f'(t) &= \frac{1}{(1+t)^2} > 0.
+          \end{align*}
+          Since $\rho$ satisfies the triangle inequality, $\rho(x,z) \leq \rho(x,y) + \rho(y,z)$. Apply $f$ on both sides. Then,
+          \begin{align*}
+            \underbrace{\frac{\rho(x,z)}{1 + \rho(x,z)}}_{d(x,z)} &\leq \frac{\rho(x,y) + \rho(y,z)}{1 + (\rho(x,y) + \rho(y,z))}\\
+                                            &= \frac{\rho(x,y)}{1+\rho(x,y) + \rho(y,z)} + \frac{\rho(y,z)}{1+\rho(x,y) + \rho(y,z)}\\
+                                            &\leq \underbrace{\frac{\rho(x,y)}{1 + \rho(x,y)}}_{d(x,y)} + \underbrace{\frac{\rho(y,z)}{1 + \rho(y,z)}}_{d(y,z)}.
+          \end{align*}
+      \end{description}
+    \item If $d_1,\dots,d_n$ are metrics on $X$, $c_1,\dots,c_n \geq 0$. Then, 
+      \begin{align*}
+        d(x,y) &= \sum_{k=1}^{n}c_kd_k(x,y)
+      \end{align*}
+       is a metric.
+     \item Let $\{\rho_k\}_{k=1}^{\infty}$ be a family of semi-metrics. Assume the family is separating --- for all $x\neq y$, there exists $k$ such that $\rho_k(x,y) \neq 0$.\\
+
+       Let $d_k$ be defined as
+       \begin{align*}
+         d_k(x,y) &= \frac{\rho_k(x,y)}{1 + \rho_k(x,y)}.
+       \end{align*}
+       Note that $\{d_k\}_{k=1}^{\infty}$ is also separating.\\
+
+       Then, 
+       \begin{align*}
+         d(x,y) &= \sum_{k=1}^{\infty}2^{-k}d_k(x,y)
+       \end{align*}
+      is a metric.
+    \item Frechet Metric: Let $X = C(\R)$. For each $k = 1,2,3,\dots$, set $p_k(f) = \sup_{x\in[-k,k]}|f(x)|$.\\
+
+      We can verify that $p_k$ defines a seminorm. We can then check $\rho_k(f,g) = p_k(f-g)$ is a semi-metric. \\
+
+      We claim that $\{\rho_k\}$ is separating: if $f\neq g$, then there exists $x_0\in \R$ with $f(x_0)\neq g(x_0)$. Since $f$ and $g$ are continuous, there is a neighborhood $[x_0-\delta,x_0+\delta]$ such that $f(x)\neq g(x)$ for all $x\in [x_0-\delta,x_0+\delta]$. Find $k$ such that $[x_0-\delta,x_0+\delta]\subseteq [-k,k]$. Then, $\rho_k(f-g) > 0$.\\
+
+      Construct $d_k$ as above, and then $d$ as follows:
+      \begin{align*}
+        d_{\text{F}} &= \sum \frac{2^{-k}p_k(f-g)}{1 + p_k(f-g)}
+      \end{align*}
   \end{enumerate}
 \end{document}
