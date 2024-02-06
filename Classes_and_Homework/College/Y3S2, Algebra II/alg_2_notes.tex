@@ -35,6 +35,7 @@
 %plotting
 \usepackage{pgfplots}
 \usepackage{tikz}
+\usetikzlibrary{cd}
 \tikzset{middleweight/.style={pos = 0.5}}
 %\tikzset{weight/.style={pos = 0.5, fill = white}}
 %\tikzset{lateweight/.style={pos = 0.75, fill = white}}
@@ -734,4 +735,196 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
                                &= \begin{bmatrix}ac-bd & ad + bc\\-(ad+bc) & ac-bd\end{bmatrix}.
   \end{align*}
   Therefore, $\C\cong R$.
+  \section{First Isomorphism Theorem}%
+  Let $\varphi: R\rightarrow S$ be a homomorphism. We have $R/\ker\varphi \cong \varphi(R)$.
+  \subsection{Proof of the First Isomorphism Theorem}%
+  We want to show that $R/\ker(\varphi)\cong \varphi(R)$. Without loss of generality, assume $\varphi$ is surjective. Let $K = \ker(\varphi)$.\\
+
+  We define $\Phi: R/K \rightarrow S$, $r+K\mapsto \varphi(r)$. We must show that $\Phi$ is a well-defined map. Let $r_1 + K = r_2 + K$ (meaning $r_1 - r_2 \in K$). This means $r_1 = r_2 + k$ for some $k\in K$. Applying $\Phi$, we have
+  \begin{align*}
+    \Phi(r_1 + K) &= \varphi(r_1)\\
+                  &= \varphi(r_2 + k)\\
+                  &= \varphi(r_2) + \varphi(k)\\
+                  &= \varphi(r_2)\\
+                  &= \Phi(r_2 + K).
+  \end{align*}
+  Let $r_1 + K$, $r_2 + K \in R/K$. Observe
+  \begin{align*}
+    \Phi((r_1 + K) + (r_2 + K)) &= \Phi((r_1 + r_2) + K)\\
+                                &= \varphi(r_1 + r_2)\\
+                                &= \varphi(r_1) + \varphi(r_2)\\
+                                &= \Phi(r_1 + K) + \Phi(r_2 + K),
+                                \intertext{and}
+    \Phi((r_1 + K)(r_2 + K)) &= \Phi(r_1r_2 + K)\\
+                             &= \varphi(r_1r_2)\\
+                             &= \varphi(r_1)\varphi(r_2)\\
+                             &= \Phi(r_1 + K)\Phi(r_2 + K),
+  \end{align*}
+  meaning $\Phi$ is a homomorphism.\\
+
+  Let $s\in S$. Since $\varphi$ is surjective, there exists $r\in R$ with $\varphi(r) = s$. So, $\Phi(r+K) = \varphi(r) = s$. Thus, $\Phi$ is surjective.\\
+
+  Let $r+K\in \ker(\Phi)$. Then,
+  \begin{align*}
+    \Phi(r+k) &= 0_S\\
+              &= \varphi(r),
+  \end{align*}
+  meaning $r\in \ker(\varphi) = K$. So, $r+K = 0_{R} + K = 0_{R/K}$. Thus, $\Phi$ is injective.
+  \subsection{Using the First Isomorphism Theorem: Example 1}%
+  Let $\varphi: \Z[x]\rightarrow \Z/2\Z$, $a_0 + a_1x + \cdots + a_nx^n \mapsto [a_0]_2$.\\
+
+  To apply the first isomorphism theorem, we must check that this is a ring homomorphism. Let
+  \begin{align*}
+    f &= a_0 + a_1 x + \cdots + a_mx^m\\
+    g &= b_0 + b_1 x + \cdots + b_mx^m
+  \end{align*}
+  be elements in $\Z[x]$. Note that 
+  \begin{align*}
+    \varphi(f+g) &= \varphi((a_0 + b_0) + \cdots)\\
+                 &= [a_0 + b_0]_2\\
+                 &= [a_0]_2 + [b_0]_2\\
+                 &= \varphi(f) + \varphi(g)
+                 \intertext{and}
+    \varphi(fg) &= \varphi((a_0b_0) + \cdots)\\
+                &=[a_0b_0]_2\\
+                &= [a_0]_2 + [b_0]_2\\
+                &= \varphi(f)\varphi(g).
+  \end{align*}
+  So $\varphi$ is a homomorphism. Note that $\varphi(0) = [0]_2$ and $\varphi(1) = [1]_2$. The first isomorphism theorem gives that $\Z[x]/\ker\varphi \cong \Z/2\Z$.\\
+
+  We claim that $\ker\varphi = \langle 2,x\rangle$.\\
+
+  If $2f(x) + xg(x)\in \langle 2,x\rangle$, and we write $f(x) = a_0 + a_1 x + \cdots + a_nx^n$, then
+  \begin{align*}
+    \varphi(2f(x) + g(x)) &= \varphi(2)\varphi(f(x)) + \varphi(x)\varphi(g(x))\\
+                          &= [0]_{2}[a_0]_2 + [0]_2\varphi(g(x))\\
+                          &= [0]_2,
+  \end{align*}
+  so $\langle 2,x \rangle \subseteq \ker\varphi$.\\
+
+  Let $f(x) = a_0 + a_1 x + \cdots + a_nx^n\in \ker(\varphi)$, meaning
+  \begin{align*}
+  [0]_2 &= \varphi(f(x))\\
+        &= [a_0]_2.
+  \end{align*}
+  Therefore, $a_0 = 2k$. So,
+  \begin{align*}
+    f(x) &= 2k x(a_1 + a_2x + \cdots + a_nx^{n-1})\\
+         &\in \langle 2,x\rangle.
+  \end{align*}
+  Thus, $\ker(\varphi)\subseteq \langle 2,x\rangle$, meaning $\ker(\varphi) = \langle 2,x\rangle$.\\
+
+  By the first isomorphism theorem, $\Z[x]/\langle 2,x\rangle \cong \Z/2\Z$.
+  \subsection{Using the First Isomorphism Theorem: Example 2}%
+  We want to find the ring that is isomorphic to $(\Z\times\Z)/(2\Z\times 5\Z)$. We define
+  \begin{align*}
+    \varphi: \Z\times\Z \rightarrow \Z/2\Z \times \Z/5\Z\\
+    (m,n)\mapsto ([m]_2,[n]_5).
+  \end{align*}
+  We will start by showing homomorphism as follows:
+  \begin{align*}
+    \varphi((m_1,n_1) + (m_2,n_2)) &= \varphi((m_1 + m_2,n_1+n_2))\\
+                                   &= ([m_1 + m_2]_2,[n_1 + n_2]_5)\\
+                                   &= ([m_1]_2 + [m_2]_2,[n_1]_5 + [n_2]_5)\\
+                                   &= ([m_1]_2,[n_1]_5) + ([m_2]_2,[n_2]_5)\\
+                                   &= \varphi((m_1,n_1)) + \varphi((m_2,n_2)),
+     \intertext{and similarly for multiplication}
+      \varphi((m_1,n_1)(m_2,n_2)) &= \varphi((m_1m_2,n_1n_2))\\
+                                &= ([m_1m_2]_2,[n_1n_2]_5)\\
+                                &\vdots\\
+                                &= \varphi((m_1,n_1))\varphi((m_2,n_2))
+  \end{align*}
+  Let $([a]_2,[b]_5) \in \Z/2\Z\times\Z/5\Z$. Then, $\varphi((a,b)) = ([a]_2,[b]_5)$. Thus, $\varphi$ is surjective.\\
+
+  Finally, we have $(m,n)\in \ker(\varphi)$ if and only if $[m]_2 = [0]_2$ and $[n]_5 = [0]_5$, meaning $m\in 2\Z$ and $n\in 5\Z$. Therefore, $\ker(\varphi) = 2\Z\times 5\Z$.
+  \subsection{Using the First Isomorphism Theorem: Example 3}%
+  Consider the map $\Z\rightarrow \Z/2\Z\times \Z/5\Z$, $n\mapsto ([n]_2,[n]_5)$. Note
+  \begin{align*}
+    \varphi(m+n) &= ([m+n]_2,[m+n]_5)\\
+                 &= ([m]_2 + [n]_2,[m]_5 + [n]_5)\\
+                 &= ([m]_2,[m]_5) + ([n]_2,[n]_5)\\
+                 &= \varphi(m) + \varphi(n),
+                 \intertext{and}
+    \varphi(mn) &= \varphi(m)\varphi(n).
+  \end{align*}
+  We want to find if this map is surjective. Let $([a]_2,[b]_5)\in \Z/2\Z\times \Z/5\Z$. We are trying to find $n\in\Z$ such that $[n]_2 = [a]_2$ and $[n]_5 = [b]_5$, or $n\equiv a$ modulo 2 and $n\equiv b$ modulo 5.
+  \begin{align*}
+    n-a &\equiv 2k \text{ for some $k\in \Z$}\\
+    n &\equiv a + 2k\\
+    a+2k &\equiv b \text{ modulo 5}\\
+    2k &= b-a \text{ modulo 5}\\
+    k &= 3(b-a) \text{ modulo 5}\\
+    n &= a + 2(3(b-a))\\
+      &= a + 6(b-a).
+  \end{align*}
+  So $\varphi(a + 6(b-a)) = ([a]_2,[b]_5)$. Thus, $\varphi$ is surjective.\\
+
+  Finally, we desire $\ker(\varphi)$. Observe that 
+  \begin{align*}
+    \ker(\varphi) &= \{n\in\Z \mid [n]_2=[0]_2,[n]_5=[0]_5\}\\
+                  &= \{n\in\Z\mid 2|n,5|n\}\\
+                  &= \{n\in\Z\mid 10|n\}\\
+                  &= 10\Z.
+  \end{align*}
+  Thus, the first isomorphism theorem gives $\Z/10\Z \equiv \Z/2\Z \times \Z/5\Z$.
+  \subsection{Proposition: Ring Homomorphisms and Ideals}%
+  Let $R$ be a ring and $I\subseteq R$ be an ideal. The map
+  \begin{align*}
+    \varphi: R\rightarrow R/I\\
+    r\mapsto r+I
+  \end{align*}
+  is a surjective ring homomorphism with $\ker(\varphi) = I$. The proof is left as an exercise to the reader.
+  \subsection{Using the First Isomorphism Theorem: Example 3}%
+  Let $A$ be a ring and $X$ be any non-empty set. Let $R$ be the set of functions from $X$ to $A$.\\
+
+  We have $R$ is a ring.
+  \begin{align*}
+    (f+g)(x) &= f(x) +_{A} g(x)\\
+    (fg)(x) &= f(x)\cdot_{A}g(x).
+  \end{align*}
+  Fix $x_0 \in X$. We define $E_{x_0}: R\rightarrow A$ by
+  \begin{align*}
+    E_{x_0}(f) &= f(x_0).
+  \end{align*}
+  We have
+  \begin{align*}
+    E_{x_0}(f+g) &= (f+g)(x_0)\\
+                 &= f(x_0) + g(x_0)\\
+                 &= E_{x_0}(f) + E_{x_0}(g)\\
+                 \intertext{and}
+    E(x_0)(fg) &= (fg)(x_0)\\
+               &= f(x_0)g(x_0)\\
+               &= E_{x_0}(f)E_{x_0}(g).
+  \end{align*}
+  Therefore, $E_{x_0}$ is a homomorphism. Additionally, $E_{x_0}$ is surjective, since we can find $f_a: X\rightarrow A$, $x\mapsto a$, meaning $E_{x_0}(f_a) = f_a(x_0) = a$.\\
+
+  If $f\in \ker(E_{x_0})$, then $E_{x_0}(f) = 0_A$. However, $E_{x_0}(f) = f(x_0)$. Then,
+  \begin{align*}
+    \ker(\varphi) &= \{f: X\rightarrow A \mid f(x_0) = 0_A\}\\
+                  &= \mathcal{M}_{x_0}.
+  \end{align*}
+  By the first isomorphism theorem, we can see that $R/\mathcal{M}_{x_0} \equiv A$.
+  \subsection{Other Isomorphism Theorems}%
+  Let $R$ be a ring.
+  \begin{description}
+    \item[Diamond Isomorphism Theorem:] Let $A$ be a subring of $R$ and $I$ an ideal of $R$. Define $A + I = \{a+i\mid a\in A,i\in I\}$. This is an ideal of $R$. We also have that $A\cap I$ is an ideal in $A$, and $(A+I)/I \equiv A/A\cap I$.
+  \end{description}
+  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAmAXVJADcBDAGwFcYkQBBAHS4GN60AAgCSIAL6l0mXPkIoADKWLU6TVu1ESp2PASLklKhizaJO4ySAw7ZRMvKNrTnANSaVMKAHN4RUADMAJwgAWyRFEBwIJGItECDQ8JoopANVE3YeXgIvCwDgsMQySOjEAGYaY3UzLJy8+ILU5NKysUoxIA
+  \begin{center}
+    \begin{tikzcd}
+                          & A+I                                    &              \\
+    I \arrow[ru, "\simeq"] &                                        & A \arrow[lu] \\
+                          & A\cap I \arrow[lu] \arrow[ru, "\simeq"] &             
+    \end{tikzcd}
+  \end{center}
+  \begin{description}
+    \item[Third Isomorphism Theorem:] Let $I,J$ be ideals of $R$ with $I\subseteq J$. Then, $J/I$ is an ideal of $R/I$ with $(R/I)/(J/I)\cong R/J$.
+    \item[Lattice Isomorphism Theorem:] Let $I\subseteq R$ be an ideal. The correspondence $A\leftrightarrow A/I$ is an inclusion-preserving bijection between the subrings $A$ of $R$ that contain $I$ and the subrings of $R/I$. Moreover, $A$ is an ideal if and only if $A/I$ is an ideal.
+  \end{description}
+  \subsection{Using the Third Isomorphism Theorem}%
+  Let $R = \Z$, $I = 12\Z$, and $J = 4\Z$. By the third isomorphism theorem, $J/I = 4\Z/12\Z$ is an ideal of $R/I = \Z/12\Z$, and
+  \begin{align*}
+    (R/I)/(J/I) &= (\Z/12\Z)/(4\Z/12\Z)\\
+                &\cong \Z/4\Z.
+  \end{align*}
 \end{document}

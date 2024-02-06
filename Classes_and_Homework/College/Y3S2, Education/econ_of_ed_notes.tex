@@ -346,4 +346,108 @@ Education can be studied from a lot of angles:
     \item The standards for general education developed around a pure method of approach towards problems.
     \item Rise of large corporations generated large need for management, idea generation, communication --- had to do HR, accounting, etc. at a scale never seen before. Skills were meant to be portable and transferable, which the decentralized American education system satisfied the demand for.
   \end{itemize}
+  \section{Understanding Causality}%
+  When discussing questions in economics, there are two basic approaches:
+  \begin{itemize}
+    \item Theory: models (as discussed in our model of human capital and the signaling model).
+    \item Empirics: using data to understand the dynamics of the world.
+  \end{itemize}
+  For example, we may want to understand the impact of a good teacher in the role of educational success through different measures:
+  \begin{itemize}
+    \item Pass rates or graduation rates.
+    \item College entrance rates.
+    \item Test scores.
+    \item Earnings.
+  \end{itemize}
+  We can think of each of these as our $Y_i$, our outcome variable of interest. At the same time, we have to measure the quality of a teacher, $X_i$, through different mechanisms:
+  \begin{itemize}
+    \item Education
+    \item Course Evaluations (with adequate controls for race and gender)
+    \item Subject
+  \end{itemize}
+  \subsection{Defining Causality}%
+  The impact of variable $A$ \textit{causally} affects variable $B$ as the change in $B$ if $A$, and only $A$, is altered. Causality is usually defined using a counterfactual.\\
+
+  In the case of education, for $Y_i$, student $i$'s outcome, with $Y_{1i}$ for an outcome for a student with a good teacher and $Y_{0i}$ for a student with a bad teacher. We define $D_i$, our dummy variable, as $1$ if the teacher is good and $0$ if the teacher is bad.
+  \begin{align*}
+    Y_i &= Y_{0i} + D_i\underbrace{(Y_{1i} - Y_{0i})}_{\text{treatment effect}}.
+  \end{align*}
+  \subsection{Potential Outcomes Framework}%
+  \begin{itemize}
+    \item What does a researcher observe? We assume $N>1$. In this case, 
+  \end{itemize}
+  \begin{align*}
+    E(Y_{1i}|D_i=1) - E(Y_{0i}|D_i=0) &= \text{ observed difference of $D_i = 1$ }\\
+                                      &= \overbrace{E(Y_{1i}|D_i = 1) - \underbrace{E(Y_{0i}|D_i=1)}_{\text{counterfactual}}}^{\text{Average Treatment Effect (impact of good teacher)}}\\
+                                      &+ \overbrace{\underbrace{E(Y_{0i}|D_i=1)}_{\text{counterfactual}} - E(Y_{0i}|D_i=0)}^{\text{selection bias}}
+  \end{align*}
+  Therefore, we can see that the observed difference is a function of treatment and selection bias. The most difficult part of empirical research is finding situations where selection bias is as close to zero as possible.\\
+
+  In regression analysis, we might have the model that states
+  \begin{align*}
+    \text{score}_i &= \beta_0 + \beta_1\text{TeacherQuality}_i + \varepsilon_i.
+  \end{align*}
+  \begin{center}
+    \includegraphics[width=10cm]{images/test_score_variables.png}
+  \end{center}
+  Suppose that teachers matter --- even then, there are other variables, such as resources or intrinsic ability. The diagram depicts the various ways that selection bias can create positive correlation.\\
+
+  In this case, $\hat{\beta_1}$ will be biased by selection. This is known as omitted variable bias, and violates the principle that $\text{Cov}(X,\varepsilon) = 0$.\\
+
+  To resolve this, we may update our regression model to control for the omitted variable of resources, denoted $Z$.
+  \begin{align*}
+    \text{score}_{i} &= \beta_0 + \beta_1\text{TeacherQuality}_i + \beta_2\text{Resources}_i + \varepsilon_i\\
+    \text{observed effect} &= E(Y_{1i}|D_i=1,Z) - E(Y_{0i}|D_{i}=1,Z) + \underbrace{E(Y_{0i}|D_i=1,Z) - E(Y_{0i}|D_i=0,Z)}_{\text{selection bias}}.
+  \end{align*}
+  However this still leaves out other omitted variables (such as parental involvement). As we add more control variables, selection bias should reduce. All these control variables exist to mitigate selection bias and make a non-experimental setting as close to an experiment as possible.\\
+
+  There are a few major ways to identify causality:
+  \begin{enumerate}[(1)]
+    \item Experiments
+    \item Instrumental Variables
+    \item Difference-in-difference
+    \item Regression discontinuity
+    \item Panel data
+  \end{enumerate}
+  \subsection{Experiments}%
+  The ``cleanest'' way to 
+  \begin{itemize}
+    \item Identify a Target Population.
+    \item Randomize Population.
+      \begin{itemize}
+        \item Treatment group experiences condition.
+        \item Control group does not experience condition.
+      \end{itemize}
+    \item Experiments have the following desirable properties:
+      \begin{itemize}
+        \item Internal Validity: $E(\varepsilon|X) = 0$ (error is uncorrelated with independent variable)
+        \item Randomness
+      \end{itemize}
+    \item However, true randomness is difficult to attain. The ABCs of experiments also threaten internal validity.
+      \begin{itemize}
+        \item Attrition: individuals drop out of experiments.
+        \item Balance: distribution of covariates may not be the same across groups.
+        \item Compliance: not everyone assigned to a treatment may experience it.
+      \end{itemize}
+    \item There are also other limits:
+      \begin{itemize}
+        \item Feasibility: expense, time, or even full impossibility.
+        \item Ethics: some experiments may pose ethical issues
+        \item External validity: experiments may only provide insights to specific situations.
+      \end{itemize}
+    \item Threats to internal validity:
+      \begin{itemize}
+        \item Poor randomization
+        \item Experimental contamination
+        \item Response rate, compliance
+        \item Attrition
+      \end{itemize}
+    \item Threats to external validity:
+      \begin{itemize}
+        \item Non-representative sample
+        \item Treatment depends on experiment
+        \item Excessive controls, Hawthorne effect
+        \item Scalability
+      \end{itemize}
+  \end{itemize}
 \end{document}
