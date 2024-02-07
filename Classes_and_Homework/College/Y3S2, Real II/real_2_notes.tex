@@ -805,8 +805,9 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
        \begin{align*}
          d(x,y) &= \sum_{k=1}^{\infty}2^{-k}d_k(x,y)
        \end{align*}
-      is a metric.
-    \item Frechet Metric: Let $X = C(\R)$. For each $k = 1,2,3,\dots$, set $p_k(f) = \sup_{x\in[-k,k]}|f(x)|$.\\
+      is a metric.\\
+
+    We will now define the Frechet Metric using this method. Let $X = C(\R)$. For each $k = 1,2,3,\dots$, set $p_k(f) = \sup_{x\in[-k,k]}|f(x)|$.\\
 
       We can verify that $p_k$ defines a seminorm. We can then check $\rho_k(f,g) = p_k(f-g)$ is a semi-metric. \\
 
@@ -816,5 +817,153 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
       \begin{align*}
         d_{\text{F}} &= \sum \frac{2^{-k}p_k(f-g)}{1 + p_k(f-g)}
       \end{align*}
+    \item Product of metric spaces: let $(X_k,\rho_k)_{k=1}^{\infty}$ be a countable family of metric spaces. For each $k$, let
+      \begin{align*}
+        d_k(x,y) &= \frac{\rho_k(x,y)}{1 + \rho_k(x,y)}.
+      \end{align*}
+      \begin{description}
+        \item[Remark:] If the $\rho_k$ are already uniformly bounded, let $d_k = \rho_k$.
+      \end{description}
+      Let 
+      \begin{align*}
+        X &= \prod_{k=1}^{\infty}X_k\\
+          &= \left\{(x_k)_k\mid x_k\in X_k\right\}\\
+          &= \left\{f: \N\rightarrow \bigsqcup_{k=1}^{\infty}X_k\mid f(k)\in X_k\right\}.
+      \end{align*}
+      Define $D: X\times X \rightarrow [0,\infty)$ as
+      \begin{align*}
+        D(x,y) &= \sum_{k=1}^{\infty}2^{-k}\rho_k(x_k,y_k),\\
+        D(f,g) &= \sum_{k=1}^{\infty}2^{-k}\rho(f(k),g(k)).
+      \end{align*}
+      For example, for each $k$, let $X_k = \{0,1\}$ with the discrete metric. Let 
+      \begin{align*}
+        \Delta &= \prod_{k\in\N}\{0,1\}\\
+               &= \left\{(x_k)_k\mid x_k\in \{0,1\}\right\}\\
+        D(x,y) &= \sum_{k=1}^{\infty}2^{-k}|x_k-y_k| \tag*{$(x_k)_k,(y_k)_k\in \Delta$.}
+      \end{align*}
+      $\Delta$ is known as the abstract Cantor set; every compact metric space is a surjective image of the abstract Cantor set.
+    \item Geodesic Distance: let $\iprod{\cdot}{\cdot}$ be the standard dot product on $\R^3(\R^n)$, then
+      \begin{align*}
+        S^{2} &= \left\{x\in\R^3\mid \norm{x}_2 = 1\right\}\\
+        S^{n-1} &= \left\{x\in\R^{n}\mid \norm{x}_2 = 1\right\}.
+      \end{align*}
+      To find the geodesic distance, we take $d(x,y) = \arccos(\iprod{x}{y})$. We claim $d$ is a metric.
+      \begin{itemize}
+        \item Symmetry: self-evident.
+        \item $d(x,x) = \arccos(1) = 0$. Suppose $d(x,y) = 0$. Then, $\langle x,y\rangle = 1$, meaning $\norm{x-y}^2 = 0$, so $x = y$.
+        \item Let $\theta = \arccos(\iprod{x}{y})$, $\varphi = \arccos(\iprod{y}{z})$, where $\theta,\varphi \in [0,\pi]$.
+          \begin{align*}
+            p_x &= \frac{\iprod{x}{y}}{\iprod{y}{y}} y\\
+              &= \cos(\theta) y\\
+            x &= \cos(\theta) y + \sin(\theta) u\\
+            \intertext{where}
+            u &= \frac{x-p_x}{\norm{x-p_x}}.\\
+            \intertext{Similarly, we can take}
+            z &= \cos(\varphi) y + \sin(\varphi) v\\
+            \intertext{where}
+            v &= \frac{z-p_{z}}{\norm{z-p_{z}}}.
+            \intertext{So,}
+            \iprod{x}{z} &= \cos(\theta)\cos(\varphi) + \sin(\theta)\sin(\varphi)\iprod{u}{v}\\
+                         &\geq \cos(\theta)\cos(\varphi) - \sin(\theta)\sin(\varphi) \tag*{$\iprod{u}{v} \geq -1$}\\
+                         &= \cos(\theta + \varphi).
+                         \intertext{Since $\arccos$ is decreasing,}
+            \arccos(\iprod{x}{z}) &\leq \arccos(\cos(\theta + \varphi))\\
+                                  &= \theta + \varphi\\
+                                  &= \arccos(\iprod{x}{y}) + \arccos(\iprod{y}{z}).
+          \end{align*}
+          Therefore, $d(x,y) \leq d(x,y) + d(y,z)$.
+        \item Let $\Gamma = (V,E)$ be a simple connected graph. We define $d: V\times V\rightarrow [0,\infty)$ to be the length of the shortest path between vertices $u$ and $v$.
+          \begin{description}
+            \item[Exercise:] Show this is a metric.
+          \end{description}
+      \end{itemize}
+    \item Let $(X,d)$ be any metric space. If $E\subseteq X$, define $\text{diam}(E) = \sup_{x,y\in E}d(x,y)$. $E$ is bounded if $\text{diam}(E) < \infty$.
+      \begin{description}
+        \item[Exercise:] If $(V,\norm{\cdot})$ is a normed space, $E\subseteq V$ is a subset, show the following are equivalent:
+          \begin{enumerate}[(i)]
+            \item $E$ is bounded (in the metric sense)
+            \item $\sup_{v\in E}\norm{v} < \infty$
+            \item $\exists r > 0$ such that $E\subseteq r B_V$.
+          \end{enumerate}
+      \end{description}
+      Let $\Omega$ be any set. The function $f:\Omega\rightarrow X$ is bounded if $f(\Omega)\subseteq X$ is bounded. We let $\text{Bd}(\Omega,X) = \{f:\Omega\rightarrow X\mid f\text{ is bounded}\}$.
+      \begin{description}
+        \item[Remark:] $\text{Bd}(\Omega,\mathbb{F}) = \ell_{\infty}(\Omega,\mathbb{F})$.
+      \end{description}
+    \item $\text{Bd}(\Omega,X)$ with 
+      \begin{align*}
+        D_u(f,g) &= \sup_{x\in\Omega}d(f(x),g(x)).
+      \end{align*}
+      \begin{description}
+        \item[Exercise:] Show that $D_u$ defines a metric.
+      \end{description}
+      Consider $\text{Bd}(\Omega,\mathbb{F}) = \ell_{\infty}$. Look at the subset
+      \begin{align*}
+        E &= \{f\in \text{Bd}(\Omega,\mathbb{F})\mid f(x) \in \{0,1\}\}.
+      \end{align*}
+      Then,
+      \begin{align*}
+        D_u(f,g) &= \sup_{x\in\Omega}|f(x)-g(x)|.\\
+                 &= \begin{cases}
+                   1 & f\neq g\\
+                   0 & f = g
+                 \end{cases}.
+      \end{align*}
+      When we take a particular subset of $D_u(f,g)$, we find that we get the discrete metric.
+  \end{enumerate}
+  Taking an overview of the concepts we have learned so far, we see
+  \begin{align*}
+    \text{Inner Product Spaces}\subseteq \text{Normed Vector Spaces} \subseteq \text{Metric Spaces}
+  \end{align*}
+  \section{Topology of Metric Spaces}%
+  Throughout this section, let $(X,d)$ be a metric space.
+  \begin{enumerate}[(1)]
+    \item Let $x_0\in X$, $\delta > 0$. 
+      \begin{enumerate}[(i)]
+          \item We say
+            \begin{align*}
+              U(x_0,\delta) &= \left\{x\in X\mid d(x,x_0)<\delta\right\}
+            \end{align*}
+            is the open ball centered at $x_0$ with radius $\delta$.
+          \item We say
+            \begin{align*}
+              B(x_0,\delta) &= \left\{x\in X\mid d(x,x_0)\leq \delta\right\}
+            \end{align*}
+            is the closed ball.
+          \item We say
+            \begin{align*}
+              S(x_0,\delta) &= \left\{x\in X\mid d(x,x_0) = \delta\right\}
+            \end{align*}
+            is the sphere.
+      \end{enumerate}
+    \item $U\subseteq X$ is open if
+      \begin{align*}
+        (\forall x\in U)(\exists \delta > 0) \ni U(x,\delta)\subseteq U.
+      \end{align*}
+      Let
+      \begin{align*}
+        \tau_{X} &= \left\{U\subseteq X\mid U\text{ open}\right\}\\
+                 &\subseteq \mathcal{P}(X).
+      \end{align*}
+    \item $D\subseteq X$ is closed if $D^{\mathsf{c}}$ is open.
+    \item If $x\in U\in \tau_X$, then $U$ is called an open neighborhood of $x$. If $x\in U\subseteq N$, where $U\in \tau_X$, then $N$ is a neighborhood of $x$.
+      \begin{align*}
+        \mathcal{N}_x &= \left\{N\mid N\text{ is a neighborhood of }x\right\}
+      \end{align*}
+    \item Let $A\subseteq X$. The interior of $A$ is
+      \begin{align*}
+        A^{0} &= \bigcup \left\{V\mid V\subseteq A, V\text{ open}\right\}.
+      \end{align*}
+      The closure of $A$ is
+      \begin{align*}
+        \overline{A} &= \bigcap \left\{D\mid A\subseteq D, D\text{ closed}\right\}.
+      \end{align*}
+      The boundary of $A$ is
+      \begin{align*}
+        \partial A &= \overline{A} \setminus A^{0}.
+      \end{align*}
+      \begin{description}
+        \item[Exercise:] $\overline{A^{\mathsf{c}}} = (A^{0})^{\mathsf{c}}$, $(\overline{A})^{\mathsf{c}} = (A^{\mathsf{c}})^{0}$.
+      \end{description}
   \end{enumerate}
 \end{document}
