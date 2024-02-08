@@ -399,4 +399,81 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   Consider the sequence $z_n = n^2 i$ for $n=1,2,\dots$. We can see that, on the projection from $z_n$ to the sphere, all the values of $p$ converge to $N$. Therefore, we write $\lim_{n\rightarrow\infty}z_n = \infty$, where $\infty$ corresponds to $N$ on $S^2$.\\
 
   We can define $\overline{\C} = \C\cup \{\infty\}$ to be the complex plane that includes the ``point at infinity'' (from the projection on $S^2$ that corresponds to the north pole).
+  \section{Analytic Functions}%
+  Let $f: A\subseteq \C \rightarrow \C$ where $A$ is open. Let $z_0\in A$. We say $f$ is differentiable at $z_0$ if
+  \begin{align*}
+    \lim_{z\rightarrow z_0}\frac{f(z)-f(z_0)}{z-z_0}
+  \end{align*}
+  exists.
+  \subsection{Rules of Differentiation}%
+  \begin{itemize}
+    \item $(f+g)' = f' + g'$
+    \item $(fg)' = f'g + fg'$
+    \item $\left(\frac{f}{g}\right)' = \frac{f'g - fg'}{(g)^2}$
+    \item $(f\circ g)' = g'(f'\circ g)$
+    \item For $n\in\Z$, $(z^n)' = nz^{n-1}$
+  \end{itemize}
+  Let $f(z) = \overline{z}$. We will find this value by directly applying the definition of the derivative.
+  \begin{align*}
+    f'(z_0) &= \lim_{z\rightarrow z_0} \frac{\overline{z}-\overline{z_0}}{z-z_0}\\
+            &= \lim_{z\rightarrow z_0}\frac{\overline{z-z_0}}{z-z_0}.
+    \intertext{Let's approach $z_0$ from the horizontal direction. Suppose $z = z_0 + t$ for some $t\in\R$. Then,}
+    \lim_{z\rightarrow z_0} \frac{\overline{z_0 + t} - \overline{z_0}}{z_0 + t - z_0} &= 1.
+    \intertext{Let's approach $z_0$ from the horizontal direction. Suppose $z = z_0 + ti$ for some $t\in\R$. Then,}
+    \lim_{z\rightarrow z_0}\frac{\overline{z_0 + ti} - \overline{z_0}}{z_0 + ti - z_0} &= \frac{-ti}{ti}\\
+                                                                                       &= -1.
+     \intertext{Since $1 \neq -1$, we find that the limit does not exist.}
+  \end{align*}
+  We see that complex-differentiability is a strong condition.\\
+
+  Suppose that $f'(z_0) = 2i$, meaning
+  \begin{align*}
+    \lim_{z\rightarrow z_0} \frac{f(z)-f(z_0)}{z-z_0} &= 2i.
+  \end{align*}
+  If $z$ is close to $z_0$, then $f(z)-f(z_0) \approx 2i(z-z_0)$. Pictorially, we can visualize this as, for $z_0$ sufficiently close to $z$, the vector $z_0-z$ is akin to a counterclockwise rotation and a scaling by $2$. This is applicable for \textit{all} $z$ in sufficient proximity to $z_0$.\\
+
+  Specifically, we can see that the complex differentiable function is \textit{angle-preserving}. The technical name for $f$ is that $f$ is \textit{conformal}.
+  \subsection{Analytic Function}%
+  Let $f: A\subseteq C \rightarrow \C$. If $f$ is differentiable at every $z_0 \in A$, we say $f$ is \textit{analytic} on $A$.\\
+
+  If $f$ is analytic on $A$, then $f$ is infinitely differentiable on $A$.\\
+
+  If $f$ is analytic on $A$ and $f'(z_0)\neq 0$ for some $z_0\in A$, then $f$ is conformal at $z_0\in A$. 
+  \subsection{Cauchy-Riemann Theorem}%
+  Given a function $f(x,y): \R^2\rightarrow \R$. Recall that we can take partial derivatives, $\frac{\partial f}{\partial x}$, and directional derivative $\frac{\partial f}{\partial u}$ for some unit vector $u$.\\
+
+  However, for $\C$, there is only one derivative, $f'(z_0)$, meaning that regardless of direction, $f'(z_0)$ exists and has one value. We can contextualize $f(z) = f(x+yi) = u(x,y) + iv(x,y)$, where $u(x,y)\in\R$ and $v(x,y)\in\R$. Then,
+  \begin{align*}
+    \frac{\partial u}{\partial x} &\neq \frac{\partial u}{\partial y}\\
+    \intertext{and}
+    \frac{\partial v}{\partial x} &\neq \frac{\partial v}{\partial y}\\
+    \intertext{but}
+    \frac{\partial f}{\partial x} &= \frac{\partial f}{\partial y}.
+  \end{align*}
+  We can see this by first letting $z = z_0 + \delta x$.
+  \begin{align*}
+    f'(z_0) &= \lim_{z\rightarrow z_0} \frac{f(z_0 + \delta x) - f(z_0)}{z_0 + \delta x - z_0}\\
+            &= \lim_{z\rightarrow z_0} \frac{u(x_0 + \delta x, y_0) + iv(x_0 + \delta x, y_0) - (u(x_0,y_0) + iv(x_0,y_0))}{\delta x}\\
+            &= \frac{\partial u}{\partial x} + i\frac{\partial v}{\partial x}
+  \end{align*}
+  and in the $y$ direction,
+  \begin{align*}
+    f'(z_0) &= \frac{1}{i} \frac{\partial u}{\partial y} + \frac{\partial v}{\partial y}\\
+            &= -i \frac{\partial u}{\partial y} + \frac{\partial v}{\partial y}.
+  \end{align*}
+  We set these two values equal to find
+  \begin{align*}
+    \frac{\partial u}{\partial x} &= \frac{\partial v}{\partial y}\\
+    \frac{\partial v}{\partial x} &= -\frac{\partial u}{\partial y},
+  \end{align*}
+  which are the Cauchy-Riemann equations. The corresponding theorem states that if $f'(z_0)$ exists, then the Cauchy-Riemann equations must hold.\\
+
+  For example, if $f(z) = \overline{z}$, with $f(x + yi) = x - yi$, we have $u(x,y) = x$ and $v(x,y) = -y$. Then,
+  \begin{align*}
+    \frac{\partial u}{\partial x} &= 1\\
+    \frac{\partial v}{\partial v} &= -1,
+  \end{align*}
+  meaning $f$ is not complex-differentiable.\\
+
+  If $f: A\rightarrow \C$ satisfies the Cauchy-Riemann equations at every $z_0 \in A$, then $f$ is analytic on $A$.
 \end{document}

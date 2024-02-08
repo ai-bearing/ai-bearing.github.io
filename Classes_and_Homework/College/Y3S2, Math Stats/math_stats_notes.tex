@@ -396,4 +396,53 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
       \end{align*}
       Solving for $n$, we find $n \approx 31$.
   \end{description}
+  \subsection{Small Sample Confidence Intervals}%
+  Recall that for an unbiased, approximately normal estimator, $\hat{\theta}$, for the parameter $\theta$, we have a pivotal quantity $Z = \frac{\hat{\theta} - \theta}{\sigma_{\hat{\theta}}}$ is approximately standard normal with confidence interval endpoints $\hat{\theta} \pm z_{\alpha/2}\sigma_{\hat{\theta}}$ for confidence coefficient $1-\alpha$.\\
+
+  However, there are some possible problems.
+  \begin{enumerate}[(1)]
+    \item If the sample size is small, then $\hat{\theta}$ may not be approximately normal. For example, $\hat{\theta} = \overline{Y}$ when $Y$ is not normal.
+    \item $\sigma_{\hat{\theta}}$ can have the unknown $\sigma$ in it, which has to be estimated with $S$.
+  \end{enumerate}
+  To estimate $\mu$, we use
+  \begin{align*}
+    T &= \frac{Z}{\sqrt{W/\nu}}\\
+      &= \frac{\overline{Y}-\mu}{S/\sqrt{n}}.
+  \end{align*}
+  This leads to us using
+  \begin{align*}
+    \overline{Y} + t_{\alpha/2} \frac{S}{\sqrt{n}}
+  \end{align*}
+  for our confidence interval.
+  \begin{description}
+    \item[Example 2:] Let $n=8$ for a sample of muzzle velocities. Then, we get $\overline{Y} = 2959$, with $S = 39.1$. We assume the muzzle velocities are distributed approximately normally. We want to find a 0.95 confidence interval for $\mu$.\\
+
+      Then, we have $t_{\alpha/2} = t_{0.025}$, with $7$ df. Therefore, we find our 0.95 confidence interval as $(2927,2996)$.\\
+
+      If we use $z$-scores instead of $t$-scores, we would get a confidence interval of $(2932,2986)$, which is a narrower confidence interval than the $t$ scores.
+  \end{description}
+  As a rule of thumb for estimating $\mu$ or $\mu_1-\mu_2$ confidence intervals, use $z$ if we either know $\sigma$ or $n$ is large enough such that the central limit theorem is effective (at least 30). We use $t$ if $\sigma$ is unknown \textit{and} $n<30$.
+  \begin{description}
+    \item[Example 2:] We will build a $t$ distribution pivot for $\mu_1 - \mu_2$.
+      \begin{align*}
+        z &= \frac{}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}}.
+        \intertext{We will assume that $\sigma_1 = \sigma_2$. Then,}
+          &= \frac{(\overline{Y}_1 - \overline{Y}_2) - (\mu_1 - \mu_2)}{\sigma \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}.\\
+        w &= \frac{(n-1)S^2}{\sigma^2}.
+        \intertext{We ask whether $S_1^2$ or $S_2^2$ should be used for sample variance. The answer is both --- by taking a weighted average.}
+      \end{align*}
+      The pooled sample variance estimator is
+      \begin{align*}
+        S^2_{p} &= \frac{\sum_{i=1}^{n_1}(Y_{1i}-\overline{Y}_1)^2 + \sum_{i=1}^{n_2}(Y_{2i}-\overline{Y}_2)}{n_1 + -1 + n_2-1},
+      \end{align*}
+      so we can have
+      \begin{align*}
+        w &= \frac{(n_1 + n_2 - 2)S_p^2}{\sigma^2}
+      \end{align*}
+      as our $\chi$ square distribution with $n_1 + n_2 - 2$ df. We make our new $T$ distribution,
+      \begin{align*}
+        T &= \frac{(\overline{Y}_1 - \overline{Y}_2) - (\mu_1 - \mu_2)}{S_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}},
+      \end{align*}
+      which serves as the pivotal quantity for $\mu_1 - \mu_2$, with confidence intervals $(\overline{Y}_1 -\overline{Y}_2) \pm t_{\alpha/2}S_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$
+  \end{description}
 \end{document}
