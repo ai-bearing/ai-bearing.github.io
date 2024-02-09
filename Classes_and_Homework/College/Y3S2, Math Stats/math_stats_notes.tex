@@ -445,4 +445,60 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
       \end{align*}
       which serves as the pivotal quantity for $\mu_1 - \mu_2$, with confidence intervals $(\overline{Y}_1 -\overline{Y}_2) \pm t_{\alpha/2}S_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$
   \end{description}
+  \subsection{Confidence Intervals for $\sigma^2$}%
+  The unbiased estimator for $\sigma^2$ is $S^2$. Recall for any sample $Y_1,\dots,Y_n$,
+  \begin{align*}
+    S^2 &= \frac{1}{n-1}\sum_{i=1}^{n}(Y_i-\overline{Y})^2.
+  \end{align*}
+  When the sample is from a normal distribution, then $\frac{(n-1)S^2}{\sigma^2}$ is our pivotal quantity that has a $\chi^2$ distribution with $n-1$ df.\\
+
+  There are two important differences between this $\chi^2$ pivot (and associated confidence interval) with how we used $t$ and $z$. For a $1-\alpha$ confidence interval, we want $a$ and $b$ such that
+  \begin{align*}
+    1-\alpha = P(a\leq \chi^2 \leq b).
+  \end{align*}
+  When we choose $z$ and $t$, their respective distributions are symmetric about $0$ --- using $b, -b$ results in the narrowest possible confidence interval. However, $\chi^2$ is not symmetric about $0$ --- it's not even symmetric. Therefore, we need to choose $a$ and $b$ to minimize the width of the confidence interval.\\
+
+  Instead, we will choose $a$ and $b$ to mimic symmetry with respect to the tails. \\
+  \begin{align*}
+    1-\alpha &= P\left(\chi^2_{1-\alpha/2} \leq \chi^2 \leq \chi^2_{\alpha/2}\right)\\
+    \intertext{Solving for $\sigma^2$,}
+             &= P\left(\frac{\chi^2_{1-\alpha/2}}{(n-1)S^2} \leq \frac{1}{\sigma^2} \leq \frac{\chi^2_{\alpha/2}}{(n-1)S^2}\right)\\
+             &= P\left(\frac{(n-1)S^2}{\chi^2_{\alpha/2}} \leq \sigma^2 \leq \frac{(n-1)S^2}{\chi^2_{1-\alpha/2}}\right).
+  \end{align*}
+  \begin{description}
+    \item[Note:] The subscripts refer to right tails, so use $1-\alpha/2$ when using the \verb|qchisq| function.
+  \end{description}
+  Because of the central limit theorem, the $z$ and $t$-inspired confidence intervals are still good even if the underlying distribution is not approximately normal (for $n$ sufficiently large). Our $\chi^2$ confidence interval does not work well if $Y$ is not approximately normal, even if $n$ is large.
+  \begin{description}
+    \item[Example:] Let $Y$ be the measurement of sound volume. Assume $Y$ is approximately normal, with samples $Y_1 = 4.1$, $Y_2 = 5.2$, and $Y_3 = 10.2$. We want to find $\sigma^2$ with 0.90 confidence interval.\\
+
+      From the data, we can find $S^2$ as $10.57$, with the $\alpha/2$ endpoint at $0.05$ and $1-\alpha/2$ endpoint at $0.95$ and $(n-1) = 2$ df. Therefore, our confidence interval is $(3.53,205.24)$.\\
+
+      This is a very wide confidence interval.
+  \end{description}
+  \section{Properties of Point Estimators}%
+  There are multiple desirable properties that we will focus on throughout this chapter.
+  \subsection{Relative Efficiency}%
+  For an unbiased estimator $\hat{\theta}$, we want $V(\hat{\theta})$ to be minimized (recall that for an unbiased estimator, the MSE of $\hat{\theta}$ is equal to the variance).\\
+
+  To determine relative efficiency of two unbiased estimators for the same parameter, $\hat{\theta}_1$ and $\hat{\theta}_2$. Then, the efficiency of $\hat{\theta}_1$ relative to $\hat{\theta}_2$ is
+  \begin{align*}
+    \text{eff}(\hat{\theta}_1,\hat{\theta}_2) &= \frac{V(\hat{\theta}_2)}{V(\hat{\theta}_1)}.
+  \end{align*}
+  \begin{description}
+    \item[Book Example 1:] Suppose $Y$ is normal. The following are unbiased estimators for the mean:
+      \begin{enumerate}[(1)]
+        \item Sample Mean: $\overline{Y}$
+        \item Sample Median: $\hat{m}$.
+      \end{enumerate}
+      For large $n$, the variance of the sample median is $(1.2533)^2(\sigma^2/n)$. We know that $V(\overline{Y}) = \sigma^2/n$. Therefore,
+      \begin{align*}
+        \text{eff}(\hat{m},\overline{Y}) &= 0.6366 < 1,
+      \end{align*}
+      so $\overline{Y}$ is a better estimator of population mean.
+    \item[Book Example 2:] Let $Y$ be uniform on $[0,\theta]$. We have two unbiased estimators, $\hat{\theta}_1 = 2\overline{Y}$ and $\hat{\theta}_2 = \frac{n}{n+1}Y_{(n)}$.\\
+
+      By calculating the relative efficiency, we find $\text{eff}(\hat{\theta}_1,\hat{\theta}_2) = 3/(n+2)$. Therefore, $\hat{\theta}_2$ is a much more efficient estimator for large $n$.
+    \item[Example 3:] If $Y$ is an unknown distribution, we have $\overline{Y}$ as a sample mean, and $\overline{Y}_{n-1}$, the average of the first $n-1$ data points, which are both unbiased estimators of $\mu$. We can see that $\overline{Y}$ is a better estimator than $\overline{Y}_{n-1}$.
+  \end{description}
 \end{document}
