@@ -128,11 +128,44 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     \item Show that $P_w:V\rightarrow V$ is a linear operator with $\norm{P_w}_{\text{op}} = 1$.
     \item Show that $P_w\circ P_w = P_w$.
   \end{enumerate}
+  \begin{description}
+    \item[Proof of (i):]
+      \begin{align*}
+        \iprod{v-P_w(v)}{P_w(v)} &= \iprod{v}{P_w(v)} - \iprod{P_w(v)}{P_w(v)}\\
+                                 &= \iprod{v}{P_w(v)} - \norm{P_w(v)}^2\\
+                                 &= \iprod{v}{\frac{\iprod{v}{w}}{\iprod{w}{w}}w} - \norm{P_w(v)}^2\\
+                                 &= \frac{\overline{\iprod{v}{w}}}{\iprod{w}{w}}\iprod{v}{w} - \norm{P_w(v)}^2\\
+                                 &= \frac{|\iprod{v}{w}|^2}{\norm{w}^2} - \frac{|\iprod{v}{w}|}{\norm{w}^2}\\
+                                 &= 0
+      \end{align*}
+    \item[Proof of (ii):]
+      \begin{align*}
+        \norm{P_w}_{\text{op}} &= \sup_{v\leq 1} \norm{\frac{\iprod{v}{w}}{\iprod{w}{w}}w}\\
+                               &= \sup_{v\leq 1} \frac{|\iprod{v}{w}|}{\norm{w}}\\
+                               &\leq \sup_{v\leq 1}\frac{\norm{v}{\norm{w}}}{\norm{w}}\\
+                               &= 1
+      \end{align*}
+    \item[Proof of (iii):]
+      \begin{align*}
+        P_w(P_w(v)) &= P_w\left(\frac{\iprod{v}{w}}{\iprod{w}{w}} w\right)\\
+                    &= \frac{\iprod{\frac{\iprod{v}{w}}{\iprod{w}{w}}w}{w}}{\iprod{w}{w}}w\\
+                    &= \frac{\iprod{v}{w}}{\iprod{w}{w}}w\\
+                    &= P_w(v).
+      \end{align*}
+  \end{description}
   \section{Problem 3}%
   Let $V$ be an inner product space. Prove the reverse Cauchy-Schwarz Inequality which states
   \begin{align*}
     v,w\in V,\text{ and } |\iprod{v}{w}| = \norm{v}\norm{w} \Rightarrow v = \alpha w.
   \end{align*}
+  \begin{description}
+    \item[Proof:] If $\norm{w} = 0$, then $w = 0$, so $\iprod{v}{w} = 0$ and $\alpha = 0$. Suppose $\norm{w} \neq 0$. Then,
+      \begin{align*}
+        |\iprod{v}{w}| &= \norm{v}\norm{w}\\
+        \norm{w}\left|\frac{\iprod{v}{w}}{\iprod{w}{w}}\right| &= \norm{v},
+      \end{align*}
+      so $P_{w}(v) = v$, meaning $w = \alpha v$.
+  \end{description}
   \section{Problem 4}%
     Let $V$ be an inner product space. Then, for any $v,w\in V$, show that
     \begin{align*}
@@ -222,6 +255,12 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   \end{enumerate}
   \section{Problem 7}%
   Let $V$ be any normed space, $p\in[1,\infty]$, and suppose $T:\ell_{p}^{n}\rightarrow V$ is linear. Show that $T$ is bounded.
+  \begin{description}
+    \item[Proof:] Let $T$ be a linear transformation from $\ell_{p}^{n}$ to $V$. Then,
+      \begin{align*}
+        \norm{T}_{\text{op}} = \sup_{\substack{v\in \ell_{p}^{n}\\\norm{v}\leq 1}}\norm{T(v)}
+      \end{align*}
+  \end{description}
   \section{Problem 8}%
   Let $\mathbb{P}[0,1] = \left\{\sum_{0}^{n}a_kx^k\mid a_k\in\C\right\}\subseteq C([0,1])$ denote the linear subspace of all polynomial functions equipped with the uniform norm $\norm{\cdot}_{u}$ inherited from $C([0,1])$. We define the map
   \begin{align*}
@@ -254,6 +293,39 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     \item[Proof:]\hfill
       \begin{enumerate}[(i)]
         \item 
+          \begin{align*}
+            \iprod{a\xi}{\eta} &\leq \norm{a\xi}\norm{\eta}\\
+                               &= \norm{a\xi}\\
+                               &\leq \sup_{\xi\in B_{\ell_2^{n}}}\norm{a\xi}\\
+                               &= \norm{a}_{\text{op}}.\\
+            \norm{a}{\text{op}} &= \sup_{\xi\in B_{\ell_2^{n}}}\norm{a\xi}\\
+            \intertext{Set $\eta = \frac{a\xi}{\norm{a\xi}}$. Then,}
+                                &= \sup_{\xi \in B_{\ell_2^{n}}} \frac{1}{\norm{a\xi}}\iprod{a\xi}{\eta}\\
+                                &= \sup \left\{\iprod{a\xi}{\eta}\mid \xi,\eta \in B_{\ell_2^n}\right\}.
+          \end{align*}
+        \item
+          \begin{align*}
+            \norm{a^{\ast}}_{\text{op}} &= \sup_{\xi,\eta \in B_{\ell_2^n}}|\iprod{a^{\ast}\xi}{\eta}|\\
+                                        &= \sup_{\xi,\eta\in B_{\ell_{2}^n}}|\iprod{\xi}{a^{\ast\ast}\eta}|\tag*{definition of conjugate transpose}\\
+                                        &= \sup_{\xi,\eta\in B_{\ell_2^n}}|\iprod{a\xi}{\eta}| \tag*{by absolute value}\\
+                                        &= \norm{a}_{\text{op}}.
+          \end{align*}
+        \item
+          \begin{align*}
+            \norm{ab}_{\text{op}} &= \sup_{\xi,\eta\in B_{\ell_2^n}} |\iprod{(ab)\xi}{\eta}|\\
+                                  &= \sup_{\xi,\eta\in B_{\ell_2^n}}|\iprod{a(b\xi)}{\eta}|\\
+                                  &= \sup_{\xi,\eta\in B_{\ell_2^n}}|\iprod{b\xi}{a^{\ast}\eta}|\\
+                                  &\leq \sup_{\xi\in B_{\ell_2^n}}\norm{b\xi}\sup_{\eta\in B_{\ell_2^n}}\norm{a^{*}\eta}\\
+                                  &= \norm{b}_{\text{op}}\norm{a^{\ast}}_{\text{op}}\\
+                                  &= \norm{a}\norm{b}.
+          \end{align*}
+        \item 
+          \begin{align*}
+            \norm{a^{\ast}a}_{\text{op}} &= \sup_{\xi,\eta\in B_{\ell_2^n}}|\iprod{(a^{\ast}a)\xi}{\eta}|\\
+                                         &= \sup_{\xi,\eta \in B_{\ell_2^n}}|\iprod{a\xi}{a^{\ast\ast}\eta}|\\
+                                         &= \sup_{\xi\in B_{\ell_2^n}}\norm{a\xi}^{2}\\
+                                         &= \norm{a}_{\text{op}}^{2}
+          \end{align*}
       \end{enumerate}
   \end{description}
 \end{document}
