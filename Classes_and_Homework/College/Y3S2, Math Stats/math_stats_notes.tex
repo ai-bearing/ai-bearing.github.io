@@ -501,4 +501,69 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
       By calculating the relative efficiency, we find $\text{eff}(\hat{\theta}_1,\hat{\theta}_2) = 3/(n+2)$. Therefore, $\hat{\theta}_2$ is a much more efficient estimator for large $n$.
     \item[Example 3:] If $Y$ is an unknown distribution, we have $\overline{Y}$ as a sample mean, and $\overline{Y}_{n-1}$, the average of the first $n-1$ data points, which are both unbiased estimators of $\mu$. We can see that $\overline{Y}$ is a better estimator than $\overline{Y}_{n-1}$.
   \end{description}
+  \subsection{Consistency}%
+  Suppose we flip a coin infinitely many times --- we have a fair coin, so the probability of success is $p = 1/2$. Let $Y_n$ be the number of heads after $n$ flips.\\
+
+  This yields us an infinite sequence of random variables --- let $\frac{Y_n}{n}$ be the $n$th approximation of $p$, denoted $\hat{p}_n$. If we graph $\hat{p}_n$ as a sequence, we find that as $n$ gets large, $\hat{p}_n$ approaches $p$. In limit language,
+  \begin{align*}
+    \lim_{n\rightarrow \infty}\hat{p}_n = p.
+  \end{align*}
+  However, since $\hat{p}_n$ is a function and we don't have a proper definition of convergence we will use a different formulation:
+  \begin{align*}
+    \lim_{n\rightarrow \infty} P(|\hat{p}_n - p| < \varepsilon) = 1 \tag*{$\forall \varepsilon > 0$.}
+  \end{align*}
+  This is the definition of a weakly consistent estimator. We say that $\hat{\theta}_n$ converges in probability to $\theta$ if this is the case.
+  \begin{description}
+    \item[Theorem 1:] If $\hat{\theta}_n$ is an \textit{unbiased} estimator of $\theta$ and $\lim_{n\rightarrow\infty}V(\hat{\theta}_n) = 0$, then $\hat{\theta}_n$ is consistent. Notice that there must be two things that exist for this to exist: finite variance and a finite expected value.
+  \end{description}
+  \begin{description}
+    \item[Sample Mean:] $\overline{Y}_n$ is an unbiased estimator for $\mu$, and
+      \begin{align*}
+        \lim_{n\rightarrow \infty}V(\overline{Y}_n)  &= \lim_{n\rightarrow\infty}\frac{\sigma^2}{n}\\
+                                                     &= 0.
+      \end{align*}
+      Therefore, $\overline{Y}_{n}$ is consistent.
+    \item[Sample Probability:] $\hat{p}_n$ is an unbiased estimator for $p$.
+      \begin{align*}
+        \lim_{n\rightarrow\infty} \hat{p}_{n} &= \lim_{n\rightarrow\infty}\frac{p(1-p)}{n}\\
+                                              &= 0.
+      \end{align*}
+      Therefore, $\hat{p}_n$ is also consistent.
+  \end{description}
+  \begin{description}
+    \item[Theorem 2:] If $\hat{\theta}_n$ and $\hat{\varphi}_n$ converge in probability to $\theta$ and $\varphi$, then 
+      \begin{enumerate}[(a)]
+        \item $\hat{\theta}_n + \hat{\varphi}_n$ converges in probability to $\theta + \varphi$
+        \item $\hat{\theta}_n\hat{\varphi}_n$ converges in probability to $\theta\varphi$
+        \item $\frac{\hat{\theta}_n}{\hat{\varphi}_n}$ converges in probability to $\frac{\theta}{\varphi}$ so long as $\varphi$ and $\hat{\varphi}_n$ do not equal zero at any point.
+        \item For any $f$ continuous at $\theta$, $f(\hat{\theta}_n)$ converges in probability to $f(\theta)$.
+      \end{enumerate}
+  \end{description}
+  \begin{description}
+    \item[Sample Means:] From the above theorem, $\overline{Y}_1 - \overline{Y}_2$ is a consistent estimator for $\mu_1 - \mu_2$.
+    \item[Sample Probabilities:] From the above theorem, $\hat{p}_1 - \hat{p}_2$ is a consistent estimator for $p_1-p_2$.
+  \end{description}
+  \begin{description}
+    \item[Theorem 3:] If $Y_1,Y_2,\dots,Y_n$ represent a random sample such that $\mu_4'$, $\mu_2'$, and $\mu$ exist, then
+      \begin{align*}
+        S_n^2 &= \frac{1}{n-1}\sum_{i=1}^{n}(Y_i - \overline{Y}_n)^2
+      \end{align*}
+      is a consistent estimator for $\sigma^2$.
+    \item[Proof:]
+      \begin{align*}
+        S_n^2 &= \frac{1}{n-1}\sum_{i=1}^{n}(Y_i - \overline{Y}_n)^2\\
+              &= \frac{1}{n-1} \left(\sum_{i=1}^{n}Y_i^2 - n\overline{Y}_n^2\right)\\
+              &= \underbrace{\frac{n}{n-1}}_{(3)}\left(\underbrace{\frac{1}{n}\sum_{i=1}^{n}Y_i^2}_{(1)} - \underbrace{\overline{Y}_n^2}_{(2)}\right).
+      \end{align*}
+      Concerning $(1)$, we see that it is an average of samples from $Y^2$. Therefore,
+      \begin{align*}
+        V(Y^2) &= E(Y^4) - (E(Y^2))^2\\
+               &= \mu_4' - (\mu_2')^2 < \infty.
+      \end{align*}
+      We know from above that $V(\overline{Y}^2)$ is consistent, meaning $(1)$ is consistent for $\mu_2'$.\\
+
+      Concerning $(2)$, we can see from Theorem 2(d) that $\overline{Y}_n^2$ converges in probability to $\mu^2$. By Theorem 2(a), we can see that $(1)-(2)$ converges in probability to $\mu_2'-\mu^2 = \sigma^2$.\\
+
+      Therefore, since $\frac{n}{n-1}\rightarrow 1$, $S_n^2$ converges in probability to $\sigma^2$
+  \end{description}
 \end{document}
