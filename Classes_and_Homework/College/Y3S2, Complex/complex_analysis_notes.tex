@@ -515,4 +515,75 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   \begin{align*}
     (f^{-1})'(f(z_0)) &= \frac{1}{f'(z_0)}.
   \end{align*}
+  \section{Derivatives of Elementary Functions}%
+  Specifically, we will be working with complex exponentiation, complex trigonometric functions, and complex logarithms.
+  \subsection{Complex Exponential}%
+  \begin{align*}
+    \frac{d}{dz}e^z &= e^z,\\
+    \intertext{since, letting $z = x+iy$,}
+    e^z &= e^{x}e^{iy}\\
+        &= e^x(\cos(y) + i\sin(y)).\\
+    \frac{d}{dz} e^z &= \frac{\partial}{\partial x}e^z \tag*{treating $y$ as constant}\\
+                     &= e^x(\cos(y) + i\sin(y))\\
+                     &= e^{x + iy}\\
+                     &= e^z.
+  \end{align*}
+  We know that $e^z$ is continuous on $\C$, but this doesn't imply differentiability at every $z_0\in \C$. We can verify by checking the Cauchy-Riemann equations, where $u(x,y) = e^x\cos(y)$ and $v(x,y) = e^x\sin(y)$. Then,
+  \begin{align*}
+    \frac{\partial u}{\partial x} &= e^x\cos(y)\\
+                                  &= \frac{\partial v}{\partial y}\\
+    \frac{\partial v}{\partial y} &= -e^x\sin(y)\\
+                                  &= -\frac{\partial v}{\partial x}.
+  \end{align*}
+  If a function is analytic on $\C$, then $f$ is known as entire.
+  \subsection{Complex Logarithm}%
+  We might ask where $\log z$ is analytic. Let $f(z) = e^z$. Then, $\log z = f^{-1}(z)$; since $f$ is not one to one, we restrict the domain of $f$ to $A_{\theta} = \{z\mid \text{Im}(z)\in [\theta,\theta + 2\pi)\}$ for any $\theta$.\\
+
+  Since $f\big|_{A_\theta}$ is one to one, then
+  \begin{align*}
+    \left(f\big|_{A_{\theta}}\right)^{-1} &= \log_{A_{\theta}}.
+  \end{align*}
+  Fixing $\theta$, set $g = f\big|_{A_{\theta}}$. Then,
+  \begin{align*}
+    g^{-1}(g(z)) &= z.
+  \end{align*}
+  Because $g$ is analytic on $A_{\theta}$, $g^{-1}$ is analytic on $A_{\theta}$. By chain rule, we have
+  \begin{align*}
+    \frac{d}{dz} (g^{-1}(g(z))) &= \frac{d}{dz}z\\
+    g^{-1'}(g(z)) &= \frac{1}{g'(z)} \tag*{$g'(z)\neq 0$}\\
+    g^{-1}(w) &= \frac{1}{g'(z)}\tag*{$w = e^z$}\\
+              &= \frac{1}{e^{z}}\\
+              &= \frac{1}{w}.
+  \end{align*}
+  Therefore, $\frac{d}{dw}\log_{A_{\theta}}(z) = \frac{1}{z}$. Therefore, $\text{dom}(\log_{A_{\theta}}) = \text{ran}(e^{z}_{A_{\theta}}) = \C\setminus \{0\}$. However, $\log_{A_{0}}$ (setting $\theta = 0$) is not even continuous on $\C\setminus \{0\}$!\\
+
+  Specifically, at $z = 0$, $e^z = 1$. Travelling around the unit circle counterclockwise in the image, we see that the preimage of these points travels along the imaginary axis. Approaching $1$ ``from the bottom,'' we find that the preimage of the points approaches $2\pi$ in the domain. However, they ought to be approaching $0$. Therefore, the limit doesn't exist.\\
+
+  However, notice that the domain is not open! To fix this, we will let $B_{\theta} = \{z\in \C\mid \text{Im}(z) \in (\theta,\theta + 2\pi)\}$.\\
+
+  Our $\log$ function \textit{is} when $e^z$ is restricted to $B_{\theta}$. Then, $\log_{B_{\theta}}$ is analytic on $\C\setminus\{re^{i\theta}\mid r\geq 0\}$. When $\theta = -\pi$, then $\log_{B_{-\pi}}$ is the principle branch of $\log z$.\\
+
+  Then, the domain is $C\setminus \{z\mid z = x + 0i, x < 0\}$ and the range is $B_{-\pi}$.
+  \subsection{Powers}%
+  Let $\alpha \in \C$. We might ask
+  \begin{align*}
+    \frac{d}{dz}\alpha^{z}\\
+    \frac{d}{dz}z^{\alpha}.
+  \end{align*}
+  Recall that $a^b = e^{b \log a}$. Specifically, $a^b = e^{b (\ln|a| + i\arg a)}$.
+  \begin{align*}
+    \frac{d}{dz}\alpha^{z} &= \frac{d}{dz}e^{z\log \alpha}\\
+    \intertext{Fix $\theta$. Then,}
+                           &= \frac{d}{dz}e^{z\log_{A_{\theta}}\alpha}\\
+                           &= \log_{A_{\theta}}\alpha e^{z\log_{A_{\theta}}\alpha} \tag*{assuming analytic domain}
+                           &= \alpha^{z}\log_{A_{\theta}}\alpha.
+  \end{align*}
+  Specifically, as long as $\alpha \notin \{re^{i\theta}\mid r \geq 0\}$, $z\log_{A_{\theta}}\alpha$ is analytic, meaning $e^{z\log_{A_{\theta}}\alpha}$ is analytic (composition of analytic functions).
+  \begin{align*}
+    z^{\alpha} &= e^{\alpha \log z}\\
+               &= e^{\alpha \log_{B_{\theta}} z}\\
+               &= e^{\alpha \log_{B_{\theta}}z} \frac{\alpha}{z}\\
+               &= \alpha z^{\alpha - 1}.
+  \end{align*}
+  Specifically, this holds for $z\notin \{re^{i\theta}\mid r\geq 0\}$.
 \end{document}
