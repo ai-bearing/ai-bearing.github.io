@@ -514,7 +514,23 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   \end{align*}
   This is the definition of a weakly consistent estimator. We say that $\hat{\theta}_n$ converges in probability to $\theta$ if this is the case.
   \begin{description}
-    \item[Theorem 1:] If $\hat{\theta}_n$ is an \textit{unbiased} estimator of $\theta$ and $\lim_{n\rightarrow\infty}V(\hat{\theta}_n) = 0$, then $\hat{\theta}_n$ is consistent. Notice that there must be two things that exist for this to exist: finite variance and a finite expected value.
+    \item[Chebyshev's Theorem:] For any random variable $Y$ whose $\mu$ and $\sigma$ exist, and for any $k > 0$, 
+      \begin{align*}
+        P(|Y-\mu|< k\sigma) &\geq 1-\frac{1}{k^2}\\
+        P(|Y-\mu| \geq k\sigma) &\leq \frac{1}{k^2}
+      \end{align*}
+    \item[Theorem 1:] If $\hat{\theta}_n$ is an \textit{unbiased} estimator of $\theta$ for each $n$, and $\lim_{n\rightarrow\infty}V(\hat{\theta}_n) = 0$, then $\hat{\theta}_n$ is consistent. Notice that there must be two things that exist for this to exist: finite variance and a finite expected value.
+    \item[Proof:] Let $\varepsilon > 0$. Since $\hat{\theta}_n$ is an unbiased estimator, $E(\hat{\theta}_n)$, and since we are assuming the variance exists for each $\hat{\theta}_n$, then $\sigma_{\hat{\theta}_n}$.\\
+
+      Suppose $\sigma_{\hat{\theta}_n} \neq 0$. For each $n$, set $k_n = \frac{\varepsilon}{\sigma_{\hat{\theta}_n}}$. Applying Chebyshev's theorem, we have
+      \begin{align*}
+        P(|\hat{\theta}_n - E(\hat{\theta}_n)| \geq k_n\sigma_{\hat{\theta}_n}) &\leq \frac{1}{k_{n}^2}.\\
+        P\left(|\hat{\theta}_n - \theta| \geq \frac{\varepsilon}{\sigma_{\hat{\theta}_n}}\sigma_{\hat{\theta}_n}\right) &= \frac{\sigma_{\hat{\theta}_n}^2}{\varepsilon^2}\\
+        0 \leq P(|\hat{\theta}_n - \theta| \geq \varepsilon) &\leq \frac{V(\hat{\theta})}{\varepsilon}\\
+        \lim_{n\rightarrow\infty} 0 \leq \lim_{n\rightarrow\infty}P(|\hat{\theta}_n - \theta| \geq \varepsilon) &\leq \lim_{n\rightarrow\infty}\frac{V(\hat{\theta})}{\varepsilon}\\
+        0 \leq P(|\hat{\theta}_n - \theta| \geq \varepsilon) &\leq 0
+      \end{align*}
+      Therefore, $\lim_{n\rightarrow\infty}P(|\hat{\theta}_n - \theta| \geq \varepsilon) = 0$, meaning $\hat{\theta}_n$ is consistent.
   \end{description}
   \begin{description}
     \item[Sample Mean:] $\overline{Y}_n$ is an unbiased estimator for $\mu$, and
@@ -533,11 +549,19 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   \begin{description}
     \item[Theorem 2:] If $\hat{\theta}_n$ and $\hat{\varphi}_n$ converge in probability to $\theta$ and $\varphi$, then 
       \begin{enumerate}[(a)]
-        \item $\hat{\theta}_n + \hat{\varphi}_n$ converges in probability to $\theta + \varphi$
-        \item $\hat{\theta}_n\hat{\varphi}_n$ converges in probability to $\theta\varphi$
-        \item $\frac{\hat{\theta}_n}{\hat{\varphi}_n}$ converges in probability to $\frac{\theta}{\varphi}$ so long as $\varphi$ and $\hat{\varphi}_n$ do not equal zero at any point.
+        \item $\hat{\theta}_n + \hat{\psi}_n$ converges in probability to $\theta + \psi$
+        \item $\hat{\theta}_n\hat{\psi}_n$ converges in probability to $\theta\psi$
+        \item $\frac{\hat{\theta}_n}{\hat{\psi}_n}$ converges in probability to $\frac{\theta}{\psi}$ so long as $\psi$ and $\hat{\psi}_n$ do not equal zero at any point.
         \item For any $f$ continuous at $\theta$, $f(\hat{\theta}_n)$ converges in probability to $f(\theta)$.
       \end{enumerate}
+    \item[Proof (a):] Let $\varepsilon,\varepsilon_1 > 0$. Since $\hat{\theta}_n \rightarrow \theta$ in probability, so $\lim_{n\rightarrow \infty} P(|\hat{\theta}_n - \theta|\geq \varepsilon/2) = 0$ Therefore, $\exists N_{\theta}\in \Z^{+}$ such that for all $n > N_{\theta}$, $|P(|\hat{\theta}_n - \theta| \geq \varepsilon)|<\varepsilon_1/2$. Similarly, $\exists N_{\psi}$ such that for all $n > N_{\psi}$, $|P(|\hat{\psi}_n - \psi| \geq \varepsilon)|<\varepsilon_1/2$. Let $N = \max\{N_{\theta},N_{\psi}\}$. Then,
+      \begin{align*}
+        P(|\left(\hat{\theta}_n + \hat{\psi}_n\right) - (\theta + \psi)| \geq \varepsilon) &= P(|(\hat{\theta}_n -\theta) + (\hat{\psi} - \psi)| \geq \varepsilon)\\
+                           &\leq P(|\hat{\theta}_n - \theta| + |\hat{\psi_n}- \psi| \geq \varepsilon)\\
+                           &\leq P(|\hat{\theta}_n-\theta| \geq \varepsilon/2 \text{ or }|\hat{\psi}_n - \psi| \geq \varepsilon/2)\\
+                           &\leq P(|\hat{\theta} - \theta| \geq \varepsilon/2) + P(|\hat{\psi}_n - \psi| \geq \varepsilon/2)\\
+                           &< \varepsilon_1
+      \end{align*}
   \end{description}
   \begin{description}
     \item[Sample Means:] From the above theorem, $\overline{Y}_1 - \overline{Y}_2$ is a consistent estimator for $\mu_1 - \mu_2$.
@@ -565,5 +589,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
       Concerning $(2)$, we can see from Theorem 2(d) that $\overline{Y}_n^2$ converges in probability to $\mu^2$. By Theorem 2(a), we can see that $(1)-(2)$ converges in probability to $\mu_2'-\mu^2 = \sigma^2$.\\
 
       Therefore, since $\frac{n}{n-1}\rightarrow 1$, $S_n^2$ converges in probability to $\sigma^2$
+    \item[Theorem 9.3:] If $U_n$ has a distribution function that converges to a standard normal distribution, and $W_n$ converges in probability to $1$, then the distribution function of $\frac{U_n}{W_n}$ converges to the standard normal distribution.
+    \item[Corollary:] Since $S_n^2$ converges in probability to $\sigma^2$, then $\overline{Y} \pm z_{\alpha/2}(\sigma/\sqrt{n})$ is a good confidence interval by the central limit theorem, even if $\sigma^2$ is approximated with $S^2$.
   \end{description}
 \end{document}
