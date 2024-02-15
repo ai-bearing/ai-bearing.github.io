@@ -946,7 +946,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   which we look at by aiming for $12\Z$ to be the kernel of $\varphi$. Then, by the first isomorphism theorem, $3\Z/12\Z \cong \Z/4\Z$.\\
 
   If we want to examine $3\Z/12\Z$ in relation to $\Z/12\Z$, we see that $3\Z/12\Z \cong \langle[3]_{12}\rangle \subseteq \Z/12\Z$.
-  \section{Generated Ideals}%
+  \section{Further Examination of Ideals}%
   Let $I,J\subseteq R$ be ideals. We define
   \begin{enumerate}[(1)]
     \item the sum, $I+J = \{i+j\mid i\in I,j\in J\}$,
@@ -1133,4 +1133,172 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   \end{enumerate}
   \subsection{Corollary: Maximal Ideals and Prime Ideals}%
   Let $R$ be a commutative ring with identity. Then, $\text{maxspec}(R)\subseteq \text{Spec}(R)$.
+  \subsection{Direct Products}%
+  Let $R$ and $S$ be rings. The set
+  \begin{align*}
+    R\times S &= \{(r,s)\mid r\in R, s\in S\}
+  \end{align*}
+   is a ring under component-wise multiplication and addition.
+   \begin{description}
+     \item[Exercise:] Let $R_1,\dots,R_n$ be rings. Let 
+       \begin{align*}
+         \varphi: R\rightarrow R_1\times \cdots \times R_n
+       \end{align*}
+      be a map. Define
+      \begin{align*}
+        \pi_j: R_1\times\cdots\times R_n \rightarrow R_j\\
+        (r_1,\dots,r_n)\mapsto r_j.
+      \end{align*}
+      Show $\varphi$ is a homomorphism if and only if $\pi_j\circ \varphi$ is a homomorphism for each $j$.
+   \end{description}
+   \subsection{Comaximal Ideals}%
+   Recall that $a\Z + b\Z = \gcd(a,b)\Z$. If $\gcd(a,b) = 1$, then $a\Z + b\Z = \Z$. Conversely, if $a\Z + b\Z = \Z$, then $am + bn = 1$ for some $m,n\in\Z$. Thus, $\gcd(a,b) = 1$.\\
+
+   Let $I,J$ be ideals in a commutative ring $R$. We say $I$ and $J$ are comaximal if $I+J = R$.
+   \subsection{Chinese Remainder Theorem}%
+   Let $I_1,\dots,I_n$ be ideals in a commutative ring $R$. The map
+   \begin{align*}
+     \varphi: R\rightarrow R/I_1 \times R/I_2\times \cdots \times R/I_n\\
+     r \mapsto (r + I_1,r+I_2,\dots,r+I_n)
+   \end{align*}
+   is a ring homomorphism with kernel $I_1\cap \cdots \cap I_n$. If $I_i,I_j$ are comaximal for all $1\leq i,j\leq n$ with $i\neq j$, then $\varphi$ is surjective, and $I_1\cap \cdots \cap I_n = (I_1)(I_2)\cdots(I_n)$, so
+   \begin{align*}
+     R/\left((I_1)(I_2)\cdots(I_n)\right) \cong R/(I_1\cap \cdots \cap I_n) \cong R/I_1\times\cdots\times R/I_n.
+   \end{align*}
+   \subsubsection{Corollary to the Chinese Remainder Theorem (1)}%
+   Let $n = p_1^{e_1}\cdots p_r^{e_r}\in \Z$. Then,
+   \begin{align*}
+     \Z/n\Z \cong \Z/p_1^{e_1}\Z \times \cdots \times \Z/p_{r}^{e_r}\Z.
+   \end{align*}
+   Moreover,
+   \begin{align*}
+     \left(\Z/n\Z\right)^{\times} \cong \left(\Z/p_1^{e_1}\Z\right)^{\times} \times \cdots \times \left(\Z/p_{r}^{e_r}\Z\right)^{\times}.
+   \end{align*}
+  \subsubsection{Corollary to the Chinese Remainder Theorem (2)}%
+  Let $n_1,\dots,n_k$ be positive integers that are pairwise relatively prime. Then, for any $a_1,\dots,a_k\in\Z$, there is a $x\in\Z$ satisfying
+  \begin{align*}
+   x &\equiv a_1\mod n_1\\
+     &\vdots\\
+   x &\equiv a_k\mod n_k
+  \end{align*}
+  This solution is unique modulo $n_1,\dots,n_k$. If we set
+  \begin{align*}
+   m_i = n_1\cdots \hat{n_i}\cdots n_k,
+  \end{align*}
+  and $y_i$ as the inverse of $m_i$ mod $n_i$. The solution $x$ is given by
+  \begin{align*}
+   x &= a_1y_1m_1 + \cdots + a_ky_km_k.
+  \end{align*}
+  We will prove the Chinese Remainder Theorem by induction, with the base case of $n=2$:
+  \begin{align*}
+   \varphi: R\rightarrow R/I_1 \times R/I_2\\
+   r \mapsto (r+I_1,r+I_2).
+  \end{align*}
+  We can verify that this is a homomorphism, with $\ker(\varphi) = I_1\cap I_2$. Assume $I_1$ and $I_2$ are comaximal: $I_1 + I_2 = R$. In particular, there exist $x\in I_1$ and $y\in I_2$ such that $x + y = 1_R$. Note that
+  \begin{align*}
+   \varphi(x) &= (x+I_1,x+I_2) \\
+              &= (0+I_1,1_R - y + I_2)\\
+              &= (0+I_1,1_R + I_2)\\
+              \intertext{and}
+   \varphi(y) &= (1_R + I_1,0+I_2).
+  \end{align*}
+  Let $(r_1 + I_1,r_2 + I_2)\in R/I_1 \times R/I_2$. Set $z = r_2x + r_1y$. Then,
+  \begin{align*}
+   \varphi(z) &= (r_2x + r_1y + I_1,r_2x + r_1y + I_2)\\
+              &= (r_1 + I_1,r_2 + I_2).
+  \end{align*}
+  So, $\varphi$ is surjective, and we get $R/I_1\cap I_2 \cong R/I_1\times R/I_2$.\\
+
+  We also have that $(I_1)(I_2)\subseteq I_1\cap I_2$. Let $z\in I_1\cap I_2$. We have
+  \begin{align*}
+   z &= z(1_R)\\
+   &= z(x+y)\\
+   &= zx + zy\\
+   &\in (I_1)(I_2).
+  \end{align*}
+  Therefore, $R/(I_1)(I_2)\cong R/I_1\cap I_2$.\\
+
+  Suppose the result holds for all values up to $2\leq n \leq k-1$. Write $J_1 = I_1$ and $J_2 = (I_2)(I_3)\cdots(I_k)$. We only need to show that $J_1$ and $J_2$ are comaximal, then apply $n=2$ to $J_1,J_2$ and $n=k-1$ to split up $J_2$.\\
+
+  For each $i\in \{2,\dots,k\}$, there are elements $x_i\in I_1$ and $y_i\in I_{i}$ such that $x_i + y_i = 1_R$. We have $x_i + y_i \equiv y_i (\text{mod } I_1)$, so
+  \begin{align*}
+   1_R &= (x_2 + y_2)(x_3 + y_3)\times(x_k + y_k)
+  \end{align*}
+  is an element of $J_1 + J_2$.
+  \section{Localization}%
+  Where does $\Q$ come from?\\
+
+  Consider the sets $\Z$ and $\Sigma = \Z\setminus \{0\}$. Set
+  \begin{align*}
+   \Sigma^{-1}\Z &= \left\{(a,b)\mid a\in\Z,b\in\Sigma\right\}.
+  \end{align*}
+  Define $\sim$ on $\Sigma^{-1}\Z$ by
+  \begin{align*}
+   (a,b)\sim (c,d) \text{ if } ad = bc.
+  \end{align*}
+  This is an equivalence relation:
+  \begin{description}
+   \item[Reflexivity:] 
+     \begin{align*}
+       (a,b)\sim (a,b)\\
+       ab = ab.
+     \end{align*}
+   \item[Symmetry:] 
+     \begin{align*}
+       (a,b)\sim (c,d)\\
+       ad = bc\\
+       bc = ad\\
+       (c,d) = (a,b)
+     \end{align*}
+   \item[Transitivity:] Suppose $(a,b)\sim (c,d)$ and $(c,d)\sim (e,f)$, meaning $ad = bc$ and $cf = de$. We need to show $af = be$.
+     \begin{align*}
+       ad - bc &= 0\\
+       cf - de &= 0\\
+       adf - bcf &= 0\\
+       bcf - bde &= 0\\
+       (adf - bcf) + (bcf - bde) &= 0\\
+       (af-be)(d) &= 0\\
+       \intertext{and since $d\neq 0$ and we are in $\Z$,}
+       af = be,
+     \end{align*}
+     meaning $(a,b)\sim (e,f)$.
+  \end{description}
+  Let $\frac{a}{b}$ denote the equivalence class containing $(a,b)$. We define
+  \begin{align*}
+   \frac{a}{b} + \frac{c}{d} &= \frac{ad + bc}{bd}\\
+   \frac{a}{b}\cdot \frac{c}{d} &= \frac{ac}{bd}.
+  \end{align*}
+  \begin{description}
+   \item[Exercise:] Show that addition and multiplication are well-defined, and make the collection of equivalence classes into a field.
+  \end{description}
+  The field of equivalence classes $\Sigma^{-1}\Z$ under the defined addition and multiplication forms the field $\Q$.\\
+
+  Let $R$ be a ring. We say $\Sigma \subseteq R$ is multiplicatively closed if, given $a,b\in \Sigma$, $ab \in \Sigma$.
+  \begin{enumerate}[(1)]
+    \item $\Sigma = \Z\setminus\{0\}$ is multiplicatively closed.
+    \item Let $r\in R$. Then, $\Sigma = \{r^n\mid n\in\Z\}$.
+    \item Let $\mathfrak{p}\in R$. Then, $R\setminus \mathfrak{p}$ is multiplicatively closed (verify this).
+  \end{enumerate}
+  \subsection{Universal Property}%
+  Let $R$ be a commutative ring with identity and $\Sigma\subseteq R$ a multiplicatively closed subset with $1_R\in \Sigma$. There is a unique commutative ring $\Sigma^{-1}R$ and ring homomorphism
+  \begin{align*}
+   \pi: R\rightarrow \Sigma^{-1}R
+  \end{align*}
+  satisfying for any homomorphism $\psi: R\rightarrow S$ that sends $1_R$ to $1_S$ and $\psi(\Sigma) \subseteq S^{\times}$, there is a unique homomorphism
+  \begin{align*}
+   \Psi: \Sigma^{-1}R \rightarrow S
+  \end{align*}
+  such that $\Psi \circ \pi = \psi$.
+  \begin{center}
+    \begin{tikzcd}
+    R \arrow[rd, "\psi"'] \arrow[r, "\pi"] & \Sigma^{-1} R \arrow[d, "\Psi"] \\
+                                       & S                              
+    \end{tikzcd}
+  \end{center}
+  For example, if $R = \Z$ and $\Sigma = \Z\setminus\{0\}$, then $\Sigma^{-1}\Z = \Q$, then for $\pi: \Z\hookrightarrow \Q$, and a homomorphism from $\Z$ into a set $S$, there must exist a map from $\Q$ to $S$.\\
+
+  Consider $\Z$ with $\Sigma = \Z\setminus p\Z$. Then, $\Sigma^{-1}\Z = \{(a,b)\mid a\in\Z, p\not|b\} = \Z_{\langle p \rangle}$. We saw on an earlier homework assignment that $\Z_{\langle p \rangle}/p\Z_{\langle p \rangle} \cong \mathbb{F}_p$, meaning it is a maximal ideal (as if $a\not| p$, then $a/b$ is a unit in $\Z_{\langle p \rangle}$). The only other ideals are $p^m \Z_{\langle p \rangle}$, so we have a chain
+  \begin{align*}
+    p\Z_{\langle p \rangle} \supseteq p^2\Z_{\langle p \rangle} \supseteq \cdots.
+  \end{align*}
 \end{document}
