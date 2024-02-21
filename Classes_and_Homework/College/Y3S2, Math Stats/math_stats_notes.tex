@@ -592,4 +592,56 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     \item[Theorem 9.3:] If $U_n$ has a distribution function that converges to a standard normal distribution, and $W_n$ converges in probability to $1$, then the distribution function of $\frac{U_n}{W_n}$ converges to the standard normal distribution.
     \item[Corollary:] Since $S_n^2$ converges in probability to $\sigma^2$, then $\overline{Y} \pm z_{\alpha/2}(\sigma/\sqrt{n})$ is a good confidence interval by the central limit theorem, even if $\sigma^2$ is approximated with $S^2$.
   \end{description}
+  \subsection{Sufficiency}%
+  \begin{description}
+    \item[Intuition:] Estimator ``uses'' all the predictive power of the sample. Sufficient estimators can give a method of finding low-variance estimators.
+    \item[Definition:] Let $\hat{\theta}$ be a statistic; the statistic is sufficient for $\theta$ if the conditional joint distribution of $Y_1,\dots,Y_n$ given $\hat{\theta}$ is not dependent on $\theta$.\\
+
+      The discrete case is $P(y_1,\dots,y_n|\hat{\theta})$, and the continuous case is $f(y_1,\dots,y_n | \hat{\theta})$.\\
+
+      If $\hat{\theta}$ is sufficient, then any injective function of $\hat{\theta}$ is also a sufficient statistic for $\theta$.
+    \item[Example (\textasteriskcentered):] Consider a binomial distribution with parameter $p$. Consider 
+      \begin{align*}
+        Y_i &= \begin{cases}
+          1& \text{$i$th trial success}\\
+          0 & \text{otherwise}
+        \end{cases}.
+      \end{align*}
+      Consider $Y = \sum Y_i$ for $p$.
+      \begin{align*}
+        P(y_1,\dots,y_n | y) &= \frac{P(Y_2=y_1\cap Y_2=y_2 \cap \cdots \cap Y_n = y_n \cap Y=y)}{P(Y=y)}\\
+                             &= \frac{p^{y_1}(1-p)^{y_1} \cdots p^{y_n}(1-p)^{y_n}}{{n\choose y} p^{y}(1-p)^{n-y}}\\
+                             &= \frac{p^{\sum y_i}(1-p)^{n-\sum y_i}}{{n\choose y}p^{y}(1-p)^{n-y}}\\
+                             &= \frac{p^{y}(1-p)^{n-y}}{{n\choose y}p^{y}(1-p)^{n-y}}\\
+                             &= \frac{1}{{n\choose y}}
+      \end{align*}
+      Since the conditional probability for $y$ does not depend on $p$, we show that $\sum Y_i$ is sufficient for $p$.
+    \item[Likelihood:] Let $Y$ have a distribution with parameter $\theta$. The likelihood of the random sample values $y_1,\dots,y_n$ given the value of $\theta$ is  $\theta$ is $L(y_1,y_2,\dots,y_n;\theta)$
+      \begin{align*}
+        L(y_1,\dots,y_n; \theta) &= P(y_1,\dots,y_n) \tag*{if discrete}\\
+                                 &= f(y_1,\dots,y_n) \tag*{if continuous}\\
+                                 &= L(\theta).
+      \end{align*}
+      In example (\textasteriskcentered), $L(y_1,\dots,y_n;\theta) = P(y_1,\dots,y_n) = \prod p(y_i)$.
+    \item[Factorization Theorem:] Let $U$ be a statistic based on $Y_1,\dots,Y_n$. $U$ is sufficient for $\theta$ if and only if
+      \begin{align*}
+        L(y_1,\dots,y_n;\theta) = g(u,\theta)\times h(y_1,\dots,y_n)
+      \end{align*}
+      for non-negative functions $g$ (exclusively a function of $u$ and $\theta$) and $h$ (exclusively a function of the sample). Furthermore, whatever appears in $g$ is probably a useful statistic.\\
+
+      In example (\textasteriskcentered), our $g(\sum y_i,p) = p^{\sum y_i}(1-p)^{n-\sum y_i}$, meaning $h(y_1,\dots,y_n) = 1$. 
+    \item[Example (\textasteriskcentered\textasteriskcentered):] Let $Y_1,\dots,Y_n$ be a random sample where $Y_i$ possesses the probability density function
+      \begin{align*}
+        f(y) &= \frac{2y}{\theta^2} \tag*{on $[0,\theta]$.}
+      \end{align*}
+      This is tricky, seeing as the domain of $f$ is dependent on $\theta$. We will modify the formula so that it works on $[0,\infty)$ regardless of $\theta$. Let $I(y) = 1$ if $y \in [0,\theta]$ and $I(y) = 0$ otherwise.\\
+
+      Then, $f(y) = \frac{2y}{\theta^2}I(y)$ works on $[0,\infty)$. Then,
+      \begin{align*}
+        L(\theta) &= L(y_1,\dots,y_n;\theta)\\
+                  &= \prod f(y_i)\\
+                  &= \prod \frac{2y_i}{\theta^2}I(y_i)\\
+                  &= 2^{n}\frac{1}{\theta^{2n}} \prod y_i \prod I(y_i)
+      \end{align*}
+  \end{description}
 \end{document}
