@@ -894,7 +894,10 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
             \item $\exists r > 0$ such that $E\subseteq r B_V$.
           \end{enumerate}
       \end{description}
-      Let $\Omega$ be any set. The function $f:\Omega\rightarrow X$ is bounded if $f(\Omega)\subseteq X$ is bounded. We let $\text{Bd}(\Omega,X) = \{f:\Omega\rightarrow X\mid f\text{ is bounded}\}$.
+      Let $\Omega$ be any set. The function $f:\Omega\rightarrow X$ is bounded if $f(\Omega)\subseteq X$ is bounded. We let.
+      \begin{align*}
+        \text{Bd}(\Omega,X) = \{f:\Omega\rightarrow X\mid f\text{ is bounded}\}.
+      \end{align*}
       \begin{description}
         \item[Remark:] $\text{Bd}(\Omega,\mathbb{F}) = \ell_{\infty}(\Omega,\mathbb{F})$.
       \end{description}
@@ -1385,5 +1388,129 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
   \end{enumerate}
   \begin{description}
     \item[Exercise:] Let $(X,\rho)$ be a metric space, let $d(x,y) = \frac{\rho(x,y)}{1 + \rho(x,y)}$. A sequence $(x_n)_n\xrightarrow{d} x$ if and only if $(x_n)_n\xrightarrow{\rho} x$.
+  \end{description}
+  \subsection{Proposition: Convergent Sequences are Bounded}%
+  Let $(x_n)_n\rightarrow x$ in $(X,d)$. Let $\varepsilon = 1$. Then, $\exists N\in \N$ large such that for $n\geq N$, $d(x_n,x) < 1$.\\
+
+  If $m,n\geq N$, then $d(x_n,x_m) \leq d(x_n,x) + d(x,x_m) < 2$. Let $c = \max_{1\leq n,m\leq N} d(x_n,x_m)$. Then,
+  \begin{align*}
+    d(x_n,x_m) &\leq d(x_n,x_N) + d(x_n,x_m)\\
+               &\leq 1 + c.
+  \end{align*}
+  Let $k = \max\{1+c,2\}$. Then, $\text{diam}(\{x_n\}) \leq k$.
+  \subsection{Convergence in Different Metric Spaces}%
+  \begin{description}
+    \item[Convergence for Bounded Functions:] Recall that for $(Y,d)$ a metric space is
+  \begin{align*}
+    \text{Bd}(\Omega,Y) &= \{f:\Omega \rightarrow Y\mid f \text{ bounded}\}\\
+    D_{u}(f,g) &= \sup_{x\in \Omega}d(f(x),g(x)).
+  \end{align*}
+  Then, $(f_n)_n\rightarrow f$ in $\text{Bd}(\Omega,Y)$ if and only if $D_{u}(f_n,f)\rightarrow 0$ in $\R$.
+  \begin{align*}
+    (\forall \varepsilon > 0)(\exists N\in \N)\ni n\geq N&\Rightarrow D_{u}(f_n,f) < \varepsilon\\
+                                                         &\Leftrightarrow\\
+    (\forall \varepsilon > 0)(\exists N\in \N)\ni n\geq N&\Rightarrow \sup_{x\in\Omega}d(f_n(x),f(x)) < \varepsilon\\
+                                                         &\Leftrightarrow\\
+    (\forall \varepsilon > 0)(\exists N\in \N)\ni n\geq N&\Rightarrow \forall x,~d(f_n(x),f(x)) < \varepsilon.
+  \end{align*}
+  This is exactly the definition of uniform convergence.\\
+
+  Since $\ell_{\infty}(\Omega) = \text{Bd}(\Omega,\mathbb{F})$, convergence in $\ell_{\infty}(\Omega)$ is uniform convergence. This is also the case for subspaces, such as $c$, $c_{0}$, and $c_{00}$.
+    \item[Convergence in the Frechet Metric:] Consider a separating family of semimetrics $\rho_k$ on a set $X$. Set $d_k = \frac{\rho_k}{1 + \rho_k}$. We saw that
+      \begin{align*}
+        d(x,y) &= \sum_{k=1}^{\infty} 2^{-k}d_k(x,y)
+      \end{align*}
+      is a metric on $X$.\\
+
+      We claim that $(x_n)_n\rightarrow x$ in $(X,d)$ if and only if for all $k\geq 1$, $\rho_k(x_n,x)\rightarrow 0$.\\
+
+      In the forward direction, we know that $(x_n)_n\rightarrow x$ with respect to $d$ if and only if $d(x_n,x)\rightarrow 0$ in $\R$. Since $0\leq 2^{-k}d_k(x_n,x) \leq d(x_n)$ for fixed $k$, we have that 
+      \begin{align*}
+        0 \leq d_k(x_n,x) \leq 2^{k}d(x_n,x),
+      \end{align*}
+      and as $n\rightarrow \infty$, $d(x_n,x)\rightarrow 0$, meaning $d_k(x_n,x)\rightarrow 0$. Therefore, $\rho_k(x_n,x)\rightarrow 0$.\\
+
+      In the reverse direction, suppose $\rho_k(x_n,x)\rightarrow 0$ in $\R$ as $n\rightarrow\infty$ for all $k\geq 1$. Thus, $d_k(x_n,x)\rightarrow 0$ as $n\rightarrow\infty$ for all $k\geq 1$.\\
+
+      Let $\varepsilon > 0$. Let $K$ be so large such that 
+      \begin{align*}
+        \sum_{k\geq K} 2^{-k}< \varepsilon/2.
+      \end{align*}
+      Therefore, $d_k(x_n,x)\rightarrow 0$ for all $k = 1,\dots,K$. Therefore, $\exists N_1,\dots,N_{K}$ such that for $n\geq N_{k}$,
+      \begin{align*}
+         d_k(x_n,x) < \frac{\varepsilon}{2}.
+      \end{align*}
+      Let $N = \max\{N_1,\dots,N_K\}$. Therefore, for $n\geq N$,
+      \begin{align*}
+        d_k(x_n,x) < \frac{\varepsilon}{2}
+      \end{align*}
+      for all $k = 1,\dots,K$.\\
+
+      Thus, for all $n\geq N$,
+      \begin{align*}
+        d(x_n,x) &= \sum_{k=1}^{\infty}2^{-k}d_k(x_n,x)\\
+                 &= \sum_{k=1}^{K}2^{-k}d_k(x_n,x) + \sum_{k=K+1}^{\infty} 2^{-k}d_k(x_n,x)\\
+                 &\leq \frac{\varepsilon}{2}\sum_{k=1}^{K}2^{-k} + \frac{\varepsilon}{2}\\
+                 &< \varepsilon
+      \end{align*}
+      Therefore, $(x_n)_n\rightarrow x$.\\
+
+      Recall that, for the Frechet metric, our set was $X = C(\R)$. For $k = 1,2,3,\dots$, we had
+      \begin{align*}
+        p_k(f) &= \sup_{[-k,k]}|f(x)|
+      \end{align*}
+      as our seminorm, and our semimetric was
+      \begin{align*}
+        \rho_k(f,g) &= p_k(f-g).
+      \end{align*}
+      We also showed that the $\rho_k$ family is separating. We make $d_k(f,g) = \frac{\rho_k(f,g)}{1+\rho_k(f,g)}$ as the bounded family of separating metrics, and
+      \begin{align*}
+        d_F(f,g) &= \sum_{k=1}^{\infty}\frac{2^{-k}\rho_k(f-g)}{1 + \rho_k(f-g)}.
+      \end{align*}
+      In $\left(C(\R),d_F\right)$, $(f_n)_n\rightarrow f$ if and only if $\rho_k(f_n,f)\rightarrow 0$ for all $k$, meaning $(f_n)_n\rightarrow f$ uniformly on $[-k,k]$ for all $k$.\\
+
+      This is known as convergence on compact subsets.
+    \item[Convergence in a Product Space:] Let $(X,d)$ and $(Y,\rho)$ be metric spaces. Then,
+      \begin{align*}
+        X\times Y &= \left\{(x,y)\mid x\in X,y\in Y\right\},\\
+        D_{1}((x,y),(x',y')) &= d(x,x') + \rho(y,y')\\
+        D_{\infty} ((x,y),(x',y'))&= \max\{d(x,x'),\rho(y,y')\}.
+      \end{align*}
+      Both $D_1$ and $D_{\infty}$ are equivalent metrics.
+      \begin{description}
+        \item[Exercise:] $((x_n,y_n))_n \rightarrow (x,y)$ if and only if $(x_n)_n \xrightarrow{d}x$ and $(y_n)_n\xrightarrow{\rho} y$.
+      \end{description}
+  \end{description}
+  \subsection{Series in a Normed Vector Space}%
+  Let $(V,\norm{\cdot})$ be a normed vector space. Consider a sequence $(v_k)_k$ of vectors.
+  \begin{align*}
+    s_1 &= v_1\\
+    s_2 &= v_1 + v_2\\
+        &\vdots\\
+    s_n &= \sum_{k=1}^{n}v_k.
+  \end{align*}
+  If $s_n\rightarrow s$ in $(V,\norm{\cdot})$, meaning $\norm{s_n-s}\rightarrow 0$, then we say the series $\sum_{k=1}^{\infty}v_k$ converges to $s$. We write
+  \begin{align*}
+    \sum_{k=1}^{\infty}v_k &= s.
+  \end{align*}
+  The series converges absolutely if
+  \begin{align*}
+    \sum_{k=1}^{\infty} \norm{v_k}
+  \end{align*}
+  converges in $\R$.
+  \subsection{Proposition: Sequential Characterization of Closure}%
+  Let $(X,d)$ be a metric space with $A\subseteq X$. $x\in \overline{A}$ if and only if $\exists (a_n)_n$ in $A$ with $(a_n)_n\rightarrow X$.\\
+
+  In the forward direction, recall that $x\in \overline{A}$ if and only if $\forall \delta > 0$, $U(x,\delta)\cap A \neq \emptyset$. If $x\in \overline{A}$, then set $\varepsilon_n = 1/n$, and since $U(x,1/n) \cap A \neq \emptyset$. Let $a_n\in U(x,1/n)\cap A$. Then, $d(a_n,x) < 1/n \rightarrow 0$, meaning $a_n\rightarrow x$ and $a_n\in A$.\\
+
+  In the reverse direction, if $(a_n)_n\rightarrow x$ and $\varepsilon > 0$, $\exists N$ with $n\geq N \Rightarrow a_n\in U(x,\varepsilon)\cap A$. Thus, $x\in \overline{A}$.
+  \subsection{Proposition: Sequential Characterization of Closed Sets}%
+  If $(X,d)$ is a metric space, $A\subseteq X$, then the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $A$ is closed.
+    \item Whenever $(a_n)_n$ in $A$ with $(a_n)_n\xrightarrow{d} x$ in $X$, then $x\in A$.
+  \end{enumerate}
+  \begin{description}
+    \item[Continuous Bounded Functions:] $C([a,b])\subseteq \ell_{\infty}([a,b])$ is closed under $\norm{\cdot}_{u}$, since if $(f_n)_n\rightarrow f$ uniformly, and $f_n$ is continuous, then $f$ is continuous.
   \end{description}
 \end{document}
