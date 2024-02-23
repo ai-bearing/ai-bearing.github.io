@@ -575,7 +575,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     \frac{d}{dz}\alpha^{z} &= \frac{d}{dz}e^{z\log \alpha}\\
     \intertext{Fix $\theta$. Then,}
                            &= \frac{d}{dz}e^{z\log_{A_{\theta}}\alpha}\\
-                           &= \log_{A_{\theta}}\alpha e^{z\log_{A_{\theta}}\alpha} \tag*{assuming analytic domain}
+                           &= \log_{A_{\theta}}\alpha e^{z\log_{A_{\theta}}\alpha} \tag*{assuming analytic domain}\\
                            &= \alpha^{z}\log_{A_{\theta}}\alpha.
   \end{align*}
   Specifically, as long as $\alpha \notin \{re^{i\theta}\mid r \geq 0\}$, $z\log_{A_{\theta}}\alpha$ is analytic, meaning $e^{z\log_{A_{\theta}}\alpha}$ is analytic (composition of analytic functions).
@@ -588,4 +588,72 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   Specifically, this holds for $z\notin \{re^{i\theta}\mid r\geq 0\}$.\\
 
   We know that $\frac{d}{dz}\log_{B_{-\pi}(z)} = \frac{1}{z}$. The domain of $\log_{B_{-\pi}}$ is $\C\setminus (-\infty,0]$.
+  \section{Contour Integrals}%
+  Recall from multivariable that $\gamma: [a,b]\rightarrow \R^n$ is called a curve.\\
+
+  For example, $\gamma: [0,\pi] \rightarrow \R^2$, defined as $\gamma(\theta) = (\cos\theta,\sin\theta)$. The image of the given curve is a half circle.\\
+
+  We want to have $\gamma$ be continuous and differentiable. Then,
+  \begin{align*}
+    \gamma(t) &= (\gamma_1(t),\dots,\gamma_n(t))
+  \end{align*}
+  is continuous/differentiable if and only if every $\gamma_i$ is continuous/differentiable.
+  \begin{align*}
+    \gamma'(t) &= (\gamma_1'(t),\dots,\gamma_n'(t))
+  \end{align*}
+  If $\gamma'$ is continuous, we say $\gamma$ is smooth. For us, $\gamma\in C^{1}$ is enough, $\gamma \in C^{\infty}$ is not necessary.\\
+
+  For $\gamma:[a,b]\rightarrow \R^n$ and $f: \R^n\rightarrow \R^n$, we define
+  \begin{align*}
+    \int_{\gamma}f &:= \int_{a}^{b}f(\gamma(t))\cdot\gamma'(t)dt
+  \end{align*}
+  as the line integral of $f$ over $\gamma$.\\
+
+  Let $f: A\subseteq \C\rightarrow \C$ for $A$ open, where $\gamma: [a,b]\rightarrow A$. Then,
+  \begin{align*}
+    \int_{\gamma}f &:= \int_{a}^{b}f(\gamma(t))\gamma'(t)dt\\
+                   &= \lim_{n\rightarrow \infty}\sum_{k=1}^{n}f(z_k)\Delta z
+  \end{align*}
+  Rather than the dot product, we use complex multiplication.\\
+
+  To define $\gamma'(t)$, we can imagine it as
+  \begin{align*}
+    \gamma(t) &= \gamma_1(t) + i\gamma_2(t)\\
+    \gamma'(t_0) &= \lim_{t\rightarrow t_0}\frac{\gamma(t)-\gamma(t_0)}{t-t_0}\\
+                 &= \gamma_1'(t_0) + i\gamma_2'(t_0).
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    \int_{\gamma}f &= \int_{\gamma}\underbrace{f(\gamma(t))\gamma'(t)}_{u(t) + iv(t)} dt\\
+                   &= \int_{a}^{b}u(t)dt + i\int_{a}^{b}v(t)dt
+  \end{align*}
+  Let $\gamma$ be the line from $i$ to $2$, and $f$ as $\text{Im}(z)$. Find $\int_{\gamma}f$.\\
+
+  To solve, we need a formula for $\gamma: [0,1]\rightarrow \C$. We can consider $\gamma(t) = i(1-t) + 2t$. For any straight line, we can define $\gamma: [0,1]\rightarrow \C$ as $\gamma(t) = p(1-t) + qt$, or $p + t(q-p)$.\\
+
+  So,
+  \begin{align*}
+    \int_{\gamma}f &= \int_{0}^{1}f(\gamma(t))\gamma'(t)dt\\
+                   &= \int_{0}^{1}\text{Im}(2t + i(1-t))(2-i)dt\\
+                   &= (2-i)\int_{0}^{1}(1-t)dt\\
+                   &= (2-i)\left(t-\frac{t^2}{2}\right)\biggr\vert_{0}^{1}\\
+                   &= \frac{1}{2}\left(2-i\right)
+  \end{align*}
+  We could also have $\tilde{\gamma}:[0,1]\rightarrow \C$, $\tilde{\gamma}(t) = 2t^2 + i(1-t^2)$. The image of $\tilde{\gamma}$ is the same as the image of $\gamma$, and (not coincidentally), so is its line integral.
+  \subsection{Theorem: Reparametrization}%
+  Let $f: A\rightarrow \C$ be analytic, $\gamma: [a,b]\rightarrow A$ and $\tilde{\gamma}:[\tilde{a},\tilde{b}]\rightarrow A$ smooth curves such that $\tilde{\gamma}$ is a reparametrization of $\gamma$. Then, 
+  \begin{align*}
+    \int_{\gamma}f &= \int_{\tilde{\gamma}}f.
+  \end{align*}
+  If $\gamma: [a,b]\rightarrow A$, then $\tilde{\gamma}[\tilde{a},\tilde{b}]\rightarrow A$ is a reparametrization if $\exists r: [a,b]\rightarrow [\tilde{a},\tilde{b}]$ such that $r(a) = \tilde{a}$ and $r(b) = \tilde{b}$, and $\tilde{\gamma}\circ r = \gamma$.\\
+
+  For a quick proof, we look at
+  \begin{align*}
+    \int_{\gamma}f &= \int_{a}^{b}f(\gamma(t))\gamma'(t)dt\\
+                   &= \int_{a}^{b}f(\tilde{\gamma}\circ r(t))(\tilde{\gamma}\circ r)(t)dt\\
+                   &= \int_{a}^{b}f(\tilde{\gamma}\circ r(t))\tilde{\gamma}'(r(t))r'(t)dt\\
+                   \intertext{$u = r(t), du = r'(t)dt$}
+                   &= \int_{r(a)}^{r(b)}f(\tilde{\gamma}(u))\tilde{\gamma}'(u)du\\
+                   &= \int_{\tilde{a}}^{\tilde{b}}f(\tilde{\gamma}(u))\tilde{\gamma}(t)du
+  \end{align*}
 \end{document}
