@@ -644,4 +644,64 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
                   &= 2^{n}\frac{1}{\theta^{2n}} \prod y_i \prod I(y_i)
       \end{align*}
   \end{description}
+  \section{Efficient Estimators}%
+  Recall relative efficiency, $\text{eff}(\hat{\theta}_1,\hat{\theta}_2) = \frac{V(\hat{\theta}_2)}{V(\hat{\theta}_1)}$.\\
+
+  The support of a function $f: A\rightarrow B$ is $\{a\in A\mid f(a)\neq 0\}$ or its closure. For example, if the support of the joint probability density function, $f(y_1,y_2)$ is not a rectangle, then $Y_1$ and $Y_2$ are dependent.
+  \begin{description}
+    \item[Cramér-Rao Theorem:] Let $Y$ be a distribution with parameter $\theta$. Let $\hat{\theta}$ be an unbiased estimator for $\theta$. If
+      \begin{itemize}
+        \item $f(y;\theta)$ has continuous first and second partial derivatives;
+        \item the support of $f$ is independent of $\theta$.
+      \end{itemize}
+      Then, 
+      \begin{align*}
+        V(\hat{\theta}) &\geq \left(\underbrace{nE\left[\left(\frac{\partial \ln f}{\partial \theta}\right)^{2}\right]}_{\text{Fisher Information}}\right)^{-1}\\
+                        &= \left(-nE\left[\frac{\partial^{2} \ln f}{\partial \theta^{2}}\right]\right)^{-1}
+      \end{align*}
+      where $n$ denotes the number of samples.
+    \item[Example (Uniform):] Cramér-Rao does not work on a uniform distribution over $[0,\theta]$. 
+    \item[Example (Binomial):] We have the binomial distribution with parameters $p$ and $n$. We know that an unbiased estimator for $p$ is $\frac{Y}{n}$.
+      \begin{align*}
+        V(Y/n) &= \frac{1}{n^2}V(Y)\\
+               &= \frac{p(1-p)}{n}.\\
+        P(y,p) &= {n\choose y}p^y(1-p)^{n-y}\\
+        \ln(P(y,p)) &= \ln {n\choose y} + y\ln p + (n-y) \ln(1-p)\\
+        \frac{\partial}{\partial p}\ln(P(y,p)) &= \frac{y}{p} - \frac{n-y}{1-p}\\
+        \frac{\partial^2}{\partial p^2} \ln(P(y,p)) &= -\frac{y}{p^2}- \frac{n-y}{(1-p)^2}\\
+        E\left[\frac{\partial^2}{\partial p^2} \ln(P(y,p))\right] &= -\frac{1}{p^2}E(Y)-\frac{1}{(1-p)^2}\left(n-E(Y)\right)\\
+                                                                  &= -\frac{np}{p^2} - \frac{n-np}{(1-p)^2}\\
+                                                                  &= -\frac{n}{p(1-p)}
+      \end{align*}
+      Therefore, the Cramér-Rao bound is
+      \begin{align*}
+        \left(-n_{s}\cdot-n\frac{1}{1-p}\right)^{-1} &= \frac{p(1-p)}{n_{s}n}.
+      \end{align*}
+    \item[Definition:] An unbiased estimator $\hat{\theta}$
+      \begin{enumerate}[(1)]
+        \item is efficient if its variance equals the Cramér-Rao bound.
+        \item is minimum variance (or best) if no other estimator has smaller variance.
+        \item has efficiency $\text{eff}(\hat{\theta},\text{C-R}) \leq 1$.
+      \end{enumerate}
+      Some parameters do not have efficient estimators. Some parameters don't even have a best estimator.
+    \item[Theorem (Rao-Blackwell):] Let $\hat{\theta}$ be an unbiased estimator for $\theta$. Let $U$ be a sufficient statistic for $\theta$. Define $\hat{\theta}^{\ast}$ as
+      \begin{align*}
+        \hat{\theta}^{\ast} &= E(\hat{\theta}|U).
+      \end{align*}
+      Then, $\hat{\theta}^{\ast}$ is an unbiased estimator of $\theta$, and $V(\hat{\theta}^{\ast}) \leq V(\hat{\theta})$. Minimum variance unbiased estimators are always sufficient estimators.\\
+
+      The sufficient statistic that produces minimum variance unbiased estimators is often the one in the likelihood factorization.\\
+
+      To find a MVUE:
+      \begin{itemize}
+        \item Find the statistic in the factorization theorem.
+        \item Find an unbiased function of the estimator.
+      \end{itemize}
+    \item[Weibull Distribution:] $f(y) = \frac{2y}{\theta}e^{-y^2/\theta}$ on $[0,\infty)$.
+      \begin{align*}
+        L(y_1,\dots,y_n;\theta) &= \prod f(y_i)\\
+                                &= \frac{2^n}{\theta^n} \prod y_i \cdot e^{-1/\theta \sum y_i^2}.
+      \end{align*}
+      We have $\sum y_i^2$ as our sufficient statistic, and $E(U) = n\theta$. Therefore, $1/n\sum y_i^2$ is our minimum variance unbiased estimator.
+  \end{description}
 \end{document}
