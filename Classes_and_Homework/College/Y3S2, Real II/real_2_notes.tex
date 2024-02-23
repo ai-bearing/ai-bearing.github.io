@@ -949,7 +949,7 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
       \end{enumerate}
     \item $U\subseteq X$ is open if
       \begin{align*}
-        (\forall x\in U)(\exists \delta > 0) \ni U(x,\delta)\subseteq U.
+        (\forall x\in U)(\exists \delta > 0) \text{ such that } U(x,\delta)\subseteq U.
       \end{align*}
       Let
       \begin{align*}
@@ -1162,7 +1162,7 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
   \begin{enumerate}[(1)]
     \item A base for $\tau_X$ is a family of open subsets $\mathcal{B}$ such that:
       \begin{align*}
-        \left(\forall U\in \tau_X\right)(\forall x\in U) \exists B\in \mathcal{B} \ni x\in B\subseteq U.
+        \left(\forall U\in \tau_X\right)(\forall x\in U) \exists B\in \mathcal{B} \text{ such that } x\in B\subseteq U.
       \end{align*}
       Equivalently,
       \begin{align*}
@@ -1407,11 +1407,11 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
   \end{align*}
   Then, $(f_n)_n\rightarrow f$ in $\text{Bd}(\Omega,Y)$ if and only if $D_{u}(f_n,f)\rightarrow 0$ in $\R$.
   \begin{align*}
-    (\forall \varepsilon > 0)(\exists N\in \N)\ni n\geq N&\Rightarrow D_{u}(f_n,f) < \varepsilon\\
+    (\forall \varepsilon > 0)(\exists N\in \N)\text{ such that } n\geq N&\Rightarrow D_{u}(f_n,f) < \varepsilon\\
                                                          &\Leftrightarrow\\
-    (\forall \varepsilon > 0)(\exists N\in \N)\ni n\geq N&\Rightarrow \sup_{x\in\Omega}d(f_n(x),f(x)) < \varepsilon\\
+    (\forall \varepsilon > 0)(\exists N\in \N)\text{ such that } n\geq N&\Rightarrow \sup_{x\in\Omega}d(f_n(x),f(x)) < \varepsilon\\
                                                          &\Leftrightarrow\\
-    (\forall \varepsilon > 0)(\exists N\in \N)\ni n\geq N&\Rightarrow \forall x,~d(f_n(x),f(x)) < \varepsilon.
+    (\forall \varepsilon > 0)(\exists N\in \N)\text{ such that } n\geq N&\Rightarrow \forall x,~d(f_n(x),f(x)) < \varepsilon.
   \end{align*}
   This is exactly the definition of uniform convergence.\\
 
@@ -1512,5 +1512,113 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
   \end{enumerate}
   \begin{description}
     \item[Continuous Bounded Functions:] $C([a,b])\subseteq \ell_{\infty}([a,b])$ is closed under $\norm{\cdot}_{u}$, since if $(f_n)_n\rightarrow f$ uniformly, and $f_n$ is continuous, then $f$ is continuous.
+    \item[Sequence Closure:] $c_{0}\subseteq \ell_{\infty}$ is closed under $\norm{\cdot}_u$. Let $(f_n)_n$ be a sequence
+      \begin{align*}
+        f_1 &= (f_1(1),f_1(2),\dots)\\
+        f_2 &= (f_2(1),f_2(2),\dots)\\
+        \lim_{k\rightarrow\infty}f_n(k) &= 0 \tag*{$\forall n$}
+      \end{align*}
+      Suppose $(f_n)_n \xrightarrow{\norm{\cdot}_{\infty}} f \in \ell_{\infty}$.\\
+
+      Let $\varepsilon > 0$. Then, $\exists n\in \N$ such that for $n\geq N$, $\norm{f-f_n}_{\infty}< \varepsilon/2$. Also, $\lim_{k\rightarrow \infty}f_{N}(k) = 0$. Then, $\exists K\in \N$ such that for $k\geq K$, $|f_{N}(k)| < \varepsilon/2$. Thus, for $k\geq K$,
+      \begin{align*}
+        |f(k)| &= |f(k) - f_{N}(k) + f_{N}(k)|\\
+               &\leq |f(k)-f_{N}(k)| + |f_{N}(k)|\\
+               &\leq \norm{f-f_{N}}_{\infty} + |f_{N}(k)|\\
+               &< \frac{\varepsilon}{2} + \frac{\varepsilon}{2}\\
+               &= \varepsilon.
+      \end{align*}
+      Thus, $f\in c_{0}$.
+  \end{description}
+  \subsection{Distance to a Set}%
+  Let $(X,d)$ be a metric space, $A\subseteq X$. Then, $\text{dist}_{A}: X\rightarrow [0,\infty)$ is defined as
+  \begin{align*}
+    \text{dist}_{A}(x) &= \inf_{a\in A}d(x,a).
+  \end{align*}
+  \begin{enumerate}[(1)]
+    \item $\overline{A} = \{x\mid \text{dist}_{A} = 0\}$
+    \item $\text{dist}_{A}(\cdot) = \text{dist}_{\overline{A}}(\cdot)$
+    \item $|\text{dist}_{A}(x) - \text{dist}_{A}(y)| \leq d(x,y)$
+  \end{enumerate}
+  \begin{description}
+    \item[Proof of (1):] Let $x\in \overline{A}$. Then, $\exists (a_n)_n$ such that $(a_n)_{n}\rightarrow x$. Then, $d(a_n,x) \rightarrow 0$. Since $0 \leq \text{dist}_{A}(x) \leq d(x,a_n)$, $\text{dist}_{A}(x) = 0$.\\
+
+      Let $x$ be such that $\text{dist}_{A}(x) = 0$. By the definition of $\inf$, we construct $a_n$ by finding $a_n\in U(x,1/n)\cap A$. Thus, $d(a_n,x)\rightarrow 0$, meaning $(a_n)_n\rightarrow x$, so $x\in \overline{A}$.
+    \item[Proof of (2):] Exercise; use (1).
+    \item[Proof of (3):] For all $a\in A$,
+      \begin{align*}
+        \text{dist}_{A}(x) &\leq d(x,a)\\
+                           &\leq d(x,y) + d(y,a).\\
+        \intertext{Therefore,}
+        \text{dist}_{A}(x) - d(x,y) &\leq d(y,a)\\
+        \text{dist}_{A}(x) - d(x,y) &\leq \inf_{a\in A}d(y,a)\\
+                                    &= \text{dist}_{A}(y)\\
+        \text{dist}_{A}(x) - \text{dist}_{A}(y) &\leq d(x,y).
+        \intertext{Similarly,}
+        \text{dist}_{A}(y) - \text{dist}_{A}(x) &\leq d(y,x) = d(x,y)\\
+        \intertext{meaning}
+        |\text{dist}_{A}(y) - \text{dist}_{A}(x)| &\leq d(x,y).
+      \end{align*}
+  \end{description}
+  \subsection{Continuity}%
+  Let $(X,d)$ and $(Y,\rho)$ be metric spaces. A map $f: X\rightarrow Y$
+  \begin{enumerate}[(1)]
+    \item is continuous at $x_0\in X$ if
+      \begin{align*}
+        (\forall \varepsilon > 0)(\exists \delta > 0) \text{ such that } d(x,x_0)<\delta \Rightarrow \rho(f(x),f(x_0)) < \varepsilon\\
+        (\forall \varepsilon > 0)(\exists \delta > 0) \text{ such that } x\in U_{X}(x_0,\delta) \Rightarrow f(x)\in U_Y(f(x_0),\varepsilon)\\
+        (\forall \varepsilon > 0)(\exists \delta > 0) \text{ such that } f(U_X(x_0,\delta))\subseteq U_Y(f(x_0),\varepsilon).
+      \end{align*}
+    \item is continuous if $f$ is continuous at every $x_0\in X$.
+  \end{enumerate}
+  \subsection{Proposition: Equivalent Continuity Criteria}%
+  Let $f: (X,d)\rightarrow (Y,\rho)$, $x_0\in X$. The following are equivalent:
+  \begin{enumerate}[(1)]
+    \item $f$ is continuous at $x_0$;
+    \item $(\forall V\in \mathcal{N}_{f(x_0)})(U\in \mathcal{N}_{x_0})$ such that $f(U)\subseteq V$.
+    \item $\forall (x_n)_n\rightarrow x_{0}$, $(f(x_n))_n\rightarrow f(x_0)$.
+  \end{enumerate}
+  \begin{description}[font=\normalfont]
+    \item[(1) $\Leftrightarrow$ (2):] Clearly follows from definitions.
+    \item[(1) $\Rightarrow$ (3):] Let $(x_n)_n\rightarrow x_0$. Let $\varepsilon > 0$. Then, $\exists \delta > 0$ such that $d(x,x_0) < \delta$ implies $\rho(f(x),f(x_0)) < \varepsilon$.\\
+
+      Thus, $\exists N\in \N$ such that $n\geq N$ implies $d(x_n,x_0) < \delta$. So, if $n\geq N$, $d(x_n,x_0) < \delta$, implying $\rho(f(x_n),f(x_0)) < \varepsilon$. So, $(f(x_n))_n \rightarrow f(x_0)$.
+    \item[(3) $\Rightarrow$ (1):] Suppose toward contradiction that $\exists \varepsilon_0 > 0$  such that for $\delta = 1/n$ where $n\in \N$, $\exists (x_n)_n: d(x_n,x_0) < \delta$ and $\rho(f(x_n),f(x_0)) \geq \varepsilon_0$. Then, $(x_n)_n\rightarrow x_0$, but $f(x_n)_n\nrightarrow f(x_0)$. $\bot$
+  \end{description}
+  \subsection{Proposition: Topological Criterion for Continuity}%
+  Let $f: (X,d)\rightarrow (Y,\rho)$. The following are equivalent:
+  \begin{enumerate}[(1)]
+    \item $f$ is continuous.
+    \item $\forall V\in \tau_Y$, $f^{-1}(V) \in \tau_{X}$.
+    \item $\forall x\in X,\forall (x_n)_n\rightarrow x$, we have $(f(x_n))_n\rightarrow f(x)$.
+  \end{enumerate}
+  \begin{description}
+    \item[Proof:] Exercise.
+  \end{description}
+  \subsection{Proposition: Composition of Functions}%
+  Let $(X,d)\xrightarrow{f} (Y,\rho)\xrightarrow{g}(Z,p)$. If $f$ and $g$ are continuous, then $g\circ f$ is continuous.
+  \begin{description}
+    \item[Proof:] Exercise.
+  \end{description}
+  \subsection{Uniform Continuity}%
+  Let $f: (X,d)\rightarrow (Y,\rho)$.
+  \begin{enumerate}[(1)]
+    \item $f$ is uniformly continuous if 
+      \begin{align*}
+        (\forall \varepsilon > 0)(\exists \delta > 0) \text{ such that }\forall x,x'\in X,d(x,x')< \delta \Rightarrow d(f(x),f(x')) < \varepsilon
+      \end{align*}
+    \item $f$ is Lipschitz if $\exists c > 0$ with
+      \begin{align*}
+        \rho(f(x),f(x')) \leq c d(x,x')
+      \end{align*}
+      for all $x,x'\in X$.
+    \item If $\rho(f(x),f(x')) = d(x,x')$, then $f$ is an isometry. Isometries are always injective.
+  \end{enumerate}
+  \begin{description}
+    \item[Exercise:]
+      \begin{align*}
+        \text{Isometry} \Rightarrow \text{Lipschitz} \Rightarrow \text{Uniformly Continuous} \Rightarrow \text{Continuous}.
+      \end{align*}
+      For example, $f(x) = x^2$ on $[0,\infty)$ is continuous but not uniformly continuous, and $\sqrt{x}$ on $[0,1]$ is uniformly continuous but not Lipschitz.
   \end{description}
 \end{document}
