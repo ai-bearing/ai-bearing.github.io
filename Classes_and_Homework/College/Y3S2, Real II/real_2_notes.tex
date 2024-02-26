@@ -1621,4 +1621,114 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
       \end{align*}
       For example, $f(x) = x^2$ on $[0,\infty)$ is continuous but not uniformly continuous, and $\sqrt{x}$ on $[0,1]$ is uniformly continuous but not Lipschitz.
   \end{description}
+  If $(V,\norm{\cdot})$ is a normed space, we might want to care that the following operations are continuous:
+  \begin{itemize}
+    \item $a: V\times V\rightarrow V$, $a(v,w) = v+w$:
+  \begin{align*}
+    \norm{a(v,w) - a(v',w')} &= \norm{v+w-(v'+  w')}\\
+                             &= \norm{v-v' + w-w'}\\
+                             &\leq \norm{v-v'} + \norm{w-w'}\\
+                             &= d(v,v') + d(w,w')\\
+                             &= d_1((v,w),(v',w')),
+  \end{align*}
+  meaning $a$ is Lipschitz.
+    \item $m: \mathbb{F}\times V \rightarrow V$, $m(\alpha,v) = \alpha v$;
+  \begin{align*}
+    \norm{m(\alpha,v)-m(\beta,w)} &= \norm{\alpha v - \beta w}\\
+                                  &= \norm{\alpha v - \alpha w + \alpha w - \beta w}\\
+                                  &\leq |\alpha|\norm{v-w} + |\alpha - \beta| \norm{w}\\
+  \intertext{If $(\alpha_n)_n\rightarrow \beta$ and $(v_n)_n\rightarrow w$, then}
+    \norm{\alpha_nv_n - \beta w} &\leq |\alpha_n|\norm{v_n-w} + |\alpha_n - \beta|\norm{w}\\
+                                 &\rightarrow 0.
+  \end{align*}
+    \item $\norm: V\rightarrow \mathbb{F}$:
+      \begin{align*}
+        \left|\norm{v}-\norm{w}\right| &\leq \norm{v-w},
+      \end{align*}
+      meaning $\norm{\cdot}$ is Lipschitz.
+  \end{itemize}
+  Let $(X,d)$ be a metric space. Then, $\text{dist}_A: X\rightarrow [0,\infty)$, $\text{dist}_A(x) = \inf_{a\in A}d(x,a)$ is continuous. We had shown
+  \begin{align*}
+    |\text{dist}_{A}(x) - \text{dist}_{A}(y)| &\leq d(x,y),
+  \end{align*}
+  meaning $\text{dist}_{A}$ is Lipschitz.
+  \subsection{Proposition: Normal Property of Metric Spaces}%
+  Given $A,B\subseteq X$ with $A\cap B = \emptyset$, then $\exists U,V\in \tau_X$ with $A\subseteq U$, $B\subseteq V$, and $U\cap V = \emptyset$.
+  \begin{description}
+    \item[Proof:] Set
+      \begin{align*}
+        f(x) &= \frac{\text{dist}_A(x)}{\text{dist}_A(x) + \text{dist}_B(x)}.
+      \end{align*}
+      Note that $\text{dist}_A(x) + \text{dist}_B(x)=0$ if and only if $x\in \overline{A}=A$ and $x\in \overline{B}=B$. Therefore, the denominator in $f(x)$ is always positive.\\
+
+      Additionally, $f: X\rightarrow [0,1]$ is continuous. Note that $f(a) = 0$ for all $a\in A$ and $f(b) = 1$ for all $b\in B$.\\
+
+      Let $U = f^{-1}((-1/2,1/2)) = f^{-1}([0,1/2))$, and $V = f^{-1}((1/2,3/2)) = f((1/2,1])$. Obviously, $U\subseteq A$ and $V\subseteq B$, and $U\cap V = \emptyset$.
+  \end{description}
+  \subsection{Proposition: Quotient Space}%
+  Let $(V,\norm{\cdot})$ be a normed space, and let $W\subseteq V$ be a closed subspace. Then, $V/W$ is a normed space with
+  \begin{align*}
+    \norm{v+W} &= \text{dist}_W(v)\\
+               &= \inf_{w\in W} \norm{v-w}.
+  \end{align*}
+  \subsection{Proposition: Uniform Continuity of Linear Transformations}%
+  Let $T:V\rightarrow W$ be a linear transformation between two normed spaces. The following are equivalent:
+  \begin{enumerate}[(1)]
+    \item $T$ is continuous at $0_{V}$.
+    \item $T$ is continuous.
+    \item $T$ is uniformly continuous.
+    \item $T$ is Lipschitz.
+    \item $\exists c \geq 0$ such that $\norm{T(v)} \leq c\norm{v}$ for all $v\in V$.
+    \item $\norm{T}_{\text{op}} = \sup_{\norm{v}\leq 1}\norm{T(v)} < \infty$. In other words, $T$ is bounded linear.
+  \end{enumerate}
+  \begin{description}
+    \item[Proof:]\hfill
+      \begin{description}[font=\normalfont]
+        \item[(4) $\Rightarrow$ (3) $\Rightarrow$ (2) $\Rightarrow$ (1):] Obvious.
+        \item[(6) $\Rightarrow$ (5)] Let $v\in V$. If $v = 0_V$, then $T(v) = 0_W$. Suppose $v\neq 0_V$. We know 
+          \begin{align*}
+            \norm{T\left(\frac{v}{\norm{v}}\right)} &\leq \norm{T}_{\text{op}}\\
+            \frac{1}{\norm{v}}\norm{T(v)} &\leq \norm{T}_{\text{op}}\\
+            \norm{T(v)} &\leq \norm{T}_{\text{op}} \norm{v}.
+          \end{align*}
+          Therefore, $c = \norm{T}_{\text{op}}$.
+        \item[(5) $\Rightarrow$ (6):] We will have $\norm{T(v)} \leq c$ for all $v\in B_V$. Thus, $\norm{T}_{\text{op}} \leq c$ for such $c$.
+        \item[(5) $\Rightarrow$ (4):] Let $v,w\in V$. Then,
+          \begin{align*}
+            \norm{T(v) - T(w)} &= \norm{T(v-w)}\\
+                               &\leq c\norm{v-w},
+          \end{align*}
+          meaning $T$ is Lipschitz.
+        \item[(1) $\Rightarrow$ (5):] Let $\varepsilon = 1$. Then, $\exists \delta$ such that
+          \begin{align*}
+            T(U_{V}(0,\delta)) &\subseteq U(T(0),1).\\
+            \intertext{Since $T$ is linear,}
+            T(U_{V}(0,\delta)) &\subseteq U_{W}(0,1).\\
+          \end{align*}
+          Let $v\in V\neq 0_V$. We know $\frac{\delta v}{2\norm{v}}\in U_V(0,\delta)$. Then, 
+          \begin{align*}
+            \norm{T\left(\frac{\delta v}{2\norm{v}}\right)} &\leq 1,\\
+            \frac{\delta}{2\norm{v}} \norm{T(v)} &\leq 1\\
+            \norm{T(v)} &\leq \frac{2}{\delta}\norm{v}.
+          \end{align*}
+          Set $c = \frac{2}{\delta}$. Clearly, $\norm{T(0)}\leq \frac{2}{\delta}\norm{0}$.
+      \end{description}
+  \end{description}
+  A corollary to this is that any linear map $T: \ell_{p}^{n}\rightarrow W$ for $W$ a normed space is uniformly continuous.
+  \subsection{Proposition: Continuous Functions on Dense Sets}%
+  Let $(X,d)$, $(Y,\rho)$ be metric spaces, and $A\subseteq X$ dense. If $f,g: X\rightarrow Y$ and $f(A) = g(A)$, then $f(X) = g(X)$.
+  \begin{description}
+    \item[Proof:] Given $x\in X$, there exists $(a_n)_n\rightarrow x$. We know that $(g(a_n))_n\rightarrow g(x)$ and $(f(a_n))_n\rightarrow f(x)$. Since $f(a_n) = g(a_n)$ for all $a_n$, it is the case that $f(x) = g(x)$.
+  \end{description}
+  \subsection{Morphisms in the Category of Metric Spaces}%
+  Let $(X,d)$ and $(Y,\rho)$ be metric spaces, $f: X\rightarrow Y$ a map.
+  \begin{enumerate}[(1)]
+    \item $f$ is a homeomorphism if $f$ is bijective, continuous, and has a continuous inverse. We write $X\cong Y$ are homeomorphic.
+    \item $f$ is a uniformism if $f$ is bijective, uniformly continuous, and has a uniformly continuous inverse. We write $X\cong Y$ are uniformly isomorphic.
+    \item $f$ is a metric isomorphism if $f$ is bijective, Lipschitz, and has a Lipschitz inverse. We write $X\cong Y$ are metrically isomorphic.
+    \item $f$ is an isometric isomorphism if $f$ is bijective and isometric. We write $X\cong Y$ are isometrically isomorphic.
+  \end{enumerate}
+  For example, $R\cong (-\pi/2,\pi/2)$ are homeomorphic (using $\tan: (-\pi/2,\pi/2)\rightarrow \R$). However, $\R$ is not uniformly isomorphic to $(-\pi/2,\pi/2)$.\\
+
+  Suppose $f: (-\pi/2,\pi/2)\rightarrow \R$ is a uniformism. Let $(x_n)_n = \pi/2-1/n$. Then, $(x_n)_n$ is Cauchy. Therefore, $(f(x_n))_n$ is Cauchy. Since $\R$ is complete, $(f(x_n))_n \rightarrow y$ for some $y\in \R$. Then, $f^{-1}(f(x_n))_n\rightarrow f^{-1}(y)$, meaning $(x_n)_n\rightarrow f^{-1}(y)\in (-\pi/2,\pi/2)$. However, $(x_n)_n\rightarrow \pi/2\notin (-\pi/2,\pi/2)$.
 \end{document}
