@@ -109,7 +109,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     {\bf \Large Math 395 \\[0.1in]Homework 4 \\[0.1in]
     Due: 2/27/2024}\\[.25in]
     {\bf Name:} {Avinash Iyer}\\[0.15in]
-    {\bf Collaborators:} {} \\
+    {\bf Collaborators:} {Nate Hall} \\
   \end{center}
   \section{Problem 1}%
   Let $F$ be a field, with $F[x]$ denoting the ring of polynomials with coefficients in $F$. Let $f(x)\in F[x]$ be a monic polynomial. Let $g(x) \in F[x]$ be a nonzero polynomial. We will show that there exist unique $q(x)$ and $r(x)$ in $F[x]$ such that $f(x) = g(x)q(x) + r(x)$, where $r(x) = 0$ or $\text{deg} r(x) < \text{deg} g(x)$.\\
@@ -136,6 +136,43 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 
   For $\varphi((x,y)) = [0]_{p}$, it must be the case that $[x]_{p} = [0]_{p}$, meaning $x = pa$ for some $a\in \Z$. Thus, $\ker\varphi = \{(pa,b)\mid a,b\in\Z\} = \mathfrak{m}$. By the first isomorphism theorem, it is the case that $(\Z\times\Z)/\mathfrak{m} = \Z/p\Z$. Since $\Z/p\Z$ is a field, $\mathfrak{m}$ must be maximal.
   \section{Problem 5}%
-  Let $p$ be a prime, and let $J$ be the collection of polynomials in $\Z[x]$ whose constant term is divisible by $p$. We will show that $J$ is a maximal ideal in $\Z[x]$.
+  Let $p$ be a prime, and let $J$ be the collection of polynomials in $\Z[x]$ whose constant term is divisible by $p$. We will show that $J$ is a maximal ideal in $\Z[x]$.\\
   
+  Let $\varphi: \Z[x]\rightarrow \Z/p\Z$ be defined by
+  \begin{align*}
+    a_0 + a_1x + \cdots + a_nx^n \mapsto [a_0]_p.
+  \end{align*}
+  For any $[a]_p\in \Z/p\Z$, we select an element of $\Z[x]$ with constant term equal to $a$, meaning that $\varphi$ is a surjective map. We will show that $\varphi$ is a homomorphism. Let $a = a_0 + a_1x + \cdots + a_nx^n$ and $b = b_0 + b_1 x + \cdots + b_mx^{m}$ be elements of $\Z[x]$. Without loss of generality, $n \geq m$. Then,
+  \begin{align*}
+    \varphi(a+b) &= \varphi\left((a_0 + b_0) + (a_1 + b_1)x + \cdots + (a_m+b_m)x^m + \cdots + a_nx^n\right)\\
+                 &= [a_0 + b_0]_{p}\\
+                 &= [a_0]_p + [b_0]_p\\
+                 &= \varphi(a_0 + a_1x + \cdots + a_nx^n) + \varphi(b_0 + b_1x + \cdots + b_mx^m),
+                 \intertext{and}
+    \varphi(ab) &= \varphi\left((a_0 + a_1x + \cdots + a_nx^n)(b_0 + b_1x + \cdots + b_mx^m)\right)\\
+                &= \varphi\left((a_0b_0) + \cdots + (a_nb_m)x^{n+m}\right)\\
+                &= [a_0b_0]_p\\
+                &= [a_0]_p[b_0]_p\\
+                &= \varphi(a_0 + a_1x + \cdots + a_nx^n)  \varphi(b_0 + b_1x + \cdots + b_mx^m)\\
+                &= \varphi(a)\varphi(b).
+  \end{align*}
+  Therefore, $\varphi$ is a homomorphism with
+  \begin{align*}
+    \ker\varphi &= \left\{a_0 + a_1x + \cdots + a_nx^n\mid a_i\in \Z, [a_0]_p = [0]_p\right\},
+  \end{align*}
+  which is precisely the set of all polynomials in  $\Z[x]$ with with $a_0 | p$, or $J$. By the first isomorphism theorem, it is thus the case that $\Z[x]/J \cong \Z/p\Z$. Since $\Z/p\Z$ is a field, it must be the case that $J$ is a maximal ideal.
+  \section{Problem 7}%
+  Let $R$ be a commutative ring with identity. Let $I\subset R$ be an ideal. The radical of $I$ is defined as
+  \begin{align*}
+    \text{rad}~I &= \{r\in R\mid r^n\in I\text{ for some } n\in \Z_{>0}\}
+  \end{align*}
+  We say $I$ is a radical ideal if $\text{rad}~I = I$. We will show that every prime ideal of $R$ is a radical ideal.\\
+
+  Let $I$ be a prime ideal. Let $r\in \text{rad}~I$. Then, $\exists n\in \Z_{>0}$ such that $r^{n} \in I$. We will show that $r\in I$ by induction.\\
+
+  In the base case, we let $n = 1$. Then, since $r^{1} = (1)(r) \in I$. Since $I$ is prime, it must be the case that either $1$ or $r$ is an element of $I$; however, since $I \neq R$, it must be the case that $1\notin I$ (as $1$ is a unit in $R$), so $r\in I$.\\
+
+  Suppose that for $2,\dots,n-1$, it is the case that if $r^{n-1}\in I$, then $r\in I$. Then, if $r^{n}\in I$, we have $r^{n} = (r^{n-1})(r)\in I$. Since $I$ is prime, either $r\in I$ or $r^{n-1}\in I$. If the first is the case, then we are done; otherwise, if $r^{n-1}\in I$, the inductive hypothesis holds that $r\in I$. Thus, $\text{rad}~I \subseteq I$.\\
+
+  Let $a\in I$. Then, since $a \in R$, we have that $a^{1}\in I$, meaning $n=1$, so $a\in \text{rad}~I$. Thus, $I\subseteq \text{rad}~I$. Therefore, for $I$ a prime ideal, $\text{rad}~I = I$.
 \end{document}
