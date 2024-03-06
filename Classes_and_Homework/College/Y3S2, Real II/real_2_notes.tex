@@ -1731,4 +1731,112 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
   For example, $R\cong (-\pi/2,\pi/2)$ are homeomorphic (using $\tan: (-\pi/2,\pi/2)\rightarrow \R$). However, $\R$ is not uniformly isomorphic to $(-\pi/2,\pi/2)$.\\
 
   Suppose $f: (-\pi/2,\pi/2)\rightarrow \R$ is a uniformism. Let $(x_n)_n = \pi/2-1/n$. Then, $(x_n)_n$ is Cauchy. Therefore, $(f(x_n))_n$ is Cauchy. Since $\R$ is complete, $(f(x_n))_n \rightarrow y$ for some $y\in \R$. Then, $f^{-1}(f(x_n))_n\rightarrow f^{-1}(y)$, meaning $(x_n)_n\rightarrow f^{-1}(y)\in (-\pi/2,\pi/2)$. However, $(x_n)_n\rightarrow \pi/2\notin (-\pi/2,\pi/2)$.
+
+  \section{Completeness}%
+  \subsection{Proposition: Weierstrass $M$-Test}%
+  Let $V$ be a Banach space (complete normed vector space). Suppose $(v_k)_k$ is such that $\sum \norm{v_k}$ is convergent. Then, $(s_n)_n = \sum_{k=1}^{n}v_k$ converges in $V$. Additionally,
+  \begin{align*}
+    \norm{\sum_{k=1}^{\infty}v_k} &\leq \sum_{k=1}^{\infty}\norm{v_k}.
+  \end{align*}
+  \begin{description}
+    \item[Proof:] Let $s_n = \sum_{k=1}^{n} v_k$, and $t_n = \sum_{k=1}^{n}\norm{v_k}$. Let $n > m$. Then,
+      \begin{align*}
+        \norm{s_n - s_m} &= \norm{\sum_{k=m+1}^{n}v_k}\\
+                         &\leq \sum_{k=m+1}^{n}\norm{v_k}\\
+                         &= |t_n-t_m|.
+      \end{align*}
+      Since $(t_n)_n$ converges, it is Cauchy, and thus $s_n$ is Cauchy. Since $V$ is complete, $(s_n)_n$ converges.
+      \begin{align*}
+        \norm{s_n} &= \norm{\sum_{k=1}^{n}v_k}\\
+                   &\leq \sum_{k=1}^{n}\norm{v_k}\\
+                   &\leq \sum_{k=1}^{\infty}\norm{v_k}.
+      \end{align*}
+      Let $n\rightarrow\infty$. Using the continuity of the norm, we get
+      \begin{align*}
+        \norm{\sum_{k=1}^{\infty}v_k} &\leq \sum_{k=1}^{\infty}\norm{v_k}.
+      \end{align*}
+  \end{description}
+  \subsection{Proposition: Convergence in Hilbert Space}%
+  Let $H$ be a Hilbert space (inner product space with a complete norm). Let $(e_n)_n$ be an orthonormal sequence in $H$. Let $(t_k)_k$ be a sequence in $\ell_2$. Then, $\sum_{k=1}^{\infty}t_ke_k$ converges in $H$, but not absolutely.
+  \begin{description}
+    \item[Proof:] Let $s_n = \sum_{k=1}^{n}t_ke_k$. For $n > m$,
+      \begin{align*}
+        \norm{s_n - s_m}^2 &= \norm{\sum_{k=m+1}^{n}t_ke_k}^2\\
+                           &= \sum_{k=m+1}^{n}\norm{t_ke_k}^2 \tag*{Pythagorean Theorem}\\
+                           &= \sum_{k=m+1}^{n}|t_k|^2
+      \end{align*}
+      Since $(t_k)_k\in \ell_2$, we know that $(t_k)_k$ is convergent and thus Cauchy. Thus, $(s_n)_n$ is Cauchy.\\
+
+      Note that for $t_k = \frac{1}{k}$, $(t_k)_k$ is square-summable, but not summable in absolute value.
+    \item[Exercise:] Show that
+      \begin{align*}
+        \norm{\sum_{k=1}^{\infty}t_ke_k}^2 &= \sum_{k=1}^{\infty}|t_k|^2.
+      \end{align*}
+      This result is known as Parseval's Theorem.
+  \end{description}
+  \section{Extensions of Continuous Functions}%
+  \subsection{Lemma: Cauchy Sequences in Uniformly Continuous Functions}%
+  Let $f: (X,d)\rightarrow (Y,\rho)$ be uniformly continuous. If $(x_n)_n$ is Cauchy, then $(f(x_n))_n$ is Cauchy.
+  \begin{description}
+    \item[Proof:] Let $\varepsilon > 0$. Then, $\exists \delta > 0$ such that
+      \begin{align*}
+        d(x,x') < \delta \Rightarrow d(f(x),f(x')) < \varepsilon.
+      \end{align*}
+      Similarly, there exists $N\in \N$ such that for $p,q \geq N$, $d(x_p,x_q) < \delta$. So, for $p,q \geq N$, $d(f(x_p),f(x_q)) < \varepsilon$.
+    \item[Remark:] This is not true for continuous functions. For example, if $f(t) = 1/t$ on $(0,1)$, $x_n = 1/n$ is Cauchy but not convergent.
+  \end{description}
+  \subsection{Theorem: Extension on a Dense Subset}%
+  Let $(X,d)$ be a metric space with $A\subseteq X$ dense. Suppose $f: A\rightarrow Y$ is uniformly continuous with $(Y,\rho)$ complete. Then, $\exists !$ uniformly continuous extension, $\tilde{f}: X\rightarrow Y$ that agrees with $f$ on $A$.
+  \begin{description}
+    \item[Proof:] Let $x\in X$. Then, $\exists (a_n)_n\in A$ with $(a_n)_n\rightarrow x$. Therefore, $(a_n)_n$ is Cauchy, and since $f$ is uniformly continuous, we know that $(f(a_n))_n$ is Cauchy. Thus, $\lim_{n\rightarrow\infty}(f(a_n))_n = \tilde{f}(x)$ exists.\\
+
+      To show $\tilde{f}$ is well-defined, suppose $(b_n)_n$ is another sequence in $A$ with $(b_n)_n\rightarrow x$. Consider $(c_n)_n = (a_1,b_1,a_2,b_2,\dots)$. It must be the case that $(c_n)_n\rightarrow x$. Thus, $(f(c_n))_n$ converges to $y\in Y$. The subsequence of $(f(a_n))_n\rightarrow y$ and $(f(b_n))_n\rightarrow y$. So, we must have $\lim f(a_n) = \lim f(b_n)$.\\
+
+      Note that $\tilde{f}(a) = f(a)$ for all $a\in A$, by choosing the sequence $(a,a,a,\dots)$.\\
+
+      We claim that $\tilde{f}$ is uniformly continuous. Let $\varepsilon > 0$. We know $\exists \delta > 0$ such that for any $a,b\in A$, with $d(a,b) < \delta$, then $\rho(f(a),f(b)) < \varepsilon / 2$. Now, let $x,x'\in X$ with $d(x,x') < \delta / 4$. Find sequences $(a_n)_n\rightarrow x$ and $(b_n)_n\rightarrow x'$ with $(a_n)_n, (b_n)_n\in A$. Find $N$ large such that $n \geq N$ implies $d(a_n,x) < \delta/4$ and $d(b_n,x') < \delta/4$. For $n\geq N$, we have
+      \begin{align*}
+        d(a_n,b_n) &\leq d(a_n,x) + d(x,x') + d(x',b_n)\\
+                   &< \frac{3\delta}{4}\\
+                   &< \delta
+      \end{align*}
+      Thus, for $n\geq N$, $\rho(f(a_n),f(b_n)) < \varepsilon/2$. By continuity of $\rho$, taking $n\rightarrow\infty$, we get $\rho(\tilde{f}(x),\tilde{f}(x')) < \varepsilon/2$. Therefore, we have $d(x,x') < \delta/4 \Rightarrow d(\tilde{f}(x),\tilde{f}(x')) < \varepsilon$. Therefore, $\tilde{f}$ is uniformly continuous.\\
+
+      Suppose $g: X\rightarrow Y$ is another continuous extension of $f$. Therefore, $g(a) = \tilde{f}(a)$ for all $a\in A$. However, $A$ is dense. Therefore, $g = \tilde{f}$.
+  \end{description}
+  \subsection{Completion of a Metric Space}%
+  Let $(X,d)$ be a fixed metric space. A completion of $X$ is a pair $((Z,\rho),i)$.
+  \begin{enumerate}[(i)]
+    \item $(Z,\rho)$ is a complete metric space.
+    \item $i: X\rightarrow Z$ is an isometry.
+    \item $\overline{i(X)}^{\rho} = Z$.
+  \end{enumerate}
+  For example, the completion of $(0,1)$ is $\left(([0,1],|\cdot|),i(t) = t\right)$.
+  \subsection{Isometric Isomorphism of Completions}%
+  Given $\left((Z,\rho),i\right)$ and $\left((Z',\rho'),j\right)$ completions of $X$, then there exists a unique isometric isomorphism $\varphi: Z\rightarrow Z'$ such that the following diagram commutes.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkQANEAX1PU1z5CKcqWLU6TVuwBaPPiAzY8BIqIBMEhizaIQMgOQ8JMKAHN4RUADMAThAC2SMiBwQkoyTvZZ5N+06ILm5I6jSM9ABGMIwACgIqwiC2WGYAFjggNNrSegBWfiB2jh40IYhhXrkgADo1DLZoab7clNxAA
+    \begin{tikzcd}
+                                       & Z \arrow[dd, "\varphi"] \\
+    X \arrow[ru, "i"] \arrow[rd, "j"'] &                         \\
+                                       & Z'                     
+    \end{tikzcd}
+  \end{center}
+  \subsection{Corollary: Isometric Map and Completion of Metric Space}%
+  If $(X,d)$ is a metric space, and $i: (X,d)\rightarrow (Y,\rho)$ is an isometry into a complete metric space, then $\left((\overline{i(X)},\rho),i\right)$ is the completion of $X$.
+  \subsection{Theorem: Every Metric Space has a Completion}%
+  Consider the Banach space $(C_{b}(X),\norm{\cdot}_u)$. We embed $X \hookrightarrow C_b(X)$ as follows. Fix $x_0 \in X$. Given $x\in X$, $i(x) = X\rightarrow \mathbb{F}$ where $i(x)(t) = d(t,x) - d(t,x_0)$.\\
+
+  Clearly, $i(x)$ is continuous for all $x$ as the distance function is continuous. Also,
+  \begin{align*}
+    |i(x)(t)| &= |d(t,x) - d(t,x_0)|\\
+              &\leq d(x,x_0)\\
+    \norm{i(x)}_{u} &\leq d(x,x_0).
+  \end{align*}
+  We need only show that $i(x)$ is an isometry. 
+  \begin{align*}
+    \norm{i(x)-i(y)}_{u} &= \sup_{t\in X}|i(x)(t)-i(y)(t)|\\
+                         &= \sup_{t\in X}|d(t,x) - d(t,y)|\\
+                         &= d(x,y).
+  \end{align*}
 \end{document}
