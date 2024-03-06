@@ -1533,15 +1533,80 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     0 &= (a_1-b_1)v_1 + \cdots + (a_n-b_n)v_n.
   \end{align*}
   Since $\{v_1,\dots,v_n\}$ is linearly independent, $a_i-b_i = 0$ for all $i\in \{1,\dots,n\}$, meaning $a_i = b_i$ for all $i$. Thus, $T$ is bijective.
-% Finish notes from Ling and Nate here
-  \subsection{Irreducible Polynomials}%
-  Let $f(x) \in F[x]$ be irreducible. There is a field $K$ containing a root of $f$ and an isomorphic copy of $F$.\\
+% Finish notes from Nate here
+  \subsection{Example: Vector Space Bases}%
+  \begin{enumerate}[(1)]
+    \item Define $\mathfrak{SL}_2(\R) = \left\{ \begin{bmatrix}a&b\\c&d\end{bmatrix}\in \text{Mat}_2(\R)\mid a+d = 0\right\}$. This is a 3-dimension $\R$-vector space with basis
+      \begin{align*}
+        \mathcal{B} &= \left\{ \begin{bmatrix}1&0\\0&-1\end{bmatrix}, \begin{bmatrix}0&1\\0&0\end{bmatrix}, \begin{bmatrix}0&0\\1&0\end{bmatrix}\right\}.
+      \end{align*}
+    \item We define $\text{SL}_2(\R) = \left\{ \begin{bmatrix}a&b\\c&d\end{bmatrix}\in \text{Mat}_2(\R)\mid ad-bc = 1\right\}$ as a Lie group.
+    \item If $\mathbb{F}$ is a finite field with $q$ elements, we want to consider the vector space $V = \mathbb{F}^n$ and find the number of potential bases.\\
 
-  We let $K = F[x]/\langle f(x)\rangle$. Then,
+      After selecting $v_1$ (for which there are $q^n-1$ choices), we choose $v_2$ by throwing away $\mathbb{F}_{v_1}$, meaning there are $q^n - q$ choices for $v_2$. Iteratively, we have, for $v_{i+1}$, $q^{n}-q^i$ choices. Therefore, there are 
+      \begin{align*}
+        \prod_{i=0}^{n-1}q^n-q^i
+      \end{align*}
+      choices of basis for $\mathbb{F}^n$.
+  \end{enumerate}
+  \subsection{Theorem: Dimension of Quotient Space}%
+  Let $V$ be an $F$-vector space and $W$ a subspace. Then, $V/W$ is a vector space and $\text{dim}_F(V) = \text{dim}_F(W) + \text{dim}_F(V/W)$ (including infinite-dimensional spaces).\\
+
+  Note that $V/W = \{v+W\mid v\in V\}$ is an abelian group. We define scalar multiplication as $\alpha(v+W) = \alpha v + W$. This can be verified as a vector space.\\
+
+  Assume $V$ is finite-dimensional. Let $\{w_1,\dots,w_m\}$ be a basis for $W$. By our earlier lemma, we can expand this set to a basis of $V$, $\{w_1,\dots,w_m,v_{m+1},\dots,v_n\}$. Define $\pi: V\rightarrow V/W$ as $v\rightarrow v+W$.\\
+
+  This is a surjective linear map with $W\subseteq \ker\pi$. We claim that $\{v_{m+1}+W,\dots,v_{n}+W\}$ is a basis for $V/W$. Let $v\in V$. Write
   \begin{align*}
-    \pi: F[x] \rightarrow F[x]/\langle f(x)\rangle\\
-    g(x) \mapsto g(x) + \langle f(x)\rangle
+    v &= \sum_{i=1}^{m}a_iw_i + \sum_{j=m+1}^{n}a_jv_j\\
+    \intertext{meaning}
+    \pi(v) &= W + \sum_{j=m+1}^{n}a_j(v + W),
   \end{align*}
+  meaning $\{v_{m+1}+W,\dots,v_{n}+ W\}$ spans $V/W$. To show linear independence, suppose $\sum_{j=m+1}^{n} a_j(v + W) = 0 + W$. Then,
+  \begin{align*}
+   \left(\sum_{j=m+1}^{n}a_jv_j\right) + W &= 0+W\\
+   \intertext{meaning}
+   \sum_{j=m+1}^{n}a_jv_j &\in W.
+  \end{align*}
+  However, since $\{w_1,\dots,w_m,v_{m+1},\dots,v_n\}$ is linearly independent, this cannot be the case unless $\sum_{j=m+1}^{n} a_jv_j = 0$, so $a_{m+1} = \cdots = a_n = 0$. Therefore, $\{v_{m+1}+W,\dots,v_{n}+W\}$ is a basis, so the dimension of $V/W$ is $n-m$.\\
+
+  If $\text{dim}_{F}(V) = \infty$ and $\text{dim}_{F}(W) = \infty$, then we are done. Otherwise, if $\text{dim}_F(V) = \infty$ and $\text{dim}_F(W) < \infty$, take a basis $\{w_1,\dots,w_m\}$ of $W$. Pick $v_1\in V,v_1\notin W$. Put $v_1 + W$ in $\mathcal{B}$. Pick $v_{2}\in V$, $v_2\notin W\cup \text{span}_{F}\{v_1\}$, and put $v_2 + W$ into $\mathcal{B}$. Continue this process. Then, $\text{dim}_F(V/W) = \infty$.
+  \subsection{Corollary: Kernel of Linear Transformations and Subspaces}%
+  Let $T\in \text{Hom}_F(V,W)$. Then, $\ker T$ is a subspace of $V$, $T(V)$ is a subspace of $W$, and $\text{dim}_F(V) = \text{dim}_F\ker T + \text{dim}_F T(v)$.\\
+
+  To prove this, we use something akin to the first isomorphism theorem.
+  \subsection{Corollary: Linear Transformations between Vector Spaces of Identical Finite Dimension}%
+  Let $T\in \text{Hom}_F(V,W)$ with $\text{dim}_F(V) = \text{dim}_F(W) = n$. Then, the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $T$ is an isomorphism;
+    \item $T$ is injective;
+    \item $T$ is surjective;
+    \item $T$ sends a basis of $V$ to a basis of $W$.
+  \end{enumerate}
+  \subsection{Field Extensions and Characteristics}%
+  Let $K$ and $F$ be fields. If $F\subseteq K$, then we say $K$ is an extension field of $F$ (note that $K$ is also an $F$-vector space). Denote $K$ as an extension field by $K/F$ (yes, this is very bad notation).\\
+
+  Viewing $K$ as an $F$-vector space, we say the degree of $K$ over $F$ means $\text{dim}_F(K)$, written as $\text{deg}(K/F)$. If $\text{deg}(K/F) < \infty$ ,we say $K$ is a finite extension of $F$. If $\text{deg}(K/F) = \infty$, it is an infinite extension.
+  \begin{enumerate}[(1)]
+    \item For $F = \R$, $K = \mathbb{C}$, we have $\text{deg}(K/F) = 2$.
+    \item For $K = \Q(\sqrt{2})$, $\text{deg}(K/\Q) = 2$.
+    \item For $K = \R$ and $F = \Q$, then $\text{deg}(\R/\Q) = \infty$.
+  \end{enumerate}
+  For $K$ a field, $K$ has characteristic $n$ if $n\cdot 1_R = 0_K$ and no smaller value of $n$ satisfies this criterion. If there is no such $n$, then $K$ has characteristic $0$. For example, $\text{char}(\Q) = 0$ and $\text{char}(\mathbb{F}_p) = p$.\\
+
+  Since fields are integral domains, all characteristics must be $0$ or prime.\\
+
+  Suppose $K$ has characteristic zero. Then, the map
+  \begin{align*}
+    f&: Z\hookrightarrow K\\
+    n&\mapsto \underbrace{1_K + \cdots + 1_K}_{k~\text{times}}\\
+    0 &\mapsto 0_K\\
+    -n &\mapsto \underbrace{-1_K - \cdots - 1_K}_{k~\text{times}}\\
+       &\vdots
+  \end{align*}
+  implying that $\Q\hookrightarrow K$. Thus, if $K$ has characteristic $0$, it is automatically an extension field of $\Q$.\\
+
+  If $K$ has characteristic $p$, then $\Z\xrightarrow{\varphi}K$ with $\ker\varphi \supseteq p\Z$ implies that $\ker\varphi = p\Z$. Thus, $\Z/p\Z\cong \text{im}~\varphi$. Every field is an extension of either $\Q$ or $\mathbb{F}_p$.
   \subsection{Polynomial Division Algorithm}%
   Let $F$ be a field, $f(x),g(x)\in F[x]$, $g(x)\neq 0$. Then, there exist unique $q(x),r(x)\in F[x]$ with $r(x) = 0$ or $\text{deg}~r(x) < \text{deg}~g(x)$ such that $f(x) = g(x)q(x) + r(x)$.\\
 
@@ -1582,6 +1647,20 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   Let $f(x) \in F[x]$. Then, $\langle f(x) \rangle$ is a maximal ideal.\\
 
   Suppose $\langle f(x) \rangle\subseteq I\subseteq F[x]$. We have $I = \langle g(x)\rangle$ for some $g(x)\in F[x]$ (by the previous result). Since $\langle f(x)\rangle \subseteq \langle g(x)\rangle$, we know $g(x)|f(x)$. In particular, $f(x) = g(x)h(x)$ for some $h(x)\in F[x]$. Since $f$ is irreducible, we must have either $g(x)\in F$ or $h(x)\in F$. If $g(x)\in F$, then $I = F$, and if $g(x) = f(x)h(x)^{-1}$, so $f(x)|g(x)$, and $I = \langle f(x)\rangle$.
+  \subsection{Field Extensions for Roots of Irreducible Polynomials}%
+  Let $f(x) \in F[x]$ be irreducible. There is a field $K$ containing a root of $f$ and an isomorphic copy of $F$.\\
+
+  We let $K = F[x]/\langle f(x)\rangle$. Then $K$ is a field since $\langle f(x)\rangle$ is maximal. We have
+  \begin{align*}
+    \pi: F[x] \rightarrow F[x]/\langle f(x)\rangle\\
+    g(x) \mapsto g(x) + \langle f(x)\rangle.
+    \intertext{Note that}
+    \pi\rvert_{F}: F\rightarrow F[x]/\langle f(x)\rangle\\
+    a \mapsto a + \langle f(x)\rangle
+    \intertext{meaning $1_F \mapsto 1_F + \langle f(x)\rangle \neq 0 + \langle f(x)\rangle$, and}
+    \ker(\pi\rvert_{F}) = 0.
+  \end{align*}
+  Thus, $\pi\rvert_{F}$ is an injection, so $F \cong \pi\rvert_{F}(F)$. Set $\theta = \pi(x) = x + \langle f(x)\rangle$. Then, $f(\theta) = f(x + \langle f(x)\rangle) = f(x) + \langle f(x) \rangle = 0 + \langle f(x)\rangle$, so $\theta$ is a root of $f$ in $K$.
   \subsection{Roots of Irreducible Polynomials}%
   Let $f(x) \in F[x]$ be irreducible with $\text{deg}~f = n$. Set $K = F[x]/\langle f(x)\rangle$ and $\theta = x + \langle f(x)\rangle\in K$. Then, $\{1,\theta,\theta^2,\dots,\theta^{n-1}\}$ forms a basis for $K$ as an $F$-vector space.\\
 
