@@ -115,16 +115,19 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   \section{Problem 2}%
   Show that $\ell_2$ is a Hilbert space.
   \begin{description}
-    \item[Proof:] Let $(x_n)_n$ be a Cauchy sequence in $\ell_2$. That is, for $\varepsilon > 0$, there exists $N$ large such that for $m,n\geq N$,
+    \item[Proof:] Let $(x_n)_n$ be a Cauchy sequence in $\ell_2$. Let $x_n(k)$ denote the index $k$ of the sequence $x_n\in \ell_2$. Then, by the equivalence of norms, $\exists c\in \R$ such that
       \begin{align*}
-        \norm{x_m - x_n} < \varepsilon/2.
+        |x_n(k) - x_m(k)| &\leq c\norm{x_m(k) - x_n(k)}_2\\
+                          &\rightarrow 0 \tag*{since $(x_n)_n$ is Cauchy in $\ell_2$.}
       \end{align*}
-      We wish to show that such $N'\in \N$ exists where for $n\geq N$, $\norm{x_n-x} < \varepsilon$.
+      Since $\R$ (or $\C$) is complete, $x_n(k) \rightarrow x(k)$ as $k\rightarrow \infty$. We set $(x(k))_k$ to be the sequence such that $x_n(k) \rightarrow x(k)$ for each $n$.\\
+
+      We must show that $\norm{x_n - x}_2\rightarrow 0$ as $n\rightarrow \infty$. This is equivalent to
       \begin{align*}
-        \norm{x_n - x} &= \norm{x_n - x_m + x_m - x}\\
-                       &\leq \norm{x_n - x_m} + \norm{x_m - x}\\
-                       &< \varepsilon/2 + \norm{x_m - x}
+        \lim_{N\rightarrow\infty}\sum_{k=1}^{N}\lim_{m\rightarrow\infty}|x_n(k) - x_m(k)|^2 &\leq \lim_{m\rightarrow\infty}\sup_{m\geq M}\norm{x_n - x_m}^2\\
+                                                                                            &\leq \varepsilon^2 \tag*{since $(x_n)_n$ is Cauchy.}
       \end{align*}
+      Thus, $\norm{x_n-x_m} \rightarrow 0$ as $m\rightarrow \infty$ and $n\rightarrow\infty$, so $\norm{x_n - x}\rightarrow 0$ as $n\rightarrow\infty$.
   \end{description}
   \section{Problem 3}%
   Suppose $(X,d)$ is a complete metric space and $(x_n)_n$ is a sequence in $X$ such that there is a $\theta \in (0,1)$ with $d(x_{n+1},x_n) \leq \theta d(x_n,x_{n-1})$. Show that $(x_n)_n$ is convergent.
@@ -134,7 +137,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
         d(x_m,x_n) &\leq d(x_m,x_{m-1}) + d(x_{m-1},x_{m-2}) + \cdots + d(x_{n+1},x_n)\\
                    &\leq d(x_2,x_1)\left(\theta^{m-2} + \theta^{m-3} + \cdots + \theta^{n-1}\right)\\
                    &= d(x_2,x_1) \theta^{n-1}\left(1 + \theta + \theta^2 + \cdots + \theta^{p-q-1}\right)\\
-                   &= d(x_2,x_1)\frac{\theta^{n-1}}{1-\theta}.
+                   &\leq d(x_2,x_1)\frac{\theta^{n-1}}{1-\theta}.
       \end{align*}
       Notice that the sequence $\left(\frac{\theta^{n-1}}{1-\theta}\right)_{n}\rightarrow 0$ in $\R$, meaning $(x_n)_n$ is Cauchy. Since $X$ is complete, $(x_n)_n$ is convergent.
   \end{description}
@@ -144,4 +147,20 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     d(f(x),f(y)) \leq \theta d(x,y).
   \end{align*}
   Prove that $f$ has a unique fixed point.
+  \begin{description}
+    \item[Proof:] Let $x_0\in X$, and define $x_{n} = f(x_{n-1})$. For all $n$, we have
+      \begin{align*}
+        d(x_{n},x_{n-1}) &\leq \theta^{n}d(x_1,x_0).
+      \end{align*}
+      Therefore, for $x_m,x_n$ arbitrary in $X$ with $m > n$, we have
+      \begin{align*}
+        d(x_m,x_n) &\leq d(x_m,x_{m-1}) + \cdots + d(x_{n+1},x_n)\\
+                   &\leq \theta^{m}d(x_1,x_0) + \cdots + \theta^{n+1}d(x_1,x_0)\\
+                   &= d(x_1,x_0) \theta^{n+1}\left(1 + \theta + \cdots + \theta^{m-n-1}\right)\\
+                   &\leq d(x_1,x_0)\frac{\theta^{n+1}}{1-\theta}.
+      \end{align*}
+      Since $\left(\frac{\theta^{n+1}}{1-\theta}\right)_n\rightarrow 0$ in $\R$ as $n\rightarrow\infty$, it must be the case that $d(x_m,x_n)\rightarrow 0$ as $m,n\rightarrow \infty$. Since $X$ is complete, this means $(x_n)_n\rightarrow x$ for some $x\in X$, meaning $f(x) = x$.\\
+
+      Suppose it were the case that there existed $s,t$ distinct with $f(s) = s$ and $f(t) = t$. Then, $d(f(s),f(t)) = d(s,t) \leq \theta d(s,t)$, but $\theta < 1$. Thus, $x$ is unique.
+  \end{description}
 \end{document}
