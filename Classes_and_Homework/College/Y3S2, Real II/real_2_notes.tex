@@ -2054,4 +2054,88 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
   where $0 < a < 1$ and $ab > 1$ is such a function. This is known as the Weierstrass function.\\
 
   Such functions are not rare at all. In the complete normed vector space $X = (C[0,1],\norm{\cdot}_u)$, $\{f\in X\mid f\text{ differentiable nowhere}\}$ is the complement of a meager set (meaning it is topologically ``big'').
+  \section{Compactness}%
+  Compactness can best be analogized to finite dimensionality in a metric space.\\
+
+  Let $(X,d)$ be a metric space, and let $K\subseteq X$. 
+  \begin{enumerate}[(1)]
+    \item A cover for $K$ is a family of subsets $\mathcal{U} = \{U_i\}_{i\in I}\subseteq \mathcal{P}(X)$ with $K \subseteq \bigcup U_i$.\\
+
+      The cover $\mathcal{U}$ is called an open cover if each $U_i \subseteq X$ is open. The cover $\mathcal{U}$ is called finite if $I$ is finite. If $\mathcal{U}$ is a cover for $K$, a subcover of $\mathcal{U}$ is a subfamily $\mathcal{V} = \{U_i\}_{i\in J}$, with $J\subseteq I$, and $K \subseteq \bigcup_{j\in J}U_j$.
+    \item $K$ is called compact if every open cover of $K$ admits a finite subcover. If $\{U_i\}_{i\in I}$ is any family that covers $K$, then there exists a finite $F\subseteq I$ such that $\{U_i\}_{i\in F}$ covers $K$.
+  \end{enumerate}
+  For example, the set $(0,1]\subseteq \R$ is not compact, because
+  \begin{align*}
+    (0,1] \subseteq \bigcup_{n\in \N}(1/n,3/2)
+  \end{align*}
+  does not admit a finite subcover.\\
+
+  Any finite set is compact.\\
+
+  A discrete metric space is $X$ is compact if and only if $X$ is finite.\\
+
+  Let $(X,d)$ be a metric space, and $Y\subseteq X$. Let $K\subseteq Y$; $K$ is compact in $X$ if and only if $K$ is compact in $Y$. This can be shown by taking the relative topology of $Y$ on every open cover of $K$ in $X$.
+  \subsection{Proposition: Properties of Compactness}%
+  Let $(X,d)$ be a metric space.
+  \begin{enumerate}[(1)]
+    \item If $K\subseteq X$ is compact, then $K$ is closed and bounded.
+    \item If $X$ is a compact metric space, and $K\subseteq X$ is closed, then $K$ is compact.
+  \end{enumerate}
+  \begin{description}
+    \item[Proof of (2):] Let $K\subseteq \bigcup U_i$, with $U_i\subseteq X$ open. Then, $X = (X\setminus K) \cup \left(\bigcup_{i\in I} U_i\right)$. This is an open cover for $X$, meaning it admits a finite subcover $F\subseteq I$ such that $X = (X\setminus K) \cup \bigcup_{i\in F}U_i$. Clearly, $K\subseteq \bigcup_{i\in F}U_i$. Thus, $K$ is compact.
+    \item[Proof of (1):] Let $K\subseteq X$ be compact. Then,
+      \begin{align*}
+        K &\subseteq \bigcup_{x\in K}\bigcup U(x,1).
+      \end{align*}
+      Since $K$ is compact, there exist $\{x_1,\dots,x_n\}$ with $K\subseteq \bigcup_{j=1}^{n}U(x_j,1)$. Let $c = \max d(x_i,x_j)$. If $x,y\in K$, then $x\in U(x_i,1)$ and $y\in U(x_j,1)$ for some $x_i,x_j$. Then,
+      \begin{align*}
+        d(x,y) &\leq d(x,x_i) + d(x_i,x_j) + d(x_j,y)\\
+               &< 1 + c + 1 = 2+c.
+      \end{align*}
+      Thus, $\text{diam}(K) < \infty$.\\
+
+      We will show that $K^{c}$ is open. Let $x_0 \notin K$. For each $x\in K$, there exist $\delta_x > 0$ with $U(x,\delta_x)\cap U(x_0,\delta_x) = \emptyset$. Then,
+      \begin{align*}
+        K\subseteq \bigcup_{x\in K}U(x,\delta_x).
+      \end{align*}
+      Since $K$ is compact, there exist $\{x_1,\dots,x_n\}$ with $K\subseteq \bigcup U(x_j,\delta_{x_j})$. Let $\delta = \min\{\delta_{x_j}\} > 0$. Then, $U(x_0,\delta) \subseteq K^{c}$.
+  \end{description}
+  \subsection{Proposition: Compactness and Intersections of Closed Sets}%
+  Let $(X,d)$ be a metric space. The following are equivalent.
+  \begin{enumerate}[(1)]
+    \item $X$ is compact;
+    \item If $\{C_i\}_{i\in I}$ is a family of closed sets with the finite intersection property (i.e., the intersection of finitely many elements of $\{C_i\}$ is non-empty), then $\bigcap_{i\in I}C_i \neq \emptyset$.
+  \end{enumerate}
+  \subsection{Proposition: Separability of Compact Metric Spaces}%
+  Let $(X,d)$ be a compact metric space. Then, $(X,d)$ is separable.
+  \begin{description}
+    \item[Proof:] For fixed $n\geq 1$, consider the cover 
+      \begin{align*}
+        X = \bigcup U(x,1/n).
+      \end{align*}
+      By compactness, there exist $\{x_{n,1},\dots,x_{n,m_n}\}$ with
+      \begin{align*}
+        X = \bigcup_{j=1}^{m_n}U(x_{n,j},1/n).
+      \end{align*}
+      Let $S = \left\{x_{n,j}\mid n\in \N, 1\leq j \leq m_n\right\}$. Then, $S$ is countable.\\
+
+      Let $x\in X$, $\varepsilon > 0$. Let $N$ be large such that $N^{-1} < \varepsilon$. So,
+      \begin{align*}
+        x\in \bigcup_{j=1}^{m_N} U(x_{N,j},1/N),
+      \end{align*}
+      so $x\in U(x_{N,j},1/N)$ for some $j$, whence $d(x,x_{N,j}) < 1/N < \varepsilon$, so $x_{N,j} \in U(x,\varepsilon)$. So, $\overline{S} = X$.
+  \end{description}
+  \subsection{Proposition: Sequential Compactness}%
+  Let $(X,d)$ be a metric space, $K\subseteq X$. We say $K$ is sequentially compact if every sequence in $K$ admits a convergent subsequence in $K$.\\
+
+  From Bolzano-Weierstrass, we know that $[a,b]\subseteq \R$ is sequentially compact.\\
+
+  If $K$ is compact, then $K$ is sequentially compact.
+  \begin{description}
+    \item[Proof:] Let $(x_k)_k\in K$. Let $C_0 = \overline{\{x_1,x_2,\dots\}}$, $C_1 = \overline{\{x_2,x_3,\dots\}}$, etc. such that $C_n = \overline{\{x_{n+1},x_{n+2},\dots\}}$.\\
+
+      Observe that $C_0 \supseteq C_1 \supseteq C_2 \supseteq \cdots$. Additionally, $\{C_n\}$ has the finite intersection property. Since $K$ is compact, the previous proposition states that $\bigcap C_n \neq \emptyset$. Let $x\in \bigcap C_n$.\\
+
+      $x\in C_1$, meaning $\exists k_1 > 1$ with $d(x,x_{k_1}) < 1$. $x\in C_{k_1}$, meaning $\exists k_2 > k_1$ with $d(x,x_{k_2}) < 1/2$. $x\in C_{k_2}$, meaning $\exists k_3 > k_2$ with $d(x,x_{k_3}) < 1/3$. Continuing, we have $(x_{k_j})_j\in K$ with $d(x,x_{k_j}) < 1/j$. Thus, $(x_{k_j})_j\rightarrow x$.
+  \end{description}
 \end{document}
