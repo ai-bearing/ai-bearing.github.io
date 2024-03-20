@@ -1,4 +1,4 @@
-\documentclass[10pt]{extarticle}
+\documentclass[8pt]{extarticle}
 \title{}
 \author{}
 \date{}
@@ -1911,7 +1911,7 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
       \end{enumerate}
   \end{description}
   \subsection{Proposition: Cantor's Intersection Theorem}%
-  Let $(X,d)$ be a complete metric space, and $F_1\supseteq F_2\supseteq \cdots$ be a sequence of closed, nonempty sets with $\left(\text{diam}(F_n)\right)_n = 0$. Then, $\bigcap F_n = \{x\}$ for some $x\in X$.
+  Let $(X,d)$ be a complete metric space, and $F_1\supseteq F_2\supseteq \cdots$ be a sequence of closed, nonempty sets with $\left(\text{diam}(F_n)\right)_n \rightarrow 0$. Then, $\bigcap F_n = \{x\}$ for some $x\in X$.
   \begin{description}
     \item[Proof:] Let $x_n\in F_n$ for $n\geq 1$. Note that $(x_n)_n$ is Cauchy. For $\varepsilon > 0$, let $N$ be large such that $n\geq N \Rightarrow \text{diam}(F_n) < \varepsilon$. For $m,n \geq N$, $d(x_n,x_m) < \varepsilon$ because $x_n,x_m\in F_N$. Therefore, $(x_n)_n\rightarrow x$ for $x\in X$.\\
 
@@ -2137,5 +2137,72 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
       Observe that $C_0 \supseteq C_1 \supseteq C_2 \supseteq \cdots$. Additionally, $\{C_n\}$ has the finite intersection property. Since $K$ is compact, the previous proposition states that $\bigcap C_n \neq \emptyset$. Let $x\in \bigcap C_n$.\\
 
       $x\in C_1$, meaning $\exists k_1 > 1$ with $d(x,x_{k_1}) < 1$. $x\in C_{k_1}$, meaning $\exists k_2 > k_1$ with $d(x,x_{k_2}) < 1/2$. $x\in C_{k_2}$, meaning $\exists k_3 > k_2$ with $d(x,x_{k_3}) < 1/3$. Continuing, we have $(x_{k_j})_j\in K$ with $d(x,x_{k_j}) < 1/j$. Thus, $(x_{k_j})_j\rightarrow x$.
+  \end{description}
+  If $(X,d)$ is sequentially compact, then $X$ is complete.
+  \begin{description}
+    \item[Lemma:] If $(x_n)_n$ is Cauchy, and $(x_n)_n$ admits a convergent subsequence, then $(x_n)_n$ is convergent.
+    \item[Proof of Lemma:] Given $\varepsilon > 0$, $\exists N\in \N$ such that for $p,q\geq N$, $d(x_p,x_q) < \varepsilon/2$.\\
+
+      Also, suppose $(x_{n_k})_k \rightarrow x$. Then, $\exists K\in \N$ large such that for $k\geq K$, $d(x_{n_k},x) < \varepsilon/2$.\\
+
+      Therefore, for $ n\geq N$, find $k\geq \max\{N,K\}$, we have
+      \begin{align*}
+        d(x_n,x) &\leq d(x_n,x_{n_k}) + d(x_{n_k},x)\\
+                 &< \varepsilon/2 + \varepsilon/2\\
+                 &= \varepsilon.
+      \end{align*}
+    \item[Proof:] If $(X,d)$ is sequentially compact, for $(x_n)_n$ a Cauchy sequence in $(X,d)$, we have that $(x_n)_n$ admits a convergent subsequence. Then, we use the lemma.
+  \end{description}
+  \subsection{Total Boundedness}%
+  Let $(X,d)$ be a metric space. $K\subseteq X$ is totally bounded if $\forall \delta > 0$, $\exists x_1,\dots,x_n\in K$ such that $K \subseteq \bigcup_{i=1}^{n} U(x_i,\delta)$.
+  \begin{description}
+    \item[Exercise:] If $K$ is totally bounded, then $K$ is bounded. If $L\subseteq K$, and $K$ is totally bounded, then $L$ is totally bounded.
+  \end{description}
+  \subsection{Sequential Compactness and Total Boundedness}%
+  Let $(X,d)$ be a metric space. Let $K\subseteq X$ be sequentially compact. Then, $K$ is totally bounded.
+  \begin{description}
+    \item[Proof:] Suppose $K$ is not totally bounded. Then, $\exists \delta_0 > 0$ such that $K\nsubseteq \bigcup_{x\in F} U(x,\delta_0)$ for any finite $F$.\\
+
+      Let $x_1 \in K$. Since $K\nsubseteq U(x_1,\delta_0)$, so let $x_2 \in K\setminus U(x_1,\delta_0)$. Since $K\nsubseteq U(x_1,\delta_0) \cup U(x_2,\delta_0)$, let $x_3 \in K\setminus \left(U(x_1,\delta_0) \cup U(x_2,\delta_0)\right)$. Continuing, we find $x_n\in K\setminus \bigcup_{j=1}^{n-1}U(x_j,\delta_0)$.\\
+
+      Thus, we have a sequence $(x_n)_n$. By sequential compactness, $(x_n)_n$ admits $(x_{n_k})_k \rightarrow x \in K$. Since $(x_{n_k})_k$ is convergent, $(x_{n_k})_k$ is Cauchy. But, $d(x_p,x_q) \geq \delta_0$, since, without loss of generality, for  $p>q$, $x_p\notin U(x_q,\delta_0)$. $\bot$
+  \end{description}
+  \subsection{Corollary: Compact Subsets of Real Numbers}%
+  If $K\subseteq \R$ is compact, $\sup K\in K$ and $\inf K \in K$.
+  \begin{description}
+    \item[Proof:] We can always construct sequences $(x_n)_n\rightarrow \sup K$ and $(y_n)_n\rightarrow \inf K$ in $K$. Since $\sup K < \infty$ and $\inf K < \infty$, since $K$ is compact, and thus bounded.\\
+
+      Since $K$ is also closed, $\sup K\in K $ and $\inf K \in K$.
+  \end{description}
+  \subsection{Theorem: Equivalence of Compactness Definitions}%
+  Let $(X,d)$ be a metric space. The following are equivalent.
+  \begin{enumerate}[(1)]
+    \item $X$ is compact.
+    \item $X$ is sequentially compact.
+    \item $X$ is complete and totally bounded.
+  \end{enumerate}
+  \begin{description}
+    \item[Proof:] We proved that $(1)\Rightarrow (2) \Rightarrow (3)$. We will now prove $(3) \Rightarrow (1)$.\\
+
+      Suppose $\mathcal{V}$ is an open cover of $X$ that fails to admit a finite subcover. Let $\varepsilon = 1$. Since $X$ is totally bounded $X = \bigcup_{j=1}^{m_1} U_{1,j}$, where $U_{1,j}$ are open balls of radius $1$.\\
+
+      There must be some open ball among the $U_{1,j}$ not covered by finitely many members of $\mathcal{V}$. Call this ball $U(x_1,1)$. Let $\varepsilon = 1/2$. By total boundedness, $X = \bigcup_{j=1}^{m_2}U_{2,j}$, where $U_{2,j}$ are open balls of radius $1/2$. Then, $U(x_1,1) = \bigcup \left(U(x_1,1)\cap U_{2,j}\right)$. So, there must be an open ball of radius $1/2$, $U(x_2,1/2)$, such that $U(x_1,1)\cap U(x_2,1/2)$ cannot be covered by finitely many members of $\mathcal{V}$.\\
+
+      Continuing, we have a sequence $(x_n)_n$, where $F_n = U(x_1,1)\cap U(x_2,1/2)\cap \cdots \cap U(x_n,1/n)$ cannot be covered by finitely many members of $\mathcal{V}$.\\
+
+      Let $C_n = \overline{F_n}$. Notice that $F_1 \supseteq F_2 \supseteq \dots$, meaning $C_1 \supseteq C_2 \supseteq \dots$. We see that $\text{diam}(C_n) = \text{diam}(F_n) \leq 2/n$. Applying Cantor's intersection theorem, we have $\bigcap C_n = \{x\}$.\\
+
+      Since $\mathcal{V}$ is an open cover, locate $V\in \mathcal{V}$ such that $x\in V$. Since $V$ is open, there exists $\varepsilon > 0$ such that $U(x,\varepsilon) \subseteq V$. Choose $N$ large such that $2/N < \varepsilon$. Since $x\in C_N$, $d(z,x) \leq 2/N < \varepsilon$ for all $z\in C_N$, meaning $F_N \subseteq C_N \subseteq U(x,\varepsilon)\subseteq V$.\\
+
+      Therefore, $\{V\}$ is a cover for $F_N$. $\bot$
+  \end{description}
+  \subsection{Proposition: Multi-dimensional Bolzano-Weierstrass Theorem}%
+  Let $\mathcal{R} = [a_1,b_1]\times [a_2,b_2]\times \cdots \times [a_d,b_d] = \prod_{j=1}^{d}[a_j,b_j]\subseteq \ell_p^{d}$. Then, $\mathcal{R}$ is sequentially compact, so $\mathcal{R}$ is compact.
+  \begin{description}
+    \item[Proof:] The proof in $\R^{d}$ works similarly to the proof in $\R^2$. Consider $\pi_x: \R^2 \rightarrow \R$ and $\pi_y: \R^2 \rightarrow \R$. We saw that $(v_{n})_n\rightarrow v$ in $\ell_{p}^{2}$ if and only if $(\pi_x(v_n))_n \rightarrow \pi_x(v)$ and $(\pi_y(v_n))_n \rightarrow \pi_y(v)$.\\
+
+      If $(v_n)_n\in \mathcal{R}$, then $(\pi_x(v_n))_n\in [a_1,b_1]$. By Bolzano-Weierstrass, there is a convergent subsequence $(\pi_x(v_{n_k}))_k \rightarrow x\in [a_1,b_1]$.\\
+
+      Now, consider $\left(\pi_y(v_{n_k})\right)_{k} \in [a_2,b_2]$. By Bolzano-Weierstrass, there is a convergent subsequence $\left(\pi_y(v_{n_{k_j}})\right)_j\rightarrow y\in [a_2,b_2]$. Thus, $(v_{n_{k_j}})_j\rightarrow (x,y)$ in $\mathcal{R}$.
   \end{description}
 \end{document}
