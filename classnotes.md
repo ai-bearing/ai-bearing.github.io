@@ -6,10 +6,10 @@ permalink: /classnotes.html
 Here are the class notes I have written up so far.
 ## Spring 2024
 ### [Real Analysis II](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S2, Real II/real_2_notes.pdf)
-### [Mathematical Statistics](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S2, Math Stats/math_stats_notes.pdf)
 ### [Complex Analysis](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S2, Complex/complex_analysis_notes.pdf)
 ### [Economics of Education](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S2, Education/econ_of_ed_notes.pdf)
 ### [Algebra II](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S2, Algebra II/alg_2_notes.pdf)
+### [Mathematical Statistics](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S2, Math Stats/math_stats_notes.pdf) (Deprecated)
 
 ## Fall 2023
 ### [Math 212: Multivariable Calculus](https://ai-bearing.github.io/Classes_and_Homework/College/Y3S1, Math 212/multivariable_notes.pdf)
