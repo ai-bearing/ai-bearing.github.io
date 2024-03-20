@@ -802,7 +802,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 
   $f$ has a local maximum at $z_0$ if $\exists \varepsilon > 0$ such that for all $z\in D_\varepsilon(z_0) := \{z\mid |z-z_0| < \varepsilon\}$, $|f(z)| \leq |f(z_0)|$.\\
 
-  If $f$ is analytic on a domain $D$, then $f$ attains its extrema on the boundary of $D$.\\
+  Maximum modulus principle: If $f$ is analytic on a bounded domain $D$ and continuous on $\partial D$, then $f$ attains its maximum on $\partial D$.\\
 
   For example, if $f(z) = z^2 - 1$, then to find the absolute extrema of $f$ on $D_2(0)$ (the closed disk of radius $2$ about $0$), we know that $f$ attains its absolute extrema on the boundary of $D_2(0)$.
   \begin{align*}
@@ -810,5 +810,57 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
            &\leq |z^2| + |1| = 5\\
            &\geq |z^2| - |1| = 3
   \end{align*}
-  We have that $|f(2)| = 3$ and $|f(2i)| = 5$.
+  We have that $|f(2)| = 3$ and $|f(2i)| = 5$.\\
+
+  If $f$ is a non-constant, non-zero analytic function on a bounded domain $D$, $f$ has no local minimum.
+  \begin{description}
+    \item[Proof:] Let $g(z) = \frac{1}{f(z)}$. Since $f(z)$ is non-zero on $D$, and $f$ is analytic on $D$, so too is $g$. Therefore, $|g|$ admits its maximum on $\partial D$. Since $\max|g| = \min|f|$, $|f|$ attains its minimum on $\partial D$.
+  \end{description}
+  To prove the maximum modulus principle, we use the following lemma:
+  \begin{description}
+    \item[Lemma:] If $f$ is analytic, and $|f|$ is non-constant on a disk $|z-z_0| < r$, then $|f(z_0)|$ is not maximal on $D$.
+    \item[Proof of Lemma:] Suppose toward contradiction that $|f(z_0)|$ is the maximum of $|f(z)|$. By the hypothesis, there exists $z_1\in D$ with $|f(z_1)| < |f(z_0)|$. Let $\Gamma$ be the circle $|z-z_0| = |z_1-z_0|$. Since $f$ is analytic,
+      \begin{align*}
+        2\pi if(z_0) &= \int_{\Gamma} \frac{f(z)}{z-z_0}dz.
+      \end{align*}
+      On $\Gamma$, $|z-z_0| = |z_1-z_0|$, so
+      \begin{align*}
+        \left|\int_{\Gamma}\frac{f(z)}{z-z_0}dz\right| &\leq \int_{\Gamma}\left|\frac{f(z)}{z-z_0}\right|dz\\
+                                                       &= \int_{\Gamma}\frac{|f(z)|}{|z-z_0|}dz\\
+                                                       &= \frac{1}{|z_1-z_0|}\int_{\Gamma}|f(z)|dz\\
+                                                       &< \frac{1}{|z_1-z_0|} \int_{\Gamma}|f(z_0)|dz \tag*{(\textasteriskcentered)}\\
+                                                       &= \frac{\ell(\Gamma)|f(z_0)|}{|z_1-z_0|}\\
+                                                       &= \frac{2\pi|z_1-z_0||f(z_0)|}{|z_1-z_0|}\\
+                                                       &= 2\pi |f(z_0)|
+      \end{align*}
+      (\textasteriskcentered): There must exist $\varepsilon > 0$ such that for $|z-z_1| < \varepsilon$, $|f(z)| < |f(z_0)|$, since $f$ is continuous and $|f(z_1)| < |f(z_0)|$. Let $\Gamma_1 = \Gamma \cap D(z_1,\varepsilon)$, and $\Gamma_2 = \Gamma \setminus \Gamma_1$. Then,
+      \begin{align*}
+        \left|\int_{\Gamma}\right| &= \left|\int_{\Gamma_1} + \int_{\Gamma_2}\right|\\
+                                   &\leq \left|\int_{\Gamma_1}\right| + \left|\int_{\Gamma_2}\right|\\
+                                   &< \left|\int_{\Gamma_1}|f(z_0)|\right| + \left|\int_{\Gamma_2}|f(z_0)|\right|.
+      \end{align*}
+      However, this means $|f(z_0)| < |f(z_0)|$, which is a contradiction.\\
+
+      Alternatively, if $f'(z_0)\neq 0$, then $f$ approximately rotates and stretches or contracts a small disk around $z_0$. If we draw a line from $0$ to $f(z_0)$ through the disk, then there is some point in $\text{im}(f)$ in the disk that has a larger modulus than $f(z_0)$.
+  \end{description}
+  \subsection{Winding Number}%
+  Recall the Cauchy Integral Formula: if $f$ is analytic on a simply connected domain $D$, and $\Gamma$ is a simple closed curve in $D$, with $z_0$ inside $\Gamma$, then
+  \begin{align*}
+    f(z_0) &= \frac{1}{2\pi i}\int_{\Gamma}\frac{f(z)}{z-z_0}dz.
+  \end{align*}
+  There is a generalized version: if $f$ is analytic on any domain $D$, and $\Gamma$ is any closed curve that is null-homotopic in $D$. If $z_0\notin \Gamma$, then
+  \begin{align*}
+    f(z_0)I(\Gamma,z_0) &= \frac{1}{2\pi i}\int_{\Gamma}\frac{f(z)}{z-z_0}dz,
+  \end{align*}
+  where $I(\Gamma,z_0)$ denotes the winding number of $\Gamma$ about $z_0$.\\
+
+  We define
+  \begin{align*}
+    I(\Gamma,z_0)\frac{1}{2\pi i}\int_{\Gamma}\frac{1}{z-z_0}dz
+  \end{align*}
+  for $z_0\notin \Gamma$. We assert that $I(\Gamma,z_0)$ is always an integer.
+  \begin{align*}
+    \frac{1}{2\pi i}\int_{\Gamma}\frac{f(z)}{z-z_0}dz &= f(z_0)I(\Gamma,z_0)\\
+    \int_{\Gamma}\frac{f(z)}{z-z_0}dz &= \int_{\Gamma}\frac{f(z_0)}{z-z_0}dz
+  \end{align*}
 \end{document}
