@@ -2290,4 +2290,84 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
       Therefore, we have $\norm{v}_1\leq \frac{1}{D}\norm{v}$. Thus, any two norms on $V$ are equivalent.
     \item[Proof of (2):] Exercise.
   \end{description}
+  \subsection{Corollary: Finite-Dimensional Subspaces}%
+  Let $V$ be a normed space, and $W\subseteq V$ finite-dimensional. Then, $W\subseteq V$ is closed.
+  \begin{description}
+    \item[Proof:] We know there is a linear uniformism $\varphi: W\rightarrow \ell_{1}^{n}$, for $\text{dim}(W) = n$. If $(w_n)_n\rightarrow v\in V$, where $(w_n)_n\in W$, then $(w_n)_n$ is Cauchy. Therefore, $\left(\varphi(w_n)\right)_n$ is Cauchy in $\ell_1^{n}$. Since $\ell_1^{n}$ is complete, $\left(\varphi(w_n)\right)_n\rightarrow z\in \ell_1^{n}$. Since $\varphi^{-1}$ is uniformly continuous, $(w_n)_n = \left(\varphi^{-1}\left(\varphi(w_n)\right)\right)_n \rightarrow \varphi^{-1}(z)\in W$. Thus, $\varphi^{-1}(z) = v$, so $v\in W$.
+  \end{description}
+  \subsection{Proposition: Uncountable Basis of Banach Space}%
+  If $V$ is an infinite-dimensional Banach space, then $\text{dim}(V)$ is uncountable.
+  \begin{description}
+    \item[Proof:] Let $\{e_n\}$ be a linearly independent set. Let $W_n = \text{span}\{e_1,\dots,e_n\}$. So, $W_n$ is closed, and $W_n\neq V$. We can see that $W_1\subseteq W_2 \subseteq \cdots$.\\
+
+      We claim that $W_n^{\circ} = \emptyset$. Suppose $\exists U(x,\varepsilon) \subseteq W_n$ for some $\varepsilon > 0$. Given any $v\in V$ with $v\neq 0$, we take $\frac{\varepsilon}{2}\frac{v}{\norm{v}} + x \in W_n$. Thus, we have $\frac{\varepsilon}{2}\frac{v}{\norm{v}}\in W_n$, so $v\in W_n$, meaning $V\subseteq W_n$.\\
+
+      By Baire's Theorem, $\bigcup W_n \neq V$.
+  \end{description}
+  \subsection{Proposition: Compact Unit Ball and Finite Dimensions}%
+  Let $V$ be a normed space, and $B_V := \{v\mid \norm{v}\leq 1\}$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $B_V$ is compact;
+    \item $\text{dim}(V) < \infty$.
+  \end{enumerate}
+  \begin{description}
+    \item[Riesz's Lemma:] Let $V$ be a normed space, and $W$ a proper closed subspace. For every $t\in (0,1)$, there exists $v_t\in V$ with $\norm{v_t} = 1$ and $\text{dist}_W(v_t)\geq t$.
+    \item[Proof of Riesz's Lemma:] Find $v_0\in V\setminus W$. We know $\text{dist}_W(v_0) := \delta > 0$. Recall that $\text{dist}_W(v_0) = \inf_{w\in W}\norm{v_0-w}$. Note that $t\delta < \delta$. So, $\delta < \frac{\delta}{t}$. Find $w_0 \in W$ with $\delta \leq \norm{v_0-w_0} < \frac{\delta}{t}$. Let $v_t = \frac{v_0-w_0}{\norm{v_0-w_0}}$. Then, $\norm{v_t} = 1$. We claim that $v_t$ satisfies the lemma.\\
+
+      If $w\in W$ arbitrary, then
+      \begin{align*}
+        \norm{v_t - w} &= \norm{\frac{v_0-w_0}{\norm{v_0-w_0}}-w}\\
+                       &= \frac{1}{\norm{v_0-w_0}}\norm{v_0-\underbrace{\left(w_0 + w\norm{v_0-w_0}\right)}_{\in W}}\\
+                       &> \frac{t}{\delta}\cdot \delta\\
+                       &= t.
+      \end{align*}
+      Thus, $\text{dist}_W(v_t) \geq t$.
+    \item[Proof:] To show (i) $\Rightarrow$ (ii), we need Riesz's Lemma. Let $B_V$ be compact. Suppose toward contradiction that $\text{dim}(V) = \infty$.\\
+
+      Choose $v_1\in V$ with $\norm{v_1} = 1$. Let $W_1 = \text{span}\{v_1\}\subset V$. Then, $W$ is closed and proper, meaning $\exists v_2\in V$ with $\norm{v_2} = 1$ with $\text{dist}_{W_1}(v_2) \geq 1/2$. Let $W_2 = \text{span}\{v_1,v_2\}$. Then, $W_2$ is a proper, closed subspace, meaning $\exists v_3\in V$ with $\norm{v_3} = 1$ and $\text{dist}_{W_2}(v_3)\geq 1/2$.\\
+      
+      Continuing, we find $\exists v_n\in V$ with $\norm{v_n} = 1$ and $\text{dist}_{W_{n-1}}(v_n) \geq 1/2$, where $W_{n-1} = \text{span}\{v_1,\dots,v_{n_1}\}$. We have a sequence $(v_n)_n\in B_V$. Since $B_V$ is compact, $\exists (v_{n_k})_k \rightarrow v\in B_V$, meaning $B_V$ is Cauchy. However, since $\norm{v_n-v_m}\geq 1/2$ for all $n$ and $m$. $\bot$
+  \end{description}
+  \subsection{Proposition: Compact Domain and Uniform Continuity}%
+  If $f: (X,d)\rightarrow (Y,\rho)$ is continuous, and $X$ is compact, then $f$ is uniformly continuous.
+  \begin{description}
+    \item[Proof:] Let $\varepsilon > 0$. For each $x\in X$, we have $\exists \delta_{x} > 0$ such that for $d(z,x) < \delta_x \Rightarrow \rho(f(z),f(x)) < \varepsilon/2$.\\
+
+      Since $X = \bigcup_{x\in X} U(x,\delta_x/2)$, by compactness, we have $x_1,\dots,x_n$ with $X = \bigcup_{j=1}^{n}U(x_j,\delta_{x_j}/2)$. Take $\delta = \min\{\delta_{x_j}/2\}$.\\
+
+      Let $x,x'\in X$ arbitrary with $d(x,x') < \delta$. Locate $x\in U(x_j,\delta_{x_j}/2)$ for some $j$. Then,
+      \begin{align*}
+        d(x',x_j) &\leq d(x',x) + d(x,x_j)\\
+                  &< \delta + \delta_{x_j}/2\\
+                  &\leq \delta_{x_j}.
+      \end{align*}
+      Therefore,
+      \begin{align*}
+        \rho(f(x),f(x')) &\leq \rho(f(x),f(x_j)) + \rho(f(x_j),f(x'))\\
+                         &< \varepsilon/2 + \varepsilon/2\\
+                         &= \varepsilon.
+      \end{align*}
+  \end{description}
+  \subsection{Compactness and Uniform Convergence}%
+  \begin{enumerate}[(1)]
+    \item Let $f_n: (0,1)\rightarrow \R$ with $f_n(t) = t^n$. Pointwise, $(f_n)_n \rightarrow \mathbb{0}$, meaning for $(f_n(t))_n \rightarrow \mathbb{0}(t) = 0$ for all $t\in (0,1)$. However, the convergence is not uniform. We have $\norm{f_n-\mathbb{0}}_{u} = \norm{f_n}_u = 1$.\\
+
+      Note that $f_n(t)$ decreases pointwise to $0$ for all $t\in (0,1)$, meaning $f_1(t) \geq f_2(t) \geq f_3(t)\geq \cdots$.
+    \item Consider the sequence of functions defined by
+      \begin{align*}
+        f_n(x) &= \begin{cases}
+          0 & x\in (-\infty,n)\\
+          x-n & x\in [n,n+1]\\
+          1 & x\in (n_1,\infty)
+        \end{cases}.
+      \end{align*}
+      Notice that $f_n(t)$ is decreasing in $n$ for all $t$ and $(f_n)_n \rightarrow \mathbb{0}$ pointwise, but convergence is not uniform, as $\norm{f_n}_u = 1$ for all $n$.
+  \end{enumerate}
+  \subsubsection{Dini's Theorem}%
+  If $(X,d)$ is a compact metric space, and $\left(f_n: X\rightarrow \R\right)_n$ is a sequence of continuous real-valued functions with $\forall x\in X$, $(f_n(x))_n \rightarrow 0$ is decreasing. Then, $(f_n)_n \rightarrow \mathbb{0}$ uniformly.
+  \begin{description}
+    \item[Proof:] Let $\varepsilon > 0$. For each $n\geq 1$, take $U_n = \{x\mid f_n(x) < \varepsilon/2\}$. Then $U_n = f_n^{-1}((-\infty,\varepsilon/2))$. Since $f_n$ is continuous, and $(-\infty,\varepsilon/2)$, so too is $U_n$ in $X$.\\
+
+      Notice that $U_1\subseteq U_2\subseteq \cdots$, as if $x\in U_n$, then $f_{n+1}(x) \leq f_n(x) < \varepsilon/2$, meaning $x\in U_{n+1}$. Then, we have that $\bigcup U_n = X$, as for all $x$, $f_n(x)\rightarrow 0$. Since $X$ is compact, we have $X = \bigcup U_{n_k} = U_{n_K}$. For any $x\in X$, $f_{n_K}(x) < \varepsilon/2$. Thus, $\norm{f_{n_K}} \leq \varepsilon/2 < \varepsilon$, so we have uniform convergence.
+  \end{description}
 \end{document}
