@@ -911,4 +911,70 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
                   \intertext{Let $z = 1 + \delta$ for $\delta > 0$ sufficiently small. Then,}
                   &\geq 1
   \end{align*}
+  \subsection{Taylor Series}%
+  Recall from Calc II that for $f: \R\rightarrow \R$, a Taylor series for $f$ centered at $x_0$ is
+  \begin{align*}
+    T_{x_0}(x) &= \sum_{k=0}^{\infty}\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n.
+  \end{align*}
+  If $f$ is infinitely differentiable at $x_0$, we have that $T_{x_0}(x)$ will converge to $f$ in an interval of convergence about $x_0$. For a finite-degree polynomial, we have that
+  \begin{align*}
+    P_k(x) := \sum_{n=0}^{k}\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n
+  \end{align*}
+  approximates $f$. Specifically, we can see that $P_k^{(j)}(x_0) = f^{(j)}(x_0)$ for $j \leq k$.\\
+
+  We say that $f(z)$ is analytic on $z_0$ if $f(z)$ is analytic on $D(z_0;\delta)$ for some $\delta > 0$. If $f(z)$ is analytic at $z_0$, then the Taylor series for $f(z)$ around $z_0$ is
+  \begin{align*}
+    \sum_{n=0}^{\infty}\frac{f^{(n)}(z_0)}{n!}(z-z_0).
+  \end{align*}
+  If $f(z)$ is analytic on an open disk $D(z_0;r)$, then the Taylor series for $f(z)$ around $z_0$ converges to $f(z)$ on $D(z_0;r)$, and converges uniformly on $D(z_0;r')\subset D(z_0;r)$.\\
+
+  For example, if $f(z) = (c-z)^{-1}$, we can find a Taylor series for $f$ about $0$, and find the disk of convergence.
+  \begin{align*}
+    f'(z_0) &= (c-z)^{-2}\\
+    f''(z_0) &= 2(c-z)^{-3}\\
+    f^{(3)}(z_0) &= 3!(c-z)^{-4}\\
+               &\vdots\\
+    f^{(n)}(z_0) &= n!(c-z)^{-(n+1)}.
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    T(f,z_0) &= \sum_{n=0}^{\infty}\frac{n!(c-z_0)^{-(n+1)}}{n!}(z-z_0)^{n}\\
+             &= \sum_{n=0}^{\infty}c^{-(n+1)}z^n.
+  \end{align*}
+  To find the radius of convergence, we find that $f$ is analytic on $\C\setminus \{c\}$. Thus, $T(f,z_0)$ is convergent about $D(0;|c|)$.\\
+
+  Considering $f(z) = (c-z)^{-1}$ again, we find 
+  \begin{align*}
+    f(z) &= \frac{1}{c}\frac{1}{1-\frac{z}{c}}\\
+         &= \frac{1}{c}\sum_{n=0}^{\infty}c^{-n}z^n \tag*{true iff $|z/c|<1$}\\
+         &= \sum_{n=0}^{\infty}c^{-(n+1)}z^n.
+  \end{align*}
+  To find a Taylor series for $g(z) = (c-z)^{-2}$, we have that $g(z) = f'(z)$, so we can take the Taylor series for $f$ and differentiate it. Since $f$ is analytic on $|z|<|c|$, and $g$ is equal to $f'$, we have that $g$ is convergent on the same disk that $f$ is convergent on.\\
+
+  If $f$ is analytic at $z_0$, and $f(z) = \sum_{n=0}^{\infty}c_n(z-z_0)^n$ on some disk $D(z_0;r)$, then $f'(z) = \sum_{n=1}^{\infty}c_n n (z-z_0)^{n-1}$, and this series converges on $D(z_0;r)$. We can also do integration term-by-term.\\
+
+  For example, to find the Taylor series for $f(z) = \text{Log}(z)$ around $z_0\in \C\setminus (\infty,0]$, we take integrals term-by-term on $g(z) = 1/z$.
+  \begin{align*}
+    g(z) &= \frac{1}{z}\\
+         &= \frac{1}{z_0-(z_0 - z)}\\
+         &= \frac{1}{z_0}\frac{1}{1-\left(1-\frac{z}{z_0}\right)}\\
+         &= \frac{1}{z_0}\sum_{n=0}^{\infty}\left(1-\frac{z}{z_0}\right)^n.\\
+   \intertext{We have that the series converges if $|1-z/z_0| < 1$.}\\
+         &= \frac{1}{z_0}\sum_{n=0}^{\infty}\left(\frac{z_0-z}{z_0}\right)\\
+         &= \sum_{n=0}^{\infty}\frac{(-1)^n}{z_0^{n+1}}(z-z_0)^{n}\\
+    \intertext{so,}
+    f(z) &= \int f'(z)dz\\
+         &= \int \sum_{n=0}^{\infty}\frac{(-1)^n}{z_0^{n+1}}(z-z_0)^n~dz\\
+         &= \sum_{n=0}^{\infty}\frac{(-1)^{n}}{z_0^{n+1}}\int(z-z_0)^n~dz\\
+         &= \sum_{n=0}^{\infty}\frac{(-1)^{n}}{z_0^{n+1}}\frac{(z-z_0)^{n+1}}{n+1} + C\\
+         \intertext{Specifically, $C = \text{Log}(z_0)$. Thus,}
+    f(z) &= \text{Log}(z_0) + \sum_{n=0}^{\infty}\frac{(-1)^{n}}{z_0^{n+1}}\frac{(z-z_0)^{n+1}}{n+1}.
+  \end{align*}
+  We have that the radius of convergence in $\C$ is equal to $\text{dist}_{(-\infty,0]}(z_0) = |\text{Im}(z_0)|$.\\
+
+  For $f$ and $g$ with respective Taylor series, we can find their sum relatively easily (coefficient-wise addition), but for $fg$, we require convolution.
+  \begin{align*}
+    \left(a_0 + a_1z + a_2z^2 + \cdots\right)\left(b_0 + b_1z + b_2z^2 + \cdots\right) &= a_0b_0 + (a_0b_1 + a_1b_0)z + \cdots\\
+                                                                                       &= \sum_{n=0}^{\infty}\left(\sum_{k=0}^{n}a_kb_{n-k}\right)z^n
+  \end{align*}
 \end{document}
