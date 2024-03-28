@@ -1254,7 +1254,7 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
       \begin{align*}
         \mathbb{P}[0,1]\left\{\sum_{k=1}^{n}a_kx^k\mid a_k\in \R,n\geq 1\right\}
       \end{align*}
-      is $\norm{\cdot}_u$-dense in $C([0,1])$. Using this, we can show that $(C([0,1]),\norm{\cdot}_u)$ is separable.
+      is $\norm{\cdot}_u$-dense in $C([0,1])$ (see: Stone-Weierstrass Theorem). Using this, we can show that $(C([0,1]),\norm{\cdot}_u)$ is separable.
   \end{enumerate}
   \subsection{The Cantor Set}%
   \begin{align*}
@@ -2369,5 +2369,95 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
     \item[Proof:] Let $\varepsilon > 0$. For each $n\geq 1$, take $U_n = \{x\mid f_n(x) < \varepsilon/2\}$. Then $U_n = f_n^{-1}((-\infty,\varepsilon/2))$. Since $f_n$ is continuous, and $(-\infty,\varepsilon/2)$, so too is $U_n$ in $X$.\\
 
       Notice that $U_1\subseteq U_2\subseteq \cdots$, as if $x\in U_n$, then $f_{n+1}(x) \leq f_n(x) < \varepsilon/2$, meaning $x\in U_{n+1}$. Then, we have that $\bigcup U_n = X$, as for all $x$, $f_n(x)\rightarrow 0$. Since $X$ is compact, we have $X = \bigcup U_{n_k} = U_{n_K}$. For any $x\in X$, $f_{n_K}(x) < \varepsilon/2$. Thus, $\norm{f_{n_K}} \leq \varepsilon/2 < \varepsilon$, so we have uniform convergence.
+  \end{description}
+  \subsection{Compactness in $C(X)$}%
+  If $X$ is a compact metric space, then, by the Extreme Value Theorem, $C(X) = C_b(X)$. We can see that $C_b(X)$ is complete under $\norm{\cdot}_u$. We may ask when $\mathcal{F}\subseteq C(X)$ is compact.\\
+
+  A family $\mathcal{F}\subseteq C(X)$ is equicontinuous if and only if $\forall \varepsilon > 0, \exists \delta > 0$ such that $\forall x,y\in X$ with $d(x,y) < \delta$, then $|f(x)-f(y)| < \varepsilon$ for all $f\in \mathcal{F}$.
+  \begin{description}
+    \item[Exercise:] For $\mathcal{F}\subseteq C(X)$ with $\mathcal{F}$ finite, then $\mathcal{F}$ is always equicontinuous.\\
+
+      Since every $f\in \mathcal{F}$ is uniformly continuous, take the minimum value of $\delta$.
+  \end{description}
+  \subsection{Arzelà-Ascoli Theorem}%
+  Let $(X,d)$ be a compact metric space. The family $\mathcal{F}\subseteq C(X)$ is compact if and only if $\mathcal{F}$ is closed, bounded, and equicontinuous.
+  \begin{description}
+    \item[Proof:] Let $\mathcal{F}$ be compact. Then, $\mathcal{F}$ is complete, and thus closed and totally bounded, meaning $\mathcal{F}$ is bounded. Thus, we need to show $\mathcal{F}$ is equicontinuous.\\
+
+      Let $\varepsilon > 0$. By total boundedness, $\exists f_1,\dots,f_n\in \mathcal{F}$ with $\mathcal{F}\subseteq \bigcup_{j=1}^{n} U(f_j,\varepsilon/3)$. Each $f_j$ is uniformly continuous since $X$ is compact. Thus, $\exists \delta_j$ with $x,y\in X$ and $d(x,y)\leq \delta_j$, then $|f_j(x)-f_j(y)| < \varepsilon/3$.\\
+
+      Let $\delta = \min\{\delta_j\}$. Given any $f\in \mathcal{F}$, we have $\mathcal{F}\in U(f_j,\varepsilon/3)$ for some $j$. For any $x,y\in X$ with $d(x,y) < \delta$, we have
+      \begin{align*}
+        |f(x)-f(y)| &\leq |f(x)-f_j(x)| + |f_j(x)-f_j(y)| + |f_j(y)-f(y)|\\
+                    &\leq \norm{f-f_j}_u + |f_j(x)-f_j(y)| + \norm{f-f_j}_u\\
+                    &< 2\varepsilon/3 + \varepsilon/3\\
+                    &= \varepsilon
+      \end{align*}
+      Let $\mathcal{F}$ be closed, bounded, and equicontinuous. Since $\mathcal{F} \subseteq C(X)$ is closed, $\mathcal{F}$ is complete. We need only show $\mathcal{F}$ is totally bounded.\\
+
+      Let $\varepsilon > 0$. Since $\mathcal{F}$ is equicontinuous, $\exists \delta > 0$ such that for all $x,y\in X$ with $d(x,y) < \delta$, then $|f(x)-f(y)| < \varepsilon/4$ for any $f\in \mathcal{F}$.\\
+
+      Since $X$ is compact, $X$ is totally bounded, so $\exists x_1,\dots,x_n\in X$ with $X\subseteq \bigcup_{j=1}^{n}U(x_j,\delta)$. Consider the set $C_{\mathcal{F}} := \left\{\left(f(x_1),\dots,f(x_n)\right)|f\in\mathcal{F}\right\}\subseteq \R^n$.\\
+
+      Since $\mathcal{F}$ is bounded, we have that $\norm{f}_u \leq M$ for all $f\in \mathcal{F}$ for some $M>0$. Thus, $|f(x_j)|\leq \norm{f}_u \leq M$ for $j = 1,\dots,n$. Thus, $C_{\mathcal{F}}$ is bounded in $\R^n$.
+      \begin{description}
+        \item[Exercise:] $S\subseteq \R^n$ is bounded if and only if $S$ is totally bounded.
+      \end{description}
+      Thus, $C_{\mathcal{F}}$ is totally bounded. Therefore, $\exists f_1,\dots,f_m\in \mathcal{F}$ with $C_{\mathcal{F}}\subseteq \bigcup_{i=1}^{m}U\left(\left(f_i(x_1),\dots,f_i(x_n)\right),\varepsilon/4\right)$.\\
+
+      If $f\in \mathcal{F}$, then $\exists i = 1,\dots,m$ (\textasteriskcentered) such that $\norm{\left(f(x_1),\dots,f(x_n)\right)-\left(f_i(x_1),\dots,f_i(x_n)\right)}_1 < \varepsilon/4$. Thus,
+      \begin{align*}
+        \sum_{j=1}^{n}|f(x_j)-f_i(x_j)| < \varepsilon/4.
+      \end{align*}
+      We claim that $F\subseteq \bigcup_{i=1}^{m}U(f_i,\varepsilon)$. Let $f\in \mathcal{F}$ and $x\in X$. Pick $i$ as in (\textasteriskcentered), and $j$ with $x\in U(x_j,\delta)$. Then,
+      \begin{align*}
+        |f(x)-f_i(x)| &\leq |f(x)-f(x_j)| + |f(x_j)-f_i(x_j)| + |f_i(x_j)-f_i(x)|\\
+                      &< 3\varepsilon/4\\
+                      \intertext{so}
+        \norm{f-f_i} &\leq 3\varepsilon/4\\
+                     &< \varepsilon.
+      \end{align*}
+  \end{description}
+  \subsection{Stone-Weierstrass Theorem}%
+  Let $(X,d)$ be a compact metric space. Suppose $A\subseteq C(X;\R)$ with
+  \begin{itemize}
+    \item $f,g\in A \Rightarrow f + g\in A$;
+    \item $f\in A,\alpha\in \mathbb{F}\Rightarrow \alpha f \in A$;
+    \item $f,g\in A\Rightarrow fg\in A$;
+    \item $\mathbb{1}_X \in A$;
+    \item $A$ is separating --- if $x\neq y$ in $X$, then $\exists f\in A$ with $f(x)\neq f(y)$.
+  \end{itemize}
+  We say $A$ is a unital separating subalgebra of $C(X)$.\\
+
+  Then, $\overline{A}^{\norm{\cdot}_u} = C(X;\R)$ ($A$ is uniformly dense).
+  \subsection{Uniform Approximation by Polynomials}%
+  For example, considering $\mathcal{P} = \left\{x\mapsto \sum_{k=0}^{n}a_kx^k\mid a_k\in \R\right\}\subseteq C([0,1])$. We can see that $\mathcal{P}$ is a separating unital subalgebra. Thus, $\mathcal{P}$ is dense.\\
+
+  Let $f(x) = |x|$ on $[-1,1]$. Consider the sequence $P_n(x)$ given by
+  \begin{align*}
+    P_0(x) &= 0\\
+    P_{n+1}(x) &= P_n(x) + \frac{x^2 - (P_n(x))^2}{2}.
+  \end{align*}
+  For example, $P_1(x) = x^2/2$, $P_2(x) = \frac{x^2}{2} + \frac{x^2 - x^4/4}{2}$. Then, $(P_n)_n \xrightarrow{\norm{\cdot}_u} f$.
+  \begin{description}
+    \item[Proof:] We claim that $0\leq P_n(x)\leq f(x)$ for all $x\in [-1,1]$. Clearly, $0\leq P_0(x) \leq |x|$, and $0 \leq P_1(x)\leq |x|$. Assume it is the case that $0\leq P_n(x) \leq |x|$. Then,
+      \begin{align*}
+        0\leq P_n(x) \leq |x|\\
+        0\leq P_n^2(x) \leq x^2\\
+        x^2 - P_n^2(x) \geq 0\\
+        P_{n+1}(x) = P_{n}(x) + \frac{x^2-P_n^2(x)}{2} \geq 0\\
+        \intertext{and}
+        |x| - P_{n+1}(x) &= |x| - P_n(x) - \frac{|x|^2 - P_n(x)}{2}\\
+                         &= |x| - P_n(x) - \frac{\left(|x|-P_n(x)\right)\left(|x| + P_n(x)\right)}{2}\\
+                         &= \left(|x|-P_n(x)\right)\left(1-\frac{|x| + P_n(x)}{2}\right)\\
+                         &\geq 0
+      \end{align*}
+      Observe that $P_n(x) \leq P_{n+1}(x)$. For every $x$, $(P_n(x))_n$ is increasing and bounded above by $|x|$. So, $P_n(x) \rightarrow L_x$.
+      \begin{align*}
+        P_{n+1}(x) &= P_{n}(x) + \frac{x^2 - P_n^2(x)}{2}\\
+        L_x &= L_x + \frac{x^2 - L_x^2}{2}\\
+        L_x &= \sqrt{x^2} = |x|.
+      \end{align*}
+      Thus, $(P_n)_n$ converges pointwise on $[-1,1]$. So, $(f-P_n)\rightarrow 0$ is decreasing pointwise. Whence, by Dini's Theorem, $\norm{f-P_n}_u \rightarrow 0$.
   \end{description}
 \end{document}
