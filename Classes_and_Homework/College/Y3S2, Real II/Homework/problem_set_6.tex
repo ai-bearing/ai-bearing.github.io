@@ -112,7 +112,7 @@
       \begin{align*}
         X &= \bigcup_{x\in X}\{x\}.
       \end{align*}
-      Since every subset of $X$ is finite, this is an open cover, but this does not contain a finite subcover as $X$ is infinite.\\
+      Since every subset of $X$ is open, this is an open cover, but this does not contain a finite subcover as $X$ is infinite.\\
 
       Suppose $(X,d)$ is not compact. Then, there is an open cover of $X$
       \begin{align*}
@@ -172,9 +172,21 @@
       \end{align*}
       and since $(\chi_n)_n \rightarrow \chi\in K$ and $(\sigma_n)_n\rightarrow \sigma \in L$, it must be the case that $(a_n)_n \rightarrow \chi + \sigma \in K+L$. Therefore, $K+L$ is complete.\\
 
-      Let $\varepsilon > 0$. Since $K$ is totally bounded, $\exists x_1,\dots,x_n\in K$ such that $K\subseteq \bigcup_{i=1}^{n} U(x_i,\varepsilon)$. Similarly, since $L$ is totally bounded, $\exists y_1,\dots,y_m\in L$ such that $L\subseteq \bigcup_{j=1}^{m}U(y_i,\varepsilon)$.\\
+      Let $\varepsilon > 0$. Since $K$ is totally bounded, $\exists x_1,\dots,x_n\in K$ such that $K\subseteq \bigcup_{i=1}^{n} U(x_i,\varepsilon/2)$. Similarly, since $L$ is totally bounded, $\exists y_1,\dots,y_m\in L$ such that $L\subseteq \bigcup_{j=1}^{m}U(y_i,\varepsilon/2)$.\\
 
-      Let $x\in K+L$. Then, $x = x_K + y_L$ for $x_K\in K$ and $y_L\in L$. We have that $d(x_K,x_i) < \varepsilon$ for some $x_i$, and $d(y_L,y_j) < \varepsilon$ for some $y_j$.
+      Let $x\in K+L$. Then, $x = x_K + y_L$ for $x_K\in K$ and $y_L\in L$. Since there exist $x_i\in K$ and $y_j\in L$ with $\norm{x_K-x_i} < \varepsilon/2$ and $\norm{y_L-y_j}< \varepsilon$, we have
+      \begin{align*}
+        \norm{x - (x_i + y_j)} &= \norm{(x_K + y_L) - (x_i - y_j)}\\
+                               &\leq \norm{x_K - x_i} + \norm{y_L - y_j}\\
+                               &< \varepsilon.
+      \end{align*}
+      Thus, it is the case that
+      \begin{align*}
+        K+L \subseteq \bigcup_{j=1}^{m}\left(\bigcup_{i=1}^{n}U(x_i + y_j,\varepsilon)\right),
+      \end{align*}
+      meaning $K+L$ is totally bounded.\\
+
+      Since $K+L$ is complete and totally bounded, it is compact.
   \end{description}
   \section{Problem 8}%
   Let $(f_n: [0,1]\rightarrow \R)_{n\geq 1}$ be a sequence of differentiable functions with $\sup\norm{f_n}_u < \infty$ and $\sup\norm{f'_n}_u < \infty$. Show that there is a subsequence $\left(f_{n_k}\right)_k$ that converges uniformly to a continuous function $f: [0,1]\rightarrow \R$.
@@ -185,7 +197,7 @@
 
       Since $\sup_{n\geq 1}\norm{f_n}_u < \infty$, the family $(f_n)_n$ is also bounded.\\
 
-      By Arzelà-Ascoli, $\exists n_k$ such that $\left(f_{n_k}\right)_k \rightarrow f$ uniformly.
+      By Arzelà-Ascoli, $\exists n_k$ such that $\left(f_{n_k}\right)_k \rightarrow f$ uniformly, as $\mathcal{F} = \{f_n\}$ is compact.
   \end{description}
   \section{Problem 9}%
   Let $(X_n,d_n)_n$ be a sequence of compact metric spaces. Show that the product $\prod X_n$ with the product metric is also compact.
@@ -194,4 +206,20 @@
   \end{description}
   \section{Problem 10}%
   Let $(X,d)$ be a compact metric space and let $\mathcal{V}$ be an open cover of $X$. Show that there is a number $L(\mathcal{V})$ satisfying that given any nonempty $E\subseteq X$ with $\text{diam}(E) < L(\mathcal{V})$, there exists $V\in \mathcal{V}$ with $E\subseteq V$.
+  \begin{description}
+    \item[Proof:] Suppose toward contradiction that no such $L(\mathcal{V})$ exists. Then, for any $E\subseteq X$ with $\text{diam}(E) < \frac{1}{n}$, there does not exist $V\in \mathcal{V}$ with $E\subseteq V$.\\
+
+      Let $(x_n)_n$ be a sequence in $X$. Since $X$ is compact, we can extract $n_k$ such that $\left(x_{n_k}\right)_k\rightarrow x\in X$. For $\varepsilon > 0$, it must be the case that $U(x,\varepsilon)\subseteq V$ for some $V\in \mathcal{V}$ (as $V$ is an open cover of $X$).\\
+
+      Since $\left(x_{n_k}\right)_k\rightarrow x$, we have that $\exists N_k$ large such that for all $k\geq N_k$, $x_{n_k}\in U(x,\varepsilon/2)$, and $\frac{1}{N_k} < \varepsilon/2$. Letting $E\subseteq X$ be a set of diameter $\frac{1}{n_k}$, we have that for $y\in E$,
+      \begin{align*}
+        d(y,x) &\leq d\left(y,x_{n_k}\right) + d\left(x_{n_k},x\right)\\
+               &\leq \text{diam}(E) + \frac{\varepsilon}{2}\\
+               &\leq \frac{1}{n_k} + \frac{\varepsilon}{2}\\
+               &\leq \frac{1}{N_k} + \frac{\varepsilon}{2}\\
+               &< \frac{\varepsilon}{2} + \frac{\varepsilon}{2}\\
+               &= \varepsilon.
+      \end{align*}
+      Thus, $E\subseteq U(x,\varepsilon)\subseteq V$. $\bot$
+  \end{description}
 \end{document}
