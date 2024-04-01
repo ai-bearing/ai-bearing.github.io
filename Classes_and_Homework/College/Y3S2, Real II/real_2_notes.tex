@@ -1,4 +1,4 @@
-\documentclass[8pt]{extarticle}
+\documentclass[10pt]{extarticle}
 \title{}
 \author{}
 \date{}
@@ -2053,7 +2053,9 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
   \end{align*}
   where $0 < a < 1$ and $ab > 1$ is such a function. This is known as the Weierstrass function.\\
 
-  Such functions are not rare at all. In the complete normed vector space $X = (C[0,1],\norm{\cdot}_u)$, $\{f\in X\mid f\text{ differentiable nowhere}\}$ is the complement of a meager set (meaning it is topologically ``big'').
+  Such functions are not rare at all.\\
+
+  In the complete normed vector space $X = (C[0,1],\norm{\cdot}_u)$, $\{f\in X\mid f\text{ differentiable nowhere}\}$ is the complement of a meager set (meaning it is topologically ``big'').
   \section{Compactness}%
   Compactness can best be analogized to finite dimensionality in a metric space.\\
 
@@ -2510,10 +2512,10 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
       If $s,t\in I$ with $s \leq t$, then $s\geq a$ or $s > a$, or $t\leq b$ or $t < b$. By cases, we find$[s,t]\subseteq I$, meaning $I$ is an interval.
     \item[Exercise:] If $Y\subseteq X$ is connected, then $\overline{Y}$ is connected.
   \end{description}
-  \subsection{Connected Components}%
+  \subsection{Connected Components and Clopen Sets}%
   Let $(X,d)$ be a metric space. We define $\sim_{X}$ on $X$ as $x\sim_{X}y$ if there is a connected $C\subseteq X$ with $x,y\in C$. This is an equivalence relation.\\
 
-  We have that $x\sim_{X}x$ by taking $C = \{x\}$. Clearly, the relation is symmetric. To show transitivity, we need the following lemma:
+  We have that $x\sim_{X}x$ by taking $C = \{x\}$, so the relation is reflexive. Clearly, the relation is symmetric. To show transitivity, we need the following lemma:
   \begin{description}
     \item[Lemma:] If $Y_1,Y_2\subseteq X$ are connected with $Y_1\cap Y_2\neq \emptyset$, then $Y_1\cup Y_2$ is connected.
     \item[Proof of Lemma:] Let $Y_1\cup Y_2\subseteq U\cup V$ be a splitting. Note that $Y_i \subseteq U\cup V$, and $Y_i \cap U\cap V = \subseteq (Y_1\cup Y_2)\cap U \cap V =\emptyset$. For $i=1,2$, since $Y_i$ are connected, so we have splittings for $Y_i$. Since the $Y_i$ are connected, these splittings are trivial.\\
@@ -2530,6 +2532,70 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
 
   The equivalence classes of $X$ under $\sim_{X}$ are called components.
   \begin{description}
-    \item[Remark:] $[x]_{\sim} = \{y\in X\mid y\sim_{X}x\} = \bigcup_{x\in C} C $ with $C$ connected. This is the largest connected subset of $X$ containing $x$.
+    \item[Remark:] $[x]_{\sim} = \{y\in X\mid y\sim_{X}x\} = \bigcup_{x\in C} C $ with $C$ connected. This is the largest connected subset of $X$ containing $x$. We have that $X = \bigsqcup_{i\in I}[x_i]_{\sim}$.
+  \end{description}
+  If $(X,d)$ is a metric space, and $C\subseteq X$ is clopen and connected, then $C$ is a component in $X$.
+  \begin{description}
+    \item[Proof:] Let $x\in C$. We claim that $C = [x]_{\sim}$.\\
+
+      Clearly, $C\subseteq [x]_{\sim}$. Suppose $y\in [x]_{\sim}$ and $y\notin C$.\\
+
+      Since $y\in [x]_{\sim}$, there is a connected $D\subseteq X$ with $x,y\in D$. We have that $D\subseteq C\cup (X\setminus C)$. This is a non-trivial splitting for $D$, meaning $D$ is disconnected. $\bot$
+  \end{description}
+  \subsection{Totally Disconnected Metric Spaces}%
+  Consider the set $X = \{0\} \cup \{1/n\mid n\geq 1\}$ with the topology inherited from $\R$. We want to find the connected components.
+  \begin{description}
+    \item[Solution:] The set $\{1/n\}$ for each $n$ is connected in $\R$, meaning it is connected in $X$. Since $\{1/n\}$ is closed in $\R$, it is also closed in $X$. We also have that $\{1/n\} = X\cap (1/n - \delta_n,1/n + \delta_n)$, with $\delta_n = \frac{1}{n(n+1)}$.\\
+
+      Since each $\{1/n\}$ is clopen and connected, each $\{1/n\}$ is a component. Additionally, $\{0\}$ is necessarily a component of $X$ since it is left over after we take $X \setminus \{1/n\mid n\geq 1\}$. We see that every connected component of $X$ is a singleton.
+  \end{description}
+  For $X=\Z$, we see that the components are singletons.\\
+
+  For $X = \Q$, we need a little bit more machinery to find the components.
+  \begin{description}
+    \item[Solution:] Suppose $q,r\in\Q$ with $r\sim_{\Q}q$. Then, $\exists D\subseteq \Q$ connected with $r,q\in D$. If $r\neq q$, then let $x\in \R\setminus \Q$ with $x$ strictly between $r$ and $q$. Without loss of generality, $r < q$. Then, $D\subseteq \left((-\infty,x)\cap \Q\right) \cup \left((x,\infty)\cap \Q\right)$ is a non-trivial splitting, meaning $D$ is not connected.\\
+
+      Therefore, $r = q$, meaning the components of $\Q$ are singletons.
+  \end{description}
+  If $(X,d)$ is a metric space where every connected component is a singleton, then $X$ is totally disconnected.
+  \begin{description}
+    \item[Exercise:] The Cantor set is totally disconnected.
+  \end{description}
+  \subsection{Proposition: Open Sets in $\R$}%
+  If $U\subseteq \R$ is open, then $U = \bigsqcup_{i\in I}V_i$, where each $V_i\subseteq \R$ is an open interval and $I$ is countable.
+  \begin{description}
+    \item[Proof:] Let $U$ be the metric space with the topology inherited from $\R$. Then, $U = \bigsqcup_{i\in I}V_i$, with $V_i \subseteq U$ are the connected components in $U$.\\
+
+      Since $V_i$ is connected in $U$, $V_i$ is connected in $\R$. Thus, $V_i$ is an interval. We will show that each $V_i$ is open in $\R$.\\
+
+      Let $x\in V_i$. Since $U$ is open, $\exists \varepsilon > 0$ with $(x-\varepsilon,x+\varepsilon)\subseteq U$. Since $x\in (x-\varepsilon,x+\varepsilon)$, and $(x-\varepsilon,x+\varepsilon)$, it is the case that $(x-\varepsilon,x+\varepsilon)\subseteq [x]_{\sim_U} = V_i$. Thus, $V_i$ is open.\\
+
+      Now, we need to show that $I$ is countable. Consider $N: I\rightarrow \Q$; $N(i) = q_i\in V_i$, with $q_i\in \Q$. If $i\neq j$, then $N(i) = N(j)$ since $V_i\cap V_j \neq \emptyset$. Hence, $N$ is injective, so $I$ is countable.
+  \end{description}
+  \subsection{Proposition: Connectedness and Continuity}%
+  If $f: X_1\rightarrow X_2$ is continuous and $Y\subseteq X_1$ is connected, then $f(Y)\subseteq X_2$ is connected.
+  \begin{description}
+    \item[Proof:] Let $f(Y)\subseteq U\cup V$ is a splitting of $f(Y)\subseteq X_2$.\\
+
+      Taking the preimage, we have $Y\subseteq f^{-1}(f(Y))\subseteq f^{-1}(U\cup V) = f^{-1}(U)\cup f^{-1}(V)$. We have that $f^{-1}(U)$ and $f^{-1}(V)$ are open in $X_1$. Additionally,
+      \begin{align*}
+        Y\cap f^{-1}(U)\cap f^{-1}(V) &= Y\cap f^{-1}(U\cap V)\\
+                                      &\subseteq f^{-1}\left(f(Y)\right)\cap f^{-1}(U\cap V)\\
+                                      &\subseteq f^{-1}\left(f(Y)\cap f^{-1}(U\cap V)\right)\\
+                                      &= \emptyset.
+      \end{align*}
+      Thus, $Y\subseteq f^{-1}(U)\cup f^{-1}(V)$ is a splitting. Since $Y$ is connected, the splitting is trivial, meaning without loss of generality, $Y\subseteq f^{-1}(U)$. So, $f(Y)\subseteq U$.
+  \end{description}
+  \subsection{Intermediate Value Theorem}%
+  Let $f: [a,b]\rightarrow \R$ is continuous. If $f(a)\leq \lambda \leq f(b)$, then $\lambda \in f([a,b])$.
+  \begin{description}
+    \item[Proof:] Since $[a,b]$ is compact and connected, and $f$ is continuous, $f([a,b])\subseteq \R$ is also connected. So, $f([a,b])$ is a compact and connected interval.\\
+
+      Since $f(a),f(b)\in f([a,b])$, and $f([a,b])$ is an interval, $\lambda \in f([a,b])$.
+  \end{description}
+  \subsection{Proposition: Continuous Map to Totally Disconnected Set}%
+  Let $X$ be connected, $Y$ totally disconnected, and $f: X\rightarrow Y$ continuous. Then, $f$ is a constant.
+  \begin{description}
+    \item[Proof:] The continuous image of a connected set is connected, and the only connected sets in $Y$ are singletons, meaning the image of $X$ is a singleton.
   \end{description}
 \end{document}
