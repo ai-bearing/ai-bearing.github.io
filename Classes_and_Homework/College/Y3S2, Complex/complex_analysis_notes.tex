@@ -977,5 +977,46 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
     \left(a_0 + a_1z + a_2z^2 + \cdots\right)\left(b_0 + b_1z + b_2z^2 + \cdots\right) &= a_0b_0 + (a_0b_1 + a_1b_0)z + \cdots\\
                  &= \sum_{n=0}^{\infty}\left(\sum_{k=0}^{n}a_kb_{n-k}\right)z^n
   \end{align*}
+  \section{Power Series}%
+  Recall that the Taylor series for $f(z)$ about $z_0$ is
+  \begin{align*}
+    f(z) &= \sum_{j=0}^{\infty}\frac{f^{(j)}(z_0)}{j!}(z-z_0)^j\\
+         &= \sum_{j=0}^{\infty}c_j(z-z_0)^j\\
+    c_j &= \frac{f^{(j)}(z_0)}{j!}.
+  \end{align*}
+  Suppose instead that we start with the sequence $(c_n)_n$. For example, let $c_j = \frac{j^2 + 1 + i}{(2i)^j}$. We may ask if $\sum c_j(z-z_0)^j$ is convergent (and thus the Taylor series for some analytic function about $z_0$).\\
 
+  If $\sum c_j(z-z_0)^j$ converges for some $z\neq z_0$, then it indeed is. A series of the form $f(z) = \sum c_j(z-z_0)^j$ is known as a power series. However, the function that the power series converges to may not be an elementary function.\\
+
+  For every power series $\sum c_j(z-z_0)^j$, there exists a single value $R\in [0,\infty]$ such that the power series converges on $|z-z_0| < R$ and diverges on $|z-z_0| \geq R$. For every $r < R$, the power series converges \textit{uniformly} on $|z-z_0| < r$. If $R$ is finite, $|z-z_0| = R$ is called the circle of convergence. The power series may converge at some, all, or no points on $|z-z_0| = R$. $R$ is known as the radius of convergence.\\
+
+  Let $c_k = \frac{k^2 + 1 + i}{(2i)^k}$, with $\sum c_k (z-5i)^k$ the series we must find the radius of convergence for. Using the ratio test, we find
+  \begin{align*}
+    \lim_{k\rightarrow\infty}\left|\frac{\frac{(k+1)^2 + 1 + i}{(2i)^{k+1}}(z-5i)^{k+1}}{\frac{k^2 + 1 + i}{(2i)^k}(z-5i)^k}\right| &= \lim_{k\rightarrow\infty}\left|(z-5i)\frac{(k+1)^2 + 1 + i}{(k^2 + 1 + i)(2i)}\right|\\
+                              &= \lim_{k\rightarrow\infty}\left|\frac{(z-5i)}{2i} \right|\\
+                              &= \frac{|z-5i|}{2}.
+  \end{align*}
+  If $\frac{|z-5i|}{2} < 1$, then the power series converges, so we have $R = 2$.\\
+
+  We care about the uniform convergence of the power series since if $(f_n)_n$ is a sequence of continuous functions that converges uniformly to $f$ on $D$, then $f$ is continuous on $D$. If $(f_n)_n$ are analytic under the same condition, then $f$ is analytic.\\
+
+  Notice that $f_n(z) = \sum_{j=0}^{n}c_j(z-z_0)^j$ is a polynomial. Since the $(f_n)_n$ are analytic, if it is the case that the power series converges uniformly on $D$, then $f(z)$ is analytic.
+  \begin{enumerate}[(i)]
+    \item Every power series with nonzero radius of convergence is an analytic function inside its circle of convergence.
+    \item The Taylor series for the function $\sum_{j=0}^{\infty}c_j(z-z_0)^j$ is itself.
+  \end{enumerate}
+  For example, let $g(z) = \sum_{k=0}^{\infty}\frac{k^2 + 1 + i}{(2i)^k}(z-5i)^{k}$. Then, $g$ is analytic on $|z-5i| < 2$, and $g^{(9)}(5i) = \left(\frac{82 + i}{(2i)^{9}}\right)(9!)$\\
+
+  To prove (ii), consider $\sum_{j=0}^{\infty}a_j(z-z_0)^j = \sum_{j=0}^{\infty}b_j(z-z_0)^j$. We then ask if $a_j = b_j$ for all $j$. The constant term of the $n$th-derivative of the left-hand side is $a_nn!$, and the constant term of the $n$th derivative of the right-hand side is $b_nn!$. Plugging in $z_0$ to the respective $n$th derivatives, we find that $a_n = b_n$.\\
+
+  To prove that a sequence of continuous functions $(f_n)_n \rightarrow f$ uniformly to a continuous function $f$, we pick $z_0\in D$ to show that $f$ is continuous at $z_0$.\\
+
+  Let $\varepsilon > 0$. We want to show that there exists $\delta > 0$ such that $|z-z_0| < \delta \Rightarrow |f(z) - f(z_0)| < \varepsilon$.\\
+
+  Since $(f_n)_n \rightarrow f$ uniformly on $D$, there exists $M$ such that $\forall n \geq M$ and $\forall z\in D$, $|f_n(z) - f(z)| < \varepsilon$. Since $f_M$ is continuous, we have that $\exists \delta > 0$ such that $|f_M(z) - f_M(z_0)| < \varepsilon$ for $|z-z_0| < \delta$. Then,
+  \begin{align*}
+    |f(z) - f(z_0)| &= |f(z) - f_M(z) + f_M(z) - f_M(z_0) + f_M(z_0) - f(z_0)|\\
+                    &\leq |f(z) - f_M(z)| + |f_M(z) - f_M(z_0)| + |f_M(z_0) - f(z_0)|\\
+                    &< 3\varepsilon
+  \end{align*}
 \end{document}

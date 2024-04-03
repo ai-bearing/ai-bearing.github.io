@@ -2594,8 +2594,92 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
       Since $f(a),f(b)\in f([a,b])$, and $f([a,b])$ is an interval, $\lambda \in f([a,b])$.
   \end{description}
   \subsection{Proposition: Continuous Map to Totally Disconnected Set}%
-  Let $X$ be connected, $Y$ totally disconnected, and $f: X\rightarrow Y$ continuous. Then, $f$ is a constant.
+  Let $X$ be connected, $Y$ totally disconnected, and $f: X\rightarrow Y$ continuous. Then, $f$ is a constant map.
   \begin{description}
     \item[Proof:] The continuous image of a connected set is connected, and the only connected sets in $Y$ are singletons, meaning the image of $X$ is a singleton.
+  \end{description}
+  \subsection{Path-Connectedness}%
+  Let $(X,d)$ be a metric space.
+  \begin{enumerate}[(i)]
+    \item A path in $X$ is a continuous map $\gamma: [0,1]\rightarrow X$. If $\gamma(0) = x_0$ and $\gamma(1) = x_1$, we say the path connects $x_0$ to $x_1$.
+    \item $X$ is said to be path-connected if for any two points $x_0$ and $x_1$, there exists a path. $Y\subseteq X$ is path connected if $Y$ is connected.
+  \end{enumerate}
+  \begin{enumerate}[(1)]
+    \item Let $V$ be any normed space, and $C\subseteq V$ convex. By definition, $C$ is path-connected. Indeed, $\gamma(t) = (1-t)x_0 + x_1$.
+    \item The metric space $\R^2\setminus \{0\}$ is path-connected.
+  \end{enumerate}
+  \subsection{Proposition: Composition of Paths}%
+  Let $\gamma: [0,1] \rightarrow X$ is a path from $x_0$ to $x_1$, and $\sigma: [0,1]\rightarrow X$ is a path from $x_1$ to $x_2$. Then, the following are all true.
+  \begin{enumerate}[(1)]
+    \item $\gamma^{-1}: [0,1]\rightarrow X$, with $\gamma^{-1}(t) = \gamma(1-t)$, is a path from $x_1$ to $x_0$.
+    \item $\sigma \cdot \gamma: [0,1]\rightarrow X$ is a path from $x_0$ to $x_2$, with $\sigma \cdot \gamma(t)$ defined as follows:
+      \begin{align*}
+        \sigma \cdot \gamma(t) &= \begin{cases}
+          \gamma(2t)&0\leq t \leq 1/2\\
+          \sigma(2t-1) & 1/2 \leq t \leq 1
+        \end{cases}.
+      \end{align*}
+  \end{enumerate}
+  \subsection{Lemma: Base Point and Path-Connectedness}%
+  Let $(X,d)$ be a metric space, and $x_0\in X$ fixed. Suppose $\forall x$, $\exists $ a path from $x_0$ to $x$. Then, $X$ is path-connected.
+  \begin{enumerate}[(1)]
+    \item The unitary group is path-connected.
+      \begin{align*}
+        U_n(\mathbb{C}) &= \{U\in \mathbb{M}_n(\mathbb{C})\mid U^{\ast}U = I_n = UU^{\ast}\}\\
+        d(U,V) &= \norm{U-V}_{\text{op}}
+      \end{align*}
+      Let $U\in U_n(\mathbb{C})$. By the spectral theorem via a unitary; there exists $V\in U_n(\mathbb{C})$ with $V^{\ast} U V = \text{diag}(\lambda_1,\lambda_2,\dots,\lambda_n)$, with $|\lambda_j| = 1$. Write $\lambda_j = e^{i\theta_j}$, with $\theta_j\in [0,2\pi)$.\\
+
+      Consider $U_t = V\text{diag}\left(e^{it\theta_1},\dots,e^{it\theta_n}\right)V^{\ast}$. Clearly, $U_t\in \mathbb{M}_n(\mathbb{C})$. Additionally, $U_0 = I_n$, and $U_1 = U$. We have
+      \begin{align*}
+        \norm{U_s - U_t} &= \norm{V^{\ast}\Lambda_s V - V\Lambda_tV^{\ast}}\\
+                         &= \norm{V(\Lambda_s - \Lambda_t)V^{\ast}}\\
+                         &\leq \norm{V}\norm{\Lambda_s - \Lambda_t}\norm{V^{\ast}}\\
+                         &= \norm{\Lambda_s - \Lambda_t}\\
+                         &\rightarrow 0.
+      \end{align*}
+      Thus, $U_t$ is continuous, meaning we have a path from $I_n$ to $U$. Thus, $U_n(\mathbb{C})$ is path-connected.
+  \end{enumerate}
+  \subsection{Proposition: Path-Connectedness implies Connectedness}%
+  If $(X,d)$ is a path-connected metric space, then $X$ is connected.
+  \begin{description}
+    \item[Proof:] Let $X = U\sqcup V$ be a splitting. Suppose $\exists x_0\in U$ and $x_1\in V$. We know $\exists \gamma: [0,1]\rightarrow X$ with $\gamma(0) = x_0$ and $\gamma(1) = x_1$. Since $[0,1]$ is connected and $\gamma$ is continuous, $\gamma([0,1])\subseteq X$ is connected. However, $\gamma([0,1])\subseteq U\cup V$ is a non-trivial splitting. $\bot$
+    \item[Exercise:] If $f: X_1\rightarrow X_2$ is continuous, and $Y\subseteq X_1$ is path-connected, then $f(Y)\subseteq X_2$ is path-connected.
+      \begin{description}
+        \item[Proof of Exercise:] Let $f(y_1),f(y_2)\in f(Y)$. We have that $\gamma: [0,1]\rightarrow Y$ is a path. Thus, $f\circ \gamma: [0,1]\rightarrow f(Y)$ is a path.
+      \end{description}
+  \end{description}
+  \subsection{A Connected Space that is not Path-Connected}%
+  Set $Y_0 = \{0\}\times [-1,1]\subseteq \R^2$, and $Y_1 = \{(x,\sin(1/x))\mid x\in (0,1]\}$. Let $Y = Y_0 \cup Y_1$. This space is known as the topologist's sine curve, and it is connected but not path-connected.
+  \begin{description}
+    \item[Proof:] We can see that $Y_1$ is the continuous image of a connected set, so $Y_1$ is connected.\\
+
+      We also see that $Y$ is connected, as $Y = \overline{Y_1}$.\\
+
+      We claim that $Y$ is not path-connected. There does not exist a path $\gamma: [0,1]\rightarrow Y$ with $\gamma(0)\in Y_0$ and $\gamma(1)\in Y_1$. Suppose toward contradiction that such a path existed. Let $\gamma^{-1}(Y_0) := F$, with $\gamma^{-1}$ being the inverse image (not inverse path). Since $Y_0$ is closed, we have $F\subseteq [0,1]$ is closed, so $u = \sup F \in F$, and $u < 1$.\\
+
+      By replacing $[0,1]$ by $[u,1]$, we may assume a new path $\gamma': [0,1]\rightarrow Y$ is a path with $\gamma_1(t) \in (0,1]$, for $\gamma'(t) = (\gamma'_1(t),\gamma'_2(t))$.\\
+
+      Let $r>0$ be small such that $[-1,1] \supset [\gamma'_2(0)-r,\gamma'_2(0)+r]$. Since $\gamma'_2$ is continuous at $t=0$, we know $\exists \varepsilon > 0$ with $\gamma'_2([0,\varepsilon])\subseteq (\gamma'_2(0)-r,\gamma'_2(0) + r)$.\\
+
+      Since $\gamma'_1([0,\varepsilon])$ is connected, and hence an interval, and $\gamma'_1(t) > 0$ for all $t\in (0,1]$, we can find $\delta$ small such that $[0,\delta]\subseteq \gamma'_1([0,\varepsilon))$.\\
+
+      We have that $\gamma'_2(t) = \sin \left(\frac{1}{\gamma'_1(t)}\right)$ for $t > 0$. Therefore,
+      \begin{align*}
+        [-1,1] &= \left\{\sin\left(\frac{1}{x}\right) \mid 0 < x < \delta\right\}\\
+               &\subseteq \left\{\sin \left(\frac{1}{\gamma'_1(t)}\right)\mid 0 < t < \varepsilon\right\}\\
+               &= \gamma'_2((0,\varepsilon))\\
+               &\subseteq (\gamma'_2(0)-r,\gamma'_2(0)+r)\\
+               &\subset [-1,1].
+      \end{align*}
+  \end{description}
+  \subsection{Proposition: Connectedness in a Normed Space}%
+  Let $V$ be a normed space, and $Y\subseteq V$ is open and connected, then $Y$ is path-connected.
+  \begin{description}
+    \item[Proof:] Fix $y_0\in Y$. Consider the set $W = \{y\in Y\mid \exists \gamma\text{ from $y_0$ to $y$}\}$. We claim that $W$ is open in $Y$.\\
+
+      Let $y\in W$. Since $Y$ is open, $\exists \delta > 0$ with $U(y,\delta)\subseteq Y$. If $w\in U(y,\delta)$, $\exists \gamma$ from $y$ to $w$. Concatenating, we get a path from $y_0$ to $w$. Thus, $U(y,\delta)\subseteq W$.\\
+
+      We also claim $W$ is closed in $Y$.
   \end{description}
 \end{document}
