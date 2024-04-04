@@ -1389,7 +1389,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   In the reverse direction, suppose $R_\mathfrak{p} = 0$ for all $\mathfrak{p}\in \text{Spec}(R)$. Pick $r\in R$, $r\neq 0$. Set $$I = \text{Ann}_{R}(r) = \{x\in R\mid xr = 0\}$$ to be the annihilator of $r$. We can verify that $I$ is an ideal. Since $r\neq 0$, $1_R\notin I$, meaning $I$ is a proper ideal. Since $I$ is a proper ideal, $I\subset \mathcal{M}$ for some maximal ideal $\mathcal{M}$.\\
 
   Consider $R_{\mathcal{M}}$. We have $\frac{r}{1}\in R_{\mathcal{M}}$. However, as $\mathcal{M}$ is maximal, $\mathcal{M}$ is prime, so $R_{\mathcal{M}} = 0$. There exists $s\in \Sigma = R\setminus\mathcal{M}$ such that $sr = 0$. So, $s\in I$. However, $I\subset M$, and $s\notin \mathcal{M}$. Thus, $r = 0$.
-  \section{Vector Spaces}%
+  \section{Vector Spaces and Polynomials}%
   Let $\mathbb{F}$ be a field. We say $V$ is a $\mathbb{F}$-vector space if $V$ is an Abelian group under addition with the scalar product $\mathbb{F}\times V \rightarrow V,(\alpha,v)\rightarrow \alpha v$ satisfying
   \begin{enumerate}[(a)]
     \item $(a + b)v = av + bv$ for all $a,b\in \mathbb{F}$, $v\in V$
@@ -2100,12 +2100,108 @@ K_1 \arrow[ru, "\leq m", no head] &                                             
     Consider $p$ and $q$ primes, with $f(x) = x^{p}-q\in \Q[x]$. By Eisenstein, $f(x)$ is irreducible. We see that $\sqrt[p]{q}$ is a root, as well as $\zeta_p\sqrt[p]{q},\dots,\zeta_p^{p-1}\sqrt[p]{q}$.\\
 
     We can see that $\Q(\zeta_p,\sqrt[p]{q})\subseteq \text{Spl}_{\Q}(f(x))$. Similarly, $\text{Spl}_{\Q}(f(x))\subseteq \Q(\zeta_p,\sqrt[p]{q})$ contains all the roots of $f(x)$.
-    \begin{center}
-      % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkQAdDgRQAou4ARwBOOZGkrBBAXwCUIaaXSZc+QinKkATNTpNW7LtwVKQGbHgJEtFXQxZtEnHvw4AvGDnoB9NPMXKFmpEmsR2+o7OfFweXr6kAiJiElJyCrowUADm8ESgAGbCEAC2SJogOBBINiCM9ABGMIwACiqW6iDCWFkAFjggNPYGTmgAtOQDID0w9FDskGBsASCFJWU0lUhkeg7saJPTs-MES6arpYjbm4gAzIMRe+MHM3NOC6cFRRc113c7w2YnjQ6o0Wm1gk4ur1+jRDq9wCd0tIgA
-\begin{tikzcd}
-                                             & {\Q(\zeta_p,\sqrt[p]{q})}                               &                                         \\
-{\Q(\sqrt[p]{q})} \arrow[ru, "p-1", no head] &                                                         & \Q(\zeta_p) \arrow[lu, "p"', no head] \\
-                                             & \Q \arrow[ru, "p-1"', no head] \arrow[lu, "p", no head] &                                        
-\end{tikzcd}
-    \end{center}
+  \begin{center}
+          % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkQAdDgRQAou4ARwBOOZGkrBBAXwCUIaaXSZc+QinKkATNTpNW7LtwVKQGbHgJEtFXQxZtEnHvw4AvGDnoB9NPMXKFmpEmsR2+o7OfFweXr6kAiJiElJyCrowUADm8ESgAGbCEAC2SJogOBBINiCM9ABGMIwACiqW6iDCWFkAFjggNPYGTmgAtOQDID0w9FDskGBsASCFJWU0lUhkeg7saJPTs-MES6arpYjbm4gAzIMRe+MHM3NOC6cFRRc113c7w2YnjQ6o0Wm1gk4ur1+jRDq9wCd0tIgA
+    \begin{tikzcd}
+                                                 & {\Q(\zeta_p,\sqrt[p]{q})}                               &                                         \\
+                {\Q(\sqrt[p]{q})} \arrow[ru, "p-1", no head] &                                                         & \Q(\zeta_p) \arrow[lu, "p"', no head] \\
+                                                 & \Q \arrow[ru, "p-1"', no head] \arrow[lu, "p", no head] &                                        
+    \end{tikzcd}
+  \end{center}
+  \subsection{Theorem: Uniqueness of Splitting Field}%
+  Let $\varphi: F\rightarrow \tilde{F}$ be an isomorphism. Let $f(x) \in F[x]$, and $\tilde{f}(x) \in \tilde{F}[x]$ under natural extension of $\varphi$ to $F[x] \rightarrow \tilde{F}[x]$. Let $E = \text{Spl}_F(f(x))$ and $\tilde{E} = \text{Spl}_{\tilde{F}}(\tilde{f}(x))$. Then, $\varphi$ extends to an isomorphism $\Phi: E\rightarrow \tilde{E}$ such that the following diagram commutes.
+  \begin{center}
+        % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAFEQBfU9TXfIRQBGclVqMWbADrS8DWMHZduvEBmx4CRMsPH1mrRCABiqvpsFFRe6ganHZ8xSZVdxMKAHN4RUADMAJwgAWyQyEBwIJAAmagALGDooNkgwVh4A4LDEUUjoxABmBKSU4zSMtSDQ8OoopGFMkGqcuPykYolDGWl6QLR4rG4KLiA
+    \begin{tikzcd}
+    E \arrow[d, no head] \arrow[r, "\Phi"] & \tilde{E} \arrow[d, no head] \\
+    F \arrow[r, "\varphi"]         & \tilde{F}                   
+    \end{tikzcd}
+  \end{center}
+  In particular, $\varphi = \text{id}$ shows the splitting field is unique up to isomorphism.\\
+
+  We will use induction on the degree of $f$ to prove this. Since $\varphi: F\rightarrow \tilde{F}$ is an isomorphism, $\varphi: F[x]\rightarrow \tilde{F}[x]$ is an isomorphism. Thus, $f(x)$ and $\tilde{f}(x)$ have corresponding factorizations.\\
+
+  In the base case, with $\text{deg}(f) = 1$, then $F$ is the splitting field of $f$, meaning $\tilde{f}$ has degree $1$, so $\tilde{F} = \text{Spl}_{\tilde{F}}(\tilde{f}(x))$, so $\varphi$ gives the isomorphism.\\
+
+  Assume the result is true for any $K$, isomorphism $\psi$, and polynomial $g(x)$ with $\text{deg}(g(x)) < n$.Let $f(x)\in F[x]$ have degree $n\geq 1$. Let $p(x)$ be an irreducible factor of $f(x)$. We can assume $\text{deg}(p(x)) \geq 2$. If $f(x) = (x-\alpha)^n$, then $\tilde{f}(x) = (x-\beta)^n$, meaning $\text{Spl}_F(f(x)) = F$ and $\text{Spl}_{\tilde{F}}(\tilde{f}(x)) = \tilde{F}$, and we are done.\\
+
+  Let $\alpha$ be a root of $p(x)$. Let $\beta$ be a corresponding root of $\tilde{p}(x)$. We have that the following diagram commutes.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADEAKAHW8bQAWdAJQgAvqXSZc+QigCM5KrUYs2vPA1jB2YntwBGMHCPGSQGbHgJFF85fWatEIDVi0wdYs1KuyiZPbUjmou7OLKMFAA5vBEoABmAE4QALZIZCA4EEgAzNQCMHRQbJBgrBKJKemIilk5iABMBUUlLmUV5slpedTZSI2VIN01mf21warOrtz0SYJYAOQRYkA
+    \begin{tikzcd}
+    F(\alpha) \arrow[d, no head] \arrow[r, "\varphi'"] & \tilde{F}(\beta) \arrow[d, no head] \\
+    F \arrow[r]                                        & \tilde{F}                          
+    \end{tikzcd}
+  \end{center}
+  Let $F_1 = F(\alpha)$ and $\tilde{F}_1 = \tilde{F}(\beta)$, and $\varphi_1 = \varphi'$. We have $f(x) = (x-\alpha)f_1(x)$ in $F_1[x]$, and $\tilde{f}(x) = (x-\beta)\tilde{f}_1(x)$ in $\tilde{F}_1[x]$. We have that $\text{deg}(f_1(x)) = \text{deg}(\tilde{f}(x)) = n-1$.\\
+
+  We have $E = \text{Spl}_{F_1}(f_1(x))$. Note that $E$ contains all the roots of $f(x)$; in particular, it contains $F_1 = F(\alpha)$ and the roots of $f_1(x)$ as $f_1(x) | f(x)$. Suppose there were a smaller field extension of $F_1$ that contains all the roots of $f_1(x)$. Then, this is an extension of $F$ that contains all the roots of $f$, so it would contain $E$. Similarly, for $\tilde{E}$, we have that $\tilde{E} = \text{Spl}_{\tilde{F}_1}(\tilde{f}_1(x))$.
+  \begin{center}
+        % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12cYAPHYAMpoGAXwD6wAGJiAjCIAUAM1nyeASjUgRpdJlz5CKMjKq1GLNtJladIDNjwEiAJnKn6zVog5de-IaISnHgMsFLicvLBWKEwwIoRqho2ug4GLqQm1B4W3tGx4bIpdnqOhiSkzu7mXiCSxfb6TiiuVdk1bPlhkiJapjBQAObwRKCKAE4QALZIMtQ4EEhkIAAWMHRQbJBgrNpjkzOIywtIznsgE9NIAMzzi4iuq+ub3tu7tpeHcyAniLdmnk67Ho4zQKywRXOnyQABY7kgAKztQF5YF0UHg4rQxBwn73b5rDZbAjvfZXRBIvE3aiEl7gEl9ERAA
+    \begin{tikzcd}
+    \text{Spl}_{F_1}(f_1(x)) \arrow[rr, "\Phi"]            &  & \text{Spl}_{\tilde{F}_1}(\tilde{f}_1(x)) \\
+    F_1 \arrow[u, no head] \arrow[rr, "\varphi_1"] &  & \tilde{F}_1 \arrow[u, no head]           \\
+    F \arrow[rr, "\varphi"] \arrow[u, no head]     &  & \tilde{F} \arrow[u, no head]            
+    \end{tikzcd}
+  \end{center}
+  Thus, we have that splitting fields are unique up to isomorphism.
+  \subsection{Separability in Finite Fields}%
+  Recall that $f(x) \in F[x]$ is separable if it has no repeated roots. Additionally, if $f(x)$ is irreducible and $\text{char}(F)= 0$, then $f$ is separable, and if $\text{char}(F) = p$, it is possible for $f$ to be irreducible and inseparable (such as $f(x) = x^2 - t\in \mathbb{F}_2(t)[x]$).\\
+
+  Let $\text{char}(F) = p$. The Frobenius map, given by $\text{Frob}_p: F\rightarrow F$, $\alpha \rightarrow \alpha^p$. We claim that $\text{Frob}_p$ is an injective homomorphism. If $F$ is finite, then $\text{Frob}_p$ is an automorphism.\\
+
+  Let $a,b\in F$. Write $\varphi_p = \text{Frob}_p$. We have
+  \begin{align*}
+    \varphi_p(ab) &= (ab)^p\\
+                  &= a^pb^p\\
+                  &= \varphi_p(a)\varphi_p(b),
+  \end{align*}
+  and
+  \begin{align*}
+    \varphi_p(a+b) &= (a+b)^p\\
+                   &= \sum_{k=0}^{p}{p\choose k}a^kb^{p-k}\\
+                   &= a^p + b^p + \sum_{k=1}^{p-1}{p\choose k}a^kb^{p-k}\\
+                   &= a^p + b^p.
+  \end{align*}
+  Thus, it is a homomorphism. To show injectivity, we know that $\ker\varphi_p$ is an ideal in $F$. Thus, $\ker\varphi_p = \{0\}$ or $\ker\varphi_p = F$. Since $\varphi_p(1) \neq 0$, it must be the case that $\ker\varphi_p = \{0\}$, meaning $\varphi_p$ is injective.\\
+
+  Let $F$ be a field with $\text{char}(F) = p$. If every element of $F$ can be written as $x^p$ for some $x$, then we say $F$ is a perfect field. We also say characteristic $0$ fields are perfect.
+  \subsection{Irreducible Polynomials over Perfect Field}%
+  Every irreducible polynomial over a perfect field is separable.\\
+
+  We have shown this to be the case in a characteristic $0$ field. We will restrict ourselves to $\text{char}(F) = p$. Assume that $F$ is perfect. Let $f(x)\in F[x]$ be irreducible and inseparable (i.e., $f$ has a multiple root).\\
+
+  If $D_xf(x) \neq 0$, then $f(x)$ and $D_xf(x)$ must be relatively prime because $f$ is irreducible. This would contradict $f$ being inseparable. We have that $D_xf(x) = 0$, meaning $p$ divides the exponent of every term in $f(x)$. Thus, we can write $f(x) = g(x^p)$ for some $g(x)$. Set $g(x) = a_nx^n + \cdots + a_1x + a_0$. Since $F^p = F$, we can write $a_j = c_j^p$ for some $c_j \in F$. Thus, 
+  \begin{align*}
+    f(x) &= c_n^px^{p^n} + \cdots + c_1^px^p + c_0^p\\
+         &= (c_nx^n + \cdots + c_1x + c_0)^p,
+  \end{align*}
+  which contradicts $f$ being irreducible.
+  \subsection{Corollary: Order of Finite Fields}%
+  For any $n > 0$ and prime $p$, there exists a unique field up to isomorphism with order $p^n$. We denote this field as $\mathbb{F}_{p^n}$.\\
+
+  Let $f(x) = x^{p^n} - x\in \mathbb{F}_p[x]$. We have that $D_xf(x) = p^nx^{p^n-1}-1 = -1$. Therefore, $\gcd(f(x),D_xf(x)) = 1$, so $f$ is separable. Therefore, there are $p^n$ distinct roots of $f$.\\
+
+  Let $\mathbb{F}$ be the roots of $f(x)$ inside $\text{Spl}_{\mathbb{F}_p}(f(x))$. Then, $\alpha\in \mathbb{F}$ if and only if $f(\alpha) = 0$, meaning $\alpha^{p^n} = \alpha$. Let $\alpha,\beta \in \mathbb{F}$. We have $\alpha\beta^{p^n} = \alpha^{p^n}\beta^{p^n} = \alpha\beta$, so $\alpha\beta \in \mathbb{F}$. Additionally, $\left(\alpha^{-1}\right)^{p^n} = \left(\alpha^{p^n}\right)^{-1} = \alpha^{-1}$, so $\alpha^{-1} \in \mathbb{F}$, and $(\alpha \pm \beta)^{p^n} = \alpha^{p^n} \pm \beta^{p^n} = \alpha \pm \beta$.\\
+
+  Thus, $\mathbb{F}\subseteq \text{Spl}_{\mathbb{F}_p}(f(x))$ is a subfield, and $\mathbb{F}$ contains all the roots of $f(x)$, so $\mathbb{F} = \text{Spl}_{\mathbb{F}_p}(f(x))$. So we get for any $n$ a field $\mathbb{F}/\mathbb{F}_p$ of order $p^n$.\\
+
+  Let $\mathbb{F}$ be any field of order $p^n$. Specifically, $[\mathbb{F}:\mathbb{F}_p] = n$. If $\mathbb{F}$ has order $p^n$, then $\mathbb{F}^{\times}$ is cyclic with order $p^n - 1$. So, any element $\alpha \in \mathbb{F}^{\times}$ satisfies $\alpha^{p^n - 1} = 1$, meaning $\alpha^{p^n} = \alpha$, meaning every element of $\mathbb{F}$ is a root of $f(x) = x^{p^n} - x$. Thus, $\mathbb{F} = \text{Spl}_{\mathbb{F}_p}\left(x^{p^n} - x\right)$, since $\mathbb{F}\subseteq \text{Spl}_{\mathbb{F}_p}\left(x^{p^n} - x\right)$ and they both have size $p^n$.
+  \section{Galois Theory}%
+  \subsection{Automorphisms}%
+  Let $K$ be a field. We have $\text{Aut}(K)$ is the collection of automorphisms of $K$. We have that $\text{Aut}(K)$ is a group.\\
+
+  Given $\sigma\in \text{Aut}(K)$, we say $\sigma$ fixes $x\in K$ if $\sigma(x) = x$. Given $F\subseteq K$, we say $F$ is fixed by $\sigma$ if $\forall x\in F$, $\sigma(x) = x$. The automorphisms of $K$ that fix $F$ is denoted $\text{Aut}(K/F)$. We can show that $\text{Aut}(K/F)$ is a subgroup.
+  \subsection{Proposition: Automorphism of Algebraic Extensions}%
+  Let $K/F$ be an extension of fields, $\alpha\in K$ algebraic over $F$, with $m_{\alpha,F}(x)$ the minimal polynomial. Given $\sigma \in \text{Aut}(K/F)$, $\sigma(\alpha)$ is a root of $m_{\alpha,F}(x)$ (i.e., $\text{Aut}(K/F)$ permutes the roots of $m_{\alpha,F}(x)$).\\
+
+  Let $\sigma \in \text{Aut}(K/F)$. Write $m_{\alpha}(x) = x^{n} + a_{n-1}x^{n-1} + \cdots + a_1x + a_0\in F[x]$. Thus,
+  \begin{align*}
+    m_{\alpha}(\sigma(\alpha)) &= \left(\sigma(\alpha)\right)^n + a_{n-1}\left(\sigma(\alpha)\right)^{n-1} + \cdots + a_1\sigma(\alpha) + a_0\\
+                               &= \left(\sigma(\alpha)\right)^{n} + \sigma(a_{n-1})\left(\sigma(\alpha)\right)^{n-1} + \cdots + \sigma(a_1)\sigma(\alpha) + \sigma(a_0)\\
+                               &= \sigma\left(\alpha^n + a_{n-1}\alpha^{n-1}+ \cdots + a_1\alpha + a_0\right)\\
+                               &= \sigma(m_{\alpha}(\alpha))\\
+                               &= \sigma(0)\\
+                               &= 0.
+  \end{align*}
 \end{document}
