@@ -2682,4 +2682,124 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
 
       We also claim $W$ is closed in $Y$.
   \end{description}
+  \section{Measure Theory}%
+  The theory of integration is tied to notions of length, area, volume, etc. The Riemann integral
+  \begin{align*}
+    \int_{0}^{1} f(x)dx &= \lim_{n\rightarrow\infty}\frac{1}{n}\sum_{k=1}^{n}f\left(\frac{k}{n}\right),
+  \end{align*}
+  is defined through the length of a subinterval. We took the interval $[0,1]$, calculated base multiplied by height, and found the area of the rectangle.\\
+
+  It's easy to compute the length of an interval. However, Lebesgue integration does the opposite; it subdivides the range of $f$ into subintervals $I_k$, and calculates the ``length'' of $f^{-1}(I_k)$.\\
+
+  We need a more rigorous treatment of length (or area, or volume) to deal with Lebesgue integration.\\
+
+  Given $E\subseteq \R^n$, with $E$ ``sufficiently nice,'' we want to assign an extended positive real number $\lambda(E)\in [0,\infty]$, such that certain natural properties are satisfied.
+  \begin{itemize}
+    \item $\lambda(\emptyset) = 0$
+    \item $\displaystyle \lambda \left(\prod_{j=1}^{n}[a_j,b_j]\right) = \prod_{j=1}^{n}(b_j-a_j)$
+    \item $\lambda(x + E) = \lambda(E)$
+    \item $\displaystyle \lambda \left(\bigsqcup_{k=1}^{\infty}E_k\right) = \sum_{k=1}^{n}E_k$
+    \item if $E\subseteq F$, then $\lambda(E)\leq \lambda(F)$
+  \end{itemize}
+  \subsection{Proposition: Non-existence of $\lambda$}%
+  There is no $\lambda: \mathcal{P}(\R)\rightarrow [0,\infty]$ that satisfies the properties above.
+  \begin{description}
+    \item[Proof:] Consider the equivalence relation on $[0,1]$, with $x\sim y \Leftrightarrow x-y\in \Q$.\\
+
+      So, $[0,1] = \bigsqcup_{i\in I} [x_i]$, with $x_i\in [0,1]$. Let $\{r_k\}_{k=1}^{\infty}$ be an enumeration of $\Q \cap [-1,1]$. Let $N = \{x_i\}_{i\in I}$ (possible with the axiom of choice).\\
+
+      Consider the set $E_k = r_k + N$.
+      \begin{itemize}
+        \item $E_k$ are pairwise disjoint; if $r_k + x_i = r_{\ell} + x_j$, then $x_j - x_i = r_k - r_{\ell}\in \Q$, meaning $x_i \sim x_j$.
+        \item $E_k \subseteq [-1,2]$.
+      \end{itemize}
+      If $t\in [0,1]$, then $t\sim x_i$ for some $i\in I$. So, $t-x_i \in \Q$, and $t-x_i\in [-1,1]$, so $t-x_i = r_k$ for some $k$. Thus, $t\in E_k$. Thus, we have shown that $[0,1]\subseteq \bigsqcup E_k\subseteq [-1,2]$.\\
+
+      If $\lambda$ were such a mapping, we have
+      \begin{align*}
+        1 &= \lambda([0,1])\\
+          &\leq \lambda(\bigsqcup E_k)\\
+          &= \sum \lambda(E_k)\\
+          &= \sum \lambda(r_k + N)\\
+          &= \sum \lambda(N).
+      \end{align*}
+      If $E = \bigsqcup E_k$, then $\lambda(E) \leq 3$ and $\lambda(E) = \sum \lambda(N)$. $\bot$.
+  \end{description}
+  Thus, we conclude that some sets are not measurable. We might then ask what sets are able to be measured.
+  \begin{itemize}
+    \item Intervals;
+    \item open sets;
+    \item closed sets.
+  \end{itemize}
+  We will eventually define a class of measurable sets, $\mathcal{L}$, and we will also construct a measure $\lambda: \mathcal{L}\rightarrow [0,\infty]$ satisfying the above properties.
+  \subsection{Measurable Spaces and $\sigma$-Algebras}%
+  Let $\Omega \neq \emptyset$.
+  \begin{enumerate}[(1)]
+    \item An algebra of subsets of $\Omega$ is a nonempty family $\mathcal{M}\subseteq \mathcal{P}(\Omega)$ such that
+      \begin{itemize}
+        \item If $E\in \mathcal{M}$, then $E^c\in \mathcal{M}$;
+        \item If $E,F\in \mathcal{M}$, then $E\cup F\in \mathcal{M}$
+      \end{itemize}
+    \item A nonempty collection $\mathcal{M}\subseteq \mathcal{P}(\Omega)$ is a $\sigma$-algebra of subsets of $\Omega$ if
+      \begin{enumerate}[(i)]
+        \item If $E\in \mathcal{M}$, then $E^{c}\in \mathcal{M}$;
+        \item If $\{E_k\}_{k=1}^{\infty}\in \mathcal{M}$, then $\bigcup E_k \in \mathcal{M}$.
+      \end{enumerate}
+    \item A measurable space is a pair $(\Omega,\mathcal{M})$ with $\Omega \neq \emptyset$ a set and $\mathcal{M}$ is a $\sigma$-algebra.
+  \end{enumerate}
+  Let $\mathcal{M}$ be an algebra of subsets of $\Omega$. Then, the following are true.
+  \begin{enumerate}[(i)]
+    \item $\emptyset,\Omega \in \mathcal{M}$;
+    \item If $E_1,\dots,E_n \in \mathcal{M}$, then $\bigcup E_k \in \mathcal{M}$;
+    \item If $E_1,\dots,E_n \in \mathcal{M}$, then $\bigcap E_k \in \mathcal{M}$;
+    \item If $E,F\in \mathcal{M}$, then $E\setminus F\in \mathcal{M}$.
+  \end{enumerate}
+  \begin{description}
+    \item[Proof:] \hfill
+      \begin{enumerate}[(i)]
+        \item Since $\mathcal{M}$ is not empty, there is an $E\in \mathcal{M}$, so $E^c\in \mathcal{M}$, so $E\cup E^{c} = \Omega \in \mathcal{M}$ ,and $(E\cup E^{c})^{c} = \emptyset \in \mathcal{M}$.
+        \item Induction.
+        \item We have $\bigcap E_k = \left(\bigcup_{i=1}^{\infty}E_k^c\right)^c \in \mathcal{M}$.
+        \item We have $E\setminus F = E\cap F^{c}\in \mathcal{M}$.
+      \end{enumerate}
+  \end{description}
+  If $\mathcal{M}$ is a $\sigma$-algebra, then (1) through (4) hold for countable families as well.
+  \begin{enumerate}[(1)]
+    \item $(\Omega,\mathcal{P}(\Omega))$ is a measurable space.
+    \item $(\Omega,\{\emptyset,\Omega\})$ is a measurable space.
+    \item For $\Omega$ uncountable, let $\mathcal{M} = \{E\subseteq \Omega\mid E\text{ countable or }E^c\text{ countable}\}$. Then, $(\Omega,\mathcal{M})$ is a measurable space.
+    \item If $\{\mathcal{M}_i\}_{i\in I}$ is a family of $\sigma$-algebras on $\Omega$, then $\bigcap \mathcal{M}_i$ is a $\sigma$-algebra on $\Omega$.
+  \end{enumerate}
+  If $0\neq \mathcal{E}\subseteq \mathcal{P}(\Omega)$, the $\sigma$-algebra generated by $\mathcal{E}$ is
+  \begin{align*}
+    \sigma(\mathcal{E}) &= \bigcap_{\substack{\mathcal{M}_i\text{ $\sigma$-algebra}\\\mathcal{E}\subseteq \mathcal{M}_i}}\mathcal{M}_i.
+  \end{align*}
+  \subsection{Borel $\sigma$-Algebra}%
+  Let $(X,d)$ be a metric space. Let $\tau_d = \{U\mid U\subseteq X\text{ open}\}$. The Borel $\sigma$-algebra on $X$ is
+  \begin{align*}
+    \mathcal{B}_X = \sigma(\tau_d).
+  \end{align*}
+  \begin{description}
+    \item[Remark:] $\mathcal{B}_X$ contains all open sets, closed sets, F$_{\sigma}$ sets, G$_{\delta}$ sets, etc.
+  \end{description}
+  \subsection{Proposition: Borel $\sigma$-Algebra on $\R$}%
+  Consider the families of $\mathcal{P}(\R)$,
+  \begin{align*}
+    \mathcal{E}_1 &= \{(a,b)\mid a < b\}\\
+    \mathcal{E}_2 &= \{[a,b]\mid a<b \}\\
+    \mathcal{E}_3 &= \{(a,b]\mid a < b\}\\
+    \mathcal{E}_4 &= \{[a,b)\mid a < b\}\\
+    \mathcal{E}_5 &= \{(-\infty,b)\mid b\in \R\}\\
+    \mathcal{E}_6 &= \{(-\infty,b]\mid b\in \R\}\\
+    \mathcal{E}_7 &= \{(a,\infty)\mid a\in \R\}\\
+    \mathcal{E}_8 &= \{[a,\infty)\mid a\in \R\}.
+  \end{align*}
+  For $i = 1,\dots,8$, we have $\sigma(\mathcal{E}_i) = \mathcal{B}_{\R}$.
+  \begin{description}
+    \item[Proof:] Note that $\mathcal{E}_1\subseteq \tau_d\subseteq \sigma(\tau_d)\subseteq \mathcal{B}_{\R}$. Thus, $\sigma(\mathcal{E}_1)\subseteq \mathcal{B}_{\R}$. Let $U\in \R$ be open. Then, $U = \bigsqcup I_j$, with $I_j$ open. Consider any open interval $I$. If $I$ is bounded, then $I\in \mathcal{E}_1$. If $I$ is not bounded, then $I = \bigcup_{k=1}^{\infty} J_{k}$ with $J_k$ bounded open intervals. Since each $J_k\in \mathcal{E}_1$, then $I\in \sigma(\mathcal{E}_1)$. Therefore, each $I_j\in \sigma(\mathcal{E}_1)$, so $U\in \sigma(\mathcal{E})_1$. Thus, $\tau_d \subseteq \sigma(\mathcal{E}_1)$, so $\mathcal{B}_{\R}\subseteq \sigma(\mathcal{E}_1)$.\\
+
+      Thus, $\mathcal{B}_{\R} = \sigma(\mathcal{E}_1)$.\\
+
+      We have that $[a,b) = \bigcap_{n=1}^{\infty} \left(a-\frac{1}{n},b\right) \in \sigma(\mathcal{E}_1)$. Therefore, $\mathcal{E}_4\in \sigma(\mathcal{E}_1)$, thus $\sigma(\mathcal{E}_4)\subseteq \sigma(\mathcal{E}_1)$. Additionally, $(a,b) = \bigcup_{n=1}^{\infty}\left[a+\frac{1}{n},b\right]\in \sigma(\mathcal{E}_4)$. So, $\sigma(\mathcal{E}_1) = \sigma(\mathcal{E}_4) = \mathcal{B}_{\R}$.
+  \end{description}
 \end{document}
