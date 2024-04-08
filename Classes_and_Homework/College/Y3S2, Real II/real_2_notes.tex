@@ -2682,7 +2682,7 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
 
       We also claim $W$ is closed in $Y$.
   \end{description}
-  \section{Measure Theory}%
+  \section{Measurable Spaces}%
   The theory of integration is tied to notions of length, area, volume, etc. The Riemann integral
   \begin{align*}
     \int_{0}^{1} f(x)dx &= \lim_{n\rightarrow\infty}\frac{1}{n}\sum_{k=1}^{n}f\left(\frac{k}{n}\right),
@@ -2802,4 +2802,103 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
 
       We have that $[a,b) = \bigcap_{n=1}^{\infty} \left(a-\frac{1}{n},b\right) \in \sigma(\mathcal{E}_1)$. Therefore, $\mathcal{E}_4\in \sigma(\mathcal{E}_1)$, thus $\sigma(\mathcal{E}_4)\subseteq \sigma(\mathcal{E}_1)$. Additionally, $(a,b) = \bigcup_{n=1}^{\infty}\left[a+\frac{1}{n},b\right]\in \sigma(\mathcal{E}_4)$. So, $\sigma(\mathcal{E}_1) = \sigma(\mathcal{E}_4) = \mathcal{B}_{\R}$.
   \end{description}
+  \section{Measure and Measure Spaces}%
+  Let $(\Omega,\mathcal{M})$ be a measurable space.
+  \begin{enumerate}[(1)]
+    \item A function $\mu: \mathcal{M}\rightarrow [0,\infty]$ is a measure on $(\Omega,\mathcal{M})$ if
+      \begin{enumerate}[(i)]
+        \item $\mu(\emptyset) = 0$;
+        \item if $\{E_k\}_{k\geq 1}\in \mathcal{M}$ are pairwise disjoint, then $\mu \left(\bigsqcup E_k\right) = \sum \mu(E_k)$. Notice that $\mu(E_k)\geq 0$ for all $E_k$, so the order of the sum does not matter.
+      \end{enumerate}
+    \item If $\mathcal{M}$ is an algebra (or $\sigma$-algebra), and $\mu$ satisfies $\mu(E\sqcup F) = \mu(E) + \mu(F)$ for $E,F\in \mathcal{M}$, then $\mu$ is called a finitely additive measure.
+    \item A measure space is a triple $(\Omega,\mathcal{M},\mu)$, where $(\Omega,\mathcal{M})$ is a measurable space and $\mu$ is a measure.
+    \item A measure space $(\Omega,\mathcal{M},\mu)$ is called finite if $\mu(\Omega) < \infty$. If $\mu(\Omega) = 1$, then $(\Omega,\mathcal{M},\mu)$ is called a probability space, with $\Omega$ the sample space and $\mathcal{M}$ the collection of events.
+    \item A measure $\mu$ is $\sigma$-finite if there exists $\{E_k\}_{k\geq 1}\subseteq \mathcal{M}$ with $\Omega = \bigcup E_k$ and $\mu(E_k) < \infty$ for each $k$.
+    \item A measure $\mu$ on $(\Omega,\mathcal{M})$ is semi-finite if $\forall E\in \mathcal{M}$ with $\mu(E) = \infty$, $\exists F\subseteq E$ with $0 < \mu(F) < \infty$.
+  \end{enumerate}
+  \begin{description}
+    \item[Exercise:] Show that $\sigma$-finite implies semi-finite.
+  \end{description}
+  \subsection{Examples of Measure Spaces}%
+  \begin{enumerate}[(i)]
+    \item Consider $(\Omega,\mathcal{P}(\Omega))$. Fix $x\in \Omega$, with $\delta_x: \mathcal{P}(\Omega)\rightarrow [0,\infty]$, with
+      \begin{align*}
+        \delta_x(E) &= \begin{cases}
+          1 & x\in E\\
+          0 & x\notin E
+        \end{cases}.
+      \end{align*}
+      We can see that $\delta_x$ is a probability measure, known as the Dirac measure.
+    \item If $\mu$ is a measure on $(\Omega,\mathcal{M})$, and $t\in [0,\infty)$, then $\left(t\mu\right)(E) = t\left(\mu(E)\right)$ is a measure.
+    \item If $\mu_1,\dots,\mu_n$ are measures on $(\Omega,\mathcal{M})$, then $\mu(E) = \sum \mu_j(E)$ is a measure.
+    \item If $0\leq t_1,\dots,t_n\leq 1$ with $\sum t_j = 1$, and $x_1,\dots,x_n\in X$, we have
+      \begin{align*}
+        \mu(E) &= \sum t_j\delta_{x_j}
+      \end{align*}
+      is a probability measure on $(\Omega,\mathcal{P}(\Omega))$.
+    \item Suppose $f: \Omega \rightarrow [0,\infty]$ is any function. We get a measure on $(\Omega,\mathcal{P}(\Omega))$. We get that
+      \begin{align*}
+        \mu(E) &= \sum_{x\in E}f(x) := \sup \left\{\sum_{x\in F} f(x)\mid F\subseteq \Omega \text{ finite}\right\}.
+      \end{align*}
+      If $f(x) = 1$ for all elements of $\Omega$, then $\mu$ is called the counting measure, with $\mu(E) = \card(E)$.
+  \end{enumerate}
+  \subsection{Proposition: Properties of Measures}%
+  Let $(\Omega,\mathcal{M},\mu)$ be a measure space.
+  \begin{enumerate}[(i)]
+    \item Monotonality: let $E,F\subseteq \mathcal{M}$ with $E\subseteq F$, then $\mu(E) \leq \mu(F)$
+    \item Subadditivity: let $\{E_k\}_k\geq 1\subseteq M$. Then, $\mu\left(\bigcup E_k\right)\leq \sum \mu(E_k)$.
+    \item Continuity (from below): say $\{E_k\}_{k\geq 1}\subseteq \mathcal{M}$ with $E_1\subseteq E_2\subseteq E_3\subseteq \dots$. Then, 
+      \begin{align*}
+        \mu\left(\bigcup E_k\right) &= \lim_{k\rightarrow\infty}\mu(E_k)\\
+        &= \sup \mu(E_k).
+      \end{align*}
+    \item Set subtraction: if $E,F\subseteq \mathcal{M}$ with $E \subseteq F$ and $\mu(F) < \infty$, then $\mu(F\setminus E) = \mu(F) - \mu(E)$.
+    \item Continuity (from above): let $\{E_k\}_{k\geq 1} \subseteq \mathcal{M}$ with $E_1\supseteq E_2\supseteq E_3\supseteq \dots$ and $\mu(E_1) < \infty$. Then,
+      \begin{align*}
+        \mu\left(\bigcap E_k\right) &= \lim_{k\rightarrow\infty}\mu(E_k)\\
+                                    &= \inf \mu(E_k).
+      \end{align*}
+  \end{enumerate}
+  \begin{description}
+    \item[Proof:]\hfill
+      \begin{enumerate}[(i)]
+        \item We have that $\mu(F) = \mu(E) + \mu(F\setminus E)\geq \mu(E)$.
+        \item Let $F_1 = E_1$, $F_2 = E_2\setminus E_1$, $F_3 = E_3 \setminus (E_1\cup E_2)$. Continuing, we have $F_n = E_n \setminus \bigcup_{k=1}^{n-1} E_k$. Notice
+          \begin{align*}
+            \bigsqcup F_k &= \bigcup E_k\\
+            \mu\left(\bigcup E_k\right) &= \mu\left(\bigsqcup F_k\right)\\
+                                        &= \sum \mu(F_k)\\
+                                        &\leq \sum \mu(E_k).
+          \end{align*}
+        \item Let $F_1 = E_1$, $F_2 = E_2 \setminus E_1$, etc. with $F_k = E_k \setminus E_{k-1}$. Notice that
+          \begin{align*}
+            \mu\left(\bigsqcup F_k\right) &= \mu\left(\bigcup E_k\right)\\
+            \mu\left(\bigcup E_k\right) &= \sum \mu(F_k)\\
+                                        &= \lim_{n\rightarrow\infty}\sum_{k=1}^{n}\mu(F_k)\\
+                                        &= \lim_{n\rightarrow\infty} \mu\left(\bigsqcup_{k=1}^{n}F_k\right)\\
+                                        &= \lim_{n\rightarrow\infty}\mu(E_n).
+          \end{align*}
+        \item For $E\subseteq F$, we have $\mu(F) = \mu(E) + \mu(F\setminus E)$. Subtracting, we have $\mu(F)\setminus \mu(E) = \mu(F\setminus E)$, provided $\mu(F)$ is finite.
+        \item Exercise.
+      \end{enumerate}
+  \end{description}
+  \subsection{Complete Measure Spaces}%
+  If $(\Omega,\mathcal{M},\mu)$ is a measures space, a subset $N\subseteq \Omega$ is $\mu$-null if $N\in \mathcal{M}$ and $\mu(N) = 0$.
+  \begin{description}
+    \item[Remark:] If $N$ is $\mu$-null, and $M\subseteq N$, then $M$ is not necessarily $\mu$-null, because we do not know if $M\in \mathcal{M}$.
+  \end{description}
+  A measure space $(\Omega,\mathcal{M},\mu)$ is said to be complete if for any $N$ $\mu$-null and $M\subseteq N$, then $M$ is $\mu$-null.\\
+
+  If $(\Omega,\mathcal{M},\mu)$, and $\mathcal{N} = \{N\in \mathcal{M}\mid \mu(N) = 0\}$, we set
+  \begin{align*}
+    \overline{\mathcal{M}} &= \{E\cup F\mid E\in \mathcal{M},F\subseteq N\in \mathcal{N}\text{ for some $N\in \mathcal{N}$}\}.
+  \end{align*}
+  We have that $ \overline{\mathcal{M}} $ is a $\sigma$-algebra with $\mathcal{M}\subseteq \overline{\mathcal{M}}$ and $\exists! \overline{\mu}: \overline{\mathcal{M}}\rightarrow [0,\infty]$, with $\overline{\mu}(E) = \mu(E)$ for all $E\in \mathcal{M}$, such that $(\Omega, \overline{\mathcal{M}},\overline{\mu})$ is a complete measure space.
+  \subsection{Outer Measures}%
+  An outer measure on a set $\Omega$ is a map $\theta: \mathcal{P}(\Omega)\rightarrow [0,\infty]$ such that
+  \begin{enumerate}[(i)]
+    \item $\theta(\emptyset) = 0$
+    \item $E\subseteq F \Rightarrow \theta(E) \leq \theta(F)$
+    \item $\theta\left(\bigcup E_k\right) \leq \sum \theta(E_k)$
+  \end{enumerate}
 \end{document}
