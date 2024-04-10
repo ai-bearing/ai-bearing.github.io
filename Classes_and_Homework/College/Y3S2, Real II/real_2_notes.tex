@@ -2901,4 +2901,116 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
     \item $E\subseteq F \Rightarrow \theta(E) \leq \theta(F)$
     \item $\theta\left(\bigcup E_k\right) \leq \sum \theta(E_k)$
   \end{enumerate}
+  \begin{description}
+    \item[Remark:] Any measure is an outer measure.\\
+
+      We will construct outer measures from covering families equipped with a notion of measure.
+  \end{description}
+  \subsection{Proposition: Constructing an Outer Measure}%
+  Let $\mathcal{E}\subseteq \mathcal{P}(\Omega)$ be a ``covering family'' --- $\forall A\subseteq \Omega$, $A\subseteq \bigcup_{k\geq 1}E_k$, where $E_k\in \mathcal{E}$. Let $\rho: \mathcal{E} \rightarrow [0,\infty]$ such that $\rho(\emptyset) = 0$.\\
+
+  Set $\theta_{\rho}: \mathcal{P}(\Omega) \rightarrow [0,\infty]$; set
+  \begin{align*}
+    \theta_{\rho}(A) &= \inf \left\{\sum \rho(E_k)\mid A\subseteq \bigcup E_k,E_k\in \mathcal{E}\right\}.
+  \end{align*}
+  Then, $\theta_{\rho}$ is an outer measure.
+  \begin{description}
+    \item[Proof:] Clearly, $\theta_{\rho}(\emptyset) = 0$.\\
+
+      Suppose $A\subseteq B$. If $B\subseteq \bigcup E_k$, then $A\subseteq \bigcup E_k$. Therefore, $\theta_{\rho}(A)\leq \sum \rho(E_k)$. By definition, it is then the case that $\theta_{\rho}(A)\leq \theta_{\rho}(B)$.\\
+
+      Let $\{A_k\}_{k\geq 1}\subseteq \mathcal{P}(\Omega)$. Let $\varepsilon > 0$. For each $k$, we can find a cover $A_k\subseteq \bigcup_{j=1}^{\infty} E_{k,j}$ such that
+      \begin{align*}
+        \theta_{\rho}(A_k) + \frac{\varepsilon}{2^k} &> \sum_{j=1}^{\infty}\rho(E_{k_j})\\
+        \sum_{k=1}^{\infty}\theta_{\rho}(A_k) + \varepsilon &> \sum_{j,k=1}^{\infty}\rho(E_{k,j}).
+      \end{align*}
+      Since $\bigcup A_k \subseteq \bigcup_{k,j=1}^{\infty}E_{k,j}$, it must be the case that
+      \begin{align*}
+        \theta_{\rho}\left(\bigcup A_k\right) &\leq \sum_{k,j=1}^{\infty}\rho(E_{k,j}).
+      \end{align*}
+      Therefore, we have
+      \begin{align*}
+        \theta_{\rho}\left(\bigcup A_k\right) &\leq \sum \theta_{\rho}(A_k) + \varepsilon.
+      \end{align*}
+      Since $\varepsilon$ was arbitrary, it must be the case that we get countable subadditivity.
+  \end{description}
+  \subsection{Measurable Sets in Outer Measures}%
+  Let $\theta$ be an outer measure on $\Omega$.\\
+
+  A subset $M\subseteq \Omega$ is said to be $\theta$-measurable if $\forall E\subseteq \Omega$, $\theta(E\cap M) + \theta(E\cap M^{c}) = \theta(E)$. Essentially, $M$ is a good ``cookie-cutter'' for any subset of $\Omega$.
+  \begin{description}
+    \item[Remark:] We always have $\theta(E) = \theta\left((E\cap M)\cup (E\cap M^{c})\right) \leq \theta(E\cap M) + \theta(E\cap M^{c})$. So, in order to show $M$ is $\theta$-measurable, all we need show is that $\theta(E\cap M) + \theta(E\cap M^{c}) \leq \theta(E)$.\\
+
+      This inequality always holds if $\theta(E) = \infty$.
+  \end{description}
+  \subsection{Carathéodory's Theorem}%
+  Let $\theta: \mathcal{P}(\Omega)\rightarrow [0,\infty]$ be an outer measure on $\Omega$.
+  \begin{enumerate}[(i)]
+    \item $\displaystyle \mathcal{M}_{\theta} = \left\{M\subseteq \Omega\mid M\text{ is $\theta$-measurable}\right\}$ is a $\sigma$-algebra.
+    \item $\displaystyle \theta\vert_{\mathcal{M}_{\theta}}: \mathcal{M}_{\theta}\rightarrow [0,\infty]$ is a complete measure.
+  \end{enumerate}
+  \begin{description}
+    \item[Proof:] We will show systematically via a series of claims.\\
+
+        \textbf{Claim 1:} $\mathcal{M}_{\theta}$ is an algebra of subsets.
+          \begin{itemize}
+            \item We have that $\emptyset\in \mathcal{M}_{\theta}$.
+              \begin{align*}
+                \theta(E) &\geq \theta(E\cap \emptyset) + \theta(E\cap \emptyset^{c})\\
+                          &= 0 + \theta(E).
+              \end{align*}
+            \item Let $M\in \mathcal{M}_{\theta}$. Clearly, $M^{c}$ is measurable, since the definition of measurable is symmetric.
+            \item Suppose $M_1,M_2$ are measurable. We will show that $M_1\cap M_2$ is measurable.
+              \begin{align*}
+                \theta(E) &\geq \theta(E\cap M_1) + \theta(E \cap M_{1}^{c})\\
+                          &\geq \theta(E\cap M_1\cap M_2) + \theta(E\cap M_1 \cap M_{2}^{c}) + \theta(E\cap M_1^{c}\cap M_2) + \theta(E\cap M_{1}^{c} \cap M_{2}^{c}).\\
+                          &\geq \theta(E\cap M_1 \cap M_2) + \theta\left(E \cap(\left(M_1\cap M_2^{c}\right) \cup \left(M_1^{c}\cap M_{2}\right) \cup \left(M_1^{c} \cap M_{2}^{c}\right) )\right)\\
+                          &= \theta(E \cap M_1\cap M_2) + \theta(E\cap \left(M_1\cap M_2\right)^{c}).
+              \end{align*}
+              Thus, $M_1\cap M_2$ is measurable.
+          \end{itemize}
+          \textbf{Claim 2:} $\theta|_{\mathcal{M}_{\theta}}$ is a finitely additive measure. Let $M_1,M_2\in \mathcal{M}_{\theta}$ with $M_1\cap M_2 = \emptyset$.
+          \begin{align*}
+            \theta(M_1\sqcup M_2) &= \theta(M_1\sqcup M_2 \cap M_1) + \theta(M_1\sqcup M_2 \cap M_1^{c})\\
+                                  &= \theta(M_1) + \theta(M_2).
+          \end{align*}
+          \textbf{Claim 3:} If $\{M_k\}_{k\geq 1}\subseteq \mathcal{M}_{\theta}$ are pairwise disjoint, then $\forall E\subseteq \Omega$, $\theta\left(E\cap \bigsqcup M_k\right) = \sum \theta(E\cap M_k)$.
+          \begin{align*}
+            \theta\left(E\cap \bigsqcup_{k=1}^{n}M_k\right) &= \theta\left(\bigsqcup_{k=1}^{n}E\cap M_k\right)
+            \intertext{cutting with $M_{n}$, we have}
+                                                            &= \theta\left(\bigsqcup_{k=1}^{n} E\cap M_k \cap M_n\right) + \theta(\bigsqcup_{k=1}^{n}E\cap M_k \cap M_{n}^{c})\\
+                                                            &= \theta\left(E\cap M_n\right) +\theta \left(\bigsqcup_{k=1}^{n-1} E\cap M_{k}\right)
+                                                            \intertext{cutting with $M_{n-1}$, we get}
+                                                            &= \theta(E\cap M_{n}) + \theta(E\cap M_{n-1}) + E\left(\bigsqcup_{k=1}^{n-2}E\cap M_k\right).
+                                                            \intertext{Continuing inductively, we have}
+            \theta\left(E\cap \bigsqcup_{k=1}^{n}M_k\right) &= \sum_{k=1}^{n}\theta(E\cap M_k).
+            \intertext{In the infinite case,}
+            \sum \theta(E\cap M_{k}) &\geq \theta\left(\bigsqcup E\cap M_k\right)\\
+                                     &= \bigsqcup \theta\left(E\cap \bigsqcup M_k\right)\\
+                                     &\geq \theta\left(E\cap \bigsqcup_{k=1}^{n}M_k\right)\\
+                                     &= \bigsqcup_{k=1}^{n}\theta(E\cap M_k).
+          \end{align*}
+          Letting $n\rightarrow\infty$, we are done.\\
+
+          \textbf{Claim 4:} $\mathcal{M}_{\theta}$ is a $\sigma$-algebra. Additionally, $\theta|_{\mathcal{M}_{\theta}}$ is a measure.\\
+
+          Let $\{M_k\}_{k\geq 1}\subseteq \mathcal{M}_{\theta}$ be pairwise disjoint. Let $M = \bigsqcup M_k$. We will show $M$ is measurable. Let $P_n = \bigsqcup_{k=1}^{n}M_k$. For $E\subseteq \Omega$,
+          \begin{align*}
+            \theta(E) &\geq \theta(E\cap P_n) + \theta(E\cap P_{n}^{c}) \tag*{Claim 1}\\
+                      &\geq \sum_{k=1}^{n} \theta(E\cap M_k) + \theta(E\cap M^{c}). \tag*{Monotonicity}
+                      \intertext{Letting $n\rightarrow\infty$,}
+            \theta(E) &\geq \sum_{k=1}^{\infty}\theta(E\cap M_{k}) + \theta(E\cap M_{c}) \tag*{Claim 3}\\
+                      &= \theta(E\cap M) + \theta(E\cap M^{c})
+          \end{align*}
+          Thus, $M$ is measurable. Taking $E = \Omega$ in Claim 3, we show that $\theta|_{\mathcal{M}_{\theta}}$ is a measure.\\
+
+          \textbf{Claim 5:} $\theta|_{\mathcal{M}_{\theta}}$ is complete.\\
+
+          Let $N\subseteq \Omega$ with $\theta(N) = 0$. Then, for all $E\subseteq \Omega$,
+          \begin{align*}
+            \theta(E\cap N) + \theta(E\cap N^{c}) &\leq \theta(N) + \theta(E)\\
+                                                  &= \theta(E).
+          \end{align*}
+          Thus, $N\in \mathcal{M}_{\theta}$. If $M\in \mathcal{M}_{\theta}$ and $\theta(M) = 0$, and $N\subseteq M$, then by monotonicity we have $\theta(N) = 0$, so $N\in \mathcal{M}_{\theta}$.
+  \end{description}
 \end{document}
