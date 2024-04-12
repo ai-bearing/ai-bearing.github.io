@@ -1111,8 +1111,40 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   For a sequence $(a_n)_n\in \R$, define $(x_n)_n$ as $x_n = \sup (a_j)_{j\geq n}$. Then, $x_n = \sup\{a_n,x_{n+1}\}$. Thus, we have $x_n \geq x_{n+1} \geq \cdots$, so $(x_n)_n$ may converge to some $L$, or $x_n \rightarrow \pm\infty$. We define $\lim_{n\rightarrow\infty}x_n$\\
 
   Let $(a_n)_n = (-1)^n$. Then, $\limsup a_n = 1$. However, $\limsup (-2)^n = \infty$.\\
+  \subsection{Cauchy-Hadamard Theorem}%
+  Given any power series $\sum_{j=0}^{\infty}a_j(z-z_0)^j$, $\exists R \in [0,\infty]$ such that the series converges uniformly for $|z-z_0| < R$, diverges on $|z-z_0| > R$, and converges uniformly on $|z-z_0| < r < R$.
 
-  Given any power series $\sum_{j=0}^{\infty}a_j(z-z_0)^j$, $\exists R \in [0,\infty]$ such that the series converges uniformly for $|z-z_0| < R$. Let $\ell = \limsup \sqrt[n]{a_n}$. Then, $R = \frac{1}{\ell}$. If $\ell = 0$, then $R = \infty$, and if $\ell = \infty$, then $R = 0$.\\
+  \begin{description}
+    \item[Case 1:] Let $\ell = \limsup \sqrt[n]{|a_n|}$. Let $\ell \in (0,\infty)$. Then, $R = \frac{1}{\ell}$.\\
 
-  Let $z\in \C$ with $|z-z_0| < \frac{1}{\ell}$. Then, $\exists \ell'$ such that $|z-z_0| < \frac{1}{\ell'} < \frac{1}{\ell}$. Let $c = \ell' |z-z_0| < 1$. Let $x_n = \sup \{a_n,a_{n+1},\dots\}$. So, $\lim x_n = \ell$. 
+      Let $z\in\C$ such that $|z-z_0| < \frac{1}{\ell}$. Then, $\exists \ell'$ such that $|z-z_0| < \frac{1}{\ell'} < \frac{1}{\ell}$. Then, $c = \ell'|z-z_0| < 1$.\\
+
+      We have $\limsup \sqrt[n]{|a_n|} = \ell$, let $x_n = \sup\{\sqrt[n]{|a_n|},\{\sqrt[n+1]{|a_{n+1}|},\dots,\}$. Then, $\lim_{n\rightarrow\infty}x_n = \ell$. Then, $\exists p$ such that $\forall n \geq p$, $|x_n - \ell| < \ell'-\ell$. So, $\sup\{\sqrt[p]{|a_{p}|},\dots\} < \ell'$, meaning that $\forall n \geq p$,
+        \begin{align*}
+          \sqrt[n]{a_n}|z-z_0| &< \ell'|z-z_0| = c\\
+          |a_n||z-z_0|^n &< c^n,
+        \end{align*}
+        so $\sum a_j(z-z_0)^j$ converges by comparison with $\sum c^j$, since $c < 1$.
+      \item[Case 2:] Let $\ell = 0$. We let $R = \infty$. Let $z\in \C$. Then, $\limsup \sqrt[n]{|a_n|} = 0$. If $z = z_0$, we have convergence. If not, let $c = |z-z_0| > 0$. Then, there exists $p$ such that for all $n \geq p$, $|x_n - 0| < \frac{1}{2c}$, where $x_n$ denotes the tail sequence.\\
+
+        Then, for all $j > p$, $\sqrt[j]{|a_j|} < \frac{1}{2c}$, so $|a_j| < \left(\frac{1}{2c}\right)^j$, so, $|a_j(z-z_0)| < \left(\frac{1}{2c}\right)^jc^j$, meaning $\sum a_j(z-z_0)^j$ converges by comparison with $\sum \frac{1}{2^j}$.
+      \item[Case 3:] Let $\ell = \infty$. We set $R = 0$. Let $z\neq z_0$. We will show that $\lim |a_j(z-z_0)^j|\nrightarrow 0$.
+  \end{description}
+  With this, we have shown absolute convergence as well. To show uniform convergence, we need the $M$-test.
+  \begin{description}
+    \item[Weierstrass $M$-Test:] Let $f_j: A\subseteq \C \rightarrow \C$, $j \in \Z_{\geq 0}$, with $f_j$ not necessarily continuous. Suppose $|f_j| \geq M_j$ on $A$. If $\sum M_j$ converges, then $\sum f_j(z)$ converges absolutely and uniformly on $A$.\\
+
+      For each $z\in A$, we know $\sum f_j(z)$ converges by the comparison test with $\sum M_j$. Let $g(z) = \sum f_j(z)$.\\
+
+      Let $g_n(z) = \sum_{j=0}^{n}f_j(z)$. We want to show $g_n \rightarrow g$ uniformly. Given $\varepsilon > 0$, $\exists p$ such that for all $n\geq p$ and for all $z\in A$, $|g_n(z) - g(z)| < \varepsilon$.
+      \begin{align*}
+        |g(z)-g_n(z)| &= \left|\sum_{j=0}^{\infty}f_j(z)-\sum_{j=0}^{n}f_j(z)\right|\\
+                      &= \left|\sum_{j=n+1}^{\infty}f_j(z)\right|\\
+                      &\leq \sum_{j=n+1}^{\infty}M_j.
+      \end{align*}
+      So, for sufficiently large $n$, $|S_n - S_{\infty}| < \varepsilon$ for sufficiently large $n$, as $\sum_{j=0}^{\infty}M_j$ converges.
+  \end{description}
+  To show uniform convergence within $|z-z_0| < r < R$, let $z_1 = z_0 + r$. So, $|z-z_0| = r < R$, meaning $\sum a_j(z_1-z_0)^j$ converges. So, $|f_j(z)| \leq |a_j||z-z_0|^j$. By above, we have $\sum_{j=0}^{\infty}M_j$ converges, where $M_j = |a_j(z_1-z_0)^j|$.\\
+
+  Then, for all $z$ with $|z-z_0| < |z_1-z_0|$, we have $|a_j(z-z_0)^j| \leq M_j$, meaning $\sum a_j(z-z_0)^j$ converges uniformly on $|z-z_0| < r$ by the $M$-test.
 \end{document}
