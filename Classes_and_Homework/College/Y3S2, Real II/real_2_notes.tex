@@ -3013,4 +3013,132 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
           \end{align*}
           Thus, $N\in \mathcal{M}_{\theta}$. If $M\in \mathcal{M}_{\theta}$ and $\theta(M) = 0$, and $N\subseteq M$, then by monotonicity we have $\theta(N) = 0$, so $N\in \mathcal{M}_{\theta}$.
   \end{description}
+  \begin{description}
+    \item[Remark:] If $\theta(N) = 0$, then $N\in \mathcal{M}_{\theta}$, and $\theta(E\cup N) = \theta(E)$ and $\theta(E\setminus N) = \theta(E)$.
+      \begin{align*}
+        \theta(E) &\leq \theta(E\cup N)\\
+                  &\leq \theta(E) + \theta(N)\\
+                  &= \theta(E)\\
+        \theta(E) &= \theta(N \cup (E\setminus N))\\
+                  &\leq \theta(N) + \theta(E\setminus N)\\
+                  &= \theta(E\setminus N)\\
+                  & \leq \theta(E)
+      \end{align*}
+  \end{description}
+  \subsection{Lebesgue Measure over $\R$}%
+  Consider the family $\mathcal{E} = \{(a,b) \mid a\leq b\}$. Let $\lambda_0: \mathcal{E}\rightarrow [0,\infty]$, with $\lambda_0((a,b)) = b-a$.\\
+
+  We see that $\mathcal{E}$ is a covering family with $\emptyset \in \mathcal{E}$. Notice that $\lambda_0(\emptyset) = 0$. As a result, we get the Lebesgue \textit{outer} measure, $\lambda^{\ast}: \mathcal{P}(\R)\rightarrow [0,\infty]$, with
+  \begin{align*}
+    \lambda^{\ast}(E) &:= \inf\left\{\sum_{k=1}^{\infty}\lambda_0(I_k)\mid E\subseteq \bigcup_{k=1}^{\infty}I_k,~I_k\in\mathcal{E}\right\}.
+  \end{align*}
+  We thus define the Lebesgue $\sigma$-algebra as
+  \begin{align*}
+    \mathcal{L} &= \left\{E\subseteq \R\mid E\text{ is $\lambda^{\ast}$-measurable}\right\}.
+  \end{align*}
+  The Lebesgue measure is $\lambda := \lambda^{\ast}|_{\mathcal{L}}$. We know from Carathéodory's theorem that $\lambda$ is complete.
+  \subsection{Properties of the Lebesgue Measure}%
+  \subsubsection{Proposition: Countable Subsets are Lebesgue Measurable}%
+  If $D\subseteq \R$ is countable, then $D\in \mathcal{L}$ and $\lambda(D) = 0$.
+  \begin{description}
+    \item[Proof:] It suffices to show that for $t\in\R$, $\{t\}$ is Lebesgue measurable.\\
+
+      We have, for any $\varepsilon > 0$,
+      \begin{align*}
+        \{t\}\subseteq \left(t-\frac{\varepsilon}{2},t+\frac{\varepsilon}{2}\right)\in \mathcal{E}.
+      \end{align*}
+      Thus, $\lambda^{\ast}(\{t\})\leq \lambda_{0}\left(\left(t-\frac{\varepsilon}{2},t+\frac{\varepsilon}{2}\right)\right) = \varepsilon$. Since $\varepsilon$ was arbitrary, we have that $\lambda^{\ast}(\{t\}) = 0$.\\
+
+      Thus, we have $\{t\}\in\mathcal{L}$. If $D = \{t_k\}_{k\geq 1}$ is countable, since each $\{t_k\}\in\mathcal{L}$, we have
+      \begin{align*}
+        D &= \bigcup_{k=1}^{\infty}\{t_k\}\in \mathcal{L},\\
+        \lambda(D) &= \sum_{k=1}^{\infty}\lambda(\{t_k\})\\
+                   &= 0.
+      \end{align*}
+  \end{description}
+  The converse is not true: the Cantor set has measure $0$.
+  \subsubsection{Proposition: Borel Sets are Lebesgue Measurable}%
+  \begin{align*}
+    \mathcal{B}_{\R} \subseteq \mathcal{L}.  
+  \end{align*}
+  \begin{description}
+    \item[Proof:] We show that $(-\infty,b) = I\in \mathcal{L}$ for any $b\in \R$. This is because $\sigma\left(\{(-\infty,b)\mid b\in\R\}\right) = \mathcal{B}_{\R}$, we will have that $\mathcal{B}_{\R}\subseteq \mathcal{L}$.\\
+
+      Let $E\subseteq \R$. Let $F = E\setminus \{b\}$. Let $F_1 = F\cap I = F \cap (-\infty,b)$, $F_2 = F\cap I^{c} = F\cap [b,\infty) = F\cap (b,\infty)$. Assume $F \subseteq \bigcup_{k=1}^{\infty} I_k$, with $I_k$ open.\\
+
+      Let $L_k = (-\infty,b)\cap I_k$, $U_k = (b,\infty)\cap I_k$. Notice that $L_k$ and $U_k$ are open intervals, and $F_1\subseteq \bigcup_{k=1}^{\infty}L_k$, $F_2 \subseteq \bigcup_{k=1}^{\infty}U_k$.
+      \begin{align*}
+        \lambda^{\ast}(F\cap I) + \lambda^{\ast}(F\cap I^{c}) &= \lambda^{\ast}(F_1) + \lambda^{\ast}(F_2)\\
+                    &\leq \sum_{k=1}^{\infty}\lambda_{0}(L_k) + \sum_{k=1}^{\infty}\lambda_0(U_k)\\
+                    &= \sum_{k=1}^{\infty}\left(\lambda_0(L_k) + \lambda_0(U_k)\right)\\
+                    &= \sum_{k=1}^{\infty}\lambda_0(I_k)
+                    \intertext{meaning}
+        \lambda^{\ast}(F\cap I) + \lambda^{\ast}(F\cap I^{c}) &\leq \lambda^{\ast}(F).
+      \end{align*}
+      Therefore, $F$ is $\lambda^{\ast}$-measurable. Notice that $E\cap I = F\cap I = F_1$, and $E\cap I^{c} = E\cap [b,\infty) \subseteq F_2 \cup \{b\}$. We have
+      \begin{align*}
+        \lambda^{\ast}(E\cap I) + \lambda^{\ast}(E\cap I^{c}) &\leq \lambda^{\ast}(F_1) + \lambda^{\ast}(F_2\cup \{b\})\\
+                                                              &\leq \lambda^{\ast}(F_1) + \lambda^{\ast}(F_2) + \lambda^{\ast}(\{b\})\\
+                                                              &= \lambda^{\ast}(F_1) + \lambda^{\ast}(F_2)\\
+                                                              &\leq \lambda^{\ast}(F)\\
+                                                              &\leq \lambda^{\ast}(E).
+      \end{align*}
+      Thus, $E$ is $\lambda^{\ast}$-measurable.
+    \begin{description}
+      \item[Remark:] Every Borel set, including closed sets, open sets, compact sets, F$_{\sigma}$-sets, G$_{\delta}$-sets, etc., is Lebesgue measurable.
+    \end{description}
+  \end{description}
+  \subsubsection{Proposition: Measure of an Interval}%
+  If $I$ is any interval, then $\lambda(I)$ is equal to the length of $I$.
+  \begin{description}
+    \item[Proof:] Let $I = [a,b]$. For all $\varepsilon > 0$, we have
+      \begin{align*}
+        I\subseteq \left(a-\frac{\varepsilon}{2},b+\frac{\varepsilon}{2}\right),
+      \end{align*}
+      meaning $\lambda^{\ast}(I) \leq (b-a) + \varepsilon$. Thus, we have $\lambda(I) = \lambda^{\ast}(I) \leq b-a$. To show the reverse direction, let
+      \begin{align*}
+        I\subseteq \bigcup_{k=1}^{\infty}I_k \tag*{$I_k$ open.}
+      \end{align*}
+      It suffices to show that
+      \begin{align*}
+        \sum_{k=1}^{\infty}\lambda_0(I_k) \geq b-a.
+      \end{align*}
+      Since $I$ is compact, $\exists n$ with
+      \begin{align*}
+        I\subseteq \bigcup_{k=1}^{n}I_k.
+      \end{align*}
+      Let $\ell = \sum_{k=1}^{n}I_k$ (\textasteriskcentered).\\
+
+      Without loss of generality, let $a\in I_1 = (a_1,b_1)$. If $b_1 \geq b$, we are done. If not, we have $a_1 < a < b_1 < b$.\\
+
+      Now, $b_1 \in I\setminus I_1$. Without loss of generality, $b_1\in I_2 = (a_2,b_2)$. If $b_2 \geq b$, we are done, as 
+      \begin{align*}
+        \ell &\geq (b_1-a_1) + (b_2 - a_2)\\
+             &= b_2 - (a_2 - b_1) - a_1\\
+             &\geq b-a_1 \\
+             &\geq b-a.
+      \end{align*}
+      We continue this process; it must terminate, as there are finitely many such intervals, meaning $b_m\geq b$ for some $m$. We have a subcollection $\{(a_k,b_k)\}_{k=1}^{m}$, with $a_1 < a$, $a_2 < b_1 < b_2$, etc. all the way to $a_m < b_{m-1} < b_m$, and $b_m \geq b$.
+      \begin{align*}
+        \ell &\geq \sum_{k=1}^{m}\lambda_0(a_k - b_k)\\
+             &= (b_m - a_m) + \left(b_{m-1} - a_{m-1}\right) + \cdots + \left(b_1 - a_1\right)\\
+             &= b_m - (a_m - b_{m-1}) - (a_{m-1} - b_{m-1}) - (a_2 - b_1) - a_1\\
+             &= b_{m} + (b_{m-1} - a-m) + \left(b_{m-2} + a_{m-1}\right) + \cdots + (b_1 - a_2) - a_1\\
+             &\geq b_m - a_1\\
+             &\geq b-a_1\\
+             &\geq b-a.
+      \end{align*}
+      Thus, $\lambda^{\ast}([a,b]) = \lambda([a,b]) = b-a$.\\
+
+      Let $I = (a,b]$. Let $I_n = [a+1/n,b]$. Then, $I = \bigcup_{n=1}^{\infty}[a+1/n,b]$.
+      \begin{align*}
+        \lambda(I) &= \lambda\left(\bigcup_{n=1}^{\infty}I_n\right)\\
+                   &= \lim_{n\rightarrow\infty} \lambda(I_n)\\
+                   &= \lim_{n\rightarrow\infty} (b-a)-(1/n)\\
+                   &= b-a.
+      \end{align*}
+      Similarly for $\lambda([a,b)) = b-a$, and $\lambda((a,b)) = b-a$.\\
+
+      If $I$ is unbounded, for every $n$, we can find a closed and bounded $I_n\subseteq I$ with $\lambda(I_n) = n$. Therefore, $\lambda(I) \geq \lambda(I_n) = n$. Therefore, $\lambda(I) = \infty$.
+  \end{description}
 \end{document}
