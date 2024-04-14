@@ -13,11 +13,11 @@ I am a mathematics major at Occidental College. I'm going to be using this websi
 ## [My CV](https://ai-bearing.github.io/CV/cv_2.pdf)
 
 ## Interests
-- Math
-- Coffee
-- Writing
-- Weightlifting
-- Urban Economics
+I'm interested in a lot of things, but I think the following are are a representative set:
+- Mathematics
+- Weightlifting and strength training
+- Economic history and political economy
+- Physical and mental health
 
 ## [Class Notes](classnotes.md)
 
