@@ -3141,4 +3141,126 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
 
       If $I$ is unbounded, for every $n$, we can find a closed and bounded $I_n\subseteq I$ with $\lambda(I_n) = n$. Therefore, $\lambda(I) \geq \lambda(I_n) = n$. Therefore, $\lambda(I) = \infty$.
   \end{description}
+  \subsubsection{Lemma: Translation-Invariance of the Outer Measure}%
+  For $E\subseteq \R$, $t\in \R$, $\lambda^{\ast}(E + t) = \lambda*{\ast}(E)$.
+  \begin{description}
+    \item[Proof:] Given that $E\subseteq \bigcup_{k\geq 1} I_k$, then $E + t \subseteq \bigcup_{k\geq 1}(I_k + t)$. We have that $I_k + t$ are still open intervals. Note that $\lambda_{0}(I_k + t) = \lambda_0(I_k)$.\\
+
+      Therefore,
+      \begin{align*}
+        \lambda^{\ast}(E + t) &\leq \sum_{k=1}^{\infty}\lambda_0(I_k + t)\\
+                              &= \sum_{k=1}^{\infty}\lambda_0(I_k).
+      \end{align*}
+      By definition, $\lambda^{\ast}(E + t) \leq \lambda^{\ast}(E)$.\\
+
+      Additionally,
+      \begin{align*}
+        \lambda^{\ast}(E) &= \lambda^{\ast}(E + t - t)\\
+                          &\leq \lambda^{\ast}(E + t).
+      \end{align*}
+  \end{description}
+  \subsubsection{Proposition: Translation-Invariance of the Lebesgue Measure}%
+  If $M\in \mathcal{L}$, and $t\in \R$, then $M + t\in \mathcal{L}$ and $\lambda(M + t) = \lambda(M)$.
+  \begin{description}
+    \item[Proof:] Let $E\subseteq \R$.
+      \begin{align*}
+        \lambda^{\ast}(E) &= \lambda^{\ast}(E - t)\\
+                          &= \lambda^{\ast}\left((E - t)\cap M\right) + \lambda^{\ast}\left((E-t)\cap M^{c}\right) \tag*{$M\in \mathcal{L}$}\\
+                          &= \lambda^{\ast}\left((E-t)\cap M + t\right) + \lambda^{\ast}\left((E-t)\cap M^{c} + t\right)\\
+                          &= \lambda^{\ast}\left(E\cap (M+t)\right) + \lambda^{\ast}\left(E\cap (M+t)^{c}\right).
+      \end{align*}
+      Therefore, $M+t\in \mathcal{L}$, and
+      \begin{align*}
+        \lambda(M+t) &= \lambda^{\ast}(M+t)\\
+                     &= \lambda^{\ast}(M)\\
+                     &= \lambda(M).
+      \end{align*}
+  \end{description}
+  Thus, we have our measure space, $(\R,\mathcal{L},\lambda)$, with
+  \begin{itemize}
+    \item $\lambda$ complete;
+    \item $\mathcal{B}_{\R}\subseteq \mathcal{L}$;
+    \item $\lambda(I) = \text{length}(I)$;
+    \item $\lambda(E+t) = \lambda(E)$;
+    \item $\lambda$ is $\sigma$-finite.
+  \end{itemize}
+  \subsection{Regularity of the Lebesgue Measure}%
+  \subsubsection{Theorem: Approximating a Measurable Set}%
+  Let $M\in\mathcal{L}$.
+  \begin{enumerate}[(1)]
+    \item $\forall \varepsilon > 0$, $\exists U\subseteq \R$ open with $M\subseteq U$ and $\lambda(U\setminus M) < \varepsilon$.
+    \item There is a G$_{\delta}$ set $V\subseteq \R$ with $M\subseteq V$ and $\lambda(V\setminus M) = 0$.
+    \item $\forall \varepsilon > 0$, $\exists C\subseteq \R$ closed with $C\subseteq M$ and $\lambda(M\setminus C) < \varepsilon$.
+    \item There is a F$_{\sigma}$ set with $F\subseteq M$ and $\lambda(M\setminus F) = 0$.
+  \end{enumerate}
+  \begin{description}
+    \item[Proof of (1):] If $M\in \mathcal{L}$, then $\lambda(M) = \lambda^{\ast}(M)$. By definition, given $\varepsilon > 0$, $\exists M\subseteq \bigcup_{k\geq 1}I_k$, with $I_k$ open, and
+      \begin{align*}
+        \lambda(M) + \varepsilon &> \sum_{k=1}^{\infty}\lambda_0(I_k)\\
+                                 &= \sum_{k=1}^{\infty}\lambda(I_k)\\
+                                 &\geq \lambda\left(\bigcup_{k=1}^{\infty}I_k\right).
+      \end{align*}
+      Set $U = \bigcup_{k=1}^{\infty}I_k$.\\
+
+      If $\lambda(M) < \infty$, then $\lambda(U\setminus M) = \lambda(U) - \lambda(M) < \varepsilon$. Otherwise, if $\lambda(M) = \infty$, then $M = \bigsqcup_{k=1}^{\infty}M_k$, where each $\lambda(M_k) < \infty$.\\
+
+      For each $M_k$, find $U_k$ open with $U_K\supseteq M_k$ and $\lambda(U_k \setminus M_k) = \lambda(U_k) \setminus \lambda(M_k) < \varepsilon \cdot 2^{-k}$. Set $U = \bigcup U_k \supseteq M$. Then,
+      \begin{align*}
+        \lambda(U\setminus M) &= \lambda \left(\bigcup_{k=1}^{\infty}\setminus \bigsqcup_{k=1}^{\infty}M_k\right)\\
+                              &= \lambda\left(\bigcup_{k=1}^{\infty}(U_k \setminus M_k^{c})\right)\\
+                              &\leq \sum_{k=1}^{\infty}\lambda(U_k\setminus M_k)\\
+                              &\leq \sum_{k=1}^{\infty}\varepsilon \cdot 2^{-k}\\
+                              &= \varepsilon.
+      \end{align*}
+    \item[Proof of (2):] For every $n\geq 1$, find an open $U_n\subseteq \R$ with $U_n \supseteq M$ and $\lambda(U_n\setminus M) < 1/n$. Set $V = \bigcap_{n=1}^{\infty}U_n$.
+      \begin{align*}
+        \lambda(V\setminus M) &= \lambda(V\cap M^{c})\\
+                              &= \lambda \left(\bigcap_{n=1}^{\infty}(U_n \setminus M)\right)\\
+                              &\leq \lambda(U_n \setminus M)\\
+                              &< 1/n \tag*{$\forall n$}
+                              \intertext{meaning}
+        \lambda(V\setminus M) &= 0.
+      \end{align*}
+    \item[Proof of (3):] $M^{c}\in \mathcal{L}$. Use (1) to prove.
+    \item[Proof of (4):] Use (3).
+  \end{description}
+  \subsubsection{Corollary: Completion of the Borel Measure Space}%
+  \begin{align*}
+    (\R,\mathcal{L},\lambda) &= \left(\R,\overline{\mathcal{B}}_{\R},\overline{\mu}\right),
+  \end{align*}
+  where $\mu = \lambda|_{\mathcal{B}_{\R}}$.
+  \begin{description}
+    \item[Proof:] We want to show that if $M\in \mathcal{L}$, then $M = B \cup E$, where $E\subseteq N\in \mathcal{B}_{\R}$, where $\mu(N) = 0$.\\
+
+      We know $\exists V$ G$_{\delta}$ and $F$ F$_{\sigma}$, with $F\subseteq M\subseteq V$, $\lambda(M\setminus F) = \lambda(V\setminus M) = \emptyset$.\\
+
+      Set $M = F \cup (M\setminus F)$. We have $F$ Borel, and $M\setminus F \subseteq V\setminus F$. We know that $\mu(V\setminus F) = 0$.
+  \end{description}
+  \subsubsection{Corollary: Inner and Outer Regularity}%
+  Let $M\in \mathcal{L}$. Then,
+  \begin{itemize}
+    \item Outer regularity: $\displaystyle \lambda(M) = \inf\left\{\lambda(U)\mid U\supseteq M,~U\text{ open}\right\}$
+    \item Inner regularity: $\displaystyle \lambda(M) = \sup\left\{\lambda(K)\mid K\subseteq M,~K\text{ compact}\right\}$
+  \end{itemize}
+  \begin{description}
+    \item[Proof of (1):] If $\lambda(M) = \infty$, the proof is clear.\\
+
+      Assume $\lambda(M) < \infty$. The $\leq$ direction is clear.\\
+
+      Let $\varepsilon > 0$; we have $\exists U\subseteq \R$ with $M\subseteq U$ and $\lambda(U\setminus M) < \varepsilon$, so $\lambda(U) < \lambda(M) + \varepsilon$.
+    \item[Proof of (2):] Assume $M$ is bounded. Given $\varepsilon > 0$, find $C$ closed with $C\subseteq M$ and $\lambda(M\setminus C) < \varepsilon$. Since $C$ is bounded, we have $C$ is compact. Since $M$ is bounded, $\lambda(M) < \infty$. Therefore, $\lambda(C) < \infty$, meaning $\lambda(M) - \lambda(C) < \varepsilon$, meaning $\lambda(M) - \varepsilon < \lambda(C)$. Since $\lambda(M)$ is an upper bound for the right hand side, we are done.\\
+
+      Suppose $M$ is not bounded. Set $M_n = M\cap [-n,n]$. Notice that $M_1 \subseteq M_2 \subseteq \cdots$, with $\bigcup M_n = M$. Therefore,
+      \begin{align*}
+        \lambda(M) &= \sup M_n.
+      \end{align*}
+      \textbf{Case 1:} $\lambda(M) = +\infty$. For every $n$, find a compact $K_n\subseteq M_n$ (which is possible as the $M_n$ are bounded) and $\lambda(M_n) - 1 < \lambda(K_n)$. Letting $n\rightarrow \infty$, we have $\lambda(K_n) \rightarrow \infty$. Therefore, $\sup \lambda(K_n) = \infty$.\\
+
+      \textbf{Case 2:} $\lambda(M) < \infty$. Given $\varepsilon > 0$, find $n$ with $\lambda(M) - \varepsilon/2 < \lambda(M_n)$. There is a compact $K$ with $K\subseteq M_n$ and $\lambda(M_n) - \varepsilon/2 < \lambda(K)$. Therefore, $K\subseteq M$ with $\lambda(M) - \varepsilon < \lambda(K)$.
+  \end{description}
+  \subsubsection{Proposition: Symmetric Difference Approximation}%
+  Let $M\in\mathcal{L}$ with $\lambda(M) < \infty$. Given $\varepsilon > 0$, there is an open $V = \bigsqcup_{j=1}^{n}(a_j,b_j)$ such that $\lambda(M\triangle V) < \varepsilon$.
+  \begin{description}
+    \item[Proof:] There is an open set $U$ with $M\subseteq U$ and $\lambda(U\setminus M) = \lambda(U) - \lambda(M) < \varepsilon/2$. Since every open set is a disjoint union of open intervals, we have $U = \bigsqcup_{j=1}^{\infty}(a_j,b_j)$. Therefore, $\sum \lambda(a_j,b_j) \leq \lambda(M)$. Thus, $\exists n$ large such that $\sum_{j=n+1}^{\infty}\lambda(a_j,b_j) < \varepsilon/2$. Set $V = \bigsqcup_{j=1}^{n}(a_j,b_j)$.
+  \end{description}
 \end{document}
