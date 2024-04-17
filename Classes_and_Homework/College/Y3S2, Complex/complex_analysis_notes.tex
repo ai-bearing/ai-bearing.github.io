@@ -1132,7 +1132,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   \end{description}
   With this, we have shown absolute convergence as well. To show uniform convergence, we need the $M$-test.
   \begin{description}
-    \item[Weierstrass $M$-Test:] Let $f_j: A\subseteq \C \rightarrow \C$, $j \in \Z_{\geq 0}$, with $f_j$ not necessarily continuous. Suppose $|f_j| \geq M_j$ on $A$. If $\sum M_j$ converges, then $\sum f_j(z)$ converges absolutely and uniformly on $A$.\\
+    \item[Weierstrass $M$-Test:] Let $f_j: A\subseteq \C \rightarrow \C$, $j \in \Z_{\geq 0}$, with $f_j$ not necessarily continuous. Suppose $|f_j| \leq M_j$ on $A$. If $\sum M_j$ converges, then $\sum f_j(z)$ converges absolutely and uniformly on $A$.\\
 
       For each $z\in A$, we know $\sum f_j(z)$ converges by the comparison test with $\sum M_j$. Let $g(z) = \sum f_j(z)$.\\
 
@@ -1147,4 +1147,38 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   To show uniform convergence within $|z-z_0| < r < R$, let $z_1 = z_0 + r$. So, $|z-z_0| = r < R$, meaning $\sum a_j(z_1-z_0)^j$ converges. So, $|f_j(z)| \leq |a_j||z-z_0|^j$. By above, we have $\sum_{j=0}^{\infty}M_j$ converges, where $M_j = |a_j(z_1-z_0)^j|$.\\
 
   Then, for all $z$ with $|z-z_0| < |z_1-z_0|$, we have $|a_j(z-z_0)^j| \leq M_j$, meaning $\sum a_j(z-z_0)^j$ converges uniformly on $|z-z_0| < r$ by the $M$-test.
+  \subsection{Zeros and Singularities}%
+  We want to use the features of Laurent series to study behavior of functions.
+  \begin{enumerate}[(i)]
+    \item If $f$ is analytic at $z_0$,, $f(z_0) = 0$, and $f$ is not constant, then $f(z) = (z-z_0)^m g(z)$ for some $m\geq 1$ and some $g$ analytic at $z_0$ such that $g(z_0) \neq 0$.
+    \item If $f$ is analytic on $0 < |z-z_0| < R$, and $\lim_{z\rightarrow z_0}|f(z)| = \infty$, then $f(z) = \frac{g(z)}{(z-z_0)^m}$ for some $m\geq 1$ and $g$ analytic such that $g(z_0)\neq 0$.
+  \end{enumerate}
+  For example, $\sin(\pi) = 0$, meaning $\sin(z) = (z-\pi)^mg(z)$ for some $m\geq 1$ and analytic $g$.\\
+
+  Suppose $f$ is analytic at $z_0$ and for some $m\geq 1$, and $f'(z_0) = 0,\dots,f^{(m-1)}(z_0) = 0$, and $f^{(m)}(z_0)\neq 0$, then we say $z_0$ is a zero of $f$ of order $m$.\\
+
+  For example, the order of the zero of $\sin z$ at $z_0 = \pi$ is $1$, meaning $\pi$ is a zero of order $1$ for $\sin z$.\\
+
+  If $f$ has a zero of order $m$ at $z_0$, then $f(z) = (z-z_0)^mg(z)$ for some analytic $g(z)$ with $g(z_0)\neq 0$.\\
+
+  To show this, notice that $f$ is analytic at $z_0$ by the definition of a zero, so
+  \begin{align*}
+    f(z) &= \sum_{j=0}^{\infty}\frac{f^{(j)}(z_0)}{j!}(z-z_0)^j
+  \end{align*}
+  for some $|z-z_0| < R$. Since $f(z_0)=f'(z_0)=\cdots=f^{(m)}(z_0) = 0$, we have
+  \begin{align*}
+    f(z) &= \sum_{j=m}^{\infty}\frac{f^{(j)}(z_0)}{j'}(z-z_0)^j\\
+         &= (z-z_0)^m\underbrace{\sum_{j=m}^{\infty}\frac{f^{(j)}(z_0)}{j!}(z-z_0)^{j-m}}_{g(z)}.
+  \end{align*}
+  We have that $g$ is analytic since the series converges on $|z-z_0| < R$. We have that $g(z_0) = f^{(m)}(z_0) \neq 0$ by definition of order $m$.\\
+
+  If $f$ is analytic on some punctured disk $0 < |z-z_0| < R$, but $f$ is not analytic at $z_0$, then we say $f$ has an isolated singularity at $z_0$. For example, $f(z) = \frac{1}{z(z-2)}$ has $0$ and $2$ as isolated singularity.\\
+
+  Let $f(z) = \sum_{j=-\infty}^{\infty}c_j(z-z_0)^j$ be the Laurent series for $f$ on $0 < |z-z_0| < R$, where $f$ has an isolated singularity at $z_0$.
+  \begin{itemize}
+    \item Removable singularity: if $0 = c_{-1} = c_{-2} = \cdots$, then $z_0$ is a removable singularity;
+    \item Pole singularity: if $\exists k$ such that $0 \neq c_{-1} = c_{-2} = \cdots = c_{-(k-1)}$, and $c_{-k} = 0$ for all $k\geq 1$, then we say $f$ has a pole of order $m$ at $z_0$;
+    \item Essential singularity: if there are infinitely many $j < 0$ with $c_j \neq 0$.
+  \end{itemize}
+  In a more concise way, let $m = \inf\{j\mid c_j\neq 0\}$. If $m = 0$, then $z_0$ is a removable singularity, if $m = -\infty$, then $z_0$ is an essential singularity, and if $m \in (0,\infty)$, then $z_0$ is a pole singularity.
 \end{document}
