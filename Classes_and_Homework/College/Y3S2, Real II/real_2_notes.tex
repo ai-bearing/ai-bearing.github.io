@@ -3263,4 +3263,139 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
   \begin{description}
     \item[Proof:] There is an open set $U$ with $M\subseteq U$ and $\lambda(U\setminus M) = \lambda(U) - \lambda(M) < \varepsilon/2$. Since every open set is a disjoint union of open intervals, we have $U = \bigsqcup_{j=1}^{\infty}(a_j,b_j)$. Therefore, $\sum \lambda(a_j,b_j) \leq \lambda(M)$. Thus, $\exists n$ large such that $\sum_{j=n+1}^{\infty}\lambda(a_j,b_j) < \varepsilon/2$. Set $V = \bigsqcup_{j=1}^{n}(a_j,b_j)$.
   \end{description}
+  \subsection{Vitali's Theorem}%
+  Given $E\subseteq \R$ with $\lambda^{\ast}(E) > 0$, $\exists N\subseteq E$ with $N\notin \mathcal{L}$.
+  \begin{description}
+    \item[Proof:] Assume $E$ is bounded; $E\subseteq [-a,a]$. Put an equivalence relation on $E$: $x\sim y$ if and only if $x-y\in\Q$. Therefore, $E = \bigsqcup_{i\in I}[x_i]$, with $x_i\in E$. Set $N = \{x_i\}_{i\in I}$. We claim that $N$ is not measurable.\\
+
+      Let $\{r_k\}_{k=1}^{\infty}$ be an enumeration of the rationals inside $\Q\cap [-2a,2a]$. Notice that $\{r_K + N\}_{k=1}^{\infty}$ are pairwise disjoint. Also, $E\subseteq \bigsqcup_{k=1}^{\infty}r_k + N$, since, given $x\in E$, we have $x\sim x_i$ for some $x_i\in N$, so $x-x_i\in \Q\cap [-2a,2a]$, meaning $x-x_i=r_k$ for some $r_k\in \Q\cap [-2a,2a]$, meaning $x \in r_k + N$.\\
+
+      If $N$ were measurable, then 
+      \begin{align*}
+        0 &< \lambda^{\ast}(E)\\
+          &\leq \lambda^{\ast}\left(\bigsqcup_{k=1}^{\infty}r_k + N\right)\\
+          &= \sum_{k=1}^{\infty} \lambda(r_k + N)\\
+          &= \sum_{k=1}^{\infty}\lambda(N).
+      \end{align*}
+      We also have $\lambda(N) = \lambda^{\ast}(N) \leq \lambda^{\ast}(E) \leq 2a$. Together, we arrive at a contradiction.\\
+
+      If $E$ is not bounded, let $E_n = \cap [-n,n]$. Then,
+      \begin{align*}
+        0 &< \lambda^{\ast}(E)\\
+          &= \lambda^{\ast}(E_n)\\
+          &\leq \sum_{n=1}^{\infty}\lambda^{\ast}(E_n).
+      \end{align*}
+      Since $\lambda^{\ast}(E) > 0$, there must exist some $E_n$ with $\lambda^{\ast}(E_n) > 0$, meaning $E_n$ contains a non-measurable subset, so $E$ has a non-measurable subset.
+  \end{description}
+  \subsection{Cantor-Lebesgue Function}%
+  To find a non-Borel, Lebesgue-measurable set, we must construct and explore the properties of the Cantor-Lebesgue function.
+  \begin{description}
+    \item[Proof:] Consider the Cantor set:
+      \begin{align*}
+        C_0 &= [0,1]\\
+        C_1 &= [0,1/3]\cup[2/3,1]\\
+        C_2 &= [0,1/9]\cup[2/9,1/3]\cup[2/3,7/9]\cup[8/9,1]\\
+        C_n &= \frac{1}{3}\left(C_{n-1}\cup (2 + C_{n-1})\right)\\
+        \mathcal{C} &= \bigcap_{n=0}^{\infty} C_n.
+      \end{align*}
+      To find $\lambda(\mathcal{C})$, notice that $\mathcal{C}$ is closed (and thus Borel), meaning $\lambda(\mathcal{C}) = \lim_{n\rightarrow\infty} \lambda(C_n)$, meaning $\lambda(\mathcal{C}) = 0$.\\
+
+      We will build a function from the removed intervals of the Cantor set. Let
+      \begin{itemize}
+        \item $\displaystyle G_1 = C_0 \setminus C_1 = \underbrace{(1/3,2/3)}_{I_{1,1}}$
+        \item $\displaystyle G_2 = C_1 \setminus C_2 = \underbrace{(1/9,2/9)}_{I_{2,1}}\sqcup\underbrace{(7/9,8/9)}_{I_{2,2}}$
+        \item $\displaystyle G_3 = C_2\setminus C_3 = \underbrace{(1/27,2/27)}_{I_{3,1}}\cup\underbrace{(7/27,8/27)}_{I_{3,2}}\cup\underbrace{(19/27,20/27)}_{I_{3,3}}\cup\underbrace{(25/27,26/27)}_{I_{3,4}}$.
+      \end{itemize}
+      At each step, we have $G_{k} = C_{k-1}\setminus C_k = \bigsqcup_{j=1}^{2^{k-1}}I_{k,j}$. If we let $L_k = \bigsqcup_{j=1}^{k}G_j$. Notice that $L_k\sqcup C_k = [0,1]$.\\
+
+      Let
+      \begin{align*}
+        g_k &= \sum_{j=1}^{2^{k-1}}\frac{2j-1}{2^k}\mathbb{1}_{I_{k,j}}\\
+        g_1 &= \frac{1}{2}\mathbb{1}_{(1/3,2/3)}\\
+        g_2 &= \frac{1}{4}\mathbb{1}_{(1/9,2/9)} + \frac{3}{4}\mathbb{1}_{(7/9,8/9)}\\
+        g_3 &= \frac{1}{8}\mathbb{1}_{(1/27,2/27)} + \frac{3}{8}\mathbb{1}_{(7/27,8/27)} + \frac{5}{8}\mathbb{1}_{(19/27,20/27)} + \frac{7}{8}\mathbb{1}_{(25/27,26/27)}.
+      \end{align*}
+      Now, let $f_n = \sum_{k=1}^{n}g_k$.\\
+
+      Let $\varphi_n: [0,1]\rightarrow [0,1]$ be the unique continuous extension of $f_n$, where $\varphi(0) = 0, \varphi(1) = 1$, and $\varphi_n$ is linear on $C_n$.\\
+
+      We claim that $(\varphi_n)_n$ are uniformly Cauchy. Note that
+      \begin{align*}
+        |\varphi_{k+1}(x) -\varphi_k(x)| &< \frac{1}{2^k}.
+      \end{align*}
+      So, for $m > n$,
+      \begin{align*}
+        |\varphi_m(x) - \varphi_n(x)| &\leq |\varphi_{m}(x) - \varphi_{m-1}(x)| + \cdots | \varphi_{n+1}(x) - \varphi_n(x)|\\
+                                      &\leq 2^{1-m} + \cdots + 2^{-n}\\
+                                      &\leq 2^{1-n}\\
+        \norm{\varphi_m(x) - \varphi_n(x)}_{u} &\leq 2^{1-n}.
+      \end{align*}
+      Since $C([0,1])$ is complete, we must have that $(\varphi_n)_n\xrightarrow{\norm{\cdot}_u}\varphi\in C([0,1])$. We call $\varphi$ the Cantor-Lebesgue Function.
+    \item[Properties of the Cantor-Lebesgue Function:]\hfill
+      \begin{enumerate}[(1)]
+        \item $\varphi$ is increasing;
+        \item $\varphi$ is constant on $[0,1]\setminus \mathcal{C}$;
+        \item $\varphi([0,1]) = [0,1]$;
+        \item $\varphi(\mathcal{C}) = [0,1]$.
+      \end{enumerate}
+    \item[Proof of Properties:]\hfill
+      \begin{enumerate}[(1)]
+        \item If $x\leq y$, then $\varphi_n(x) \leq \varphi_n(y)$, meaning $\varphi(x) \leq \varphi(y)$ as $n\rightarrow\infty$.
+        \item If $x\notin \mathcal{C}$, then $x\in \bigcup_{k=1}^{\infty} L_k$. Let $x\in L_{\ell}$. Thus, $\varphi(x) = \lim_{n\rightarrow\infty}\varphi_n(x)=\lim_{n\rightarrow\infty}f_{n}(x) = f_{\ell}(x)$.
+        \item Intermediate value theorem.
+        \item We can see that $\mathcal{C}\sqcup \underbrace{[0,1]\setminus \mathcal{C}}_{L} = [0,1]$. Thus, 
+          \begin{align*}
+            \varphi([0,1]) &= \varphi(\mathcal{C}) \sqcup \varphi(L).
+          \end{align*}
+          We can see that $\lambda(\varphi(L)) = 0$, since $\varphi(L)$ is a countable set. Thus, $\lambda(\varphi(\mathcal{C})) = 1$.\\
+
+          Since $C$ is compact, $\varphi(C)$ is compact, and thus closed.\\
+
+          If $\exists t\in [0,1]\setminus \varphi(\mathcal{C})$, then $\exists \delta > 0$ such that $(t-\delta,t+\delta)\in [0,1]\setminus \varphi(\mathcal{C})$, implying $\lambda(\varphi(\mathcal{C})) < 1$.
+      \end{enumerate}
+    \item[Properties of a New Function:] Let $\psi: [0,1]\rightarrow [0,2]$, $\psi(x) = x + \psi(x)$.
+      \begin{enumerate}[(1)]
+        \item $\psi$ is strictly increasing
+        \item $\psi: [0,1]\rightarrow [0,2]$ is bijective
+        \item $\lambda(\psi(\mathcal{C})) = 1$
+      \end{enumerate}
+    \item[Proof of Properties of New Function:]\hfill
+      \begin{enumerate}[(1)]
+        \item Trivial.
+        \item Intermediate Value Theorem.
+        \item 
+          \begin{align*}
+            \psi(L) &= \psi\left(\bigsqcup L_k\right)\\
+                    &= \bigsqcup \psi(L_k).
+          \end{align*}
+          Notice that
+          \begin{align*}
+            \psi(I_{k,j}) &= \{x + \varphi(x)\mid x\in I_{k,j}\}\\
+                          &= \left\{x + \frac{2j-1}{2^{k}}\mid x\in I_{k,j}\right\}\\
+            \lambda(\psi(I_{k,j})) &= \lambda(I_{k,j}).
+          \end{align*}
+          Therefore, we see that
+          \begin{align*}
+            \lambda(\psi(G_k)) &= \lambda\left(\psi\left(\bigsqcup_{j=1}^{2k-1}I_{k,j}\right)\right)\\
+                               &= \lambda\left(\bigsqcup\psi(I_{k,j})\right)\\
+                               &= \sum_{j=1}^{2k-1} \lambda(\psi(I_{k,j}))\\
+                               &= \sum_{j=1}^{2k-1}\lambda(I_{k,j})\\
+                               &= \lambda(G_k).
+          \end{align*}
+          Thus,
+          \begin{align*}
+            \lambda(\psi(L)) &= \sum \lambda(\psi(G_k))\\
+                             &= \sum\lambda(G_k)\\
+                             &= \sum \lambda\left(\bigsqcup G_k\right)\\
+                             &= 1,
+          \end{align*}
+          meaning
+          \begin{align*}
+            [0,2] &= \psi([0,1])\\
+                  &= \psi(\mathcal{C}\sqcup L)\\
+                  &= \psi(\mathcal{C}) \sqcup \psi(L)\\
+                  &\Rightarrow \lambda(\psi(\mathcal{C})) = 1.
+          \end{align*}
+      \end{enumerate}
+  \end{description}
 \end{document}
