@@ -1177,8 +1177,78 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
   Let $f(z) = \sum_{j=-\infty}^{\infty}c_j(z-z_0)^j$ be the Laurent series for $f$ on $0 < |z-z_0| < R$, where $f$ has an isolated singularity at $z_0$.
   \begin{itemize}
     \item Removable singularity: if $0 = c_{-1} = c_{-2} = \cdots$, then $z_0$ is a removable singularity;
-    \item Pole singularity: if $\exists k$ such that $0 \neq c_{-1} = c_{-2} = \cdots = c_{-(k-1)}$, and $c_{-k} = 0$ for all $k\geq 1$, then we say $f$ has a pole of order $m$ at $z_0$;
+    \item Pole singularity: if $\exists k$ such that $0 \neq c_{-1},c_{-2},\dots, c_{-(m-1)}$, and $c_{-k} = 0$ for all $k\geq m$, then we say $f$ has a pole of order $m$ at $z_0$;
     \item Essential singularity: if there are infinitely many $j < 0$ with $c_j \neq 0$.
   \end{itemize}
-  In a more concise way, let $m = \inf\{j\mid c_j\neq 0\}$. If $m = 0$, then $z_0$ is a removable singularity, if $m = -\infty$, then $z_0$ is an essential singularity, and if $m \in (0,\infty)$, then $z_0$ is a pole singularity.
+  In a more concise way, let $m = \inf\{j\mid c_j\neq 0\}$. If $m = 0$, then $z_0$ is a removable singularity, if $m = -\infty$, then $z_0$ is an essential singularity, and if $m \in (0,\infty)$, then $z_0$ is a pole singularity.\\
+
+  For example, we can classify singularities in the following functions:
+  \begin{itemize}
+    \item $\frac{\sin z}{z}$: We see that $z = 0$ is an isolated singularity since $\sin z$ is entire. We see that $\displaystyle\sin z = \sum_{j=0}^{\infty} (-1)^j\frac{z^{2j+1}}{(2j+1)!}$, meaning $\displaystyle\frac{\sin z}{z} = \sum_{j=0}^{\infty}(-1)^j\frac{z^{2j}}{(2j+1)!}$. Since this Laurent series doesn't have any non-zero negative index coefficients, we see that $z=0$ is a removable singularity.
+    \item $\frac{\sin z}{z^2}:$ by the same logic, we find that $\displaystyle\frac{\sin z}{z^2} = \sum_{j=0}^{\infty}(-1)^j\frac{z^{2j-1}}{(2j+1)!}$, which means we have a pole of order $1$.
+    \item $\sin(1/z):$ since $\displaystyle\sin(1/z) = \sum_{j=0}^{\infty}(-1)^j\frac{1}{z^{2j+1}(2j+1)!}$, the singularity at $z=0$ is essential.
+  \end{itemize}
+  \begin{center}
+    \renewcommand{\arraystretch}{2}
+    \begin{tabular}{c|c|c|c}
+      Type of Singularity & Removable & Pole & Essential\\
+      \hline
+      Behavior & $\displaystyle\lim_{z\rightarrow z_0}f(z)$ & $\displaystyle \lim_{z\rightarrow z_0}|f(z)| = \infty$ & $\displaystyle |f| \text{ unbounded near $z_0$, and} \lim_{z\rightarrow z_0}|f(z)| \neq \infty$
+    \end{tabular}
+  \end{center}
+  We can then find the following equivalent statements:
+  \begin{enumerate}[(i)]
+    \item $f$ has a removable singularity at $z_0$
+    \item $\lim_{z\rightarrow z_0}f(z)$ exists
+    \item $|f(z)|$ is bounded on some punctured disk $0 < |z-z_0| < R$
+    \item $\exists R > 0$ such that $f|_{0<|z-z_0| < R}$ can be extended to an analytic function on $|z-z_0| < R$.
+  \end{enumerate}
+  We can verify this for $f(z) = \frac{\sin z}{z-\pi}$. For (i), we see that for $z_0 = \pi$, we find the Taylor Series for $\sin z$ about $\pi$, which is
+  \begin{align*}
+    \sin z &= -(z-\pi) + \frac{(z-\pi)^3}{3!} - \frac{(z-\pi)^5}{5!} + \cdots\\
+           &= \sum_{j=0}^{\infty}(-1)^{j+1} \frac{(z-\pi)^{2j+1}}{(2j+1)!}\\
+    \frac{\sin z}{z-\pi} &= \sum_{j=0}^{\infty}(-1)^{j+1} \frac{(z-\pi)^{2j}}{(2j+1)!},
+  \end{align*}
+  meaning $z=\pi$ is a removable singularity.\\
+
+  To show (ii), we see
+  \begin{align*}
+    \lim_{z\rightarrow \pi}\frac{\sin z}{z-\pi} &= \lim_{z\rightarrow \pi} \left((-1) + \frac{(z-\pi)^2}{3!} + \cdots\right)\\
+                                                &= -1.
+  \end{align*}
+  We \textit{could} use L'Hôpital's rule, but we would have to prove it.\\
+
+  To show (iv), we see that $\frac{\sin z}{z-\pi}$ extends to the analytic function
+  \begin{align*}
+    f_{\text{new}}(z) &= \begin{cases}
+      \frac{\sin z}{z-\pi} & z\neq \pi\\
+      -1 & z=\pi
+    \end{cases},
+  \end{align*}
+  where $R = \infty$, as $f_{\text{new}}$ is equal to the Taylor series, which is itself entire.\\
+
+  We can also use Picard's theorem: if $f(z)$ has an essential singularity at $z_0$, then $f$ assumes every value except possibly one on every neighborhood of $z_0$. In other words, there exists $w_0$ such that $\forall w\in \C\setminus \{w_0\}$ and $\forall \varepsilon > 0$, $\exists z$ such that $|z-z_0| < \varepsilon$ and $f(z) = w$.\\
+
+  Let $z_0$  be an isolated singularity of $f$. Then, the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $z_0$ is a pole of order $m$
+    \item $\lim_{z\rightarrow z_0}|f(z)| = \infty$
+    \item $f(z) = \frac{g(z_0)}{(z-z_0)^m}$, where $g(z_0)\neq 0$
+  \end{enumerate}
+  Additionally, the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $z_0$ is an essential singularity
+    \item $|f(z)|$ is unbounded on every neighborhood of $z_0$, and $\lim_{z\rightarrow z_0}|f(z)|\neq \infty$
+    \item $f$ assumes every value except possibly one on every neighborhood of $z_0$.
+  \end{enumerate}
+  The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $z_0$ is a zero of order $m$ for $f$
+    \item $z_0$ is a pole of order $m$ for $\frac{1}{f}$
+  \end{enumerate}
+  and
+  \begin{enumerate}[(i)]
+    \item $z_0$ is a pole of order $m$ for $f$
+    \item Defining $(1/f)(z_0) = 0$, $z_0$ is a zero of order $m$ for $\frac{1}{f}$.
+  \end{enumerate}
 \end{document}
