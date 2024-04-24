@@ -3513,4 +3513,130 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
           \end{align*}
       \end{enumerate}
   \end{description}
+  \subsection{Proposition: Pointwise Convergence of Measurable Functions}%
+  Let $\left(f_{n}:\Omega \rightarrow \overline{\R}\right)$ be a sequence of measurable functions with $(f_n)_n \rightarrow f$ pointwise. Then, $f$ is measurable.
+  \begin{description}
+    \item[Proof:] If $(f_n)_n \rightarrow f$ pointwise, then $f = \limsup f_n = \liminf f_n$.
+  \end{description}
+  \subsection{Simple Functions}%
+  \begin{enumerate}[(1)]
+    \item for $E\subseteq \Omega$, then $\mathbb{1}_E: \Omega\rightarrow \R$, the characteristic function of $E$, is defined by
+      \begin{align*}
+        \mathbb{1}_E(x) &= \begin{cases}
+          1 & x\in E\\
+          0 & x\notin E
+        \end{cases}.
+      \end{align*}
+        If $E = \{x_0\}$, then we write $\mathbb{1}_E = \delta_{x_0}$.
+    \item A simple function $\phi: \Omega \rightarrow \R$ is a linear combination of characteristic functions.
+      \begin{align*}
+        \phi &= \sum_{k=1}^{n}c_k\mathbb{1}_{E_k}. \tag*{$c_k\in \R$, $E_k\subseteq \Omega$}
+      \end{align*}
+  \end{enumerate}
+  \begin{description}
+    \item[Remark:] $\phi$ can assume finitely many values, specifically at most $2^n$.
+  \end{description}
+  If $\text{ran}(\phi) = \{d_1,\dots,d_m\}$, where $d_j$ are distinct. Write $D_j = \phi^{-1}(\{d_j\})$. Then,
+  \begin{align*}
+    \phi &= \sum_{j=1}^{m}d_j\mathbb{1}_{D_j}
+  \end{align*}
+  is known as the \textit{standard form}, where $d_j$ are distinct, and $\bigsqcup D_j = \Omega$.
+  \begin{description}
+    \item[Exercise 1:] Given $\phi = \sum_{k=1}^{n}c_k\mathbb{1}_{E_k}$, $\phi$ is measurable if and only if $E_k \in \mathcal{M}$.
+    \item[Exercise 2:] If $X$ is a metric space, $\mathbb{1}_E$ is continuous if and only if $E$ is clopen in $X$.
+  \end{description}
+  \subsection{Proposition: Properties of Characteristic Functions}%
+  \begin{enumerate}[(1)]
+    \item 
+      \begin{align*}
+        \mathbb{1}_{\bigsqcup D_j} &= \sum_{j=1}^{m}\mathbb{1}_{D_j}
+      \end{align*}
+    \item 
+      \begin{align*}
+        \mathbb{1}_E \cdot \mathbb{1}_F &= \mathbb{1}_{E\cap F}
+      \end{align*}
+    \item 
+      \begin{align*}
+        \Sigma(\Omega) &:= \{\phi\mid \phi: \Omega \rightarrow \R \text{ simple}\}\\
+        \Sigma(\Omega,\mathcal{M}) &:= \{\phi\mid \phi: \Omega \rightarrow \R \text{ simple and measurable}\}
+      \end{align*}
+      is a unital separating subalgebra of $\mathcal{F}(\Omega,\R)$.
+    \item Let $X$ be a compact, totally disconnected metric space. Then,
+      \begin{align*}
+        \mathfrak{C} &:= \text{span}\{\mathbb{1}_{E}\mid E\subseteq X\text{ clopen}\}
+      \end{align*}
+      is a unital separating subalgebra for $C(X)$.\\
+
+      Therefore, $\overline{\mathfrak{C}}^{\norm{\cdot}_u} = C(X)$.
+  \end{enumerate}
+  \subsection{Theorem: Pointwise Convergence of Simple Measurable Functions}%
+  If $(\Omega,\mathcal{M})$ is a measurable space, and $f: \Omega \rightarrow \overline{\R}$ is measurable, there is a sequence $(\phi_n)_n$ of simple measurable functions such that $\phi_n(x) \rightarrow f(x)$ for all $x\in \Omega$.\\
+
+  If $f \geq 0$, we can take $(\phi_n)_n$ to be pointwise increasing.\\
+
+  If $f$ is bounded, then $\left(\norm{f-\phi_n}_u\right)_n \rightarrow 0$, and $\phi_n$ are uniformly bounded: $\sup \norm{\phi_n}_u < \infty$.
+  \begin{description}
+    \item[Proof:] Assume that $f \geq 0$. For each $n$, partition $[0,2^n]$ into subintervals of length $2^{-n}$. We will have $2^{2n}$ subintervals:
+      \begin{align*}
+        I_{n,0} &= \left[0,\frac{1}{2^n}\right]\\
+        I_{n,k} &= \left(\frac{k}{2^n},\frac{k+1}{2^n}\right],
+      \end{align*}
+      with $k = 1,2,\dots,2^{2n}-1$. We define $J_n = (2^n,\infty]$.\\
+
+      Let $E_{n,k} = f^{-1}(I_{n,k})$, with $k = 1,2,\dots,2^{2n}-1$. Let $F_n = f^{-1}(J_n)$.\\
+
+      Notice that $\displaystyle \left(\bigsqcup_{k=1}^{2^{2n}-1} E_{n,k}\right) \sqcup F_n = \Omega$, and $E_{n,k}$, $F_n$ are measurable.\\
+
+      Let
+      \begin{align*}
+        \phi_n &= \sum_{k=0}^{2^{2n}-1} \frac{k}{2^n}\mathbb{1}_{E_{n,k}} + 2^n \mathbb{1}_{F_n}.
+      \end{align*}
+      We see that $\phi_n$ are simple, measurable, and positive.\\
+
+      Fix $x \in \Omega$. If $f(x)$ is finite, there is a large $N$ with $f(x) \leq 2^N$. Fix $n\geq N$. Then, $\exists ! k$ with $x\in E_{n,k}$, meaning that $\frac{k}{2^n} < f(x) \leq \frac{k+1}{2^n}$.\\
+
+      Thus, we have
+      \begin{align*}
+        |f(x) - \phi_n(x)| &= \left|f(x) - \frac{k}{2^n}\right|\\
+                           &\leq \frac{1}{2^n}.
+      \end{align*}
+      Thus, as $n\rightarrow \infty$, we have $\left(\phi_n(x)\right) \rightarrow f(x)$.\\
+
+      If $f(x) = +\infty$, then $x\in F_n$ for all $n$. So, $\phi_n(x) = 2^n$ for all $n$, which converges to $f(x)$.\\
+
+      If $f$ is bounded, then for large $n$, $F_n = \emptyset$. So, $\norm{f-\phi_n}_u \leq 2^{-n}$, since our choice of $N$ above works for all $x$. Thus, $(\varphi_n)_n \xrightarrow{\norm{\cdot}_u}f$, and clearly $\sup\norm{\phi_n}_u \leq \norm{f}_u$.\\
+
+      If $f: \Omega \rightarrow \overline{\R}$ is measurable, then $f = f^{+} - f^{-}$, where $f^{+}$ and $f^{-}$ are positive and measurable. Perform the above procedure for $f^{+}$ and $f^{-}$, and subtract.
+  \end{description}
+  \section{Proposition: Measure on set of Measurable Functions}%
+  Let $(\Omega,\mathcal{M})$ be a measurable space.
+  \begin{align*}
+    L_0(\Omega,\mathcal{M}) &:= \{f: \Omega \rightarrow \R\mid f\text{ measurable}\}
+  \end{align*}
+  is a unital, commutative algebra. Let $\mu$ be a measure on $(\Omega,\mathcal{M})$. Define a relation on $L_{0}(\Omega,\mathcal{M})$:
+  \begin{align*}
+    f\sim_{\mu}g \Leftrightarrow \mu\left(\underbrace{\{x\mid f(x)\neq g(x)\}}_{\left((f-g)^{-1}(\{0\})\right)^{c}}\right) = 0.
+  \end{align*}
+  Then, $\sim_{\mu}$ is an equivalence relation.\\
+
+  We define
+  \begin{align*}
+    L(\Omega,\mathcal{M},\mu) &:= L_0(\Omega,\mathcal{M})/\sim_{\mu}
+  \end{align*}
+  is a unital, commutative algebra.
+  \begin{align*}
+    [f]_{\mu} + [g]_{\mu} &= [f + g]_{\mu}\\
+    \alpha [f]_{\mu} &= [\alpha f]_{\mu}\\
+    [f]_{\mu}\cdot[g]_{\mu} &= [fg]_{\mu}.
+  \end{align*}
+  \begin{description}
+    \item[Proof:] Reflexivity and symmetry are clear.\\
+
+      Let $f\sim_{\mu} g \sim_{\mu} h$. Let $N := \{x\mid f(x)\neq g(x)\}$ and $M = \{x\mid g(x)\neq h(x)\}$. We know that $\mu(N) = 0 = \mu(M)$.
+      \begin{align*}
+        N^{c}\cap M^{c} &\subseteq \{x\mid f(x) = h(x)\}.\\
+        \{x\mid f(x)\neq h(x)\} &\subseteq N \cup M.
+      \end{align*}
+      Since $\mu(N\cup M) = 0$, so too is $\mu\left(\{x\mid f(x)\neq h(x)\}\right)$.
+  \end{description}
 \end{document}
