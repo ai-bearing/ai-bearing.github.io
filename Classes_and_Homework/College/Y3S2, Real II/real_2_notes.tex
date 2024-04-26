@@ -102,6 +102,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\iprod}[2]{\left\langle #1,#2\right\rangle}
 \newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\esssup}{\text{ess}\sup}
 \setcounter{secnumdepth}{0}
 \begin{document}
 \section{Normed Vector Spaces}%
@@ -3608,7 +3609,7 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
 
       If $f: \Omega \rightarrow \overline{\R}$ is measurable, then $f = f^{+} - f^{-}$, where $f^{+}$ and $f^{-}$ are positive and measurable. Perform the above procedure for $f^{+}$ and $f^{-}$, and subtract.
   \end{description}
-  \section{Proposition: Measure on set of Measurable Functions}%
+  \subsection{Proposition: Measure on set of Measurable Functions}%
   Let $(\Omega,\mathcal{M})$ be a measurable space.
   \begin{align*}
     L_0(\Omega,\mathcal{M}) &:= \{f: \Omega \rightarrow \R\mid f\text{ measurable}\}
@@ -3638,5 +3639,151 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
         \{x\mid f(x)\neq h(x)\} &\subseteq N \cup M.
       \end{align*}
       Since $\mu(N\cup M) = 0$, so too is $\mu\left(\{x\mid f(x)\neq h(x)\}\right)$.
+  \end{description}
+  \subsection{Essentially Bounded Functions}%
+  Let $(\Omega,\mathcal{M},\mu)$ be a measure space. Suppose $f\in L_{0}(\Omega,\mathcal{M})$.
+  \begin{enumerate}[(1)]
+    \item $c\geq 0$ is an essential bound for $f$ if $\mu\left(\{x\mid |f(x)| > c\}\right) = 0$. If $f$ admits an essential bound, $f$ is called essentially bounded.
+    \item The essential supremum, $\esssup(f)= \text{inf}\left(\{c\mid c\text{ is an essential bound}\}\right)$. We say $\esssup(f) = \infty$ if $f$ has no essential bound.
+  \end{enumerate}
+  For example, if $f = \mathbb{1}_{\Q}$, then $\esssup(f) = 0$. At the same time, $\norm{f}_{u} = 1$.
+  \subsection{Lemma: Essential Supremum Property}%
+  Let $(\Omega,\mathcal{M},\mu)$ be a measure space. For $f\in L_{0}(\Omega,\mathcal{M})$, $|f(x)| \leq \esssup(f)$ for almost every $x\in\Omega$ ($\mu$-almost everywhere). We say $\mu$-a.e. if $x\in\Omega$ means $\forall x\in\Omega \setminus N$, where $\mu(N) = 0$.
+  \begin{description}
+    \item[Proof:] If $\esssup(f) = \infty$, then we are done.\\
+
+      Suppose $c_f = \esssup(f) < \infty$. For $n\geq 1$, $\exists \text{ essential bound } c_n$ for $f$ such that $c_f + 1/n > c_n$.\\
+
+      Let $N_n = \{x\mid |f(x)| > c_n\}$. Since $c_n$ is an essential bound, $\mu(N_n) = 0$.
+      \begin{align*}
+        \mu\left(\{x\mid |f(x)| \leq c_f\}^{c}\right) &= \mu\left(\{x\mid |f(x)| > c_f\}^{c}\right)\\
+                                                      &= \mu \left(\bigcup_{n\geq 1} \{x\mid |f(x)| > c_f + 1/n\}\right)\\
+                                                      &\subseteq \mu \left(\bigcup_{n\geq 1}\{x\mid |f(x)| > c_n\}\right)\\
+                                                      &= \mu \left(\bigcup_{n\geq 1}N_n\right)\\
+                                                      &= 0.
+      \end{align*}
+  \end{description}
+  \subsection{Proposition: Arithmetic Operations of Essential Supremum}%
+  Let $(\Omega,\mathcal{M},\mu)$ be a measure space, and $f,g\in L_{0}(\Omega,\mathcal{M})$. Then,
+  \begin{enumerate}[(1)]
+    \item $\esssup(f+g)\leq \esssup(f) + \esssup(g)$
+    \item $\esssup(\alpha f) = |\alpha|\esssup(f)$
+    \item $\esssup(fg)\leq \left(\esssup(f)\right)\left(\esssup(g)\right)$
+    \item $\esssup(f) = 0 \Rightarrow f = 0$ $\mu$-a.e., so $[f]_0 = L(\Omega,\mathcal{M},\mu)$
+    \item $\esssup(\mathbb{1}_{\Omega})=  1$
+    \item $\esssup(f) \leq \norm{f}_{u}$
+    \item $f\sim_{\mu}g \Rightarrow \esssup(f) = \esssup(g)$.
+  \end{enumerate}
+  \begin{description}
+    \item[Proof of (1):] Assume $c_f = \esssup(f)$, $c_g = \esssup(g)$, with $c_f,c_g < \infty$.\\
+
+      Let $N = \{x\mid |f(x)| > c_f\}$ and $M = \{x\mid |g(x)| > c_g\}$. Both $N$ and $M$ are $\mu$-null, by the lemma.
+      \begin{align*}
+        \underbrace{\{x\mid |(f+g)(x)| > c_f + c_g\}}_{\mu\text{-null ($f+g$ measurable)}} &\subseteq N\cup M.
+      \end{align*}
+      Therefore, $c_f + c_g$ is an essential bound for $f+g$. Thus, $\esssup(f+g) \leq c_f + c_g$.
+    \item[Proof of (7):] Let $N = \{x\mid f(x) \neq g(x)\}$. It is the case that $\mu(N) = 0$. Let $c_f = \esssup(f)$ and $N_f = \{x\mid |f(x)| > c_f\}$, which is is $\mu$-null by the lemma.\\
+
+      Then, $\{x\mid |g(x)| > c_f\}\subseteq N_f \cup N$ is $\mu$-null.\\
+
+      Therefore, $c_f$ is an essential bound for $g$. Thus, $\esssup(g) \leq c_f$.\\
+
+      Similarly, $\esssup(f) \leq c_g$.
+  \end{description}
+  \subsection{Proposition: Properties of $L_{\infty}$}%
+  Let $(\Omega,\mathcal{M},\mu)$ be a measure space.
+  \begin{align*}
+    \left\{[f]\in L(\Omega,\mathcal{M},\mu)\mid \esssup(f) < \infty\right\}
+  \end{align*}
+  is a unital commutative Banach algebra with norm $\norm{[f]_{\mu}}_{\infty} = \esssup(f)$. It is denoted $L_{\infty}(\Omega,\mu)$.
+  \begin{description}
+    \item[Proof:] All we need show is completeness.\\
+
+      Let $(f_n)_n$ be Cauchy in $L_{\infty}(\Omega,\mu)$. Then, $|f_n(x)| \leq \norm{f_n}_{\infty}$ for all $x\in N_n^{c}$, where $\mu(N_n) = 0$. Let $N = \bigcup_{n\geq 1} N_n$. Then, $\mu(N) = 0$.\\
+
+      For all $x\in N^{c}$, we have $|f_n(x)| \leq \norm{f_n}_{\infty}$ for all $n$. Set
+      \begin{align*}
+        g_n(x) &= \begin{cases}
+          f_n(x) & x\in N^{c}\\
+          0 & x\in N
+        \end{cases}.
+      \end{align*}
+      Then, $g_n = f_n$ in $L_{\infty}(\Omega,\mu)$. Note that $\left(g_n: \Omega \rightarrow \R\right)_{n\geq 1}$ are uniformly Cauchy in $\ell_{\infty}(\Omega)$ (in $N^{c}$, $|g_n - g_m| = |f_n - f_m| < \varepsilon$, and in $N$, $|g_n - g_m| = 0$).\\
+
+      Since $\ell_{\infty}(\Omega)$ is complete, we know $(g_n)_n\rightarrow g$ in $\ell_{\infty}(\Omega)$. Certainly, $g \in L_{\infty}(\Omega,\mu)$. Thus,
+      \begin{align*}
+        \norm{f_n - g}_{\infty} &= \norm{g_n - g}_{\infty}\\
+                                &\leq \norm{g_n - g}_{u}\\
+                                &\rightarrow 0,
+      \end{align*}
+      so $L_{\infty}(\Omega,\mu)$ is complete.
+  \end{description}
+  \section{Lebesgue Integration}%
+  Fix a measure space $(\Omega,\mathcal{M},\mu)$.\\
+
+  Define $\phi: \Omega \rightarrow [0,\infty)$ be simple, positive, and measurable, given by
+  \begin{align*}
+    \phi &= \sum_{k=1}^{n}d_k\mathbb{1}_{D_k}.\tag*{Standard Form}
+  \end{align*}
+  Then,
+  \begin{align*}
+    \int_{\Omega}\phi~d\mu &:= \sum_{k=1}^{n}d_k\mu(D_k),
+  \end{align*}
+  with the convention that $0 \cdot \infty = 0$.
+  \begin{description}
+    \item[Fact:] If $\phi = \sum_{j=1}^{m} c_j\mathbb{1}_{E_j}$, with $c_j\geq 0$ and $E_j\in\mathcal{M}$, not necessarily in standard form. Then,
+      \begin{align*}
+        \int_{\Omega}\phi~d\mu &= \sum_{j=1}^{m}c_j\mu(E_j).
+      \end{align*}
+  \end{description}
+  \subsection{Properties of Integral of Simple Functions}%
+  Let $\phi,\psi: \Omega \rightarrow [0,\infty)$ be simple, measurable, and positive. Then,
+  \begin{enumerate}[(i)]
+    \item 
+      \begin{align*}
+        \int_{\Omega}(\phi + \psi)~d\mu &= \int_{\Omega}\phi~d\mu + \int_{\Omega}\psi~d\mu
+      \end{align*}
+    \item For $\alpha \geq 0$
+      \begin{align*}
+        \int_{\Omega}\alpha\phi~d\mu &= \alpha \int_{\Omega}\phi~d\mu.
+      \end{align*}
+    \item If $0 \leq \phi \leq \psi$, then
+      \begin{align*}
+        \int_{\Omega}\phi~d\mu &\leq \int_{\Omega}\psi~d\mu
+      \end{align*}
+  \end{enumerate}
+  \begin{description}
+    \item[Proof of (iii):] Let
+      \begin{align*}
+        \phi &= \sum_{k=1}^{n}c_k\mathbb{1}_{E_k}\\
+        \psi &= \sum_{\ell=1}^{m}d_{\ell}\mathbb{1}_{F_{\ell}}
+      \end{align*}
+      be standard representations. Consider a common refinement $\{E_k \cap F_{\ell}\}_{k,\ell}$. Then, 
+      \begin{align*}
+        \mathbb{1}_{E_k} &= \mathbb{1}_{\bigsqcup_{\ell}E_k\cap F_{\ell}}\\
+                         &= \sum_{\ell = 1}^{m}\mathbb{1}_{E_k\cap F_{\ell}}.
+      \end{align*}
+      Thus,
+      \begin{align*}
+        \phi &= \sum_{k=1}^{n}c_k\sum_{\ell=1}^{m}\mathbb{1}_{E_k\cap F_{\ell}}\\
+             &= \sum_{k,\ell} c_{k,\ell}\mathbb{1}_{E_k\cap F_{\ell}},
+             \intertext{where}
+        c_{k,\ell} &= \begin{cases}
+          0 & E_k\cap F_{\ell} = \emptyset\\
+          c_k & E_k\cap F_{\ell} \neq \emptyset
+        \end{cases}.
+        \intertext{Similarly,}
+          \psi &= \sum_{k,\ell}d_{k,\ell}\mathbb{1}_{E_{k}\cap F_{\ell}},\\
+          d_{k,\ell} &= \begin{cases}
+            d_{\ell} & E_k\cap F_{\ell} \neq \emptyset\\
+            0 & E_k\cap F_{\ell} = \emptyset
+          \end{cases}.
+      \end{align*}
+      Then, $c_{k,\ell}\leq d_{k,\ell}$.
+      \begin{align*}
+        \int_{\Omega}\phi~d\mu &= \sum_{k,\ell} c_{k,\ell}\mu(E_k\cap F_{\ell})\\
+                               &\leq \sum_{k,\ell}d_{k,\ell}\mu(E_k\cap F_{\ell})\\
+                               &= \int_{\Omega}\psi~d\mu.
+      \end{align*}
   \end{description}
 \end{document}
