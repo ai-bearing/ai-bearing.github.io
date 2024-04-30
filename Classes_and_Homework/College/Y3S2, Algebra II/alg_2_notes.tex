@@ -1,4 +1,4 @@
-\documentclass[10pt]{extarticle}
+\documentclass[9pt]{extarticle}
 \title{}
 \author{}
 \date{}
@@ -103,6 +103,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 \newcommand{\C}{\mathbb{C}}
 \setcounter{secnumdepth}{0}
 \begin{document}
+\tableofcontents
   \section{Motivation and Introduction}%
   Main purpose of this course is to study Galois theory --- a field that arose in trying to study roots of polynomials.\\
 
@@ -703,7 +704,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
                               &= a_0 + \langle 2,x \rangle\\
                               &= \begin{cases}
                                 0 & 2|a_0\\
-                                1 & 2\not| a_0
+                                1 & 2\nmid a_0
                               \end{cases},
                               \shortintertext{So, we can consider}
     \Z[x]/\langle 2,x\rangle &\cong \Z/2\Z.
@@ -1340,7 +1341,7 @@ boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
 
   For example, if $R = \Z$ and $\Sigma = \Z\setminus\{0\}$, then $\Sigma^{-1}\Z = \Q$, then for $\pi: \Z\hookrightarrow \Q$, and a homomorphism from $\Z$ into a set $S$, there must exist a map from $\Q$ to $S$.\\
 
-  Consider $\Z$ with $\Sigma = \Z\setminus p\Z$. Then, $\Sigma^{-1}\Z = \{(a,b)\mid a\in\Z, p\not|b\} = \Z_{\langle p \rangle}$. We saw on an earlier homework assignment that $\Z_{\langle p \rangle}/p\Z_{\langle p \rangle} \cong \mathbb{F}_p$, meaning it is a maximal ideal (as if $a\not| p$, then $a/b$ is a unit in $\Z_{\langle p \rangle}$). The only other ideals are $p^m \Z_{\langle p \rangle}$, so we have a chain
+  Consider $\Z$ with $\Sigma = \Z\setminus p\Z$. Then, $\Sigma^{-1}\Z = \{(a,b)\mid a\in\Z, p\nmid b\} = \Z_{\langle p \rangle}$. We saw on an earlier homework assignment that $\Z_{\langle p \rangle}/p\Z_{\langle p \rangle} \cong \mathbb{F}_p$, meaning it is a maximal ideal (as if $a\nmid p$, then $a/b$ is a unit in $\Z_{\langle p \rangle}$). The only other ideals are $p^m \Z_{\langle p \rangle}$, so we have a chain
   \begin{align*}
     p\Z_{\langle p \rangle} \supseteq p^2\Z_{\langle p \rangle} \supseteq \cdots.
   \end{align*}
@@ -2668,13 +2669,108 @@ K \arrow[rd, no head] \arrow[rdd, no head, bend right] &                        
   \subsection{Proposition: Cyclic Extensions and Roots of Unity}%
   An extension $K/F$ is said to be cyclic if it is cyclic with cyclic Galois group.\\
 
-  Let $F$ be a field with $\text{char}(F)\not| n$, and $\mathbb{\mu}_n \subseteq F$, where $\mathbb{\mu}_n$ denotes the $n$th roots of unity. Then, the extension $F(\sqrt[n]{a})/F$ is cyclic of degree dividing $n$, for any $a\in F$.\\
+  Let $F$ be a field with $\text{char}(F)\nmid n$, and $\mathbb{\mu}_n \subseteq F$, where $\mathbb{\mu}_n$ denotes the $n$th roots of unity. Then, the extension $F(\sqrt[n]{a})/F$ is cyclic of degree dividing $n$, for any $a\in F$.\\
 
-  We see that $F(\sqrt[n]{a})/F$ is Galois, as $F(\sqrt[n]{a}) = \text{Spl}_{F}(x^n - a)$, since $\mathbb{\mu}_n \subseteq F$, and $x^n - a$ is separable, since $\text{char}(F)\not| n$.\\
+  We see that $F(\sqrt[n]{a})/F$ is Galois, as $F(\sqrt[n]{a}) = \text{Spl}_{F}(x^n - a)$, since $\mathbb{\mu}_n \subseteq F$, and $x^n - a$ is separable, since $\text{char}(F)\nmid n$.\\
 
   Given any $\sigma \in \text{Gal}\left(F(\sqrt[n]{a})/F\right)$, we have $\sigma(\sqrt[n]{a})$ is another root of $x^n - a$. So, $\sigma(\sqrt[n]{a}) = \zeta_{\sigma}\sqrt[n]{a}$, for some $\zeta_{\sigma}\in \mathbb{\mu}_n$.\\
 
   This gives a map $\varphi: \text{Gal}\left(F(\sqrt[n]{a})/F\right)\rightarrow \mathbb{\mu}_n$, $\sigma \mapsto \zeta_{\sigma}$. We have $\varphi(\sigma\tau) = \zeta_{\sigma\tau} = \zeta_{\sigma}\zeta_{\tau}$, meaning $\varphi$ is a homomorphism. If $\varphi(\sigma) = 1$, then $\sigma(\sqrt[n]{a}) = 1\sqrt[n]{a}$, meaning $\sigma = \text{id}$, so $\varphi$ is injective.\\
 
   Therefore, $\text{Gal}\left(F(\sqrt[n]{a})/F\right)\hookrightarrow \mathbb{\mu}_n$, and $\mathbb{\mu}_n$ is cyclic, so $\text{Gal}\left(F(\sqrt[n]{a})/F\right)$ is cyclic.
+  \subsection{Lagrange Resolvents}%
+  Let $K/F$ be cyclic, $\text{Gal}(K/F) = \langle \sigma \rangle$, with $[K:F] = n$. Let $\mathbb{\mu}_n \subseteq F$, and $\text{char}(F)\nmid n$. For $\alpha \in K$ and $\zeta \in \mathbb{\mu}_n$, the Lagrange resolvent is given by $(\alpha,\zeta)\in K$, with
+  \begin{align*}
+    (\alpha,\zeta) &= \sum_{k=0}^{n-1}\zeta^{k}\sigma^{k}(\alpha)\\
+                   &= \alpha + \zeta\sigma(\alpha) + \zeta^2\sigma^2(\alpha) + \cdots + \zeta^{n-1}\sigma^{n-1}(\alpha).
+  \end{align*}
+  \textbf{Proposition 7.22:} Let $K/F$ be cyclic of degree $n$, $\mathbb{\mu}_n\subseteq F$, and $\text{char}(F)\nmid n$, with $\text{Gal}(K/F) = \langle \sigma \rangle$. Then, $K = F\left(\sqrt[n]{\alpha}\right)$.
+  \begin{quote}
+    Apply $\sigma$ to $(\alpha,\zeta)$. Then,
+    \begin{align*}
+      \sigma\left(\alpha,\zeta\right) &= \sigma(\alpha) + \zeta\sigma^{2}(\alpha) + \cdots + \zeta^{n-1}\sigma^{n}(\alpha)\\
+                                      &=  \sigma(\alpha) + \zeta\sigma^{2}(\alpha) + \cdots + \zeta^{n-1}\alpha\\
+                                      &= \zeta^{-1}\alpha + \sigma(\alpha) + \zeta\sigma^{2}(\alpha) + \cdots + \zeta^{n-2}\sigma^{n-1}(\alpha).\\
+                                      &= \zeta^{-1}\left(\alpha + \zeta\sigma(\alpha) + \zeta^{2}\sigma^{2}(\alpha) + \cdots + \zeta^{n-1}\sigma^{n-1}(\alpha)\right)\\
+                                      &= \zeta^{-1}(\alpha,\zeta).
+                                      \intertext{Thus,}
+      \sigma\left((\alpha,\zeta)^{n}\right) &= \left(\sigma(\alpha,\zeta)\right)^{n}\\
+                                            &= \left(\zeta^{-1}(\alpha,\zeta)\right)^{n}\\
+                                            &= \zeta^{-n}(\alpha,\zeta)^{n}\\
+                                            &= (\alpha,\zeta)^{n},
+    \end{align*}
+    meaning $(\alpha,\zeta)^{n} \in F$ for any $\alpha \in K$ (as every element of $\text{Gal}(K/F)$ fixes $(\alpha,\zeta)^{n}$).\\
+
+    Recall that $\text{Gal}(K/F) = \{1,\sigma,\sigma^2,\dots,\sigma^{n-1}\}$. We want to show that these are linearly independent as functions. In other words,
+    \begin{align*}
+      a_1 + a_2 \sigma + a_3\sigma^{2} + \cdots + a_n\sigma^{n-1} &= \mathbb{0}
+    \end{align*}
+    if and only if $a_i$ are identically $0$. Let $\{\sigma_1,\sigma_2,\dots,\sigma_n\} = \{1,\sigma,\sigma^2,\dots,\sigma^{n-1}\}$.\\
+
+    Let $a_1\sigma_1 + a_2\sigma_2 + \cdots a_k\sigma_k = \mathbb{0}$ with the minimal number of $a_i$ nonzero. For any $\beta\in K$,
+    \begin{align*}
+      a_1\sigma_1(\beta) + a_2\sigma_2(\beta) + \cdots + a_k\sigma_k(\beta) = 0. \tag*{(\textasteriskcentered)}
+    \end{align*}
+    Since $\sigma_k\neq \sigma_1$, there is some $\beta_0\in K$ such that $\sigma_k(\beta_0)\neq \sigma_1(\beta_0)$. Applying to $\beta\beta_0$,
+    \begin{align*}
+      a_1\sigma_1(\beta\beta_0) + a_2\sigma_2(\beta\beta_0) + \cdots + a_k\sigma_k(\beta\beta_0) &= 0\\
+      a_1\sigma_1(\beta)\sigma_1(\beta_0) + a_2\sigma_2(\beta)\sigma_2(\beta_0) + \cdots + a_k\sigma_k(\beta)\sigma_k(\beta_0) &= 0. \tag*{(\textasteriskcentered\textasteriskcentered)}
+    \end{align*}
+    Multiply (\textasteriskcentered) by $\sigma_k(\beta_0)$, and subtract from (\textasteriskcentered\textasteriskcentered). (I couldn't put the first step here because it caused margin difficulties.)
+    \begin{align*}
+        0 &= \underbrace{a_1\left(\sigma_1(\beta_0) - \sigma_k(\beta_0)\right)\sigma_1(\beta)}_{\neq 0} + \cdots + a_{k-1}\left(\sigma_{k-1}(\beta_0) - \sigma_k(\beta_0)\right)\sigma_{k-1}(\beta).
+    \end{align*}
+    Returning to $(\alpha,\zeta)$, we see that since $1,\sigma,\sigma^2,\dots,\sigma^{n-1}$ are linearly independent, there is an $\alpha_0\in K$ with $(\alpha_0,\zeta)\neq 0$. Note that $\sigma\left((\alpha_0,\zeta)^{i}\right) = \zeta^{-i}(\alpha_0,\zeta)$. As long as $\zeta$ is a primitive $n$th root of unity, then $\sigma$ does not fix $(\alpha_0,\zeta)^{i}$ for $0 < i < n$, meaning $(\alpha_0,\zeta)^{i}\notin F$ for $0 < i < n$.\\
+
+    Thus, $[F((\alpha_0,\zeta)):F] = [K:F] = n$, so $K = F((\alpha_0,\zeta))$. Set $a = (\alpha_0,\zeta)^n$, meaning $K = F(\sqrt[n]{a})$.
+  \end{quote}
+  \textbf{Lemma: Galois Root Extensions} Let $F = K_0\subseteq K_1 \subseteq \cdots \subseteq K_n = K$ be a root extension. For any $\alpha \in K$, $\alpha$ is contained in a root extension that is Galois over $F$, and each intermediate field is cyclic.\\
+
+  \textbf{Theorem 7.24:} The polynomials $f(x)$ can be solved in radicals if and only if its Galois group is solvable.
+  \subsection{Solvable Group}%
+  A group $G$ is said to be solvable if there is a chain of subgroups
+  \begin{align*}
+    1 &= G_n \leq G_{n-1} \leq G_{n-2}\leq \dots \leq G_{0} = G
+  \end{align*}
+  with $G_{i}/G_{i+1}$ cyclic.\\
+
+  \textbf{Fact:} If $H\leq G$ and $G/H$ are both solvable, then so is $G$.
+  \begin{quote}
+    
+  Assume $f(x)$ is solvable by radicals. Every root of $f(x)$ is contained in a root extension of the form $F = K_1\subseteq K_1\subseteq \cdots \subseteq K_n = K$, with $\text{Gal}(K_{i+1}/K_i)$ cyclic. Let $L = K_0K_1K_2\cdots K_n$.\\
+
+  This is also a root extension. Then, $F = L_0\subseteq L_1\subseteq \cdots \subseteq L_m = L$, with $\text{Gal}(L_{i+1}/L_i)$ cyclic. Set $G_i = \text{Gal}(L/L_i)$ (the group that corresponds to $L_i$). From the fundamental theorem of Galois theory, $G_{i}/G_{i+1} \cong \text{Gal}(L_{i+1}/L_i)$ is cyclic. This yields the chain of groups.\\
+
+  We have $\text{Spl}_{F}(f(x))\subset L$, meaning $\text{Gal}(f(x))$ is a quotient of $\text{Gal}(L/F)$, which is itself solvable.\\
+
+  Suppose $\text{Gal}(f(x))$ is solvable. Let $K = \text{Spl}_{F}(f(x))$. Set $1 = G_n \leq G_{n-1}\leq \cdots \leq G_0 = G$. Set $K_i = K^{G_i}$. This gives a chain
+  \begin{align*}
+    F = K_0 \subset K_1 \subset \cdots \subset K_{n} = K.
+  \end{align*}
+  Each of $K_{i+1}/K_i$ is cyclic of degree $m_i$. Set $F'$ to be $F$ adjoin the $m_i$ roots of unity for $m_1,m_2,\dots,m_n$.\\
+
+  Form $K_i' = F' K_i$. We now have a sequence
+  \begin{align*}
+    F \subset F' = F'K_0 \subset F'K_1 \subset \cdots \subset F'K_n = F'K.
+  \end{align*}
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoBmAXVJADcBDAGwFcYkQBpAfSxAF9S6TLnyEUZAEzU6TVu27AsAamJ8AOmoDG9NAAIAYgHJuvAUOx4CRCaWLSGLNok5dFKvv0EgMF0UQAMtvayTiBGJp7mIlbipP7Bjuzhrsqq-NIwUADm8ESgAGYAThAAtkiBIDgQSGQgABYw9FDskGBsNHB1WPk45WYgRaU1NFVI5DQNTS0EbP2DZYi1o4g29Y3Nzq3tMonOGpoEWZEDxQvjldWIACw0jPQARjCMAArClmIgjDA9IBPr021fjs5HstIdjvMkKtljc1lNNjMIadyiNLqtHmANgBacgVSYbcCI24PJ6vXwxECFLBZOq9GgOEEgDQ4GAADxwwE0AE9NIwsJpdBB8rpYFlCjAYLoACQlHhSjx8Sh8IA
+\begin{tikzcd}
+                                   & F'K_{i+1}                                                                                 &                             \\
+F'K_i \arrow[ru, "\cong", no head] &                                                                                           & K_{i+1} \arrow[lu, no head] \\
+                                   & K_{i+1}\cap F'K_i \arrow[lu, no head] \arrow[ru, "\cong", no head]                        &                             \\
+                                   & K_i \arrow[u, no head] \arrow[ruu, "\text{cyclic of degree $m_i$}"', no head, bend right] &                            
+\end{tikzcd}
+  \end{center}
+  Therefore,
+  \begin{align*}
+    \text{Gal}(F'K_{i+1}/F'K_i) &\cong \text{Gal}(K_{i+1}/K_{i+1}\cap F'K_i)\\
+                                &\subseteq \text{Gal}(K_{i+1}/K_i),
+  \end{align*}
+  meaning it is cyclic of degree dividing $m_i$. Thus, we have $F'K_{i+1} = F'K_i\left(\sqrt[n_i]{a_i}\right)$, with $n_i\in \mathbb{Z}_{\geq 2}$, $a_i\in F'K_i$.
+  \end{quote}
+  \subsection{Corollary: Solvability of the Quintic}%
+  The general polynomial of degree $\geq 5$ cannot be solved by radicals. The general polynomial of degree $\leq 4$ can be.\\
+
+  We know that the Galois group of the general polynomial is $S_n$. It is known that $S_n$ for $n\geq 5$ is not a solvable group, and $S_n$ for $n\leq 4$ is a solvable group.
 \end{document}
