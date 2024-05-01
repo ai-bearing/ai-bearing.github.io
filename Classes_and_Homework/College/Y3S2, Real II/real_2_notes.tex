@@ -1,4 +1,4 @@
-\documentclass[10pt]{extarticle}
+\documentclass[9pt]{extarticle}
 \title{}
 \author{}
 \date{}
@@ -3940,9 +3940,163 @@ Two norms, $\Vert \cdot \Vert$ and $\Vert \cdot \Vert'$ are called \textbf{equiv
 
       Therefore, we have $\infty > \int_{\Omega}f~d\mu\geq \int_{\Omega}n\mathbb{1}_E = n\mu(E)$. Since this is true for any $n$, it must be the case that $\mu(E) = 0$.
   \end{description}
-  \subsection{Chebyshev's Inequality}%
-  Let $f: \Omega \rightarrow [0,\infty]$ be integrable. Then, $\mu\left(\{x\mid f(x)\geq t\}\right) \leq \frac{1}{t}\int_{\Omega}f~d\mu$.
+  \subsection{Proposition: Chebyshev's Inequality}%
+  Let $f: \Omega \rightarrow [0,\infty]$ be integrable. Then, $\displaystyle \mu\left(\{x\mid f(x)\geq t\}\right) \leq \frac{1}{t}\int_{\Omega}f~d\mu$.
   \begin{description}
-    \item[Proof:] Let $E = \{x\mid f(x) \geq t\}$. Thus, $f \geq t\mathbb{1}_E$.
+    \item[Proof:] Let $E_t = \{x\mid f(x) \geq t\}$. Thus, $f\mathbb{1}_{E_t} \geq t\mathbb{1}_E$. Thus,
+      \begin{align*}
+        \int_{\Omega}f~d\mu &\geq \int_{\Omega}f\mathbb{1}_{E_t}~d\mu\\
+                            &\geq \int_{\Omega}t\mathbb{1}_{E_t}~d\mu\\
+                            &= t\mu(E_t).
+      \end{align*}
+  \end{description}
+  \subsection{Proposition: Zero Definiteness}%
+  Let $f: \Omega \rightarrow \overline{\R}$ be measurable. Then,
+  \begin{align*}
+    \int_{\Omega}|f|~d\mu = 0 \Leftrightarrow f = 0~\text{$\mu$-a.e.}
+  \end{align*}
+  \begin{description}
+    \item[Proof:] Suppose $f = 0$ $\mu$-a.e., and we can assume $f$ is positive.\\
+
+      Suppose $0 \leq \phi \leq f$ with $\phi$ simple and measurable. Then, $\phi = 0$ $\mu$-a.e. If
+      \begin{align*}
+        \phi = \sum_{k=1}^{n}c_k\mathbb{1}_{E_k},
+      \end{align*}
+      then
+      \begin{align*}
+        \int_{\Omega}\phi~d\mu &= \sum_{k=1}^{n}c_k\mu(E_k).
+      \end{align*}
+      If $c_k \neq 0$, then $\mu(E_k) = 0$ (by the definition of $\mu$-a.e.) Thus, $\int_{\Omega}\phi~d\mu = 0$, meaning $\int_{\Omega}f~d\mu = 0$.\\
+
+      Suppose $\int_{\Omega}|f|~d\mu = 0$. Consider $\{x\mid f(x) > 0\} = \bigcup_{n\geq 1} \{x\mid f(x)>1/n\}$, meaning
+      \begin{align*}
+        \mu\left(\{x\mid f(x) \geq 1/n\}\right) &\leq n\int_{\Omega}f~d\mu = 0,\tag*{Chebyshev's Inequality}
+      \end{align*}
+      so $\mu\left(\{x\mid f(x) > 0\}\right) = 0$.
+    \item[Exercise:] If $f: \Omega \rightarrow \overline{\R}$ is integrable, and $\mu(N) = 0$, then $\int_{N}f~d\mu =0$.
+  \end{description}
+  \subsection{Proposition: Equivalent Integrals}%
+  Let $f,g: \Omega \rightarrow \overline{\R}$ integrable, and $f = g$ $\mu$-a.e. Then, $\int_{\Omega}f~d\mu = \int_{\Omega}g~d\mu$.
+  \begin{description}
+    \item[Proof:] We find $\int_{\Omega}(f-g)~d\mu = 0$. Since $\int$ is linear, we are done.
+  \end{description}
+  \subsection{Defining $L_1$}%
+  Let $(\Omega,\mathcal{M},\mu)$ be a measure space. Then,
+  \begin{align*}
+    L_1(\Omega,\mu) &:= \left\{[f]_\mu\in L(\Omega,\mu)\mid f~\text{integrable}\right\}.
+  \end{align*}
+  \subsection{Proposition: Properties of $L^1$}%
+  \begin{enumerate}[(1)]
+    \item $L_1(\Omega,\mu)\rightarrow \R$, $[f]_\mu \mapsto \int_{\Omega}f~d\mu$ and $[f]_{\mu}\mapsto \int_{\Omega}|f|~d\mu$ are well-defined maps.
+    \item $L_1(\Omega,\mu)$ equipped with
+      \begin{align*}
+        \norm{[f]_\mu}_1 &= \int_{\Omega}|f|~d\mu
+      \end{align*}
+      is a Banach space.
+  \end{enumerate}
+  \begin{description}
+    \item[Proof:] \hfill
+      \begin{enumerate}[(1)]
+        \item Exercise.
+        \item We have already shown that $\norm{[f]_\mu}_1$ is a norm.
+      \end{enumerate}
+  \end{description}
+  \subsection{Convergence of Integrable Functions}%
+  Fix a measure space $(\Omega,\mathcal{M},\mu)$. If $\left(f_n:\Omega \rightarrow \R\right)_{n}$ is a sequence of integrable functions with $(f_n)_n\rightarrow f$ pointwise, with $f$ integrable, can we ensure
+  \begin{align*}
+    \int_{\Omega}f_n~d\mu \rightarrow \int_{\Omega}f~d\mu.
+  \end{align*}
+  Alternatively, can we ensure
+  \begin{align*}
+    \norm{f_n - f}_1 \rightarrow 0.
+  \end{align*}
+  One way we can ensure it is if $(f_n)_n\rightarrow f$ uniformly and $\mu(\Omega) < \infty$, we find
+  \begin{align*}
+    \int|f_n - f|~d\mu &\leq \int_{\Omega}\norm{f_n - f}_{u}~d\mu\\
+                       &\leq \mu(\Omega)\norm{f_n - f}_{u}\\
+                       &\rightarrow 0.
+  \end{align*}
+  However, this condition is too strong.
+  \begin{enumerate}[(1)]
+    \item Consider $\left(f_n: \R\rightarrow \R\right)_{n}$, $f_n = n\mathbb{1}_{(0,1/n)}$. We see that $(f_n)_n\rightarrow \mathbb{0}$ pointwise, but $\int_{\R} f_n~d\mu = 1$.
+    \item Let $g_n = \mathbb{1}_{(0,1/n)}$. We see that $(g_n)_n\rightarrow \mathbb{0}$ pointwise, but $\int_{\R}g_n~d\mu = n$.
+    \item Let $h_n = \mathbb{1}_{(n,n+1)}$. Then, $(h_n)_n\rightarrow \mathbb{0}$ pointwise, but $\int_{\R}h_n~d\mu = 1$.
+    \item Let $\left(k_n: \R\rightarrow \R\right)_n$ be defined by $k_n = \frac{1}{n}\mathbb{1}_{(0,n)}$. Then, $(k_n)_n\rightarrow \mathbb{0}$ uniformly, but $\int_{\R}k_n~d\mu = 1$.
+  \end{enumerate}
+  \subsection{Convergence in Measure}%
+  Let  $f: \Omega \rightarrow \R$ be measurable, and $\left(f_n: \Omega \rightarrow \R\right)_{n}$ be a sequence of measurable functions. Then, $(f_n)_n \rightarrow f$ in measure if $\forall \delta > 0$, $\mu \left(\{x\mid |f_n(x) - f(x)| \geq \delta\}\right) \xrightarrow{n\rightarrow\infty} 0$.\\
+
+  In all the above examples, we can see that $(f_n)_n$ and $(g_n)_n$ converge to $\mathbb{0}$ in measure. Additionally, we see $(k_n)_n \rightarrow \mathbb{0}$ in measure (for any $\delta > 0$, $\exists N$ large such that $1/N < \delta$). However, $(h_n)_n$ does not converge to $\mathbb{0}$ in measure (set $\delta = 1/2$).
+  \begin{description}
+    \item[Exercise:] If $(f_n)_n\rightarrow f$ in $L_1$, then $(f_n)_n \rightarrow f$ in measure. (Use Chebyshev's Inequality)
+  \end{description}
+  \subsection{Fatou's Lemma}%
+  Let $\left(f_k: \Omega \rightarrow [0,\infty]\right)_k$ be a sequence of measurable functions. Then,
+  \begin{align*}
+    \int_{\Omega}\liminf f_k~d\mu \leq \liminf\int_{\Omega}f_k~d\mu.
+  \end{align*}
+  \begin{description}
+    \item[Proof:] Let $\displaystyle f:= \liminf f_k = \sup_{n\geq 1}\left(\underbrace{\inf_{k\geq n}f_k}_{g_n}\right)$.\\
+
+      Notice that $(g_n)_n$ increase pointwise to $f$. By monotone convergence,
+      \begin{align*}
+        \sup_{n\geq 1}\int_{\Omega}g_n~d\mu &= \int_{\Omega}f~d\mu.
+      \end{align*}
+      Now, fix $n$. Note that $g_n \leq f_k$ for all $k\geq n$, meaning
+      \begin{align*}
+        \int_{\Omega}g_n~d\mu &\leq \int_{\Omega}f_k~d\mu\\
+        \int_{\Omega}g_n~d\mu &\leq \inf_{k > n}\int_{\Omega}f_k~d\mu\\
+        \sup_{n\geq 1}\int_{\Omega}g_n~d\mu &\leq \sup_{n\geq 1}\left(\inf_{k\geq n}\int_{\Omega}f_k~d\mu\right)\\
+        \int_{\Omega}\liminf f_k &\leq \liminf \int_{\Omega}f_k~d\mu.
+      \end{align*}
+  \end{description}
+  \subsection{Theorem: Lebesgue's Dominated Convergence}%
+  Let $\left(f_n: \Omega \rightarrow \R\right)_n$ be a sequence of measurable functions with $(f_n)_n\rightarrow f$ pointwise. Suppose $\exists g: \Omega \rightarrow [0,\infty]$ integrable with $|f_n|\leq g$ for all $n$\footnote{Both pointwise convergence and $|f_n|\leq g$ apply $\mu$-a.e.}. Then, $(f_n)_n$ and $f$ are integrable, and
+  \begin{align*}
+    \int_{\Omega}f_n~d\mu &\rightarrow \int_{\Omega}f~d\mu,
+  \end{align*}
+  and $\norm{f_n - f}_{1}\rightarrow 0$.
+  \begin{description}
+    \item[Proof:] The proof amounts to applying Fatou's Lemma to $g - f_n$ and $g + f_n$.\\
+
+      First, $|f_n| \leq g$, so each $f_n$ is integrable, meaning $|f| \leq g$ and $f$ is integrable.
+      \begin{align*}
+        \int_{\Omega}g~d\mu + \int_{\Omega}f~d\mu &= \int_{\Omega}(g+f)d~\mu\\
+                                                  &= \int_{\Omega}\liminf(g + f_n)~d\mu\\
+                                                  &\leq \liminf\int_{\Omega}(g+f_n)~d\mu\\
+                                                  &\leq \liminf \left(\int_{\Omega}g~d\mu + \int_{\Omega}f_n~d\mu\right)\\
+                                                  &\leq \overbrace{\int_{\Omega}g~d\mu}^{ < \infty } + \liminf\int_{\Omega}f_n~d\mu.
+                                                  \intertext{Thus,}
+        \int_{\Omega}f~d\mu &\leq \liminf\int_{\Omega}f_n~d\mu.
+        \intertext{Additionally,}
+        \int_{\Omega}g~d\mu - \int_{\Omega}f~d\mu &= \int_{\Omega}(g-f)~d\mu\\
+                                                  &= \int_{\Omega}\liminf(g-f_n)~d\mu\\
+                                                  &\leq \liminf\int_{\Omega}g-f_n~d\mu\\
+                                                  &= \liminf \left(\int_{\Omega}g~d\mu + \int_{\Omega}-f_n~d\mu\right)\\
+                                                  &\leq \int_{\Omega} g~d\mu + \liminf \left(-\int_{\Omega}f_n~d\mu\right)\\
+                                                  &= \int_{\Omega} g~d\mu - \limsup \int_{\Omega}f_n~d\mu,
+                                                  \intertext{meaning}
+        \limsup\int_{\Omega}f_n~d\mu &\leq \int_{\Omega}f d\mu.
+      \end{align*}
+      Thus, $\int_{\Omega}f_n~d\mu = \int_{\Omega}f~d\mu$.\\
+
+      Note that $|f-f_n| \rightarrow \mathbb{0}$ pointwise, and $|f-f_n| \leq 2g$, with $2g$ still integrable. By above, we see that $\int_{\Omega}|f-f_n|~d\mu \rightarrow 0$, which is convergence in $L^1$.
+  \end{description}
+  \subsubsection{Addenda}%
+  Using Dominated Convergence, we find that $C_{c}(\R)\subseteq L^{1}(\R,\lambda)$ is $\norm{\cdot}_1$-dense.
+  \begin{itemize}
+    \item $f\geq 0$ integrable implies the existence of $0\leq \phi_n\leq f$ a sequence of simple functions increasing to $f$.
+    \item If $\phi$ is simple and integrable, then $\phi = \sum_{k=1}^{n}c_k\mathbb{1}_{E_k}$, with $E_k$ bounded. We see that there exist $\lambda(U\triangle E_k) < \varepsilon$ with $U$ open in $\R$.
+    \item We approximate each $\mathbb{1}_{E_k}$ with a continuous bump function on $U$.
+  \end{itemize}
+  \subsection{Riesz Representation Theorem}%
+  Let $X$ be a compact metric space. Let $\varphi: C(X)\rightarrow \R$ be bounded linear, positive ($f\geq 0\Rightarrow \phi(f) \geq 0$), and $\varphi\left(\mathbb{1}_X\right) = 1$. We call $\varphi$ a state.\\
+
+  Then, there exists a unique regular Borel probability measure $\mu: \mathcal{B}_{X}\rightarrow [0,1]$ with
+  \begin{align*}
+    \phi(f) &= \int_{\Omega}f~d\mu.
+  \end{align*}
+  \begin{description}
+    \item[Proof:] We will prove this for $X = \Delta$, where $\Delta$ is the Cantor set.
   \end{description}
 \end{document}
