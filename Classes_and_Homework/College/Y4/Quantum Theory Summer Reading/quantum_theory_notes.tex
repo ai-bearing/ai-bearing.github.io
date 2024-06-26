@@ -1,0 +1,511 @@
+\documentclass[10pt]{extarticle}
+\title{}
+\author{}
+\date{}
+\usepackage[shortlabels]{enumitem}
+
+
+%paper setup
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage{fancyhdr}
+% sans serif font:
+\usepackage{cmbright}
+\usepackage{sfmath}
+%symbols
+\usepackage{amsmath}
+\usepackage{bigints}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\usepackage[hidelinks]{hyperref} %hyperlinks
+\usepackage{gensymb} %more symbols
+\usepackage{multirow,array} %better tables
+\usepackage{multicol} %multiple columns per page
+\usepackage{braket} %bra-ket notation
+\usepackage{bbold} %better blackboard bold
+\usepackage{sansmathfonts}
+\newtheorem*{remark}{Remark}
+%\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\renewcommand*\familydefault{\sfdefault}
+%chemistry stuff
+%\usepackage[version=4]{mhchem}
+%\usepackage{chemfig}
+
+%plotting
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\tikzset{middleweight/.style={pos = 0.5}}
+%\tikzset{weight/.style={pos = 0.5, fill = white}}
+%\tikzset{lateweight/.style={pos = 0.75, fill = white}}
+%\tikzset{earlyweight/.style={pos = 0.25, fill=white}}
+
+%\usepackage{natbib}
+
+%graphics stuff
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+%\usepackage[style=numeric, backend=biber]{biblatex} % Use the numeric style for Vancouver
+%\addbibresource{the_bibliography.bib}
+
+%code stuff
+%when using minted, make sure to add the -shell-escape flag
+%you can use lstlisting if you don't want to use minted
+%\usepackage{minted}
+%\usemintedstyle{pastie}
+%\newminted[javacode]{java}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+%\newminted[cppcode]{cpp}{frame=lines,framesep=2mm,linenos=true,fontsize=\footnotesize,tabsize=3,autogobble,}
+
+%\usepackage{listings}
+%\usepackage{color}
+%\definecolor{dkgreen}{rgb}{0,0.6,0}
+%\definecolor{gray}{rgb}{0.5,0.5,0.5}
+%\definecolor{mauve}{rgb}{0.58,0,0.82}
+%
+%\lstset{frame=tb,
+%	language=Java,
+%	aboveskip=3mm,
+%	belowskip=3mm,
+%	showstringspaces=false,
+%	columns=flexible,
+%	basicstyle={\small\ttfamily},
+%	numbers=none,
+%	numberstyle=\tiny\color{gray},
+%	keywordstyle=\color{blue},
+%	commentstyle=\color{dkgreen},
+%	stringstyle=\color{mauve},
+%	breaklines=true,
+%	breakatwhitespace=true,
+%	tabsize=3
+%}
+
+% text + color boxes
+%\renewcommand{\mathbf}[1]{\mathbb{#1}}
+%\usepackage[most]{tcolorbox}
+%\tcbuselibrary{breakable}
+%\tcbuselibrary{skins}
+%\newtcolorbox{problem}[1]{colback=white,enhanced,title={\small #1},
+%          attach boxed title to top center=
+%{yshift=-\tcboxedtitleheight/2},
+%boxed title style={size=small,colback=black!60!white}, sharp corners, breakable}
+
+\setlength{\parindent}{0pt} %I don't like indentation
+\usepackage{cancel} %better X-throughs
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Quantum Theory for Mathematicians: Notes}
+
+%useful symbols
+
+%\newcommand{\card}{\text{card}}
+%\newcommand{\ran}{\text{ran}}
+
+%canonical sets
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+
+%common other symbols
+\newcommand{\mcc}{\mathcal{C}} %cantor set
+\newcommand{\mco}{\mathcal{O}} %holomorphic functions
+\newcommand{\mfp}{\mathfrak{p}} %prime ideal
+
+%inner products and norms
+\newcommand{\iprod}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\norm}[1]{\left\Vert #1\right\Vert}
+
+\setcounter{secnumdepth}{0}
+\begin{document}
+
+  \section{Classical Mechanics}%
+  \subsection{Motion in $\R^{1}$}%
+  Let $x(t)$ denote position. Then, $v(t) = \frac{dx}{dt} = \dot{x}(t)$ is velocity (where the $\cdot$ denotes derivative with respect to time), $a(t) = \dot{v}(t) = \ddot{x}(t)$, etc.\\
+
+  Considering Newton's second law, $F(x(t)) = m\ddot{x}(t)$, every exact solution requires initial conditions of $x(t_0)$ and $v(t_0)$. Solutions to Newton's second law are known as trajectories.\\
+
+  Considering a spring of constant $k$, $F(x) = -kx$ yields the differential equation $m\ddot{x} + kx = 0$. The general solution is
+  \begin{align*}
+    x(t) = a\cos(\omega t) + b\cos(\omega t),
+  \end{align*}
+  with $\omega = \sqrt{k/m}$ denoting the frequency. The spring is an example of a simple harmonic oscillator.
+  \subsection{Conservation of Energy}%
+  For a general force function $F(x)$, the kinetic energy is $\frac{1}{2}mv^2$, and the potential energy is
+  \begin{align*}
+    V(x) = -\int F(x)dx,
+  \end{align*}
+  meaning $F(x) = -\frac{dV}{dx}$. The total energy is thus found as
+  \begin{align*}
+    E(x,v) = \frac{1}{2}mv^2 + V(x).
+  \end{align*}
+  \subsubsection{Theorem: Conservation of Energy}%
+  If a particle with trajectory $x(t)$ satisfies $m\ddot{x} = F(x)$, then the energy $E$ is conserved.
+  \begin{description}
+    \item[Proof:]
+      \begin{align*}
+        \frac{d}{dt}E(x(t),\dot{x}(t)) &= \frac{d}{dt}\left(\frac{1}{2}m(\dot{x}(t))^2 + V(x(t))\right)\\
+                                       &= m\dot{x}(t)\ddot{x}(t) + \frac{dV}{dx}\dot{x}(t)\\
+                                       &= \dot{x}(t)\left(m\ddot{x}(t) - F(x(t))\right).
+      \end{align*}
+  \end{description}
+  By using the conservation of energy, we can reduce the second order differential equation $F(x) = m\ddot{x}$ to a system of first order differential equations in $x(t)$ and $v(t)$ respectively:
+  \begin{align*}
+    \frac{dx}{dt} &= v(t)\\
+    \frac{dv}{dt} &= \frac{1}{m}F(x(t)).
+  \end{align*}
+  If $(x(t),v(t))$ satisfies this set of equations, then $x(t)$ satisfies Newton's second law. We say the set of all possible $(x,v)$ forms the phase space for the particle in $\R^1$.\\
+
+  In phase space, conservation of energy implies that the set of all $(x,v)$ must lie on the level curve of the energy function: $\Set{(x,v)\mid E(x,v) = E(x_0,v_0)}$.\\
+
+  Using the conservation of energy, we find that, though Newton's second law is a second order differential equation in time, it is actually a first order differential equation:
+  \begin{align*}
+    \frac{m}{2}\left(\dot{x}(t)\right)^2 + V(x(t) &= E(x(t_0),v(t_0))\\
+    \dot{x}(t) &= \sqrt{\frac{2(E_0 - V(x(t)))}{m}}
+  \end{align*}
+  \subsection{Damping}%
+  Suppose we also introduce a force that depends on velocity --- in the case of a damped simple harmonic oscillator, the equation for force changes from $F = -kx$ to $F = -kx - \gamma\dot{x}$, with $\gamma > 0$. The damping force acts in the opposite direction of velocity, meaning the particle slows down.\\
+
+  The equation of motion is then
+  \begin{align*}
+    m\ddot{x} + \gamma\dot{x} + kx = 0.
+  \end{align*}
+  For $\gamma$ small, the solutions are a sum sines and cosines multiplied by some exponential decay factor, but for $\gamma$ large, the solutions are only the exponential decay.\\
+  \subsubsection{Energy Conservation (or lack thereof) in Damped System}%
+  Suppose a particle moves along $x(t)$ that satisfies $F(x,\dot{x}) = F_1(x) - \gamma\dot{x}$, with $\frac{dV}{dx} = -F_1(x)$ and $\gamma > 0$. Then,
+  \begin{align*}
+    \frac{d}{dt}E(x(t),\dot{x}(t)) &= -\gamma\dot{x}(t)^2.
+  \end{align*}
+  \begin{description}
+    \item[Proof:]
+      \begin{align*}
+        \frac{d}{dt}E(x(t),\dot{x}(t)) &= \dot{x}(t)\left(m\ddot{x}(t) - F_1(x(t))\right)\\
+                                       &= \dot{x}(t)\left(m\ddot{x}(t) - (m\ddot{x}(t) + \gamma\dot{x}(t))\right)\\
+                                       &= -\gamma\dot{x}(t)^2
+      \end{align*}
+  \end{description}
+  \subsection{Motion in $\R^n$}%
+  The position of a particle $\mathbf{x} = (x_1,\dots,x_n)$ lends itself to velocity $\mathbf{v} = (v_1,\dots,v_n) = (\dot{x}_1,\dots,\dot{x}_n)$, and $\mathbf{a} = (\ddot{x}_1,\dots,\ddot{x}_n)$. Similar to in $\R^1$, Newton's second law is denoted
+  \begin{align*}
+    m\mathbf{\ddot{x}} = \mathbf{F}(\mathbf{x}(t),\mathbf{\dot{x}}(t)).
+  \end{align*}
+  \subsubsection{Conservation of Energy in $n$ Dimensions}%
+  The energy function
+  \begin{align*}
+    E(\mathbf{x},\mathbf{\dot{x}}) = \frac{1}{2}m\norm{\mathbf{\dot{x}}}^2 + V(\mathbf{x})
+  \end{align*}
+  is only satisfied where $\mathbf{F} = -\nabla V$.
+  \begin{description}
+    \item[Proof:]
+      \begin{align*}
+        \frac{d}{dt}\left(\frac{1}{2}m\norm{\mathbf{\dot{x}}}^2 + V(\mathbf{x})\right) &= m\sum_{j=1}^{n}\dot{x}_j\ddot{x}_j + \sum_{j=1}^{n}\frac{\partial V}{\partial x_j}\dot{x}_j(t)\\
+                                                                                 &= \mathbf{\dot{x}}(t)\left(m\mathbf{\ddot{x}}(t) + \nabla V\right)\\
+                                                                                 &= \dot{x}(t)\left(\mathbf{F}(x) + \nabla V(\mathbf{x})\right),
+      \end{align*}
+      which is equal to zero only if $-\nabla V = \mathbf{F}$.
+  \end{description}
+  If $\mathbf{F}$ is a smooth $\R^n$ valued function on $U\subset \R^n$, then $\mathbf{F}$ is conservative if there exists a smooth real-valued function $V$ such that $\mathbf{F} = -\nabla V$.\\
+
+  In other words, $\mathbf{F}$ is conservative if $\mathbf{F}$ is a gradient field, implying that $\nabla \times \mathbf{F} = 0$.\\
+
+  If $\mathbf{F}(\mathbf{x},\mathbf{y}) = -\nabla V(\mathbf{x}) + \mathbf{F}_{2}(\mathbf{x},\mathbf{y})$, with $\mathbf{v}\cdot \mathbf{F}_{2} = 0$ for all $\mathbf{x}$ and $\mathbf{v}$, then energy is conserved along a given trajectory.
+  \subsection{Systems of Particles}%
+  Let $\mathbf{x}^j = \left(x_{1}^j,x_2^j,\dots,x_n^j\right)$ denote the $j$th particle of a system of $N$ particles. Newton's second law is thus reformulated as
+  \begin{align*}
+    m_j\mathbf{\ddot{x}}^j = \mathbf{F}^j\left(\mathbf{x}^1,\dots,\mathbf{x}^N,\mathbf{\dot{x}}^1,\dots,\mathbf{\dot{x}}^N\right).
+  \end{align*}
+  The total energy is determined by
+  \begin{align*}
+    E(\mathbf{x}^1,\dots\mathbf{x}^N,\mathbf{v}^1,\dots,\mathbf{v}^N) &= \left(\sum_{j=1}^{N}\frac{1}{2}m_j\norm{\mathbf{v}^j}^2\right) + V(\mathbf{x}^1,\dots,\mathbf{x}^N).
+  \end{align*}
+  \subsubsection{Conservation of Energy in a System of Particles}%
+  The energy function is constant along each trajectory if $\nabla^{j}V = -\mathbf{F}^j$, where $\nabla^j$ denotes the gradient with respect to $\mathbf{x}^j$.\\
+
+  The force function along a simply connected domain $U$ in $\R^{nN}$ satisfies $\nabla^j V = -\mathbf{F}^j$ if and only if
+  \begin{align*}
+    \frac{\partial F_{k}^j}{\partial x_m^l} = \frac{\partial F_m^l}{\partial x_k^j}
+  \end{align*}
+  for all $j,k,l,m$.
+  \begin{description}
+    \item[Proof:]
+      \begin{align*}
+        \frac{dE}{dt} &= \sum_{j=1}^{N}\left(m_j\mathbf{\dot{x}}^j\cdot\mathbf{\ddot{x}}^j + \nabla^{j}V\cdot \mathbf{x}^j\right)\\
+                      &= \sum_{j=1}^{N}\mathbf{\dot{x}}^j\left(m_j\mathbf{\ddot{x}}^j + \nabla^jV\right)\\
+                      &= \sum_{j=1}^{N}\mathbf{\dot{x}}\left(\mathbf{F}^j + \nabla^j V\right),
+      \end{align*}
+      which is equal to zero if $\nabla^j V = -\mathbf{F}^j$.\\
+
+      Applying a higher dimension version of $\nabla \times \mathbf{F}$ to each coordinate pair $(a,b)$, we find the identity that shows $\mathbf{F}$ is a gradient field.
+  \end{description}
+  \subsection{Momentum of a System of Particles}%
+  The momentum of a particle $\mathbf{p}^j$ is defined by
+  \begin{align*}
+    \mathbf{p}^j = m_j\mathbf{\dot{x}}^j.
+  \end{align*}
+  Observe that $\frac{d\mathbf{p}^j}{dt} = m_j\mathbf{\ddot{x}}^j = \mathbf{F}^j$. The total momentum is then
+  \begin{align*}
+    \mathbf{p} &= \sum_{j=1}^{N}\mathbf{p}^j.
+  \end{align*}
+  Newton's third law, which states ``for every action there is an equal and opposite reaction'' applies if 
+  \begin{itemize}
+    \item $\displaystyle \mathbf{F}^j = \sum_{k\neq j}\mathbf{F}^{j,k}(\mathbf{x}^j,\mathbf{y}^j)$;
+    \item $\displaystyle \mathbf{F}^{j,k}(\mathbf{x}_j,\mathbf{x}_k) = -\mathbf{F}^{k,j}(\mathbf{x}^k,\mathbf{x}^j)$.
+  \end{itemize}
+  If each $\mathbf{F}^j$ is also a conservative force, then satisfying these conditions yields potential energy in the form of
+  \begin{align*}
+    V(\mathbf{x}^1,\mathbf{x}^2,\dots,\mathbf{x}^N) &= \sum_{j < k}V^{j,k}(\mathbf{x}^{j} - \mathbf{x}^{k}).
+  \end{align*}
+  \subsubsection{Newton's Third Law and Conservation of Momentum}%
+  If the system of particles satisfies the conditions of
+  \begin{itemize}
+    \item $\displaystyle \mathbf{F}^j = \sum_{k\neq j}\mathbf{F}^{j,k}(\mathbf{x}^j,\mathbf{y}^j)$
+    \item and $\displaystyle \mathbf{F}^{j,k}(\mathbf{x}_j,\mathbf{x}_k) = -\mathbf{F}^{k,j}(\mathbf{x}^k,\mathbf{x}^j)$,
+  \end{itemize}
+  then total momentum is conserved.
+  \begin{description}
+    \item[Proof:] 
+      \begin{align*}
+        \frac{d\mathbf{p}}{dt} &= \sum_{j=1}^{N}\mathbf{F^{j}}\\
+                            &= \sum_{j=1}^{N}\sum_{k\neq j}\mathbf{F}^{j,k}(\mathbf{x}^j,\mathbf{x}^{k}),
+      \end{align*}
+      and since $F^{j,k}(\mathbf{x}^j,\mathbf{x}^k) + \mathbf{F}^{k,j}(\mathbf{x}^k,\mathbf{x}^j) = 0$, we find $\frac{d\mathbf{p}}{dt} = 0$.
+  \end{description}
+  \subsubsection{Translation Invariance of Potential and Momentum Conservation}%
+  Let $V$ denote the potential for a conservative force. Then, momentum is conserved if and only if $V$ is translation invariant, meaning that for all $\mathbf{a}\in \R^n$,
+  \begin{align*}
+    V(\mathbf{x}^1 + \mathbf{a},\mathbf{x}^2 + \mathbf{a},\dots,\mathbf{x}^N+\mathbf{a}) &= V(\mathbf{x}^1,\mathbf{x}^2,\dots,\mathbf{x}^N).
+  \end{align*}
+  \begin{description}
+    \item[Proof:] Let $\mathbf{a} = t\mathbf{e}_k$. Then, differentiating at $t=0$ with respect to $t$, we find
+      \begin{align*}
+        0 &= \sum_{j=1}^{N}\frac{\partial V}{\partial x_{k}^j}\\
+          &= -\sum_{j=1}^{N}F^{j}_k\\
+          &= -\sum_{j=1}^{N}\frac{dp_{k}^j}{dt}\\
+          &= -\frac{dp_k}{dt},
+      \end{align*}
+      with $p_k$ denoting the $k$th component of $\mathbf{p}$. Therefore, $\mathbf{p}$ is constant in time.\\
+
+      If $\mathbf{p}$ is conserved, then the sum of all forces is $0$ at each point for all $t$, meaning that for all $t$,
+      \begin{align*}
+        \frac{d}{dt}V(\mathbf{x}^1 + t\mathbf{a} , \mathbf{x}^2 + t\mathbf{a},\dots,\mathbf{x}^N + t\mathbf{a}) &= \sum_{j=1}^{N}\nabla^jV(\mathbf{x}^1 + t\mathbf{a},\mathbf{x}^2 + t\mathbf{a},\dots,\mathbf{x}^n + t\mathbf{a})\cdot \mathbf{a}\\
+                                                                                              &= -\left(\sum_{j=1}^{N}\mathbf{F}^j(\mathbf{x}^1 + t\mathbf{a}, \mathbf{x}^2 + t\mathbf{a},\dots,\mathbf{x}^N + t\mathbf{a})\right)\cdot \mathbf{a}\\
+                                                                                              &= 0
+      \end{align*}
+      meaning $V$ is equal at $t=0$ and $t=1$.
+  \end{description}
+  \subsection{Center of Mass}%
+  For a system of $N$ particles, the center of mass is denoted
+  \begin{align*}
+    \mathbf{c} &= \sum_{j=1}^{N}\frac{m_j}{\sum_{j=1}^{N}m_j}\mathbf{x}_j.
+  \end{align*}
+  We denote $\sum_{j=1}^{N}m_j = M$. Differentiating $\mathbf{c}$, we get
+  \begin{align*}
+    \frac{d\mathbf{c}}{dt} &= \frac{1}{M}\sum_{j=1}^{N}m_j\mathbf{\dot{x}}^j\\
+                        &= \frac{\mathbf{p}}{M}.
+  \end{align*}
+  Notice that if $ \mathbf{p} $ is conserved, then $ \mathbf{c}(t) = \mathbf{c}(t_0) + (t-t_0)\frac{ \mathbf{p} }{M}$.\\
+
+  For a system of two particles, if $V( \mathbf{x}^1, \mathbf{x}^2 )$ is invariant under translation, then $V( \mathbf{x}^1, \mathbf{x}^2 ) = \tilde{V}( \mathbf{x}^1- \mathbf{x}^2 )$, and $\tilde{V}(\mathbf{a}) = V\left(\mathbf{a},0\right)$.\\
+
+  The positions $\mathbf{x}^1$ and $\mathbf{x}^2$ can be recovered from knowledge about $\mathbf{c}$ and the relative position $\mathbf{y} := \mathbf{x}^1 - \mathbf{x}^2$:
+  \begin{align*}
+    \mathbf{x}^1 &= \frac{\mathbf{c} + m_2\mathbf{y}}{m_1 + m_2}\\
+    \mathbf{x}^2 &= \frac{\mathbf{c} - m_1\mathbf{y}}{m_1 + m_2}.
+  \end{align*}
+  Thus, we can calculate
+  \begin{align*}
+    \mathbf{\ddot{y}} &= \mathbf{\ddot{x}}^1 - \mathbf{\ddot{x}}^2\\
+                      &= -\frac{1}{m_1}\nabla\tilde{V}\left(\mathbf{x}^1 - \mathbf{x}^2\right) - \frac{1}{m_2}\nabla\tilde{V}\left(\mathbf{x}^1 - \mathbf{x}^2\right).
+  \end{align*}
+  \subsubsection{Motion of Relative Position under Translation Invariant Potential}%
+  For a two particle system with translation invariant potential, the relative position $\mathbf{y} = \mathbf{x}^1 - \mathbf{x}^2$ is a solution to the differential equation
+  \begin{align*}
+    \mu\mathbf{\ddot{y}} &= -\nabla\tilde{V}(\mathbf{y}),
+  \end{align*}
+  where
+  \begin{align*}
+    \mu &= \frac{m_1m_2}{m_1 + m_2}.
+  \end{align*}
+  This implies that when momentum is conserved, the relative position of the two particle system evolves as a one-particle system with effective mass $\mu$.
+  \subsection{Angular Momentum}%
+  A particle moving in $\R^2$ with position $\mathbf{x}$, velocity $\mathbf{v}$, and momentum $\mathbf{p} = m\mathbf{v}$ has angular momentum $J$ denoted as
+  \begin{align*}
+    J = x_1p_2 - x_2p_1,
+  \end{align*}
+  or $J = \norm{\mathbf{x}\times \mathbf{p}} = \norm{\mathbf{x}}\norm{\mathbf{p}}\sin\phi$, with $\phi$ measured counterclockwise. In polar coordinates, we find
+  \begin{align*}
+    J &= mr^2\frac{d\theta}{dt}\\
+      &= 2M\frac{dA}{dt},
+  \end{align*}
+  where $A= 1/2 \int r^2 d\theta$ denotes the area swept out by $\mathbf{x}(t)$.
+  \subsubsection{Conservation of Angular Momentum}%
+  Suppose a particle of mass $m$ is moving in $\R^2$ under the influence of a conservative force with potential $V(\mathbf{x})$. $V$ is invariant under rotation if and only if $J$ is conserved.
+  \begin{description}
+    \item[Proof:]
+      \begin{align*}
+        \frac{dJ}{dt} &= \frac{dx_1}{dt}p_2 + x_1\frac{dp_2}{dt} - \frac{dx_2}{dt}p_1 - x_2\frac{dp_1}{dt}\\
+                      &= \frac{1}{m}p_1p_2 - x_1\frac{\partial V}{\partial x_2} - \frac{1}{m}p_2p_1 + x_2\frac{\partial V}{\partial x_1}\\
+                      &= x_2\frac{\partial V}{\partial x_1} - x_1\frac{\partial V}{\partial x_2}.
+      \end{align*}
+      Alternatively, consider $R_{\theta} = \begin{bmatrix}\cos\theta & -\sin\theta \\ \sin\theta & \cos\theta\end{bmatrix}$. Differentiating $V$ along $R_{\theta}$, we get
+      \begin{align*}
+        \frac{d}{d\theta}V(R_{\theta}\mathbf{x})\biggr\vert_{\theta = 0} &= \frac{\partial V}{\partial x}\frac{dx}{d\theta} + \frac{\partial V}{\partial y}\frac{dy}{d\theta}\\
+                                                                         &= -x_2\frac{\partial V}{\partial x_1} + x_1\frac{\partial V}{\partial x_2}\\
+                                                                         &= -\frac{dJ}{dt}\left(\mathbf{x}\right)
+      \end{align*}
+      Thus, $\frac{dJ}{dt} = 0$ if and only if the angular derivative of $V$ is zero.
+  \end{description}
+  As a result of the conservation of angular momentum, we thus get Kepler's Second Law: if $\mathbf{x}(t)$ is the trajectory of a particle under the influence of a force with rotationally invariant potential, then the area swept out by $\mathbf{x}(t)$ between $t=a$ and $t=b$ is $\frac{b-a}{2m}J$.\\
+
+  In $\R^3$, $\mathbf{J}$ is a vector given by $\mathbf{x}\times \mathbf{p}$. Meanwhile, in $\R^n$, the angular momentum is a skew-symmetric matrix defined by
+  \begin{align*}
+    J_{jk} &= x_{j}p_k - x_kp_j.
+  \end{align*}
+  The total angular momentum of a system of $N$ particles in $\R^n$ is given by $\mathbf{J}$ with entries
+  \begin{align*}
+    J_{jk} &= \sum_{l=1}^{N}\left(x_{j}^lp_{k}^l - x_{k}^l - p_{j}^l\right).
+  \end{align*}
+  Similar to the case of linear momentum, angular momentum is constant in the presence of a conservative force if and only if the potential function $V$ is rotationally invariant. That is,
+  \begin{align*}
+    V(R\mathbf{x}^1,R\mathbf{x}^2,\dots,R\mathbf{x}^N) &= V(\mathbf{x}^1,\mathbf{x}^2,\dots,\mathbf{x}^N)
+  \end{align*}
+  for all rotation matrices $R$.
+  \subsection{Hamiltonian Mechanics}%
+  The Hamiltonian is the total energy function, but formulated in terms of position and momentum rather than position and velocity. If a particle in $\R^n$ has the usual energy function, we write
+  \begin{align*}
+    H(\mathbf{x},\mathbf{p}) &= \frac{1}{2m}\sum_{j=1}^{n}p_j^2 + V(\mathbf{x}),
+  \end{align*}
+  where $p_j = m_j\dot{x}_j$. Observe that the equations of motion can be written as
+  \begin{align*}
+    \frac{dx_j}{dt} &= \frac{\partial H}{\partial p_j}\\
+    \frac{dp_j}{dt} &= -\frac{\partial H}{\partial x_j}.
+  \end{align*}
+  In the basic formulation, we can see that the first equation is just $\dot{x}_j = p_j/m$, and $\dot{p}_j = F_j$.The equations of motion written with Hamiltonians are known as Hamilton's equations.
+  \subsubsection{Poisson Bracket}%
+  Let $f$ and $g$ be two smooth functions on $\R^{2n}$, with each element of $\R^{2n}$ being denoted by $(\mathbf{x},\mathbf{p})$. The Poisson bracket of $f$ and $g$ is equal to
+  \begin{align*}
+    \Set{f,g} (\mathbf{x},\mathbf{p}) &= \sum_{j=1}^{n}\left(\frac{\partial f}{\partial x_j}\frac{\partial g}{\partial p_j} - \frac{\partial f}{\partial p_j}\frac{\partial g}{\partial x_j}\right).
+  \end{align*}
+  The Poisson bracket satisfies the following properties:
+  \begin{itemize}
+    \item Linearity: $\set{f,g+ch} = \set{f,g} + c\set{f,h}$
+    \item Antisymmetry: $\set{g,f} = -\set{f,g}$
+    \item Product Rule: $\set{f,gh} = \set{f,g}h + g\set{f,h}$
+    \item Jacobi Identity: $\set{f,\set{g,h}} + \set{h,\set{f,g}} + \set{g,\set{h,f}} = 0$.
+  \end{itemize}
+  It can be easily verified that the following Poisson bracket relations hold:
+  \begin{align*}
+    \set{x_j,x_k} &= 0\\
+    \set{p_j,p_k} &= 0\\
+    \set{x_j,p_k} &= \delta_{jk},
+  \end{align*}
+  where $\delta_{jk}$ denotes the Kronecker delta function.
+  \subsubsection{Functions of Solutions to Hamilton's Equations}%
+  If $(\mathbf{x}(t),\mathbf{p}(t))$ is a solution to Hamilton's Equations, then for any smooth $f$ on $\R^{2n}$, we have
+  \begin{align*}
+    \frac{df}{dt} &= \set{f,h}.
+  \end{align*}
+  \begin{description}
+    \item[Proof:]
+      \begin{align*}
+        \frac{df}{dt} &= \sum_{j=1}^{n}\left(\frac{\partial f}{\partial x_j}\frac{dx_j}{dt} + \frac{\partial f}{\partial p_j}\frac{dp_j}{dt}\right) \\
+                      &= \sum_{j=1}^{n}\left(\frac{\partial f}{\partial x_j}\frac{\partial H}{\partial p_j}+ \frac{\partial f}{\partial p_j}\left(-\frac{\partial H}{\partial x_j}\right)\right)\\
+                      &= \set{f,H}.
+      \end{align*}
+  \end{description}
+  \subsubsection{Conserved Quantities}%
+  Let $f\in C^{1}(\R^{2n})$ be called conserved if $f(\mathbf{x}(t),\mathbf{p}(t))$ is independent of $t$ for each solution to Hamilton's equation. Then, $f$ is a conserved quantity if and only if
+  \begin{align*}
+    \set{f,H} &= 0.
+  \end{align*}
+  Note that $H$ is also a conserved quantity.
+  \subsubsection{Flow and Liouville's Theorem}%
+  Solving Hamilton's equations on $\R^{2n}$ yields a flow $\Phi_t$\footnote{the $\Phi_t$ are diffeomorphisms, or differentiable isomorphisms with differentiable inverses} with $\Phi_t(\mathbf{x},\mathbf{p})$ equal to the solution at time $t$ with initial condition $(\mathbf{x},\mathbf{p})$.\\
+
+  The $\Phi_t$ aren't necessarily defined on all of $\R^{2n}$, but if $\Phi_t$ is defined on $\R^{2n}$ for all $t$, then we say $\Phi_t$ is complete.\\
+
+  Liouville's Theorem\footnote{not the one from complex analysis} states that the flow preserves the $2n$-dimensional measure
+  \begin{align*}
+    dx_1 dx_2 \cdots dx_n dp_1 dp_2 \cdots dp_n.
+  \end{align*}
+  More specifically, if $E$ is a measurable subset of the domain of $\Phi_t$, then $\mu\left(\Phi_t(E)\right) = \mu(E)$.
+  \begin{description}
+    \item[Proof:] Hamilton's equations can be written as
+      \begin{align*}
+        \frac{d}{dt} \begin{bmatrix}x_1\\\vdots\\x_n\\p_1\\\vdots\\p_n\end{bmatrix} &= \begin{bmatrix}\frac{\partial H}{\partial p_1}\\\vdots \frac{\partial H}{\partial p_n}\\-\frac{\partial H}{\partial x_1}\\\vdots\\-\frac{\partial H}{\partial x_n}\end{bmatrix}.
+      \end{align*}
+      Hamilton's equations describe the flow along the vector field appearing on the right side --- by a result in vector calculus,\footnote{Author's Note: I do not know this result yet, but hopefully I will soon!} the flow preserves the $2n$-dimensional area measure if and only if the divergence of the vector field is zero.
+      \begin{align*}
+        \nabla \cdot \begin{bmatrix}\frac{\partial H}{\partial p_1}\\\vdots \frac{\partial H}{\partial p_n}\\-\frac{\partial H}{\partial x_1}\\\vdots\\-\frac{\partial H}{\partial x_n}\end{bmatrix} &= \sum_{k=1}^{n}\frac{\partial}{\partial x_k}\frac{\partial H}{\partial p_{k}} - \frac{\partial}{\partial p_k}\frac{\partial H}{\partial x_{k}}\\
+       &= \sum_{k=1}^{n}\frac{\partial^{2} H}{\partial x_k \partial p_k} - \frac{\partial^2 H}{\partial p_k\partial x_k}\\
+        &= 0
+      \end{align*}
+  \end{description}
+  The condition of zero divergence is equivalent to $\Phi_t$ preserving a particular symplectic form $\omega$ defined by
+  \begin{align*}
+    \omega\left((\mathbf{x},\mathbf{p}),(\mathbf{x}',\mathbf{p}')\right) &= \mathbf{x}\cdot p' - \mathbf{p}\cdot x',
+  \end{align*}
+  meaning that for any $t$ and any $(\mathbf{x},\mathbf{p})\in \R^{2n}$, the partial derivatives of $\Phi_t$ preserves $\omega$.\\
+
+  Alternatively, this is equivalent to $\Phi_t$ preserving Poisson brackets:
+  \begin{align*}
+    \set{f\circ \Phi_t,g\circ\Phi_t} &= \set{f,g}\circ \Phi_t.
+  \end{align*}
+  Thus, $\Phi_t$ is an example of a symplectomorphism.
+  \subsubsection{Hamiltonian Flow and Hamiltonian Generators}%
+  We say $f\in C^{1}(\R^{2n})$ is the Hamiltonian generator of the flow that results from solving Hamilton's equations with $f$ substituted for $H$:
+  \begin{align*}
+    \frac{dx_j}{dt} &= \frac{\partial f}{\partial p_j}\\
+    \frac{dp_j}{dt} &= -\frac{\partial f}{\partial x_j}.
+  \end{align*}
+  It is possible to see that
+  \begin{align*}
+    f_{\mathbf{a}}(\mathbf{x},\mathbf{p}) &= \mathbf{a}\cdot \mathbf{p}
+  \end{align*}
+  yields the flow
+  \begin{align*}
+    \mathbf{x}(t) &= \mathbf{x}_0 + t\mathbf{a}\\
+    \mathbf{p}(t) &= \mathbf{p}_0,
+  \end{align*}
+  and
+  \begin{align*}
+    g_{\mathbf{b}}(\mathbf{x},\mathbf{p}) &= \mathbf{b}\cdot \mathbf{x}
+  \end{align*}
+  yields the flow
+  \begin{align*}
+    \mathbf{x}(t) &= \mathbf{x}_0\\
+    \mathbf{p}(t) &= \mathbf{p}_0 - t\mathbf{b}.
+  \end{align*}
+  Thus, the Hamiltonian flow generated by momentum yields translation in position, and the Hamiltonian flow generated by position yields translation in momentum.\\
+
+  In this light, we can think of \textit{the} Hamiltonian as the Hamiltonian generator that yields time evolution.Other Hamiltonian generators represent some other family of symmetries of the system.
+  \subsubsection{Hamiltonian Flow generated by Angular Momentum}%
+  For a particle moving in $\R^2$, the Hamiltonian  flow generated by 
+  \begin{align*}
+    J(\mathbf{x},\mathbf{p}) &= x_1p_2 - x_2p_1
+  \end{align*}
+  consists of simultaneous rotations of $\mathbf{x}$ and $\mathbf{p}$.
+  \begin{align*}
+    \begin{bmatrix}x_1(t)\\x_2(t)\end{bmatrix} &= \begin{bmatrix}\cos t & -\sin t\\\sin t& \cos t\end{bmatrix} \begin{bmatrix}x_1(0)\\x_2(0)\end{bmatrix}\\
+    \begin{bmatrix}p_1(t)\\p_2(t)\end{bmatrix} &= \begin{bmatrix}\cos t & -\sin t \\ \sin t & \cos t\end{bmatrix} \begin{bmatrix}p_1(0) \\ p_2(0)\end{bmatrix}.
+  \end{align*}
+  \begin{description}
+    \item[Proof:] Plugging $J$ Hamilton's equations, we get
+      \begin{align*}
+        \frac{dx_1}{dt} &= \frac{\partial J}{\partial p_1} = -x_2\\
+        \frac{dp_1}{dt} &= -\frac{\partial J}{\partial x_1} = -p_2\\
+        \frac{dx_2}{dt} &= \frac{\partial J}{\partial p_2} = x_1\\
+        \frac{dp_2}{dt} &= -\frac{\partial J}{\partial x_2} = p_1.
+      \end{align*}
+  \end{description}
+  It's important to note that the parameter $t$ in the Hamiltonian flow for $J$ is the rotation, not time. That is, $J$ is the Hamiltonian generator of rotations.\\
+
+  If $f$ is any smooth function, it is the case that the time derivative of any other function $g$ along the Hamiltonian flow generated by $f$ is $\frac{dg}{dt} = \set{g,f}$. In particular, the derivative of $H$ along the flow generated by $f$ is $\set{H,f}$, meaning that $f$ is constant along the flow generated by $H$ if and only if $\set{f,H} = 0$, which is true if and only if $H$ is constant along the flow generated by $H$.\\
+
+  Thus, we find that $f$ is conserved for solutions of Hamilton's equations if and only if $H$ is invariant under the Hamiltonian flow generated by $f$. Of particular note, we find that $J$ is conserved if and only if $H$ is invariant under rotations of $\mathbf{x}$ and $\mathbf{p}$.
+\end{document}
