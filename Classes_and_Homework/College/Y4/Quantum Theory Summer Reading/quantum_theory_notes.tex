@@ -69,12 +69,13 @@
 
 \theoremstyle{plain}
 \newtheorem*{theorem}{Theorem}%[section]
-\newtheorem*{lemma}{Lemma}%[section]
+\newtheorem*{axiom}{Axiom}%[section]
 \newtheorem*{corollary}{Corollary}%[theorem]
 \newtheorem*{proposition}{Proposition}%[section]
 
 \theoremstyle{definition}
 \newtheorem*{definition}{Definition}
+\newtheorem*{example}{Example}
 
 \theoremstyle{remark}
 %\newtheorem*{remark}{Remark}
@@ -83,6 +84,7 @@
 
 \usepackage[document]{ragged2e}
 \renewcommand{\newline}{\hfill\break}
+\renewcommand{\thefootnote}{\Roman{footnote}}
 \begin{document}
 
   \section{Classical Mechanics}%
@@ -729,4 +731,89 @@
     \end{align*}
   \end{proof}
   Thus, we have shown that $X$ and $P$ are symmetric operators on certain dense subspaces of $L^{2}(\R)$. We will have to wait until later to prove that $X$ and $P$ are essentially self-adjoint.
+  \subsection{Kinematic Axioms of Quantum Mechanics}%
+  These aren't really axioms\footnote{Physicists once again caught stealing the valor of mathematicians.} (as in, first principles from which quantum mechanics is derived), but they're essential principles of quantum mechanics. For ease of use, I'm labeling them with my personal interpretation of their content (rather than the numbering system used in the book).
+  \begin{axiom}[Principle of Representation]
+    The state of a quantum mechanical system is represented by $\psi \in \mathbf{H}$ for some Hilbert space $\mathbf{H}$. If $\psi_1$ and $\psi_2$ are two unit vectors in $\mathbf{H}$ with $\psi_1 = c\psi_2$ for some $c\in \C$, $\psi_1$ and $\psi_2$ represent the same state.
+  \end{axiom}
+  Each $\psi$ represents a pure state --- there are mixed states, but those will be discussed later.
+  \begin{axiom}[Principle of Correspondence]
+    To each real-valued $f$ on the classical phase space, there is an unbounded, self-adjoint operator $\hat{f}$ on the Hilbert space.
+  \end{axiom}
+  For a particle in $\R^{1}$, the phase space in $\R^{2}$ is represented by $(x,p)$ for $x$ position and $p$ momentum; the analogue to the classical phase space in quantum mechanics is $L^{2}(\R)$ with the position function $f(x,p) = x$ being $M_x$ (the position operator), and the momentum function $g(x,p) = p$ being $P = -i\hbar\frac{d}{dx}$ (the momentum operator).
+  \begin{axiom}[Principle of Measurement]
+    If a system is in a state represented by $\psi \in \mathbf{H}$, then the measurement for the $m$th moment of $f$ satisfies
+    \begin{align*}
+      E(f^{m}) &= \iprod{\psi}{\left(\hat{f}\right)^m\psi}.
+    \end{align*}
+    In particular, the measurement for $f$ is
+    \begin{align*}
+      E(f) &= \iprod{\psi}{\hat{f}\psi}.
+    \end{align*}
+  \end{axiom}
+  \begin{remark}
+    Note that in the quantum system, we are measuring the \textit{classical} $f$. However, rather than a definitive value, we need to find the expectation of the operator $\hat{f}$ using the probabilities derived from $\psi$.\newline
+
+    Since $\hat{f}$ is self-adjoint, $E(f^{m})$ is real, we can construct a probability measure $\mu_{A,\psi}$ that is the probability distribution for measurements of $A$ in the state $\psi$.
+  \end{remark}
+  \begin{proposition}[Eigenvectors]
+    If a quantum system is in a state described by $\psi\in \mathbf{H}$, and $\hat{f}\psi = \lambda\psi$ for some $\lambda\in \R$\footnote{Recall that the eigenvalues of self-adjoint operators are real.}, then
+    \begin{align*}
+      E(f^{m}) &= \lambda^{m}.
+    \end{align*}
+    The aforementioned probability measure consistent with this condition is $\delta_{\lambda}$ (where $f$ has value $\lambda$ with probability $1$).
+  \end{proposition}
+  Essentially, if $\psi$ is an eigenvector for $\hat{f}$, then measurements for $f$ are determined. Thus, we would need to find the probability measure such that
+  \begin{align*}
+    \int_{\R}x^{m}d\mu &= \lambda^{m},
+  \end{align*}
+  which only works if $\mu = \delta_{\lambda}$.\\
+
+  Note that if $\psi$ is a linear combination of eigenvectors for $\hat{f}$, then the measurements of $f$ are not deterministic.\footnote{The spectral decomposition is very cool.}
+  \begin{example}
+    Suppose $\hat{f}$ has an orthonormal basis $\set{e_j}$ with distinct real eigenvalues $\lambda_j$. Let $\psi$ be a unit vector in $\mathbf{H}$ with the expansion
+    \begin{align*}
+      \psi &= \sum_{j=1}^{\infty}a_je_j.
+    \end{align*}
+    Then, the measurement in the state $\psi$ of $f$ will necessarily be some value of $\lambda_j$ with probability $|a_j|^2$.
+  \end{example}
+  \begin{axiom}[Principle of Wave Function Collapse]
+    Suppose a quantum system begins in a state $\psi$, and a measurement of the observable $f$ is performed. If the measurement is $\lambda \in \R$, then immediately after the measurement, the system will be in a state $\psi'$ such that
+    \begin{align*}
+      \hat{f}\psi' &= \lambda \psi',
+    \end{align*}
+    where $\hat{f}$ is the self-adjoint operator representation of $f$.
+  \end{axiom}
+  \begin{remark}
+    Since $\psi'$ is an eigenvector of $\hat{f}$, this means that a second measurement of $f$ occurring immediately after the first measurement will yield the value $\lambda$ with probability $1$ (see the above proposition about eigenvectors).
+  \end{remark}
+  The wave function collapse principle only applies to measurements very shortly after the initial measurement; the system will still evolve over time.
+  \subsubsection{Hydrogen Atom Measurements and Uncertainty}%
+  The Hamiltonian operator $\hat{H}$ for the hydrogen atom has eigenvalues of the form
+  \begin{align*}
+    -\frac{R}{n^2},
+  \end{align*}
+  where $R$ is the Rydberg constant and $n\in \N$ denotes a state. The negative value of these eigenvalues is important; they denote that the electron is bound to the nucleus.\newline
+
+  If an electron is placed into a state with energy $-\frac{R}{n_1^2}$ (where $n_1 > 1$), it will eventually decay into a state with lower energy, $-\frac{R}{n_2^2}$, with $n_2 < n_1$. The process of decay releases a photon with energy
+  \begin{align*}
+    E_{\text{photon}} &= \frac{R}{n_2^2} - \frac{R}{n_1^2}.
+  \end{align*}
+  The frequency of a photon is proportional to its energy; by observing the frequency of the photon, we can determine the change in energy (and thus the values of $n_1$ and $n_2$).\newline
+
+  A bound state for the hydrogen atom will be a linear combination of the eigenvectors of $\hat{H}$ with eigenvalues of the aforementioned form.\newline
+
+  Just as the standard deviation of a random variable $Y$ is found by $\sigma^2 = E(Y^2) - \left(E(Y)\right)^2$, we can find the \textit{uncertainty} of a self-adjoint operator $A$, defined as
+  \begin{align*}
+    \left(\Delta_{\psi}A\right)^2 &= \left\langle A^2\right\rangle_{\psi} - \left(\left\langle A\right\rangle_{\psi}\right)^2,
+  \end{align*}
+  recalling that $\langle A \rangle_{\psi} = \langle \psi,A\psi\rangle$.\newline
+
+  For a single $A$, we can find $\psi$ such that $\Delta_{\psi}A < \varepsilon$ for any $\varepsilon > 0$; however, if $A$ and $B$ do not commute, then $\Delta_{\psi}A$ and $\Delta_{\psi}B$ cannot both be made arbitrarily small.\newline
+
+  In particular, we know that $X$ and $P$ do not commute; thus yields the famous Heisenberg Uncertainty Principle:
+  \begin{align*}
+    \left(\Delta_{\psi}X\right)\left(\Delta_{\psi}P\right) \geq \frac{\hbar}{2}
+  \end{align*}
+  for all $\psi$ such that $\Delta_{\psi}X$ and $\Delta_{\psi}P$ are defined.
 \end{document}
