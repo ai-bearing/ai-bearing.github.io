@@ -84,7 +84,7 @@
 
 \usepackage[document]{ragged2e}
 \renewcommand{\newline}{\hfill\break}
-\renewcommand{\thefootnote}{\Roman{footnote}}
+\renewcommand{\thefootnote}{\roman{footnote}}
 \begin{document}
 
   \section{Classical Mechanics}%
@@ -525,15 +525,10 @@
   \section{Introduction to Quantum Mechanics}%
   Observable quantities such as position and momentum in quantum mechanics are represented by operators on a complex-valued Hilbert space (an inner product space that is complete with respect to the induced metric) --- specifically, these quantities are \textit{unbounded} linear operators.\newline
 
-  In physics, the inner product is linear in the second factor and conjugate linear in the first factor: 
+  In physics, the inner product is linear in the second factor and conjugate linear in the first factor:\footnote{Notice that this is different with math, where the inner product is linear in the first factor and conjugate linear in the second factor.} 
   \begin{align*}
     \iprod{\phi}{\lambda \psi} &= \lambda\iprod{\phi}{\psi}\\
     \iprod{\lambda\phi}{\psi} &= \overline{\lambda}\iprod{\phi}{\psi}.
-  \end{align*}
-  Alternatively, in Dirac notation:
-  \begin{align*}
-    \braket{\phi}{\lambda \psi} &= \lambda \braket{\phi}{\psi}\\
-    \braket{\lambda\phi}{\psi} &= \overline{\lambda}\braket{\phi}{\psi}.
   \end{align*}
   \subsection{A Taste of Operator Theory}%
   A linear operator $A: \mathbf{H} \rightarrow \mathbf{H}$ is bounded if it has finite operator norm:\footnote{I'm using more operator-theoretic language than the book uses because I'm \xcancel{pretentious} a mathematician, not a physicist.}
@@ -627,7 +622,7 @@
   \end{definition}
   Momentum is encoded in the oscillations of the wave function --- the de Broglie hypothesis provides a special relationship between the frequency of oscillation (as a function of position at a fixed time) and the momentum.
   \begin{proposition}[De Broglie Hypothesis]
-    If the wave function of a particle has angular frequency $k$, then the momentum $p$ of the particle is
+    If the wave function of a particle has spatial frequency $k$, then the momentum $p$ of the particle is
     \begin{align*}
       p &= \hbar k,
     \end{align*}
@@ -821,7 +816,7 @@
 
   In a classical system, the Hamiltonian is the generator of time evolution\footnote{The Hamiltonian is also equal to the total energy of the system.}--- thus, by the Principle of Representation, there is an operator, $\hat{H}$, which is the Hamiltonian operator for the system.\newline
 
-  We motivated the definition of the momentum operator via the de Broglie hypothesis, which stated that $p = \hbar k$, where $k$ is the angular frequency of the wave function. Similarly, we can look at the relation between energy and the temporal frequency of the wave function,
+  We motivated the definition of the momentum operator via the de Broglie hypothesis, which stated that $p = \hbar k$, where $k$ is the spatial frequency of the wave function. Similarly, we can look at the relation between energy and the temporal frequency of the wave function,
   \begin{align*}
     E = \hbar \omega,
   \end{align*}
@@ -1011,5 +1006,278 @@
   \subsection{Particle in a Box}%
   We want to solve the time-independent Schrödinger equation for the case of a particle that is confined to move in the interval $x\in [0,L]$. That is, we want to find all the eigenvectors and eigenvalues of $\hat{H}\psi = E\psi$. \newline
 
-  The particle has potential $0$ for $x\in [0,L]$ and very large $C$ outside $[0,L]$.
+  The particle has potential $0$ for $x\in [0,L]$ and very large $C$ outside $[0,L]$. In the classical case, the particle has to have very high energy to escape the box; in the quantum case, if $E$ is an eigenvalue satisfying $\hat{H}\psi = E\psi$, with $E \ll C$, then $\psi$ rapidly decays outside the box. In general, we expect that the solutions to the time-independent Schrödinger equation vanish as we approach $x = 0$ or $x=L$.\newline
+
+  Essentially, we are looking for $\psi \in C^{2}([0,L])$ such that
+  \begin{align*}
+    -\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2} &= E\psi(x)
+  \end{align*}
+  subject to the boundary conditions $\psi(0) = \psi(L) = 0$.\newline
+
+  For $E > 0$, the solution to this differential equation is a linear combination of two complex exponentials (or, since $\hat{H}$ is symmetric, a linear combination of sines and cosines):
+  \begin{align*}
+    \psi(x) &= a\sin\left(\frac{\sqrt{2mE}}{\hbar}x\right) + b\cos\left(\frac{\sqrt{2mE}}{\hbar}x\right).
+  \end{align*}
+  Implementing the boundary condition $\psi(0) = 0$ yields $b = 0$; imposing $\psi(L) = 0$ \textit{could} give us $a = 0$, but that would be boring. Instead, we want to find solutions such that
+  \begin{align*}
+    \sin \left(\frac{\sqrt{2mE}}{\hbar}L\right) = 0
+  \end{align*}
+  that are not identically zero. This forces $E$ to be of the form
+  \begin{align*}
+    E_j &= \frac{j^2\pi^2\hbar^2}{2mL^2},
+  \end{align*}
+  with $j \in \N$. It is easy to verify that for $E \leq 0$, the only solutions are where $\psi = \mathbb{0}$.
+  \begin{proposition}[Eigenvectors of the Solution]
+    The following eigenvectors are a solution to the Schrödinger of the particle in a box satisfying $\psi(0) = \psi(L) = 0$:
+    \begin{align*}
+      \psi_j &= \sqrt{\frac{2}{L}}\sin\left(\frac{j\pi x}{L}\right).
+    \end{align*}
+    The $\psi_j$ correspond to each value of $E_j$, and form an orthonormal basis for $L^{2}([0,L])$.
+  \end{proposition}
+  \begin{proof}
+    It has already been verified that the $\psi_j$ are eigenvectors with eigenvalue $E_j$. To verify that the $\psi_j$ are orthonormal, we see that
+    \begin{align*}
+      \frac{2}{L}\int_{0}^{L}\sin^2\left(\frac{j\pi x}{L}\right)dx &= \frac{2}{L}\left(\frac{L}{2}\right)\\
+                                                                   &= 1,
+    \end{align*}
+    and
+    \begin{align*}
+      \frac{2}{L}\int_{0}^{L}\sin\left(\frac{j_1\pi x}{L}\right) \sin\left(\frac{j_2\pi x}{L}\right) dx &= 0.
+    \end{align*}
+    To verify that it is a basis, we use the fact that the $\psi_j$ are a Fourier sine series for $L^{2}([0,L])$.
+  \end{proof}
+  The Hamiltonian operator for the particle in a box with $V = 0$ is
+  \begin{align*}
+    \hat{H}\psi &= -\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2}.
+  \end{align*}
+  This operator isn't defined over $L^{2}([0,L])$, but only a dense subspace. The domain of $\hat{H}$ should be chosen such that $\hat{H}$ is essentially self-adjoint, meaning
+  \begin{align*}
+    \iprod{\phi}{\hat{H}\psi} &= \iprod{\hat{H}\phi}{\psi}
+  \end{align*}
+  for $\phi,\psi \in \text{Dom}(\hat{H})$. For this to hold, $\phi$ and $\psi$ must satisfy the boundary conditions necessary for the boundary terms in integration by parts to be $0$.
+  \subsection{$n$-Dimensional Single-Particle Quantum Mechanics}%
+  It is relatively straightforward to generalize from a quantum particle moving in $\R$ to one moving in $\R^n$. The Hilbert space is $L^{2}(\R^n)$, and instead of one position operator, there are $n$:
+  \begin{align*}
+    X_j\psi(\mathbf{x}) &= x_j\psi(\mathbf{x}).
+  \end{align*}
+  Similarly, there are $n$ momentum operators given by
+  \begin{align*}
+    P_j\psi(\mathbf{x}) &= -i\hbar \frac{\partial \psi}{\partial x_j}.
+  \end{align*}
+  As with $\R$, $[X_j,P_j] = i\hbar I$, but it is also the case that $[X_j,X_k] = 0$ and $[P_j,P_k] = 0$.
+  \begin{proposition}[Canonical Commutation Relations in $n$ Dimensions]
+    The position and momentum operators satisfy
+    \begin{align*}
+      \frac{1}{i\hbar}[X_j,X_k] &= 0\\
+      \frac{1}{i\hbar}[P_j,P_k] &= 0\\
+      \frac{1}{i\hbar}[X_j,P_k] &+ \delta_{jk}I
+    \end{align*}
+    for all $1 \leq j,k \leq n$.
+  \end{proposition}
+  These are the counterparts to the classical Poisson bracket, where $\frac{1}{i\hbar}[\cdot,\cdot]$ plays the same role as the Poisson bracket.\newline
+
+  The Hamiltonian operator in $n$ dimensions is defined analogously to the classical Hamiltonian:
+  \begin{align*}
+    \hat{H} &= \sum_{j=1}^{n}\frac{P_j^2}{2m} + V(\mathbf{X}),
+  \end{align*}
+  where $V(\mathbf{X})$ results from applying $V$ to the family $\mathbf{X} = (X_1,\dots,X_n)$; we may also identify $V(\mathbf{X})$ with the operator of multiplication by $V(\mathbf{x})$, in which case we can write the Hamiltonian operator as
+  \begin{align*}
+    \hat{H}\psi(\mathbf{x}) &= -\frac{\hbar}{2m}\Delta \psi(\mathbf{x}) + V(\mathbf{x})\psi(\mathbf{x}),
+  \end{align*}
+  where $\delta = \sum_{j=1}^{n}\frac{\partial^2}{\partial x_j^2}$.\newline
+
+  Now that we are in multiple dimensions, we can now introduce the angular momentum operator, $\hat{J}_{jk}$:
+  \begin{align*}
+    \hat{J}_{jk} &= X_jP_k - X_kP_j.
+  \end{align*}
+  As in the classical case, $\hat{J}_{jk} = 0$ when $j=k$; when $j\neq k$, $X_j$ and $P_k$ commute, meaning the order of the factors in $\hat{J}_{jk}$ is not important. In particular,
+  \begin{align*}
+    \hat{J}_{jk} &+ -i\hbar \left(x_j\frac{\partial}{\partial x_k} - x_k\frac{\partial}{\partial x_j}\right).
+  \end{align*}
+  The operator $\displaystyle \left(x_j\frac{\partial}{\partial k} - x_k\frac{\partial}{\partial j}\right)$ as the angular derivative, $\frac{\partial}{\partial \theta}$ in the $(x_j,x_k)$ plane.\newline
+
+  When $n=3$, we use the quantum version of the angular momentum vector;
+  \begin{align*}
+    \hat{J}_1 &= X_2P_3 - X_3P_2\\
+    \hat{J}_2 &= X_3P_1 - X_1P_3\\
+    \hat{J}_3 &= X_1P_2 - X_2P_1.
+  \end{align*}
+  When $n=3$, every $\hat{J}_{jk}$ is either $\hat{J}_1,\hat{J}_2,\hat{J}_3$ or their negative.
+  \subsection{Systems of Multiple Particles}%
+  Suppose we have a system of $N$ particles moving in $\R^n$. If the particles are of different types, then the Hilbert space is $L^2(R^{nN})$. The wave function $\psi$ is a function of $\mathbf{x}^1,\mathbf{x}^2,\dots,\mathbf{x}^N$, with $\mathbf{x}^j$ a vector in $\R^n$.\newline
+
+  If $\psi$ is a unit vector in $L^{2}(\R^{nN})$, then $|\psi(\mathbf{x}^1,\mathbf{x}^2,\dots,\mathbf{x}^N)|^2$ is the joint probability distribution of the positions of the $N$ particles.\newline
+
+  We introduce position operators $X_{k}^{j}$ to denote the $k$th component of the position of the $j$th particle, and similarly so with momentum operators $P_{k}^{j}$. The Hamiltonian operator is then
+  \begin{align*}
+    \hat{H}\psi\left(\mathbf{x}^1,\mathbf{x}^2,\dots,\mathbf{x}^N\right) &= \sum_{j=1}^{N}\frac{\hbar}{2m_j}\Delta_{j}\psi(\mathbf{x}^1,\mathbf{x}^2,\dots,\mathbf{x}^N) + V(\mathbf{x}^1,\mathbf{x}^2,\dots,\mathbf{x}^N)\psi(\mathbf{x}),
+  \end{align*}
+  where $m_j$ denotes the mass of the $j$th particle, and $\Delta_{j}$ denotes the Laplacian with respect to $\mathbf{x}^j$, fixing all other variables.\newline
+
+  The Hilbert space for a composite system is taken to be the tensor product of the individual Hilbert spaces; there is a natural isomorphism\footnote{Category theory term} between $L^{2}(\R^{nN})$ and the $N$ copies of $\R^n$.\newline
+
+  If the particles are identical, then things get more complicated --- to start, we are supposed to believe that identical particles are indistinguishable, meaning if we exchange $\mathbf{x}^1$ and $\mathbf{x}^2$ with each other, then they represent the same state. Thus, we get that
+  \begin{align*}
+    \psi\left(\mathbf{x}^2,\mathbf{x}^1,\mathbf{x}^3,\dots,\mathbf{x}^N\right) &= u\psi \left(\mathbf{x}^1,\mathbf{x}^2,\mathbf{x}^3,\dots,\mathbf{x}^N\right)
+  \end{align*}
+  for some complex number $u$ with $|u| = 1$.\footnote{We used the fact that $\psi_1 = c\psi_2$ means $\psi_1$ and $\psi_2$ are equivalent states.} Exchanging again yields $u^2 = 1$, meaning $u = 1$ or $u = -1$.\newline
+
+  Particles with $u = 1$ are known as bosons, and particles with $u = -1$ are known as fermions. The classification of a particle is determined by its spin --- we also say that particles without spin are bosons.\newline
+
+  For a collection of $N$ identical spinless particles in $\R^{3}$, we say that the Hilbert space is the symmetric subspace of $L^{2}\left(\R^{3N}\right)$, or the space of all functions in $L^{2}\left(R^{3N}\right)$ that are invariant under variable permutation.
+  \subsection{Dirac Notation}%
+  Dirac notation is physicists' preferred way to deal with ideas such as inner products and operators acting on vectors in Hilbert space.
+  \begin{definition}[Bras and Kets]
+    A vector $\psi\in \mathbf{H}$ is referred to as a ket, denoted $\ket{\psi}$.\newline
+
+    A continuous linear functional in $\mathbf{H}^{\ast}$ is a bra; we use $\bra{\phi}$ to denote the unique linear functional such that $\bra{\phi}(\psi) = \iprod{\phi}{\psi}$. The existence of $\bra{\phi}$ follows from the Riesz representation theorem.\newline
+
+    We denote inner products as $\braket{\phi}{\psi}$.
+  \end{definition}
+  If $A$ is an operator on $\mathbf{H}$, and $\phi$ is a vector in $\mathbf{H}$, we can form the linear functional $\bra{\phi}A$ to denote the linear map $\psi \mapsto \braket{\phi}{A\psi}$. Physicists like to write this as $\bra{\phi} A \ket{\psi}$, to denote either the linear functional $\bra{\phi}A$ applied to the vector $\ket{\psi}$ or the linear functional $\phi$ applied to the vector $A\ket{\psi}$.
+  \begin{definition}[Outer Products]
+    For any $\phi$ and $\psi$ in $\mathbf{H}$, the outer product, $\ket{\phi}\bra{\psi}$ denotes the operator given by
+    \begin{align*}
+      \left(\ket{\phi}\bra{\psi}\right)(\chi) &= \braket{\psi}{\chi} \ket{\phi}.
+    \end{align*}
+    In math terms,
+    \begin{align*}
+      \chi \xmapsto{\ket{\phi}\bra{\psi}}\iprod{\psi}{\chi}\phi.
+    \end{align*}
+  \end{definition}
+  Notationally, if a family of vectors is labeled by indices, we write the ket vectors with purely the indices. For instance, if $\set{\phi_{n}}\subseteq \mathbf{H}$, we write $\ket{n}$ rather than $\ket{\phi_n}$.\newline
+
+  If an operator $\hat{H}$ has an orthonormal basis of eigenvectors $\psi_n$, the decomposition would be in the form
+  \begin{align*}
+    I &= \sum_{n}\ket{n}\bra{n},
+  \end{align*}
+  where $\ket{n}$ is a unit vector and $\ket{n}\bra{n}$ denotes the orthogonal projection onto the one dimensional subspace spanned by $\ket{n}$.\newline
+
+  Physicists also like to denote the complex conjugate of $z$ as $z^{\ast}$ and the adjoint of an operator as $A^{\dagger}$\footnote{I don't like this either.}; self-adjoint operators are known as Hermitian operators.\newline
+
+  To express the adjoint of an operator using Dirac notation, we say that if $A$ is a bounded operator on $\mathbf{H}$, then $A^{\dagger}$ is the unique bounded operator such that
+  \begin{align*}
+    \bra{\psi}A &= \bra{A^{\dagger}\psi}.
+  \end{align*}
+  Physicists tend to define the irreducible canonical commutation relations between certain operators on a Hilbert space in order to define said Hilbert space --- this is because the Stone--von Neumann theorem\footnote{We will return to this in the future.} says that if certain conditions hold, the canonical commutation relations uniquely define the Hilbert space up to unitary equivalence.\newline
+
+  Given this irreducible representation, and a vector $\psi \in \mathbf{H}$, the position wave function is defined by
+  \begin{align*}
+    \psi(x) &= \braket{x}{\psi}.
+  \end{align*}
+  We can analogously define the momentum wave function.
+  \section{Interlude: Fourier Transform and Schwartz Space}%
+  In order to go any further, it's probably pretty useful to understand the basics of the Fourier transform. To do this, the following are notes of some content from the \textit{Princeton Lectures on Analysis}. 
+  \subsection{Functions of Moderate Decrease}%
+  A function $f$ defined on $\R$ that is integrable over a closed and bounded interval may not be integrable over $\R$. For instance, the function $f = \frac{1}{1+|x|}$ is such a function.\newline
+
+  In order to study functions that \textit{are} integrable over $\R$, we will find it useful to restrict our view to certain classes of functions --- namely, ones that decrease ``fast enough.''
+  \begin{definition}[Function of Moderate Decrease]
+    A function $f\in C(\R)$ is said to be of moderate decrease if there exists $A > 0$ such that
+    \begin{align*}
+      |f(x)| \leq \frac{A}{1 + x^{1 + \varepsilon}}
+    \end{align*}
+    for all $x\in \R$ and some $\varepsilon > 0$. We denote the set of all functions of moderate decrease as $\mathcal{M}(\R)$; $\mathcal{M}(\R)$ is a vector space over $\C$.
+  \end{definition}
+  If $f$ is of moderate decrease, we can define
+  \begin{align*}
+    \int_{-\infty}^{\infty}f(x)dx &= \lim_{N\rightarrow\infty}\int_{-N}^{N}f(x)dx.
+  \end{align*}
+  The integral over $\R$ of $f,g\in \mathcal{M}(\R)$ (with $a,b\in \C$) has the following properties:
+  \begin{itemize}
+    \item Linearity:
+      \begin{align*}
+        \int_{-\infty}^{\infty}\left(af(x) + bg(x)\right) dx &= a\int_{-\infty}^{\infty}f(x)dx + b\int_{-\infty}^{\infty}g(x)dx.
+      \end{align*}
+    \item Translation Invariance:
+      \begin{align*}
+        \int_{-\infty}^{\infty}f(x-h)dx &= \int_{-\infty}^{\infty}f(x)dx.
+      \end{align*}
+    \item Scaling under dilation:
+      \begin{align*}
+        \delta\int_{-\infty}^{\infty}f(\delta x)dx &= \int_{-\infty}^{\infty}f(x)dx
+      \end{align*}
+    \item Continuity:
+      \begin{align*}
+        \lim_{h\rightarrow 0}\int_{-\infty}^{\infty}|f(x-h) - f(x)|dx &= 0.
+      \end{align*}
+  \end{itemize}
+  \subsection{Schwartz Space}%
+  The Schwartz space is a subspace of $f\in C^{\infty}(\R)$ where, for all $k,\ell \geq 0$,
+  \begin{align*}
+    \sup_{x\in \R}\left\vert x^{k}f^{(\ell)}(x) \right\vert < \infty.
+  \end{align*}
+  The space $\mathcal{S}(\R)\subseteq C^{\infty}(\R)$ is also a vector space over $\C$. Notice that if $f\in \mathcal{S}(\R)$, then so too are $f'(x)$ and $xf(x)$.\newline
+
+  Important classes of Schwartz functions include the Gaussians and the bump functions (compactly supported $C^{\infty}(\R)$ functions).\footnote{Bump functions are fascinating because even though they're $C^{\infty}$, they are not analytic (or equivalent to their Taylor series, denoted $C^{\omega}$). Compare this to functions defined over the complex numbers, where $C^{1}(\C) = C^{\infty}(\C) = C^{\omega}(\C)$.}
+  \subsection{The Fourier Transform on $\mathcal{S}(\R)$}%
+  \begin{definition}[Fourier Transform]
+    The Fourier transform of a function $f\in \mathcal{S}(\R)$ is defined by
+    \begin{align*}
+      \hat{f}(k) &= \int_{-\infty}^{\infty}f(t)e^{-2\pi i k t}dt.
+    \end{align*}
+    I will use $\mathfrak{F}$ to denote the Fourier transform; $\mathfrak{F}(f(t)) = \hat{f}(k)$.
+  \end{definition}
+  \begin{proposition}[Properties of the Fourier Transform]
+    Let $f\in \mathcal{S}(\R)$. Then:
+    \begin{itemize}
+      \item $\displaystyle\mathfrak{F}(f(x+h)) = \hat{f}(k)e^{2\pi i h k}$ for $h\in \R$;
+      \item $\displaystyle \mathfrak{F}\left(f(x)e^{-2\pi i x h}\right) = \hat{f}(k + h)$ for $h\in \R$;
+      \item $\displaystyle \mathfrak{F}\left(f(\delta x)\right) = \delta^{-1}\hat{f}(\delta^{-1}k)$ for $\delta > 0$;
+      \item $\mathfrak{F}(f'(x)) = 2\pi i k \hat{f}(k)$;
+      \item $\mathfrak{F}(-2\pi i x f(x)) = \frac{d\hat{f}}{dk}$.
+    \end{itemize}
+  \end{proposition}
+  One of the important facts of the Fourier transform is that it preserves the Schwartz space.
+  \begin{theorem}[Preservation of Schwartz Space under Fourier Transform]
+    If $f\in \mathcal{S}(\R)$, then so too is $\hat{f}$.
+  \end{theorem}
+  \section{The Schrödinger Equation for a Free Particle}%
+  We want to solve the Schrödinger equation using a variety of methods for a ``free'' particle in $\R$ --- that is, a particle with identically zero potential. The free Schrödinger equation is thus
+  \begin{align*}
+    \frac{d\psi}{dt} &= \frac{i\hbar}{2m}\frac{\partial^2\psi}{\partial x^2}
+  \end{align*}
+  subject to the initial condition $\psi(x,0) = \psi_0(x)$. Before fully solving the equation, we begin by observing the time evolution of the expectation of the position and momentum operators:
+  \begin{align*}
+    \frac{d}{dt}\langle X \rangle_{\psi(t)} &= \frac{1}{m}\langle P \rangle_{\psi(t)}\\
+    \frac{d}{dt}\langle P \rangle_{\psi(t)} &= 0.
+  \end{align*}
+  Thus, the expectation of $X$ is linear in time:
+  \begin{align*}
+    \langle X \rangle_{\psi(t)} &= \langle X \rangle_{\psi_0} + \frac{t}{m}\langle P \rangle_{\psi_0}\\
+    \langle P \rangle_{\psi(t)} &= \langle P \rangle_{\psi_0}.
+  \end{align*}
+  The free Schrödinger equation is a special case where the expectation of $X$ and $P$ exactly follows the classical solution.
+  \subsection{Using the Fourier Transform to solve the Free Schrödinger Equation}%
+  We want to find solutions to the free Schrödinger equation of the form
+  \begin{align*}
+    \psi(x,t) &= e^{i(kx - \omega(k)t)},
+  \end{align*}
+  where $k$ is the spatial frequency and $\omega(k)$ is the frequency in time for a given spatial frequency.\footnote{I think my PDEs knowledge is lacking in order to explain why the solution is of this form.} Plugging this solution form into the free Schrödinger equation yields
+  \begin{align*}
+    \omega(k) &= \frac{\hbar k^2}{2m}.
+  \end{align*}
+  Formulae that express the frequency in time as a function of spatial frequency in a solution of some partial differential equation are called dispersion relations.\newline
+
+  We can also see that the solution form can be written as
+  \begin{align*}
+    \psi(x,t) &= e^{ik\left(x - \frac{\omega(k)}{k}t\right)},
+  \end{align*}
+  meaning that time evolution shifts the initial function to the write by $\frac{\omega(k)}{k}t$, so $\psi(x,t)$ is moving to the right over time with speed $\frac{\omega(k)}{k}$.
+  \begin{definition}[Phase Velocity]
+    The phase velocity of a particle with momentum $p = \hbar k$ is
+    \begin{align*}
+      \frac{\omega(k)}{k} &= \frac{\hbar k}{2m}\\
+                          &= \frac{p}{2m},
+    \end{align*}
+    which is half the velocity of a classical particle with momentum $p$.
+  \end{definition}
+  The ``real'' velocity, $\frac{p}{m}$ is referred to as the group velocity, whereas the phase velocity originates in the pure exponential solution to the free Schrödinger equation.
+  \begin{proposition}[Solution to the Schrodinger Equation]
+    Suppose $\psi_0$ is a Schwartz function. Let $\hat{\psi_0}$ denote the Fourier transform of $\psi_0$, and define $\psi(x,t)$ by
+    \begin{align*}
+      \psi(x,t) &= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}\hat{\psi_0}(k)e^{i\left(kx - \omega(k)t\right)}dk.
+    \end{align*}
+    Then, $\psi(x,t)$ solves the free Schrödinger equation.
+  \end{proposition}
 \end{document}
