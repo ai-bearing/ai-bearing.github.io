@@ -1216,22 +1216,164 @@
     \begin{align*}
       \hat{f}(k) &= \int_{-\infty}^{\infty}f(t)e^{-2\pi i k t}dt.
     \end{align*}
-    I will use $\mathfrak{F}$ to denote the Fourier transform; $\mathfrak{F}(f(t)) = \hat{f}(k)$.
+    I will use $\mathcal{F}$ to denote the Fourier transform; $\mathcal{F}(f(t)) = \hat{f}(k)$.
   \end{definition}
   \begin{proposition}[Properties of the Fourier Transform]
     Let $f\in \mathcal{S}(\R)$. Then:
     \begin{itemize}
-      \item $\displaystyle\mathfrak{F}(f(x+h)) = \hat{f}(k)e^{2\pi i h k}$ for $h\in \R$;
-      \item $\displaystyle \mathfrak{F}\left(f(x)e^{-2\pi i x h}\right) = \hat{f}(k + h)$ for $h\in \R$;
-      \item $\displaystyle \mathfrak{F}\left(f(\delta x)\right) = \delta^{-1}\hat{f}(\delta^{-1}k)$ for $\delta > 0$;
-      \item $\mathfrak{F}(f'(x)) = 2\pi i k \hat{f}(k)$;
-      \item $\mathfrak{F}(-2\pi i x f(x)) = \frac{d\hat{f}}{dk}$.
+      \item $\displaystyle\mathcal{F}(f(x+h)) = \hat{f}(k)e^{2\pi i h k}$ for $h\in \R$;
+      \item $\displaystyle \mathcal{F}\left(f(x)e^{-2\pi i x h}\right) = \hat{f}(k + h)$ for $h\in \R$;
+      \item $\displaystyle \mathcal{F}\left(f(\delta x)\right) = \delta^{-1}\hat{f}(\delta^{-1}k)$ for $\delta > 0$;
+      \item $\mathcal{F}(f'(x)) = 2\pi i k \hat{f}(k)$;
+      \item $\mathcal{F}(-2\pi i x f(x)) = \frac{d\hat{f}}{dk}$.
     \end{itemize}
   \end{proposition}
   One of the important facts of the Fourier transform is that it preserves the Schwartz space.
   \begin{theorem}[Preservation of Schwartz Space under Fourier Transform]
     If $f\in \mathcal{S}(\R)$, then so too is $\hat{f}$.
   \end{theorem}
+  \begin{proof}
+    Let $f\in \mathcal{S}(\R)$. Then, $\hat{f}$ is bounded,\footnote{I'm not sure exactly why.} so for every nonnegative $k,\ell$, it is the case that
+    \begin{align*}
+      \xi^{k}\left(\frac{d}{d\xi}\right)^{\ell}\hat{f}(\xi)
+    \end{align*}
+    is bounded, as it is the Fourier transform of the (bounded) expression
+    \begin{align*}
+      \frac{1}{(2\pi i)^k}\left(\frac{d}{dx}\right)^k \left((-2\pi i x)^{\ell}f(x)\right).
+    \end{align*}
+    Thus, $\hat{f}\in \mathcal{S}(\R)$.
+  \end{proof}
+  \subsection{Good Kernels for the Fourier Transform}%
+  Consider the fact that
+  \begin{align*}
+    \int_{-\infty}^{\infty}e^{-\pi x^2}dx &= 1.
+  \end{align*}
+  We can see that $e^{-\pi x^2}\in \mathcal{S}(\R)$, meaning we can examine its Fourier transform.
+  \begin{theorem}[Fourier Transform of $e^{-\pi x^2}$]
+    Let $f(x) = e^{-\pi x^2}$. Then, $\hat{f}(\xi) = f(\xi)$.
+  \end{theorem}
+  \begin{proof}
+    Define $F(\xi) = \hat{f}(\xi) = \int_{-\infty}^{\infty}e^{-\pi x^2}e^{-2\pi i \xi}dx$. Observe that $F(0) = 1$.\newline
+
+    Using the fact that $\frac{df}{dx} = -2\pi x f(x)$ and that $\mathcal{F}\left(-2\pi i x f(x)\right) = \frac{d}{d\xi}\hat{f}(\xi)$, we find by differentiating under the integral sign that
+    \begin{align*}
+      F'(\xi) &= \int_{-\infty}^{\infty}f(x)(-2\pi i x)e^{-2\pi i x \xi}dx\\
+              &= i\int_{-\infty}^{\infty}f'(x)e^{-2\pi i x \xi}dx\\
+              \intertext{meaning}
+      F'(\xi) &= i\left(\frac{d}{d\xi}\hat{f}\xi\right)\\
+              &= -2\pi \xi F(\xi).
+    \end{align*}
+    Thus, $F(\xi) = e^{-\pi \xi^2}$.\footnote{I skipped a step here that was kind of annoying even though I maybe shouldn't have.}
+  \end{proof}
+  From this, we can see that if $K_{\delta}(x) = \delta^{-1/2}e^{-\pi x^2/\delta}$, then $\widehat{K_{\delta}}(\xi) = e^{-\pi \delta \xi^2}$. We can see that as $\delta \rightarrow 0$, $K_{\delta}$ peaks at the origin, while $\widehat{K_{\delta}}$ becomes flatter.\newline
+
+  Importantly, $K_{\delta}(x) = \delta^{-1/2}e^{-\pi x^2/\delta}$ also satisfies the following properties:
+  \begin{itemize}
+    \item $\displaystyle \int_{-\infty}^{\infty}K_{\delta}(x)dx = 1$;
+    \item $\displaystyle \int_{-\infty}^{\infty}\left\vert K_{\delta}(x)\right\vert dx \leq M$;
+    \item for every $\eta > 0$, we have $\displaystyle\int_{|x| > \eta}\left\vert K_{\delta}(x)\right\vert dx \rightarrow 0$ as $\delta \rightarrow 0$.
+  \end{itemize}
+  This makes the collection $\set{K_{\delta}}$ a family of good kernels for the Fourier transform.\newline
+
+  In particular, this means that $(f\ast K_{\delta})(x) \rightarrow f(x)$ uniformly as $\delta \rightarrow 0$ for any $f\in \mathcal{S}(\R)$, where $\ast$ denotes the convolution.
+  \subsection{Fourier Inversion}%
+  \begin{proposition}[Multiplication Identity]
+    If $f,g\in \mathcal{S}(\R)$, then
+    \begin{align*}
+      \int_{-\infty}^{\infty}f(x)\hat{g}(x)dx &= \int_{-\infty}^{\infty}\hat{f}(y)g(y)dy.
+    \end{align*}
+  \end{proposition}
+  \begin{proof}
+    Consider a continuous multivariate function of moderate decrease in $x$ and $y$, $|F(x,y)| \leq \frac{A}{(1+x^2)(1+y^2)}$. Set $F_1(x) = \int_{-\infty}^{\infty}F(x,y)dy$ and $F_2(y) = \int_{-\infty}^{\infty}F(x,y)dx$. Then, by Fubini's Theorem, we have
+    \begin{align*}
+      \int_{-\infty}^{\infty}F_1(x)dx &= \int_{-\infty}^{\infty}F(y)dy.
+    \end{align*}
+    If $F(x,y) = f(x)g(y)e^{-2\pi i x y}$, then $F_1(x) = f(x)\hat{g}(x)$ and $F_2(y) = \hat{f}(y)g(y)$.
+  \end{proof}
+  \begin{theorem}[Fourier Inversion]
+    If $f\in \mathcal{S}(\R)$, then\footnote{Note the sign change.}
+    \begin{align*}
+      f(x) &= \int_{-\infty}^{\infty}\hat{f}(\xi)e^{2\pi i x \xi}d\xi.
+    \end{align*}
+  \end{theorem}
+  \begin{proof}
+    We start by claiming that
+    \begin{align*}
+      f(0) &= \int_{-\infty}^{\infty}\hat{f}(\xi)d\xi.
+    \end{align*}
+    Let $G_{\delta}(x) = e^{-\pi \delta x^2}$ such that $\widehat{G_{\delta}}(\xi) = K_{\delta}(\xi)$. By the multiplication formula, we get
+    \begin{align*}
+      \int_{-\infty}^{\infty}f(x)K_{\delta}(x) dx &= \int_{-\infty}^{\infty}\hat{f}(\xi)G_{\delta}(\xi)d\xi.
+    \end{align*}
+    Since $K_{\delta}$ is a good kernel, the first integral goes to $f(0)$ as $\delta \rightarrow 0$, and since the second integral converges to $\int_{-\infty}^{\infty}\hat{f}(\xi)d\xi$ as $\delta \rightarrow 0$, we find that the claim is true.\newline
+
+    Let $F(y) = f(y+x)$, so
+    \begin{align*}
+      f(x) &= F(0)\\
+           &= \int_{-\infty}^{\infty}\hat{F}(\xi)d\xi\\
+           &= \int_{-\infty}^{\infty}\hat{f}(\xi)e^{2\pi i x \xi}d\xi.
+    \end{align*}
+  \end{proof}
+  This implies the existence of two maps, $\mathcal{F}: \mathcal{S}(\R)\rightarrow \mathcal{S}(\R)$ and $\mathcal{F}^{\ast}:\mathcal{S}(\R)\rightarrow \mathcal{S}(\R)$, where
+  \begin{align*}
+    \mathcal{F}(f)(\xi) &= \int_{-\infty}^{\infty}f(x)e^{-2\pi i x \xi}dx\\
+    \mathcal{F}^{\ast}(g)(x) &= \int_{-\infty}^{\infty} g(\xi)e^{2\pi i x \xi}d\xi.
+  \end{align*}
+  We say $\mathcal{F}$ is the Fourier transform, and $\mathcal{F}^{\ast}$ is the inverse Fourier transform; $\mathcal{F}\circ \mathcal{F}^{\ast} = \mathcal{F}^{\ast}\circ \mathcal{F} = I$.
+  \subsection{Plancherel's Theorem}%
+  In order to prove that $\norm{\mathcal{F}}_{\text{op}} = 1$, we need to understand the Fourier transform's effects on convolutions.
+  \begin{proposition}[Convolutions under the Fourier Transform]
+    Let $f,g\in \mathcal{S}(\R)$. Then,
+    \begin{itemize}
+      \item $f\ast g \in \mathcal{S}(\R)$;
+      \item $f\ast g = g\ast f$;
+      \item $\widehat{\left(f\ast g\right)}(\xi) = \hat{f}(\xi)\hat{g}(\xi)$.
+    \end{itemize}
+  \end{proposition}
+  \begin{proof}
+  To prove that $f\ast g$ is rapidly decreasing, we observe that for $\ell \geq 0$,
+  \begin{align*}
+    \sup_{x}|x|^{\ell}|g(x-y)| &\leq A_{\ell}(1+|y|)^{\ell},
+  \end{align*}
+  since $g$ is rapidly decreasing. Thus, we see that
+  \begin{align*}
+    \sup_{x}\left\vert x^{\ell}(f\ast g)(x) \right\vert &\leq A_{\ell}\int_{-\infty}^{\infty}|f(y)|\left(1 + |y|\right)^{\ell}dy,
+  \end{align*}
+  meaning $x^{\ell}(f\ast g)(x)$ is bounded for every $\ell \geq 0$. Similarly, since
+  \begin{align*}
+    \left(\frac{d}{dx}\right)^k \left(f\ast g\right)(x) &= \left(f\ast \left(\frac{d}{dx}\right)^{k}g\right)(x),
+  \end{align*}
+  it is the case that $f\ast g \in \mathcal{S}(\R)$. \newline
+
+  To show that $f\ast g = g\ast f$, simply substitute $x - y = u$ in the formula of $f\ast g$:
+  \begin{align*}
+    \left(f\ast g\right)(x) &= \int_{-\infty}^{\infty}f(y)g(x-y)dy\\
+               &= \int_{-\infty}^{\infty}f(x-u)g(u)du\\
+               &= \left(g\ast f\right)(x)
+  \end{align*}
+  Finally, consider $F(x,y) = f(y)g(x-y)e^{-2\pi i x \xi}$. We set $F_1(x) = (f\ast g)(x)e^{-2\pi i x \xi}$ (by integrating with respect to $y$), and $F_2(x) = f(y)e^{-2\pi i y \xi}\hat{g}(\xi)$. Thus,
+  \begin{align*}
+    \int_{-\infty}^{\infty}F_1(x)dx &= \int_{-\infty}^{\infty}F_2(y)dy.
+  \end{align*}
+  \end{proof}
+  The Schwartz space is a Hilbert space with inner product
+  \begin{align*}
+    \iprod{f}{g} &= \int_{-\infty}^{\infty}f(x)\overline{g(x)} dx.
+  \end{align*}
+  \begin{theorem}[Plancherel]
+    If $f\in \mathcal{S}(\R)$, then $\norm{\hat{f}} = \norm{f}$.
+  \end{theorem}
+  \begin{proof}
+    Let $f\in \mathcal{S}(\R)$. Define $\tilde{f} = \overline{f(-x)}$. Then, $\widehat{\tilde{f}}(\xi) = \overline{\hat{f}(\xi)}$. Let $h = f\ast \tilde{f}$. Clearly,
+    \begin{align*}
+      \hat{h}(\xi) &= \left\vert \hat{f}(\xi) \right\vert^2\\
+      h(0) &= \int_{-\infty}^{\infty}|f(x)|^2dx.
+    \end{align*}
+    Plancherel's theorem follows from the inversion formula applied at $x=0$, meaning
+    \begin{align*}
+      \int_{-\infty}^{\infty}\hat{h}(\xi)d\xi &= h(0).
+    \end{align*}
+  \end{proof}
   \section{The Schrödinger Equation for a Free Particle}%
   We want to solve the Schrödinger equation using a variety of methods for a ``free'' particle in $\R$ --- that is, a particle with identically zero potential. The free Schrödinger equation is thus
   \begin{align*}
@@ -1280,4 +1422,24 @@
     \end{align*}
     Then, $\psi(x,t)$ solves the free Schrödinger equation.
   \end{proposition}
+  \begin{proof}
+    Notice that, by differentiating under the integral sign, and remembering that $\omega(k) = \frac{\hbar k^2}{2m}$, we have\footnote{I did not show the convergence of the integral here, but it follows a similar argument to the convergence of the derivative with respect to $x$.}
+    \begin{align*}
+      \frac{d\psi}{dt} &= \frac{i\hbar}{2m}\left(\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}-k^2\hat{\psi}_0(k)e^{i(kx - \omega(k)t)}dk\right).
+    \end{align*}
+    To show that the integral on the right is equal to $\frac{d^2\psi}{dx^2}$, we will need to show that the integral indeed converges. Taking the derivative of the $e^{ikx}$, we find that
+    \begin{align*}
+      \left\vert \frac{e^{ik(x+h)-e^{ikx}}}{h} \right\vert\leq |k|
+    \end{align*}
+    for all $h > 0$. Thus, with $|k\hat{\psi}_0(k)|$ as our dominating function, the dominated convergence theorem states that
+    \begin{align*}
+      \lim_{h\rightarrow 0}\int_{-\infty}^{\infty}\hat{\psi}_0(k)\frac{e^{i\left(k(x+h) - \omega(k)t\right)} - e^{i(kx - \omega(k)t)}}{h}dk &= \int_{-\infty}^{\infty}-ik\hat(\psi)_0(k)e^{i\left(kx - \omega(k)t\right)}dk.
+    \end{align*}
+    Following a similar pattern, we find that
+    \begin{align*}
+      \frac{d\psi}{dt} &= \frac{i\hbar}{2m}\left(\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}-k^2\hat{\psi}_0(k)e^{i(kx - \omega(k)t)}dk\right).\\
+                       &= \frac{i\hbar}{2m}\frac{d^2\psi}{dx^2}.
+    \end{align*}
+    Finally, we use the Fourier inversion formula to show that $\psi(x,0) = \psi_0(x)$.\footnote{The book's proof is quite a bit more vague than this proof, and I'll probably have to go back and clarify a lot of this in the future.}
+  \end{proof}
 \end{document}
