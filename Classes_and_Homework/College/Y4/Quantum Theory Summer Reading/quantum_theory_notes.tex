@@ -1216,7 +1216,7 @@
     \begin{align*}
       \hat{f}(k) &= \int_{-\infty}^{\infty}f(t)e^{-2\pi i k t}dt.
     \end{align*}
-    I will use $\mathcal{F}$ to denote the Fourier transform; $\mathcal{F}(f(t)) = \hat{f}(k)$.
+    I will use $\mathcal{F}$ to denote the Fourier transform; $\mathcal{F}(f(t)) = \hat{f}(k)$. 
   \end{definition}
   \begin{proposition}[Properties of the Fourier Transform]
     Let $f\in \mathcal{S}(\R)$. Then:
@@ -1420,7 +1420,7 @@
     \begin{align*}
       \psi(x,t) &= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}\hat{\psi_0}(k)e^{i\left(kx - \omega(k)t\right)}dk.
     \end{align*}
-    Then, $\psi(x,t)$ solves the free Schrödinger equation.
+    Then, $\psi(x,t)$ solves the free Schrödinger equation.\footnote{The reason why physicists insert a factor of $\sqrt{2\pi}$ is because, rather than dealing with cycles per second, $k$ is angular frequency (or radians per second). To normalize will require a factor of $2\pi$ at the conversion from $x$ to $k$, but we also want the Fourier transform to remain unitary.}
   \end{proposition}
   \begin{proof}
     Notice that, by differentiating under the integral sign, and remembering that $\omega(k) = \frac{\hbar k^2}{2m}$, we have\footnote{I did not show the convergence of the integral here, but it follows a similar argument to the convergence of the derivative with respect to $x$.}
@@ -1442,4 +1442,72 @@
     \end{align*}
     Finally, we use the Fourier inversion formula to show that $\psi(x,0) = \psi_0(x)$.\footnote{The book's proof is quite a bit more vague than this proof, and I'll probably have to go back and clarify a lot of this in the future.}
   \end{proof}
+  \begin{proposition}[Fourier Transform of $\psi(x,t)$]
+    If $\psi(x,t)$ is defined as
+    \begin{align*}
+      \psi(x,t) &= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}\hat{\psi}_0(k)e^{i(kx - \omega(k)t)}dk,
+    \end{align*}
+    then the Fourier transform of $\psi(x,t)$ with respect to $x$, keeping $t$ fixed, is
+    \begin{align*}
+      \hat{\psi}(k,t) &= \hat{\psi}_0(k)e^{-i\frac{\hbar k^2 t}{2m}}.
+    \end{align*}
+  \end{proposition}
+  \begin{proof}
+    Rewriting $\psi(x,t)$ as
+    \begin{align*}
+      \psi(x,t) &= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{ikx}\left(\hat{\psi}_0e^{-i\omega(k)t}\right)dk,
+    \end{align*}
+    we can see that the inner expression must be the Fourier transform of $\psi(x,t)$ with respect to $x$ (seeing as the function $e^{ikx}$ does not have any values of $t$ inside it, and the Fourier transform is injective since it is unitary). Plugging in $\omega(k) = \frac{\hbar k^2}{2m}$, we get the final expression.
+  \end{proof}
+  From these two results, we can see that for any $\psi_0 \in L^{2}(\R)$, we define $\psi(x,t)$ to be the unique element of $L^{2}(\R)$ whose Fourier transform with respect to $x$ is $\hat{\psi}_0(k)e^{-i\frac{\hbar k^2 t}{2m}}$. Notice here that $\psi_0$ and $\psi$ need not be differentiable, but they will still satisfy a version of the Schrödinger equation.
+  \subsection{Solving via Convolutions}%
+  Recall that
+  \begin{align*}
+    \mathcal{F}(\phi \ast \psi) &= \hat{\phi}\hat{\psi},
+  \end{align*}
+  where $\ast$ denotes convolution. In other words, the \textit{inverse} Fourier transform of the function $\hat{\phi}\hat{\psi}$ is $\phi \ast \psi$\footnote{Barring a factor of $\sqrt{2\pi}$, of course.}. Thus, by the property of the Fourier transform kernel, we ought to have
+  \begin{align*}
+    \psi(x,t) &+ \psi_0(x)\ast K_t(x),
+  \end{align*}
+  where
+  \begin{align*}
+    K_t &= \frac{1}{\sqrt{2\pi}}\mathcal{F}^{-1}\left(e^{-i\frac{\hbar k^2 t}{2m}}\right).
+  \end{align*}
+  However, unfortunately, $e^{-i\frac{\hbar k^2 t}{2m}}$ is not the Fourier transform of some function in $L^{1}(\R)\cap L^{2}(\R)$, since it does not tend to zero at $\infty$. Fortunately, we \textit{can} calculate $K_t(x)$ using regular techniques of integration.
+  \begin{align*}
+    K_t(x) &= \frac{1}{2\pi}\int_{-\infty}^{\infty}e^{ikx}e^{-i\frac{\hbar k^2t}{2m}}dk\\
+           &= \sqrt{\frac{m}{i2\pi \hbar t}}e^{i\frac{mx^2}{2t\hbar}},
+  \end{align*}
+  where the square root has positive real part. This is known as the fundamental solution of the free Schrödinger equation.
+  \begin{theorem}[Fundamental Solution to the Schrödinger Equation]
+    Let $\psi_0\in L^{2}(\R)\cap L^{1}(\R)$. Then, $\psi(x,t)$ defined by
+    \begin{align*}
+      \psi(x,t) &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} \hat{\psi}_0(k)e^{i(kx - \omega(k)t)} dk
+    \end{align*}
+    is computed for all $t\neq 0$ as
+    \begin{align*}
+      \psi(x,t) &= \sqrt{\frac{m}{2\pi i t\hbar}}\int_{-\infty}^{\infty} e^{i\frac{m}{2t\hbar}(x-y)^2}\psi_0(y) dy.
+    \end{align*}
+    This expression is equal to $\frac{1}{\sqrt{2\pi}}\left(K_t\ast \psi_0\right)$, where $K_t$ is the kernel as described above.
+  \end{theorem}
+  \begin{proof}
+    Let $E\subseteq \R$, and let $\mathbb{1}_E$ denote the indicator function of $E$. Then, $K_t \mathbb{1}_{[-n,n]}$ belongs to $L^{1}(\R) \cap L^{2}(\R)$ for any $n \in \Z_{\geq 0}$. The Fourier transform thus tells us that
+    \begin{align*}
+      \mathcal{F}\left(\left(K_t \mathbb{1}_{[-n,n]}\right)\ast \psi_0\right) &= \sqrt{2\pi}\mathcal{F}\left(K_t \mathbb{1}_{[-n,n]}\right) \mathcal{F}\left(\psi_0\right).
+    \end{align*}
+    Since $\psi_0 \in L^{1}(\R)$, we can see that $K_t \mathbb{1}_{[-n,n]}\ast \psi_0$ converges pointwise to $K_t\ast \psi_0$; similarly, we can see that $\mathcal{K_t \mathbb{1}_{[-n,n]}}$ is bounded by a constant function independent of $n$ and
+    \begin{align*}
+      \mathcal{F}\left(K_t \mathbb{1}_{[-n,n]}\right) \xrightarrow{\text{p.w.}} \frac{1}{\sqrt{2\pi}}e^{-i\frac{\hbar k^2t}{2m}}.
+    \end{align*}
+    By dominated convergence, it is thus the case that
+    \begin{align*}
+      \mathcal{F}\left(\left(K_t \mathbb{1}_{-n,n}\right)\ast \psi_0\right) \rightarrow \hat{\psi}e^{-i\frac{\hbar k^2t}{2m}}.
+    \end{align*}
+    Thus, $K_t\mathbb{1}_{[-n,n]}\ast \psi_0$ must converge in $L^2(\R)$ (since the Fourier transform is unitary), and the $L^2$ limit must converge with the pointwise limit.
+  \end{proof}
+  A function tends to be the \textit{fundamental} solution to an equation if it converges to the $\delta$ function as $t\rightarrow 0$; we can see that $\mathcal{F}\left(K_t\right)$ converges to $\frac{1}{\sqrt{2\pi}}$ as $t\rightarrow 0$, meaning $K_t \rightarrow \delta$.\footnote{I'm anticipating that I will depend a lot on various tables evaluating Fourier transforms if I take quantum.}
+  \subsection{Solving by Propagation of the Wave Function: First Approach}%
+  To come soon!\footnote{I don't really like PDEs and these sections are confusing me, so I'll probably do these much later.}
+  \section{Introduction to Spectral Theory}%
+
 \end{document}
