@@ -20,7 +20,6 @@
 \usepackage{amsthm}
 \usepackage{mathtools}
 
-\usepackage[hidelinks]{hyperref} %hyperlinks
 \usepackage{gensymb} %more symbols
 \usepackage{multirow,array} %better tables
 \usepackage{multicol} %multiple columns per page
@@ -82,9 +81,18 @@
 \newtheorem*{authnote}{Author's Remark}
 \newtheorem*{profnote}{Professor's Remark}
 
+
 \usepackage[document]{ragged2e}
 \renewcommand{\newline}{\hfill\break}
 \renewcommand{\thefootnote}{\roman{footnote}}
+\usepackage{hyperref} %
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=black,
+    citecolor=black
+}
 \begin{document}
 
   \section{Classical Mechanics}%
@@ -1509,5 +1517,379 @@
   \subsection{Solving by Propagation of the Wave Function: First Approach}%
   To come soon!\footnote{I don't really like PDEs and these sections are confusing me, so I'll probably do these much later.}
   \section{Introduction to Spectral Theory}%
+  A matrix $A$ is self-adjoint if $A^{\ast} = A$, where $A^{\ast}$ denotes the conjugate transpose; by a standard result in linear algebra, there exists an orthonormal basis $\set{\mathbf{v}_j}_{j=1}^{n}$ for $\C^n$ and real numbers $\lambda_j$ such that $A\mathbf{v}_j = \lambda \mathbf{v}_j$.\newline
 
+  When we enter infinite dimensions, things get a little more complicated; there are many self-adjoint operators that have no eigenvalues or eigenvectors. For instance, if $A$ is defined on $\mathbf{H} = L^{2}([0,1])$ as
+  \begin{align*}
+    (A\psi)(x) &= x\psi(x),
+  \end{align*}
+  or $A = M_x$, then $A$ is self-adjoint. However, the only way $x \psi(x) = \lambda \psi(x)$ works is if $\lambda = 0$ or $\psi(x)$ is only supported on $\{\lambda\}$ (which has measure zero). As a result, only the zero element of $L^{2}([0,1])$ is an eigenvector for $M_x$.\newline
+
+  It is true that physicists would say that $M_x$ has the eigenvectors $\delta(x-\lambda)$, which do satisfy $x\delta(x-\lambda) = \lambda\delta(x-\lambda)$, but they aren't elements of $L^{2}([0,1])$. However, understanding these \textit{generalized} eigenvectors is a problem for the future.\newline
+
+  What is valuable, though, is that we can create an orthonormal basis of eigenvectors for \textit{compact} self-adjoint operators (the operators whose image of every bounded set has compact closure); however, in quantum mechanics, operators aren't compact, let alone bounded.\newline
+
+  For instance, the position operator $X$ acting on the indicator function $\mathbb{1}_{[n,n+1]}$ has operator norm at least $n$ (and thus, is not bounded on $L^{2}(\R)$).\newline
+
+  It can be shown\footnote{That is, it will be shown in the future.} that if $\iprod{\phi}{A\psi} = \iprod{A\phi}{\psi}$ for all $\phi,\psi \in \mathbf{H}$, then $A$ must be bounded; thus, our unbounded operators cannot be defined on $\mathbf{H}$, only a subspace.\newline
+
+  Specifically, unbounded operators in quantum mechanics are densely defined. The adjoint of the unbounded operator $A$ will be a different unbounded operator $A^{\ast}$ with its own domain (where $\iprod{A^{\ast}\phi}{\psi} = \iprod{\phi}{A\psi}$ for $\phi,\psi \in \text{Dom}(A^{\ast})$); if $A^{\ast}$ and $A$ have the same value, and the domains of $A^{\ast}$ and $A$ are identical, then we say $A$ is self-adjoint.
+  \subsection{Goals of Spectral Theory}%
+  In order to fully understand spectral theory, we need to take a step back and ponder what we expect the spectral theorem to do for us. Specifically, we want it to be able to apply functions to operators; for instance, the time-dependent Schrödinger equation is solved by setting
+  \begin{align*}
+    \psi(t) &= \psi_0e^{-\frac{it}{\hbar}\hat{H}}.
+  \end{align*}
+  However, since $\hat{H}$ is unbounded, we can't use the power series representation of $e^{x}$ to define it; if $\hat{H}$ has an orthonormal basis of eigenvectors $\set{e_k}_{k}$ with eigenvalues $\set{\lambda_k}_k$, then we can define $\hat{H}$ to be the unique bounded operator with
+  \begin{align*}
+    e_ke^{-it\frac{\hat{H}}{\hbar}} &= e_ke^{-it\frac{\lambda_k}{\hbar}}
+  \end{align*}
+  for all $k$.\newline
+
+  If $\hat{H}$ doesn't have an orthonormal basis of eigenvectors, we want the spectral theorem to provide a functional calculus that allows us to apply functions to $\hat{H}$ (and specifically, one that has similar properties to the case where $\hat{H}$ has an orthonormal basis).\newline
+
+  We would also like the spectral theorem to provide a probability distribution for measurement. In the case where $A$ has an orthonormal basis $\set{e_j}_j$ of eigenvectors with eigenvalues $\set{\lambda_j}_j$, we compute probabilities as follows. \newline
+
+  For Borel $E\subseteq \R$, we let $V_E = \overline{\text{span}\set{e_j\mid \lambda_j\in E}}$, and $P_E$ be the orthogonal projection onto $V_E$. For any unit vector $\psi$, we define
+  \begin{align*}
+    \text{prob}_{\psi}(A\in E) &= \iprod{\psi}{P_E\psi}.
+  \end{align*}
+  In particular, if the eigenvalues are distinct and $\psi = \sum_{j}c_je_j$, then the probability of observing $\lambda_j$ will be $|c_j|^2$.\newline
+
+  If $A$ does not have an orthonormal basis of eigenvectors, the spectral theorem should be able to provide a family of projection operators $P_E$ for each Borel $E\subseteq \R$. These will be known as spectral projections, with $V_E$ the spectral subspaces.\newline
+
+  In order to achieve these goals, we will create spectral projections using a projection-valued measure, and create the functional calculus via integration.\newline
+
+  Meanwhile, to understand generalized eigenvectors, we need to create the \textit{direct integral} to decompose $\mathbf{H}$ with respect to a measure $\mu$ into generalized eigenspaces for the self-adjoint operator $A$.\footnote{Think about it as the ``continuous'' analogue of the direct sum of subspaces for a vector space.} The generalized eigenspace for $\lambda$ will not be a subspace of $\mathbf{H}$ unless $\mu\left(\set{\lambda}\right) > 0$. The direct integral will allow us to formally define ``eigenvectors'' that are not elements of the Hilbert space.
+  \subsection{Spectral Theorem on the Position Operator}%
+  Consider the position operator $X$. We have established that $X$ has no true Hilbert space eigenvectors. If we think that the generalized eigenvectors for $X$ are the distributions $\delta(x-\lambda)$ for $\lambda \in \R$, we can make a guess that $V_E$ should consist of functions whose support is $E$. The projection $P_E$ can then be calculated by
+  \begin{align*}
+    P_E\psi &= \mathbb{1}_{E}\psi.
+  \end{align*}
+  In this case, the probability is
+  \begin{align*}
+    \iprod{\psi}{P_E\psi} &= \int_{E}|\psi(x)|^2dx.
+  \end{align*}
+  Recall from earlier that we claimed that the probability distribution for the position of a particle with state $\psi$ is $|\psi(x)|^2$, meaning this construction holds.\newline
+
+  Turning our attention the functional calculus, if $f(\lambda) = \lambda^m$, then we expect that $f(X)$ should be multiplication by $x^m$. Similarly, for any function $f$, $f(X)$ should be multiplication by $f(x)$; in particular, $e^{iaX}$ should be defined as multiplication by $e^{iax}$, itself a bounded operator on $L^2(\R)$.
+  \subsection{Generalization: Multiplication Operators}%
+  Consider the more general setting $\mathbf{H} = L^{2}(X,\mu)$, with $h$ a real-valued measurable function on $X$. The multiplication operator on $L^{2}(X,\mu)$ is then defined
+  \begin{align*}
+    M_h\psi = h\psi,
+  \end{align*}
+  with the spectral subspaces
+  \begin{align*}
+    V_E &= \set{\psi\mid \text{supp}(\psi) = h^{-1}(E)}.
+  \end{align*}
+  The functional calculus can then be defined by
+  \begin{align*}
+    f(A) &= M_{f\circ h}A.
+  \end{align*}
+  \begin{theorem}[The Spectral Theorem: Unitary Equivalence]
+    A self-adjoint operator $A$ on a separable Hilbert space is unitarily equivalent to a multiplication operator.
+  \end{theorem}
+  This means there is some $\sigma$-finite measure space $(X,\mu)$ and a measurable function $h$ on $X$ such that $A = UM_hU^{\ast}$ for some unitary operator $U$.
+  \subsection{Spectral Theorem on the Momentum Operator}%
+  Consider, now, $P = -i\hbar \frac{d }{dx}$ on $L^{2}(\R)$. The eigenvectors of $P$ are $e^{ikx}$ for $k\in \R$, with eigenvalues $\hbar k$. While $e^{ikx}\notin L^{2}(\R)$, the Fourier transform shows that any function in $L^{2}(\R)$ can be expanded as a superposition of functions of the form $e^{ikx}$.\newline
+
+  As a result, the Fourier coefficients of $\hat{\psi}(k)$ can be expressed in terms of a quasi-inner product of $\psi$ with $e^{ikx}$:
+  \begin{align*}
+    \hat{\psi}(k) &= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} e^{-ikx}\psi(x) dx\\
+                  &= \frac{1}{\sqrt{2\pi}}\iprod{e^{ikx}}{\psi}_{L^{2}(\R)}.
+  \end{align*}
+  Physicists say\footnote{They have a tendency to do that.} that $\frac{1}{\sqrt{2\pi}}e^{ikx}$ forms a ``continuous orthonormal basis'' for $L^{2}(\R)$. The Kronecker delta is replaced by the Dirac $\delta$ distribution.
+  \begin{align*}
+    \iprod{\frac{1}{\sqrt{2\pi}}e^{ikx}}{\frac{1}{\sqrt{2\pi}}e^{ilx}} &= \delta{k-l},
+  \end{align*}
+  where for continuous $f$, $\delta$ satisfies
+  \begin{align*}
+    \int_{-\infty}^{\infty} f(k)\delta(k-l) dk &= f(l).
+  \end{align*}
+  The quasi-inner product on $e^{ikx}$ and $e^{ilx}$ can be more rigorously defined by approximation as
+  \begin{align*}
+    \frac{1}{\sqrt{2\pi}}\int_{-A}^{A} e^{-ikx}e^{ilx} dx &= \frac{A}{\pi}\frac{\sin\left(A(k-l)\right)}{A(k-l)}\\
+                                                          &= f(k).
+  \end{align*}
+  Taking the limit as $A$ approaches infinity, it is possible to see that
+  \begin{align*}
+    \lim_{A\rightarrow\infty}\int_{-A}^{A} \psi(k)\frac{A}{\pi}\frac{\sin\left(A(k-l)\right)}{A(k-l)} dk &= \psi(l),
+  \end{align*}
+  meaning $f(k)$ behaves like the $\delta$ distribution.
+  \begin{definition}[Momentum Wave Function]
+    For any $\psi \in L^{2}(\R)$, define $\tilde{\psi}$ by
+    \begin{align*}
+      \tilde{\psi}(p) &= \frac{1}{\sqrt{\hbar}}\hat{\psi}\left(\frac{p}{\hbar}\right),
+    \end{align*}
+    meaning
+    \begin{align*}
+      \tilde{\psi}(p) &= \frac{1}{\sqrt{2\pi \hbar}}\int_{-\infty}^{\infty} e^{-ipx/\hbar}\psi(x) dx.
+    \end{align*}
+    We call $\tilde{\psi}(p)$ the momentum wave function.
+  \end{definition}
+  Since the Fourier transform is unitary, if $\psi$ is a unit vector then so too is $\hat{\psi}$ and $\tilde{\psi}$; we interpret $|\tilde{\psi}(p)|^2$ to be the probability density of the momentum just as $\left\vert \psi(x) \right\vert^2$ is the probability distribution of the position.\newline
+
+  We can then verify that for nice $\psi$, $\widetilde{P\psi}(p) = p\tilde{\psi}(p)$, meaning the map $\psi \rightarrow \tilde{\psi}$ turns the momentum operator into multiplication by $p$.\newline
+
+  The functional calculus for $P$ can be defined similar to the case for $X$. For Borel $E\subseteq \R$, define $P_E$ to be the orthogonal projection onto the space of functions $\psi$ for which $\text{supp}(\tilde{\psi}(p)) = E$. If $f$ is any bounded measurable function on $\R$, define $f(P)\psi$ to be the unique element of $L^{2}(\R)$ where
+  \begin{align*}
+    \widetilde{f(P)\psi}(p) &= f(p)\tilde{\psi}(p).
+  \end{align*}
+  \section{The Spectral Theorem for Bounded Self-Adjoint Operators}%
+  \subsection{Preliminaries}%
+  We will let $\mathbf{H}$ denote a separable complex Hilbert space. An operator $A$ on $\mathbf{H}$ is bounded if the operator norm of $A$ is finite:
+  \begin{align*}
+    \norm{A}_{\text{op}} &= \sup_{\norm{\psi} = 1}\norm{A\psi}\\
+                         &< \infty.
+  \end{align*}
+  For any operator $A$, I will be denoting the operator norm $\norm{A}_{\text{op}} $ as $ \norm{A}$. The space of bounded operators on $\mathbf{H}$ forms a Banach algebra under the operator norm with multiplication; additionally, $\norm{AB}_{\text{op}}\leq \norm{A}_{\text{op}}\norm{B}_{\text{op}}$. The Banach algebra of bounded operators on $\mathbf{H}$ with respect to the operator norm is denoted $\mathcal{B}(\mathbf{H})$.\newline
+
+  For any $A\in \mathcal{B}(\mathbf{H})$, there is a unique operator $A^{\ast}\in \mathcal{B}(\mathbf{H})$ such that
+  \begin{align*}
+    \iprod{\phi}{A\psi} &= \iprod{A^{\ast}\phi}{\psi}
+  \end{align*}
+  for all $\phi,\psi \in \mathbf{H}$. An operator $A\in \mathcal{B}(\mathbf{H})$ is self-adjoint if $A^{\ast} = A$, and $A$ is nonnegative if $\iprod{\psi}{A\psi} \geq 0$ for all $\psi \in \mathbf{H}$.
+  \begin{proposition}[The $C^{\ast}$ Property]
+    For all $A\in \mathcal{B}(\mathbf{H})$, we have
+    \begin{align*}
+      \norm{A^{\ast}} &= \norm{A}
+    \end{align*}
+    and
+    \begin{align*}
+      \norm{A^{\ast}A} &= \norm{A}^2.
+    \end{align*}
+    If $A$ is self-adjoint, we have $\norm{A^2} = \norm{A}^2$.
+  \end{proposition}
+  \begin{proof}
+    For any vector $\phi \in \mathbf{H}$, $\norm{\phi} = \sup_{\norm{\chi} = 1}|\iprod{\chi}{\phi}|$ (by the Cauchy-Schwarz inequality and taking $\chi$ a multiple of $\phi$). Thus,
+    \begin{align*}
+      \norm{A} &= \sup_{\norm{\phi} = \norm{\psi} = 1} |\iprod{\phi}{A\psi}|.
+    \end{align*}
+    Thus, we get
+    \begin{align*}
+      \norm{A^{\ast}} &= \sup_{\norm{\phi} = \norm{\psi} = 1} |\iprod{\phi}{A^{\ast}\psi}|\\
+                      &= \sup_{\norm{\phi} = \norm{\psi} = 1} |\iprod{A\phi}{\psi}|\\
+                      &=\sup_{\norm{\phi} = \norm{\psi} = 1} |\iprod{\psi}{A\phi}|\\
+                      &= \norm{A}.
+    \end{align*}
+    Since $\norm{A^{\ast}A} \leq \norm{A}^2$ (by submultiplication of the norm), we have
+    \begin{align*}
+      \norm{A^{\ast}A} &= \sup_{\norm{\phi} = \norm{\psi} = 1}|\iprod{\phi}{A^{\ast}A\psi}|\\
+                       &= \sup_{\norm{\phi} = \norm{\psi} = 1} |\iprod{A\phi}{A\psi}|\\
+                       &\geq \sup_{\norm{\psi} = 1}|\iprod{A\psi}{A\psi}|\\
+                       &= \norm{A}^2.
+    \end{align*}
+  \end{proof}
+  \begin{proposition}[Orthogonal Complements and Adjoints]
+  For all $A\in \mathcal{B}(\mathbf{H})$, we have
+  \begin{align*}
+    \left(\text{Range}(A)\right)^{\perp} &= \ker(A^{\ast}).
+  \end{align*}
+  \end{proposition}
+  \begin{proof}
+    Let $\psi \in \left(\text{Range}(A)\right)^{\perp}$. Then, for all $\phi \in \mathbf{H}$, we have
+    \begin{align*}
+      0 &= \iprod{\psi}{A\phi}\\
+        &= \iprod{A^{\ast}\psi}{\phi},
+    \end{align*}
+    meaning $A^{\ast}\psi = 0$, or $\psi \in \ker(A^{\ast})$.\newline
+
+    Let $\psi \in \ker(A^{\ast})$. Then, for all $\phi \in \mathbf{H}$, the above relation holds (reading from bottom right upward), implying $\psi$ is orthogonal to every element of the form $A\phi$, so $\psi \in \left(\text{Range}(A)\right)^{\perp}$.
+  \end{proof}
+  \begin{definition}[Spectrum and Resolvent]
+    For $A\in \mathcal{B}(\mathbf{H})$, the resolvent set of $A$, denoted $\rho(A)$, is the set of all $\lambda \in \C$ such that $(A-\lambda I)$ has a bounded inverse.\newline
+
+    The spectrum of $A$, denoted $\sigma(A)$, is equal to $\C\setminus \rho(A)$.\newline
+
+    For $\lambda \in \rho(A)$, the operator $(A - \lambda I)^{-1}$ is called the resolvent of $A$ at $\lambda$.
+  \end{definition}
+  By ``bounded inverse,'' it is meant that there exists a bounded operator $B$ such that $\left(A - \lambda I\right) B = B \left(A - \lambda I\right) = I$. If $A$ is bounded and $A - \lambda I$ is one-to-one and maps $\mathbf{H}$ to $\mathbf{H}$, then the closed graph theorem states that the inverse map must be bounded. With this in mind, we can also describe the resolvent set as the set of $\lambda \in \C$ such that $A - \lambda I$ is bijective.
+  \begin{proposition}[Properties of the Spectrum and Resolvent]
+    Let $A\in \mathcal{B}\left(\mathbf{H}\right)$. Then,
+    \begin{itemize}
+      \item $\sigma(A)\subseteq \C$ is closed, bounded, and non-empty.
+      \item If $|\lambda| \geq \norm{A}$, then $\lambda \in \rho(A)$.
+    \end{itemize}
+  \end{proposition}
+  \begin{lemma}[Property of a Contraction Operator]
+    Let $X\in \mathcal{B}\left(\mathbf{H}\right)$ with $\norm{X} < 1$. Then, $I-X$ is invertible and its inverse is given by the series
+    \begin{align*}
+      \left(I-X\right)^{-1} &= \sum_{n=0}^{\infty}X^n.
+    \end{align*}
+  \end{lemma}
+  \begin{proof}[Proof of Lemma]
+    Since the operator norm is submultiplicative, $\norm{X^m}\leq \norm{X}^{m}$. The geometric series is, therefore, absolutely convergent, which implies convergence in $\mathcal{B}\left(\mathbf{H}\right)$.\newline
+
+    Multiplying by $(I-X)$, everything on the right cancels except for $I$; therefore, the series is the inverse of $(I-X)$.
+  \end{proof}
+  \begin{proof}[Proof of Properties of Spectrum and Resolvent]
+    Let $\lambda \in \C\setminus \{0\}$. Consider the operator
+    \begin{align*}
+      A - \lambda I &= -\lambda \left(I - \frac{A}{\lambda}\right).
+    \end{align*}
+    If $|\lambda| > \norm{A}$, then $\norm{A / \lambda} < 1$, meaning $I - A/\lambda$ is invertible, so $A - \lambda I$ is invertible, meaning $\lambda \in \rho(A)$.\newline
+
+    Let $\lambda_0\in \rho(A)$. For any other value $\lambda$, we have
+    \begin{align*}
+      A - \lambda I &= A - \lambda_0 I - (\lambda - \lambda_0)I\\
+                    &= (A-\lambda_0 I)\left(A - (\lambda - \lambda_0)(A-\lambda_0 I)^{-1}\right).
+    \end{align*}
+    If
+    \begin{align*}
+      |\lambda - \lambda_0| < \frac{1}{\norm{(A - \lambda_0 I)}^{-1}},
+    \end{align*}
+    both factors on the right will be invertible, so $A - \lambda_0$ is also invertible, meaning $\rho(A)$ is open and $\sigma(A)$ is closed.\newline
+
+    To show $\sigma(A)$ is nonempty, we note that
+    \begin{align*}
+      \left(A - \lambda I\right)^{-1} &= \left(\sum_{m=0}^{\infty}\left(\lambda - \lambda_0\right)^m\left(A - \lambda_0 I\right)^{-m}\right)\left(A - \lambda_0 I\right)^{-1}.
+    \end{align*}
+    Near any point $\lambda_0$ in the resolvent set, the resolvent $(A-\lambda I)^{-1}$ can be computed by the series in powers of $\lambda - \lambda_0$, and the coefficients of the series are elements of $\mathcal{B}\left(\mathbf{H}\right)$. For any $\psi,\phi \in \mathbf{H}$, the map
+    \begin{align*}
+      \lambda \mapsto \iprod{\phi}{(A-\lambda I)^{1}\psi}
+    \end{align*}
+    will be given by a locally convergent power series with coefficients in $\C$, meaning the function is holomorphic on $\rho(A)$. We can also see that $\norm{\left(A-\lambda I\right)^{-1}}$ tends to zero as $|\lambda|$ tends to infinity.\newline
+
+    If $\sigma(A)$ were empty, the function would be holomorphic on all of $\C$ and tend to zero at infinity, meaning it would be identical to $0$ for all $\phi,\psi$, which means $\left(A-\lambda I\right)^{-1}$ is the zero operator, which cannot happen.
+  \end{proof}
+  If $A\psi = \lambda \psi$ for some $\lambda \in \C$ and nonzero $\psi \in \mathbf{H}$, then $(A - \lambda I)$ has nonzero kernel, meaning $\lambda \in \sigma(A)$, so any eigenvalue of $A$ is contained in the spectrum of $A$.\newline
+
+  In the infinite-dimensional case, though, points in the spectrum may not be eigenvalues; but, for a bounded self-adjoint operator, the spectrum of $A$ can be defined similar to the finite-dimensional case.
+  \begin{proposition}[Properties of the Spectrum of a Bounded Self-Adjoint Operator]
+  If $A\in \mathcal{B}\left(\mathbf{H}\right)$ is self-adjoint, then the following are true.
+  \begin{itemize}
+    \item $\sigma(A) \subseteq \R$.
+    \item A number $\lambda \in \R$ belongs to the spectrum of $A$ if and only if there exists a sequence $\psi_n$ of nonzero vectors in $\mathbf{H}$ such that
+      \begin{align*}
+        \lim_{n\rightarrow\infty}\frac{\norm{A\psi_n - \lambda \psi_n}}{\norm{\psi_n}} = 0.
+      \end{align*}
+  \end{itemize}
+  \end{proposition}
+  Essentially, the spectrum contains all numbers where the error between $A\psi$ and $\lambda \psi$ is small relative to $\psi$.
+  \begin{lemma}[Lower bound for $A - \lambda I$]
+    Let $A\in \mathcal{B}\left(\mathbf{H}\right)$ be self-adjoint. Then, for all $\lambda = a + bi\in \C$, we have
+    \begin{align*}
+      \iprod{(A-\lambda I)\psi}{(A -\lambda I)\psi} \geq b^2 \iprod{\psi}{\psi}.
+    \end{align*}
+  \end{lemma}
+  \begin{proof}[Proof of Lemma]
+    We compute
+    \begin{align*}
+      \iprod{\left(A - \lambda I\right)\psi}{\left(A - \lambda\right)\psi} &= \iprod{(A - aI)\psi}{(A - aI)\psi} + bi\iprod{\psi}{(A - aI)\psi} \\
+                                                                           & - bi\iprod{(A - aI)\psi}{\psi} + b^2\iprod{\psi}{\psi},
+                                                                           \intertext{and since $A$ is self-adjoint,}
+                                                                           &= \iprod{\left(A - aI\right)\psi}{\left(A - aI\right)\psi} + b^2\iprod{\psi}{\psi}.
+    \end{align*}
+  \end{proof}
+  \begin{proof}[Proof of Properties of Spectrum of a Bounded Self-Adjoint Operator]
+    To show the first item, we need to show that for any $\lambda \in \C$ with $\lambda = a + bi$, $b \neq 0$, $\lambda \in \rho(A)$.\newline
+
+    To start, since $b\neq 0$, we know from the previous lemma that $A - \lambda I$ is injective.\footnote{$\ker(A - \lambda I) = \{0\}$ since $\norm{(A-\lambda I)\psi}^2 \geq b^2\norm{\psi}^2 \neq 0$ for all $\psi \neq 0$.} Since $\left(\text{Range}(A - \lambda I)\right)^{\perp} = \ker(A - \bar{\lambda}I)$, and $\text{Im}(\bar{\lambda}) \neq 0$, $A - \bar{\lambda} I$ is injective, meaning $\overline{\text{Range}(A - \lambda I)} = \mathbf{H}$.\newline
+
+    To show that $\overline{\text{Range}(A - \lambda I)} = \mathbf{H}$, let $\phi \in \mathbf{H}$, and choose a sequence $\phi_n = (A - \lambda I)\psi_n$ in $\text{Range}(A - \lambda I)$ with $\phi_n \rightarrow \phi$. Applying the lemma, replacing $\psi$ with $\psi_n - \psi_m$, we see that $(\psi_n)_n$ is Cauchy, so $\psi_n \rightarrow \psi$ for some $\psi \in \mathbf{H}$. Additionally, since $A$ is bounded,
+    \begin{align*}
+      (A - \lambda I)\psi &= \lim_{n\rightarrow\infty}(A - \lambda I)\psi_n\\
+                          &= \lim_{n\rightarrow\infty}\phi_n\\
+                          &= \phi.
+    \end{align*}
+    Thus, $A - \lambda I$ is surjective, so $(A - \lambda I)^{-1}$ is bounded.\newline
+
+    To show the second item in the forward direction, let $\lambda \in \sigma(A)$ and $\psi_n$ be a sequence such that
+    \begin{align*}
+      \lim_{n\rightarrow\infty}\frac{\norm{A\psi_n - \lambda \psi_n}}{\norm{\psi_n}} = 0.
+    \end{align*}
+    Suppose toward contradiction that $A - \lambda I$ has an inverse. Let $\phi_n = (A - \lambda I)\psi_n$, meaning $\psi_n = (A - \lambda I)^{-1}\phi_n$; thus, we see
+    \begin{align*}
+      \lim_{n\rightarrow\infty}\frac{\norm{\phi_n}}{\norm{(A - \lambda I)^{-1}\phi_n}} &= 0,
+    \end{align*}
+    meaning $A - \lambda I$ is unbounded.\newline
+
+    To show the second item in the reverse direction, if for some $\lambda \in \R$, no such sequence exists, then for some $\varepsilon > 0$,
+    \begin{align*}
+      \norm{(A - \lambda I)\psi} \geq \varepsilon \norm{\psi},
+    \end{align*}
+    meaning $A - \lambda I$ is injective, so the range of $A$ is dense in $\mathbf{H}$; by the argument made in the first point, this means $A - \lambda I$ is also bijective, so $\lambda \in \rho(A)$.
+  \end{proof}
+  \begin{example}[Spectrum of $M_x$]
+    Let $\mathbf{H} = L^{2}\left([0,1]\right)$, and let $A = M_x$. Then, $A$ is a bounded, self-adjoint operator whose spectrum is $\sigma(A) = [0,1]$.
+  \end{example}
+  \begin{proof}
+    It is readily apparent that $\norm{A\psi} \leq \norm{\psi}$ (since $x\leq 1$ for all $x\in [0,1]$), and $\iprod{\phi}{A\psi} = \norm{A\phi}{\psi}$ for all $\phi,\psi \in \mathbf{H}$, meaning $A$ is bounded and self-adjoint.\newline
+
+    Let $\lambda \in (0,1)$, consider $\psi_n = \mathbb{1}_{\lambda,\lambda + 1/n}$, where $\norm{\psi_n}^1 = \frac{1}{n}$. Additionally, since $|x - \lambda| \leq \frac{1}{n}$ on $[\lambda,\lambda + 1/n]$, we have
+    \begin{align*}
+      \norm{(A - \lambda I)\psi_n}^2 &\leq \frac{1}{n^3}.
+    \end{align*}
+    Thus, $\lambda \in \sigma(A)$; since this is true for all $\lambda \in (0,1)$ and $\sigma(A)$ is closed, $[0,1]\subseteq \sigma(A)$.\newline
+
+    Meanwhile, if $\lambda \notin [0,1]$, the function $\frac{1}{x - \lambda}$ is bounded on $[0,1]$, meaning $A - \lambda I$ has a bounded inverse consisting of multiplication by $\frac{1}{x - \lambda}$. Therefore,$\sigma(A) = [0,1]$.
+  \end{proof}
+  \subsection{Spectral Subspaces}%
+  Given a bounded self-adjoint operator $A$, we hope to associate each Borel $E\subseteq \sigma(A)$ with a closed subspace $V_E\subseteq \mathbf{H}$, where $V_E$  is effectively the closed span of the generalized eigenvectors of $A$ with eigenvalues in $E$. The subspaces should have the following properties:
+  \begin{enumerate}[(1)]
+    \item $V_{\sigma(A)} = \mathbf{H}$ and $V_{\emptyset} = \{0\}$.
+    \item $E\cap F = \emptyset$ implies $V_E \perp V_F$.
+    \item For any $E,F$, $V_{E\cap F} = V_E \cap V_F$.
+    \item If $E_1,E_2,\dots$ are disjoint, $E = \bigsqcup_{j}E_j$, then
+      \begin{align*}
+        V_E = \bigoplus_{j} V_{E_j}.
+      \end{align*}
+    \item For any $E$, $V_E$ is invariant under $A$.
+    \item If $E\subseteq [\lambda_0 - \varepsilon, \lambda_0 + \varepsilon]$, then for $\psi \in V_E$,
+      \begin{align*}
+        \norm{\left(A - \lambda_0 I\right)\psi} \leq \varepsilon \norm{\psi}.
+      \end{align*}
+  \end{enumerate}
+  Combined, these properties essentially allow for an infinite-dimensional version of the finite-dimensional properties that the spectrum holds for self-adjoint matrices.
+  \subsection{Projection-Valued Measure}%
+  In order to describe closed subspaces of $\mathbf{H}$, we would like to use the projection operator to do so. Given a closed subspace $V\subseteq \mathbf{H}$, there exists a unique bounded, self-adjoint, idempotent operator $P$ that equals $I$ on $V$ and equals $0$ on $V^{\perp}$.\newline
+
+  We can express the first four properties of spectral subspaces by defining measure that has properties similar to that of a measure.
+  \begin{definition}[Projection-Valued Measure]
+    Let $X$ be a set, with $\Omega$ a $\sigma$-algebra on $X$.\footnote{For more information on $\sigma$-algebras, measures, etc., consult my Real Analysis II notes.} A map $\mu: \Omega \rightarrow \mathcal{B}\left(\mathbf{H}\right)$ is called a projection-valued measure if the following hold:
+        \begin{enumerate}[(1)]
+          \item For each $E\in \Omega$, $\mu(E)$ is an orthogonal projection.
+          \item $\mu(\emptyset) = 0$ and $\mu(X) = I$.
+          \item If $E_1,E_2,\dots$ are disjoint, then for all $v\in \mathbf{H}$, we have
+            \begin{align*}
+              \mu\left(\bigsqcup_{j=1}^{\infty}E_j\right)v &= \sum_{j=1}^{\infty}\mu(E_j)v.
+            \end{align*}
+          \item For all $E_1,E_2\in \Omega$, we have $\mu(E_1\cap E_2) = \mu(E_1)\mu(E_2)$.
+        \end{enumerate}
+  \end{definition}
+  If $E_1$ and $E_2$ are disjoint, then properties (2) and (4) tell us that $\mu(E_1)\mu(E_2) = 0$, from which it follows that the range of $\mu(E_1)$ and $\mu(E_2)$ are perpendicular; we can verify that $\mu(E_1)\mu(E_2)$ is the projection onto the intersection of the ranges of $\mu(E_1)$ and $\mu(E_2)$. For each $E\in \Omega$, we define a closed subspace $V_E = \text{Range}(\mu(E))$; the collection of $V_E$ then satisfy the first four properties we expect for spectral subspaces.\newline
+
+  We will associate a projection-valued measure $\mu^{A}$ for each bounded self-adjoint operator $A$; then, $\mu^{A}(E)$ is a projection onto the spectral subspace corresponding to $E$. Then, we will introduce operator-valued integration with respect to a projection-valued measure $\mu^{A}$ for $A$, which will be known as a functional calculus for $A$.\newline
+
+  Observe that for any projection-valued $\mu$ and $\psi\in \mathbf{H}$, we can define a positive, real-valued $\mu_{\psi}$ by
+  \begin{align*}
+    \mu_{\psi}(E) &= \iprod{\psi}{\mu(E)\psi}
+  \end{align*}
+  for $E\in \Omega$. This allows us to link between projection-valued measure and integration with respect to an ordinary measure.
+  \begin{definition}[Operator-Valued Integration]
+    Let $\Omega$ be a $\sigma$-algebra in $X$ and $\mu: \Omega \rightarrow \mathcal{B}\left(\mathbf{H}\right)$ a projection-valued measure. Then, there exists a unique linear map, $f \mapsto \int_{\Omega}fd\mu$ from the space of bounded, measurable, complex-valued functions on $\Omega$ into $\mathcal{B}(\mathbf{H})$, where
+    \begin{align*}
+      \iprod{\psi}{\left(\int_{X}f\:d\mu\right)\psi} &= \int_{X}f \:d\mu_{\psi}
+    \end{align*}
+    for all $f$ and all $\psi \in \mathbf{H}$, where $\mu_{\psi}$ is given as above. The integral has the following properties:
+    \begin{enumerate}[(1)]
+      \item For all $E\in \Omega$, we have
+        \begin{align*}
+          \int_{X}^{} \mathbb{1}_{E} \:d\mu &= \mu(E).
+        \end{align*}
+        In particular, the integral of $\mathbb{1}_{X}$ is $I$.
+      \item For all $f$, we have
+        \begin{align*}
+          \norm{\int_{X}f\:d\mu} \leq \sup_{\lambda \in X}|f(\lambda)|.
+        \end{align*}
+      \item For all $f$ and $g$, we have
+        \begin{align*}
+          \int_{X}fg\:d\mu &= \left(\int_{X}f\:d\mu\right) \left(\int_{X}^{} g \:d\mu\right).
+        \end{align*}
+      \item For all $f$, we have
+        \begin{align*}
+          \int_{X}^{} \bar{f} \:d\mu &= \left(\int_{X}^{} f \:d\mu\right)^{\ast}.
+        \end{align*}
+        In particular, if $f$ is real-valued, then $\int_{X}f\:d\mu$ is self-adjoint.
+    \end{enumerate}
+  \end{definition}
 \end{document}
