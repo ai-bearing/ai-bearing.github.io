@@ -312,9 +312,83 @@
     \end{align*}
   \end{proof}
   \section{Prelude: Sesquilinear and Quadratic Forms on Hilbert Spaces}%
-  It will be useful to understand the general theory of sesquilinear forms as we enter the world of spectral theory.\newline
+  It will be useful to understand the general theory of sesquilinear forms as we go deeper into theories of operators on Hilbert spaces. To do this, I will draw information from the book \textit{Introduction to Hilbert Spaces with Applications} by Debnath and Mikusinski, as well as a result or two from \textit{Quantum Theory for Mathematicians}.
 
-  To be continued...
+  \begin{definition}[Sesquilinear Form]
+    Let $E$ be a $\C$-vector space. A sesquilinear form\footnote{Debnath and Mikusinski call this a bilinear functional.} is a map $\varphi: E\times E \rightarrow \C$ with the following properties:
+    \begin{enumerate}[(a)]
+      \item $\displaystyle \varphi(\alpha x_1 + \beta x_1,y) = \alpha \varphi(x_1,y) + \beta\varphi(x_2,y)$;
+      \item $\displaystyle \varphi(x,\alpha y_1 + \beta y_2) = \bar{\alpha}\varphi(x,y_1) + \bar{\beta}\varphi(x,y_2)$;
+    \end{enumerate}
+    for any $\alpha,\beta \in \C$ and $x,x_1,x_2,y,y_1,y_2 \in E$.
+  \end{definition}
+  A familiar sesquilinear form is the inner product, but we want to develop properties and ideas that are generalized over all sesquilinear forms rather than simply sticking to the inner product.
+  \begin{definition}[Classes of Sesquilinear Forms]
+    Let $\varphi$ be a sesquilinear form on $E$.
+    \begin{enumerate}[(a)]
+      \item We say $\varphi$ is symmetric if $\varphi(x,y) = \overline{\varphi(y,x)}$ for all $x,y\in E$.\footnote{I'd personally prefer to call this ``conjugate symmetry.''}
+      \item We say $\varphi$ is positive if $\varphi(x,x) \geq 0$ for every $x\in E$.
+      \item We say $\varphi$ is \textit{strictly} positive if $\varphi(x,x) = 0 $ if and only if $x = 0$.
+      \item If $E$ has a normed space, then $\varphi$ is bounded if $|\varphi(x,y)| \leq K\norm{x}\norm{y}$ for some $K > 0$ and all $x,y\in E$.\footnote{The Cauchy-Schwarz inequality over Hilbert spaces with the standard inner product is a particular case of this.} The operator norm is
+        \begin{align*}
+          \norm{\varphi} &= \sup_{\norm{x},\norm{y} = 1}\left\vert \varphi(x,y) \right\vert.
+        \end{align*}
+    \end{enumerate}
+  \end{definition}
+  Note that, by the definition of the operator norm, $\left\vert \varphi(x,y) \right\vert\leq \norm{\varphi}\norm{x}\norm{y}$ for all $x,y\in E$.
+  \begin{definition}[Quadratic Form]
+    For a particular sesquilinear form $\varphi$ on $E$, the function $\Phi: E\rightarrow \C$ defined by $\Phi(x) = \varphi(x,x)$ is known as the quadratic form for $\varphi$.\newline
+
+    If $E$ has a norm, then $\Phi(x)$ is bounded if $\left\vert \Phi(x) \right\vert\leq K\norm{x}^2$ for all $x\in E$ and some $K > 0$. The norm of $\Phi$ is defined by
+    \begin{align*}
+      \norm{\Phi} &= \sup_{\norm{x} = 1}\left\vert \Phi(x) \right\vert.
+    \end{align*}
+  \end{definition}
+  For a bounded quadratic form $\Phi$ on a normed space, $\left\vert \Phi(x) \right\vert\leq \norm{\phi}\norm{x}^2$.\newline
+
+  The standard inner product in an inner product space is a special case where $\norm{x}^2 = \iprod{x}{x}$.
+  \begin{theorem}[Polarization Identity]
+    For any $\varphi$ a sesquilinear form on $E$ (and associated quadratic form $\Phi$),
+    \begin{align*}
+      4\varphi(x,y) &= \Phi(x+y) - \Phi(x-y) + i\Phi(x + iy) - i\Phi(x - iy)
+    \end{align*}
+    for all $x,y\in E$.
+  \end{theorem}
+  \begin{proof}[Proof of Polarization Identity]
+    For any $\alpha,\beta in \C$, we have
+    \begin{align*}
+      \Phi(\alpha x + \beta y) &= \left\vert \alpha \right\vert^2\Phi(x) + \alpha\bar{\beta}\varphi(x,y) + \bar{\alpha}\beta \varphi(y,x) + \left\vert \beta \right\vert^2\Phi(y).
+    \end{align*}
+    Keeping $\alpha = 1$, the cases of $\beta = 1,-1,i,-i$ yield
+    \begin{align*}
+      \Phi(x+y) &= \Phi(x) + \varphi(x,y) + \varphi(y,x) + \Phi(y);
+      -\Phi(x-y) &= -\Phi(x) + \varphi(x,y) + \varphi(y,x) - \Phi(y);
+      i\Phi(x+iy) &= i\Phi(x) + \varphi(x,y) - \varphi(y,x) + i\Phi(y);
+      -i\Phi(x-iy) &= -i\Phi(x) + \varphi(x,y) - \varphi(y,x) - i\Phi(y).
+    \end{align*}
+    Adding all these together, we get the polarization identity.
+  \end{proof}
+  \begin{proposition}[Passing Quadratic Forms into Operators]
+    Let $Q$ be a quadratic form over a Hilbert space $\mathbf{H}$. Then, there is a unique $A\in \mathcal{B}\left(\mathbf{H}\right)$\footnote{The set of all bounded linear operators on $\mathbf{H}$ into itself.} such that $Q(\psi) = \iprod{\psi}{A\psi}$ for all $\psi \in \mathbf{H}$.\newline
+
+    If $Q(\psi) \in \R$ for all $\psi \in \mathbf{H}$, then $A$ is self-adjoint.
+  \end{proposition}
+  \begin{proof}
+    Since $Q$ is bounded, so too is the sesquilinear form from which it originates (which we will call $L$). Therefore, there exists a constant $C$ such that $\left\vert L(\phi,\psi) \right\vert\leq C\norm{\phi}\norm{\psi}$, and for any $\phi \in \mathbf{H}$, the linear functional $\psi \mapsto L(\phi,\psi)$ is bounded.\newline
+
+    By the Riesz representation theorem, there exists a unique $\chi \in \mathbf{H}$ with $\norm{\chi} \leq C\norm{\phi}$, and $L(\phi,\psi) = \iprod{\chi}{\psi}$.\newline
+
+    Define $B: \mathbf{H}\rightarrow \mathbf{H}$ by $B\phi = \chi$ --- thus meaning $L(\phi,\psi) = \iprod{B\phi}{\psi}$. We can see that $B$ is bounded linear. Setting $A = B^{\ast}$, we find the desired operator; we can see that $A$ is unique since, if $\iprod{\phi}{A\psi} = 0$ for all $\phi,\psi \in \mathbf{H}$, then $A$ is the zero operator.\newline
+
+    If $Q(\psi)$ is real for all $\psi \in \mathbf{H}$, then
+    \begin{align*}
+      \iprod{\phi}{A\psi} &= L(\phi,\psi)\\
+                          &= \overline{L(\psi,\phi)}\\
+                          &= \overline{\iprod{\psi}{A\phi}}\\
+                          &= \iprod{A\phi}{\psi},
+    \end{align*}
+    meaning $A$ is self-adjoint.
+  \end{proof}
   \section{Classical Mechanics}%
   \subsection{Motion in $\R^{1}$}%
   Let $x(t)$ denote position. Then, $v(t) = \frac{dx}{dt} = \dot{x}(t)$ is velocity (where the $\cdot$ denotes derivative with respect to time), $a(t) = \dot{v}(t) = \ddot{x}(t)$, etc.\newline
@@ -1918,7 +1992,7 @@
     \begin{align*}
       Q_f(\psi) &= \int_{X}^{}f \:d\mu_{\psi},
     \end{align*}
-    where $\mu_{\psi}(E) = \iprod{\psi}{\mu(E)\psi}$. If $f$ is an indicator function, then $Q_f(\psi)$ is a bounded quadratic form --- we can then show that
+    where $\mu_{\psi}(E) = \iprod{\psi}{\mu(E)\psi}$. If $f$ is an indicator function, then $Q_f(\psi)$ is a bounded quadratic form --- as a result, by the boundedness of the form,
     \begin{align*}
       |Q_f(\psi)| \leq \left(\sup_{\lambda \in X}|f(\lambda)|\right)\norm{\psi}^2.
     \end{align*}
