@@ -1671,7 +1671,7 @@
   \begin{align*}
     f(A) &= M_{f\circ h}A.
   \end{align*}
-  \begin{theorem}[The Spectral Theorem: Unitary Equivalence]
+  \begin{theorem}[Spectral Theorem, Multiplication Operator Form]
     A self-adjoint operator $A$ on a separable Hilbert space is unitarily equivalent to a multiplication operator.
   \end{theorem}
   This means there is some $\sigma$-finite measure space $(X,\mu)$ and a measurable function $h$ on $X$ such that $A = UM_hU^{\ast}$ for some unitary operator $U$.
@@ -2004,4 +2004,202 @@
 
     Finally, for $f$ real valued, $Q_f(\psi)$ is real for all $\psi \in \mathbf{H}$, meaning $A_f$ is self-adjoint. This yields property (4) via linearity.
   \end{proof}
+  \subsection{The Spectral Theorem for Bounded Self-Adjoint Operators, Statement 1}%
+  \begin{theorem}[Spectral Theorem, Projection Integral Form]
+    Let $A\in \mathcal{B}\left(\mathbf{H}\right)$ be self-adjoint. Then, there exists a unique projection-valued measure $\mu^{A}$, defined on the Borel $\sigma$-algebra of $\sigma(A)$, with values of projections on $\mathbf{H}$, such that
+    \begin{align*}
+      \int_{\sigma(A)}^{} \lambda\:d\mu^{A}(\lambda) &= A.
+    \end{align*}
+    Since $\sigma(A)$ is bounded, the function $f(\lambda) := \lambda$ is bounded.\footnote{The integral is effectively integrating $\mu^{A}\left(\set{\lambda}\right)$ with respect to the spectrum.}
+  \end{theorem}
+  \begin{definition}[Functional Calculus]
+    If $A\in \mathcal{B}\left(\mathbf{H}\right)$ is self-adjoint, and $f: \sigma(A)\rightarrow \C$ is an (essentially) bounded measurable function, then
+    \begin{align*}
+      f(A) &= \int_{\sigma(A)}^{} f(\lambda)\:d\mu^{A}(\lambda),
+    \end{align*}
+    where $\mu^{A}$ is the aforementioned unique projection-valued measure.
+  \end{definition}
+  To extend the projection-valued measure from $\sigma(A)$ to $\R$, we assign measure $0$ to $\R\setminus \sigma(A)$.\newline
+
+  Since the integral with respect to $\mu^{A}$ is multiplicative, $f(\lambda) = \lambda^{m}$ yields $f(A) = A^{m}$, and since
+  \begin{align*}
+    e^{a\lambda} &= \sum_{m=0}^{\infty}\frac{(a\lambda)^{m}}{m!}
+  \end{align*}
+  converges on the compact set $\sigma(A)$, the operator $e^{aA}$ computed with the functional calculus on the function $f(\lambda) = e^{a\lambda}$ is equal to its power series.
+  \begin{definition}[Spectral Subspace]
+    For $A\in \mathcal{B}\left(\mathbf{H}\right)$, let $\mu^{A}$ be the projection-valued measure extended to $\R$ by assigning $\mu^{A}\left(\R\setminus \sigma(A)\right) = 0$. Then, for Borel $E\subseteq \R$, define the spectral subspace $V_E$ of $\mathbf{H}$ by
+    \begin{align*}
+      V_E &= \text{Range}\left(\mu^{A}\left(E\right)\right).
+    \end{align*}
+  \end{definition}
+  \begin{proposition}[Properties of Spectral Subspaces]
+    If $A\in \mathcal{B}\left(\mathbf{H}\right)$ is self-adjoint, the spectral subspaces associated with $A$ have the following properties:
+    \begin{enumerate}[(1)]
+      \item Each spectral subspace $V_E$ is invariant under $A$.
+      \item If $E\subseteq [\lambda_0 - \varepsilon, \lambda_0 + \varepsilon]$, then for all $\psi \in V_E$,
+        \begin{align*}
+          \norm{\left(A-\lambda_0I\right)\psi}\leq \varepsilon \norm{\psi}
+        \end{align*}
+      \item $\displaystyle \sigma\left(A\rvert_{V_E}\right)\subseteq \overline{E}$.
+      \item If $\lambda_0 \in \sigma(A)$, then for every neighborhood $U$ of $\lambda_0$, $V_U \neq \{0\}$ (or $\mu(U)\neq 0$).
+    \end{enumerate}
+  \end{proposition}
+  \begin{proof}
+    To show (1), we can see that for any bounded measurable functions $f$ and $g$ on $\sigma(A)$, $f(A)$ and $g(A)$ commute; in particular, $A$ is the integral of $f(\lambda) = \lambda$, which commutes with $\mu^{A}(E)$, which is the integral of the indicator function of $E$. As a result, for any $\mu^{A}(E)\phi \in \text{Range}\left(\mu^{A}(E)\right)$, we have
+    \begin{align*}
+      A\mu^{A}(E)\phi &= \mu^{A}(E)A\psi,
+    \end{align*}
+    which is in $\mu^{A}(E)$. Thus, $\text{Range}\left(\mu^{A}(E)\right)$ is invariant under the spectral subspace.\newline
+
+    To show (2), let $\psi \in V_E$ with $E \subseteq [\lambda_0 - \varepsilon,\lambda_0 + \varepsilon]$. Then, $\psi\in \text{Range}\left(\mu^{A}(E)\right)$, meaning
+    \begin{align*}
+      (A - \lambda_0 I)\psi &= (A - \lambda_0 I)\mu^{A}(E)\psi.
+    \end{align*}
+    However, since $\mu^{A}(E) = \mathbb{1}_{E}(A)$, and $A - \lambda_0 I = f(A)$ for $f(\lambda) = \lambda - \lambda_0$, the integral's multiplicativity gives us
+    \begin{align*}
+      (A - \lambda_0 I)\psi &= \left(f\mathbb{1}_{E}\right)(A)\psi.
+    \end{align*}
+    We can see that $\left\vert f(\lambda) - \mathbb{1}_{E}(\lambda) \right\vert \leq \varepsilon$, meaning $\norm{(A - \lambda_0 I)\psi} \leq \varepsilon \norm{\psi}$.\newline
+
+    To show (3), let $\lambda_0 \notin \overline{E}$. Then, $g(\lambda) = \mathbb{1}_{E}(\lambda)\frac{1}{\lambda - \lambda_0}$ is bounded, meaning $g(A)$ is a bounded operator with
+    \begin{align*}
+      g(A)\left(A - \lambda_0 I\right) &= (A - \lambda_0 I)g(A)\\
+                                       &= \mathbb{1}_{E}(A).
+    \end{align*}
+    Therefore, the restriction to $V_E$ of $g(A)$ is the inverse of the restriction of $A$ to $V_E$, meaning $\lambda_0\notin \sigma\left(A\rvert_{V_E}\right)$.\newline
+
+    To show (4), fix $\lambda_0\in \sigma(A)$, and suppose that for some $\varepsilon > 0$, $\mu\left((\lambda_0 - \varepsilon, \lambda_0 + \varepsilon)\right) = 0$. Consider the function
+    \begin{align*}
+      f(\lambda) &= \begin{cases}
+        \frac{1}{\lambda - \lambda_0} & \left\vert \lambda - \lambda_0 \right\vert \geq \varepsilon\\
+        0 & \left\vert \lambda - \lambda_0 \right\vert < \varepsilon
+      \end{cases}.
+    \end{align*}
+    Since $f(\lambda)\left(\lambda - \lambda_0\right) = 1$ everywhere except $(\lambda_0 - \varepsilon,\lambda_0 + \varepsilon)$, the equation $f(\lambda)\left(\lambda - \lambda_0\right) = 1$ is true $\mu$-a.e., meaning the integral is equal to the integral of $\mathbb{1}_{\sigma(A)} = I$. Since integrals are multiplicative, we see
+    \begin{align*}
+      f(A)\left(A - lambda_0 I\right) &= \left(A - \lambda_0 I\right)f(A)\\
+                                      &= I,
+    \end{align*}
+    meaning $f(A)$ is the inverse of $A - \lambda_0 I$, which contradicts $\lambda_0 \in \sigma(A)$.\footnote{Seems like fundamental construction we need for proofs involving the spectrum is $A - \lambda_0 I$.}
+  \end{proof}
+  \begin{proposition}[Commuting Operators]
+    Let $A\in \mathcal{B}\left(\mathbf{H}\right)$ be self-adjoint, and $B\in \mathcal{B}\left(\mathbf{H}\right)$ commute with $A$. The following are true:
+    \begin{enumerate}[(1)]
+      \item For all bounded measurable functions $f$ on $\sigma(A)$, $f(A)$ commutes with $B$.
+      \item Every spectral subspace for $A$ is invariant under $B$.
+    \end{enumerate}
+  \end{proposition}
+  \begin{proof}
+    To be shown later.
+  \end{proof}
+  As a result of the properties of the spectral theorem, we are able to generate the most important part of quantum mechanics: a probability measure to find the measurements of a self-adjoint operator with the state $\psi$.
+  \begin{proposition}[Probability Distributions]
+    Let $A\in \mathcal{B}\left(\mathbf{H}\right)$ be self-adjoint, and $\psi \in \mathbf{H}$ a unit vector. Then, there exists a unique probability measure such that
+    \begin{align*}
+      \int_{\R}^{} \lambda^{m}\:d\mu^{A}_{\psi}(\lambda) &= \iprod{\psi}{A^{m}\psi}.
+    \end{align*}
+  \end{proposition}
+  \begin{proof}
+    Define $\mu^{A}_{\psi}$ on $\sigma(A)$ by
+    \begin{align*}
+      \mu^{A}_{\psi}(E) &= \iprod{\psi}{\mu^{A}(E)\psi}.
+    \end{align*}
+    Then, by the properties of integration with respect to $\mu^{A}$, we get
+    \begin{align*}
+      \iprod{\psi}{A^{m}\psi} &= \iprod{\psi}{\left(\int_{\sigma(A)}^{} \lambda^{m}\:d\mu^{A}(\lambda)\right)\psi}\\
+                              &= \int_{\sigma(A)}^{} \lambda^{m}\:d\mu^{A}_{\psi}(\lambda).
+    \end{align*}
+    To extend $\mu^{A}_{\psi}$ to be defined on $\R$, set $\mu^{A}_{\psi}$ to be $0$ on $\R\setminus \sigma(A)$.\newline
+
+    To show uniqueness, we see that
+    \begin{align*}
+      \left\vert \iprod{\psi}{A^{m}\psi} \right\vert &\leq \norm{\psi}^2\norm{A^{m}}\\
+                                                     &\leq \norm{\psi}^2\norm{A}^{m},
+    \end{align*}
+    meaning moments only grow exponentially with $m$. The uniqueness of the moment problem\footnote{The book's recommended resource here is Allan Gut's \textit{Probability Theory: A Graduate Course}, so I'll probably look there for more information and create a prelude.} yields the uniqueness of $\mu^{A}_{\psi}$.
+  \end{proof}
+  \subsection{Proof: The Spectral Theorem for Bounded Self-Adjoint Operators, Statement 1}%
+  To come soon.
+  \subsection{The Spectral Theorem for Bounded Self-Adjoint Operators, Statement 2}%
+  One version of the spectral theorem states that every self-adjoint operator is unitarily equivalent to a multiplication operator. However, we can state a more general version of the spectral theorem by invoking the direct integral.\newline
+
+  For every $\lambda \in X$, where $(X,\mu)$ is a measure space,\footnote{I presume this is with the Borel $\sigma$-algebra.} we associate a Hilbert space $\mathbf{H}_{\lambda}$; an element of the direct integral is a function $s$ on $X$ such that $s(\lambda)$ is in $\mathbf{H}_{\lambda}$ for each $\lambda \in X$. For a real-valued measurable function $h$ on $X$, we can multiply an element $s$ of the direct integral by $h$.\newline
+
+  The direct integral version of the spectral theorem states that a bounded self-adjoint operator is unitarily equivalent to a multiplication on a direct integral. The benefits are several.
+  \begin{itemize}
+    \item The canonical set $X$ is $\sigma(A)$ and canonical function $h$ is $h(\lambda) = \lambda$.
+    \item We can say $\mathbf{H}_{\lambda}$ is the space of generalized eigenvectors with eigenvalue $\lambda$. Thus, we can give a rigorous definition of the ``eigenvectors'' that are not in the Hilbert space.
+    \item We can classify two self-adjoint operators as unitarily equivalent if their direct integral representations are equivalent.
+  \end{itemize}
+  \begin{definition}[Direct Integral]
+    Let $\mu$ be a $\sigma$-finite measure on the $\sigma$-algebra $\Omega$ of $X$. Suppose that for each $\lambda \in X$, we have a separable Hilbert space $\mathbf{H}_{\lambda}$, with inner product $\iprod{\cdot}{\cdot}_{\lambda}$.\newline
+
+    Elements of the integral will be sections, $s$, functions on $X$ with values in the union of $\mathbf{H}_{\lambda}$, meaning $s(\lambda)\in \mathbf{H}_{\lambda}$ for each $\lambda \in X$.\newline
+
+    We would like to define the norm of a section by the formula
+    \begin{align*}
+      \norm{s}^{2} &= \int_{X}^{} \iprod{s(\lambda)}{s(\lambda)}\:d\mu(\lambda),
+    \end{align*}
+    provided the integral is finite. The inner product of $s_1$ and $s_2$ is
+    \begin{align*}
+      \iprod{s_1}{s_2} &= \int_{X}^{} \iprod{s_1(\lambda)}{s_2(\lambda)}\:d\mu(\lambda).
+    \end{align*}
+    In order to ensure measurability of the sections, we will need to choose a \textit{simultaneous} orthonormal basis for the $\mathbf{H}_{lambda}$.\newline
+
+    Recall that an orthonormal basis for $\mathbf{H}$ is a family unit vectors $\set{e_j}_j$ where $\iprod{e_j}{e_k} = 0$ for $j\neq k$, and $\overline{\text{span}\set{e_j}_j} = \mathbf{H}$.\newline
+
+    The simultaneous orthonormal basis of $\mathbf{H}_{\lambda}$ is a collection of sections $\set{e_j(\cdot)}$ such that for each $\lambda$, $\set{e_j(\lambda)}$ is an orthonormal basis for $\mathbf{H}_{\lambda}$. Provided that $\lambda \mapsto \text{dim}(\mathbf{H}_{\lambda})$ is measurable, it is possible to choose a simultaneous orthonormal basis such that $\iprod{e_j(\lambda)}{e_k(\lambda)}$ is measurable for all $j,k$.\newline
+
+    The section $s$ is measurable if the function $\lambda \mapsto \iprod{e_j(\lambda)}{s(\lambda)}$ is measurable for each $j$; the $e_j$ are assumed to be measurable sections.\newline
+
+    The choice of simultaneous orthonormal basis is known as a measurability structure on $\set{\mathbf{H}_{\lambda}}$. Given two measurable sections, the function
+    \begin{align*}
+      \lambda \mapsto \iprod{s_1(\lambda)}{s_2(\lambda)}_\lambda = \sum_{j=1}^{\infty}\iprod{s_1(\lambda)}{e_j(\lambda)}\iprod{e_j(\lambda)}{s_2(\lambda)}
+    \end{align*}
+    is also measurable.\newline
+
+    Thus, for a $\sigma$-finite measure space $(X,\Omega,\mu)$ with a collection $\set{H_{\lambda}}$ with measurable dimension functions, and a measurability structure on $\set{H_{\lambda}}$, the direct integral of $\mathbf{H}_{\lambda}$ with respect to $\mu$ is denoted
+    \begin{align*}
+      \int_{X}^{\oplus} \mathbf{H}_{\lambda}\:d\mu(\lambda).
+    \end{align*}
+    The direct integral is the space of equivalence classes of $\mu$-a.e. equal measurable sections for which
+    \begin{align*}
+      \norm{s}^2 &= \int_{X}^{} \iprod{s(\lambda)}{s(\lambda)}\:d\mu(\lambda)
+    \end{align*}
+    is finite. The inner product is defined by
+    \begin{align*}
+      \iprod{s_1}{s_2} &= \int_{X}^{} \iprod{s_1(\lambda)}{s_2(\lambda)}\:d\mu(\lambda).
+    \end{align*}
+  \end{definition}
+  It is possible to show that the direct integral is itself a Hilbert space.
+  \begin{example}[Two Particular Direct Sums]
+    If each $\mathbf{H}_{\lambda}$ is equal to $\C$, then the direct integral is $L^{2}\left(X,\mu\right)$.\newline
+
+    If $X = \set{\lambda_1,\lambda_2,\dots}$, $\Omega$ consists of all subsets, and $\mu$ is the counting measure, then the direct integral is the Hilbert space direct sum.
+  \end{example}
+  \begin{theorem}[Spectral Theorem, Direct Integral Form]
+    If $A \in \mathcal{B}\left(\mathbf{H}\right)$ is self-adjoint, then there exists a $\sigma$-finite measure $\mu$ on $\sigma(A)$, a direct integral
+    \begin{align*}
+      \int_{\sigma(A)}^{\oplus} \mathbf{H}_{\lambda}\:d\mu(\lambda),
+    \end{align*}
+    and a unitary map between $\mathbf{H}$ and the direct integral such that
+    \begin{align*}
+      UAU^{-1}(s) &= M_{\lambda}s
+    \end{align*}
+    for all $s$ in the direct integral.
+  \end{theorem}
+  \begin{theorem}[Spectral Theorem, Multiplication Operator Form]
+    Let $A\in \mathcal{B}\left(\mathbf{H}\right)$ be self-adjoint. Then, there exists a $\sigma$-finite measure space $(X,\mu)$, a bounded, measurable, real-valued function $h$ on $X$, and a unitary map $U: \mathbf{H}\rightarrow L^{2}(X,\mu)$ such that
+    \begin{align*}
+      \left(UAU^{-1}\right)\psi &= M_{h}\psi
+    \end{align*}
+    for all $\psi \in L^{2}\left(X,\mu\right)$.
+  \end{theorem}
+  \begin{proposition}[Functional Calculus on Direct Integral]
+  Let $A\in \mathcal{B}\left(\mathbf{H}\right)$ be self-adjoint, and $U$ the specific unitary map that satisfies the direct integral form of the spectral theorem. Then, for $f$ a bounded measurable function on $\sigma(A)$,
+  \begin{align*}
+    \left(Uf(A)U^{-1}\right)s &= M_{f}s
+  \end{align*}
+  \end{proposition}
+  Roughly speaking, $f(A) = f(\lambda)I$ on each generalized eigenspace $\mathbf{H}_{\lambda}$; we can see that the proposition follows from the direct integral form applied to $\lambda^{m}$, then take limits over the compact set $\sigma(A)$.
 \end{document}
