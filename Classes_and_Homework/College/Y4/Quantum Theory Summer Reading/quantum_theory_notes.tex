@@ -54,6 +54,7 @@
 \newcommand{\ket}[1]{\left\vert#1\right\rangle}
 \newcommand{\braket}[2]{\left\langle#1\mid#2\right\rangle}
 \newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ve}{\varepsilon}
 
 %common other symbols
 \newcommand{\mcc}{\mathcal{C}} %cantor set
@@ -1746,6 +1747,166 @@
       \end{align*}
       The proof is completed by using the unitarity of the Fourier transform and the definition of $\kappa$.
     \end{proof}
+    \subsection{Uncertainty in the Wave Packet}%
+    The ``uncertainty'' of position, $\Delta_{\psi}X$,\footnote{Variance of $X$ at state $\psi$.} is the ``width'' of $\psi(x)$ as a function of $x$. Since the amplitude of the wave function shifts to the right at speed approximately equal to the group velocity, the uncertainty in position shouldn't change (though it does over long enough time scales).\newline
+
+    To compute the time-evolution in the uncertainty, we do not need to solve the full Schrödinger equation, but only the identity
+    \begin{align*}
+      \frac{d}{dt}\left\langle A\right\rangle_{\psi(t)} &= \left\langle\frac{1}{i\hbar}[A,\hat{H}]\right\rangle_{\psi(t)},
+    \end{align*}
+    with the Hamiltonian of $\frac{P^2}{2m}$ and the canonical commutation relation, $[X,P] = i\hbar I$.
+    \begin{proposition}[Expectations of Solutions to the free Schrödinger Equation]
+      For a wave function $\psi(x,t)$ evolving according to the free Schrödinger equation, the expectation values for $X$ and $X^2$ evolve as follows:
+      \begin{align*}
+        \left\langle X \right\rangle_{\psi(t)} &= \left\langle X\right\rangle_{\psi_0} + \frac{t}{m}\left\langle P \right\rangle_{\psi_0};
+        \left\langle X^2 \right\rangle_{\psi(t)} &= \left\langle X^2 \right\rangle_{\psi_0} + \frac{t}{m}\left\langle XP + PX \right\rangle_{\psi_0} + \frac{t^2}{m^2}\left\langle P^2 \right\rangle_{\psi_0}.
+      \end{align*}
+      Thus, we get the result
+      \begin{align*}
+        \left(\Delta_{\psi(t)} X\right)^{2} &= \frac{t^2}{m^2}\left(\Delta_{\psi_0}P\right)^2 + \frac{t}{m}\left(\left\langle XP + PX \right\rangle_{\psi_0} - 2\left\langle X \right\rangle_{\psi_0}\left\langle P \right\rangle_{\psi_0}\right) + \left(\Delta_{\psi_0}X\right)^2.
+      \end{align*}
+    \end{proposition}
+    It is important to note that $\Delta_{\psi_0}P$ cannot be zero, because that would only be the case if $\psi_0$ is an eigenvector for the momentum operator, but $e^{ikx}\notin L^{2}(\R)$. Since the coefficients in $\left(\Delta_{\psi(t)}X\right)^2$ are never zero, it must be the case that $\Delta_{\psi(t)}X$ tends to infinity as $t$ tends to infinity.
+    \begin{proof}
+      Computing
+      \begin{align*}
+        [P^2,X] &= P^2X - PXP + PXP - XP^2\\
+                &= P[P,X] + [P,X]P\\
+                &= -2i\hbar P,
+      \end{align*}
+      and using $\hat{H} = \frac{P^2}{2m}$, we find
+      \begin{align*}
+        \frac{d}{dt}\left\langle X \right\rangle_{\psi(t)} &= \left\langle \frac{i}{\hbar}\left(-2i\hbar P\right) \right\rangle_{\psi(t)}\\
+                                                           &= \frac{\left\langle P \right\rangle_{\psi(t)}}{m}\\
+                                                           &= \frac{\left\langle P \right\rangle_{\psi_0}}{m}.
+      \end{align*}
+      Since $\frac{d}{dt}\left\langle X \right\rangle_{\psi(t)}$ is constant, it must be the case that $\left\langle X \right\rangle_{\psi(t)}$ is a linear function of $t$; thus gives the result for $\left\langle X \right\rangle_{\psi(t)}$.\newline
+
+      We can also see that
+      \begin{align*}
+        [P^2,X^2] &= P[P,X]X + [P,X]PX + XP[P,X] + X[X,P]P\\
+                  &= -2i\hbar \left(PX + XP\right)\\
+        [P^2,PX + XP] &= P[P^2,X] + [P^2,X]P\\
+                      &= -4i\hbar P^2.
+      \end{align*}
+      Thus,
+      \begin{align*}
+        \frac{d}{dt}\left\langle X^2 \right\rangle_{\psi(t)} &= \frac{i}{2m\hbar}\left\langle [P^2,X^2] \right\rangle\\
+                                                             &= \frac{1}{m}\left\langle XP + PX \right\rangle_{\psi(t)},
+      \end{align*}
+      and
+      \begin{align*}
+        \frac{d ^2}{d t^2}\left\langle X^2 \right\rangle &= \frac{i}{\hbar}\frac{1}{m}\frac{1}{2m}\left\langle [P^2,XP + PX] \right\rangle_{\psi(t)}\\
+                                                         &= \frac{2}{m^2}\left\langle P^2 \right\rangle_{\psi(t)}\\
+                                                         &= \frac{2}{m^2}\left\langle P^2 \right\rangle_{\psi_0}.
+      \end{align*}
+      Since the second derivative of $\left\langle X^2 \right\rangle_{\psi(t)}$ is independent of $t$, $\left\langle X^2 \right\rangle_{\psi(t)}$ is quadratic in $t$, which are determined by $\left\langle X \right\rangle_{\psi(t)}$ and its first two derivatives.
+    \end{proof}
+  \section{Particle in a Square Well}%
+  We have seen that it is quite difficult to solve the time-dependent Schrödinger equation, even with the simplest potential of $V(x) = 0$ for all $x$. For more complicated potentials, we will solve the time-\textit{independent} Schrödinger equation for the eigenvectors of $\hat{H}$, and try to elicit understanding from the solution.\newline
+
+  We will consider the potential of the form
+  \begin{align*}
+    V(x) &= \begin{cases}
+      -C & |x| \leq A\\
+      0 & |x| > A
+    \end{cases},
+  \end{align*}
+  where $A$ and $C$ are greater than $0$ and constant. The region $|x| \leq A$ is the square well for the potential.\newline
+
+  To set up the context for the quantum case, let's examine the case of a classical particle. We consider $V$ is the limit of a sequence of potentials that change linearly from $-1$ to $0$ about $\pm 1$. There are two cases in the classical solution.
+  \begin{itemize}
+    \item If the particle has negative energy, then the particle will move with constant speed inside the well until it hits the edge, after which it reflects off the wall and moves in the opposite direction.
+    \item If the particle has positive energy, then it moves in the same direction, with one speed inside the well and a different, lower speed outside the well.
+  \end{itemize}
+  For the quantum case, we want to consider the eigenvectors with \textit{negative} eigenvalues. We should expect that the quantum particle will have equal probability of being found in each part of the well, which will be fulfilled by ``highly excited states''; however, there is also a small (but nonzero) probability of finding the particle outside the well in the quantum case.\newline
+
+  The time-independent Schrödinger equation is our object of study:
+  \begin{align*}
+    -\frac{\hbar^2}{2m}\frac{d ^2\psi}{d x^2} + V(x)\psi(x) &= E\psi(x),
+  \end{align*}
+  where both $E$ (eigenvalues) and $\psi$ (eigenvectors) are yet to be known. This is a second order linear differential equation, meaning it has a two-dimensional solution space; specifically, we are looking for nontrivial solutions in $L^{2}(\R)$.
+  \subsection{Conditions for Solutions}%
+  The Hamiltonian
+  \begin{align*}
+    \hat{H} &= -\frac{\hbar^2}{2m} \frac{d ^2}{d x^2} + V(X)
+  \end{align*}
+  is an unbounded linear operator, meaning there is no constant $C$ such that $\norm{\hat{H}\psi} \leq C\norm{\psi}$; we do want $\hat{H}$ to be self-adjoint, though, which means $\hat{H}$ must be densely defined, but not defined on $L^{2}(\R)$. In particular, for many $\psi \in L^{2}(\R)$, $\frac{d ^2\psi}{d x^2}\notin L^{2}(\R)$.\footnote{A fun fact is that the space of differentiable functions is much, \textit{much} smaller than the space of continuous or square-integrable functions.}\newline
+
+  Since $V$ is bounded, the domain of $\hat{H} = \frac{P^2}{2m} + V(X)$ is the same as the domain of $\frac{P^2}{2m} = -\frac{\hbar^2}{2m}\frac{d ^2}{d x^2}$. We will see that the domain of the kinetic energy operator is the space of $L^{2}$ functions for which the (weak) $\frac{d ^2\psi}{d x^2}$ is square-integrable. The weak $\frac{d ^2\psi}{d x^2}$ means that $\psi$ is the second \textit{integral} of $\phi\in L^{2}(\R)$.\newline
+
+  Since the potential is piecewise constant, any solution will be smooth except for the transition points $x = \pm A$, both $\psi$ and $\psi'$ have left and right limits at $A$ and $-A$ respectively; in particular, any solution along each of $(-\infty,-A)$, $(-A,A)$, and $(A,\infty)$ will be a linear combination of exponentials.
+  \begin{proposition}[Domain of Hamiltonian]
+    Let $\psi$ be smooth on the intervals $(-\infty,-A)$, $(-A,A)$, $(A,\infty)$. Then, $\psi$ belongs to the domain of $\hat{H}$ if and only if
+    \begin{enumerate}[(1)]
+      \item $\psi$ and $\frac{d \psi}{d x}$ are continuous at $x = \pm A$;
+      \item $\frac{d ^2\psi}{d x^2}\in L^{2}(\R)$.
+    \end{enumerate}
+  \end{proposition}
+  \begin{proof}
+    Suppose that $\psi$ satisfies the conditions. Then, the second derivative of $\psi$ in the distribution sense is $\frac{d ^2\psi}{d x^2}$, computed in the regular sense for $x\neq \pm A$ (for $\{A,-A\}$ has measure $0$). Thus, $\frac{d ^2\psi}{d x^2}$ is an element of $L^{2}(\R)$.\newline
+
+    If $\psi$ or $\psi'$ has a discontinuity at $x=A$ or $x=-A$, the weak derivative will contain either a multiple of a $\delta$ function or a multiple of the derivative of the $\delta$-function at each of these points; however, neither $\delta$ nor the derivative are square-integrable.
+  \end{proof}
+  The continuity condition on $\psi$ and $\frac{d \psi}{d x}$ effectively serves as a matching condition between the solutions on $(-\infty,A)$ and $(-A,A)$.
+  \subsection{Square-Integrable Solutions}%
+  For $E > 0$, any solution will be a linear combination of two complex exponentials in $x < -A$, which cannot be square-integrable unless the solution is identically $0$; however, if $\psi$ is identically $0$ along $x < -A$, then continuity requires that $\psi$ and $\frac{d \psi}{d x}$ equal $0$ as $x$ approaches $-A$ from the right, forcing the solution to be $0$ on $[-A,A]$ as well, and similarly for $(A,\infty)$. Thus, for any $E > 0$, the solution is identically $0$. A similar analysis applies to the solutions where $E = 0$.\newline
+
+  Therefore, if we want to have a nontrivial square-integrable solution, we require $E < 0$. The solution on $(-\infty,-A)$ will be a linear combination of exponentials $e^{\alpha x}$ and $e^{-\alpha x}$, where
+  \begin{align*}
+    \alpha &= \frac{\sqrt{2m|E|}}{\hbar}.
+  \end{align*}
+  For $\psi$ to be square-integrable, the coefficient of $e^{-\alpha x}$ needs to be $0$; thus, $\psi$ must be equal to $ce^{\alpha x}$ on $(-\infty,-A)$. Once we choose a value for $c$, we find a solution on $(-A,A)$ by matching $\psi$ and $\frac{d \psi}{d x}$ across $x=-A$. The unique solution on $(A,\infty)$ is found by matching across $(A,\infty)$.\newline
+
+  The conclusion is that for any $E < 0$, there is a unique up-to-constant solution to the time-independent Schrödinger equation that is square-integrable on $(-\infty,-A)$, which gives rise to a unique solution on $(-A,A)$, and a unique solution on $(A,\infty)$; however, the solution on $(A,\infty)$ will probably not be square-integrable, so the solution will not be in $L^{2}(\R)$ for any nontrivial $E$.\newline
+
+  Any square-integrable solutions must come from the range $-C < E < 0$; to find these, rewrite the time-independent Schrödinger equation by dividing by $-\frac{\hbar^2}{2m}$:
+  \begin{align*}
+    \frac{d ^2\psi}{d x^2} &= \begin{cases}
+      \varepsilon\psi & |x| > A\\
+      -(c - \varepsilon)\psi & |x| < A
+    \end{cases},
+    \intertext{where}
+      \varepsilon &= -\frac{2mE}{\hbar^2}\\
+      c &= \frac{2mC}{\hbar^2}.
+  \end{align*}
+  Note that though $E$ is negative, we have normalized $ \varepsilon$ to be positive; the condition $-C < E < 0$ corresponds to $0 < \varepsilon < c$.\newline
+
+  Since $V$ is even, we can see that for any solution $\psi$, the even and odd parts of $\psi$ are also solutions. Therefore, we can examine even and odd solutions separately.\newline
+
+  Starting from the even case, every solution that is square-integrable over $(-\infty,-A)$ is of the form
+  \begin{align*}
+    \psi(x) &= ae^{ \sqrt{ \varepsilon }x }.
+  \end{align*}
+  Since $\psi$ is even, we have, for $x > A$,
+  \begin{align*}
+    \psi(x) &= a e^{-\sqrt{ \varepsilon }x}.
+  \end{align*}
+  Meanwhile, for $-A < x < A$, every even solution is of the form
+  \begin{align*}
+    \psi(x) &= b \cos\left(x\sqrt{c - \varepsilon }\right).
+  \end{align*}
+  \begin{proposition}[Matching Condition]
+    Let $\psi$ be the function defined piecewise by:
+    \begin{align*}
+      \psi(x) &= \begin{cases}
+        ae^{\sqrt{ \varepsilon }x} & x \in (-\infty,A]\\
+        b\cos\left(x\sqrt{c - \varepsilon}\right) & x\in (-A,A)\\
+        ae^{-\sqrt{ \varepsilon }x} & x\in [A,\infty)
+      \end{cases}.
+    \end{align*}
+    There exist nonzero $a$ and $b$ such that $\psi\in \text{Dom}(\hat{H})$ if and only if the following matching condition holds:
+    \begin{align*}
+      \sqrt{ \varepsilon} &= \sqrt{c - \varepsilon}\tan\left(A\sqrt{c - \varepsilon}\right).
+    \end{align*}
+  \end{proposition}
+  \begin{proof}
+    Both $\psi$ and $\frac{d ^2\psi}{d x^2}$ belong to $L^{2}(\R)$. Thus, we only need ensure that $\psi(x)$ and $\frac{d \psi}{d x}$ are continuous at $x = \pm A$.\newline
+
+    Since the exponentials are never zero, we can ensure that $\psi$ is continuous by taking any value for $b$ and selecting $a$ appropriately. Once $\psi$ is continuous, $\frac{d \psi}{d x}$ will be continuous  so long as $\frac{\psi'}{\psi}$ has the same value at $\pm A$ approaching from both the left and the right.\newline
+
+    To obtain the condition, we calculate $\frac{\psi'}{\psi}$ at $-A$ from the left and the center, and equate.  Since $\psi$ is an even function, we get the matching condition.
+  \end{proof}
   \section{Introduction to Spectral Theory}%
   A matrix $A$ is self-adjoint if $A^{\ast} = A$, where $A^{\ast}$ denotes the conjugate transpose; by a standard result in linear algebra, there exists an orthonormal basis $\set{\mathbf{v}_j}_{j=1}^{n}$ for $\C^n$ and real numbers $\lambda_j$ such that $A\mathbf{v}_j = \lambda \mathbf{v}_j$.\newline
 
