@@ -1,4 +1,4 @@
-\documentclass[10pt]{extarticle}
+\documentclass[12pt]{extarticle}
 
 \title{}
 \author{}
@@ -7,7 +7,7 @@
 
 %paper setup
 \usepackage{geometry}
-\geometry{letterpaper, portrait, margin=1in}
+\geometry{legalpaper, portrait, margin=1in}
 \usepackage{fancyhdr}
 % sans serif font:
 \usepackage{cmbright}
@@ -1600,8 +1600,152 @@
     Thus, $K_t\mathbb{1}_{[-n,n]}\ast \psi_0$ must converge in $L^2(\R)$ (since the Fourier transform is unitary), and the $L^2$ limit must converge with the pointwise limit.
   \end{proof}
   A function tends to be the \textit{fundamental} solution to an equation if it converges to the $\delta$ function as $t\rightarrow 0$; we can see that $\mathcal{F}\left(K_t\right)$ converges to $\frac{1}{\sqrt{2\pi}}$ as $t\rightarrow 0$, meaning $K_t \rightarrow \delta$.\footnote{I'm anticipating that I will depend a lot on various tables evaluating Fourier transforms if I take quantum.}
-  \subsection{Solving by Propagation of the Wave Function: First Approach}%
-  To come soon!\footnote{I don't really like PDEs and these sections are confusing me, so I'll probably do these much later.}
+  \subsection{Solving by Propagation of the Wave Packet: First Approach}%
+  Consider the Schrödinger equation in $\R$ with the initial condition $\psi_0$ of a wave packet. Specifically,
+  \begin{align*}
+    \psi_0(x) &= A_0(x)e^{\frac{ip_0x}{\hbar}},
+  \end{align*}
+  where $A_0$ is a real, positive function and $p_0$ is a nonzero real number. Assume $A_0$ is approximately constant over many periods of $e^{\frac{ip_0x}{\hbar}}$ --- if we look at $\psi_0(x)$ over a small period of functions, then $\psi_0$ looks like $Ce^{\frac{ip_0x}{\hbar}}$, which represents a particle with momentum $p_0$. Thus, $\psi_0$ should represent a particle with momentum approximately equal to $p_0$.\newline
+
+  In terms of amplitude and phase, we write
+  \begin{align*}
+    \psi(x,t) &= A(x,t)e^{i\theta(x,t)},
+  \end{align*}
+  with $A$ and $\theta$ real-valued. Inputting this into the free Schrödinger equation and cancelling a factor of $e^{i\theta(x,t)}$, we get
+  \begin{align*}
+    \frac{\partial A}{\partial t} + i\frac{\partial \theta}{\partial t}A &= \frac{i\hbar}{2m}\frac{\partial^2 A}{\partial x^2} - \frac{\hbar}{m}\frac{\partial A}{\partial x}\frac{\partial \theta}{\partial x} - \frac{i\hbar}{2m}A\left(\frac{\partial \theta}{\partial x}\right)^2 - \frac{\hbar}{2m}A\frac{\partial ^2 \theta}{\partial x^2}
+  \end{align*}
+  Setting real and imaginary parts equal, we get
+  \begin{align*}
+    \frac{\partial A}{\partial t} &= -\frac{\hbar}{m}\frac{\partial A}{\partial x}\frac{\partial \theta}{\partial x} - \frac{\hbar}{2m}A\frac{\partial ^\theta}{\partial x^2}\\
+    \frac{\partial \theta}{\partial t} &= \frac{\hbar}{2m}\frac{1}{A}\frac{\partial ^2A}{\partial x^2} - \frac{\hbar}{2m}\left(\frac{\partial \theta}{\partial x}\right)^2.
+  \end{align*}
+  The assumption that $A$ is ``approximately constant'' is, essentially, the assumption that
+  \begin{align*}
+    \frac{1}{A}\frac{\partial ^2A}{\partial x^2}\ll \left(\frac{\partial \theta}{\partial x}\right)^2.
+  \end{align*}
+  To first approximation, we drop this term, giving
+  \begin{align*}
+    \frac{\partial \theta}{\partial t} &= -\frac{\hbar}{2m}\left(\frac{\partial \theta}{\partial x}\right)^2.
+  \end{align*}
+  \begin{proposition}[Solution to the Approximate System]
+    The approximate solution to
+    \begin{align*}
+      \frac{\partial A}{\partial t} &= -\frac{\hbar}{m}\frac{\partial A}{\partial x}\frac{\partial \theta}{\partial x} - \frac{\hbar}{2m}A\frac{\partial ^\theta}{\partial x^2}\\
+      \frac{\partial \theta}{\partial t} &= -\frac{\hbar}{2m}\left(\frac{\partial \theta}{\partial x}\right)^2
+    \end{align*}
+    with the initial condition $\theta(x,0) = \frac{p_0x}{\hbar}$ is given by
+    \begin{align*}
+      \theta(x,t) &= \frac{p_0}{\hbar}\left(x - \frac{p_0}{2m}t\right)\\
+      A(x,t) &= A_0\left(x - \frac{p_0}{m}t\right).
+    \end{align*}
+    The approximate solution to the free Schrödinger equation is, thus,
+    \begin{align*}
+      \psi(x,t) &= A_0\left(x - \frac{p_0}{m}t\right)e^{\left(i\frac{p_0}{\hbar}\left(x - \frac{p_0}{2m}t\right)\right)}.
+    \end{align*}
+  \end{proposition}
+  \begin{proof}
+    The initial condition $\frac{p_0x}{\hbar}$ allows us to see that
+    \begin{align*}
+      \theta(x,t) &= \frac{p_0x}{\hbar} - \frac{p_0^2}{2m\hbar}t\\
+                  &= \frac{p_0}{\hbar}\left(x - \frac{p_0}{2m}t\right).
+    \end{align*}
+    Since $\frac{\partial \theta}{\partial x} = \frac{p_0}{\hbar}$ and $\frac{\partial ^2\theta}{\partial x^2} = 0$, we plug this into the equation for $A$ and find
+    \begin{align*}
+      \frac{\partial A}{\partial t} &= -\frac{p_0}{m}\frac{\partial A}{\partial x}.
+    \end{align*}
+    The only solution to this equation with $A(x,0) = A_0$ is
+    \begin{align*}
+      A(x,t) &= A_0\left(x - \frac{p_0}{m}t\right).
+    \end{align*}
+  \end{proof}
+  In this solution to the free Schrödinger equation, we can see that $\theta$ (or phase) moves at the velocity $\frac{p_0}{2m}$, and $A$ (or amplitude) moves at the velocity $\frac{p_0}{m}$.
+  \begin{definition}[Phase and Group Velocity]
+    We define the phase velocity and group velocity as:
+    \begin{align*}
+      \text{phase velocity} &= \frac{p_0}{2m}\\
+      \text{group velocity} &= \frac{p_0}{m}.
+    \end{align*}
+  \end{definition}
+  The formula for the phase velocity agrees with the velocity of propagation of a pure exponential solution to the free Schrödinger equation.\newline
+
+  We should expect that, over sufficiently long time spans, there will be a divergence between the approximate and true solutions to the free Schrödinger equation, since our approximation of $\frac{1}{A}\frac{\partial ^2A}{\partial x^2} \ll \left(\frac{\partial \theta}{\partial x}\right)^2$ may not hold over the longer run. 
+  \subsection{Solving by Propagation of the Wave Packet: Second Approach}%
+    The general solution of the free Schrödinger equation can be found by the Fourier transform as
+    \begin{align*}
+      \psi(x,t) &= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \hat{\psi}_0(k)e^{i(kx-\omega(k)t)}\:dk,
+    \end{align*}
+    where $\omega(k)=\frac{\hbar k^2}{2m}$.\newline
+
+    Assume that $\psi_0$ has approximate momentum equal to $p_0$, and $\hat{\psi}_0(k)$ is concentrated near $k_0 = \frac{p_0}{\hbar}$. If this is the case, then only the values of $k$ near $k_0$ are important, meaning we use the Taylor expansion
+    \begin{align*}
+      \omega(k) \approx \omega(k_0) + \omega'(k_0)(k - k_0).
+    \end{align*}
+    Inserting this expression for $\omega(k)$ into the Fourier transform solution, we get
+    \begin{align*}
+      \psi(x,t) &= \frac{1}{\sqrt{2\pi}} e^{i\omega'(k_0)k_0 t}e^{-i\omega(k_0)t}\int_{}^{} \hat{\psi}_0(k)e^{ik\left(x - \omega'(k_0)t\right)}\:dk\\
+                &= e^{i\omega'(k_0)k_0t}e^{-i\omega(k_0)t}\psi_0(x - \omega'(k_0)t).
+    \end{align*}
+    The factors in front of $\psi_0(x-\omega'(x_0)t)$ are independent of $x$, which do not affect the state of the system. Thus, we are left with $\psi_0\left(x-\omega'(k_0)t\right)$, which is equal to shift to the right at $\omega'(k_0)$. The velocity is
+    \begin{align*}
+      \omega'(k_0) &= \frac{\hbar k_0}{m}\\
+                   &= \frac{p_0}{m}.
+    \end{align*}
+    Consider the case where $\psi_0$ is of the form
+    \begin{align*}
+      \psi_0(x) &= e^{ik_0x}A_0(x),
+    \end{align*}
+    where $A_0$ is real and positive. The solution is then
+    \begin{align*}
+      \psi(x,t) &\approx e^{i\omega'(k_0)k_0t}e^{-i\omega(k_0 t)}e^{ik_0\left(x - \omega'(k_0)t\right)}A_0(x - \omega'(k_0)t).
+    \end{align*}
+    After cancelling terms, we obtain
+    \begin{align*}
+      \psi(x,t) &\approx e^{i\left(k_0 x - \omega(k_0)t\right)}A_0(x - \omega'(k_0)t).
+    \end{align*}
+    Recall that $p_0 = \hbar k_0$; replacing $\omega$ as such, we obtain the same approximation as the first solution by wave propagation.
+    \begin{proposition}[Free Schrödinger Equation Solution Velocities]
+    The speed at which a pure exponential solution of the free Schrödinger equation propagates is the phase velocity,
+    \begin{align*}
+      \text{phase velocity} &= \frac{\hbar k_0}{2m}\\
+                            &= \frac{p_0}{2m}.
+    \end{align*}
+    Meanwhile, the approximate speed at which the wave packet propagates is the group velocity,
+    \begin{align*}
+      \text{group velocity} &= \frac{dw}{dk}\biggr\vert_{k=k_0}\\
+                            &= \frac{\hbar k_0}{m}\\
+                            &= \frac{p_0}{m}.
+    \end{align*}
+    \end{proposition}
+    The error on the estimate of the group velocity can be found by comparing Fourier transforms; in particular, we use the quantity $\kappa$ defined by
+    \begin{align*}
+      \kappa &= \left(\int_{-\infty}^{\infty} \left\vert \hat{\psi_0}(k) \right\vert\left(k-k_0\right)^4\:dk\right)^{1/4}.
+    \end{align*}
+    The value of $\kappa$ is approximately half the width of the interval about $k_0$ on which most of $\hat{\psi}(k)$ is concentrated.
+    \begin{proposition}[Error Estimation for the Approximate Solution to the Free Schrödinger Equation]
+      Let $\psi(x,t)$ be the exact solution to the free Schrödinger equation with initial condition $\psi_0$, and let $\phi(x,t)$ be the approximate solution found by propagation of the wave packet. Then,
+      \begin{align*}
+        \norm{\psi(x,t) - \phi(x,t)}_{L^{2}(\R)} &\leq \frac{|t|\hbar \kappa^2}{2m}\\
+                                                 &= |t|\omega(\kappa),
+      \end{align*}
+      where the $L^2$ norm is with respect to $x$ and fixed $t$, and $\omega(k) = \frac{\hbar k^2}{2m}$.
+    \end{proposition}
+    Provided that $|t| \ll \frac{1}{\omega(\kappa)}$, the estimate will hold; in other words, if $\kappa \ll k_0$, then $\frac{1}{\omega(\kappa)} \gg \frac{1}{\omega(k_0)}$, meaning that the true and approximate solutions to the equation will diverge on a timescale much longer than the oscillation.
+    \begin{proof}[Proof of Error Estimation]
+      Let $\hat{\psi}(k,t)$ and $\hat{\phi}(k,t)$ denote the Fourier transforms of $\phi$ and $\psi$ with respect to $x$ and fixed $t$. We can see that
+      \begin{align*}
+        \hat{\psi}(k,t) &= e^{-i\omega(k)t}\hat{\psi}_0(k).
+      \end{align*}
+      Meanwhile, $\hat{\phi}(k,t)$ is derived from $\hat{\psi}(k,t)$ by replacing $\omega(k)$ with $\omega(k_0) + \omega'(k_0)(k-k_0)$. Thus,
+      \begin{align*}
+        \omega(k) - \left(\omega(k_0) + \omega'(k_0)(k-k_0)\right) &= \frac{\hbar }{2m}(k-k_0)^2.
+      \end{align*}
+      Using the estimate $\left\vert e^{i\theta} - e^{i\phi} \right\vert \leq \left\vert \theta - \phi \right\vert$, we obtain
+      \begin{align*}
+        \left\vert \hat{\psi}(k,t) - \hat{\phi}(k,t) \right\vert &\leq \frac{|t|\hbar}{2m}(k-k_0)^2 \left\vert \hat{\psi}(k) \right\vert.
+      \end{align*}
+      The proof is completed by using the unitarity of the Fourier transform and the definition of $\kappa$.
+    \end{proof}
   \section{Introduction to Spectral Theory}%
   A matrix $A$ is self-adjoint if $A^{\ast} = A$, where $A^{\ast}$ denotes the conjugate transpose; by a standard result in linear algebra, there exists an orthonormal basis $\set{\mathbf{v}_j}_{j=1}^{n}$ for $\C^n$ and real numbers $\lambda_j$ such that $A\mathbf{v}_j = \lambda \mathbf{v}_j$.\newline
 
