@@ -4,8 +4,9 @@ title: "Class Notes"
 permalink: /classnotes.html
 ---
 Here are the class notes I have written up so far.
-## Summer and Fall 2024
-### [Quantum Theory Summer Reading](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Quantum Theory Summer Reading/quantum_theory_notes.pdf)
+## Summer Reading
+### [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)
+### [Banach Algebras and Operator Theory](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/banach_algebras_operator_theory.pdf)
 ## Spring 2024
 ### [Real Analysis II](https://ai-bearing.github.io/Classes_and_Homework/College/Y3/Y3S2, Real II/real_2_notes.pdf)
 ### [Complex Analysis](https://ai-bearing.github.io/Classes_and_Homework/College/Y3/Y3S2, Complex/complex_analysis_notes.pdf)

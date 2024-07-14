@@ -1,0 +1,380 @@
+\documentclass[12pt]{extarticle}
+
+\title{}
+\author{}
+\date{}
+\usepackage[shortlabels]{enumitem}
+
+%paper setup
+\usepackage{geometry}
+\geometry{letterpaper, portrait, margin=1in}
+\usepackage{fancyhdr}
+% sans serif font:
+\usepackage{cmbright}
+\usepackage{sfmath}
+
+%symbols
+\usepackage{amsmath}
+\usepackage{bigints}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+\usepackage[hidelinks]{hyperref} %hyperlinks
+\usepackage{gensymb} %more symbols
+\usepackage{multirow,array} %better tables
+\usepackage{multicol} %multiple columns per page
+\usepackage{bbold} %better blackboard bold
+\newtheorem*{remark}{Remark}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\tikzset{middleweight/.style={pos = 0.5}}
+
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\setlength{\parindent}{0pt} %I don't like indentation
+\usepackage{cancel} %better X-throughs
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{\textit{Banach Algebra Techniques in Operator Theory}}
+
+%canonical sets
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+
+%common other symbols
+\newcommand{\mcc}{\mathcal{C}} %cantor set
+\newcommand{\mco}{\mathcal{O}} %holomorphic functions
+\newcommand{\mfp}{\mathfrak{p}} %prime ideal
+
+%inner products and norms
+\newcommand{\iprod}[2]{\left\langle #1,#2\right\rangle}
+\newcommand{\norm}[1]{\left\Vert #1\right\Vert}
+\newcommand{\bra}[1]{\left\langle#1\right\vert}
+\newcommand{\ket}[1]{\left\vert#1\right\rangle}
+\newcommand{\braket}[2]{\left\langle#1\mid#2\right\rangle}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\ve}{\varepsilon}
+
+\setcounter{secnumdepth}{0}
+
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{proposition}{Proposition}
+
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newtheorem*{example}{Example}
+
+\newtheoremstyle{note}
+  {}%
+  {}%
+  {}%
+  {}%
+  {\bfshape}%
+  {:}%
+  { }%
+  {}%
+\theoremstyle{note}
+\newtheorem*{note}{Note}
+% \newtheorem*{claim}{Claim}
+
+\usepackage[document]{ragged2e}
+\renewcommand{\newline}{\hfill\break}
+\renewcommand{\thefootnote}{\roman{footnote}}
+\begin{document}
+\section{Prelude}%
+My REU mentor recently bought me the book \textit{Banach Algebra Techniques in Operator Theory}, so I'm going to be reading through it here. Astute readers may already know that I am also reading through the book \textit{Quantum Theory for Mathematicians}, and may be wondering if this is going to crowd out that book. The answer is yes --- but I don't really care that much. If I come out of the summer knowing more things than I knew entering, then I will have succeeded.
+\section{Banach Spaces}%
+Let $X$ be a compact Hausdorff space, and let $C(X)$ denote the set of continuous functions $f: X\rightarrow \C$. For $f_1,f_2\in C(X)$ and $\lambda\in \C$, we define
+\begin{enumerate}[(1)]
+  \item $\displaystyle \left(f_1 + f_2\right)(x) = f_1(x) + f_2(x)$
+  \item $\displaystyle \left(\lambda f_1\right)(x) = \lambda f_1(x)$
+  \item $\displaystyle \left(f_1f_2\right)(x) = f_1(x)f_2(x)$
+\end{enumerate}
+With these operations, $C(X)$ is a commutative algebra\footnote{A vector space with multiplication.} with identity over the field $\C$.\newline
+
+For each $f\in C(X)$, $f$ is bounded (since $X$ is compact and $f$ is continuous); thus, $\sup\left\vert f \right\vert < \infty$. We call this the norm of $f$, and denote it
+\begin{align*}
+  \norm{f}_{\infty} &= \sup\set{|f(x)|\mid x\in X}.
+\end{align*}
+\begin{proposition}[Properties of the Norm on $C(X)$]\hfill
+  \begin{enumerate}[(1)]
+    \item Positive Definiteness: $\displaystyle \norm{f}_{\infty} = 0 \Leftrightarrow f = 0$
+    \item Absolute Homogeneity: $\displaystyle \norm{\lambda f}_{\infty} = |\lambda|\norm{f}_{\infty}$
+    \item Subadditivity (Triangle Inequality): $\displaystyle \norm{f+g}_{\infty}\leq \norm{f}_{\infty} + \norm{g}_{\infty}$
+    \item Submultiplicativity: $\displaystyle \norm{fg}_{\infty} \leq \norm{f}_{\infty} \norm{g}_{\infty}$
+  \end{enumerate}
+\end{proposition}
+We define a metric $\rho$ on $C(X)$ by $\rho(f,g) = \norm{f-g}_{\infty}$.
+\begin{proposition}[Properties of the Induced Metric on $C(X)$]\hfill
+  \begin{enumerate}[(1)]
+    \item $\displaystyle \rho(f,g) = 0 \Leftrightarrow f=g$
+    \item $\displaystyle \rho(f,g) = \rho(g,f)$
+    \item $\displaystyle \rho(f,h) \leq \rho(f,g) + \rho(g,h)$
+  \end{enumerate}
+\end{proposition}
+\begin{proposition}[Completeness of $C(X)$]
+  If $X$ is a compact Hausdorff space, then $C(X)$ is a complete metric space.
+\end{proposition}
+\begin{proof}
+  Let $\set{f_n}_{n=1}^{\infty}$ be Cauchy. Then,
+  \begin{align*}
+    \left\vert f_n(x) - f_m(x) \right\vert &\leq \norm{f_n - f_m}_{\infty}\\
+    &= \rho(f_n,f_m)
+  \end{align*}
+  for each $x\in X$. Thus, $\set{f_n(x)}_{n=1}^{\infty}$ is Cauchy for each $x\in X$. We define $f(x) = \lim_{n\rightarrow \infty}f_n(x)$. We will need to show that this implies $\lim_{n\rightarrow\infty}\norm{f_n-f}_{\infty} = 0$.\newline
+
+  Let $\varepsilon > 0$; choose $N$ such that $n,m \geq N$ implies $\norm{f_n - f_m}_{\infty} < \varepsilon$. For $x_0\in X$, there exists a neighborhood $U$ such that $\left\vert f_N(x_0) - f_N(x) \right\vert < \varepsilon$ for $x\in U$.\footnote{This is by the continuity of $\set{f_n}_n$.} Thus,
+  \begin{align*}
+    \left\vert f(x_0) - f(x) \right\vert &= \left\vert f_n(x_0) - f_N(x_0) + f_N(x_0) - f_N(x) + f_N(x) - f_n(x) \right\vert\\
+                                         &\leq \left\vert f_n(x_0) - f_N(x_0) \right\vert + \left\vert f_N(x_0) - f_N(x) \right\vert + \left\vert f_N(x) - f_n(x) \right\vert\\
+                                         &\leq 3\varepsilon.
+  \end{align*}
+  Thus, $f$ is continuous. Additionally, for $n\geq N$ and $x\in X$, we have
+  \begin{align*}
+    \left\vert f_n(x) - f(x) \right\vert &= \lim_{m\rightarrow\infty}\left\vert f_n(x) - f_m(x) \right\vert\\
+                                         &\leq \lim_{m\rightarrow\infty}\norm{f_n-f_m}_{\infty}\\
+                                         &\leq \varepsilon.
+  \end{align*}
+  Thus, $\lim_{n\rightarrow\infty}\norm{f_n - f}_{\infty} = 0$, meaning $C(X)$ is complete.
+\end{proof}
+\begin{definition}[Banach Space]
+  A Banach space is a vector space over $\C$ with a norm $\norm{\cdot}$ is complete with respect to the induced metric.
+\end{definition}
+\begin{proposition}[Properties of the Banach Space Operations]
+  Let $\mathcal{X}$ be a Banach space. The functions
+  \begin{itemize}
+    \item $a: \mathcal{X}\times \mathcal{X} \rightarrow \mathcal{X};\:a(f,g) = f+g$,
+    \item $s: \C\times \mathcal{X}\rightarrow \mathcal{X};\:s(\lambda,f) = \lambda f$,
+    \item $n: \mathcal{X}\rightarrow \R^{+};\:n(f) = \norm{f}$
+  \end{itemize}
+  are continuous.
+\end{proposition}
+\begin{definition}[Directed Sets and Nets]
+  Let $A$ be a partially ordered set with ordering $\leq$. We say $A$ is directed if for each $\alpha,\beta \in A$, there exists a $\gamma$ such that $\alpha \leq \gamma$ and $\beta \leq \gamma$.\newline
+
+  A net is a map $\alpha \mapsto \lambda_{\alpha}$, where $\alpha\in A$ for some directed set $A$. 
+\end{definition}
+\begin{definition}[Convergence of Nets]
+  Let $\set{\lambda_{\alpha}}$ be a net in $X$. We say the net converges to $\lambda \in X$ if for every neighborhood $U$ of $\lambda$, there exists $\alpha_{U}$ such that for $\alpha \geq \alpha_U$, every $\lambda_{\alpha}$ is contained in $U$.\footnote{The net convergence generalizes sequence convergence in a metric space to the case where $X$ does not have a metric.}
+\end{definition}
+\begin{definition}[Cauchy Nets in Banach Spaces]
+  A net $\set{f_{\alpha}}_{\alpha}$ in a Banach space $\mathcal{X}$ is said to be a Cauchy net if for every $\ve > 0$, there exists $\alpha_0$ in $A$ such that $\alpha_1,\alpha_2 \geq \alpha_0$ implies $\norm{f_{\alpha_1} -f_{\alpha_2}} < \ve$.
+\end{definition}
+\begin{proposition}[Convergence of Cauchy Nets in Banach Spaces]
+In a Banach space, every Cauchy net is convergent.
+\end{proposition}
+\begin{proof}
+  Let $\set{f_{\alpha}}_{\alpha}$ be a Cauchy net in $\mathcal{X}$. Choose $\alpha_1$ such that $\alpha \geq \alpha_1$ implies $\norm{f_{\alpha} - f_{\alpha_1}} < 1$.\newline
+
+  We iterate this process by choosing $\alpha_{n+1}\geq \alpha_n$ such that $\alpha \geq \alpha_{n+1}$ implies  $\norm{f_{\alpha} - f_{\alpha_{n+1}}} < \frac{1}{n+1}$.\newline
+
+  The sequence $\set{f_{\alpha_n}}_{n=1}^{\infty}$ is Cauchy, and since $\mathcal{X}$ is complete, there exists $f\in \mathcal{X}$ such that $\lim_{n\rightarrow\infty} f_{\alpha_n} = f$.\newline
+
+  We must now prove that $\lim_{\alpha\in A}f_{\alpha} = f$. Let $\ve > 0$. Choose $n$ such that $\frac{1}{n} < \frac{\ve}{2}$, and $\norm{f_{\alpha_n} - f_{\alpha}} < \frac{\ve}{2}$. Then, for $\alpha \geq \alpha_n$, we have
+  \begin{align*}
+    \norm{f_{\alpha} - f} &\leq \norm{f_{\alpha} - f_{\alpha_n}} + \norm{f_{\alpha_n} - f}\\
+                          &< \frac{1}{n} + \frac{\ve}{2}\\
+                          &< \ve.
+  \end{align*}
+\end{proof}
+\begin{definition}[Convergence of Infinite Series]
+  Let $\set{f_{\alpha}}_{\alpha}$ be a set of vectors in $\mathcal{X}$. Let $\mathcal{F} = \set{F\subseteq A\mid F\text{ finite}}$.\newline
+
+  Define the ordering $F_1\leq F_2 \Leftrightarrow F_1 \subseteq F_2$.\footnote{the inclusion ordering} For each $F$, define
+  \begin{align*}
+    g_F = \sum_{\alpha \in F}f_{\alpha}.
+  \end{align*}
+  If $\set{g_F}_{F\in \mathcal{F}}$ converges to some $g\in \mathcal{X}$, then
+  \begin{align*}
+    \sum_{\alpha \in A}f_{\alpha}
+  \end{align*}
+  converges, and we write
+  \begin{align*}
+    g = \sum_{\alpha \in A}f_{\alpha}.
+  \end{align*}
+\end{definition}
+\begin{proposition}[Absolute Convergence of Series in Banach Space]
+  Let $\set{f_{\alpha}}_{\alpha}$ be a set of vectors in the Banach space $\mathcal{X}$. Suppose $\displaystyle \sum_{\alpha \in A}\norm{f_{\alpha}}$ converges in $\R$. Then, $\sum_{\alpha \in A}f_{\alpha}$ converges in $\mathcal{X}$.
+\end{proposition}
+\begin{proof}
+  All we need show is $\set{g_{F}}_{F\in \mathcal{F}}$ is Cauchy. Since $\displaystyle \sum_{\alpha \in A}\norm{f_{\alpha}}$ converges, there exists $F_0\in \mathcal{F}$ such that $F\geq F_{0}$ implies
+  \begin{align*}
+    \sum_{\alpha \in F} \norm{f_{\alpha}} - \sum_{\alpha \in F_{0}}\norm{f_{\alpha}} < \ve.
+  \end{align*}
+  Thus, for $F_1,F_2 \geq F_0$, we have
+  \begin{align*}
+    \norm{g_{F_1} - g_{F_2}} &= \norm{\sum_{\alpha \in F_1}f_{\alpha} - \sum_{\alpha \in F_2}f_{\alpha}}\\
+                             &= \norm{\sum_{\alpha \in F_1\setminus F_2}f_{\alpha} - \sum_{\alpha \in F_2\setminus F_1}}\\
+                             &\leq \sum_{\alpha \in F_{1}\setminus F_2} \norm{f_{\alpha}} + \sum_{\alpha \in F_2\setminus F_1}\norm{f_{\alpha}}\\
+                             &\leq \sum_{\alpha \in F_1\cup F_2}\norm{f_{\alpha}} - \sum_{\alpha \in F_0}\norm{f_{\alpha}}\\
+                             &< \ve.
+  \end{align*}
+  Thus, $\set{g_{F}}_{F\in \mathcal{F}}$ is Cauchy, and thus the series is convergent.
+\end{proof}
+\begin{theorem}[Absolute Convergence Criterion for Banach Spaces]
+  Let $\mathcal{X}$ be a normed vector space. Then, $\mathcal{X}$ is a Banach space if and only if for every sequence $\set{f_{n}}_{n=1}^{\infty}$ of vectors in $\mathcal{X}$,
+  \begin{align*}
+    \sum_{n=1}^{\infty}\norm{f_n} < \infty \Rightarrow \sum_{n=1}^{\infty}f_n\text{ convergent.}
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  The forward direction follows from the previous proposition.\newline
+
+  Let $\set{g_n}_{n=1}^{\infty}$ be a Cauchy sequence in a normed vector space where
+  \begin{align*}
+    \sum_{n=1}^{\infty}\norm{f_n} < \infty \Rightarrow \sum_{n=1}^{\infty}f_n\text{ convergent.}
+  \end{align*}
+  We select a subsequence $\set{g_{n_k}}_{k=1}^{\infty}$ as follows. Choose $n_1$ such that $i,j\geq n_1$ implies $\norm{g_i - g_j} < 1$; recursively, we select $n_{N+1}$ such that $\norm{g_{N+1} - g_N} < 2^{-N}$. Then,
+  \begin{align*}
+    \sum_{k=1}^{\infty}\norm{g_{k+1} - g_k} < \infty.
+  \end{align*}
+  Set $f_k = g_{n_k} - g_{n_{k-1}}$ for $k > 1$, with $f_1 = g_{n_1}$. Then,
+  \begin{align*}
+    \sum_{k=1}^{\infty}\norm{f_{k}} < \infty,
+  \end{align*}
+  meaning $\displaystyle\sum_{k=1}^{\infty}f_k$ converges. Thus, $\set{g_{n_k}}_{k=1}^{\infty}$ converges, meaning $\set{g_{n}}_{n=1}^{\infty}$ converges in $\mathcal{X}$.
+\end{proof}
+\begin{definition}[Bounded Linear Functional]
+Let $\mathcal{X}$ be a Banach space. A function $\varphi: \mathcal{X}\rightarrow \C$ is known as a bounded linear functional if
+\begin{enumerate}[(1)]
+  \item $\displaystyle \varphi(\lambda_1f_1 + \lambda_2f_2) = \lambda_1\varphi(f_1) + \lambda_2\varphi(f_2)$ for each $\lambda_1,\lambda_2\in \C$ and $f_1,f_2\in \mathcal{X}$.
+  \item There exists $M$ such that $|\varphi(f)| \leq M\norm{f}$ for each $f\in \mathcal{X}$.
+\end{enumerate}
+\end{definition}
+\begin{proposition}[Equivalent Criteria for Bounded Linear Functionals]
+Let $\varphi$ be a linear functional on $\mathcal{X}$. Then, the following conditions are equivalent:
+\begin{enumerate}[(1)]
+  \item $\varphi$ is bounded;
+  \item $\varphi$ is continuous;
+  \item $\varphi$ is continuous at $0$.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+  \begin{description}[font=\normalfont]
+    \item[$(1)\Rightarrow (2)$:] If $\set{f_{\alpha}}_{\alpha \in A}$ is a net in $\mathcal{X}$ converging to $f$, then $\lim_{\alpha \in A}\norm{f_{\alpha} - f} = 0$. Thus,
+      \begin{align*}
+        \lim_{\alpha \in A}\left\vert \varphi\left(f_{\alpha}\right)-  \varphi\left(f\right) \right\vert &= \lim_{\alpha \in A}\left\vert \varphi(f_{\alpha} - f) \right\vert\\
+                                                                                                         &\leq \lim_{\alpha \in F}M\norm{f_{\alpha} - f}\\
+                                                                                                         &= 0
+      \end{align*}
+    \item[$(2)\Rightarrow (3)$:] Trivial.
+    \item[$(3) \Rightarrow (1)$:] If $\varphi$ is continuous at $0$, then there exists $\delta > 0$ such that $\norm{f} < \delta \Rightarrow \left\vert \varphi(f) \right\vert < 1$. Thus, for any $g\in X$ nonzero, we have
+      \begin{align*}
+        \left\vert \varphi\left(g\right) \right\vert &= \frac{2\norm{g}}{\delta}\left\vert \varphi\left(\frac{\delta}{2\norm{g}}g\right) \right\vert\\
+                                                     &< \frac{2}{\delta}\norm{g},
+      \end{align*}
+      meaning $\varphi$ is bounded.
+  \end{description}
+\end{proof}
+\begin{definition}[Dual Space]
+  Let $\mathcal{X}^{\ast}$ be the set of bounded linear functionals on $\mathcal{X}$. For each $\varphi \in \mathcal{X}^{\ast}$, define
+  \begin{align*}
+    \norm{\varphi} &= \sup_{\norm{f} = 1} \left\vert \varphi(f) \right\vert.
+  \end{align*}
+  We say $\mathcal{X}^{\ast}$ is the dual space of $\mathcal{X}$.
+\end{definition}
+\begin{proposition}[Completeness of the Dual Space]
+  For $\mathcal{X}$ a Banach space, $\mathcal{X}^{\ast}$ is a Banach space.
+\end{proposition}
+\begin{proof}
+  Both positive definiteness and absolute homogeneity are apparent from the definition of the norm. We will now show the triangle inequality as follows. Let $\varphi_1,\varphi_2\in \mathcal{X}^{\ast}$. Then,
+  \begin{align*}
+    \norm{\varphi_1 + \varphi_2} &= \sup_{\norm{f} = 1}\left\vert \varphi_1\left(f\right) +  \varphi_{2}\left(f\right)\right\vert\\
+                                 &\leq \sup_{\norm{f} = 1}\left\vert \varphi_1(f) \right\vert + \sup_{\norm{f} = 1}\left\vert \varphi_2(f) \right\vert\\
+                                 &= \norm{\varphi_1} + \norm{\varphi_2}.
+  \end{align*}
+  We must now show completeness. Let $\set{\varphi_n}_n$ be a sequence in $\mathcal{X}^{\ast}$. Then, for every $f\in \mathcal{X}$, it is the case that
+  \begin{align*}
+    \left\vert \varphi_n(f) - \varphi_m(f) \right\vert &\leq \norm{\varphi_n - \varphi_m}\norm{f},
+  \end{align*}
+  meaning $\set{\varphi_n(f)}_n$ is Cauchy for each $f$. Define $\varphi(f) = \lim_{n\rightarrow\infty}\varphi_n(f)$. It is clear that $\varphi(f)$ is linear, and for $N$ such that $n,m \geq N \Rightarrow \norm{\varphi_n - \varphi_m} < 1$,
+  \begin{align*}
+    \left\vert \varphi(f) \right\vert &\leq \left\vert \varphi(f) - \varphi_N(f) \right\vert + \left\vert \varphi_N(f) \right\vert\\
+                                      &\leq \lim_{n\rightarrow\infty}\left\vert \varphi_n(f) - \varphi_N(f) \right\vert + \left\vert \varphi_N(f) \right\vert\\
+                                      &\leq \left(\lim_{n\rightarrow\infty}\norm{\varphi_n - \varphi_N} + \norm{\varphi_N}\right)\norm{f}\\
+                                      &\leq \left(1 + \norm{\varphi_N}\right)\norm{f},
+  \end{align*}
+  so $\varphi$ is bounded. Thus, we must show that $\lim_{n\rightarrow\infty}\norm{\varphi_n - \varphi} = 0$. Let $\ve > 0$. Set $N$ such that $n,m\geq N \Rightarrow \norm{\varphi_n - \varphi_m} < \ve$. Then, for $f\in \mathcal{X}$,
+  \begin{align*}
+    \left\vert \varphi(f) - \varphi_n(f) \right\vert &\leq \left\vert \varphi(f) - \varphi_m(f) \right\vert + \left\vert \varphi_m(f) - \varphi_n(f) \right\vert\\
+                                                     &\leq \left\vert (\varphi - \varphi_m)(f) \right\vert + \ve\norm{f}.\\
+  \end{align*}
+  Since $\lim_{m\rightarrow\infty}\left\vert \left(\varphi - \varphi_m\right)(f) \right\vert = 0$, we have $\norm{\varphi - \varphi_m} < \ve$.
+\end{proof}
+\begin{proposition}[Banach Spaces and their Duals]\hfill
+  \begin{enumerate}[(1)]
+    \item The space $\ell^{\infty}$ consists of the set of bounded sequences. For $f\in \ell^{\infty}$, the norm on $f$ is computed as $\displaystyle\norm{f}_{\infty} = \sup_{n} \left\vert f(n) \right\vert$.
+    \item The subspace $c_0\subseteq \ell^{\infty}$ consists of all sequences that vanish at $\infty$. The norm on $c_0$ is inherited from the norm on $\ell_{\infty}$.
+    \item The space $\ell^{1}$ consists of the set of all absolutely summable sequences. For $f\in \ell^{1}$, the norm on $f$ is computed as $\displaystyle \norm{f} = \sum_{n=1}^{\infty}\left\vert f(n) \right\vert$.
+  \end{enumerate}
+  We claim that these are all Banach spaces.\newline
+
+  We also claim that $c_0^{\ast} = \ell^1$, and $\left(\ell^{1}\right)^{\ast} = \ell^{\infty}$.
+\end{proposition}
+\begin{proof}[Proof of Banach Space]\hfill
+  \begin{description}[font = \normalfont]
+    \item[$\ell^{\infty}$:]\hfill
+      \begin{description}[font = \normalfont]
+        \item[Proof of Normed Vector Space:] Let $a,b\in \ell^{\infty}$, and $\lambda \in \C$. Then,
+          \begin{align*}
+            \sup_{n}|a(n)| = 0
+          \end{align*}
+          if and only if $a$ is the zero sequence. Additionally, we have that
+          \begin{align*}
+            \norm{\lambda a}_{\infty} &= \sup_{n}\left\vert \lambda a(n) \right\vert\\
+                             &= |\lambda|sup_{n}|a(n)|\\
+                             &= |\lambda|\norm{a}_{\infty},
+          \end{align*}
+          meaning $\norm{\cdot}_{\infty}$ is absolutely homogeneous. Finally,
+          \begin{align*}
+            \norm{a + b}_{\infty} &= \sup_{n}\left\vert a(n) + b(n) \right\vert\\
+                         &\leq \sup_{n}\left\vert a(n) \right\vert + \sup_{n}\left\vert b(n) \right\vert\\
+                         &= \norm{a}_{\infty} + \norm{b}_{\infty}.
+          \end{align*}
+        \item[Proof of Completeness:] Let $\set{a_n}_{n=1}^{\infty}$ be a Cauchy sequence of elements of $\ell^{\infty}$. Let $\ve > 0$, and let $N$ be such that $\norm{a_n - a_m}_{\infty} < \varepsilon$ for $n,m \geq N$. Then, for each $k$,
+          \begin{align*}
+            \left\vert a_{n}(k) - a_m(k) \right\vert &= \left\vert (a_n - a_m)(k) \right\vert\\
+                                                     &\leq \norm{a_n - a_m}\\
+                                                     &< \varepsilon,
+          \end{align*}
+          meaning that $a_n(k)$ is Cauchy in $\C$ for each $k$.\newline
+
+          Set $a(k) = \lim_{n\rightarrow\infty}a_n(k)$. We must now show that $\lim_{n\rightarrow\infty}\norm{a - a_n} = 0$. Let $\ve > 0$, and set $N$ such that for $n,m\geq N$, $\norm{a_m - a_n} < \ve$. Then,
+          \begin{align*}
+            \left\vert a(k) - a_n(k) \right\vert &\leq \left\vert a(k) - a_m(k) \right\vert + \left\vert a_m(k) - a_n(k) \right\vert\\
+                                                 &\leq \left\vert a(k) - a_m(k) \right\vert + \norm{a_m - a_n}\\
+                                                 &< \left\vert a(k) - a_m(k) \right\vert + \ve.
+          \end{align*}
+          Since $\lim_{m\rightarrow\infty} \left\vert a(k) - a_m(k) \right\vert = 0$, we have $\norm{a - a_n} < \ve$.\footnote{The reason we had to go about it like this was that we defined the sequence $a$ pointwise; however, we need to show convergence \textit{in norm}.}
+      \end{description}
+    \item[$c_0$:]\hfill
+      \begin{description}[font=\normalfont]
+        \item[Proof of Subspace:] Let $a,b\in c_0$, and $\lambda \in \C\setminus \set{0}$. Let $\ve > 0$. Set $N_1$ such that $|a(n)| < \frac{\ve}{2|\lambda|}$ for all $n\geq N_1$, and set $N_2$ such that $|b(n)| < \frac{\ve}{2}$ for all $n \geq N_2$.\newline
+
+          Then, for all $n \geq \max\set{N_1,N_2}$,
+          \begin{align*}
+            |\lambda a(n) + b(n)| &\leq |\lambda||a(n)| + |b(n)|\\
+                                  &< |\lambda|\frac{\ve}{2|\lambda|} + \frac{\ve}{2}\\
+                                  &= \ve.
+          \end{align*}
+        \item[Proof of Completeness:] In order to show completeness, we must show that $c_0$ is closed in $\ell^{\infty}$. Let $\set{a_k}_{k=1}^{\infty}$ be a sequence in $c_0$, with $a_k \rightarrow a$.\newline
+
+          We will need to show that $a\in c_0$.\footnote{Sequential criterion for closure.} Let $\ve > 0$, and set $K$ such that for all $k\geq K$, $\norm{a_k - a} < \ve/2$. 
+      \end{description}
+  \end{description}
+\end{proof}
+\end{document}
