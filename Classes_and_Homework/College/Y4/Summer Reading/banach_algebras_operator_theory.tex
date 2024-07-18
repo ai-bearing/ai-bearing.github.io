@@ -25,7 +25,6 @@
 \usepackage{multirow,array} %better tables
 \usepackage{multicol} %multiple columns per page
 \usepackage{bbold} %better blackboard bold
-\newtheorem*{remark}{Remark}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
@@ -79,17 +78,18 @@
 \newtheorem*{example}{Example}
 
 \newtheoremstyle{note}
+  {3pt}%
+  {3pt}%
   {}%
   {}%
-  {}%
-  {}%
-  {\bfshape}%
+  {\bfseries}%
   {:}%
   { }%
   {}%
 \theoremstyle{note}
 \newtheorem*{note}{Note}
-% \newtheorem*{claim}{Claim}
+\newtheorem*{remark}{Remark}
+%\newtheorem*{claim}{Claim}
 
 \usepackage[document]{ragged2e}
 \renewcommand{\newline}{\hfill\break}
@@ -97,6 +97,60 @@
 \begin{document}
 \section{Prelude}%
 My REU mentor recently bought me the book \textit{Banach Algebra Techniques in Operator Theory}, so I'm going to be reading through it here. Astute readers may already know that I am also reading through the book \textit{Quantum Theory for Mathematicians}, and may be wondering if this is going to crowd out that book. The answer is yes --- but I don't really care that much. If I come out of the summer knowing more things than I knew entering, then I will have succeeded.
+\section{Prerequisite Notes}%
+Since Douglas's book is very advanced, I'm going to end up going back and reading other important material in order to contextualize the parts of the book I don't fully understand.
+\subsection{Tychonoff's Theorem}%
+I'm drawing information for this section from Volker Runde's book \textit{A Taste of Topology}, specifically from Chapter 3.
+\begin{definition}[Product Topology]
+  Let $\set{\left(X_{i},\tau_{i}\right)}_{i}$ be a family of topological spaces, and $\displaystyle X = \prod_{i\in I}X_i$.\newline
+
+  The product topology on $X$ is the coarsest topology $\tau$ on $X$ such that
+  \begin{align*}
+    \prod_{i}: X \rightarrow X_i;~~f\mapsto f(i)
+  \end{align*}
+  is continuous.
+\end{definition}
+The product topology's open sets are of the form
+\begin{align*}
+  \bigcap_{j=1}^{n}\pi_{i_j}\left(U_j\right),
+\end{align*}
+where $i_{j}\in I$. The product topology is the topology of coordinatewise convergence.
+\begin{theorem}[Tychonoff's]
+  Let $\set{\left(K_i,\tau_i\right)}_{i\in I}$ be a nonempty family of compact topological spaces. Then, the product space $\displaystyle K = \prod_{i\in I}K_i$ is compact in the product topology.
+\end{theorem}
+\begin{proof}
+  Let $\set{f_{\alpha}}_{\alpha\in A}$ be a net\footnote{See future definition of nets.} in $K$. Let $J\subseteq I$ be nonempty, and let $f\in K$.\newline
+
+  We call $\left(J,f\right)$ a partial accumulation point of $\set{f_{\alpha}}_{\alpha \in A}$ if $f\vert_{J}$ is a accumulation point of $\set{f_{\alpha}\vert_{J}}_{\alpha \in A}$ in $\displaystyle \prod_{j\in J}K_j$. A partial accumulation point of $\set{f_{\alpha}}_{\alpha \in A}$ is a accumulation point of $\set{f_{\alpha}}_{\alpha\in A}$  if and only if $J = I$.\newline
+
+  Let $\mathcal{P}$ be the set of partial accumulation points of $\set{f_{\alpha}}_{\alpha \in A}$ For any two $\left(J_f,f\right),\left(J_g,g\right)\in \mathcal{P}$, define the order $\left(J_f,f\right)\leq \left(J_g,g\right)$ if and only if $J_f\subseteq J_g$ and $g\vert_{J_f} = f$.\newline
+
+  Since $K_i$ is compact for each $i\in I$, the net $\set{f_{\alpha}}_{\alpha}$ has partial accumulation points $\left(\set{i},f_i\right)$ for each $i\in I$ (since each $K_i$ is compact, the net analogue to sequential compactness holds); in particular, $\mathcal{P}$ is nonempty.\newline
+
+  Let $\mathcal{Q}$ be a totally ordered subset of $\mathcal{P}$, and $J_g = \bigcup\set{J_f\mid \left(J_f,f\right)\in \Q}$. Define $g$ by letting $g(j) = f(j)$ for each $j\in J_f$ with $\left(J_f,f\right)\in \mathcal{Q}$, and arbitrarily on $I\setminus J_g$.\newline
+
+  Since $\mathcal{Q}$ is totally ordered, $g$ is well-defined. We claim that $\left(J_g,g\right)$ is a partial accumulation point of $\set{f_{\alpha}}_{\alpha}$.\newline
+
+  Let $\displaystyle N\subseteq \prod_{j\in J_g} K_j$ be a neighborhood of $g\vert_{J_g}$. We may suppose that
+  \begin{align*}
+    N = \pi_{j_1})^{-1}\left(U_{j_1}\right) \cap \cdots \cap \pi_{j_n}\left(U_{j_n}\right),
+  \end{align*}
+  where $j_1,\dots,j_n\in J_g$, and $U_{j_i} \subseteq K_{j_i}$ are open.\newline
+
+  Let $\left(J_{h},h\right)\in \mathcal{Q}$ be such that $\set{j_1,\dots,j_n}\subseteq J_h$, which is possible since $\mathcal{Q}$ is totally ordered. Since $\left(J_h,h\right)$ is a partial accumulation point of $\set{f_{\alpha}}_{\alpha}$, there is an index $\alpha$ and a $\beta \geq \alpha$, where
+  \begin{align*}
+    f_{\beta}\left(j_k\right) = \pi_{j_k}\left(f_{\beta}\right)U_{j_k},
+  \end{align*}
+  so $f_{\beta}\in N$. Thus, $\left(J_g,g\right)$ is a partial accumulation point of $\set{f_{\alpha}}_{\alpha}$, and is an element of $\mathcal{P}$.\newline
+
+  By Zorn's lemma,\footnote{In a partially ordered set, if every totally ordered subset contains an upper bound, the set contains a maximal element} $\mathcal{P}$ has a maximal element, $\left(J_{\text{max}},f_{\text{max}}\right)$.\newline
+
+  Suppose toward contradiction that $J_{\text{max}}\subset I$, meaning there is an $i_0\in I\setminus J_{\text{max}}$. Since $\left(J_{\text{max}},f_{\text{max}}\right)$ is a partial accumulation point of $\set{f_{\alpha}}_{\alpha}$, there is a subnet $\set{f_{\alpha_\beta}}_{\beta}$ such that $\pi_{j}\left(f_{\alpha_\beta}\right) \rightarrow \pi_{j}\left(f_{\text{max}}\right)$ for each $j\in J_{\text{max}}$.\newline
+
+  Since $K_{i_0}$ is compact, we find a subnet $\set{f_{\alpha_{\beta_{\gamma}}}}_{\gamma}$ such that $\pi_{i_0}\left(f_{\alpha_{\beta_{\gamma}}}\right)_{\gamma}$ converges to $x_{i_0}$ in $K_{i_0}$.\newline
+
+  Define $\tilde{f} \in K$ by setting $\tilde{f}\vert_{J_{\text{max}}} = f_{\text{max}}$, and $\tilde{f}(i_0) = x_{i_0}$. Thus, $\left(J_{\text{max}}\cup \set{i_0},\tilde{f}\right)$ is a partial accumulation point, which contradicts the maximality of $\left(J_{\text{max}},f_{\text{max}}\right)$.
+\end{proof}
 \section{Banach Spaces}%
 Let $X$ be a compact Hausdorff space, and let $C(X)$ denote the set of continuous functions $f: X\rightarrow \C$. For $f_1,f_2\in C(X)$ and $\lambda\in \C$, we define
 \begin{enumerate}[(1)]
@@ -325,10 +379,10 @@ Let $\varphi$ be a linear functional on $\mathcal{X}$. Then, the following condi
 
   We also claim that $c_0^{\ast} = \ell^1$, and $\left(\ell^{1}\right)^{\ast} = \ell^{\infty}$.
 \end{proposition}
-\begin{proof}[Proof of Banach Space]\hfill
+\begin{proof}[Proofs of Banach Space]\hfill
   \begin{description}[font = \normalfont]
     \item[$\ell^{\infty}$:]\hfill
-      \begin{description}[font = \normalfont]
+      \begin{description}
         \item[Proof of Normed Vector Space:] Let $a,b\in \ell^{\infty}$, and $\lambda \in \C$. Then,
           \begin{align*}
             \sup_{n}|a(n)| = 0
@@ -362,7 +416,7 @@ Let $\varphi$ be a linear functional on $\mathcal{X}$. Then, the following condi
           Since $\lim_{m\rightarrow\infty} \left\vert a(k) - a_m(k) \right\vert = 0$, we have $\norm{a - a_n} < \ve$.\footnote{The reason we had to go about it like this was that we defined the sequence $a$ pointwise; however, we need to show convergence \textit{in norm}.}
       \end{description}
     \item[$c_0$:]\hfill
-      \begin{description}[font=\normalfont]
+      \begin{description}
         \item[Proof of Subspace:] Let $a,b\in c_0$, and $\lambda \in \C\setminus \set{0}$. Let $\ve > 0$. Set $N_1$ such that $|a(n)| < \frac{\ve}{2|\lambda|}$ for all $n\geq N_1$, and set $N_2$ such that $|b(n)| < \frac{\ve}{2}$ for all $n \geq N_2$.\newline
 
           Then, for all $n \geq \max\set{N_1,N_2}$,
@@ -373,8 +427,287 @@ Let $\varphi$ be a linear functional on $\mathcal{X}$. Then, the following condi
           \end{align*}
         \item[Proof of Completeness:] In order to show completeness, we must show that $c_0$ is closed in $\ell^{\infty}$. Let $\set{a_k}_{k=1}^{\infty}$ be a sequence in $c_0$, with $a_k \rightarrow a$.\newline
 
-          We will need to show that $a\in c_0$.\footnote{Sequential criterion for closure.} Let $\ve > 0$, and set $K$ such that for all $k\geq K$, $\norm{a_k - a} < \ve/2$. 
+          We will need to show that $a\in c_0$.\footnote{Sequential criterion for closure.} Let $\ve > 0$, and set $K$ such that for all $k\geq K$, $\norm{a_k - a} < \ve/2$. For each $k$, choose $N$ such that $|a_k(n)| < \ve/2$ for all $n \geq N$. Then, for all $n\geq N$,
+          \begin{align*}
+            \left\vert a(n) \right\vert &\leq \left\vert a(n) - a_k(n) \right\vert + \left\vert a_k(n) \right\vert\\
+                                        &< \norm{a - a_k} + \left\vert a_k(n) \right\vert\\
+                                        &< \ve.
+          \end{align*}
+          Since $c_0$ is closed in $\ell^{\infty}$, it is thus complete.
+      \end{description}
+    \item[$\ell^{1}$:]\hfill
+      \begin{description}
+        \item[Proof of Normed Vector Space:] Let $a,b\in \ell^{1}$, and $\lambda \in \C$. Then,
+          \begin{align*}
+            \norm{\lambda a + b} &= \sum_{k=1}^{\infty}\left\vert \lambda a(k) + b(k) \right\vert\\
+                                 &\leq \sum_{k=1}^{\infty}\left\vert \lambda a(k) \right\vert + \sum_{k=1}^{\infty}\left\vert b(k) \right\vert\\
+                                 &= |\lambda|\sum_{k=1}^{\infty}\left\vert a(k) \right\vert + \sum_{k=1}^{\infty}\left\vert b(k) \right\vert\\
+                                 &= |\lambda|\norm{a} + \norm{b}.
+          \end{align*}
+          Thus, $\lambda a + b\in \ell^{1}$. We have also shown both the triangle inequality and absolute homogeneity. We can also see that, if $\norm{a} = 0$,
+          \begin{align*}
+            \norm{a} &= \sum_{k=1}^{\infty}\left\vert a(k) \right\vert\\
+            &= 0,
+          \end{align*}
+          which is only true if $a(k) = 0$ for all $k$.
       \end{description}
   \end{description}
 \end{proof}
+\begin{example}[Pointwise Convergence and Convergence in Norm]
+  Consider a sequence $\set{\varphi_n}_n$ in $\mathcal{X}^{\ast}$. If the sequence converges in norm to $\varphi$, then it must also converge pointwise. However, the converse isn't true.\newline
+
+  For each $k$, define $L_k(f) = f(k)$, where $f\in \ell^{1}$. We can see that $L_k \in \left(\ell^{1}\right)^{\ast}$, and $\lim_{k\rightarrow\infty}L_k(f) = 0$ for each $f\in \ell^{1}$. The sequence of $L_k$ thus converges to the zero functional pointwise, but since $\norm{L_k} = 1$ always, it isn't the case that $L_k$ converges to the zero functional in norm.
+\end{example}
+\begin{definition}[Weak Topology and $w^{\ast}$-Topology]
+Let $X$ be a set, $Y$ a topological space, and $\mathcal{F}$ be a family of functions from $X$ to $Y$. The weak topology on $X$ is the topology for which all functions in $\mathcal{F}$ are continuous.\newline
+
+For each $f$ in $\mathcal{X}$, let $\hat{f}: \mathcal{X}^{\ast}\rightarrow \C$ be defined by $\hat{f}(\varphi) = \varphi(f)$. The $w^{\ast}$-topology on $\mathcal{X}^{\ast}$ is the weak topology on $\mathcal{X}^{\ast}$ defined by the family of functions $\set{\hat{f}\mid f\in \mathcal{X}}$.\newline
+
+If $Y$ is Hausdorff and $\mathcal{F}$ separates the points of $X$, then the weak topology is Hausdorff.\footnote{I am trying to find a source to prove this, will include the proof of this implicit proposition hopefully.}
+\end{definition}
+\begin{proposition}[Hausdorff Property of $w^{\ast}$-Topology]
+  The $w^{\ast}$-topology on $\mathcal{X}^{\ast}$ is Hausdorff.
+\end{proposition}
+\begin{proof}
+  If $\varphi_1 \neq \varphi_2$, then there exists at least one $f$ such that $\varphi_1(f) \neq \varphi_2(f)$, meaning $\set{\hat{f}\mid f\in \mathcal{X}}$ separates the points of $\mathcal{X}^{\ast}$, so the $w^{\ast}$-topology is Hausdorff.
+\end{proof}
+\begin{proposition}[Convergence in the $w^{\ast}$-Topology]
+  A net $\set{\varphi_{\alpha}}_{\alpha}$ converges to $\varphi\in\mathcal{X}^{\ast}$ in the $w^{\ast}$ topology if and only if $\lim_{\alpha \in A}\varphi_{\alpha} = \varphi$.\footnote{In the special case of Hilbert space $\mathcal{H}$, we know from the Riesz Representation Theorem that each $\varphi\in \mathcal{H}^{\ast}$ is represented by $\psi$ such that $\varphi(f) = \iprod{f}{\psi}$.}
+\end{proposition}
+\begin{proposition}[Determination of the $w^{\ast}$-Topology]
+  Let $\mathcal{M}$ be a dense subset of $\mathcal{X}$, and let $\set{\varphi_{\alpha}}_{\alpha\in A}$ be a uniformly bounded net in $\mathcal{X}^{\ast}$, where $\lim_{\alpha \in A}\varphi_{\alpha}(f) = \varphi(f)$ for each $f\in \mathcal{M}$. Then, the net $\set{\varphi_{\alpha}}_{\alpha \in A}$ converges to $\varphi$ in the $w^{\ast}$ topology.
+\end{proposition}
+\begin{proof}
+  Let $\displaystyle M = \sup_{\alpha \in A}\max\set{\norm{\varphi_{\alpha}},\norm{\varphi}}$, and let $\ve > 0$.\newline
+
+  Given $g\in \mathcal{X}$, choose $f\in \mathcal{M}$ such that $\norm{f - g} < \frac{\ve}{3M}$. Let $\alpha_0\in A$ such that $\alpha \geq \alpha_0$  implies $\left\vert \varphi_{\alpha}(f) - \varphi(f) \right\vert < \frac{\ve}{3}$. Then, for all $\alpha \geq \alpha_0$,
+  \begin{align*}
+    \left\vert \varphi_{\alpha}(g) - \varphi(g) \right\vert &\leq \left\vert \varphi_{\alpha}(g) - \varphi_{\alpha}(f) \right\vert + \left\vert \varphi_{\alpha}(f) - \varphi(f) \right\vert + \left\vert \varphi(f) - \varphi(g) \right\vert\\
+                                                            &\leq \norm{\varphi_{\alpha}}\norm{f-g} + \frac{\ve}{3} + \norm{\varphi}\norm{f-g}\\
+                                                            &< \ve.
+  \end{align*}
+\end{proof}
+\begin{definition}[Unit Ball]
+  For $\mathcal{X}$ a Banach space, we denote the unit ball as $B_{\mathcal{X}} = \set{ f\in \mathcal{X}\mid \norm{f}\leq 1}$.\footnote{The book uses a different notation, but I don't like that notation.}
+\end{definition}
+\begin{theorem}[Banach--Alaoglu]
+  The set $B_{\mathcal{X}^{\ast}}$ is compact in the $w^{\ast}$-topology.
+\end{theorem}
+\begin{proof}
+  Let $f\in B_{\mathcal{X}}$. Let $\overline{\mathbb{D}}^{f}$ denote the $f$-labeled copy of the closed unit disc in $\C$. Set
+  \begin{align*}
+    P &= \prod_{f\in B_{\mathcal{X}}}\overline{\mathbb{D}}^{f}.
+  \end{align*}
+  Then, $P$ is compact by Tychonoff's theorem.\newline
+
+  Define $\Lambda: B_{\mathcal{X}^{\ast}} \rightarrow P$ by $\Lambda(\varphi) = \varphi\vert_{B_{\mathcal{X}}}$. Notice that $\Lambda(\varphi_1) = \Lambda(\varphi_2)$ implies that $\varphi_1 = \varphi_2$ on $B_{\mathcal{X}}$, meaning $\varphi_1 = \varphi_2$. Therefore, $\Lambda$ is injective.\newline
+
+  Let $\set{\varphi_{\alpha}}_{\alpha \in A}$ be a net in $\mathcal{X}^{\ast}$ converging to $\varphi$ in the $w^{\ast}$-topology. Then,
+  \begin{align*}
+    \lim_{\alpha \in A}\varphi_{\alpha}(f) &= \varphi(f)\\
+    \lim_{\alpha \in A}\left(\Lambda\left(\varphi_{\alpha}\right)\right)(f) &= \lim_{\alpha \in A}\left(\Lambda\left(\varphi\right)\right)(f),
+  \end{align*}
+  meaning
+  \begin{align*}
+    \lim_{\alpha \in A}\Lambda\left(\varphi_{\alpha}\right) = \Lambda\left(\varphi\right)
+  \end{align*}
+  in $P$. Since $\Lambda$ is one-to-one, we can see that $\Lambda: \mathcal{B}_{\mathcal{X}^{\ast}} \rightarrow \Lambda\left(B_{\mathcal{X}^{\ast}}\right)\subseteq P$ is a linear homeomorphism.\newline
+
+  Let $\set{\Lambda\left(\varphi_{\alpha}\right)}_{\alpha\in A}$ be a net in $\Lambda\left(B_{\mathcal{X}^{\ast}}\right)$ converging in the product topology to $\psi$. Let $f,g \in B_{\mathcal{X}^{\ast}}$ and $\xi \in \C$ with $f+g\in B_{\mathcal{X}^{\ast}}$ and $\xi f \in B_{\mathcal{X}^{\ast}}$. Then,
+  \begin{align*}
+    \psi\left(f+g\right) &= \lim_{\alpha \in A}\left(\Lambda\left(\varphi_{\alpha}\right)\right)(f+g)\\
+                         &= \lim_{\alpha \in A}\left(\Lambda\left(\varphi_{\alpha}\right)\right)(f) + \lim_{\alpha \in A}\left(\Lambda\left(\varphi_{\alpha}\right)\right)(g)\\
+                         &= \psi(f) + \psi(g)
+  \end{align*}
+  and
+  \begin{align*}
+    \psi(\xi f) &= \lim_{\alpha \in A}\left(\Lambda\left(\varphi_{\alpha}\right)\right)(\xi f)\\
+                 &= \lim_{\alpha \in A}\varphi_{\alpha}\left(\xi f\right)\\
+                 &= \varphi\left(\xi f\right)\\
+                 &= \xi \varphi\left(f\right)\\
+                 &= \xi \left(\Lambda\left(\varphi\right)\right)(f)\\
+                 &= \xi \psi(f).
+  \end{align*}
+  Thus, $\psi(f)$ determines $\tilde{\psi}(f) = \frac{1}{\norm{f}}\psi\left(f\right)$ in $B_{\mathcal{X}^{\ast}}$ for all $f\in \mathcal{X}\setminus \set{0}$. If $f\in B_{\mathcal{X}}$, then $\tilde{\psi} \in \mathcal{B}_{\mathcal{X}^{\ast}}$ and $\Lambda(\tilde{\psi}) = \psi$.\newline
+
+  Thus, $\Lambda\left(B_{\mathcal{X}^{\ast}}\right)$ is closed in $P$, meaning $B_{\mathcal{X}^{\ast}}$ is compact in the $w^{\ast}$-topology.
+\end{proof}
+We will be able to use the Banach--Alaoglu theorem to prove that every Banach space is isomorphic to a subspace of $C(X)$ for some compact Hausdorff space $X$. However, we will need some theorems and machinery to prove that
+\begin{definition}[Sublinear Functionals]
+  Let $\mathcal{E}$ be a real linear space, and let $p$ be a real-valued functional on $\mathcal{E}$. We say $p$ is a sublinear functional if $p(f+g)\leq p(f) + p(g)$ for all $f,g\in \mathcal{E}$, and $p(\lambda f) = \lambda p(f)$.
+\end{definition}
+\begin{theorem}[Hahn--Banach Dominated Extension]
+  Let $\mathcal{E}$ be a real linear space, and $p$ a (real-valued) sublinear functional on $\mathcal{E}$. Let $\mathcal{F}\subseteq \mathcal{E}$ be a subspace, and $\varphi$ a real linear functional on $\mathcal{F}$ such that $\varphi(f) \leq p(f)$ for all $f\in \mathcal{F}$.\newline
+
+  Then, there exists a real linear functional $\Phi$ on $\mathcal{E}$ such that $\Phi(f) = \varphi(f)$ for $f\in \mathcal{F}$, and $\Phi(g) \leq p(g)$ for all $g\in \mathcal{E}$.
+\end{theorem}
+\begin{proof}
+  Let $\mathcal{F}\subseteq \mathcal{E}$ be a nonempty subspace, and let $f\notin \mathcal{F}$. Select $\mathcal{G} = \set{g + \lambda f\mid g\in \mathcal{F},~\lambda \in \R}$.\newline
+
+  We will extend $\varphi$ to $\Phi_{\mathcal{G}}$ by taking $\Phi(g + \lambda f)\leq p(g + \lambda f)$. Dividing by $|\lambda|$, we find that, for all $h\in \mathcal{F}$
+  \begin{align*}
+    \Phi(f - h) &\leq p(f - h)\\
+    \intertext{and}
+    -p\left(h - f\right)&\leq \Phi\left(h - f\right).
+  \end{align*}
+  Thus, recalling that $\Phi(h) = \varphi(h)$ for $h\in \mathcal{F}$,
+  \begin{align*}
+    -p\left(h-f\right) + \varphi(h) \leq \Phi\left(f\right) \leq p(f-h) + \varphi(h).
+  \end{align*}
+  The desired $\Phi$ only has this property if
+  \begin{align*}
+    \sup_{h\in \mathcal{F}}\set{\varphi(h) - p(h-f)} \leq \inf_{k\in \mathcal{F}}\set{\varphi(k) + p(f-k)}.
+  \end{align*}
+  However, we also have
+  \begin{align*}
+    \varphi(h)- \varphi(k) &= \varphi(h-k)\\
+                           &\leq p(h-k)\\
+                           &\leq p(f-k) + p(h-f),
+  \end{align*}
+  meaning
+  \begin{align*}
+    \varphi(h) - p(h-f) &\leq \varphi(k) + p(f-k).
+  \end{align*}
+  Therefore, we can thus extend $\varphi$ on $\mathcal{F}$ to $\Phi$ on $\mathcal{G}$, where $\Phi(h) \leq p(h)$. We label this as $\Phi_{\mathcal{G}}$.\newline
+
+  Let $\mathcal{P} = \set{(\mathcal{G}_{\delta},\Phi_{\mathcal{G}_{\delta}})}_{\delta \in D}$ denote the class of extensions of $\varphi$ such that $\Phi_{\mathcal{G}_{\delta}}(h) \leq p(h)$ for all $h\in \mathcal{G}_{\delta}$.\newline
+
+  An element of $\mathcal{P}$ contains $\mathcal{G}$ such that $\mathcal{F}\subseteq \mathcal{G}\subseteq \mathcal{E}$, where $\Phi_{\mathcal{G}}$ extends $\varphi$, meaning $\mathcal{P}$ is nonempty.\newline
+
+  The partial order on $\mathcal{P}$ can be set by $\left(\mathcal{G}_{1},\Phi_{\mathcal{G}_2}\right)\leq \left(\mathcal{G}_{2},\Phi_{\mathcal{G}_{2}}\right)$ if $G_1\subseteq G_2$ and $\Phi_{\mathcal{G}_1}(f) = \Phi_{\mathcal{G}_{2}}(f)$ for all $f\in \mathcal{G}_{1}$.\newline
+
+  Consider a chain\footnote{totally ordered subset} $\set{\left(\mathcal{G}_{\alpha},\Phi_{\mathcal{G}_{\alpha}}\right)}_{\alpha \in A}$. To find an upper bound, consider
+  \begin{align*}
+    \mathcal{G} &= \bigcup_{\alpha \in A}\mathcal{G}_{\alpha},
+  \end{align*}
+  where $\Phi_{\mathcal{G}}(f) = \Phi_{\mathcal{G}_{\alpha}}(f)$ for every $f\in \mathcal{G}_{\alpha}$. Then, $\Phi_{\mathcal{G}}$ is a linear functional that satisfies the given properties,\footnote{I am too lazy to prove this.} and $\left(\mathcal{G},\Phi_{\mathcal{G}}\right)$ is an upper bound for $\set{\left(\mathcal{G}_{\alpha},\Phi_{\mathcal{G}_{\alpha}}\right)}$.\newline
+
+  Thus, by Zorn's Lemma, there is a maximal element of $\mathcal{P}$, $\left(\mathcal{G}_{\text{max}},\Phi_{\mathcal{G}_{\text{max}}}\right)$. If $\mathcal{G}_0\neq \mathcal{E}$, then we can find a $f\notin \mathcal{G}_{0}$ and repeat the process performed at the beginning of the proof, which would contradict maximality.\newline
+
+  Thus, we have constructed a linear functional $\Phi$ such that $\Phi(f) \leq p(f)$ for all $f\in \mathcal{E}$ that extends $\varphi$.
+\end{proof}
+\begin{theorem}[Hahn--Banach Continuous Extension]
+  Let $\mathcal{M}$ be a subspace of the Banach space $\mathcal{X}$. If $\varphi$ is a bounded linear functional on $\mathcal{M}$, then there exists $\Phi$ on $\mathcal{X}^{\ast}$ such that $\Phi(f) = \varphi(f)$ for all $f\in \mathcal{M}$ and $\norm{\Phi} = \norm{\varphi}$.
+\end{theorem}
+\begin{proof}
+  Consider $\tilde{\mathcal{X}}$ as the real linear space on which $\norm{\cdot}$ is the sublinear functional. Set $\psi = \text{Re}\left(\varphi\right)$ on $\mathcal{M}$.\newline
+
+  We can see that, since $\text{Re}\left(\varphi(f)\right) \leq |\varphi(f)|$, $\norm{\psi}\leq \norm{\varphi}$.\newline
+
+  Set $p(f) = \norm{\varphi}\norm{f}$. Since $\psi(f) \leq p(f)$ for all $f\in \mathcal{X}$, by the dominated extension theorem, there exists $\Psi$ defined on $\tilde{\mathcal{X}}$ that extends $\psi$. In particular, we can see that $\Psi(f) \leq \norm{\varphi}\norm{f}$.\newline
+
+  Define $\Phi$ on $\mathcal{X}$ by $\Phi(f) = \Psi(f) - i\Psi(if)$ for any $f\in \mathcal{X}$. We will show that $\Phi$ is a complex bounded linear functional that extends $\varphi$ and has norm $\norm{\varphi}$. We can see that
+  \begin{align*}
+    \Phi(f+g) &= \Psi(f + g) - i\Psi\left(i\left(f+g\right)\right) \\
+              &= \Psi(f) - i\Psi(if) +\Psi(g) - i\Psi(ig)\\
+              &= \Phi(f) + \Phi(g),
+  \end{align*}
+  and for $\lambda_1,\lambda_2\in \R$,\footnote{Notice that $\Phi(if) = \Psi(if) - i\Psi(-f) = i\Psi(f) + \Psi(if) = i\Phi(f)$}
+  \begin{align*}
+    \Phi\left(\left(\lambda_1 + i\lambda_2\right)f\right) &= \Phi\left(\lambda_1 f\right) + \Phi\left(i\lambda_2 f\right)
+                                                          &=\left(\lambda_1 + i\lambda_2\right)\Phi(f).
+  \end{align*}
+  To verify that $\Phi(f)$ extends $\varphi(f)$, let $f\in \mathcal{M}$, and we can see that
+  \begin{align*}
+    \Phi(f) &= \Psi(f) - i\Psi(if)\\
+            &= \psi(f) - i\psi(if)\\
+            &= \text{Re}\left(\varphi(f)\right) - i\text{Re}\left(\varphi(if)\right)\\
+            &= \text{Re}\left(\varphi(f)\right) - i\left(-\text{Im}\left(\varphi(f)\right)\right)\\
+            &= \varphi(f).
+  \end{align*}
+  Finally, to verify that $\norm{\Phi} = \norm{\varphi}$, all we need show is that $\norm{\Phi} \leq \norm{\Psi}$. Let $\Phi(f) = re^{i\theta}$. Then,
+  \begin{align*}
+    \left\vert \Phi(f) \right\vert &= r\\
+                                   &= e^{-i\theta}\Phi(f)\\
+                                   &= \Phi\left(e^{-i\theta}f\right)\\
+                                   &= \Psi\left(e^{-i\theta}f\right)\\
+                                   &\leq \left\vert \Psi\left(e^{-i\theta}f\right) \right\vert\\
+                                   &\leq \norm{\Psi}\norm{f},
+                                   \intertext{meaning}
+                                   \norm{\Phi}\norm{f} \leq \norm{\Psi}\norm{f}.
+  \end{align*}
+\end{proof}
+\begin{corollary}[Norming Functional]
+  If $f\in \mathcal{X}$, then there exists $\varphi \in \mathcal{X}^{\ast}$ such that $\norm{\varphi} = 1$ and $\varphi(f) = \norm{f}$.
+\end{corollary}
+\begin{proof}
+  Assume $f\neq 0$. Let $\mathcal{M} = \set{\lambda f\mid \lambda \in \C}$, and define $\psi$ on $\mathcal{M}$ by $\psi(\lambda f) = \lambda \norm{f}$. Then, $\norm{\psi} = 1$ and an extension of $\psi$ to $\mathcal{X}$ has the desired properties.
+\end{proof}
+\begin{theorem}[Banach]
+  Let $\mathcal{X}$ be any Banach space. Then, $\mathcal{X}$ is isometrically isomorphic to some closed subspace of $C(X)$ for compact Hausdorff $X$.
+\end{theorem}
+\begin{proof}
+  Set $X = B_{\mathcal{X}^{\ast}}$ in the $w^{\ast}$-topology, which by Banach--Alaoglu, is compact.\newline
+
+  Set $\beta: \mathcal{X}\rightarrow C(X)$ by $\beta(f)(\varphi) = \varphi(f)$. Then, for $\lambda_1,\lambda_2\in \C$, $f_1,f_2\in \mathcal{X}$,
+  \begin{align*}
+    \beta\left(\lambda_1f_1 + \lambda_2f_2\right)(\varphi) &= \varphi\left(\lambda_1 f_1 + \lambda_2f_2\right)\\
+                                                           &= \lambda_1 \varphi(f_1) + \lambda_2\varphi\left(f_2\right)\\
+                                                           &= \left(\lambda_1\beta\left(f_1\right) + \lambda_2\beta\left(f_2\right)\right)\left(\varphi\right).
+  \end{align*}
+  Let $f\in \mathcal{X}$. Then,
+  \begin{align*}
+    \norm{\beta(f)}_{\infty} &= \sup_{\varphi \in B_{\mathcal{X}^{\ast}}} \left\vert \beta(f)(\varphi) \right\vert\\
+                             &= \sup_{\varphi \in B_{\mathcal{X}^{\ast}}}\left\vert \varphi(f) \right\vert\\
+                             &\leq \sup_{\varphi \in B_{\mathcal{X}^{\ast}}}\norm{\varphi}\norm{f}\\
+                             &\leq \norm{f}.
+  \end{align*}
+  Additionally, since there exists a norming functional in $B_{\mathcal{X}^{\ast}}$, we have that $\norm{\beta(f)}_{\infty} = \norm{f}$, meaning $\beta$ is an isometric isomorphism.
+\end{proof}
+\begin{note}
+  The preceding construction cannot yield an isometric isomorphism to $C\left(B_{\mathcal{X}^{\ast}}\right)$ itself, even if $\mathcal{X} = C(Y)$ for some $Y$.\newline
+
+  It can be shown via topological arguments that if $\mathcal{X}$ is separable, we can take $X$ to be the interval $[0,1]$.
+\end{note}
+Now, we turn to finding the dual space of $C([0,1])$. In particular, we will soon find out that $C([0,1]) = \text{BV}([0,1])$, which is the space of all functions of bounded variation.
+\begin{definition}[Bounded Variation]
+  If $\varphi$ is a complex function with domain $[0,1]$, $\varphi$ is said to be of bounded variation if for every partition $0 = t_0 < t_1 < \cdots < t_{n} < t_{n+1} = 1$, it is the case that
+  \begin{align*}
+    \sum_{i=0}^{n}\left\vert \varphi\left(t_{n+1}\right) - \varphi\left(t_{n}\right) \right\vert \leq M.
+  \end{align*}
+  The infimum of all such values of $M$ is denoted $\norm{\varphi}_{\text{BV}}$.\footnote{The book uses $\norm{\varphi}_{\nu}$, but I think that's more confusing than BV.} Henceforth, all functions of bounded variation will be referred to as BV functions.
+\end{definition}
+\begin{proposition}[Limits of BV Functions]
+  A BV function possesses a limit from the left and right at each endpoint.
+\end{proposition}
+\begin{proof}
+  Let $\varphi: [0,1]\rightarrow \C$ not have a limit from the left at some point $t\in (0,1]$.\newline
+
+  Then, for any $\delta > 0$, there exist $s_1,s_2$ such that $t-\delta < s_1 < s_2 < t$ and $\left\vert \varphi(s_2) - \varphi(s_1) \right\vert \geq \ve$. Selecting $\delta_2 = t - s_2$, we inductively create a sequence $\set{s_n}_{n = 1}^{\infty}$ where $0 < s_1 < s_2 < \cdots < s_n < \cdots < t$.\newline
+
+  Consider a partition $t_0 = 0$, and $t_k= s_k$ for $k = 1,2,\dots,N $, and $t_{N+1} = 1$, we have
+  \begin{align*}
+    \sum_{k=0}^{N}\left\vert \varphi(t_{k+1}) - \varphi(t_k) \right\vert &\geq \sum_{k=1}^{N}\left\vert \varphi(s_{k+1}) - \varphi(s_{k}) \right\vert\\
+                                                                         &\geq N\varepsilon.
+  \end{align*}
+  Thus, $\varphi$ is not a BV function.
+\end{proof}
+\begin{corollary}[Discontinuities of a BV Function]
+  Let $\varphi: [0,1]\rightarrow \C$ be a BV function. Then, $\varphi$ has countably many discontinuities.
+\end{corollary}
+\begin{proof}
+  Notice that $\varphi$ is discontinuous at a point $t$ if and only if $\varphi(t) \neq \varphi\left(t^{+}\right)$ or $\varphi(t) \neq \varphi\left(t^{-}\right)$.\newline
+
+  If $t_0,t_1,\dots,t_n$ are distinct points of $[0,1]$, then
+  \begin{align*}
+    \sum_{i=0}^{N}\left\vert \varphi(t) - \varphi(t^{+}) \right\vert + \sum_{i=0}^{N}\left\vert \varphi(t) - \varphi(t^{-}) \right\vert \leq \norm{\varphi}_{\text{BV}}.
+  \end{align*}
+  Thus, for every $\ve > 0$, there exist at most finitely many $t$ such that $\left\vert \varphi(t) - \varphi\left(t^{+}\right) \right\vert + \left\vert \varphi(t) - \varphi(t^{-}) \right\vert \geq \ve$, meaning there can be at most countably many discontinuities.
+\end{proof}
+\begin{definition}[Riemann--Stieltjes Integral]
+  Let $f\in C([0,1])$, and let $\varphi \in \text{BV}\left([0,1]\right)$. Then, we denote the Riemann--Stieltjes integral
+  \begin{align*}
+    \int_{0}^{1}f\:d\varphi &= \sum_{i=0}^{n}f\left(t_i'\right)\left[\varphi\left(t_{i+1}\right) - \varphi\left(t_i\right)\right],
+  \end{align*}
+  where $\{t_i\}$ is a partition and $t_i'\in [t_i,t_{i+1}]$.
+\end{definition}
+\begin{proposition}[Essential properties of the Riemann--Stieltjes Integral]
+  If $f\in C([0,1])$ and $\varphi\in \text{BV}\left([0,1]\right)$, then
+  \begin{enumerate}[(1)]
+    \item $\displaystyle \int_{0}^{1} f\:d\varphi$ exists;
+    \item $\displaystyle \int_{0}^{1} \left(\lambda_1f_1 + \lambda_2f_2\right)\:d\varphi = \lambda_1 \int_{0}^{1} f_1\:d\varphi + \lambda_2 \int_{0}^{1} f_2\:d\varphi$ for $\lambda_1,\lambda_2\in \C$ and $f_1,f_2 \in C([0,1])$;
+    \item $\displaystyle \int_{0}^{1} f\:d\left(\lambda_1\varphi_1 + \lambda_2\varphi_2\right) = \lambda_1\int_{0}^{1} f_1\:d\varphi_1 + \lambda_2 \int_{0}^{1} f_2\:d\varphi_2$ for $\lambda_1,\lambda_2\in \C$ and $\varphi_1,\varphi_2\in \text{BV}\left([0,1]\right)$;
+    \item $\displaystyle \left\vert \int_{0}^{1} f\:d\varphi \right\vert \leq \norm{f}_{\infty}\norm{\varphi}_{\text{BV}}$ for $f\in C\left([0,1]\right)$ and $\varphi \in \text{BV}\left([0,1]\right)$.
+  \end{enumerate}
+\end{proposition}
 \end{document}
