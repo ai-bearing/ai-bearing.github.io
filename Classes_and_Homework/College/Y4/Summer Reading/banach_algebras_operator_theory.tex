@@ -1,4 +1,4 @@
-\documentclass[12pt]{extarticle}
+\documentclass[10pt]{extarticle}
 
 \title{}
 \author{}
@@ -710,4 +710,176 @@ Now, we turn to finding the dual space of $C([0,1])$. In particular, we will soo
     \item $\displaystyle \left\vert \int_{0}^{1} f\:d\varphi \right\vert \leq \norm{f}_{\infty}\norm{\varphi}_{\text{BV}}$ for $f\in C\left([0,1]\right)$ and $\varphi \in \text{BV}\left([0,1]\right)$.
   \end{enumerate}
 \end{proposition}
+\begin{proposition}[BV Function Limits and Riemann--Stieltjes Integrals]
+  Let $\varphi\in \text{BV}\left([0,1]\right)$ and $\psi$ be defined by $\psi(t) = \varphi\left(t^{-}\right)$ for $t\in (0,1)$, where $\psi(0) = \varphi(0)$ and $\psi(1) = \varphi(1)$.\newline
+
+  Then, $\psi \in \text{BV}\left([0,1]\right)$, $\norm{\psi}_{\text{BV}} \leq \norm{\varphi}_{\text{BV}}$, and
+  \begin{align*}
+    \int_{0}^{1} f\:d\varphi &= \int_{0}^{1} f\:d\psi
+  \end{align*}
+  for $f\in C\left([0,1]\right)$.
+\end{proposition}
+\begin{proof}
+  We list the set $\set{s_i}_{i\geq 1}$ the points where $\varphi$ is discontinuous from the left. By the definition of $\psi$, we have $\psi(t) = \varphi(t)$ for $t\notin \set{s_i}_{i\geq 1}$.\newline
+
+  Let $0 = t_0 < t_1 < \cdots < t_n < t_{n+1} = 1$ be a partition where if $t_i \in \set{s_i}_{i\geq 1}$, then neither $t_{i-1}$ nor $t_{i+1}$ is. To show that $\psi$ is BV, then we must show
+  \begin{align*}
+    \sum_{i=0}^{n}\left\vert \psi\left(t_{i+1}\right) - \psi\left(t_{i}\right) \right\vert \leq \norm{\varphi}_{\text{BV}}.
+  \end{align*}
+  Set $\ve > 0$. If $t_i \notin \set{s_i}_{i\geq 1}$, $i=0$, or $i = n + 1$, then set $t_i' = t_i$. If $t_i\in \set{s_i}_{i\geq 1}$ and $i\neq 0,n+1$, choose $t_i'\in \left(t_{i-1},t_i\right)$ such that $\left\vert \varphi\left(t_i^-\right) - \varphi\left(t_i'\right) \right\vert < \frac{\ve}{2n}$. Then, $0 = t_0' < t_1' < \cdots < t_n' < t_{n+1}' = 1$ is a partition of $0,1$ with
+  \begin{align*}
+    \sum_{i=0}^{n}\left\vert \psi\left(t_{i+1}\right)- \psi\left(t_i\right) \right\vert &= \sum_{i=0}^{n}\left\vert \varphi\left(t_{i+1}^{-}\right) - \varphi_{t_i^{-}} \right\vert\\
+                                                                                        &\leq \sum_{i=0}^{n}\left\vert \varphi\left(t_{i+1}^{-}\right) - \varphi\left(t_{i+1}'\right)\right\vert + \sum_{i=0}^{n}\left\vert \varphi\left(t_{i+1}'\right) - \varphi(t_i') \right\vert + \sum_{i=0}^{n}\left\vert \varphi\left(t_i'\right) - \varphi\left(t_i^{-}\right) \right\vert\\
+                                                                                        &\leq \frac{\ve}{2} + \norm{\varphi}_{\text{BV}} + \frac{\ve}{2}
+  \end{align*}
+  Since $\ve $ was arbitrary, $\psi\in \text{BV}\left([0,1]\right)$, with $\norm{\psi}_{\text{BV}} \leq \norm{\varphi}_{\text{BV}}$.\newline
+
+  For $N$ any arbitrary integer, define $\eta_{N}(t) = 0$ for $t$ not in $\set{s_1,s_2,\dots,s_N}$, and $\eta_{N}(s_i) = \varphi(s_i) - \psi(s_i)$. Then, we can see that $\norm{\varphi - \left(\psi + \eta_N\right)}_{\text{BV}} = 0$, with $\int_{0}^{1}f\:d\eta_N = 0$. Thus,
+  \begin{align*}
+    \int_{0}^{1}f\:d\varphi &= \int_{0}^{1}f\:d\psi + \lim_{N\rightarrow\infty}\int_{0}^{1}f\:d\eta_N\\
+                            &= \int_{0}^{1} f\:d\psi.
+  \end{align*}
+\end{proof}
+We let $\text{BV}\left([0,1]\right)$ be the space of all BV functions with pointwise addition and scalar multiplication, with norm $\norm{\cdot}_{\text{BV}}$.\footnote{Yes, technically before now I was engaging in a gross abuse of notation.}
+\begin{theorem}
+  $\text{BV}\left([0,1]\right)$ is a Banach space.
+\end{theorem}
+\begin{proof}
+  Suppose $\set{\varphi_n}_{n=1}^{\infty}$ is a sequence in $\text{BV}\left([0,1]\right)$ such that
+  \begin{align*}
+    \sum_{n=1}^{\infty}\norm{\varphi_n}_{\text{BV}} & < \infty.
+  \end{align*}
+  Additionally,
+  \begin{align*}
+    \left\vert \varphi_n(t) \right\vert &\leq \left\vert \varphi_n(t) - \varphi_n(0) \right\vert + \left\vert \varphi_n(1) - \varphi_n(t) \right\vert\\
+                                        &\leq \norm{\varphi_n}_{\text{BV}}
+  \end{align*}
+  for $t\in [0,1]$, meaning
+  \begin{align*}
+    \sum_{n=1}^{\infty}\varphi_n(t)
+  \end{align*}
+  converges uniformly and absolutely to a function $\varphi$ defined on $[0,1]$. We can see that $\varphi(0) = 0$ and $\varphi$ is continuous from the left on $(0,1)$. We must now show that $\varphi$ is of bounded variation and
+  \begin{align*}
+    \lim_{N\rightarrow\infty}\norm{\varphi - \sum_{n=1}^{N}\varphi_n} &= 0.
+  \end{align*}
+  To start, let $0 = t_0 < t_1 < \cdots < t_k < t_{k+1} = 1$ be a partition of $[0,1]$. Then,
+  \begin{align*}
+    \sum_{i=0}^{k}\left\vert \varphi\left(t_{i+1}\right)- \varphi\left(t_i\right) \right\vert &= \sum_{i=0}^{k}\left\vert \sum_{n=1}^{\infty}\varphi_{n}(t_{i+1}) - \sum_{n=1}^{\infty}\varphi_n(t_i) \right\vert\\
+                                                                                              &\leq \sum_{n=1}^{\infty}\left(\sum_{i=0}^{k}\left\vert \varphi_n(t_{i+1}) - \varphi_n(t_i) \right\vert\right)\\
+                                                                                              &\leq \sum_{n=1}^{\infty}\norm{\varphi_n}_{\text{BV}}.
+  \end{align*}
+  Thus, $\varphi \in \text{BV}\left([0,1]\right)$. Additionally,
+  \begin{align*}
+    \sum_{i=0}^{k}\left\vert \left(\varphi - \sum_{n=1}^{N}\varphi_n\right)\left(t_{i+1}\right) - \left(\varphi - \sum_{n=1}^{N}\varphi_n\right)\left(t_i\right) \right\vert &= \sum_{i=0}^{k}\left\vert \sum_{n=N+1}^{\infty}\varphi_n\left(t_{i+1}\right) - \sum_{n=N+1}^{\infty}\varphi_n\left(t_{i}\right) \right\vert \\
+                                                                                                                                                                                                 &\leq \sum_{i=0}^{k}\sum_{n=N+1}^{\infty}\left\vert \varphi_{n}\left(t_{i+1}\right)-\varphi_n\left(t_i\right) \right\vert\\
+                                                                                                &\leq \sum_{n=N+1}^{\infty}\norm{\varphi_n}_{\text{BV}},
+  \end{align*}
+  meaning $\displaystyle\varphi = \sum_{n=1}^{\infty}\varphi_n$ in the BV norm.
+\end{proof}
+\begin{theorem}[Riesz]
+  Let $\hat{\varphi}(f) = \int_{0}^{1}f\:d\varphi$. Then, $\varphi \rightarrow \hat{\varphi}$ is an isometric isomorphism between $\left(C\left([0,1]\right)\right)^{\ast}$ and $\text{BV}\left([0,1]\right)$.
+\end{theorem}
+\begin{proof}
+  We must show that the map $\varphi\mapsto \hat\varphi$ is an isometric isomorphism.\newline
+
+  We can see that, to start, $\hat\varphi \in \left(C\left([0,1]\right)\right)^{\ast}$, with $\norm{\hat{\varphi}} \leq \norm{\varphi}_{\text{BV}}$.\newline
+
+  We must now show that for $L\in \left(C\left([0,1]\right)\right)^{\ast}$, there exists $\psi \in \text{BV}\left([0,1]\right)$ such that $\hat{\psi} = L$, $\norm{\hat{\psi}}_{\text{BV}} \leq \norm{L}$, and $\psi$ is unique.\newline
+
+  Let $B([0,1])$ be the space of all \textit{bounded} functions on $[0,1]$. It is readily apparent that $C([0,1])\subseteq B([0,1])$,\footnote{Extreme Value Theorem} and we can see $B([0,1])$ is a Banach space with pointwise addition and scalar multiplication under the norm $\norm{f}_{u} = \sup_{t\in [0,1]}\left\vert f(t) \right\vert$.\footnote{Obviously $B([0,1])$ is a normed vector space. For a Cauchy sequence of functions $(f_n)_n\in B([0,1])$, completeness has pointwise convergence to $f$. Boundedness and convergence follows from the properties of the supremum.} For $E\subseteq [0,1]$, define $I_{E}$ to be the indicator function on $E$. The indicator function is always bounded.\footnote{I am using $I_E$ instead of $\mathbb{1}_{E}$ since it's easier for me to type that faster.}\newline
+
+  Since $L$ is a bounded linear functional on $C([0,1])$, the Hahn--Banach continuous extension theorem allows us to create a (not necessarily unique) bounded linear functional $L'$ on $B([0,1])$ with $\norm{L'} = \norm{L}$.\newline
+
+  In particular, we can choose $L'$ such that $L'\left(I_{\set{0}}\right) = 0$, by extending $L$ to the linear span of $I_{\set{0}}$ and $C([0,1])$:
+  \begin{align*}
+    \left\vert L'\left(f + \lambda I_{\set{0}}\right) \right\vert &= \left\vert L(f) \right\vert\\
+                                                                  &\leq \norm{L}\norm{f}_{\infty}\\
+                                                                  &\leq \norm{L}\norm{f + \lambda I_{\set{0}}}_{u}
+  \end{align*}
+  for all $f\in C([0,1])$ and $\lambda \in \C$.\newline
+
+  FOr $0 < t \leq 1$, let $\varphi(t) = L\left(I_{(t,t+1]}\right)$, with $\varphi(0) = 0$. We aim to show that $\varphi \in \text{BV}\left([0,1]\right)$ and $\norm{\varphi}_{\text{BV}} \leq \norm{L}$.\newline
+
+  Select a partition $0 = t_0 < t_1 < \cdots < t_n < t_{n+1} = 1$, and set
+  \begin{align*}
+    \lambda_k &= \frac{\varphi\left(t_{k+1}\right) - \varphi\left(t_{k}\right)}{\left\vert \varphi\left(t_{k+1}\right) - \varphi\left(t_k\right) \right\vert}
+  \end{align*}
+  for $\varphi\left(t_{k+1}\right) \neq \varphi\left(t_k\right)$, and $\lambda_k = 0$ otherwise. Then,
+  \begin{align*}
+    f &= \sum_{k=0}^{n}\lambda_k I_{\left(t_{k},t_{k+1}\right]} \in B\left([0,1]\right)
+  \end{align*}
+  with $\norm{f}_{u} \leq 1$, and
+  \begin{align*}
+    \sum_{k=0}^{n}\left\vert \varphi\left(t_{k+1}\right) - \varphi\left(t_{k}\right) \right\vert &= \sum_{k=0}^{n}\lambda_k\left(\varphi\left(t_{k+1} - t_k\right)\right)\\
+       &= \sum_{k=0}^{n}L'\left(I_{\left(t_k - t_{k+1}\right]}\right)\\
+           &= L'(f)\\
+                             &\leq \norm{L'} = \norm{L}.
+  \end{align*}
+  Thus, $\norm{\varphi}_{\text{BV}} \leq \norm{L}$.\newline
+
+  Now, we need to show that $L(g) = \int_{0}^{1} g\:d\varphi$ for every $g\in C\left([0,1]\right)$.\newline
+
+  Let $g \in C\left([0,1]\right)$. For $\ve > 0$, set $0 = t_0 < t_1 < \cdots < t_{n} < t_{n+1} = 1$ a partition such that
+  \begin{align*}
+    \left\vert g(s) - g(s') \right\vert &< \frac{\ve}{2\norm{L'}}
+  \end{align*}
+  for every $s,s'\in \left(t_{k},t_{k+1}\right]$, and
+  \begin{align*}
+    \left\vert \int_{0}^{1} g\:d\varphi - \sum_{k=0}^{n}g(t_k)\left(\varphi\left(t_{k+1}\right)-\varphi\left(t_{k}\right)\right) \right\vert < \frac{\ve}{2}.
+  \end{align*}
+  Thus, for $f = \sum_{k=0}^{n}g(t_k)I_{\left(t_{k},t_{k+1}\right]} + g(0)I_{\set{0}}$, we have
+  \begin{align*}
+    \left\vert L(g) - \int_{0}^{1} g\:d\varphi \right\vert &\leq \left\vert L(g) - L'(f) \right\vert + \left\vert L'(f) - \int_{0}^{1} g\:d\varphi \right\vert\\
+                                                           &\leq \norm{L'}\norm{g - f}_{u} + \left\vert \sum_{k=0}^{n}g(t_k)\left(\varphi\left(t_{k+1}\right)- \varphi\left(t_k\right)\right) - \int_{0}^{1} g\:d\varphi \right\vert\\
+                                                           &\leq \frac{\ve}{2} + \frac{\ve}{2}\\
+                                                           &= \ve.
+  \end{align*}
+  Thus, $L(g) = \int_{0}^{1} g\:d\varphi$.\newline
+
+  We obtain $\psi \in \text{BV}\left([0,1]\right)$ with $\norm{\psi}_{\text{BV}} \leq \norm{\varphi}_{\text{BV}}\leq \norm{L}$ (see function limits), and
+  \begin{align*}
+    \hat{\psi}(g) &= \int_{0}^{1} g\:d\psi\\
+                  &= \int_{0}^{1} g\:d\varphi\\
+                  &= L(g).
+  \end{align*}
+  Now, we must show that the mapping $\varphi \mapsto \hat\varphi$ is injective.\newline
+
+  Let $\varphi \in \text{BV}\left([0,1]\right)$. Fix $0 < t_0 \leq 1$, and let $f_n$ be a sequence of functions in $C\left([0,1]\right)$ defined by
+  \begin{align*}
+    f_n\left(t\right) &= \begin{cases}
+      1 & 0 \leq t \leq \frac{n-1}{n}t_0\\
+      n\left(1 - \frac{t}{t_0}\right) & \frac{n-1}{n}t_0 < t \leq t_0\\
+      0 & t_0 < t \leq 1
+    \end{cases}.
+  \end{align*}
+  The function $I_{\left(0,t_0\right]} - f_n$ is zero outside the open interval $\left(\frac{n-1}{n}t_0,t_0\right)$. If we define
+  \begin{align*}
+    \varphi_n(t) &= \begin{cases}
+      \varphi\left(\frac{n-1}{n}t_0\right) & 0 \leq t \leq \frac{n-1}{n}t_0\\
+      \varphi(t) & \frac{n-1}{n}t_0 < t \leq t_0\\
+      \varphi\left(t_0\right) & t_0 < t \leq 1
+    \end{cases},
+  \end{align*}
+  then
+  \begin{align*}
+    \left\vert \int_{0}^{1} \left(I_{\left(0,t_0\right]} - f_n\right)\:d\varphi \right\vert &= \left\vert \int_{0}^{1} \left(I_{\left(0,t_0\right]} - f_n\right)\:d\varphi_n \right\vert\\
+                                                                                            &\leq \norm{\varphi_n}_{\text{BV}}.
+  \end{align*}
+  We claim that $\lim_{n\rightarrow\infty}\norm{\varphi}_{\text{BV}} = 0$.\newline
+
+  Since $\varphi$ is left continuous at $t_0$, there exists $\delta > 0$ such that $0 < t_0 - t < \delta$ implies $\left\vert \varphi(t_0 - t) \right\vert < \frac{\ve}{2}$. Let $0 = t_0 < t_1 < \cdots < t_{k+1} = 1$ be a partition of $[0,1]$, where
+  \begin{align*}
+    \left\vert\norm{\varphi}_[\text{BV}] - \left(\sum_{i=0}^{k}\left\vert \varphi(t_{i+1}) - \varphi(t_i) \right\vert\right)\right\vert < \frac{\ve}{2}.
+  \end{align*}
+  Let $t_0 = t_{i_0}$ for some $i_0$, where $t_{i_0} - t_{i_0 - 1} < \delta$. Then,
+  \begin{align*}
+    \left\vert \varphi\left(t_{i_0}\right) - \varphi\left(t_{i_0 - 1}\right) \right\vert < \frac{\ve}{2},
+  \end{align*}
+  and $\text{Var}\left(\varphi\right)_{\left[t_{i_0 - 1} ,t_{i_0}\right]} < \ve$. Therefore,
+  \begin{align*}
+    \varphi\left(t_0\right) &= \int_{0}^{1} I_{\left(0,t_0\right]}\:d\varphi\\
+                            &= \lim_{n\rightarrow\infty}\int_{0}^{1} f\:d\varphi,
+  \end{align*}
+  with $\hat{\varphi} = 0$ implying $\varphi = 0$. Thus, $\left(C\left([0,1]\right)\right)^{\ast} = \text{BV}\left([0,1]\right)$.
+\end{proof}
 \end{document}
