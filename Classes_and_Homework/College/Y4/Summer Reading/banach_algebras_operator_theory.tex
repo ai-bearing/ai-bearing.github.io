@@ -882,4 +882,85 @@ We let $\text{BV}\left([0,1]\right)$ be the space of all BV functions with point
   \end{align*}
   with $\hat{\varphi} = 0$ implying $\varphi = 0$. Thus, $\left(C\left([0,1]\right)\right)^{\ast} = \text{BV}\left([0,1]\right)$.
 \end{proof}
+\begin{example}[Conjugate Space of $C(X)$]
+  If $X$ is any compact Hausdorff space, rather than merely $[0,1]$, it makes no sense to talk about bounded variation (since $X$ may not have an ordering on it), so to find $\left(C(X)\right)^{\ast}$ would require some extra work.\newline
+
+  Every countably additive measure on $\mathcal{B}_{X}$ gives rise to a bounded linear functional on $C(X)$. Using the Hahn--Banach continuous extension theorem, we can extend this to the Banach space of bounded Borel functions, and obtain a Borel measure by evaluating the extended linear functional on the indicator functions of Borel subsets of $X$.\newline
+
+  If we restrict our attention to regular measures\footnote{Inner regular means the measure of a set can be approximated by compact subsets, outer regular means the measure of a set can be approximated by open supersets, and regular means both inner and outer regular.}, the extended functional \textit{is} unique, and we can identify $\left(C(X)\right)^{\ast}$ to be $M(X)$, which is the set of complex regular Borel measures on $X$.\newline
+
+  This result is known as the Riesz--Markov--Kakutani Representation Theorem.
+\end{example}
+\begin{example}[Quotient Spaces of Banach Spaces]
+  Let $\mathcal{X}$ be a Banach space, and $\mathcal{M}$ be a closed subspace of $\mathcal{X}$. We will try to find a norm on $\mathcal{X}/\mathcal{M}$.\newline
+
+  The space $\mathcal{X}/\mathcal{M}$ is the set of equivalence classes of $f\in \mathcal{X}$ where $[f] = \set{f + g\mid g\in \mathcal{M}}$. The norm can be defined by
+  \begin{align*}
+    \norm{[f]} &= \inf_{g\in \mathcal{M}}\norm{f-g}.
+  \end{align*}
+  If $\norm{[f]} = 0$, then there is a sequence $g_n$ such that $\lim_{n\rightarrow\infty}\norm{f - g_n} = 0$,\footnote{I am using $\norm{[f]} = \inf_{g\in \mathcal{M}}\norm{f-g}$ instead since that is what my professor uses.} meaning $g_n \rightarrow f$; since $\mathcal{M}$ is closed, this implies that $[f] = [0]$. In the converse direction, if $[f] = [0]$, then $0\leq \norm{[f]} \leq \norm{f-f} = 0$. Thus, $\norm{[f]}$ is positive definite.\newline
+
+  To show homogeneity, let $f\in \mathcal{X}$ and $\lambda \in \C$. Then,
+  \begin{align*}
+    \norm{\lambda[f]} &= \inf_{g\in \mathcal{M}}\norm{\lambda f - g}\\
+                      &= \inf_{h\in \mathcal{M}}\norm{\lambda\left(f - h\right)}\\
+                      &= |\lambda|\inf_{h\in \mathcal{M}}\norm{f - h}\\
+                      &= |\lambda|\norm{[f]}.
+  \end{align*}
+  Finally, to show the triangle inequality, let $f_1,f_2\in \mathcal{X}$. Then,
+  \begin{align*}
+    \norm{[f_1] + [f_2]} &= \norm{[f_1 + f_2]}\\
+                         &= \inf_{g\in \mathcal{M}}\norm{\left(f_1 + f_2\right) - g}\\
+                         &= \inf_{g_1,g_2\in \mathcal{M}}\norm{(f_1 - g_1) + (f_2 - g_2)}\\
+                         &\leq \inf_{g_1\in \mathcal{M}}\norm{f_1 - g_1} + \inf_{g_2\in \mathcal{M}}\norm{f_2 - g_2}\\
+                         &= \norm{[f_1]} + \norm{[f_2]}.
+  \end{align*}
+  Finally, to show completeness, we let $\set{[f_n]}_{n=1}^{\infty}$ be a Cauchy sequence in $\mathcal{X}/\mathcal{M}$. Then, there exists a subsequence $\set{\left[f_{n_k}\right]}_{k=1}^{\infty}$ such that $\norm{\left[f_{n_{k+1}}\right] - \left[f_{n_k}\right]} < \frac{1}{2^k}$.\newline
+
+  Select $h_k \in \left[f_{n_{k+1}} - f_{n_k}\right]$ such that $\norm{h_k} < \frac{1}{2^k}$. Then, $\sum_{k=1}^{\infty}\norm{h_k} < 1 < \infty$, meaning $\sum_{k=1}^{\infty}h_k = h$ for some $h$.\newline
+
+  Since
+  \begin{align*}
+    \left[f_{n_k} - f_{n_1}\right] &= \sum_{i=1}^{k-1}\left[f_{n_{i+1}} - f_{n_i}\right]\\
+                                   &= \sum_{i=1}^{k-1}\left[h_i\right],
+  \end{align*}
+  we must have $\lim_{k\rightarrow\infty}\left[f_{n_k} - f_{n_1}\right] = [h]$, meaning $\lim_{k\rightarrow\infty}\left[f_{n_k}\right] = \left[h + f_{n_1}\right]$.
+\end{example}
+We can see that there is a natural (projection) map $\pi: \mathcal{X}\rightarrow \mathcal{X}/\mathcal{M}$, defined by $\pi(f) = [f]$. This is a contraction and a surjective (which we will later see to be the same as open) map.
+\begin{definition}[Bounded Linear Transformation]
+Let $\mathcal{X},\mathcal{Y}$ be Banach spaces. The linear transformation $T: \mathcal{X}\rightarrow \mathcal{Y}$ is bounded if
+\begin{align*}
+  \norm{T}_{\text{op}} &= \sup_{\norm{f} = 1}\norm{T(f)}\\
+                       &< \infty
+\end{align*}
+The set of all bounded linear transformations from $\mathcal{X}$ to $\mathcal{Y}$ is denoted $\mathcal{L}\left(\mathcal{X},\mathcal{Y}\right)$. We have proven earlier that a linear transformation is bounded if and only if it is continuous.\footnote{This holds in all normed vector spaces, not just Banach spaces.}
+\end{definition}
+\begin{proposition}[Properties of $\mathcal{L}\left(\mathcal{X},\mathcal{Y}\right)$]
+  The space $\mathcal{L}\left(\mathcal{X},\mathcal{Y}\right)$ is a Banach space.
+\end{proposition}
+\begin{proof}
+  It is readily apparent that $\mathcal{L}\left(\mathcal{X},\mathcal{Y}\right)$ is a normed vector space under pointwise addition and scalar multiplication. All we need to show now is completeness. \newline
+
+  Let $\left(T_n\right)_n$ be a Cauchy sequence of elements of $\mathcal{L}\left(\mathcal{X},\mathcal{Y}\right)$. Then, for $\ve > 0$, there exists $N$ such that for $m,n > N$,
+  \begin{align*}
+    \norm{T_m - T_n}_{\text{op}} < \ve.
+  \end{align*}
+  This means that for any $f\in \mathcal{X}$, there exists $N_f$ such that for $m,n > N_f$,
+  \begin{align*}
+    \norm{\left(T_m - T_n\right)(f)} &\leq \norm{f}\norm{T_m-T_n}_{\text{op}}\\
+                                     &< \frac{\ve}{\norm{f}} \norm{f}\\
+                                     &= \ve.
+  \end{align*}
+  Since for each $f$, $\left(T_n(f)\right)_n$ is Cauchy, and $\mathcal{Y}$ is complete, we define $T$ to be the pointwise limit of $\left(T_n\right)_n$.\newline
+
+  Thus, since
+  \begin{align*}
+    \lim_{m\rightarrow\infty}\norm{T_m - T_n}_{\text{op}} &= \norm{T - T_n}_{\text{op}}\\
+                                                          &< \ve,
+  \end{align*}
+  we have that $\mathcal{L}\left(\mathcal{X},\mathcal{Y}\right)$ is complete.
+\end{proof}
+\begin{theorem}[Open Mapping]
+  Let $\mathcal{X}$, $\mathcal{Y}$ be Banach spaces, and let $T\in \mathcal{L}\left(\mathcal{X},\mathcal{Y}\right)$ be surjective. Then, $T$ is an open map.
+\end{theorem}
 \end{document}
