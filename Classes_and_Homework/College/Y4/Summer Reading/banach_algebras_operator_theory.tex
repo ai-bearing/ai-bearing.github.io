@@ -64,6 +64,7 @@
 \newcommand{\braket}[2]{\left\langle#1\mid#2\right\rangle}
 \newcommand{\set}[1]{\left\{#1\right\}}
 \newcommand{\ve}{\varepsilon}
+\DeclareMathOperator*{\esssup}{ess\,sup}
 
 \setcounter{secnumdepth}{0}
 
@@ -962,5 +963,125 @@ The set of all bounded linear transformations from $\mathcal{X}$ to $\mathcal{Y}
 \end{proof}
 \begin{theorem}[Open Mapping]
   Let $\mathcal{X}$, $\mathcal{Y}$ be Banach spaces, and let $T\in \mathcal{L}\left(\mathcal{X},\mathcal{Y}\right)$ be surjective. Then, $T$ is an open map.
+\end{theorem}
+\begin{note}
+  I don't like order that Douglas's book introduces the Open Mapping/Bounded Inverse/Uniform Boundedness principle as well as the proofs, so I'm going to be drawing the following proofs mostly from Stein and Shakarchi's Functional Analysis text.
+\end{note}
+\begin{proof}
+  We see
+  \begin{align*}
+    \mathcal{X} &= \bigcup_{n=1}^{\infty}U_{\mathcal{X}}(0,n),
+  \end{align*}
+  Since $T$ is surjective, we have
+  \begin{align*}
+    \mathcal{Y} &= \bigcup_{n=1}^{\infty}T\left(U_{\mathcal{X}}(0,n)\right).
+  \end{align*}
+  Since $Y$ is complete, the Baire Category Theorem states that there must be at least one value of $n$ such that $\overline{T\left(U_{\mathcal{X}}(0,n)\right)}^{\circ}$ is nonempty. Since $T$ is linear, in particular we can see that $\overline{T\left(U_{\mathcal{X}}(0,1)\right)}$ has a nonempty interior.\newline
+
+  We let $U_{\mathcal{Y}}\left(y_0,\ve\right)\subseteq \overline{T\left(U_{\mathcal{X}}(0,1)\right)}$. By the definition of closure, we may select $y_1 = Tx_1$ for $x_1 \in T\left(U_{\mathcal{X}}(0,1)\right)$ such that $\norm{y_1 - y_0} < \frac{\ve}{2}$. \newline
+
+  Inductively, we can select $y_2 = Tx_2$ for $x_2 \in T\left(U_{\mathcal{X}}(0,1/2)\right)$ such that $\norm{y_0 - y_1 - y_2} < \frac{\ve}{4}$, and so on, selecting $x_n\in T\left(U_{\mathcal{X}}\left(0,\frac{1}{2^{n-1}}\right)\right)$ such that $\norm{y_0 - \sum_{j=1}^{n}Tx_j} < \frac{\ve}{2^{n}}$.\newline
+
+  Since $\norm{x_j} < \frac{1}{2^{j-1}}$ for $j\in \N$, it is clear that $\sum_{j=1}^{\infty}\norm{x_j}$ converges --- thus, since $X$ is a Banach space, there exists $x$ such that $x = \sum_{j=1}^{n}x_j$. Moreover, since $\norm{y_0 - \sum_{j=1}^{n}Tx_j} < \frac{\ve}{2^n}$, and $T$ is continuous, the limit of $\set{x_j}_{j=1}^{n}$ must be such that $T(x) = y_0$.\newline
+
+  Therefore, we must have that $U_{\mathcal{Y}}\left(0,\frac{1}{2}\right)\subseteq T\left(U_{\mathcal{X}}\left(0,1\right)\right)$.
+\end{proof}
+\begin{theorem}[Bounded Inverse]
+  Let $T: \mathcal{X}\rightarrow \mathcal{Y}$ be a bounded bijective linear transformation. Then, $T^{-1}:\mathcal{Y}\rightarrow \mathcal{X}$ is also bounded.
+\end{theorem}
+\begin{proof}
+  Since $T$ is bijective, $T$ is an open map, meaning $T^{-1}$ must be continuous.
+\end{proof}
+\begin{theorem}[Uniform Boundedness Principle]
+  Let $\mathcal{L}$ be a collection of continuous linear functionals on a Banach space $\mathcal{X}$. Then, if $\sup_{\varphi \in \mathcal{L}}\left\vert \varphi(f) \right\vert < \infty$ for all $f$ in a residual subset $A\subseteq \mathcal{X}$, then $\sup_{\varphi \in \mathcal{L}}\norm{\varphi} < \infty$.
+\end{theorem}
+\begin{proof}
+  Suppose $\sup_{\varphi \in \mathcal{L}}\left\vert \varphi(f) \right\vert < \infty$ for all $f\in A$, where $A$ is residual. For every $M$, define $A_{M,\varphi} = \set{f\in \mathcal{X}\mid \left\vert \varphi(f) \right\vert\leq M}$. Each of $A_{M,\varphi}$ is closed since $\varphi$ is continuous. Define $A_{M} = \bigcap_{\varphi \in \mathcal{L}}A_{M,\varphi}$; each $A_{M}$ is closed.\newline
+
+  We can see that
+  \begin{align*}
+    A &= \bigcup_{M=1}^{\infty}\bigcap_{\varphi \in \mathcal{L}}A_{M,\varphi}.
+  \end{align*}
+  Since $A$ is residual, there must be some $M_0$ such that $A_{M_0}$ has nonempty interior, so there exists $f_0\in \mathcal{X}$ and $r > 0$ such that $U_{\mathcal{X}}\left(f_0,r\right)\subseteq A_{M_0}$.\newline
+
+  Thus, for every $\varphi \in \mathcal{L}$, we have $\left\vert \varphi(f) \right\vert \leq M_0$ for all $f$ where $\norm{f-f_0} < r$. Thus, for all $\norm{g} < r$ and $\varphi \in \mathcal{L}$, we have
+  \begin{align*}
+    \left\vert \varphi(g) \right\vert &\leq \left\vert \varphi(g + f_0) \right\vert + \left\vert \varphi(-f_0) \right\vert\\
+                                      &\leq 2M_0,
+  \end{align*}
+  meaning $\norm{\varphi} < \infty$ for all $\varphi \in \mathcal{L}$.
+\end{proof}
+\begin{definition}[Lebesgue Spaces]
+  Let $\mu$ be a probability measure on a $\sigma$-algebra $\Omega$ of the subsets of a set $X$.\newline
+
+  We let $\mathcal{L}^{1}$ denote the vector space of all integrable complex-valued functions, with $\mathcal{N}\subseteq \mathcal{L}^{1}$ denoting the subspace of all $f\in \mathcal{L}^{1}$ where
+  \begin{align*}
+    \int_{X}^{} \left\vert f \right\vert\:d\mu = 0.
+  \end{align*}
+  Then, $L^{1} = \mathcal{L}^{1}/\mathcal{N}$ is the space of equivalence classes $[f]$, where $\norm{[f]}_{1} = \int_{X}|f|d\mu$.\newline
+
+  For each $1 \leq p < \infty$, we set $\mathcal{L}^{p}$ to be the functions in $\mathcal{L}^{1}$ where $\int_{X}|f|^{p}\:d\mu < \infty$; then, defining $\mathcal{N}^{p} = \mathcal{N}\cap \mathcal{L}^{p}$, the quotient space $L^{p} = \mathcal{L}^{p}/\mathcal{N}^{p}$ is the space of equivalence classes $[f]$ with norm
+  \begin{align*}
+    \norm{[f]}_{p} &= \left(\int_{X}^{} |f|^{p}\:d\mu\right)^{1/p}.
+  \end{align*}
+  To construct $L^{\infty}$, we start by constructing $\mathcal{L}^{\infty}$, which is the set of all essentially bounded functions, where $\mu\set{x\in X\mid |f(x)| > M} = 0$ for some $M$; we say $\norm{f}_{\infty}$ is the infimum of all such $M$. Equivalently, $\norm{f}_{\infty} = \esssup |f|$. The set $\mathcal{N}^{\infty} = \mathcal{N}\cap \mathcal{L}^{\infty}$, and $L^{\infty} = \mathcal{L}^{\infty}/\mathcal{N}^{\infty}$ is the set of the equivalence classes $[f]$ where $\norm{[f]}_{\infty} = \norm{f}_{\infty} < \infty$ for $f$ a representative of $[f]$.\newline
+
+  We can see that all the $L^{p}$ spaces are normed vector spaces; to show completeness will take more work, but we will show completeness for both $L^{1}$ and $L^{\infty}$.
+\end{definition}
+\begin{theorem}[Completeness of $L^{1}$]
+  The space $L^{1}$ is complete with respect to the norm $\norm{[f]}_1 = \int_{X}|f|\:d\mu$.
+\end{theorem}
+\begin{proof}
+  Let $\set{\left[f_n\right]}_{n=1}^{\infty}$ be a sequence in $L^{1}$ where $\sum_{n=1}^{\infty}\norm{[f_n]}_1 \leq M < \infty$.\newline
+
+   Select representatives $f_n$ from each equivalence class. The sequence $\set{\sum_{n=1}^{N}f_n}_{N=1}^{\infty}$ is increasing for every $x\in X$ and non-negative, meaning
+   \begin{align*}
+     \int_{X}\left(\sum_{n=1}^{N}|f_n|\right)\:d\mu &= \sum_{n=1}^{N}\norm{[f_n]}_{1}\\
+                                                    &\leq M,
+   \end{align*}
+   so by the dominated convergence theorem\footnote{The book states that they use Fatou's Lemma but I couldn't really understand where it comes into use so I decided to use the dominated convergence theorem and provide an explanation.} (with $g = M$, whose integral is finite because $\mu$ is a probability measure), we have that $\set{\sum_{n=1}^{N}|f_n|}_{N=1}^{\infty}$ is integrable and converges $\mu$-almost everywhere to $[k]\in \mathcal{L}^{1}$.\newline
+
+   Finally,
+   \begin{align*}
+     \norm{[k] - \int_{n=1}^{N}}_{1} &= \int_{X}^{} \left\vert \sum_{n=1}^{\infty}f_n - \sum_{n=1}^{N}f_n \right\vert\:d\mu\\
+                                     &\leq \sum_{n=N+1}^{\infty}\int_{X}^{} \left\vert f_n \right\vert\:d\mu\\
+                                     &\leq \sum_{n=N+1}^{\infty}\norm{[f_n]}_1.
+   \end{align*}
+   Thus, $\sum_{n=1}^{\infty}[f_n] = [k]$.
+\end{proof}
+\begin{theorem}[Completeness of $L^{\infty}$]
+  The space $L^{\infty}$ is complete with respect to the norm $\norm{[f]}_{\infty} = \esssup |f|$.\footnote{I had a proof of this in my Real Analysis II notes with Cauchy sequences. Here, I'll be going off the book's proof, which uses the absolute convergence determination criterion for Banach spaces.}
+\end{theorem}
+\begin{proof}
+  Let $\set{[f_n]}_{n=1}^{\infty}$ be a sequence of elements of $L^{\infty}$ with $\sum_{n=1}^{\infty}\norm{[f_n]}_{\infty}\leq M < \infty$. Choose representatives $f_n$ from $[f_n]$, such that $\left\vert f_n \right\vert$ is bounded everywhere by $\norm{[f_n]}_{\infty}$.\newline
+
+  For $x\in X$, we have
+  \begin{align*}
+    \sum_{n=1}^{\infty}\left\vert f_n(x) \right\vert &\leq \sum_{n=1}^{\infty}\norm{[f_n]}\\
+                                                     &\leq M.
+  \end{align*}
+  Thus, by dominated convergence, the sequence $\sum_{n=1}^{\infty}f_n = \lim_{N\rightarrow\infty}\sum_{n=1}^{N}f_n$ converges to a measurable bounded function $h$, where
+  \begin{align*}
+    \left\vert h(x) \right\vert &= \left\vert \sum_{n=1}^{\infty}f_n(x) \right\vert\\
+                                &\leq \sum_{n=1}^{\infty}\left\vert f_n(x) \right\vert\\
+                                &\leq M.
+  \end{align*}
+  Thus, $h\in \mathcal{L}^{\infty}$. Finally, we can see that
+  \begin{align*}
+    \left\vert [h] - \sum_{n=1}^{N} \right\vert &= \left\vert \sum_{n=1}^{\infty}f_n - \sum_{n=1}^{N} f_n \right\vert\\
+                                                &\leq \sum_{n=N + 1}^{\infty}\left\vert f_n\right\vert\\
+                                                &\leq \sum_{n=N+1}^{\infty}\norm{f_n}_{\infty},
+  \end{align*}
+  meaning $\norm{[h] = \sum_{n=1}^{N}f_n}_{\infty}$ converges to $0$.
+\end{proof}
+The traditional abuse of notation for elements of $L^{p}$ spaces is to refer to $f\in L^{1}$ to mean the equivalence class of $\mu$-almost everywhere functions equal to $f\in \mathcal{L}^{1}$.\newline
+
+Now, we turn our attention to the dual of $L^{1}$, $\left(L^{1}\right)^{\ast}$.
+\begin{theorem}[Dual of $L^{1}$]
+  Let $\hat{\varphi}$ be the linear functional defined by
+  \begin{align*}
+    \hat{\varphi}(f) &= \int_{X}^{} f\varphi\:d\mu
+  \end{align*}
+  for $f\in L^{1}$ and $\varphi \in L^{\infty}$. Then, the map $\varphi \mapsto \hat\varphi$ is an isometric isomorphism of $L^{\infty}$ onto $\left(L^{1}\right)^{\ast}$.
 \end{theorem}
 \end{document}
