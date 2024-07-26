@@ -1,4 +1,4 @@
-\documentclass[10pt]{extarticle}
+\documentclass[12pt]{extarticle}
 
 \title{}
 \author{}
@@ -10,8 +10,8 @@
 \geometry{letterpaper, portrait, margin=1in}
 \usepackage{fancyhdr}
 % sans serif font:
-\usepackage{cmbright}
-\usepackage{sfmath}
+%\usepackage{cmbright}
+%\usepackage{sfmath}
 
 %symbols
 \usepackage{amsmath}
@@ -59,9 +59,9 @@
 %inner products and norms
 \newcommand{\iprod}[2]{\left\langle #1,#2\right\rangle}
 \newcommand{\norm}[1]{\left\Vert #1\right\Vert}
-\newcommand{\bra}[1]{\left\langle#1\right\vert}
-\newcommand{\ket}[1]{\left\vert#1\right\rangle}
-\newcommand{\braket}[2]{\left\langle#1\mid#2\right\rangle}
+%\newcommand{\bra}[1]{\left\langle#1\right\vert}
+%\newcommand{\ket}[1]{\left\vert#1\right\rangle}
+%\newcommand{\braket}[2]{\left\langle#1\mid#2\right\rangle}
 \newcommand{\set}[1]{\left\{#1\right\}}
 \newcommand{\ve}{\varepsilon}
 \DeclareMathOperator*{\esssup}{ess\,sup}
@@ -92,6 +92,7 @@
 \newtheorem*{remark}{Remark}
 %\newtheorem*{claim}{Claim}
 
+\usepackage{newpxtext,eulerpx}
 \usepackage[document]{ragged2e}
 \renewcommand{\newline}{\hfill\break}
 \renewcommand{\thefootnote}{\roman{footnote}}
@@ -151,6 +152,48 @@ where $i_{j}\in I$. The product topology is the topology of coordinatewise conve
   Since $K_{i_0}$ is compact, we find a subnet $\set{f_{\alpha_{\beta_{\gamma}}}}_{\gamma}$ such that $\pi_{i_0}\left(f_{\alpha_{\beta_{\gamma}}}\right)_{\gamma}$ converges to $x_{i_0}$ in $K_{i_0}$.\newline
 
   Define $\tilde{f} \in K$ by setting $\tilde{f}\vert_{J_{\text{max}}} = f_{\text{max}}$, and $\tilde{f}(i_0) = x_{i_0}$. Thus, $\left(J_{\text{max}}\cup \set{i_0},\tilde{f}\right)$ is a partial accumulation point, which contradicts the maximality of $\left(J_{\text{max}},f_{\text{max}}\right)$.
+\end{proof}
+\subsection{Complex Measures and the Radon--Nikodym Theorem}%
+I am going to be drawing much of this information from Gerald B. Folland's text on Real Analysis.
+\begin{definition}[Signed Measure]
+  For $(X,\Omega)$ a measurable space, a signed measure is a function $\nu: \Omega \rightarrow [-\infty,\infty]$ such that
+  \begin{itemize}
+    \item $\nu\left(\emptyset\right) = 0$
+    \item $\nu$ assumes at most one of $\pm\infty$
+    \item For $\set{E_j}$ a sequence of disjoint sets in $\Omega$,
+      \begin{align*}
+        \nu\left(\bigsqcup_{j=1}^{\infty}E_j\right) &= \sum_{j=1}^{\infty}\nu\left(E_j\right),
+      \end{align*}
+      with the latter sum converging if $\nu\left(\bigsqcup_{j=1}^{\infty}E_j\right)$ is finite.
+  \end{itemize}
+\end{definition}
+Traditional measures will be referred to as positive measures.\newline
+
+If $\mu_1$ and $\mu_2$ are positive measures on $\Omega$ with at least one a finite measure, then $\nu = \mu_1 - \mu_2$ is a signed measure.\newline
+
+For $\mu$ a measure on $\Omega$, if $f: X\rightarrow [-\infty,\infty]$ such that at least one of $\int f^{+}\:d\mu$ or $\int f^{-}\:d\mu$ is finite, we call $f$ an extended $\mu$-integrable function, with $\nu(E)\int_{E}f\:d\mu$ a signed measure.\newline
+
+In fact, we shall soon see that every signed measure is represented in these forms.
+\begin{theorem}[Hahn Decomposition]
+  If $\nu$ is a signed measure on $\left(X,\Omega\right)$, then there exist a positive set $P$ and a negative set $N$ for $\nu$ such that $P\cup N = X$, and $P\cap N = 0$. If $P'$ and $N'$ are another set, then $P\triangle P'$ and $N\triangle N'$ are $\nu$-null.
+\end{theorem}
+\begin{proof}
+  We assume that $\nu$ does not assume the value of negative infinity. Let $m$ be the supremum of $\nu(E)$ as $E$ ranges over all positive sets; let $\set{P_j}$ be the sequence of positive sets such that $\nu(P_j) \rightarrow m$.\newline
+
+  We set $P = \bigcup_{j=1}^{\infty}P_j$; by continuity and the property that the union of a countable family of positive sets is positive, we see that $P$ is positive and $\nu(P) = m < \infty$. We claim that $N = X\setminus P$ is negative.\newline
+
+  Suppose toward contradiction that it is not the case. First, we can see that $N$ does not contain any nonnull positive sets, as for $E\subseteq N$ positive, then $E\cup P$ is positive and $\nu(E\cup P) = \nu(E) + \nu(P) > m$. Alternatively, we can see that for any $A\subseteq N$ with $\nu(A) > 0$, we find $C\subseteq A$ with $\nu(C) < 0$ (as $A$ cannot be positive), so $B = A\setminus C$ has measure $\nu(A) - \nu(C) > \nu(A)$.\newline
+
+  If $N$ is nonnegative, we can find subsets $\set{A_j}$ in $N$ and define $n_j$ as follows. We select $n_1$ to be the smallest integer for which there exists a set $B\subseteq N$ with $\nu(B) > \frac{1}{n_1}$; $A_1$ is the given set. Inductively, select $n_j$ the smallest integer where $B\subseteq A_{j-1}$ has measure $\nu(B) > \nu(A_{j-1}) + \frac{1}{n_j}$, with $A_j$ as the set.\newline
+
+  Let $A = \bigcap_{j=1}^{\infty}A_j$. Then,
+  \begin{align*}
+    \sum_{j=1}^{\infty}\frac{1}{n_j} &< \lim_{j\rightarrow\infty}\nu\left(A_j\right)\\
+                                     &<\infty,
+  \end{align*}
+  meaning that $n_j \rightarrow\infty$ as $j\rightarrow\infty$. However, we still have $B\subseteq A$ with $\nu(B) > \nu(A) + \frac{1}{n}$ for some $n$; for $j$ sufficiently large, we have $n < n_j$ with $B\subseteq A_{j-1}$, which contradicts the construction of $n_j$.\newline
+
+  If $P'$ and $N'$ are another pair of sets, then $P\setminus P' \subseteq P$ and $P\setminus P' \subseteq N'$, meaning $P\setminus P'$ is measure zero.
 \end{proof}
 \section{Banach Spaces}%
 Let $X$ be a compact Hausdorff space, and let $C(X)$ denote the set of continuous functions $f: X\rightarrow \C$. For $f_1,f_2\in C(X)$ and $\lambda\in \C$, we define
@@ -1084,4 +1127,94 @@ Now, we turn our attention to the dual of $L^{1}$, $\left(L^{1}\right)^{\ast}$.
   \end{align*}
   for $f\in L^{1}$ and $\varphi \in L^{\infty}$. Then, the map $\varphi \mapsto \hat\varphi$ is an isometric isomorphism of $L^{\infty}$ onto $\left(L^{1}\right)^{\ast}$.
 \end{theorem}
+\begin{proof}
+  If $\varphi \in L^{\infty}$, then for $f\in L^{1}$, it is the case that $\left\vert (\varphi f)(x) \right\vert \leq \norm{\varphi}_{\infty}\left\vert f(x) \right\vert$ almost everywhere. Thus, $\varphi f$ is integrable, meaning $\hat{\varphi}$ is well-defined and linear, with
+  \begin{align*}
+    \left\vert \hat{\varphi}(f) \right\vert &= \left\vert \int_{X}^{} f\varphi\:d\mu \right\vert\\
+                                            &\leq \norm{\varphi}_{\infty}\int_{X}^{} |f|\:d\mu\\
+                                            &\leq \norm{\varphi}_{\infty}\norm{f}_{1},
+  \end{align*}
+  meaning $\hat{\varphi}\in \left(L^{1}\right)^{\ast}$ and $\norm{\hat{\varphi}}\leq \norm{\varphi}_{\infty}$.\newline
+
+  Let $L\in \left(L^{1}\right)^{\ast}$. For $E$ a measurable subset of $X$, $I_{E}$, the indicator function on $E$, is $L^{1}$, with $\norm{I_{E}}_{1} = \mu(E)$.\newline
+
+  If we set $\lambda(E) = L(I_E)$, we can see that $\lambda$ is a finitely additive complex-valued measure, with $\left\vert \lambda(E) \right\vert\leq \mu(E) \norm{L}$. Moreover, for $\set{E_n}_{n=1}^{\infty}$ a nested sequence of measurable sets with $\bigcap_{n=1}^{\infty} E_n = \emptyset$, we have
+  \begin{align*}
+    \left\vert \lim_{n\rightarrow\infty}\lambda\left(E_n\right) \right\vert &\leq \lim_{n\rightarrow\infty}\left\vert \lambda\left(E_n\right) \right\vert\\
+                                                                            &\leq \norm{L}\lim_{n\rightarrow\infty}\mu\left(E_n\right)\\
+                                                                            &= 0.
+  \end{align*}
+  Thus, $\lambda$ is dominated by $\mu$, meaning that by the Radon--Nikodym theorem,\footnote{Someday I will actually learn this theorem for real.} there exists an integrable function $\varphi$ on $X$ such that $\lambda(E) = \int_{X}I_E\varphi \: d\mu$ for all measurable sets $E$. What we need to show now is that $\varphi$ is essentially bounded, and $L(f) = \int_{X}f\varphi\:d\mu$ for all $f\in L^1$.\newline
+
+  Set
+  \begin{align*}
+    E_N &= \set{x\in X\,\bigg|\,\norm{L} + \frac{1}{N} \leq \left\vert \varphi(x) \right\vert \leq N}.
+  \end{align*}
+  Then, $E_N$ is measurable, and $I_{E_N} \varphi$ is bounded.\newline
+
+  If $f = \sum_{i=1}^{k}c_iI_{E_i}$, then we can see that $L(f) = \int_{X}f\varphi\:d\mu$. We can also see that for any $f\in L_1$ with $\text{supp}(f) = E_N$, $L(f) = \int_{X}f\varphi\:d\mu$.\newline
+
+  Let $g = \frac{\overline{\varphi(x)}}{\left\vert \varphi(x) \right\vert}$ if $x\in E_N$ and $\varphi(x) \neq 0$; otherwise, $g = 0$. Then, $g\in L^1$ with $\text{supp}(g) = E_n$ and $\norm{g}_{1} = \mu(E_N)$. Thus, we have
+  \begin{align*}
+    \mu(E_N)\norm{L} &\geq \left\vert L(g) \right\vert\\
+                     &= \left\vert \int_{X}^{} g\varphi\:d\mu \right\vert\\
+                     &= \int_{X}^{} \left\vert \varphi \right\vert I_{E_N}\:d\mu\\
+                     &\geq \left(\norm{L} + \frac{1}{N}\right)\mu\left(E_N\right),
+  \end{align*}
+  meaning $\mu(E_N) = 0$. Thus, $\mu\left(\bigcup_{N=1}^{\infty}E_N\right) = 0$, meaning $\varphi$ is essentially bounded and $\norm{\varphi}_{\infty}\leq \norm{L}$.
+\end{proof}
+\begin{definition}[Hardy Spaces]
+  Let $\mathbb{T}$ denote the unit circle in the complex plane, and $\mu$ the Lebesgue measure normalized such that $\mu\left(\mathbb{T}\right) = 1$. We define $L^{p}\left(\mathbb{T}\right)$ with respect to $\mu$ as the Lebesgue space on $\mathbb{T}$.\newline
+
+  The Hardy space, $H^{p}$ is a closed subspace of $L^{p}\left(\mathbb{T}\right)$.\newline
+
+  For $n\in \Z$, we define $\chi_n$ on $\mathbb{T}$ such that $\chi_n(z) = z^n$. We define
+  \begin{align*}
+    H^1 &= \set{f\in L^{1}\left(\mathbb{T}\right) \mid \frac{1}{2\pi}\int_{0}^{2\pi}f\chi_n\:dt = 0}.
+  \end{align*}
+  We can see that $H^1$ is a linear subspace, and is a kernel of a bounded linear functional on $L^1\left(\mathbb{T}\right)$, meaning it is closed.\newline
+
+  For similar reasons,
+  \begin{align*}
+    H^{\infty} &= \set{\varphi \in L^{\infty}\left(\mathbb{T}\right) \mid \frac{1}{2\pi}\int_{0}^{2\pi}\varphi \chi_n\:dt = 0}
+  \end{align*}
+  is also a closed subspace of $L^{\infty}\left(\mathbb{T}\right)$. In particular, this is the kernel of the $w^{\ast}$-continuous function
+  \begin{align*}
+    \hat{\chi}_n\left(\varphi\right) &= \frac{1}{2\pi}\int_{0}^{2\pi} \varphi \chi_n\:dt,
+  \end{align*}
+  meaning $H^{\infty}$ is also $w^{\ast}$-closed.
+\end{definition}
+\section{Banach Algebras}%
+Earlier, we showed that $C(X)$, where $X$ is a compact Hausdorff space, is a Banach space; additionally, every Banach space is isomorphic to some subspace of $C(X)$. We can also see that $C(X)$ is an algebra\footnote{Vector space with multiplication.} with multiplication continuous in the norm topology.
+\begin{definition}[Multiplicative Linear Functional]
+  A linear functional $\varphi: C(X) \rightarrow \C$ is multiplicative if $\varphi(fg) = \varphi(f)\varphi(g)$, meaning $\varphi(1) = 1$.\newline
+
+  For each $x\in X$, we define $\varphi_x(f) = f(x)$.\newline
+
+  The space of multiplicative linear functionals on $C(X)$ is denoted $M_{C(X)}$.
+\end{definition}
+\begin{proposition}
+  Let $\psi: X\rightarrow M_{C(X)}$ be defined by $\psi(x) = \varphi_x$.\newline
+
+  Then, $\psi$ is a homeomorphism from $X$ onto $M_{C(X)}$, where $M_{C(X)}$ is given the $w^{\ast}$-topology on $\left(C(X)\right)^{\ast}$.
+\end{proposition}
+\begin{proof}
+  Let $\varphi \in M_{C(X)}$, and set
+  \begin{align*}
+    \mathfrak{R} &= \ker\varphi\\
+                 &= \set{f\in C(X) \mid \varphi(f) = 0}.
+  \end{align*}
+  We show that there exists $x_0$ in $X$ such that $f(x_0) = 0$ for all $f\in \mathfrak{R}$.\newline
+
+  If this were not the case, then for each $x\in X$, there would exist $f_x\in \mathfrak{R}$ such that $f_x(x) \neq 0$. Since $f_x$ is continuous, there exists a neighborhood $U_x$ of $x$ where $f_x\neq 0$. Since $X$ is compact, and $\set{U_x}_{x\in X}$ is an open cover of $X$, there exist $U_{x_1},\dots,U_{x_N}$ with $X = \bigcup_{n=1}^{N}U_{x_n}$.\newline
+
+  If we set $g = \sum_{n=1}^{N}\overline{f_{x_n}}f_{x_n}$, then
+  \begin{align*}
+    \varphi(g) &= \sum_{n=1}^{n}\varphi\left(\overline{f_{x_n}}\right)\varphi\left(f_{x_n}\right)\\
+               &= 0,
+  \end{align*}
+  implying $g\in \mathfrak{R}$. However, $g\neq 0$ on $C(X)$, meaning $g$ is invertible, implying $\varphi(1) = \varphi(g) \varphi(1/g) = 0$. Thus, there must exist $x_0\in X$ such that $f(x_0) = 0$.\newline
+
+  If $f\in C(X)$, then $f - (1)(\varphi(f))$ is in $\mathfrak{R}$, since $\varphi\left(f - (1)\varphi(f)\right) = \varphi(f) - \varphi(f) = 0$.
+\end{proof}
 \end{document}
