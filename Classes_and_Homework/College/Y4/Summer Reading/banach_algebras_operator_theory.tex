@@ -93,6 +93,7 @@
 %\newtheorem*{claim}{Claim}
 
 \usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \usepackage[document]{ragged2e}
 \renewcommand{\newline}{\hfill\break}
 \renewcommand{\thefootnote}{\roman{footnote}}
@@ -117,7 +118,7 @@ The product topology's open sets are of the form
   \bigcap_{j=1}^{n}\pi_{i_j}\left(U_j\right),
 \end{align*}
 where $i_{j}\in I$. The product topology is the topology of coordinatewise convergence.
-\begin{theorem}[Tychonoff's]
+\begin{theorem}[Tychonoff]
   Let $\set{\left(K_i,\tau_i\right)}_{i\in I}$ be a nonempty family of compact topological spaces. Then, the product space $\displaystyle K = \prod_{i\in I}K_i$ is compact in the product topology.
 \end{theorem}
 \begin{proof}
@@ -135,7 +136,7 @@ where $i_{j}\in I$. The product topology is the topology of coordinatewise conve
 
   Let $\displaystyle N\subseteq \prod_{j\in J_g} K_j$ be a neighborhood of $g\vert_{J_g}$. We may suppose that
   \begin{align*}
-    N = \pi_{j_1})^{-1}\left(U_{j_1}\right) \cap \cdots \cap \pi_{j_n}\left(U_{j_n}\right),
+    N = \pi_{j_1}^{-1}\left(U_{j_1}\right) \cap \cdots \cap \pi_{j_n}\left(U_{j_n}\right),
   \end{align*}
   where $j_1,\dots,j_n\in J_g$, and $U_{j_i} \subseteq K_{j_i}$ are open.\newline
 
@@ -195,6 +196,153 @@ In fact, we shall soon see that every signed measure is represented in these for
 
   If $P'$ and $N'$ are another pair of sets, then $P\setminus P' \subseteq P$ and $P\setminus P' \subseteq N'$, meaning $P\setminus P'$ is measure zero.
 \end{proof}
+The decomposition $X = P\sqcup N$ is known as the Hahn decomposition for $\nu$ (non-unique, generally speaking).\newline
+
+We say two measures, $\mu$ and $\nu$ on $(X,\Omega)$ are mutually singular if there exist disjoint $E,F\in \Omega$ with $E\sqcup F = X$, where $\mu(E) = 0$ and $\nu(F) = 0$. Informally speaking, $\mu$ and $\nu$ exist on disjoint sets; we denote mutual singularity as $\mu \perp \nu$.
+\begin{theorem}[Jordan Decomposition]
+  If $\nu$ is a signed measure, then there exist unique positive measure $\nu^{+}$ and $\nu^{-}$ such that $\nu = \nu^{+}-\nu^{-}$, and $\nu^{+}\perp \nu^{-}$.
+\end{theorem}
+\begin{proof}
+  Let $X = P\sqcup N$ be a Hahn decomposition for $\nu$, and define $\nu^{+}\left(E\right) = \nu\left(E\cap P\right)$, $\nu^{-}\left(E\right)= -\nu\left(E\cap N\right)$. Then, we can obviously see that $\nu = \nu^{+} - \nu^{-}$, with $\nu^{+}\perp \nu^{-}$.\newline
+
+  Suppose $\nu = \mu^{+} - \mu^{-}$ with $\nu^{+} \perp \nu^{-}$. Let $E,F\in \Omega$ be such that $E\cap F = \emptyset$, $E\cup F = X$, and $\mu^{+}\left(F\right) = \mu^{-}\left(E\right) = 0$. Then, $X = E \sqcup F$ is another Hahn decomposition for $\nu$, meaning $P\triangle E$ is $\nu$-null, meaning that for any $A\in \Omega$, $\mu^{+}\left(A\right) = \nu^{+}\left(A\cap E\right) = \nu\left(A\cap E\right) = \nu\left(A\cap P\right) = \nu^{+}\left(A\right)$, and similarly, $\nu^{-} = \mu^{-}$.
+\end{proof}
+\begin{definition}[Variation of Signed Measure]
+  We define $\nu^{+}$ to be the positive variation of $\nu$, $\nu^{-}$ to be the negative variation of $\nu$, with the total variation of $\nu$ being defined by
+  \begin{align*}
+    |\nu| = \nu^{+} + \nu^{-}.
+  \end{align*}
+  If $\nu$ does not admit the value $\infty$, then $\nu^{+}(X) = \nu(P) < \infty$, meaning $\nu^{+}$ is a signed measure, and $\nu$ is bounded above by $\nu^{+}$.\newline
+
+We say $\nu$ is ($\sigma$-)finite if $|\nu|$ is ($\sigma$-)finite.
+\end{definition}
+\begin{definition}[Integration with respect to a Signed Measure]
+  To integrate with respect to the signed measure $\nu$, we take $L^{1}\left(\nu\right) = L^{1}\left(\nu^{+}\right) - L^{1}\left(\nu^{-}\right)$, and
+  \begin{align*}
+    \int_{X}^{} f\:d\nu &= \int_{X}^{} f\:d\nu^{+} - \int_{X}^{} f\:d\nu^{-}.
+  \end{align*}
+\end{definition}
+\begin{definition}[Absolute Continuity]
+Let $\nu$ be a signed measure, and $\mu$ a positive measure on $(X,\Omega)$. We say $\nu$ is absolutely continuous with respect to $\mu$ if $\nu(E) = 0$ for every $E\in \Omega$ where $\mu(E) = 0$. We write $\nu \ll \mu$.\newline
+
+We can verify that $\nu \ll \mu$ if and only if $|\nu| \ll \mu$, which is true if and only if $\nu^{+}\ll \mu$ and $\nu^{-}\ll \mu$.
+\end{definition}
+\begin{theorem}[Definition of Absolute Continuity]
+  Let $\nu$ be a signed measure and $\mu$ a positive measure on $(X,\Omega)$. Then, $\nu \ll \mu$ if and only if, for every $\ve > 0$, there exists $\delta > 0$ such that $\left\vert \nu(E) \right\vert < \ve$ when $\mu\left(E\right)< \delta$.
+\end{theorem}
+\begin{proof}
+  Since $\nu \ll \mu$ if and only if $\left\vert \nu \right\vert\ll\mu$, and $\left\vert \nu(E) \right\vert\leq \left\vert \nu \right\vert\left(E\right)$, we only need assume $\nu$ is positive.\newline
+
+  We can see easily that the $\ve$-$\delta$ condition implies $\nu \ll \mu$.\newline
+
+  In the opposite direction, suppose toward contradiction that there exists $\ve_0 > 0$ such that for all $n\in \N$, we can find $E_n\in \Omega$ with $\mu\left(E_n\right) < 2^{-n}$ with $\nu\left(E_n\right) \geq \ve_0$.\newline
+
+  Let $F_k = \bigcup_{n=k}^{\infty}E_n$, and $F = \bigcap_{k=1}^{\infty}F_k$. Then, $\mu\left(F_k\right) < 2^{1-k}$, meaning $\mu(F) = 0$, but $\nu\left(F_k\right) \geq \ve_0$ for all $k$, meaning $\nu$ is finite and $\nu\left(F\right) = \lim_{k\rightarrow\infty}\nu\left(F_k\right) \geq \ve$, meaning $\nu \nll \mu$.
+\end{proof}
+\begin{corollary}
+  Let $\nu(E)$ be defined by $\nu(E) = \int_{E}^{} F\:d\mu$. Then, if $f\in L^{1}\left(\mu\right)$, $\nu \ll \mu$.
+\end{corollary}
+\begin{lemma}[Prelude to Radon--Nikodym]
+  Suppose that $\nu$ and $\mu$ are finite measures on $(X,\Omega)$. Either $\nu \perp \mu$, or there exists $\ve_0 > 0$ and $E\in \Omega$ such that $\mu(E) > 0$ and $\nu \geq \ve_0 \mu$ on $E$.
+\end{lemma}
+\begin{proof}
+  Let $X = P_n \cup N_n$ be a Hahn decomposition for $\nu - \frac{1}{n}\mu$. Let $P = \bigcup_{n=1}^{\infty}P_n$, $N = \bigcap_{n=1}^{\infty}N_n = P^{c}$.\newline
+
+  Then, $N$ is a negative set for $\nu - \frac{1}{n}\mu$ for all $n$, meaning $0 \leq \nu(N) \leq \frac{1}{n}\mu(N)$ for all $n$, so $\nu\left(N\right) = 0$. \newline
+
+  If $\mu(P) = 0$, then $\nu \perp \mu$. If $\mu(P) > 0$, then $\mu\left(P_n\right)$ > 0 for some $n$, and $P_n$ is a positive set for $\nu - \frac{1}{n}\mu$.
+\end{proof}
+\begin{theorem}[Radon--Nikodym]
+  Let $\nu$ be a $\sigma$-finite signed measure, $\mu$ a $\sigma$-finite positive measure on $(X,\Omega)$. Then, there exist unique $\sigma$-finite signed measures $\lambda,\rho$ on $(X,\Omega)$ such that $\lambda \perp \mu$, $\rho \ll \mu$, and $\nu = \lambda + \rho$.\newline
+
+  Moreover, there exists an extended $\mu$-integrable function $f: X\rightarrow \R$ such that $\rho(E) = \int_{E}^{} f\:d\mu$. The derived measure $\rho$ will be referred to by the shorthand, $d\rho = f\:d\mu$.
+\end{theorem}
+\begin{proof}\hfill
+  \begin{description}
+    \item[Case 1:] Suppose $\nu$ and $\mu$ are finite positive measures. Let
+      \begin{align*}
+        \mathcal{F} &= \set{f: X\rightarrow[0,\infty]\mid \int_{E}^{} f\:d\mu \leq \nu(E)~\forall E\in \Omega}.
+      \end{align*}
+      Then, $\mathcal{F}$ is nonempty, since $0\in \mathcal{F}$. If $f,g\in \mathcal{F}$, then $h = \max\left(f,g\right) \in \mathcal{F}$, since, for $A = \set{x\mid f(x) > g(x)}$,
+      \begin{align*}
+        \int_{E}^{} h\:d\mu &= \int_{E\cap A}^{} f\:d\mu + \int_{E\setminus A}^{} g\:d\mu\\
+                            &\leq \nu\left(E\cap A\right) + \nu\left(E\setminus A\right)\\
+                            &= \nu\left(E\right).
+      \end{align*}
+      Let $a = \sup\set{\int_{X}^{} f\:d\mu\mid f\in \mathcal{F}}$. Noting that $a\leq \nu(X) < \infty$, choose a sequence $\set{f_n}\in \mathcal{F}$ such that $\int_{X}f_n\:d\mu \rightarrow a$.\newline
+
+      Let $g_n = \max\left(f_1,\dots,f_n\right)$, and $f = \sup_{n}f_n$. Then, $g_n \in \mathcal{F}$, increasing pointwise to $f$, and $\int_{X}^{} g_n\:d\mu \geq \int_{X}^{} f_n\:d\mu$. Thus, $\lim_{n\rightarrow\infty}\int_{X}^{} g_n\:d\mu = a$, meaning that by monotone convergence, $f\in \mathcal{F}$ with $\int_{X}^{} f\:d\mu = a$.\newline
+
+      We claim that the measure $d\lambda = d\mu - f\:d\mu$ is singular with respect to $\mu$. If it isn't, then there exists $E\in \Omega$ and $\ve_0 > 0$ such that $\mu\left(E\right) > 0$ and $\lambda \geq \ve_0 \mu$ on $E$. However, $\ve_0 \chi_{E}d\mu \leq d\lambda = d\nu - f\:d\mu$, meaning $\left(f + \ve_0\chi_{E}\right)d\mu \leq d\nu$, meaning $f + \ve_0\chi_E\in \mathcal{F}$, and
+      \begin{align*}
+        \int_{X}^{} \left(f + \ve_0 \chi_E\right)\:d\mu &= a + \ve_0\mu(E)\\
+                                                        &> a,
+      \end{align*}
+      contradicting the definition of $a$.\newline
+
+      Thus, existence of $\lambda,f$, and $d\rho = f\:d\mu$ is proved. To show uniqueness, if it is also the case that $d\nu = d\lambda' + f'd\mu$, we have $d\lambda - d\lambda' = \left(f' - f\right)d\mu$. However, $\lambda - \lambda' \perp \mu$, while $\left(f' - f\right)d\mu \ll d\mu$, meaning $d\lambda - d\lambda' = \left(f'-f\right)d\mu = 0$, meaning $\lambda = \lambda '$ and $f = f'$ $\mu$-almost everywhere.
+    \item[Case 2:] If $\mu$ and $\nu$ are $\sigma$-finite measures, then $X$ is a countable disjoint union of $\mu$-finite sets and a countable disjoint union of $\nu$-finite sets.\newline
+
+      Taking intersections, we obtain a sequence of disjoint sets $\set{A_i}\subseteq \Omega$ such that $\mu\left(A_j\right)$ and $\nu\left(A_j\right)$ are finite for all $j$, and $X = \bigcup_{j=1}^{\infty}A_j$.\newline
+
+      Define $\mu_j \left(E\right) = \mu\left(E\cap A_j\right)$, and $\nu_j\left(E\right) = \nu\left(E\cap A_j\right)$. For each $j$, we have $d\nu_j = d\lambda_j + f_j\:d\mu_j$, where $\lambda_j \perp \mu_j$ (applying Case 1 to each finite measure).\newline
+
+      Since $\mu_j\left(A^{c}_j\right) = \nu_j\left(A^{c}_j\right) = 0$, we have $\lambda_j\left(A_j^{c}\right) = \nu_j\left(A_j^{c}\right) - \int_{A_{j}^c}^{} f\:d\mu = 0$, meaning $f_j = 0 $ on $A_{j}^c$.\footnote{$\mu$-almost everywhere, of course.}\newline
+
+      Let $\lambda = \sum_{j=1}^{\infty}\lambda_j$ and $f = \sum_{j=1}^{\infty}f_j$. Then, $d\nu = d\lambda + f\:d\mu$, $\lambda \perp \mu$, and $d\lambda$, $f\:d\mu$ are $\sigma$-finite.\newline
+
+      The uniqueness follows from the uniqueness of each $\lambda_j$ and $f\:d\mu_j$.
+  \end{description}
+  In the general case, we apply each argument to $\nu^{+}$ and $\nu^{-}$, then subtract.
+\end{proof}
+\begin{definition}[Radon--Nikodym Derivative]
+  The composition $\nu = \lambda + \rho$, where $\lambda \perp \mu$ and $\rho \ll \mu$ is known as the Lebesgue decomposition of $\nu$ with respect to $\mu$.\newline
+
+  When $\nu \ll \mu$, then $d\nu = f\:d\mu$ for some $f$. We call $f$ the Radon--Nikodym derivative of $\nu$ with respect to $\mu$. We write
+  \begin{align*}
+    d\nu &= \frac{d\nu}{d\mu} d\mu.
+  \end{align*}
+\end{definition}
+\begin{proposition}[Chain Rule]
+  Let $\nu$ be a $\sigma$-finite signed measure, where $\mu$, $\lambda$ are $\sigma$-finite measures on $(X,\Omega)$ with $\nu \ll \mu$, $\mu \ll \lambda$.
+  \begin{enumerate}[(a)]
+    \item If $g \in L^{1}\left(\nu\right)$, then $g\frac{d\nu}{d\mu}\in L^1\left(\mu\right)$ and
+      \begin{align*}
+        \int_{}^{} g\:d\nu &= \int_{}^{} g\frac{d\nu}{d\mu}\:d\mu.
+      \end{align*}
+    \item We have $\nu \ll \lambda$, and
+      \begin{align*}
+        \frac{d\nu}{d\lambda} &= \frac{d\nu}{d\mu}\frac{d\mu}{d\lambda}
+      \end{align*}
+      $\lambda$-almost everywhere.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We may assume $\nu \geq 0$. By the definition of $\frac{d\nu}{d\mu}$, it is the case that
+  \begin{align*}
+    \int_{}^{} g\:d\nu &= \int_{}^{} g\frac{d\nu}{d\mu}\:d\mu
+  \end{align*}
+  whenever $g = \chi_E$. Thus, by linearity, the equation is true for simple functions, and then for nonnegative measurable functions by monotone convergence, then for $L^{1}(\nu)$ functions by linearity.\newline
+
+  Replacing $\nu$ and $\mu$ with $\mu$ and $\lambda$, setting $g = \chi_E \frac{d\nu}{d\mu}$, we have
+  \begin{align*}
+    \nu(E) &= \int_{E}^{} \frac{d\nu}{d\mu}\:d\mu\\
+           &= \int_{E}^{} \frac{d\nu}{d\mu}\frac{d\mu}{d\lambda}\:d\lambda
+  \end{align*}
+  for all $E\in \Omega$, meaning
+  \begin{align*}
+    \frac{d\nu}{d\lambda} &= \frac{d\nu}{d\mu}\frac{d\mu}{d\lambda}
+  \end{align*}
+  $\lambda$-almost everywhere.
+\end{proof}
+\begin{corollary}
+  If $\mu \ll \lambda$ and $\lambda \ll \mu$, then $\frac{d\lambda}{d\mu}\frac{d\mu}{d\lambda} = 1$.
+\end{corollary}
+\begin{example}[Dirac $\delta$ Distribution]
+  Let $\mu$ be the Lebesgue measure on $\R$, and $\nu$ the point mass at $0$ on $\left(\R,\mathcal{B}_{\R}\right)$. We can see that $\nu \perp \mu$.\newline
+
+  The ``Radon--Nikodym derivative'' $\frac{d\nu}{d\mu}$ is the Dirac $\delta$ distribution.
+\end{example}
 \section{Banach Spaces}%
 Let $X$ be a compact Hausdorff space, and let $C(X)$ denote the set of continuous functions $f: X\rightarrow \C$. For $f_1,f_2\in C(X)$ and $\lambda\in \C$, we define
 \begin{enumerate}[(1)]
@@ -1215,6 +1363,24 @@ Earlier, we showed that $C(X)$, where $X$ is a compact Hausdorff space, is a Ban
   \end{align*}
   implying $g\in \mathfrak{R}$. However, $g\neq 0$ on $C(X)$, meaning $g$ is invertible, implying $\varphi(1) = \varphi(g) \varphi(1/g) = 0$. Thus, there must exist $x_0\in X$ such that $f(x_0) = 0$.\newline
 
-  If $f\in C(X)$, then $f - (1)(\varphi(f))$ is in $\mathfrak{R}$, since $\varphi\left(f - (1)\varphi(f)\right) = \varphi(f) - \varphi(f) = 0$.
+  If $f\in C(X)$, then $f - (1)(\varphi(f))$ is in $\mathfrak{R}$, since $\varphi\left(f - (1)\varphi(f)\right) = \varphi(f) - \varphi(f) = 0$, meaning $f(x_0) - \varphi(f) = 0$, and $\varphi = \varphi_{x_0}$.\newline
+
+  Since each $\varphi \in M_{C(X)}$ is bounded, we can give $M_{C(X)}$ the subspace topology of the $w^{\ast}$-topology on $\left(C(X)\right)^{\ast}$.\newline
+
+  Consider $\psi: X \rightarrow M_{C(X)}$. Since $X$ is compact and Haursdorff, it is normal, meaning that by Urysohn's lemma, there exists $f\in C(X)$ such that $f(x) \neq f(y)$, meaning
+  \begin{align*}
+    \psi(x)(f) &= \varphi_x(f)\\
+               &= f(x)\\
+               &\neq f(y)\\
+               &= \varphi_y(f)\\
+               &= \psi(y)(f),
+  \end{align*}
+  implying $\psi$ is injective.\newline
+
+  To show $\psi$ is continuous, let $\set{x_{\alpha}}_{\alpha \in A}$ be a net in $X$ converging to $x$. Then, for every $f\in C(X)$, $\lim_{\alpha \in A}f\left(x_{\alpha}\right) = f(x)$, or $\lim_{\alpha \in A}\psi\left(x_{\alpha}\right)(f) = \psi(x)(f)$.\newline
+
+  Thus, $\set{\psi\left(x_{\alpha}\right)}_{\alpha \in A}$ converges in the $w^{\ast}$-topology to $\psi(x)$, meaning $\psi$ is continuous.\newline
+
+  Since $\psi$ is injective and continuous mapping a compact space onto a Hausdorff space, $\psi$ is a homeomorphism.
 \end{proof}
 \end{document}
