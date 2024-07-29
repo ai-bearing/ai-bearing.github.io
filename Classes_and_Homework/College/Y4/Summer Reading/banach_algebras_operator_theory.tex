@@ -343,6 +343,88 @@ We can verify that $\nu \ll \mu$ if and only if $|\nu| \ll \mu$, which is true i
 
   The ``Radon--Nikodym derivative'' $\frac{d\nu}{d\mu}$ is the Dirac $\delta$ distribution.
 \end{example}
+\subsection{Essentials of Abstract Harmonic Analysis}%
+In order to go further into theories of Banach algebras, we need a better understanding of the theory of topological groups and other essentials of abstract harmonic analysis. As a result, I'm going to be pulling information from Hewitt and Ross's \textit{Abstract Harmonic Analysis, Volume I}.
+\subsubsection{Basic Definitions}%
+\begin{definition}[Topological Group]
+Let $G$ be a set that is a group with a topological structure. If
+\begin{enumerate}[(i)]
+  \item $\cdot: G\times G \rightarrow G$, $(x,y) \mapsto xy$;
+  \item and $^{-1}: G\rightarrow G$, $x\mapsto x^{-1}$
+\end{enumerate}
+are continuous, then $G$ is a topological group.
+\end{definition}
+The continuity of group multiplication implies that for every neighborhood $U$ of $xy$, there exists a neighborhood $V$ of $x$ and $W$ of $y$ such that $VW \subseteq U$.
+\begin{theorem}[Homeomorphisms]
+  Let $G$ be a topological group. For $a\in G$, the maps $\set{a}\times G \rightarrow aG$, $G\times \set{a}\rightarrow Ga$, and inversion are homeomorphisms.
+\end{theorem}
+\begin{theorem}[Translation of Bases]
+  Let $G$ be a topological group, and let $\mathcal{U}$ be a basis for $G$ at $e$. Then, the families $\mathcal{U}x$ and $x\mathcal{U}$ for every $x\in G$ are bases for $G$.
+\end{theorem}
+\begin{proof}
+  Let $W$ be a nonempty open subset of $G$ with $a\in W$. The map $x \mapsto a^{-1}x$ takes $W$ to the set $a^{-1}W$; notice that $e\in a^{-1}W$.\newline
+
+  Since $\mathcal{U}$ is a basis at $e$, there is a neighborhood $U\in \mathcal{U}$ such that $U\subseteq a^{-1}W$, meaning $aU\subseteq W$.\newline
+
+  Thus, $W$ is a union of the sets $aU$, meaning $\set{xU\mid x\in G,U\in \mathcal{U}}$ is an basis for $G$.
+\end{proof}
+\begin{theorem}[Product Sets]
+  Let $G$ be a topological group, with $A,B\subseteq G$.
+  \begin{itemize}
+    \item If $A$ is open, then $AB$ and $BA$ are open.
+    \item If $A$ and $B$ are compact, then $AB$ is compact.
+    \item If $A$ is closed and $B$ is compact, then $AB$ and $BA$ are closed.
+    \item If $A$ and $B$ are closed, then $AB$ need not be closed.
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  To prove the first item, we have $AB = \bigcup_{b\in B}Ab$; since open sets are translation-invariant, this means $AB$ is a union of open sets, and thus open.\newline
+
+  Suppose $A$ and $B$ are compact; then, by Tychonoff's theorem, $A\times B$ is compact in $G\times G$. Since group multiplication is continuous, $AB$ is compact.\newline
+
+  Suppose $A$ is closed and $B$ is compact. Let $\set{x_{\alpha}}_{\alpha \in D}$ be a net in $AB$ converging to $x_0$ in $G$. We only need show that $x_0\in AB$. For each $x_{\alpha}$, we have $x_{\alpha} = a_{\alpha}b_{\alpha}$, where $a_{\alpha}\in A$ and $b_{\alpha}\in B$.\newline
+
+  Since $B$ is compact, there is a subnet such that $\lim_{\beta \in E}b_{\beta}\rightarrow b_0$. It must be the case that $x_{\beta}\rightarrow x_0$, and we can see that $\left(x_{\beta},b_{\beta}\right)\rightarrow \left(x_0,b_0\right)$. Therefore, $a_{\beta} = x_{\beta}b_{\beta}$ converges to $x_0b_0^{-1}$, as it is the composition of $\left(x_{\beta},y_{\beta}\right)$ with $(x,y)\mapsto xy^{-1}$. Since $A$ is closed, and each $a_{\beta}\in A$, $a_{\beta}\rightarrow a_0\in A$, meaning
+  \begin{align*}
+    x_0 &= \left(x_0b_0^{-1}\right)b_0\\
+        &= \left(a_0\right)b_0\\
+        &\in AB.
+  \end{align*}
+  Similarly, we can see that $BA$ is closed.
+\end{proof}
+\begin{theorem}[Characterization of Topological Groups]
+  Let $G$ be a topological group with $\mathcal{U}$ a basis centered at $e$. Then,
+  \begin{enumerate}[(i)]
+    \item for every $U\in \mathcal{U}$, there is a $V\in \mathcal{U}$ such that $V^{2} \subseteq U$;
+    \item for every $U\in \mathcal{U}$, there is a $V\in \mathcal{U}$ such that $V^{-1}\subseteq U$;
+    \item For every $U\in \mathcal{U}$ and every $x\in U$, there is a $V\in \mathcal{U}$ such that $xV \subseteq U$;
+    \item for every $U\in \mathcal{U}$ and every $x\in G$, there is a $V\in \mathcal{U}$ such that $xVx^{-1}\subseteq U$.
+  \end{enumerate}
+  Conversely, if $G$ is a group and $\mathcal{U}$ is a family of subsets of $G$ with the finite intersection property and (i)--(iv), then the family of subsets $\set{xU\mid U\in \mathcal{U},x\in G}$ is a subbasis\footnote{The topology on $G$ is the smallest topology containing $\set{xU\mid U\in \mathcal{U},x\in G}$.} for a topology on $G$.\newline
+
+  If $\mathcal{U}$ also satisfies $U,V\in \mathcal{U}\Rightarrow \exists W\in \mathcal{U}$ such that $W\subseteq U\cap V$, then $\set{xU\mid U\in \mathcal{U},x\in G}$ and $\set{Ux\mid U\in \mathcal{U},x\in G}$ are open bases for the topology on $G$.
+\end{theorem}
+\begin{proof}
+  In the forward direction, we see that (i) implies that $(x,y)\mapsto xy$ is continuous, (ii) implies that $x\mapsto x^{-1}$ is continuous, and (iii) implies that $U$ is open. Finally, (iv) follows from the fact that $x\mapsto ax \mapsto axa^{-1}$ is a homeomorphism.\newline
+
+  In the reverse direction, let $\mathcal{U}$ satisfy conditions (i)--(iv) and have the finite intersection property. Then, for $U\in \mathcal{U}$, there are $V,W\in\mathcal{U}$ such that $V^2 \subseteq U$ and $W^{-1}\subseteq V$. Since $V\cap W\neq \emptyset$, we have $e\in VW^{-1}\subseteq V^2 \subseteq U$. Thus, all elements of $\mathcal{U}$ must contain $e$.\newline
+
+  Let $\tilde{\mathcal{U}}$ be the family of all sets $\bigcap_{k=1}^{n}U_k$ for $U_1,\dots,U_n \in \mathcal{U}$. For each $U_{k}$, there exist $V_k$ such that $V_k^2 \subseteq U_k$. Thus,
+  \begin{align*}
+    \left(\bigcap_{k=1}^{n}V_k\right)^2 &\subseteq \bigcap_{k=1}^{n}\left(V_k\right)^2\\
+                                        &\subseteq \bigcap_{k=1}^{n}U_k.
+  \end{align*}
+  Thus, condition (i) holds for $\tilde{\mathcal{U}}$. Additionally, since $\left(\bigcap_{k=1}^{n}V_k\right)^{-1} = \bigcap_{k=1}^{n}V_k^{-1}$, (ii) holds for $\tilde{\mathcal{U}}$. Finally, since $x\left(\bigcap_{k=1}^{n}V_k\right) = \bigcap_{k=1}^{n}xV_k$ and $x\left(\bigcap_{k=1}^{n}V_k\right)x^{-1} = \bigcap_{k=1}^{n}\left(xV_kx^{-1}\right)$, properties (iii) and (iv) hold for $\tilde{\mathcal{U}}$.\newline
+
+  Thus, the nonempty sets $\bigcap_{k=1}^{n}\left(x_kU_k\right)$ with $x_k\in G$ and $U_k\in \mathcal{U}$ form an open basis for the topology of $G$. Let $y\in \bigcap_{k=1}^{n}\left(x_kU_k\right)$, and let $V_k$ be such that $x_kyV_k \subseteq U_k$ for each $k$. Then,
+  \begin{align*}
+    y\left(\bigcap_{k=1}^{n}V_k\right) &= \bigcap_{k=1}^{n}\left(yV_k\right)\\
+                                       &\subseteq \bigcap_{k=1}^{n}\left(x_kU_k\right),
+  \end{align*}
+  meaning $y\tilde{U}$ as $\tilde{U}$ runs through $\tilde{\mathcal{U}}$ forms an open basis at $y$ for each $y\in G$.\newline
+
+  To show that $G$ is a topological group, let $a,b\in G$ and $\tilde{U} \in \tilde{\mathcal{U}}$. By (i) and (iv) on $\tilde{\mathcal{U}}$, there exist $\tilde{V},\tilde{W}\in \tilde{\mathcal{U}}$ such that $\left(b^{-1}\tilde{W}b\right)\tilde{V}\subseteq \tilde{U}$, meaning $\left(a\tilde{W}\right)\left(b\tilde{V}\right) \subseteq ab\tilde{U}$, meaning group multiplication is continuous. Similarly, from (ii) and (iv), we can see that $a^{-1}\tilde{V} \subseteq \tilde{U}$.
+\end{proof}
 \section{Banach Spaces}%
 Let $X$ be a compact Hausdorff space, and let $C(X)$ denote the set of continuous functions $f: X\rightarrow \C$. For $f_1,f_2\in C(X)$ and $\lambda\in \C$, we define
 \begin{enumerate}[(1)]
