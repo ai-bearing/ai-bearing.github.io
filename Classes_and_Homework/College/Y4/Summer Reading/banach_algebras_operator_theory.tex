@@ -99,7 +99,7 @@
 \renewcommand{\thefootnote}{\roman{footnote}}
 \begin{document}
 \section{Prelude}%
-My REU mentor recently bought me the book \textit{Banach Algebra Techniques in Operator Theory}, so I'm going to be reading through it here. Astute readers may already know that I am also reading through the book \textit{Quantum Theory for Mathematicians}, and may be wondering if this is going to crowd out that book. The answer is yes --- but I don't really care that much. If I come out of the summer knowing more things than I knew entering, then I will have succeeded.
+  My REU mentor recently bought me the book \textit{Banach Algebra Techniques in Operator Theory}, so I'm going to be reading through it here. Astute readers may already know that I am also reading through the book \textit{Quantum Theory for Mathematicians}, and may be wondering if this is going to crowd out that book. The answer is yes --- but I don't really care that much. If I come out of the summer knowing more things than I knew entering, then I will have succeeded.
 \section{Prerequisite Notes}%
 Since Douglas's book is very advanced, I'm going to end up going back and reading other important material in order to contextualize the parts of the book I don't fully understand.
 \subsection{Tychonoff's Theorem}%
@@ -425,6 +425,80 @@ The continuity of group multiplication implies that for every neighborhood $U$ o
 
   To show that $G$ is a topological group, let $a,b\in G$ and $\tilde{U} \in \tilde{\mathcal{U}}$. By (i) and (iv) on $\tilde{\mathcal{U}}$, there exist $\tilde{V},\tilde{W}\in \tilde{\mathcal{U}}$ such that $\left(b^{-1}\tilde{W}b\right)\tilde{V}\subseteq \tilde{U}$, meaning $\left(a\tilde{W}\right)\left(b\tilde{V}\right) \subseteq ab\tilde{U}$, meaning group multiplication is continuous. Similarly, from (ii) and (iv), we can see that $a^{-1}\tilde{V} \subseteq \tilde{U}$.
 \end{proof}
+\begin{theorem}[Symmetric Neighborhoods]
+  Every topological group $G$ has a basis at $e$ consisting of neighborhoods $U$ such that $U = U^{-1}$.
+\end{theorem}
+\begin{proof}
+  For an arbitrary neighborhood $U$ of $e$, we can see that for $V = U\cap U^{-1}$, $V = V^{-1}$ and $V$ is a neighborhood of $V$ with $V\subseteq U$.
+\end{proof}
+\begin{corollary}[Regularity of Topological Groups at Identity]
+  Let $G$ be a topological group. For every (open) neighborhood $U$ of $e$, there is a neighborhood $V$ of $e$ such that $\overline{V} \subseteq U$.
+\end{corollary}
+\begin{proof}
+  Let $V$ be a symmetric neighborhood of $e$ such that $V^{2}\subseteq U$. Then, for $x\in \overline{V}$, we have $xV \cap V \neq \emptyset$, meaning $xv_1 = v_2$ for some $v_1,v_2 \in V$, so $x = v_2v_1^{_1}\in VV^{-1} = V^2 \subseteq U$.
+\end{proof}
+\begin{theorem}[$T_3$ Property of Topological Groups]
+  Let $G$ be a $T_0$ topological group.\footnote{$T_0$ is the Kolmogorov property, implying that for two points $x\neq y$, there exists an open set $O$ such that $x\in O\wedge y\notin O$ or vice versa.} Then, $G$ is regular at every point, thus it is Hausdorff.
+\end{theorem}
+\begin{proof}
+  From the corollary, we know that $G$ is regular at $e$, and since left translation is a homeomorphism, this means $G$ is regular at every element. Thus, $G$ is Hausdorff.
+\end{proof}
+\begin{theorem}[Conjugate Neighborhoods in Compact Subsets]
+  Let $G$ be a topological group, with $U$ a neighborhood of $e$, $F \subseteq G$ compact. Then, there is a neighborhood $e$ of $V$ such that $xVx^{-1} \subseteq U$ for all $x\in F$.
+\end{theorem}
+\begin{proof}
+  Let $\mathcal{U}$ denote the family of symmetric neighborhoods of $e$. We will first show that for $y\in G$, there is a $V\in \mathcal{U}$ such that $x\subseteq Vy$ implies $xVx^{-1}\subseteq U$.\newline
+
+  Let $V_1\in \mathcal{U}$ be such that $V_1^{3}\subseteq U$, and $V_2\in \mathcal{U}$ such that $yV_2 y^{-1}\subseteq V_1$. Let $V = V_1 \cap V_2$. Then, for $x\in Vy$, we have $xy^{-1}\in V\subseteq V_1$, and $yx^{-1}\in V_1^{-1} = V_1$, meaning $xVx^{-1}\subseteq xV_2x^{-1} = \left(xy^{-1}\right) y V_2 y^{-1} \left(yx^{-1}\right) \subseteq V_1^{3}\subseteq U$.\newline
+
+  For each $y\in F$, there is a $V_y\in \mathcal{U}$ such that $xV_y y \Rightarrow xV_y x^{-1}\subseteq U$. Since $F\subseteq \bigcup_{y\in F}V_y y$, and $F$ is compact, there exist $y_1,\dots,y_n$ such that $F\subseteq \bigcup_{k=1}^{n}V_{y_k}y_k$.\newline
+
+  Let $V = \bigcap_{k=1}^{n}V_{y_k}$. Then, for $x\in F$, $x\in V_{y_k}y_k$ for some $k$, meaning $xVx^{-1}\subseteq xV_{y_k}x^{-1}\subseteq U$.
+\end{proof}
+\begin{theorem}[Neighborhoods with Compact Closure]
+  Let $G$ be a topological group and $U$ an open subset of $G$ such that for compact $F$, $F\subseteq U$. Then, there is a neighborhood $V$ of $e$ such that $\left(FV\right) \cup \left(VF\right) \subseteq U$. If $G$ is locally compact, then $V$ can be chosen such that $\overline{\left(FV\right) \cup \left(VF\right)}$.
+\end{theorem}
+\begin{proof}
+  For each $x\in F$, there is a neighborhood $W_x$ of $e$ such that $xW_x\subseteq U$, and a neighborhood $V_x$ of $e$ such that $V_x^2\subseteq W_x$.\newline
+
+  Since $F \subseteq \bigcup_{x\in F}xV_x$, there exist $x_1,\dots,x_n\in F$ such that $F\subseteq \bigcup_{k=1}^{n}x_kV_{x_k}$. Let $V_1 = \bigcap_{k=1}^{n}V_{x_k}$. Then,
+  \begin{align*}
+    FV_1 &\subseteq \bigcup_{k=1}^{n}x_kV_{x_k}V_1\\
+         &\subseteq \bigcup_{k=1}^{n} x_kV_{x_k}^2\\
+         &\subseteq \bigcup_{k=1}^{n}x_kW_{x_k}\\
+         &\subseteq U.
+  \end{align*}
+  Similarly, there is a neighborhood $V_2$ of $e$ such that $V_2F\subseteq U$. Letting $V = V_1\cap V_2$, we get that $\left(FV\right)\cup \left(VF\right)\subseteq U$.\newline
+
+  If $G$ is locally compact, then $V$ can be chosen such that $\overline{V}$ is compact. It follows that $F\overline{V}$ is compact; since $FV \subseteq F\overline{V}$, and $F\overline{V}$ is closed, $\overline{FV}\subseteq F\overline{V}$, meaning $F\overline{V}$ is compact. Similarly, $\overline{VF}$ is compact, meaning $\overline{\left(FV\right) \cup \left(VF\right)}$ is compact.
+\end{proof}
+As a result of the fact that translation is a homeomorphism, we can introduce a notion of ``uniform nearness'' of points, as well as uniform continuity for real- and complex-valued functions on $G$.\newline
+
+Considering uniform nearness, left translating $x$ and $y$ in $G$ by $x^{-1}$, we find that $x\mapsto e$ and $y\mapsto x^{-1} y$. If $x^{-1}y$ is in a symmetric neighborhood $U$ of $e$, we can say that $x$ and $y$ are $U$-near in the sense of left translation. Similarly, if $yx^{-1}\in U$, we can say that $x$ and $y$ are $U$-near in the sense of right translation.\newline
+
+Both of these are uniform concepts, in that they can be applied to any $x$ and $y$ in $G$. If $\varphi$ is a complex-valued function on $G$, we can say that $\varphi$ is left (right) uniformly continuous if for every $\ve > 0$, there exists a neighborhood $U$ of $e$ such that $\left\vert \varphi(x)-\varphi(y) \right\vert < \ve$ whenever $x$ and $y$ are $U$-near in the sense of left (right) translation.\newline
+
+Thus, for left uniform continuity, we must have
+\begin{align*}
+  \left\vert \varphi(x) - \varphi(xu) \right\vert < \ve
+\end{align*}
+ for all $x\in G$ and all $u\in U$, and for right uniform continuity, we must have
+ \begin{align*}
+   \left\vert \varphi(x) - \varphi(ux)  \right\vert < \ve
+ \end{align*}
+ for all $x\in G$ and all $u\in U$.\newline
+
+ The notions of left and right uniform continuity are natural extensions of uniform continuity for a complex-valued function defined on $\R$; however, instead of a single $\delta > 0$ that works for all $x,y\in \R$, we have a single neighborhood $U$ that works for every $x\in G$.
+ \begin{definition}[Uniform Structure]
+   Let $G$ be a topological group. For every neighborhood $U$ of $e$ in $G$, let $L_{U}$ be the set of points $(x,y)\in G\times G$ such that $x^{-1}y\in U$, and let $R_U$ be the set of points $(x,y)\in G\times G$ such that $yx^{-1}\in U$. The family of sets $L_U$ (or $R_U$) as $U$ runs through all neighborhoods of $e$ is written as $\mathcal{I}_{l}\left(G\right)$ (or $\mathcal{I}_{r}\left(G\right)$), and is called hte left (or right) uniform structure on $G$.
+ \end{definition}
+ \begin{definition}[Uniformly Continuous Mapping]
+   Let $G$ and $H$ be topological groups, with $\varphi: G\rightarrow H$ a map. Let $\mathcal{U}$ and $\mathcal{V}$ denote the bases at the identities of $G$ and $H$ respectively.\newline
+
+   Suppose that for every $V\in \mathcal{V}$, there is a $U\in \mathcal{U}$ such that $\left(\varphi(x),\varphi(y)\right)\in L_{V}$ for all $(x,y)\in L_U$. Then, $\varphi$ is said to be a uniformly continuous mapping for the pair of uniform structures $\left(\mathcal{I}_{l}\left(G\right),\mathcal{I}_{l}\left(H\right)\right)$.\newline
+
+   Uniform continuity for the pairs of uniform structures $\left(\mathcal{I}_l\left(G\right),\mathcal{I}_r\left(H\right)\right)$, $\left(\mathcal{I}_r\left(G\right),\mathcal{I}_l\left(H\right)\right)$, and $\left(\mathcal{I}_r\left(G\right),\mathcal{I}_r\left(H\right)\right)$ are defined similarly.
+ \end{definition}
 \section{Banach Spaces}%
 Let $X$ be a compact Hausdorff space, and let $C(X)$ denote the set of continuous functions $f: X\rightarrow \C$. For $f_1,f_2\in C(X)$ and $\lambda\in \C$, we define
 \begin{enumerate}[(1)]
@@ -1650,4 +1724,98 @@ Since $M\subseteq B_{\mathfrak{B}^{\ast}}$, then $\hat{f}|_{M}$ is continuous.
   \end{align*}
   Thus, $\Gamma$ is a contractive algebra homomorphism.
 \end{proof}
+\begin{remark}[Notes on the Gelfand Transform]
+  Note that $\Gamma(fg - gf) = 0$, meaning that if $\mathfrak{B}$ is not commutative, then the subalgebra of $C(M)$ that is $\text{ran}\left(\Gamma\right)$ may not reflect the properties of $\mathfrak{B}$.\newline
+
+  In the commutative case, though, $M$ is not only nonempty, but sufficiently large such that the invertibility of $f\in \mathfrak{B}$ is determined by the invertibility of $\Gamma(f)$ in $C(M)$.
+\end{remark}
+\begin{definition}[Spectrum of an Element]
+  Let $f\in \mathfrak{B}$ for $\mathfrak{B}$ a Banach algebra. Then,
+  \begin{align*}
+    \sigma_{\mathfrak{B}}(f) &= \set{\lambda \in \C\mid f - \lambda e\notin \mathcal{G}}.
+  \end{align*}
+  The resolvent of $f$ is
+  \begin{align*}
+    \rho_{\mathfrak{B}}(f) &= \C \setminus \sigma_{\mathfrak{B}}\left(f\right).
+  \end{align*}
+  Finally, the spectral radius of $f$ is
+  \begin{align*}
+    r_{\mathfrak{B}}\left(f\right) &= \sup_{\lambda \in \sigma_{\mathfrak{B}}(f)}|\lambda|.
+  \end{align*}
+  We write $\sigma(f)$, $\rho(f)$, and $r(f)$.
+\end{definition}
+\begin{proposition}[Properties of the Spectrum]
+  Let $\mathfrak{B}$ be a Banach algebra. Then, $\sigma(f)$ is compact in $\C$ and $r(f) \leq \norm{f}$.
+\end{proposition}
+\begin{proof}
+  Define $\varphi: \C\rightarrow \mathfrak{B}$, $\varphi(\lambda) = f - \lambda e$. Then, $\varphi$ is continuous, and $\rho(f) = \varphi^{-1}\left(\mathcal{G}\right)$ is open. Thus, $\sigma(f)$ is closed.\newline
+
+  If $|\lambda| > \norm{f}$, then
+  \begin{align*}
+    1 &> \frac{\norm{f}}{|\lambda|}\\
+      &= \norm{\frac{f}{\lambda}}\\
+      &= \norm{e - \left(e - \frac{f}{\lambda}\right)},
+  \end{align*}
+  meaning $e - \frac{f}{\lambda}$ is invertible, so $f - \lambda e$ is invertible. Thus, $\lambda \in \rho(f)$, so $\sigma(f)$ is bounded (hence compact), and $r(f) \leq \norm{f}$.
+\end{proof}
+\begin{theorem}[Existence of Spectrum]
+  Let $f\in \mathfrak{B}$. Then, $\sigma(f)$ is nonempty.
+\end{theorem}
+\begin{proof}
+  Consider $F: \rho(f) \rightarrow \mathfrak{B}$ defined by $F(\lambda) = \left(f - \lambda e\right)^{-1}$. We will show that $F$ is an analytic $\mathfrak{B}$-valued function on $\rho(f)$ that is bounded at infinity (thus, a contradiction).\newline
+
+  Since inversion is continuous, we have that for $\lambda_0 \in \rho(f)$,
+  \begin{align*}
+    \lim_{\lambda \rightarrow \lambda_0} \frac{F(\lambda) - F(\lambda_0)}{\lambda - \lambda_0} &= \lim_{\lambda \rightarrow \lambda_0}\frac{\left(f - \lambda_0 e\right)^{-1}\left((f - \lambda-0 e) - (f - \lambda e)\right)\left(f - \lambda e\right)^{-1}}{\lambda - \lambda_0}\\
+                                                                                               &= \lim_{\lambda \rightarrow \lambda_0}\left(f - \lambda_0 e\right)^{-1}\left(f - \lambda e\right)^{-1}\\
+                                 &= \left(f - \lambda e\right)^{-2}.
+  \end{align*}
+  In particular, for $\varphi \in \mathfrak{B}^{\ast}$, the function $\varphi(F)$ is holomorphic on $\rho(f)$. Further, for $|\lambda| \geq \norm{f}$, we have that $e - \frac{f}{\lambda}$ is invertible, and
+  \begin{align*}
+    \norm{\left(e - \frac{f}{\lambda}\right)^{-1}} &\leq \frac{1}{1 - \norm{\frac{f}{\lambda}}},
+  \end{align*}
+  meaning
+  \begin{align*}
+    \lim_{\lambda \rightarrow\infty}\norm{F(\lambda)} &= \lim_{\lambda \rightarrow\infty}\norm{\frac{1}{\lambda}\left(\frac{f}{\lambda} - e\right)^{-1}}\\
+                                                      &\leq \lim_{|\lambda|\rightarrow\infty}\sup\frac{1}{|\lambda|} \frac{1}{1-\norm{\frac{f}{\lambda}}}\\
+                                                      &= 0.
+  \end{align*}
+  Thus, for $\varphi \in \mathfrak{B}^{\ast}$, $\lim_{\lambda \rightarrow\infty}\varphi\left(F(\lambda)\right) - 0$.\newline
+
+  If $\sigma(f)$ is empty, then $\rho(f) = \C$, meaning that for $\varphi \in \mathfrak{B}^{\ast}$, it follows that $\varphi(F)$ is an entire function that vanishes at infinity, meaning $\varphi(F) = 0$ by Liouville's Theorem.\newline
+
+  In particular, for $\lambda \in \C$, $\varphi\left(F(\lambda)\right) = 0$, meaning that $F(\lambda) = 0$, which contradicts $F(\lambda)$ being invertible in $\mathfrak{B}$.
+\end{proof}
+\begin{theorem}[Gelfand--Mazur]
+  If $\mathfrak{B}$ is a Banach algebra that is also a division algebra,\footnote{Every nonzero element has a nonzero inverse.} then there exists a unique isometric isomorphism of $\mathfrak{B}$ onto $\C$.
+\end{theorem}
+\begin{proof}
+  Let $f\in \mathfrak{B}$. Then $\sigma(f)$ is nonempty; for $\lambda_f\in \sigma(f)$, we have that $f-\lambda_f e$ is not invertible, meaning that $f - \lambda_f e = 0$ since $\mathfrak{B}$ is a division algebra.\newline
+
+  Moreover, for $\lambda \neq \lambda_f$, $f - \lambda e = \lambda_f e - \lambda e$, which is invertible. Thus, $\sigma(f)$ consists of exactly one $\lambda_f\in \C$ for each $f$.\newline
+
+  The map $\psi: \mathfrak{B}\rightarrow \C$ defined by $\psi(f) = \lambda_f$ is an isometric isomorphism of $\mathfrak{B}$ onto $\C$.\newline
+
+  Moreover, for $\psi': \mathfrak{B} \rightarrow \C$, we would have that $\psi'(f) \in \sigma(f)$, meaning $\psi'(f) = \psi(f)$.
+\end{proof}
+\begin{definition}[Quotient Algebra]
+Let $\mathfrak{B}$ be a Banach algebra, and let $\mathfrak{M}$ be a closed two-sided ideal in $\mathfrak{B}$. Since $\mathfrak{M}$ is closed in $\mathfrak{B}$, we can define a norm on $\mathfrak{B}/\mathfrak{M}$ to make it into a Banach space, and since $\mathfrak{M}$ is a two-sided ideal in $\mathfrak{B}$, we know that $\mathfrak{B}/\mathfrak{M}$ is an algebra.\newline
+
+To verify that $\mathfrak{B}/\mathfrak{M}$ is a Banach algebra, we need to verify two facts.\newline
+
+To show that $\norm{[e]} = 1$, we see that $\norm{[e]} = \inf_{g\in \mathfrak{M}} \norm{e-g} = 1$; if $\norm{e-g} < 1$, then $g$ is invertible.\footnote{Any proper ideal in $\mathfrak{B}$ cannot contain any invertible elements, since if $x\in \mathfrak{M}$ is invertible, then for $y\in \mathfrak{B}$, $y = \left(yx^{-1}\right)x \in \mathfrak{M}$, implying $\mathfrak{M} = \mathfrak{B}$.}\newline
+
+For $f,g\in \mathfrak{B}$, we have
+\begin{align*}
+  \norm{[f][g]} &= \norm{[fg]}\\
+                &= \inf_{h\in \mathfrak{M}}\norm{fg - h}\\
+                &\leq \inf_{h_1,h_2\in \mathfrak{M}}\norm{(f-h_1)(g-h_2)}\\
+                &\leq \inf_{h_1\in \mathfrak{M}}\norm{f-h_1}\inf_{h_2\in \mathfrak{M}}\norm{g-h_2}\\
+                &= \norm{[f]}\norm{[g]}.
+\end{align*}
+Thus, we can see that $\mathfrak{B}/\mathfrak{M}$ is a Banach algebra, with the natural map $\pi: f \rightarrow [f]$ a contractive algebra homomorphism.
+\end{definition}
+\begin{proposition}[Multiplicative Linear Functionals and Maximal Ideal Space]
+  If $\mathfrak{B}$ is a commutative Banach algebra, then there is a bijection between $M_{\mathfrak{B}}$ and the set of maximal two-sided ideals in $\mathfrak{B}$.
+\end{proposition}
 \end{document}
