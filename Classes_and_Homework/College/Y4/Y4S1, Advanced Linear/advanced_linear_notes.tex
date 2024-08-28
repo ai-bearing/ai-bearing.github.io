@@ -1,0 +1,321 @@
+\documentclass[12pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\usepackage{epigraph}
+\renewcommand{\epigraphflush}{flushleft}
+\renewcommand{\sourceflush}{flushleft}
+
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Advanced Linear Algebra: Class Notes}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\section{Introduction}%
+\epigraph{It is my experience that proofs involving matrices can be shortened by 50\% if one throws the matrices out.}{Emil Artin}
+Essentially, the goal of this course is to prove a lot of the essential results of linear algebra without basis dependence (as in, using the properties of the linear transformations themselves rather than matrices).
+\section{Vector Spaces and Linear Transformations}%
+\begin{remark}
+We let $\F$ be either $\R,\Q,\C,\F_{p}$ (where $p$ is a prime). Primarily, we let $\F = \Q,\R,\C$.\newline
+\end{remark}
+\begin{example}[Our First Vector Space]
+  The primary vector space we study in lower-division linear algebra is
+  \begin{align*}
+    V &= \R^n\\
+      &= \set{ \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix}\left|a_1,\dots,a_n\in \R\right. }
+  \end{align*}
+  We know that for
+  \begin{align*}
+    v &= \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix}\\
+    w &= \begin{pmatrix}b_1\\\vdots\\b_n\end{pmatrix},
+  \end{align*}
+  that
+  \begin{align*}
+    v+w &= \begin{pmatrix}a_1 + b_1\\\vdots\\a_n + b_n\end{pmatrix}\\
+    cv &= \begin{pmatrix}ca_1 \\\vdots\\ca_n\end{pmatrix},
+  \end{align*}
+  where $c\in\R$ is some constant.
+\end{example}
+\begin{definition}[Vector Space]
+  Let $V$ be a nonempty set with the following operations:
+  \begin{itemize}
+    \item $a: V\times V \rightarrow V$, $a(v,w)\mapsto v+w$ (vector addition);
+    \item $m: F\times V \rightarrow V$, $m(c,v) \mapsto cv$ (scalar multiplication);
+  \end{itemize}
+  satisfying the following:
+  \begin{enumerate}[(1)]
+    \item there exists $0_v\in V$ such that $0_v + v = v = v + 0_v$ for all $v\in V$;
+    \item for every $v\in V$, there exists $-v$ such that $v + (-v) = 0_v = (-v) + v$;
+    \item for every $u,v,w\in V$, $(u+v) + w = u + (v+w)$;
+    \item for every $v,w\in V$, $v+w = w+v$;
+    \item for every $v,w\in V$ and $c\in \F$, $c(v+w) = cv + cw$;
+    \item for every $c,d\in \F$, $v\in V$, $(c+d)v = cv + dv$;
+    \item for every $c,d\in \F$, $v\in V$, $(cd)v = c(dv)$;
+    \item for every $v\in V$, $\left(1_{\F}\right)v = v$.
+  \end{enumerate}
+  We say $V$ is a $\F$-vector space.
+\end{definition}
+\begin{example}[$\F^{n}$]
+  Let $\F$ be a field, $V = \F^n$.
+  \begin{align*}
+    V &= \set{ \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix}\left|a_i\in \F\right. }.
+    \intertext{Define:}
+    \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix} + \begin{pmatrix}b_1\\\vdots\\b_n\end{pmatrix} &= \begin{pmatrix}a_1 + b_1\\\vdots\\a_n + b_n\end{pmatrix}\\
+    c \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix} &= \begin{pmatrix}ca_1 \\\vdots \\ ca_n\end{pmatrix}.
+  \end{align*}
+  We set
+  \begin{align*}
+    0_{\F^n} &= \begin{pmatrix}0\\\vdots\\0\end{pmatrix}.
+  \end{align*}
+  Let
+  \begin{align*}
+    v &= \begin{pmatrix}v_1\\\vdots\\v_n\end{pmatrix}\\
+    w &= \begin{pmatrix}w_1\\\vdots\\w_n\end{pmatrix}\\
+    u &= \begin{pmatrix}u_1\\\vdots\\u_n\end{pmatrix},
+  \end{align*}
+  $c,d\in \F$. We observe that
+  \begin{align*}
+    0_{\F^n} + v &= \begin{pmatrix}0 + v_1\\\vdots\\0 + v_n\end{pmatrix}\\
+                 &= \begin{pmatrix}v_1\\\vdots\\v_n\end{pmatrix}.
+  \end{align*}
+  Define
+  \begin{align*}
+    -v &= \begin{pmatrix}-v_1\\\vdots\\-v_n\end{pmatrix}.
+  \end{align*}
+  Then,
+  \begin{align*}
+    v + (-v) &= \begin{pmatrix}v_1 + \left(-v_1\right)\\\vdots\\v_n + \left(-v_n\right)\end{pmatrix}\\
+             &= \begin{pmatrix}0\\\vdots\\0\end{pmatrix}\\
+             &= 0_{\F^n}.
+  \end{align*}
+  Note that
+  \begin{align*}
+    (u + v) + w &= \begin{pmatrix}\left(u_1 + v_1\right) + w_1 \\\vdots\\\left(u_n + v_n\right) + w_n\end{pmatrix}\\
+                &= \begin{pmatrix}u_1 + \left(v_1 + w_1\right) \\\vdots\\u_n + \left(v_n + w_n\right)\end{pmatrix}\\
+                &= u + (v+w).
+  \end{align*}
+  We have
+  \begin{align*}
+    v +w &= \begin{pmatrix}v_1 + w_1 \\\vdots\\v_n + w_n\end{pmatrix}\\
+         &= \begin{pmatrix}w_1 + v_1\\\vdots\\w_n + v_n\end{pmatrix}\\
+         &= w + v.
+  \end{align*}
+  Observe
+  \begin{align*}
+    c\left(v+w\right) &= c \begin{pmatrix}v_1 + w_1\\\vdots\\v_n + w_n\end{pmatrix}\\
+                      &= \begin{pmatrix}c\left(v_1 + w_1\right)\\\vdots\\c\left(v_n + w_n\right)\end{pmatrix}\\
+                      &= \begin{pmatrix}cv_1 + cw_1 \\\vdots \\cv_n + cw_n\end{pmatrix}\\
+                      &= cv + cw,\\
+    (c+d)v &= (c+d) \begin{pmatrix}v_1\\\vdots\\v_n\end{pmatrix}\\
+          &= \begin{pmatrix}(c+d)v_1\\\vdots\\(c+d)v_n\end{pmatrix}\\
+          &= \begin{pmatrix}cv_1 + dv_1 \\\vdots\\cv_n + dv_n\end{pmatrix}\\
+          &= cv + dv,
+          \intertext{and}
+    (cd)v &= (cd) \begin{pmatrix}v_1\\\vdots\\v_n\end{pmatrix}\\
+          &= \begin{pmatrix}(cd)v_1 \\\vdots\\(cd)v_n\end{pmatrix}\\
+          &= \begin{pmatrix}c\left(dv_1\right) \\\vdots\\c\left(dv_n\right)\end{pmatrix}\\
+          &= c\left(dv\right).
+  \end{align*}
+  Finally,
+  \begin{align*}
+    1_{\mathbb{F}} &= 1_{\mathbb{F}} \begin{pmatrix}v_1\\\vdots\\v_n\end{pmatrix}\\
+                   &= \begin{pmatrix}1_{\mathbb{F}}v_1\\\vdots 1_{\F}v_n\end{pmatrix}\\
+                   &= \begin{pmatrix}v_1\\\vdots\\v_n\end{pmatrix}\\
+                   &= v.
+  \end{align*}
+\end{example}
+\begin{example}[Polynomials]
+  Let $n\in \Z_{\geq 0}$. We define
+  \begin{align*}
+    \mathcal{P}_{n}\left(\mathbb{F}\right) &= \set{a_0 + a_1x + \cdots + a_nx^n\left|a_i\in \F\right.}.
+  \end{align*}
+  For $f(x) = \sum_{j=0}^{n}a_jx^j$ and $g(x) = \sum_{j=0}^{n}b_jx^j$ in $\mathcal{P}_n(\mathbb{F})$, we have
+  \begin{align*}
+    f(x) + g(x) &= \sum_{j=0}^{n}\left(a_j + b_j\right)x^j\\
+    cf(x) &= \sum_{j=0}^{n}\left(ca_j\right)x^j.
+  \end{align*}
+  Note that these are not functions \textit{per se}, we are only $f(x)$ and $g(x)$ to represent elements of $\mathcal{P}_n\left(\mathbb{F}\right)$. We can verify that $\mathcal{P}_n\left(\mathbb{F}\right)$ is a $\mathbb{F}$-vector space.\newline
+
+  We define
+  \begin{align*}
+    \mathbb{F}[x] &= \bigcup_{n\geq 0}\mathcal{P}_n\left(\F\right),
+  \end{align*}
+  which is also a $\F$-vector space.
+\end{example}
+\begin{example}[Matrices]
+  Let $m,n\in \Z_{> 0}$. We set
+  \begin{align*}
+    V &= \text{Mat}_{m,n}\left(\F\right),
+  \end{align*}
+  which is the set of $m\times n$ matrices with entries in $\F$. This is an $\F$-vector space with matrix addition and scalar multiplication.\newline
+
+  In the case where $m = n$, we write $\text{Mat}_{n}\left(\F\right)$ to denote $\text{Mat}_{n,n}\left(\F\right)$.
+\end{example}
+\begin{example}[Complex Numbers]
+  Let $V = \C$. Then, $V$ is a $\C$-vector space, an $\R$-vector space, and a $\Q$-vector space.\newline
+
+  Note that the properties of a vector space change with the underlying scalar field.
+\end{example}
+\begin{lemma}[Basic Properties of Vector Spaces]
+  Let $V$ be a $\F$-vector space.
+  \begin{enumerate}[(1)]
+    \item $0_V$ is unique.
+    \item $0_{\mathbb{F}}v = 0_V$.
+    \item $\left(-1_{\mathbb{F}}\right)v = -v$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Suppose toward contradiction that there exist $0,0'$ both satisfy 
+      \begin{align*}
+        0 + v &= v\tag*{(\textasteriskcentered)}\\
+        0' + v &= v.\tag*{(\textasteriskcentered\textasteriskcentered)}
+      \end{align*}
+      Then,
+      \begin{align*}
+        0 + v &= v\\
+        0 + 0' &= 0'\tag*{by (\textasteriskcentered) with $v = 0'$}\\
+               &= 0' + 0\\
+               &= 0. \tag*{by (\textasteriskcentered\textasteriskcentered) with $v = 0$}
+      \end{align*}
+    \item Note
+      \begin{align*}
+        0_{\mathbb{F}}v &= \left(0_{\mathbb{F}} + 0_{\F}\right) v\\
+                        &= 0_{\F}v + 0_{\F}v.
+      \end{align*}
+      We subtract $0_{\F}v$ from both sides.
+    \item
+      \begin{align*}
+        \left(-1_{\mathbb{F}}\right)v + v &= \left(-1_{\mathbb{F}} \right)v + 1_{\F}v\\
+                                          &= \left(-1_{\F} + 1_{\F}\right)v\\
+                                          &= 0_{\F}v.
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+\begin{definition}[Subspaces]
+  Let $V$ be an $\F$-vector space. We say $W\subseteq V$ is an $\F$-subspace (henceforth subspace) if $W$ is an $\F$-vector space under the same addition and scalar multiplication.
+\end{definition}
+\begin{example}[Subspaces of $\R^2$]
+  Let $V = \R^2$. 
+  \begin{center}
+    \begin{tikzpicture}[scale = 0.5]
+      \draw (0,5) -- (0,-5);
+      \draw (5,0) -- (-5,0);
+      \draw[thick, color=orange,<->] (-5,-5) -- (5,5);
+      \node[anchor = south west] at (5,5){$W_1$};
+      \draw[thick, color=yellow!40!black,<->] (-5,-1) -- (1,5);
+      \node[anchor = south west] at (1,5) {$W_2$};
+    \end{tikzpicture}
+  \end{center}
+  Here, we see that $W_1$ is a subspace, and $W_2$ is not a subspace (as $W_2$ does not contain $0_{V}$).
+\end{example}
+\begin{example}[Subspaces of $\C$]
+  Let $V = \C$, $W = \set{a + 0i\mid a\in \R}$.
+  \begin{itemize}
+    \item If $\F = \R$, then $W$ is a subspace of $V$.
+    \item If $\F = \C$, then $W$ is not a subspace; we can see that $2\in W$, $i\in \C$, but $2i\notin W$.
+  \end{itemize}
+\end{example}
+\begin{example}[Matrices]
+  It is not the case that $\text{Mat}_2(\R)$ is a subspace of $\text{Mat}_4(\R)$, since $\text{Mat}_2(\R)$ is not a subset of $\text{Mat}_4(\R)$.
+\end{example}
+\begin{example}[Polynomials]
+  For the spaces $\mathcal{P}_{m}(\F)$ and $\mathcal{P}_{n}\left(\F\right)$, if $m \leq n$, then $\mathcal{P}_{m}\left(\F\right)$ is a subspace of $\mathcal{P}_{n}\left(\F\right)$.
+\end{example}
+\begin{lemma}[Proving Subspace Relation]
+  Let $V$ be a $\F$-vector space, $W\subseteq V$. Then, $W$ is a subspace of $V$ if
+  \begin{enumerate}[(1)]
+    \item $W$ is nonempty;
+    \item $W$ is closed under addition;
+    \item $W$ is closed under scalar multiplication.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  The proof is an exercise.
+\end{proof}
+\begin{definition}[Linear Transformation]
+  Let $V,W$ be $\F$-vector spaces. Let $T: V\rightarrow W$. We say $T$ is a linear transformation (or linear map) if for every $v_1,v_2\in V$, $c\in \F$, we have
+  \begin{align*}
+    T\left(v_1 + cv_2\right) &= T\left(v_1\right) + cT\left(v_2\right).
+  \end{align*}
+  Note that on the left side, addition is in $V$, and on the right side, addition is in $W$.\newline
+
+  The collection of all linear maps from $V$ to $W$ is denoted $\text{Hom}_{\F}\left(V,W\right)$, or $\mathcal{L}\left(V,W\right)$.
+\end{definition}
+\begin{example}[Identity Transformation]
+  Define
+  \begin{align*}
+    \text{id}_{V}: V\rightarrow V,
+  \end{align*}
+  where $\text{id}_V(v) = v$. We can see that $\text{id}_V \in \text{Hom}_{\F}\left(V,V\right)$, since
+  \begin{align*}
+    \text{id}_V\left(v_1 + cv_2\right) &= v_1 + cv_2\\
+                            &= \text{id}_V\left(v_1\right) + (c)\left(\text{id}_{V}\left(v_2\right)\right)
+  \end{align*}
+\end{example}
+\begin{example}[Complex Conjugation]
+  Let $V = \C$. Define $T: V\rightarrow V$ by $z\mapsto \overline{z}$.\newline
+
+  We may ask whether $T\in \text{Hom}_{\R}\left(\C,\C\right)$ or $T\in \text{Hom}_{\C}\left(\C,\C\right)$.
+  \begin{align*}
+    T\left(z_1 + cz_1\right) &= \overline{z_1 + cz_2}\\
+                             &= \overline{z_1} + \left(\overline{c} \right)\left(\overline{z_2}\right).
+  \end{align*}
+  We can see that $T\left(z_1 + cz_2\right) = T\left(z_1\right) cT\left(z_2\right)$ if and only if $c = \overline{c}$, meaning $c$ must be real. This means $T\in \text{Hom}_{\R}\left(\C,\C\right)$, but $T\notin \text{Hom}_{\C}\left(\C,\C\right)$.
+\end{example}
+\begin{example}[Matrices]
+  Let $A \in \text{Mat}_{m,n}\left(\F\right)$. We define
+  \begin{align*}
+    T_{A}: \F^n \rightarrow \F^m\\
+    x \mapsto Ax.
+  \end{align*}
+  Then, $T_A \in \text{Hom}_{\F}\left(\F^n,\F^m\right)$.
+\end{example}
+\begin{example}[Linear Maps on Smooth Functions]
+  Let $V = C^{\infty}\left(\R\right)$, which denotes the set of continuous functions with continuous derivatives at all orders. This is a vector space under pointwise addition and scalar multiplication.
+  \begin{align*}
+    (f+g)\left(x\right) &= f(x) + g(x)\\
+    (cf)(x) &= (c)\left(f(x)\right).
+  \end{align*}
+  Let $a\in \R$.
+  \begin{enumerate}[(1)]
+    \item 
+\begin{align*}
+  E_a: V\rightarrow \R\\
+  f \mapsto f(a).
+\end{align*}
+Then, $E_a \in \text{Hom}_{\R}\left(V,\R\right)$.
+\item
+  \begin{align*}
+    D: V\rightarrow V\\
+    f\mapsto f'.
+  \end{align*}
+  Then, $D\in \text{Hom}_{\R}\left(V,V\right)$.
+\item 
+  \begin{align*}
+    I_a: V\rightarrow V
+    f\mapsto \int_{a}^{x} f(t)\:dt.
+  \end{align*}
+  Then, $I_a\in \text{Hom}_{\R}\left(V,V\right)$.
+\item With $a$ a function,
+  \begin{align*}
+    \tilde{E}_a: V\rightarrow V
+    f\mapsto f\circ a.
+  \end{align*}
+  Then, $\tilde{E}_{a}\in \text{Hom}_{\R}\left(V,V\right)$.
+  \end{enumerate}
+  Additionally,
+  \begin{itemize}
+    \item $D\circ I_a = \text{id}_V$;
+    \item $I_a\circ D = \text{id}_V - \tilde{E_a}$ for some $a\in \R$.
+  \end{itemize}
+\end{example}
+\end{document}

@@ -4,6 +4,10 @@ title: "Class Notes"
 permalink: /classnotes.html
 ---
 Here are the class notes I have written up so far.
+## Fall 2024
+###[Mathematical Methods of Physics](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Math Methods/math_methods_notes.pdf)
+###[Advanced Linear Algebra](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Advanced Linear/advanced_linear_notes.pdf)
+###[Ordinary Differential Equations](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Ordinary Differential Equations/odes_notes.pdf)
 ## Summer Reading
 ### [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)
 ### [Banach Algebras and Operator Theory](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/banach_algebras_operator_theory.pdf)

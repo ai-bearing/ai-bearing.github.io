@@ -1,0 +1,234 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Ordinary Differential Equations: Class Notes}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\section{First-Order Differential Equations}%
+\subsection{Introduction to first-order ODEs}%
+  Recall that for $y = f(x)$, $x$ is the independent variable and $y$ is the dependent variable.
+  \begin{definition}[Differential Equation]
+  A differential equation is an equation which contains derivatives of a dependent variable with respect to one or more independent variables.
+  \end{definition}
+  \begin{example}[A Basic Differential Equation]
+    \begin{align*}
+      \frac{dy}{dx} - 5y - 1 &= 
+    \end{align*}
+  \end{example}
+  We can classify differential equations by
+  \begin{itemize}
+    \item type;
+    \item order;
+    \item linearity.
+  \end{itemize}
+  \begin{definition}[Classification by Type]
+  There are two types of differential equations:
+  \begin{itemize}
+    \item ordinary differential equations (ODEs);
+    \item partial differential equations (PDEs).
+  \end{itemize}
+  ODEs are characterized by derivatives of the dependent variable with respect to one independent variable. PDEs are characterized by derivatives of the dependent variable with respect to multiple independent variables.
+  \end{definition}
+  \begin{example}[ODEs and PDEs]\hfill
+    \begin{enumerate}[(1)]
+      \item An ODE:
+        \begin{align*}
+          \frac{d^2y}{dx^2} - 2\frac{dy}{dx} + 6y &= 0
+        \end{align*}
+      \item A PDE:
+        \begin{align*}
+          \pd{^2u}{x^2} + \pd{^2u}{y^2} &= 0
+        \end{align*}
+    \end{enumerate}
+  \end{example}
+  \begin{definition}[Classificiation by Order]
+    The order of the highest derivative in a differential equation is the order of the differential equation.
+  \end{definition}
+  \begin{example}[Differential Equations of Varying Orders]\hfill
+    \begin{enumerate}[(1)]
+      \item 
+        \begin{align*}
+          \diff{^2y}{x^2} + 5\left(\frac{dy}{dx}\right) - 4y &= x \tag*{order 2}
+        \end{align*}
+      \item 
+        \begin{align*}
+          2\frac{dy}{dx} + y &= 0\tag*{order 1}
+        \end{align*}
+      \item 
+        \begin{align*}
+          \sin(x)y''' - \left(\cos x\right)y' &= 2\tag*{order 3}
+        \end{align*}
+    \end{enumerate}
+  \end{example}
+  In general, we write a differential equation of order $n$ in the form
+  \begin{align*}
+    \underbrace{F\left(x,y,\frac{dy}{dx},\frac{d^2y}{dx^2},\dots,\frac{d^ny}{dx^n}\right)}_{\text{$n+2$ variables}} = 0.
+  \end{align*}
+  \begin{example}
+    Suppose we have the differential equation
+    \begin{align*}
+      \frac{d^3y}{dx^3} + y^2 &= x.
+    \end{align*}
+    Then, we rewrite as
+    \begin{align*}
+      \underbrace{\frac{d^3y}{dx^3} + y^2 - x}_{F\left(x,y,\frac{dx}{dy},\frac{d^2x}{dy^2},\frac{d^3x}{dy^3}\right)} &= 0.
+    \end{align*}
+    Alternatively, we can write as
+    \begin{align*}
+      \frac{d^3y}{dx^3} &= \underbrace{x - y^2}_{f(x,y)}.
+    \end{align*}
+  \end{example}
+  \begin{definition}[Classification by Linearity]
+    We much prefer to analyze linear differential equations over nonlinear differential equations.\newline
+
+    A differential equation is linear if it has the following form:
+    \begin{align*}
+      a_n(x)\frac{d^ny}{dx^n} + a_{n-1}(x)\frac{d^{n-1}y}{dx^{n-1}} + \cdots + a_{1}(x)\frac{dy}{dx} + a_0(x)y &= g(x).
+    \end{align*}
+    \begin{enumerate}[(1)]
+      \item The power of each term involving $y$ and all its derivatives is one.
+      \item All coefficients are exclusively functions of $x$.
+    \end{enumerate}
+    A differential equation that is not linear is called nonlinear.
+  \end{definition}
+  \begin{example}[Linear Differential Equations (or lack thereof)]\hfill
+    \begin{enumerate}[(1)]
+      \item 
+        \begin{align*}
+          x^3\frac{d^3y}{dx^3} - x^2\frac{d^2y}{dx^2} + 3x\frac{dy}{dx} + 5y &= e^x \tag*{Linear}
+        \end{align*}
+      \item 
+        \begin{align*}
+          yy'' - 2y' &= x\tag*{Nonlinear}
+        \end{align*}
+      \item 
+        \begin{align*}
+          \frac{d^3y}{dx^3} + y^2 &= 0 \tag*{Nonlinear}
+        \end{align*}
+    \end{enumerate}
+  \end{example}
+  \begin{definition}[Autonomous Differential Equations]
+    An autonomous (first-order) differential equation is a differential equation in the following form:
+    \begin{align*}
+      \frac{dy}{dx} &= f(y).
+    \end{align*}
+  \end{definition}
+  \begin{definition}[Solution to an ODE]
+    Consider the general ODE
+    \begin{align*}
+      F\left(x,y,\frac{dy}{dx},\frac{d^2y}{dx^2},\dots,\frac{d^ny}{dx^n}\right) &= 0.\tag*{(\textasteriskcentered)}
+    \end{align*}
+    A solution of (\textasteriskcentered) is a function $y = f(x)$ that satisfies the ODE; that is,
+    \begin{align*}
+      F\left(x,f(x),f'(x),f''(x),\dots,f^{(n)}(x)\right) &= 0
+    \end{align*}
+    for every $x$ in the domain of $f(x)$.\newline
+
+    Notice that $f$ is an element of a family of functions that satisfy the differential equation.
+  \end{definition}
+  \begin{example}[Verifying a Solution]
+    We wish to show that $y = xe^{x}$ is a solution to
+    \begin{align*}
+      y'' - 2y' + y &= 0
+    \end{align*}
+    on $(-\infty,\infty)$.\newline
+
+    In order to do this, we plug the proposed solution into the ODE:
+    \begin{align*}
+      y'' - 2y' + y &= \frac{d^2}{dx^2}\left(xe^{x}\right) - 2\frac{d}{dx}\left(xe^x\right) + xe^x\\
+                    &= \left(xe^x + 2e^x\right) - 2\left(xe^x + e^x\right) + xe^x\\
+                    &= 0.
+    \end{align*}
+  \end{example}
+  \subsection{Modeling with Differential Equations}%
+  \begin{definition}[Initial Value Problem]
+  An initial value problem is a problem with a given ODE and an initial condition.
+  \end{definition}
+  \begin{example}[Initial Value Problems]\hfill
+    \begin{enumerate}[(1)]
+      \item We want to find
+    \begin{align*}
+      \frac{dy}{dx} &= f\left(x,y\right)
+    \end{align*}
+    such that $y\left(x_0\right) = y_0$.
+    \item
+      \begin{align*}
+        \frac{d^2y}{dx^2} &= f\left(x,y,\frac{dy}{dx}\right)
+      \end{align*}
+      must satisfy $y\left(x_0\right) = y_0$, $y'\left(x_0\right) = y_1$.
+    \end{enumerate}
+  \end{example}
+  Modeling primarily occurs via the following feedback loop:
+  \begin{itemize}
+    \item real-world problem;
+    \item mathematical model;
+    \item solution;
+    \item result/prediction.
+  \end{itemize}
+  As predictions from the model begin to stray from real-world observations, we update the model to reflect these new observations.
+  \begin{example}[Vertical Motion]
+    Consider someone who throws a rock off a building.\newline
+
+    We let $y(t)$ denote the height of the ball at time $t$, with $y_0$ denoting initial height. The acceleration due to gravity is equal to $a(t) = v'(t) = y''(t) = g$.\newline
+
+    Our ODE is
+    \begin{align*}
+      y''(t) &= -g \tag*{for $0 \leq t \leq T$.}
+    \end{align*}
+    We require some initial conditions:
+    \begin{itemize}
+      \item $y(0) = y_0$ (initial position);
+      \item $y'(0) = v_0$ (initial velocity).
+    \end{itemize}
+    Thus, we have created our second-order initial value problem.\newline
+
+    To solve this second-order initial value problem analytically, we start with
+    \begin{align*}
+      y'' &= -g.
+    \end{align*}
+    Taking our first integral with respect to $t$, we have
+    \begin{align*}
+      y' &= -gt + c_1.
+    \end{align*}
+    Now, taking our second integral, 
+    \begin{align*}
+      y(t) &= -\frac{1}{2}gt^2 + c_1 t + c_2.
+    \end{align*}
+    This version of $y(t)$ is the general solution.\newline
+
+    Applying our initial condition on $y'(t)$, we have $y'(0) = c_1$, meaning $c_1 = v_0$, and applying the initial condition to $y(t)$, we have $y(0) = c_2$, meaning $c_2 = y_0$.\newline
+
+    Thus, the solution to this initial value problem is
+    \begin{align*}
+      y(t) &= -\frac{1}{2}gt^2 + v_0 t + y_0.
+    \end{align*}
+  \end{example}
+  \begin{example}[Population Growth]
+    Let $P(t)$ be the population of living fish in a lake at time $t$.\newline
+
+    We know that the rate of growth in population is proportional to the population. In other words,
+    \begin{align*}
+      \frac{dP}{dt} &= kP(t)
+    \end{align*}
+    for some constant $k > 0$.\newline
+
+    We can also include an initial condition, $P(0) = P_0$.\newline
+
+    We can see (relatively easily) that
+    \begin{align*}
+      P(t) &= P_0e^{kt}.
+    \end{align*}
+  \end{example}
+\end{document}

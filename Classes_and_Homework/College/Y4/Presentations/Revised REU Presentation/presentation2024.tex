@@ -70,7 +70,7 @@
 \end{itemize} 
 \begin{definition}[\(\lambda\)-weighted Square-Integrable Functions]
     \begin{align*}
-        L^{2}(\Omega,\lambda) &= \set{f \left| \int_{\Omega}|f(z)|^2\lambda(z) \: d A(z) < \infty\right.}
+        L^{2}(\Omega,\lambda) &= \set{f: \Omega \rightarrow \C \left| \int_{\Omega}|f(z)|^2\lambda(z) \: d A(z) < \infty\right.}
     \end{align*}
 \end{definition}
 
@@ -380,41 +380,52 @@
     dx\wedge dy &= \frac{1}{2i}\left(d\overline{z}\wedge dz\right)\\
                 &= -\frac{1}{2i}\left(dz \wedge d\overline{z}\right).
   \end{align*}
-\end{frame}
-\begin{frame}[allowframebreaks]{Using Integration by Parts to find Excess Area Identity: Calculation}
-  \footnotesize
-  Set $\lambda = e^{-|z|^2} = e^{-z\overline{z}}$. Then, for $h,\frac{\partial h}{\partial z} \in A^{2}\left(\mathbb{C},e^{-|z|^2}\right)$, we have
+  The area integral is now rewritten as:
   \begin{align*}
-    \norm{\frac{\partial h}{\partial z}}_{A^2\left(\mathbb{C},e^{-|z|^2}\right)}^2 &= \frac{1}{\pi}\int_{\C}^{} \left(\frac{\partial h}{\partial z}\right)\overline{\left(\frac{\partial h}{\partial z}\right)}e^{-|z|^2}\:dx\wedge dy\\
-                                                                                   &= \frac{1}{2\pi i}\int_{\C}^{} \overline{\left(\frac{\partial h}{\partial z}\right)}e^{-|z|^2}\:d\overline{z}\wedge \left(\frac{\partial h}{\partial z}\right) dz
-  \end{align*}
-  We now use integration by parts to move the derivative from $\overline{\left(\frac{\partial h}{\partial z}\right)}$ to $e^{-|z|^2}$.
-  \begin{align*}
-    \overline{\frac{\partial}{\partial z}}\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right) &= \left(\left(\overline{\frac{\partial h}{\partial z}}\right)e^{-|z|^2}\right)\left(\frac{\partial h}{\partial z}\right) + \left(\overline{h}\overline{\frac{\partial}{\partial z}}\left(e^{-|z|^2}\right)\right)\left(\frac{\partial h}{\partial z}\right)\\
-                                                                                                           &+ \cancelto{0}{\left(\overline{h}e^{-|z|^2}\right)\overline{\frac{\partial}{\partial z}}\left(\frac{\partial h}{\partial z}\right)}.\\
-    \left(\frac{\partial h}{\partial z}\right)\overline{\left(\frac{\partial h}{\partial z}\right)}e^{-|z|^2} &= \overline{\frac{\partial }{\partial z}}\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right) + \left(\overline{h}\right)\left(z\frac{\partial h}{\partial z}\right)\left(e^{-|z|^2}\right)
-  \end{align*}
-  Rewriting the integral, we now have
-  \begin{align*}
-    \norm{\frac{\partial h}{\partial z}}_{A^{2}\left(\C,e^{-|z|^2}\right)}^2 &= \underbrace{\frac{1}{2\pi i}\int_{\C}^{} \overline{\frac{\partial }{\partial z}}\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right)\:d\overline{z}\wedge dz}_{\text{Integral $A$}}\\
-                                                                             &+ \frac{1}{2\pi i}\int_{\C}^{} \left(\overline{h}\right)\left(z\frac{\partial h}{\partial z}\right)\left(e^{-|z|^2}\right)\:d\overline{z}\wedge dz
-  \end{align*}
-  Let's turn our attention to Integral $A$.
-  \begin{align*}
-    \frac{1}{2\pi i}\int_{\C}^{} \overline{\frac{\partial }{\partial z}}\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right)\:d\overline{z}\wedge dz &= \frac{1}{2\pi i}\lim_{r\rightarrow\infty} \int_{D(0,r)}^{} \overline{\frac{\partial }{\partial z}}\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right)\:d\overline{z}\wedge dz\\
-                                                                                                                                                                                         &= \frac{1}{2\pi i } \lim_{r\rightarrow\infty}\int_{D(0,r)}^{} d\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right)\:d\overline{z}\wedge dz.
-  \end{align*}
-  We can now use Stokes's Theorem to move the integral in the limit from the interior of the disc to the boundary of the disc (dropping a derivative in the process).
-  \begin{align*}
-    \frac{1}{2\pi i } \lim_{r\rightarrow\infty}\int_{D(0,r)}^{} d\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right)\:d\overline{z}\wedge dz &= \frac{1}{2\pi i}\lim_{r\rightarrow\infty}\int_{b D(0,r)}^{} \overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\:dz\\
-                                                                                                                                                                    &= \frac{1}{2\pi i}\lim_{r\rightarrow\infty}e^{-r^2}\int_{bD(0,r)}^{} \overline{h}\frac{\partial h}{\partial z}\:dz\\
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    &= 0
-  \end{align*}
-  Returning to the original area integral, we now have
-  \begin{align*}
-    \norm{\frac{\partial h}{\partial z}}_{A^{2}\left(\C,e^{-|z|^2}\right)}^{2}&= \frac{1}{2\pi i}\int_{\C}^{} \left(\overline{h}\right)\left(z\frac{\partial h}{\partial z}\right)e^{-|z|^2}\:d\overline{z}\wedge dz
+    \iprod{\frac{\partial h}{\partial z}}{\frac{\partial h}{\partial z}}_{L^{2}\left(\Omega,\lambda\right)} &= \int_{\Omega}^{} \left(\overline{\frac{\partial h}{\partial z}}\right)\left(\frac{\partial h}{\partial z}\right)\lambda\left(|z|\right)\:dx\wedge dy\\
+                                                                                                            &= \frac{1}{2i}\int_{\Omega}^{} \lambda\left(|z|\right)\:\left(\left(\overline{\frac{\partial h}{\partial z}}\right)d\overline{z}\right)\wedge \left(\left(\frac{\partial h}{\partial z}\right)dz\right)
   \end{align*}
 \end{frame}
+\begin{frame}[allowframebreaks]{Using Integration by Parts to find Excess Area Identity: Stokes's Theorem}
+  In particular,
+  \begin{align*}
+    \overline{\frac{\partial}{\partial z}}\left(\left(\lambda\left(|z|\right)\right)\overline{h}\wedge \frac{\partial h}{\partial z}\right) &= \underbrace{\left(\lambda\left(|z|\right)\right)\overline{\frac{\partial h}{\partial z}}\wedge \frac{\partial h}{\partial z}}_{\text{area integrand}} + \left(\overline{\frac{\partial}{\partial z}}\lambda\left(|z|\right)\right)\overline{h}\wedge \frac{\partial h}{\partial z}.
+  \end{align*}
+\end{frame}
+%\begin{frame}[allowframebreaks]{Using Integration by Parts to find Excess Area Identity: Calculation}
+%  \footnotesize
+%  Set $\lambda = e^{-|z|^2} = e^{-z\overline{z}}$. Then, for $h,\frac{\partial h}{\partial z} \in A^{2}\left(\mathbb{C},e^{-|z|^2}\right)$, we have
+%  \begin{align*}
+%    \norm{\frac{\partial h}{\partial z}}_{A^2\left(\mathbb{C},e^{-|z|^2}\right)}^2 &= \frac{1}{\pi}\int_{\C}^{} \left(\frac{\partial h}{\partial z}\right)\overline{\left(\frac{\partial h}{\partial z}\right)}e^{-|z|^2}\:dx\wedge dy\\
+%                                                                                   &= \frac{1}{2\pi i}\int_{\C}^{} \overline{\left(\frac{\partial h}{\partial z}\right)}e^{-|z|^2}\:d\overline{z}\wedge \left(\frac{\partial h}{\partial z}\right) dz
+%  \end{align*}
+%  We now use integration by parts to move the derivative from $\overline{\left(\frac{\partial h}{\partial z}\right)}$ to $e^{-|z|^2}$.
+%  \begin{align*}
+%    \overline{\frac{\partial}{\partial z}}\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right) &= \left(\left(\overline{\frac{\partial h}{\partial z}}\right)e^{-|z|^2}\right)\left(\frac{\partial h}{\partial z}\right) + \left(\overline{h}\overline{\frac{\partial}{\partial z}}\left(e^{-|z|^2}\right)\right)\left(\frac{\partial h}{\partial z}\right)\\
+%                                                                                                           &+ \cancelto{0}{\left(\overline{h}e^{-|z|^2}\right)\overline{\frac{\partial}{\partial z}}\left(\frac{\partial h}{\partial z}\right)}.\\
+%    \left(\frac{\partial h}{\partial z}\right)\overline{\left(\frac{\partial h}{\partial z}\right)}e^{-|z|^2} &= \overline{\frac{\partial }{\partial z}}\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right) + \left(\overline{h}\right)\left(z\frac{\partial h}{\partial z}\right)\left(e^{-|z|^2}\right)
+%  \end{align*}
+%  Rewriting the integral, we now have
+%  \begin{align*}
+%    \norm{\frac{\partial h}{\partial z}}_{A^{2}\left(\C,e^{-|z|^2}\right)}^2 &= \underbrace{\frac{1}{2\pi i}\int_{\C}^{} \overline{\frac{\partial }{\partial z}}\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right)\:d\overline{z}\wedge dz}_{\text{Integral $A$}}\\
+%                                                                             &+ \frac{1}{2\pi i}\int_{\C}^{} \left(\overline{h}\right)\left(z\frac{\partial h}{\partial z}\right)\left(e^{-|z|^2}\right)\:d\overline{z}\wedge dz
+%  \end{align*}
+%  Let's turn our attention to Integral $A$.
+%  \begin{align*}
+%    \frac{1}{2\pi i}\int_{\C}^{} \overline{\frac{\partial }{\partial z}}\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right)\:d\overline{z}\wedge dz &= \frac{1}{2\pi i}\lim_{r\rightarrow\infty} \int_{D(0,r)}^{} \overline{\frac{\partial }{\partial z}}\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right)\:d\overline{z}\wedge dz\\
+%                                                                                                                                                                                         &= \frac{1}{2\pi i } \lim_{r\rightarrow\infty}\int_{D(0,r)}^{} d\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right)\:d\overline{z}\wedge dz.
+%  \end{align*}
+%  We can now use Stokes's Theorem to move the integral in the limit from the interior of the disc to the boundary of the disc (dropping a derivative in the process).
+%  \begin{align*}
+%    \frac{1}{2\pi i } \lim_{r\rightarrow\infty}\int_{D(0,r)}^{} d\left(\overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\right)\:d\overline{z}\wedge dz &= \frac{1}{2\pi i}\lim_{r\rightarrow\infty}\int_{b D(0,r)}^{} \overline{h}e^{-|z|^2}\frac{\partial h}{\partial z}\:dz\\
+%                                                                                                                                                                    &= \frac{1}{2\pi i}\lim_{r\rightarrow\infty}e^{-r^2}\int_{bD(0,r)}^{} \overline{h}\frac{\partial h}{\partial z}\:dz\\
+%                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    &= 0
+%  \end{align*}
+%  Returning to the original area integral, we now have
+%  \begin{align*}
+%    \norm{\frac{\partial h}{\partial z}}_{A^{2}\left(\C,e^{-|z|^2}\right)}^{2}&= \frac{1}{2\pi i}\int_{\C}^{} \left(\overline{h}\right)\left(z\frac{\partial h}{\partial z}\right)e^{-|z|^2}\:d\overline{z}\wedge dz
+%  \end{align*}
+%\end{frame}
 \begin{frame}{Excess Area on $A^2(\mathbb{D},\lambda)$}
 %\begin{align*}
 %    A(zh)-A(h)=\norm{Sh}^2_{L^2(b\mathbb{D})}
