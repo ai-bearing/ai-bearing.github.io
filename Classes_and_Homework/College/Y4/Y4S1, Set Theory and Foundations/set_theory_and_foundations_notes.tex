@@ -1,0 +1,133 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Set Theory and Foundations of Mathematics: Class Notes}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\section{Cardinality and Countability}%
+\subsection{Section 1.1: Countable Sets}%
+\begin{definition}[Denumerable Set]
+  A set S is denumerable if there exists a function $f: S\rightarrow \N$ with $f$ a bijection. We also say $S$ is countably infinite.
+\end{definition}
+\begin{definition}[Countable Set]
+  We say $S$ is countable if $S$ is either finite or denumerable.
+\end{definition}
+\begin{theorem}[Countability of Unions]
+  If $A$ and $B$ are countable sets, then $A\cup B$ is countable.
+\end{theorem}
+\begin{theorem}[Countability of Subsets]
+  If $A\subseteq B$, then if $B$ is countable, then $A$ is countable.
+\end{theorem}
+\begin{theorem}[Union of Finite Sets]
+  If $A$ and $B$ are finite, then $A\cup B$ is finite.
+\end{theorem}
+\begin{proof}
+  If $A$ is finite and $|B|$ has one element, then we show that $A\cup B$ is finite (with two cases).\newline
+  
+  Afterward, for $|B| > 1$, we use induction on $|B|$.
+\end{proof}
+\begin{definition}[Finite Set]
+  A set $A$ is finite if there exists a bijection $f: S\rightarrow \set{1,2,\dots,n}$ for some $n \in \N = \set{0,1,\dots}$.\newline
+
+  We write $|A| = n$.
+\end{definition}
+\begin{theorem}[Disjoint Union of Countable Sets]
+  If $A$ is denumerable, $B$ is finite, and $A\cap B = \emptyset$, then $A\cup B$ is denumerable.
+\end{theorem}
+\begin{proof}
+  There exists a bijection $f: A\rightarrow \N$ (since $A$ is denumerable), and a bijection $g: B\rightarrow \set{1,2,\dots,n}$ for some $n \in \N$ (since $B$ is finite).\newline
+
+  We create a new bijection $h: A\cup B \rightarrow \N$ by:
+  \begin{align*}
+    h(x) &= \begin{cases}
+      g(x) - 1 & x\in B\\
+      f(x) + n & x\in A
+    \end{cases}.
+  \end{align*}
+  Since $A\cap B = \emptyset$, we know that $h$ is well-defined.\newline
+
+  Now, we must show that $h$ is a bijection.\newline
+
+  Suppose $h(x) = h(y)$.
+  \begin{description}
+    \item[Case 1:] If $x,y\in B$, then $h(x) = g(x) - 1$, and $h(y) = g(y) - 1$, meaning $g(x) - 1 = g(y) - 1$, meaning $g(x) = g(y)$. Since $g$ is a bijection, $x = y$.
+    \item[Case 2:] If $x,y\in A$, a similar argument yields that $x = y$
+    \item[Case 3:] Without loss of generality, let $x\in A$ and $y\in B$. If $x\in A$, then $h(x) = f(x) + n$ and $h(y) = g(y) - 1$. Thus, $f(x) + n = g(y) - 1$. However, since $f(x) + n \geq n$ and $0 \leq g(y) - 1 \leq n - 1$. Thus, we get that $0 \leq n \leq n-1$, which is a contradiction.
+  \end{description}
+  Thus, we have shown that $h$ is injective.
+\end{proof}
+\begin{theorem}[Cartesian Product of Natural Numbers]
+  $\N\times \N$ is denumerable.
+\end{theorem}
+\begin{proof}
+  We consider $\N\times \N$ as
+  \begin{align*}
+    \N \times \N &= \N \times \set{0} \cup \N\times \set{1} \cup \cdots,
+  \end{align*}
+  \begin{center}
+    \begin{tabular}{cccccc}
+      $\N\times \set{0}:$ & $(0,0)$ & $(1,0)$ & $(2,0)$ & $(3,0)$ & $\cdots$\\
+      $\N\times \set{1}:$ & $(0,1)$ & $(1,1)$ & $(2,1)$ & $(3,1)$ & $\cdots$\\
+      $\N\times \set{2}:$ & $(0,2)$ & $(1,2)$ & $(2,2)$ & $(3,2)$ & $\cdots$\\
+      $\N\times \set{3}:$ & $(0,3)$ & $(1,3)$ & $(2,3)$ & $(3,3)$ & $\cdots$\\
+      $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$
+    \end{tabular}
+  \end{center}
+  Then, we can find an (informal) bijection as follows:
+  \begin{center}
+    \begin{tabular}{cccccc}
+      $\N\times \set{0}:$ & $\cancelto{0}{(0,0)}$ & $\cancelto{2}{(1,0)}$ & $\cancelto{5}{(2,0)}$ & $\cancelto{9}{(3,0)}$ & $\cdots$\\
+      $\N\times \set{1}:$ & $\cancelto{1}{(0,1)}$ & $\cancelto{4}{(1,1)}$ & $\cancelto{8}{(2,1)}$ & $(3,1)$ & $\cdots$\\
+      $\N\times \set{2}:$ & $\cancelto{3}{(0,2)}$ & $\cancelto{7}{(1,2)}$ & $(2,2)$ & $(3,2)$ & $\cdots$\\
+      $\N\times \set{3}:$ & $\cancelto{6}{(0,3)}$ & $(1,3)$ & $(2,3)$ & $(3,3)$ & $\cdots$\\
+      $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$
+    \end{tabular}
+  \end{center}
+  We can also find a bijection $P: \N\times \N \rightarrow \N$, with
+  \begin{align*}
+    P\left(x,y\right) &= \frac{(x+y)(x+y+1)}{2} + x
+  \end{align*}
+  A fun challenge is to prove that $P$ is a bijection.
+\end{proof}
+\begin{theorem}[Countability of the Rationals]
+  $\Q$ is denumerable.
+\end{theorem}
+\begin{theorem}[Countability of the Integers]
+  The set $\Z$ is denumerable.
+\end{theorem}
+\begin{proof}
+  Let $f: \Z\rightarrow \N$ be defined by
+  \begin{align*}
+    f(x) &= \begin{cases}
+      2x & x\geq 0\\
+      -2x - 1 & x < 0
+    \end{cases}
+  \end{align*}
+\end{proof}
+\begin{definition}[Cardinality]
+  We say two sets, $A$ and $B$, have the same cardinality if there exists a bijection $f: A\rightarrow B$.
+\end{definition}
+\begin{theorem}[Finite Subset Cardinality]
+  If $m,n\in \N$ and $m\neq n$, then $\set{1,2,\dots,m}$ and $\set{1,2,\dots,n}$ do not have the same cardinality.
+\end{theorem}
+\begin{theorem}[Infinitude of the Natural Numbers]
+  $\N$ is not finite.
+\end{theorem}
+\begin{example}
+  If $A\subsetneq B$ and $|A| = |B|$, then both $A$ and $B$ are infinite.\newline
+
+  In order to prove this, we need to show that every injection from a finite set to itself is a bijection.
+\end{example}
+\end{document}
