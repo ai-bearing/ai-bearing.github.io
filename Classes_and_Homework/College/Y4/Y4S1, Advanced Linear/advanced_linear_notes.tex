@@ -1,4 +1,4 @@
-\documentclass[12pt]{mypackage}
+\documentclass[10pt]{mypackage}
 
 % sans serif font:
 %\usepackage{cmbright}
@@ -19,10 +19,12 @@
 \setcounter{secnumdepth}{0}
 
 \begin{document}
+\RaggedRight
 \section{Introduction}%
 \epigraph{It is my experience that proofs involving matrices can be shortened by 50\% if one throws the matrices out.}{Emil Artin}
-Essentially, the goal of this course is to prove a lot of the essential results of linear algebra without basis dependence (as in, using the properties of the linear transformations themselves rather than matrices).
-\section{Vector Spaces and Linear Transformations}%
+The goal of this course is to prove a lot of the essential results of linear algebra without basis dependence (as in, using the properties of the linear transformations themselves rather than matrices).
+\section{Vector Spaces}%
+\subsection{Vector Spaces and Linear Transformations}
 \begin{remark}
 We let $\F$ be either $\R,\Q,\C,\F_{p}$ (where $p$ is a prime). Primarily, we let $\F = \Q,\R,\C$.\newline
 \end{remark}
@@ -30,7 +32,7 @@ We let $\F$ be either $\R,\Q,\C,\F_{p}$ (where $p$ is a prime). Primarily, we le
   The primary vector space we study in lower-division linear algebra is
   \begin{align*}
     V &= \R^n\\
-      &= \set{ \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix}\left|a_1,\dots,a_n\in \R\right. }
+      &= \set{ \left. \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix}\right|a_1,\dots,a_n\in \R }
   \end{align*}
   We know that for
   \begin{align*}
@@ -66,7 +68,7 @@ We let $\F$ be either $\R,\Q,\C,\F_{p}$ (where $p$ is a prime). Primarily, we le
 \begin{example}[$\F^{n}$]
   Let $\F$ be a field, $V = \F^n$.
   \begin{align*}
-    V &= \set{ \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix}\left|a_i\in \F\right. }.
+    V &= \set{ \left.\begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix}\right|a_i\in \F }.
     \intertext{Define:}
     \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix} + \begin{pmatrix}b_1\\\vdots\\b_n\end{pmatrix} &= \begin{pmatrix}a_1 + b_1\\\vdots\\a_n + b_n\end{pmatrix}\\
     c \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix} &= \begin{pmatrix}ca_1 \\\vdots \\ ca_n\end{pmatrix}.
@@ -301,21 +303,301 @@ Then, $E_a \in \text{Hom}_{\R}\left(V,\R\right)$.
   Then, $D\in \text{Hom}_{\R}\left(V,V\right)$.
 \item 
   \begin{align*}
-    I_a: V\rightarrow V
+    I_a: V\rightarrow V\\
     f\mapsto \int_{a}^{x} f(t)\:dt.
   \end{align*}
   Then, $I_a\in \text{Hom}_{\R}\left(V,V\right)$.
-\item With $a$ a function,
+\item Treating $f(a)$ as a (constant) function,
   \begin{align*}
-    \tilde{E}_a: V\rightarrow V
-    f\mapsto f\circ a.
+  \tilde{E}_a: V\rightarrow V\\
+    f\mapsto f(a).
   \end{align*}
   Then, $\tilde{E}_{a}\in \text{Hom}_{\R}\left(V,V\right)$.
   \end{enumerate}
   Additionally,
   \begin{itemize}
     \item $D\circ I_a = \text{id}_V$;
-    \item $I_a\circ D = \text{id}_V - \tilde{E_a}$ for some $a\in \R$.
+    \item $I_a\circ D = \text{id}_V - \tilde{E}_a$ for some $a\in \R$.
   \end{itemize}
+\end{example}
+\begin{exercise}
+  Show $\text{Hom}_{\mathbb{F}}\left(V,W\right)$ is an $F$-vector space.
+\end{exercise}
+\begin{exercise}
+  Let $U,V,W$ be vector spaces. Let $S\in \text{Hom}_{\mathbb{F}}\left(U,V\right)$ and $T\in \text{Hom}_{\mathbb{F}}\left(V,W\right)$. Show $T\circ S \in \text{Hom}_{\mathbb{F}}\left(U,W\right)$
+\end{exercise}
+\begin{lemma}[Image of Identity]
+  Let $T\in \text{Hom}_{V,W}$. Then, $T\left(0_V\right) = 0_W$.
+\end{lemma}
+\begin{definition}[Isomorphism]
+  Let $T\in \text{Hom}_{\mathbb{F}}\left(V,W\right)$ be invertible, meaning there exists $T^{-1}W\rightarrow V$ such that $T\circ T^{-1} = \text{id}_{W}$ and $T^{-1}\circ T = \text{id}_{V}$.\newline
+
+  We say $T$ is an isomorphism, and $V,W$ are isomorphic.
+\end{definition}
+\begin{exercise}
+  Show $T^{-1}\in \text{Hom}_{\mathbb{F}}\left(W,V\right)$.
+\end{exercise}
+\begin{example}[$\R^2$ and $\C$]
+  Let $V = \R^2$, $W = \C$. Define $T: \R^2\rightarrow \C$, $(x,y)\mapsto x + iy$.\newline
+
+  We can verify that $T\in \text{Hom}_{\R}\left(\R^2,\C\right)$. Let $\left(x_1,y_1\right),\left(x_2,y_2\right)\in \R^2$ and $r\in \R$. Then,
+  \begin{align*}
+    T\left(\left(x_1,y_1\right) + r\left(x_2,y_2\right)\right) &= T\left(\left(x_1 + rx_2,y_1 + ry_2\right)\right)\\
+                                                               &= \left(x_1 + rx_2\right) + i\left(y_1 + ry_2\right)\\
+                                                               &= x_1 + iy_1 + rx_2 + i\left(ry_2\right)\\
+                                                               &= x_1 + iy_1 + r\left(x_2 + iy_2\right)\\
+                                                               &= T\left(\left(x_1,y_1\right)\right) + rT\left(\left(x_2,y_2\right)\right).
+  \end{align*}
+  Define $T^{-1}\C \rightarrow \R^2$ by $x + iy \mapsto (x,y)$. We have $T\circ T^{-1}\left(x + iy\right) = x+iy$ is an inverse map and $T^{-1}\circ T\left(\left(x,y\right)\right) = \left(x,y\right)$. Thus, $\R^2\cong \C$ as $\R$-vector spaces.
+\end{example}
+\begin{example}[$\mathcal{P}_{n}\left(\mathbb{F}\right)$ and $\F^{n+1}$]
+  Set $V = \mathcal{P}_{n}\left(\mathbb{F}\right)$ and $W = \mathbb{F}^{n+1}$.\newline
+
+  Define $T: \mathcal{P}_{n}\left(\F\right) \mapsto \F^{n+1}$,
+  \begin{align*}
+    a_0 + a_1x + \cdots + a_nx^n &\mapsto \begin{pmatrix}a_0\\a_1\\\vdots\\a_n\end{pmatrix}.
+  \end{align*}
+  We can verify that $T$ is linear, with inverse map $T^{-1}: \F^{n+1}\rightarrow \mathcal{P}_{n}\left(\F\right)$
+  \begin{align*}
+    \begin{pmatrix}a_0\\a_1\\\vdots\\a_n\end{pmatrix} \mapsto a_0 + a_1x + \cdots + a_nx^n.
+  \end{align*}
+  Thus, $\mathcal{P}_n(\F) \cong \F^{n+1}$.
+\end{example}
+\begin{definition}[Kernel]
+  Let $T\in \text{Hom}_{\F}\left(V,W\right)$. Define
+  \begin{align*}
+    \ker T &= \set{v\in V\mid T(v) = 0_W}.
+  \end{align*}
+  We call this the kernel of $T$.
+\end{definition}
+\begin{definition}[Image]
+  Let $T\in \text{Hom}_{\F}\left(V,W\right)$. Define
+  \begin{align*}
+    \text{im}\left(T\right) &= T(V)\\
+                      &= \set{w\in W\mid \exists v\in V\text{ such that }T(v) = w}
+  \end{align*}
+\end{definition}
+\begin{lemma}[Kernel and Image are Subspaces]
+  The kernel, $\ker T$, is a subspace of $V$, and the image, $\text{im}\left(T\right)$, is a subspace of $W$.
+\end{lemma}
+\begin{proof}
+  Since $T\left(0_V\right) = 0_W$, we know that both $\ker T$ and $\text{im}\left(T\right)$ are nonempty.\newline
+
+  Let $c\in \F$ and $v_1,v_2\in \ker T$. Then,
+  \begin{align*}
+    T\left(v_1 + cv_2\right) &= T\left(v_1\right) + cT\left(v_2\right)\\
+                             &= 0.
+  \end{align*}
+  Thus, $v_1 + cv_2 \in \ker T$.\newline
+
+  Let $w_1,w_2\in \text{im}\left(T\right)$. Then, there exist $u_1,u_2\in V$ such that $T\left(u_1\right) = w_1$ and $T\left(u_2\right) = w_2$. We have
+  \begin{align*}
+    T\left(u_1 + cu_2\right) &= T\left(u_1\right) + cT\left(u_2\right)\\
+                             &= w_1 + cw_2,
+  \end{align*}
+  meaning $w_1 + cw_2\in \text{im}\left(T\right)$, meaning $\text{im}\left(T\right)$ is a subspace of $W$.
+\end{proof}
+\begin{lemma}[Injectivity of a Linear Transformation]
+  $T$ is injective and only if $\ker T = \set{0_V}$.
+\end{lemma}
+\begin{proof}
+  Suppose $T$ is injective. Let $v\in V$ be such that $T\left(v\right) = 0_W$. We also know that $T\left(0_V\right) = 0_W$. Since $T$ is injective, this means $v = 0_V$.\newline
+
+  Let $\ker T = \set{0_V}$. Suppose $T\left(v_1\right) = T\left(v_2\right)$. Then,
+  \begin{align*}
+    T\left(v_1\right) - T\left(v_2\right) &= 0_W\\
+    T\left(v_1 - v_2\right) &= 0_W,
+  \end{align*}
+  meaning $v_1 - v_2 \in \ker T$, meaning $v_1 - v_2 = 0_V$. Thus, $v_1 = v_2$.
+\end{proof}
+\begin{example}[Projection Map]
+  Let $m > n$. Define $T: \F^{m}\rightarrow \F^n$ by
+  \begin{align*}
+    \begin{pmatrix}a_1\\\vdots\\a_m\end{pmatrix} \mapsto \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix}.
+  \end{align*}
+  We can see that $\text{im}\left(T\right) = \F^n$.\newline
+
+  To examine the kernel, let
+  \begin{align*}
+    \begin{pmatrix}a_1\\\vdots\\a_m\end{pmatrix}\in \ker(T).
+  \end{align*}
+  Then,
+  \begin{align*}
+    \begin{pmatrix}a_1\\\vdots\\a_m\end{pmatrix}\mapsto \begin{pmatrix}0\\\vdots\\0\end{pmatrix},
+  \end{align*}
+  with $n$ entries. Thus,
+  \begin{align*}
+    \ker(T) &= \set{\left. \begin{pmatrix}0\\0\\\vdots\\0\\a_{n+1}\\\vdots\\a_{m}\end{pmatrix}\right|a_i\in \F^m}\\
+            &\cong \F^{m-n}.
+  \end{align*}
+\end{example}
+\subsection{Bases and Dimension}%
+For this section, we let $V $ be a $ \F$-vector space.
+\begin{definition}[Linear Combination]
+  Let $\mathcal{B} = \set{v_i}_{i\in I}$ be a subset of $V$. We say $v\in V$ is an $\F$-linear combination of $\mathcal{B}$ if there is a set $\set{a_i}_{i\in I}$ with $a_i = 0$ for all but finitely many $i$ such that
+  \begin{align*}
+    v = \sum_{i\in I}a_iv_i.
+  \end{align*}
+  We write $v\in \Span_{\F}\left(\mathcal{B}\right)$.
+\end{definition}
+\begin{example}
+  Let $V = \mathcal{P}_2\left(\F\right)$. Set $\mathcal{B} = \set{1,x,x^2}$. We have $\Span_{\F}\left(\mathcal{B}\right) = \mathcal{P}_2\left(\F\right)$.
+\end{example}
+\begin{definition}[Linear Independence]
+  Let $\mathcal{B} = \set{v_i}_{i\in I}$ be a subset of $V$. We say $\mathcal{B}$ is $\F$-linearly independent if whenever
+  \begin{align*}
+    \sum_{i\in I}a_iv_i = 0_V,
+  \end{align*}
+  we have $a_i = 0 $ for all $i\in I$. Note that these are finite sums.
+\end{definition}
+\begin{definition}[Hamel Basis]
+  Let $\mathcal{B} = \set{v_i}_{i\in I}$ be a subset of $V$. We say $\mathcal{B}$ is a $\F$-basis for $V$ if
+  \begin{enumerate}[(1)]
+    \item $\Span\left(\mathcal{B}\right) = V$
+    \item $\mathcal{B}$ is linearly independent.
+  \end{enumerate}
+\end{definition}
+\begin{example}[Standard Basis for $\F^n$]
+Let $V = \F^n$. We let
+\begin{align*}
+  \mathcal{E}_n = \set{e_1,\dots,e_n},
+\end{align*}
+where
+\begin{align*}
+  e_1 &= \begin{pmatrix}1\\0\\\vdots\\0\end{pmatrix}\\
+  e_2 &= \begin{pmatrix}0\\1\\\vdots\\0\end{pmatrix}\\
+      &\vdots\\
+  e_n &= \begin{pmatrix}0\\0\\\vdots\\1\end{pmatrix}.
+\end{align*}
+We have $\mathcal{E}_n$ is a basis of $\F^n$ referred to as the standard basis.
+\end{example}
+We wish to show that every vector space has a basis. In order to do so, we require Zorn's lemma.
+\begin{theorem}[Zorn's Lemma]
+  Let $X$ be a nonempty partially ordered set. If every totally ordered subset of $X$ has an upper bound, then there exists at least one maximal element in $X$.
+\end{theorem}
+\begin{theorem}
+  Let $\mathcal{A}$ and $\mathcal{C}$ be subsets of $V$ with $\mathcal{A}\subseteq \mathcal{C}$. Assume $\mathcal{A}$ is linearly independent and $\Span_{\F}\left(\mathcal{C}\right) = V$. Then, there exists a basis $\mathcal{B}$ of $V$ with $\mathcal{A}\subseteq \mathcal{B}\subseteq \mathcal{C}$.
+\end{theorem}
+\begin{proof}
+  Take
+  \begin{align*}
+    X &= \set{\mathcal{B}'\subseteq V\mid \mathcal{A}\subseteq \mathcal{B}'\subseteq \mathcal{C},\mathcal{B}\text{ linearly independent}}.
+  \end{align*}
+  We have $\mathcal{A}\in X$, meaning $X$ is nonempty. We know that $X$ is partially ordered with respect to inclusion, and has an upper bound of $\mathcal{C}$.\newline
+
+  Thus, by Zorn's lemma, we have a maximal element in $X$. We call this maximal element $\mathcal{B}$. By the definition of $X$, $\mathcal{B}$ is linearly independent.\newline
+
+  We claim that $\Span_{\F}\left(\mathcal{B}\right) = V$. If not, there exists some $v\in \mathcal{C}$ such that $v\notin \Span_{\F}\left(\mathcal{B}\right)$. However, if $v\notin \Span_{\F}\left(\mathcal{B}\right)$, then $\mathcal{B}\cup \set{v}\subseteq \mathcal{C}$ is linearly independent. However, since $\mathcal{B}\subsetneq \mathcal{B}\cup \set{v}$, this implies that $\mathcal{B}$ is not maximal, which is a contradiction. Thus, $\Span_{\F}\left(\mathcal{B}\right) = V$.
+\end{proof}
+\begin{remark}
+This proof applies to all vector spaces, not just those with finite dimensions.
+\end{remark}
+\begin{lemma}
+  A homogeneous system of $m$ linear equations in $n$ unknowns with $m < n$ has a nonzero solution.
+\end{lemma}
+\begin{corollary}
+  Let $\mathcal{B}\subseteq V$ with $\Span_{\F}\left(\mathcal{B}\right) = V$ and $\left\vert \mathcal{B} \right\vert = m$.\newline
+
+  Then, any set with more than $m$ elements cannot be linearly independent.
+\end{corollary}
+\begin{proof}
+  Let $\mathcal{C} = \set{w_1,\dots,w_n}$ with $n > m$. We wish to show that $\mathcal{C}$ cannot be linearly independent.\newline
+
+  Write $\mathcal{B} = \set{v_1,\dots,v_m}$ with $\Span_{\F}\left(\mathcal{B}\right) = V$. For each $i$, write $w_i = \sum_{j=1}^{m}a_{ji}v_j$ for some $a_{ji}\in \F$.\newline
+
+  Consider the equations
+  \begin{align*}
+    \sum_{i=1}^{n}a_{ji}x_i = 0.
+  \end{align*}
+  We have a solution to this $\left(c_1,\dots,c_n\right) \neq \left(0,\dots,0\right)$.\newline
+
+  We have
+  \begin{align*}
+    0 &= \sum_{j=1}^{m} \left(\sum_{i=1}^{n}a_{ji}c_i\right)v_j\\
+      &= \sum_{i=1}^{n}c_i\left(\sum_{j=1}^{m}a_{ji}v_j\right)\\
+      &= \sum_{i=1}^{n}c_iw_i.
+  \end{align*}
+  Thus, $\mathcal{C}$ is not linearly independent.
+\end{proof}
+\begin{corollary}
+  If $\mathcal{B}$ and $\mathcal{C}$ are bases over $V$, with $\mathcal{B}$ and $\mathcal{C}$ finite, then $\Card \mathcal{B} = \Card \mathcal{C}$.
+\end{corollary}
+\begin{proof}
+  Let $|\mathcal{B}| = m$, $|\mathcal{C}| = n$. Since $\mathcal{C}$ is linearly independent, we know that $n\leq m$. We reverse the roles to see that $m\leq n$.
+\end{proof}
+\begin{definition}[Dimension]
+  Let $V$ be a $\F$-vector space with Hamel basis $\mathcal{B}$. Then, we define $\Dim_{\F} V = \Card \mathcal{B}$.
+\end{definition}
+\begin{theorem}
+  Let $V$ be finite-dimensional with $\Dim_{\F} V = n$. Let $\mathcal{C} \subseteq V$ with $\Card \mathcal{C} = m$.
+  \begin{enumerate}[(1)]
+    \item If $m > n$, then $\mathcal{C}$ is not linearly independent.
+    \item If $m < n$, then $\Span_{\F}\left(\mathcal{C}\right) \neq V$.
+    \item If $m = n$, then the following are equal:
+      \begin{itemize}
+        \item $\mathcal{C}$ is a basis;
+        \item $\mathcal{C}$ is linearly independent;
+        \item $\Span_{\F}\left(\mathcal{C}\right) = V$.
+      \end{itemize}
+  \end{enumerate}
+\end{theorem}
+\begin{corollary}
+  Let $W\subseteq V$ be a subspace. We have $\Dim_{\F}W \leq \Dim_{\F} V$.\newline
+
+  If $\Dim_{\F} V < \infty$, then $V = W$ if and only if $\Dim_{\F} W = \Dim_{\F} V$.
+\end{corollary}
+\begin{example}
+  Let $V = \C$.\newline
+
+  If $\F = \C$, then $\mathcal{B} = \set{1}$, and $\Dim_{\C}\C = 1$.\newline
+
+  If $\F = \R$, then $\mathcal{B} = \set{1,i}$, and $\Dim_{\R}\C = 2$.
+
+  %If $\F = \Q$, then $\mathcal{B}$ is uncountable.
+\end{example}
+\begin{example}
+  Let $V = \F[x]$, and let $f(x) \in \F[x]$ be fixed.\newline
+
+  Define an equivalence relation $g(x) \equiv h(x) $ if $f(x)|\left(g(x) - h(x)\right)$.\newline
+
+  Given $g(x) \in \F[x]$, write $\left[g(x)\right]$ for the equivalence class containing $g(x)$.\newline
+
+  Define $W = \F[x] / \left(f(x)\right) = \set{\left[g(x)\right]\mid g(x)\in \F[x]}$.\newline
+
+  Define
+  \begin{align*}
+    [g(x)] + [h(x)] &= [g(x) + h(x)]\\
+    c[g(x)] &= [cg(x)].
+  \end{align*}
+  This makes $W$ into a vector space. Set $n = \deg f(x)$.\newline
+
+  Then, we claim
+  \begin{align*}
+    \mathcal{B} = \set{[1],[x],\dots,\left[x^{n-1}\right]}.
+  \end{align*}
+  Suppose there exist $a_0,\dots,a_{n-1} \in \F$ with
+  \begin{align*}
+    a_0 [1] + a_1[x] + \cdots + a_{n-1}\left[x^{n-1}\right] = [0].
+  \end{align*}
+  Thus,
+  \begin{align*}
+    \left[a_0 + a_1x + \cdots + a_{n-1}x^{n-1}\right] = [0].
+  \end{align*}
+  Thus,
+  \begin{align*}
+    f(x) | \left(a_0 + a_1x + \cdots + a_{n-1}x^{n-1} - 0\right),
+  \end{align*}
+  which means we must have $a_0 = a_1 = \cdots = a_{n-1}$.\newline
+
+  Let $\left[g(x)\right]\in W$. By the Euclidean algorithm,
+  \begin{align*}
+    g(x) &= f(x)q(x) + r(x)
+  \end{align*}
+  for some $q(x),r(x) \in \F[x]$ with $r(x) = 0$ or $\deg r(x) < n$. Thus, we have
+  \begin{align*}
+    \left[g(x)\right] &= \left[f(x)q(x)\right] + \left[r(x)\right]\\
+                      &= \left[r(x)\right].
+  \end{align*}
+  Since $r(x) = 0$ or $\deg r(x) < n$, we must have $\left[g(x)\right] = \left[r(x)\right]\in \Span_{\F}\left(\mathcal{B}\right)$.
 \end{example}
 \end{document}

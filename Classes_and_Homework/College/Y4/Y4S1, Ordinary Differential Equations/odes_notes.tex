@@ -17,7 +17,7 @@
 
 \begin{document}
 \section{First-Order Differential Equations}%
-\subsection{Introduction to first-order ODEs}%
+\subsection{Introduction to First-Order Differential Equations}%
   Recall that for $y = f(x)$, $x$ is the independent variable and $y$ is the dependent variable.
   \begin{definition}[Differential Equation]
   A differential equation is an equation which contains derivatives of a dependent variable with respect to one or more independent variables.
@@ -152,6 +152,26 @@
                     &= 0.
     \end{align*}
   \end{example}
+  \begin{definition}[Equilibrium Solution]
+    An equilibrium solution of a differential equation is a \textit{constant function} that satisfies the differential equation.
+  \end{definition}
+  \begin{example}
+    We want to find equilibrium solutions for the following equations:
+    \begin{enumerate}[(1)]
+      \item $\frac{dy}{dt} = 2-y$
+      \item $\frac{dy}{dt} = y^2 - 3y - 4$.
+    \end{enumerate}
+    In order to find equilibrium solutions, we know that $\frac{dy}{dt} = 0$. Thus, the equilibrium solutions are, respectively,
+    \begin{enumerate}[(1)]
+      \item $y(t) = 2$
+      \item $y(t) = -1$ or $y(t) = 4$.
+    \end{enumerate}
+  \end{example}
+  For first-order ODEs of the form
+  \begin{align*}
+    \frac{dy}{dt} = f(t,y),
+  \end{align*}
+  equilibrium solutions are found by taking $\frac{dy}{dt} = 0$, and solving for $y$.
   \subsection{Modeling with Differential Equations}%
   \begin{definition}[Initial Value Problem]
   An initial value problem is a problem with a given ODE and an initial condition.
@@ -215,7 +235,7 @@
       y(t) &= -\frac{1}{2}gt^2 + v_0 t + y_0.
     \end{align*}
   \end{example}
-  \begin{example}[Population Growth]
+  \begin{example}[Population Growth, Exponential and Logistic]
     Let $P(t)$ be the population of living fish in a lake at time $t$.\newline
 
     We know that the rate of growth in population is proportional to the population. In other words,
@@ -230,5 +250,150 @@
     \begin{align*}
       P(t) &= P_0e^{kt}.
     \end{align*}
+    However, this is not particularly realistic; there is no theoretical upper bound on the model, even though in real life, ecosystems tend to have carrying capacities.\newline
+
+    The logistic population model with growth rate $k$ and carrying capacity $N$ is is
+    \begin{align*}
+      \frac{dP}{dt} &= kP\left(1 - \frac{P}{N}\right).
+    \end{align*}
+    We can analyze this equation qualitatively first (before finding an analytical solution).
+    \begin{itemize}
+      \item If $P > N$, we can see that $\frac{dP}{dt} < 0$, which is expected since, if population is greater than carrying capacity, we expect population to approach carrying capacity.
+      \item If $P < N$ (assuming $P$ is positive), we see that $\frac{dP}{dt} > 0$, meaning population increases as it approaches carrying capacity. In particular, as population increases, the growth rate decreases.
+      \item The equilibrium solutions occur at $P = 0$ or $P = N$.
+    \end{itemize}
+    \begin{center}
+      \includegraphics[width=10cm]{images/logistic_map.png}
+    \end{center}
   \end{example}
+\subsection{Separable First-Order Differential Equations}%
+Consider the first-order differential equation
+\begin{align*}
+  \frac{dy}{dt} &= f(t,y).
+\end{align*}
+\begin{definition}[Separable Differential Equation]
+  A differential equation of the form
+  \begin{align*}
+    \frac{dy}{dt} &= g(t)h(y)
+  \end{align*}
+  is called separable.
+\end{definition}
+\begin{note}
+\begin{align*}
+  f(t,y) = g(t)h(y).
+\end{align*}
+\end{note}
+\begin{example}\hfill
+  \begin{enumerate}[(1)]
+    \item We can see that $\frac{dP}{dt} = kP$ is separable; $g(t) = k$, $h(y) = P$.
+    \item We can see that $\frac{dy}{dt} = -\frac{t}{y}$ is also separable; $g(t) = -t$, $h(y) = \frac{1}{y}$.
+    \item We can see that $\frac{dy}{dt} = y + t$ is not separable.
+  \end{enumerate}
+\end{example}
+\begin{method}[Separation of Variables]
+  We want to solve $\frac{dy}{dt} = g(t)h(y)$.
+  \begin{enumerate}[(1)]
+    \item We take $\frac{dy}{h(y)} = g(t)\:dt$ by multiplying $dt$ on both sides and dividing by $h(y)$.
+    \item Integrate both sides with respect to their corresponding variable, yielding
+      \begin{align*}
+        \int_{}^{} \frac{1}{h(y)}\:dy &= \int_{}^{} g(t)\:dt.
+      \end{align*}
+    \item We get
+      \begin{align*}
+        H(y) &= G(t) + C,
+      \end{align*}
+      where $H(y)$ and $G(t)$ are antiderivatives of $\frac{1}{h(y)}$ and $g(t)$ respectively.
+  \end{enumerate}
+\end{method}
+\begin{example}[Solving the Exponential Population Growth Model by Separation of Variables]
+  Let $\frac{dP}{dt} = kP$, $P(0) = P_0$.
+  \begin{align*}
+    \frac{dP}{dt} &= kP\\
+    \frac{dP}{P} &= k\:dt\\
+    \int_{}^{} \frac{1}{P}\:dP &= \int_{}^{} k\:dt\\
+    \ln|P| &= kt + C\\
+    |P| &= e^{kt + C}\\
+      &= e^{kt}e^{C}\\
+    P &= \left(\pm e^{C}\right)e^{kt}\\
+      &= Ae^{kt}.
+  \end{align*}
+  Our solution is now of the form $P(t) = Ae^{kt}$ (where $A = \pm e^{C}$). This is not the general solution, though, since it lacks our equilibrium solution of $P = 0$. Thus, the general solution is
+  \begin{align*}
+    \begin{cases}
+      P(t) = Ae^{kt}\\
+      P(t) = 0
+    \end{cases}
+  \end{align*}
+  With the initial condition of $P(0) = P_0$, we have
+  \begin{align*}
+    P_0 = P(0)
+         &= Ae^{k\cdot 0}\\
+         &= A.
+  \end{align*}
+  Thus, the particular solution to our initial value problem is $P(t) = P_0e^{kt}$.
+\end{example}
+\begin{example}[Solving a Sample Differential Equation by Separation of Variables]
+  Let $\frac{dy}{dt} = y^2 - 4$. Note that, even though this is not a linear equation, this is a separable equation. We start with the equilibrium solutions, which are at $y(t) = 2$ and $y(t) = -2$.\newline
+
+  If $y\neq \pm 2$, we have
+  \begin{align*}
+    \frac{dy}{dt} &= y^2 - 4\\
+    \frac{1}{y^2 - 4}\:dy &= dt\\
+    \int_{}^{} \frac{1}{4(y-2)} - \frac{1}{4(y+2)}\:dy &= \int_{}^{} \:dt\\
+    \frac{1}{4}\left(\ln\left|\frac{y-2}{y+2}\right|\right) &= t + C_1\\
+    \ln \left\vert \frac{y-2}{y+2} \right\vert &= 4t + C_2\\
+    \left\vert \frac{y-2}{y+2} \right\vert &= e^{C_2}e^{4t}\\
+                                           &= C_3e^{4t}\\
+    \frac{y-2}{y+2} &=  \pm C_3 e^{4t}\\
+                    &= C e^{4t}\\
+    y &= 2 + y Ce^{4t} + 2Ce^{4t}\\
+    y &= \frac{2\left(1 + Ce^{4t}\right)}{1-Ce^{4t}}.
+  \end{align*}
+  Thus, our general solution is
+  \begin{align*}
+    \begin{cases}
+     y(t) = \frac{2\left(1 + Ce^{4t}\right)}{1-Ce^{4t}} \\
+     y(t) = 2\\
+     y(t) = -2
+    \end{cases}
+  \end{align*}
+\end{example}
+\begin{example}[Solving the Logistic Population Growth Model]
+  Let $\frac{dP}{dt} = kP\left(1-\frac{P}{N}\right)$. Our equilibrium solutions are at $P(t)=0$ and $P(t)=N$. For non-equilibrium solutions, we have
+  \begin{align*}
+    \frac{dP}{dt} &= kP\left(1-\frac{P}{N}\right)\\
+    \frac{1}{P\left(1-\frac{P}{N}\right)}\: dP &= k\:dt\\
+    \int_{}^{} \frac{1}{P\left(1-\frac{P}{N}\right)}\:dP &= \int_{}^{} k\:dt\\
+    \int_{}^{} \frac{-N}{P\left(P-N\right)}\:dP &= kt + C_1\\
+    \int_{}^{} \frac{1}{P} - \frac{1}{P-N}\:dP &= kt + C_1\\
+    \ln \left\vert P \right\vert - \ln \left\vert P-N \right\vert &= kt + C_1\\
+    \ln \left\vert \frac{P}{P-N} \right\vert &= kt + C_1\\
+    \left\vert \frac{P}{P-N} \right\vert &= e^{C_1}e^{kt}\\
+    \frac{P}{P-N} &= \pm e^{C_1}e^{kt}\\
+                  &= Ce^{kt}\\
+    P\left(1-Ce^{kt}\right) &= -NCe^{kt}\\
+    P &= N\frac{Ce^{kt}}{Ce^{kt} - 1}.
+  \end{align*}
+  Therefore, our general solution is
+  \begin{align*}
+    \begin{cases}
+      P(t) = N\frac{Ce^{kt}}{Ce^{kt} - 1}\\
+      P(t) = 0\\
+      P(t) = N
+    \end{cases}.
+  \end{align*}
+\end{example}
+\begin{example}[A Non-Separable Linear Differential Equation]
+  Consider the linear differential equation
+  \begin{align*}
+    \frac{dy}{dt} + a(t) y &= b(t).
+  \end{align*}
+  Notice that
+  \begin{align*}
+    \frac{dy}{dt} &= -a(t)y + b(t),
+  \end{align*}
+  which is not able to be separated.\newline
+
+  In order to solve such an equation, we will need to use an integrating factor.
+\end{example}
 \end{document}
