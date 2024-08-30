@@ -34,7 +34,7 @@
 \tikzstyle{xzp}=[canvas is xz plane at y=0]
 \tikzstyle{xyp}=[canvas is xy plane at z=0]
 \def\tick#1#2{\draw[thick] (#1) ++ (#2:0.12) --++ (#2-180:0.24)}
-\def\N{100}
+%\def\N{100}
 \tikzset{axis/.style={thick,-latex}}
 \tikzset{vec/.style={thick,blue}}
 \tikzset{univec/.style={thick,red,-latex}}
@@ -48,6 +48,7 @@
 \setcounter{secnumdepth}{0}
 
 \begin{document}
+\RaggedRight
 \section{Things You Just Gotta Know}%
 \subsection{Coordinate Systems}%
 We want to focus on vector-valued functions of coordinates.
@@ -322,6 +323,29 @@ We specifically desire the determinant:
   |J| &= \pd{x}{u}\pd{y}{v} - \pd{y}{u}\pd{x}{v}.
 \end{align*}
 \subsection{Complex Numbers}%
+\begin{center}
+  \renewcommand{\arraystretch}{1.75}
+  \begin{tabular}{c|c}
+    Quantity & Expression and/or Criterion\\
+    \hline
+    Cartesian form & $z = a + bi$\\
+    Polar form & $z = re^{i\phi}$\\
+    $r$ & $\sqrt{a^2 + b^2}$\\
+    $\phi$ & $\arg z = \arctan\left(\frac{b}{a}\right)$\\
+    \hline
+    Cartesian $z^{\ast}$ & $z^{\ast} = a-bi$\\
+    Polar $z^{\ast}$ & $z = re^{-i\phi}$\\
+    $|z|$ & $\sqrt{zz^{\ast}}$\\
+    \hline
+    $\re(z)$ & $\re(z) = \frac{z + z^{\ast}}{2}$\\
+    $\im(z)$ & $\im(z) = \frac{z - z^{\ast}}{2i}$\\
+    $\cos\phi$ & $\frac{e^{i\phi} + e^{-i\phi}}{2}$\\
+    $\sin\phi$ & $\frac{e^{i\phi} - e^{-i\phi}}{2i}$\\
+    \hline
+    $e^{i\phi}$ & $\cos \phi + i\sin\phi$\\
+    $e^{in\phi}$ & $\cos \left(n\phi\right) + i\sin \left(n\phi\right)$
+  \end{tabular}
+\end{center}
 \subsubsection{Introduction}%
 
 \begin{center}
@@ -401,7 +425,7 @@ To find if some complex number $z$ is purely real or purely imaginary, we can us
         &= e^{-\frac{\pi}{2}}.
   \end{align*}
 \end{example}
-\subsubsection{Trigonometric Formulas with Euler's Formula}%
+\subsubsection{Some Trigonometry with Complex Exponentials}%
 Consider $z = \cos \phi + i\sin\phi$. We can see that
 \begin{align*}
   \re(z) &= \cos\phi\\
@@ -411,5 +435,98 @@ Consider $z = \cos \phi + i\sin\phi$. We can see that
          &= \frac{\left(\cos\phi + i\sin\phi\right) - \left(\cos\phi - i\sin\phi\right)}{2i}\\
          &= \frac{e^{i\phi} - e^{-i\phi}}{2i}.
 \end{align*}
-We can actually define $\sin\phi$ and $\cos\phi$ with the above derivation.
+We can actually define $\sin\phi$ and $\cos\phi$ with the above derivation.\newline
+
+\begin{theorem}[De Moivre]
+\begin{align*}
+  e^{inx} &= \cos\left(nx\right) + i\sin \left(nx\right)\\
+          &= \left(e^{ix}\right)^{n}\\
+          &= \left(\cos x + i\sin x\right)^n.
+\end{align*}
+\end{theorem}
+\begin{example}[Finding $\cos \left(2x\right)$ and $\sin \left(2x\right)$]
+  \begin{align*}
+    \cos\left(2x\right) + i\sin \left(2x\right) &= \left(\cos x + i\sin x\right)^2\\
+                                                &= \left(\cos^2 x - \sin^2 x\right) + i\left(2\sin x \cos x\right).
+  \end{align*}
+  Since the real parts and imaginary parts have to be equal, this means
+  \begin{align*}
+    \cos 2x &= \cos^2 x - \sin^2 x\\
+    \sin^2 x &= 2\sin x \cos x.
+  \end{align*}
+\end{example}
+In particular, we can see that $e^{in\phi} = \left(-1\right)^n$ and $e^{in\frac{\pi}{2}} = i^n$.\footnote{This will be especially useful when we get to Fourier series.}\newline
+
+Additionally, we can see that for $z = re^{i\phi}$,
+\begin{align*}
+  z^{1/m} &= \left(re^{i\phi + 2\pi n}\right)^{1/m}\\
+          &= r^{1/m}e^{i\frac{1}{m}\left(\phi + 2\pi n\right)},
+\end{align*}
+where $n\in \N$ and $m$ is fixed. For $r = 1$, we call these values the $m$ roots of unity.
+\begin{example}[Waves and Oscillations]
+  Recall that for a wave with spatial frequency $k$, angular frequency $\omega$, and amplitude $A$, the wave is represented by
+  \begin{align*}
+    f(x,t) &= A\cos\left(kx - \omega t\right).
+  \end{align*}
+  The speed of a wave $v$ is equal to $\frac{\omega}{k}$.\newline
+
+  Simple harmonic motion is characterized by the solution to the differential equation $\ddot{\mathbf{x}} = -\omega^2 \mathbf{x}$, where $\mathbf{x}$ denotes position. In simple harmonic motion, there is no spatial motion, meaning our function is only of time:
+  \begin{align*}
+    f(t) &= A\cos \omega t\\
+         &= \re\left(Ae^{i\omega t}\right).
+  \end{align*}
+  As a result of the representation of complex numbers in polar form, we can do math entirely in exponentials, then take the real part of our solution to find $f(t)$.\newline
+
+  Unfortunately, in the real world, there is friction; as a result, our oscillation is damped by an exponential factor.
+\end{example}
+\begin{example}[Hyperbolic Sine and Hyperbolic Cosine]
+  We wish to calculate $\cos ix$ and $\sin ix$.
+  \begin{align*}
+    \cos ix &= \frac{1}{2}\left(e^{i\left(ix\right)} + e^{-i\left(ix\right)}\right)\\
+            &= \frac{e^{-x} + e^{x}}{2}
+  \end{align*}
+  We define $\cosh x = \cos \left(ix\right)$. Additionally,
+  \begin{align*}
+    - i\sin ix &= -i\frac{1}{2i}\left(e^{i\left(ix\right)} - e^{-i\left(ix\right)}\right)\\
+            &= i\frac{e^{ix} - e^{-ix}}{2i}.\\
+            &= \frac{e^{x} - e^{-x}}{2}.
+  \end{align*}
+  We define $\sinh x = -i\sin\left(ix\right)$.\newline
+
+  Similar to how $\cos^2 x + \sin^2 x = 1$, we can find that $\cosh^2 x - \sinh^2 x = 1$.
+\end{example}
+\subsection{Index Algebra}%
+We usually denote vectors by either $\vec{A}$, $\mathbf{A}$, or
+\begin{align*}
+  \begin{pmatrix}a_1\\a_2\\\vdots\\a_n\end{pmatrix},
+\end{align*}
+which is defined by a basis.\newline
+
+If we imagine we are in $n$-dimensional space, we can let $A_i$ where $i = 1,2,\dots,n$ denote both
+\begin{itemize}
+  \item the $i$th component of $\vec A$;
+  \item the entire vector $\vec{A}$ (since $i$ can be arbitrary).
+\end{itemize}
+\subsubsection{Contractions and Dummy Indices}%
+Consider $C = AB$, where $A,B $ are $n\times m$ and $m\times p$ matrices respectively.
+\begin{align*}
+  C &= \begin{pmatrix}A_{11} & A_{12} & \cdots & A_{1m}\\
+  \vdots & \vdots & \ddots & \vdots\\
+A_{n1} & A_{n2} & \cdots & A_{nm}\end{pmatrix} \begin{pmatrix}B_{11} & B_{12} & \cdots & B_{1p}\\
+  \vdots & \vdots & \ddots & \vdots\\
+B_{m1} & B_{m2} & \cdots & B_{mp}\end{pmatrix}.
+\end{align*}
+The index notation description of this multiplication is much more contracted than the traditional method learned in linear algebra:
+\begin{align*}
+  C_{ij} &= \sum_{k=1}^{n} A_{ik}B_{kj}.
+\end{align*}
+This might seem like a very convoluted system for small matrices.\newline
+
+However, looking at $AB$ compared to $BA$, we see that
+\begin{align*}
+  \left(AB\right)_{ij} &= \sum_{k} A_{ik}B_{kj}\\
+                       &= \sum_{k}B_{kj}A_{ik},\\
+  \left(BA\right)_{ij} &= \sum_{k}B_{ik}A_{kj}\\
+                       &= \sum_{k}A_{kj}B_{ik}.
+\end{align*}
 \end{document}

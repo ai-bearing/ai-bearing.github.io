@@ -17,6 +17,7 @@
 \setcounter{secnumdepth}{0}
 
 \begin{document}
+\RaggedRight
 \section{Preliminary Statements}%
 \begin{theorem}[Definition of Countability]
   A set $S$ is countable if and only if there exists an injection $f: S\hookrightarrow \N$.
@@ -32,8 +33,12 @@
 \end{proof}
 \begin{theorem}[Injection into a Finite Set]
   Let $S$ be a nonempty set. If there exists an injection $S\hookrightarrow \set{1,2,\dots,n}$ for some $n\in \N$, then $S$ is finite.
+
+  Then, $S$ is finite if and only if there exists an injection $S\hookrightarrow \set{1,2,\dots,n}$ for some $n\in \N$.
 \end{theorem}
 \begin{proof}
+  We begin by showing the reverse direction.\newline
+
   Let $\sigma: S\hookrightarrow \set{1,2,\dots,n}$ be an injection for some $n\in \N$. Define $s_i$ by $\sigma\left(s_i\right) = i$ for $i\in \text{im}\left(\sigma\right)$.\newline
 
   Notice that $\sigma': S\rightarrow \sigma(S)$ is a bijection, since $\sigma$ is injective and any map of the form $f: A\rightarrow f(A)$ is surjective by definition.\newline
@@ -42,7 +47,9 @@
 
   Then, defining $r': \sigma\left(S\right)\rightarrow r\left(\sigma(S)\right)$, we can see that $r'$ is a bijection, with $r\left(\sigma(S)\right) = \set{1,2,\dots,j}$ for some $j\leq n$ (since, by definition, $\sigma$ is an injection, meaning $\sigma\left(s_i\right) \leq n$ for all $n$).\newline
 
-  Taking $r'\circ \sigma': S\rightarrow \set{1,2,\dots,j}$, we see that this is a composition of bijections, meaning it is a bijection. Thus, $S$ is finite.
+  Taking $r'\circ \sigma': S\rightarrow \set{1,2,\dots,j}$, we see that this is a composition of bijections, meaning it is a bijection. Thus, $S$ is finite.\newline
+
+  In the forward direction, we can see that if $S$ is finite, then the bijection $h: S\rightarrow \set{1,2,\dots,n}$ is an injection, and we are done.
 \end{proof}
 %\begin{theorem}[Definition of Infinite]
 %  Let $A$ be a set. Then, $A$ is not finite if and only if there exists an injection $f: \N\hookrightarrow A$.
@@ -51,6 +58,39 @@
 %
 %\end{proof}
 \section{1.1}%
+\begin{problem}
+  Show that the function $f: \N\rightarrow \Z$ given by
+  \begin{align*}
+    f(n) &= \left(-1\right)^{n+1}\left\lfloor \frac{n+1}{2}\right\rfloor
+  \end{align*}
+  is a bijection.
+\end{problem}
+\begin{solution}
+  We begin by showing that $f$ is injective. Let $f\left(n_1\right) = f\left(n_2\right)$. Then, we have two cases: one if $f\left(n_1\right)$ and $f\left(n_2\right)$ are positive, and one if $f\left(n_1\right)$ and $f\left(n_2\right)$ are negative. In the either case, we have
+  \begin{align*}
+    f\left(n_1\right) &= \left(-1\right)^{n_1 + 1}\left\lfloor \frac{n_1 + 1}{2}\right\rfloor,
+    f\left(n_2\right) &= \left(-1\right)^{n_2 + 1}\left\lfloor \frac{n_2 + 1}{2}\right\rfloor,
+  \end{align*}
+  meaning 
+  \begin{align*}
+    \left\lfloor \frac{n_1 + 1}{2}\right\rfloor = \left\lfloor \frac{n_2 + 1}{2}\right\rfloor.
+  \end{align*}
+  If $f\left(n_1\right)$ and $f\left(n_2\right)$ are positive, this implies that $n_1$ and $n_2$ are odd (so that $n_1 + 1$, $ n_2+ 1$ are even). Since $n_1 + 1$ and $n_2 + 1$ are even, this implies
+  \begin{align*}
+    \left\lfloor\frac{n_1 + 1}{2}\right\rfloor &= \frac{n_1 + 1}{2}\\
+    \left\lfloor \frac{n_2 + 1}{2}\right\rfloor &= \frac{n_2 + 1}{2},
+  \end{align*}
+  meaning $n_1 = n_2$.\newline
+
+  If $f\left(n_1\right)$ and $f\left(n_2\right)$ are odd, this implies that $n_1$ and $n_2$ are even, so
+  \begin{align*}
+    \left\lfloor\frac{n_1 + 1}{2}\right\rfloor &= \frac{n_1 }{2}\\
+    \left\lfloor \frac{n_2 + 1}{2}\right\rfloor &= \frac{n_2 }{2},
+  \end{align*}
+  once again implying that $n_1 = n_2$.\newline
+
+  To show surjectivity, let $z\in \Z$. Suppose $z < 0$. Then, we find $n\in \N$ by taking $n = -2z$. If $z > 0$, we take $n = 2z - 1$, and if $z = 0$, we take $n = 0$.
+\end{solution}
 \section{1.2}%
 \begin{problem}
   Given bijections $f: \N\rightarrow \Z$ and $P: \N\times\N\rightarrow \N$, show that the function $h: \Z\times \Z \rightarrow \N$ defined by $h(x,y) = P\left(f^{-1}\left(x\right),f^{-1}\left(y\right)\right)$ is bijective.
@@ -84,12 +124,53 @@
 \end{solution}
 \section{1.5}%
 \begin{problem}
-  If $A_1,A_2,\dots$ is an infinite sequence of disjoint finite sets, show that the union $\bigcup_{n=1}^{\infty}A_n$ is countably infinite.
+  If $A_1,A_2,\dots$ is an infinite sequence of (pairwise) disjoint finite sets, show that the union $\bigcup_{n=1}^{\infty}A_n$ is countably infinite.
 \end{problem}
 \begin{solution}
-  Let $a_n$ be defined by the bijection $\alpha_n: A_n \rightarrow \set{1,2,\dots,a_n}$.
+  Let $\chi_n: A_n \rightarrow \set{1,2,\dots,\alpha_n}$ be the bijection that defines the cardinality of each $A_n$. We define $a_{i,n}\in A_n$ to be the unique element of $a_n$ such that $\chi_{n}\left(a_{i,n}\right) = i$. Let $p_n$ denote the $n$th prime number.\newline
+
+  The function $h: \bigcup_{n=1}^{\infty}A_n \rightarrow \N$ defined by $h\left(a_{i,k}\right) = p_k^{\chi_{k}\left(a_{i,k}\right)}$, where $a_{i,k}\in A_k$, is an injection (since prime numbers do not divide each other). Thus, we know that $\bigcup_{n=1}^{\infty}A_n$ is countable (by the theorem above).
 \end{solution}
+{\color{blue}
+\begin{solution}[Proposed]
+  For all $i\in \N$, there exists $f_i: A_i \rightarrow \set{1,2,\dots,n_i}$ such that $f_i$ is a bijection (by the definition of finitude).\newline
+
+  Let $x\in \bigcup_{i=1}^{\infty}A_i$.\newline
+
+  Then, $x\in A_i$ for some $i$, and only one $i$, because the sets $A_i$ are pairwise disjoint.\newline
+
+  Define
+  \begin{align*}
+    p(x) &= f_i(x) - 1 + \sum_{j=1}^{i-1}n_j.
+  \end{align*}
+  Thus, $\bigcup_{i=1}^{\infty}A_i$ is denumerable.
+\end{solution}
+}
 \section{1.6}%
+\begin{problem}
+  If $A_1,A_2,\dots$ is an infinite sequence of disjoint countably infinite sets, show that the union $\bigcup_{n=1}^{\infty} A_n$ is countably infinite.
+\end{problem}
+\begin{solution}
+  Proceeding in a similar manner to 1.5, we define $\chi_n: A_n\rightarrow \N$ to be bijections that define the cardinality of $A_n$, and let $a_{i,n}\in A_n$ be defined by $\chi_n\left(a_{i,n}\right) = i$. We let $p_n$ denote the $n$th prime number.\newline
+
+  The function $h: \bigcup_{n=1}^{\infty}A_n\rightarrow \N$ defined by $h\left(a_{i,k}\right) = p_k^{\chi_k\left(a_{i,k}\right)}$ is an injection, as each $A_k$ is disjoint and prime numbers do not divide each other. Thus, we know that $\bigcup_{n=1}^{\infty}A_n$ is countable.
+\end{solution}
+{
+  \color{blue}
+  \begin{solution}
+    Since $A_i$ is denumerable for all $i\in \Z_{> 0}$ , there exists a bijection $f_i: A_i \rightarrow \N$.\newline
+
+    Define $f: \bigcup_{i=1}^{\infty}A_i\rightarrow \N\times \N$ by 
+    \begin{align*}
+      f(x) &= \left(i-1, f_{i}\left(x\right)\right)
+    \end{align*}
+    for $x\in A_i$.\newline
+
+    We know $f$ is well-defined, since $A_i$ are pairwise disjoint, so $x\in A_i$ for exactly one value of $i$.\newline
+
+    To define $g: \bigcup_{i=1}^{\infty}A_i \rightarrow \N$, we take $g = P\circ f$. We can see that $g$ is a bijection since $P$ and $f$ are bijections.
+  \end{solution}
+}
 \section{1.7}%
 \begin{problem}
   Construct an explicit polynomial bijection between $\N\times\N\times\N$ and $\N$.
@@ -106,6 +187,28 @@
 \begin{solution}
   We have $A\cup B = A\setminus B \cup B\setminus A \cup A\cap B$. Since $A\setminus B\subseteq A$, $B\setminus A\subseteq B$, and $A\cap B\subseteq A$, with all three disjoint, this is a finite disjoint union of finite sets, meaning it is finite.\footnote{In the order of my completing homework, I proved the injection to finite sets, then the subset of a finite set, then this problem.}
 \end{solution}
+{
+  \color{blue}
+  \begin{solution}[Proposed]
+    We know $A\setminus B \subseteq A$; since $A$ is finite, so too is $A\setminus B$ (by Extra Problem 3).\newline
+
+    Since $A\cup B = \left(A\setminus B\right)\cup B$ is a disjoint union of finite sets, $A\cup B$ is finite.
+  \end{solution}
+\begin{remark}[Disjoint Union of Finite Sets is Finite]
+  Let $A,B$ be disjoint finite sets. Then, $A\cup B$ is finite.\newline
+
+  To prove this, by the definition of finitude, there exist $\alpha: A\rightarrow \set{1,2,\dots,m}$ and $\beta: B\rightarrow \set{1,2,\dots,n}$ bijections for some $m,n\in \N$.\newline
+
+  We can create a new function $f: A\cup B \rightarrow \set{1,2,\dots,m+n}$ by 
+  \begin{align*}
+    h(x) &= \begin{cases}
+      f(x) & x\in A\\
+      g(x) + m & x\in B
+    \end{cases}.
+  \end{align*}
+  We can see that $h$ is a well-defined bijection since $A\cap B = \emptyset$.
+\end{remark}
+}
 %\begin{quote}
 %  Prove that if $A$ and $B$ are finite sets, then $A\cup B$ is finite.
 %\end{quote}
@@ -132,7 +235,7 @@
 
   Let $A$ be a nonempty finite set. Then, there exists a bijection $\alpha: A\rightarrow \set{1,2,\dots,n}$ for some $n\in\N$.\newline
 
-  Let $B\subseteq A$ be nonempty. The identity map $\text{id}: B\hookrightarrow A$ is an injection.\newline
+  Let $B\subseteq A$ be nonempty. The inclusion map $\iota: B\hookrightarrow A$ defined by $\iota(x) = x$ is an injection.\newline
 
   Thus, $\alpha \circ \text{id}: B\hookrightarrow \set{1,2,\dots,n}$ is an injection, as it is a composition of injections. By the established theorem above, this means $B$ is finite.
 \end{solution}
