@@ -51,6 +51,57 @@
 \RaggedRight
 \section{Things You Just Gotta Know}%
 \subsection{Coordinate Systems}%
+\begin{center}
+\tdplotsetmaincoords{60}{110}
+\begin{tikzpicture}[scale=3, tdplot_main_coords]
+    \coordinate (O) at (0,0,0);
+    \draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
+    \draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=north west]{$y$};
+    \draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
+    \tdplotsetcoord{P}{1}{30}{60}
+    \draw plot [mark=*, mark size=0.2] (P) node [right] {\scriptsize$(x,y,z)$}; 
+    \draw[dashed] (O) -- (P);
+    \draw[dashed, color=black] (O) -- (Pxy);
+    \draw[dashed, color=black] (P) -- (Pxy);
+    \draw[dashed, color=black] (P) -- (Pz) node [below left] {$z$};
+    \draw[dashed, color=black] (Pxy) -- (Px) node [left] {$x$};
+    \draw[dashed, color=black] (Pxy) -- (Py) node [above] {$y$};
+\end{tikzpicture}
+
+% Polar Coordinates
+\tdplotsetmaincoords{60}{110}
+\begin{tikzpicture}[scale=3, tdplot_main_coords]
+    \coordinate (O) at (0,0,0);
+    \draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
+    \draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=north west]{$y$};
+    \draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
+    \tdplotsetcoord{P}{1}{30}{60}
+    \draw plot [mark=*, mark size=0.2] (P) node [right] {\scriptsize$(\rho,\phi,z)$};
+    \draw[dashed] (O) -- (P);
+    \draw[->, thick, color=black] (O) -- (Pxy) node [below right] {$\rho$};
+    \draw[dashed, color=black] (P) -- (Pxy);
+    \tdplotdrawarc{(O)}{0.2}{0}{60}{anchor=north}{$\phi$}
+    \draw[dashed, color=black] (P) -- (Pz) node [below left] {$z$};
+\end{tikzpicture}
+	
+% Spherical Coordinates
+\tdplotsetmaincoords{60}{110}
+\begin{tikzpicture}[scale=3, tdplot_main_coords]
+    \coordinate (O) at (0,0,0);
+    \draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
+    \draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=north west]{$y$};
+    \draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
+    \tdplotsetcoord{P}{1}{30}{60}
+    \draw plot [mark=*, mark size=0.2] (P) node [right] {\scriptsize$(r,\theta,\phi)$};
+    \draw[->, thick] (O) -- (P) node [midway, below right] {$r$};
+    \draw[dashed, color=black] (O) -- (Pxy);
+    \draw[dashed, color=black] (P) -- (Pxy);
+    \tdplotdrawarc{(O)}{0.2}{0}{60}{anchor=north}{$\phi$}
+    \tdplotsetthetaplanecoords{60}
+    \tdplotdrawarc[tdplot_rotated_coords]{(0,0,0)}{0.4}{0}%
+        {30}{anchor=south}{$\theta$}
+\end{tikzpicture}
+\end{center}
 We want to focus on vector-valued functions of coordinates.
 \begin{align*}
   \vec{V}(\mathbf{r}) &= V_x(x,y)\hat{i} + V_y(x,y)\hat{j}.
@@ -516,17 +567,201 @@ A_{n1} & A_{n2} & \cdots & A_{nm}\end{pmatrix} \begin{pmatrix}B_{11} & B_{12} & 
   \vdots & \vdots & \ddots & \vdots\\
 B_{m1} & B_{m2} & \cdots & B_{mp}\end{pmatrix}.
 \end{align*}
-The index notation description of this multiplication is much more contracted than the traditional method learned in linear algebra:
-\begin{align*}
-  C_{ij} &= \sum_{k=1}^{n} A_{ik}B_{kj}.
-\end{align*}
-This might seem like a very convoluted system for small matrices.\newline
+%The index notation description of this multiplication is much more contracted than the traditional method learned in linear algebra:
+%\begin{align*}
+%  C_{ij} &= \sum_{k=1}^{n} A_{ik}B_{kj}.
+%\end{align*}
+%This might seem like a very convoluted system for small matrices.\newline
+%
+%However, looking at $AB$ compared to $BA$, we see that
+%\begin{align*}
+%  \left(AB\right)_{ij} &= \sum_{k} A_{ik}B_{kj}\\
+%                       &= \sum_{k}B_{kj}A_{ik},\\
+%  \left(BA\right)_{ij} &= \sum_{k}B_{ik}A_{kj}\\
+%                       &= \sum_{k}A_{kj}B_{ik}.
+%\end{align*}
+\begin{definition}[Matrix Multiplication in Index Notation]
+  For matrices $A$ and $B$, where $A$ is an $m\times n$ and $B$ is a $n\times p$ matrix, we write
+  \begin{align*}
+    C_{ij} &= \sum_{k=1}^{n}A_{ik}B_{kj}
+  \end{align*}
+\end{definition}
+We say that $k$ is a dummy index, since $k$ takes values from $1$ to $n$. Note that the value we calculate is $C_{ij}$; in other words, in the sum $\sum_{k}A_{ik}B_{kj}$, the indices of the form $ij$ are the ``net indices'' from the multiplication.\newline
 
-However, looking at $AB$ compared to $BA$, we see that
+Note that if $C = BA$, then
 \begin{align*}
-  \left(AB\right)_{ij} &= \sum_{k} A_{ik}B_{kj}\\
-                       &= \sum_{k}B_{kj}A_{ik},\\
-  \left(BA\right)_{ij} &= \sum_{k}B_{ik}A_{kj}\\
-                       &= \sum_{k}A_{kj}B_{ik}.
+  C_{ij} &= \sum_{k=1}^{n}B_{ik}A_{kj}\\
+         &= \sum_{k=1}^{n}A_{kj}B_{ik}\\
+         &\neq \sum_{k=1}^{n}A_{ik}B_{kj}.
 \end{align*}
+The corresponding fact is that $AB\neq BA$ necessarily.\newline
+
+Note that the index that is summed over always appears exactly twice.
+\begin{definition}[Symmetric Matrix]
+  Let $C$ be a matrix. Then, we say $C$ is symmetric if
+  \begin{align*}
+    C_{ij} &= C_{ji}
+  \end{align*}
+\end{definition}
+\begin{definition}[Antisymmetric Matrix]
+  Let $C$ be a matrix. We say $C$ is antisymmetric if
+  \begin{align*}
+    C_{ij} &= -C_{ji}.
+  \end{align*}
+\end{definition}
+We can always decompose a random matrix into the sum of a symmetric matrix and an antisymmetric matrix.
+\subsubsection{Two Special Tensors}%
+\begin{center}
+  \renewcommand{\arraystretch}{1.75}
+  \begin{tabular}{c|c|c}
+    Name & Notation & Definition\\
+    \hline
+    Kronecker Delta & $\delta_{ij}$ &$\delta_{ij} = \begin{cases}1 & i=j\\ 0 & i\neq j \end{cases}$\\
+    Levi--Civita Symbol & $\epsilon_{ijk}$ & $\epsilon_{ijk} = \begin{cases}1 & \text{$(i,j,k) = (1,2,3)$ cyclically}\\-1 & \text{$(i,j,k) = (2,1,3)$ cyclically}\\0 & \text{else} \end{cases}$
+  \end{tabular}
+\end{center}
+\begin{center}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{c|c}
+    Order of $\left(i,j,k\right)$ & Value of $\epsilon_{ijk}$\\
+    \hline
+    $1,2,3$ & $1$\\
+    $3,1,2$ & $1$\\
+    $2,3,1$ & $1$\\
+    \hline
+    $1,3,2$ & $-1$\\
+    $2,1,3$ & $-1$\\
+    $3,2,1$ & $-1$\\
+    \hline
+    else & $0$
+  \end{tabular}
+\end{center}
+\begin{definition}[Kronecker Delta]
+  The Kronecker Delta, $\delta_{ij}$, is the tensor that denotes the identity matrix.
+  \begin{align*}
+    \delta_{ij} &= \begin{cases}
+      1 & i=j\\
+      0 & i\neq j
+    \end{cases}
+  \end{align*}
+\end{definition}
+\begin{example}[Extracting an Index]
+  Consider $A$ as vector. Then,
+  \begin{align*}
+    \sum_{i}A_i \delta_{ij} &= A_j.
+  \end{align*}
+  In other words, the Kronecker Delta collapses the sum to the $j$th index.
+\end{example}
+\begin{example}[Orthonormal Basis from Kronecker Delta]
+  Let $\set{\hat{e}_i}_{i=1}^{n}$ be a basis for some vector space $V$. If
+  \begin{align*}
+    \hat{e}_i\cdot \hat{e}_j &= \delta_{ij}
+  \end{align*}
+  for every $i,j$, then $\set{\hat{e}_i}_{i=1}^{n}$ is an orthonormal basis for $V$.
+\end{example}
+\begin{definition}[Levi--Civita Symbol]
+  In two dimensions, as a matrix, we write
+  \begin{align*}
+    \epsilon_{ij} &= \begin{pmatrix}0 & 1 \\ -1 & 0\end{pmatrix},
+  \end{align*}
+  meaning
+  \begin{align*}
+    \epsilon_{ij} &= \begin{cases}
+      1 & i=1,j=2\\
+      -1 & i=2,j=1\\
+      0 & \text{else}
+    \end{cases}.
+  \end{align*}
+  The Levi--Civita Symbol is antisymmetric, just as the Kronecker Delta is symmetric.\newline
+
+  In three dimensions, we define
+  \begin{align*}
+    \epsilon_{ijk}  &= \begin{cases}
+      1 & \text{$\left(i,j,k\right) = \left(1,2,3\right)$ cyclically}\\
+      -1 & \text{$\left(i,j,k\right) = \left(2,1,3\right)$ cyclically}\\
+      0 & \text{else}
+    \end{cases}.
+  \end{align*}
+  In other words, $\epsilon_{ijk} = -\epsilon_{jik}$.
+\end{definition}
+\begin{exercise}[Relations between $\delta_{ij}$ and $\epsilon_{ijk}$]
+  \begin{align*}
+    \sum_{j,k}\epsilon_{mjk}\epsilon_{njk} &= 2\delta_{mn}\\
+    \sum_{\ell}\epsilon_{mn\ell}\epsilon_{ijl} &= \delta_{mi}\delta_{nj} - \delta_{mj}\delta_{ni}
+  \end{align*}
+\end{exercise}
+\begin{definition}[Dot Product]
+  Let $\set{\hat{e}_i}_{i=1}^{n}$ be an orthonormal basis for $V$. Let $\mathbf{A} = \sum_{i}A_i\hat{e}_i$ and $\mathbf{B} = \sum_{i}B_i\hat{e}_i$. Then,
+  \begin{align*}
+    \mathbf{A}\cdot \mathbf{B} &= \sum_{i,j}\left(A_i\hat{e}_i\right)\cdot\left(B_j\hat{e}_j\right)\\
+                               &= \sum_{i,j}A_iB_j \left(\hat{e}_i \cdot \hat{e}_j\right)\\
+                               &= \sum_{i,j}A_iB_j \delta_{ij}\\
+                               &= \sum_{i}A_iB_i
+  \end{align*}
+\end{definition}
+\begin{definition}[Cross Product]
+  Let $\set{\hat{e}_i}_{i=1}^{3}$ be the standard basis over $\R^3$. Let $\mathbf{A} = \sum_{i}A_i\hat{e}_i$ and $\mathbf{B} = \sum_{i}B_i\hat{e}_i$. Then,
+  \begin{align*}
+    \mathbf{A}\times \mathbf{B} &= \sum_{i,j}\left(A_i\hat{e}_i\right)\times \left(B_j\hat{e}_j\right)\\
+                                &= \sum_{i,j}A_iB_j \left(\hat{e}_i \times \hat{e}_j\right)\\
+                                &= \sum_{i,j,k}A_iB_j\left(\epsilon_{ijk}\hat{e}_k\right).
+  \end{align*}
+  Instead of asking about $\mathbf{A}\times \mathbf{B}$, we ask about $\left(\mathbf{A}\times \mathbf{B}\right)_{\ell}$, yielding
+  \begin{align*}
+    \left(\mathbf{A}\times \mathbf{B}\right)_{\ell} &= \left(\mathbf{A}\times \mathbf{B}\right)\cdot \hat{e}_{\ell}\\
+                                                    &= \left(\sum_{i,j,k}A_iB_j\left(\epsilon_{ijk}\hat{e}_k\right)\right)\cdot \hat{e}_{\ell}\\
+                                                    &= \sum_{i,j}\epsilon_{ij\ell}A_iB_j.
+  \end{align*}
+\end{definition}
+\begin{remark}
+  This notation for $\mathbf{A}\times \mathbf{B}$ automatically shows us that
+  \begin{align*}
+    \left(\mathbf{B}\times \mathbf{A}\right)_{\ell} &= \sum_{i,j}\epsilon_{ij\ell}B_iA_j\\
+                                                    &= -\sum_{i,j}\epsilon_{ji\ell}B_iA_j\\
+                                                    &= -\sum_{i,j}\epsilon_{ji\ell}A_jB_i\\
+                                                    &= -\sum_{i,j}\epsilon_{ij\ell}A_iB_j\tag*{$i,j$ are dummy indices}\\
+                                                    &= -\left(\mathbf{A}\times \mathbf{B}\right)_{\ell}.
+  \end{align*}
+\end{remark}
+\begin{example}[Central Force and Angular Momentum]
+  A central force is defined by
+  \begin{align*}
+    \mathbf{F} &= f(r)\hat{r},
+  \end{align*}
+  where $\hat{r}$ is a radial vector.\newline
+
+  Angular momentum is defined by
+  \begin{align*}
+    \mathbf{L} &= \mathbf{r}\times \mathbf{p},
+  \end{align*}
+  where $\mathbf{r}$ denotes position and $\mathbf{p}$ denotes momentum. Then,
+  \begin{align*}
+    \frac{d\mathbf{L}}{dt} &= \frac{d}{dt}\left(\mathbf{r}\times \mathbf{p}\right)\\
+                           &= \left(\frac{d}{dt}\mathbf{r}\times \mathbf{p}\right) + \mathbf{r}\times \left(\frac{d\mathbf{p}}{dt}\right)\\
+                           &= m\left(\frac{d}{dt}\mathbf{r}\times \frac{d}{dt}\mathbf{r}\right) + \mathbf{r}\times \left(f(r)\hat{r}\right)\\
+                           &= f(r)\left(\mathbf{r}\times \hat{r}\right).
+  \end{align*}
+  This implies that $\frac{d\mathbf{L}}{dt} = 0$ under a central force.
+\end{example}
+\begin{example}[Determinant]
+  Let $\mathbf{M} = M_{ij}$ be square. We denote $\mathbf{M}_i$ to be the vector denoting the $i$th-row. Then,
+  \begin{align*}
+    m &= \left\vert \mathbf{M} \right\vert\\
+      &= \mathbf{M}_1\cdot \left(\mathbf{M}_2 \times \mathbf{M}_3\right)\\
+      &= \mathbf{M}_3 \cdot \left(\mathbf{M}_1\times \mathbf{M}_2\right)\\
+      &= \mathbf{M}_2 \cdot \left(\mathbf{M}_3\times \mathbf{M}_1\right).
+  \end{align*}
+\end{example}
+\begin{example}[Trace]
+  Let $\mathbf{M} = M_{ij}$ be a square matrix. We define $\text{tr} = \sum_{i}M_{ii}$. Equivalently,
+  \begin{align*}
+    \text{tr}\left(\mathbf{M}\right) &= \sum_{ij}M_{ij}\delta_{ij}\\
+                                     &= \sum_{i}M_{ii}.
+  \end{align*}
+  Note that
+  \begin{align*}
+    \text{tr}\left(\mathbb{1}_{n}\right) &= \sum_{i}\delta_{ii}\\
+                                     &= n
+  \end{align*}
+\end{example}
 \end{document}

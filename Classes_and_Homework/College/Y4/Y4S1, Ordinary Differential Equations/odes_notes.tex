@@ -9,6 +9,9 @@
 \usepackage{newpxtext,eulerpx}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 
+%\usepackage{mathrsfs}
+%\usetikzlibrary{arrows}
+\pagestyle{fancy}
 \fancyhf{}
 \rhead{Avinash Iyer}
 \lhead{Ordinary Differential Equations: Class Notes}
@@ -395,5 +398,150 @@ Consider the first-order differential equation
   which is not able to be separated.\newline
 
   In order to solve such an equation, we will need to use an integrating factor.
+\end{example}
+\subsection{Slope Fields}%
+\begin{definition}
+  A slope field is a set of short line segments that indicate slope $\frac{dy}{dx}$ at a set of points $(x,y)$ in the $xy$ plane.\newline
+
+  It is a graphical method of displaying the general slope and behavior of functions that satisfy $\frac{dy}{dx} = f(x,y)$.
+\end{definition}
+\begin{example}
+  Consider $\frac{dy}{dx} = 1-y$. We can select some samples of slopes as follows:
+  \begin{center}
+    \begin{tabular}{c|c}
+      Point & $\frac{dy}{dx}$\\
+      \hline
+      $(0,0)$ & $1$\\
+      $(1,0)$ & $1$\\
+      $(0,1)$ & $0$\\
+      $(0,2)$ & $-1$
+    \end{tabular}
+  \end{center}
+  Thus, we can draw the slope field:
+  \begin{center}
+    \includegraphics[width=7cm]{images/slope_field_2.png}
+  \end{center}
+  Qualitatively, we can see that
+  \begin{itemize}
+    \item at $y = 1$, all line segments are horizontal;
+    \item for $y < 1$, all line segments have positive slope;
+    \item for $y > 1$, all line segments have negative slope.
+  \end{itemize}
+  Using a computer, we can generate a better slope field:
+  \begin{center}
+    \begin{tikzpicture}
+\begin{axis}[
+  axis x line*=center,
+  axis y line*=center,
+	xmin = -4, xmax = 4,
+	ymin = -4, ymax = 4,
+	zmin = 0, zmax = 1,
+	axis equal image,
+    xtick={-4,-3,-2,-1,0,1,2,3,4},
+    ytick={-4,-3,-2,-1,0,1,2,3,4},
+	view = {0}{90},
+]
+	\addplot3[
+    color=black!70!white,
+		quiver = {
+			u = {1/sqrt(1+(1-y)^2)},
+			v = {(1-y)/sqrt(1+(1-y)^2)},
+			scale arrows = 0.25,
+		},
+		-stealth,
+		domain = -4:4,
+		domain y = -4:4,
+	] {0};
+\end{axis}
+\end{tikzpicture}
+  \end{center}
+  Analytically, we solve the equation by separation of variables:
+  \begin{align*}
+    \frac{dy}{dx} &= 1-y\\
+    \frac{dy}{1-y} &= dx\\
+    \int_{}^{} \frac{1}{1-y}\:dy &= \int_{}^{} \:dx\\
+    -\ln|1-y| &= x + C\\
+    \left\vert 1-y \right\vert &= e^{-x-C_1}\\
+    1-y &= \pm e^{-C_1}e^{-x}\\
+    y &= 1-Ae^{-x}.
+  \end{align*}
+  With the initial condition of $y(0) = -1$, we get $y = 1-2e^{-x}$.
+
+  \begin{center}
+    \begin{tikzpicture}
+\begin{axis}[
+  axis x line*=center,
+  axis y line*=center,
+	xmin = -4, xmax = 4,
+	ymin = -4, ymax = 4,
+	zmin = 0, zmax = 1,
+	axis equal image,
+	view = {0}{90},
+    xtick={-4,-3,-2,-1,0,1,2,3,4},
+    ytick={-4,-3,-2,-1,0,1,2,3,4},
+]
+	\addplot3[
+    color=black!20!white,
+		quiver = {
+			u = {1/sqrt(1+(1-y)^2)},
+			v = {(1-y)/sqrt(1+(1-y)^2)},
+			scale arrows = 0.25,
+		},
+		-stealth,
+		domain = -4:4,
+		domain y = -4:4,
+	] {0};
+\addplot[
+		-stealth,
+		domain = -4:4,
+    samples=250,
+    color=red
+    ]{1 - 2*pow(e,-x)};
+\end{axis}
+\end{tikzpicture}
+  \end{center}
+\end{example}
+\subsection{Euler's Method}%
+We want to approximate solutions to the differential equation $y' = f(x,y)$, $y(x_0) = y_0$. In the diagram, we can see the use of the slope field to calculate the approximate values of $\left(x_i,y_i\right)$.
+\begin{center}
+  \includegraphics[width=15cm]{images/eulers_method_1.png}
+\end{center}
+\begin{method}[Euler's Method]
+  To approximate the curve at $x_1 = x_0 + h$, we take the point-slope form:
+  \begin{align*}
+    \frac{y_1 - y_0}{\left(x_0 + h\right)-x_0} &= f\left(x_0,y_0\right)\\
+    y_1 &= y_0 + hf\left(x_0,y_0\right).
+  \end{align*}
+  In general, we have
+  \begin{align*}
+    y_{n+1} &= y_k + hf\left(x_k,y_k\right).
+  \end{align*}
+\end{method}
+\begin{example}
+  Consider the differential equation $y' = 2y-1$. With the step size $\Delta x = h = 0.5$ and $y(0) = 1$, we can approximate $y(1)$ by
+  \begin{center}
+    \begin{tabular}{c|c|c|c}
+      k & $x_k$ & $y_k$ & $f\left(x_k,y_k\right)$\\
+      \hline
+      $0$ & $1$ & 1 & 1\\
+      $1$ & $1$ & $1.5$ & $2$\\
+      $2$ & $1$ & $2.5$ & ---
+    \end{tabular}
+  \end{center}
+  Thus, using Euler's method with a step size of $0.5$, we find that $y(1)\approx 2.5$. The table is read left to right, changing columns after calculating $f\left(x_k,y_k\right)$, then using it to calculate $y_{k+1}$.\newline
+
+  Solving the differential equation analytically, we find
+  \begin{align*}
+    \frac{dy}{dx} &= 2y-1\\
+    \int_{}^{} \frac{1}{2y-1}\:dy &= \int_{}^{} \:dx\\
+    \frac{1}{2}\ln\left\vert 2y-1 \right\vert &= x + C_1\\
+    \ln\left\vert 2y-1 \right\vert &= 2x + C_2\\
+    \left\vert 2y-1 \right\vert &= e^{C_2}e^{2x}\\
+    2y-1 &= \pm e^{C_2}e^{2x}\\
+    y &= \frac{1}{2} + Ae^{2x}.
+  \end{align*}
+  Plugging in our initial condition, we find $A = \frac{1}{2}$, and the exact value of $y(1)$ is $\frac{1}{2} + \frac{1}{2}e^2$, which is approximately $4.1945$.\newline
+
+  We can make our approximation via Euler's method better using a shorter step size.
 \end{example}
 \end{document}
