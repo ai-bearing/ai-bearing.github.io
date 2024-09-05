@@ -9,6 +9,7 @@
 \usepackage{newpxtext,eulerpx}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 
+\pagestyle{fancy}
 \fancyhf{}
 \rhead{Avinash Iyer}
 \lhead{Set Theory and Foundations of Mathematics: Class Notes}
@@ -129,5 +130,96 @@
   If $A\subsetneq B$ and $|A| = |B|$, then both $A$ and $B$ are infinite.\newline
 
   In order to prove this, we need to show that every injection from a finite set to itself is a bijection.
+\end{example}
+\subsection{Section 1.2}%
+\begin{definition}[Uncountable Set]
+A set is uncountable if it is not countable.
+\end{definition}
+\begin{theorem}[Uncountability of $\R$]
+  $\R$ is uncountable.
+\end{theorem}
+\begin{proof}
+  For all $x\in \R$, and for all $j\in\N$, we define $\left[x\right]_j$ to denote the $j+1$-th digit after the decimal point in the decimal expansion of $x$.\newline
+
+  For example, $\left[\pi\right]_0 = 1$, $\left[\pi\right]_1 = 4$, etc.\newline
+
+  Let $f: \N\rightarrow \R$. We will show that $f$ is not surjective.\newline
+
+  Let $y\in [0,1)\subseteq \R$ defined by $\forall j\in \N$,
+  \begin{align*}
+    \left[y\right]_j &= \begin{cases}
+      0 & \left[f(j)\right]_j = 1\\
+      1 & \left[f(j)\right]_j \neq 1
+    \end{cases}.
+  \end{align*}
+  We claim that $y\notin f\left(\N\right)$. We will show that $\forall j\in \N$, $f(j) \neq y$.\newline
+
+  We can see that if $\left[f(j)\right]_j = 1$, then $\left[y\right]_j = 0$. Similarly, if $\left[f(j)\right]_j\neq 1$, then $\left[y\right]_j = 1$. Either way, $\left[f(j)\right]_j \neq \left[y\right]_j$ for all $j\in\N$.
+\end{proof}
+\begin{remark}
+The above proof is an example of a diagonalization proof. It can be imagined as
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{c|c}
+    f(0) & $\ast.\cancelto{\neq}{a_1}\:a_2a_3\dots$\\
+    f(1) & $\ast.b_1\cancelto{\neq}{b_2}\:b_3\dots$\\
+    f(2) & $\ast.c_1c_2\cancelto{\neq}{c_3}\dots$\\
+    $\vdots$ & $\vdots$
+  \end{tabular}
+\end{center}
+\end{remark}
+\begin{note}
+  A substantial problem that we might need to deal with is that a real number does not necessarily have a unique decimal representation. For instance, $3.999\dots = 4.000\dots$.\newline
+
+  In order to resolve this issue, we can default to the option with trailing $0$ over trailing $9$.
+\end{note}
+\begin{definition}[Power Set]
+The power set of a set $S$ is 
+\begin{align*}
+  \mathcal{P}(S) &= \set{A\mid A\subseteq S}.
+\end{align*}
+\end{definition}
+\begin{theorem}[Power Set Surjection]
+  Let $f: S\rightarrow \mathcal{P}\left(S\right)$. Then, $f$ is not surjective.
+\end{theorem}
+\begin{proof}
+  Let $T = \set{x\in S\mid x\notin f(x)}$. Then, $T\notin f(S)$.\newline
+
+  Let $y\in S$. We want to show that $f(y)\neq T$. Suppose toward contradiction that $f(y) = T$. Then, if $y\in T$, then $y\in f(y)$, which implies that $y\notin T$.\newline
+
+  If $y\notin T$, then $y\notin f(y)$, which implies that $y\in T$.\newline
+
+  Thus, it cannot be the case that $f(y) = T$.
+\end{proof}
+\begin{definition}[Cardinality Comparison]
+  Let $A$ and $B$ be sets. Then, we write $\Card(A) \leq \Card(B)$ if there exists an injective map $f: A\hookrightarrow B$.\newline
+
+  We write $\Card(A) < \Card(B)$ if there exists an injection $f: A\hookrightarrow B$ but no bijection.
+\end{definition}
+\begin{example}[Cardinality of the Power Set]
+  For every set,
+  \begin{align*}
+    \Card(S) < \Card\left(\mathcal{P}(S)\right).
+  \end{align*}
+  \begin{enumerate}[(1)]
+    \item We know that $\Card(S) \leq \Card\left(\mathcal{P}\left(S\right)\right)$, defining $f: S\hookrightarrow \mathcal{P}\left(S\right)$, $f(a) = \set{a}$, since if $f(x) = f(y)$, then $\set{x} = \set{y}$, meaning $x \in \set{y}$, so $x = y$.\newline
+
+      In the case of $f: \emptyset \rightarrow \set{\emptyset}$, we define $\emptyset = f\subseteq \emptyset\times\set{\emptyset}$.
+    \item Since there exists no bijection $f: S\rightarrow \mathcal{P}\left(S\right)$, it is the case that $\Card(S)\neq \Card\left(\mathcal{P}\left(S\right)\right)$.
+  \end{enumerate}
+\end{example}
+\begin{example}[Decimal Expansion]
+  We know that for some decimal expansion
+  \begin{align*}
+    3.14159\dots &= 3 + \frac{1}{10} + \frac{4}{100} + \cdots\\
+                 &= \sum_{i=0}^{\infty}\frac{n_i}{10^i},
+  \end{align*}
+  with $0 \leq n_i \leq 9$ for $i \geq 1$.\newline
+
+  However, we can also write any real number as
+  \begin{align*}
+    \sum_{i=0}^{\infty}\frac{n_i}{3^i}
+  \end{align*}
+  with $0 \leq n_i \leq 2$ for all $i \geq 1$.
 \end{example}
 \end{document}
