@@ -368,7 +368,7 @@ Then, $E_a \in \Hom_{\R}\left(V,\R\right)$.
 \begin{definition}[Kernel]
   Let $T\in \Hom_{\F}\left(V,W\right)$. Define
   \begin{align*}
-    \ker T &= \set{v\in V\mid T(v) = 0_W}.
+    \ker (T) &= \set{v\in V\mid T(v) = 0_W}.
   \end{align*}
   We call this the kernel of $T$.
 \end{definition}
@@ -380,17 +380,17 @@ Then, $E_a \in \Hom_{\R}\left(V,\R\right)$.
   \end{align*}
 \end{definition}
 \begin{lemma}[Kernel and Image are Subspaces]
-  The kernel, $\ker T$, is a subspace of $V$, and the image, $\img\left(T\right)$, is a subspace of $W$.
+  The kernel, $\ker(T)$, is a subspace of $V$, and the image, $\img\left(T\right)$, is a subspace of $W$.
 \end{lemma}
 \begin{proof}
-  Since $T\left(0_V\right) = 0_W$, we know that both $\ker T$ and $\img\left(T\right)$ are nonempty.\newline
+  Since $T\left(0_V\right) = 0_W$, we know that both $\ker(T)$ and $\img\left(T\right)$ are nonempty.\newline
 
-  Let $c\in \F$ and $v_1,v_2\in \ker T$. Then,
+  Let $c\in \F$ and $v_1,v_2\in \ker(T)$. Then,
   \begin{align*}
     T\left(v_1 + cv_2\right) &= T\left(v_1\right) + cT\left(v_2\right)\\
                              &= 0.
   \end{align*}
-  Thus, $v_1 + cv_2 \in \ker T$.\newline
+  Thus, $v_1 + cv_2 \in \ker(T)$.\newline
 
   Let $w_1,w_2\in \img\left(T\right)$. Then, there exist $u_1,u_2\in V$ such that $T\left(u_1\right) = w_1$ and $T\left(u_2\right) = w_2$. We have
   \begin{align*}
@@ -400,17 +400,17 @@ Then, $E_a \in \Hom_{\R}\left(V,\R\right)$.
   meaning $w_1 + cw_2\in \img\left(T\right)$, meaning $\img\left(T\right)$ is a subspace of $W$.
 \end{proof}
 \begin{lemma}[Injectivity of a Linear Transformation]
-  $T$ is injective and only if $\ker T = \set{0_V}$.
+  $T$ is injective and only if $\ker(T) = \set{0_V}$.
 \end{lemma}
 \begin{proof}
   Suppose $T$ is injective. Let $v\in V$ be such that $T\left(v\right) = 0_W$. We also know that $T\left(0_V\right) = 0_W$. Since $T$ is injective, this means $v = 0_V$.\newline
 
-  Let $\ker T = \set{0_V}$. Suppose $T\left(v_1\right) = T\left(v_2\right)$. Then,
+  Let $\ker(T) = \set{0_V}$. Suppose $T\left(v_1\right) = T\left(v_2\right)$. Then,
   \begin{align*}
     T\left(v_1\right) - T\left(v_2\right) &= 0_W\\
     T\left(v_1 - v_2\right) &= 0_W,
   \end{align*}
-  meaning $v_1 - v_2 \in \ker T$, meaning $v_1 - v_2 = 0_V$. Thus, $v_1 = v_2$.
+  meaning $v_1 - v_2 \in \ker(T)$, meaning $v_1 - v_2 = 0_V$. Thus, $v_1 = v_2$.
 \end{proof}
 \begin{example}[Projection Map]
   Let $m > n$. Define $T: \F^{m}\rightarrow \F^n$ by
@@ -855,9 +855,270 @@ However, we also do this by defining $n\Z = \set{nk\mid k\in\Z}$, and taking $a\
 \end{align*}
 \end{example}
 \begin{definition}[Quotient Space]
-  Let $W\subseteq V$ be a subspace. We say $v_1\sim_{W}v_w$ if $v_1 - v_2 \in W$. This is an equivalence relation, with
+  Let $W\subseteq V$ be a subspace. We say $v_1\sim v_2$ if $v_1 - v_2 \in W$. Note that if $w\in W$, then $w\sim 0_V$ since $w-0_V\in W$.\newline
+
+  This is an equivalence relation.
+  \begin{itemize}
+    \item Reflexivity: since $W$ is a subspace, $0_V\in W$, meaning $v-v\in W$ for all $v\in V$.
+    \item Symmetry: if $v_1\sim v_2$, then $v_1 - v_2 \in W$, meaning $-\left(v_1 - v_2\right)\in W$, so $v_2 - v_1\in W$, or $v_2 \sim v_1$.
+    \item Transitivity: Let $v_1\sim v_2$ and $v_2\sim v_3$. Then, $v_1 - v_2\in W$ and $v_2 - v_3\in W$. Since $W$ is a subspace, $\left(v_1 - v_2\right) + \left(v_2 - v_3\right)\in W$, meaning $v_1 - v_3 \in W$, so $v_1 \sim v_3$.
+  \end{itemize}
+  We denote the equivalence classes by
   \begin{align*}
-    V/W &= \set{v + W\mid v\in V}.
+    \left[v\right] &= \left[v\right]_W\\
+                   &= v+W\\
+                   &= \set{\tilde{v}\in V\mid v\sim \tilde{v}}\\
+                   &= \set{v+w\mid w\in W}.
   \end{align*}
+  We set
+  \begin{align*}
+    V/W &:= \set{v + W\mid v\in V}.
+  \end{align*}
+  We need to define vector addition and scalar multiplication on $V/W$. Let $v_1 + W,v_2 + W\in V/W$ and $c\in\F$. Define
+  \begin{align*}
+    \left(v_1 + W\right) + \left(v_2 + W\right) &= \left(v_1 + v_2\right) + W\\
+    c\left(v_1 + W\right) &= cv_1 + W.
+  \end{align*}
+  We will show that addition and scalar-multiplication are well-defined.
+  \begin{description}
+    \item[Addition:] Let $v_1 + W = \tilde{v}_1 + W$, $v_2 + W = \tilde{v}_2 + W$, meaning $v_1 = \tilde{v}_1 + w_1$ and $v_2 = \tilde{v}_2 + w_2$ for some $w_1,w_2 \in W$. We have
+      \begin{align*}
+        \left(v_1 + W\right) + \left(v_2 + W\right) &= \left(v_1 + v_2\right) + W\\
+                                                    &= \left(\tilde{v}_1 + w_1 + \tilde{v}_2 + w_2\right) + W\\
+                                                    &= \left(\tilde{v}_1 + \tilde{v}_2\right) + W
+      \end{align*}
+    \item[Scalar Multiplication:] Let $v + W = \tilde{v} + W$. Then, we have $v = \tilde{v} + w$ for some $w\in W$. For $c\in\F$, we have
+      \begin{align*}
+        c\left(v + W\right) &= cv + W\\
+                            &= c\left(\tilde{v} + w\right) + W\\
+                            &= c\tilde{v} + W\\
+                            &= c\left(\tilde{v} + W\right).
+      \end{align*}
+  \end{description}
+  We say $V/W$ is the quotient space of $V$ by $W$.
+\end{definition}
+\begin{example}[Quotient Space of $\R^2$]
+  Let $V = \R^2$, and $W = \set{\left(x,0\right)\mid x\in \R}$.\newline
+
+  Let $\left(x_0,y_0\right)\in V$. We have
+  \begin{align*}
+  \left(x_0,y_0\right) \sim \left(x,y\right)
+  \end{align*}
+  if
+  \begin{align*}
+    \left(x_0 - x,y_0 - y\right)\in W.
+  \end{align*}
+  The only condition is thus that the $y$-coordinates in $\R^2$ must be equal. Therefore,
+  \begin{align*}
+    \left(x_0,y_0\right) + W &= \set{(x,y_0)\mid x\in\R}.
+  \end{align*}
+  Define $\tau: \R\rightarrow V/W$, $y\mapsto \left(0,y\right) + W$. We claim that $\tau$ is an isomorphism.\newline
+
+  Let $y_1,y_2,c\in\R$. We have
+  \begin{align*}
+    \tau\left(y_1 + cy_2\right) &= \left(0,y_1 + cy_2\right) + W\\
+                                &= \left(\left(0,y_1\right) + W\right) + c\left(\left(0,y_2\right) + W\right)\\
+                                &= \tau\left(y_1\right) + c\tau\left(y_2\right).
+  \end{align*}
+  Thus, we see that $\tau$ is a linear map.\newline
+
+  To show surjectivity, let $\left(x,y\right) + W\in V/W$. We have $\left(x,y\right) + W = \left(0,y\right) + W$. Thus, $\tau$ is surjective, since
+  \begin{align*}
+    \tau\left(y\right) &= \left(0,y\right) + W\\
+                       &= \left(x,y\right) + W.
+  \end{align*}
+  Finally, to show injectivity, we let $y\in\ker\left(\tau\right)$. We have
+  \begin{align*}
+    \tau\left(y\right) &= \left(0,y\right) + W\\
+                       &= \left(0,0\right) + W,
+  \end{align*}
+  implying that $y = 0$. Thus, $\tau$ is injective.
+\end{example}
+\begin{example}[Quotient Space of Polynomials]
+  Let $V = \F[x]$, $f(x) \in V$, and
+  \begin{align*}
+    W &= \set{g(x)\in \F[x]\mid f(x)|g(x)}.
+  \end{align*}
+  We can see that $W$ is a subspace, which we refer to as $\left\langle f(x) \right\rangle$.\newline
+
+  We defined an equivalence class $g(x) \sim h(x)$ if $f(x) | \left(g(x) - h(x)\right)$, where we then constructed a vector space from this set.\newline
+
+  In particular, this construction is realized as $V/W$.\footnote{The ramifications of this construction are covered in depth in Algebra II.}
+\end{example}
+\begin{definition}[Canonical Projection]
+  Let $W\subseteq V$ be a subspace. The canonical projection map $\pi_W$ is defined by
+  \begin{align*}
+    \pi_W: V\rightarrow V/W\\
+    v\mapsto v + W.
+  \end{align*}
+  Note that $\pi_W\in \Hom_{\F}\left(V,V/W\right)$.
+\end{definition}
+\begin{remark}
+  To define a map $T: V/W\rightarrow U$, one must always verify that $T$ is well-defined.
+\end{remark}
+\begin{theorem}[First Isomorphism Theorem for Vector Spaces]
+  Let $T\in\Hom_{\F}\left(V,W\right)$. Define $\overline{T}: V/\ker(T)\rightarrow W$ by taking $v + \ker(T) \mapsto T(v)$. Then, $\overline{T}\in \Hom_{\F}\left(V/\ker(T),W\right)$. Moreover, $V/\ker(T)\cong \img(T)$.
+\end{theorem}
+\begin{proof}
+  We will first show that $\overline{T}$ is well-defined. Let $v_1 + \ker(T) = v_2 + \ker(T)$. Then, for some $\tilde{v}\in \ker(T)$, we have $v_1 = v_2 + \tilde{v}$. Then,
+  \begin{align*}
+    \overline{T}\left(v_1 + \ker(T)\right) &= T\left(v_1\right)\\
+                                           &= T\left(v_2 + \tilde{v}\right)\\
+                                           &= T\left(v_2\right) + T\left(\tilde{v}\right)\\
+                                           &= T\left(v_2\right)\\
+                                           &= \overline{T}\left(v_2 + \ker(T)\right).
+  \end{align*}
+  Let $v_1 + \ker(T)$, $v_2 + \ker(T)\in V/\ker(T)$, and $c\in \F$. Then, we have
+  \begin{align*}
+    \overline{T}\left(\left(v_1 + \ker(T)\right) + c\left(v_2 + \ker(T)\right)\right) &= \overline{T}\left(\left(v_1 + cv_2\right) + \ker(T)\right)\\
+                                                                                      &= T\left(v_1 + cv_2\right)\\
+                                                                                      &= T\left(v_1\right) + cT\left(v_2\right)\\
+                                                                                      &= \overline{T}\left(v_1 + \ker(T)\right) + c\overline{T}\left(v_2 + \ker(T)\right).
+  \end{align*}
+  Let $w\in \img(T)$. Then, $w = T(v)$ for some $v\in V$, meaning
+  \begin{align*}
+    w &= T\left(v\right)\\
+    &= \overline{T} \left(v + \ker(T)\right).
+  \end{align*}
+  Thus, $\overline{T}$ is surjective onto $\img(T)$.\newline
+
+  Let $v + \ker(T)\in \ker\left(\overline{T}\right)$. Then,
+  \begin{align*}
+    \overline{T}\left(v + \ker(T)\right) &= 0_W.
+  \end{align*}
+  This gives
+  \begin{align*}
+    T\left(v\right) = 0_W,
+  \end{align*}
+  meaning $v\in \ker(T)$, meaning $v + \ker(T) = 0_V + \ker(T)$. Thus, $\overline{T}$ is injective.
+\end{proof}
+\subsection{Dual Spaces}%
+\begin{definition}[Dual Space]
+  Let $V$ be an $\F$-vector space. The dual space, $V'$,\footnote{My professor denotes this as $V^{\vee}$, but it's too hard to type that out in real time, so I will use the $'$ to denote the algebraic dual, just as $V^{\ast}$ denotes the continuous dual of $V$.} is defined to be
+  \begin{align*}
+    V':= \Hom_{\F}\left(V,\F\right).
+  \end{align*}
+\end{definition}
+\begin{theorem}
+  We have $V$ is isomorphic to a subspace of $V'$. If $\Dim_{\F}\left(V\right) < \infty$, then $V\cong V'$.
+\end{theorem}
+\begin{remark}
+  The isomorphism between $V$ and $V'$ in the finite-dimensional case is not canonical --- that is, it depends on a basis.
+\end{remark}
+\begin{proof}
+  Let $\mathcal{B} = \set{v_i}_{i\in I}$ be a basis for $V$.\newline
+
+  For each $i\in I$, let $v_i'(v_j) = \delta_{ij}$, where $\delta_{ij}$ is the Kronecker delta. We get $\set{v_i'}_{i\in I}$ are elements of $V'$. We obtain
+  \begin{align*}
+    T\in \Hom_{\F}\left(V,V'\right)
+  \end{align*}
+  by $T\left(v_i\right) = v_i'$.\newline
+
+  To show $V$ is isomorphic to a subspace of $V'$, it suffices to show that $T$ is injective, since $V\cong \img(T)$, which is a subspace of $V'$.\newline
+
+  Let $v\in V$ with $T(v) = 0_{V'}$. We write
+  \begin{align*}
+    v &= \sum_{i\in I}a_iv_i\\
+    0_{V'}&= T(v)\\
+                    &= \sum_{i\in I}a_iT\left(v_i\right)\\
+                    &= \sum_{i\in I}a_iv_i'.
+  \end{align*}
+  Pick $j$ with $a_j\neq 0$. Note that
+  \begin{align*}
+    \sum_{i\in I}a_iv_i'(v_j) &= 0\\
+                              &= a_j,
+  \end{align*}
+  which contradicts $a_j\neq 0$. Thus, $v = 0_V$, and $T$ is injective.\newline
+
+  Suppose $\Dim_{\F}\left(V\right) = n$, with $\mathcal{B} = \set{v_1,\dots,v_n}$. Let $v'\in V'$. Define $a_i$ by
+  \begin{align*}
+    a_i &= v'\left(v_i\right).
+  \end{align*}
+  Set
+  \begin{align*}
+    v &= \sum_{i=1}^{n}a_iv_i.
+  \end{align*}
+  Define the map $S: V'\rightarrow V$ by taking
+  \begin{align*}
+    S\left(v'\right) &= \sum_{i=1}^{n}\left(v'\left(v_i\right)\right)v_i.
+  \end{align*}
+  We want to show that $S\in \Hom_{\F}\left(V',V\right)$, and $S$ is the inverse to $T$.\newline
+
+  Let $v',w'\in V'$, $c\in \F$. Set $a_i = v'\left(v_i\right)$ and $b_i = w'\left(v_i\right)$. Then,
+  \begin{align*}
+    S\left(v' + cw'\right) &= \sum_{i=1}^{n}\left(v' cw'\right)\left(v_i\right)v_i\\
+                           &= \sum_{i=1}^{n}\left(v'\left(v_i\right) + cw'\left(v_i\right)\right)v_i\\
+                           &= \sum_{i=1}^{n}\left(v'\left(v_i\right)\right)v_i + c\sum_{i=1}^{n}w'\left(v_i\right)\\
+                           &= S\left(v'\right) + cS\left(w'\right).
+  \end{align*}
+  We compute $S\circ T\left(v_i\right)$.
+  \begin{align*}
+    S\circ T\left(v_j\right) &= S\left(T\left(v_j\right)\right)\\
+                             &= S\left(v_j'\right)\\
+                             &= \sum_{i=1}^{n}v_j'\left(v_i\right)v_i\\
+                             &= \sum_{i=1}^{n}\delta_{ij}v_i\\
+                             &= v_j.
+  \end{align*}
+  Note that for $T\circ S$, we have $T\circ S$ maps $V'$ to $V'$, meaning we need to check that $T\circ S$ is the identity map on $V'$. Let $v'\in V'$. Then,
+  \begin{align*}
+    \left(T\circ S\right)\left(v'\right)\left(v_j\right) &= T\left(S\left(v'\right)\right)\left(v_j\right)\\
+                                                         &= T\left(\sum_{i=1}^{n}v'\left(v_i\right)v_i\right)\left(v_j\right)\\
+                                                         &= \left(\sum_{i=1}^{n}v'\left(v_i\right)T\left(v_i\right)\right)\left(v_j\right)\\
+                                                         &= \sum_{i=1}^{n}v'\left(v_i\right)\left(v_i'\left(v_j\right)\right)\\
+                                                         &= \sum_{i=1}^{n}v'\left(v_i\right)\delta_{ij}\\
+                                                         &= v'\left(v_j\right).
+  \end{align*}
+\end{proof}
+\begin{definition}[Dual Basis]
+  Let $\mathcal{B} = \set{v_1,\dots,v_n}$ be a basis of $V$. The dual basis for $V'$ is
+  \begin{align*}
+    \mathcal{B}' &= \set{v_i',\dots,v_n'}.
+  \end{align*}
+\end{definition}
+\begin{remark}
+  It is possible to continue taking duals; in the case of finite-dimensional $V$, we have
+  \begin{align*}
+    V &\cong V'\\
+    V' &\cong V''.
+  \end{align*}
+  Despite the isomorphism between $V$ and $V'$ not being canonical, it is the case that the isomorphism between $V$ and $V''$ \textit{is} canonical (i.e., not dependent on a basis).
+\end{remark}
+\begin{proposition}
+  There is a canonical injective linear map from $V$ to $V''$. If $\Dim_{\F}\left(V\right) < \infty$, this is an isomorphism.
+\end{proposition}
+\begin{proof}
+  Let $v\in V$. Define $\hat{v}: V' \rightarrow \F$, $\varphi \mapsto \varphi(v)$.\footnote{This can be notated as $\text{eval}_v$, but $\hat{v}$ is faster to type (and it's used in functional analysis).} We can easily verify that $\hat{v}$ is a linear map.\newline
+
+  Therefore, we have $\hat{v}\in \Hom_{\F}\left(V',\F\right) = V''$. We have a map
+  \begin{align*}
+    \Phi: V\rightarrow V''\\
+    v\mapsto \hat{v}.
+  \end{align*}
+  We want to verify that $\Phi$ is a linear and injective map. Let $v_1,v_2\in V$, $c\in \F$. Let $\varphi\in V'$.
+  \begin{align*}
+    \Phi\left(v_1 + cv_2\right)\left(\varphi\right) &= \left(\hat{v}_1 + c\hat{v}_2\right)\left(\varphi\right)\\
+                                                    &= \varphi\left(v_1 + cv_2\right)\\
+                                                    &= \varphi\left(v_1\right) + c\varphi\left(v_2\right)\\
+                                                    &= \hat{v}_1\left(\varphi\right) + c\hat{v}_2\left(\varphi\right)\\
+                                                    &= \Phi\left(v_1\right)(\varphi) + c\Phi\left(v_2\right)\left(\varphi\right).
+  \end{align*}
+  We will show that $\Phi$ is injective. Let $v\in V$; suppose $v\neq 0_V$. We form a basis $\mathcal{B}$ of $V$ that contains $v$. Note that $v'\in V'$, with $v'(v) = 1$ and $v'(w) = 0$ for $w\in \mathcal{B}$ and $w\neq v$.\newline
+  
+  Assume $v\in \ker\left(\Phi\right)$. Then, for any $\varphi\in V'$,
+  \begin{align*}
+    \Phi\left(v\right)(\varphi) &= 0\\
+    \varphi(v) &= 0.
+  \end{align*}
+  However, this is a contradiction, as we can take $\varphi = v'$, where $\varphi(v) = 1$. Thus, it must be the case that $\Phi$ is injective.
+\end{proof}
+\begin{definition}[Dual Operator]
+  Let $T\in \Hom_{\F}\left(V,W\right)$. We get an induced map $T': W'\rightarrow V'$. We define $T'\left(\varphi\right) = \varphi\circ T$.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADUQBfU9TXfIRQBGclVqMWbAOrdeIDNjwEio4ePrNWiEAB1dAMW7iYUAObwioAGYAnCAFskZEDghIATNU1SdAFQByAAp9els0AAssAEoQagY6ACMYBgAFfmUhEFssMwicORt7J0QXNyRRCS02P0KQO0cK6nLELyrfPV0wyKxjLiA
+\begin{tikzcd}
+V \arrow[rd, "T'(\varphi)"'] \arrow[r, "T"] & W \arrow[d, "\varphi"] \\
+                                            & \F                    
+\end{tikzcd}
+  \end{center}
 \end{definition}
 \end{document}
