@@ -56,6 +56,7 @@
 
 \begin{document}
 \RaggedRight
+\tableofcontents
 \section{Things You Just Gotta Know}%
 \subsection{Coordinate Systems}%
 \begin{center}
@@ -938,6 +939,186 @@ There are a few prerequisites for series convergence:
     \zeta(1) &= 1 + \frac{1}{2} + \frac{1}{3} + \cdots\\
     \zeta(2) &= 1 + \frac{1}{4} + \frac{1}{9} + \cdots\\
              &= \frac{\pi^2}{6}.
+  \end{align*}
+\end{example}
+\begin{example}[Absolute Convergence]
+  In our original ratio test, we had assumed that $a_k$ are real and positive. However, if the $a_k\in \C$, we have to look at the convergence in modulus:
+  \begin{align*}
+    r &= \lim_{k\rightarrow\infty}\left\vert \frac{a_{k+1}}{a_k} \right\vert.
+  \end{align*}
+  If $\sum_{k}\left\vert a_k \right\vert$ converges, this is known as absolute convergence.
+\end{example}
+\begin{example}[Alternating Series Test]
+  If the series
+  \begin{align*}
+    \sum_{k=0}^{\infty}\left(-1\right)^ka_{k}
+  \end{align*}
+  has the following conditions:
+  \begin{itemize}
+    \item $a_{k+1} < a_k$ for $k > K$;
+    \item $\lim_{k\rightarrow\infty}a_k = 0$;
+  \end{itemize}
+  then $\sum_{k}\left(-1\right)^ka_k$ converges.\newline
+
+  For instance, the alternating harmonic series converges
+  \begin{align*}
+    \sum_{k=1}^{\infty}\left(-1\right)^{k+1}\frac{1}{k} &= \ln 2.
+  \end{align*}
+\end{example}
+\subsubsection{Power Series}%
+Consider the function
+\begin{align*}
+  S(x) &= \sum_{k=0}^{\infty}a_kx^k.
+\end{align*}
+This is a series both in $a_k$ and in $x$. In order to determine convergence, we use the ratio test as follows:
+\begin{align*}
+  \lim_{k\rightarrow\infty}\left\vert \frac{a_{k+1}x^{k+1}}{a_kx^k} \right\vert &= \left\vert x \right\vert\lim_{k\rightarrow\infty}\left\vert \frac{a_{k+1}}{a_k} \right\vert\\
+                                                                                &\equiv \left\vert x \right\vert r.
+\end{align*}
+In particular, for convergence , it must be the case that
+\begin{align*}
+  \left\vert x \right\vert r < 1.
+\end{align*}
+We define
+\begin{align*}
+  R &= \begin{cases}
+    \frac{1}{r} & 0 < r < \infty\\
+    0 & r = \infty\\
+    \infty & r = 0
+  \end{cases}.
+\end{align*}
+In particular, this means
+\begin{align*}
+  |x| &< R.
+\end{align*}
+\begin{definition}[Radius of Convergence]
+  For a power series $\sum_{k}a_kx^k$, the series converges for $|x| < R$,\footnote{The definition is not the true radius of convergence; it is actually that $r = \limsup_{k\rightarrow\infty}\sqrt[k]{\left|a_k\right|}$. It just happens to be the case that the ratio test and root test return the same value when they're regular limits (rather than limits superior).} where
+  \begin{align*}
+    r &= \lim_{k\rightarrow\infty}\left\vert \frac{a_{k+1}}{a_k} \right\vert\\
+    R &= \begin{cases}
+      \frac{1}{r} & 0 < r < \infty\\
+      0 & r = \infty\\
+      \infty & r=0
+    \end{cases}.
+  \end{align*}
+\end{definition}
+  Note that convergence for $|x| < R$ does not provide information regarding convergence at the boundary.
+\begin{example}[Geometric Series]
+  We have
+  \begin{align*}
+    \frac{1}{1-x} &= \sum_{k=0}^{\infty}x^k
+  \end{align*}
+  has $R = 1$, meaning the power series converges for $|x| < 1$.
+\end{example}
+\begin{example}[Exponential Function]
+  We have
+  \begin{align*}
+    e^{x} &= \sum_{k=0}^{\infty}\frac{x^k}{k!},
+  \end{align*}
+  with $R = \infty$.
+\end{example}
+\begin{example}[Natural Log]
+  We have
+  \begin{align*}
+    \ln\left(1+x\right) &= x - \frac{1}{2}x^2 + \frac{1}{3}x^{3} - \cdots
+  \end{align*}
+  In particular, since $R = 1$, we know that the radius of convergence is $|x| < 1$. However, the series does converge on the boundary when $x = 2$, but not when $x =0$ (for obvious reasons).
+\end{example}
+\begin{example}[Why Radius of Convergence?]
+  Consider two series
+  \begin{align*}
+    \frac{1}{1-x^2} &= \sum_{k=0}^{\infty}x^{2k}\\
+    \frac{1}{1+x^2} &= \sum_{k=0}^{\infty}\left(-1\right)^{k}x^{2k}.
+  \end{align*}
+  We can see that the first series converges for $|x| < 1$. However, even though $\frac{1}{1+x^2}$ has a domain across the entire real numbers, it is still the case that the \textit{series} converges for $|x| < 1$.\newline
+
+  The primary reason that the radius of convergence is defined as such is because, over the complex numbers, it is the case that $x^2 + 1 = 0$ at $x = \pm i$, meaning $\frac{1}{1+z^2}$ has singularities at those values of $z$.
+\end{example}
+The main reason power series are useful is that, when truncated, they are simply polynomials. In particular, with power series, we can reverse the order of sum and derivative.
+\subsubsection{Taylor Series}%
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{c|c}
+    Function & Taylor Series\\
+    \hline
+    $f(x)$ & $ \sum_{k=0}^{\infty}\frac{\left(x-x_0\right)^n}{n!}\left(\frac{d^{n}f}{dx^n}\biggr\vert_{x=x_0}\right)$\\
+    $e^x$ & $\sum_{n=0}^{\infty}\frac{x^n}{n!}$\\
+    $\cos x$ & $\sum_{n=0}^{\infty}\frac{\left(-1\right)^nx^{2n}}{\left(2n\right)!}$\\
+    $\sin x$ & $\sum_{n=0}^{\infty}\frac{\left(-1\right)^{n+1}x^{2n+1}}{\left(2n+1\right)!}$
+  \end{tabular}
+\end{center}
+\begin{definition}
+  The Taylor series of a function $f(x)$ about $x_0$ is defined by
+  \begin{align*}
+    f(x) &= \sum_{n=0}^{\infty}\frac{\left(x-x_0\right)^n}{n!}\left(\frac{d^nf}{dx^n}\biggr\vert_{x=x_0}\right).
+  \end{align*}
+\end{definition}
+\begin{remark}
+  The reason we write $\frac{d^nf}{dx^n}$ is because $\frac{d^n}{dx^n}$ is an operator in and of itself.
+\end{remark}
+\begin{example}[The Most Important Taylor Series]
+  \begin{align*}
+    e^x &= \sum_{n=0}^{\infty}\frac{x^n}{n!}\\
+    \cos x &= \sum_{n=0}^{\infty}\frac{\left(-1\right)^nx^{2n}}{\left(2n\right)!}\\
+    \sin x &= \sum_{n=0}^{\infty}\frac{\left(-1\right)^{n+1}x^{2n+1}}{\left(2n+1\right)!}
+  \end{align*}
+\end{example}
+\begin{example}[Equilibrium Points]
+  Let $U(x)$ denote a potential over $x$. Then, $\mathbf{F} = -\nabla U$. We have
+  \begin{align*}
+    U(x) &= U(x_0) + \left(x-x_0\right)U'\left(x_0\right) + \frac{1}{2!}\left(x-x_0\right)^2U''\left(x_0\right) + \frac{1}{3!}\left(x-x_0\right)^3U'''\left(x_0\right) + \cdots
+  \end{align*}
+  When we analyze an equilibrium point, we disregard the $U\left(x_0\right)$ term, and see that the derivative of $U$ is zero; thus, we can truncate our series at the second derivative close to $x=x_0$:
+  \begin{align*}
+    U(x) &\approx \frac{1}{2}U''\left(x_0\right)\left(x-x_0\right)^2\\
+         &= \frac{1}{2}m\omega^2 \left(x-x_0\right)^2.
+  \end{align*}
+  In other words, when we are very close to equilibrium, we have simple harmonic motion.
+\end{example}
+\begin{example}[Faster Taylor Series]
+  Consider the function
+  \begin{align*}
+    \exp \left(\frac{x}{1-x}\right).
+  \end{align*}
+  In order to create its Taylor series, we can create this Taylor series piecewise:
+  \begin{align*}
+    \exp\left(\frac{x}{1-x}\right) &= 1 + \left(\frac{x}{1-x}\right) + \frac{1}{2!}\left(\frac{x}{1-x}\right)^2 + \frac{1}{3!}\left(\frac{x}{1-x}\right)^3.
+    \intertext{Now, we expand the denominators as geometric series:}
+                                   &= 1 + x\left(\sum_{k=0}^{\infty}x^k\right) + \frac{x^2}{2!}\left(\sum_{k=0}^{\infty}x^k\right)^2 + \frac{x^3}{3!}\left(\sum_{k=0}^{\infty}x^k\right) + \cdots
+                                   \intertext{If we want to expand through $x^3$, we have to expand by keeping track of \textit{every} term:}
+                                   &= 1 + x + \frac{3}{2}x^2 + \frac{13}{6}x^3 + O\left(x^4\right).
+  \end{align*}
+  We say we have expanded the series through the third order; the lowest order correction, denoted $O\left(x^n\right)$, is the fourth order (in this case).
+\end{example}
+\begin{example}[Exponentiated Operator]
+  Consider a (square) matrix $M$. Then, we define
+  \begin{align*}
+    e^{M} &= \sum_{k=0}^{\infty}\frac{M^k}{k!},
+  \end{align*}
+  where $M^k = \prod_{i=1}^{k}M$; we define $M^0 = I$. Similarly,
+  \begin{align*}
+    e^{\frac{d}{dx}} &= \sum_{k=0}^{\infty}\frac{d^k}{dx^k} \frac{1}{k!}.
+  \end{align*}
+  In particular, $e^{\frac{d}{dx}}$ is the Taylor series operator.
+\end{example}
+\begin{remark}
+  In quantum mechanics, the momentum operator is
+  \begin{align*}
+    P &= -i\hbar \frac{d}{dx}.
+  \end{align*}
+\end{remark}
+\begin{example}[Binomial Expansion]
+  For any $\alpha \in \R^{+}$ and $|x| < 1$, we have
+  \begin{align*}
+    \left(1+x\right)^{\alpha} &= 1 + \alpha x + \frac{\alpha\left(\alpha - 1\right)}{2!}x^2 + \frac{\alpha\left(\alpha - 1\right)\left(\alpha - 2\right)}{3!}x^3 + \cdots
+  \end{align*}
+  Note that if $\alpha \in \Z^{+}$, then the series truncates (and we recover the binomial theorem again).\newline
+
+  The main use of the binomial expansion is with very small quantities. For instance,
+  \begin{align*}
+    E &\sim \frac{1}{\left(x^2 + a^2\right)^{3/2}}\\
+      &= \frac{1}{x^3\left(1 + \frac{a^2}{x^2}\right)^{3/2}}\\
+      &\approx \frac{1}{x^3}\left(1-\frac{3}{2}\frac{a^2}{x^2}\right)\tag*{For $x \gg a$}
   \end{align*}
 \end{example}
 \end{document}
