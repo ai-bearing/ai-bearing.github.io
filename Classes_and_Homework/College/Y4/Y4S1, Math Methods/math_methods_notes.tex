@@ -547,7 +547,7 @@ where $n\in \N$ and $m$ is fixed. For $r = 1$, we call these values the $m$ root
   We define $\cosh x = \cos \left(ix\right)$. Additionally,
   \begin{align*}
     - i\sin ix &= -i\frac{1}{2i}\left(e^{i\left(ix\right)} - e^{-i\left(ix\right)}\right)\\
-            &= i\frac{e^{ix} - e^{-ix}}{2i}.\\
+            &= i\frac{e^{x} - e^{-x}}{2i}.\\
             &= \frac{e^{x} - e^{-x}}{2}.
   \end{align*}
   We define $\sinh x = -i\sin\left(ix\right)$.\newline
@@ -1110,7 +1110,7 @@ The main reason power series are useful is that, when truncated, they are simply
   \end{align*}
 \end{remark}
 \begin{example}[Binomial Expansion]
-  For any $\alpha \in \R^{+}$ and $|x| < 1$, we have
+  For any $\alpha \in \C$ and $|x| < 1$, we have
   \begin{align*}
     \left(1+x\right)^{\alpha} &= 1 + \alpha x + \frac{\alpha\left(\alpha - 1\right)}{2!}x^2 + \frac{\alpha\left(\alpha - 1\right)\left(\alpha - 2\right)}{3!}x^3 + \cdots
   \end{align*}
@@ -1121,6 +1121,114 @@ The main reason power series are useful is that, when truncated, they are simply
     E &\sim \frac{1}{\left(x^2 + a^2\right)^{3/2}}\\
       &= \frac{1}{x^3\left(1 + \frac{a^2}{x^2}\right)^{3/2}}\\
       &\approx \frac{1}{x^3}\left(1-\frac{3}{2}\frac{a^2}{x^2}\right)\tag*{For $x \gg a$}
+  \end{align*}
+\end{example}
+\begin{remark}
+  The binomial expansion only applies to the form $\left(1 + x\right)^{\alpha}$. If we are dealing with an expression of the form $\left(a + x\right)^{\alpha}$, we need to factor out $a$, making the expression $a^{\alpha}\left(1 + x/a\right)^{\alpha}$.
+\end{remark}
+\begin{example}[Special Relativity with the Binomial Expansion]
+  In the theory of special relativity, Einstein came up with the equations
+  \begin{align*}
+    E &= \gamma mc^2\\
+    \gamma &= \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}.
+  \end{align*}
+  We can use the binomial expansion to find more information about $\gamma$.
+  \begin{align*}
+    E &= \left(1-\frac{v^2}{c^2}\right)^{-1/2}mc^2\\
+      &= \left(1 + \frac{1}{2}\frac{v^2}{c^2} + \frac{\left(-\frac{1}{2}\right)\left(-\frac{3}{2}\right)}{2!}\left(-\frac{v^2}{c^2}\right)^{2} + \cdots\right)mc^2\\
+      &= mc^2 + \underbrace{\frac{1}{2}mv^2\left(1 + \frac{3}{4}\frac{v^2}{c^2} + \frac{5}{8}\left(\frac{v^2}{c^2}\right)^{2} + \cdots\right)}_{\text{Kinetic Energy}}
+  \end{align*}
+  As we take $v \ll c$, we only need to keep the first order term in the expansion, meaning we have $E = mc^2 + \frac{1}{2}mv^2$.\newline
+
+  Thus, we can find kinetic energy as $KE = \left(\gamma - 1\right)mc^2$. Notice that this means that \textit{most} energy is internal energy emergent as mass.
+\end{example}
+\subsection{Ten Integration Techniques}%
+While Mathematica may exist,\footnote{Citation needed.} it is still valuable to know how to take various integrals. More importantly, knowing how to take integrals provides valuable insights into \textit{what} exactly integrals are.
+\subsubsection{Integration by Parts}%
+\begin{definition}[Integration by Parts]
+  Using the product rule, we have
+  \begin{align*}
+    \int_{}^{} \frac{d}{dx}\left(uv\right)\:dx &= \int_{}^{} \frac{du}{dx}v - \frac{dv}{dx}u\:dx\\
+                                               &= \int_{}^{} \frac{du}{dx}v\:dx - \int_{}^{} \frac{dv}{dx}u\:dx.
+  \end{align*}
+  Thus, we get
+  \begin{align*}
+    \int_{}^{} u\:dv &= uv - \int_{}^{} v\:du.
+  \end{align*}
+  In the case where our integrals are definite, we have
+  \begin{align*}
+    \int_{a}^{b} u\:dv &= uv\bigr\vert_{a}^{b} - \int_{a}^{b} v\:du.
+  \end{align*}
+  We say $uv\bigr\vert_{a}^{b}$ is the boundary term (or surface term).\footnote{We can also use integration by parts to define the (weak) derivative, assuming the boundary term is zero.}
+\end{definition}
+\begin{example}
+  \begin{align*}
+    \int_{}^{} xe^{ax}\:dx &= \frac{1}{a}xe^{ax} - \int_{}^{} \frac{1}{a}e^{ax}\:dx\tag*{$u = x$, $dv = e^{ax}dx$}\\
+                           &= \frac{1}{a}xe^{ax} - \frac{1}{a^2}e^{ax}\\
+                           &= \frac{1}{a^2}e^{ax}\left(ax - 1\right).
+  \end{align*}
+  The $+C$ is implicit.
+\end{example}
+\begin{example}
+  \begin{align*}
+    \int_{}^{} \ln x\:dx &= x\ln x - \int_{}^{} x\left(\frac{1}{x}\right)\:dx\tag*{$u = \ln x$, $dv = dx$}\\
+                         &= x\ln x - x.
+  \end{align*}
+\end{example}
+\subsubsection{Change of Variables}%
+\begin{definition}[$u$-Substitution]
+  Let $x = x(u)$, meaning $dx = \frac{dx}{du}du$. Thus, we get
+  \begin{align*}
+    \int_{x_1}^{x_2} f(x)\:du &= \int_{u(x_1)}^{u(x_2)} f\left(x(u)\right)\frac{dx}{du}\:du.
+  \end{align*}
+\end{definition}
+\begin{example}
+  \begin{align*}
+    I_1 &= \int_{0}^{\infty} xe^{-ax^2}\:dx\\
+        &= \frac{1}{2}\int_{0}^{\infty} e^{-au}\:du\tag*{$u = x^2$}\\
+        &= \frac{1}{2a}
+  \end{align*}
+\end{example}
+\begin{example}
+  \begin{align*}
+    \int_{0}^{\pi} \sin\theta\:d\theta &= \int_{-1}^{1} \:du\tag*{$u = \cos\theta$}\\
+                                       &= 2.
+  \end{align*}
+  More generally, we have, for $f(\theta) = f(\cos\theta)$,
+  \begin{align*}
+    \int_{0}^{\pi} f(\theta)\sin\theta\:d\theta &= \int_{-1}^{1} f(u)\:du.
+  \end{align*}
+\end{example}
+\begin{example}[Trig Substitution]
+  \begin{align*}
+  \int_{0}^{a} \frac{x}{x^2 + a^2}\:dx &= \int_{0}^{\pi/4} \frac{a^2\tan\theta\sec^2\theta}{a^2\left(1 + \tan^2\theta\right)}\:d\theta\tag*{$x = a\tan\theta$}\\
+                                       &= \int_{0}^{\pi/4} \tan\theta\:d\theta\\
+                                       &= -\ln\left(\cos\theta\right)\bigr\vert_{0}^{\pi/4}\\
+                                       &= \ln\left(\sqrt{2}\right)\\
+                                       &= \frac{1}{2}\ln(2).
+  \end{align*}
+\end{example}
+\begin{example}[Trig Substitution 2.0]
+  For rational functions of $\sin\theta$ and $\cos\theta$, we can use the half-angle trig substitution $u = \tan(\theta/2)$.\footnote{$\tan(\theta/2) = \frac{\sin\theta}{1 + \cos\theta}$} This yields
+  \begin{align*}
+    d\theta &= \frac{2du}{1 + u^2}\\
+    \sin\theta &= \frac{2u}{1 + u^2}\\
+    \cos\theta &= \frac{1-u^2}{1 + u^2}.
+  \end{align*}
+  For instance,
+  \begin{align*}
+    \int_{}^{} \frac{1}{1+\cos\theta}\:d\theta &= \int_{}^{} \frac{1}{1 + \frac{1-u^2}{1+u^2}}\frac{2}{1 + u^2} \:du\\
+                                               &= \int_{}^{} \:du\\
+                                               &= \tan(\theta/2)\\
+                                               &= \frac{\sin\theta}{1 + \cos\theta}.
+  \end{align*}
+\end{example}
+\begin{example}[Dimensionless Integrals]
+  Anything that has a nonzero absolute temperature radiates some energy. In particular, we want to know how this radiation is distributed among various wavelengths.\newline
+
+  For a box of photons in equilibrium at temperature $T$, the energy per volume per wavelength $\lambda$ is
+  \begin{align*}
+    u\left(\lambda\right) &= \frac{8\pi h c}{\lambda^{5}\left(e^{h c/\lambda kT} - 1\right)}.
   \end{align*}
 \end{example}
 \end{document}
