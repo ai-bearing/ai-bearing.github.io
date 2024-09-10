@@ -19,6 +19,7 @@
 \setcounter{secnumdepth}{0}
 
 \begin{document}
+\tableofcontents
 \section{First-Order Differential Equations}%
 \subsection{Introduction to First-Order Differential Equations}%
   Recall that for $y = f(x)$, $x$ is the independent variable and $y$ is the dependent variable.
@@ -401,7 +402,7 @@ Consider the first-order differential equation
 \end{example}
 \subsection{Slope Fields}%
 \begin{definition}
-  A slope field is a set of short line segments that indicate slope $\frac{dy}{dx}$ at a set of points $(x,y)$ in the $xy$ plane.\newline
+  A slope field is a set of short line segments that indicate slope $\frac{dy}{dx}$ at a set of points $(x,y)$ in the $x,y$-plane.\newline
 
   It is a graphical method of displaying the general slope and behavior of functions that satisfy $\frac{dy}{dx} = f(x,y)$.
 \end{definition}
@@ -494,7 +495,7 @@ Consider the first-order differential equation
 \addplot[
 		-stealth,
 		domain = -4:4,
-    samples=250,
+    samples=100,
     color=red
     ]{1 - 2*pow(e,-x)};
 \end{axis}
@@ -572,5 +573,174 @@ We want to approximate solutions to the differential equation $y' = f(x,y)$, $y(
        &= 4y-2.
   \end{align*}
   In particular, our initial condition of $y(0) = 1$ suggests that $y'' = 2 > 0$, meaning Euler's method will return an underestimate (as the tangent lines will lie below the true curve).
+\end{example}
+\subsection{Existence and Uniqueness}%
+Given an initial value problem
+\begin{align*}
+  \frac{dy}{dt} &= f(t,y)\\
+  y\left(t_0\right) &= y_0,
+\end{align*}
+we ask the following two questions.
+\begin{enumerate}[(1)]
+  \item When does a solution to this initial value problem exist?
+  \item If it does exists, is the solution unique?
+\end{enumerate}
+\begin{example}
+  Consider the polynomial
+  \begin{align*}
+    \underbrace{2x^5 - 10x + 5}_{f} = 0,
+  \end{align*}
+  and suppose want to find solutions to this equation.\newline
+
+  Notice that $f$ is continuous on $[-1,1]$, with $f(-1) = 13$ and $f(1) = 3$.\newline
+
+  By the Intermediate Value Theorem, this must mean $f$ takes on the value of $0$ at at least one value between $x=-1$ and $x=1$.
+\end{example}
+\begin{theorem}[Existence and Uniqueness]
+  Let $R$ be a rectangular region in the $t,y$-plane containing the point $\left(t_0,y_0\right)$ in the interior of $R$. In particular, $R = \set{(t,y)\mid a<t<b, c < y < d}$, and $\left(t_0,y_0\right)\in R$.\newline
+
+  If $f(t,y)$ and $\pd{f}{y}$ are continuous on $R$, then there exists $\ve > 0$ and a unique function $y(t)$ defined on some neighborhood $t_0 - \ve < t < t_0 + \ve$ contained in $a < t < b$ such that $y(t)$ is a solution to the initial value problem
+  \begin{align*}
+    \frac{dy}{dt} &= f(t,y)\\
+    y\left(t_0\right) &= y_0.
+  \end{align*}
+\end{theorem}
+Note the two major conditions here:
+\begin{itemize}
+  \item the continuity of $f$ on $R$; this guarantees existence\\
+  \item the continuity of $\pd{f}{y}$ on $R$; this guarantees uniqueness.
+\end{itemize}
+\begin{center}
+  \includegraphics[width=7cm]{images/existence_uniqueness.png}
+\end{center}
+If one of the conditions is not satisfied, we may have
+\begin{itemize}
+  \item exactly one solution;
+  \item many solutions;
+  \item no solutions.
+\end{itemize}
+\begin{example}
+  Consider the differential equation
+  \begin{align*}
+    \frac{dy}{dt} &= t^2 y^{1/2},
+  \end{align*}
+  and $y(0) = 0$.\newline
+
+  We have $f(t,y) = t^2 y^{1/2}$. We have
+  \begin{align*}
+    \pd{f}{y} &= \frac{1}{2}t^2y^{-1/2}\\
+              &= \frac{t^2}{2\sqrt{y}}.
+  \end{align*}
+  We can see that $f$ is continuous at $(0,0)$, but $\pd{f}{y}$ is not continuous at $(0,0)$.\newline
+
+  Additionally, since $f$ is not defined for $y < 0$, we cannot place $(0,0)$ in the interior of any region on the $t,y$-plane.\newline
+
+  Therefore, we cannot use the existence and uniqueness theorem on $f$.\newline
+
+  Going forward analytically, we start with the equilibrium condition $y(t) = 0$. Using separation of variables, we have
+  \begin{align*}
+    \frac{dy}{dt} &= t^2y^{1/2}\\
+    \int\frac{dy}{y^{1/2}} &= \int_{}^{} t^2\:dt\\
+    2y^{1/2} &= \frac{t^3}{3} + C\\
+    y &= \left(\frac{t^3}{6} + K\right)^{2}\\
+    0 &= \left(\frac{(0)^3}{6} + K\right)^{2}\\
+    K &= 0\\
+    \intertext{meaning we also have a solution of}
+    y(t) &= \left(\frac{t^3}{6}\right)^{2}\\
+         &= \frac{t^6}{36}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Let $\frac{dy}{dt} = t^2y^{1/2}$ with the (new) initial condition of $y(2) = 1$.\newline
+
+  In particular, we can see that not only is $f(t,y)$ continuous at $0$, but so too is $\pd{f}{y}$, and there exists a region about the point $(2,1)$ such that $f$ and $\pd{f}{y}$ are continuous.\newline
+
+  Thus, by the existence and uniqueness theorem, there exists exactly one solution to this initial value problem.
+\end{example}
+\begin{example}
+  Let $\frac{dy}{dt} = 1 + y^2$, with the initial condition $y(0) = 0$.\newline
+
+  We have $f(t,y) = 1 + y^2$, $\pd{f}{y} = 2y$; both of these functions are continuous on the $t,y$-plane. Thus, by the existence and uniqueness theorem, there exists a unique solution to this initial value problem.\newline
+
+  We solve by separation of variables:
+  \begin{align*}
+    \frac{dy}{dt} &= 1 + y^2\\
+    \int_{}^{} \frac{1}{1+y^2}\:dy &= \int_{}^{} \:dt\\
+    \arctan(y) &= t + C\\
+    y &= \tan\left(t + C\right)\\
+    0 &= \tan\left(0 + C\right)\\
+    0 &= \tan\left(C\right).
+  \end{align*}
+  We can let $C = 0$, meaning we have the solution
+  \begin{align*}
+    y(t) &= \tan t.
+  \end{align*}
+  \begin{center}
+    \begin{tikzpicture}
+\begin{axis}[
+  axis x line*=center,
+  axis y line*=center,
+	xmin = -4, xmax = 4,
+	ymin = -4, ymax = 4,
+	axis equal image,
+    xtick={-4,-3,-2,-1,0,1,2,3,4},
+    ytick={-4,-3,-2,-1,0,1,2,3,4},
+]
+%	\addplot3[
+%    color=black!20!white,
+%		quiver = {
+%			u = {1/sqrt(1+(1-y)^2)},
+%			v = {(1-y)/sqrt(1+(1-y)^2)},
+%			scale arrows = 0.25,
+%		},
+%		-stealth,
+%		domain = -4:4,
+%		domain y = -4:4,
+%	] {0};
+\addplot[
+		-stealth,
+		domain = -1.5:1.5,
+    samples=100,
+    color=red
+    ]{tan(deg(x))};
+\end{axis}
+\end{tikzpicture}
+  \end{center}
+\end{example}
+\begin{example}[Application of the Uniqueness Theorem]
+  Suppose $f(t,y)$ satisfies the conditions for uniqueness.\newline
+
+  Assume $y_1(t)$ and $y_2(t)$ are solutions of the differential equation $\frac{dy}{dt} = f(t,y)$.\newline
+
+  If these solutions intersect at some $t = t_0$, then $y_1(t)$ and $y_2(t)$ are solutions to this new initial value problem of
+  \begin{align*}
+    \diff{y}{t} &= f(t,y)\\
+    y\left(t_0\right) &= y_1\left(t_0\right) = y_2\left(t_0\right).
+  \end{align*}
+  Since $f$ satisfies the uniqueness theorem, it be the case that $y_1(t) = y_2(t)$.\newline
+
+  In particular, this means that solutions to differential equations that satisfy the uniqueness conditions cannot intersect. In other words, solutions cannot equal each other at the same ``place'' at the same ``time.''
+\end{example}
+\begin{example}
+  Consider the initial value problem
+  \begin{align*}
+    \frac{dy}{dt} &= \frac{2y}{t}\\
+    y(1) &= 1.
+  \end{align*}
+  We have $f(t,y) = \frac{2y}{t}$, $\pd{f}{y} = \frac{2}{t}$. We can see that $f$ and $\pd{f}{y}$ are continuous at $(1,1)$, as well as a given region with $(1,1)$ in its interior (since continuity is only lost when $t = 0$).\newline
+
+  Thus, there exists a unique solution to this initial value problem. We can solve the equation via separation of variables:
+  \begin{align*}
+    \frac{dy}{dt} &= \frac{2y}{t}\\
+    \int_{}^{} \frac{1}{2y}\:dy &= \int_{}^{} \frac{1}{t}\:dt\\
+    \frac{1}{2}\ln|y| &= \ln|t| + C\\
+    \ln|y| &= 2\ln|t| + 2C\\
+    |y| &= e^{2\ln|t|}e^{2C}\\
+    y &= \pm e^{2C}t^2\\
+    y &= Kt^2
+  \end{align*}
+  We have the initial condition $y(1) = 1$, meaning we have the solution $y(t) = t^2$.\newline
+
+  Notice that as a function, the domain of $y$ is $\R$, but as a solution, we cannot have $t = 0$, meaning that the domain of $y(t) = t^2$ \textit{as a solution} is $t > 0$.
 \end{example}
 \end{document}
