@@ -25,6 +25,7 @@
 \section{Introduction}%
 \epigraph{It is my experience that proofs involving matrices can be shortened by 50\% if one throws the matrices out.}{Emil Artin}
 The goal of this course is to prove a lot of the essential results of linear algebra without basis dependence (as in, using the properties of the linear transformations themselves rather than matrices).
+\tableofcontents
 \section{Vector Spaces}%
 \subsection{Vector Spaces and Linear Transformations}
 \begin{remark}
@@ -257,12 +258,12 @@ We let $\F$ be either $\R,\Q,\C,\F_{p}$ (where $p$ is a prime). Primarily, we le
 \begin{example}[Identity Transformation]
   Define
   \begin{align*}
-    \text{id}_{V}: V\rightarrow V,
+    \id_{V}: V\rightarrow V,
   \end{align*}
-  where $\text{id}_V(v) = v$. We can see that $\text{id}_V \in \Hom_{\F}\left(V,V\right)$, since
+  where $\id_V(v) = v$. We can see that $\id_V \in \Hom_{\F}\left(V,V\right)$, since
   \begin{align*}
-    \text{id}_V\left(v_1 + cv_2\right) &= v_1 + cv_2\\
-                            &= \text{id}_V\left(v_1\right) + (c)\left(\text{id}_{V}\left(v_2\right)\right)
+    \id_V\left(v_1 + cv_2\right) &= v_1 + cv_2\\
+                            &= \id_V\left(v_1\right) + (c)\left(\id_{V}\left(v_2\right)\right)
   \end{align*}
 \end{example}
 \begin{example}[Complex Conjugation]
@@ -1178,8 +1179,8 @@ Define $P = T_{\mathcal{B}}: V\rightarrow \F^n$, $v\mapsto \left[v\right]_{\math
 \begin{center}
   % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADUQBfU9TXfIRQBGclVqMWbAOrdeIDNjwEiZYePrNWiEAB1dAMQB6wMFzl8lgoqPXVNUnfuPAAtua7iYUAObwioABmAE4QrkhkIDgQSKISWmwAKhYgIWER1NFIAEz2ktogAAog1Ax0AEYwDIX8ykIgwVg+ABY4KWnhiHFZiADMeQk6AIolIGWV1bXWOgwwgW08QaGduVExfQOOIEP6AMZYwbsABIl7B8eFJgC0wualFVU1Vio6jS0LFFxAA
 \begin{tikzcd}
-V \arrow[r, "T"] \arrow[d, "P"']          & W \arrow[d, "Q"] \\
-\F^{n} \arrow[r, "Q\circ T\circ P^{-1}"'] & \F^{m}          
+  V \arrow[r, "T"] \arrow[d, "T_{\mathcal{B}}"']          & W \arrow[d, "T_{\mathcal{C}}"] \\
+  \F^{n} \arrow[r, "T_{\mathcal{C}}\circ T\circ T_{\mathcal{B}}^{-1}"'] & \F^{m}          
 \end{tikzcd}
 \end{center}
 In particular, this means $T$ is given by a matrix $A\in \Mat_{m,n}\left(\F\right)$, which we write as $\left[T\right]_{\mathcal{B}}^{\mathcal{C}} = A$.\newline
@@ -1351,7 +1352,7 @@ For example, if we let $f(x) = -7 + 3x + 4x^2$, we have
   \end{align*}
   Thus, the change of basis matrix is
   \begin{align*}
-    \left[\id_{V}\right]_{\mathcal{B}}^{\mathcal{B}'} &= \begin{pmatrix}1 -2 & 4 \\ 0 & 1 & -4 \\ 0 & 0 & 1\end{pmatrix}.
+    \left[\id_{V}\right]_{\mathcal{B}}^{\mathcal{B}'} &= \begin{pmatrix}1 & -2 & 4 \\ 0 & 1 & -4 \\ 0 & 0 & 1\end{pmatrix}.
   \end{align*}
   Thus, we have
   \begin{align*}
@@ -1359,4 +1360,194 @@ For example, if we let $f(x) = -7 + 3x + 4x^2$, we have
                                                                             &= \begin{pmatrix}22\\-14\\2\end{pmatrix}
   \end{align*}
 \end{solution}
+%Recall that if $\Dim_{\F}\left(V\right) = n$, with $\mathcal{B} = \set{v_1,\dots,v_n}$, there is an isomorphism
+%\begin{align*}
+%  T_{\mathcal{B}}:V\rightarrow \F^n\\
+%  v\mapsto \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix},
+%\end{align*}
+%where $v = \sum_{i=1}^{n}a_iv_i$.\newline
+\begin{definition}[Similar Matrices]
+  Given $A,B\in \Mat_{n}\left(\F\right)$, we say $A$ and $B$ are similar if there exists $P\in \text{GL}_{n}\left(\F\right)$\footnote{$\text{GL}_{n}\left(\F\right) = \set{C\in \Mat_{n}\left(\F\right)\mid C^{-1}\text{ exists}}$} such that $A = PBP^{-1}$.
+\end{definition}
+We wish to rephrase this definition in terms of matrices. Given $A\in \Mat_{n}\left(\F\right)$, there exists $T_A\in \Hom_{\F}\left(F^n,H^n\right)$ with $T_A(v) = Av$. Given a basis $\mathcal{B}$, we have the following diagram:
+\begin{center}
+  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADUQBfU9TXfIRQBGclVqMWbTjz7Y8BImWHj6zVohAAdLQDEAeoVkgM8wUVErqaqZp0Gj4mFADm8IqABmAJwgBbJDIQHAgkUQl1NgAVAH1gAEEubl4QH39A6hCkACZqBjoAIxgGAAV+BSEQbywXAAscEGtJDRBY4B0-OhxagGNGYAAhLiTjNIDEcKzEAGYmyM02jq7e-qGRlLGczNCZudttLQYYTxxkNsSdarqcCjil7r6GQeHGkHyi0vLzTSv67gouEA
+\begin{tikzcd}
+  \F^n \arrow[r, "T_{A}"] \arrow[d, "T_{\mathcal{B}}"']    & \F^n \arrow[d, "T_{\mathcal{B}}"] \\
+\F^n \arrow[r, "{\left[T_{A}\right]_{\mathcal{B}}}"'] & \F^n                          
+\end{tikzcd}
+\end{center}
+If $\mathcal{E}_n$ is the standard basis, then $A = \left[T_{A}\right]_{\mathcal{E}_n}$, meaning we have the following diagram:
+\begin{center}
+  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAGAXVJADcBDAGwFcYkQAdDgMQD1CAvqXSZc+QigBMFanSat2XPoOEgM2PASJlishizaJOPfiCEiN4otN019Co0tPm1ozROQBmGXfmHjymaq6mJaKN62cgaKJioWoR7kPlEOAc7BblYoSZH2-k6CsjBQAObwRKAAZgBOEAC2SEkgOBBIZCn+ACoA+sAAggJBVbUNiE0tSNIgjPQARjCMAAqZYSDVWCUAFjggvtFGPcBcdfQ4mwDGTMAAogLdYIMuNfVtNBOI3h3sh8enF1e3e6PVTPUZTd6fPLsPq7aZzBbLSyrdZbHZPEavZqtRAAFj2qS4WCgvQKwOGLw+b2xAFZ8f5FrxgABaYgCAAEAF42VxGDBKjhkITiUdYgIuCjtpQSRwTmdLowbncHozfnKrgAhASDGgzeZLFYSNYbbZDECgpB4rFIWlfA7S2X-RhszWm82IABsVMadJiROlyjJZoxiAA7F7EFMoUYGczWZzuRxefzBRw-SKA+LjTgpSKHfLgJqBCqZX984CHrDdQiDewJWiQcHPVbQzr4fqkYa67CoyAfiW1QrC2ZKAIgA
+  \begin{tikzcd}
+\F^n \arrow[r, "\id_{\F^n}"] \arrow[d, "T_{\mathcal{B}}"']                          & \F^n \arrow[r, "T_{A}"] \arrow[d, "T_{\mathcal{E}_n}"'] & \F^n \arrow[d, "T_{\mathcal{E}_n}"] \arrow[r, "\id_{\F^n}"]                         & \F^n \arrow[d, "T_{\mathcal B}"] \\
+\F^n \arrow[r, "{P^{-1} = \left[\id_{\F^n}\right]_{\mathcal{B}}^{\mathcal{E}_n}}"'] & \F^n \arrow[r, "A"']                                    & \F^n \arrow[r, "{P^{-1} = \left[\id_{\F^n}\right]_{\mathcal{E}_n}^{\mathcal{B}}}"'] & \F^n                            
+\end{tikzcd}
+\end{center}
+%\begin{center}
+%  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAGAXVJADcBDAGwFcYkQAdDgMQD1CAvqXSZc+QigBMFanSat2XPoOEgM2PASJlishizaJOPfiCEiN4otN019Co0tPm1ozROQBmGXfmHjymaq6mJaKN62cgaKJioWoR7kPlEOAc7BblYoSZH2-k6CsjBQAObwRKAAZgBOEAC2SEkgOBBIZCn+ACoA+sAAggJBVbUNiE0tSNIgjPQARjCMAAqZYSDVWCUAFjggvtFGPcBcdfQ4mwDGTMAAogLdYIMuNfVtNBOI3h3sh8enF1e3e6PVTPUZTd6fPLsPq7aZzBbLSyrdZbHZPEavZqtRAAFj2qS4WCgvQKwOGLw+b2xAFZ8f5FrCZvMlisJGsNtshiBQUg8VikLSvgcSRwTmdLowAAQAITJ3IxiAAbFTGnSYkSRco5TzEAB2FWIKZQoyLXjAAC0xEGNCZCNZ7BRnPRFOV-L1NvhLKRbMdOzVwqOor+EuAsselAEQA
+%\begin{tikzcd}
+%\F^n \arrow[r, "\id_{\F^n}"] \arrow[d, "T_{\mathcal{B}}"'] & \F^n \arrow[r, "T_{A}"] \arrow[d, "T_{\mathcal{E}_n}"'] & \F^n \arrow[d, "T_{\mathcal{E}_n}"] \arrow[r, "\id_{\F^n}"] & \F^n \arrow[d, "T_{\mathcal B}"] \\\F^n \arrow[r, "P^{-1} = \id_{\F^n}\right]"']                                  & \F^n \arrow[r, "A"']                                    & \F^n \arrow[r, "P = \id_{\F^n}"']                                        & \F^n                            
+%\end{tikzcd}
+%\end{center}
+Thus, $A = P \left[T_{A}\right]_{\mathcal{B}} P^{-1}$. In other words, $A\sim B$ if and only if $A = \left[T_{A}\right]_{\mathcal{B}}$ for some basis $\mathcal{B}$ and $B = \left[T_{A}\right]_{\mathcal{C}}$.
+\subsection{Row Operations, Column Space, and Null Space}%
+\begin{definition}[Pivot]
+  Let $A = \left(a_{ij}\right)\in \Mat_{m,n}\left(\F\right)$. We say $a_{k\ell}$ is a pivot of $A$ if and only if $a_{k\ell}\neq 0$ and $a_{ij} = 0$ if $i\geq k$ or $j\leq \ell$, with $\left(i,j\right)\neq \left(k,\ell\right)$.
+\end{definition}
+\begin{example}
+  For the matrix
+  \begin{align*}
+    A &= \begin{pmatrix}\boxed{2} & 1 & 4 & 5 \\ 0 & 0 & \boxed{1} & 7 \\ 0 & 0 & 0 & \boxed{5}\end{pmatrix},
+  \end{align*}
+  the boxed entries are pivots.
+\end{example}
+\begin{definition}
+  Let $A\in \Mat_{m,n}\left(\F\right)$. We say $A$ is in row echelon form if all its nonzero rows have a pivot and all its zero rows are located below the nonzero rows. We say the matrix is in reduced row echelon form if it is in row echelon form and the pivots are the nonzero elements in the columns containing the pivots.
+\end{definition}
+\begin{example}
+  We have
+  \begin{align*}
+    A &= \begin{pmatrix}2 & 1 & 4 & 5 \\ 0 & 0 & 1 & 7 \\ 0 & 0 & 0 & 5 \\ 0 & 0 & 0 & 0\end{pmatrix}
+  \end{align*}
+  is in row echelon form, and
+  \begin{align*}
+    B &= \begin{pmatrix}2 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1\\0 & 0 & 0 & 0\end{pmatrix}
+  \end{align*}
+\end{example}
+\begin{example}
+  Let
+  \begin{align*}
+    A &= \begin{pmatrix}3 & 4 & 5 & 6 \\ 1 & 2 & 3 & 4 \\ 1 & 1 & 2 & 3\end{pmatrix}.
+  \end{align*}
+  We are going to put this matrix into reduced row echelon form. We have $T_A: \F^4 \rightarrow \F^3$. Let $\mathcal{E}_4 = \set{e_1,e_2,e_3,e_4}$ and $\mathcal{F}_3 = \set{f_1,f_2,f_3}$. Then, $A = \left[T_A\right]_{\mathcal{E}_4}^{\mathcal{F}_3}$. We have
+  \begin{align*}
+    T_A\left(e_1\right) &= 3f_1 + f_2 + f_3\\
+    T_A\left(e_2\right) &= 4f_1 + 2f_2 + f_3\\
+    T_A\left(e_3\right) &= 5f_1 + 3f_2 + 2f_3\\
+    T_A\left(e_4\right) &= 6f_1 + 4f_2 + 3f_3
+  \end{align*}
+  \begin{description}
+    \item[Step 1:] We switch $R_1\leftrightarrow R_3$, yielding
+      \begin{align*}
+        \mathcal{F}_3^{(2)} &= \set{f_1^{(2)} = f_3,f_{2}^{(2)},f_{3}^{(2)} = f_1},
+      \end{align*}
+      yielding
+      \begin{align*}
+        \left[T_{A}\right]_{\mathcal{E}_4}^{\mathcal{F}_3^{(2)}} &= \begin{pmatrix}1 & 1 & 2 & 3 \\ 1 & 2 & 3 & 4 \\ 3 & 4 & 5 & 6\end{pmatrix}\\
+        \\
+        T_A\left(e_1\right) &= f_1^{(2)} + f_{2}^{(3)} + 3f_{3}^{(2)}\\
+        T_A\left(e_2\right) &= f_{1}^{(2)} + 2f_{2}^{(3)} + 4f_3^{(2)}\\
+        T_A\left(e_3\right) &= 2f_1^{(2)} + 3f_2^{(2)} + 5f_3^{(2)}\\
+        T_A\left(e_4\right) &= 3f_1^{(2)} + f_2^{(2)} + 6f_3^{(2)}.
+      \end{align*}
+    \item[Step 2:] Our next step is $-R_1 + R_2 \rightarrow R_2$, yielding
+      \begin{align*}
+        \mathcal{F}_3^{(3)} &= \set{f_1^{(3)} = f_1^{(2)} + f_{2}^{(2)},f_{3}^{(2)} = f_{2}^{(2)},f_{3}^{(3)} = f_{2}^{(3)}}.
+      \end{align*}
+      Our new matrix is
+      \begin{align*}
+        \left[T_{A}\right]_{\mathcal{E}_4}^{\mathcal{F}_3^{(3)}} &= \begin{pmatrix}1 & 1 & 2 & 3 \\ 0 & 1 & 1 & 1 \\ 3 & 4 & 5 & 6\end{pmatrix}\\
+        \\
+        T_A\left(e_1\right) &= \left(f_1^{(2)} + f_{2}^{(2)}\right) + 3f_{3}^{(2)}\\
+                            &= f_{1}^{(3)} + 3f_3^{(3)}\\
+        T_{A}\left(e_2\right) &= \left(f_1^{(2)} + f_2^{(2)}\right) + f_{2}^{(2)} + 4f_3^{(2)}\\
+                              &= f_1^{(3)} + f_2^{(2)} + 4f_3^{(3)}\\
+                              &\vdots
+      \end{align*}
+    \item[Step 3:] Next, we have $-3R_1 + R_3\rightarrow R_3$, which yields
+      \begin{align*}
+        \mathcal{F}_3^{(4)} &= \set{f_1^{(4)} = f_{1}^{(3)} + 3f_{3}^{(3)},f_{2}^{(4)} = f_{2}^{(3)},f_{3}^{(4)} = f_{3}^{(3)}}.
+      \end{align*}
+      Our matrix is now
+      \begin{align*}
+        \left[T_{A}\right]_{\mathcal{E}_{4}}^{\mathcal{F}_{3}^{(4)}} &= \begin{pmatrix}1 & 1 & 2 & 3 \\ 0 & 1 & 1 & 1 \\ 0 & 1 & -1 & -3\end{pmatrix}
+      \end{align*}
+    \item[Step 4:] Next, we have $-R_2 + R_3 \rightarrow R_3$, which yields
+      \begin{align*}
+        \mathcal{F}_{3}^{(5)} &= \set{f_{1}^{(5)} = f_{1}^{(4)},f_{2}^{(5)} = f_{2}^{(4)} + f_{3}^{(4)},f_{3}^{(5)} = f_{3}^{(4)}},
+      \end{align*}
+      and a matrix of
+      \begin{align*}
+        \left[T_{A}\right]_{\mathcal{E}_4}^{\mathcal{F}_3^{(5)}} &= \begin{pmatrix}1 & 1 & 2 & 3 \\ 0 & 1 & 1 & 1 \\ 0 & 0 & -2 & -4\end{pmatrix}.
+      \end{align*}
+  \end{description}
+\end{example}
+\begin{theorem}
+  Let $A\in \Mat_{m,n}\left(\F\right)$. The matrix $A$ can be put in row-echelon form through a series of row operations of the form:
+  \begin{itemize}
+    \item switching two rows: $R_i\leftrightarrow R_j$;
+    \item multiplying a row by a scalar: $\R_i\rightarrow cR_i$;
+    \item replacing a row by adding a scalar multiple of another row: $aR_i + R_j\rightarrow R_j$.
+  \end{itemize}
+\end{theorem}
+\begin{proof}[Sketch of a Proof]
+  For any matrix, we switch rows such that the value of $a_{11}$ is nonzero. Then, we take
+  \begin{align*}
+    f_{1}^{(2)} &= \sum_{j=1}^{m}a_{ji}f_j\\
+    f_k^{(2)} = f_{k}.
+  \end{align*}
+\end{proof}
+Instead of directly changing the bases, we can use linear maps to change the bases.\newline
+
+We define $T_{i,j}: W\rightarrow W$ to be
+\begin{align*}
+  T_{i,j}\left(w_{k}\right) &= w_k\tag*{$k\neq i,j$}\\
+  T_{i,j}\left(w_i\right) &= w_j\\
+  T_{i,j}\left(w_j\right) &= w_i.
+\end{align*}
+Thus,
+\begin{align*}
+  E_{i,j} &= \left[T_{i,j}\right]_{\mathcal{C}}^{\mathcal{C}}
+\end{align*}
+is the identity matrix except for switching the $i$ and $j$ rows.\newline
+
+Let $c\in \F$, define $T_i^{(c)}:W\rightarrow W$ by
+\begin{align*}
+  T_i^{(c)}\left(w_k\right) &= w_k\tag*{$k\neq i$}\\
+  T_{i}^{(c)}\left(w_i\right) &= cw_i,
+\end{align*}
+with
+\begin{align*}
+  E_i^{(c)} &= \left[T_{i}^{(c)}\right]_{\mathcal{C}}^{\mathcal{C}}
+\end{align*}
+being the identity matrix except for row $i$ multiplied by $c$.\newline
+
+Finally, we define $T_{i,j}^{(c)}:W\rightarrow W$ by
+\begin{align*}
+  T_{i,j}^{(c)}\left(w_k\right) &= w_k\tag*{$k\neq j$}\\
+  T_{i,j}^{(c)}\left(w_j\right) &= cw_i + w_j,
+\end{align*}
+with
+\begin{align*}
+  E_{i,j}^{(c)} &= \left[T_{i,j}^{(c)}\right]_{\mathcal{C}}^{\mathcal{C}}
+\end{align*}
+as the identity map with $c$ in the $ij$th entry.
+\begin{example}
+  Let 
+  \begin{align*}
+    A &= \begin{pmatrix}3 & 4 & 5 & 5\\ 1 & 2 & 3 & 4 \\ 1 & 1 & 2 & 3\end{pmatrix}.
+  \end{align*}
+  Define $T_A: \F^4\rightarrow \F^3$, $\mathcal{E}_4 = \set{e_1,e_2,e_3,e_4}$, and $\mathcal{F}_3 = \set{f_1,f_2,f_3}$. We have
+  \begin{align*}
+    T_A\left(e_1\right) &= 3f_1 + f_2 + f_3\\
+    T_A\left(e_2\right) &= 4f_1 + 2f_2 + f_3\\
+    T_A\left(e_3\right) &= 5f_1 + 3f_2 + 2f_3\\
+    T_A\left(e_4\right) &= 6f_1 + 4f_2 + 3f_3.
+  \end{align*}
+  First, we interchange the rows by $T_{1,3}:\F^3\rightarrow \F^3$, Then,
+  \begin{align*}
+    \left(T_{1,3}\circ T_A\right)\left(e_1\right) &= T_{1,3}\left(3f_1 + f_2 + f_3\right)\\
+                                                  &= 3T_{1,3}\left(f_1\right) + T_{1,3}\left(f_1\right) + T_{1,3}\left(f_3\right).
+  \end{align*}
+  If we look at the matrix, we then have
+  \begin{align*}
+    \left[T_{1,3}\circ T_A\right]_{\mathcal{E}_4}^{\mathcal{F}_3} &= \begin{pmatrix}1 & 1 & 2 & 3 \\ 1 & 2 & 3 & 4 \\ 3 & 4 & 5 & 6\end{pmatrix}.
+  \end{align*}
+  For the full reduced row echelon form, we would have the following series of transformations:
+  \begin{align*}
+    \left[T_{1,3}^{(-1)}\circ T_{2,3}^{(-1)}\circ T_{3}^{(-2)}\circ T_{3,1}^{(-3)}\circ T_{1,2}^{-1}\circ T_{1,3}\circ T_A\right]_{\mathcal{E}_4}^{\mathcal{F}_3} &= \begin{pmatrix}1 & 0 & 0 & 0 \\ 0 & 1 & 0  & -1\\ 0 & 0 & 1 & 2\end{pmatrix}.
+  \end{align*}
+\end{example}
 \end{document}
