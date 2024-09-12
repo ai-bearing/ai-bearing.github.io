@@ -1223,12 +1223,160 @@ While Mathematica may exist,\footnote{Citation needed.} it is still valuable to 
                                                &= \frac{\sin\theta}{1 + \cos\theta}.
   \end{align*}
 \end{example}
-\begin{example}[Dimensionless Integrals]
+  %\include{images/blackbody_2.tex}
+\begin{example}[Dimensionless Integrals]\hfill
+  \begin{center}
+    \includegraphics[width=10cm]{images/blackbody.pdf}
+  \end{center}
   Anything that has a nonzero absolute temperature radiates some energy. In particular, we want to know how this radiation is distributed among various wavelengths.\newline
 
-  For a box of photons in equilibrium at temperature $T$, the energy per volume per wavelength $\lambda$ is
+  For a box of photons in equilibrium at temperature $T$, the energy per volume per wavelength $\lambda$\footnote{read as (energy per volume) per wavelength} is
   \begin{align*}
     u\left(\lambda\right) &= \frac{8\pi h c}{\lambda^{5}\left(e^{h c/\lambda kT} - 1\right)}.
   \end{align*}
+  Here, $h$ denotes Planck's constant, $c$ is the speed of light, and $k$ is Boltzmann's constant.\newline
+
+  In order to find the total energy density, we have to integrate $u(\lambda)$ over all possible values of $\lambda$:
+  \begin{align*}
+    U &= \int_{0}^{\infty} u\left(\lambda\right)\:d\lambda\\
+      &= 8\pi h c\int_{0}^{\infty}\frac{1}{\lambda^{5}\left(e^{hc/\lambda k T} - 1\right)} \:d\lambda
+  \end{align*}
+  This integral is, for lack of a better word, hard. However, if we remove the dimensions of $\lambda$ by substituting $x = \frac{hc}{\lambda k t}$, we can verify that the value of $U$ now becomes
+  \begin{align*}
+    U &= 8\pi h c \left(\frac{kT}{hc}\right)^{4}\underbrace{\int_{0}^{\infty} \frac{x^3}{e^x-1}\:dx}_{\text{scalar}}.
+  \end{align*}
+  Thus, all the physics\footnote{Who cares about that stuff?} is captured as a coefficient on the integral; namely, this integral captures the Stefan--Boltzmann law, which has that energy density scales by $T^{4}$.\newline
+
+  Using some fancy techniques we will learn later, we can evaluate
+  \begin{align*}
+    \int_{0}^{\infty} \frac{x^3}{e^x-1}\:dx &= \frac{\pi^4}{15}.
+  \end{align*}
+\end{example}
+\subsubsection{Even/Odd}%
+\begin{definition}[Even and Odd Functions]
+A function $f(x)$ is
+\begin{itemize}
+  \item even if $f(-x) = f(x)$;
+  \item odd if $f(-x) = -f(x)$.
+\end{itemize}
+\end{definition}
+Just as a matrix can be decomposed into a sum of a symmetric and antisymmetric matrix, we can decompose a function into a sum of an even function and an odd function.\newline
+
+Integrals over symmetric intervals on functions with definite parity are very simple:
+\begin{align*}
+  \int_{-a}^{a} f(x)\:dx &= \begin{cases}
+    2\int_{0}^{a} f(x)\:dx & f\text{ odd}\\
+    0 & f\text{ even}
+  \end{cases}.
+\end{align*}
+For the case of a function $g\left(x\right) = g\left(|x|\right)$, we have
+\begin{align*}
+  \int_{-a}^{b} g\left(|x|\right)\:dx &= \int_{-a}^{0} g(-x)\:dx + \int_{0}^{b} g(x)\:dx.
+\end{align*}
+\subsubsection{Products and Powers of Sines and Cosines}%
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{c|c}
+    Value & Expression\\
+    \hline
+    $\sin\left(\alpha \pm \beta\right)$ & $\sin\alpha\cos\beta \pm \sin\beta\cos\alpha$\\
+    $\cos\left(\alpha \pm \beta\right)$ & $\cos\alpha\cos\beta \mp \sin\alpha\sin\beta$\\
+    \hline
+    $\sin\alpha\cos\beta$ & $\frac{1}{2}\left(\sin(\alpha + \beta) + \sin\left(\alpha - \beta\right)\right)$\\
+    $\cos\alpha\cos\beta$ & $\frac{1}{2}\left(\cos(\alpha - \beta) + \cos(\alpha + \beta)\right)$\\
+    $\sin\alpha\sin\beta$ & $\frac{1}{2}\left(\cos(\alpha - \beta) - \cos(\alpha + \beta)\right)$
+  \end{tabular}
+\end{center}
+\begin{example}
+  If we have an integral
+  \begin{align*}
+    \int_{}^{} \sin(3x)\cos(2x)\:dx &= \frac{1}{2}\int_{}^{} \sin(5x) + \sin(x)\:dx\\
+                                    &= \frac{1}{2}\left(-\frac{1}{5}\cos (5x) - \cos(x) \right).
+  \end{align*}
+\end{example}
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{c|c}
+    Integral & Shortcut\\
+    \hline
+    $\int \sin^{m}(x)\cos^{2k+1}(x)\:dx$ & $\int_{}^{} u^{m}\left(1-u^2\right)^{k}\:du$\\
+    $\int_{}^{} \sin^{2k+1}(x)\cos^{n}(x)\:dx$ & $-\int_{}^{} \left(1-u^2\right)^ku^{n}\:du$\\
+    $\int_{}^{} \sin^{2}(x)\:dx$ &
+  \end{tabular}
+\end{center}
+\begin{example}
+  To evaluate
+  \begin{align*}
+    \int_{}^{} \sin^{2}(x)\:dx,\\
+    \int_{}^{} \cos^2(x)\:dx
+  \end{align*}
+  we use the identity
+  \begin{align*}
+    \sin^2(x) &= \frac{1}{2}\left(1-\cos(2x)\right)\\
+    \cos^{2}(x) &= \frac{1}{2}\left(1 + \cos(2x)\right),
+  \end{align*}
+  and take
+  \begin{align*}
+    \int_{}^{} \sin^2(x)\:dx &= \frac{1}{2}\int_{}^{} \left(1-\cos(2x)\right)\:dx\\
+                             &= \frac{x}{2} - \frac{1}{4}\sin(2x)\\
+    \int_{}^{} \cos^2(x)\:dx &= \frac{1}{2}\int_{}^{} \left(1+\cos(2x)\right)\:dx\\
+                             &= \frac{x}{2} + \frac{1}{4}\sin(2x).
+  \end{align*}
+  Thus, we can see that
+  \begin{align*}
+    \int_{0}^{\pi} \sin^2(x)\:dx&= \frac{\pi}{2}\\
+    \int_{0}^{\pi} \cos^2(x)\:dx&= \frac{\pi}{2}
+  \end{align*}
+\end{example}
+\subsubsection{Axial and Spherical Symmetry}%
+Consider a function of the form $f(x,y) = x^2 + y^2$. If we were to integrate with respect to $dx dy$, we would need a two dimensional integral. With polar coordinates, though, we would have $dx dy = rdrd\phi$. Since $f$ is axially symmetric, we would have our $dx dy = 2\pi r dr$, which is a one-dimensional integral.\newline
+
+If we have something with spherical symmetry, then there is no dependence on either $\theta$ or $\phi$, yielding a function $f\left(\mathbf{r}\right) = f(r)$, meaning
+\begin{align*}
+  \int_{}^{} f\left(\mathbf{r}\right)\:d\tau &= \int_{}^{} f(r)r^2\sin\theta\:drd\theta d\phi\\
+                                             &= 4\pi \int_{}^{} f(r)r^2\:dr.
+\end{align*}
+Note that $\int_{}^{} \sin\theta \:d\theta d\phi$ over the sphere is $4\pi$.
+\begin{example}
+  Consider a surface $S$ with charge density $\sigma\left(\mathbf{r}\right)$. Finding the total charge requires evaluating
+  \begin{align*}
+    Q &= \int_{S}^{} \sigma\left(\mathbf{r}\right)\:dA.
+  \end{align*}
+  If $S$ is hemispherical with $z > 0$ with radius $R$, and $\sigma = k\frac{x^2 + y^2}{R^2}$, the integrand is axially symmetric.\newline
+
+  Using spherical coordinates, we evaluate
+  \begin{align*}
+    Q &= \int_{S}^{} \sigma\left(\mathbf{r}\right)\:dA\\
+      &= \frac{k}{R^2}\int_{}^{} x^2 + y^2\:dA\\
+      &= \frac{k}{R^2}\int_{}^{} \left(R^2\sin^2\theta\cos^2\phi + R^2\sin^2\theta\sin^2\phi\right)R^2\sin\theta\:d\theta d\phi\\
+      &= kR^2\int_{S}^{} \sin^{3}\theta\:d\theta d\phi\\
+      &= 2\pi kR^2 \int_{0}^{\pi/2} \sin^{3}\theta\:d\theta\\
+      &= \frac{4\pi kR^2}{3}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Let
+  \begin{align*}
+    \Phi\left(\mathbf{r}\right) &= \int_{}^{} \frac{e^{-i\mathbf{k}\cdot\mathbf{r}}}{\left(2\pi\right)^3\norm{\mathbf{k}}^2}\:d^{3}k
+  \end{align*}
+  where $k$-space is an abstract $3$-dimensional Euclidean space. In Cartesian coordinates, $d^3k = dk_x dk_y dk_z$, which yields the integral
+  \begin{align*}
+    \Phi\left(\mathbf{r}\right) &= \int_{}^{} \frac{e^{-ik_x x}e^{-ik_y y}e^{-ik_z z}}{\left(2\pi\right)^3 \left(k_x^2 + k_y^2 + k_z^2\right)}\:dk_x dk_y dk_z.
+  \end{align*}
+  This integral is very hard to evaluate (over Cartesian coordinates, anyway),\footnote{Citation needed.} so we need to use some other methods.\newline
+
+  In spherical coordinates, we have $d^3 k = k^2 dk d\Omega$, yielding
+  \begin{align*}
+    \Phi\left(\mathbf{r}\right) &= \frac{1}{\left(2\pi\right)^3}\int_{}^{} k^2\frac{e^{-ikr\cos\theta}}{k^2}\:dkd\left(\cos \theta\right)d\phi.
+  \end{align*}
+  Since we are summing away all our $k$-dependence, we can orient $r$ along the $k_z$ axis. Thus, we can evaluate the integral as
+  \begin{align*}
+    \Phi\left(\mathbf{r}\right) &= \frac{1}{\left(2\pi\right)^3}\int_{}^{} k^2\frac{e^{-ikr\cos\theta}}{k^2}\:dkd\left(\cos \theta\right)d\phi\\
+                                &= \frac{1}{\left(2\pi\right)^{2}}\int_{-1}^{1}\int_{0}^{\infty} e^{-ikr\cos\theta} \:dk d(\cos\theta)\\
+                                &= \frac{1}{\left(2\pi\right)^2}\int_{}^{} \frac{1}{\left(-ikr\right)}\left(e^{-ikr} - e^{ikr}\right)\:dk\\
+                                &= \frac{1}{\left(2\pi\right)^2}\int_{0}^{\infty}\frac{2\sin(kr)}{kr} \:dk\\
+                                &= \frac{1}{2\pi^2}\underbrace{\int_{0}^{\infty} \frac{\sin(kr)}{kr}\:dk}_{\text{sinc integral}}.
+  \end{align*}
+  In order to evaluate the sinc integral, we have to use some different techniques.
 \end{example}
 \end{document}

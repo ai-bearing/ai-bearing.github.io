@@ -1,4 +1,4 @@
-\documentclass[10pt]{mypackage}
+\documentclass[12pt]{mypackage}
 
 % sans serif font:
 %\usepackage{cmbright}
@@ -23,19 +23,52 @@
   Math 395: Homework 2\\
   Name: Avinash Iyer\\
   Due: 09/12/2024\\
-  Collaborators: Noah Smith, Gianluca Crescenzo, Carly Venenciano
+  Collaborators: Noah Smith, Gianluca Crescenzo, Carly Venenciano, Timothy Rainone
 \end{center}
 \section{Problem 11}%
 \begin{problem}
-  Let $T\in \Hom_{\F}\left(\mathcal{P}_7\left(\F\right),\mathcal{P}_{7}\left(\R\right)\right)$ be defined by $T\left(f(x)\right) = f'(x)$, where $f'(x)$ denotes the usual derivative of a polynomial $f(x)\in \mathcal{P}_{7}\left(\F\right)$. For each of the fields below, determine a basis for the image and kernel of $T$:
+  Let $T\in \Hom_{\F}\left(P_7\left(\F\right),P_{7}\left(\F\right)\right)$ be defined by $T\left(f(x)\right) = f'(x)$, where $f'(x)$ denotes the usual derivative of a polynomial $f(x)\in P_{7}\left(\F\right)$. For each of the fields below, determine a basis for the image and kernel of $T$:
   \begin{enumerate}[(a)]
     \item $\F = \R$
     \item $\F = \F_{3}$.
   \end{enumerate}
 \end{problem}
-\begin{solution}
+\begin{solution}\hfill
   \begin{enumerate}[(a)]
-    \item 
+    \item For $f(x)\in P_{7}\left(\R\right)$, we have
+      \begin{align*}
+        f(x) &= a_0 + a_1x + \cdots + a_7x^{7},
+      \end{align*}
+      where $a_i\in \R$ for each $i$ from $1$ through $7$. In particular,
+      \begin{align*}
+        T\left(f(x)\right) &= a_1 + 2a_2x + \cdots + 7a_7x^{6},
+      \end{align*}
+      and since $a_{i}\in \R$ for each $i$, so too is $ia_{i}$. For any $p(x)\in P_{6}\left(\R\right)$, with $p(x) = p_0 + p_1x + \cdots + p_{6}x^{6}$, we can find $q(x)\in P_{7}\left(\R\right)$ with
+      \begin{align*}
+        q(x) &= q_0 + p_0x + \frac{p_1}{2}x^2 + \cdots + \frac{p_5}{6}x^{6} + \frac{p_6}{7}x^{7},
+      \end{align*}
+      with $q_0\in \R$ being arbitrary, and
+      \begin{align*}
+        T\left(q(x)\right) &= p_0 + p_1 x + \cdots + p_6x^{6}.
+      \end{align*}
+      Thus, $\img\left(T\right) = P_6\left(\R\right)$. The basis for $\img\left(T\right)$ is the basis for $P_{6}\left(\R\right)$, which is $\set{1,x,x^2,\dots,x^{6}}$.\newline
+
+      We know that if $f(x)\in \R$, then $T\left(f(x)\right) = 0$, meaning $\ker\left(T\right) = \R$. Thus, a basis for $\ker\left(T\right)$ is $\set{1}$.
+    \item For $f(x) \in P_{7}\left(\F_3\right)$, we have
+      \begin{align*}
+        f(x) &= a_0 + a_1 x + \cdots + a_{5}x^{5} + a_6x^{6} + a_7x^{7}
+      \end{align*}
+      where $a_0,a_1,\dots,a_6,a_7\in \F_3$. In particular, we can see that
+      \begin{align*}
+        T\left(f(x)\right) &= a_1 + 2a_2x + 3a_3x^2 + \cdots + 5a_5x^4 + 6a_6x^5 + 7a_7x^{6}.
+      \end{align*}
+      Since we are working in $\F^{3}$, in particular, it is the case that $3a_3 \equiv 0a_3 = 0$, and similarly with $6a_6$. Thus, we have
+      \begin{align*}
+        T\left(f(x)\right) &= a_1 + 2a_2x + 4a_4x^3 + 5a_5x^4 + 7a_7x^6.
+      \end{align*}
+      Thus, $\img\left(T\right)$ must be of this form, meaning that the set $\set{1,x,x^3,x^4,x^6}$ is a basis for the image of $T$.\newline
+
+      Similarly, since all polynomials of the form $f(x) = a + bx^3 + cx^6$ with $a,b,c\in \F_3$ are mapped to $0$ under $T$, it is the case that the set $\set{1,x^3,x^6}$ is a basis for $\ker\left(T\right)$.
   \end{enumerate}
 \end{solution}
 \section{Problem 12}%
@@ -77,5 +110,73 @@
   \begin{align*}
     V &= \ker(T)\oplus \set{cv\mid c\in\F}.
   \end{align*}
+\end{solution}
+\section{Problem 18}%
+\begin{problem}
+  Let $V$ be a $\F$-vector space of dimension $n$. Let $T\in \Hom_{\F}\left(V,V\right)$ such that $T^2 = 0$. Prove that the image of $T$ is contained in the kernel of $T$, and hence the dimension of the image of $T$ is at most $n/2$.
+\end{problem}
+\begin{solution}
+  Suppose $w\in \img(T)$. Then, there exists $v\in V$  such that $T(v) = w$. In particular, this means that
+  \begin{align*}
+    T(w) &= T\left(T(v)\right)\\
+         &= T^2\left(v\right)\\
+         &= 0,
+  \end{align*}
+  meaning $T(w)\in \ker(T)$. Thus, $w\in \ker(T)$, implying that $\img(T)\subseteq \ker(T)$. In particular, since $n = \Dim_{\F}(V) = \Dim_{\F}\left(\img(T)\right) + \Dim_{\F}\left(\ker(T)\right)$, and $\Dim_{\F}\left(\img(T)\right) \leq \Dim_{\F}\left(\ker(T)\right)$, it is the case that $\Dim_{\F}\left(\img(T)\right) \leq n/2$.
+\end{solution}
+\section{Problem 19}%
+\begin{problem}
+  Let $W$ be a subspace of a finite-dimensional vector space $V$. Let $T\in \Hom_{\F}\left(V,V\right)$ be such that $T\left(W\right)\subseteq W$. Show that $T$ induces a linear transformation $\overline{T}\in \Hom_{\F}\left(V/W,V/W\right)$. Prove that $T$ is nonsingular (i.e., injective) on $V$ if and only if $T$ restricted to $W$ and $\overline{T}$ on $V/W$ are both nonsingular.
+\end{problem}
+\begin{solution}
+  Let $\pi: V\rightarrow V/W$ be the projection map, $\pi(v) = v + W$. For $T\in \Hom_{\F}\left(V,V\right)$ with $T(W) \subseteq W$, it is the case that $\pi\circ T (W) = 0 + W$. We define $\overline{T}: V/W \rightarrow V/W$ by taking
+  \begin{align*}
+    \overline{T}\left(v + W\right) &= T(v) + W.
+  \end{align*}
+  We will show that $\overline{T}$ is well-defined and that $\pi \circ T = \overline{T}\circ \pi$. Suppose $v_1 + W = v_2 + W$. Then, for some $w\in W$, $v_1 = v_2 + w$. Therefore,
+  \begin{align*}
+    \overline{T}\left(v_1 + W\right) &= \overline{T}\left(v_2 + w + W\right)\\
+                                     &= T\left(v_2 + w\right) + W\\
+                                     &= T\left(v_2\right) + T\left(w\right) + W\\
+                                     &= T\left(v_2\right) + W,
+  \end{align*}
+  where the property that $T\left(W\right)\subseteq W$ was used in the final step.\newline
+
+  We will now show that $\overline{T}$ is a linear map. Let $\alpha \in \F$, $v_1 + W,v_2 + W\in V/W$. Then,
+  \begin{align*}
+    \overline{T}\left(\left(v_1 + W\right) + \alpha \left(v_2 + W\right)\right) &= \overline{T}\left(\left(v_1 + \alpha v_2\right) + W\right)\\
+                                                                                &= T\left(v_1 + \alpha v_2\right) + W\\
+                                                                                &= T\left(v_1\right) + \alpha T\left(v_2\right) + W\\
+                                                                                &= \left(T\left(v_1\right) + W\right) + \alpha\left(T\left(v_2\right) + W\right)\\
+                                                                                &= \overline{T}\left(v_1 + W\right) + \alpha \overline{T}\left(v_2 + W\right).
+  \end{align*}
+  Finally, we can see that for $v\in V$
+  \begin{align*}
+    \pi \circ T\left(v\right) &= \pi\left(T(v)\right)\\
+                              &= T\left(v\right) + W\\
+                              &= \overline{T}\left(v + W\right)\\
+                              &= \overline{T}\left(\pi\left(v\right)\right).
+  \end{align*}
+  Thus, we can see that the following diagram commutes.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADUQBfU9TXfIRQBGclVqMWbTjz7Y8BImWHj6zVog4B6AOrdeIDPMFFRK6mqmb2u7uJhQA5vCKgAZgCcIAWyRkQOBBIAEzUDHQARjAMAAr8CkIgHliOABY4IBaSGiAAOrloWPruXr6IogFBiADMWeps+YXFIJ4+ftSBSBWWOQAqza1loZVItRL1mvkQNDAeDFhgMMC9XJkg4VGx8SaayWkZXBRcQA
+\begin{tikzcd}
+V \arrow[d, "\pi"'] \arrow[r, "T"] & V \arrow[d, "\pi"] \\
+V/W \arrow[r, "\overline{T}"']     & V/W               
+\end{tikzcd}
+  \end{center}
+  Suppose $T$ is injective. Then, by inclusion, $T\bigr\vert_{W}$ is injective. Let $v + W\in \ker\left(\overline{T}\right)$. Then,
+  \begin{align*}
+    \overline{T}\left(v + W\right) &= 0 + W\\
+                                   &= T\left(v\right) + W,
+  \end{align*}
+  Thus, we have $T(v) \in W$. Since $V$ is finite-dimensional, and $T$ is injective, then $T$ is bijective, meaning $T(W) = W$ (as, by assumption, $T(W)\subseteq W$). Thus, $v\in W$, meaning $v + W = 0 + W$, so $\ker\left(\overline{T}\right) = 0 + W$, meaning $\overline{T}$ is injective.\newline
+
+  Suppose $\ker\left(\overline{T}\right) = 0 + W$ and $\ker\left(T\bigr\vert_{W}\right) = 0$. Let $v\in \ker(T)$. Then, $T(v) = 0$. Thus,
+  \begin{align*}
+    \pi\left(T(v)\right) &= 0 + W\\
+                         &= \overline{T}\left(\pi(v)\right),
+  \end{align*}
+  implying that $\pi(v) = 0 + W$, so $v\in W$. So, $T(v) = T\bigr\vert_{W}\left(v\right) = 0$, meaning $v = 0$.
 \end{solution}
 \end{document}

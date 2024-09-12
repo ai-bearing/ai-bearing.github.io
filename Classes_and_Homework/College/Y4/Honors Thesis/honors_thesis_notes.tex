@@ -12,19 +12,20 @@
 \pagestyle{fancy}
 \fancyhf{}
 \rhead{Avinash Iyer}
-\lhead{Amenability and C$^{\ast}$-Algebras}
+\lhead{Amenability}
 
 \setcounter{secnumdepth}{0}
 
 \begin{document}
 \RaggedRight
 \section{Introduction}%
-This is going to be the notes document for my honors thesis. Hopefully, we will cover locally compact topological groups, (Haar) measures, Tarski's theorem, group algebras, the theory of Banach algebras and C$^{\ast}$-algebras, and the proof that a C$^{\ast}$-algebra is nuclear if and only if it's amenable as a Banach algebra.\newline
+This is going to be the notes from my Honors Thesis project on amenability. We will be covering different results that are used to show that a topological group has a translation-invariant finitely additive probability measure (i.e., a mean).\newline
 
-The primary source texts to inform this independent study will be Volker Runde's \textit{Lectures on Amenability} and Timothy Rainone's \textit{Functional Analysis-en route to Operator Algebras}.
-\section{Group Actions and Paradoxical Decompositions}%
-This section will draw information from Dummit and Foote's \textit{Abstract Algebra}, as well as Runde's \textit{Lectures on Amenability}.
-
+The primary source texts to inform this independent study will be Volker Runde's \textit{Lectures on Amenability} and Timothy Rainone's \textit{Functional Analysis-en route to Operator Algebras}, as well as various notes compiled by my professor.
+\section{Group Actions, Paradoxical Decompositions, and Tarski's Theorem}%
+In order to introduce the idea of amenability, we will start by stating some essential facts about group actions before proving Tarski's theorem, which states that a group is amenable if and only if it is non-paradoxical.
+\subsection{Basics of Group Actions}%
+The information for these essentials about group actions will be drawn from Dummit and Foote's \textit{Abstract Algebra}.
 \begin{definition}[Group Action]
   A (left) group action of $G$ onto a set $A$ is a map from $G\times A$ to $A$ that satisfies:
   \begin{itemize}
@@ -70,6 +71,11 @@ This section will draw information from Dummit and Foote's \textit{Abstract Alge
 \begin{definition}[Faithful Action]
   An action is faithful if the kernel of the action is $e$.
 \end{definition}
+\begin{definition}[Free Action]
+  For a set $X$ with $G$ acting on $X$, the action of $G$ on $X$ is free if, for every $x$, $g\cdot x = x$ if and only if $g = e_G$.\newline
+
+  If the action of $G$ on $X$ is a free action, we say $G$ acts freely on $X$.
+\end{definition}
 \begin{proposition}[Equivalence Relation on $A$]
   Let $G$ be a group that acts on a nonempty set $A$. We define a relation $a\sim b$ if and only if $a = g\cdot b$ for some $g\in G$. This is an equivalence relation, with the number of elements in $\left[a\right]_{\sim}$ found by taking $\left\vert G:G_a \right\vert$, which is the index of the stabilizer of $a$.
 \end{proposition}
@@ -94,4 +100,51 @@ This section will draw information from Dummit and Foote's \textit{Abstract Alge
   \end{align*}
   In particular, if $c\in G\cdot a$ for some $a\in A$, then $G\cdot c = G\cdot a$.
 \end{definition}
+\subsection{Paradoxical Decompositions}%
+Most of the information from this section will be drawn from Volker Runde's \textit{Lectures on Amenability}.
+\begin{definition}[Paradoxical Sets and Decompositions]
+  Let $G$ be a group that acts on a set $X$. Let $E\subseteq X$.\newline
+
+  If there exist pairwise disjoint $A_1,\dots,A_n,B_1,\dots,B_m\subseteq E$ and $g_1,\dots,g_n,h_1,\dots,h_m\in G$ such that
+  \begin{align*}
+    E &= \bigcup_{j=1}^{n}g_j\cdot A_j
+    \intertext{and}
+    E &= \bigcup_{j=1}^{m}h_j\cdot B_j,
+  \end{align*}
+  then we say that $E$ is $G$-paradoxical.\newline
+
+  In particular, a paradoxical group is one where $G$ acts on itself by left-multiplication.
+\end{definition}
+\begin{example}[Our First Paradoxical Group]
+  The free group on two generators, $\mathbb{F}\left(a,b\right)$,\footnote{The set of all reduced words over $\set{a,b,a^{-1},b^{-1},e_{\F(a,b)}}$. In particular, a word is reduced when the pairs $aa^{-1}$ and $bb^{-1}$ are replaced with the identity $e_{\F(a,b)}$.} is paradoxical. To see this, we let
+  \begin{align*}
+    W(x) &= \set{w\in \F(a,b)\mid w\text{ starts with }x}.
+  \end{align*}
+  Here, ``starts with'' refers to the left-most element. For instance, $ba^2ba^{-1}\in W\left(b\right)$.\newline
+
+  In particular, we can see that
+  \begin{align*}
+    \F(a,b) &= \set{e_{\F(a,b)}} \sqcup W(a) \sqcup W(b) \sqcup W\left(a^{-1}\right)\sqcup W\left(b^{-1}\right).
+  \end{align*}
+  For any $w\in \F(a,b)\setminus W(a)$, we can see that $a^{-1}w\in W\left(a^{-1}\right)$, meaning $w\in aW\left(a^{-1}\right)$. Therefore, $\F(a,b) = W(a)\sqcup aW\left(a^{-1}\right)$.\newline
+
+  Similarly, for any $v\in \F(a,b)\setminus W(b)$, $b^{-1}v \in W\left(b^{-1}\right)$, so $v \in bW\left(b^{-1}\right)$. Therefore, $\F(a,b) = W(b) \sqcup bW\left(b^{-1}\right)$.
+\end{example}
+\begin{proposition}[Free Action of a Paradoxical Group]
+  Let $G$ be a paradoxical group that acts freely on $X$. Then, $X$ is $G$-paradoxical.
+\end{proposition}
+\begin{proof}
+  Let $A_1,\dots,A_n,B_1,\dots,B_m\subseteq G$ be pairwise disjoint, with $g_1,\dots,g_n,h_1,\dots,h_m\in G$ such that
+  \begin{align*}
+    G &= \bigcup_{j=1}^{n}g_j A_j\\
+      &= \bigcup_{j=1}^{m}h_jB_j.
+  \end{align*}
+  We let $M\subseteq X$ contain exactly one element from every orbit of $G$.\newline
+
+  The set $\set{g\cdot M\mid g\in G}$ is a partition of $X$. Since $M$ contains exactly one element from every orbit of $G$, it is then the case that $\bigcup_{g\in G}g\cdot M = X$, since $G\cdot M = X$.\newline
+
+  Additionally, if $x,y\in M$ with $g\cdot x = h\cdot y$, then $\left(h^{-1}g\right)\cdot x = y$, meaning $y$ is in the orbit of $x$ and vice versa, implying $x = y$. Thus, we must have $h^{-1}g = e_G$, as we assume $G$ acts freely.\newline
+
+  Thus, we can see that $g_1\cdot M \neq g_2\cdot M$ if $g_1\neq g_2$, meaning $\set{g\cdot M\mid g\in G}$ is a partition.
+\end{proof}
 \end{document}
