@@ -1379,4 +1379,148 @@ Note that $\int_{}^{} \sin\theta \:d\theta d\phi$ over the sphere is $4\pi$.
   \end{align*}
   In order to evaluate the sinc integral, we have to use some different techniques.
 \end{example}
+\subsubsection{Differentiation with Respect to a Parameter}%
+\begin{example}
+  We can evaluate
+  \begin{align*}
+    \int_{}^{} xe^{ax}\:dx &= \pd{}{a}\left(\int_{}^{} e^{ax}\:dx\right)\\
+                           &= \pd{}{a} \left(\frac{1}{a}e^{ax}\right)\\
+                           &= -\frac{1}{a^2}e^{ax} + \frac{1}{a}xe^{ax}\\
+                           &= \frac{1}{a^2}e^{ax}\left(ax - 1\right)
+  \end{align*}
+  When differentiating with respect to a parameter, it is important to remember that we are often differentiating \textit{with respect to the parameter}, not with respect to our main variable.
+\end{example}
+\begin{example}[Introducing a Parameter]
+  We wish to solve the sinc integral,
+  \begin{align*}
+    \int_{0}^{\infty} \frac{\sin x}{x}\:dx.
+  \end{align*}
+  In order to do this, we will introduce a parameter such that differentiation will cancel out the $x$ in the denominator:
+  \begin{align*}
+    J\left(\alpha\right) &= \int_{0}^{\infty} e^{-\alpha x}\frac{\sin x}{x}\:dx. \tag*{$\alpha > 0$}
+  \end{align*}
+  In particular, $\alpha > 0$. We calculate
+  \begin{align*}
+    \frac{dJ}{d\alpha} &= -\int_{0}^{\infty} e^{-\alpha x}\sin x\:dx\\
+                       &= -\frac{1}{1 + \alpha^2}.
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    J\left(\alpha\right) &= -\int_{}^{} \frac{1}{\alpha^2}\:d\alpha\\
+                         &= -\arctan\left(\alpha\right) + C.
+  \end{align*}
+  In order to determine the value of $C$, we need to make sure $J(\infty) = 0$. Therefore, $C = \frac{\pi}{2}$. Therefore, we have
+  \begin{align*}
+    J(0) &= \frac{\pi}{2}.
+  \end{align*}
+\end{example}
+\subsubsection{Gaussian Integral}%
+We cannot evaluate $I_0 = \int_{0}^{\infty} e^{-ax^2}\:dx$ using elementary methods, because $e^{-ax^2}$ is not an elementary function. The reason we care a lot about $e^{-ax^2}$ is because it is very important in quantum mechanics and statistics.\footnote{Who cares about that?}\newline
+
+It is clear that $I_0$ converges. We can see that the dimension of $a$ is $x^{-2}$, and since we are integrating with respect to $dx$, we can see that our integral is related to $\frac{1}{\sqrt{a}}$.
+\begin{example}
+  We will not solve for $I_0$, but for $I_0^2$. Thus, we have
+  \begin{align*}
+    I_0^2 &= \left(\frac{1}{2}\int_{-\infty}^{\infty} e^{-ax^2}\:dx\right)\left(\frac{1}{2}\int_{-\infty}^{\infty} e^{-ay^2}\:dy\right)\\
+          &= \frac{1}{4}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} e^{-a\left(x^2 + y^2\right)}\:dxdy\\
+          &= \frac{1}{4}\int_{0}^{2\pi}\int_{0}^{\infty} re^{-ar^2}\:drd\phi\\
+          &= \frac{\pi}{2}\int_{0}^{\infty} re^{-ar^2}\:dr\\
+          &= \frac{\pi}{2}\left(\frac{1}{2}\int_{0}^{\infty} e^{-au}\:du\right)\\
+          &= \frac{\pi}{4a}.
+  \end{align*}
+  Therefore, $I_0 = \frac{1}{2}\sqrt{\frac{\pi}{a}}$.
+\end{example}
+\begin{definition}[Family of Gaussian Integrals]
+\begin{align*}
+  I_n &= \int_{0}^{\infty} x^ne^{-ax^2}\:dx.
+\end{align*}
+\end{definition}
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{c|c}
+    Expression & Value\\
+    \hline
+    $I_0$ & $\frac{1}{2}\sqrt{\frac{\pi}{a}}$\\
+    $I_1$ & $\frac{1}{2a}$\\
+    $I_{2n}$ & $(-1)^{n}\frac{d^{n}}{da^{n}}I_0$\\
+    $I_{2n+1}$ & $\left(-1\right)^{n}\frac{d^{n}}{da^{n}}I_1$
+  \end{tabular}
+\end{center}
+It is important to note that there are different expressions for the Gaussian integral:
+\begin{align*}
+  \int_{}^{} e^{-ax^2}\:dx\\
+  \int_{}^{} e^{-a^2x^2}\:dx\\
+  \int_{}^{} e^{-a^2x^2/2}\:dx\\
+  \int_{}^{} e^{-x^2/a}\:dx\\
+  \int_{}^{} e^{-x^2/a^2}\:dx,
+\end{align*}
+meaning we have to be careful when evaluating these integrals.
+\begin{example}[Error Function]
+Consider the integral
+\begin{align*}
+  \int_{0}^{53} e^{-ax^2}\:dx.
+\end{align*}
+Unfortunately, there is no way to do this integral analytically. It is only able to be calculated numerically.\newline
+
+We define
+\begin{align*}
+  \text{erf}\left(u\right) &= \int_{0}^{u} e^{-ax^2}\:dx
+\end{align*}
+\end{example}
+\subsubsection{Completing the Square}%
+\begin{example}
+  Consider the integral
+  \begin{align*}
+    \int_{-\infty}^{\infty} e^{-ax^2-bx}\:dx.
+  \end{align*}
+  This integral is Gaussian-esque, but it isn't fully Gaussian, yet.\newline
+
+  To do this, we will complete the square:
+  \begin{align*}
+    ax^2 + bx &= a\left(x^2 + \frac{b}{a}x\right)\\
+              &= a\left(x^2 + \frac{b}{a}x + \frac{b^2}{4a^2} - \frac{b^2}{4a^2}\right)\\
+              &= a\left(x + \frac{b}{2a}\right)^2 - \frac{b^2}{4a}.
+  \end{align*}
+  In particular, this turns the integral into
+  \begin{align*}
+    \int_{-\infty}^{\infty} e^{-ax^2 - bx}\:dx &= \int_{-\infty}^{\infty} e^{-a\left(x + b/2a\right)^2 + b^2/4a}\:dx\\
+                                               &= e^{b^2/4a}\int_{-\infty}^{\infty} e^{-a\left(x + b/2a\right)}\:dx\\
+                                               &= e^{b^2/4a}\left(\sqrt{\frac{\pi}{a}}\right)\\
+                                               &= e^{b^2/4a}\sqrt{\frac{\pi}{a}}.
+  \end{align*}
+\end{example}
+\subsubsection{Series Expansion}%
+\begin{center}
+  \renewcommand{\arraystretch}{1.75}
+  \begin{tabular}{c|c}
+    Function & Expression\\
+    \hline
+    $\Gamma(s)$ & $\displaystyle \int_{0}^{\infty} x^{s-1}e^{-x}\:dx$\\
+    $\zeta(s)$ & $\displaystyle \sum_{k=1}^{\infty}\frac{1}{k^s}$\\
+    $\Gamma\left(s+1\right)$ & $s\Gamma(s)$
+  \end{tabular}
+\end{center}
+Consider the integral
+\begin{align*}
+  \int_{0}^{\infty} \frac{x^{s-1}}{e^{x}-1}\:dx.
+\end{align*}
+This is a very nasty integral,\footnote{Citation needed.} but we will need to know this value because it is useful in statistical mechanics.\footnote{Okay actually I do kinda care about this.} We want to ensure this converges.\newline
+
+Notice that for large $x$, the integrand looks like $e^{-x}x^{s-1}$.
+\begin{example}
+  To resolve the integral we take
+  \begin{align*}
+    \int_{0}^{\infty} \frac{x^{s-1}}{e^{x}-1}\:dx &= \int_{0}^{\infty} \frac{e^{-x}x^{-1}}{1-e^{-x}}\:dx
+    \intertext{We will use the geometric series expansion for the denominator:}
+                                                  &= \int_{0}^{\infty} e{-x}x^{s-1}\sum_{k=0}^{\infty}e^{-kx}\:dx\\
+                                                  &= \sum_{k=0}^{\infty}\int_{0}^{\infty} x^{s-1}e^{-\left(k+1\right)x}\:dx.
+                                                  \intertext{We make the change of variables $u = (n+1)x$.}
+                                                  &= \sum_{n=0}^{\infty}\frac{1}{\left(n+1\right)^{s}}\int_{0}^{\infty} u^{s-1}e^{-u}\:du\\
+                                                  &= \underbrace{\sum_{n=1}^{\infty}\frac{1}{n^s}}_{\zeta(s)}\underbrace{\int_{0}^{\infty} u^{s-1}e^{-u}\:du}_{\Gamma(s)}.
+  \end{align*}
+  Thus, our integral resolves to
+  \begin{align*}
+    \int_{0}^{\infty} \frac{x^{s-1}}{e^{x}-1}\:dx &= \Gamma(s)\zeta(s).
+  \end{align*}
+\end{example}
 \end{document}

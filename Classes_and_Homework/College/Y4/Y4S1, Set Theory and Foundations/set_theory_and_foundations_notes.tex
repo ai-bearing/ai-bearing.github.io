@@ -349,7 +349,7 @@ The power set of a set $S$ is
   \begin{align*}
     |\N| < |S| < |\R|.
   \end{align*}
-  The continuum hypothesis is independent of the ZFC axioms.\footnote{Zermelo--Frankel Axioms with the Axiom of Choice.}
+  The continuum hypothesis is independent of the ZFC axioms.\footnote{Zermelo--Fraenkel Axioms with the Axiom of Choice.}
 \end{definition}
 \begin{exercise}[Challenge Problem]
   Let $T = \set{\left(a_0,a_1,a_2,\dots\right) \mid a_i\in \N;\text{ finitely many nonzero $a_i$}}$. Is $T$ countable? We also write 
@@ -357,4 +357,123 @@ The power set of a set $S$ is
     T &= \bigoplus_{i=0}^{\infty}\N.
   \end{align*}
 \end{exercise}
+\section{Axiomatic Set Theory}%
+\begin{question}
+  Is there a set $A$ such that $A\in A$?
+\end{question}
+\begin{answer}
+  Yes! There is the set $\set{\cdots\set{}\cdots}$, which contains infinitely many sets in itself. Additionally, there is the set $A = \set{x\mid x\text{ is a set}}$.
+\end{answer}
+\begin{example}[Russell's Paradox]
+Consider the set
+\begin{align*}
+  R &= \set{x\mid x\notin x}.
+\end{align*}
+The question is if $R\in R$. However, this cannot be true, because if $R\in R$, then $R\notin R$ and vice versa.
+\end{example}
+\subsection{Axioms of Set Theory}%
+We cannot just say
+\begin{align*}
+  S &= \set{x\mid x\text{ is blah}},
+\end{align*}
+as evidenced by Russell's paradox. We need to carefully construct rules to create a rigorous description of formal set theory.
+\begin{axiom}[Existence]
+  The existence axiom states that there exists a set:
+  \begin{align*}
+    \exists a \left(a = a\right).
+  \end{align*}
+\end{axiom}
+\begin{axiom}[Empty Set]
+  The empty set axiom states that there exists a set with no elements:
+  \begin{align*}
+    \exists a\: \forall x\left(x\notin a\right).
+  \end{align*}
+\end{axiom}
+\begin{axiom}[Pairing]
+  The pairing axiom states that, given any sets $a$ and $b$, there is a set $c$ such that the only elements of $c$ are $a$ and $b$:
+  \begin{align*}
+    \forall a\:\forall b\:\exists c\:\forall x\left(x\in c \Leftrightarrow x = a \vee x = b\right)
+  \end{align*}
+\end{axiom}
+\begin{axiom}[Extensionality]
+  The axiom of extensionality states that if two sets have the same elements, they are the same sets:
+  \begin{align*}
+    \forall a\:\forall b\left(\forall x\left(x\in a\Leftrightarrow x\in b\right) \Rightarrow a = b\right)
+  \end{align*}
+\end{axiom}
+\begin{question}
+  What is a set?
+\end{question}
+\begin{answer}
+  The unsatisfying answer is that ``set'' and ``element'' have no meaning \textit{per se}. The main reason we define these axioms is to define relationships between objects (rather than objects themselves).
+\end{answer}
+\begin{example}
+  We want to prove that for every set $b$, there exists a set $\set{b}$.\newline
+
+  Symbolically, we want to show
+  \begin{align*}
+    \forall b\: \exists c\: \forall x \left(x\in c \Leftrightarrow x = b\right).
+  \end{align*}
+  In particular, we can see that, in the pairing axiom, there is no requirement that $a$ and $b$ be distinct. Therefore, we can use the pairing axiom of $a = b$ and $b = b$. Therefore, the pairing axiom becomes
+  \begin{align*}
+    \forall b\:\forall b\:\exists c\:\forall x\left(x\in c\Leftrightarrow x = b \vee x = b\right),
+  \end{align*}
+  which reduces to
+  \begin{align*}
+    \forall b\:\exists c\:\forall x\left(x\in c \Leftrightarrow x = b\right).
+  \end{align*}
+\end{example}
+In particular, if $b = \set{}$ in the previous example, then the pairing axiom implies the uniqueness of the empty set. We will denote $\set{} = \emptyset$. We can create a tower
+\begin{align*}
+  \set{}, \set{\set{}}, \set{\set{},\set{\set{}}},\dots,
+\end{align*}
+entirely consisting of the empty set.
+\begin{axiom}[Union]
+  The axiom of union states that if $a$ and $b$ are sets, there exists a set $c$ whose elements are either elements of $a$ or elements of $b$, and every element of $a$ is in $c$ and every element of $b$ is in $c$:
+  \begin{align*}
+    \forall a\: \forall b\:\exists c\:\forall x\left(x\in c \Leftrightarrow x\in a \vee x\in b\right)
+  \end{align*}
+\end{axiom}
+\begin{definition}
+  The string $a\subseteq b$ is shorthand for
+  \begin{align*}
+    \forall x \left(x\in a\Rightarrow x\in b\right).
+  \end{align*}
+\end{definition}
+\begin{axiom}[Power Set]
+  The power set axiom states that for all $a$, there is a set $b$ such that all elements of $b$ are subsets of $a$ and all subsets of $a$ are contained in $b$:
+  \begin{align*}
+    \forall a\:\exists b\:\forall y\left(y\in b \Leftrightarrow y\subseteq a\right).
+  \end{align*}
+\end{axiom}
+\begin{definition}
+  We let $(a,b)$ be shorthand for the set
+  \begin{align*}
+    \set{a,\set{a,b}}.
+  \end{align*}
+\end{definition}
+\begin{exercise}
+  If $\set{a,\set{a,b}} = \set{c,\set{c,d}}$, it is the case that $a=c$ and $b = d$.
+\end{exercise}
+Recall that
+\begin{align*}
+  c = \set{x\mid x\text{ is blah}}
+\end{align*}
+is a problematic definition of a set. However, if $a$ is a set, we can define
+\begin{align*}
+  c = \set{x\mid x\in a\hat x\text{ is blah}},
+\end{align*}
+which does not cause any contradictions. The following axiom schema formalizes this fact.
+\begin{axiom}[Comprehension schema]
+  The comprehension schema says that, given any formula $\varphi(x)$, in which $x$ is a free variable, there exists a set $c$ whose elements are those in $a$ that satisfy $\varphi$:
+  \begin{align*}
+    \forall a\:\exists c\:\forall x\left(x\in c\Leftrightarrow x\in a\hat \varphi(x)\right).
+  \end{align*}
+\end{axiom}
+\begin{remark}
+  There are infinitely many axioms in the comprehension schema, one for each formula $\varphi$.
+\end{remark}
+\begin{remark}
+  Since we can specify a formula $\varphi(x): x\neq x$, the comprehension schema obviates the empty set axiom.
+\end{remark}
 \end{document}

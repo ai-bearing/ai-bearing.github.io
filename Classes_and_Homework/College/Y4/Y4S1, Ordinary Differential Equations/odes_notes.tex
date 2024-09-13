@@ -743,4 +743,132 @@ If one of the conditions is not satisfied, we may have
 
   Notice that as a function, the domain of $y$ is $\R$, but as a solution, we cannot have $t = 0$, meaning that the domain of $y(t) = t^2$ \textit{as a solution} is $t > 0$.
 \end{example}
+\subsection{Equilibria and Phase Lines}%
+Given a differential equation
+\begin{align*}
+  \frac{dy}{dt} = f(t,y),
+\end{align*}
+we can use slope fields and Euler's method to find an approximate solution, as well as various analytic methods to find a definite solution.\newline
+
+Given an autonomous differential equation, though,
+\begin{align*}
+  \frac{dy}{dt} &= f(y),
+\end{align*}
+particularly one with $f,\pd{f}{y}$ continuous, we can use some deeper analysis.\newline
+
+In particular, for constant $y$, the slope at any point $(t,y)$ will be the same as at any other $(t,y)$. This means we can analyze the behavior of \textit{the entire solution} based on one particular line.
+\begin{method}[Equilibrium Analysis for Autonomous Differential Equations]\hfill
+  \begin{enumerate}[(1)]
+    \item Solve $f(y) = 0$ to find the equilibrium solutions.
+    \item Analyze the behavior of $f(y)$ around the equilibrium points.
+      \begin{itemize}
+        \item Draw a particular line, known as a phase line, with positive $t$.
+        \item Determine if $f(y)$ is positive or negative between equilibrium points.
+        \item If $f(y) > 0$, then the solution is increasing in this region, and if $f(y) < 0$, the solution is decreasing in this region.
+      \end{itemize}
+  \end{enumerate}
+\end{method}
+\begin{example}
+  Let
+  \begin{align*}
+    \frac{dy}{dt} &= (1-y)y.
+  \end{align*}
+  Thus, we have $f(y) = (1-y)y$, meaning $y(1-y) = 0$ for $y=0$ and $y=1$.\newline
+
+  For $ y = 2$, we have $f(2) = -2 < 0$, for $y = 0.5$, $f(y) = 0.25 > 0$, and $f(-1) = -2 < 0$. Thus, our equilibrium analysis looks like the following:
+  \begin{center}
+    \begin{tikzpicture}
+      \draw (0,-3) -- (0,3);
+      \filldraw (0,1) circle (2pt)
+        (0,0) circle (2pt);
+      \node[anchor = west] at (0,1) {$y = 1$};
+      \node[anchor = west] at (0,0) {$y = 0$};
+      \draw[->] (0,2) -- (0,1.5);
+      \draw[->] (0,0.25) -- (0,0.5);
+      \draw[->] (0,-1) -- (0,-1.5);
+    \end{tikzpicture}
+  \end{center}
+  \begin{center}
+    \includegraphics[width=10cm]{images/equilibrium_analysis.png}
+  \end{center}
+\end{example}
+\begin{definition}[Classificiation of Equilibrium Points]\hfill
+  \begin{enumerate}[(1)]
+    \item An equilibrium point at $y=c$ is called a sink if all the solutions with the initial condition near $y = c$ approach $c$ as $t$ approaches $\infty$.
+      \begin{itemize}
+        \item On the phase line, $f(y)$ goes from $+$ to $-$ on the phase line as $y$ goes from $c - \ve$  to $c + \ve$.
+      \end{itemize}
+    \item An equilibrium point at $y=c$ is called a source if all the solutions with the initial conditions near $y = c$ move away from $c$ as $t$ approaches $\infty$.
+      \begin{itemize}
+        \item On the phase line, $f(y)$ goes from $-$ to $+$ on the phase line as $y$ goes from $c-\ve$ to $c + \ve$.
+      \end{itemize}
+    \item Every equilibrium point that is neither a source nor a sink is called a node.
+      \begin{itemize}
+        \item On the phase space, $f(y)$ maintains the same sign as $y$ goes from $c - \ve$ to $c + \ve$.
+      \end{itemize}
+  \end{enumerate}
+\end{definition}
+\begin{example}[Logistic Population Model]
+Recall that the logistic population model is
+\begin{align*}
+  \frac{dy}{dt} &= \underbrace{k\left(1-\frac{y}{m}\right)y}_{f(y)},
+\end{align*}
+with the conditions of $k > 0$, $m > 0$. We want to draw a phase line for this model.\newline
+
+The equilibrium solutions are at $y=0$ and $y = m$. We draw our phase line with its equilibrium points as
+\begin{center}
+  \begin{tikzpicture}
+    \draw (0,2) -- (0,-1);
+    \filldraw (0,0) circle (2pt)
+    (0,1) circle (2pt);
+    \node[anchor = west] at (0,0) {$y=0$};
+    \node[anchor = west] at (0,1) {$y=m$};
+  \end{tikzpicture}
+\end{center}
+To find out what happens in between, we choose
+\begin{itemize}
+  \item $y = -1$; $f(y) < 0$.
+  \item $y = m/2$; $f(y) > 0$.
+  \item $y = 2m$; $f(y) < 0$.
+\end{itemize}
+Therefore, our phase line is
+\begin{center}
+  \begin{tikzpicture}
+    \draw (0,2) -- (0,-1);
+    \filldraw (0,0) circle (2pt)
+    (0,1) circle (2pt);
+    \node[anchor = west] at (0,0) {$y=0$};
+    \node[anchor = west] at (0,1) {$y=m$};
+    \draw[->](0,2) -- (0,1.5);
+    \draw[->](0,0.25) -- (0,0.5);
+    \draw[->](0,-0.25) -- (0,-0.5);
+    \end{tikzpicture}
+\end{center}
+\end{example}
+\begin{theorem}[Linearization]
+  Suppose $y_0$ is an equilibrium point of the differential equation $\frac{dy}{dt} = f(y)$, where $f(y)$ is a continuously differentiable function. Then,
+  \begin{itemize}
+    \item if $f'\left(y_0\right) < 0$, then $y_0$ is a sink;
+    \item if $f'\left(y_0\right) > 0$, then $y_0$ is a source;
+    \item if $f'\left(y_0\right) = 0$, then we do not have enough information to determine the type of $y_0$.
+  \end{itemize}
+\end{theorem}
+\begin{remark}
+  In order to do an equilibrium analysis given a graph of $f(y)$, we identify all our equilibrium points by finding the roots of $f$, then examining the slope of $f$ at each of the identified equilibrium points.
+\end{remark}
+\begin{example}
+  Suppose
+  \begin{align*}
+    \frac{dy}{dt} &= \left(y-1\right)\left(y^5 - 7y^4 + 3y^3 + 8y^2 - 11\right).
+  \end{align*}
+  We want to classify the equilibrium point $y=1$. In order to do this, we find its derivative:
+  \begin{align*}
+    \pd{f}{y} &= \left(y^5 - 7y^4 + 3y^3 + 8y^2 - 11\right) + \left(y-1\right)\left(5y^4 - 28y^3 + 9y^2 + 16y\right).
+  \end{align*}
+  Evaluating
+  \begin{align*}
+    \pd{f}{y}\bigr\vert_{y=1} &= -6,
+  \end{align*}
+  meaning our equilibrium point at $y=1$ is a sink.
+\end{example}
 \end{document}
