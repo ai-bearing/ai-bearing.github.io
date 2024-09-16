@@ -468,7 +468,7 @@ which does not cause any contradictions. The following axiom schema formalizes t
 \begin{axiom}[Comprehension schema]
   The comprehension schema says that, given any formula $\varphi(x)$, in which $x$ is a free variable, there exists a set $c$ whose elements are those in $a$ that satisfy $\varphi$:
   \begin{align*}
-    \forall a\:\exists c\:\forall x\left(x\in c\Leftrightarrow x\in a\hat \varphi(x)\right).
+    \forall a\:\exists c\:\forall x\left(x\in c\Leftrightarrow x\in a\wedge \varphi(x)\right).
   \end{align*}
 \end{axiom}
 \begin{remark}
@@ -476,5 +476,105 @@ which does not cause any contradictions. The following axiom schema formalizes t
 \end{remark}
 \begin{remark}
   Since we can specify a formula $\varphi(x): x\neq x$, the comprehension schema obviates the empty set axiom.
+\end{remark}
+\begin{example}[Some Logic]
+  An example of a formula is $\forall p\:\exists q(p\Rightarrow q)$.\newline
+
+  In the formula $\exists q\:\left(p\Rightarrow q\right)$, we say $p$ is a free variable.\newline
+
+  The main symbols in logic are $\wedge,\vee,\lnot,\Rightarrow,\Leftrightarrow,()$ (the symbols that make up propositional logic), as well as $\forall,\exists$ (which form the basis of first-order logic).\newline
+
+  In propositional logic, the only two symbols that are needed are $\wedge$ and $\lnot$ (or $\vee$ and $\lnot$).\footnote{In computers, the only gate that is necessary is the NAND gate.}\newline
+
+  When we get to set theory, the last symbol we need is $\in$.\newline
+
+  We can build larger formulae by substituting formulae into other formulae.
+\end{example}
+\begin{example}[Using the Comprehension Schema]
+Let $\phi(x): \exists y\left(y\in X\right)$. This is an axiom:
+\begin{align*}
+  \forall a\:\exists b\:\forall x\left(x\in b \Leftrightarrow x\in a\wedge \exists y\left(y\in x\right)\right)
+\end{align*}
+In particular, this axiom is equivalent to saying
+\begin{align*}
+  \forall a\:\exists b\text{ s.t. }b = \set{x\in a\mid x\neq \emptyset}.
+\end{align*}
+\end{example}
+\begin{axiom}[Union]
+  The union axiom states that for a collection of sets $T$, there is a union of the sets, $a = \bigcup T$.
+  \begin{align*}
+    \forall t\:\exists a\:\forall x\left(x\in a \Leftrightarrow \exists y\left(y\in t\wedge x\in y\right)\right).
+  \end{align*}
+  Alternatively, we can say
+  \begin{align*}
+    \forall t\:a = \set{x\mid x\in \text{some element of }t}
+  \end{align*}
+  is a set.
+\end{axiom}
+\begin{axiom}[Infinity]
+  There exists an infinite set.
+  \begin{align*}
+    \exists a\left(\emptyset\in a\wedge \forall x\left(x\in a \Rightarrow x \cup \set{x}\in a\right)\right)
+  \end{align*}
+\end{axiom}
+\begin{remark}
+  To see that this set, $a$ has an element, $\emptyset$. Thus,
+  \begin{align*}
+    a &= \set{\emptyset,\set{\emptyset},\set{\emptyset,\set{\emptyset}},\set{\emptyset,\set{\emptyset,\set{\emptyset}}},\dots}
+  \end{align*}
+  We define $0 = \emptyset$, $1 = \set{\emptyset,\set{\emptyset}}$, etc. Thus, the axiom of infinity defines the natural numbers.
+\end{remark}
+\begin{axiom}[Regularity]
+  There is no infinite chain of the form
+  \begin{align*}
+    \dots\in d\in c\in b\in a.
+  \end{align*}
+  \begin{align*}
+    \forall s\exists x\left(s = \emptyset \vee s\neq\emptyset \Rightarrow \left(x\in s\wedge x\cap s = \emptyset\right)\right)
+  \end{align*}
+\end{axiom}
+\begin{remark}
+  The existence of this axiom is meant to obviate the case where we imagined a set $a$ with $a\in a$.
+\end{remark}
+\begin{definition}[Function-like Formula]
+  Let $\psi(x,y)$ be a formula with $x,y$ free variables such that $\forall x,y,z$, $\psi(x,y)\wedge \psi(x,z)\Rightarrow y = z$.
+\end{definition}
+\begin{axiom}[Replacement Schema]
+  \begin{align*}
+    \forall a\:\exists b\:\forall x\left(x\in b \Leftrightarrow \exists y\left(y\in a\wedge \psi(x,y)\right)\right)
+  \end{align*}
+\end{axiom}
+\begin{remark}
+  It is possible to prove the comprehension schema from the replacement schema.
+\end{remark}
+The axioms that we have discussed so far are known as the Zermelo--Fraenkel axioms. 
+\begin{question}
+  If $A$ and $B$ are nonempty, is it the case that $A\times B \neq \emptyset$
+\end{question}
+\begin{answer}
+  This is true. There exists $a\in A$ and $b\in B$ such that $(a,b)\in A\times B$. This can be proven using the ZF axioms.
+\end{answer}
+\begin{question}
+  If $A_1,A_2,\dots,\neq\emptyset$, then is $A_1\times A_2\times \dots \neq \emptyset$?
+\end{question}
+\begin{answer}
+  This requires the axiom of choice.
+\end{answer}
+\begin{axiom}[Choice]
+  If $T$ is a collection of sets, $\exists b$ such that $\forall a\in T, a\cap b \neq \emptyset$.
+  \begin{align*}
+    \forall t\:\exists b\left(\forall a\left(a\in t \Rightarrow \exists x\left(x\in a \wedge x\in b\right)\right)\right).
+  \end{align*}
+\end{axiom}
+\begin{remark}
+  We define $x\in \left(a\cap b\right) $ as shorthand for $ x\in a \wedge x\in b$.
+\end{remark}
+\begin{remark}
+  The axiom of choice is controversial. 
+\end{remark}
+\begin{remark}
+The axiom of choice entails certain counterintuitive results, such as the Banach--Tarski paradox\footnote{Hey, one of the topics for my Honors thesis is on this.} and the existence of non-measurable sets.\newline
+
+The Banach--Tarski paradox states that for any two bounded subsets of $\R^3$ with nonempty interior, one of the sets can be partitioned into finitely many subsets, with certain isometries applied to said partition, and reconstituted into the second set.
 \end{remark}
 \end{document}
