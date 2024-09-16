@@ -1301,7 +1301,8 @@ For the case of a function $g\left(x\right) = g\left(|x|\right)$, we have
     \hline
     $\int \sin^{m}(x)\cos^{2k+1}(x)\:dx$ & $\int_{}^{} u^{m}\left(1-u^2\right)^{k}\:du$\\
     $\int_{}^{} \sin^{2k+1}(x)\cos^{n}(x)\:dx$ & $-\int_{}^{} \left(1-u^2\right)^ku^{n}\:du$\\
-    $\int_{}^{} \sin^{2}(x)\:dx$ &
+    $\int_{}^{} \sin^{2}(x)\:dx$ & $\frac{x}{2} - \frac{1}{4}\sin(2x)$\\
+    $\int_{}^{} \cos^{2}\left(x\right)\:dx$ & $\frac{x}{2} + \frac{1}{4}\sin(2x)$
   \end{tabular}
 \end{center}
 \begin{example}
@@ -1510,9 +1511,9 @@ Notice that for large $x$, the integrand looks like $e^{-x}x^{s-1}$.
 \begin{example}
   To resolve the integral we take
   \begin{align*}
-    \int_{0}^{\infty} \frac{x^{s-1}}{e^{x}-1}\:dx &= \int_{0}^{\infty} \frac{e^{-x}x^{-1}}{1-e^{-x}}\:dx
+    \int_{0}^{\infty} \frac{x^{s-1}}{e^{x}-1}\:dx &= \int_{0}^{\infty} \frac{e^{-x}x^{s-1}}{1-e^{-x}}\:dx
     \intertext{We will use the geometric series expansion for the denominator:}
-                                                  &= \int_{0}^{\infty} e{-x}x^{s-1}\sum_{k=0}^{\infty}e^{-kx}\:dx\\
+                                                  &= \int_{0}^{\infty} e^{-x}x^{s-1}\sum_{k=0}^{\infty}e^{-kx}\:dx\\
                                                   &= \sum_{k=0}^{\infty}\int_{0}^{\infty} x^{s-1}e^{-\left(k+1\right)x}\:dx.
                                                   \intertext{We make the change of variables $u = (n+1)x$.}
                                                   &= \sum_{n=0}^{\infty}\frac{1}{\left(n+1\right)^{s}}\int_{0}^{\infty} u^{s-1}e^{-u}\:du\\
@@ -1523,4 +1524,152 @@ Notice that for large $x$, the integrand looks like $e^{-x}x^{s-1}$.
     \int_{0}^{\infty} \frac{x^{s-1}}{e^{x}-1}\:dx &= \Gamma(s)\zeta(s).
   \end{align*}
 \end{example}
+\subsubsection{Partial Fractions}%
+\begin{example}[A Partial Fraction Decomposition]
+  \begin{align*}
+    \frac{1}{1-x^2} &= \frac{\alpha}{1-x} + \frac{\beta}{1+x}\\
+                    &= \frac{1/2}{1-x} + \frac{1/2}{1+x}.
+  \end{align*}
+\end{example}
+\begin{example}[Integrating using Partial Fractions]
+  To evaluate
+  \begin{align*}
+    \int_{}^{} \frac{4-2x}{\left(x^2 + 1\right) \left( x-1\right)^2}\:dx,
+  \end{align*}
+  we do the partial fraction decomposition to find
+  \begin{align*}
+    \int_{}^{} \frac{4-2x}{\left(x^2 + 1\right) \left( x-1\right)^2}\:dx &= \int_{}^{} \frac{2x+1}{x^2 + 1} + \frac{-2}{x-1} + \frac{1}{\left(x-1\right)^2}\:dx.
+  \end{align*}
+\end{example}
+\begin{example}[Mean Value Theorem]
+  If we have a function $f$ defined on $[a,b]$, then there is a point $c\in \left(a,b\right)$ such that
+  \begin{align*}
+    f(c)\left(b-a\right) &= \int_{a}^{b} f(x)\:dx.
+  \end{align*}
+  More generally, the mean value theorem says there exists $c\in \left(a,b\right)$ such that
+  \begin{align*}
+    \int_{a}^{b} f(x)g(x)\:dx &= f(c)\int_{a}^{b} g(x)\:dx
+  \end{align*}
+\end{example}
+\subsection{Delta Distribution}%
+Consider a ``function'' $\delta(x)$ such that
+\begin{align*}
+  \int_{-\infty}^{\infty} f(x)\delta(x-a)\:dx &= f(a).
+\end{align*}
+This idea seems absurd on its face --- after all, singletons have measure zero, so the idea of an integral collapsing into a single point doesn't sound normal.\newline
+
+The structure of the delta distribution is
+\begin{align*}
+  \delta\left(x-a\right) &= \begin{cases}
+    +\infty & x=a\\
+    0 & \text{else}
+  \end{cases}.
+\end{align*}
+In particular, we also have to define
+\begin{align*}
+  \int_{-\infty}^{\infty} \delta\left(x-a\right)\:dx &= 1.
+\end{align*}
+This is known as the Dirac delta function (or rather, distribution). The delta distribution ``weights'' $f$ to infinity at $x=a$ and zero everywhere else.
+\begin{example}[Delta Distribution as a Limit]
+  Imagine a Gaussian function with area under the curve $1$. In particular,
+  \begin{align*}
+    f_n(x) &= \frac{1}{\sqrt{\pi}}ne^{-n^2x^2}.
+  \end{align*}
+  In particular, we have
+  \begin{align*}
+    \delta(x) &= \lim_{n\rightarrow\infty}\frac{1}{\sqrt{\pi}}ne^{-n^2x^2}
+  \end{align*}
+\end{example}
+\begin{example}[A Physical Example]
+  Imagine a ball is kicked. The force is dependent on time, $F(t)$.\newline
+
+  There isn't an easy to find the force, but by Newton's second law, we have
+  \begin{align*}
+    \delta p &= \int_{}^{} F(t)\:dt,
+  \end{align*}
+  where
+  \begin{align*}
+    I \equiv \int_{}^{} F(t)\:dt
+  \end{align*}
+  is the impulse.\newline
+
+  If we want to model $F(t)$, where we don't care about a nonzero time over which the force is occurring, we can simply state $F(t)$ as
+  \begin{align*}
+    F(t) &= \Delta p \delta\left(t-t_0\right).
+  \end{align*}
+  Taking this integral yields $I$.
+\end{example}
+\begin{example}[Fourier Integral Representation of Delta Distribution]
+A different representation of $\delta(x)$ is
+\begin{align*}
+  \delta(x) &= \frac{1}{2\pi}\int_{-\infty}^{\infty} e^{ikx}\:dk.
+\end{align*}
+We are superimposing all the waves $e^{ikx}$ --- in particular, for all values of $k\neq 0$, both $e^{ikx}$ and $e^{-ikx}$ are ``added'' together, yielding absolute destructive interference.\newline
+
+The factor of $\frac{1}{2\pi}$ is necessary to normalize the integral.
+\end{example}
+\subsubsection{Properties of the Delta Distribution}%
+\begin{description}
+  \item[Normalization:]
+    \begin{align*}
+      \int_{-\infty}^{\infty} \delta(x)\:dx &= 1\\
+      \int_{x_1}^{x_2} \delta(x-a)\:dx &= \begin{cases}
+        1 & x_1 < a < x_2\\
+        0 & \text{else}
+      \end{cases}.
+    \end{align*}
+  \item[Sieve:]
+    \begin{align*}
+      \int_{x_1}^{x_2} f(x)\delta(x-a)\:dx &= \begin{cases}
+        f(a) & x_1 < a < x_2\\
+        0 & \text{else}
+      \end{cases}.
+    \end{align*}
+\end{description}
+\begin{example}[Delta Distribution as a Limit of Rectangles]
+  We define the family of functions
+  \begin{align*}
+    \phi_k(x) &= \begin{cases}
+      k/2 & |x| < 1/k\\
+      0 & |x| > 1/k
+    \end{cases}.
+  \end{align*}
+  We can see that integrating $\phi_k$ over $\R$ yields $1$ for each $k$.\newline
+
+  We now need to evaluate if $\lim_{k\rightarrow\infty}\phi_k(x) = \delta(x)$. In order to see this, we take
+  \begin{align*}
+    \lim_{k\rightarrow\infty}\int_{-\infty}^{\infty} f(x)\phi_k(x)\:dx &= \lim_{k\rightarrow\infty}\frac{k}{2}\int_{-1/k}^{1/k} f(x)\:dx\\
+                                                                       &= \lim_{k\rightarrow\infty}f\left(c_k\right)\left(\frac{k}{2}\int_{-1/k}^{1/k} \:dx\right)\\
+                                                                       &= \lim_{k\rightarrow\infty}f\left(c_k\right),
+  \end{align*}
+  where we define $c_k$ from the mean value theorem. In particular, since $c_k \in \left(-1/k,1/k\right)$, it is the case that $c_k\rightarrow 0$ as $k\rightarrow\infty$, so
+  \begin{align*}
+    \lim_{k\rightarrow\infty}\int_{-\infty}^{\infty} f(k)\phi_k(x)\:dx &= \lim_{k\rightarrow\infty}f\left(c_k\right)\\
+                                                                       &= f(0).
+  \end{align*}
+  Thus, $\lim_{k\rightarrow\infty}\phi_k(x) = \delta(x)$.
+\end{example}
+We can imagine the delta distribution to be the density distribution of a single point.\newline
+
+The units of $\delta(x)$ are
+\begin{align*}
+  \left[\delta(x)\right] &= x^{-1}.
+\end{align*}
+\begin{description}
+  \item[Complicated Arguments:] Imagine $\delta\left(ax\right)$. For instance, we want to evaluate
+    \begin{align*}
+      \int_{-\infty}^{\infty} f(x)\delta(ax)\:dx.
+    \end{align*}
+    To do so, we use $u$ substitution with $u = ax$:
+    \begin{align*}
+      \int_{-\infty}^{\infty} f(x)\delta\left(ax\right)\:dx &= \frac{1}{a}\int_{-\infty}^{\infty} f\left(u/a\right)\delta(u)\:du\\
+                                                            &= \frac{1}{a}f(0).
+    \end{align*}
+    It is important to note that the integration variable $dx$ and the argument of $\delta(x)$ must be equal.\newline
+
+    In general, we have
+    \begin{align*}
+      \delta(ax) &= \frac{1}{|a|}\delta(x)
+    \end{align*}
+\end{description}
 \end{document}
