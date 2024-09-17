@@ -1,4 +1,4 @@
-\documentclass[10pt]{mypackage}
+\documentclass[12pt]{mypackage}
 
 % sans serif font:
 %\usepackage{cmbright}
@@ -423,6 +423,99 @@ Since $S^{2}\setminus D$ and $S^{2}$ are equidecomposable under the action of $S
   Let $G$ be a group that acts on $X$. Let $A,B$ be subsets of $X$ with $A\preceq_{G} B$ and $B\preceq_{G} A$. Then, $A\sim_{G} B$.
 \end{theorem}
 \begin{proof}
-  Let $B_1\subseteq B$ with $A\sim_{G} B_1$, and let $A_1\subseteq A$ with $B\sim_{G} A_1$.
+  Let $B_1\subseteq B$ with $A\sim_{G} B_1$, and let $A_1\subseteq A$ with $B\sim_{G} A_1$.\newline
+
+  We know that there exist bijections $\phi: A\rightarrow B_1$ and $\psi: B\rightarrow A_1$. Define $C_0 = A\setminus A_1$, $C_{n+1} = \psi\left(\phi\left(C_n\right)\right)$. We set
+  \begin{align*}
+    C &= \bigcup_{n\geq 1} C_n.
+  \end{align*}
+  Since $\psi^{-1}\left(\psi\left(\phi\left(C_n\right)\right)\right) = \phi\left(C_n\right)$, we have
+  \begin{align*}
+    \psi^{-1}\left(A\setminus C\right) &= B\setminus \phi(C),
+  \end{align*}
+  meaning $A\setminus C \sim B\setminus \phi(C)$. Additionally, $C\sim \phi(C)$. Thus,
+  \begin{align*}
+    A &= \left(A\setminus C\right)\cup C\\
+      &\sim \left(B\setminus \phi(C)\right) \cup \phi(C)\\
+      &= B.
+  \end{align*}
 \end{proof}
+\begin{theorem}[Banach--Tarski Paradox]
+  Let $A$ and $B$ be bounded subsets of $\R^3$ with nonempty interior. Then, $A \sim_{E(3)} B$.
+\end{theorem}
+\begin{proof}
+  It is sufficient to show that $A\preceq_{E(3)} B$.\newline
+
+  Since $A$ is bounded, there is $r > 0$ such that $A\subseteq B(0,r)$. Let $x\in B^{\circ}$. Then, there is $\epsilon > 0$ such that $B(x,\epsilon)\subseteq B$.\newline
+
+  Since $B(0,r)$ is compact (and thus totally bounded), there are translations $g_1,\dots,g_n$ such that
+  \begin{align*}
+    B(0,r)\subseteq g_1\cdot B(x,\epsilon) \cup \cdots \cup g_n\cdot B(x,\epsilon).
+  \end{align*}
+  Choose translations $h_1,\dots,h_n$ such that $h_j\cdot B(x,\epsilon)\cap h_k\cdot B(x,\epsilon) = \emptyset$ for $j\neq k$. Set
+  \begin{align*}
+    S &= \bigcup_{j=1}^{n}h_j\cdot B(x,\epsilon).
+  \end{align*}
+  Since each of the subsets $h_j\cdot B(x,\epsilon)$ is equidecomposable with any arbitrary closed ball subset of $B(x,\epsilon)$, it is the case that $S\subseteq B(x,\epsilon)$.\newline
+
+  Thus, we have
+  \begin{align*}
+    A &\subseteq B(0,r)\\
+      &\subseteq g_1\cdot B(x,\epsilon)\cup g_n\cdot B(x,\epsilon)\\
+      &\preceq S\\
+      &\preceq B(x,\epsilon)\\
+      &\subseteq B.
+  \end{align*}
+\end{proof}
+\begin{remark}
+  The axiom of choice was invoked when we stated that $h_j\cdot B(x,\epsilon)$ is equidecomposable with an arbitrary closed ball subset of $B(x,\epsilon)$.
+\end{remark}
+\section{Tarski's Theorem}%
+One of the central facts that allowed for the Banach--Tarski paradox to be true is that $\F(a,b)$ does not have a property known as amenability. We had also proved that $\F(a,b)$ is paradoxical.\newline
+
+In this section, we will prove paradoxicality and non-amenability are equivalent. This is formulated in Tarski's Theorem
+\begin{theorem}[Tarski's Theorem]
+  Let $G$ be a group that acts on a set $X$, and let $E$ be a subset of $X$. There is a finitely additive set function invariant under $G$, $\mu: P(X)\rightarrow \left[0,\infty\right]$ with $\mu(E)\in (0,\infty)$ if and only if $E$ is not $G$-paradoxical.
+\end{theorem}
+\begin{remark}
+  It is possible to see that if $G$ is paradoxical, with $X = G$ and $G$ acting on itself via left-multiplication, that this finitely-additive set function eventually ``blows up.''\newline
+
+  Let $G$ be paradoxical. Suppose toward contradiction that there existed such a $\nu: P(G) \rightarrow [0,\infty]$. For $E_1,\dots,E_n\subseteq G$ and $t_1,\dots,t_n\in G$, $F_1,\dots,F_m\subseteq G$ and $s_1,\dots,s_m\in G$ with $E_1,\dots,E_n,F_1,\dots,F_m$ pairwise disjoint, we have
+      \begin{align*}
+        \nu(G) &= \nu\left(\bigsqcup_{j=1}^{n}t_jE_j\right)\\
+               &= \sum_{j=1}^{n}\nu(t_jE_j)\\
+               &= \sum_{j=1}^{n}\nu(E_j).
+               \intertext{We know that $G \cup s_1F_1 = G$, meaning $\nu(G) = \nu(G \cup s_1F_1)$. However,}
+        \nu(G \cup s_1F_1) &= \nu\left(\bigsqcup_{j=1}^{n}t_jE_j \sqcup s_1F_1\right)\\
+                           &= \sum_{j=1}^{n}\nu(t_jE_j) + \nu(s_1F_1)\\
+                           &= \nu(G) + \nu(s_1F_1)\\
+                           &= \nu(G) + \nu(F_1)\\
+                           &> \nu(G).
+      \end{align*}
+\end{remark}
+\subsection{König's Theorem and Perfect Matchings}%
+In order to prove that non-paradoxicality implies amenability, we must use some essential results from graph theory.
+\begin{definition}[Graphs and Paths]
+  A graph is a triple $\left(V,E,\phi\right)$, where $V$ and $E$ are nonempty sets, and $\phi: E\rightarrow P_{2}(V)$ is a map from $e$ to the set of all unordered subset pairs of $V$.\newline
+
+  We say that for $\phi(e) = \set{v,w}$, we say $v$ and $w$ are endpoints of $e$, with $e$ incident on $v$ and $w$.\newline
+
+  A path in $(V,E,\phi)$ is a finite sequence $\left(e_1,\dots,e_n\right)$ of edges along with a finite sequence of vertices $v_0,\dots,v_n$, with $\phi\left(e_k\right) = \set{v_{k-1},v_k}$.\newline
+
+  The degree of a vertex, $\deg(v)$, is the number of edges incident on the vertex.
+\end{definition}
+\begin{definition}[Bipartite Graphs and $k$-Regularity]
+  Let $(V,E,\phi)$ be a graph, $k\in \N$.
+  \begin{enumerate}[(i)]
+    \item If $\deg(v) = k$ for each $v\in V$, we say $(V,E,\phi)$ is $k$-regular.
+    \item If $V = X\sqcup Y$, with each edge having an endpoint in $X$ and an endpoint in $Y$, we say $(V,E,\phi)$ is bipartite.
+  \end{enumerate}
+\end{definition}
+\begin{definition}[Perfect Matching]
+Let $(X,Y,E,\phi)$ be a bipartite graph. Let $A\subseteq X$ and $B\subseteq Y$. A perfect matching of $A$ and $B$ is a subset $F\subseteq E$ with
+\begin{enumerate}[(i)]
+  \item each element of $A\cup B$ is an endpoint of exactly one $f\in F$
+  \item all endpoints of edges in $F$ are in $A\cup B$.
+\end{enumerate}
+\end{definition}
 \end{document}
