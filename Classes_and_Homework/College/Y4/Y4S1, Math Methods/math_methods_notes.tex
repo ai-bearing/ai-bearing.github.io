@@ -48,6 +48,7 @@
                   top color=red!40!black!30,bottom color=red!40!black!10,shading angle=30]
 %Notation
 \usepackage{physics}
+\newcommand{\del}{\delta\!}
 \fancyhf{}
 \rhead{Avinash Iyer}
 \lhead{Mathematical Methods of Physics: Class Notes}
@@ -1560,14 +1561,14 @@ This idea seems absurd on its face --- after all, singletons have measure zero, 
 
 The structure of the delta distribution is
 \begin{align*}
-  \delta\left(x-a\right) &= \begin{cases}
+  \delta\!\left(x-a\right) &= \begin{cases}
     +\infty & x=a\\
     0 & \text{else}
   \end{cases}.
 \end{align*}
 In particular, we also have to define
 \begin{align*}
-  \int_{-\infty}^{\infty} \delta\left(x-a\right)\:dx &= 1.
+  \int_{-\infty}^{\infty} \delta\!\left(x-a\right)\:dx &= 1.
 \end{align*}
 This is known as the Dirac delta function (or rather, distribution). The delta distribution ``weights'' $f$ to infinity at $x=a$ and zero everywhere else.
 \begin{example}[Delta Distribution as a Limit]
@@ -1595,7 +1596,7 @@ This is known as the Dirac delta function (or rather, distribution). The delta d
 
   If we want to model $F(t)$, where we don't care about a nonzero time over which the force is occurring, we can simply state $F(t)$ as
   \begin{align*}
-    F(t) &= \Delta p \delta\left(t-t_0\right).
+    F(t) &= \Delta p \delta\!\left(t-t_0\right).
   \end{align*}
   Taking this integral yields $I$.
 \end{example}
@@ -1609,7 +1610,7 @@ We are superimposing all the waves $e^{ikx}$ --- in particular, for all values o
 The factor of $\frac{1}{2\pi}$ is necessary to normalize the integral.
 \end{example}
 \subsubsection{Properties of the Delta Distribution}%
-\begin{description}
+\begin{description}[leftmargin=0pt]
   \item[Normalization:]
     \begin{align*}
       \int_{-\infty}^{\infty} \delta(x)\:dx &= 1\\
@@ -1655,21 +1656,148 @@ The units of $\delta(x)$ are
 \begin{align*}
   \left[\delta(x)\right] &= x^{-1}.
 \end{align*}
-\begin{description}
-  \item[Complicated Arguments:] Imagine $\delta\left(ax\right)$. For instance, we want to evaluate
+\begin{example}[Linear Argument for $\delta$]
+Consider $\delta\!\left(ax\right)$. For instance, we want to evaluate
     \begin{align*}
       \int_{-\infty}^{\infty} f(x)\delta(ax)\:dx.
     \end{align*}
     To do so, we use $u$ substitution with $u = ax$:
     \begin{align*}
-      \int_{-\infty}^{\infty} f(x)\delta\left(ax\right)\:dx &= \frac{1}{a}\int_{-\infty}^{\infty} f\left(u/a\right)\delta(u)\:du\\
+      \int_{-\infty}^{\infty} f(x)\delta\!\left(ax\right)\:dx &= \frac{1}{a}\int_{-\infty}^{\infty} f\left(u/a\right)\delta(u)\:du\\
                                                             &= \frac{1}{a}f(0).
     \end{align*}
     It is important to note that the integration variable $dx$ and the argument of $\delta(x)$ must be equal.\newline
 
     In general, we have
     \begin{align*}
-      \delta(ax) &= \frac{1}{|a|}\delta(x)
+      \delta(ax) &= \frac{1}{|a|}\delta(x).
     \end{align*}
-\end{description}
+
+\end{example}
+\begin{example}[Function Argument for $\delta$]
+  We now want to evaluate
+  \begin{align*}
+    \int_{-\infty}^{\infty} f() \delta(g(x))\:dx.
+  \end{align*}
+  When we take the change of variables, we have
+  \begin{align*}
+    \int_{y_1}^{y_2} f(y)\delta(y)\:dy &= \int_{x_1}^{x_2} f(g(x))\delta(g(x)) \left\vert \frac{dg}{dx} \right\vert\:dx.
+  \end{align*}
+  Therefore, we must have $\delta(g(x)) = \frac{1}{\left\vert dg/dx \right\vert_{g(x)=0}}\delta(x)$.\newline
+
+  In the general case, we have
+  \begin{align*}
+    \delta\!\left(g(x)\right) &= \frac{1}{\left\vert dg/dx \right\vert_{x_0}}\delta\!\left(x-x_0\right)
+  \end{align*}
+  where $g\left(x_0\right) = 0$.\newline
+
+  If, in the region of integration, $g$ takes multiple zeros, we must take a sum:
+  \begin{align*}
+    \delta\!\left(g(x)\right) &= \sum_{i}\frac{1}{\left\vert dg/dx \right\vert_{x_i}}\delta\!\left(x_i\right);
+  \end{align*}
+  where we assume $\left\vert \frac{dg}{dx} \right\vert_{x_i} \neq 0$.
+\end{example}
+\begin{example}[$x^2 - a^2$ Argument for $\delta$]
+  Consider the distribution
+  \begin{align*}
+    \delta\!\left(x^2 - a^2\right).
+  \end{align*}
+  The derivative of $g(x)$ is $2x$; the two zeros of $g$ are at $x = \pm a$. Therefore,
+  \begin{align*}
+    \delta\!\left(x^2 - a^2\right) &= \frac{1}{\left\vert 2x \right\vert_{a}}\delta\!\left(x-a\right) + \frac{1}{\left\vert 2x \right\vert_{-a}}\delta\!\left(x+a\right)\\
+                                 &= \frac{1}{2a}\left(\delta\!\left(x-a\right) + \delta\!\left(x+a\right)\right).
+  \end{align*}
+  For example, if we took
+  \begin{align*}
+    \int_{-\infty}^{\infty} x^3\delta\!\left(x^2 - a^2\right)\:dx &= \frac{1}{2a}\int_{-\infty}^{\infty} x^3\left(\delta\!\left(x-a\right) + \delta\!\left(x+a\right)\right)\:dx\\
+                                                                &= \frac{1}{2a}\left(a^3 + \left(-a\right)^3\right)\\
+                                                                &= 0.
+  \end{align*}
+  Now, evaluating
+  \begin{align*}
+    \int_{0}^{\infty} x^3\left(\delta\!\left(x^2 - a^2\right)\right)\:dx &= \frac{1}{2a}\int_{0}^{\infty} x^3\left(\delta\!\left(x-a\right) + \delta\!\left(x+a\right)\right)\:dx\\
+                                                                       &= \frac{1}{2a}\left(a^3\right)\\
+                                                                       &= \frac{1}{2}a^2.
+  \end{align*}
+\end{example}
+\begin{example}[(Weak) Derivative of $\delta$]
+  Obviously we cannot formally take $\delta'(x)$, but we can always place $\delta(x)$ under the integral sign and treat $\delta'(x)$ as the ``derivative'' via integration by parts:
+  \begin{align*}
+    \int_{-\infty}^{\infty} f(x)\delta'(x)\:dx &= f(x)\delta(x)\bigr\vert_{-\infty}^{\infty} - \int_{-\infty}^{\infty} \frac{df}{dx}\delta(x)\:dx\\
+                                               &= -\frac{df}{dx}\bigr\vert_{0}\\
+                                               &= -f'(0).
+  \end{align*}
+  The ``identity'' for the delta function's derivatives is
+  \begin{align*}
+    f(x) \delta'(x) &= -f'(x)\delta(x).
+  \end{align*}
+\end{example}
+\begin{example}[Heaviside Step Function]
+The Heaviside step function, $\Theta(x)$, is
+\begin{align*}
+  \Theta(x) &= \begin{cases}
+    0 & x < 0\\
+    1 & x > 0.
+  \end{cases}
+\end{align*}
+\begin{center}
+  \begin{tikzpicture}
+    \draw[thick] (-3,0) -- (0,0);
+    \draw[thick] (0,1) -- (3,1);
+    \draw (0,3) -- (0,-1);
+    \draw (-3,0) -- (3,0);
+  \end{tikzpicture}
+\end{center}
+\end{example}
+\begin{example}[Higher Dimension Delta Distributions]
+  In higher dimensions,
+  \begin{align*}
+    \int_{\text{all space}}^{} \delta\!\left(\mathbf{r}\right)\:d\tau &= 1,
+  \end{align*}
+  and
+  \begin{align*}
+    \int_{V}^{} f\left(\mathbf{r}\right)\delta\!\left(\mathbf{r}-\mathbf{a}\right)\:d\tau &= \begin{cases}
+      f\left(\mathbf{a}\right) & \mathbf{a}\in V\\
+      0 & \text{otherwise}
+    \end{cases}.
+  \end{align*}
+  One of the common notations for higher dimensional delta functions is $\delta^{(n)}\left(\mathbf{r}\right)$, where $(n)$ denotes the dimension (not to be confused with $n$th derivative).\newline
+
+  Instead, we can use $\delta\!\left(\mathbf{r}\right)$, which lets us know that we are dealing in higher dimensions, and context is evident.
+\end{example}
+\begin{example}[Voltage under a Point Charge]
+  The voltage of a point charge $q$ at a position $\mathbf{a}$ is given by Coulomb's law
+  \begin{align*}
+    \Phi(\mathbf{r}) &= \frac{q}{4\pi \epsilon_0} \frac{1}{\left\vert \mathbf{r} - \mathbf{a} \right\vert},
+  \end{align*}
+  with $\Phi = 0$ at $\infty$.\newline
+
+  For a continuous point charge distribution $\rho\left(\mathbf{r}\right)$, we consider each element of the volume $d\tau$ centered at $\mathbf{r}$ with charge $dq = \rho\left(\mathbf{r}\right)d\tau$.
+  \begin{align*}
+    d\Phi\left(\mathbf{r}\right) &= \frac{dq}{4\pi \epsilon_0}\frac{1}{\left\vert \mathbf{r} - \mathbf{a} \right\vert}\\
+                                 &= \frac{1}{4\pi\epsilon_0}\frac{\rho\left(\mathbf{r}\right)d\tau}{\left\vert \mathbf{r} - \mathbf{a} \right\vert}.
+  \end{align*}
+  In particular, for some $\mathbf{r}$, we need to add up over $\mathbf{a}$, yielding
+  \begin{align*}
+    \Phi\left(\mathbf{r}\right) &= \frac{1}{4\pi\epsilon_0}\int_{V}^{} \frac{\rho\left(\mathbf{r}'\right)}{\left\vert \mathbf{r} - \mathbf{r}' \right\vert}\:d\tau'
+  \end{align*}
+  This expression should hold for every physically reasonable volume charge distribution $\rho$, what $\rho\left(\mathbf{r}\right)$ denotes a point charge?\newline
+
+  In particular, if $\rho\left(\mathbf{r}\right)$ is a point charge, then $\rho = q\delta\!\left(\mathbf{r} - \mathbf{a}\right)$.
+\end{example}
+\begin{example}[Using the Multi-Dimensional Delta Distribution]
+  In Cartesian coordinates, we have
+  \begin{align*}
+    \delta\!\left(\mathbf{r} - \mathbf{r}_0\right) &= \delta\!\left(x-x_0\right)\delta\!\left(y-y_0\right)\delta\!\left(z-z_0\right).
+  \end{align*}
+  If we want to transform $\delta\!\left(\mathbf{r} - \mathbf{r}_0\right)$ into a different coordinate system such as $d\tau = du\:dv\:dw$, we need the Jacobian. Thus,
+  \begin{align*}
+    \delta\!\left(\mathbf{r} - \mathbf{r}_0\right) &= \frac{1}{|J|}\delta\!\left(u-u_0\right)\delta\!\left(v-v_0\right)\delta\!\left(w-w_0\right).
+  \end{align*}
+  For instance, in spherical coordinates, we have
+  \begin{align*}
+    \delta\!\left(\mathbf{r} - \mathbf{r}_0\right) &= \frac{1}{r^2\sin\theta}\delta\!\left(r-r_0\right)\delta\!\left(\theta - \theta_0\right)\delta\!\left(\phi-\phi_0\right)\\
+                                                 &= \frac{1}{r^2}\delta\!\left(r-r_0\right)\delta\!\left(\cos\theta - \cos\theta_0\right)\delta\!\left(\phi-\phi_0\right).
+  \end{align*}
+\end{example}
 \end{document}
