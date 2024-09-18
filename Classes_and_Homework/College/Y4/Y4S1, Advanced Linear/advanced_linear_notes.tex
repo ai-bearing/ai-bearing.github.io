@@ -1475,7 +1475,7 @@ Thus, $A = P \left[T_{A}\right]_{\mathcal{B}} P^{-1}$. In other words, $A\sim B$
   \end{description}
 \end{example}
 \begin{theorem}
-  Let $A\in \Mat_{m,n}\left(\F\right)$. The matrix $A$ can be put in row-echelon form through a series of row operations of the form:
+  Let $A\in \Mat_{m,n}\left(\F\right)$. The matrix $A$ can be put in row echelon form through a series of row operations of the form:
   \begin{itemize}
     \item switching two rows: $R_i\leftrightarrow R_j$;
     \item multiplying a row by a scalar: $\R_i\rightarrow cR_i$;
@@ -1548,6 +1548,274 @@ as the identity map with $c$ in the $ij$th entry.
   For the full reduced row echelon form, we would have the following series of transformations:
   \begin{align*}
     \left[T_{1,3}^{(-1)}\circ T_{2,3}^{(-1)}\circ T_{3}^{(-2)}\circ T_{3,1}^{(-3)}\circ T_{1,2}^{-1}\circ T_{1,3}\circ T_A\right]_{\mathcal{E}_4}^{\mathcal{F}_3} &= \begin{pmatrix}1 & 0 & 0 & 0 \\ 0 & 1 & 0  & -1\\ 0 & 0 & 1 & 2\end{pmatrix}.
+  \end{align*}
+\end{example}
+\begin{definition}[Column Space, Null Space, and Rank]
+  Let $A\in \Mat_{m,n}\left(\F\right)$. The column space of $A$ is the $\F$-span of the column vectors. This is denoted $\Col(A)$.\newline
+
+  The null space, $\Null(A)$, is the $\F$-span of the vectors $v\in \F^n$ such that $Av = 0_{\F^m}$.\newline
+
+  The rank of $A$, denoted $\Rank(A)$, is $\Rank(A) = \Dim_{\F}\left(\Col(A)\right)$.
+\end{definition}
+  Let $\mathcal{E}_n = \set{e_1,\dots,e_n}$ be the standard basis for $\F^n$, with $T_A \in \Hom_{\F}\left(\F^n,\F^n\right)$, and $\mathcal{F}_m = \set{f_1,\dots,f_m}$ the standard basis of $\F^m$.\newline
+
+  We have $\left[T_A\right]_{\mathcal{E}_n}^{\mathcal{F}_m} = A$. We know that
+  \begin{align*}
+    A &= \begin{pmatrix}T_A\left(e_1\right) & \cdots & T_A\left(e_n\right)\end{pmatrix}.
+  \end{align*}
+  Thus, $\Col(A) = \img\left(T_A\right)$, meaning $\Rank(A) = \Dim_{\F}\left(\img\left(T_A\right)\right)$.\newline
+
+In order to calculate $\col(A)$, we put the matrix $A$ into row echelon form, look at the columns that have pivots, and those columns form the basis for $\col(A)$.\newline
+
+We have an isomorphism $E: \F^m\rightarrow \F^m$ such that
+\begin{align*}
+  \left[E\circ T_A\right]_{\mathcal{E}_n}^{\mathcal{F}_m} &= \left[E\right]_{\mathcal{F}_m}^{\mathcal{F}_m}
+\end{align*}
+is in row echelon form. In particular, the column space of $\left[E\circ T_A\right]_{\mathcal{E}_n}^{\mathcal{F}_m}$ has as its basis the columns containing pivots:
+\begin{align*}
+  \underbrace{\overbrace{\left[E\circ T_A\left(e_{i_1}\right)\right]}^{w_1}_{\mathcal{F}_m},\dots,\overbrace{\left[E\circ T_A\left(e_{i_k}\right)\right]}^{w_k}_{\mathcal{F}_m}}_{\text{basis of }\col\left(\left[E\circ T_A\right]_{\mathcal{E}_n}^{\mathcal{F}_m}\right)}
+\end{align*}
+We have an inverse $E^{-1}: \F^{m}\rightarrow \F^m$. In particular,
+\begin{align*}
+  \underbrace{E^{-1}\left(w_1\right),\dots,E^{-1}\left(w_k\right)}_{=\left[T_{A}\left(e_{i_1}\right)\right]_{\mathcal{F}_m},\dots,\left[T_{A}\left(e_{i_k}\right)\right]_{\mathcal{F}_m}}
+\end{align*}
+are linearly independent since $E^{-1}$ is an isomorphism.\newline
+
+If there is a vector $v\in \col(A)$ that is not in the span of $\left[T_{A}\left(e_{i_1}\right)\right]_{\mathcal{F}_m},\dots,\left[T_{A}\left(e_{i_k}\right)\right]_{\mathcal{F}_m}$, then $E(v)$ cannot be in the span of $w_1,\dots,w_k$.\newline
+
+Thus, the columns $\left[T_A\left(e_{i_1}\right)\right]_{\mathcal{F}_m},\dots \left[T_A\left(e_{i_k}\right)\right]_{\mathcal{F}_m}$ give a basis for $\col(A)$.
+\begin{example}
+  Consider the matrix
+  \begin{align*}
+    A &= \begin{pmatrix}3&4&5&6\\1&2&3&4\\1&1&2&3\end{pmatrix}.
+  \end{align*}
+  We put $A$ into row echelon form as
+  \begin{align*}
+    B &= \begin{pmatrix}1 & 1 & 2 & 3 \\ 0 & 1 & 1 & 1 \\ 0 & 0 & -2 & -4\end{pmatrix}.
+  \end{align*}
+  Examining the pivots, we have the column space as
+  \begin{align*}
+    \col(B) &= \Span_{\F}\left( \begin{pmatrix}1\\0\\0\end{pmatrix}, \begin{pmatrix}1\\1\\0\end{pmatrix}, \begin{pmatrix}2\\1\\-2\end{pmatrix}\right),
+  \end{align*}
+  implying the basis of the column space for $A$ is
+  \begin{align*}
+    \col(A) &= \Span_{\F}\left( \begin{pmatrix}3\\1\\1\end{pmatrix}, \begin{pmatrix}4\\2\\1\end{pmatrix}, \begin{pmatrix}5\\3\\2\end{pmatrix}\right).
+  \end{align*}
+\end{example}
+We have $v\in \Null(A)$ if and only if $Av = 0_{\F^m}$. Since $Av = T_A(v)$, we have $\Null(A) = \ker\left(T_A\right)$.
+\begin{example}
+  Let
+  \begin{align*}
+    A &= \begin{pmatrix}4 & -4 & 2 \\ -4 & 4 & -2 \\ 2 & -1 & 1\end{pmatrix}.
+  \end{align*}
+  The reduced row echelon form of $A$ is
+  \begin{align*}
+    B &= \begin{pmatrix}1 & 0 & 1/2 \\ 0 & 1 & 0 \\ 0 & 0 & 0\end{pmatrix}.
+  \end{align*}
+  Thus,
+  \begin{align*}
+    \col(A) &= \Span_{\F}\left( \begin{pmatrix}4\\-4\\2\end{pmatrix}, \begin{pmatrix}-4\\4\\-1\end{pmatrix}\right).
+  \end{align*}
+  We know that $\null(A) = \ker\left(T_A\right) \subseteq \F^{3}$-domain of $T_A$. When we put a matrix into reduced row echelon form, we do not impact the basis vectors of the domain of $T_A$, implying that $\Null(A) = \Null(B)$.\newline
+
+  In particular, we want
+  \begin{align*}
+    \begin{pmatrix}1 & 0 & 1/2\\0 & 1 & 0 \\ 0 & 0 & 0\end{pmatrix} \begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix} &= \begin{pmatrix}x_1 + \left(1/2\right) x_3\\x_2\\0\end{pmatrix}\\
+                     &= \begin{pmatrix}0\\0\\0\end{pmatrix}.
+  \end{align*}
+  Therefore, we have $x_2 = 0$, $x_1 = -1/2 x_3$, meaning
+  \begin{align*}
+    \Null(A) &= \Span_{\F}\left( \begin{pmatrix}-1/2\\0\\1\end{pmatrix}\right).
+  \end{align*}
+\end{example}
+\subsection{Transpose of a Matrix}%
+Recall that, given a linear map $T\in \Hom_{\F}\left(V,W\right)$, there is an induced map $T'\in \Hom_{\F}\left(W',V'\right)$ on the dual space given by $T'\left(\varphi\right) = \varphi\circ T$.\newline
+
+Let $A\in \Mat_{m,n}\left(\F\right)$, $\mathcal{E}_n = \set{e_1,\dots,e_n}$ and $\mathcal{F}_m = \set{f_1,\dots,f_m}$ be standard bases for $\F^n$ and $\F^m$ respectively. Let $T_A \in \Hom_\F\left(\F^n,\F^m\right)$, meaning $A = \left[T_A\right]_{\mathcal{E}_n}^{\mathcal{F}_m}$.\newline
+
+We have $\mathcal{E}_n' = \set{e_1',\dots,e_n'}$ and $\mathcal{F}_{m}' = \set{f_1',\dots,f_m'}$. The dual map $T_A'\in \Hom_{\F}\left(\F^m,\F^n\right)$, and the transpose of $A$ is defined by
+\begin{align*}
+  A^{T} &= \left[T_{A}'\right]_{\mathcal{F}_m'}^{\mathcal{E}_n'}.
+\end{align*}
+\begin{lemma}
+  Let $A = \left(a_{ij}\right) \in \Mat_{m,n}\left(\F\right)$. Then,
+  \begin{align*}
+    A^{T} &= \left(b_{ij}\right)\in \Mat_{n,m}\left(\F\right)
+  \end{align*}
+  with $b_{ij} = a_{ji}$.
+\end{lemma}
+\begin{proof}
+  Let $A\in \Mat_{m,n}\left(\F\right)$, $\mathcal{E}_n = \set{e_1,\dots,e_n}$ and $\mathcal{F}_m = \set{f_1,\dots,f_m}$ be standard bases for $\F^n$ and $\F^m$ respectively. Let $\mathcal{E}_n'$ and $\mathcal{F}_m'$ denote the dual bases.\newline
+
+  Let $T_A \in \Hom_\F\left(\F^n,\F^m\right)$, meaning $A = \left[T_A\right]_{\mathcal{E}_n}^{\mathcal{F}_m}$. In particular, we have
+  \begin{align*}
+    T_A\left(e_i\right) &= \sum_{k=1}^{m}a_{ki}f_k. \tag*{(\textasteriskcentered)}
+  \end{align*}
+  We have
+  \begin{align*}
+    A^{t} &= \left[T_{A}'\right]_{\mathcal{F}_m'}^{\mathcal{E}_n'} \tag*{(\textasteriskcentered\textasteriskcentered)}\\
+          &= \left(b_{ij}\right)
+  \end{align*}
+  Now, we have
+  \begin{align*}
+    T_{A}' \left(f_j'\right) &= \sum_{j=1}^{n}b_{kj}e_{k}'.
+  \end{align*}
+  Apply $f_j'$ to (\textasteriskcentered). Then,
+  \begin{align*}
+    \left(f_j'\circ T_A\right)\left(e_i\right) &= f_j'\left(\sum_{k=1}^{m}a_{ki}f_k\right)\\
+                                               &= \sum_{k=1}^{m}a_{ki}f_j'\left(f_k\right)\\
+                                               &= a_{ji}.
+  \end{align*}
+  Apply (\textasteriskcentered\textasteriskcentered) to $e_i$. Then,
+  \begin{align*}
+    T_A'\left(f_j'\right)\left(e_i\right) &= \sum_{k=1}^{n}b_{kj}e_k'\left(e_i\right)\\
+                                          &= b_{ij}.
+  \end{align*}
+  We have
+  \begin{align*}
+    \left(f_j'\circ T_A\right)\left(e_i\right) &= \left(T_A'\left(f_j'\right)\right)\left(e_i\right)
+  \end{align*}
+  by the definition of $T_A'$, meaning $b_{ij} = a_{ji}$.
+\end{proof}
+\begin{exercise}
+  Let $A_1,A_2\in \Mat_{m,n}\left(\F\right)$, $c\in \F$. Use the definition of the transpose to show
+  \begin{align*}
+    \left(A_1 + A_2\right)^{T} &= A_1^T + A_2^T\\
+    \left(cA_1\right)^T &= cA_1^T.
+  \end{align*}
+\end{exercise}
+\begin{lemma}
+  Let $A\in \Mat_{m,n}\left(\F\right)$, $B\in \Mat_{p,m}\left(\F\right)$. Then,
+  \begin{align*}
+    \left(BA\right)^T &= A^TB^T.
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  Let $\mathcal{E}_m$, $\mathcal{E}_n$, and $\mathcal{E}_p$ be standard bases.\newline
+
+  We have
+  \begin{align*}
+    \left[T_A\right]_{\mathcal{E}_n}^{\mathcal{E}_m} &= A\\
+    \left[T_B\right]_{\mathcal{E}_m}^{\mathcal{E}_p} &= B.
+  \end{align*}
+  So,
+  \begin{align*}
+    BA &= \left[T_B\circ T_A\right]_{\mathcal{E}_n}^{\mathcal{E}_p}.
+  \end{align*}
+  Thus,
+  \begin{align*}
+    \left(BA\right)^{T} &= \left[\left(T_B\circ T_A\right)'\right]_{\mathcal{E}_p'}^{\mathcal{E}_n'}\\
+                        &= \left[T_A'\circ T_B'\right]_{\mathcal{E}_p'}^{\mathcal{E}_n'}\\
+                        &= \left[T_A'\right]_{\mathcal{E}_m'}^{\mathcal{E}_n'}\left[T_{B}'\right]_{\mathcal{E}_p'}^{\mathcal{E}_m'}\\
+                        &= A^TB^T.
+  \end{align*}
+\end{proof}
+\begin{lemma}
+  Let $A\in \text{GL}_{n}\left(\F\right)$. Then,
+  \begin{align*}
+    \left(A^{-1}\right)^{T} &= \left(A^{T}\right)^{-1}.
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  We will show that $A^{T} \left(A^{-1}\right)^{T} = I_n = \left(A^{-1}\right)^{T} A^T$, and use the fact that inverses are unique.\newline
+
+  We have
+  \begin{align*}
+    A &= \left[T_A\right]_{\mathcal{E}_n}^{\mathcal{E}_n}\\
+    A^{-1} &= \left[T_A^{-1}\right]_{\mathcal{E}_n}^{\mathcal{E}_n}
+  \end{align*}
+  We have
+  \begin{align*}
+    I_n &= \left[\id_{\F^n}'\right]_{\mathcal{E}_n'}^{\mathcal{E}_n'}\\
+        &= \left[\left(T_A^{-1}\circ T_A\right)'\right]_{\mathcal{E}_n'}^{\mathcal{E}_n'}\\
+        &= \left[T_A'\circ \left(T_A^{-1}\right)'\right]_{\mathcal{E}_n'}^{\mathcal{E}_n'}\\
+        &= \left[T_A'\right]_{\mathcal{E}_n'}^{\mathcal{E}_n'}\left[\left(T_A^{-1}\right)'\right]_{\mathcal{E}_n'}^{\mathcal{E}_n'}\\
+        &= A^T\left(A^{-1}\right)^T.\\
+    I_n &= \left[\left(T_A\circ T_A^{-1}\right)'\right]_{\mathcal{E}_n'}^{\mathcal{E}_n'}\\
+        &= \left[\left(T_A^{-1}\right)'\circ T_A'\right]_{\mathcal{E}_n'}^{\mathcal{E}_n'}\\
+        &= \left[\left(T_A^{-1}\right)'\right]_{\mathcal{E}_n'}^{\mathcal{E}_n'}\left[T_A'\right]_{\mathcal{E}_n'}^{\mathcal{E}_n'}\\
+        &= \left(A^{-1}\right)^{T}A^{T}.
+  \end{align*}
+\end{proof}
+\section{Generalized Eigenvectors and Jordan Canonical Form}%
+Recall that we say $A \sim B$ if $A = PBP^{-1}$ for some $P\in \text{GL}_{n}\left(\F\right)$. In particular, this means that $A = \left[T\right]_{\mathcal{A}}$ and $B = \left[T\right]_{\mathcal{B}}$ for some bases $\mathcal{A}$ and $\mathcal{B}$.
+\begin{definition}[Diagonalizable]
+  We say $A$ is diagonalizable if $A \sim D$ for some $D$ a diagonal matrix.\newline
+
+  If $A = \left[T\right]_{\mathcal{A}}$, $A$ is diagonalizable if there is a basis $\mathcal{B}$ if $\left[T\right]_{\mathcal{B}} = D$ for $D$ a diagonal matrix.\newline
+
+  If $A\sim B$, $A$ is diagonalizable if and only if $B$ is diagonalizable. If $A$ and $B$ are diagonalizable, they must be similar to the same diagonal matrix up to reordering the diagonals.
+\end{definition}
+\begin{example}
+  Let $V = \F^2$, $T \in \Hom_{\F}\left(V,V\right)$. We take $T\left(e_1\right) = 3e_1$ and $T\left(e_2\right) = -2e_2$.\newline
+
+  In particular, we can see that
+  \begin{align*}
+    \left[T\right]_{\mathcal{E}_2} &= \begin{pmatrix}3 & 0 \\ 0 & -2\end{pmatrix}.
+  \end{align*}
+  When we look at $V = V_1\oplus V_2$, with $V_1 = \Span_{\F}\left(e_1\right)$ and $V_2 = \Span_{\F}\left(e_2\right)$.\newline
+
+  In this case, we have $T\left(V_1\right)\subseteq V_1$ and $T\left(V_2\right) \subseteq V_2$, which allows us to write $T$ as a diagonal matrix.
+\end{example}
+\begin{example}
+  Let $V = \F^2$, $T \in \Hom_{\F}\left(V,V\right)$. We take $T\left(e_1\right) = 3e_1$ and $T\left(e_2\right) = e_1 + 3e_2$.\newline
+
+  In particular, we can see that
+  \begin{align*}
+    \left[T\right]_{\mathcal{E}_2} &= \begin{pmatrix}3 & 1 \\ 0 & 3\end{pmatrix}.
+  \end{align*}
+  We still have $V = V_1\oplus V_2$ with $V_1 = \Span_{\F}\left(e_1\right)$ and $V_2 = \Span_{\F}\left(e_2\right)$.\newline
+
+  While we have $T\left(V_1\right)\subseteq V_1$, we do not have $T\left(V_2\right)\subseteq V_2$. We will find a diagonalization (or lack thereof) of $T$.\newline
+
+  Suppose we have $W_1,W_2\neq \set{0}$ with $V = W_1 \oplus W_2$ with $T\left(W_1\right)\subseteq W_1$ and $T\left(W_2\right)\subseteq W_2$.\newline
+
+  Write $W_i = \Span_{\F}\left(w_i\right)$. In particular, this means we can write $T\left(w_1\right) = \alpha w_1$ and $T\left(w_2\right) = \beta w_2$. For $\mathcal{B} = \set{w_1,w_2}$, we would be able to write
+  \begin{align*}
+    \left[T\right]_{\mathcal{B}} &= \begin{pmatrix}\alpha & 0 \\ 0 & \beta\end{pmatrix}.
+  \end{align*}
+  Write $w_1 = ae_1 + be_2$ and $w_2 = ce_1 + de_2$.
+  \begin{align*}
+    \alpha w_1 &= T\left(w_1\right)\\
+               &= aT\left(e_1\right) + bT\left(e_2\right)\\
+               &= a\left(3e_1\right) + b\left(e_1 + 3e_2\right)\\
+               &= \left(3a+b\right)e_1 + 3be_2
+  \end{align*}
+  Thus, $\alpha\left(ae_1 + be_2\right) = \left(3a+b\right)e_1 + 3be_2$, meaning $\alpha a = 3a + b$, $\alpha b = 3b$. Either $b = 0$ or $\alpha = 3$, but we still end with $\alpha = 3$. Thus, $T\left(w_1\right) = 3w_1$.\newline
+
+  Applying to $w_2$, we have
+  \begin{align*}
+    \beta w_2 &= \left(3c + d\right)e_1 + \left(3d\right)e_2,
+  \end{align*}
+  implying $\beta c = ec + d$ and $\beta d = 3d$, meaning either $\beta = 3$ (which contradicts the first equation)or $w_2 = ce_1$, which contradicts $w_1,w_2$ being a basis.
+\end{example}
+\begin{example}
+  Let
+  \begin{align*}
+    A &= \begin{pmatrix}1& 2\\ 3&4\end{pmatrix}.
+  \end{align*}
+  Let $\F = \Q$. Can we find $P \in \text{GL}_2\left(\Q\right)$ such that $P^{-1}AP = \begin{pmatrix}\alpha & 0\\ 0 & \beta\end{pmatrix}$.\newline
+
+  If we write $P = \begin{pmatrix}a & b \\c & d\end{pmatrix}$, we have
+  \begin{align*}
+    P^{-1}AP &= \frac{1}{ad-bc} \begin{pmatrix}ad - 3ab + 2cd - 4bc & -3bd - 3b^2 + 2d^2\\ 3ac + 3a^2 - 2c^2 & -bc + 3ab - 2cd + 4ad\end{pmatrix}.
+  \end{align*}
+  By the definition of diagonal matrix, we must have
+  \begin{align*}
+    3a^2 + 3ac - 2c^2 &= 0.
+  \end{align*}
+  If $c = 0$, then $a = 0$, which is a contradiction since $P$ is invertible. We have $c\neq 0$, meaning we can divide by $c^2$ and set $x = a/c$
+  \begin{align*}
+    3x^2 + 3x - 2 &= 0\\
+    x &= \frac{-3 \pm \sqrt{33}}{6}\\
+    a &= \frac{-3 \pm \sqrt{33}}{6}c.
+  \end{align*}
+  Since $c\neq 0$, $\frac{-3 \pm \sqrt{33}}{6}c \notin \Q$. Thus, we cannot diagonalize $A$ over $\Q$.\newline
+
+  If we take $\F = \Q\left(\sqrt{33}\right)$, then we take
+  \begin{align*}
+    \mathcal{B} &= \set{v_1 = \begin{pmatrix}1\\ \frac{3 + \sqrt{33}}{4}\end{pmatrix}, v_2 = \begin{pmatrix}1\\\frac{3-\sqrt{33}}{4}\end{pmatrix}},\\
+    \left[T\right]_{\mathcal{B}} &= \begin{pmatrix}\frac{5 + \sqrt{33}}{2} & 0 \\ 0 & \frac{5-\sqrt{33}}{2}\end{pmatrix}.
   \end{align*}
 \end{example}
 \end{document}
