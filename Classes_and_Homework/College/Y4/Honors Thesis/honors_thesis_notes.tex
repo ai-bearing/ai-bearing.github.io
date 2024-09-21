@@ -493,7 +493,7 @@ In this section, we will prove paradoxicality and non-amenability are equivalent
                            &> \nu(G).
       \end{align*}
 \end{remark}
-\subsection{König's Theorem and Perfect Matchings}%
+\subsection{Perfect Matchings in Infinite Bipartite Graphs}%
 In order to prove that non-paradoxicality implies amenability, we must use some essential results from graph theory.
 \begin{definition}[Graphs and Paths]
   A graph is a triple $\left(V,E,\phi\right)$, where $V$ and $E$ are nonempty sets, and $\phi: E\rightarrow P_{2}(V)$ is a map from $e$ to the set of all unordered subset pairs of $V$.\newline
@@ -536,7 +536,7 @@ Let $(X,Y,E,\phi)$ be a bipartite graph. Let $A\subseteq X$ and $B\subseteq Y$. 
 
         We can see that $\left[M_X,N\left(M_X\right)\right]\subseteq \left[X,N\left(M_X\right)\right]$, and similarly with $\left[M_Y,N\left(M_Y\right)\right]\subseteq \left[Y,N\left(M_Y\right)\right]$. Additionally, $\left\vert \left[M_X,N\left(M_X\right)\right] \right\vert = k\left\vert M_X \right\vert$, with $\left\vert \left[X,N\left(M_X\right)\right] \right\vert = k\left\vert N\left(M_X\right) \right\vert$, meaning $|M_X| \leq |N\left(M_X\right)|$, and similarly for $|M_Y|$ and $|N\left(M_Y\right)|$.\newline
 
-        Thus, $|M| \leq |N(M)|$.
+        Thus, $|M| \leq |N(M)|$. For future reference, the condition $|M| \leq |N(M)|$ is known as the Hall condition.
       \item Let $A\subseteq X$ and $B\subseteq Y$. Let $F$ be a perfect matching between $A$ and $B$. Suppose toward contradiction that $A\neq X$.\newline
 
         Thus, there exists $x\in X\setminus A$. Consider the set $Z\subseteq V$ consisting of all vertices such that there exists a $F$-alternating path $\left(e_1,\dots,e_n\right)$ between $z\in Z$ and $x$.\newline
@@ -558,14 +558,69 @@ Let $(X,Y,E,\phi)$ be a bipartite graph. Let $A\subseteq X$ and $B\subseteq Y$. 
       \item By symmetry, we have $A = X$ and $B = Y$, implying that there is a perfect matching in $\left(X,Y,E,\phi\right)$.
     \end{enumerate}
   \end{solution}
-  \begin{theorem}[König]
-    Let $(X,Y,E,\phi)$ be a bipartite graph which is $k$-regular for some $k\in\N$. Then, there is a perfect matching of $X$ and $Y$.
+  \begin{definition}[Hall's Marriage Condition]
+    For a bipartite graph $\left(X,Y,E,\phi\right)$, there is an $X$-perfect matching\footnote{A matching on $\left(X,Y,E,\phi\right)$ that satisfies every vertex of $X$.} if and only if for all $S\subseteq $
+
+    Equivalently, for a finite collection of (not necessarily distinct) finite sets $\mathcal{G} = \set{X_i}_{i=1}^{n}$, there is a system of distinct representatives\footnote{A set $\set{x_i}_{i=1}^{n}$ such that $x_i\in X_i$ and $x_{i}\notin X_j$ for $j\neq i$.} for $\mathcal{G}$ if and only if for all subcollections $\mathcal{Y}_k = \set{X_{i_k}}_{k=1}^{m}$, $\left\vert \mathcal{Y}_k \right\vert\leq \left\vert \bigcup_{k=1}^{m}X_{i_k} \right\vert$.
+  \end{definition}
+  \begin{remark}
+    These two formulations of the Hall condition are equivalent regarding a $X$-perfect matching.\newline
+
+    In the case of a graph, this yields an injection $f: X\hookrightarrow Y$, and in the case of a collection of sets, this yields an injection $f: \mathcal{G}\hookrightarrow \bigcup_{i=1}^{n}X_i$.\newline
+  \end{remark}
+  \begin{definition}[Choice Function]
+    Let $\mathcal{Y} = \set{X_i}_{i\in I}$ be a collection of sets. A function $f: \mathcal{Y}\rightarrow \bigcup_{i\in I}X_i$ is known as a choice function if, for each $i\in I$, $f\left(X_i\right)\in X_i$.\newline
+
+    We also say that $f: \mathcal{Y}\rightarrow \bigcup_{i\in I}X_i$ is a choice function if $f\in \prod_{i\in I}X_i$.
+  \end{definition}
+  \begin{remark}
+    A choice function on an infinite collection $\mathcal{Y}$ is analogous to a system of distinct representatives on a finite collection $\mathcal{G}$.
+  \end{remark}
+  \begin{theorem}[Tychonoff]
+    Let $\set{X_i}_{i\in I}$ be a family of compact topological spaces. Then, $\prod_{i\in I}X_i$ is compact.
+  \end{theorem}
+  There is a way to extend Hall's Marriage Condition to a particular infinite case, which we will use to show König's Theorem.
+  \begin{theorem}[Infinite Marriage Theorem]
+    Let $\mathcal{G} = \set{X_i}_{i\in I}$ be a collection of (not necessarily distinct) finite sets. If, for every finite subcollection $\mathcal{Y} = \set{X_{i_k}}_{k=1}^{n}$,
+    \begin{align*}
+      n \leq \left\vert \bigcup_{k=1}^{n}X_{i_k} \right\vert,
+    \end{align*}
+    then there is a choice function on $\mathcal{G}$.
   \end{theorem}
   \begin{proof}
-    We define an equivalence relation on $V$ by saying that two vertices are equal if there is a path between them.\newline
+    We endow each $X_i\in \set{X_i}_{i\in I}$ with the discrete topology. Since each $X_i$ is finite, it is the case that each $X_i$ is compact.\newline
 
-    Each equivalence class under this relation on $(X,Y,E,\phi)$\footnote{These are known as connected components.} is a $k$-regular bipartite graph that has countably many edges and vertices. We may thus restrict our attention to one of these equivalence classes.\newline
+    By Tychonoff's theorem, it is the case that $\prod_{i\in I}X_i$ is compact.\newline
 
-    If the equivalence class is finite, we have proven in the exercise that by Hall's theorem that there is a perfect matching. We may thus restrict our attention to connected components with countably infinite $X$, $Y$, and $E$.
+    For every finite subset $Y$ of $\mathcal{G}$, define
+    \begin{align*}
+      S_Y &= \set{\left. f\in \prod_{i\in I}X_i \right|~f\vert_{Y}\text{ is injective}}
+    \end{align*}
+    In particular, the injectivity of $f\vert_{Y}$ is equivalent the existence of a system of distinct representatives on $Y$. Since $Y$ satisfies the Hall condition, it is the case that each $S_Y$ is nonempty. Additionally, since $\prod_{i\in I}X_i$ is endowed with the discrete topology, it is also the case that $S_Y$ is closed.\newline
+
+    We define $F = \set{S_Y\mid Y\subseteq \mathcal{G}\text{ finite}}$. Notice that, for finite $Y_1,Y_2\subseteq \mathcal{G}$, since every system of distinct representatives on $Y_1\cup Y_2$ is a system of distinct representatives on $Y_1$ and a system of distinct representatives on $Y_2$, it is the case that $S_{Y_1\cup Y_2}\subseteq S_{Y_1}\cap S_{Y_2}$.\newline
+
+    Since $F$ is a closed subset of $\prod_{i\in I}X_i$, $F$ is compact, meaning that $\bigcap_{Y\subseteq \mathcal{G}} F$ is nonempty. Thus, for $f\in \bigcap F$, $f$ is necessarily a choice function. 
   \end{proof}
+  \begin{remark}
+    This is equivalent to the existence of an injection $f: \mathcal{G}\hookrightarrow \bigcup_{i\in I}X_i$.
+  \end{remark}
+  %\begin{theorem}[König's Theorem]
+  %  Let $(X,Y,E,\phi)$ be a bipartite graph which is $k$-regular for some $k\in \N$. Then, there is a perfect matching of $X$ and $Y$.
+  %\end{theorem}
+  \begin{theorem}[König's Theorem]
+    Let $(X,Y,E,\phi)$ be a bipartite graph which is $k$-regular for some $k\in\N$. Then, there is a perfect matching of $X$ and $Y$.
+  \end{theorem}
+ % \begin{proof}
+ %   We define an equivalence relation on $V$ by saying that two vertices are equal if there is a path between them.\newline
+
+ %   Each equivalence class under this relation on $(X,Y,E,\phi)$\footnote{These are known as connected components.} is a $k$-regular bipartite graph that has countably many edges and vertices. We may thus restrict our attention to one of these equivalence classes.\newline
+
+ %   If the equivalence class is finite, we have proven in the exercise that by Hall's theorem that there is a perfect matching. We may thus restrict our attention to connected components with countably infinite $X$, $Y$, and $E$.\newline
+
+ %   For $x\in X$ and $y\in Y$, define $Z_1 = \set{x,y}\cup N\left(\set{x,y}\right)$, and $Z_{n} = N\left(Z_{n-1}\right)$. Define $X_n = Z_n\cap X$ and $Y_n = Z_n\cap Y$, with $E_n\subseteq E$ such that $\left(X_n,Y_n,E_n,\phi\bigr\vert_{E_n}\right)$ is a graph.\newline
+
+ %   We can extend $\left(X_n,E_n,\phi\bigr\vert{E_n}\right)$ to a $k$-regular bipartite graph, $\left(X_n', Y_n', E_n',\phi\bigr\vert_{E_n'}\right)$ by 
+ % \end{proof}
+
 \end{document}
