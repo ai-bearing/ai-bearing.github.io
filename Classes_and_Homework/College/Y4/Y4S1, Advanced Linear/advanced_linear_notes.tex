@@ -1237,7 +1237,7 @@ To compute $\left[T\right]_{\mathcal{B}}^{\mathcal{C}}$, we have
     \left[T\right]_{\mathcal{B}}^{\mathcal{C}} &= \begin{pmatrix}0 & 1 & 2 & -9 \\ 0 & 0 & 2 & -6\\ 0&0&0&3\\ 0&0&0&0\end{pmatrix}
   \end{align*}
 \end{example}
-\begin{exercise}
+\begin{exercise}\hfill
   \begin{enumerate}[(1)]
     \item Let $\mathcal{A}$ be a basis of $U$, $\mathcal{B}$ a basis of $V$, and $\mathcal{C}$ a basis of $W$. Let $S\in\Hom_{\F}\left(U,V\right)$ and $T\in\Hom_{\F}\left(V,W\right)$.\newline
 
@@ -1738,6 +1738,7 @@ We have $\mathcal{E}_n' = \set{e_1',\dots,e_n'}$ and $\mathcal{F}_{m}' = \set{f_
   \end{align*}
 \end{proof}
 \section{Generalized Eigenvectors and Jordan Canonical Form}%
+\subsection{Eigenvalues and Eigenvectors}%
 Recall that we say $A \sim B$ if $A = PBP^{-1}$ for some $P\in \text{GL}_{n}\left(\F\right)$. In particular, this means that $A = \left[T\right]_{\mathcal{A}}$ and $B = \left[T\right]_{\mathcal{B}}$ for some bases $\mathcal{A}$ and $\mathcal{B}$.
 \begin{definition}[Diagonalizable]
   We say $A$ is diagonalizable if $A \sim D$ for some $D$ a diagonal matrix.\newline
@@ -1818,4 +1819,221 @@ Recall that we say $A \sim B$ if $A = PBP^{-1}$ for some $P\in \text{GL}_{n}\lef
     \left[T\right]_{\mathcal{B}} &= \begin{pmatrix}\frac{5 + \sqrt{33}}{2} & 0 \\ 0 & \frac{5-\sqrt{33}}{2}\end{pmatrix}.
   \end{align*}
 \end{example}
+\begin{recall}
+  The fundamental question we are investigating is whether given a $A\in \Mat_{n}\left(\F\right)$, can we choose $P\in \text{GL}_{n}\left(\F\right)$ such that $PAP^{-1}$ is diagonal.\newline
+
+  We saw that if $\F^2 = V_1\oplus V_2$ with $A\left(V_1\right) \subseteq V_1$, $A\left(V_2\right)\subseteq V_2$, then it is possible to diagonalize $A$.
+\end{recall}
+\begin{definition}
+  Let $V$ be an $\F$-vector space with $T\in \Hom_{\F}\left(V,V\right)$. We say a subspace $W\subseteq V$ is $T$-invariant or $T$-stable if $T\left(W\right)\subseteq W$.
+\end{definition}
+\begin{theorem}
+  Let $\Dim_{\F}\left(V\right) = n$, $W\subseteq V$ a $k$-dimensional subspace.\newline
+
+Let $\mathcal{B}_{W} = \set{v_1,\dots,v_k}$ be a basis for $W$, and extend to a basis $\mathcal{B} = \set{v_1,\dots,v_n}$ of $V$.\newline
+
+Let $T\in \Hom_{\F}\left(V,V\right)$.\newline
+
+Then, $W$ is $T$-stable if and only if $\left[T\right]_{\mathcal{B}}$ is block-upper triangular of the form
+\begin{align*}
+  \left[T\right]_{\mathcal{B}} &= \begin{pmatrix}A & B \\ 0 & D\end{pmatrix},
+\end{align*}
+where $A = \left[T\vert_{W}\right]_{\mathcal{B}_W}$.
+\end{theorem}
+\begin{example}
+  Let $V = \Q^4$, $\mathcal{E}_4 = \set{e_1,e_2,e_3,e_4}$ the standard basis. Define $T$ by
+  \begin{align*}
+    T\left(e_1\right) &= 2e_1 + 3e_3\\
+    T\left(e_2\right) &= e_1 + e_4\\
+    T\left(e_3\right) &= e_1 - e_3\\
+    T\left(e_4\right) &= 2e_1 - 2e_2 + 5e_3 - 4e_4.
+  \end{align*}
+  Notice that if we set $W = \Span_{\Q}\left(e_1,e_3\right)$, then $W$ is $T$-stable. We set $\mathcal{B}_W = \set{e_1,e_3}$, $\mathcal{B} = \set{e_1,e_2,e_3,e_4}$.
+  \begin{align*}
+    \left[T\right]_{\mathcal{B}} &= \begin{pmatrix}2 & 1 & 1 & 2 \\ 3 & -1 & 0 & 5 \\ 0 & 0 & 0 & -2 \\ 0 & 0 & 1 & -4\end{pmatrix}
+  \end{align*}
+\end{example}
+A special case is when $\Dim_{\F}\left(W\right) = 1$. If $W = \Span_{\F}\left(w_1\right)$, and $W$ is $T$-stable, then $T\left(w_1\right) \in W$, meaning $T\left(w_1\right) = \lambda w_1$ for some $\lambda \in \F$.\newline
+
+We can rewrite this as $T\left(w_1\right) - \lambda\left(w_1\right) = 0_V$, meaning $\left(T - \lambda \id_V\right)\left(w_1\right) = 0_V$, meaning $w_1\in \ker\left(T - \lambda\id_V\right)$.
+\begin{definition}
+  Let $T\in \Hom_{\F}\left(V,V\right)$, and $\lambda \in F$. If $\ker\left(T - \lambda\id_V\right) \neq \set{0_V}$, we say $\lambda$ is an eigenvalue of $T$.\newline
+
+  Any nonzero vector in $\ker\left(T - \lambda \id_V\right)$ is called an eigenvector.\newline
+
+  The set $E_{\lambda} = \ker\left(T - \lambda \id_V\right)$ is called the eigenspace associated with $\lambda$.
+\end{definition}
+\begin{exercise}
+  Show $E_{\lambda}$ is a subspace of $V$.
+\end{exercise}
+\begin{exercise}
+  Let $T\in \Hom_{\F}\left(V,V\right)$. If $\lambda_1,\lambda_2 \in \F$ with $\lambda_1\neq \lambda_2$, then $E_{\lambda_1} \cap E_{\lambda_2} = \set{0_V}$.
+\end{exercise}
+\begin{example}
+  Let
+  \begin{align*}
+    A &= \begin{pmatrix}-12 & 35 \\ -6 & 17\end{pmatrix}\in \Mat_{2}\left(\Q\right),
+  \end{align*}
+  with $T_A \in \Hom_{\Q}\left(\Q^2,\Q^2\right)$ the associated linear map.\newline
+
+  We have
+  \begin{align*}
+    \begin{pmatrix}-12 & 35 \\ -6 & 17\end{pmatrix} \begin{pmatrix}1\\2/5\end{pmatrix} &= 2 \begin{pmatrix}1\\2/5\end{pmatrix}\\
+    \begin{pmatrix}-12 & 35 \\ -6 & 17\end{pmatrix} \begin{pmatrix}1\\3/7\end{pmatrix} &= 3 \begin{pmatrix}1\\3/7\end{pmatrix}.
+  \end{align*}
+  Therefore, $T_A$ has eigenvalues of $2$ and $3$, with
+  \begin{align*}
+    E_2 &= \Span_{\Q} \left(\begin{pmatrix}1\\2/5\end{pmatrix}\right) = \Span_{\Q}\left(v_1\right)\\
+    E_3 &= \Span_{\Q}\left( \begin{pmatrix}1\\3/7\end{pmatrix}\right) = \Span_{\Q}\left(v_2\right),
+  \end{align*}
+  meaning
+  \begin{align*}
+    \left[T_{A}\right]_{\set{v_1,v_2}} &= \begin{pmatrix}2 & 0 \\ 0 & 3\end{pmatrix}.
+  \end{align*}
+\end{example}
+\begin{notation}
+  Let $T\in \Hom_{\F}\left(V,V\right)$. We write $T^m = \underbrace{T\circ \cdots \circ T}_{m\text{ times}}$.\newline
+
+  If $f(x) \in \F[x]$, $f(x) = a_mx^m + \cdots + a_1 x + a_0$, then
+  \begin{align*}
+    f\left(T\right) &= a_mT^m + \cdots + a_1T + a_0 \id_V\\
+                    &\in \Hom_{\F}\left(V,V\right).
+  \end{align*}
+  If $f(x) = g(x)h(x)$, then
+  \begin{align*}
+    f(T) &= g(T)\circ h(T)
+  \end{align*}
+\end{notation}
+\begin{example}
+  If $g(x) = 2x^2 + 3$, then
+  \begin{align*}
+    g\left(T\right) &= 2T^2 + 3\id_V\\
+    g\left(T\right)\left(v\right) &= 2T\left(T\left(v\right)\right) + 3v.
+  \end{align*}
+\end{example}
+Let $\Dim_{\F}\left(V\right) = n$. Recall that $\Hom_{\F}\left(V,V\right)$ is an $\F$-vector space, meaning $\Hom_{\F}\left(V,V\right) \cong \Mat_{n}\left(\F\right)$. Thus, $\Dim_{\F}\left(\Hom_{\F}\left(V,V\right)\right) = n^2$.\newline
+
+Given $T\in \Hom_{\F}\left(V,V\right)$, consider
+\begin{align*}
+  \set{\id_V,T,T^2,\dots,T^{n^2}}\subseteq \Hom_{\F}\left(V,V\right).
+\end{align*}
+Since this set contains $n^2 + 1$ elements, it must be linearly dependent. Let $m$ be the smallest integer such that $a_m T^{m} + \cdots + a_1 T + a_0\id_V = 0_{\Hom_{\F}\left(V,V\right)}$. Since $m$ is minimal, $a_m \neq 0$.\newline
+
+Define $f(x) = x^m + b_{m-1}x^{m-1} + \cdots + b_1 x + b_0\in \F[x]$, where $b_i = \frac{a_i}{a_m}$.\newline
+
+Observe that $f(T) = 0_{\Hom_{\F}\left(V,V\right)}$. In other words, $f\left(T\right)\left(v\right) = 0_V$ for all $v\in V$.
+\begin{theorem}
+  Let $\Dim_{\F}\left(V\right) = n$. There is a unique monic polynomial $m_T(x) \in \F[x]$ of lowest degree such that
+  \begin{align*}
+    m_T\left(T\right)\left(v\right) &= 0_V
+  \end{align*}
+  for every $v\in V$. Moreover, $\deg\left( m_T\left(x\right)\right)\leq n^2$
+\end{theorem}
+\begin{proof}[Proof of Uniqueness]
+  Suppose $f(x) \in \F[x]$ satisfies $f(T)(v) = 0$ for all $v\in V$.\newline
+
+  We write
+  \begin{align*}
+    f(x) &= m_T\left(x\right)q(x) + r(x),
+  \end{align*}
+  for some $q(x),r(x) \in \F[x]$, with $r(x) = 0$ or $\deg r(x) < \deg m_T(x)$.\newline
+
+  Plugging in $T$, we have for all $v\in V$,
+  \begin{align*}
+    0_V &= f(T)(v)\\
+        &= q(T)m_T(T)(v) + r(T)(v)\\
+        &= q(T)\left(0_V\right) + r(T)(v)\\
+        &= r(T)(v)
+  \end{align*}
+  Thus, $r(T) (v) = 0$ for all $v\in V$; thus, it must be the case that $r(T) = 0$.\newline
+
+  Thus, $m_T(x)|f(x)$. However, if $m_T(x)$ and $f(x)$ are monic and of minimal degree, with $m_T(x)|f(x)$, then $m_T(x) = f(x)$.
+\end{proof}
+\begin{definition}
+  The unique monic polynomial $m_T(x)$ is called the minimal polynomial.
+\end{definition}
+\begin{corollary}
+  If $f(x)\in \F[x]$ satisfies $f(T)(v) = 0$ for all $v\in V$, then $m_T(x)|f(x)$.
+\end{corollary}
+\begin{example}
+  Let $F = \Q$,
+  \begin{align*}
+    A &= \begin{pmatrix}1 & 2 \\ 3 & 4\end{pmatrix}.
+  \end{align*}
+  We can see that for any $a_0\in \Q$,
+  \begin{align*}
+    A - a_0I_{2} \neq 0_{\Mat_{2}\left(\Q\right)}.
+  \end{align*}
+  However, for
+  \begin{align*}
+    A^2 &= \begin{pmatrix}7 & 10 \\ 15 & 22\end{pmatrix},
+  \end{align*}
+  we have
+  \begin{align*}
+    A^2 - 5A - 2I_{2} &= 0_{\Mat_{2}\left(\Q\right)},
+  \end{align*}
+  yielding $m_{A}\left(x\right) = x^2 - 5x - 2$.\newline
+
+  The roots of $m_A(x)$ are $\frac{5\pm \sqrt{33}}{2}$.
+\end{example}
+\begin{example}
+  Let $V = \Q^3$, $\mathcal{E}_3 = \set{e_1,e_2,e_3}$, with $T_A$ given by
+  \begin{align*}
+    A &= \begin{pmatrix}1 & 2 & 3 \\ 0 & 1 & 4 \\ 0 & 0 & -1\end{pmatrix}.
+  \end{align*}
+  We can find
+  \begin{align*}
+    A^2 &= \begin{pmatrix}1 & 4 & 8 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{pmatrix}\\
+    A^3 &= \begin{pmatrix}1 & 6 & 11 \\ 0 & 1 & 4 \\ 0 & 0 & -1\end{pmatrix}.
+  \end{align*}
+  Thus, we find
+  \begin{align*}
+    A^3 - A^2 - A + I &= 0,\\
+    \left(x-1\right)^2 \left(x+1\right) &= m_{T_A}\left(x\right)
+  \end{align*}
+\end{example}
+\begin{theorem}
+  Let $V$ be an $\F$-vector space, and let $T\in \Hom_{\F}\left(V,V\right)$. We have $\lambda$ is an eigenvalue if and only if $\lambda$ is a root of $m_{T}\left(x\right)$.\newline
+
+  In particular, if $\left(x-\lambda\right)\vert m_T(x)$, then $E_{\lambda}\neq \set{0_V}$.
+\end{theorem}
+\begin{proof}
+  Let $\lambda$ be an eigenvalue with eigenvector $v$, and write $m_{T}\left(x\right) = x^m + \cdots + a_1x + a_0$. Notice that $T^{k}\left(v\right) = \lambda^{k}\left(v\right)$.\newline
+
+  We have 
+  \begin{align*}
+    0_V &= m_T(T)(v)\\
+        &= \left(T^{m} + a_{m-1}T^{m-1} + \cdots + a_1T + a_0\id_V\right)\left(v\right)\\
+        &= T^{m}\left(v\right) + a_{m-1}T^{m-1}\left(v\right) + \cdots + a_1T\left(v\right) + a_0 v\\
+        &= \lambda^{m}v + a_{m-1}\lambda^{m-1}v + \cdots + a_1\lambda v + a_0 v\\
+        &= \left(\lambda^{m} + a_{m-1}\lambda^{m-1} + \cdots + a_1\lambda + a_0\right)v\\
+        &= m_{T}\left(\lambda\right)v,
+  \end{align*}
+  meaning $m_T\left(\lambda\right)v = 0_V$. Since $m_T\left(\lambda\right)\in \F$ and $v \neq 0_V$, it is the case that $m_T\left(\lambda\right) = 0$, meaning $\lambda$ is a root of $m_T(x)$.\newline
+
+  Suppose $m_T\left(\lambda\right) = 0$. This gives
+  \begin{align*}
+    m_T\left(x\right) &= \left(x-\lambda\right)f(x)
+  \end{align*}
+  for some $f(x)\in \F[x]$. Therefore, $\deg\left(f(x)\right) < \deg \left(m_{T}\left(x\right)\right)$. There must exist a nonzero vector $v\in V$ such that $f(T)(v) \neq 0_V$. Set $w = f(T)(v)$. Observe that $m_T(T)(v) = 0_V$, so $\left(T-\lambda\id_V\right)f(T)(v) = 0_V$, meaning $\left(T-\lambda\id_V\right)\left(w\right) = 0_V$, so $T(w) = \lambda w$. Thus, $\lambda$ is an eigenvalue.
+\end{proof}
+\begin{corollary}
+  Let $\lambda_1,\dots,\lambda_m\in \F$ be distinct eigenvalues of $T$. For each $i$, let $v_i$ be an eigenvector with eigenvalue $\lambda_i$. Then, $\set{v_1,\dots,v_m}$ is linearly independent 
+\end{corollary}
+\begin{proof}
+  We can write
+  \begin{align*}
+    m_T(x) &= \left(x-\lambda_1\right)\cdots\left(x-\lambda_m\right)f(x).
+  \end{align*}
+  Suppose $a_1v_1 + \cdots + a_mv_m = 0_V$ for some $a_i\in \F$.\newline
+
+  Define $g_1(x) = \left(x-\lambda_2\right)\cdots\left(x-\lambda_m\right)f(x)$. Note that $g_1(T)(v_i) = 0_V$ for all $2\leq i \leq m$. Then,
+  \begin{align*}
+    0_V &= g_1(T)\left(0_V\right)\\
+        &= \sum_{j=1}^{m}a_jg_1(T)\left(v_j\right)\\
+        &= a_1g_1(T)\left(v_1\right)\\
+        &= a_1g_1\left(\lambda_1\right)v_1.
+  \end{align*}
+  Since $g_1\left(\lambda_1\right)\neq 0$, and $v_1\neq 0$, it must be the case that $a_1 = 0$. Symmetry provides the case for $2,\dots,m$.
+\end{proof}
 \end{document}
