@@ -1,4 +1,4 @@
-\documentclass[12pt]{mypackage}
+\documentclass[10pt]{mypackage}
 
 % sans serif font:
 %\usepackage{cmbright}
@@ -13,7 +13,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \rhead{Avinash Iyer}
-\lhead{Amenability}
+\lhead{Amenability and $C^{\ast}$-Algebras}
 
 \setcounter{secnumdepth}{0}
 
@@ -624,6 +624,7 @@ Let $(X,Y,E,\phi)$ be a bipartite graph. Let $A\subseteq X$ and $B\subseteq Y$. 
 
     Consider, now, $\left(X,Y,F\cup G,\phi\vert_{F\cup G}\right)$. We can see that, when restricted to this subgraph of $(X,Y,E,\phi)$, the injections $f$ and $g$ between $X$ and $Y$ still hold. Thus, by the Cantor--Schröder-Bernstein theorem, there is a bijection $h: X\rightarrow Y$ in $\left(X,Y,F\cup G,\phi\vert_{F\cup G}\right)$. This is our desired perfect matching.
   \end{proof}
+  \subsection{Type Semigroups}%
   \begin{definition}
     Let $G$ be a group that acts on a set $X$.
     \begin{enumerate}[(i)]
@@ -646,16 +647,93 @@ Let $(X,Y,E,\phi)$ be a bipartite graph. Let $A\subseteq X$ and $B\subseteq Y$. 
 
     Similarly, if $E_1\times\set{n} \sim_{G^{\ast}}E_2\times \set{m}$, we select $g_1,\dots,g_n$ from the elements $\left(g_1,\pi_1\right),\dots,\left(g_n,\pi_n\right)$ that satisfy the definition of equidecomposability. This yields $E_1\sim_{G}E_2$.
   \end{solution}
- % \begin{proof}
- %   We define an equivalence relation on $V$ by saying that two vertices are equal if there is a path between them.\newline
+  \begin{definition}
+    Let $G$ be a group that acts on $X$, with $G^{\ast}$ and $X^{\ast}$ defined as previous.
+    \begin{enumerate}[(i)]
+      \item A set $A\subseteq X^{\ast}$ is called \textit{bounded} if it has finitely many levels.
+      \item If $A\subseteq X^{\ast}$ is bounded, the equivalence class of $A$ with respect to equidecomposability under $G^{\ast}$ is called the type of $A$, denoted $[A]$.
+      \item If $E\subseteq X$, we write $[E] = \left[E\times \set{0}\right]$.
+      \item Let $A,B\subseteq X^{\ast}$ be bounded, with $k\in \N_0$ such that for
+        \begin{align*}
+          B' &:= \set{\left(b,n+k\right)\mid \left(b,n\right) \in B},
+        \end{align*}
+        $B'\cap A = \emptyset$. We define $[A] + [B] = \left[A \sqcup B'\right]$.
+      \item We define
+        \begin{align*}
+          \mathcal{S} &= \set{[A]\mid A\subseteq X^{\ast}\text{ bounded}}
+        \end{align*}
+        under the addition defined in part (iv) to be the type semigroup of the action of $G$ on $X$.
+    \end{enumerate}
+  \end{definition}
+  \begin{exercise}
+    Let $G$ be a group acting on a set $X$, and let $\left(\mathcal{S},+\right)$ be the corresponding type semigroup.
+    \begin{enumerate}[(i)]
+      \item Show that $+$ is well-defined.
+      \item Show that $\left(\mathcal{S},+\right)$ is a commutative semigroup with identity $\left[\emptyset\right]$.
+    \end{enumerate}
+  \end{exercise}
+  \begin{solution}\hfill
+    \begin{enumerate}[(i)]
+      \item Let $\left[A_1\right] = \left[A_2\right]$ and $\left[B_1\right] = \left[B_2\right]$. Without loss of generality, we have $A_1\cap B_1 = \emptyset$ and $A_2\cap B_2 = \emptyset$.\newline
 
- %   Each equivalence class under this relation on $(X,Y,E,\phi)$\footnote{These are known as connected components.} is a $k$-regular bipartite graph that has countably many edges and vertices. We may thus restrict our attention to one of these equivalence classes.\newline
+        By the definition of the type, $A_1\sim_{G^{\ast}}A_2$ and $B_1\sim_{G^{\ast}}B_2$, meaning
+        \begin{align*}
+          A_1\sqcup B_1 \sim_{G^{\ast}}A_2\sqcup B_2,
+        \end{align*}
+        so
+        \begin{align*}
+          \left[A_1\right] + \left[B_1\right] &= \left[A_1\sqcup B_1\right]\\
+                                              &= \left[A_2\sqcup B_2\right]\\
+                                              &= \left[A_2\right] + \left[B_2\right],
+        \end{align*}
+        proving that addition is well-defined.
+      \item We are aware that $+$ is a well-defined operation on $\mathcal{S}$. Since $A\sqcup B = B\sqcup A$, we can also see that $+$ is commutative.\newline
 
- %   If the equivalence class is finite, we have proven in the exercise that by Hall's theorem that there is a perfect matching. We may thus restrict our attention to connected components with countably infinite $X$, $Y$, and $E$.\newline
+        Finally,
+        \begin{align*}
+          \left[A\right] + \left[\emptyset\right] &= \left[A\sqcup \emptyset\right]\\
+                                                  &= \left[A\right],
+        \end{align*}
+        meaning $\left[\emptyset\right]$ is the identity on $\mathcal{S}$.\newline
 
- %   For $x\in X$ and $y\in Y$, define $Z_1 = \set{x,y}\cup N\left(\set{x,y}\right)$, and $Z_{n} = N\left(Z_{n-1}\right)$. Define $X_n = Z_n\cap X$ and $Y_n = Z_n\cap Y$, with $E_n\subseteq E$ such that $\left(X_n,Y_n,E_n,\phi\bigr\vert_{E_n}\right)$ is a graph.\newline
+        Finally, since $A$ has finitely many levels, and $B$ has finitely many levels, so too must $A\cup B$ for any $A$ and $B$, meaning $\left[A\right] + \left[B\right]$ is contained in $\mathcal{S}$.
+    \end{enumerate}
+  \end{solution}
+  \begin{definition}
+    For any commutative semigroup $\mathcal{S}$ with $\alpha \in \mathcal{S}$ and $n\in \N$,
+    \begin{align*}
+      n\alpha &:= \underbrace{\alpha + \cdots + \alpha}_{n\text{ times}}
+    \end{align*}
+  \end{definition}
+  \begin{definition}
+    For $\alpha,\beta \in \mathcal{S}$, if there exists $\gamma \in \mathcal{S}$ such that $\alpha + \gamma = \beta$, we write $\alpha \leq \beta$.
+  \end{definition}
+  \begin{exercise}
+    Let $G$ be a group acting on a set $X$, and let $\mathcal{S}$ be the corresponding type semigroup.
+    \begin{enumerate}[(i)]
+      \item If $\alpha,\beta \in S$ with $\alpha \leq \beta$ and $\beta \leq \alpha$, then $\alpha = \beta$.
+      \item A set $E\subseteq X$ is paradoxical under the action of $G$ if and only if $[E] = 2[E]$.
+    \end{enumerate}
+  \end{exercise}
+  \begin{solution}
+    Let $G$ act on $X$, and let $\mathcal{S}$ denote the corresponding type semigroup.
+    \begin{enumerate}[(i)]
+      \item If $\left[A\right] \leq \left[B\right]$ and $\left[B\right] \leq \left[A\right]$, then there exist $C_1\subseteq X^{\ast}$ and $C_2\subseteq X^{\ast}$ such that $\left[A\right] + \left[C_1\right] = \left[B\right]$ and $\left[B\right] + \left[C_1\right] = \left[A\right]$. In particular, without loss of generality, $C_1 \cap A = \emptyset$ and $C_2\cap B = \emptyset$, meaning $\left[A\sqcup C_1\right] = \left[B\right]$, and $\left[B\sqcup C_2\right] = \left[A\right]$. Thus, we can see that $A\preceq_{G^{\ast}} B$ and $B\preceq_{G^{\ast}}A$, meaning $A\sim_{G^{\ast}} B$.
+      \item Let $E$ be paradoxical under the action of $G$. Then, $E\sim_{G} \bigcup_{i=1}^{n}g_i\cdot A_i$ and $E\sim_{G}\bigcup_{j=1}^{m}h_j\cdot B_j$ for some disjoint $A_1,\dots,A_n,B_1,\dots,B_m\subseteq E$ and $g_1,\dots,g_n,h_1,\dots,h_m\in G$.\newline
 
- %   We can extend $\left(X_n,E_n,\phi\bigr\vert{E_n}\right)$ to a $k$-regular bipartite graph, $\left(X_n', Y_n', E_n',\phi\bigr\vert_{E_n'}\right)$ by 
- % \end{proof}
+        This yields $\left[E\right] = \left[\left(\bigcup_{i=1}^{n}g_i\cdot A_i\right) \sqcup \left(\bigcup_{j=1}^{m}h_j\cdot B_j\right)\right]$, so $\left[E\right] = 2\left[E\right]$.\newline
 
+        Similarly, if $\left[E\right] = 2\left[E\right]$, there necessarily exist $A,B$ such that $\left[E\right] = \left[A\right] + \left[B\right]$, so $\left[E\right] = \left[A\sqcup B\right]$, so $A$ and $B$ are equidecomposable with $E$ under $G$, meaning $E$ is paradoxical.
+    \end{enumerate}
+  \end{solution}
+  \begin{theorem}
+    Let $\mathcal{S}$ be the type semigroup for some group action, and let $\alpha,\beta \in S$, $n\in \N$ with $n\alpha = n\beta$. Then, $\alpha = \beta$.
+  \end{theorem}
+  \begin{proof}
+    If $n\alpha = n\beta$, there are two disjoint bounded sets $E,E'\subseteq X^{\ast}$ with $E\sim_{G^{\ast}}E'$, and pairwise disjoint subsets $A_1,\dots,A_n\subseteq E$, $B_1,\dots,B_n\subseteq E'$, with
+    \begin{itemize}
+      \item $E = A_1\cup \cdots \cup A_n$, $E' = B_1\cup \cdots B_n$,
+      \item $\left[A_{j}\right] = \alpha$ and $\left[B_j\right] = \beta$ for $j=1,\dots,n$.
+    \end{itemize}
+  \end{proof}
 \end{document}
