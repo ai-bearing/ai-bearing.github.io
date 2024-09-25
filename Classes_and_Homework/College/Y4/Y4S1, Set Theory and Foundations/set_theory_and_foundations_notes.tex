@@ -4,6 +4,7 @@
 %\usepackage{cmbright}
 %\usepackage{sfmath}
 %\usepackage{bbold} %better blackboard bold
+\usepackage{mathdots}
 
 %serif font + different blackboard bold for serif font
 \usepackage{newpxtext,eulerpx}
@@ -433,11 +434,17 @@ In particular, if $b = \set{}$ in the previous example, then the pairing axiom i
 \end{align*}
 entirely consisting of the empty set.
 \begin{axiom}[Union]
-  The axiom of union states that if $a$ and $b$ are sets, there exists a set $c$ whose elements are either elements of $a$ or elements of $b$, and every element of $a$ is in $c$ and every element of $b$ is in $c$:
+  The axiom of union states that for any set $a$, there exists a set consisting of all the elements of $a$
   \begin{align*}
-    \forall a\: \forall b\:\exists c\:\forall x\left(x\in c \Leftrightarrow x\in a \vee x\in b\right)
+    \forall a \exists u \forall x \forall y \left(\left(x\in y \wedge y\in a\right)\Rightarrow x\in u\right)
   \end{align*}
 \end{axiom}
+%\begin{remark}
+%  The union axiom can be rephrased as
+%  \begin{align*}
+%    \forall a \exists u \forall x\forall y\left(x\in y \wedge y\in u \Rightarrow x\in u\right).
+%  \end{align*}
+%\end{remark}
 \begin{definition}
   The string $a\subseteq b$ is shorthand for
   \begin{align*}
@@ -803,7 +810,6 @@ Therefore, we can talk about $\cong$ as an equivalence relation on the \xcancel{
 \end{example}
 \begin{theorem}
   Every such equivalence class has exactly one element that is well-ordered by $\in$ and is $\in$-transitive.\newline
-
   This element is called an ordinal.
 \end{theorem}
 \begin{definition}
@@ -820,5 +826,152 @@ Therefore, we can talk about $\cong$ as an equivalence relation on the \xcancel{
 \end{answer}
 \begin{theorem}
   For any two ordinals $\alpha,\beta$, either $\alpha \in \beta$, $\beta \in \alpha$, or $\beta = \alpha$.
+\end{theorem}
+\begin{recall}
+  An ordinal is a set that is $\in$-transitive and well-ordered by $\in$.\newline
+
+  A set $t$ is $\in$-transitive if $a\in b$ and $b\in t$ implies $a\in t$. Equivalently, $b\in t \Rightarrow b\subseteq t$.
+\end{recall}
+\begin{example}
+  The set
+  \begin{align*}
+    \set{a < b < c} \cong 3 = \set{0,1,2},
+  \end{align*}
+  since $0 < 1 < 2$.\newline
+
+  The set
+  \begin{align*}
+    \set{a_0 < a_1 < \cdots} \cong \omega,
+  \end{align*}
+  while
+  \begin{align*}
+    \set{a_0 < a_1 < \cdots < b_0}\cong \omega^{+} := \omega + 1 = \omega \cup \set{\omega}.
+  \end{align*}
+  We can also see that
+  \begin{align*}
+    \set{a_0 < a_1 < a_2 < \cdots < b_0 < b_1 < b_3 < \cdots} &= \omega + \omega\\
+                                                              &= \omega 2
+  \end{align*}
+\end{example}
+\begin{example}
+  Let $S = \set{p^n\mid p\text{ prime}, n\in \omega}$.\newline
+
+  We place the ordering
+\begin{align*}
+  2^0 \prec 2^1 \prec \cdots 3^1 \prec 3^2 \prec \cdots \prec 5^1 \prec 5^2 \prec \cdots
+\end{align*}
+In other words,
+\begin{align*}
+  p_k^{m} \prec p_{k+1}^{n}\\
+  p_{k}^{m} \prec p_{k}^{m+1}.
+\end{align*}
+We can see that this ordering must be isomorphic to $\omega \omega$, since it must be greater than $\omega k$ for all $k \in \omega$.
+\end{example}
+\begin{example}
+  We define
+  \begin{align*}
+    1 + \omega &\cong \set{b_0 < a_0 < a_1 < a_2 < \cdots}\\
+               &\cong \omega.
+  \end{align*}
+  This means $1 + \omega = \omega$, while $\omega + 1 \neq \omega$.\newline
+
+  This is because $\omega + 1$ has a greatest element, while $\omega$ does not.
+\end{example}
+\begin{definition}[Addition]
+  For any ordinals $\alpha$ and $\beta$, $\alpha + \beta$ is the ordinal that is order isomorphic to the following well-ordered set.
+  \begin{align*}
+    S &= \set{0}\times \alpha \cup \set{1}\times \beta.
+  \end{align*}
+  The ordering for this set is the lexicographical ordering. We declare
+  \begin{align*}
+    (x,y)\prec (x',y')
+  \end{align*}
+  $x \in x'$ or $x = x'$ and $y\in y'$.
+\end{definition}
+\begin{example}
+  \begin{align*}
+    2 + 3 &= \set{0,1} + \set{0,1,2}\\
+    S &= \set{0}\times\set{0,1} \cup \set{1}\times \set{0,1,2}\\
+      &= \set{(0,0),(0,1),(1,0),(1,1),(1,2)}\\
+      &= \set{(0,0)\prec (0,1) \prec(1,0) \prec( 1,1) \prec(1,2)}\\
+      &\cong \set{0,1,2,3,4}\\
+      &= 5
+  \end{align*}
+\end{example}
+\begin{definition}[Multiplication]
+  For any ordinals $\alpha$ and $\beta$, $\alpha \beta$ is the ordinal that is order-isomorphic to the following well-ordered set
+  \begin{align*}
+    S &= \alpha \times \beta,
+  \end{align*}
+  ordered by
+  \begin{align*}
+    (a,b) \prec (a',b')
+  \end{align*}
+  if $a \in a'$ or $a = a'$ and $b\in b'$
+\end{definition}
+\begin{remark}
+  For general ordinals, addition and multiplication are \textit{not} commutative.\newline
+
+  For instance, $1 + \omega \neq \omega + 1$, since $ 1 + \omega = \omega$. However, addition and multiplication of ordinals is associative.
+\end{remark}
+\begin{theorem}
+  \begin{align*}
+    \left(\alpha + \beta\right) + \gamma &= \alpha + \left(\beta + \gamma\right)\\
+    \left(\alpha \beta\right)\gamma &= \alpha\left(\beta \gamma\right).
+  \end{align*}
+\end{theorem}
+\begin{remark}
+  We define
+  \begin{align*}
+    \omega^{2} &:= \omega \omega,\\
+    \omega^{3} &:= \omega \omega \omega.
+  \end{align*}
+  However, we may ask how to define
+  \begin{align*}
+    \omega^{\omega}.
+  \end{align*}
+\end{remark}
+\begin{definition}[Exponentiation]
+  For any ordinals $\alpha$ and $\beta$, we define
+  \begin{align*}
+    \alpha^{\beta} &= \begin{cases}
+      1 & \text{if $\beta = 0$}\\
+      \alpha ^{\gamma} \alpha & \text{if $\beta = \gamma^{+}$ for some $\gamma$}\\
+      \bigcup_{\gamma < \beta} \alpha^{\gamma}
+    \end{cases}
+  \end{align*}
+\end{definition}
+\begin{remark}
+  If an ordinal $\alpha\neq 0$ and $\alpha$ has no predecessor, then $\alpha$ is known as a limit ordinal. For instance, $\omega$ is a limit ordinal.
+\end{remark}
+\begin{example}
+  From this definition,
+  \begin{align*}
+    \omega^{\omega} &= \bigcup_{n \in \omega}\omega^{n}.
+  \end{align*}
+\end{example}
+\begin{remark}
+  Notice that $\omega^{\omega}$ is countable, since it is the countable union of countable sets.
+\end{remark}
+\begin{definition}
+  \begin{align*}
+    \omega^{\omega^{\omega}} &:= \omega^{\left(\omega^{\omega}\right)}\\
+    \omega^{\omega^{\omega^{\iddots}}} &:= \bigcup_{n\in \omega}\omega^{\omega^{\iddots^{\omega}}}\\
+                                       &= \epsilon_{0}.
+  \end{align*}
+\end{definition}
+\begin{definition}
+  We define
+  \begin{align*}
+    \omega_1 &:= \set{\alpha\mid \alpha\text{ is an ordinal and } \alpha\text{ is countable}}.
+  \end{align*}
+\end{definition}
+\begin{remark}
+  It can be proven that $\omega_1$ is indeed an ordinal.\newline
+
+  Every subset of $\omega_1$ is well-ordered (or else we would violate the Axiom of Regularity).
+\end{remark}
+\begin{theorem}
+  It is not the case that $\omega_1$ is countable.
 \end{theorem}
 \end{document}
