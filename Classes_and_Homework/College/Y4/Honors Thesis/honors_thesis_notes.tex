@@ -600,9 +600,9 @@ Let $(X,Y,E,\phi)$ be a bipartite graph. Let $A\subseteq X$ and $B\subseteq Y$. 
     \end{align*}
     In particular, the injectivity of $f\vert_{Y}$ is equivalent the existence of a system of distinct representatives on $Y$. Since $Y$ satisfies Hall's marriage condition, it is the case that each $S_Y$ is nonempty. Additionally, since $\prod_{i\in I}X_i$ is endowed with the discrete topology, it is also the case that $S_Y$ is closed.\newline
 
-    We define $F = \set{S_Y\mid Y\subseteq \mathcal{G}\text{ finite}}$. Notice that, for finite $Y_1,Y_2\subseteq \mathcal{G}$, since every system of distinct representatives on $Y_1\cup Y_2$ is a system of distinct representatives on $Y_1$ and a system of distinct representatives on $Y_2$, it is the case that $S_{Y_1\cup Y_2}\subseteq S_{Y_1}\cap S_{Y_2}$.\newline
+    We define $F = \set{S_Y\mid Y\subseteq \mathcal{G}\text{ finite}}$. Notice that, for finite $Y_1,Y_2\subseteq \mathcal{G}$, since every system of distinct representatives on $Y_1\cup Y_2$ is a system of distinct representatives on $Y_1$ and a system of distinct representatives on $Y_2$, it is the case that $S_{Y_1\cup Y_2}\subseteq S_{Y_1}\cap S_{Y_2}$, meaning our collection $\set{S_{Y_j}}$ has the finite intersection property. \newline
 
-    Since $F$ is a closed subset of $\prod_{i\in I}X_i$, $F$ is compact, meaning that $\bigcap_{Y\subseteq \mathcal{G}} F$ is nonempty. Thus, for $f\in \bigcap F$, $f$ is necessarily a choice function. 
+    Since $F$ is compact, $\bigcap_{Y\subseteq \mathcal{G}} F$ is nonempty by Cantor's intersection theorem. Thus, for $f\in \bigcap F$, $f$ is necessarily a choice function. 
   \end{proof}
   \begin{remark}
     This is equivalent to the existence of an injection $f: \mathcal{G}\hookrightarrow \bigcup_{i\in I}X_i$.
@@ -744,8 +744,31 @@ Let $(X,Y,E,\phi)$ be a bipartite graph. Let $A\subseteq X$ and $B\subseteq Y$. 
     \end{align*}
     Define a bipartite graph with $X = \set{\overline{a}\mid a\in A_1}$, $Y = \set{\overline{b}\mid b\in B_1}$. For each $j$ from $1,\dots,n$ define an edge $\set{\overline{a},\overline{b}}$ if $\chi\left(\phi_j\left(a\right)\right)\in \overline{b}$.\newline
 
-    This graph is $n$-regular, as $\chi$ is a bijection, so for $j = 1,\dots,n$, $\chi\left(\phi_j(a)\right)$ must land in some $B_k$, and only one such $B_k$.\newline
+    This graph is $n$-regular, as $\chi$ is a bijection, so for $j = 1,\dots,n$, $\chi\left(\phi_j(a)\right)$ must land in some $B_k$, and only one such $B_k$ (as the $B_k$ are disjoint).\newline
 
-    By König's theorem, this graph has a perfect matching $F$.
+    By König's theorem, this graph has a perfect matching $F$.\newline
+
+    Thus, for each $\overline{a}\in X$, there is a unique $\overline{b}\in Y$ and a unique edge $\left(\overline{a},\overline{b}\right)\in F$ such that $\chi\left(\phi_j\left(a\right)\right) = \psi_k\left(b\right)$ for some $j,k \in \set{1,\dots,n}$.\newline
+
+    Define
+    \begin{align*}
+      C_{j,k} &:= \set{a\in A_1\mid \left(\overline{a},\overline{b}\right)\in F, \chi\left(\phi_j(a)\right) = \psi_k(b)}
+      D_{j,k} &:= \set{b\in A_1\mid \left(\overline{a},\overline{b}\right)\in F, \chi\left(\phi_j(a)\right) = \psi_k(b)}
+    \end{align*}
+    Since $\psi^{-1}_{k}\circ \chi \circ \phi_j$ is a bijection from $C_{j,k}$ to $D_{j,k}$, this means $C_{j,k}\sim_{G^{\ast}}D_{j,k}$ (as each of $\chi$, $\psi$, and $\phi$ are defined by equidecomposability under $G^{\ast}$).\newline
+
+    Since $C_{j,k}$ and $D_{j,k}$ are partitions of $A_1$ and $B_1$ respectively, it follows that $A_1\sim_{G^{\ast}}B_1$, meaning $\alpha = \beta$.
+  \end{proof}
+  \begin{corollary}
+    Let $\mathcal{S}$ be the type semigroup of some group action, and let $\alpha \in \mathcal{S}$, $n\in \N$ such that $\left(n+1\right)\alpha \leq n\alpha$. Then, $\alpha = 2\alpha$.
+  \end{corollary}
+  \begin{proof}
+    \begin{align*}
+      2\alpha + n\alpha &= \left(n+1\right)\alpha + \alpha\\
+                        &\leq n\alpha + \alpha\\
+                        &= \left(n+1\right)\alpha\\
+                        &\leq n\alpha.
+    \end{align*}
+    Inductively repeating this argument, we get $n\alpha \geq 2n\alpha$. Since it is the case that $n\alpha \leq 2n\alpha$, we have $n\alpha = 2n\alpha$, so $\alpha = 2\alpha$.
   \end{proof}
 \end{document}

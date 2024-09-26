@@ -1861,13 +1861,13 @@ We can rewrite this as $T\left(w_1\right) - \lambda\left(w_1\right) = 0_V$, mean
 
   Any nonzero vector in $\ker\left(T - \lambda \id_V\right)$ is called an eigenvector.\newline
 
-  The set $E_{\lambda} = \ker\left(T - \lambda \id_V\right)$ is called the eigenspace associated with $\lambda$.
+  The set $E^{1}_{\lambda} = \ker\left(T - \lambda \id_V\right)$ is called the eigenspace associated with $\lambda$.
 \end{definition}
 \begin{exercise}
-  Show $E_{\lambda}$ is a subspace of $V$.
+  Show $E^{1}_{\lambda}$ is a subspace of $V$.
 \end{exercise}
 \begin{exercise}
-  Let $T\in \Hom_{\F}\left(V,V\right)$. If $\lambda_1,\lambda_2 \in \F$ with $\lambda_1\neq \lambda_2$, then $E_{\lambda_1} \cap E_{\lambda_2} = \set{0_V}$.
+  Let $T\in \Hom_{\F}\left(V,V\right)$. If $\lambda_1,\lambda_2 \in \F$ with $\lambda_1\neq \lambda_2$, then $E^{1}_{\lambda_1} \cap E^{1}_{\lambda_2} = \set{0_V}$.
 \end{exercise}
 \begin{example}
   Let
@@ -1995,7 +1995,7 @@ Observe that $f(T) = 0_{\Hom_{\F}\left(V,V\right)}$. In other words, $f\left(T\r
 \begin{theorem}
   Let $V$ be an $\F$-vector space, and let $T\in \Hom_{\F}\left(V,V\right)$. We have $\lambda$ is an eigenvalue if and only if $\lambda$ is a root of $m_{T}\left(x\right)$.\newline
 
-  In particular, if $\left(x-\lambda\right)\vert m_T(x)$, then $E_{\lambda}\neq \set{0_V}$.
+  In particular, if $\left(x-\lambda\right)\vert m_T(x)$, then $E^{1}_{\lambda}\neq \set{0_V}$.
 \end{theorem}
 \begin{proof}
   Let $\lambda$ be an eigenvalue with eigenvector $v$, and write $m_{T}\left(x\right) = x^m + \cdots + a_1x + a_0$. Notice that $T^{k}\left(v\right) = \lambda^{k}\left(v\right)$.\newline
@@ -2036,4 +2036,237 @@ Observe that $f(T) = 0_{\Hom_{\F}\left(V,V\right)}$. In other words, $f\left(T\r
   \end{align*}
   Since $g_1\left(\lambda_1\right)\neq 0$, and $v_1\neq 0$, it must be the case that $a_1 = 0$. Symmetry provides the case for $2,\dots,m$.
 \end{proof}
+\begin{corollary}
+  If $\deg m_{T}\left(x\right) = \dim_{\F}\left(V\right)$, and $m_{T}\left(x\right)$ has distinct roots, all of which are in $\F$, then we can find a basis $\mathcal{B}$ for $V$ such that $\left[T\right]_{\mathcal{B}}$ is diagonal.
+\end{corollary}
+\begin{example}
+  Let
+  \begin{align*}
+    A &= \begin{pmatrix}1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 2\end{pmatrix}\\
+    B &= \begin{pmatrix}1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 2\end{pmatrix}.
+  \end{align*}
+  These matrices are not similar. However, $m_{A}(x) = m_{B}\left(x\right) = \left(x-1\right)\left(x-2\right)$.\newline
+
+  Therefore, the minimal polynomial does not provide enough information about a matrix's similarity class.
+\end{example}
+\begin{example}
+  Let
+  \begin{align*}
+    A &= \begin{pmatrix}1 & 2 & 3 \\ 0 & 1 & 4 \\ 0 & 0 & -1\end{pmatrix}.
+  \end{align*}
+  We found that the minimal polynomial for $A$ was $m_A(x) = \left(x-1\right)^2 \left(x+1\right)$.\newline
+
+  We can see that $Ae_{1} = e_1$, meaning $\Span_{\F}\left(e_1\right) = E_{1}^{1}$. Note that
+  \begin{align*}
+    Ae_2 &= \begin{pmatrix}2\\1\\0\end{pmatrix},
+  \end{align*}
+  meaning $e_2 \notin E_{1}^{1}$.\newline
+
+  We can see that
+  \begin{align*}
+    \left(A-I_{3}\right)^{2} &= \begin{pmatrix}0 & 0 & 2 \\ 0 & 0 & -8 \\ 0 & 0 & 4\end{pmatrix}.
+  \end{align*}
+  However,
+  \begin{align*}
+    \left(A-I_{3}\right)^2\left(e_2\right) &= \begin{pmatrix}0\\0\\0\end{pmatrix},
+  \end{align*}
+  meaning $e_1,e_2\in \ker\left(\left(T_A - \id_{\F^3}\right)^2\right)$.\newline
+
+  Though we do not have distinct eigenvectors, we \textit{kinda} have them.
+\end{example}
+\begin{definition}[Generalized Eigenvector]
+  Let $T\in \Hom_{\F}\left(V,V\right)$. For $k\geq 1$, the $k$th generalized eigenspace of $T$ with eigenvalue $\lambda$ is
+  \begin{align*}
+    E_{\lambda}^{k} &= \ker\left(\left(T_A - \lambda\id_{V}\right)^{k}\right)\\
+                    &= \set{v\in V \mid \left(T-\lambda \id_{V}\right)^{k}v = 0_V}.
+  \end{align*}
+  Elements in $E_{\lambda}^{k}$ are called generalized $\lambda$-eigenvectors.\newline
+
+  We set
+  \begin{align*}
+    E_{\lambda}^{\infty} &= \bigcup_{k\geq 1}E_{\lambda}^{k}.
+  \end{align*}
+\end{definition}
+\begin{example}
+  In the previous example, we saw that $\Span_{\F}\left(e_1,e_2\right)\subseteq E_{1}^{2}$, and we have $-1$ is an eigenvalue of $A$ with eigenvector
+  \begin{align*}
+    v_3 &= \begin{pmatrix}1/2\\-1/2\\1\end{pmatrix}.
+  \end{align*}
+  We can verify that $v_3 \notin E_{1}^{2}$.\newline
+
+  Thus, $\dim_{F}E_{1}^{2} \leq 2$, meaning $E_{1}^{2} = \Span_{\F}\left(e_1,e_2\right)$.
+\end{example}
+\begin{example}
+  Let $\mathcal{B} = \set{v_1,\dots,v_n}$ be a basis for $V$, and $T\in \Hom_{\F}\left(V,V\right)$, $\lambda \in \F$ such that
+  \begin{align*}
+    A = \left[T\right]_{\mathcal{B}} &= \begin{pmatrix}\lambda & 1 & 0 \\ 0 & \lambda & 1 \\ 0 & 0 & \lambda\end{pmatrix},
+  \end{align*}
+  which is a matrix of $\lambda$ along the diagonal and $1$ along the superdiagonal. In particular, we can see that $A - \lambda I_{n}$ is the matrix with $1$ along the superdiagonal and $0$ everywhere else.\newline
+
+  Notice that $\left(A - \lambda I_{n}\right)(v_1) = 0$, $\left(A - \lambda I_{n}\right)\left(v_2\right) = v_1$, etc.\newline
+
+  Thus, we get that $E_{\lambda}^{1} = \Span_{\F}\left(v_1\right)$, $E_{\lambda}^{2} = \Span_{\F}\left(v_1,v_2\right)$, etc.\newline
+
+  In general, $E_{\lambda}^{k} = \Span_{\F}\left(v_1,\dots,v_k\right)$ for $1 \leq k \leq n$.\newline
+
+  Thus, $E_{\lambda}^{\infty} = E_{\lambda}^{n} = V$.
+\end{example}
+\begin{exercise}
+  Describe the generalized eigenspaces of
+  \begin{align*}
+    \begin{pmatrix}\lambda_1 & 1 & 0 & 0 \\ 0 & \lambda_1 & 0 & 0 \\ 0 & 0 & \lambda_2 & 0 \\ 0 & 0 & 0 & \lambda_3\end{pmatrix}
+  \end{align*}
+\end{exercise}
+We can see that we used $E_{\lambda}^{i} \subseteq E_{\lambda}^{i+1}$; this is true more generally.\newline
+
+More generally, let $T\in \Hom_{\F}\left(V,V\right)$. We claim that if $i\geq j$, then $\ker\left(T^j\right)\subseteq \ker\left(T^i\right)$.\newline
+
+Write $i = j + k$. Let $v\in \ker\left(T^j\right)$. Then, 
+\begin{align*}
+  T^i\left(v\right) &= T^{j+k}\left(v\right)\\
+                    &= T^{k}\left(T^j\left(v\right)\right)\\
+                    &= T^{k}\left(0_V\right)\\
+                    &= 0_V.
+\end{align*}
+This gives $E_{\lambda}^{1}\subseteq E_{\lambda}^{2}\subseteq \cdots\subseteq E_{\lambda}^{\infty}$.
+\begin{lemma}
+  Let $V$ be a finite dimensional vector space with $\Dim_{\F}\left(V\right) = n$, and $T\in \Hom_{\F}\left(V,V\right)$. Then, there exists $m$ with $1 \leq m \leq n$ such that
+  \begin{align*}
+    \ker\left(T^{m}\right) = \ker\left(T^{m+1}\right).
+  \end{align*}
+  Moreover, for such an $m$, $\ker\left(T^{m}\right) = \ker\left(T^{m+j}\right)$ for all $j\geq 0$.
+\end{lemma}
+\begin{proof}
+  We have
+  \begin{align*}
+    \ker\left(T^{1}\right)\subseteq \ker\left(T^{2}\right)\subseteq \cdots \subseteq \ker\left(T^{\infty}\right).
+  \end{align*}
+  If these containments are strict, then the dimension goes up indefinitely, contradicting $\Dim_{\F}\left(V\right) = n$.\newline
+
+  Thus, we have $1 \leq m \leq n$ with
+  \begin{align*}
+    \ker\left(T^{m}\right) = \ker\left(T^{m+1}\right).
+  \end{align*}
+  Let $m$ be the smallest value such that $\ker\left(T^{m}\right) = \ker\left(T^{m+1}\right)$.\newline
+
+  We use induction on $j$. The base case of $j = 1$ is what defines $m$. Assume $\ker\left(T^{m}\right) = \ker\left(T^{m+j}\right)$ for all $1 \leq j \leq N$.\newline
+
+  Let $v\in \ker\left(T^{m+N+1}\right)$. This gives 
+  \begin{align*}
+    0_V &= T^{m+N+1}\left(v\right)\\
+        &= T^{m+1}\left(T^{N}\left(v\right)\right),
+  \end{align*}
+  meaning $T^N(v)\in \ker\left(T^{m+1}\right)$. However, $\ker\left(T^{m+1}\right) = \ker\left(T^{m}\right)$, meaning $T^{N}\left(v\right) \in \ker\left(T^{m}\right)$, hence
+  \begin{align*}
+    0_V &= T^{m}\left(T^{N}(v)\right)\\
+        &= T^{m+N}\left(v\right),
+  \end{align*}
+  meaning $v\in \ker\left(T^{m+N}\right)$. The inductive hypothesis gives $\ker\left(T^{m+N}\right) = \ker\left(T^{m}\right)$, meaning $v\in \ker\left(T^{m}\right)$. Thus, $\ker\left(T^{m+N+1}\right)\subseteq \ker\left(T^{m+N}\right)$, meaning $\ker\left(T^{m+N+1}\right) = \ker\left(T^{m+N}\right)$.
+\end{proof}
+\begin{corollary}
+  If $\Dim_{\F}\left(V\right) = n$, and $T\in \Hom_{\F}\left(V,V\right)$, there exists $m$ with $1 \leq m \leq n$ such that for any $\lambda \in \F$,
+  \begin{align*}
+    E_{\lambda}^{\infty} &= E_{\lambda}^{m}.
+  \end{align*}
+\end{corollary}
+\begin{theorem}
+  Let $T\in \Hom_{\F}\left(V,V\right)$, $\lambda \in \F$, with $\left(x-\lambda\right)^{j}\mid m_{T}\left(x\right)$. We have
+  \begin{align*}
+    \Dim_{\F}\left(E_{\lambda}^{j}\right) \geq j.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Write $m_T(x) = \left(x-\lambda\right)^{k}f(x)$, $f(x)\in \F[x]$, $f(x)\neq 0$.\newline
+
+  Define $g_j\left(x\right) = \left(x-\lambda\right)^{j}$. We have $g_{k-1}f(x)$ is not the minimal polynomial, meaning there is $v\in V$ such that
+  \begin{align*}
+    g_{k-1}\left(T\right)f(T)(v) \neq 0_V.
+  \end{align*}
+  Set $v_k = f(T) v$. Note that $v_k \neq 0_V$.\newline
+
+  Observe that 
+  \begin{align*}
+    \left(T - \lambda \id_{V}\right)^k\left(v_k\right) &= \left(T-\lambda \id_V\right)^{k}f(T) \left(v_k\right)\\
+                                                       &= m_{T}\left(T\right)\left(v_k\right)\\
+                                                       &= 0_V.
+  \end{align*}
+  Thus, $v\in E_{\lambda}^{k}$.\newline
+
+  Moreover, by construction, 
+  \begin{align*}
+    \left(T-\lambda\id_{V}\right)^{k-1}\left(v_k\right) &= g_{k-1}(T)\left(v_k\right)\\
+                                                        &= g_{k-1}(T)f(T)(v)\\
+                                                        &\neq 0_{V}.
+  \end{align*}
+  Thus, $v_k\notin E_{\lambda}^{k-1}$.\newline
+
+  Define
+  \begin{align*}
+    v_{k-1} &= \left(T - \lambda \id_V\right)\left(v_k\right)\\
+            &= \left(T - \lambda \id_V\right)f(T)(v).
+  \end{align*}
+  Note that
+  \begin{align*}
+    \left(T - \lambda \id_V\right)^{k-1}\left(v_{k-1}\right) &= \left(T - \lambda\id_V\right)\left(v_k\right)\\
+                                                             &= m_T\left(T\right)(v)\\
+                                                             &= 0_V,
+  \end{align*}
+  meaning $v_{k-1}\in E_{\lambda}^{k-1}$.\newline
+
+  Additionally,
+  \begin{align*}
+    \left(T - \lambda \id_{V}\right)^{k-1}\left(v_{k-1}\right) &= \left(T -\lambda \id_V\right)^{k-2}\left(v_{k}\right)\\
+                                                               &\neq 0_{V},
+  \end{align*}
+  meaning $v_{k-1}\in E_{\lambda}^{k-1}\setminus E_{\lambda}^{k-2}$.\newline
+
+  Continuing the process, we construct $\set{v_1,\dots,v_k}$ linearly independent.
+\end{proof}
+\begin{example}
+  Let $T_A\in \Hom_{\F}\left(\F^3,\F^3\right)$ given by
+  \begin{align*}
+    A &= \begin{pmatrix}2 & 1 & 3 \\ 0 & 2 & 4 \\ 0 & 0 & 2\end{pmatrix}.
+  \end{align*}
+  We can verify that $m_{T}\left(x\right) = \left(x-2\right)^3$.\newline
+
+  Observe that
+  \begin{align*}
+    \left(A - 2 I_{3}\right)^2 &= \begin{pmatrix}0 & 0 & 4 \\ 0 & 0 & 0 \\ 0 & 0 & 0\end{pmatrix}.
+  \end{align*}
+  Notice that $\left(A - 2I_3\right)^{3}\left(e_3\right) = 4e_3\neq 0$, meaning we set $v_3 = e_3$.\newline
+
+  Note that $\left(T - 2\id_V\right)^{3}\left(e_3\right) = 0$, meaning $e_3\in E_{2}^{3}$.\newline
+
+  We find $v_2 = \left(A - 2I_3\right)\left(v_3\right)$, meaning
+  \begin{align*}
+    v_2 &= \begin{pmatrix}0 & 1 & 3 \\ 0 & 0 & 4 \\ 0 & 0 & 0 \end{pmatrix} \begin{pmatrix}0 \\ 0 \ 1\end{pmatrix}\\
+        &= \begin{pmatrix}3\\4\\0\end{pmatrix}.
+  \end{align*}
+  Finally,
+  \begin{align*}
+    v_1 &= \left(A - 2I_{3}\right)\left(v_2\right)\\
+        &= \begin{pmatrix}4\\0\\0\end{pmatrix}.
+  \end{align*}
+  Thus, our generalized eigenvectors are
+  \begin{align*}
+    E_{2}^{3} &= \Span\left( \begin{pmatrix}0\\0\\1\end{pmatrix}, \begin{pmatrix}3\\4\\0\end{pmatrix}, \begin{pmatrix}4\\0\\0\end{pmatrix}\right).
+  \end{align*}
+  If we say $\mathcal{B} = \set{v_1,v_2,v_3}$, then our matrix $\left[T_{A}\right]_{\mathcal{B}}$ is
+  \begin{align*}
+    \left[T_{A}\right]_{\mathcal{B}} &= \begin{pmatrix}2 & 1 & 0 \\ 0 & 2 & 1\\ 0 & 0 & 2\end{pmatrix}.
+  \end{align*}
+  \begin{remark}
+    This matrix is in what is known as Jordan canonical form.
+  \end{remark}
+\end{example}
+\subsection{Characteristic Polynomials and the Cayley--Hamilton Theorem}%
+\begin{definition}
+  Let $A \in \Mat_{n}\left(\F\right)$. The characteristic polynomial is $C_{A}\left(x\right) = \det\left(xI_n - A\right)$.
+\end{definition}
+\begin{remark}
+  The Cayley--Hamilton theorem states that
+  \begin{align*}
+    C_A(A) &=0_{n}.
+  \end{align*}
+\end{remark}
 \end{document}
