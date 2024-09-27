@@ -2205,4 +2205,190 @@ In one dimension, if $\diff{f}{x}\bigr\vert_{P} = 0$ and $ \diff{^2f}{x^2}\bigr\
     \includegraphics[width=10cm]{images/curl1b.pdf}
   \end{center}
 \end{example}
+\subsection{Integrating Scalar and Vector Fields}%
+\begin{table}[h!]
+  \centering
+  \renewcommand{\arraystretch}{2}
+  \begin{tabular}{c|c}
+    Type of Integral & Expression\\
+    \hline\hline
+    Line Integral, $C = y(x)$ & $\displaystyle \int_{x_1}^{x_2} f\left(x,g(x)\right)\sqrt{1 + \left(\frac{dy}{dx}\right)^2}\:dx$\\
+    Line Integral, $\mathbf{c}(t) = \left(x(t),y(t)\right)$ & $\displaystyle\int_{t_1}^{t_2}f\left(x(t),y(t)\right)\norm{\frac{d\mathbf{c}}{dt}}\:dt$
+  \end{tabular}
+\end{table}
+Integration is summation,\footnote{kinda} meaning the expression
+\begin{align*}
+  \int_{x_1}^{x_2} f(x)\:dx
+\end{align*}
+describes a sum along a unique interval defined by $x_1$ and $x_2$.\newline
+
+When we go to higher dimensions, we first think of
+\begin{align*}
+  \int_{P_1}^{P_2} f(x,y)\:dx,
+\end{align*}
+which wants us to sum $f(x,y)$ from $P_1 = \left(x_1,y_1\right)$ to $P_2 = \left(x_2,y_2\right)$. However, this is not a fully specific expression --- we need a \textit{path} along which we integrate. We specify the path by $y = g(x)$. Now, the integral becomes
+\begin{align*}
+  \int_{P_1}^{P_2} f\left(x,g(x)\right)\:dx.
+\end{align*}
+Similarly, for a surface integral
+\begin{align*}
+  \int_{S}^{} f(x,y)\:dx dy,
+\end{align*}
+we need the surface $S$ along which we integrate, where we say $z = g(x,y)$.\newline
+
+However, while there are certain functions that are path-independent,\footnote{Holomorphic functions, for instance} we must assume that every function is path-\textit{dependent}.
+\subsubsection{Line Integrals}%
+A line integral is a sum over a curve $C$.
+\begin{align*}
+  \int_{C}^{} f\left(\mathbf{r}\right)\:d\ell.
+\end{align*}
+Here, $d\ell$ denotes the length element along $C$. For instance, if $f$ denotes the charge density per unit length, and $C$ is a wire, then $\int_{C}^{} f\left(\mathbf{r}\right)\:d\ell$.\newline
+
+If we define $C$ by $y = g(x)$, then the integral is
+\begin{align*}
+  \int_{C}^{} f(x,y)\:d\ell &= \int_{C}^{} f\left(x,g(x)\right)\:d\ell.
+\end{align*}
+However, we need to figure out how to deal with $d\ell$ --- in particular, we need $d\ell$ to be an expression only in $dx$. In particular, $d\ell$ is given by the Pythagorean theorem:
+\begin{align*}
+  \left(d\ell\right)^2 &= \left(dx\right)^2 + \left(dy\right)^2.
+\end{align*}
+\begin{notation}
+  Everyone (else) drops the parentheses:
+  \begin{align*}
+    d\ell^2 &= dx^2 + dy^2.
+  \end{align*}
+\end{notation}
+Our integral now becomes
+\begin{align*}
+  \int_{C}^{} f\left(x,g(x)\right)\:d\ell &= \int_{C}^{} f\left(x,g(x)\right)\:\sqrt{\left(dx\right)^2 + \left(dy\right)^2}\\
+                                          &= \int_{x_1}^{x_2} f\left(x,g(x)\right)\:dx\sqrt{1 + \left(\frac{dy}{dx}\right)^2}
+\end{align*}
+\begin{example}
+  Let
+  \begin{align*}
+    f\left(\mathbf{r}\right) &= \sqrt{\frac{1}{4}x^2 + y^2}\\
+    y(x) &= \frac{1}{2}x^2,
+  \end{align*}
+  integrated from $0 < x < 1$.\newline
+
+  Then,
+  \begin{align*}
+    \int_{C}^{} f\left(\mathbf{r}\right)\:d\ell &= \int_{0}^{1} \sqrt{\frac{1}{4}x^2 + \frac{1}{4}x^4}\sqrt{1 + \left(\frac{dy}{dx}\right)^2}\:dx\\
+                                                &= \frac{1}{2}\int_{0}^{1} x\sqrt{1 + x^2}\sqrt{1 + x^2}\:dx\\
+                                                &= \frac{1}{2}\int_{0}^{1} x\left(1 + x^2\right)\:dx\\
+                                                &= \frac{3}{8}.
+  \end{align*}
+  Note that we can also evaluate this integral as a function of $y$, and still get the same outcome.
+\end{example}
+\begin{example}
+  Let
+  \begin{align*}
+    f\left(\mathbf{r}\right) &= \sqrt{\frac{1}{4}x^2 + y^2}\\
+    y(x) &= x,
+  \end{align*}
+  integrated from $0 < x < 1$.\newline
+
+  Then,
+  \begin{align*}
+    \int_{C}^{} f\left(\mathbf{r}\right)\:d\ell &= \int_{0}^{1} \sqrt{\frac{1}{4}x^2 + x^2}\sqrt{1 + \left(\frac{dy}{dx}\right)^2}\:dx\\
+                                                &= \sqrt{\frac{5}{2}}\int_{0}^{1} x\:dx\\
+                                                &= \sqrt{\frac{5}{8}}.
+  \end{align*}
+  We can also do this in polar coordinates. First, we have
+  \begin{align*}
+    \left(d\ell\right)^2 &= \left(dr\right)^2 + r^2\left(d\theta\right)^2.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \int_{C}^{} f\left(\mathbf{r}\right)\:d\ell &= \int_{0}^{\sqrt{2}} \sqrt{\frac{1}{4}r^2\cos^2\theta + r^2\sin^2\theta}\:dr\\
+                                                &= \sqrt{\frac{5}{8}}.
+  \end{align*}
+\end{example}
+When we integrate with respect to a parametrized curve in one dimension, we have
+\begin{align*}
+  \int_{x_1}^{x_2} f(x)\:dx &= \int_{t(x_1)}^{t(x_2)} f\left(x(t)\right)\frac{dx}{dt}\:dt.
+\end{align*}
+In multiple dimensions for $c(t) = \left(x(t),y(t)\right)$, we have
+\begin{align*}
+  d\ell &= \sqrt{\left(dx\right)^2 + \left(dy\right)^2}\\
+        &= dt\sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2}\\
+        &= \norm{\frac{d\mathbf{c}}{dt}},
+\end{align*}
+yielding
+\begin{align*}
+  \int_{C}^{} f\left(\mathbf{r}\right)\:d\ell &= \int_{t_1}^{t_2} f(x(t),y(t))\norm{\frac{d\mathbf{c}}{dt}}\:dt.
+\end{align*}
+\subsubsection{Surface Integrals}%
+When we turn to a surface
+\begin{align*}
+  \int_{S}^{} f\left(\mathbf{r}\right)\:dA,
+\end{align*}
+we parametrize $z = g(x,y)$ to yield
+\begin{align*}
+  \int_{S}^{} f\left(x,y,z\right)\:dA &= \int_{D}^{} f\left(x,y,g(x,y)\right)\sqrt{1 + \norm{\nabla g}^2}\:dx dy,
+\end{align*}
+where $D$ is the projection of $S$ onto the $x,y$-plane.
+\subsubsection{Circulation}%
+So far, we have only considered scalar  fields, When we look at
+\begin{align*}
+  \int_{C}^{} \mathbf{F}\left(\mathbf{r}\right)\:d\ell &= \hat{i}\int_{C}^{} F_x\left(\mathbf{r}\right)\:d\ell + \hat{j}\int_{C}^{} F_y\left(\mathbf{r}\right)\:d\ell + \hat{k}\int_{C}^{} F_z\left(\mathbf{r}\right)\:d\ell.
+\end{align*}
+More commonly, though, we are interested in
+\begin{align*}
+  \int_{C}^{} \mathbf{F}\left(\mathbf{r}\right)\cdot\:d\vec{\ell},
+\end{align*}
+which is a scalar quantity. When we add the dot product into the integral, we signal that we are most interested in the \textit{parallel} component of $\mathbf{F}$ to $d\vec{\ell}$.\newline
+
+In cartesian coordinates, this integral is equal to
+\begin{align*}
+  \int_{C}^{} \mathbf{F}\left(\mathbf{r}\right)\cdot\:d\vec{\ell} &= \int_{C}^{}F_x dx + F_y dy + F_z dz.
+\end{align*}
+For a more physical example,\footnote{Who cares about that?} this integral is a measure of work if $\mathbf{F}\left(\mathbf{r}\right)$ denotes force. Similarly,
+\begin{align*}
+  \Delta V &= -\int_{P_1}^{P_2} \mathbf{E}\cdot\:d\vec{\ell}
+\end{align*}
+\begin{definition}[Circulation]
+When we integrate over a closed curve $C$, our line integral now becomes
+\begin{align*}
+  \Psi &= \oint_{C}^{} \mathbf{F}\cdot \:d\vec{\ell}
+\end{align*}
+\end{definition}
+\begin{remark}
+  It is not always the case that $\Psi$ is zero.
+\end{remark}
+Summing $\mathbf{F}$ along a closed path $C$ measures the net ``swirl'' of the vector field.
+\begin{example}[Symmetry in Circulation]
+  Ampère's law says that
+  \begin{align*}
+    \oint_{C}^{} \mathbf{B}\cdot \:d\vec{\ell} &= \mu_0 I,
+  \end{align*}
+  where $\mu_0$ is the permeability of free space, $I$ denotes current, and $\mathbf{B}$ is the magnetic field.\newline
+
+  Consider the case of a wire with constant radius $a$ and uniform current $I_0$. From cylindrical symmetry, it must be the case that $\mathbf{B}$ forms concentric circles about the wire.\newline
+
+  Since Ampère's law says we can \textit{always} pick a curve that yields a constant, we can let $C$ correspond to one of the circles with constant $\norm{\mathbf{B}}$.
+  \begin{align*}
+    \oint_{C}^{} \mathbf{B}\cdot\:d\vec{\ell} &= \oint_{C}^{} B\:d\ell\\
+                                             &= B\oint_{C}^{} \:d\ell\\
+                                             &= 2\pi r B,
+  \end{align*}
+  where $r$ is the radius of the loop $C$.\newline
+
+  Note that this value does not depend on the radius of $C$, but the value of $\mu_0 I$ does depend on the radius of $C$.\newline
+
+  In particular,
+  \begin{align*}
+    I\left(r < a\right) &= I_0\frac{r^2}{a^2},
+  \end{align*}
+  yielding
+  \begin{align*}
+    \mathbf{B}\left(r < a\right) &= \frac{\mu_0 I_0}{2\pi}\frac{r}{a^2}\hat{\phi}\\
+    \mathbf{B}\left(r > a\right) &= \frac{\mu_0I_0}{2\pi r} \hat{\phi}.
+  \end{align*}
+  Inside the wire, the magnitude of the $B$ field grows linearly with respect to $r$, and outside, the magnitude of the $B$ field falls off by a factor of $r^{-1}$.
+\end{example}
+However, in the general case, we need to parametrize our line integral.
+\begin{align*}
+  \int_{C}^{} \mathbf{F}\cdot\:d\vec{\ell} &= \int_{t_1}^{dt} \left(\mathbf{F}\cdot \frac{d\mathbf{c}}{dt}\right)\:dt
+\end{align*}
 \end{document}
