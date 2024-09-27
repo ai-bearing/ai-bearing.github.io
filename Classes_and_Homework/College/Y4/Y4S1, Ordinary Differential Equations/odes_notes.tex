@@ -1141,4 +1141,121 @@ Note that, as a result of the extended linearity principle, all solutions to a n
     $n$-th degree polynomial & $A_nt^{n} + A_{n-1}t^{n-1} + \cdots + A_1t + A_0$
   \end{tabular}
 \end{center}
+\subsection{Integrating Factors}%
+We can formalize the aforementioned ``lucky guess'' method by creating an integrating factor.
+\begin{derivation}[Integrating Factor]
+  Consider the equation
+  Consider a factor $\mu(t)$.
+  \begin{align*}
+    \diff{y}{t} &= a(t) y + b(t)\\
+    \diff{y}{t} - a(t) y &= b(t)\\
+    \diff{y}{t} + g(t) y &= b(t),
+  \end{align*}
+  where we define $g(t) = -a(t)$. We multiply each side of this differential equation by $\mu(t)$, yielding
+  \begin{align*}
+    \mu(t)\left(\diff{y}{t} + g(t)y\right) &= \mu(t)b(t)\\
+    \mu(t)\diff{y}{t} + \mu(t)g(t)y &= \mu(t)b(t).
+  \end{align*}
+  Examining the left-hand side, it would be very convenient if $\diff{\left(\mu(t)y(t)\right)}{t} = \mu(t)\diff{y}{t} + y(t)\diff{\mu}{t}$. Then, we would have
+  \begin{align*}
+    \diff{}{t}\left(\mu(t)y(t)\right) &= \mu(t)b(t),
+  \end{align*}
+  where $\diff{\mu}{t} = \mu(t)g(t)$. Then,
+  \begin{align*}
+    \mu(t)y(t) &= \int_{}^{} \mu(t)b(t)\:dt\\
+    y(t) &= \frac{1}{\mu(t)}\int_{}^{} \mu(t)b(t)\:dt.
+  \end{align*}
+  Orienting our focus to the condition of $\diff{\mu}{t} = \mu(t)g(t)$, we solve for $\mu$ by separation of variables.
+  \begin{align*}
+    \diff{\mu}{t} &= \mu g(t)\\
+    \int_{}^{} \frac{1}{\mu}\:d\mu &= \int_{}^{} g(t)\:dt\\
+    \ln \left\vert \mu \right\vert &= \int_{}^{} g(t)\:dt\\
+    \left\vert \mu \right\vert &= e^{C + \int_{}^{} g(t)\:dt}\\
+    \mu &= K e^{\int_{}^{} g(t)\:dt}.
+  \end{align*}
+\end{derivation}
+\begin{definition}[Integrating Factor]
+  For a non-homogeneous linear differential equation,
+  \begin{align*}
+    \diff{y}{t} + g(t)y &= b(t)
+  \end{align*}
+  the integrating factor is a family of functions such that
+  \begin{align*}
+    \mu(t) &= Ke^{\int_{}^{} g(t)\:dt}.
+  \end{align*}
+  In particular, we can let $K = 1$, yielding the factor
+  \begin{align*}
+    \mu(t) &= e^{\int_{}^{} g(t)\:dt}.
+  \end{align*}
+\end{definition}
+\begin{example}
+  We wish to solve
+  \begin{align*}
+    x\diff{y}{x} - 4y &= x^{6}e^{x}.
+  \end{align*}
+  First, we divide out $x$, yielding
+  \begin{align*}
+    \diff{y}{x} - \frac{4}{x}y &= x^5 e^x.
+  \end{align*}
+  Now, we find the integrating factor,
+  \begin{align*}
+    \mu(x) &= e^{\int_{}^{} -\frac{4}{x}\:dx}\\
+           &= e^{-4\ln |x|}\\
+           &= e^{\ln\left\vert x^{-4}\right\vert}\\
+           &= e^{\ln\left\vert x^{-4} \right\vert}
+           &= \frac{1}{x^4}.
+  \end{align*}
+  Multiplying through, we get
+  \begin{align*}
+    x^{-4}\diff{y}{x} - 4x^{-5}y &= xe^{x}\\
+    \diff{}{x}\left(x^{-4} y\right) &= xe^{x}\\
+    x^{-4} y &= \int_{}^{} xe^{x}\:dx\\
+    y &= x^{4}\left(xe^{x} - e^{x} + C\right)\\
+      &= \underbrace{x^{5}e^{x} - x^4e^{x}}_{y_p(x)} + \underbrace{Cx^{4}}_{y_h(x)}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Consider the equation
+  \begin{align*}
+    \diff{y}{t} + y &= 17\sin(4t).
+  \end{align*}
+  The coefficient in front of $y$ is $1$, so our integrating factor is
+  \begin{align*}
+    \mu(t) &= e^{\int_{}^{} \:dt}\\
+           &= e^{t}.
+  \end{align*}
+  Multiplying through, we get
+  \begin{align*}
+    \diff{}{t}\left(e^{t} y\right) &= 17e^{t}\sin(4t)\\
+    e^{t} y &= \int_{}^{} 17e^{t}\sin(4t)\:dt\\
+            &= 17\int_{}^{} e^{t}\sin(4t)\:dt\\
+            &= e^{t}\sin(4t) - 4e^{t}\cos(4t)+ C\tag*{Integration by Parts.}\\
+    y &= \underbrace{\sin(4t) - 4\cos(4t)}_{y_p(t)} + \underbrace{Ce^{-4t}}_{y_h(t)}.
+  \end{align*}
+  Alternatively, we can solve this equation using a ``lucky guess'' method. Starting with the homogeneous equation, we find
+  \begin{align*}
+    \diff{y}{t} + y &=0 \\
+    \int_{}^{} \frac{1}{y}\:dy &= \int_{}^{} -1\:dt\\
+    \ln \left\vert y \right\vert &= -t + C\\
+    y_h &= Ce^{-t}.
+  \end{align*}
+  Now, looking at the non-homogeneous equation, we look at
+  \begin{align*}
+    \diff{y}{t} + y &= 17 \sin(4t).
+  \end{align*}
+  The lucky guess we take is $y_p(t) = A\sin(4t) + B\cos(4t)$, yielding
+  \begin{align*}
+    \diff{y_p}{t} + y &= 17\sin(4t)\\
+    4A\cos(4t) - 4B\sin(4t) + \left(A \sin(4t) + B\cos(4t)\right) &= 17\sin(4t)\\
+    (4A + B)\cos(4t) + \left(A - 4B\right)\sin(4t) &= 17\sin(4t).
+  \end{align*}
+  The system of equations yields $4A + B = 0$ and $A - 4B = 17$, meaning $A = 1$ and $B = -4$. Thus, $y_p(t)$ is
+  \begin{align*}
+    y_p(t) &= \cos(4t) - 4\sin(4t).
+  \end{align*}
+  Our general solution is, finally,
+  \begin{align*}
+    y(t) &= \cos(4t) - 4\sin(4t) + Ce^{-t}.
+  \end{align*}
+\end{example}
 \end{document}
