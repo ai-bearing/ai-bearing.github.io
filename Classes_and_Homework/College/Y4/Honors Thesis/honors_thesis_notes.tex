@@ -83,7 +83,7 @@ The information for these essentials about group actions will be drawn from Dumm
 
   If the action of $G$ on $X$ is a free action, we say $G$ acts freely on $X$.
 \end{definition}
-\begin{proposition}[Equivalence Relation on $A$]
+\begin{proposition}[Stabilizers and Orbits]
   Let $G$ be a group that acts on a nonempty set $A$. We define a relation $a\sim b$ if and only if $a = g\cdot b$ for some $g\in G$. This is an equivalence relation, with the number of elements in $\left[a\right]_{\sim}$ found by taking $\left\vert G:G_a \right\vert$, which is the index of the stabilizer of $a$.
 \end{proposition}
 \begin{proof}
@@ -885,8 +885,8 @@ Let $(X,Y,E,\phi)$ be a bipartite graph. Let $A\subseteq X$ and $B\subseteq Y$. 
     To show (ii) implies (i), we let $\nu: \left(\mathcal{S},+\right)\rightarrow \left([0,\infty],+\right)$ be a semigroup homomorphism with $\nu\left(\epsilon\right) = 1$. Then, by the definition of a semigroup homomorphism, it is the case that, for any $n\in \N$,
     \begin{align*}
       \nu\left(\left(n+1\right)\epsilon\right) &= \left(n+1\right)\nu\left(\epsilon\right)\\
-                                               &= n + 1
-                                               &> n
+                                               &= n + 1\\
+                                               &> n\\
                                                &= n\nu\left(\epsilon\right)\\
                                                &= \nu\left(n\epsilon\right)
     \end{align*}
@@ -911,6 +911,52 @@ Let $(X,Y,E,\phi)$ be a bipartite graph. Let $A\subseteq X$ and $B\subseteq Y$. 
     \end{align*}
     meaning $\kappa\left(\alpha + \beta\right) = \kappa\left(\alpha\right) + \kappa\left(\beta\right)$. Thus, $M_{\mathcal{S}_0}$ is nonempty.\newline
 
-    We let $\set{\kappa\mid \kappa: \mathcal{S}\rightarrow [0,\infty]} = \left[0,\infty\right]^{\mathcal{S}}$ be equipped with the product topology. By Tychonoff's theorem, $\left[0,\infty\right]^{\mathcal{S}}$ is compact.
+    We let $\set{\kappa\mid \kappa: \mathcal{S}\rightarrow [0,\infty]} = \left[0,\infty\right]^{\mathcal{S}}$ be equipped with the product topology. By Tychonoff's theorem, $\left[0,\infty\right]^{\mathcal{S}}$ is compact.\newline
+
+    It is also the case that $M_{\mathcal{S}_0}$ is closed, since any net of functions $\kappa_{p}: \mathcal{S}\rightarrow [0,\infty]$ with $\kappa_{p}\left(\epsilon\right) = 1$ and $\kappa_{p}\left(\alpha + \beta\right) = \kappa_{p}\left(\alpha\right) + \kappa_{p}\left(\beta\right)$ will necessarily satisfy these conditions in the limit.\newline
+
+    Additionally, the family
+    \begin{align*}
+      \set{M_{\mathcal{S}_0}\mid \mathcal{S}_0\subseteq \mathcal{S}\text{ finite}}
+    \end{align*}
+    has the finite intersection property since the map defined by $\kappa(\epsilon) = 1$ is contained in all such $M_{\mathcal{S}_0}$.\newline
+
+    Thus, by Cantor's intersection theorem, there is some $\nu\in \bigcap\set{M_{\mathcal{S}_0}\mid \mathcal{S}_0\subseteq \mathcal{S}\text{ finite}}$, meaning $\nu\left(\epsilon\right) = 1$ and for all $\alpha,\beta \in \mathcal{S}$, $\nu \in M_{\set{\alpha,\beta,\alpha + \beta}}$, meaning $\nu\left(\alpha + \beta\right) = \nu\left(\alpha\right) + \nu\left(\beta\right)$.
   \end{proof}
+  \subsection{Proof of Tarski's Theorem}%
+  \begin{proof}
+    Let $\mathcal{S}$ be the type semigroup of the action of $G$ on $X$.\newline
+
+    Suppose $E$ is not paradoxical under the action of $G$. Then, $\left[E\right] \neq 2\left[E\right]$, implying $\left(n+1\right)\left[E\right]\nleq n\left[E\right]$ for all $n\in \N$.\newline
+
+    Thus, there is a map $\nu: \mathcal{S} \rightarrow [0,\infty]$ with $\nu\left(\left[E\right]\right) = 1$. Thus, the map
+    \begin{align*}
+      \mu: P\left(X\right)\rightarrow [0,\infty]
+    \end{align*}
+    defined by $\mu\left(A\right) = \nu\left(\left[A\right]\right)$ is the desired finitely additive measure.
+  \end{proof}
+  For any set $X$, with a finitely additive measure $\mu: P\left(X\right)\rightarrow [0,\infty]$, and $\mu(X) < \infty$, we can define a mean $m\in \ell^{\infty}\left(X\right)^{\ast}$ by taking
+  \begin{align*}
+    m\left(\phi\right) &= \int_{X}^{} \phi(x)\:d\mu(x),
+  \end{align*}
+  where $\phi \in \ell^{\infty}\left(X\right)$.\newline
+
+  When $G$ is non-paradoxical, the function $m$ also has the property that, for all $g\in G$ and all $\phi \in \ell^{\infty}\left(G\right)$,
+  \begin{align*}
+    m\left(\delta_{g}\ast \phi\right) &= \int_{G}^{} \phi\left(gs\right)\:d\mu(s)\\
+                                      &= \int_{G}^{} \phi\left(s\right)\:d\mu(s)\\
+                                      &= m\left(\phi\right).
+  \end{align*}
+  \begin{corollary}[Equivalent Conditions for Group Amenability]
+    For a group $G$, the following are equivalent.
+    \begin{enumerate}[(i)]
+      \item $G$ is non-paradoxical.
+      \item there is a translation-invariant finitely additive probability measure on $G$ --- i.e., $\mu: P(G)\rightarrow [0,1]$ with $\mu(G) = 1$ and $\mu(gE) = \mu(E)$ for all $g\in G$ and $E\subseteq G$;
+      \item there is $m\in \ell^{\infty}\left(G\right)^{\ast}$ with $m\left(\mathbb{1}_{G}\right) = 1$, $\norm{m}_{\text{op}} = 1$, and for all $g\in G$ and $\phi \in \ell^{\infty}\left(G\right)$,
+        \begin{align*}
+          m\left(\delta_{g}\ast \phi\right) &= m\left(\phi\right).
+        \end{align*}
+    \end{enumerate}
+  \end{corollary}
+
 \end{document}
