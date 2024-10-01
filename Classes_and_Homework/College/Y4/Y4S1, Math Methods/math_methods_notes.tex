@@ -13,6 +13,8 @@
 \usetikzlibrary{bending} % for arrow head angle
 %\contourlength{1.0pt}
 \usetikzlibrary{3d}
+\usepackage{endfloat}
+\renewcommand{\efloatseparator}{\vspace{10pt}}
 
 \usepackage[outline]{contour} % glow around text
 \tikzset{>=latex} % for LaTeX arrow head
@@ -58,7 +60,7 @@
 \begin{document}
 \RaggedRight
 \tableofcontents
-\listoftables
+%\listoftables
 \section{Things You Just Gotta Know}%
 \subsection{Coordinate Systems}%
 \begin{center}
@@ -320,14 +322,14 @@ Thus, we can see that the $\hat\rho,\hat,\phi$ axis is orthogonal.
 		
 	\end{tikzpicture}
 \end{center}
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{c|c|c}
     Polar & Cylindrical & Spherical\\
     \hline\hline
     $\mathbf{s} = s(\rho,\phi)$ & $\mathbf{s} = s(\rho,\phi,z)$ & $\mathbf{s} = s(r,\phi,\theta)$\\
-    $\mathbf{s} = \begin{pmatrix}\rho\cos\phi\\\rho\sin\phi\end{pmatrix}$ & $\mathbf{s} = \begin{pmatrix}\rho\cos\phi\\\rho\sin\phi\\z\end{pmatrix}$ & $\mathbf{s} = \begin{pmatrix}r\cos\phi\sin\theta\\r\sin\phi\sin\theta \\ r\cos\theta\end{pmatrix}$
+    $\mathbf{s} = \rho\cos\phi\hat{i} + \rho\sin\phi\hat{j}$ & $\mathbf{s} = \rho\cos\phi\hat{i} + \rho\sin\phi\hat{j} + z\hat{k}$ & $\mathbf{s} = r\cos\phi\sin\theta\hat{i} + r\sin\phi\sin\theta\hat{j} + r\cos\theta\hat{k}$
   \end{tabular}
   \caption{Coordinate Conversions}
 \end{table}
@@ -352,15 +354,15 @@ We can see that $\hat\rho$, $\hat\phi$, and $\hat\theta$ in spherical coordinate
                &= \cos\phi\cos\theta\hat{i} + \cos\theta\sin\phi\hat{j} - \sin\theta\hat{k}
 \end{align*}
 \subsubsection{Scale Factors and Jacobians}%
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{c|c|c|c}
     Coordinate System & Line Element & Area Element & Volume Element\\
     \hline\hline
     Polar & $d \mathbf{s} = \hat\rho d\rho + \rho \hat\phi d\phi$ & $d\mathbf{a} = r\:drd\phi$ & ---\\
-    Cylindrical & $d \mathbf{s} = \hat\rho d\rho + \rho\hat\phi d\phi + \hat k dz$ & $d\mathbf{a} = \hat{\rho}\rho d\phi dz$ & $d\tau = r\:dr d\phi dz$\\
-    Spherical & $d \mathbf{s} = \hat r dr + r\sin\theta \hat\phi d\phi + r\hat\theta d\theta$ &  $d \mathbf{a} = \hat{r}r^2\sin\theta d\phi d\theta$ & $d\tau = r^2\sin\theta\:dr d\phi d\theta$
+    Cylindrical & $d \mathbf{s} = \hat\rho d\rho + \rho\hat\phi d\phi + \hat k dz$ & $d\mathbf{a} = \hat{\rho}\:\rho d\phi dz$ & $d\tau = r\:dr d\phi dz$\\
+    Spherical & $d \mathbf{s} = \hat r dr + r\sin\theta \hat\phi d\phi + r\hat\theta d\theta$ &  $d \mathbf{a} = \hat{r}\:r^2\sin\theta d\phi d\theta$ & $d\tau = r^2\sin\theta\:dr d\phi d\theta$
   \end{tabular}
   \caption{Line, Area, and Volume Elements in Different Coordinate Systems}
 \end{table}
@@ -397,7 +399,7 @@ We specifically desire the determinant:
   |J| &= \pd{x}{u}\pd{y}{v} - \pd{y}{u}\pd{x}{v}.
 \end{align*}
 \subsection{Complex Numbers}%
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{1.75}
   \begin{tabular}{c|c}
@@ -636,7 +638,7 @@ Note that the index that is summed over always appears exactly twice.
 \end{definition}
 We can always decompose a random matrix into the sum of a symmetric matrix and an antisymmetric matrix.
 \subsubsection{Two Special Tensors}%
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{1.75}
   \begin{tabular}{c|c|c}
@@ -647,7 +649,7 @@ We can always decompose a random matrix into the sum of a symmetric matrix and a
   \end{tabular}
   \caption{$\delta_{ij}$ and $\epsilon_{ijk}$}
 \end{table}
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{1.25}
   \begin{tabular}{c|c}
@@ -665,7 +667,7 @@ We can always decompose a random matrix into the sum of a symmetric matrix and a
   \end{tabular}
   \caption{Values of $\epsilon_{ijk}$}
 \end{table}
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{c|c}
@@ -1059,9 +1061,9 @@ In particular, this means
 \end{example}
 The main reason power series are useful is that, when truncated, they are simply polynomials. In particular, with power series, we can reverse the order of sum and derivative.
 \subsubsection{Taylor Series}%
-\begin{table}[ht]
+\begin{table}
   \centering
-  \renewcommand{\arraystretch}{1.5}
+  \renewcommand{\arraystretch}{2}
   \begin{tabular}{c|c}
     Function & Taylor Series\\
     \hline\hline
@@ -1069,9 +1071,8 @@ The main reason power series are useful is that, when truncated, they are simply
     $e^x$ & $\sum_{n=0}^{\infty}\frac{x^n}{n!}$\\
     $\cos x$ & $\sum_{n=0}^{\infty}\frac{\left(-1\right)^nx^{2n}}{\left(2n\right)!}$\\
     $\sin x$ & $\sum_{n=0}^{\infty}\frac{\left(-1\right)^{n+1}x^{2n+1}}{\left(2n+1\right)!}$\\
-    $\left(1 + x\right)^{\alpha}$ & $\sum_{n=0}^{\infty}\frac{\left(\alpha\right)_{n}}{n!}x^n$\footnotemark
+    $\left(1 + x\right)^{\alpha}$ & $\sum_{n=0}^{\infty}\frac{\prod_{k=0}^{n-1}\left(\alpha - k\right)}{n!}x^n$
   \end{tabular}
-  \footnotetext{We define $\left(\alpha\right)_n = \prod_{k=0}^{n-1}\left(\alpha - k\right)$}
   \caption{Important Taylor Series}
 \end{table}
 \begin{definition}
@@ -1299,7 +1300,7 @@ For the case of a function $g\left(x\right) = g\left(|x|\right)$, we have
   \int_{-a}^{b} g\left(|x|\right)\:dx &= \int_{-a}^{0} g(-x)\:dx + \int_{0}^{b} g(x)\:dx.
 \end{align*}
 \subsubsection{Products and Powers of Sines and Cosines}%
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{c|c}
@@ -1321,7 +1322,7 @@ For the case of a function $g\left(x\right) = g\left(|x|\right)$, we have
                                     &= \frac{1}{2}\left(-\frac{1}{5}\cos (5x) - \cos(x) \right).
   \end{align*}
 \end{example}
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{c|c}
@@ -1465,7 +1466,7 @@ It is clear that $I_0$ converges. We can see that the dimension of $a$ is $x^{-2
   I_n &= \int_{0}^{\infty} x^ne^{-ax^2}\:dx.
 \end{align*}
 \end{definition}
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{c|c}
@@ -1522,7 +1523,7 @@ We define
   \end{align*}
 \end{example}
 \subsubsection{Series Expansion}%
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{1.75}
   \begin{tabular}{c|c}
@@ -1906,7 +1907,7 @@ Notice that our vector fields are dependent on both the basis and the coordinate
 
 In particular, we have reason to prefer a Cartesian basis over the polar or spherical basis, since the Cartesian basis is position-independent.
 \subsection{Gradient, Divergence, and Curl}%
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{c|c|c}
@@ -2099,7 +2100,7 @@ since $\nabla \cdot \mathbf{E}$ is a scalar field, while $\mathbf{E}\cdot \nabla
   \end{align*}
 \end{example}
 \subsubsection{Changing Coordinates}%
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{1.5}
   \begin{tabular}{c|c}
@@ -2218,7 +2219,7 @@ In one dimension, if $\diff{f}{x}\bigr\vert_{P} = 0$ and $ \diff{^2f}{x^2}\bigr\
   \end{center}
 \end{example}
 \subsection{Integrating Scalar and Vector Fields}%
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{2.5}
   \begin{tabular}{c|c}
@@ -2232,7 +2233,7 @@ In one dimension, if $\diff{f}{x}\bigr\vert_{P} = 0$ and $ \diff{^2f}{x^2}\bigr\
   \end{tabular}
   \caption{Integrating Scalar Fields}
 \end{table}
-\begin{table}[ht]
+\begin{table}
   \centering
   \renewcommand{\arraystretch}{2}
   \begin{tabular}{c|c}
