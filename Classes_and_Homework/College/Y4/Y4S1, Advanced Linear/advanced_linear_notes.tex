@@ -6,6 +6,7 @@
 %\usepackage{bbold} %better blackboard bold
 
 %serif font + different blackboard bold for serif font
+\DeclareMathOperator*{\lcm}{lcm}
 \usepackage{newpxtext,eulerpx}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \usepackage{epigraph}
@@ -17,6 +18,7 @@
 \fancyhf{}
 \rhead{Avinash Iyer}
 \lhead{Advanced Linear Algebra: Class Notes}
+\cfoot{\thepage}
 
 \setcounter{secnumdepth}{0}
 
@@ -2269,4 +2271,252 @@ This gives $E_{\lambda}^{1}\subseteq E_{\lambda}^{2}\subseteq \cdots\subseteq E_
     C_A(A) &=0_{n}.
   \end{align*}
 \end{remark}
+\begin{definition}
+  Let $f(x) = x^n + a_{n-1}x^{n-1} +  \cdots + a_1 x + a_0\in \F[x]$. The companion matrix of $f(x)$ is given by $C\left(f(x)\right)$, which consists of $-a_{n-1}$ through $-a_0$ along the first column, $0$ on the rest of the diagonal, and $1$ along the superdiagonal.
+\end{definition}
+\begin{lemma}
+  If $A = C\left(f(x)\right)$, then $C_{A}\left(x\right) = f(x)$.
+\end{lemma}
+\begin{lemma}
+  Let $A,B\in \Mat_{n}\left(\F\right)$ be similar matrices. Then, $C_{A}\left(x\right) = C_{B}\left(x\right)$.
+\end{lemma}
+\begin{proof}
+  Let $A = PBP^{-1}$ for some $P\in \text{GL}_{n}\left(\F\right)$. Then, we have
+  \begin{align*}
+    C_{A}\left(x\right) &= \det\left(xI_{n} - A\right)\\
+                        &= \det\left(xI_{n}- PBP^{-1}\right)\\
+                        &= \det\left(P\left(xI_n\right)P^{-1}-PBP^{-1}\right)\\
+                        &= \det\left(P\left(xI_n - B\right)P^{-1}\right)\\
+                        &= \det\left(P\right)\det\left(xI_n-B\right)\det\left(P^{-1}\right)\\
+                        &= \det\left(xI_n - B\right)\\
+                        &= C_B\left(x\right).
+  \end{align*}
+\end{proof}
+\begin{definition}[Characteristic Polynomial of Linear Transformation]
+  For $T\in \Hom_{\F}\left(V,V\right)$, let $\mathcal{B}$ be a basis of $V$ and set
+  \begin{align*}
+    C_T(x) &= C_{\left[T\right]_{\mathcal{B}}}(x).
+  \end{align*}
+\end{definition}
+\begin{theorem}
+  Let $v\in V$, $v\neq 0$. Let $\Dim_{\F}\left(V\right) < \infty$. Then, there is a unique monic polynomial $m_{T,v}(x)\in \F[x]$ of minimal degree such that $m_{T,v}\left(T\right)\left(v\right) = 0_V$.\newline
+
+  Moreover, if $f(x)\in \F[x]$ with $f(T)(v) = 0$, then $m_{T,v}(x)|f(x)$.
+\end{theorem}
+\begin{proof}
+  Consider the set $\set{v,T(v),\dots,T^n(v)}$. This collection consists of $n+1$ elements of $V$, meaning it is linearly dependent. Let
+  \begin{align*}
+    a_mT^{m}\left(v\right) + \cdots + a_1T(v) + a_0 = 0_V
+  \end{align*}
+  for some $m \leq n$ of minimal degree with not all $a_i = 0$. Set
+  \begin{align*}
+    p(x) &= x^m + \frac{a_{m-1}}{a_m}x^{m-1} + \cdots + \frac{a_1}{a_m}x + \frac{a_0}{a_m}.
+  \end{align*}
+  Thus, $p(t)(v) = 0_V$ by construction.\newline
+
+  Set
+  \begin{align*}
+    I_v &= \set{g(x)\in \F[x]\mid g(T)(v) = 0_V}.
+  \end{align*}
+  We know $p(x)\in I_v$, and $p(x)\neq 0$. We have $p(x)$ is a nonzero monic polynomial in $I_v$ of minimal degree.\newline
+
+  Set $m_{T,v}(x) = p(x)$.\newline
+
+  Let $f(x)\in I_v$. We want to show that $m_{T,v}(x)|f(x)$.\newline
+
+  Write $f(x) = q(x)m_{T,v}(x) + r(x)$ for some $q(x),r(x)\in \F[x]$, with $r(x) = 0$ or $\deg \left(r(x)\right) < \deg m_{T,v}(x)$. We have $r(x) = f(x) - q(x)m_{T,v}(x)$, implying
+  \begin{align*}
+    r(T)(v) &= f(T)(v) - q(T)\left(m_{T,v}\left(T\right)(v)\right)\\
+            &= 0_v- q(T)\left(0_v\right)\\
+            &= 0_v,
+  \end{align*}
+  implying $r(x)\in I_v$. Since $m_{T,v}(x)$ was defined to have minimal degree, it has to be the case that $r(x) = 0$.\newline
+
+  If $h(x) \in I_{v}$ with $\deg \left(h(x)\right) = \deg\left(m_{T,v}(x)\right)$ with $h(x)$ monic, then $m_{T,v}(x)|h(x)$ implies $h(x) = m_{T,v}(x)$.
+\end{proof}
+We will refer to $m_{T,v}(x)$ as the $T$-annihilator of $v$.
+\begin{example}
+  Let $V = \F^n$, $\mathcal{B} = \set{e_1,\dots,e_n}$. Define $T\in \Hom_{\F}\left(V,V\right)$ by
+  \begin{align*}
+    T\left(e_1\right) &= 0\\
+    T\left(e_{j}\right) &= e_{j-1} \tag*{$2\leq j\leq n$}.
+  \end{align*}
+  Let $f(x) = x$. Then, $f(T)\left(e_1\right) = T\left(e_1\right) = 0_V$, implying that $m_{T,e_1}\left(x\right) | x$; thus, $m_{T,e_1}(x) = 1$ or $m_{T,e_1}(x) = x$, but $\id\left(e_1\right) = e_1 \neq 0_V$, meaning $m_{T,e_1}\left(x\right) = x$.\newline
+
+  Let $g(x) = x^2$. Then,
+  \begin{align*}
+    g(T)\left(e_2\right) &= T^{2}\left(e_2\right)\\
+                         &= T\left(T\left(e_1\right)\right)\\
+                         &= T\left(0_V\right)\\
+                         &= 0_V.
+  \end{align*}
+  This gives $m_{T,e_2}(x) | x^2$, so $m_{T,e_2}(x) = 1,x,x^2$. If $m_{T,e_2}(x) = 1$, then $\id_V\left(e_2\right) = e_2 = 0_V$, which is not the case. Similarly, if $m_{T,e_2}(x) = x$, then $T(e_2) = e_1 = 0_V$, so $m_{T,e_2}(x) = x^2$.\newline
+
+  For each $1 \leq j\leq n$, $m_{T,e_j}(x) = x^j$.
+\end{example}
+\begin{example}
+  Let $V = \Q^2$, $T\in \Hom_{\Q}\left(\Q^2,\Q^2\right)$, with
+  \begin{align*}
+    T\left(e_1\right) &= e_1 + 3e_2\\
+    T\left(e_2\right) &= 2e_1 + 4e_2.
+  \end{align*}
+  We wish to find the annihilating polynomial for $e_1$.\newline
+
+  We know that $m_{T,e_1}(x)$ has degree $1$ or $2$. Additionally, $m_{T,e_1}(x)$ cannot have degree $1$, as if $m_{T,e_1}\left(x\right) = x+a$, then
+  \begin{align*}
+    m_{T,e_1}\left(T\right)\left(e_1\right) &= T\left(e_1\right) + ae_1\\
+                                            &= e_1 + 3e_2 + ae_1\\
+                                            &\neq 0.
+  \end{align*}
+  Thus, $m_{T,e_1}$ is of degree $2$.
+  \begin{align*}
+    T^2\left(e_1\right) &= T\left(e_1 + 3e_2\right)\\
+                        &= T\left(e_1\right) + 3T\left(e_2\right)\\
+                        &= e_1 + 3e_2 + 3\left(2e_1 + 4e_2\right)\\
+                        &= 7e_1 + 15 e_2.
+  \end{align*}
+  We want to find $b,c\in \Q$ such that
+  \begin{align*}
+    T^2\left(e_1\right) + bT\left(e_1\right) + ce_1 &= 0_V.
+  \end{align*}
+  Solving the resulting system of linear equation yields $b = -5$ and $c = -2$. The annihilating polynomial is, thus,
+  \begin{align*}
+    m_{T,e_1}(x) &= x^2 - 5x - 2.
+  \end{align*}
+\end{example}
+\begin{exercise}\hfill
+  \begin{enumerate}[(1)]
+    \item Show that $m_{T,e_2}(x) = x^2 - 5x - 2$.
+    \item Calculate $m_{T,e_1}(x)$ and $m_{T,e_2}(x)$ for $\F = \F_3 = \Z/3\Z$.
+  \end{enumerate}
+\end{exercise}
+\begin{theorem}
+  Let $\Dim_{\F}\left(V\right) = n$, and $\mathcal{B} = \set{v_1,\dots,v_n}$ be a basis of $V$. Let $T\in \Hom_{\F}\left(V,V\right)$. We have
+  \begin{align*}
+    m_{T}\left(x\right) &= \lcm_{1 \leq i \leq n}m_{T,v_i}\left(x\right).
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Let $f(x) = \lcm_{1\leq i\leq n} m_{T,v_i}\left(x\right)$. Then,
+  \begin{align*}
+    m_{T}\left(T\right)\left(v_i\right) &= 0
+  \end{align*}
+  meaning $m_{T,v_i}|m_{T}(x)$ for each $i$, so $f(x) | m_{T}(x)$.\newline
+
+  Let $v\in V$; write $v = \sum_{i=1}^{n}a_iv_i$. Then,
+  \begin{align*}
+    f(T)(v) &= f(T)\left(\sum_{i=1}^{n}a_iv_i\right)\\
+            &= \sum_{i=1}^{n}a_if(T)\left(v_i\right)\\
+            &= 0,
+  \end{align*}
+  since $m_{T,v_i}(x)|f(x)$ for all $i$. Thus, $m_{T}(x) | f(x)$.
+\end{proof}
+\begin{lemma}
+  Let $T \in \Hom_{\F}\left(V,V\right)$. Let $v_1,\dots,v_k\in V$, and set $p_i(x) = m_{T,v_i}(x)$. Suppose $p_i(x)$ are pairwise relatively prime. Set
+  \begin{align*}
+    v &= v_1 + \cdots v_k.
+  \end{align*}
+  Then,
+  \begin{align*}
+    m_{T,v}\left(x\right) &= \prod_{j=1}^{k}p_j(x).
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  We will prove this for $k = 2$.\newline
+
+  Since $p_1(x)$ and $p_2(x)$ are relatively prime, we can write
+  \begin{align*}
+    1 &= p_1(x)q_1(x) + p_2(x)q_2(x).
+  \end{align*}
+  Particularly,
+  \begin{align*}
+    \id_V &= p_1(T)q_1(T) + p_2(T)q_2(T).
+  \end{align*}
+  Set $v = v_1 + v_2$. Then,
+  \begin{align*}
+    v &= \id_V(v)\\
+      &= \left(p_1(T)q_1(T) + p_2(T)q_2(T)\right)(v)\\
+      &= p_1(T)q_2(T)(v) + p_2(T)q_2(T)(v)\\
+      &= p_1(T)q_2(T)\left(v_1 + v_2\right) + p_2(T)q_2(T)\left(v_1 + v_2\right)\\
+      &= \underbrace{p_1(T)q_2(T)\left(v_2\right)}_{w_2} + \underbrace{p_2(T)q_2(T)\left(v_2\right)}_{w_1}
+      \intertext{meaning}
+    v &= w_1 + w_2.
+  \end{align*}
+Note that
+\begin{align*}
+  p_1(T)(w_1) &= p_1(T)p_2(T)q_2(T)\left(v_1\right)\\
+              &= q_2(T)p_2(T)p_1(T)\left(v_1\right)\\
+              &= 0_V,
+\end{align*}
+meaning $w_1\in \ker \left(p_1(T)\right)$, and similarly, $w_2\in \ker \left(p_2(T)\right)$.\newline
+
+Let $r(x)\in \F[x]$ with $r(T)(v) = 0$. We have $v = w_1 + w_2$ and $w_2\in \ker\left( p_2(T)\right)$, meaning
+\begin{align*}
+  p_2(T)(v) &= p_2(T)\left(w_1 + w_2\right)\\
+            &= p_2(T)\left(w_1\right).
+\end{align*}
+Thus,
+\begin{align*}
+  0_V &= p_2(T)q_2(T)\left(0_V\right)\\
+      &= p_2(T)q_2(T)r(T)(v)\\
+      &= r(T)q_2(T)p_2(T)(v)\\
+      &= r(T)q_2(T)p_2(T)\left(w_1\right).
+\end{align*}
+Similarly, $r(T)q_1(T)p_1(T)\left(w_1\right) = 0_V$ since $w_1\in \ker\left(p_1(T)\right)$. Hence,
+\begin{align*}
+  0_V &= r(T)p_2(T)q_2(T)\left(w_1\right) + r(t)p_1(T)q_1(T)\left(w_1\right)\\
+      &= r(T)\underbrace{\left(p_2(T)q_2(T) + p_1(T)q_1(T)\right)}_{\id_V}\left(w_1\right)\\
+      &= r(T)\left(w_1\right).
+\end{align*}
+This gives
+\begin{align*}
+  0_V &= r(T)\left(w_1\right)\\
+      &= r(T)p_2(T)q_2(T)\left(v_1\right).
+\end{align*}
+Thus, $p_1(x)|r(x)p_2(x)q_2(x)$. Additionally,
+\begin{align*}
+  1 &= p_1(x)q_1(x) + p_2(x)q_2(x)\\
+  \gcd\left(p_1(x),p_2(x)q_2(x)\right) &= 1,
+\end{align*}
+implying $p_1(x)|r(x)$, and similarly for $p_2(x) | r(x)$.\newline
+
+Since $\gcd\left(p_1(x),p_2(x)\right) = 1$, we have
+\begin{align*}
+  \lcm\left(p_1(x),p_2(x)\right) &= p_1(x)p_2(x),
+\end{align*}
+so $p_1(x)p_2(x) | r(x)$. If we take $r(x) = m_{T,v}(x)$, implying $p_1(x)p_2(x)|m_{T,v}(x)$. Thus, $m_{T,v}(x) = p_1(x)p_2(x)$.
+\end{proof}
+\begin{exercise}
+  Prove for $k > 2$.
+\end{exercise}
+\begin{theorem}
+  Let $T\in \Hom_{\F}\left(V,V\right)$. There exists $v\in V$ such that $m_{T,v}\left(x\right) = m_{T}(x)$. In particular, $\deg m_{T}(x) \leq n$.
+\end{theorem}
+\begin{proof}
+  Let $\mathcal{B} = \set{v_1,\dots,v_n}$ be a basis for $V$.\newline
+
+  We know that
+  \begin{align*}
+    m_{T}\left(v\right) &= \lcm_{1 \leq i \leq n} m_{T,v_i}(x).
+  \end{align*}
+  Factor
+  \begin{align*}
+    m_T(x) &= p_1(x)^{e_1} \cdots p_{k}(x)e^{k},
+  \end{align*}
+  with $p_i$ relatively prime, $e_i \geq 1$.\newline
+
+  For $1 \leq j \leq k$, there exists $i_j\in \set{1,\dots,n}$ and $q_{i_j}(x)\in \F[x]$ with
+  \begin{align*}
+    m_{T,v_{i_j}}(x) &= p_j(x)^{e_j}q_{i_j}(x).
+  \end{align*}
+  Define $w_j = q_{i_j}(T)\left(v_{i_j}\right)$. This gives
+  \begin{align*}
+    M_{T,w_j} &= p_j(x)^{e_j}.
+  \end{align*}
+  Set $w = w_1 + \cdots + w_k$. The previous result gives
+  \begin{align*}
+    m_{T,w}(x) &= \prod_{j=1}^{k}p_j(x)^{e_j}\\
+               &= m_T(x).
+  \end{align*}
+\end{proof}
 \end{document}
