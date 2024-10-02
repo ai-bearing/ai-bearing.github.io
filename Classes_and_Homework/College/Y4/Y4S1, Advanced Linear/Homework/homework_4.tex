@@ -1,0 +1,81 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+%\pagestyle{fancy} %better headers
+%\fancyhf{}
+%\rhead{Avinash Iyer}
+%\lhead{}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\begin{center}
+  \textbf{Math 395: Homework 4}\break
+  \textbf{Due:}  10/03/2024\break
+  
+  \textbf{Avinash Iyer}\break
+  \textbf{Collaborators: Carly Venenciano, Gianluca Crescenzo, Noah Smith, Ben Langer Weida, Clarissa Ly}
+\end{center}
+\RaggedRight
+\section{Problem 6}%
+\begin{problem}
+  Let $A\in \Mat_{n}\left(\F\right)$.
+  \begin{enumerate}[(a)]
+    \item Assume $A$ has eigenvalues $\lambda_1,\dots,\lambda_n$. Prove that $\det(A) = \lambda_1\cdots\lambda_n$ and $\tr(A) = \lambda_1 + \cdots + \lambda_n$.
+    \item Suppose $A$ does not have $n$ distinct eigenvalues, but $c_A(x)$ splits into linear factors over $F$. Can you characterize the determinant and trace of $A$ in terms of the eigenvalues?
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item If $A\in \Mat_{n}\left(\F\right)$ has distinct eigenvalues $\lambda_1,\dots,\lambda_n$, then there exists $P\in \text{GL}_{n}\left(\F\right)$ such that
+      \begin{align*}
+        A &= P\left(\diag\left(\lambda_1,\dots,\lambda_n\right)\right)P^{-1},
+      \end{align*}
+      where $\diag\left(\lambda_1,\dots,\lambda_n\right)$ denote the diagonal matrix with entries $\lambda_1,\dots,\lambda_n$ at entries $a_{11},\dots,a_{nn}$. In particular, this means
+      \begin{align*}
+        \det(A) &= \det\left(P\left(\diag\left(\lambda_1,\dots,\lambda_n\right)\right)P^{-1}\right)\\
+                &= \det\left(\diag\left(\lambda_1,\dots,\lambda_n\right)\right)\\
+                &= \prod_{j=1}^{n}\lambda_j,
+                \intertext{and}
+        \tr\left(A\right) &= \tr\left(P\left(\diag\left(\lambda_1,\dots,\lambda_n\right)\right)P^{-1}\right)\\
+                          &= \tr\left(\diag\left(\lambda_1,\dots,\lambda_n\right)\right)\\
+                          &= \sum_{j=1}^{n}\lambda_j.
+      \end{align*}
+    \item If $c_A(x)$ splits into linear factors over $F$, then the Jordan canonical form for $A$ exists, with each of its Jordan blocks consisting of the roots of $c_A(x)$ with multiplicity.\footnote{Assistance from Wikipedia} Thus, we can characterize $\tr(A)$ to be the sum of the roots of $c_A(X)$ with multiplicity, and $\det(A)$ to be the product of the roots with multiplicity.
+  \end{enumerate}
+\end{solution}
+\section{Problem 8}%
+\begin{problem}
+  Prove that if $\lambda_1,\dots,\lambda_n$ are the eigenvalues of a matrix $A\in \Mat_{n}\left(\F\right)$, the $\lambda_1^k,\dots,\lambda_n^{k}$ are the eigenvalues for $A^k$ for any $k\geq 0$.
+\end{problem}
+\begin{solution}
+  Since $A$ has eigenvalues $\lambda_1,\dots,\lambda_n$, it is the case that there exists some $P\in \text{GL}_{n}\left(\F\right)$ such that
+  \begin{align*}
+    A &= P\left(\diag\left(\lambda_1,\dots,\lambda_k\right)\right)P^{-1}.
+  \end{align*}
+  For $k = 0$, we have
+  \begin{align*}
+    A^{0}  &= \left(P\left(\diag\left(\lambda_1,\dots,\lambda_n\right)\right)P^{-1}\right)^{0}
+           &= I_n\\
+           &= P\left(\diag\left(\lambda_1^{0},\dots,\lambda_n^{0}\right)\right)P^{-1},
+  \end{align*}
+  meaning $\lambda_1^k,\dots,\lambda_n^k$ are eigenvalues for $A^k$.\newline
+
+  For $k > 0$, we have
+  \begin{align*}
+    A^{k} &= \underbrace{\left(P\left(\diag\left(\lambda_1,\dots,\lambda_n\right)\right)P^{-1}\right)\left(P\left(\diag\left(\lambda_1,\dots,\lambda_n\right)\right)P^{-1}\right)\cdots \left(P\left(\diag\left(\lambda_1,\dots,\lambda_n\right)\right)P^{-1}\right)}_{\text{$k$ times}}\\
+          &= P\underbrace{\left(\diag\left(\lambda_1,\dots,\lambda_n\right)\right)\left(\diag\left(\lambda_1,\dots,\lambda_n\right)\right)\cdots\left(\diag\left(\lambda_1,\dots,\lambda_n\right)\right)}_{\text{$k$ times}}P^{-1}\\
+          &= P\left(\diag\left(\lambda_1^{k},\dots,\lambda_n^{k}\right)\right)P^{-1},
+  \end{align*}
+  meaning $\lambda_1^k,\dots,\lambda_n^{k}$ are eigenvalues for $A^{k}$.
+\end{solution}
+\end{document}

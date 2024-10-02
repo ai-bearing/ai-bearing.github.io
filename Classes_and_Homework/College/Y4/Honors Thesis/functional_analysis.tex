@@ -26,4 +26,144 @@ This is going to be part of the notes for my Honors thesis independent study, wh
 The primary source for this section is going to be Timothy Rainone's \textit{Functional Analysis-En Route to Operator Algebras}, which has not been published yet.\newline
 
 I do not claim any of this work to be original.
+\section{Normed Vector Spaces}%
+\subsection{Vector Spaces, Norms, and Basic Properties}%
+All vector spaces are defined over $\C$. Most of the information here is in my Real Analysis II notes, so I'm going to skip to some of the more important content.
+\begin{definition}[Vector Space]
+  A vector space $V$ is a set closed under two operations
+  \begin{align*}
+    a: V\times V \rightarrow V,~\left(v_1,v_2\right)\mapsto v_1 + v_2\\
+    m: \C\times V\rightarrow V,~\left(\lambda,v\right) \mapsto \lambda v.
+  \end{align*}
+  We refer to $a$ as addition, and $m$ as scalar multiplication; $(V,+)$ is an abelian ring.
+\end{definition}
+\begin{definition}[Norm]
+  A norm is a function
+  \begin{align*}
+    \norm{\cdot}: V \rightarrow \R^+,~x\mapsto \norm{x}
+  \end{align*}
+  that satisfies the following properties:
+  \begin{itemize}
+    \item Positive definiteness: $\norm{v} = 0$ if and only if $v = 0_V$.
+    \item Triangle inequality: $\norm{v+w} \leq \norm{v} + \norm{w}$.
+    \item Absolute Homogeneity: $\norm{\lambda v} = \left\vert \lambda \right\vert\norm{v}$, for $\lambda \in \C$.
+  \end{itemize}
+  If a function $p: V\rightarrow \R^+$ satisfies the triangle inequality and absolute homogeneity, we say $p$ is a seminorm.
+\end{definition}
+We say the pair $\left(V,\norm{\cdot}\right)$ is a normed vector space.
+\begin{definition}[Balls and Spheres]
+  Let $X$ be a normed vector space, $x\in X$, and $\delta > 0$. Then,
+  \begin{align*}
+    U(x,\delta) &= \set{y\in X\mid d(x,y) < \delta}\\
+    B(x,\delta) &= \set{y\in X\mid d(x,y) \leq \delta}\\
+    S(x,\delta) &= \set{y\in X\mid d(x,y) = \delta}.
+  \end{align*}
+  For a normed vector space, we will use the following conventions for common sets:
+  \begin{align*}
+    U_X &= U(0,1)\\
+    B_X &= B(0,1)\\
+    S_X &= S(0,1)\\
+    \mathbb{D} &= U_{\C}\\
+    \mathbb{T} &= S_{\C}.
+  \end{align*}
+\end{definition}
+\begin{definition}[Equivalent Norms]
+  Two norms on $V$, $\norm{\cdot}_{a}$ and $\norm{\cdot}_{b}$ are said to be equivalent if there are two constants $C_1$ and $C_2$ such that
+  \begin{align*}
+    \norm{v}_{a} &\leq C_1\norm{v}_b\\
+    \norm{v}_{b} &\leq C_2\norm{v}_a
+  \end{align*}
+  for all $v\in V$. We say $\norm{\cdot}_{a}\sim \norm{\cdot}_{b}$.
+\end{definition}
+\subsection{Examples}%
+\begin{example}[Finite-Dimensional Vector Spaces]
+  The vector space $\C^n$ is with the $p$-norm is denoted $\ell_{p}^{n}$, where for $p \in [1,\infty]$, the $p$-norm is defined by
+  \begin{align*}
+    \norm{x}_{p} &= \left(\sum_{i=1}^{n}\left\vert x_i \right\vert^p\right)^{1/p}.
+  \end{align*}
+  In the case with $p=2$, this gives the traditional Euclidean norm, and with $p = \infty$, this gives the $\sup$ norm:
+  \begin{align*}
+    \norm{x}_{\infty} &= \max_{1\leq i \leq n}\left\vert x_i \right\vert.
+  \end{align*}
+\end{example}
+\begin{example}[A Sequence Space]
+  We let $\ell_{p} = \set{\left(x_{n}\right)_n\mid x_n\in \C,\norm{x}_p < \infty}$ be the collection of sequences in $\C$ with finite $p$-norm. Here,
+  \begin{align*}
+    \norm{x}_p &= \left(\sum_{n=1}^{\infty}\left\vert x_n \right\vert^p\right)^{1/p}.
+  \end{align*}
+  In the case with $p = \infty$, this gives the sequence space $\ell_{\infty}$, which has norm
+  \begin{align*}
+    \norm{x}_{\infty} &= \sup_{n\in \N}\left\vert x_n \right\vert.
+  \end{align*}
+\end{example}
+\begin{example}[A Function Space]
+  We let $\ell^{\infty}\left(\Omega\right)$ denote the set of all bounded functions $f: \Omega \rightarrow \C$, equipped with the norm
+  \begin{align*}
+    \norm{f}_{\infty} &= \sup_{x\in \Omega}\left\vert f(x) \right\vert.
+  \end{align*}
+  If $\Omega = \left(\Omega,\mathcal{M},\mu\right)$ is a measure space, then we let $L^{\infty}\left(\Omega\right)$ be the space of $\mu$-a.e. equal essentially bounded measurable functions, under the norm
+  \begin{align*}
+    \norm{f}_{\infty} &= \esssup_{x\in \Omega}\left\vert f(x) \right\vert.
+  \end{align*}
+\end{example}
+\subsection{Series Convergence and Completeness}%
+\begin{proposition}[Criteria for Banach Spaces]
+Let $X$ be a normed vector space. The following are equivalent:
+\begin{enumerate}[(i)]
+  \item $X$ is a Banach space.\footnote{Complete normed vector space.}
+  \item If $\left(x_k\right)_k$ is a sequence of vectors such that $\sum_{k=1}^{\infty}\norm{x_k}$ converges, then $\sum_{k=1}^{\infty}x_k$ converges.
+  \item If $\left(x_k\right)_k$ is a sequence in $X$ such that $\norm{x_k} < 2^{-k}$, then $\sum_{k=1}^{\infty}x_k$ converges.
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+  To show (i) implies (ii), for $n > m > N$, we have
+  \begin{align*}
+    \norm{s_n - s_m} &= \norm{\sum_{k=m+1}^{n}x_k}\\
+                     &\leq \sum_{k=m+1}^{n}\norm{x_k}\\
+                     &< \epsilon,
+  \end{align*}
+  implying that $s_n$ is Cauchy, and thus converges since $X$ is complete.\newline
+
+  Since $\sum_{k=1}^{\infty}2^{-k}$ converges, it is clear that (ii) implies (iii).\newline
+
+  To show (iii) implies (i), we let $\left(x_n\right)_n$ be a Cauchy sequence in $X$. We only need construct a convergent subsequence in order to show that $\left(x_n\right)_n$ converges.\newline
+
+  Chose $n_1\in \N$ such that for $n,m\geq n_1$, $ \norm{x_m - x_n} < \frac{1}{2^2}$, and inductively define $n_j > n_{j-1}$ such that $n,m\geq n_j$ implies $\norm{x_m - x_n} < \frac{1}{2^{j+1}}$.\newline
+
+  Let $y_1 = x_{n_1}$, $y_{j} = x_{n_j} - x_{n_{j-1}}$. Then,
+  \begin{align*}
+    \norm{y_j} &= \norm{x_{n_j} - x_{n_{j-1}}}\\
+               &< \frac{1}{2^{j}},
+  \end{align*}
+  so $\sum_{j=1}^{\infty}y_j$ converges by our assumption. By telescoping, we see that $\sum_{j=1}^{k}y_j = x_{n_k}$, so $\left(x_{n_{k}}\right)_k$ converges.
+\end{proof}
+\subsection{Quotient Spaces}%
+Let $X$ be a normed vector space. Then, for $E\subseteq X$ a subspace, there is a quotient space $X/E$ with the projection map $\pi: X\rightarrow X/E$, $x\mapsto x + E$. We want to make $X/E$ into a normed space --- in order to do this, we use the distance function:
+\begin{align*}
+  \dist_{E}(x) &= \inf_{y\in E}d(x,y),
+\end{align*}
+which is uniformly continuous. For $E$ closed, then $\dist_{E}(x) = 0$ if and only if $x\in E$.
+\begin{proposition}[Quotient Space Norm]
+  Let $X$ be a normed vector space, and $E\subseteq X$ a subspace. Set
+  \begin{align*}
+    \norm{x + E}_{X/E} &= \dist_{E}(x).
+  \end{align*}
+  Then,
+  \begin{enumerate}[(1)]
+    \item $\norm{\cdot}_{X/E}$ is a well-defined seminorm on $X/E$.
+    \item If $E$ is closed, then $\norm{\cdot}_{X/E}$ is a norm on $X/E$.
+    \item $\norm{x+E}_{X/E} \leq \norm{x}$ for all $x\in X$.
+    \item If $E$ is closed, then $\pi: X\rightarrow X/E$ is Lipschitz.
+    \item If $X$ is a Banach space and $E$ is closed, then $X/E$ is also a Banach space.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  We will show that $\norm{\cdot}_{X/E}$ is well-defined. If $x + E = x' + E$, $x'-x\in E$, so for every $y\in E$, $x'-x + y\in E$. Thus,
+  \begin{align*}
+    \norm{x-y} &= \norm{x'-\left(x'-x+y\right)}\\
+               &\geq \inf_{z\in E}\norm{x' - z}\\
+               &= \norm{x' + E}_{X/E}.
+  \end{align*}
+  Thus, $\norm{x + E}_{X/E} \geq \norm{x' + E}_{X/E}$, and vice versa.
+\end{proof}
 \end{document}

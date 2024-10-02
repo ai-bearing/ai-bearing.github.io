@@ -937,7 +937,7 @@ We can see that this ordering must be isomorphic to $\omega \omega$, since it mu
     \alpha^{\beta} &= \begin{cases}
       1 & \text{if $\beta = 0$}\\
       \alpha ^{\gamma} \alpha & \text{if $\beta = \gamma^{+}$ for some $\gamma$}\\
-      \bigcup_{\gamma < \beta} \alpha^{\gamma}
+      \bigcup_{\gamma < \beta} \alpha^{\gamma} & \text{else}
     \end{cases}
   \end{align*}
 \end{definition}
@@ -974,4 +974,82 @@ We can see that this ordering must be isomorphic to $\omega \omega$, since it mu
 \begin{theorem}
   It is not the case that $\omega_1$ is countable.
 \end{theorem}
+\subsection{Induction and Recursion}%
+\begin{definition}[Principle of Mathematical Induction]
+  Let $\phi$ be a formula such that
+  \begin{align*}
+    \phi(0) \wedge \forall n\in \omega\left(\phi(n)\Rightarrow \phi\left(n+1\right)\right)
+  \end{align*}
+  Then, $\forall n\in \omega,~\phi(n)$.\newline
+
+  Equivalently, let $S$ be a set such that
+  \begin{align*}
+    0\in S \wedge \forall n\in\omega\left(n\in S \Rightarrow n+1\in S\right).
+  \end{align*}
+  Then, $\omega \subseteq S$.
+\end{definition}
+\begin{definition}[Strong Principle of Mathematical Induction]
+  Let $S$ be a set such that
+  \begin{align*}
+    0\in S \wedge \forall n\in \omega \left(n\subseteq S \Rightarrow n\in S\right).
+  \end{align*}
+  Then, $\omega \subseteq S$.
+\end{definition}
+\begin{remark}
+  Strong induction implies weak induction, since the antecedent in strong induction is more restrictive than the antecedent in weak induction.
+\end{remark}
+\begin{proof}
+  Suppose toward contradiction that $\omega \nsubseteq S$. Then, since $\omega \setminus S\subseteq \omega$ must be nonempty, and $\omega$ is well-ordered, there exists $n_0$ such that $n_0 \in \omega \setminus S$. Thus, for every $m < n_0$, $m\in S$.\newline
+
+  Thus, $\forall m\in n_0$, $m\in S$, meaning $n_0 \subseteq S$. Thus, $n_0\in S$, meaning $n_0\in S\wedge n_0\notin S$. $\bot$
+\end{proof}
+\begin{remark}
+  The above proof shows that everything you can prove by induction, you can prove by contradiction (since induction follows from contradiction).
+\end{remark}
+\begin{example}
+  Suppose $\prec$ is a well-ordering on $\R$.\footnote{All nonempty sets contain a well-ordering, which is another statement of the Axiom of Choice} Define $x\in \R$ to be ``good'' if a certain condition is satisfied. We wish to show that $x\in \R$ --- in particular, we cannot use either weak or strong induction.
+  \begin{proof}[Proof Idea]
+    Suppose there exists some real number $x$ that fails the condition. Let $x_0$ the least element that fails the condition. Then, $\forall y\prec x_0$, $y$ is good. Then, we need to use some inductive step to show that such a condition implies that $x_0$ is good.
+  \end{proof}
+\end{example}
+\begin{example}
+  Suppose that for all $m,n\in \N$, Then, $G_{m,n}$ is some graph, group, etc.\newline
+
+  We want to show that every $G_{m,n}$ satisfies some condition.\newline
+
+  Suppose there is a bad $G_{a,b}$. Take the smallest such $G_{a,b}$ (via the lexicographical order), and we can use strong induction to show that such a $G_{a,b}$ also satisfies the condition.
+\end{example}
+\begin{example}[Transfinite Induction]
+  Suppose we want to show that for all $\alpha \in \omega2$, $\phi(\alpha)$. 
+  \begin{question}
+    Is the following enough?
+    \begin{align*}
+      \phi(0) \wedge \forall \alpha \in \omega 2\left(\phi(\alpha)\Rightarrow \varphi\left(\alpha\cup \set{\alpha}\right)\right).
+    \end{align*}
+  \end{question}
+  \begin{answer}
+    \textbf{No}.
+  \end{answer}
+  The reason why the above cannot work (as a statement of induction) is because $\omega$ is a limit ordinal (i.e., $\omega$ is not a successor to any particular ordinal).\newline
+
+  We can use contradiction.
+  \begin{proof}[Proof by Contradiction]
+    Suppose toward contradiction that $\phi(\alpha)$ is not true for all $\alpha \in \omega2$. Let $\alpha_0$ be the smallest ordinal in $\omega 2$ such that $\phi\left(\alpha_0\right)$ is false.\newline
+
+    Then, for every $\alpha \in \alpha_0$, $\phi(\alpha)$. Then, we would have to conclude $\phi\left(\alpha_0\right)$, implying a contradiction.
+  \end{proof}
+  The above is an example of transfinite induction.
+\end{example}
+\begin{example}[Recursion]
+  Recall the Fibonacci numbers:
+  \begin{align*}
+    0,1,1,2,3,5,8,\dots
+  \end{align*}
+  We define the Fibonacci numbers recursively:
+  \begin{align*}
+    F(0) &= 0\\
+    F(1) &= 1\\
+    F(n+2) &= F(n+1) + F(n).
+  \end{align*}
+\end{example}
 \end{document}
