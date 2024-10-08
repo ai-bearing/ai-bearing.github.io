@@ -13,7 +13,7 @@
 \usetikzlibrary{bending} % for arrow head angle
 %\contourlength{1.0pt}
 \usetikzlibrary{3d}
-\usepackage{endfloat}
+\usepackage[nomarkers]{endfloat}
 \renewcommand{\efloatseparator}{\vspace{10pt}}
 
 \usepackage[outline]{contour} % glow around text
@@ -2101,17 +2101,40 @@ since $\nabla \cdot \mathbf{E}$ is a scalar field, while $\mathbf{E}\cdot \nabla
 \end{example}
 \subsubsection{Changing Coordinates}%
 \begin{table}
+  \scriptsize
   \centering
-  \renewcommand{\arraystretch}{1.5}
-  \begin{tabular}{c|c}
-    Coordinate System & Gradient Expression\\
+  \renewcommand{\arraystretch}{2}
+  \begin{tabular}{c|c|c}
+    Coordinate System & Value & Expression\\
     \hline\hline
-    Cartesian & $\nabla f = \pd{f}{x}\hat{i} + \pd{f}{y}\hat{j} + \pd{f}{z}\hat{k}$\\
-    Cylindrical & $\nabla f = \pd{f}{\rho}\hat{\rho} + \frac{1}{\rho}\pd{f}{\phi}\hat{\phi} + \pd{f}{z}\hat{k}$\\
-    Spherical & $\nabla f = \pd{f}{r}\hat{r} + \frac{1}{r\sin\theta}\pd{f}{\phi}\hat{\phi} + \frac{1}{r}\pd{f}{\theta}\hat{\theta}$
+    \multirow[c]{4}{*}{Cartesian} & Gradient & $\nabla f = \pd{f}{x}\hat{i} + \pd{f}{y}\hat{j} + \pd{f}{z}\hat{k}$\\
+                                 & Laplacian & $\nabla\cdot \nabla f = \pd{^2f}{x^2} + \pd{^2f}{y^2} + \pd{^2f}{z^2}$\\
+                                 & Divergence & $\nabla \cdot \mathbf{A} = \pd{}{x}A_x + \pd{}{y}A_y + \pd{}{z}A_z$\\
+                                 & Curl & $\nabla \times \mathbf{A} = \left(\pd{A_z}{y} - \pd{A_y}{z}\right)\hat{i} + \left(\pd{A_x}{z} - \pd{A_z}{x}\right)\hat{j} + \left(\pd{A_y}{x} - \pd{A_x}{y}\right)\hat{k}$\\
+                                 \hline
+    \multirow[c]{4}{*}{Cylindrical} & Gradient & $\nabla f = \pd{f}{\rho}\hat{\rho} + \frac{1}{\rho}\pd{f}{\phi}\hat{\phi} + \pd{f}{z}\hat{z}$\\
+                                    & Laplacian & $\nabla \cdot \nabla f = \frac{1}{\rho}\pd{}{\rho}\left(\rho \pd{f}{\rho}\right) + \frac{1}{\rho^2}\pd{^2f}{\phi^2} + \pd{^2f}{z^2}$\\
+                                    & Divergence & $\nabla \cdot \mathbf{A} = \frac{1}{\rho}\pd{}{\rho}\left(\rho\pd{A_{\rho}}{\rho}\right) + \frac{1}{\rho}\pd{A_{\phi}}{\phi} + \pd{A_z}{z}$\\
+                                    & Curl & $\left(\frac{1}{\rho}\pd{A_z}{\phi} - \pd{A_{\phi}}{z}\right)\hat{\rho} + \left(\pd{A_\rho}{z} - \pd{A_z}{\rho}\right)\hat{\phi} + \frac{1}{\rho}\left(\pd{}{\rho}\left(\rho A_{\phi}\right) - \pd{A_z}{\phi}\right)\hat{z}$\\
+                                    \hline
+    \multirow[c]{4}{*}{Spherical} & Gradient & $\nabla f = \pd{f}{r}\hat{r} + \frac{1}{r\sin\theta}\pd{f}{\phi}\hat{\phi} + \frac{1}{r}\pd{f}{\theta}\hat{\theta}$\\
+                                  & Laplacian & $\nabla \cdot \nabla f = \frac{1}{r^2}\pd{}{r}\left(r^2\pd{f}{r}\right) + \frac{1}{r^2\sin^2\theta}\pd{^2f}{\phi^2} + \frac{1}{r^2\sin\theta}\pd{}{\theta}\left(\sin\theta \pd{f}{\theta}\right)$\\
+                                  & Divergence & $\nabla \cdot \mathbf{A} = \frac{1}{r^2}\pd{}{r}\left(r^2\pd{A_r}{r}\right) + \frac{1}{r\sin\theta}\pd{A_{\phi}}{\phi} + \frac{1}{r\sin\theta}\pd{}{\theta}\left(\sin\theta A_{\theta}\right)$\\
+                                  & Curl & $\nabla \times \mathbf{A} = \frac{1}{r\sin\theta}\left(\pd{}{\theta}\left(\sin\theta A_{\phi}\right) - \pd{A_{\theta}}{\phi}\right)\hat{r} + \frac{1}{r}\left(\pd{}{r}\left(rA_{\theta}\right) - \pd{}{\theta}\left(A_r\right)\right)\hat{\phi}+ \frac{1}{r}\left(\frac{1}{\sin\theta}\pd{A_r}{\phi} - \pd{}{r}\left(rA_{\phi}\right)\right)\hat{\theta}$
+    %\multirow{4}{7em}{Cylindrical} & $\nabla f = \pd{f}{\rho}\hat{\rho} + \frac{1}{\rho}\pd{f}{\phi}\hat{\phi} + \pd{f}{z}\hat{k}$\\
+    %\multirow{4}{7em}{Spherical} & $\nabla f = \pd{f}{r}\hat{r} + \frac{1}{r\sin\theta}\pd{f}{\phi}\hat{\phi} + \frac{1}{r}\pd{f}{\theta}\hat{\theta}$
   \end{tabular}
   \caption{Gradients in Coordinate Systems}
 \end{table}
+%\begin{table}
+%  \centering
+%  \renewcommand{\arraystretch}{2}
+%  \begin{tabular}{c|c}
+%    Coordinate System & Divergence Expression\\
+%    \hline \hline
+%  \end{tabular}
+%
+%\end{table}
 Vector equations are fundamentally independent of their coordinate systems. Thus, the established identities in the previous subsection must be valid regardless of the coordinate system.\newline
 
 For instance, we should be able to calculate
@@ -2240,6 +2263,8 @@ In one dimension, if $\diff{f}{x}\bigr\vert_{P} = 0$ and $ \diff{^2f}{x^2}\bigr\
     Type of Integral & Expression\\
     \hline\hline
     $\int_{C}^{} \mathbf{B}\cdot\:d\vec{\ell}$, $\mathbf{B} = B_x\hat{i} + B_y\hat{j} + B_z\hat{k}$ & $\displaystyle \int_{C} B_x\:dx + B_y\:dy + B_z\:dz$\\
+    $\int_{C}^{} \mathbf{B}\cdot\:d\vec{\ell}$, $\mathbf{B} = B_r\hat{r} + B_{\phi}\hat{\phi} + B_z\hat{k}$ & $\displaystyle \int_{C} B_r\:dr + rB_{\phi}\:d\phi + B_z\:dz$\\
+    $\int_{C}^{} \mathbf{B}\cdot\:d\vec{\ell}$, $\mathbf{B} = B_r\hat{r} + B_{\phi}\hat{\phi} + B_{\theta}\hat{\theta}$ & $\displaystyle \int_{C} B_{r}\:dr + r\sin\theta B_{\phi}\:d\phi + B_{\theta}\:d\theta$\\
     $\int_{C}^{} \mathbf{E}\cdot\:d\vec{\ell}$, $\mathbf{E} = \nabla \Phi$ & $\displaystyle \Phi\left(t_2\right) - \Phi\left(t_1\right)$\\
     \hline
     $\Phi$ & $\displaystyle \int_{S}\mathbf{E}\cdot d\mathbf{a}$\\
@@ -2723,5 +2748,238 @@ Notice that the divergence of a curl is zero, so we can see that $\nabla \cdot \
   whose curl is also $\mathbf{B}$.\newline
 
   Note that this means $\mathbf{A}$ it not unique. In particular, for any $\mathbf{A}$, we can add any gradient field $\nabla \chi$, since $\nabla \times \nabla \chi = 0$.
+\end{example}
+\subsection{Divergence Theorem, Stokes's Theorem, and the Fundamental Theorem of Line Integrals}%
+\begin{table}
+  \renewcommand{\arraystretch}{2}
+  \centering
+  \begin{tabular}{c|c}
+    Theorem & Expression\\
+    \hline\hline
+    Divergence Theorem & $\displaystyle \int_{V}^{} \nabla \cdot \mathbf{E}\:d\tau = \oint_{\partial V}^{} \mathbf{E}\cdot d\mathbf{a}$\\
+    Divergence Theorem, Gradients & $\displaystyle \int_{V}^{} \nabla \Phi\:d\tau = \oint_{\partial V}^{} \Phi d\mathbf{a}$\\
+    Divergence Theorem, Curls & $\displaystyle \int_{V}^{} \nabla \times \mathbf{E}\:d\tau = \oint_{\partial V}^{} \:d\mathbf{a}\times \mathbf{E}$\\
+    \hline
+    Green's Theorem & $\displaystyle \int_{C}^{} \mathbf{B}\cdot d\vec{\ell} = \int_{S}^{} \left(\pd{B_y}{x} - \pd{B_x}{y}\right)\:dxdy$\\
+    Stokes's Theorem & $\displaystyle \int_{S}^{} \nabla \times \mathbf{B}\:d\mathbf{a} = \int_{\partial S}^{} \mathbf{B}\cdot d\vec{\ell}$
+  \end{tabular}
+  \caption{Generalized Stokes's Theorem}
+\end{table}
+Recall the fundamental theorem of calculus:
+\begin{align*}
+  \int_{a}^{b} \frac{df}{dx}\:dx &= f(b) - f(a).
+\end{align*}
+In higher dimensions along a path $C$ traveling from $\mathbf{r}_1$ to $\mathbf{r}_2$, we have
+\begin{align*}
+  \int_{C}^{} \nabla f\cdot d\vec{\ell} &= f\left(\mathbf{r}_2\right) - f\left(\mathbf{r}_1\right).
+\end{align*}
+Notice that, via this process, we convert from a local property (derivatives) to a property defined by the boundary of a region (in this case, the endpoints of an interval and/or curve).
+\subsubsection{Divergence Theorem}%
+Consider an infinitesimal box with length $dx$, height $dy$, and depth $dz$. We can see that the flux of $\mathbf{E}$ about these faces is
+\begin{align*}
+  d\Phi_{\text{net}} &= \sum_{i}\mathbf{E}\cdot d\mathbf{a}_i.
+\end{align*}
+Evaluating $\mathbf{E}$ at the faces on the $yz$ plane parallel to the $x$ axis, we get
+\begin{align*}
+  \mathbf{E}\left(0,0,0\right)\cdot d\mathbf{a}_{\text{left}} + \mathbf{E}\left(dx,0,0\right)\cdot d\mathbf{a}_{\text{right}} &= -E_x(0,0,0)dydz + E_x\left(dx,0,0\right)dydz.
+\end{align*}
+The x component of $d\Phi_{\text{net}}$ is, thus,
+\begin{align*}
+  d\phi_{1} &- \left(E_x\left(dx,0,0\right)- E_x(0,0,0)\right)dydz\\
+            &= \left(\pd{E_x}{x}dx\right)dydz.
+\end{align*}
+Similarly,
+\begin{align*}
+  d\phi_2 &= \left(\pd{E_y}{y}dy\right)dzdx\\
+  d\phi_3 &= \left(\pd{E_z}{z}dz\right)dxdy.
+\end{align*}
+Therefore, 
+\begin{align*}
+  d\Phi_{\text{net}} &= \left(\pd{E_x}{x}dx\right)dydz + \left(\pd{E_y}{y}dy\right)dzdx + \left(\pd{E_z}{z}dz\right)dxdy\\
+                     &= \left(\nabla \cdot \mathbf{E}\right)d\tau,
+\end{align*}
+where $d\tau = dxdydz$ is the volume element. Thus, we see that the infinitesimal flux is proportional to the divergence of $\mathbf{E}$.\newline
+
+To convert from infinitesimal boxes to a full (bounded) region, we cut up $V$ into a bunch of small boxes. The interior box faces' respective fluxes cancel each other out since they have opposite-facing normals.
+\begin{theorem}
+    Let $V$ be a compact surface in $\R^3$ with piecewise smooth boundary $\partial V$, and $\mathbf{E}$ a continuously differentiable vector field defined on a neighborhood of $V$. Then, the following is true
+  \begin{align*}
+    \int_{V}^{} \nabla \cdot \mathbf{E}\:d\tau &= \oint_{\partial V}^{} \mathbf{E}\cdot d\mathbf{a}.
+  \end{align*}
+\end{theorem}
+\begin{example}
+  Let $\mathbf{E} = r^{\alpha}\hat{r}$, and $V$ be a sphere of radius $R$. Since we have spherical symmetry, we can find the flux of $\mathbf{E}$ about the sphere by taking
+  \begin{align*}
+    \oint_{S}\mathbf{E}\cdot d\mathbf{a} &= \oint r^{\alpha}R^2d\Omega\\
+                                         &= 4\pi R^{\alpha + 2}.
+  \end{align*}
+  Using the divergence theorem, we take $\nabla \cdot \mathbf{E} = \frac{1}{r^2}\pd{}{r}\left(r^2E_{r}\right) = \left(\alpha + 2\right)r^{\alpha - 1}$, and take
+  \begin{align*}
+    \int_{V}^{} \nabla \cdot \mathbf{E}\:d\tau &= \left(\alpha + 2\right)\int_{0}^{R} r^{\alpha - 1}r^{2}\:drd\Omega\\
+                                               &= 4\pi R^{\alpha + 2}.
+  \end{align*}
+  Notice that at $\alpha = -2$, this expression appears to fail --- the divergence is zero, but the flux is clearly not zero.
+\end{example}
+\begin{example}
+  Let $\mathbf{E} = r^{\alpha}\hat{r}$, and $V$ be the region between a sphere of radius $R_1$ and radius $R_2$, with $R_1 < R_2$.\newline
+
+  To find the flux about $E$, we find
+  \begin{align*}
+    \int_{\partial V}^{} \mathbf{E}\cdot d\mathbf{a} &= \oint_{S_2}\mathbf{E}\cdot d\mathbf{a} + \oint_{S_1} \mathbf{E}\cdot d\mathbf{a}\\
+                                            &= 4\pi \left(R_2^{\alpha + 2} - R_{1}^{\alpha + 2}\right).
+  \end{align*}
+  Similarly, we get
+  \begin{align*}
+    \int_{V}^{} \nabla \cdot \mathbf{E}\:d\tau &= 4\pi\left(R_2^{\alpha + 2} - R_1^{\alpha + 2}\right).
+  \end{align*}
+  Calculating for $\alpha = -2$, we know that
+  \begin{align*}
+    \int_{V}\nabla \cdot \frac{\hat{r}}{r^2}d\tau &= \oint_{S}\frac{\hat{r}\cdot \hat{n}}{r^2}da\\
+                                                  &= \oint_{S_1}\frac{\hat{r}\cdot \hat{n}_1}{r^2}da + \underbrace{\oint_{S_2}\frac{\hat{r}\cdot \hat{n}_2}{r^2}da}_{-\oint_{S_1}\frac{\hat{r}\cdot \hat{n}_1}{r^2}da}\\
+                                                  &= 0.
+  \end{align*}
+  Thus,
+  \begin{align*}
+    \oint_{S_2}\frac{\hat{r}}{r^2}d\mathbf{a} &= \oint_{S_1}\frac{\hat{r}}{r^2}d\mathbf{a}\\
+                                              &= \oint_{S_1}\frac{R_1^{2}}{R_1^2}d\Omega\\
+                                              &= 4\pi.
+  \end{align*}
+  Thus, the integral over $R_2$ has \textit{no} dependence on $R_2$, and (as long as $R_1\neq 0$), we can change $R_1$ however we like. If we let $R_1\rightarrow 0$, we find
+  \begin{align*}
+    \int_{V}\left(\nabla \cdot \frac{\hat{r}}{r^2}\right)d\tau &= 4\pi.
+  \end{align*}
+  Since the divergence is $0$ everywhere except the origin, this means
+  \begin{align*}
+    \nabla \cdot \frac{\hat{r}}{r^2} &= 4\pi \df\left(\mathbf{r}\right)
+  \end{align*}
+  Thus,
+  \begin{align*}
+    \Phi_{\text{net}} &= \oint_{S}\mathbf{E}\cdot d\mathbf{a}\\
+                      &= \oint_{S}\frac{R^2}{R^2}d\Omega\\
+                      &= 4\pi\\
+                      &= \frac{1}{\epsilon_0}Q_{\text{encl}},
+  \end{align*}
+  meaning we get back Gauss's law:
+  \begin{align*}
+    \mathbf{E} &= \frac{Q}{4\pi\epsilon_0}\frac{\hat{r}}{r^2}.
+  \end{align*}
+\end{example}
+\begin{remark}
+  Gauss's law for magnetism has
+  \begin{align*}
+    \Phi_{\text{net}} &= \oint_{S}\mathbf{B}\cdot d\mathbf{a}\\
+                      &= 0.
+  \end{align*}
+  This means that $\nabla \cdot \mathbf{B} = 0$ at all points (rather than yielding the Dirac delta distribution), or that there are no magnetic monopoles. All magnetic fields must form closed loops.
+\end{remark}
+\subsubsection{Stokes's Theorem}%
+The divergence theorem allows us to move from flux (which is defined on the boundary of a region) and the divergence (defined on the interior). Similarly, we want to find some similar relation for circulation.\newline
+
+Consider a field $\mathbf{B}$ and an infinitesimal rectangular curve with length $dx$ and width $dy$. Then,
+\begin{align*}
+  d\Psi &= \sum_{i}\mathbf{B}\cdot d\vec{\ell}_{i}.
+\end{align*}
+Looking at the bottom and top segments, we find
+\begin{align*}
+  \mathbf{B}\left(0,0,0\right)\cdot d\vec{\ell}_{\text{bottom}} + \mathbf{B}\left(0,dy,0\right)\cdot d\vec{\ell}_{\text{top}} &= B_x\left(0,0,0\right)dx - B_x\left(0,dy,0\right)dx,
+\end{align*}
+where the minus sign appears from integrating right to left along the top segment. Thus, we get
+\begin{align*}
+  d\psi_1 &= \left(-B_x\left(0,dy,0\right) + B_x\left(0,0,0\right)\right)dx\\
+          &= -\left(\pd{B_y}{x}dy\right)dx.
+\end{align*}
+Similarly, for left and right segments, we get
+\begin{align*}
+  d\psi_2 &= \left(B_y\left(dx,0,0\right) - B_y\left(0,0,0\right)\right)dy\\
+          &= \left(\pd{B_y}{x}dx\right)dy.
+\end{align*}
+Thus, we get
+\begin{align*}
+  d\Psi &= \left(\pd{B_y}{x} - \pd{x}{y}\right)dxdy\\
+        &= \left(\frac{B_y}{x} - \pd{B_x}{y}\right)dA,
+\end{align*}
+where $dA = dx dy$ is the area element.\newline
+
+To build up to a simply connected region, split the region into rectangles. The interior infinitesimal segments cancel each other out, yielding Green's Theorem:
+\begin{theorem}
+  Let $C$ be a piecewise smooth simple closed curve in $\R^2$, and let $S$ be the region in $\R^2$ that is bounded by $C$. Then, for a continuously differentiable vector field $\mathbf{B}$,
+  \begin{align*}
+    \oint_{C}^{} \mathbf{B}\cdot d\vec{\ell} &- \int_{S}^{} \left(\pd{B_y}{x} - \pd{B_x}{y}\right)\:dx dy,
+  \end{align*}
+\end{theorem}
+Notice that
+\begin{align*}
+  \pd{B_y}{x} - \pd{B_x}{y} &= \left(\nabla \times \mathbf{B}\right)_{z}.
+\end{align*}
+With this in mind, we can move to three dimensions using the curl, yielding Stokes's Theorem.
+\begin{theorem}
+  Let $S$ be a smooth oriented surface with boundary $C = \partial S$. Then, for a continuously differentiable vector field $\mathbf{B}$,
+  \begin{align*}
+    \oint_{C}\mathbf{B}\cdot d\vec{\ell} &= \int_{S}^{} \nabla \times \mathbf{B}\cdot d\mathbf{a}.
+  \end{align*}
+\end{theorem}
+\begin{example}
+  Let $\mathbf{B} = x^2y \hat{i} - xy^2\hat{j}$.\newline
+
+  We calculated the circulation from $P_1 = (0,0)$ and $P_2 = (1,1)$, via $C_1$, defined by the straight line from $(0,0)$ to $(1,0)$ to $(1,1)$, to be
+  \begin{align*}
+    \int_{C_1}^{} \mathbf{B}\cdot d\vec{\ell} &= -\frac{1}{3},
+  \end{align*}
+  and the circulation along $C_2$, which is a straight line from $(0,0)$ to $(1,1)$, to be
+  \begin{align*}
+    \int_{C_2}^{} \mathbf{B}\cdot d\vec{\ell} &= 0.
+  \end{align*}
+  Thus, the circulation along the path $C_2 - C_1$ is $\frac{1}{3}$.\newline
+
+  Verifying with Green's Theorem, we find $\nabla \times \mathbf{B} = -\left(x^2 + y^2\right)\hat{k}$, and take
+  \begin{align*}
+    \int_{S}^{} \nabla \times \mathbf{B}\cdot d\mathbf{a} &= \int_{S}^{} \left(-\left(x^2 + y^2\right)\hat{k}\right)\cdot \left(-\hat{k}\right)\:dxdy\\
+                                                          &= \int_{0}^{1} \:dx\int_{0}^{x} \left(x^2 + y^2\right)\:dy\\
+                                                          &= \frac{4}{3}\int_{0}^{1} x^3\:dx\\
+                                                          &= \frac{1}{3}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Let $\mathbf{B} = r^{\alpha}\hat{\phi}$, and consider a circle of radius $R$.\newline
+
+  Since our field is axially symmetric, we evaluate the cirulation to find
+  \begin{align*}
+    \int_{C}^{} \mathbf{B}\cdot d\vec{\ell} &= \oint_{C}^{} r^{\alpha}R\:d\phi\\
+                                            &= R^{\alpha + 1}\int_{0}^{2\pi} \:d\phi\\
+                                            &= 2\pi R^{\alpha + 1}.
+  \end{align*}
+  Calculating the curl, since the field only has a $\hat{\phi}$ component, we get
+  \begin{align*}
+    \nabla \times \mathbf{B} &= \frac{1}{r}\pd{}{r}\left(rB_{\phi}\right)\hat{z}\\
+                             &= \left(\alpha + 1\right)r^{\alpha - 1}\hat{z},
+  \end{align*}
+  meaning over the circular disc bounded by $C$, we have
+  \begin{align*}
+    \int_{S}^{} \left(\nabla \times \mathbf{B}\right)\cdot d\mathbf{a} &= \left(\alpha + 1\right)\int_{S}^{} r^{\alpha}\:drd\phi\\
+                                                                       &= 2\pi R^{\alpha + 1}.
+  \end{align*}
+  Notice that we seem to be missing a curl here --- if $\alpha = -1$, one side of Stokes's theorem says $\int_{S}^{} \left(\nabla \times \mathbf{B}\right)\cdot d\mathbf{a} = 0$, but the circulation is not zero.
+\end{example}
+\begin{example}
+  Consider a field of $\mathbf{B} = -\hat{k}$, and we want to know the flux about a hemispherical surface of radius $R$ bounded by a curve $C$ in the $xy$-plane.\newline
+
+  We can integrate about the hemisphere,
+  \begin{align*}
+    \int_{S_1}^{} \mathbf{B}\cdot d\mathbf{a} &= \int_{S}^{} \left(\hat{r}\cos\theta - \hat{\theta}\sin\theta\right)\cdot\hat{r}R^2\:d\Omega\\
+                                            &= -2\pi R^2\int_{0}^{1} \cos\theta\:d\left(\cos\theta\right)\\
+                                            &= -\pi R^2.
+  \end{align*}
+  We can also use the boundary integral. In particular, since $\nabla \times \mathbf{B} = 0$, we can find $\mathbf{A} = -y\hat{i}$. Now, we can evaluate it as the circulation of $A$.\newline
+
+  Notice that $d\vec{\ell} = \hat{\phi}Rd\phi$, meaning we only need $A_{\phi} = -y\sin\phi$; since $y = R\sin\theta\sin\phi$ and $\theta = \pi/2$, we have
+  \begin{align*}
+    \int_{C}^{} \mathbf{A}\cdot d\vec{\ell} &= -\oint_{C} y\sin\phi Rd\phi\\
+                                            &= -\pi R^2.
+  \end{align*}
+  However, the easiest way to do this integral is by selecting our surface to be the disk in the plane bounded by $C$. Thus,
+  \begin{align*}
+    \int_{S_2}^{} \mathbf{B}\cdot d\mathbf{a} &= -\int_{}^{} \hat{k}\cdot \hat{k} r\:drd\phi\\
+                                              &= -\pi R^2.
+  \end{align*}
 \end{example}
 \end{document}

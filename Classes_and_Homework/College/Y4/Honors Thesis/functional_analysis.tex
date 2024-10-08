@@ -229,12 +229,60 @@ which is uniformly continuous. For $E$ closed, then $\dist_{E}(x) = 0$ if and on
   \end{align*}
 \end{exercise}
 \begin{solution}
-  By the definition of the quotient norm, we have
+  Let $z = \left(z_k\right)_k\in \ell_{\infty}$. We define the distance
   \begin{align*}
-    \norm{\left(z_k\right)_k + c_0}_{\ell_{\infty}/c_0} &= \inf_{\left(a_k\right)_k\in c_0}\norm{\left(z_k\right)_k - \left(a_k\right)_k}\\
-                                                        &= \inf_{\left(a_k\right)_k\in c_0}\sup_{k\in \N}\left\vert z_k - a_k \right\vert\\
-                                                        &= \limsup_{k\rightarrow\infty}\left\vert z_k \right\vert.
+    \dist_{c_0}(z) &= \inf_{t\in c_0}\left\vert z_k - t_k \right\vert.
   \end{align*}
+  Let $w\in c_c$ be defined by
+  \begin{align*}
+    w &= \left(z_1,z_2,\dots,z_{n-1},0,0,\dots\right).
+  \end{align*}
+  Then,
+  \begin{align*}
+    \norm{z-w}_{\infty} &= \sup_{k\in \N}\left\vert z_k - w_k \right\vert\\
+                        &= \sup_{k\geq n}\left\vert z_k - w_k \right\vert,
+  \end{align*}
+  meaning that
+  \begin{align*}
+    \dist_{c_c}(z) &\leq \sup_{k\geq n}\left\vert z_k \right\vert.
+  \end{align*}
+  Since $c_0 \supseteq c_c$, we have
+  \begin{align*}
+    \dist_{c_0}(z) &\leq \dist_{c_c}(z)\\
+                   &\leq \inf_{n\geq 1}\left(\sup_{k\geq n}\left\vert z_k \right\vert\right)\\
+                   &= \limsup_{k\rightarrow\infty}\left\vert z_k \right\vert.
+  \end{align*}
+  Now, we show that $\limsup_{k\rightarrow\infty}\left\vert z_k \right\vert \leq \dist_{c_c}\left(z\right)$. Given $\ve > 0$, there exists $w\in c_c$ such that
+  \begin{align*}
+    \norm{z-w} < \dist_{c_c}(z) + \ve.
+  \end{align*}
+  Additionally, for $w$ that terminates at $n-1$ (i.e., is equal to $0$ for all $k\geq n$), we have
+  \begin{align*}
+    \sup_{k\geq n}\left\vert z_k-w_k \right\vert &\leq \sup_{k\in \N}\left\vert z_k - w_k \right\vert,
+  \end{align*}
+  meaning
+  \begin{align*}
+    \limsup_{k\rightarrow\infty}\left\vert z_k \right\vert &= \inf_{n\geq 1}\left(\sup_{k\geq n}\left\vert z_k \right\vert\right)\\
+                                                         &\leq \sup_{k\geq n}\left\vert z_k - w_k \right\vert\\
+                                                         &\leq \sup_{k\in \N}\left\vert z_k - w_k \right\vert\\
+                                                         &= \norm{z-w}\\
+                                                         &< \dist_{c_c}(z) + \ve,
+  \end{align*}
+  implying that
+  \begin{align*}
+    \limsup_{k\rightarrow\infty}\left\vert z_k \right\vert &= \dist_{c_c}(z).
+  \end{align*}
+  For $\ve > 0$, let $w\in c_0$ be such that
+  \begin{align*}
+    \norm{z-w} &< \dist_{c_0}\left(z\right) + \ve/2.
+  \end{align*}
+  Additionally, let $\lambda \in c_c$ such that $\norm{\lambda - w} < \ve/2$. Then, we have
+  \begin{align*}
+    \dist_{c_0}\left(z\right) + \ve &> \norm{z-\lambda} + \norm{\lambda - w}\\
+                                    &\geq \dist_{c_c}\left(z\right) + \ve/2\\
+                                    &\geq \limsup_{k\rightarrow\infty}\left\vert z_k \right\vert.
+  \end{align*}
+  Thus, $\limsup_{k\rightarrow\infty}\left\vert z_k \right\vert \leq \dist_{c_0}\left(z\right)$, meaning $\limsup_{k\rightarrow\infty}\left\vert z_k \right\vert = \dist_{c_0}\left(z\right)$.
 \end{solution}
 \subsection{Bounded Linear Operators}%
 \begin{definition}[Continuous Functions]
@@ -559,4 +607,297 @@ For a linear map $T: X\rightarrow Y$, the following are equivalent:
     \item $T$ is a $1$-quotient map if and only if $\overline{T}: X/\ker(T) \rightarrow Y$ is an isometric isomorphism.
   \end{enumerate}
 \end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Let $\overline{T}: X/\ker(T)\rightarrow Y$ be a bicontinuous isomorphism. Since $\overline{T}$ is bicontinuous, it is a homeomorphism, meaning it is open and surjective. Since $\pi$ is a quotient map, so too is $T: \overline{T}\circ \pi$.\newline
+
+      Suppose $T$ is a quotient map. Then, $T$ is surjective, meaning $\overline{T}$ is an isomorphism. Since $T$ is bounded below, $\overline{T}$ is also bounded. Let $\pi(x) = x + \ker(T)\in X/\ker(T)$, with $T(x) = y$. Let $M$ be such that $\norm{x}\leq M\norm{y}$. There is an $x'\in X$ with $T\left(x'\right) = y$, and $\norm{x'}\leq M\norm{y}$. Thus, $x-x'\in \ker(T)$, so $\pi(x) = \pi\left(x'\right)$, meaning
+      \begin{align*}
+        \norm{\overline{T}\circ \pi (x)} &= \norm{T\circ \pi\left(x'\right)}\\
+                                         &= \norm{y}\\
+                                         &\geq M^{-1}\norm{x'}\\
+                                         &\geq M^{-1}\norm{\pi\left(x'\right)}\\
+                                         &= M^{-1}\norm{\pi\left(x\right)},
+      \end{align*}
+      meaning $T$ is bounded below.
+    \item Suppose $\overline{T}:X/\ker(T) \rightarrow Y$ is an isometric isomorphism. Then, $\overline{T}$ is a $1$-quotient map, and since $\pi$ is a $1$-quotient map, so too is $T = \overline{T}\circ \pi$.\newline
+
+      Suppose $T$ is a $1$-quotient map. Since $T$ is surjective, $\overline{T}$ is an isomorphism. Since $T$ is a $1$-quotient map, $\norm{T} = \sup_{x\in U_X}\norm{T(x)}\leq 1$, meaning $\norm{\overline{T}}\leq \norm{T} \leq 1$. Consider $S = \left(\overline{T}\right)^{-1}: Y\rightarrow X/\ker(T)$; $S$ is also an isomorphism, so $S\circ \overline{T} = = \id_{X/\ker(T)}$. We will now show $S$ is a contraction, meaning $\overline{T}$ is an isometry.\newline
+
+      Let $y\in U_Y$. Since $T$ is a $1$-quotient map, there exists $x\in U_X$ such that $T(x) = y$. Then, $\overline{T}\left(x + \ker(T)\right) = T(x) = y$, meaning $S(y) = x + \ker(T)$, and
+      \begin{align*}
+        \norm{S(y)} &= \norm{x + \ker(T)}\\
+                    &\leq \norm{x}\\
+                    &\leq 1,
+      \end{align*}
+      meaning $\norm{S} \leq 1$.
+  \end{enumerate}
+\end{proof}
+\begin{proposition}
+  Every separable Banach space is isometrically isomorphic to a quotient of $\ell_1$.
+\end{proposition}
+\begin{proof}
+  Let $X$ be a separable Banach space. Since $X$ is separable, so too is $S_{X}$. Let $\left(z_n\right)_n$ be norm-dense in $S_X$, and define
+  \begin{align*}
+    T: \ell_1\rightarrow X\\
+    \left(\lambda_n\right)_n \rightarrow \sum_{n=1}^{\infty}\lambda_nz_n.
+  \end{align*}
+  This series converges absolutely:
+  \begin{align*}
+    \sum_{n=1}^{\infty}\norm{\lambda_nz_n} &= \sum_{n=1}^{\infty}\left\vert \lambda_n \right\vert\\
+                                           &<\infty,
+  \end{align*}
+  so this series converges in $X$. We can also see that $T$ is linear; additionally, $T$ is a contraction:
+  \begin{align*}
+    \norm{T\left(\left(\lambda_n\right)_n\right)} &= \norm{\sum_{n=1}^{\infty}\lambda_nz_n}\\
+                                                  &= \lim_{N\rightarrow\infty}\norm{\sum_{n=1}^{N}\lambda_nz_n}\\
+                                                  &\leq \lim_{N\rightarrow\infty}\sum_{n=1}^{N}\norm{\lambda_nz_n}\\
+                                                  &= \lim_{N\rightarrow\infty}\sum_{n=1}^{N}\left\vert \lambda_n \right\vert\\
+                                                  &= \norm{\left(\lambda_n\right)_n}.
+  \end{align*}
+  Thus, $T\left(U_{\ell_1}\right) \subseteq U_X$. To show that $T\left(U_{\ell}\right) = U_X$, we will use the following fact (which follows from the density of $z_n$).
+  \begin{fact}
+    For $\delta > 0$ and $x\neq 0$ in $X$, and $k\in \N$, there exists $n > k$ such that
+    \begin{align*}
+      \norm{\frac{x}{\norm{x}} - z_n} &< \frac{\delta}{\norm{x}}\\
+      \norm{x - \left(\norm{x}\right)z_n} &< \delta
+    \end{align*}
+  \end{fact}
+  Let $x\in U_X$ with $x \neq 0$, and let $\ve > 0$. Find $n_1$ such that
+  \begin{align*}
+    \norm{x - \left(\norm{x}\right)z_{n_1}} < \frac{\ve}{2},
+  \end{align*}
+  and set $\lambda_{n_1} = \norm{x}$.\newline
+
+  We find $n_{2}$ with $n_2 > n_1$ and
+  \begin{align*}
+    \norm{\left(x - \lambda_{n_1}z_{n_1}\right) - \left(\norm{x-\lambda_{n_1}z_{n_1}}\right)z_{n_2}} < \frac{\ve}{2^2},
+  \end{align*}
+  and set $\lambda_{n_2} = \norm{x - \lambda_{n_1}z_{n_1}}$. We have
+  \begin{align*}
+    \norm{x - \left(\lambda_{n_1}z_{n_1} + \lambda_{n_2}z_{n_2}\right)} < \frac{\ve}{2^2},
+  \end{align*}
+  and $\lambda_{n_2} < \frac{\ve}{2}$.\newline
+
+  Inductively, we obtain the subsequence $\left(z_{n_k}\right)_k$ in $z_n$ and a sequence of scalars $\left(\lambda_{n_k}\right)_{k}$ such that
+  \begin{align*}
+    \norm{x - \sum_{j=1}^{k}\lambda_{n_j}z_{n_j}} < \frac{\ve}{2^k}
+  \end{align*}
+  and
+  \begin{align*}
+    \norm{\lambda_{n_k}} < \frac{\ve}{2^{k-1}}.
+  \end{align*}
+  Let $\lambda = \left(\lambda_{1},\lambda_2,\dots\right)$ with $\lambda_{i} = 0$ for $i\notin \set{n_1,n_2,\dots}$. We can see that
+  \begin{align*}
+    \norm{\lambda_{n_1}} &= \norm{\lambda_{n_1} + \sum_{k=2}^{\infty}\lambda_{n_k}}\\
+                         &\leq \norm{x} + \sum_{k=2}^{\infty}\frac{\ve}{2^{k-1}}\\
+                         &= \norm{x} + \ve.
+  \end{align*}
+  We choose $\ve$ such that $\norm{x} + \ve < 1$, meaning $\lambda \in U_{\ell_1}$.\newline
+
+  We can also see that $\sum_{j=1}^{\infty}\lambda_{n_j}z_{n_j} = x$, meaning $T$ is a $1$-quotient map.
+\end{proof}
+\section{Pillars of Functional Analysis}%
+The five main theorems of functional analysis are:
+\begin{itemize}
+  \item Baire Category Theorem;
+  \item Open Mapping Theorem (and Bounded Inverse Theorem);
+  \item Closed Graph Theorem;
+  \item Uniform Boundedness Principle;
+  \item and the Hahn Banach Theorems:
+    \begin{itemize}
+      \item Hahn--Banach--Minkowski Theorem;
+      \item Hahn--Banach Extension Theorem;
+      \item Hahn--Banach Separation Theorem.
+    \end{itemize}
+\end{itemize}
+These theorems will appear time and again as we work through the fundamentals of functional analysis.
+\subsection{Baire Category Theorem}%
+\begin{definition}[Baire Space]
+  Let $\set{A_n}_{n\geq 1}$ be a countable collection of open, dense subsets of a topological space $X$. We say $X$ is a Baire space if
+  \begin{align*}
+    \bigcap_{n\geq 1}A_n
+  \end{align*}
+  is dense for every such collection.
+\end{definition}
+\begin{definition}[Meager Set]
+  If $X = \bigcup_{n\geq 1}F_n$, where $\left(\overline{F_n}\right)^{\circ} = \emptyset$ for each $n$, then we say $X$ is meager.\footnote{In other words, $X$ is meager if $X$ is a countable union of nowhere dense subsets.}
+\end{definition}
+\begin{proposition}[Meager Spaces]
+  If $X$ is a Baire space, then $X$ is nonmeager.
+\end{proposition}
+\begin{proof}
+  Suppose toward contradiction that $X = \bigcup_{n\geq 1}F_n$, with $F_n$ all nowhere dense. Then,
+  \begin{align*}
+    X &= \bigcup_{n\geq 1}C_n,
+  \end{align*}
+  where $C_n = \overline{F_n}$ are closed with $C_n^{\circ} = \emptyset$.\newline
+
+  Let $A_n = C_n^{c}$. Then, $A_n$ is open for all $n$, and $\overline{A_n} = \overline{C_n^{c}} = \left(C_n^{c}\right)^{\circ} = X$, meaning $A_n$ are all open and dense.\newline
+
+  Since $X$ is a Baire space, we know that $\bigcap_{n\geq 1}A_n $ is dense. However, we also have
+  \begin{align*}
+    \emptyset &= X^{c}\\
+              &= \left(\bigcup_{n\geq 1}C_n\right)^{c}\\
+              &= \bigcap_{n\geq 1}C_n^{c}\\
+              &= \bigcap_{n\geq 1}A_n.
+  \end{align*}
+\end{proof}
+\begin{theorem}[Baire Category Theorem]
+  If $(X,d)$ is a complete metric space, then $X$ is a Baire space.
+\end{theorem}
+\begin{proof}
+  Let $\set{A_n}_{n\geq 1}$ be a collection of open dense subsets of $X$. Let $U_0$ be any ball of radius $r > 0$, and set $B_0 = \overline{U_0}$. Since $A_1\cap U_0$ is open and nonempty, it contains a closed ball $B_1$ with radius less than $r/2$.\newline
+
+  Set $U_1 = B_1^{\circ}$. Similarly, we find a closed ball $B_2$ with radius less than $r/4$ such that $B_2\subseteq A_2\cap U_1$, and set $U_2 = B_2^{\circ}$.\newline
+
+  Continuing in this manner, we find a closed ball $B_n$ with radius less than $r/2^n$ with $B_n \subseteq A_n\cap U_{n-1}$, and the chain
+  \begin{align*}
+    B_0\supseteq U_0\supseteq B_1\supseteq U_1\supseteq B_2\supseteq U_2\supseteq \cdots.
+  \end{align*}
+  Letting $\left(x_n\right)_n$ be the center of $B_n$, we can see that $x_n$ forms a Cauchy sequence in $X$, as the distance between $x_m$ and $x_n$ with $n > m$ is no more than $\frac{r}{2^{m-1}}$.\newline
+
+  Since $X$ is complete, $\left(x_n\right)_n\rightarrow x\in X$. We claim that $x$ belongs to $\bigcap_{n\geq 1}B_n$.\newline
+
+  Suppose toward contradiction that $x\notin B_{N}$ for some $N\in \N$. For $n\geq N$, we have $x\notin B_n$, so $d\left(x_n,x\right) \geq \dist_{B_n}(x) > 0$, which contradicts the fact that $\left(x_n\right)_n\rightarrow x$.\newline
+  
+  Thus, $x\in \bigcap_{n\geq 1}B_n\subseteq \bigcap_{n\geq 1}A_n$. Since $\bigcap_{n\geq 1}B_n\subseteq U_0$, we have $\left(\bigcap_{n\geq 1}A_n\right)\cap U_0 \neq \emptyset$, meaning $\bigcap_{n\geq 1}A_n$ is dense in $X$.
+\end{proof}
+\begin{corollary}
+  Let $X$ be an infinite-dimensional Banach space. The cardinality of the Hamel basis of $X$ is uncountable.
+\end{corollary}
+\begin{proof}
+  Suppose toward contradiction that $\set{b_k}_{k\in \N}$ is a Hamel basis for $X$. For each $n$, set $E_n = \Span\set{b_1,\dots,b_n}$. Each $E_n$ is closed, meaning $\overline{E_n} = E_n \neq X$ since $X$ is infinite-dimensional.\newline
+
+  Additionally, $E_n^{\circ} = \emptyset$ for each $n$, meaning the $E_n$ are nowhere dense.\newline
+
+  Since $\set{b_k}_{k\in \N}$ is a spanning set,
+  \begin{align*}
+    X &= \bigcup_{n\geq 1}E_n,
+  \end{align*}
+  implying that $X$ is meager.
+\end{proof}
+\begin{exercise}
+  Let $X$ be a Banach space, and $Z\subseteq X$ a subspace. Is it true that $\Dim\left(Z\right) = \Dim\left(\overline{Z}\right)$?
+\end{exercise}
+\begin{solution}
+  It is not the case that $\Dim\left(Z\right) = \Dim\left(\overline{Z}\right)$. For example, consider the subspace $c_c\subseteq \ell_{\infty}$. Then, the Hamel basis of $c_c$ consists of $e_n$, which consists of $1$ at index $n$ and zero elsewhere, implying that $\dim\left(c_c\right) = \aleph_{0}$. However, $\overline{c_c} = c_0$, and $c_0$ is an infinite-dimensional Banach space, meaning that $\dim\left(\overline{c_c}\right) = 2^{\aleph_0}\neq \aleph_{0}$.
+\end{solution}
+\subsection{Open Mapping Theorem}%
+A surjective continuous map between topological spaces is not necessarily an open map --- however, if $X$ and $Y$ are Banach spaces, and $f:X\rightarrow Y$ is a surjective linear map. This is the Open Mapping theorem, which yields the result that a continuous linear bijection between Banach spaces always admits a bounded inverse.
+  \begin{lemma}
+    Let $X$ and $Y$ be Banach spaces, and suppose $T\in \mathcal{B}\left(X,Y\right)$. 
+    \begin{enumerate}[(1)]
+      \item If $U_Y \subseteq \overline{T\left(\delta U_X\right)}$ for some $\delta > 0$, then $U_Y\subseteq T\left(2\delta U_X\right)$.
+      \item If $\delta U_Y\subseteq \overline{T\left(U_X\right)}$ for some $\delta > 0$, then $\frac{\delta}{2}U_Y\subseteq T\left(U_X\right)$.
+    \end{enumerate}
+  \end{lemma}
+  \begin{proof}\hfill
+    \begin{enumerate}[(1)]
+      \item Let $y\in U_Y$. By our assumption, there exists $x_1\in \delta U_X$ such that $\norm{y - T\left(x_1\right)} < 1/2$. Additionally,
+        \begin{align*}
+          y - T\left(x_1\right) &\in \frac{1}{2}U_Y\\
+                                &\subseteq \frac{1}{2}\overline{T\left(\delta U_X\right)}\\
+                                &= \overline{T\left(\frac{\delta}{2}U_X\right)}.
+        \end{align*}
+        Thus, there exists $x_2\in \frac{\delta}{2}U_X$ such that $\norm{\left(y-T\left(x_1\right)\right)-T\left(x_2\right)} < \frac{1}{4}$, implying that
+        \begin{align*}
+          y - T\left(x_1\right) -T\left(x_2\right) &\in \frac{1}{4}U_Y\\
+                                                   &\subseteq \overline{T\left(\frac{\delta}{4}U_X\right)}.
+        \end{align*}
+        Inductively, we have a sequence $\left(x_k\right)_k\in \frac{\delta}{2^{k-1}}U_X$ for each $k$, and
+        \begin{align*}
+          \norm{y - \sum_{j=1}^{k}T\left(x_j\right)} < 2^{-k}.
+        \end{align*}
+        We consider $\sum_{j=1}^{\infty}x_j$. Since
+        \begin{align*}
+          \sum_{j=1}^{\infty}\norm{x_j} &\leq \sum_{j=1}^{\infty}\frac{\delta}{2^{j-1}}\\
+                                        &= 2\delta\\
+                                        &< \infty,
+        \end{align*}
+        the series converges to $x\in X$ since $X$ is complete.\newline
+
+        Additionally, since $\norm{x}\leq \sum_{j=1}^{\infty}\norm{x_j} \leq 2\delta$, we have $x\in 2\delta U_X$, and $T\left(x\right) = y$ by the continuity of $T$.
+      \item If $\delta U_y\subseteq \overline{T\left(U_X\right)}$, then $U_Y\subseteq \frac{1}{\delta}\overline{T\left(U_X\right)}$, so $U_Y\subseteq \overline{T\left(\frac{1}{\delta}U_X\right)}$, meaning $U_Y\subseteq T\left(\frac{2}{\delta}U_X\right)$, or $\frac{\delta}{2}U_Y\subseteq T\left(U_X\right)$.
+    \end{enumerate}
+  \end{proof}
+  \begin{theorem}[Open Mapping Theorem]
+    Let $X$ and $Y$ be Banach spaces, $T\in \mathcal{B}\left(X,Y\right)$ surjective. Then, $T$ is open and thus a quotient mapping.
+  \end{theorem}
+  \begin{proof}
+    We will show that $\delta U_Y\subseteq T\left(U_X\right)$ for some $\delta > 0$. This is enough to show that $T$ is a quotient mapping.\newline
+
+    We can write
+    \begin{align*}
+      X &= n\bigcup_{n\geq 1}U_X\\
+      Y &= T\left(X\right)\\
+        &= \bigcup_{n\geq 1}T\left(nU_X\right)
+    \end{align*}
+    since $T$ is onto. Since $Y$ is nonmeager, there is an $m \geq 1$ such that $\overline{T\left(mU_X\right)}^{\circ} \neq \emptyset$. There exists $y_0\in Y$ and $\ve > 0$ such that $U_Y\left(y_0,\ve\right) \subseteq \overline{T\left(mU_X\right)}$. We claim that
+    \begin{align*}
+      \ve U_Y &= U_Y\left(0,\ve\right)\\
+              &\subseteq T\left(mU_X\right).
+    \end{align*}
+    Let $z\in \ve U_Y$. Note that $y_0 + z$ and $y_0 - z$ are in $U_Y\left(y_0,\ve\right)$, and
+    \begin{align*}
+      2z &= \left(y_0 + z\right) - \left(y_0 - z\right)\\
+         &\in \overline{T\left(mU_X\right)} - \overline{T\left(mU_X\right)}.
+    \end{align*}
+    We write $2z = z_1 - z_2$, with $z_1,z_2\in \overline{T\left(mU_X\right)}$. We can find sequences $\left(T\left(x_k\right)\right)_k$ and $\left(T\left(x'_k\right)\right)_k$ with $\left(T\left(x_k\right)\right)_k\rightarrow z_1$ and $\left(T\left(x_k'\right)\right)_k\rightarrow z_2$. Thus, we have
+    \begin{align*}
+      2z &= \lim_{k\rightarrow\infty}\left(T\left(x_k\right) - T\left(x'_k\right)\right)\\
+         &= \lim_{k\rightarrow\infty}T\left(x_k -x_k'\right),
+    \end{align*}
+    where $\norm{x_k - x_k'} \leq 2m$. Thus, $2x\in \overline{T\left(mU_X\right)} = 2\overline{T\left(mU_X\right)}$, so $z\in \overline{T\left(mU_X\right)}$.\newline
+
+    We now have
+    \begin{align*}
+      \frac{\ve}{m}U_Y\subseteq \overline{T\left(U_X\right)},
+    \end{align*}
+    so
+    \begin{align*}
+      \frac{\ve}{2m}U_Y\subseteq T\left(U_X\right).
+    \end{align*}
+    Setting $\delta = \frac{\ve}{2m}$, we finish the proof.
+  \end{proof}
+  If $T: X\rightarrow Y$ is bijective linear, then $T^{-1}:Y\rightarrow X$ is linear. If $X = Y$, we say $T$ is invertible in the unital algebra $\mathcal{L}\left(X\right)$. However, if $X$ and $Y$ are normed vector spaces, we also have to be concerned with the continuity of $T^{-1}$.
+  \begin{corollary}[Bounded Inverse Theorem]
+    Let $X$ and $Y$ be Banach spaces, $T: X\rightarrow Y$ is linear, bounded, and bijective. Then, $T^{-1}: Y\rightarrow X$ is also bounded.
+  \end{corollary}
+  \begin{proof}
+    Since $T$ is surjective, $T$ is open, so $T^{-1}$ is continuous.
+  \end{proof}
+  \begin{example}
+    Consider the normed space $Y = \left(C\left([0,1]\right),\norm{\cdot}_1\right)$. To show that $Y$ is not complete, we let $X = \left(C\left([0,1]\right),\norm{\cdot}_{u}\right)$, which we know is complete.\newline
+
+    The identity function from $X$ to $Y$ is bijective and bounded linear since $\norm{\cdot}_{1}\leq \norm{\cdot}_u$. If $Y$ were to be complete, then it would imply that the inverse map is bounded. However, since there is no $C$ such that $\norm{\cdot}_u\leq C\norm{\cdot}_1$, it is not the case that $Y$ is complete.
+  \end{example}
+  \begin{definition}
+    Let $X$ and $Y$ be normed spaces. A bounded linear map $T\in \mathcal{B}\left(X,Y\right)$ is called invertible if there is a bounded linear map $S\in \mathcal{B}\left(Y,X\right)$ with $T\circ S = \id_Y$ and $S\circ T = \id_X$. We write $T^{-1} = S$.
+  \end{definition}
+  \begin{corollary}
+    Let $T\in \mathcal{B}\left(X,Y\right)$ with $X$ and $Y$ Banach spaces. The following are equivalent.
+    \begin{enumerate}[(i)]
+      \item $T$ is bounded below.
+      \item $T$ is injective and $\Ran(T)\subseteq Y$ is closed.
+      \item $T: X\rightarrow \Ran(T)$ is a bicontinuous isomorphism.
+    \end{enumerate}
+  \end{corollary}
+  \begin{proof}
+    For (i) to (ii), if $T$ is bounded below, then $\ker T = \set{0}$, so $T$ is injective. Additionally, since $T$ is bounded below, if $\left(T\left(x_n\right)\right)_n$ is a Cauchy sequence in $\Ran(T)$, then
+    \begin{align*}
+      C\norm{x_n - x_m} &\leq \norm{T\left(x_n - x_m\right)}\\
+                        &= \norm{T\left(x_n\right) - T\left(x_m\right)},
+    \end{align*}
+    meaning $\left(x_n\right)_n$ is a Cauchy sequence in $X$. Since $T$ is continuous, $\left(T\left(x_n\right)\right)_n \rightarrow T(x)\in \Ran(T)$.\newline
+
+    For (ii) to (i), since $Y$ is complete and $\Ran(T)\subseteq Y$ is closed, $\Ran(T)$ is a Banach space, so $T^{-1}:\Ran(T) \rightarrow X$ is bounded. Thus,
+    \begin{align*}
+      \norm{x} &= \norm{T^{-1}\left(T(x)\right)}\\
+               &\leq \norm{T^{-1}}_{\text{op}}\norm{T(x)},
+    \end{align*}
+    meaning $\norm{T(x)}\geq \norm{T^{-1}}_{\text{op}}^{-1}\norm{x}$ for all $x\in X$.\newline
+
+    To show that (ii) is true if and only if (iii) is true, we can see that since $T$ is bounded and $T$ is bounded below, it is the case that $T$ is a bicontinuous isomorphism.
+  \end{proof}
 \end{document}

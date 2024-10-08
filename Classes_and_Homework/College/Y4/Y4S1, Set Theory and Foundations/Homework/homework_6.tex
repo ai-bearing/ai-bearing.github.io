@@ -1,0 +1,91 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Set Theory and Foundations: Homework 6}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Problem 4}%
+\begin{problem}
+  Let $\sim$ be a relation on $\N\times \N$ under the lexicographical order. We say $(a,b)$ is a child of $(c,d)$ if $(a,b)\sim (c,d)$ and $(a,b) \prec (c,d)$, where $\prec$ is the lexicographical order.\newline
+
+  We have two definitions for ``descendant'' below. Which one is the correct one?
+  \begin{enumerate}[(1)]
+    \item We say $(a,b)$ is a descendant of $(c,d)$ if $(a,b)$ is a child of $(c,d)$ or $(a,b)$ is a descendant of a child of $(c,d)$.
+    \item We say $(a,b)$ is a descendant of $(c,d)$ if $(a,b)$ is a child of $(c,d)$ or $(a,b)$ is a child of a descendant of $(c,d)$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}
+  Definition (1) is the correct definition. We let
+  \begin{align*}
+    C\left((m,n)\right) = \set{(a,b)\mid (a,b)\text{ is a child of }(m,n)}.
+  \end{align*}
+  Define
+  \begin{align*}
+    D: \N\times \N\times P\left(\N\times \N\right),
+    D\left(\left(m,n\right)\right) &= C\left((m,n)\right) \cup \bigcup_{\left((a,b)\right)\in C\left(\left(m,n\right)\right)} D\left(\left(a,b\right)\right)\label{eq:eqn4}\tag{\textasteriskcentered}
+  \end{align*}
+  We want to show that there exists a unique function $D$ that satisfies condition (\ref{eq:eqn4}).\newline
+
+  If this is not the case, pick the smallest $(m,n)$ for which there is no such $D$. So, for every $(a,b)\in C(m,n)$, $D(a,b)$ is defined and satisfies (\ref{eq:eqn4}).\newline
+
+  Define 
+  \begin{align*}
+    D(m,n) = C\left(m,n\right)\cup \bigcup_{\left(a,b\right)\in C\left(\left(m,n\right)\right)} D\left((a,b)\right).
+  \end{align*}
+\end{solution}
+\section{Problem 5}%
+\begin{problem}
+  Let $S$ be well-ordered by $\prec$. Then, for every $x\in S$, if $x$ is non-maximal, then $x$ has a successor. The successor is defined by
+  \begin{align*}
+    \exists y\succ x\text{ s.t. }\lnot\exists z~x \prec z \prec y.
+  \end{align*}
+\end{problem}
+\begin{solution}
+  Let $x\in S$ be nomaximal. Set
+  \begin{align*}
+    T &= \set{y\in S\mid x\prec y}.
+  \end{align*}
+  Since $x$ is nonmaximal, $T$ is nonempty, meaning there exists a least element $z$. Then, $z$ is a successor of $x$, because for all $y$, $x\prec y$, then $y\in T$, meaning $y=z$ or $z \prec y$, since $z$ is the least element of $T$.
+\end{solution}
+\section{Problem 6}%
+\begin{problem}
+  Every $S\subseteq \R$ well-ordered by the traditional $<$ relation is countable.
+\end{problem}
+\begin{solution}
+  Let $S\subseteq \R$ be well-ordered. It is enough to show that $S\cap [z,z+1]$ is countable for every $z\in \Z$, as
+  \begin{align*}
+    S &= \bigcup_{z\in \Z}S\cap \left[z,z+1\right]
+  \end{align*}
+  is a countable union of countable sets.\newline
+
+  For every $x\in S$, let $f(x) = x^{+} - x$, where $x^{+}$ is the successor of $x$ in $S$. If $x$ has no successor, we let $f(x) = 0$.\newline
+
+  It is enough to show that $S_0 = S\cap [0,1]$ is countable. We have $S_0$ is well-ordered.\newline
+
+  For every $k\in \Z_{>0}$, define
+  \begin{align*}
+    A_k &= \set{x\in S_0\mid f(x) > \frac{1}{k}}.
+  \end{align*}
+  Notice that $\left\vert A_k \right\vert \leq k$ for all $k$, since $S$ is well-ordered by $<$.
+\end{solution}
+\begin{remark}[``Converse'' to Problem 6]
+  The previous problem states that we cannot embed an uncountable well-ordered set into $\R$. Here, an embedding means that there is a function $f: S\rightarrow \R$ such that $f$ is injective and $f$ preserves order. In other words, $S$ and $f(S)\subseteq \R$ are order-isomorphic.\newline
+
+  A question we may be interested in is if every countable ordinal can be embedded into $\R$.
+\end{remark}
+\end{document}
