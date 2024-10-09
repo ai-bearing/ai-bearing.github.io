@@ -2749,7 +2749,7 @@ Notice that the divergence of a curl is zero, so we can see that $\nabla \cdot \
 
   Note that this means $\mathbf{A}$ it not unique. In particular, for any $\mathbf{A}$, we can add any gradient field $\nabla \chi$, since $\nabla \times \nabla \chi = 0$.
 \end{example}
-\subsection{Divergence Theorem, Stokes's Theorem, and the Fundamental Theorem of Line Integrals}%
+\subsection{Calculating Flux Integrals with Boundary Geometry}%
 \begin{table}
   \renewcommand{\arraystretch}{2}
   \centering
@@ -2761,7 +2761,9 @@ Notice that the divergence of a curl is zero, so we can see that $\nabla \cdot \
     Divergence Theorem, Curls & $\displaystyle \int_{V}^{} \nabla \times \mathbf{E}\:d\tau = \oint_{\partial V}^{} \:d\mathbf{a}\times \mathbf{E}$\\
     \hline
     Green's Theorem & $\displaystyle \int_{C}^{} \mathbf{B}\cdot d\vec{\ell} = \int_{S}^{} \left(\pd{B_y}{x} - \pd{B_x}{y}\right)\:dxdy$\\
-    Stokes's Theorem & $\displaystyle \int_{S}^{} \nabla \times \mathbf{B}\:d\mathbf{a} = \int_{\partial S}^{} \mathbf{B}\cdot d\vec{\ell}$
+    Stokes's Theorem & $\displaystyle \int_{S}^{} \nabla \times \mathbf{B}\:d\mathbf{a} = \int_{\partial S}^{} \mathbf{B}\cdot d\vec{\ell}$\\
+    Stokes's Theorem, Gradients & $\displaystyle \oint_{C}\Phi d\vec{\ell} = \int_{S}d\mathbf{a}\times \nabla \Phi$\\
+    Stokes's Theorem, Curls & $\displaystyle \oint_{C}d\vec{\ell}\times \mathbf{E} = \int_{S}\left(d\mathbf{a}\times \nabla\right)\times \mathbf{E}$
   \end{tabular}
   \caption{Generalized Stokes's Theorem}
 \end{table}
@@ -2982,4 +2984,174 @@ With this in mind, we can move to three dimensions using the curl, yielding Stok
                                               &= -\pi R^2.
   \end{align*}
 \end{example}
+\subsection{The Fundamental Theorem of Calculus, Revisited}%
+The fundamental theorem of calculus says
+\begin{align*}
+  f\left(P_2\right) - f\left(P_1\right) &= \int_{C}\nabla F \cdot d\vec{\ell},
+\end{align*}
+which expresses the accumulation of $\nabla f \cdot d\vec{\ell}$ along the one-dimensional curve $C$ via its expression over the (zero-dimensional) boundary. Similarly, the divergence theorem says
+\begin{align*}
+  \oint_{S}\mathbf{E}\cdot d\mathbf{a} &= \int_{V}\nabla \cdot \mathbf{E}\:d\tau,
+\end{align*}
+which expresses the accumulation of $\nabla \cdot \mathbf{E}\:d\tau$ over the three-dimensional volume via its expression over the two-dimensional boundary. Similarly,
+\begin{align*}
+  \oint_{C}\mathbf{B}\cdot d\vec{\ell} &= \int_{S}\left(\nabla \times \mathbf{B}\right)\cdot d\mathbf{a}
+\end{align*}
+expresses the accumulation of $\left(\nabla \times \mathbf{B}\right)\cdot d\mathbf{a}$ over the two-dimensional surface via its expression on the one-dimensional boundary $C$.
+\begin{example}[Integration By Parts]
+  Recall that integration by parts is the inverse of the product rule
+  \begin{align*}
+    \diff{}{x}\left(f(x)g(x)\right) &= \diff{f}{x}g + f\diff{g}{x},
+  \end{align*}
+  meaning
+  \begin{align*}
+    \int_{a}^{b} f(x)\diff{g}{x}\:dx &= f(x)g(x)\bigr\vert_{a}^{b} - \int_{a}^{b} \diff{f}{x}g(x)\:dx.
+  \end{align*}
+  However, we can do this for higher dimensions too, since the fundamental theorem of calculus still holds.
+  \begin{align*}
+    \nabla \cdot \left(f\mathbf{E}\right) &= f\left(\nabla \cdot \mathbf{E}\right) + \left(\nabla f\right)\cdot \mathbf{E},
+  \end{align*}
+  meaning
+  \begin{align*}
+    \int_{V} f\left(\nabla \cdot \mathbf{E}\right)\:d\tau &= \oint_{S}f\mathbf{E}\cdot d\mathbf{a} - \int_{V}\left(\nabla f\right)\cdot \mathbf{E}\:d\tau,
+  \end{align*}
+  which yields a boundary term.\newline
+
+  Similarly,
+  \begin{align*}
+    \nabla\times \left(f\mathbf{B}\right) &= f\left(\nabla \times \mathbf{B}\right) + \left(\nabla f\right)\times \mathbf{B},
+  \end{align*}
+  meaning
+  \begin{align*}
+    \int_{S}f\left(\nabla \times \mathbf{B}\right)\cdot d\mathbf{a} &= \oint_{C}f\mathbf{B}\cdot d\vec{\ell} - \int_{S}^{} \left(\left(\nabla f\right)\cdot \mathbf{B}\right)\cdot d\mathbf{a}.
+  \end{align*}
+\end{example}
+\begin{example}[Boundary of the Boundary]
+The fundamental theorem of calculus for an arbitrary field $f$ in relation to its infinitesimal change $df$ integrated over $\Omega$ can be expressed by the generalized Stokes's theorem (which is the fundamental theorem of calculus):
+\begin{align*}
+  \int_{\partial \Omega}f &= \int_{\Omega}df.
+\end{align*}
+When we take the integral of the second derivative, we get
+\begin{align*}
+  \int_{\Omega}d^2f &= \int_{\partial \Omega}df\\
+                    &= \int_{\partial^2\Omega}f.
+                    \intertext{Since there is no boundary of a boundary, this means the integral is}
+                    &= 0.
+\end{align*}
+Consider a field $\mathbf{E} = \nabla \Phi$. Using generalized Stokes's theorem
+\begin{align*}
+  \int_{S} \left(\nabla \times \mathbf{E}\right)\cdot \mathbf{a} &= \int_{S}\nabla \times \left(\nabla\Phi\right)\cdot d\mathbf{a}\\
+                                                                 &= \oint_{C}\nabla \Phi\cdot d\vec{\ell}\\
+                                                                 &= \Phi\left(P_2\right) - \Phi\left(P_1\right)\\
+                                                                 &= 0.
+\end{align*}
+Similarly, for $\mathbf{B} = \nabla \times \mathbf{A}$, using the generalized Stokes theorem, we get
+\begin{align*}
+  \int_{V}^{} \nabla \times \mathbf{B}\:d\tau &= \int_{V} \nabla \times \left(\nabla \times \mathbf{B}\right)\:d\tau\\
+                                              &= \oint_{S}\left(\nabla \times \mathbf{A}\right)\cdot d\mathbf{a}\\
+                                              &= \oint_{C}\mathbf{A}\cdot d\vec{\ell}\\
+                                              &= 0.
+\end{align*}
+Since these hold for \textit{any} arbitrary region in $\R^3$, we get the previously shown results that
+\begin{align*}
+  \nabla \times \nabla \Phi &= 0\\
+  \nabla \cdot \left(\nabla \times \mathbf{A}\right) &= 0.
+\end{align*}
+\end{example}
+\subsection{Helmholtz Decomposition}%
+In electrostatics, we have
+\begin{align*}
+  \Phi\left(\mathbf{r}\right) &= \int_{}^{} \frac{\rho\left(\mathbf{x}\right)}{\left\vert\mathbf{r} - \mathbf{x}\right\vert}\:d^3x\\
+  \mathbf{E} &= -\nabla\Phi.
+\end{align*}
+However, this integral is hard to calculate,\footnote{Citation needed.} so we focus on trying to find the behavior of the field.\newline
+
+The Helmholtz decomposition basically tells us that, if the field goes to zero ``fast enough,'' then we can reconstruct the field from the divergence and the curl.\newline
+
+We start with a generic field,
+\begin{align*}
+  \mathbf{F}\left(\mathbf{r}\right) &= \int_{V}\mathbf{F}\left(\mathbf{x}\right)\delta\left(\mathbf{r} - \mathbf{x}\right)d^3x,
+\end{align*}
+where $V$ includes $\mathbf{r}$. The identity
+\begin{align*}
+  \nabla\cdot \left(\nabla \left(\frac{1}{\left\vert \mathbf{r} - \mathbf{x} \right\vert}\right)\right) &= -4\pi \delta\left(\mathbf{r} - \mathbf{x}\right)
+\end{align*}
+allows us to substitute into the original expression of $\mathbf{F}$.
+\begin{align*}
+  \mathbf{F}\left(\mathbf{r}\right) &= -\frac{1}{4\pi}\int_{V}\mathbf{F}\left(\mathbf{x}\right)\nabla^2\left(\frac{1}{\left\vert \mathbf{r}-\mathbf{x} \right\vert}\right)d^3x\\
+                                    &= -\frac{1}{4\pi}\nabla^2\int_{V}\frac{\mathbf{F}\left(\mathbf{x}\right)}{\left\vert \mathbf{r} - \mathbf{x} \right\vert}d^3x,
+\end{align*}
+which we are allowed to do\footnote{Well, we need a little more, but we're physicists so everything is assumed to be nice.} since $\nabla^2$ acts on $\mathbf{x}$ rather than $\mathbf{r}$.\newline
+
+The integrand can be rewritten by taking $\nabla^2\mathbf{v} = \nabla\left(\nabla \cdot \mathbf{v}\right) - \nabla\times\left(\nabla\times\mathbf{v}\right)$, yielding
+\begin{align*}
+  \mathbf{F}\left(\mathbf{r}\right) &= -\nabla\underbrace{\left(\frac{1}{4\pi}\nabla \cdot \int_{V}\frac{\mathbf{F}\left(\mathbf{x}\right)}{\left\vert \mathbf{r}-\mathbf{x} \right\vert}d^3x\right)}_{\Phi} + \nabla \times \underbrace{\left(\frac{1}{4\pi}\nabla \times \int_{V}\frac{\mathbf{F}\left(\mathbf{r}\right)}{\left\vert \mathbf{r} - \mathbf{x} \right\vert}d^3x\right)}_{\mathbf{A}},\\
+                                    &= -\nabla\Phi + \nabla \times \mathbf{A}.
+\end{align*}
+Now that we have completed the decomposition, we can reconstruct our field. Starting with $\Phi$, we take
+\begin{align*}
+  \Phi\left(\mathbf{r}\right) &= \frac{1}{4\pi}\nabla \cdot \int_{V}\frac{\mathbf{F}\left(\mathbf{x}\right)}{\left\vert \mathbf{r}-\mathbf{x} \right\vert}d^3x\\
+                              &= \frac{1}{4\pi} \int_{V}\mathbf{F}\left(\mathbf{x}\right)\cdot\nabla \frac{1}{\left\vert \mathbf{r}-\mathbf{x} \right\vert}d^3x\\
+                              &= -\frac{1}{4\pi} \int_{V}\mathbf{F}\left(\mathbf{x}\right)\cdot\nabla_{\mathbf{x}} \frac{1}{\left\vert \mathbf{r}-\mathbf{x} \right\vert}d^3x\\,
+\end{align*}
+where we move the $r$ derivative in the integral, and use the technique that
+\begin{align*}
+  \nabla\frac{1}{\left\vert \mathbf{r}-\mathbf{x} \right\vert} &= -\nabla_{\mathbf{x}}\frac{1}{\left\vert \mathbf{r}-\mathbf{x} \right\vert},
+\end{align*}
+to move the derivative to the $\mathbf{x}$. Now, we can use integration by parts to take
+\begin{align*}
+  \Phi\left(\mathbf{r}\right) &= -\frac{1}{4\pi}\oint_{S}\frac{\mathbf{F}\left(\mathbf{x}\right)\cdot d\mathbf{a}}{\left\vert \mathbf{r} - \mathbf{x} \right\vert} + \frac{1}{4\pi}\int_{V}\frac{\nabla_{\mathbf{x}}\cdot \mathbf{F}\left(\mathbf{x}\right)}{\left\vert \mathbf{r} - \mathbf{x} \right\vert}d^3x.
+\end{align*}
+Using a similar technique for $\mathbf{A}$, we get
+\begin{align*}
+  \mathbf{A}\left(\mathbf{r}\right) &= -\frac{1}{4\pi}\oint_{S}\frac{d\mathbf{a}\times \mathbf{F}\left(\mathbf{x}\right)}{\left\vert \mathbf{r} - \mathbf{x} \right\vert} + \frac{1}{4\pi}\int_{V}\frac{\nabla_{\mathbf{x}}\times \mathbf{F}\left(\mathbf{x}\right)}{\left\vert \mathbf{r} - \mathbf{x} \right\vert}d^3x.
+\end{align*}
+Thus, assuming these integrals converge, these expressions allow us to \textit{uniquely} determine $\mathbf{F}$ from its curl and divergence.\newline
+
+%If we take $V$ to be all of space, and let $\mathbf{F}\left(\mathbf{r}\right)$ be a static field that goes to zero at infinity with 
+%\begin{align*}
+%  \nabla \cdot \mathbf{F} &= \rho\left(\mathbf{r}\right)\\
+%  \nabla \times \mathbf{F} &= \mathbf{J}\left(\mathbf{r}\right).
+%\end{align*}
+\subsection{Maxwell's Equations}%
+\begin{table}
+  \centering
+  \renewcommand{\arraystretch}{2}
+  \begin{tabular}{c|c}
+    Equation & Expression\\
+    \hline\hline
+    Gauss's Law & $\displaystyle \oint_{S}\mathbf{E}\cdot d\mathbf{a} = \frac{Q_{\text{encl}}}{\epsilon_0}$\\
+    Gauss's Law for Magnetism & $\displaystyle \oint_{S} \mathbf{B}\cdot d\mathbf{a} = 0$\\
+    Faraday's Law & $\displaystyle \oint_{C}\mathbf{E}\cdot d\vec{\ell} = -\frac{d}{dt}\int_{S}\mathbf{B}\cdot d\mathbf{a}$\\
+    Ampère's Law & $\displaystyle \oint_{C} \mathbf{B}\cdot d\vec{\ell} = \mu_{0}I_{\text{encl}} + \mu_{0}\epsilon_0\int_{S}\mathbf{E}\cdot d\mathbf{a}$
+  \end{tabular}
+  \caption{Maxwell's Equations}
+  \label{table:maxwell}
+\end{table}
+Maxwell's equations (see Table \ref{table:maxwell}) help move beyond Coulomb's Law and the Biot--Savart law by showing that electricity and magnetism are connected to each other once time is involved. 
+\subsubsection{Integrating Maxwell}%
+We saw that we can derive the expression for conservation of charge by the continuity equation:
+\begin{align*}
+  \oint_{S}\mathbf{J}\cdot d\mathbf{a} &= -\frac{d}{dt}\int_{V}\rho\:d\tau,
+\end{align*}
+where $\rho$ is the charge density and $\mathbf{J}$ is the current density. The continuity equation states that the charge that disappears from a volume is equal to the flux of the charge.\newline
+
+Since Maxwell's equations lay claim to being able to describe everything with respect to electric and magnetic fields (as they include both a divergence and curl), we see if we can derive the continuity equation from Maxwell's equations.\newline
+
+Only one of Maxwell's equations uses current: Ampère's law. In a time-independent field, we have
+\begin{align*}
+  \oint_{C} \mathbf{B}\cdot d\vec{\ell} &= \mu_0\int_{S}^{} \mathbf{J}\cdot d\mathbf{a}.
+\end{align*}
+Assuming that both $\mathbf{B}$ and $\mathbf{J}$ are continuous, we can shrink the bounding curve to a single point, meaning $\mathbf{S}$ becomes a closed surface, yielding
+\begin{align*}
+  \oint_{S}\mathbf{J}\cdot d\mathbf{a}&= 0.
+\end{align*}
+This is what we expected for time-independence.\newline
+
+However, when we deal with a time-dependent system, we need a displacement current, $I_{\text{disp}} = \epsilon_0\diff{}{t}\int_{S}\mathbf{E}\cdot d\mathbf{a}$. Thus, our modified Ampère's law for a closed surface yields
+\begin{align*}
+  0 &= \oint_{S}\mathbf{B}\cdot \vec{\ell}\\
+    &= \mu_0\oint_{S}\mathbf{J}\cdot d\mathbf{a} + \mu_0\epsilon_0\frac{d}{dt}\underbrace{\oint_{S}\mathbf{E}\cdot d\mathbf{a}}_{\frac{Q_{\text{encl}}}{\epsilon_0}}\\
+  \oint_{S}\mathbf{J}\cdot d\mathbf{a} &= -\frac{dQ}{dt}.
+\end{align*}
 \end{document}

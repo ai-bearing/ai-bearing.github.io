@@ -9,6 +9,7 @@
 \usepackage{newpxtext,eulerpx}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \renewcommand*{\hbar}{\hslash}
+\DeclareMathOperator{\Graph}{graph}
 
 \pagestyle{fancy} %better headers
 \fancyhf{}
@@ -899,5 +900,111 @@ A surjective continuous map between topological spaces is not necessarily an ope
     meaning $\norm{T(x)}\geq \norm{T^{-1}}_{\text{op}}^{-1}\norm{x}$ for all $x\in X$.\newline
 
     To show that (ii) is true if and only if (iii) is true, we can see that since $T$ is bounded and $T$ is bounded below, it is the case that $T$ is a bicontinuous isomorphism.
+  \end{proof}
+  \begin{corollary}
+    Let $X$ and $Y$ be Banach spaces, $T\in \mathcal{B}\left(X,Y\right)$. Then, $T$ is invertible if and only if $T$ is bounded below and surjective.
+  \end{corollary}
+  \subsubsection{Complemented Subspaces and Direct Sums}%
+  For any normed vector spaces $X$ and $Y$, we can form the product $X\oplus_{p}Y$ by defining $\norm{\left(x,y\right)} = \left(\norm{x}^p + \norm{y}^p\right)^{1/p}$ for all $p\in [1,\infty)$.\newline
+
+  A vector space $Z$ with subspaces $X$ and $Y$ is called the direct sum of $X$ and $Y$ if
+  \begin{enumerate}[(a)]
+    \item for all $z\in Z$, there exist $x\in X$ and $y\in Y$ such that $z = x+y$;
+    \item $X\cap Y = \set{0}$.
+  \end{enumerate}
+  We write $Z = X\oplus Y$ for the internal direct sum.
+  \begin{proposition}
+    Let $\left(Z,\norm{\cdot}_Z\right)$ be a Banach space, and suppose $X$ and $Y$ are closed subspaces of $Z$ with $Z = X\oplus Y$. Then, $Z\cong X\oplus_{p}Y$ for all $p\in [1,\infty]$.
+  \end{proposition}
+  \begin{proof}
+    Let $p = 1$. Set $\phi: X\oplus_{1}Y \rightarrow Z$ by taking $\phi\left((x,y)\right) = x + y$. Since $Z = X\oplus Y$, this is a bijection, hence an isomorphism. Additionally,
+    \begin{align*}
+      \norm{\phi\left(\left(x,y\right)\right)}_{Z} &= \norm{x + y}_Z\\
+                                                   &\leq \norm{x}_Z + \norm{y}_Z\\
+                                                   &= \norm{\left(x,y\right)}_1,
+    \end{align*}
+    meaning $\phi$ is bounded. Thus, $\phi^{-1}$ is also bounded, meaning $\phi$ is bicontinuous. The proof is similar for all other $p\in (1,\infty]$.
+  \end{proof}
+  \begin{definition}
+    If $Z$ is a normed space, $X$ and $Y$ are closed subspaces of $Z$ such that $Z = X\oplus Y$, we say $Z$ is the topological internal direct sum of $X$ and $Y$.
+  \end{definition}
+  \begin{definition}
+    Let $Z$ be a normed space, and suppose $X$ is a closed subspace of $Z$. We say $X$ is complemented in $Z$ if there is a closed $Y\subseteq Z$ with $X\oplus Y = Z$.
+  \end{definition}
+  Not all closed subspaces are complemented.
+  \begin{proposition}
+    Let $T: X\rightarrow Y$ be a bounded linear map between Banach spaces. If $Z\subseteq Y$ is a closed subspace such that $Y = \Ran(T) \oplus Z$, then $\Ran(T)$ is closed (meaning the internal direct sum is topological).
+  \end{proposition}
+  \begin{proof}
+    Passing to the quotient
+    \begin{align*}
+      X/\ker(T) \rightarrow Y,~x + \ker(T) \mapsto T(x),
+    \end{align*}
+    we may assume that $T$ is injective. The map $S: X\oplus_{\infty}Z \rightarrow Y$, $S(x,z) = T(x) + z$ is bounded and bijective. Thus, $S$ is bounded below, so for some $C > 0$, we have
+    \begin{align*}
+      \norm{T(x)} &= \norm{S\left(x,0\right)}\\
+                  &\geq C\norm{\left(x,0\right)}_{\infty}\\
+                  &= C\norm{x},
+    \end{align*}
+    meaning $T$ is bounded below, and thus has closed range.
+  \end{proof}
+  \begin{corollary}
+    If $X$ and $Y$ are Banach spaces, and $T: X\rightarrow Y$ is bounded Fredholm,\footnote{A linear map is Fredholm if both $\ker(T)$ and $\operatorname{coker}(T) $ are finite. Here, $\operatorname{coker}(T) = Y/\Ran(T)$.} then $T$ has closed range.
+  \end{corollary}
+  \begin{proof}
+    There is a subspace $C\subseteq Y$ with $C$ linearly isomorphic to $\operatorname{coker}(T)$, and $Y = \Ran(T)\oplus C$. Since $T$ is Fredholm, $\Dim(C)$ is finite, meaning $C$ is closed. Thus, $\Ran(T)$ is closed.
+  \end{proof}
+  \subsection{Closed Graph Theorem}%
+  \begin{definition}
+    If $f: A\rightarrow B$ is a map between arbitrary sets, then the graph of $f$ is
+    \begin{align*}
+      \Graph(f) &= \set{\left(a,f(a)\right)\mid a\in A}\\
+                &\subseteq A\times B.
+    \end{align*}
+  \end{definition}
+  \begin{proposition}
+    If $\left(X,d\right)$ and $\left(Y,\rho\right)$ are metric spaces, and $f: \left(X,d\right)\rightarrow \left(Y,\rho\right)$ is continuous, then $\Graph(f) \subseteq X\times Y$ is closed under the product topology.\footnote{The product topology is the coarsest topology on $X\times Y$ such that the projection maps $\pi_X$ and $\pi_Y$ are continuous.}
+  \end{proposition}
+  \begin{proof}
+    Let $\left(x_n,f\left(x_n\right)\right)_n$ be a sequence in $\Graph(f)$ such that $\left(x_n,f\left(x_n\right)\right)_n\rightarrow \left(x,y\right)$ in $X\times Y$. Then, $\left(x_n\right)_n \rightarrow x$ in $X$ and $\left(f\left(x_n\right)\right)_n\rightarrow y$ in $Y$.\newline
+
+    By the continuity of $f$, we have $\left(f\left(x_n\right)\right)_n\rightarrow f(x)$, and since limits are unique, we have $f(x) = y$. Thus,
+    \begin{align*}
+      \left(x,y\right) &= \left(x,f(x)\right)\\
+                       &\in \Graph(f).
+    \end{align*}
+  \end{proof}
+  Thus, we can see that the graph of any continuous function is closed in the product topology. However, the converse fails in the general case. For instance,
+  \begin{align*}
+    f: \R\rightarrow \R\\
+    f(x) &= \begin{cases}
+      \frac{1}{x} & x\neq 0\\
+      0 & x = 0
+    \end{cases}
+  \end{align*}
+  has a closed graph, but $f$ is not continuous.\newline
+
+  However, with linear maps between Banach spaces, the converse is actually true.
+  \begin{theorem}[Closed Graph Theorem]
+    Let $X$ and $Y$ be Banach spaces, and let $T: X\rightarrow Y$ be a linear map. Then, $T$ is continuous if and only if $\Graph(T) \subseteq X\times Y$ is closed with respect to the product topology on $X\times Y$.
+  \end{theorem}
+  \begin{proof}
+    The forward direction follows from the previous proposition.\newline
+
+    Suppose $\Graph(T)\subseteq X\times Y$ is closed in the product topology. Note that the product topology coincides with the $\norm{\cdot}_1$ topology, with $\norm{\left(x,y\right)}_{1} = \norm{x} + \norm{y}$. Thus, $\left(\Graph(T),\norm{\cdot}_1\right)$ is a Banach space.\newline
+
+    Consider the projection map $P: \Graph(T) \rightarrow X$ defined by $P\left(\left(x,T(x)\right)\right) = x$, which is bijective. We also have
+    \begin{align*}
+      \norm{P\left(\left(x,T(x)\right)\right)} &= \norm{x}\\
+                                               &\leq \norm{x} + \norm{T(x)}\\
+                                               &= \norm{\left(x,T(x)\right)}_{1},
+    \end{align*}
+    meaning $P$ is bounded. Thus, $P$ is bicontinuous, meaning it is bounded below, so for some constant $C$, we have
+    \begin{align*}
+      \norm{x} &= \norm{P\left(\left(x,T(x)\right)\right)}\\
+               &\geq C\norm{\left(x,T(x)\right)}_{1}\\
+               &\geq C\norm{T(x)},
+    \end{align*}
+    meaning $\norm{T(x)}\leq \frac{1}{C}\norm{x}$, so $T$ is bounded.
   \end{proof}
 \end{document}

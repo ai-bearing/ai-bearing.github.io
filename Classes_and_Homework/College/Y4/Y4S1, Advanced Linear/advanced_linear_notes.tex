@@ -2241,7 +2241,7 @@ This gives $E_{\lambda}^{1}\subseteq E_{\lambda}^{2}\subseteq \cdots\subseteq E_
 
   We find $v_2 = \left(A - 2I_3\right)\left(v_3\right)$, meaning
   \begin{align*}
-    v_2 &= \begin{pmatrix}0 & 1 & 3 \\ 0 & 0 & 4 \\ 0 & 0 & 0 \end{pmatrix} \begin{pmatrix}0 \\ 0 \ 1\end{pmatrix}\\
+    v_2 &= \begin{pmatrix}0 & 1 & 3 \\ 0 & 0 & 4 \\ 0 & 0 & 0 \end{pmatrix} \begin{pmatrix}0 \\ 0 \\ 1\end{pmatrix}\\
         &= \begin{pmatrix}3\\4\\0\end{pmatrix}.
   \end{align*}
   Finally,
@@ -2687,7 +2687,7 @@ For the purposes of this section, $V$ is always finite dimensional, and all poly
 \begin{definition}
   Let $T\in \Hom_{\F}\left(V,V\right)$. A Jordan basis for $V$ with regard to $T$ is a basis $\mathcal{B}$ such that $\left[T\right]_{\mathcal{B}}$ has some $\lambda \in \F$ along the diagonal and $1$ along the superdiagonal.\newline
 
-  More generally, if $V = V_1\oplus \cdots \oplus V_k$ is a decomposition into $T$-invariant subspaces, then each $V_i$ has Jordan basis $\mathcal{B}_i$, and we say $\mathcal{B} = \bigcup_{i=1}^{k}B_i$ is a Jordan basis for $V$.
+  More generally, if $V = V_1\oplus \cdots \oplus V_k$ is a decomposition into $T$-invariant subspaces, then each $V_i$ has Jordan basis $\mathcal{B}_i$, and we say $\mathcal{B} = \bigcup_{i=1}^{k}\mathcal{B}_i$ is a Jordan basis for $V$.
 \end{definition}
 \begin{definition}
   A matrix with $\lambda$ along the diagonal and $1$ along the superdiagonal is called a Jordan block associated with eigenvalue $\lambda$.
@@ -2709,4 +2709,283 @@ For the purposes of this section, $V$ is always finite dimensional, and all poly
     \item Let $A\in \Mat_{n}\left(\F\right)$ with $c_A = \left(x-\lambda_1\right)^{e_1}\cdots \left(x-\lambda_k\right)^{e_k}$ over $\F$. Then $A$ is similar to a matrix in Jordan canonical form that is unique up to the order of the blocks.
   \end{enumerate}
 \end{theorem}
+\begin{lemma}
+  Let $T\in \Hom_{\F}\left(V,V\right)$. We have $\ker\left(\left(T-\lambda \id_V\right)^j\right)$ and $\img\left(\left(T-\lambda \id_V\right)^j\right)$ are $T$-invariant subspaces for all $j\geq 0$.
+\end{lemma}
+\begin{proof}
+  Note that
+  \begin{align*}
+    T\circ \left(T - \lambda\id_{V}\right)^j &= \left(T - \lambda\id_{V}\right)^j\circ T.
+  \end{align*}
+  Let $v\in \ker\left(\left(T-\lambda \id_V\right)^j\right)$. We have
+  \begin{align*}
+    \left(T-\lambda\id_V\right)^j\left(T(v)\right) &= T\left(\left(T-\lambda\id_V\right)^j(v)\right)\\
+                                                   &= T\left(0_V\right)\\
+                                                   &= 0_V.
+  \end{align*}
+  Thus, $T(v)\in \ker\left(\left(T-\lambda\id_V\right)^j\right)$.\newline
+
+  Let $w\in \img\left(\left(T-\lambda\id_V\right)^j\right)$. We can write
+  \begin{align*}
+    w &= \left(T-\lambda\id_V\right)^j(v)
+  \end{align*}
+  for some $v\in V$. Applying $T$ to both sides, we have
+  \begin{align*}
+    T(w) &= T\left(\left(T-\lambda\id_V\right)^j(v)\right)\\
+         &= \left(T-\lambda\id_V\right)^j\left(T(v)\right),
+  \end{align*}
+  meaning $T(w)\in \img\left(\left(T-\lambda\id_V\right)^j\right)$.
+\end{proof}
+We know there exists $m$ such that $E_{\lambda}^{\infty} = E_{\lambda}^{m}$. We also know that if $\left(x-\lambda\right)^k|m_T(x)$, then $\dim_{\F}\left(E_{\lambda}^{k}\right)\geq k$.
+\begin{lemma}
+  Suppose $m_T(x) = \left(x-\lambda\right)^mp(x)$ with $p\left(\lambda\right)\neq 0$. Then,
+  \begin{align*}
+    E_{\lambda}^{\infty} &= E_{\lambda}^{m}.
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  Let $v\in E_{\lambda}^{\infty}$ and $e$ be the least positive integer such that 
+  \begin{align*}
+    \left(T-\lambda\id_V\right)^{e}\left(v\right) = 0_V.
+  \end{align*}
+  Suppose toward contradiction that $e > m$. We have $m_{T,v}(x) | \left(x-\lambda\right)^e$, but $m_{T,v}\left(x\right) \nmid \left(x-\lambda\right)^{e-1}$. In particular, $m_{T,v}(x) = \left(x-\lambda\right)^{e}$. However, $m_{T,v}(x) | m_{T}(x)$.
+\end{proof}
+\begin{lemma}
+  Let $\dim_{\F}\left(V\right) = n$. Let $m_T(x) = \left(x-\lambda\right)^mp(x)$ with $p\left(\lambda\right)\neq 0$. Then, we have
+  \begin{align*}
+    V &= E_{\lambda}^{m} \oplus \img\left(\left(T-\lambda\id_V\right)^m\right).
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  Recall that
+  \begin{align*}
+    E_{\lambda}^{m} &= \ker\left(\left(T-\lambda\id_{V}\right)^m\right).
+  \end{align*}
+  Therefore, the dimensions line up. All we need show is that $E_{\lambda}^{m}\cap \img\left(\left(T-\lambda\id_V\right)^m\right) = \set{0_V}$.\newline
+
+  Let $v\in E_{\lambda}^{m}\cap \img\left(\left(T-\lambda\id_V\right)^m\right)$. We have
+  \begin{align*}
+    v &= \left(T-\lambda\id_V\right)^{m}\left(w\right)
+  \end{align*}
+  for some $w\in V$. Applying $\left(T-\lambda\id_V\right)^{m}$ to both sides, we have
+  \begin{align*}
+    \left(T-\lambda\id_V\right)^{m}\left(v\right) &= \left(T-\lambda\id_V\right)^{2m}(w)\\
+                                                  &=0_V,
+  \end{align*}
+  since $v\in \ker\left(\left(T-\lambda\id_V\right)^m\right)$. Thus,
+  \begin{align*}
+    \left(T-\lambda\right)^{2m}(w) &= 0_V.
+  \end{align*}
+  Thus, $w\in E_{\lambda}^{2m}$. However, since $E_{\lambda}^{\infty} = E_{\lambda}^{m}$, so too is $E_{\lambda}^{2m}$, so $w\in E_{\lambda}^{m}$, meaning
+  \begin{align*}
+    \left(T-\lambda\right)^{m}\left(w\right) &= 0_V,
+  \end{align*}
+  so $v = 0_V$.
+\end{proof}
+\begin{theorem}
+  Assume $m_T(x) = \left(x-\lambda_1\right)^{m_1}\cdots\left(x-\lambda_k\right)^{m_k}$ with $\lambda_j\in \F$, $\lambda_j$ distinct, $m_j\geq 1$.\newline
+
+  Then, 
+  \begin{align*}
+    V &= E_{\lambda_1}^{m_1} \oplus \cdots \oplus E_{\lambda_k}^{m_k}.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  We will use induction on $k$.\newline
+
+  If $k = 1$, then $m_T(x) = \left(x-\lambda_1\right)^{m_1}$. Since $m_{T}\left(T\right)\left(v\right) = 0_V$ for all $v\in V$, we have
+  \begin{align*}
+    V &= E_{\lambda_1}^{m_1}.
+  \end{align*}
+  Assume the result is true for any vector space $W$ and $S\in \Hom_{\F}\left(W,W\right)$, where $m_S(x)$ splits completely over $\F$ and has fewer than $k$ distinct roots.\newline
+
+  We can break our vector space $V$ to be
+  \begin{align*}
+    V &= E_{\lambda_1}^{m_1}\oplus \img\left(\left(T-\lambda_1\id_{V}\right)^{m_1}\right).
+  \end{align*}
+  Set $W = \img\left(\left(T-\lambda_1\right)^{m_1}\right)$. We have $W$ is $T$-invariant. Thus, $T_W := T\vert_{W}\in \Hom_{\F}\left(W,W\right)$.\newline
+
+  We claim that $m_{T_W}(x) = \left(x-\lambda_2\right)^{m_2}\cdots \left(x-\lambda_k\right)^{m_k}$.\newline
+
+  Set $p(x) = \left(x-\lambda_2\right)^{m_2}\cdots \left(x-\lambda_k\right)^{m_k}$. Suppose $w\in W$ satisfies $p\left(T_W\right)\left(w\right) \neq 0_V$. At the same time, we have $m_{T}(T)(w) = 0_V$. Thus,
+  \begin{align*}
+    \left(T-\lambda_1\id_V\right)^{m_1}\left(p(T)(w)\right) = 0_V,
+  \end{align*}
+  meaning $p(T)(w) \in E_{\lambda_1}^{m_1}$. This is a contradiction, since $p(T)(w) = p\left(T_W\right)(w)\in W$.\newline
+
+  Thus, $m_{T_W}|p(x)$.\newline
+
+  Suppose $m_{T_W}$ is a proper divisor of $p(x)$. If we set $f(x) = m_{T_W}(x)\left(x-\lambda_1\right)^{m_1}$. For $v\in V$, write
+  \begin{align*}
+    v &= v_1 + w
+  \end{align*}
+  with $v_1\in E_{\lambda_1}^{m_1}$ and $w\in W$. Notice that
+  \begin{align*}
+    f(T)(v) &= f(T)\left(v_1\right) + f(T)\left(w\right)\\
+            &= m_{T_W}\left(\left(T-\lambda_1\id_V\right)^{m_1}\right)(v) + \left(T-\lambda_1\id_V\right)^{m_1}M_{T_W}(w)\\
+            &= 0_V + 0_V\\
+            &= 0_V.
+  \end{align*}
+  Thus, $m_{T}(x)|f(x)$, which is a contradiction if $m_{T_W}$ is a proper divisor of $p(x)$.\newline
+
+  Thus, $m_{T_W}(x) = p(x)$ as claimed.\newline
+
+  We have that
+  \begin{align*}
+    V &= E_{\lambda_1}^{m_1}\oplus W,
+  \end{align*}
+  and we apply the induction hypothesis to $W$ to yield
+  \begin{align*}
+    V &= E_{\lambda_1}^{m_1}\oplus \left(E_{\lambda_2}^{m_2}\oplus \cdots \oplus E_{\lambda_k}^{m_k}\right).
+  \end{align*}
+\end{proof}
+If $T$ has minimal polynomial of the form $m_T(x) = \left(x-\lambda\right)^mp(x)$ with $p\left(\lambda\right) \neq 0$, then we get at least one Jordan block with size $m$.
+\begin{lemma}
+  Let $m_T(x) = c_T(x) = \left(x-\lambda\right)^n$, with $\dim_{\F}\left(V\right) = n$. Then, a Jordan basis for $V$ exists.
+\end{lemma}
+\begin{proof}
+  Let $w_1\in V$ with $m_{T,w_1}(x) = m_{T}(x) = c_T(x)$. Let $W_1$ be the space generated by $T$ on $\set{w_1}$. We claim $W_1 = V$.\newline
+
+  Set $v_n = w_1$ and
+  \begin{align*}
+    v_i &= \left(T-\lambda\id_V\right)^{n-i}\left(v_n\right).
+  \end{align*}
+  Note that
+  \begin{align*}
+    v_i &= \left(T-\lambda\id_V\right)^{n-i}\left(v_n\right)\\
+        &= \left(T-\lambda\id_V\right)\left(T-\lambda\id_V\right)^{n-i-1}\left(v_n\right)\\
+        &= \left(T-\lambda\id_V\right)\left(v_{i+1}\right),
+  \end{align*}
+  meaning $T\left(v_{i+1}\right) = v_i + \lambda v_{i+1}$.\newline
+
+  We claim that $\set{v_1,\dots,v_n}$ is a basis of $V$.\newline
+
+  Suppose
+  \begin{align*}
+    c_1 v_1 + \cdots + c_nv_n = 0_V
+  \end{align*}
+  for some $c_i\in \F$> This gives
+  \begin{align*}
+    c_1\left(T-\lambda\id_V\right)^{n-1} + \cdots + c_{n}v_n = 0_V.
+  \end{align*}
+  Set $p(x) = c_1(x-\lambda)^{n-1} + \cdots + c_{n-1}\left(x-\lambda\right) + c_n$.\newline
+
+  Then,
+  \begin{align*}
+    p(T)\left(v_n\right) &= 0_V\\
+                         &= p(T)\left(w_1\right),
+  \end{align*}
+  meaning
+  \begin{align*}
+    m_{T,w_1}\left(x\right)|p(x),
+  \end{align*}
+  but $\deg\left(m_{T,w_1}(x)\right) = n$, meaning $p(x) = 0$, so $c_i = 0$ for all $i$.\newline
+
+  Thus, $\set{v_1,\dots,v_n}$ is a Jordan basis.
+\end{proof}
+\begin{proposition}
+  Let $\dim_{\F}\left(V\right) = n$ and $m_T(x) = \left(x-\lambda\right)^k$ for some $1\leq k \leq n$. Then, a Jordan basis for $V$ exists.
+\end{proposition}
+\begin{proof}
+  We have $V = E_{\lambda}^{\infty} = E_{\lambda}^{k}$. We know the result if $k = n$. Assume $k < n$.\newline
+
+  We claim that given any subspace $W_1$ of $V$ with $W_1\cap \ker\left(\left(T-\lambda\id_{V}\right)^{k-1}\right) = \set{0_V}$, there is a $T$-stable subspace $U$ of $V$ with 
+  \begin{align*}
+    V =\underbrace{\left( W_1 + \left(T-\lambda\id_V\right)\left(W_1\right) + \cdots + \left(T-\lambda\id_V\right)^{k-1}(W_1)\right)}_{\text{$k\times k$ Jordan block}}\oplus U.
+  \end{align*}
+  We know there exists $v_k\in V$ with $\left(T-\lambda\id_V\right)^{k-1}\left(v_k\right) \neq 0_V$. Set $W_1 = \Span_{\F}\left(v_k\right)$. We have
+  \begin{align*}
+    W_1\cap \ker\left(\left(T-\lambda\id_V\right)^{k01}\right) &= \set{0_V}.
+  \end{align*}
+  Write
+  \begin{align*}
+    V &= W_1\oplus \ker\left(\left(T-\lambda\id_V\right)^{k-1}\right)\oplus W_2.
+  \end{align*}
+  Note that $W_2$ consists of other $k\times k$ Jordan block generators, though it can also be $0_V$.\newline
+
+  Set $W = W_1\oplus W_2$. We have 
+  \begin{align*}
+    \left(T-\lambda\id_V\right)(W)\subseteq \ker\left(\left(T-\lambda\id_V\right)^{k-1}\right).
+  \end{align*}
+  We also have
+  \begin{align*}
+    \left(T-\lambda\id_V\right)\left(W\right)\cap \ker\left(\left(T-\lambda\id_V\right)^{k-2}\right) &= \set{0_V}.
+  \end{align*}
+  If $w\in \left(T-\lambda\id_V\right)\left(W\right)\cap \ker\left(\left(T-\lambda\id_V\right)^{k-2}\right)$, then
+  \begin{align*}
+    w = \left(T-\lambda\id_V\right)\left(w_1 + w_2\right)
+  \end{align*}
+  for $w_i\in W_i$, and
+  \begin{align*}
+    \left(T-\lambda\id_V\right)^{k-2}\left(w\right) &= 0_V,
+  \end{align*}
+  meaning
+  \begin{align*}
+    \left(T-\lambda\id_V\right)^{k-2}\left(T-\lambda\id_V\right)\left(w_1 + w_2\right) &= 0_V\\
+    \left(T-\lambda\id_V\right)^{k-1}\left(w_1\right) + \left(T-\lambda\id_V\right)^{k-1}w_2 &= 0_V,
+  \end{align*}
+  implying $w_1 = w_2 = 0_V$, since
+  \begin{align*}
+    V &= W_1 \oplus W_2 \oplus \underbrace{\ker\left(\left(T-\lambda\id_V\right)^{k-1}\right)}_{\tilde{V}}.
+  \end{align*}
+  Note that $\dim_{\F}\left(\tilde{V}\right) < n$. We also know that $\tilde{V}$ is $T$-stable.\newline
+
+  Let $\tilde{W} = \left(T-\lambda\id_V\right)(W)$. We have
+  \begin{align*}
+    \tilde{W} \cap \ker\left(\left(T-\lambda\id_V\right)^{k-2}\right) = \set{0_V}.
+  \end{align*}
+  We apply the induction hypothesis to $\tilde{V}$ and $\tilde{W}$ to get a $T$-stable subspace $\tilde{U}$ such that
+  \begin{align*}
+    \tilde{V} = \left(\tilde{W} + \left(T - \lambda\id_V\right)\left(\tilde{W}\right) + \cdots + \left(T-\lambda\id_V\right)^{k-2}\left(\tilde{W}\right)\right) \oplus \tilde{U}.
+  \end{align*}
+  Define
+  \begin{align*}
+    U &= \left(W_2 + \left(T-\lambda\id_V\right)\left(W_2\right) + \cdots + \left(T-\lambda\id_V\right)^{k-1}\left(W_2\right)\right) + \tilde{U}.
+  \end{align*}
+  We have $U$ is $T$-stable. We need to show that
+  \begin{align*}
+    V &= \left(W_1 + \left(T-\lambda\id_V\right)\left(W_1\right) + \cdots + \left(T-\lambda\id_V\right)^{k-1}\left(W_1\right)\right)\oplus U.
+  \end{align*}
+  We have
+  \begin{align*}
+    V &= W_1 + W_2 + \ker\left(\left(T-\lambda\id_V\right)^{k-1}\right)\\
+      &= W_1 + W_2 + \tilde{V}\\
+      &= W_1 + W_2 + \left(\tilde{W} + \left(T - \lambda\id_V\right)\left(\tilde{W}\right) + \cdots + \left(T-\lambda\id_V\right)^{k-2}\left(\tilde{W}\right)\right) + \tilde{U}\\
+      &= W_1 + W_2 + \left(\left(W_1 + W_2\right) + \left(T - \lambda\id_V\right)\left(W_1 + W_2\right) + \cdots + \left(T-\lambda\id_V\right)^{k-2}\left(W_1 + W_2\right)\right) + \tilde{U}\\
+      &= W_1 + \left(T-\lambda\id_V\right)\left(W_1\right) + \cdots + \left(T-\lambda\id_V\right)^{k-1}\left(W_1\right) + U.
+  \end{align*}
+  Let $v\in \left(W_1 + \left(T-\lambda\id_V\right)\left(W_1\right) + \cdots + \left(T-\lambda\id_V\right)^{k-1}\left(W_1\right)\right)\cap U$. Then,
+  \begin{align*}
+    v &= \sum_{j=0}^{k-1}\left(T-\lambda\id_V\right)^j\left(w_j\right)
+  \end{align*}
+  for $w_0,\dots,w_{k-1}\in W_1$. Additionally,
+  \begin{align*}
+    v &= \sum_{j=0}^{k-1}\left(T-\lambda\id_V\right)^{j}\left(w_j'\right) + \tilde{u}
+  \end{align*}
+  for $w_0',\dots,w_{k-1}'\in W_2$ and $\tilde{u}\in \tilde{U}$.\newline
+
+  Applying $\left(T-\lambda\id_V\right)^{k-1}$ to both expressions for $v$, yielding
+  \begin{align*}
+    \left(T-\lambda\id_V\right)^{k-1}\left(w_0\right) &= \left(T-\lambda\id_V\right)\left(w_0'\right)
+  \end{align*}
+  since $\tilde{u}\in \ker\left(T-\lambda\id_V\right)^{k-1}$. Thus,
+  \begin{align*}
+    \left(T-\lambda\id_V\right)^{k-1}\left(w_0-w_0'\right) &= 0_V,
+  \end{align*}
+  meaning $w_0 - w_0'\in \ker\left(\left(T-\lambda\id_V\right)^{k-1}\right)$, and $w_0 - w_0'\in W$, so $w_0 = w_0'\in W_1\cap W_2 = \set{0_V}$.\newline
+
+  To extract the basis, let $W_1 = \Span\left(v_k\right)$, $v_j = \left(T-\lambda\id_V\right)^{k-j}\left(v_k\right)$, and
+  \begin{align*}
+    \mathcal{B}_{\mathcal{W}} = \set{v_1,\dots,v_k}
+  \end{align*}
+  is a Jordan basis for $\mathcal{W} :=W_1 + \left(T-\lambda\id_V\right)W_1 + \cdots + \left(T-\lambda\id_V\right)^{k-1}\left(W_1\right)$. Thus, we have
+  \begin{align*}
+    V &= \mathcal{W}\oplus U,
+  \end{align*}
+  with $U$ having Jordan basis $\mathcal{B}_U$ by induction. Thus,
+  \begin{align*}
+    \mathcal{B} &= \mathcal{B}_{\mathcal{W}}\cup \mathcal{B}_U
+  \end{align*}
+  is a Jordan basis for $V$.
+\end{proof}
 \end{document}
