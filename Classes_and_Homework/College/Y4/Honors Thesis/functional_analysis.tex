@@ -1007,4 +1007,100 @@ A surjective continuous map between topological spaces is not necessarily an ope
     \end{align*}
     meaning $\norm{T(x)}\leq \frac{1}{C}\norm{x}$, so $T$ is bounded.
   \end{proof}
+  \begin{example}
+    Consider the collection of sequences
+    \begin{align*}
+      X &= \set{f: \N\rightarrow\C\mid \sum_{k\geq 1}k\left\vert f(k) \right\vert < \infty}.
+    \end{align*}
+    Note that $X\subseteq \ell_1$, and $X$ is a linear subspaces. Let
+    \begin{align*}
+      T: \left(X,\norm{\cdot}_1\right) \rightarrow \ell_1\\
+      T\left(f\right)\left(k\right) &= \left(kf(k)\right)_1,
+    \end{align*}
+    which is well-defined and linear. We will show that $T$ is unbounded.\newline
+
+    Let $f_n$ denote the element of $X$ defined by
+    \begin{align*}
+      f_n &= (\underbrace{1,1,\dots,1}_{\text{$n$ times}},0,0,\dots).
+    \end{align*}
+    For each $f_n$, the norm is $\norm{f_n}_1 = n$. We also see that
+    \begin{align*}
+      T\left(f_n\right) &= \left(1,2,\dots,n,0,0,\dots\right),
+    \end{align*}
+    with norm
+    \begin{align*}
+      \norm{T\left(f_n\right)}_1 &= \frac{n\left(n+1\right)}{2}.
+    \end{align*}
+    If $T$ were bounded, we would have a constant $C$ such that
+    \begin{align*}
+      \frac{n\left(n+1\right)}{2}\leq Cn
+    \end{align*}
+    for all $n$. This is not possible, meaning $T$ is unbounded.\newline
+
+    However, at the same time, $\Graph(T)$ is closed, as for $\left(f_n\right)_n\rightarrow f$ in $X$ and $\left(T\left(f_n\right)\right)_n\rightarrow g$ in $\ell_1$, we have
+    \begin{align*}
+      \left(f_n\left(k\right)\right)_n\rightarrow f(k)
+    \end{align*}
+    and
+    \begin{align*}
+      \left(kf(k)\right)_n\rightarrow g(k)
+    \end{align*}
+    for all $k\in \N$, implying that $g(k) = kf(k)$, or that $T\left(f\right) = g$.\newline
+
+    The closed graph theorem thus implies that $X\subseteq \ell_1$ must not be closed.
+  \end{example}
+  \subsection{Uniform Boundedness Principle}%
+  The uniform boundedness principle is often useful when when dealing with a family of bounded operators. It says that a pointwise bounded family of operators on a Banach space is bounded.
+  \begin{theorem}[Uniform Boundedness Principle]
+    Let $X$ and $Y$ be normed vector spaces, and consider a family of bounded operators $\set{T_i}_{i\in I}\subseteq \mathcal{B}\left(X,Y\right)$.
+    \begin{enumerate}[(1)]
+      \item If $\sup_{T_i(x)} < \infty$ for all $x\in A\subseteq X$ with $A$ nonmeager, then
+        \begin{align*}
+          \sup_{i\in I}\norm{T_i}_{\text{op}} < \infty.
+        \end{align*}
+      \item If $X$ is a Banach space with $\sup_{i\in I}\norm{T_i(x)} < \infty$ for all $x\in X$, then
+        \begin{align*}
+          \sup_{i\in I}\norm{T_i}_{\text{op}} < \infty.
+        \end{align*}
+    \end{enumerate}
+  \end{theorem}
+  \begin{proof}
+    We only need to prove (1), as (2) follows.\newline
+
+    For each $i\in I$ and $n\in \N$, define
+    \begin{align*}
+      E_{n,i} &= \set{x\in X\mid \norm{T_i(x)} \leq n}.
+    \end{align*}
+    Notice that 
+    \begin{align*}
+      E_{n,i} &= T_i^{-1}\circ \norm{\cdot}^{-1}\left([0,n]\right).
+    \end{align*}
+    Since both the norm and $T_i$ are continuous, each $E_{n,i}$ is closed. Therefore,
+    \begin{align*}
+      E_{n} &= \bigcap_{i\in I}E_{n,i}\\
+            &= \set{x\in X\mid \sup_{i\in I}\norm{T_i(x)} \leq n}
+    \end{align*}
+    is also closed, meaning $\overline{E_n} = E_n$.\newline
+
+    By our assumption,
+    \begin{align*}
+      A &= \bigcup_{n\geq 1}E_n.
+    \end{align*}
+    Since $A$ is nonmeager, there is $m\in \N,$  $x_0\in X$, and $r > 0$ such that $B\left(x_0,r\right)\subseteq E_m$.\footnote{Select $\delta$ such that $U\left(x_0,\delta\right)\subseteq E_m$, and then select $r = \delta/2$.}\newline
+
+    We will now prove that $B\left(0,r\right) = rB_{X}\subseteq E_{2m}$. Let $x$ be such that $\norm{x} < r$. Then, $x + x_0\in B\left(x_0,r\right) \subseteq E_m$. For each $i$, we also have
+    \begin{align*}
+      \norm{T_i(x)} &= \norm{T_i(x) - T_i\left(x_0\right) + T_i\left(x_0\right)}\\
+                    &\leq \norm{T_i(x) + T_i\left(x_0\right)} + \norm{T_i\left(x_0\right)}\\
+                    &= \norm{T_i\left(x + x_0\right)} + \norm{T_i\left(x_0\right)}\\
+                    &\leq 2m,
+    \end{align*}
+    meaning $\sup_{i\in I}\norm{T_i(x)} \leq 2m$, meaning $x\in E_{2m}$.\newline
+
+    Given $x\in B_X \setminus \set{0}$, we have $rx\in E_{2m}$, so $T_i\left(rx\right) \leq 2m$ for all $i\in I$, meaning
+    \begin{align*}
+      \norm{T_i(x)} \leq \frac{2m}{r}
+    \end{align*}
+    for all $i\in I$, so $\sup_{x\in B_X}\norm{T_i(x)}\leq \frac{2m}{r}$. Thus, $\sup_{i\in I}\norm{T_i}_{\text{op}} \leq \frac{2m}{r}$.
+  \end{proof}
 \end{document}
