@@ -3290,5 +3290,146 @@ In particular, we can choose a gauge such that $\nabla \cdot \mathbf{A} = 0$, wh
 \begin{align*}
   \nabla \cdot \mathbf{A} + \frac{1}{c^2}\pd{\Phi}{t} &= 0.
 \end{align*}
+\section{Linear Algebra}%
+\subsection{Superposition}%
+Waves, unlike particles, are able to be superimposed --- we can add waves together to get new waves.\newline
 
+Consider a charge with density $\rho = \rho_1 + \rho_2$. Then, each charge density yields $\mathbf{E}_1$ and $\mathbf{E}_2$, where $\nabla \cdot \mathbf{E}_1 + \nabla \cdot \mathbf{E}_2 = \nabla \cdot \left(\mathbf{E}_1 + \mathbf{E}_2\right) = \nabla \cdot \mathbf{E}$.\newline
+
+Generally, for superposition to hold, we need an operator $\mathcal{L}$ to be linear. For any inputs $f$ and $g$ and $a,b\in \F$, we must have
+\begin{align*}
+  \mathcal{L}\left(af + bg\right) &= a\mathcal{L}\left(f\right) + b\mathcal{L}\left(g\right).
+\end{align*}
+\begin{example}[Some Linear and Nonlinear Operators]
+  \begin{enumerate}[(1)]
+    \item Consider $f(x) = mx + b$ with $b\neq 0$. Then, $f$ is a linear function, but $f$ is not a linear operator, since
+      \begin{align*}
+        f\left(ax_1 + bx_2\right) &= m\left(ax_1 + bx_2\right) + b\\
+                                  &\neq af\left(x_1\right) + bf\left(x_2\right).
+      \end{align*}
+      We say $f$ is an affine transformation of $\R$ (or $\C$).
+    \item In finite dimensions, a linear operator can always be expressed as a matrix.
+      \begin{align*}
+        \begin{pmatrix}y_1\\y_2\\y_3\end{pmatrix} &= \begin{pmatrix}m_{11} & m_{12} & m_{13} \\ m_{21} & m_{22} & m_{23} \\ m_{31} & m_{32} & m_{33}\end{pmatrix} \begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix}\\
+        y_{i} &= \sum_{j}M_{ij}x_j.
+      \end{align*}
+    \item The linear operator
+      \begin{align*}
+        P &= \begin{pmatrix}1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 0\end{pmatrix}
+      \end{align*}
+      is a projection. In particular, $P$ maps any vector $v$ to its $x$ and $y$ components. The projection operator is idempotent --- $P^2 = P$.
+  \end{enumerate}
+\end{example}
+Note that ``magnitude and direction'' follows from the idea of a vector.
+\subsection{Vector Spaces}%
+\subsubsection{Essentials of Vector Spaces}%
+A vector space is a free module generated over a field. The generating set is known as a basis.\newline
+
+Unfortunately, physicists don't care about that stuff so we have to go the long way to define a vector space.
+\begin{definition}[Properties of a Vector Space]
+  Let $\mathbf{A}$ and $\mathbf{B}$ be vectors and $a,b\in \F$. Our vector space must be closed under addition. Then, we must have
+  \begin{itemize}
+    \item Commutativity: $\mathbf{A} + \mathbf{B} = \mathbf{B} + \mathbf{A}$.
+    \item Associativity: $\left(\mathbf{A} + \mathbf{B}\right) + \mathbf{C} = \mathbf{A} + \left(\mathbf{B} + \mathbf{C}\right)$.
+    \item Additive Inverse: $\mathbf{A} + \left(-\mathbf{A}\right) = 0$.
+    \item Distributivity of Scalar Multiplication: $a\left(\mathbf{A} + \mathbf{B}\right) = a\mathbf{A} + a\mathbf{B}$.
+    \item Associativity of Scalar Multiplication: $\left(ab\right)\mathbf{A} = a\left(b\mathbf{A}\right)$.
+  \end{itemize}
+\end{definition}
+\begin{example}[Understanding $\R^3$]
+  \begin{itemize}
+    \item Arrows in $\R^3$ are a vector space.
+    \item Vectors in $\R^3$ with one vanishing component \textit{are not} a vector space. However, vectors in $\R^3$ with the same vanishing component \textit{are} a vector space (also known as a subspace) --- this vector space is isomorphic to $\R^2$.
+    \item A plane that slices through the origin in $\R^3$ is a subspace, and any line that slices through the origin in $\R^3$ is also a subspace.
+  \end{itemize}
+\end{example}
+\subsubsection{Touching Base(s)}%
+The primary circumstance under which $a\mathbf{A} + b\mathbf{B} = 0$ is if $\mathbf{B} = -\left(\frac{a}{b}\right)\mathbf{A}$, meaning $\mathbf{A}$ and $\mathbf{B}$ are parallel.\newline
+
+If the only way $a\mathbf{A} + b\mathbf{B} = 0$ is if $a = b = 0$, then $\mathbf{A}$ and $\mathbf{B}$ are independent of each other.
+\begin{definition}
+  A collection $\set{\mathbf{A}_{i}}_{i=1}^{k}$ of vectors is called linearly independent if
+  \begin{align*}
+    \sum_{i=1}^{k}c_i\mathbf{A}_i = 0
+  \end{align*}
+  if and only if $c_i = 0$ for all $i = 1,\dots,k$.
+\end{definition}
+\begin{definition}[Spanning Set]
+  A collection $\set{\mathbf{B}_j}_{j=1}^{m}$ is said to be spanning if for any vector $\mathbf{A}$, there exist $c_1,\dots,c_m$ such that
+  \begin{align*}
+    \mathbf{A} &= \sum_{j=1}^{m}c_j\mathbf{B}_j.
+  \end{align*}
+\end{definition}
+\begin{definition}[Basis]
+  A collection of vectors $\set{e_i}_{i=1}^{n}$ is a basis if it is both linearly independent and spanning for the vector space.\newline
+
+  The dimension of a vector space is equal to the cardinality of the basis.
+\end{definition}
+The basis $\set{e_i}_{i=1}^{n}$ ``supports'' any vector in a set. For any vector $\mathbf{A}$, then
+\begin{align*}
+  \mathbf{A} &= \sum_{j=1}^{n}c_je_j.
+\end{align*}
+We say the $c_j$ are the components of $\mathbf{A}$ on the basis $\set{e_i}_{i=1}^{n}$.
+\begin{example}[Standard Basis]
+Consider the set of $n\times 1$ arrays,
+\begin{align*}
+  \mathbf{A} = \begin{pmatrix}a_1\\\vdots\\a_n\end{pmatrix}.
+\end{align*}
+This set obeys the necessary rules for the column vectors. We define the standard basis for this set by
+\begin{align*}
+  e_i &= \begin{pmatrix}0\\\vdots\\1\\\vdots\\0\end{pmatrix},
+\end{align*}
+where the $1$ is at the $i$th position. We will write $e_i = \hat{e}_i$.\newline
+
+We can write
+\begin{align*}
+  \mathbf{A} &= \sum_{i=1}^{n}a_i\hat{e}_i.
+\end{align*}
+Note that the expansion coefficients are the elements of the column vector $\mathbf{A}$.
+\end{example}
+\begin{example}[Non-standard Basis]
+  Let
+  \begin{align*}
+    \epsilon_1 &= \begin{pmatrix}1\\1\\1\end{pmatrix}\\
+    \epsilon_2 &= \begin{pmatrix}1\\-2\\1\end{pmatrix}\\
+    \epsilon_3 &= \begin{pmatrix}1\\0\\-1\end{pmatrix}.
+  \end{align*}
+  Then, $\set{\epsilon_1,\epsilon_2,\epsilon_3}$ forms a basis.\newline
+
+  We have
+  \begin{align*}
+    \begin{pmatrix}a_1\\a_2\\a_3\end{pmatrix} &= \left(\frac{a_1 + a_2 + a_3}{3}\right)\epsilon_1 + \left(\frac{a_1 - 2a_2 + a_3}{6}\right)\epsilon_2 + \left(\frac{a_1 - a_3}{2}\right)\epsilon_3.\\
+                                              &= \sum_{i=1}^{3}c_i\epsilon_i.
+  \end{align*}
+\end{example}
+\begin{example}[Matrix Basis]
+  Consider $\Mat_{2}\left(\C\right)$, the set of all $2\times 2$ matrices over $\C$. Then, the set
+  \begin{align*}
+    \mathcal{B} = \set{ \begin{pmatrix}1 &0 \\ 0 & 0\end{pmatrix}, \begin{pmatrix}0 & 1 \\ 0 & 0\end{pmatrix}, \begin{pmatrix}0 & 0 \\ 1 & 0 \end{pmatrix}, \begin{pmatrix}0 & 0 \\ 0 & 1\end{pmatrix} }
+  \end{align*}
+  is linearly independent. Also,
+  \begin{align*}
+    \mathcal{S} &= \set{ \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix}, \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix}, \begin{pmatrix}0 & -i \\ i & 0\end{pmatrix}, \begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix} }\\
+                &= \set{\sigma_0,\sigma_1,\sigma_2,\sigma_3}
+  \end{align*}
+  forms a basis for $\Mat_{2}\left(\C\right)$. The set $\sigma_1,\sigma_2,\sigma_3$ are known as the Pauli matrices.
+\end{example}
+\begin{example}[Vector Spaces of Polynomials]
+  Consider the set of polynomials with degree $n$, $\mathcal{P}_n$. An element of $\mathcal{P}_n$ is written
+  \begin{align*}
+    P_n\left(x\right) &= a_nx^n + a_{n-1}x^{n-1} + \cdots + a_1x + a_0.
+  \end{align*}
+  This is \textit{not} closed under addition, since we can subtract two polynomials to yield a polynomial with degree $n-1$. However, the set of polynomials with degree \textit{at most} $n$ is closed under $n$.\newline
+
+  A basis for $\mathcal{P}_n$ is $\mathcal{B} = \set{1,x,x^2,\dots,x^n}$.
+\end{example}
+\begin{example}[Vector Spaces of Periodic Functions]
+Consider the set of functions $f$ such that $f(x + T) = f(x)$ for some fixed period $T$. This \textit{is} a vector space, since we can add two functions with the same period to yield another function with that same period.\newline
+
+Finding a basis is much more difficult. However, we know that sine and cosine have a periodicity. In particular, $\sin(2\pi n/T)$ and $\cos(2\pi n/T)$ can form a (Schauder) basis for the set of functions with period $T$.
+\begin{align*}
+  f(t) &= \sum_{n=0}^{\infty} a_n\cos(2\pi nt/T) + b_n\sin(2\pi nt/T).
+\end{align*}
+However, when we have infinitely many dimensions, we run into issues of convergence, which we will deal with in a future part of this course.
+\end{example}
 \end{document}

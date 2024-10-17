@@ -1,0 +1,79 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+%\pagestyle{fancy} %better headers
+%\fancyhf{}
+%\rhead{Avinash Iyer}
+%\lhead{Advanced Linear Algebra: Ho}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{center}
+  \textbf{Math 395: Homework 5}\break
+  \textbf{Due: October 22, 2024}\break
+  \textbf{Name: Avinash Iyer}\break
+  \textbf{Collaborators: Carly Venenciano, Gianluca Crescenzo, Noah Smith, Ben Langer Weida}
+\end{center}
+\section{Problem 16}%
+\begin{problem}
+  Let
+  \begin{align*}
+    A &= \begin{pmatrix}2 & -4 & 2 & 2 \\ -2 & 0 & 1 & 3 \\ -2 & -2 & 3 & 3 \\ -2 & -6 & 3 & 7\end{pmatrix}.
+  \end{align*}
+  \begin{enumerate}[(a)]
+    \item Find the characteristic polynomial of $A$.
+    \item Compute $E_{\lambda}^{j}$ for all eigenvalues $\lambda$ of $A$ and all $j$.
+    \item Give the Jordan canonical form of $A$ and the Jordan basis $\mathcal{B}$ of $\F^4$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Using computational assistance, we find
+      \begin{align*}
+        c_A(x) &= \det\left(A - x I_{4}\right)\\
+               &= x^4 - 12x^3 + 52x^2 - 96x + 64\\
+               &= \left(x-4\right)^2\left(x-2\right)^2.
+      \end{align*}
+    \item The eigenvalues of $A$ are $2$ and $4$. Thus, we calculate
+      \begin{align*}
+        A - 2I_4 &= \begin{pmatrix}0 & -4 & 2 & 2 \\ -2 & -2 & 1 & 3 \\ -2 & -2 & 1 & 3 \\ -2 & -6 & 3 & 5\end{pmatrix}.
+        \intertext{In reduced row echelon form (with computational assistance), we get}
+                 &\simeq \begin{pmatrix}1 & 0 & 0 & -1 \\ 0 & 1 & -\frac{1}{2} & -\frac{1}{2} \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0\end{pmatrix}.
+      \end{align*}
+      Thus, $A - 2I_4$ is of rank $2$, so $\Dim\left(\ker\left(A - 2I_4\right)\right) = 2$. Thus, the vectors $v_1 =2e_1 + e_2 + e_3 + 3e_4$ and $v_2 = 2e_1 + 3e_2 + 3e_3 + 5e_4$ form a basis for the kernel. Additionally, $E_{2}^{\infty} = E_{2}^1$, since the degree on $\left(x-2\right)$ is $2$.\newline
+
+      Now, we turn our attention to $A - 4I_4$. We have
+      \begin{align*}
+        A - 4I_4 &= \begin{pmatrix} -2 & -4 & 2 & 2 \\ -2 & -4 & 1 & 3 \\ -2 & -2 & -1 & 3 \\ -2 & -6 & 3 & 3\end{pmatrix},
+        \intertext{which row-reduces to}
+                &\simeq \begin{pmatrix}1 & 0 & 0 & 0 \\ 0 & 1 & 0 & -1\\ 0 & 0 & 1 & -1 \\ 0 & 0 & 0 & 0\end{pmatrix}.
+      \end{align*}
+      Thus, $A - 4I_4$ is of rank $3$, so $\Dim\left(\ker\left(A - 4I_4\right)\right) = 1$. The vector $v_3 = 2e_1 + 3e_2 + 3e_3 + 3e_4$ is a basis for $E_{4}^{1}$. Then, we have
+      \begin{align*}
+        \left(A - 4I_4 \right)^2 &= \begin{pmatrix}4 & 8 & -4 & -4 \\ 4 & 4 & 0 & -4 \\ 4 & 0 & 4 & -4 \\ 4 & 8 & -4 & -4\end{pmatrix},
+        \intertext{which row-reduces to}
+                                 &\simeq \begin{pmatrix}1 & 0 & 1 & -1 \\ 0 & 1 & -1 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0\end{pmatrix}.
+      \end{align*}
+      Thus, $\left(A - 4I_4\right)^2$ is of rank $2$, meaning $\Dim\left(\ker\left(\left(A - 4I_4\right)^2\right)\right)  =2$, The vector $v_4 = 4e_1 + 4e_3 - 4e_4$, along with $v_3$, forms a basis for $E_{4}^{2}$.
+    \item Thus, via finding the generalized eigenspaces $E_{2}^1$ and $E_{4}^2$, we get the Jordan basis of
+      \begin{align*}
+        \mathcal{B} &= \set{ \begin{pmatrix}2 \\ 1 \\ 1 \\ 3\end{pmatrix}, \begin{pmatrix}2 \\ 3 \\ 3 \\ 5\end{pmatrix}, \begin{pmatrix}2\\3\\3\\3\end{pmatrix}, \begin{pmatrix}4\\0\\4\\-4\end{pmatrix}},
+      \end{align*}
+      with the Jordan canonical form of
+      \begin{align*}
+        \left[T_A\right]_{\mathcal{B}} &= \begin{pmatrix}2 &0 &0 &0 \\ 0& 2 & 0&0 \\ 0& 0& 4 & 1 \\ 0& 0& 0& 4\end{pmatrix}
+      \end{align*}
+  \end{enumerate}
+\end{solution}
+\end{document}

@@ -1292,9 +1292,99 @@ However, now, we mean $\left\vert A \right\vert < \left\vert B \right\vert$ mean
 \begin{proof}
   \begin{align*}
     \kappa^{\kappa} &= \left(2^{\kappa}\right)^{\kappa}\\
-                    &= 2^{\kappa\times\kappa}\\
+                    &= 2^{\kappa\cdot\kappa}\\
                     &= 2^{\kappa}\\
                     &\leq \kappa^{\kappa}.
   \end{align*}
 \end{proof}
+\subsection{Equivalent Versions of the Axiom of Choice}%
+\begin{theorem}[Traditional Statement of the Axiom of Choice]
+  If $S$ is a set, and $\forall x\in S$, $x\notin \emptyset$, then
+  \begin{align*}
+    \exists f: S\rightarrow \bigcup S
+  \end{align*}
+  such that $\forall x\in S$, $f(x)\in x$.\newline
+
+  We say $f$ is a choice function.
+\end{theorem}
+\begin{theorem}[Well-Ordering Theorem]
+  Every nonempty set admits a well-ordering.
+\end{theorem}
+\begin{theorem}[Zorn's Lemma]
+  In every partially ordered set $S$, if every chain has an upper bound in $S$, then $S$ contains a maximal element.
+\end{theorem}
+The common joke is that the axiom of choice is obviously true, the well-ordering theorem is obviously false, and Zorn's lemma is unclear.
+\begin{definition}[Partially Ordered Set]
+  A relation $\preceq$ is known as a partial order if
+  \begin{itemize}
+    \item $\forall x\in S \left(x\preceq x\right)$;
+    \item $\forall x,y\in S\left(x\preceq y \wedge y\preceq x \Rightarrow x = y\right)$;
+    \item $\forall x,y,z\in S\left(x\preceq y\wedge y\preceq z \Rightarrow x\preceq z\right)$.
+  \end{itemize}
+  A partial order may or may not be total. A total ordering includes a fourth condition:
+  \begin{itemize}
+    \item $\forall x,y\in S\left(x\preceq y \vee y\preceq x\right)$.
+  \end{itemize}
+  A set equipped with a partial ordering is known as a partially ordered set.
+\end{definition}
+\begin{definition}[Chain]
+  A chain in $S$ is a subset of $S$ that is totally ordered by $\preceq$.
+\end{definition}
+\begin{definition}[Upper Bound]
+  An upper bound of a subset of $S$ is an element $u\in S$ such that $\forall x\in T\left(x\preceq u\right)$.
+\end{definition}
+\begin{definition}[Maximal Element]
+  An element $m\in S$ is maximal if $\forall x\in S \left(x\succeq m \Rightarrow x = m\right)$.
+\end{definition}
+\begin{example}[Using Zorn's Lemma]
+  We want to know if there exists an uncountable set $T$ such that
+  \begin{enumerate}[(1)]
+    \item $\forall A\in T$, $A\subseteq \R$ and $A$ is countable;
+    \item $ \left(T,\subseteq\right) $ is totally ordered.
+  \end{enumerate}
+  The answer is yes.
+\end{example}
+\begin{proof}[Proof of Zorn's Lemma]
+  Suppose $S$ does not have a maximal element. Then, every chain $C$ in $S$ has a strict upper bound; i.e., for any upper bound $b$ of $C$, $b\notin C$.\newline
+
+  The Axiom of Choice implies that there exists $f: H = \set{C\mid C\text{ is a chain in $S$}}\rightarrow S$ such that $f(C)$ is a strict upper bound for $c$.\newline
+
+  Let $\Gamma$ be an arbitrary ordinal, $\alpha \in \Gamma$. Define $g: \Gamma \rightarrow H$ recursively by
+  \begin{align*}
+    g(\alpha) &= \begin{cases}
+      \emptyset & \alpha = \emptyset\\
+      g(\beta) \cup \set{f\left(g\left(3\right)\right)}& \alpha = \beta + 1\\
+      \bigcup_{\beta\in\alpha}g(\beta)& \alpha\text{ is a limit ordinal}
+    \end{cases}.
+  \end{align*}
+  We must show that $g$ is injective.\newline
+
+  If $g$ is injective, then we have $\left\vert \Gamma \right\vert\leq \left\vert H \right\vert$. However, since $\Gamma$ is arbitrary, we can find $\kappa$ that is a cardinal for $\left\vert H \right\vert$, but this implies that $\left\vert H \right\vert \geq \kappa$.
+\end{proof}
+  \begin{theorem}
+    Every vector space has a basis.
+  \end{theorem}
+  \begin{proof}
+    Let $V$ be a vector space. Let $L = \set{S\subseteq V\mid S\text{ is linearly independent}}$. Then, $\left(L,\subseteq\right)$ is a partially ordered set.\newline
+
+    Every chain $C$ in $L$ has an upper bound:
+    \begin{align*}
+      U &= \bigcup_{A\in C} A.
+    \end{align*}
+    Then, $C$ is necessarily linearly independent, as otherwise, we would have $a_1v_1 + \cdots a_nv_n = 0$ with $a_1,\dots,a_n\neq 0$, implying $v_1,\dots,v_n\in A$ for some $A\in C$, implying $A$ is linearly dependent.\newline
+
+    Thus, by Zorn's lemma, $L$ has a maximal element, $S_{\text{max}}$. Then, $S_{\text{max}}\in L$, so $S_{\text{max}}$ is linearly independent.\newline
+
+    Additionally, $S_{\text{max}}$ spans $V$, because if there were some $w\in V$ with $w\notin \Span\left(S_{\text{max}}\right)$, then we could take $S_{\text{max}}\cup \set{w}$, which would still be linearly independent, contradicting the maximality of $S$.
+  \end{proof}
+  \begin{example}
+    Let $\Gamma = \set{f: \R\rightarrow \R}$, and let $\Gamma_{C}\set{f: \R\xrightarrow{\text{continuous}}\R}$. We want to prove that $\left\vert \Gamma_{C} \right\vert < \left\vert \Gamma \right\vert$.
+    \begin{lemma}
+      If $f,g\in \Gamma_C$ are continuous, and for every $x\in \Q$, $f(x) = g(x)$, then $f=g$.
+    \end{lemma}
+    \begin{proof}
+      Suppose toward contradiction that $\exists x$ with $f(x) \neq g(x)$. Then, $\left(f-g\right)(x) \neq 0$. Since $f-g$ is continuous, there is some $\delta$ such that on $\left(x-\delta,x+\delta\right)$, $f-g$ is never zero. However, since $\exists r\in \Q$ such that $r\in \left(x-\delta,x+\delta\right)$, this implies that $\left(f-g\right)(r) \neq 0$.
+    \end{proof}
+    Let $\gamma_{\Q} = \set{f|_{\Q}\mid f\in \Gamma_{C}}$. Let $\varphi: \Gamma_{C}\rightarrow \Gamma_{\Q}$ defined by $\varphi(f) = f|_{\Q}$. Then, $\varphi$ is injective. Thus, $\left\vert \Gamma_{C} \right\vert \leq \left\vert \Gamma_{\Q} \right\vert \leq \left\vert \R \right\vert^{\left\vert \Q \right\vert} < \left\vert \R \right\vert^{\left\vert \R \right\vert}$ since $\left\vert \Q \right\vert < \left\vert \R \right\vert$, so $\left\vert \Gamma_{C} \right\vert < \left\vert \Gamma \right\vert$.
+  \end{example}
 \end{document}

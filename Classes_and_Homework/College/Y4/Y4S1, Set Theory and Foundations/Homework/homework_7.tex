@@ -1,0 +1,113 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Set Theory and Foundations: Homework 7}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{2.12}%
+\begin{problem}
+  Let $\kappa$ and $\lambda$ be cardinals. Show that $\kappa \in \lambda$ if and only if there exists an injective function from $\kappa$ to $\lambda$ and there does not exist a bijective map between $\kappa$ and $\lambda$.
+\end{problem}
+\begin{solution}
+  Let $\kappa \in \lambda$. Then, $\kappa \subset \lambda$ since ordinals are transitive. Then, $\iota: \kappa \hookrightarrow \lambda$, the inclusion map, is injective.\newline
+
+  Let $S = \set{\alpha\mid \exists g: \alpha \rightarrow \kappa}$ with $g$ bijective, and similarly, let $T = \set{\alpha\mid \exists h: \alpha \rightarrow \lambda}$. Since $S = T$, then $\kappa$ is the least element of $S$ and $\lambda$ is the least element of $S$ as both $\kappa$ and $\lambda$ are cardinals, meaning $\kappa = \lambda$.\newline
+
+  Suppose there exists $f: \kappa \hookrightarrow \lambda$ that is injective, and there does not exist $g: \kappa \rightarrow \lambda$ that is bijective.\newline
+
+  By trichotomy, either $\kappa = \lambda$, $\kappa \in \lambda$, or $\lambda\in \kappa$. Since $\kappa \neq \lambda$ (as otherwise, $\id: \kappa \rightarrow \lambda$ would be a bijection). If $\lambda \in \kappa$, then there would exist an injection $h: \lambda \hookrightarrow \kappa$, then there would be a bijection by Cantor--Schröder--Bernstein, which would be a contradiction to the assumption that there does not exist a bijection.
+\end{solution}
+\section{2.13}%
+\begin{problem}
+  Let $A$ be a set. Given a subset $B$ of $A$, define $f_B: A\rightarrow \set{0,1}$ by
+  \begin{align*}
+    f_B(x) &= \begin{cases}
+      1 & x\in B,\\
+      0 & x\notin B
+    \end{cases}.
+  \end{align*}
+  Let $C$ be the set of all functions mapping from $A$ from $\set{0,1}$, and define $\Phi: P(A) \rightarrow C$ by $\Phi(B) = f_B$. Show that $\Phi$ is bijective.
+\end{problem}
+\begin{solution}
+  Let $\Phi(B) = \Phi(C)$. Then, we have $f_B = f_C$, meaning that $f_B(x) = f_C(x)$ for all $x\in A$. Thus, for $x\in B$, we have $f_B(x) = 1 = f_C(x)$, meaning $x\in C$, and for $x\notin B$, $f_B(x) = 0 = f_C(x)$, meaning $x\notin C$. Thus, $B = C$. This shows injectivity.\newline
+
+  To show surjectivity, we let $f\in C$. Then, $\text{Graph}(f)$ is some collection of the form $(a,0)$ and $(a,1)$ in $A\times \set{0,1}$. We find $B\subseteq A$ by taking $B = \set{a\in A\mid \left(a,1\right)\in \text{Graph}(f)}$. Since $f$ is a function, it must be the case that $B$ is well-defined, and $B\subseteq A$. Thus, $\Phi$ is surjective.\newline
+
+  Let $\left\vert A \right\vert = \kappa$. We can define a bijection $P(A)$ to $\set{0,1}^{A}$, meaning $\left\vert P(A) \right\vert = \left\vert \set{0,1}^{A} \right\vert$, and $\left\vert \set{0,1}^{A} \right\vert = 2^{\kappa}$, so $\left\vert P(A) \right\vert = 2^{\kappa}$.
+\end{solution}
+\section{Extra Problem 1}%
+\begin{problem}
+  Show that for cardinals $A$ and $B$, $A+B = B+A$ and $AB = BA$.
+\end{problem}
+\begin{solution}
+  We have
+  \begin{align*}
+    A+B &= \left\vert A\times \set{0} \cup B\times \set{1} \right\vert = \left\vert S \right\vert\\
+    B+A &= \left\vert A\times \set{1} \cup B\times \set{0} \right\vert = \left\vert T \right\vert.
+  \end{align*}
+  We define a bijection $S\rightarrow T$ by $ \left(a,0\right)\mapsto\left(a,1\right)$ for $a\in A$ and $\left(b,1\right)\mapsto \left(b,0\right)$ for $b\in B$. Thus, $\left\vert S \right\vert = \left\vert T \right\vert$, so $A+B = B+A$.\newline
+
+  We also have
+  \begin{align*}
+    AB &= \left\vert A\times B \right\vert = \left\vert P \right\vert\\
+    BA &= \left\vert B\times A \right\vert = \left\vert Q \right\vert.
+  \end{align*}
+    We define a bijection $P\rightarrow Q$ by $(a,b)\mapsto (b,a)$. Thus, $\left\vert P \right\vert = \left\vert Q \right\vert$, meaning $AB = BA$.
+\end{solution}
+\section{Extra Problem 2}%
+\begin{problem}
+  Use the ``contradiction format'' of induction to prove the Pigeonhole Principle.
+\end{problem}
+\begin{solution}
+  Suppose toward contradiction that the Pigeonhole Principle fails. Let $n_0\in \N$ be the smallest value such that the Pigeonhole principle fails. Then, there exists an injection from $\set{0,\dots,n_0}\rightarrow A$, where $A\subsetneq \set{0,\dots,n_0}$. In particular, the ordinal corresponding to $\left\vert \set{0,\dots,n_0} \right\vert $ is $ n_0 + 1$, so $\left\vert A \right\vert\in n_0 + 1$. However, since $\left\vert A \right\vert\in n_0 + 1$, there is an injection from $A$ to $n_0 + 1$, meaning there is a bijection from $A$ to $\set{0,\dots,n_0}$. However, this implies that $n_0 + 1 = A \in n_0 + 1$, or $n_0 + 1\in n_0 + 1$, which is a violation of the Axiom of Regularity.
+\end{solution}
+\section{Extra Problem 3}%
+\begin{problem}
+  Prove that if $A\subsetneq B$ and $\left\vert A \right\vert = \left\vert B \right\vert$, then $A$ and $B$ are infinite.
+\end{problem}
+\begin{solution}
+  Let $c_A: A\rightarrow \lambda$ and $c_B: B\rightarrow \lambda$ be bijections, where $\lambda = \min\set{\alpha\mid c_A,c_B\text{ are bijections}}$.\newline
+
+  Since $A\subsetneq B$, $\iota: A\rightarrow B$ defined by $\iota(x) = x$ is an injection that is not a bijection. Thus, $c_B\circ\iota: A\rightarrow \lambda$ is an injection. However, since there does not exist $\kappa \in \lambda$ with $c_B\circ \iota: A\rightarrow \kappa$ as a bijection, it must be the case that $\lambda$ is a limit ordinal (i.e., infinite).
+\end{solution}
+\section{Extra Problem 4}%
+\begin{problem}
+  Prove that if $\gamma$ is an infinite ordinal, then $\omega \subseteq \gamma$.
+\end{problem}
+\begin{solution}
+  If $\gamma$ is an infinite ordinal, then $\gamma = \omega$, in which case $\omega \subseteq \omega = \gamma$, $\omega \in \gamma$, in which case $\omega \subseteq \gamma$, or $\gamma \in \omega$, meaning $\gamma$ is finite (contradicting the assumption that $\gamma$ is infinite).
+\end{solution}
+\section{Extra Problem 5}%
+\begin{problem}
+  Show that every infinite set contains a denumerable subset.
+\end{problem}
+\begin{solution}
+  Let $S$ be an infinite set, and let $\alpha$ denote the cardinality of $S$.\newline
+
+  There exists some bijection $f: S\rightarrow \alpha$. Since $S$ is infinite, $\alpha$ is infinite, since if $\alpha$ were to be finite, then $f^{-1}:\alpha \rightarrow S$ would be a bijection with a finite domain, meaning $S$ would be finite.\newline
+
+  By the previous problem, $\omega \subseteq \alpha$, meaning we can take $U\subseteq S$ to be $U = f^{-1}\left(\omega\right)$, which is a denumerable set as $\omega$ is denumerable.
+\end{solution}
+\section{Extra Problem 6}%
+\begin{problem}
+  Show that every infinite subset $S$ has a proper subset with the same cardinality as $S$.
+\end{problem}
+\begin{solution}
+  I don't know how to do this problem.
+\end{solution}
+\end{document}

@@ -10,6 +10,7 @@
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \renewcommand*{\hbar}{\hslash}
 \DeclareMathOperator{\Graph}{graph}
+\DeclareMathOperator{\supp}{supp}
 
 \pagestyle{fancy} %better headers
 \fancyhf{}
@@ -22,7 +23,7 @@
 \RaggedRight
 \tableofcontents
 \section{Introduction}%
-This is going to be part of the notes for my Honors thesis independent study, which will be focused on amenability and $C^{\ast}$-algebras. This section of notes will be focused on the essential results in functional analysis, starting from normed vector spaces, working our way up through $C^{\ast}$-algebras.\newline
+This is going to be part of the notes for my Honors thesis independent study, which will be focused on amenability and $C^{\ast}$-algebras. This section of notes will be focused on the essential results in functional analysis, starting from normed vector spaces, working our way up through locally convex topological vector spaces and the Krein--Milman theorem.\newline
 
 The primary source for this section is going to be Timothy Rainone's \textit{Functional Analysis-En Route to Operator Algebras}, which has not been published yet.\newline
 
@@ -1049,6 +1050,42 @@ A surjective continuous map between topological spaces is not necessarily an ope
 
     The closed graph theorem thus implies that $X\subseteq \ell_1$ must not be closed.
   \end{example}
+  We can use the closed graph theorem to obtain insights about the orthogonal projection operators.\footnote{Idempotent operator, where $P^2 = P$, are also known as projections. I will refer to them as projections.}
+  \begin{proposition}
+    Let $Z = X\oplus Y$ be a topological internal direct sum of a Banach space $Z$. Then, the projection operators $P_{X}$ and $P_{Y}$ onto the closed subspaces of $X$ and $Y$ respectively are bounded.
+  \end{proposition}
+  \begin{proof}
+    Let $\left(z_n\right)_n$ and $\left(P_X\left(z_n\right)\right)_n$ be sequences in $z$ with $\left(z_n\right)_n \rightarrow z$ and $\left(P_{X}\left(z_n\right)\right)_n \rightarrow u$ for some $z,u\in Z$.\newline
+
+     For each $n\in \N$, we may write $z_n = x_n + y_n$, with $x_n\in X$ and $y_n \in Y$. Since $X$ is closed, and $x_n = P_X\left(z_n\right)$, it is the case that $u\in X$. Then, $y_n = z_n - x_n$ converges to $z - u$; since $Y$ is closed, $z-u\in Y$. Setting $y = z-u$, we have
+     \begin{align*}
+       P_X\left(z\right) &= P_X\left(u + y\right)\\
+                         &= P_X\left(u\right) + P_X\left(y\right)\\
+                        &= u.
+     \end{align*}
+     Thus, the graph of $P_X$ is closed.
+  \end{proof}
+  \begin{proposition}
+    Let $Z$ be a Banach space, and let $P\in \mathcal{B}\left(Z\right)$ be a projection. Then, $\ker\left(P\right)$ and $\Ran\left(P\right)$ are closed subspaces, and
+    \begin{align*}
+      Z &= \Ran\left(P\right) \oplus \ker\left(P\right).
+    \end{align*}
+  \end{proposition}
+  \begin{proof}
+    For every $z\in Z$, we may express $z = P(z) + \left(z - P(z)\right)$. Since $P\left(z-P(z)\right) = P(z) - P^2\left(z\right) = P(z)-P(z) = 0$, we can see that $Z = \Ran\left(P\right) \oplus \ker\left(P\right)$.\newline
+
+    We now need to show that $\Ran\left(P\right)$ is closed. Let $\left(x_n\right)_n$ be a sequence in $\Ran\left(p\right)$ with $\left(x_n\right)_n\rightarrow z$. Then, for each $n\in \N$, we may write $x_n = P\left(z_n\right)$. Since $P$ is continuous, we can see that $\left(P\left(x_n\right)\right)\rightarrow P\left(z\right)$. However, at the same time, we may write $x_n = P\left(z_n\right)$, so
+    \begin{align*}
+      P\left(x_n\right) &= P\left(P\left(z_n\right)\right)\\
+                        &= P\left(z_n\right)\\
+                        &= x_n\\
+                        &\rightarrow z,
+    \end{align*}
+    Which implies that $z = P(z)\in \Ran\left(P\right)$ by the uniqueness of limits.
+  \end{proof}
+  \begin{corollary}
+    Let $Z$ be a Banach space, and let $X\subseteq Z$ be a closed subspace. Then, $X$ is complemented in $Z$ if and only if there is a projection $P: Z\rightarrow Z$ with $\Ran\left(P\right) = X$.
+  \end{corollary}
   \subsection{Uniform Boundedness Principle}%
   The uniform boundedness principle is often useful when when dealing with a family of bounded operators. It says that a pointwise bounded family of operators on a Banach space is bounded.
   \begin{theorem}[Uniform Boundedness Principle]
@@ -1103,4 +1140,1496 @@ A surjective continuous map between topological spaces is not necessarily an ope
     \end{align*}
     for all $i\in I$, so $\sup_{x\in B_X}\norm{T_i(x)}\leq \frac{2m}{r}$. Thus, $\sup_{i\in I}\norm{T_i}_{\text{op}} \leq \frac{2m}{r}$.
   \end{proof}
+  \begin{proof}[Alternative Proof of (2)]
+    Suppose toward contradiction that $\sup_{i\in I}\norm{T_i}_{\text{op}} = \infty$. We can choose a sequence of operators $\left(T_{i_n}\right)_n$ such that $\norm{T_{i_n}}_{\text{op}}\geq 4^n$. We write $T_{i_n}:=T_n$. We will construct some $x\in X$ such that $\left(\norm{T_n(x)}\right)_n$ is unbounded, yielding a contradiction.\newline
+
+    For any $x\in X$ and $r > 0$, we have
+    \begin{align*}
+      \sup_{y\in B\left(x,r\right)} &\geq r\norm{T}_{\text{op}}\\
+                                    &> \frac{2}{3}r\norm{T}_{\text{op}}.
+    \end{align*}
+    Setting $x_0 = 0$, $T = T_1$, and $r_0 = T^0$, we can find $x_1$ with
+    \begin{align*}
+      \norm{x_1 - x_0} \leq r_0\\
+      \norm{T_1\left(x_1\right)} &\geq \frac{2r}{3}\norm{T_1}_{\text{op}}.
+    \end{align*}
+    We find $x_2$ given $T_2$ such that for $r_1 = 3^{-1}$
+    \begin{align*}
+      \norm{x_2 - x_1} & \leq r_1
+      \norm{T_2\left(x_2\right)} \geq \frac{2r_1}{3}\norm{T_2}_{\text{op}}.
+    \end{align*}
+    Inductively, we find $x_{n+1}$ such that for $r_n = 3^{-n}$,
+    \begin{align*}
+      \norm{x_{n+1}-x_n} &\leq r_n\\
+      \norm{T_{n+1}\left(x_{n+1}\right)} \geq \frac{2r_{n}}{3}\norm{T_{n+1}}_{\text{op}}.
+    \end{align*}
+    Thus, we have a sequence $\left(x_n\right)_n$ with
+    \begin{align*}
+      \norm{x_{n+1}-x_n} &\leq 3^{-n}\\
+      \norm{T_n\left(x_n\right)}\geq \frac{2}{3^n}\norm{T_n}_{\text{op}}.
+    \end{align*}
+    This means $\left(x_n\right)_n$ is Cauchy, and thus converges to $x\in X$ with $\norm{x-x_n}\leq \frac{1}{(2)\left(3^{n-1}\right)}$. Thus yields
+    \begin{align*}
+      \frac{1}{\left(2\right)\left(3^{n-1}\right)}\norm{T_n}_{\text{op}} &\geq \norm{T_n}_{\text{op}}\norm{x_n - x}\\
+                                                                     &\geq \norm{T_n\left(x_n -x\right)}\\
+                                                                     &= \norm{T_n\left(x_n\right) - T_n\left(x\right)}\\
+                                                                     &\geq \norm{T_n\left(x_n\right)} - \norm{T_n\left(x\right)}\\
+                                                                     &\geq \frac{2}{3^n}\norm{T_n}_{\text{op}} - \norm{T_n\left(x\right)}.
+    \end{align*}
+    Thus, we have
+    \begin{align*}
+      \norm{T_n\left(x\right)} &\geq \frac{2}{3^n}\norm{T_n}_{\text{op}} - \frac{1}{\left(2\right)\left(3^{n-1}\right)}\norm{T_n}_{\text{op}}\\
+                               &= \frac{1}{\left(2\right)3^{n}}\norm{T_n}_{\text{op}}\\
+                               &\geq \frac{1}{2}\left(\frac{4}{3}\right)^{n}
+    \end{align*}
+  \end{proof}
+  \begin{corollary}[Banach--Steinhaus Theorem]
+    Let $X,Y$ be Banach spaces, and let $\left(T_n\right)_n$ be a sequence of bounded linear operators in $\mathcal{B}\left(X,Y\right)$ with $\lim_{n\rightarrow\infty}\left(T_n\left(x\right)\right)$ exists for every $x\in X$. Then,
+    \begin{align*}
+      T\left(x\right) &= \lim_{n\rightarrow\infty}\left(T_n\left(x\right)\right)
+    \end{align*}
+    defines a bounded linear map from $X$ to $Y$.
+  \end{corollary}
+  \begin{proof}
+    We can see that $T$ is linear by its definition. Since $\left(T_n\left(x\right)\right)_n$ converges in $Y$ for all $x\in X$, we have $\left(T_n\left(x\right)\right)$ is bounded in $Y$ for all $x\in X$. Thus, $\sup_{n\geq 1}\norm{T_n\left(x\right)} < \infty$ for all $x\in X$, so $\sup_{n\geq 1}\norm{T_n}_{\text{op}} = C$ for some $C > 0$.\newline
+
+    Given $x\in B_X$, we can see that
+    \begin{align*}
+      \norm{T\left(x\right)} &= \norm{\lim_{n\rightarrow\infty}\left(T_{n}\left(x\right)\right)}\\
+                             &= \lim_{n\rightarrow\infty}\norm{T_n\left(x\right)}\\
+                             &\leq \limsup_{n\rightarrow\infty}\norm{T_n}_{\text{op}}\norm{x}\\
+                             &\leq \limsup_{n\rightarrow\infty}\norm{T_n}_{\text{op}}\\
+                             &\leq C,
+    \end{align*}
+    meaning $\norm{T}_{\text{op}} \leq C$.
+  \end{proof}
+  \begin{example}
+    Let $\left(z_k\right)_k$ be a sequence such that $\sum_{k=1}^{\infty}z_ky_k$ converges for every $\left(y_k\right)_k\in c_0$. We claim that $\left(z_k\right)_k\in \ell_1$.\newline
+
+    Consider the map
+    \begin{align*}
+      T_n: c_0\rightarrow \C\\
+      T_n\left(y\right) &= \sum_{k=1}^{n}z_ky_k.
+    \end{align*}
+    We can see that
+    \begin{align*}
+      \left\vert T_n\left(y\right) \right\vert &= \left\vert \sum_{k=1}^{n}z_ky_k \right\vert\\
+                                               &\leq \sum_{k=1}^{n}\left\vert z_ky_k \right\vert\\
+                                               &\leq \norm{y}_{\infty}\left(\sum_{k=1}^{n}\left\vert z_k \right\vert\right).
+    \end{align*}
+    Thus, each $T_n$ is bounded linear with $\left\vert T_n \right\vert_{\text{op}}\leq \sum_{k=1}^{n}\left\vert z_k \right\vert$.\footnote{It is an exercise to show that this is an inequality. I'm not sure how to do it though.}\newline
+
+    By assumption, we have that $\left(T_n\left(y\right)\right)_n$ converges, meaning $\sup_{n\geq 1}\left\vert T_n\left(y\right) \right\vert < \infty$ for all $y\in c_0$. The Uniform Boundedness Principle gives $\sup_{n\geq 1}\norm{T_n}_{\text{op}} < \infty$. Thus,
+    \begin{align*}
+      \norm{z}_1 &= \sum_{k=1}^{\infty}\\
+                 &= \sup_{n\geq 1}\left(\sum_{k=1}^{n}\left\vert z_k \right\vert\right)\\
+                 &= \sup_{n\geq 1}\norm{T_n}_{\text{op}}\\
+                 &<\infty.
+    \end{align*}
+  \end{example}
+  \begin{example}[Product Maps]
+    Let $\set{X_i}_{i\in I}$ be a family of Banach spaces, and consider the product
+    \begin{align*}
+      \prod_{i\in I}X_i &= \set{\left(x_i\right)_i\mid x_i\in X_i, \sup_{i\in I}\norm{x_i} < \infty}.
+    \end{align*}
+    The product space is a Banach space with pointwise operations and the norm $\norm{\left(x_i\right)_{i\in I}}_{\infty} = \sup_{i\in I}\norm{x_i}$.\newline
+
+    Consider a Banach space $Z$ and a linear map $Z\rightarrow \prod_{i\in I}X_i$.\newline
+
+    We can see that if $T$ is continuous, then $\pi_j\circ T: Z\rightarrow X_j$, where $\pi_j$ is the canonical projection map on $\prod_{i\in I}X_i$, is also continuous for each $j$. However, it is also the case that this is a sufficient condition --- that is, if $\pi_j\circ T$ is continuous for each $j$, then $T$ is continuous.
+    \begin{proof}
+      Let $\iota_j: X_j\hookrightarrow \prod_{i\in I}X_i$ be the inclusion map, and $T_j: Z\rightarrow \prod_{i\in I}X_i$ be given by
+      \begin{align*}
+        T_j &= \iota_j\circ \pi_j\circ T.
+      \end{align*}
+      Then,
+      \begin{align*}
+        \sup_{j\in I}\norm{T_j\left(z\right)} &= \sup_{j\in I}\norm{\pi_j\circ T(z)}\\
+                                              &= \norm{T(z)}\\
+                                              &< \infty
+      \end{align*}
+      for all $z\in Z$. Thus, $\sup_{j\in I}\norm{T_j}_{\text{op}} < \infty$, so $\norm{T}_{\text{op}}$ is bounded.
+    \end{proof}
+  \end{example}
+  \subsection{Hahn--Banach Theorems}%
+  The Hahn--Banach extension theorems allow us to extend continuous linear functionals from subspaces to the full vector space, while the separation theorems allow us to separate points from closed subspaces.
+  \begin{definition}[Algebraic Dual]
+    Let $X$ be a vector space over $\F$. Then, $X' = \mathcal{L}\left(X,\F\right)$, which consists of \textit{all} linear functionals from $X$ into $\F$, is known as the algebraic dual.
+  \end{definition}
+  \begin{definition}[Continuous Dual]
+    Let $X$ be a normed vector space over $\F$. Then, $X^{\ast} = \mathcal{B}\left(X,\F\right)$, which consists of all \textit{continuous} linear functionals from $X$ into $\F$, is known as the continuous dual.\footnote{Since this is functional analysis, any mention of the ``dual space'' will refer to the continuous dual.}
+  \end{definition}
+  \begin{definition}[Hyperplane]
+    A hyperplane is a subspace $E\subseteq X$ such that $\Dim\left(X/E\right) = 1$. An affine hyperplane is of the form $x_0 + E$ for some fixed $x_0\in X$.
+  \end{definition}
+  \begin{proposition}
+    Let $X$ be a normed vector space over $\F$.
+    \begin{enumerate}[(1)]
+      \item If $\varphi\in X'$ is not zero, then $\varphi$ is bounded if and only if $\ker\left(\varphi\right) \subseteq X$ is closed. In this case, $X/\ker\left(\varphi\right) \cong \F$ are bicontinuously isomorphic.
+      \item Given a closed hyperplane $M\subseteq X$, there is a $\varphi\in X^{\ast}$ with $\ker\left(\varphi\right) = M$.
+      \item If $\varphi\in X'$ is unbounded, then $\ker\left(\varphi\right)\subseteq X$ is norm-dense.
+    \end{enumerate}
+  \end{proposition}
+  \begin{proof}\hfill
+    \begin{enumerate}[(1)]
+      \item If $\varphi$ is continuous, then $\ker\left(\varphi\right) = \varphi^{-1}\left(0\right)$ is closed. Thus, from the definition of a quotient map, $\tilde{\varphi}: X/\ker\left(\varphi\right) \rightarrow \F$ defined by $x + \ker\left(\varphi\right) = \varphi(x)$, is a bicontinuous isomorphism from $X/\ker\left(\varphi\right)$ to $\F$.\newline
+
+        Conversely, if $\ker\left(\varphi\right)$ is closed in $X$, then $X/\ker\left(\varphi\right)$ is a normed space with dimension $1$, meaning $\tilde{\varphi}$ is continuous (as it is a linear map of dimension $1$). Thus, $\varphi = \tilde{\varphi}\circ \pi$ is continuous.
+      \item Since $X/M$ is a normed space with $\Dim\left(X/M\right) = 1$, there is a bicontinuous isomorphism $\psi: X/M\rightarrow \F$. Set $\varphi = \psi\circ\pi$, where $\pi$ denotes the canonical projection map. Then, $\varphi$ is continuous with $\ker\left(\varphi\right) = M$.
+      \item Let $M = \ker\left(\varphi\right)$. Since $\varphi$ is unbounded, then $M\subset \overline{M}$, meaning $p: X/M\rightarrow X/\overline{M}$ defined by $x+M \mapsto x + \overline{M}$ is well-defined with nontrivial kernel.\newline
+
+        However, since $\Dim\left(X/M\right) = 1$, we must have $\ker\left(p\right) = X/M$, implying that $x+\overline{M} = 0_{X/\overline{M}}$ for all $x\in X$, meaning $x\in \overline{M}$ for all $x\in X$, so $X\subseteq \overline{M}$.
+    \end{enumerate}
+  \end{proof}
+  For a vector space $X$ over $\C$, we can consider $X$ as a $\R$-vector space by simply ``forgetting'' the imaginary scalars. We can also consider the respective dual spaces over $\R$ and $\C$, which we write as follows.
+  \begin{align*}
+    \mathcal{L}_{\C}\left(X,\C\right) &:= \set{\varphi: X\rightarrow \C\mid \varphi\text{ is $\C$-linear}}\\
+    \mathcal{L}_{\R}\left(X,\R\right) &:= \set{\varphi: X\rightarrow \R\mid\varphi\text{ is $\R$-linear}}.
+  \end{align*}
+  For $\varphi\in \mathcal{L}_{\mathcal{C}}\left(X,\C\right)$, we define $\re\left(\varphi\right): X\rightarrow \R$ and $\im\left(\varphi\right): X\rightarrow \R$ to denote the real and imaginary parts of $\varphi$.
+  \begin{proposition}
+    Let $X$ be a $\F$-vector space.
+    \begin{enumerate}[(1)]
+      \item For $\varphi\in \mathcal{L}_{\C}\left(X,\C\right)$, then $u := \re\left(\varphi\right)$ and $v := \im\left(\varphi\right)$, and $v(x) = -u\left(ix\right)$, implying $\varphi(x) = u(x) - iu\left(ix\right)$.
+      \item For $u\in \mathcal{L}_{\R}\left(X,\R\right)$, the map $v: X\rightarrow \R$ defined by $v(x) := -u\left(ix\right)$ belongs to $\mathcal{L}_{\R}\left(X,\R\right)$, and the map $\varphi: X\rightarrow \C$ defined by $\varphi(x) = u(x) + iv(x)$ belongs to $\mathcal{L}_{\C}\left(X,\C\right)$.
+      \item If $\left(X,\norm{\cdot}\right)$ is a normed space, with $\varphi$ and $u$ as in (1) or (2), then $\norm{\varphi} = \norm{u}$.
+    \end{enumerate}
+  \end{proposition}
+  \begin{proof}\hfill
+    \begin{enumerate}[(1)]
+      \item For $x,y\in X$ and $t\in \R$, we find
+        \begin{align*}
+          u\left(x + ty\right) &= \re\left(\varphi\left(x + ty\right)\right)\\
+                               &= \re\left(\varphi(x) + t\varphi\left(y\right)\right)\\
+                               &= \re\left(\varphi(x)\right) + \re\left(t\varphi(y)\right)\\
+                               &= \re\left(\varphi(x)\right) + t\re\left(\varphi(y)\right)\\
+                               &= u(x) + tu(y).
+        \end{align*}
+        For any $z\in \C$, we have $\re\left(iz\right) = -\im\left(z\right)$, meaning
+        \begin{align*}
+          v(x) &= \im\left(\varphi(x)\right)\\
+               &= -\re\left(i\varphi(x)\right)\\
+               &= -\re\left(\varphi\left(ix\right)\right)\\
+               &= -u\left(ix\right).
+        \end{align*}
+      \item Since $u$ is $\R$-linear, so too are $v$ and $\varphi$. Thus,
+        \begin{align*}
+          \varphi\left(ix\right) &= u\left(ix\right) - iu\left(-x\right)\\
+                                 &= u\left(ix\right) + iu\left(x\right)\\
+                                 &= i\varphi(x).
+        \end{align*}
+        Thus, $\varphi$ is $\C$-linear.
+      \item Note that $\left\vert u(x) \right\vert = \left\vert \re\left(\varphi(x)\right) \right\vert \leq \left\vert \varphi(x) \right\vert$ for all $x\in X$, meaning $\norm{u}\leq \norm{\phi}$.\newline
+
+        For $\varphi(x) \neq 0$, we set $\alpha = \frac{\left\vert \varphi(x) \right\vert}{\varphi(x)}$, meaning $\left\vert \alpha \right\vert = 1$ and $\alpha\varphi(x) = \left\vert \varphi(x) \right\vert$. Thus, we have
+        \begin{align*}
+          \left\vert \varphi(x) \right\vert &= \alpha\varphi(x)\\
+                                            &= \varphi\left(\alpha x\right)\\
+                                            &= \re\left(\varphi\left(\alpha x\right)\right)\\
+                                            &= u\left(\alpha x\right)\\
+                                            &\leq \norm{u}\norm{\alpha x}\\
+                                            &= \norm{u}\norm{x},
+        \end{align*}
+        meaning $\norm{\varphi}\leq \norm{u}$.
+    \end{enumerate}
+  \end{proof}
+  \begin{definition}[Minkowski Functional]
+  Let $X$ be an $\R$-vector space. A Minkowski functional on $X$ is a map $m: X\rightarrow \R$ such that the following are satisfied for every $x,y\in X$ and $t\geq 0$:
+  \begin{enumerate}[(i)]
+    \item $m\left(x+y\right)\leq m(x) + m(y)$;
+    \item $m\left(tx\right) = tm(x)$.
+  \end{enumerate}
+  \end{definition}
+  Before we go into the Hahn--Banach theorems, we want to consider the problem of whether, for an $\F$-vector space $X$ and a subspace $E\subseteq X$, if there is a linear functional $\varphi: E\rightarrow \F$, is there an extension to $\psi: X\rightarrow \F$ such that $\psi|_{E} = \varphi$?\newline
+
+  The answer is yes. If we select a basis for $E$, $\mathcal{B}_0$, we extend it to a basis for $X$, $\mathcal{B}$, and define $\psi_0: X\rightarrow \F$ by sending $b\mapsto \varphi(b)$ for $b\in \mathcal{B}_{0}$, and $0$ for elements in $\mathcal{B}\setminus \mathcal{B}_0$.\newline
+
+  We may be interested in extending \textit{bounded} linear functionals as well, and if we can control the norms of these various extensions. This is where the Hahn--Banach theorems start to play a major role.
+  \begin{theorem}[Hahn--Banach--Minkowski]
+    Let $X$ be a real vector space with a Minkowski functional $m: X\rightarrow \R$, and let $E\subseteq X$ be a subspace. Suppose $\varphi: E\rightarrow \R$ is a linear functional with $\varphi(y) \leq m(y)$ for all $y\in E$.\newline
+
+    Then, there exists a linear functional $\psi: X\rightarrow \R$ such that $\psi|_{E} = \varphi$ and $\psi(x)\leq m(x)$ for all $x\in X$.
+  \end{theorem}
+  \begin{proof}
+    Consider the collection $\mathcal{Z} = \set{\left(Z,\phi\right)}$ of all linear functionals that extend $\varphi$ and are dominated by $m$. That is, $E\subseteq Z\subseteq X$ are subspaces, $\phi\in Z'$ with $\phi|_{E} = \varphi$, and $\phi(z) \leq m(z)$ for all $z\in Z$.\newline
+
+    Note that $\left(E,\varphi\right)$ is in $\mathcal{Z}$, meaning $\mathcal{Z}$ is nonempty. We define an ordering on $\mathcal{Z}$ by taking
+    \begin{align*}
+      \left(Z_1,\phi_1\right)\leq \left(Z_2,\phi_2\right)
+    \end{align*}
+    if and only if $Z_1\subseteq Z_2$ and $\phi_2|_{Z_1} = \phi_1$.\newline
+
+    Consider a chain in $\mathcal{Z}$, $\mathcal{C} = \left(Z_i,\phi_i\right)_{i\in I}$. Let $Y = \bigcup_{i\in I}Z_i$. Since $Z_i$ are totally ordered by inclusion, it is the case that $Y$ is a subspace of $X$. We define $\eta: Y\rightarrow \R$ by $\eta(x) = \phi_i(x)$ for $x\in Z_i$. Since $Z_i$ are totally ordered by inclusion, for $Z_j\subseteq Z_i$, it is the case that $\phi_{i}|_{Z_j} = \phi_i$, meaning $\left(Y,\eta\right)$ is an upper bound for $\mathcal{C}$.\newline
+
+    By Zorn's lemma,\footnote{If $P$ is a partially ordered set, and every totally ordered $C\subseteq P$ admits an upper bound, then $P$ has a maximal element.} there is a maximal element $\left(Z_0,\phi_0\right)$. We will now show that $Z_0 = X$.\newline
+
+    Suppose there exists $x_1\in X\setminus Z_0$. Consider the subspace
+    \begin{align*}
+      Z_1 &= \set{x + \lambda x_1\mid \lambda\in \R,~x\in Z_0}.
+    \end{align*}
+    Note that a vector in $Z_1$ has a unique expression $x + \lambda x_1$, since $x_1\notin Z_0$. Thus, the linear functional $\phi_1: Z_1\rightarrow \R$ defined by $\phi_1\left(x + \lambda x_1\right) = \phi_0\left(x\right) + \lambda \alpha$ is well-defined. Note that $E\subseteq Z_1$ and $\phi_1\in Z_1'$ extends $\varphi$, since $\phi_0$ extends $\varphi$. We need to find some $\alpha$ such that $\phi_1\left(z\right) \leq m(z)$ for all $z\in Z_1$, which will contradict the maximality of $\left(Z_0,\phi_0\right)$.\newline
+
+    For any $u,v\in Z_0$, we have
+    \begin{align*}
+      \phi_0\left(u\right) + \phi_0\left(v\right) &= \phi_0(u+v)\\
+                                                  &\leq m\left(u+v\right)\\
+                                                  &= m\left(u-x_1 + v+x_1\right)\\
+                                                  &\leq m\left(u-x_1\right) + m\left(v + x_1\right),
+    \end{align*}
+    meaning that for all $u,v\in Z_0$,
+    \begin{align*}
+      \phi_0\left(u\right) - m\left(u-x_1\right) \leq m\left(v + x_1\right) - \phi_0(v).
+    \end{align*}
+    We define
+    \begin{align*}
+      \alpha &= \sup_{u\in Z_0}\left(\phi_0\left(u\right) - m\left(u-x_1\right)\right).
+    \end{align*}
+    Then, for all $u\in Z_0$,
+    \begin{align*}
+      m\left(u-x_1\right) &\geq \phi_0\left(u\right) - \alpha,
+    \end{align*}
+    meaning $\alpha \leq m\left(v+x_1 \right) - \phi_0(v)$ for all $v\in Z_0$, so
+    \begin{align*}
+      \phi_0(v) + \alpha \leq m\left(v + x_1\right).
+    \end{align*}
+    Thus, for $t = \pm 1$, and $z\in Z_0$, we have
+    \begin{align*}
+      \phi_0(z) + t\alpha \leq m\left(z + t\alpha\right)
+    \end{align*}
+    Scaling by $c > 0$, we find
+    \begin{align*}
+      \phi_0\left(cz\right) + ct\alpha \leq m\left(cz + ct\alpha\right).
+    \end{align*}
+    Setting $c = |\lambda|$, $z = \frac{1}{c}x$, and $t = \operatorname{sgn}\left(\lambda\right)$, we find 
+    \begin{align*}
+      \phi_1\left(x\right) + \lambda\alpha \leq m\left(x + \lambda\alpha\right),
+    \end{align*}
+    thus contradicting maximality.
+  \end{proof}
+  \begin{theorem}[Hahn--Banach Extension]
+    Let $X$ be a normed vector space, $E\subseteq X$ a subspace with a bounded linear functional $\varphi\in E^{\ast}$. Then, there exists a continuous $\psi\in X^{\ast}$ such that $\norm{\varphi} = \norm{\psi}$ and $\psi|_{E} = \varphi$.
+  \end{theorem}
+  \begin{proof}
+    Let $m(x) = \norm{\varphi}\norm{x}$ be our desired Minkowski functional. Restricting our view to $\R$, we find
+    \begin{align*}
+      \varphi(x) &\leq \left\vert \varphi(x) \right\vert\\
+                 &\leq \norm{\varphi}\norm{x}\\
+                 &= m(x).
+    \end{align*}
+    Thus, there exists $\psi\in X'$ such that $\psi|_{E} = \varphi$ and $\psi$ is dominated by $m$ on $X$.\newline
+
+    We must now show that $\norm{\psi}=\norm{\varphi}  $. We have
+    \begin{align*}
+      \psi(x) &\leq m(x)\\
+              &\leq \norm{\varphi}
+    \end{align*}
+    for all $x\in B_X$, and we also have
+    \begin{align*}
+      -\psi\left(x\right) &= \psi\left(-x\right)\\
+                          &\leq \norm{\varphi}\norm{x}\\
+                          &\leq \norm{\varphi}.
+    \end{align*}
+    Thus, $\left\vert \psi(x) \right\vert\leq \norm{\varphi}$ for all $x\in B_X$. Additionally, since $\norm{\varphi}\leq \norm{\psi}$ necessarily (as $\psi$ is defined on a larger space than $\varphi$), it is the case that $\norm{\varphi} = \norm{\psi}$.\newline
+
+    Now, turning our attention to $\C$, we decompose $\varphi = u + iv$, where $u = \re\left(\varphi\right)$ and $v(y) = -u\left(iy\right)$ for all $y\in E$. Then, $u: E\rightarrow \R$ is an $\R$-linear functional with $\norm{u} = \norm{\varphi}$. We extend $u$ to $U\in X^{\ast}$ such that $\norm{U} = \norm{u} = \norm{\varphi}$ with $U|_{E} = u$. Defining $V(x) = -U(ix)$ for all $x\in X$, we find $\psi = U + iV$ is a $\C$-linear functional with $\norm{\psi} = \norm{U} = \norm{\varphi}$, and $\psi|_{E} = \varphi$.
+  \end{proof}
+  Thanks to the Hahn--Banach extension result, we can see that there are ``enough'' linear functionals in $X^{\ast}$ for any normed vector space $X$.
+  \begin{theorem}[Hahn--Banach Separation]
+    Let $X$ be a normed vector space.
+    \begin{enumerate}[(1)]
+      \item Given a nonzero $x_0\in X$, there is a $\varphi\in X^{\ast}$ with $\norm{\varphi} = 1$ and $\varphi(x_0) = \norm{x_0}$. We call $\varphi$ a norming functional.
+      \item Given a proper closed subspace $E\subseteq X$ and $x_0\in X\setminus E$, there is a $\varphi\in X^{\ast}$ such that $\varphi|_{E} = 0$, $\norm{\varphi} \leq 1$, and $\varphi(x_0) = \dist_{E}\left(x_0\right)$.
+      \item The unit sphere in $X^{\ast}$, $S_{X^{\ast}}$, separates the points of $X$.
+    \end{enumerate}
+  \end{theorem}
+  \begin{proof}\hfill
+    \begin{enumerate}[(1)]
+      \item Let $E = \Span\left(x_0\right)$, and $\varphi: E\rightarrow \F$ defined by $\varphi(\lambda x) = \lambda\norm{x}$. This is a linear functional, with
+        \begin{align*}
+          \left\vert \varphi(\lambda x) \right\vert &= \left\vert \lambda \right\vert\norm{x}\\
+                                                    &= \norm{\lambda x},
+        \end{align*}
+        meaning $\norm{\varphi} = 1$. We can extend $\varphi$ to $\psi$ on $X$ such that $\psi|_{E} = \varphi$, meaning $\psi\left(x_0\right) = \varphi\left(x_0\right) = \norm{x_0}$.
+      \item There is a $\psi\in \left(X/E\right)^{\ast}$ with $\norm{\psi} = 1$ and $\psi\left(x_0 + E\right) = \norm{x_0 + E} = \dist_{E}\left(x_0\right)$. For the canonical quotient map $\pi: X\rightarrow X/E$, we set $\varphi = \psi\circ\pi$. Since $\pi$ sends $E$ to $0 + E$, $\varphi$ must send any element of $E$ to $0$.\newline
+
+        Additionally,
+        \begin{align*}
+          \norm{\varphi} &= \norm{\psi\circ\pi}\\
+                         &\leq \norm{\psi}\norm{\pi}\\
+                         &= 1.
+        \end{align*}
+        Thus, $\varphi$ is such that $\varphi\left(x_0\right) = \dist_{E}\left(x_0\right)$.
+      \item If $x\neq y$ with $x,y\in X$, then $x-y\neq 0$, meaning there is $\varphi\in S_{X^{\ast}}$ with $\varphi\left(x-y\right) = \norm{x-y}\neq 0$, meaning $\varphi(x)\neq \varphi(y)$.
+    \end{enumerate}
+  \end{proof}
+  \begin{corollary}
+    Let $X$ be a normed space. For every $x\in X$, we have
+    \begin{align*}
+      \sup_{\varphi\in B_{X^{\ast}}} \left\vert \varphi(x) \right\vert &= \sup_{\varphi\in S_{X^{\ast}}}\left\vert \varphi(x) \right\vert\\
+                                                                       &= \norm{x}.
+    \end{align*}
+  \end{corollary}
+  \begin{proposition}
+    Let $X$ be a normed vector space with separable dual $X^{\ast}$. Then, there is an isometric embedding $X\hookrightarrow \ell_{\infty}$.
+  \end{proposition}
+  \begin{proof}
+    Let $\left(\varphi_{n}\right)_{n\geq 1}$ be a norm-dense subset of $B_{X^{\ast}}$. Consider the map
+    \begin{align*}
+      \mu: X\rightarrow \ell_{\infty}
+    \end{align*}
+    with $\mu(x) = \left(\varphi_{n}\left(x\right)\right)_{n\geq 1}$ for $x\in X$. It is pretty clear that $\mu$ is linear. Since $\norm{\varphi_n}\leq 1$ for each $n\geq 1$, we have
+    \begin{align*}
+      \norm{\mu(x)}_{\infty} &= \sup_{n\geq 1}\left\vert \varphi_n(x) \right\vert\\
+                             &\leq \sup_{n\geq 1}\norm{\varphi_n}\norm{x}\\
+                             &\leq \norm{x}.
+    \end{align*}
+    Suppose $\norm{\mu(x)}_{\infty} < \norm{x}$ for some $x\in B_X$. Then, since $x\neq 0$, we set $\delta = \norm{x} -\norm{\mu(x)}_{\infty}$.\newline
+
+    We can find $\psi\in B_{X^{\ast}}$ with $\psi(x) = \norm{x}$. Since $\left(\varphi_n\right)_{n\geq 1}$ is norm-dense, there is $m\in \N$ with
+    \begin{align*}
+      \norm{\psi - \varphi_{m}} < \delta,
+    \end{align*}
+    meaning
+    \begin{align*}
+      \norm{x} &= \psi(x)\\
+               &\leq \left\vert \psi(x) - \varphi_{m}(x) \right\vert + \left\vert \varphi_m(x) \right\vert\\
+               &\leq \norm{\psi - \varphi_m}\norm{x} + \norm{\mu(x)}\\
+               &< \delta + \norm{\mu(x)}_{\infty}\\
+               &= \norm{x},
+    \end{align*}
+    which is a contradiction. Thus, $\mu$ is isometric on the unit ball.
+  \end{proof}
+  \begin{definition}
+    Let $X$ be a normed vector space with $S\subseteq X$ and $T\subseteq X^{\ast}$ subsets. We define the annihilator of $S$ by
+    \begin{align*}
+      S^{\perp} &= \set{\varphi\in X^{\ast}\mid \varphi(x)= 0~\forall x\in S},
+    \end{align*}
+    and the pre-annihilator of $T$ by
+    \begin{align*}
+      ^{\perp}T &= \set{x\in X\mid \varphi(x) = 0~\forall \varphi \in T}.
+    \end{align*}
+  \end{definition}
+  \begin{exercise}
+    If $X$ is a normed space and $E\subset X$ is a proper subspace, show that $E^{\perp}$ is nonzero. Also, show that $S^{\perp}\subseteq X^{\ast}$ and $^{\perp}T\subseteq X$ are norm-closed subspaces.
+  \end{exercise}
+  \begin{solution}\hfill
+    \begin{enumerate}[(a)]
+      \item For $E\subset X$ a proper subspace, we know there exists some $\phi\in X^{\ast}$ such that $\norm{\phi} \leq 1$ and $\norm{x_0} = \dist_{E}\left(x_0\right)$ for some $x_0\in X$, meaning $E^{\perp}\neq 0$.
+      \item For $\varphi,\psi\in S^{\perp}$, we have $\varphi(x) = 0$ and $\psi(x) = 0$ for all $x\in \S$, meaning
+        \begin{align*}
+          \left(\varphi + \alpha \psi\right)\left(x\right) &= \varphi(x) + \alpha \psi(x)\\
+                                                           &= 0,
+        \end{align*}
+        so $\varphi + \alpha \psi\in S^{\perp}$, so $S$ is a subspace.\newline
+
+        Additionally, for a sequence $\left(\varphi_n\right)_{n\geq 1} $ in $S^{\perp}$ such that $\left(\varphi_{n}\right)_n\rightarrow \varphi\in X^{\ast}$, we have $\varphi_n(x) = 0$ for all $x\in S$, so $\varphi(x) = 0$ for all $x\in S$.
+      \item Similarly, for $x,y\in ^{\perp}T$, we have
+        \begin{align*}
+          \varphi\left(x + \alpha y\right) &= \varphi(x) + \alpha\varphi(y)\\
+                                           &= 0,
+        \end{align*}
+        meaning $^{\perp}T$ is a subspace. Similarly, for any sequence $\left(x_n\right)_{n\geq 1}$ in $^{\perp}T$ such that $\left(x_n\right)_n\rightarrow x\in X$, we have $\varphi\left(x_n\right) = 0$ for all $\varphi \in T$, so $\varphi(x) = 0$.
+    \end{enumerate}
+  \end{solution}
+  \begin{exercise}
+    Let $T: X\rightarrow Y$ be a bounded linear map between normed vector spaces. Show
+    \begin{enumerate}[(1)]
+      \item $\Ran(T)^{\perp} = \ker\left(T^{\ast}\right)$
+      \item $^{\perp}\Ran\left(T\right) = \ker\left(T\right)$.
+    \end{enumerate}
+  \end{exercise}
+  \begin{solution}
+    Note that $T^{\ast}: Y^{\ast}\rightarrow X^{\ast}$ is defined by $T^{\ast}\left(\varphi\right)(x) = \varphi\left(T(x)\right)$.
+    \begin{enumerate}[(1)]
+      \item 
+        \begin{align*}
+          \Ran\left(T\right)^{\perp} &= \set{\varphi\in Y^{\ast}\mid \varphi\left(y\right) = 0,~\forall y\in \Ran(T)}\\
+                                     &= \set{\varphi\in Y^{\ast}\mid \varphi\left(T\left(x\right)\right) = 0,~\forall x\in X}\\
+                                     &= \set{\varphi\in Y^{\ast}\mid T^{\ast}\left(\varphi\right)(x) = 0,~\forall x\in X}\\
+                                     &= \set{\varphi\in Y^{\ast}\mid T^{\ast}\left(\varphi\right) = 0}\\
+                                     &= \ker\left(T^{\ast}\right).
+        \end{align*}
+      \item 
+        \begin{align*}
+          ^{\perp}\ran\left(T^{\ast}\right) &= \set{x\in X\mid \psi(x) = 0,~\forall \psi\in \Ran\left(T^{\ast}\right)}\\
+                                            &= \set{x\in X\mid \varphi\left(T(x)\right) = 0,~\forall \varphi\in Y^{\ast}}\\
+                                            &= \set{x\in X\mid T(x) = 0}\\
+                                            &= \ker\left(T\right).
+        \end{align*}
+    \end{enumerate}
+  \end{solution}
+  \begin{corollary}
+    Let $X$ be a normed vector space, and suppose $S\subseteq X$ is a subset. Then,
+    \begin{align*}
+      ^{\perp}\left(S^{\perp}\right) &= \overline{\Span}(S).
+    \end{align*}
+  \end{corollary}
+  \begin{proof}
+    Since $S\subseteq ^{\perp}\left(S^{\perp}\right)$, and the latter is a norm-closed subspace, it is the case that $Z = \overline{\Span}(S)\subseteq ^{\perp}\left(S^{\perp}\right)$.\newline
+
+    Suppose there exists $x_0\in ^{\perp}\left(S^{\perp}\right)\setminus Z$. Then, we must have a $\varphi\in X^{\ast}$ with $\varphi|_{Z} = 0$ and $\varphi(x_0)\neq 0$, meaning $\varphi\in S^{\perp}$, so $\varphi\left(x_0\right) = 0$, which is a contradiction.
+  \end{proof}
+  Having used the Hahn--Banach theorems to understand some structure results on normed vector spaces, we now turn to an application to complex analysis.
+  \begin{definition}
+    Let $X$ be a normed vector space and consider a function $f: \Omega\rightarrow X$, where $\Omega\subseteq \C$ is open. We say $f$ is differentiable at $z\in \Omega$ if
+    \begin{align*}
+      f'(z) &= \lim_{w\rightarrow z}\frac{f(w)-f(z)}{w-z}\\
+            &= \lim_{\zeta \rightarrow 0}\frac{f(z + \zeta) - f(z)}{\zeta}
+    \end{align*}
+    exists in $X$. Here, the limit is defined through the norm of $X$.\newline
+
+    If $f'(z)$ exists for all $z\in \Omega$, we say $f$ is holomorphic on $\Omega$. If $\Omega = \C$, then we say $f$ is entire.
+  \end{definition}
+  \begin{example}
+    Let $A$ be a Banach algebra with $a\in A$ fixed. The exponential map
+    \begin{align*}
+      f: \C\rightarrow A\\
+      z\mapsto \exp(az)
+    \end{align*}
+    is entire.\newline
+
+    For any $z\in \C$,
+    \begin{align*}
+      f'(z) &= \lim_{w \rightarrow 0}\frac{\exp(az + aw) - \exp(az)}{w}\\
+            &= \lim_{w\rightarrow 0}\frac{\exp(az)\exp(aw) - \exp(az)}{w}\\
+            &= \exp(az)\left(\lim_{w\rightarrow 0}\frac{\exp(aw)-1}{w}\right)\\
+            &= a\exp(az).
+    \end{align*}
+  \end{example}
+  \begin{lemma}
+    Let $X$ be a normed space, and suppose $f: \Omega\rightarrow X$ is differentiable at $z\in \Omega$. If $\varphi\in X^{\ast}$, then $\varphi\circ f$ is also differentiable at $z$. Similarly, if $f$ is holomorphic on $\Omega$, then $\varphi\circ f$ is holomorphic on $\Omega$.
+  \end{lemma}
+  \begin{proof}
+    By continuity and linearity of $\varphi$, we have
+    \begin{align*}
+      \left(\varphi\circ f\right)'(z) &= \lim_{w\rightarrow z}\frac{\varphi\left(f(w)\right) - \varphi\left(f(z)\right)}{w-z}\\
+                                      &= \lim_{w\rightarrow z}\varphi\left(\frac{f(w)-f(z)}{w-z}\right)\\
+                                      &= \varphi\left(\lim_{w\rightarrow z}\frac{f(w)-f(z)}{w-z}\right)\\
+                                      &= \varphi\left(f'(z)\right).
+    \end{align*}
+  \end{proof}
+  Liouville's theorem is a fundamental result in complex function theory which provides insight into the behavior of holomorphic functions.
+  \begin{theorem}[Liouville's Theorem]
+    If $f: \C\rightarrow \C$ is entire, and $\sup_{z\in \C}\left\vert f(z) \right\vert < \infty$, then there is some $z_0\in \C$ such that $f(z) = z_0$ for all $z\in \C$.
+  \end{theorem}
+  A proof of Liouville's theorem is presented below.
+  \begin{proof}
+    Let $f$ be holomorphic and bounded on $\C$. Then, $f$ is analytic, meaning
+    \begin{align*}
+      f(z) &= \sum_{k=0}^{\infty}a_kz^k,
+    \end{align*}
+    and Cauchy's integral formula gives
+    \begin{align*}
+      a_k &= \frac{f^{(k)}(0)}{k!}\\
+          &= \frac{1}{2\pi i}\oint_{C_r}\frac{f(w)}{w^{k+1}}\:dw,
+    \end{align*}
+    where $C_r$ denotes a circle of radius $r$ about the origin. Since $f$ is bounded on $\C$, $f$ is bounded on $C_{r}$. Thus, we have
+    \begin{align*}
+      \left\vert a_k \right\vert &= \frac{1}{2\pi} \left\vert \oint_{C_r}\frac{f(w)}{w^{k+1}}\:dw \right\vert\\
+                                 &\leq \frac{1}{2\pi}\oint_{C_r}\left\vert \frac{f(w)}{w^{k+1}} \right\vert\left\vert dw \right\vert\\
+                                 &\leq \frac{1}{2\pi}\oint_{C_r}\frac{M}{r^{k+1}}\left\vert dw \right\vert\\
+                                 &= \frac{M}{2\pi r^{k+1}}\oint_{C_r}\left\vert dw \right\vert\\
+                                 &= \frac{M}{r^{k}}.
+    \end{align*}
+    Since $r$ was arbitrary, this means $a_k = 0$ for all $k\geq 1$, meaning $f(z) = a_0$ for all $z$.
+  \end{proof}
+  \begin{corollary}
+    Let $X$ be a normed space. If $f: \C\rightarrow X$ is entire and bounded, then there is $x_0\in X$ such that $f(z) = x_0$ for all $z\in \C$.
+  \end{corollary}
+  \begin{proof}
+    Suppose this is not the case. Then, there are $z_1,z_2\in \C$ such that $f\left(z_1\right)\neq f\left(z_2\right)$. Thus, there is $\varphi\in X^{\ast}$ such that $\varphi\left(f\left(z_1\right)\right) \neq \varphi\left(f\left(z_2\right)\right)$. Additionally, $\varphi\circ f: \C\rightarrow \C$ is entire, and
+    \begin{align*}
+      \sup_{z\in\C}\left\vert \varphi\circ f \right\vert &= \sup_{z\in\C}\left\vert \varphi\left(f(z)\right) \right\vert\\
+                                                         &\leq \sup_{z\in \C}\norm{\varphi}\left\vert f(z) \right\vert\\
+                                                         &< \infty,
+    \end{align*}
+    so $\varphi\circ f$ is constant. However, this contradicts $\varphi\left(f\left(z_1\right)\right)\neq \varphi\left(f\left(z_2\right)\right)$.
+  \end{proof}
+\section{Duality}%
+If $X$ is a normed vector spaces, we know that the continuous dual space, $X^{\ast} = \mathcal{B}\left(X,\C\right)$, is a Banach space as $\C$ is complete. This section will be focused on understanding dual spaces and their operators.
+\subsection{Completions and the Double Dual}%
+\begin{definition}[Double Dual]
+We define $X^{\ast\ast} = \mathcal{B}\left(X^{\ast},\C\right)$ to be the double dual of $X$.
+\end{definition}
+\begin{remark}
+$X^{\ast\ast}$ is complete.
+\end{remark}
+\begin{proposition}
+  Let $X$ be a normed vector space. If $x\in X$, the map
+  \begin{align*}
+    \hat{x}: X^{\ast}\rightarrow \F\\
+    \hat{x}(\varphi) = \varphi(x)
+  \end{align*}
+  is linear and bounded with $\hat{x}_{\text{op}} = \norm{x}$. The map $\iota_X: X\hookrightarrow X^{\ast\ast}$ with $x\mapsto \hat{x}$, is a linear isometry known as the canonical embedding.
+\end{proposition}
+\begin{proof}
+  First, we show that $\hat{x}$ is linear. Let $\varphi,\psi\in X^{\ast}$ and $\alpha \in \F$. Then,
+  \begin{align*}
+    \hat{x}\left(\varphi + \alpha \psi\right) &= \left(\varphi + \alpha \psi\right)\left(x\right)\\
+                                              &= \varphi(x) + \alpha\psi(x)\\
+                                              &= \hat{x}\left(\varphi\right) + \alpha\hat{x}(\psi).
+  \end{align*}
+  We can also see, by the Hahn--Banach Separation theorem,
+  \begin{align*}
+    \norm{\hat{x}}_{\text{op}} &= \sup_{\varphi\in B_{X^{\ast}}}\left\vert \hat{x}\left(\varphi\right) \right\vert\\
+                               &= \sup_{\varphi\in B_{X^{\ast}}} \left\vert \varphi(x) \right\vert\\
+                               &= \norm{x}.
+  \end{align*}
+  Now, we will show that $\iota_X$ is linear. Let $x,y\in X$, $\lambda \in \F$. Then,
+  \begin{align*}
+    \iota_X\left(x + \lambda y\right) &= \widehat{x + \lambda y}\\
+                                    &= \hat{x} + \widehat{\lambda y}\\
+                                    &= \hat{x} + \lambda \hat{y}\\
+                                    &= \iota_X\left(x\right) + \lambda\iota_X\left(y\right).
+  \end{align*}
+\end{proof}
+\begin{definition}[Completion of a Metric Space]
+  For a metric space $X$, the completion $\widetilde{X}$ is a complete metric space where $X\subseteq \widetilde{X}$ and $\overline{X} = \widetilde{X}$.
+\end{definition}
+Since $X^{\ast\ast}$ is complete, we can make a completion of $X$ using the canonical embedding.
+\begin{definition}[Norm Completion]
+  Let $X$ be a normed vector space. A norm completion of $X$ is a pair $\left(Z,j\right)$, with $Z$ is a Banach space and $j: X\hookrightarrow Z$ is a linear isometry such that $\overline{\Ran}\left(j\right)= Z$.
+\end{definition}
+First, we show the existence of a norm completion. Then, we will show that norm completions are unique up to isometric isomorphism.
+\begin{proposition}
+  Let $X$ be a normed vector space. Set $\widetilde{X} = \overline{\iota_X(X)}^{\norm{\cdot}_{\text{op}}}\subseteq X^{\ast\ast}$, where $\iota_X$ is the canonical embedding. The pair, $\left(\widetilde{X},\iota_X\right)$, is a completion of $X$.
+\end{proposition}
+\begin{proof}
+  Since $X^{\ast\ast}$ is a Banach space, the closed subspace $\overline{\iota_{X}(X)}^{\norm{\cdot}_{\text{op}}}$ is complete. Since $\iota_X$ is an isometric isomorphism, and $\overline{\Ran}\left(\iota_X\right) = \overline{\iota_X(X)}^{\norm{\cdot}_{\text{op}}}$.
+\end{proof}
+\begin{note}
+  If $X$ is a Banach space, $\Ran\left(\iota_X\right)$ is already norm-closed, since $X$ is complete, so $\widetilde{X} = \iota_X(X) \cong X$.
+\end{note}
+To show that completions are unique up to isometric isomorphism, we need to be able to extend bounded linear operators from normed spaces to their completions that preserve the operator norm.
+\begin{proposition}
+  Let $X$ be a normed space with $E\subseteq X$ a linear subspace.
+  \begin{enumerate}[(1)]
+    \item The closure $\overline{E}$ is a closed linear subspace.
+    \item If $T: E\rightarrow Z$ is a bounded linear map into a Banach space $Z$, then there is a unique bounded linear map $\widetilde{T}: \overline{E}\rightarrow Z$ such that $\widetilde{T}|_{E} = T$ and $\norm{\widetilde{T}}_{\text{op}} = \norm{T}_{\text{op}}$. If $T$ is an isometry, then so is $\widetilde{T}$, and $\Ran\left(\widetilde{T}\right) = \overline{\Ran}(T)$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Let $\left(x_n\right)_n\rightarrow x$ and $\left(y_n\right)_n\rightarrow y$ in $\overline{E}$. Then, $x + \alpha y = \lim_{n\rightarrow\infty}\left(x_n\right)_n + \alpha \lim_{n\rightarrow\infty}\left(y_n\right)_n$, or $x + \alpha y = \lim_{n\rightarrow\infty}\left(x_n + \alpha y_n\right)_n$, meaning $x + \alpha y \in \overline{E}$.
+    \item Let $x\in \overline{E}$. There is a sequence $\left(x_n\right)_{n}$ in $E$ with $\left(x_n\right)_n\rightarrow x$. Then,
+      \begin{align*}
+        \norm{T\left(x_n\right) - T\left(x_m\right)} &= \norm{T\left(x_n - x_m\right)}\\
+                                                     &\leq \norm{T}\norm{x_n - x_m}.
+      \end{align*}
+      Thus, $\left(T\left(x_n\right)\right)_n$ is a Cauchy sequence in $Z$, meaning it converges to $z\in Z$.\newline
+
+      If $\left(x_n'\right)_n$ is a different sequence in $E$ with $\left(x_n'\right)_n\rightarrow x$, then similarly, $\left(T\left(x_n'\right)\right)_n$ is Cauchy in $Z$ that converges to $z'$. We have
+      \begin{align*}
+        z &= \lim_{n\rightarrow \infty}T\left(x_n\right)\\
+          &= \lim_{n\rightarrow\infty}\left(T\left(x_n\right) - T\left(x'_n\right) + T\left(x'_n\right)\right)\\
+          &= \lim_{n\rightarrow\infty}\left(T\left(x_n\right) - T\left(x'_n\right)\right) + \lim_{n\rightarrow\infty}T\left(x_n'\right)\\
+          &= z'.
+      \end{align*}
+      We define $\widetilde{T}: \overline{E}\rightarrow Z$ with $\widetilde{T}(x) := \lim_{n\rightarrow\infty}T\left(x_n\right)$ for any sequence $\left(x_n\right)_n$ in $E$ that converges to $x$.\newline
+
+      Linearity of $\widetilde{T}$ follows from the linearity of limits.\newline
+
+      We now verify that $\norm{\widetilde{T}}_{\text{op}} = \norm{T}_{\text{op}}$.
+      \begin{align*}
+        \norm{\widetilde{T}(x)} &= \norm{\lim_{n\rightarrow\infty}T\left(x_n\right)}\\
+                                &= \lim_{n\rightarrow\infty}\norm{T\left(x_n\right)}\\
+                                &\leq \lim_{n\rightarrow\infty}\norm{T}\norm{x_n}\\
+                                &= \norm{T}\norm{x},
+      \end{align*}
+      implying that $\norm{\widetilde{T}}_{\text{op}}\leq \norm{T}_{\text{op}}$. Additionally, since $\widetilde{T}$ is defined on a larger space than $T$, $\norm{T}_{\text{op}}\leq \norm{\widetilde{T}}_{\text{op}}$. Uniqueness follows from the fact that two continuous functions defined on a dense subset agree on the whole set.\newline
+
+      Additionally, if $T$ is an isometry, then
+      \begin{align*}
+        \norm{\widetilde{T}\left(x\right)} &= \norm{\lim_{n\rightarrow\infty}T\left(x_n\right)}\\
+                                           &= \lim_{n\rightarrow\infty}\norm{T\left(x_n\right)}\\
+                                           &= \lim_{n\rightarrow\infty}\norm{x_n}\\
+                                           &= \norm{x}.
+      \end{align*}
+      By definition, we can see that $\Ran(T) \subseteq \Ran\left(\widetilde{T}\right) \subseteq \overline{\Ran}(T)$. Since $\widetilde{T}$ is an isometry, its range is closed, so we have $\Ran\left(\widetilde{T}\right) = \overline{\Ran}(T)$.
+  \end{enumerate}
+\end{proof}
+\begin{theorem}
+  Let $X$ be a normed vector space. There is a Banach space $\widetilde{X}$ and a linear isometry $j: X\hookrightarrow \widetilde{X}$ such that $\overline{j(X)} = \widetilde{X}$. If $\left(Z,k\right)$ is any other completion of $X$, then $Z\cong X$ are isometrically isomorphic.
+\end{theorem}
+\begin{proof}
+  We have shown existence with the earlier proposition.\newline
+
+  Let $\left(Z_1,j_1\right)$ and $\left(Z_2,j_2\right)$ be norm completions of $X$. Consider the mappings $T: \Ran\left(j_1\right) \rightarrow Z_2$ and $S: \Ran\left(j_2\right) \rightarrow Z_1$ given by
+  \begin{align*}
+    T\left(j_1(x)\right) &= j_2(x)\\
+    S\left(j_2(x)\right) &= j_1(x).
+  \end{align*}
+  Since $j_1$ and $j_2$ are isometries, then $T$ and $S$ are well-defined linear isometries. Thus, $T$ and $S$ extend to isometries $T: Z_1\rightarrow Z_2$ and $S: Z_2\rightarrow Z_1$.\newline
+
+  We have $S\circ T(z) = z$ for all $z\in \Ran\left(j_1\right)$, meaning $S\circ T = \id_{Z_1}$, and similarly, $T\circ S = \id_{Z_2}$. Thus, $Z_1\cong Z_2$ are isometrically isomorphic.
+\end{proof}
+\begin{corollary}
+  Let $Z$ be a Banach space with $X\subseteq Z$ a subspace. Then, $\widetilde{X} \cong \overline{X}$.
+\end{corollary}
+\begin{remark}
+  For a normed space $\left(X,\norm{\cdot}\right)$, we let $\overline{X}^{\norm{\cdot}}$ denote the norm completion $\widetilde{X}$, and $X\subseteq \overline{X}^{\norm{\cdot}}$ is considered as a dense subspace.
+\end{remark}
+We are now able to extend bounded linear operators to the completion.
+\begin{proposition}
+  Let $X$ and $Y$ be normed spaces. If $T\in \mathcal{B}\left(X,Y\right)$, there is a unique $\widetilde{T}\in \mathcal{B}\left(\widetilde{X},\widetilde{Y}\right)$ such that $\widetilde{T}\circ \iota_X = \iota_Y\circ T$. The following diagram commutes.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12B3LWPB2MAAaAXxAjS6TLnyEUARnJVajFm048+WATGABNMRKnY8BImXnL6zVohBDxkkBhOyiiy9Wtq7e8cpgoAHN4IlAAMwAnCABbJAAmahwIJABmL1VbEAAVRwjouMQyEGSkRRUbdW5eGH5BbMMnKNiEpJSijMq7TnwcOgB9ByMQZsL0kvbyhjoAIxgGAAVpUzkQSKwggAscEE6fDnZegb8RChEgA
+\begin{tikzcd}
+\widetilde{X} \arrow[r, "\widetilde{T}"] & \widetilde{Y}           \\
+X \arrow[r, "T"] \arrow[u, "\iota_X",hookrightarrow]    & Y \arrow[u, "\iota_Y"',hookrightarrow]
+\end{tikzcd}
+Additionally, $\norm{T}_{\text{op}} = \norm{\widetilde{T}}_{\text{op}}$. If $T$ is an isometry, then so is $\widetilde{T}$, and if $T$ is an isometric isomorphism, so is $\widetilde{T}$.
+  \end{center}
+\end{proposition}
+\begin{proof}
+  Define $T_0: \Ran\left(\iota_X\right)\rightarrow \tilde{Y}$ by $T_0\left(\iota_X\left(x\right)\right) = \iota_Y\left(T(x)\right)$. Since $\iota_X$ is injective, $T_0$ is well-defined and linear. Additionally, since $\iota_X$ and $\iota_Y$ are isometries, for every $x\in X$, we have
+  \begin{align*}
+    \norm{T_0\left(\iota_X\left(x\right)\right)} &= \norm{\iota_Y\left(T(x)\right)}\\
+                                                 &= \norm{T(x)}\\
+                                                 &\leq \norm{T}_{\text{op}}\norm{x}\\
+                                                 &= \norm{T}_{\text{op}}\norm{\iota_X(x)},
+  \end{align*}
+  meaning $T_0$ is bounded. Thus, $T_0$ extends to $\widetilde{T}$ defined on $\overline{\Ran}\left(\iota_X\right) = \tilde{X}$, such that $\norm{\widetilde{T}}_{\text{op}} = \norm{T_0}_{\text{op}} \leq \norm{T}_{\text{op}}$. It is also the case that $\norm{T}_{\text{op}}\leq \norm{\widetilde{T}}_{\text{op}}$ since $\widetilde{T}$ is an extension.\newline
+
+  Thus, the diagram commutes. Uniqueness follows from the fact that $\Ran\left(\iota_X\right)\subseteq \widetilde{X}$ is dense.\newline
+
+  If $T$ is isometric, then
+  \begin{align*}
+    \norm{T_0\left(\iota_X\left(x\right)\right)} &= \norm{\iota_Y\left(T\left(x\right)\right)}\\
+                                                 &= \norm{T(x)}\\
+                                                 &= \norm{x}\\
+                                                 &= \norm{\iota_X\left(x\right)},
+  \end{align*}
+  meaning $T_0$ is an isometry. Thus, the extension to $\widetilde{T}: \widetilde{X}\rightarrow \widetilde{Y}$ is also an isometry.\newline
+
+  If $T$ is an isometric isomorphism, then
+  \begin{align*}
+    \Ran\left(\widetilde{T}\right) &= \overline{\Ran}\left(T_0\right)\\
+                                   &= \overline{\iota_Y\left(\Ran\left(T\right)\right)}\\
+                                   &= \overline{\iota_Y\left(Y\right)}\\
+                                   &= \widetilde{Y},
+  \end{align*}
+  meaning $\widetilde{T}$ is an isomorphism as well.
+\end{proof}
+\begin{corollary}
+  Let $X$ be a vector space and $Y$ a Banach space. Suppose there is an injective linear map $T: X\rightarrow Y$, and we write $\norm{\cdot}_X$ to be the norm on $X$ induced by $T$, defined by $\norm{x}_X = \norm{T(x)}_Y$. If $Z:=\overline{T(X)}$ is the closure of the range of $T$ in $Y$, then $\widetilde{X} \cong Z$.
+\end{corollary}
+\begin{proof}
+  By the definition of the norm, $T: X\rightarrow Z$ is an isometry into the Banach space $Z$, and so extends to $\widetilde{T}: \widetilde{X}\rightarrow Z$, where $\widetilde{T}|_{X} = T$. Since $T$ is an isometry and $\widetilde{X}$ is complete, the range $\widetilde{T}\left(\widetilde{X}\right)$ is closed in $Y$, meaning
+  \begin{align*}
+    T(X) &\subseteq \widetilde{T}\left(\widetilde{X}\right)\\
+    \overline{T(X)} &\subseteq \widetilde{T}\left(\widetilde{X}\right).
+  \end{align*}
+  Thus, $\widetilde{T}$ is surjective.
+\end{proof}
+\subsection{Dual Spaces}%
+\begin{definition}
+  A normed vector space $X$ is called a dual space if there is a normed vector space $Z$ such that $Z^{\ast}\cong X$ are isometrically isomorphic. The space $Z$ is known as the pre-dual of $X$.
+\end{definition}
+It is generally not easy to find whether or not $X$ is a dual space. However, we can attempt to find some dual spaces that for various Banach spaces.\newline
+
+A linear map is uniquely defined on the Hamel basis of its domain. However, when dealing with infinite-dimensional Banach spaces, we know that they cannot have a countable Hamel basis, which makes working with them very difficult. However, we can use a different notion of basis to assist us in our study.
+\begin{definition}
+  Let $X$ be a Banach space over $\F$. A sequence $\left(e_n\right)_n$ in $X$ is called a Schauder basi for $X$ if every $x\in X$ admits a unique sequence $\left(\lambda_n\right)_n$ in $\F$ such that
+  \begin{align*}
+    x &= \sum_{n=1}^{\infty}\lambda_ne_n
+  \end{align*}
+  is a norm convergent sum in $X$.
+\end{definition}
+\begin{proposition}
+  The canonical coordinate vectors $\left(e_n\right)_n$\footnote{The sequence with $1$ at position $n$ and $0$ everywhere else.} is a Schauder basis for $c_0$ and $\ell_p$ for $1 \leq p < \infty$.
+\end{proposition}
+\begin{proof}
+  We will show this for $c_0$. Let $x\in c_0$, $x = \left(\lambda_n\right)_n$. For each $N\geq 1$, define
+  \begin{align*}
+    x_n &= \sum_{n=1}^{N}\lambda_ne_n.
+  \end{align*}
+  Whenever $N\geq M$, we have
+  \begin{align*}
+    \norm{x_N - x_M}_{\infty} &= \norm{\sum_{n=M+1}^{N}\lambda_ne_n}_{\infty}\\
+                     &=\sup_{M+1 \leq n \leq N}\left\vert \lambda_n \right\vert.
+  \end{align*}
+  Since $\left(\lambda_n\right)_n\rightarrow 0$ as $x\in c_0$, we have $\norm{x_N - x_M}_{\infty}$ is small for large $N,M$. Thus, $\left(x_N\right)_N$ is Cauchy.\newline
+
+  By the completeness of $c_0$, we know that $\sum_{n=1}^{\infty}\lambda_ne_n$ thus converges. Since
+  \begin{align*}
+    \norm{x-x_N}_{\infty} &= \sup_{n\geq N+1} \left\vert \lambda_n \right\vert\\
+                          &\rightarrow 0,
+  \end{align*}
+  we have $x = \sum_{n=1}^{\infty}\lambda_ne_n$. Thus, we have shown existence.\newline
+
+  To show uniqueness, let $\varphi_k\in c_0^{\ast}$ be given by $\varphi_k\left(\left(z_n\right)_n\right) = z_k$ for each $k\in \N$. Suppose that there exist two sequences of coefficients $\left(\lambda_n\right)_n$ and $\left(\mu_n\right)_n$ such that
+  \begin{align*}
+    x &= \sum_{n=1}^{\infty}\lambda_ne_n\\
+      &= \sum_{n=1}^{\infty}\mu_ne_n.
+  \end{align*}
+  For each $k$, since $\varphi_k$ is continuous, we have
+  \begin{align*}
+  \lambda_k &= \sum_{n=1}^{\infty}\lambda_n\varphi_k\left(e_n\right)\\
+            &= \varphi_k\left(\sum_{n=1}^{\infty}\lambda_n e_n\right)\\
+            &= \varphi_k\left(x\right)\\
+            &= \varphi_k\left(\sum_{n=1}^{\infty}\mu_ne_n\right)\\
+            &= \sum_{n=1}^{\infty}\mu_n\varphi_k\left(e_n\right)\\
+            &= \mu_k.
+  \end{align*}
+  Thus, $\left(\lambda_n\right)_n = \left(\mu_n\right)_n$.
+\end{proof}
+\begin{exercise}
+  Every Banach space that admits a Schauder basis is separable. Conclude that the canonical sequence of coordinate vectors $\left(e_n\right)_n$ is not a Schauder basis for $\ell_{\infty}$.
+\end{exercise}
+\begin{solution}
+  Let $X$ admit a Schauder basis $\left(e_n\right)_n$, and let $\left(\lambda_n\right)_n$ be a sequence of coefficients in $\C$ such that
+  \begin{align*}
+    x &= \sum_{n=1}^{\infty}\lambda_ne_n.
+  \end{align*}
+  Define
+  \begin{align*}
+    E &= \set{\sum_{k=1}^{\infty}\alpha_ke_k\mid \alpha_k\in \C_{\Q}}.
+  \end{align*}
+  Since the coefficients in $E$ are defined over $\C_{\Q}$, $E$ is countable. We claim that $\overline{E} = X$.\newline
+
+  Let $\ve > 0$. Since $\overline{\C_{\Q}} = \C$, we find $\alpha_1\in \C_{\Q}$ such that $\norm{\left(\alpha_1 - \lambda_1\right)e_1} < \frac{\ve}{2}$, and inductively find $\alpha_k\in \C_{\Q}$ such that
+  \begin{align*}
+    \norm{\left(\alpha_k - \lambda_k\right)e_k} < \frac{\ve}{2^k}.
+  \end{align*}
+  Define $\mu = \sum_{k=1}^{\infty}\alpha_ke_k$. Then,
+  \begin{align*}
+    \norm{\mu - x} &= \norm{\sum_{k=1}^{\infty}\left(\alpha_k - \lambda_k\right)e_k}\\
+                   &\leq \sum_{k=1}^{\infty}\norm{\left(\alpha_k - \lambda_k\right)e_k}\\
+                   &< \ve.
+  \end{align*}
+  Since $\ell_{\infty}$ is not separable,\footnote{The set $E = \set{\left(a_k\right)_k\mid a_k\in \set{0,1}}$ under $\norm{\cdot}_{\infty}$ has the discrete metric but is uncountable (hence, not separable), but any subset of a separable set is necessarily separable.} it is the case that $\ell_{\infty}$ does not admit a Schauder basis.
+\end{solution}
+We can now find some dual spaces.
+\begin{proposition}
+  The dual space of $c_0$ is isometrically isomorphic to $\ell_{1}$. That is, $c_0^{\ast} \cong \ell_1$.
+\end{proposition}
+\begin{proof}
+  Let $\theta: \ell_1\rightarrow c_0^{\ast}$ be defined by $\theta\left(\lambda\right)\left(z\right) = \sum_{n=1}^{\infty}\lambda_nz_n$, where $\lambda = \left(\lambda_n\right)_n\in \ell_1$ and $z = \left(z_n\right)_n \in c_0$. We will show that $\theta$ is an isometric isomorphism.\newline
+
+  We start by showing that $\theta$ is well-defined. To see this, note that
+  \begin{align*}
+    \sum_{n=1}^{\infty}\left\vert \lambda_nz_n \right\vert &\leq \sum_{n=1}^{\infty}\left\vert \lambda_n \right\vert\norm{z}_{\infty}\\
+                                                           &= \norm{\lambda}_1\norm{z}_{\infty},
+  \end{align*}
+  which is finite since $\lambda\in \ell_1$ and $z\in \ell_{\infty}$. Thus, $\sum_{n=1}^{\infty}\lambda_nz_n$ converges absolutely, and thus is convergent.\newline
+
+  For each $\lambda\in \ell_1$, the map $\theta\left(\lambda\right): c_0\rightarrow \F$ is linear. We now need to show that $\theta$ is bounded.\newline
+
+  Let $z\in c_0$. Then,
+  \begin{align*}
+    \left\vert \theta\left(\lambda\right)\left(z\right) \right\vert &= \left\vert \sum_{n=1}^{\infty}\lambda_nz_n \right\vert\\
+                                                                    &\leq \sum_{n=1}^{\infty}\left\vert \lambda_n \right\vert\left\vert z_n \right\vert\\
+                                                                    &\leq \sum_{n=1}^{\infty}\left\vert \lambda_n \right\vert\norm{z}_{\infty}\\
+                                                                    &= \norm{\lambda}_1\norm{z}_{\infty}.
+  \end{align*}
+  Thus, $\norm{\theta\left(\lambda\right)}_{\text{op}}\leq \norm{\lambda}_1$, so $\theta\left(\lambda\right) \in c_0^{\ast}$.\newline
+
+  The map $\lambda \mapsto \theta\left(\lambda\right)$ is linear. Now, we show that $\theta$ is an isometry. We know that $\norm{\theta\left(\lambda\right)}_{\text{op}}\leq \norm{\lambda}_{1}$. For $\left(\lambda_n\right)_n\in \ell_1$, we know know that
+  \begin{align*}
+    z_{\lambda} &= \left(\sgn\left(\lambda_1\right),\sgn\left(\lambda_1\right),\dots,\sgn\left(\lambda_n\right)\right)
+  \end{align*}
+  is a member of $B_{c_0}$, as its nonzero terms have modulus at most $1$. Here, $\sgn\left(z\right)$ is the complex number of modulus $1$ defined by $\sgn(z) = \frac{|z|}{z}$. Thus,
+  \begin{align*}
+    \norm{\theta\left(\lambda\right)}_{\text{op}} &\geq \left\vert \theta\left(\lambda\right)\left(z_1\right) \right\vert\\
+                                                  &= \left\vert \sum_{i=1}^{n}\lambda_i\sgn\left(\lambda_i\right) \right\vert\\
+                                                  &= \sum_{i=1}^{n}\left\vert \lambda_i \right\vert.
+  \end{align*}
+  Sending $n\rightarrow\infty$, we have $\norm{\theta\left(\lambda\right)}_{\text{op}} \geq \norm{\lambda}_1$. Thus, $\theta$ is an isometry.\newline
+
+  Finally, we must show that $\theta$ is onto. Let $\varphi\in c_0^{\ast}$, and let $\lambda_n = \varphi\left(e_n\right)$. We set $\omega_n = \sgn\left(\varphi\left(e_n\right)\right)$ Then,
+  \begin{align*}
+    \sum_{n=1}^{N}\left\vert \lambda_n \right\vert &= \sum_{n=1}^{N}\left\vert \varphi\left(e_n\right) \right\vert\\
+                                                   &= \sum_{n=1}^{N}\varphi_n\sgn\left(\varphi\left(e_n\right)\right)\\
+                                                   &= \sum_{n=1}^{N}\varphi_n\left(e_n\omega_n\right)\\
+                                                   &= \varphi\left(\sum_{n=1}^{N}\omega_ne_n\right)\\
+                                                   &\leq \norm{\varphi}_{\text{op}}\norm{\sum_{n=1}^{N}\omega_ne_n}_{\infty}\\ %Note that here, e_n are the canonical coordinate vectors on c_0, and \omega_n are all complex numbers of modulus 1.
+                                                   &\leq \norm{\varphi}_{\text{op}}.
+  \end{align*}
+  Sending $N\rightarrow\infty$, we find that $\left(\lambda_n\right)_n\in \ell_1$. For an arbitrary $\left(z_n\right)_n\in c_0$, we have
+  \begin{align*}
+    \varphi\left(z\right) &= \varphi\left(\sum_{z=1}^{\infty}z_ne_n\right)\\
+                          &= \sum_{n=1}^{\infty}z_n\varphi\left(e_n\right)\\
+                          &= \sum_{n=1}^{\infty}z_n\lambda_n\\
+                          &= \theta\left(\lambda\right)\left(z\right),
+  \end{align*}
+  thus meaning $\varphi$ and $\theta\left(\lambda\right)$ agree on an arbitrary member of $c_0$.
+\end{proof}
+\begin{remark}
+  What made this problem so much easier than it might have been is the fact that since $c_0$ has a Schauder basis, we could define how $\varphi\in c_0^{\ast}$ behaved entirely through its action on the basis elements. This is similar to how we can find properties of linear maps in linear algebra by finding their actions on the Hamel bases of the vector space.
+\end{remark}
+\begin{exercise}
+  Consider the map $\phi: \ell_1\rightarrow \ell_{\infty}^{\ast}$ defined by $\phi\left(\lambda\right)\left(z\right) = \sum_{n=1}^{\infty}\lambda_nz_n$ for $\lambda = \left(\lambda_n\right)_n\in \ell_1$ and $z = \left(z_n\right)_n\in \ell_{\infty}$. Prove that $\phi$ is a linear isometry, but $\phi$ is \textit{not} onto.
+\end{exercise}
+\begin{solution}
+  A similar method to the proof that $c_0^{\ast}\cong \ell_1$ gives $\phi$ is an isometry. We will replicate it here.\newline
+
+  First, we show that $\phi$ is bounded and well-defined.
+  \begin{align*}
+    \left\vert \phi\left(\lambda\right)\left(z\right) \right\vert &= \left\vert \sum_{n=1}^{\infty}\lambda_nz_n \right\vert\\
+                                                                  &\leq \sum_{n=1}^{\infty}\left\vert \lambda_nz_n \right\vert\\
+                                                                  &\leq \sum_{n=1}^{\infty}\left\vert \lambda_n \right\vert\norm{z}_{\infty}\\
+                                                                  &= \norm{\lambda}_1\norm{z}_{\infty}\\
+                                                                  &< \infty.
+  \end{align*}
+  Thus, $\norm{\phi\left(\lambda\right)}_{\text{op}}\leq \norm{\lambda}_1$, so $\phi$ is bounded. It is also clear that $\phi$ is linear in $\lambda$ and in $z$. Similarly, for $\lambda = \left(\lambda_n\right)_n\in \ell_1$, we define
+  \begin{align*}
+    z_{\lambda} &= \left(\sgn\left(\lambda_1\right),\dots,\sgn\left(\lambda_n\right),0,0,\dots\right)\\
+                &\in B_{c_0}.
+  \end{align*}
+  Thus, 
+  \begin{align*}
+    \norm{\phi\left(\lambda\right)}_{\text{op}} &\geq \left\vert \phi\left(\lambda\right)\left(z_{\lambda}\right) \right\vert\\
+                                                &= \sum_{k=1}^{n}\left\vert \lambda_k \right\vert,
+  \end{align*}
+  meaning $\norm{\phi\left(\lambda\right)}_{\text{op}} \geq \norm{\lambda}_1$, so $\phi$ is an isometry.\newline
+
+  In particular, $\phi$ is an isometric isomorphism from $\ell_1$ to $c_0^{\ast}\subset \ell_{\infty}^{\ast}$, so $\phi$ cannot be onto $\ell_{\infty}^{\ast}$.
+\end{solution}
+\begin{proposition}
+  The dual of $\ell_1$ is isometrically isomorphic to $\ell_{\infty}$.
+\end{proposition}
+\begin{proof}
+  Let $\theta: \ell_{\infty}\rightarrow \ell_1^{\ast}$ be defined by $\theta\left(z\right)\left(\lambda\right) = \sum_{n=1}^{\infty}z_n\lambda_n$ for $z = \left(z_n\right)_n\in \ell_{\infty}$ and $\left(\lambda_n\right)_n\in \ell_1$.\newline
+
+  We can see that $\theta$ is well-defined with $\norm{\theta(z)}_{\text{op}}\leq \norm{z}_{\infty}$ by a similar reasoning to the case of $\theta: \ell_1\rightarrow c_0^{\ast}$. Additionally, since
+  \begin{align*}
+    \norm{\theta(z)}_{\text{op}} &\geq \left\vert \theta(z)\left(e_n\right) \right\vert\\
+                                 &= \left\vert z_n \right\vert
+  \end{align*}
+  for every $n\geq 1$, we have $\norm{z}_{\infty}\leq \norm{\theta(z)}_{\text{op}}$, meaning $\theta$ is an isometry.\newline
+
+  Suppose $\varphi\in \ell_1^{\ast}$. Set $z_n = \varphi\left(e_n\right)$. Note that $z\in \ell_{\infty}$ since $\left\vert z_n \right\vert = \left\vert \varphi\left(e_n\right) \right\vert \leq \norm{\varphi}_{\text{op}}$ for all $n\geq 1$. For $\lambda = \left(\lambda_n\right)_n\in \ell_1$, then $\lambda = \sum_{n=1}^{\infty}\lambda_ne_n$ is convergent in the $1$-norm, as
+  \begin{align*}
+    \norm{\sum_{n=1}^{\infty}\lambda_ne_n} &\leq \sum_{n=1}^{\infty}\norm{\lambda_ne_n}\\
+                                           &= \sum_{n=1}^{\infty}\left\vert \lambda_n \right\vert\norm{e_n}\\
+                                           &= \sum_{n=1}^{\infty}\left\vert \lambda_n \right\vert\\
+                                           &< \infty.
+  \end{align*}
+  Thus, 
+  \begin{align*}
+    \varphi\left(\lambda\right) &= \varphi\left(\sum_{n=1}^{\infty}\lambda_ne_n\right)\\
+                                &= \sum_{n=1}^{\infty}\lambda_n\varphi\left(e_n\right)\\
+                                &= \sum_{n=1}^{\infty}\lambda_nz_n\\
+                                &= \theta\left(z\right)\left(\lambda\right).
+  \end{align*}
+\end{proof}
+This result can be generalized to $L_{p}$ spaces, which are spaces of measurable functions satisfying some integration property.
+\begin{theorem}
+  Let $\left(\Omega,\mathcal{M},\mu\right)$ be a measure space.
+  \begin{enumerate}[(1)]
+    \item If $\mu$ is a $\sigma$-finite measure, and $p,q\in \left(1,\infty\right)$ satisfying $p^{-1} + q^{-1} = 1$, then the map $L_q\left(\Omega,\mu\right)\rightarrow L_p\left(\Omega,\mu\right)^{\ast}$ given by $f \mapsto \varphi_f$, with
+      \begin{align*}
+        \varphi_f\left(g\right) &= \int_{\Omega}gf\:d\mu,
+      \end{align*}
+      is an isometric isomorphism.
+    \item If $\mu$ is semi-finite, then $L_{\infty}\rightarrow L_{1}\left(\Omega,\mu\right)^{\ast}$ given by $f\mapsto \varphi_f$ is an isometric isomorphism.
+  \end{enumerate}
+\end{theorem}
+%\subsubsection{Duals of Continuous Function Spaces}%
+We will now turn our attention to spaces of continuous functions. Let $\Omega$ be a locally compact Hausdorff space. We want to understand $C_0\left(\Omega\right)^{\ast}$, the space of bounded linear functionals on $C_0\left(\Omega\right)$.\newline
+
+Note that $C_0\left(\Omega\right)$ is a $\ast$-algebra, and admits a cone of positive elements, $C_0\left(\Omega\right)_{+}$.\footnote{$C_0\left(\Omega\right)_{+} = \set{f\in C_0\left(\Omega\right)\mid f(x)\geq 0~\forall x\in \Omega}$.} We start by understanding the properties of positive linear functionals.
+\begin{definition}
+  Let $\Omega$ be a locally compact Hausdorff space.
+  \begin{enumerate}[(1)]
+    \item A linear functional $\varphi: C_0\left(\Omega\right)\rightarrow \C$ is called positive if $\varphi(f) \geq 0$ whenever $f\in C_0\left(\Omega\right)_{+}$.
+    \item A positive linear functional $\varphi: C_0\left(\Omega\right)\rightarrow \C$ is called faithful if
+      \begin{align*}
+        \ker\left(\varphi\right)\cap C_0\left(\Omega\right)_{+} &= \set{0}.
+      \end{align*}
+    \item A state on $C_0\left(\Omega\right)$ is a positive linear functional $\varphi\in C_0\left(\Omega\right)'$ with $\norm{\varphi}_{\text{op}} = 1$. The collection of states
+      \begin{align*}
+        S\left(C_0\left(\Omega\right)\right) &= \set{\varphi\in C_0\left(\Omega\right)^{\ast}\mid \text{ $\varphi$ is a state}}\\
+                                             &\subseteq B_{C_{0}\left(\Omega\right)^{\ast}}.
+      \end{align*}
+      is called the state space of $\Omega$, which we abbreviate $S\left(\Omega\right)$.
+  \end{enumerate}
+\end{definition}
+\begin{lemma}
+  Let $\Omega$ be a locally compact Hausdorff space, and suppose $\varphi: C_0\left(\varphi\right)\rightarrow \C$ is a positive linear functional.
+  \begin{enumerate}[(1)]
+    \item If $h\in C_0\left(\Omega,\R\right)$, then $\varphi\left(h\right)\in \R$.
+    \item If $h\leq k$ in $C_0\left(\Omega,\R\right)$, then $\varphi\left(h\right) \leq \varphi\left(k\right)$.
+    \item If $f\in C_0\left(\Omega\right)$, then $\varphi\left(f^{\ast}\right) = \overline{\varphi\left(f\right)}$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item We write $h = h_{+} - h_{-}$, and see that $\varphi(h) = \varphi\left(h_{+}\right) - \varphi\left(h_{-}\right) \in \R$.
+    \item If $h \leq k$ in $C_0\left(\Omega,\R\right)$, then $k-h\geq 0$, so $\varphi\left(k-h\right) \geq 0$, so $\varphi\left(h\right)\leq \varphi\left(k\right)$.
+      \item We write $f$ as the Cartesian decomposition, $f = h + ik$, where $h,k\in C_0\left(\Omega,\R\right)$. Thus,
+        \begin{align*}
+          \varphi\left(f^{\ast}\right) &= \varphi\left(h-ik\right)\\
+                                       &= \varphi\left(h\right) - i\varphi\left(k\right)\\
+                                       &= \overline{\varphi(h) + i\varphi{k}}\\
+                                       &= \overline{\varphi(f)}.
+        \end{align*}
+  \end{enumerate}
+\end{proof}
+\begin{proposition}
+  If $\varphi: C_0\left(\Omega\right)\rightarrow \C$ is positive and linear, then $\varphi$ is bounded.
+\end{proposition}
+\begin{proof}
+  Let
+  \begin{align*}
+    M &= \sup\set{\varphi\left(f\right)\mid f\in C_0\left(\Omega\right)_{+},\norm{f}_{u}\leq 1}.
+  \end{align*}
+  We claim that $M$ is finite. If $M = \infty$< then for each $n\in \N$, there exists $f_n\in C_0\left(\Omega\right)_{+}$ with $\norm{f_n}_{u}\leq 1$ and $\varphi\left(f_n\right) \geq 2^n$. Note that
+  \begin{align*}
+    \sum_{n=1}^{\infty}\norm{2^{-n}f_n}_{u} &\leq \sum_{n=1}^{\infty}2^{-n}\\
+                                            &= 1,
+  \end{align*}
+  meaning the series $f = \sum_{n=1}^{\infty}2^{-n}f_n$ converges uniformly in $C_0\left(\Omega\right)$.\newline
+
+  For $N\in \N$, we can see that $f\geq \sum_{n=1}^{N}2^{-n}f_n \geq 0$, as $f_n$ are all positive. Since $\varphi$ preserves the order on $C_0\left(\Omega\right)$, we have
+  \begin{align*}
+    \varphi(f) &\geq \varphi\left(\sum_{n=1}^{N}2^{-n}f_n\right)\\
+               &= \sum_{n=1}^{n}2^{-n}\varphi\left(f_n\right)\\
+               &\geq \sum_{n=1}^{N}2^{-n}2^{n}\\
+               &= N.
+  \end{align*}
+  This is absurd since $N$ is arbitrary. Thus, $M < \infty$.\newline
+
+  Let $f\in C_0\left(\Omega\right)$ with $\norm{f}_u \leq 1$. Let $f = h + ik$ be the Cartesian decomposition. Then, we can write $f = \left(h_{+} - h_{-}\right) + i\left(k_{+} - k_{-}\right)$. Since $\varphi$ is linear, $\left\vert \varphi(f) \right\vert \leq 4M$, meaning $\norm{\varphi}_{\text{op}} \leq 4M$.
+\end{proof}
+\begin{proposition}
+  If $\Omega$ is a compact Hausdorff space, and $\varphi: C\left(\Omega\right)\rightarrow \F$ is linear, then $\varphi$ is positive if and only if $\norm{\varphi} = \varphi\left(\1_{\Omega}\right)$.
+\end{proposition}
+\begin{proof}
+  Let $h\in C\left(\Omega,\R\right)$. Then,
+  \begin{align*}
+    -\norm{h}\1_{\Omega}\leq h \leq \norm{h}\1_{\Omega}.
+  \end{align*}
+  Thus, since $\varphi$ is positive,
+  \begin{align*}
+    -\norm{h}\varphi\left(\1_{\Omega}\right) \leq \varphi(h) \leq \norm{h}\varphi\left(\1_{\Omega}\right).
+  \end{align*}
+  Thus, $\left\vert \varphi(h) \right\vert\leq \norm{h}\varphi\left(\1_{\Omega}\right)$.\newline
+
+  Let $f\in C\left(\Omega\right)$, and find $\omega\in \C$ such that $\left\vert \omega \right\vert = 1$ and $\omega\varphi(f) = \left\vert \varphi(f) \right\vert$. Set $g = \omega f$. Note that $\norm{g}_{u} = \norm{f}_u$. Then,
+  \begin{align*}
+    \left\vert \varphi(f) \right\vert &= \re\left(\left\vert \varphi(f) \right\vert\right)\\
+                                      &= \re\left(\omega\varphi(f)\right)\\
+                                      &= \re\left(\varphi\left(\omega f\right)\right)\\
+                                      &= \re\left(\varphi(g)\right)\\
+                                      &= \frac{1}{2}\left(\varphi(g) + \overline{\varphi(g)}\right)\\
+                                      &= \varphi\left(\frac{g + \overline{g}}{2}\right)\\
+                                      &= \varphi\left(\re(g)\right)\\
+                                      &\leq \varphi\left(\1_\Omega\right)\norm{\re(g)}_{u}\\
+                                      &\leq \varphi\left(\1_\Omega\right)\norm{g}\\
+                                      &= \varphi\left(\1_{\Omega}\right)\norm{f}_u,
+  \end{align*}
+  meaning $\norm{\varphi}_{\text{op}}\leq \varphi\left(\1_\Omega\right)$.\newline
+
+  Suppose $\norm{\varphi} = \varphi\left(\1_{\Omega}\right)$. We start by claiming that if $h\in C\left(\Omega,\R\right)$, then $\varphi(h)\in \R$. Let $\varphi(h) = a + bi$; we will show that $b = 0$. Let $t\in \R$ be arbitrary.
+  \begin{align*}
+    \norm{h + it\1_{\Omega}}_{u}^2 &= \left(\sup_{x\in \Omega}\left\vert h(x) + it \right\vert\right)^2\\
+                                   &= \sup_{x\in \Omega}\left\vert h(x) + it \right\vert^2\\
+                                   &= \sup_{x\in \Omega}\left(\left(h(x)\right)^2 + t^2\right)\\
+                                   &= \norm{h}_{u}^2 + t^2.
+  \end{align*}
+  Thus,
+  \begin{align*}
+    \left\vert \varphi\left(h + it\1_\Omega\right) \right\vert^2 &\leq \left(\varphi\left(\1_\Omega\right)\right)^2\norm{h + it\1_{\Omega}}^2\\
+                                                                 &= \left(\varphi\left(\1_\Omega\right)\right)^2\left(\norm{h}^2 + t^2\right).
+  \end{align*}
+  Alternatively,
+  \begin{align*}
+    \left\vert \varphi\left(h + it\1_\Omega\right) \right\vert^2 &= \left\vert \varphi(h) + it\varphi\left(\1_\Omega\right) \right\vert^2\\
+                                                                 &= \left\vert a + i\left(b + t\varphi\left(\1_\Omega\right)\right) \right\vert^2\\
+                                                                 &= a^2 + \left(b + t\varphi\left(\1_\Omega\right)\right)^2\\
+                                                                 &= a^2 + b^2 + t^2\left(\varphi\left(\1_\Omega\right)\right)^2 + 2bt\varphi\left(\1_\Omega\right).
+  \end{align*}
+  Thus, we get $a^2 + b^2 + 2bt\varphi\left(\1_\Omega\right) \leq \left(\varphi\left(\1_\Omega\right)\right)\norm{h}^2$. If $b \neq 0$, sending $t\rightarrow\infty$ yields a contradiction. Thus, $b = 0$.\newline
+
+  Assume $f\in C\left(\Omega\right)_+$. Observe that $\Ran\left(f - \norm{f}\1_\Omega\right) \subseteq \left[-\norm{f},\norm{f}\right]$, meaning $\norm{f - \norm{f}\1_\Omega}\leq \norm{f}$. Thus,
+  \begin{align*}
+    \left\vert \varphi(f) - \norm{f}\varphi\left(\1_\Omega\right) \right\vert &= \left\vert \varphi\left(f - \norm{f}\1_\Omega\right) \right\vert\\
+                                                                              &\leq \varphi\left(\1_\Omega\right)\norm{f - \norm{f}\1_\Omega}\\
+                                                                              &\leq \varphi\left(\1_\Omega\right)\norm{f}.
+  \end{align*}
+  Since $\varphi(f)\in \R$, we have $\varphi(f) \geq 0$, so $\varphi$ is positive.
+\end{proof}
+\begin{corollary}
+  Let $\Omega$ be a compact Hausdorff space. The state space
+  \begin{align*}
+    S\left(\Omega\right) &= \set{\varphi\in C\left(\Omega\right)^{\ast}\mid \varphi\left(\1_\Omega\right) = 1 = \norm{\varphi}}
+  \end{align*}
+  is convex.
+\end{corollary}
+\begin{proof}
+  Suppose $\varphi_1 ,\varphi_2\in S(\Omega)$, $t\in [0,1]$. Then, $\left(1-t\right)\varphi_1 + t\varphi_2$ is a positive functional, meaning
+  \begin{align*}
+    \norm{\left(1-t\right)\varphi_1 + t\varphi_2} &= \left(1-t\right)\varphi\left(\1_\Omega\right) + t\varphi\left(\1_\Omega\right)\\
+    &= \left(1-t\right) + t\\
+    &= 1,
+  \end{align*}
+  so $S(\Omega)$ is convex.
+\end{proof}
+Now, we can associate bounded linear functionals with regular measures.
+\begin{theorem}[Riesz Representation Theorem]
+  Let $\Omega$ be a locally compact Hausdorff space. If $\varphi: C_c\left(\Omega\right) \rightarrow \C$ is a positive linear functional, then there exists a unique Radon measure $\mu$ such that
+  \begin{align*}
+    \varphi(f) &= \int_{\Omega}f\:d\mu,
+  \end{align*}
+  with $\left\vert \varphi(f) \right\vert \leq \norm{f}\mu\!\left(\supp(f)\right)$. The Radon measure $\mu$ also satisfies the following.
+  \begin{enumerate}[(1)]
+    \item For every open $U\subseteq \Omega$, we have
+      \begin{align*}
+        \mu\!\left(U\right) &= \sup\set{\varphi(f)\mid f\in C_c\left(\Omega,[0,1]\right),\supp(f)\subseteq U}.
+      \end{align*}
+    \item For every compact $K\subseteq \Omega$,
+      \begin{align*}
+        \mu\!\left(K\right) &= \inf\set{\varphi(f)\mid f\geq \1_{K}}.
+      \end{align*}
+  \end{enumerate}
+\end{theorem}
+The following proof is adapted from Folland's \textit{Real Analysis}.
+\begin{notation}
+  For an open set $U$, we let $f\prec U$ denote $f\in C_c\left(\Omega,[0,1]\right)$ and $\supp(f) \subset U$.
+\end{notation}
+\begin{proof}
+  We start by establishing uniqueness.\newline
+
+  Let $\mu$ be a Radon measure such that $\varphi(f) = \int_{\Omega}f\:d\mu$ for all $f\in C_c\left(\Omega\right)$. For $U\subseteq X$ open, it is the case that $\varphi(f) \leq \mu\!\left(U\right)$ for $f\prec U$.\newline
+
+  If $K\subseteq U$ is compact, Urysohn's lemma gives $f\in C_c\left(\Omega\right)$ such that $f\prec U$ and $f = 1$ on $K$, meaning $\mu\!\left(K\right) \leq \int_{\Omega}f\:d\mu = \varphi(f)$. Since $\mu$ is inner regular on $U$, we satisfy condition (1). Thus, $\mu$ is determined on all open sets by $\varphi$, and so is determined on all Borel sets since $\mu$ is outer regular.\newline
+
+  To show existence, we start by defining
+  \begin{align*}
+    \mu\!\left(U\right) &=\sup\set{\varphi\left(f\right)\mid f\in C_c\left(\Omega\right),f\prec U}.
+  \end{align*}
+  For any $E\subseteq X$, we define
+  \begin{align*}
+    \mu^{\ast}\!\left(E\right) &= \inf\set{\mu\left(U\right)\mid E\subseteq U,~\text{$U$ open}}.
+  \end{align*}
+  Note that by the way we define $\mu$, if $U\subseteq V$, then $\mu\!\left(U\right) \leq \mu\!\left(V\right)$, meaning $\mu^{\ast}\!\left(U\right) = \mu\!\left(U\right)$ if $U$ is open.\newline
+
+  We begin by showing that $\mu^{\ast}$ is an outer measure. It suffices to show that for a sequence of open sets $\set{U_j}_{j=1}^{n}$ such that $U = \bigcup_{j=1}^{\infty}U_j$, $\mu\!\left(U\right) \leq \sum_{j=1}^{\infty}\mu\!\left(U_j\right)$. From this, we can see that, for any $E\subseteq X$,
+  \begin{align*}
+    \mu^{\ast}\!\left(E\right) &= \inf\set{\sum_{j=1}^{\infty}\mu\!\left(U_j\right)\mid U_j\text{ open, }E\subseteq \bigcup_{j=1}^{\infty}U_j}\\
+                               &= \inf\set{\mu\!\left(U\right)\mid E\subseteq U,\text{ $U$ open}}
+  \end{align*}
+  defines an outer measure.\newline
+
+  Let $U = \bigcup_{j=1}^{\infty}U_j$ and $f\in C_c\left(\Omega\right)$ with $f\prec U$. Let $K = \supp\left(f\right)$. Since $K$ is compact, $K\subseteq \bigcup_{i=1}^{n}U_i$ for some $n$.
+  \begin{proposition}
+    If $K$ is a compact set in a locally compact Hausdorff space $\Omega$ with an open cover $\set{U_j}_{j=1}^{n}$, then there is a partition of unity\footnote{A collection of functions in $C\left(X,[0,1]\right)$ such that their sum is $1$ on $E$ and every neighborhood has only finitely many nonzero functions.} on $K$ consisting of compactly supported functions $g_j$ such that $\supp\left(g_j\right)\subseteq U_j$.
+  \end{proposition}
+  \begin{proof}
+    For each $x\in K$, there is a compact neighborhood $N_x$ such that $N_x\subseteq U_j$ for some $j$. The set $\set{N_x^{\circ}\mid x\in K}$ is an open cover of $K$, meaning there exist $x_1,\dots,x_m$ such that $K\subseteq \bigcup_{k=1}^{m}N_{x_k}$.\newline
+
+    Let $F_j$ be the union of the set of $N_{x_k}$ that are a subset of $U_j$. Then, $F_j\subseteq U_j$ is compact, so by Urysohn's lemma, there are $g_1,\dots,g_n\in C_c\left(\Omega\right)$ such that $g_j = 1$ on $F_j$ and $\supp\left(g_j\right) \subseteq U_j$.\newline
+
+    Since $F_j$ covers $K$, it is the case that $\sum_{k=1}^{n}g_k \geq 1$ on $K$. By Urysohn's Lemma, there $f\in C_c\left(\Omega,[0,1]\right)$ such that $f = 1$ on $K$ and $\supp(f) \subseteq \set{x\mid \sum_{k=1}^{n}g_k(x) > 0}$.\newline
+
+    Define $g_{n+1} = 1 - f$, meaning $\sum_{k=1}^{n+1}g_{k} > 0$ everywhere. For $j = 1,\dots,n$, let $h_j = \frac{g_j}{\sum_{k=1}^{n+1}g_k}$. Then, $\supp\left(h_j\right) = \supp\left(g_j\right)$, $\supp\left(h_j\right) \subseteq U_j$, and $\sum_{j=1}^{n}h_j = 1$ on $K$.
+  \end{proof}
+  With this proposition, we can construct $g_i \prec U_i$ with $\sum_{i=1}^{n}g_j = 1$ on $K$. Then, $f = \sum_{i=1}^{n}fg_i$, with $fg_i\prec U_i$. Thus,
+  \begin{align*}
+    \varphi(f) &= \sum_{i=1}^{n}\varphi\left(fg_i\right)\\
+               &\leq \sum_{i=1}^{n}\mu\!\left(U_i\right)\\
+               &\leq \sum_{j=1}^{\infty}\mu\!\left(U_j\right).
+  \end{align*}
+  Thus, $\sup_{f\in C_c\left(\Omega\right)}\left(\varphi(f)\right) = \mu\!\left(U\right) \leq \sum_{j=1}^{\infty}\mu\!\left(U_j\right)$. Since this holds for any $f\prec U$, we conclude that $\mu\!\left(U\right) \leq \sum_{j=1}^{\infty}\mu\!\left(U_j\right)$.\newline
+
+  We now show that for any open set $U\subseteq \Omega$, $U$ is $\mu^{\ast}$-measurable.\newline
+
+  Let $U$ be open, $E\subseteq \Omega$ with $\mu^{\ast}\!\left(E\right) < \infty$. Suppose $E$ is open. Then, $E\cap U$ is open, so for $\ve > 0$, we can find $f\in C_c\left(\Omega\right)$ such that $f\prec E\cap U$ and $\varphi(f) > \mu\!\left(E\cap U\right) - \ve$. Additionally, $E\setminus \supp\left(f\right)$ is open, so we can find $g\in C_c\left(\Omega\right)$ such that $g\prec E\setminus \supp(f)$, and $\varphi(g) > \mu\!\left(E\setminus \supp(f)\right) - \ve$. However, $f + g\prec E$, so
+  \begin{align*}
+    \mu(E) &\geq \varphi(f) + \varphi(g)\\
+           &> \mu\!\left(E\cap U\right) + \mu\!\left(E\setminus \supp(f)\right) - 2\ve\\
+           &\geq \mu^{\ast}\!\left(E\cap U\right) + \mu^{\ast}\!\left(E\setminus U\right) - 2\ve.
+  \end{align*}
+  We obtain the desired inequality as $\ve\rightarrow 0$.\newline
+
+  For any $E\subseteq \Omega$, we find $V$ open with $E\subseteq V$ and $\mu(V) < \mu^{\ast}\!(E) + \ve$ (by our definition of $\mu^{\ast}$). Thus,
+  \begin{align*}
+    \mu^{\ast}\!\left(E\right) + \ve &> \mu\!\left(V\right)\\
+                                     &\geq \mu^{\ast}\!\left(V\cap U\right) + \mu^{\ast}\!\left(V\setminus U\right)\\
+                                     &\geq \mu^{\ast}\!\left(E\cap U\right) + \mu^{\ast}\!\left(E\setminus U\right).
+  \end{align*}
+  We let $\ve \rightarrow 0$ to obtain our desired inequality.\newline
+
+  Now, we show that for any compact $K\subseteq \Omega$, $\mu\!\left(K\right) = \inf\set{\varphi(f)\mid f\in C_c\left(\Omega\right),f\geq \1_{K}}$.\newline
+
+  Let $K$ be compact, $f\in C_c\left(\Omega\right)$, and $f\geq \1_K$. Let $U_{\ve} = \set{x\mid f(x) > 1-\ve}$. Then, $U_{\ve}$ is open, and for $g\prec U_{\ve}$, we have $\left(1-\ve\right)^{-1}f - g \geq 0$.\newline
+
+  Thus, $\varphi(g) \leq \left(1-\ve\right)^{-1}\varphi(f)$, meaning $\mu\!\left(K\right) \leq \mu\!\left(U_{\ve}\right) \leq \left(1-\ve\right)^{-1}\varphi(f)$. Letting $\ve \rightarrow 0$, we find $\mu\!\left(K\right) \leq \varphi(f)$.\newline
+
+  For any $K\subseteq U$, Urysohn's lemma gives $f\in C_c\left(\Omega\right)$ such that $f\geq \1_K$ and $f\prec U$, meaning $\varphi(f) \leq \mu(U)$. Since $\mu$ is outer regular, we obtain condition (2).\newline
+
+  With our measure $\mu$ defined, we only need to show that $\varphi(f) = \int_{\Omega}f\:d\mu$ for $f\in C_c\left(\Omega,[0,1]\right)$, as $C_c\left(\Omega\right)$ is the linear span of $C_c\left(\Omega,[0,1]\right)$.\newline
+
+  Set $f\in C_c\left(\Omega,[0,1]\right)$. Given $N\in \N$, for $1\leq j\leq N$, let $K_j = \set{x\mid f(x) \geq \frac{j}{N}}$. Let $K_0 = \supp(f)$. Define $f_1,\dots,f_N\in C_c\left(\Omega\right)$ with $f_j(x) = 0$ for $x\notin K_{j-1}$, $f_j(x) = f(x) - \frac{j-1}{N}$ for $x\in K_{j-1}\setminus K_j$, and $f_j = \frac{1}{N}$ for $x\in K_j$.\newline
+
+  We, thus have $\frac{\1_{K_j}}{N} \leq f_j \leq \frac{\1_{K_{j-1}}}{N}$, meaning
+  \begin{align*}
+    \frac{1}{N}\mu\!\left(K_j\right) \leq \int_{\Omega}f_j\:d\mu \leq \frac{1}{N}\mu\!\left(K_{j-1}\right).
+  \end{align*}
+  If $U$ is an open set containing $K_{j-1}$, then $Nf_{j} \prec U$, meaning $\varphi\left(f_j\right) \leq \frac{\mu\!\left(U\right)}{N}$. Thus, by condition (2), and outer regularity,
+  \begin{align*}
+    \frac{1}{N}\mu\!\left(K_{j}\right) \leq \varphi\left(f_j\right) \leq \frac{1}{N}\mu\!\left(K_{j-1}\right).
+  \end{align*}
+  Since $f = \sum_{j=1}^{N} f_j$, we have
+  \begin{align*}
+    \frac{1}{N}\sum_{j=1}^{N}\mu\!\left(K_j\right) \leq \int_{\Omega}f\:d\mu \leq \frac{1}{N}\sum_{j=1}^{N}\mu\!\left(K_{j-1}\right),
+  \end{align*}
+  and
+  \begin{align*}
+    \frac{1}{N}\sum_{j=1}^{N}\mu\!\left(K_j\right) \leq \varphi(f)\leq \frac{1}{N}\sum_{j=1}^{N-1}\mu\!\left(K_j\right).
+  \end{align*}
+  Thus,
+  \begin{align*}
+    \left\vert \varphi(f) - \int_{\Omega}f\:d\mu \right\vert &\leq \frac{\mu\!\left(K_0\right) - \mu\!\left(K_{N}\right)}{N}\\
+    &\leq \frac{\mu\!\left(\supp(f)\right)}{N}.
+  \end{align*}
+  Since $\mu\!\left(\supp(f)\right) < \infty$, and $N$ is arbitrary, we have $I(f) = \int_{\Omega}f\:d\mu$.
+\end{proof}
+Having proven the Riesz Representation Theorem, we can begin to describe all bounded linear functionals on continuous function spaces, starting with the positive ones.
+\begin{proposition}
+  Let $\Omega$ be a locally compact Hausdorff space.
+  \begin{enumerate}[(1)]
+    \item For $\mu$ a positive and finite regular measure on $\Omega$,
+      \begin{align*}
+        \varphi_{\mu}: C_0\left(\Omega\right)\rightarrow \C\\
+        \varphi_{\mu}(f) &= \int_{\Omega}f\:d\mu
+      \end{align*}
+      defines a positive linear functional with $\norm{\varphi_{\mu}}_{\text{op}} = \mu\!\left(\Omega\right)$. Moreover, $\varphi_{\mu}$ is faithful if $\mu$ has full support.
+    \item If $\varphi: C_0\left(\Omega\right)\rightarrow \C$ is a positive linear functional, then there exists a unique positive and finite regular measure $\mu_{\varphi}$ such that $\varphi - \varphi_{\mu_{\varphi}}$. That is,
+      \begin{align*}
+        \varphi(f) &= \int_{\Omega}f\:d\mu_{\varphi}.
+      \end{align*}
+      Moreover, $\norm{\varphi}_{\text{op}} = \mu\left(\Omega\right)$, and $\mu$ has full support if $\varphi$ is faithful.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  The map
+  \begin{align*}
+    \varphi_{\mu}\left(f\right) &= \int_{\Omega}f\:d\mu
+  \end{align*}
+  is positive, linear, and well=defined, since
+  \begin{align*}
+    \left\vert \varphi_{\mu}(f) \right\vert &\leq \left\vert \int_{\Omega}f\:d\mu \right\vert\\
+                                            &\leq \int_{\Omega}\left\vert f \right\vert\:d\mu\\
+                                            &\leq \norm{f}_{u} \mu\!\left(\Omega\right).
+  \end{align*}
+  This also shows that $\norm{\varphi_{\mu}}_{\text{op}}\leq \mu\!\left(\Omega\right)$. Given $\ve > 0$, the regularity of $\mu$ allows us to find $K\subseteq \Omega$ with $\mu\!\left(\Omega\right)-\ve < \mu\left(K\right)$. Urysohn's lemma gives a continuous $f\in C_c\left(\Omega,[0,1]\right)$ with $f = 1$ on $K$. Thus,
+  \begin{align*}
+    \norm{\varphi_{\mu}}_{\text{op}} &\geq \varphi_{\mu}\left(f\right)\\
+                                     &= \int_{\Omega}f\:d\mu\\
+                                     &\geq \int_{\Omega}\1_{K}\:d\mu\\
+                                     &= \mu\!\left(K\right)\\
+                                     &> \mu\!\left(\Omega\right) - \ve.
+  \end{align*}
+  Since $\ve$ was arbitrary, $\mu\!\left(\Omega\right)\leq \norm{\varphi_{\mu}}_{\text{op}}$.\newline
+
+  Suppose $g\in C_0\left(\Omega\right)$ with $g\geq 0$ and $g\neq 0$. Then, there is a nonempty open subset $U\subseteq \Omega$ and $\delta > 0$ such that $g(x) \geq \delta$ for all $x\in U$. If $\mu$ has full support, $\mu\!\left(U\right) > 0$, meaning
+  \begin{align*}
+    \varphi(g) &= \int_{\Omega}g\:d\mu\\
+               &\geq \int_{\Omega}\delta\1_{U}\:d\mu\\
+               &= \delta\mu\!\left(U\right)\\
+               &> 0.
+  \end{align*}
+  Thus, we have proven (1).\newline
+
+  If $\varphi: C_0\left(\Omega\right)\rightarrow \C$ is a positive linear functional, then $\varphi$ is bounded. The restriction $\varphi_0 = \varphi|_{C_c\left(\Omega\right)}: C_c\left(\Omega\right)\rightarrow \C$ is positive and linear, meaning $\varphi_0 = I_{\mu}$ for some Radon measure $\mu$ by the Riesz Representation Theorem. We set $\mu_{\varphi} = \mu$.\newline
+
+  By the Riesz Representation theorem, we have
+  \begin{align*}
+    \mu\!\left(\Omega\right) &= \sup\set{I_{\mu}\left(f\right)\mid f\in C_c\left(\Omega,[0,1]\right),~\supp\left(f\right) \subseteq \Omega}\\
+                             &\leq \sup\set{\varphi(f)\mid f\in C_0\left(\Omega\right),\norm{f}\leq 1}\\
+                             &= \norm{\varphi}_{\text{op}}\\
+                             &< \infty.
+  \end{align*}
+  Additionally, if $f\in C_c\left(\Omega\right)$, then
+  \begin{align*}
+    \left\vert \varphi(f) \right\vert &= \left\vert \varphi_0\left(f\right) \right\vert\\
+                                      &\leq \left\vert \int_{\Omega}f\:d\mu \right\vert\\
+                                      &\leq \int_{\Omega}\left\vert f \right\vert\:d\mu\\
+                                      &\leq \norm{f}_{u}\mu\!\left(\Omega\right).
+  \end{align*}
+  Since $C_c\left(\Omega\right)\subseteq C_0\left(\Omega\right)$ is dense, we have $\left\vert \varphi(f) \right\vert\leq \norm{f}_u\mu\!\left(\Omega\right)$ for all $f\in C_0\left(\Omega\right)$, meaning $\norm{\varphi}_{\text{op}}\leq \mu\!\left(\Omega\right)$.\newline
+
+  Since $\mu$ is finite and Radon, $\mu$ is regular. We can see that $\varphi$ and $\varphi_u$ are bounded functionals that agree on $C_c\left(\Omega\right)$, so $\varphi = \varphi_{\mu}$.\newline
+
+  Suppose $\varphi$ is faithful. Let $U\subseteq \Omega$ be open and nonempty. By Urysohn's lemma, there is $f: \Omega\rightarrow [0,1]$ that is nonzero and compactly supported with $\supp(f) \subseteq U$. Thus,
+  \begin{align*}
+    \mu\!\left(U\right) &= \int_{\Omega}\1_{U}\:d\mu\\
+                        &\geq \int_{\Omega}f\:d\mu\\
+                        &= \varphi_{\mu}\left(f\right)\\
+                        &= \varphi(f)\\
+                        &> 0,
+  \end{align*}
+  meaning $\mu$ has full support.
+\end{proof}
+We let $\mathcal{P}_r\left(\Omega\right)$ be the convex set of all regular probability measures on $\left(\Omega,\mathcal{B}_\Omega\right)$. The following corollary follows from the previous proposition.
+\begin{corollary}
+  Let $\Omega$ be a compact Hausdorff space. There exists a bijective affine map $T: S\left(\Omega\right)\rightarrow \mathcal{P}_{r}\left(\Omega\right)$ given by $T\left(\varphi\right) = \mu_{\varphi}$.
+\end{corollary}
+We can use the positive linear functionals to generate all bounded linear functionals on a function space.
+\begin{theorem}[Jordan Decomposition]
+  Let $\Omega$ be a locally compact Hausdorff space, and suppose $\varphi: C_0\left(\Omega\right)\rightarrow \C$ be bounded linear. Then, there exists positive linear functionals $\varphi_1,\varphi_2,\varphi_3,\varphi_4$ such that
+  \begin{align*}
+    \varphi &= \left(\varphi_1-\varphi_2\right) + i\left(\varphi_3 - \varphi_4\right),
+  \end{align*}
+  and $\norm{\varphi_j}_{\text{op}}\leq \norm{\varphi}_{\text{op}}$.
+\end{theorem}
+\begin{remark}
+  The Jordan decomposition for positive linear functionals follows from the Hahn decomposition for complex measures.
+\end{remark}
+If $\varphi\in C_0\left(\Omega\right)^{\ast}$, then the Jordan decomposition provides $\varphi = \left(\varphi_1-\varphi_2\right) + i\left(\varphi_3 - \varphi_4\right)$, which gives the positive regular measures $\mu_1,\dots,\mu_4$ such that $\varphi_j\left(f\right) = \int_{\Omega}f\:d\mu_j$ for $f\in C_0\left(\Omega\right)$.\newline
+
+Then, $\mu = \left(\mu_1 - \mu_2\right) + i\left(\mu_3 - \mu_4\right)$ has total variation $\left\vert \mu \right\vert$, meaning it is regular itself. Thus,
+\begin{align*}
+  \varphi(f) &= \varphi_1\left(f\right) - \varphi_2\left(f\right) + i\left(\varphi_3\left(f\right) - \varphi_4\left(f\right)\right)\\
+             &= \int_{\Omega}f\:d\mu_1 - \int_{\Omega}f\:d\mu_2 + i \left(\int_{\Omega}f\:d\mu_4 - \int_{\Omega}f\:d\mu_4\right)\\
+             &= \int_{\Omega}f\:d\mu\\
+             &= \varphi_{\mu}\left(f\right).
+\end{align*}
+Thus, we get the following characterization of $C_0\left(\Omega\right)^{\ast}$.
+\begin{theorem}[Riesz--Markov Theorem]
+  Let $\Omega$ be a locally compact Hausdorff space. Then, $M_r\left(\Omega\right) \cong C_0\left(\Omega\right)^{\ast}$. The map $\Phi: M_r\left(\Omega\right)\rightarrow C_0\left(\Omega\right)^{\ast}$ defined by $\Phi\left(\mu\right) = \varphi_{\mu}$, where
+  \begin{align*}
+    \varphi_\mu &= \int_{\Omega}f\:d\mu,
+  \end{align*}
+  is an isometric isomorphism.
+\end{theorem}
+\subsection{The Banach Space Adjoint}%
+\begin{definition}
+  Let $X,Y$ be normed vector spaces, and let $T\in \mathcal{B}\left(X,Y\right)$. Then, the map $T^{\ast}:Y^{\ast}\rightarrow X^{\ast}$, defined by $T^{\ast}\left(\varphi\right) = \varphi\circ T$ is called the Banach space adjoint (or adjoint) of $T$.
+\end{definition}
+We can see that $T^{\ast}$ is well-defined since it is the composition of two bounded linear operators. Additionally,
+\begin{align*}
+  \norm{T^{\ast}\left(\varphi\right)}_{\text{op}} &= \norm{\varphi\circ T}_{\text{op}}\\
+                                                  &\leq \norm{\varphi}_{\text{op}}\norm{T}_{\text{op}}.
+\end{align*}
+\begin{proposition}
+  If $X$ and $Y$ are normed vector spaces spaces, $T\in \mathcal{B}\left(X,Y\right)$, and $T^{\ast}$ be the adjoint of $T$. Then, $T^{\ast}\in \mathcal{B}\left(Y^{\ast},X^{\ast}\right)$, and $\norm{T^{\ast}}_{\text{op}} = \norm{T}_{\text{op}}$.
+\end{proposition}
+\begin{proof}
+  Let $\varphi_1,\varphi_2\in Y^{\ast}$, $\alpha \in \C$. Then,
+  \begin{align*}
+    T^{\ast}\left(\varphi_1 + \alpha\varphi_2\right) &= \left(\varphi_1 + \alpha\varphi_2\right)\circ T\\
+                                                     &= \varphi_1\circ T + \alpha\varphi_2\circ T\\
+                                                     &= T^{\ast}\left(\varphi_1\right) + \alpha T^{\ast}\left(\varphi_2\right),
+  \end{align*}
+  meaning $T^{\ast}$ is linear. Recall that for any normed space $Z$ and $z\in Z$, we have $\norm{z} = \sup_{\varphi\in B_{Z^{\ast}}}\left\vert \varphi(z) \right\vert$. Thus, for $x\in X$, we have
+  \begin{align*}
+    \norm{T(x)} &= \sup_{\varphi\in B_{Y^{\ast}}}\left\vert \varphi\left(T(x)\right) \right\vert\\
+                &= \sup_{\varphi\in B_{Y^{\ast}}}\left\vert T^{\ast}\left(\varphi(x)\right) \right\vert\\
+                &= \sup_{\varphi\in B_{Y^{\ast}}}\left\vert T^{\ast}\left(\varphi\right) \right\vert\norm{x}\\
+                &\leq \norm{T^{\ast}}_{\text{op}}.
+  \end{align*}
+  Thus, we have $\norm{T}_{\text{op}}\leq \norm{T^{\ast}}_{\text{op}}$.
+\end{proof}
+We can now understand some of the analytic and algebraic properties of the adjoint.
+\begin{theorem}
+  Let $X,Y,Z$ be normed spaces, and let $T,S: X\rightarrow Y$, $R: Y\rightarrow Z$ be bounded linear operators. The following are true.
+  \begin{enumerate}[(1)]
+    \item $\left(T+S\right)^{\ast} = T^{\ast} + S^{\ast}$
+    \item $\left(\alpha T\right)^{\ast} = \alpha T^{\ast}$
+    \item $\left(R\circ T\right)^{\ast} = T^{\ast} \circ R^{\ast}$
+    \item $\left(\id_{X}\right)^{\ast} = \id_{X^{\ast}}$
+    \item The following diagram commutes.
+      \begin{center}
+        % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAA0A9YAHR7rg4+AnAF8Qo0uky58hFAEZyVWoxZsAmt2GCdYiVJAZseAkTIKV9Zq0QcD0k3KJLL1a+rsaJKmFADm8ESgAGYAThAAtkhkIDgQSEqqNmwAKtr8upn6kqER0YgATNTxSADM1Ax0AEYwDAAKMqbyIGFY-gAWOCDuarYgqQ4g4VFIxXEJiLEe-Xz4OHQA+uxDIwUVE4mVNXWNTmZ2bZ3dvSl2cxALi96iFKJAA
+\begin{tikzcd}
+X^{\ast\ast} \arrow[r, "T^{\ast\ast}"] & Y^{\ast\ast}            \\
+X \arrow[r, "T"'] \arrow[u, "\iota_X",hookrightarrow] & Y \arrow[u, "\iota_Y"',hookrightarrow]
+\end{tikzcd}
+      \end{center}
+  \end{enumerate}
+\end{theorem}
+\begin{proof}[Proof of (5)]
+  \begin{align*}
+    T^{\ast\ast}\left(\iota_X\left(x\right)\right)\left(\varphi\right) &= T^{\ast\ast}\left(\hat{x}\right)\left(\varphi\right)\\
+                                                                       &= \hat{x}\circ T^{\ast}\left(\varphi\right)\\
+                                                                       &= \hat{x}\left(\varphi\circ T\right)\\
+                                                                       &= \varphi\circ T\left(x\right)\\
+                                                                       &= \widehat{T(x)}\left(\varphi\right)\\
+                                                                       &= \iota_Y\left(T\left(x\right)\right)\left(\varphi\right).
+  \end{align*}
+  Thus, $T^{\ast\ast}\left(\iota_X(x)\right) = \iota_Y\left(T\left(x\right)\right)$, meaning $T^{\ast\ast}\circ \iota_X = \iota_Y\circ T$.
+\end{proof}
+\begin{theorem}
+  Let $X$ and $Y$ be normed spaces.
+  \begin{enumerate}[(1)]
+    \item If $T: X\rightarrow Y$ is an isometric isomorphism, then $T^{\ast}: Y^{\ast}\rightarrow X^{\ast}$ is an isometric isomorphism.
+    \item If $T: X\rightarrow Y$ is a bicontinuous isomorphism, then $\left(T^{-1}\right)^{\ast} = \left(T^{\ast}\right)^{-1}$, so $T^{\ast}$ is a bicontinuous isomorphism.
+    \item If $T: X\rightarrow Y$ is an isometry, then $T^{\ast}: Y^{\ast}\rightarrow X^{\ast}$ is a $1$-quotient map. We have $T^{\ast}\left(B_{Y^{\ast}}\right) = B_{X^{\ast}}$.
+    \item If $T: X\rightarrow Y$ is a $1$-quotient map, then $T^{\ast}:Y^{\ast}\rightarrow X^{\ast}$.
+    \item $T: X\rightarrow Y$ is an isometry if and only if $T^{\ast\ast}: X^{\ast\ast}\rightarrow Y^{\ast\ast}$ is an isometry.
+    \item If $T\in \mathcal{B}\left(X,Y\right)$, and $T^{\ast}$ is a $1$-quotient map, then $T$ is an isometry.
+    \item If $X,Y$ are Banach spaces, and $T\in \mathcal{B}\left(X,Y\right)$, and $T^{\ast}$ is an isometry, then $T$ is a $1$-quotient map.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Starting by proving (2), we have
+  \begin{align*}
+    \id_{X^{\ast}} &= \left(\id_{X}\right)^{\ast}\\
+                   &= \left(T^{-1}\circ T\right)^{\ast}\\
+                   &= T^{\ast}\circ \left(T^{-1}\right)^{\ast}
+                   \intertext{and}
+    \id_{X^{\ast}} &= T^{\ast}\circ \left(T^{-1}\right)^{\ast},
+  \end{align*}
+  meaning $\left(T^{\ast}\right)^{-1} = \left(T^{-1}\right)^{\ast}$.\newline
+
+  Now, turning our attention to (4), if $T$ is a $1$-quotient map, then $T\left(U_X\right) = U_Y$. For $\psi\in Y^{\ast}$, we have
+  \begin{align*}
+    \norm{T^{\ast}\left(\psi\right)}_{\text{op}} &= \norm{\psi\circ T}_{\text{op}}\\
+                                                 &= \sup_{x\in U_X}\norm{\psi\circ T\left(x\right)}\\
+                                                 &= \sup_{y\in Y}\norm{\psi(y)}\\
+                                                 &= \norm{\psi}_{\text{op}}.
+  \end{align*}
+  Thus, $T^{\ast}$ is an isometry.\newline
+
+  Focusing on (3), we have $\norm{T^{\ast}}_{\text{op}} = \norm{T}_{\text{op}} = 1$, so $T^{\ast}\left(B_{Y^{\ast}}\right)\subseteq B_{X^{\ast}}$. Let $\varphi\in B_{X^{\ast}}$. We want to find $\psi\in B_{Y^{\ast}}$ such that $T^{\ast}\left(\psi\right) = \varphi$. Let $\psi_0: \Ran(T) \rightarrow \F$ be defined by $\psi_0\left(T\left(x\right)\right) = \varphi(x)$. THis is well-defined since $T$ is injective. For $x\in B_X$, we have
+  \begin{align*}
+    \left\vert \psi_0\left(T\left(x\right)\right) \right\vert &= \left\vert \varphi(x) \right\vert\\
+                                                              &\leq \norm{\varphi}_{\text{op}}\norm{x}\\
+                                                              &\leq \norm{\varphi}_{\text{op}}.
+  \end{align*}
+  Thus, $\norm{\psi_0}_{\text{op}} \leq \norm{\varphi}_{\text{op}} \leq 1$. There is an extension $\psi\in Y^{\ast}$ of $\psi_0$ such that $\norm{\psi}_{\text{op}} = \norm{\psi_0}_{\text{op}}$, and $\psi\circ T = \varphi$. Thus, $T^{\ast}\left(B_{Y^{\ast}}\right) = B_{X^{\ast}}$.\newline
+
+  The veracity of (1) follows from (2), (3), and (4).\newline
+
+  To show (5), we let $T$ be isometric, which implies that $T^{\ast}$ is a $1$-quotient map. Thus, we have $T^{\ast\ast}$ is isometric. Conversely, if $T^{\ast\ast}$ is isometric, then
+  \begin{align*}
+    \norm{T(x)} &= \norm{\iota_Y\left(T(x)\right)}\\
+                &= \norm{T^{\ast\ast}\left(\iota_X(x)\right)}\\
+                &= \norm{\iota_X(x)}\\
+                &= \norm{x}.
+  \end{align*}
+  To see (6), if $T^{\ast}$ is a $1$-quotient map, then $T^{\ast\ast}$ is isometric, so $T$ is isometric.\newline
+
+  We will show (7) later.
+\end{proof}
+\begin{example}
+  Let $\tau: \Omega \rightarrow \Lambda$ be a proper map\footnote{Inverse image of a compact subset of $\Lambda$ is compact in $\Omega$} between locally compact Hausdorff spaces. The induced contractive map $T_{\tau}: C_0\left(\Lambda\right)\rightarrow C_0\left(\Omega\right)$ has an adjoint map
+  \begin{align*}
+    T_{\tau}^{\ast}: C_0\left(\Omega\right)\rightarrow C_0\left(\Lambda\right)^{\ast},
+  \end{align*}
+  where $T_{\tau}^{\ast}\left(\varphi\right) = \varphi\circ T_{\tau}$. By the Riesz--Markov theorem, we can identify $C_0\left(\Omega\right)^{\ast}\cong M_{r}\left(\Omega\right)$.\newline
+
+  The push forward measure is an induced map
+  \begin{align*}
+    \tau_{\ast}: M(\Omega) \rightarrow M(\Lambda),
+  \end{align*}
+  defined by
+  \begin{align*}
+    \tau_{\ast}\mu\!\left(E\right) &:= \mu\!\left(\tau^{-1}\left(E\right)\right)
+  \end{align*}
+  for any $E\in \mathcal{B}_{\Lambda}$. We can verify that $\tau_{\ast}\mu$ is a complex measure on $\left(\Lambda,\mathcal{B}_{\Lambda}\right)$, and that $\tau_{\ast}\left(\mathcal{P}\left(\Omega\right)\right)\subseteq \mathcal{P}\left(\Lambda\right)$.\newline
+
+  We can also see that for all $f\in C_0\left(\Lambda\right)$,
+  \begin{align*}
+    \int_{\Omega}f\circ \tau\:d\mu &= \int_{\Lambda}f\:d\left(\tau_{\ast}\mu\right).
+  \end{align*}
+  This is because, for some $E\in \mathcal{B}_{\Lambda}$, we have $\1_{E}\circ \tau = \1_{\tau^{-1}\left(E\right)}$, so
+  \begin{align*}
+    \int_{\Omega}\1_{E}\circ \tau\:d\mu &= \int_{\Omega}\1_{\tau^{-1}\left(E\right)}\:d\mu\\
+                                        &= \mu\!\left(\tau^{-1}\left(E\right)\right)\\
+                                        &= \tau_{\ast}\mu\!\left(E\right)\\
+                                        &= \int_{\Lambda}\1_{E}\:d\left(\tau_{\ast}\mu\right).
+  \end{align*}
+  Thus, since this identity holds for all simple functions, and every bounded function is the uniform limit of a simiple function, we get that
+  \begin{align*}
+    \int_{\Omega}f\circ \tau\:d\mu &= \int_{\Lambda}f\:d\left(\tau_{\ast}\mu\right)
+  \end{align*}
+  for all $f\in C_0\left(\Lambda\right)$ by Dominated Convergence.\newline
+
+  Thus, we can see that for any $\tau: \Omega\rightarrow \Lambda$ that is a proper map between locally compact Hausdorff spaces, then $T_{\tau}^{\ast}\left(\varphi_{\mu}\right) = \varphi_{\tau_{\ast}\mu}$ for all $\mu\in M_{r}\left(\Omega\right)$.
+  \begin{align*}
+    T_{\tau}^{\ast}\left(\varphi_{\mu}\right)\left(f\right) &= \varphi_{\mu}\circ T_{\tau}\left(f\right)\\
+                                                            &= \varphi_{\mu}\left(f\circ \tau\right)\\
+                                                            &= \int_{\Omega}f\circ \tau\:d\mu\\
+                                                            &= \int_{\Lambda}f\:d\left(\tau_{\ast}\mu\right)\\
+                                                            &= \varphi_{\tau_{\ast}\mu}(f).
+  \end{align*}
+  This also shows that the push forward of a regular complex Borel measure is regular, or $\tau_{\ast}\left(M_{r}\left(\Omega\right)\right) \subseteq M_{r}\left(\Lambda\right)$.
+\end{example}
+Suppose we are dealing with the special case of $\tau: \Omega\rightarrow \Lambda$ is a homeomorphism. Then, $T_{\tau}$ is an isometric isomorphism of Banach spaces, meaning
+\begin{align*}
+  T_{\tau}^{\ast}: C_0\left(\Omega\right)^{\ast} \rightarrow C_0\left(\Lambda\right)^{\ast},
+  \intertext{or}
+  \tau_{\ast}: M_r\left(\Omega\right)\rightarrow M_r\left(\Lambda\right),
+\end{align*}
+is an isometric isomorphism of Banach spaces. The restriction to the state space
+\begin{align*}
+  T_{\tau}^{\ast}|_{S(\Omega)}: S(\Omega)\rightarrow S(\Lambda),
+  \intertext{or}
+  \tau_{\ast}|_{\mathcal{P}_r(\Omega)}: \mathcal{P}_r\left(\Omega\right)\rightarrow \mathcal{P}_r\left(\Lambda\right)
+\end{align*}
+is an affine bijection.\newline
+
+This allows us to consider the idea of an \textit{invariant} measure (or, equivalently, invariant state).
+\begin{definition}
+  Let $\Omega$ be a locally compact state, and let $\tau: \Omega\rightarrow\Omega$ be a continuous transformation. A regular Borel probability measure, $\mu\in \mathcal{P}_r\left(\Omega\right)$ is called $\tau$-invariant if $\tau_{\ast}\mu = \mu$, or $T_{\tau}^{\ast}\left(\varphi_{\mu}\right) = \varphi_{\mu}$. We write
+  \begin{align*}
+    \mathcal{P}_{r}\left(\Omega,\tau\right) := \set{\mu\in \mathcal{P}_{r}\left(\Omega\right)\mid \tau_{\ast}\mu = \mu}
+  \end{align*}
+  to denote the set of $\tau$-invariant measures.
+\end{definition}
+We can now use the analytic and algebraic properties of adjoints to identify duals of subspaces and quotient spaces. Recall that for a normed vector space $X$ and $E\subseteq X$ a subset, then
+\begin{align*}
+  E^{\perp} &= \set{\varphi\in X^{\ast}\mid \varphi|_{E} = 0}
+\end{align*}
+is the annihilator of $E$.
+\begin{proposition}
+  Let $X$ be a normed vector space, $E\subseteq X$ a subspace. The dual space of $E$ is isometrically isomorphic to $X^{\ast}/E^{\perp}$.
+\end{proposition}
+\begin{proof}
+  The embedding $\iota: E\hookrightarrow X$ is an isometry, so $\iota^{\ast}: X^{\ast}\rightarrow E^{\ast}$ is a $1$-quotient map. The first isomorphism theorem gives $X^{\ast}/\ker\left(\iota^{\ast}\right) \cong E^{\ast}$. Thus,
+  \begin{align*}
+    \ker\left(\iota^{\ast}\right) &= \set{\varphi\in X^{\ast}\mid \iota^{\ast}\left(\varphi\right) = 0}\\
+                                  &= \set{\varphi\in X^{\ast}\mid \varphi\circ\iota = 0}\\
+                                  &= \set{\varphi\in X^{\ast}\mid \varphi|_{E} = 0}\\
+                                  &= E^{\perp}.
+  \end{align*}
+\end{proof}
+Now, we can look at the dual of a quotient space.
+\begin{proposition}
+  Let $X$ be a normed vector space and $E\subseteq X$ a closed subspace. Then, $\left(X/E\right)^{\ast} \cong E^{\perp}$.
+\end{proposition}
+\begin{proof}
+  Let $\pi: X\rightarrow X/E$ be the canonical projection map. Since $\pi$ is a $1$-quotient map, we have $\pi^{\ast}:\left(X/E\right)^{\ast}\rightarrow X^{\ast}$ is an isometry, so $\left(X/E\right)^{\ast} \cong \Ran\left(\pi^{\ast}\right)$. We have
+  \begin{align*}
+    \Ran\left(\pi^{\ast}\right) &= \set{\pi^{\ast}\left(\psi\right)\mid \psi\in \left(X/E\right)^{\ast}}\\
+                                &= \set{\psi\circ \pi\mid \psi\in \left(X/E\right)^{\ast}}.
+  \end{align*}
+  We claim that $\Ran\left(\pi^{\ast}\right) = E^{\perp}$. For any $\psi\in \left(X/E\right)^{\ast}$, we have $\psi\circ \pi\in X^{\ast}$, and $\psi\circ \pi|_{E} = 0$, meaning $\Ran\left(\pi^{\ast}\right) \subseteq E^{\perp}$.\newline
+
+  For the reverse direction, if $\varphi\in E^{\perp}$, and $\varphi: X\rightarrow \C$ sends $E$ to $0$, then $\varphi$ factors through $X/E$, meaning $\varphi(x) = \widetilde{\varphi}\left(x+E\right)$ for some bounded linear operator $\widetilde{\varphi}$ such that $\norm{\widetilde{\varphi}}_{\text{op}} = \norm{\varphi}_{\text{op}}$. Thus, $\widetilde{\varphi}\circ \pi = \varphi$, so $\varphi\in \Ran\left(\pi^{\ast}\right)$, so $\Ran\left(\pi^{\ast}\right) = E^{\perp}$.\newline
+
+  Thus, we have $\left(X/E\right)^{\ast} \cong \Ran\left(\pi^{\ast}\right) \cong E^{\perp}$.
+\end{proof}
+\begin{proposition}[Existence of Auerbach Basis]
+  Let $X$ be a finite dimensional normed vector space. Then, there exists a collection $\set{u_1,\dots,u_n}\subseteq S_X$ that forms a basis for $X$, and a collection $\set{\varphi_1,\dots,\varphi_n}\subseteq S_{X^{\ast}}$ that forms a basis for $X^{\ast}$, such that $\varphi_u\left(u_j\right) = \delta_{ij}$. We call the collection $\set{\left(u_i,\varphi_i\right)}_{j=1}^{n}$ and Auerbach basis for $X$.
+\end{proposition}
+\begin{proof}
+  Let $\theta: X\rightarrow \ell_{\infty}^{n}$ be a bicontinuous isomorphism. Consider the map
+  \begin{align*}
+    D: \underbrace{B_{X}\times\cdots\times B_X}_{\text{$n$ times}}\rightarrow \C
+  \end{align*}
+  defined by
+  \begin{align*}
+    D\left(x_1,\dots,x_n\right) &= \det \begin{pmatrix}\theta\left(x_1\right) & \theta\left(x_2\right) & \cdots & \theta\left(x_n\right)\end{pmatrix},
+  \end{align*}
+  where $\theta\left(x_n\right)$ are column vectors. It is the case that $D$ is continuous, as $D$ is a polynomial over its entries, and since $B_X\times\cdots\times B_X$ is compact (as $B_X$ is compact, and the finite product of compact sets is compact), we must have
+  \begin{align*}
+    \max_{x_j\in B_X}\left\vert D\left(x_1,\dots,x_n\right) \right\vert &= \left\vert D\left(u_1,\dots,u_n\right) \right\vert\\
+                                                                        &:= M
+  \end{align*}
+  for some $u_1,\dots,u_n\in B_X\times\cdots\times B_X$. Define $\varphi: X\rightarrow \C$ by
+  \begin{align*}
+    \varphi_k\left(x\right) &= \frac{1}{M}D\left(u_1,\dots,x,\dots,u_n\right),
+  \end{align*}
+  where $x$ is in the $k$th index. Since $D$ is multilinear, $\varphi$ is linear. Additionally, $\left\vert \varphi_k(x) \right\vert\leq 1$ for each $B_x$, so $\norm{\varphi_k}_{\text{op}} \leq 1$, while $\left\vert \varphi_k\left(u_k\right) \right\vert = 1$, so $\norm{\varphi_k}_{\text{op}} =1 $.\newline
+
+  Let $\omega_k = \sgn\left(\varphi_k\left(u_k\right)\right)$, and set $v_k = \omega_ku_k$. Then, $\varphi_k\left(v_j\right) = \delta_{jk}$.\newline
+
+  
+\end{proof}
 \end{document}
