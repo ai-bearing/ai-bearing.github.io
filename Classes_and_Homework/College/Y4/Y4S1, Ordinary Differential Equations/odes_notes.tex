@@ -1259,6 +1259,7 @@ We can formalize the aforementioned ``lucky guess'' method by creating an integr
   \end{align*}
 \end{example}
 \section{Systems of First-Order Differential Equations}%
+\subsection{Modeling with Systems}%
 Consider a second-order differential equation
 \begin{align*}
   y'' + 2y' + 3y + 5 = 0.
@@ -1333,7 +1334,7 @@ In order to solve these, we need to start by passing our second order differenti
     \diff{R}{t} &= \underbrace{aR - bRF}_{f_1(R,F)}\\
     \diff{F}{t} &= \underbrace{cRF - dF}_{f_2(R,F)},
   \end{align*}
-  where $a,b,c,d > 0$ are positive constants.\footnote{This is known as the Lotka--Volterra model.}\newline
+  where $a,b,c,d > 0$ are positive constants.\footnote{This is known as the Lotka--Volterra model.}
   \begin{itemize}
     \item The equilibrium solutions are a pair of constant functions $R(t)$ and $F(t)$ that solve the system, or for which $f_1(R(t),F(t))$ and $f_2(R(t),F(t))$ are simultaneously equal to zero.
     \item A general solution to the system is a pair of functions $R(t)$ and $F(t)$ that, taken together, satisfy the system of equations.
@@ -1347,4 +1348,133 @@ In order to solve these, we need to start by passing our second order differenti
     \item A phase portrait is the phase plane with enough solution curves to show how the solutions behave in every part of the plane.
   \end{itemize}
 \end{definition}
+\begin{example}[Solutions for a System of Differential Equations]
+Consider the following Lotka--Volterra model.
+\begin{align*}
+  \diff{R}{t} &= 2R - 1.2RF\\
+  \diff{F}{t} &= -F + 0.9RF.
+\end{align*}
+We start with the equilibrium points.
+\begin{align*}
+  \diff{R}{t} &= 0\\
+  0 &= R\left(2 - 1.2F\right),\\
+  R &= 0
+  F &= \frac{2}{1.2}\\
+  \diff{F}{t} &= 0\\
+  0 &= -F + 0.9RF\\
+  \intertext{When $R = 0$}
+  -F &= 0\\
+  F &= 0.\\
+  \intertext{When $F = \frac{2}{1.2}$}
+  0 &= F\left(0.9R - 1\right)\\
+  R &= \frac{1}{0.9}.
+\end{align*}
+Thus, the equilibrium solutions are at $\left(\frac{1}{0.9},\frac{2}{1.2}\right)$ and at $\left(0,0\right)$. We can see that the phase portrait seems to approach a fixed point towards the point $\left(1.11,1.67\right)$.
+\begin{center}
+  \includegraphics[width=10cm]{images/lv_eqns_1.pdf}
+\end{center}
+If we take the initial condition of $R(0) = 1$ and $F(0) = 1$, and send $F$ to $0$, we see that $R$ tends toward infinity.\newline
+
+Meanwhile, if we send $R$ to $0$, we see that the number of tends to $0$.\newline
+
+Using a computer, we can plot the solution to these initial conditions as seen below.
+\begin{center}
+  \includegraphics[width=10cm]{images/lv_eqns_w_sol.pdf}
+\end{center}
+As we send the initial conditions closer to $(1.11,1.67)$, we see that the solution curves seem to approach an equilibrium value.
+\begin{center}
+  \includegraphics[width=10cm]{images/lv_eqns_w_sol_2.pdf}
+\end{center}
+\end{example}
+\begin{example}[An Alternative Lotka--Volterra Model]
+  Consider the following altered model.
+\begin{align*}
+  \diff{R}{t} &= 2R\left(1 - \frac{R}{2}\right) - 1.2RF\\
+  \diff{F}{t} &= -F + 0.9RF.
+\end{align*}
+Note that, with this new initial condition, we see that the solution approaches an equilibrium point.
+\begin{center}
+  \includegraphics[width=10cm]{images/modified_lv_eqns_w_sol.pdf}
+\end{center}
+Solving for the equilibrium solutions, we get $R = F = 0$, $R = 2, F = 0$, and $R = \frac{1}{0.9},F = 0.74$.\newline
+
+In particular, with this modified equation, we can see that as $F$ tends to $0$, the number of rabbits approaches a stable equilibrium of $R = 2$ as $t\rightarrow\infty$. Meanwhile, if $R$ tends to $0$, then $F$ also tends to $0$.\newline
+
+In general, this modified Lotka--Volterra model approaches some equilibrium point regardless of the starting condition, which differs greatly to the periodic solutions that were found in the original model.
+\end{example}
+\subsection{Representing Systems of Equations with Vector Fields}%
+Consider the system of differential equations,
+\begin{align*}
+  \diff{x}{t} &= f(x,y)\\
+  \diff{y}{t} &= g(x,y).
+\end{align*}
+Note that this system is autonomous. We let
+\begin{align*}
+  \vec{Y}(t) &= \begin{pmatrix}x(t)\\y(t)\end{pmatrix}\\
+  \vec{F}(x,y) &= \begin{pmatrix}f(x,y)\\g(x,y)\end{pmatrix}.
+\end{align*}
+We can see that
+\begin{align*}
+  \diff{\vec{Y}}{t} &= \begin{pmatrix}\diff{x}{t}\\\diff{y}{t}\end{pmatrix}\\
+                    &= \begin{pmatrix}f(x,y)\\g(x,y)\end{pmatrix}\\
+                    &= \vec{F}(x,y).
+\end{align*}
+\begin{definition}
+  An equilibrium point $\vec{Y}_0$ of the system $\diff{\vec{Y}}{t} = \vec{F}\left(\vec{Y}\right)$ is a point a which $\vec{F}\left(\vec{Y}\right) = \vec{0}$.
+\end{definition}
+\begin{example}
+  Consider the system
+  \begin{align*}
+    \diff{x}{t} &= x\\
+    \diff{y}{t} &= y.
+  \end{align*}
+  The corresponding vector field $\vec{Y}$ is
+  \begin{align*}
+    \vec{Y} &= \begin{pmatrix}x\\y\end{pmatrix},
+  \end{align*}
+  which has the following vector field.
+  \begin{center}
+    \includegraphics[width=5cm]{images/example_vector_field.pdf}
+  \end{center}
+  The direction field is the depiction of the vector field with where all vectors are of unit length.\newline
+
+  Meanwhile, if we have the system
+  \begin{align*}
+    \diff{x}{t} &= y\\
+    \diff{y}{t} &= -x,
+  \end{align*}
+  the direction field looks as follows.
+  \begin{center}
+    \includegraphics[width=7cm]{images/example_vector_field_2.pdf}
+  \end{center}
+  We can verify that 
+  \begin{align*}
+    \vec{y}(t) &= \begin{pmatrix}\cos(t)\\-\sin(t)\end{pmatrix}
+  \end{align*}
+  is a solution by plugging it into the expression for $\diff{\vec{y}}{t}$.
+\end{example}
+\begin{definition}[Decoupled System]
+  A system of linear equations of the form
+  \begin{align*}
+    \diff{x}{t} &= f(x)\\
+    \diff{y}{t} &= f(y)
+  \end{align*}
+   is known as a completely decoupled system.
+\end{definition}
+\begin{example}
+  Considering the system
+  \begin{align*}
+    \diff{x}{t} &= -2x\\
+    \diff{y}{t} &= -y,
+  \end{align*}
+  we can solve to get
+  \begin{align*}
+    x(t) &= k_1e^{-2t}\\
+    y(t) &= k_2e^{-t}.
+  \end{align*}
+  Thus, the general solution to the system is of the form
+  \begin{align*}
+    \vec{F}(t) &= \begin{pmatrix}k_1e^{-2t}\\k_2e^{-t}\end{pmatrix}.
+  \end{align*}
+\end{example}
 \end{document}
