@@ -1,0 +1,117 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Set Theory and Foundations of Mathematics: Homework 8}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Problem 1}%
+\begin{problem}
+  An ordinal $A$ is a successor ordinal if $A = B\cup \set{B}$ for some ordinal $B$. An element $m\in A$ is maximal if $\forall x\in A\left(x \in \vee x = m\right)$. Show that an ordinal is a successor ordinal if and only if it contains a maximal element.
+\end{problem}
+\begin{solution}
+  Let $y$ be an ordinal that contains a maximal element $m$. Then, for all $x\in y$, $x\in m$ or $x = m$. Thus, for $z = y\setminus \set{m}$, $\forall t\in z$, $ t\in m$. Thus, $z\subseteq m$. \newline
+
+  We claim that $m\subseteq z$. Since $m\in y$, $m\subset y$. Thus, $m\subset y\cup \set{m}$. However, since $m\notin m$, we have $m\subseteq z$. Thus, $z = m$, and $y = m\cup\set{m}$.\newline
+
+  If $y$ is a successor ordinal, then $y = m\cup\set{m}$ for some ordinal $m$, meaning that for all $x\in y$, $x\in m$ or $x \in \set{m}$, meaning $x\in m$ or $x = m$.
+  
+\end{solution}
+\section{Problem 2}%
+\begin{problem}
+  A limit ordinal is a nonzero ordinal that is not a successor ordinal. Prove that an ordinal $A$ is a limit ordinal if and only if $A = \bigcup A$.
+\end{problem}
+\begin{solution}
+  Let $A = \bigcup A$ and $A\neq 0$. Let $x\in A$. Then, $x\in \bigcup A = \bigcup_{y\in A}y$. Thus, $x\in y$ for some $y\in A$. Thus, $x < y$, so $x$ is not maximal, meaning $A$ has no maximal element. Thus, by problem 2, $A$ is not a successor ordinal.
+\end{solution}
+
+\section{Problem 3}%
+\begin{problem}
+  Prove that the following two versions of the Axiom of Choice are equivalent.
+  \begin{description}
+    \item[AC 1:] Let $T$ be a set such that every element of $T$ is nonempty. Then, there exists a function $f$ with domain $T$ such that $\forall x\in T, f(x)\in x$.
+    \item[AC 2:] Let $T$ be a set and $F$ a function with domain $T$ such that $\forall x\in T$, $F(x)$ is nonempty. Then, there exists a function $f$ with domain $T$ such that $\forall x\in T$, $f(x)\in F(x)$.
+  \end{description}
+\end{problem}
+\section{Problem 4}%
+\begin{problem}
+  Let $\left(S,\leq\right)$ be a partially ordered set where every chain in $S$ has an upper bound in $S$. Prove that there is a maximal element in $S$.
+
+\end{problem}
+\begin{solution}
+  Let $\Gamma$ be an ordinal. We define $g: \Gamma \rightarrow H$ recursively by
+  \begin{align*}
+    g(\alpha) &= \begin{cases}
+      g(\beta)\cup f\left(g\left(\beta\right)\right) & \alpha = \beta \cup \set{\beta}\\
+      \bigcup_{\beta \in \alpha}g(\alpha) & $\text{else}$
+    \end{cases}
+  \end{align*}
+  We wish to prove that for all $\alpha\in \Gamma$, $g\left(\alpha\right)$ is a chain in $S$.\newline
+
+  If $\alpha = 0$, then $g(\alpha) = \emptyset$, which is a chain (by vacuous truth).\newline
+
+  Suppose toward contradiction there is some $\alpha$ such that $g\left(\alpha\right)$ is not a chain. Set $B = \set{\alpha\in \Gamma\mid g\left(\alpha\right)\text{ is not a chain}}$. Thus, $B\neq\emptyset$ by our assumption. Let $\alpha_0$ be the least element of $B$ (which exists because $B\subseteq \Gamma$ and $\Gamma$ is well-ordered). Additionally, we know that $\alpha_0\neq\emptyset$ since $g\left(\emptyset\right) = \emptyset$ is a chain.
+  \begin{enumerate}[(i)]
+    \item If $\alpha_0 = \alpha' \cup \set{\alpha'}$. Then $g\left(\alpha_0\right) = g\left(\alpha'\right) \cup \set{f\left(g\left(\alpha'\right)\right)}$.\newline
+
+      We know that $g\left(\alpha'\right)$ is a chain, since $\alpha' < \alpha_0$ and $\alpha_0$ is the least element of $B$. Since $m = f\left(g\left(\alpha'\right)\right)$ is a strict upper bound for $g\left(\alpha'\right)$, $\forall x\in g\left(\alpha'\right)$, $x < m$.\newline
+
+      Let $a,b\in g\left(\alpha_0\right) = g\left(\alpha'\right)\cup \set{m}$. Then, either $a,b\in g\left(\alpha'\right)$, $a,b\in \set{m}$, or (without loss of generality), $a\in g\left(\alpha'\right)$ and $b\in \set{m}$. If $a,b\in g\left(\alpha'\right)$, then $a < b$, $b < a$, or $a = b$, since $g\left(\alpha'\right)$ is totally ordered. If $a,b\in \set{m}$, then $a=b$. Else, if $a\in g\left(\alpha'\right)$ and $b\in \set{m}$, then $a < b$.\newline
+
+      Thus, $g\left(\alpha_0\right)$ is totally ordered. $\bot$
+    \item Let $\alpha_0$ be a limit ordinal. Then,
+      \begin{align*}
+        g\left(\alpha_0\right) &= \bigcup_{\beta \in \alpha_0} g\left(\beta\right).
+      \end{align*}
+      Let $a,b\in g\left(\alpha_0\right)$. 
+  \end{enumerate}
+  Let $g: \Gamma \rightarrow H$. We have shown that $g(\alpha) \in H$ for any $\alpha \in H$.\newline
+
+  Let $\alpha,\beta \in \Gamma$ with $\alpha \neq \beta$. Without loss of generality, let $\alpha \subset \beta$. We will show that $g\left(\alpha\right) \subset g\left(\beta\right)$.\newline
+  
+  Suppose toward contradiction that $\alpha\subset \beta$ does not imply $g\left(\alpha\right)\subset g\left(\beta\right)$. Let $\beta_0$ be the smallest element of $\Gamma$ such that there exists $\alpha_0\subset \beta_0$ with $g\left(\alpha_0\right)\nsubset g\left(\beta_0\right)$. We know that $\beta_0\neq 0$ because $0$ has no proper subsets.
+  \begin{enumerate}[(i)]
+    \item If $\beta_0 = \beta' \cup \set{\beta'}$ for some $\beta'\in \Gamma$, then $g\left(\beta\right) = g\left(\beta'\right)\cup \set{f\left(g\left(\beta'\right)\right)}$.\newline
+
+      Since $\alpha_0 \subset \beta_0$, $\alpha_0\in \beta_0$, then $\alpha_0 \in \beta'$ or $\alpha_0 = \beta'$, meaning $\alpha_0\in \beta'$ or $\alpha_0 = \beta'$.\newline
+
+      If $\alpha_0 = \beta'$, then $g\left(\alpha_0\right) = g\left(\beta'\right)\subset g\left(\beta_0\right)$ since $\set{f\left(g\left(\beta'\right)\right)}$ is a strict upper bound.\newline
+
+      If $\alpha_0 \subset \beta'$, then $g\left(\alpha_0\right) \subset g\left(\beta'\right)$ since $\beta'$ satisfies the assumption. Thus, $g\left(\alpha_0\right)\subset g\left(\beta_0\right)$.
+  \end{enumerate}
+\end{solution}
+\section{Problem 5}%
+\begin{problem}
+  Show that there exists an uncountable set $T$ of countable subsets of $\R$.
+\end{problem}
+\begin{solution}
+  Let $S$ be the set of all countable subsets of $\R$, partially ordered by inclusion.\newline
+
+  Let $C$ be a chain in $S$. Since $C\subseteq S$, $C$ consists of countable sets.\newline
+
+  Suppose toward contradiction that there exists no chain with uncountable length. Then, $C$ is countable, so
+  \begin{align*}
+    C' &= \bigcup_{A\in C}A
+  \end{align*}
+  is a countable union of countable sets, so $C'$ is countable, and $C'$ is an upper bound for $C$. It is thus the case that $S$ has a maximal element $M$, which is a countable set.\newline
+
+  However, since $\R$ is uncountable, there is some $q\in \R\setminus M$, meaning $M\subsetneq M\cup \set{q}$, contradicting the maximality of $M$.\newline
+
+  Thus, there must be at least one uncountable chain, $T$, in $S$.
+\end{solution}
+
+\end{document}
