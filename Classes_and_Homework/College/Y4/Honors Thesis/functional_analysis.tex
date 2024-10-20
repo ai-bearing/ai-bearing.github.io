@@ -2632,7 +2632,95 @@ Now, we can look at the dual of a quotient space.
 
   If $D\left(x_1,\dots,x_n\right) = 0$, then $\set{\theta\left(x_1\right),\dots,\theta\left(x_n\right)}$ is linearly dependent in $\F^n$, and since $\theta$ is a linear isomorphism, then $\set{x_1,\dots,x_n}$ is linearly dependent. Thus, $\set{v_1,\dots,v_n}$ is a basis for $X$.\newline
 
-  We will show that $\set{\varphi_1,\dots,\varphi_n}$ is a basis for $X^{\ast}$ later.
+  Similarly, if $x = \sum_{i=1}^{n}\alpha_iv_i$ with at least one $\alpha_i\neq 0$, then
+  \begin{align*}
+    \left(\varphi_{1} + \cdots + \varphi_{n}\right)\left(x\right) &\neq 0
+  \end{align*}
+  so $\set{\varphi_i}_{i=1}^{n}$ is a basis for $X^{\ast}$.
+
+  %Let $\varphi_{1} + \cdots + \varphi_n = 0$ in $X^{\ast}$. Then,
+  %\begin{align*}
+  %  \left(\varphi_1 + \cdots + \varphi_n\right)\left(x\right) &= 0\\
+  %  \frac{1}{M}\left(D\left(x,\dots,x\right)\right) = 0
+  %\end{align*}
+\end{proof}
+\begin{proposition}
+  Let $E\subseteq X$ be a subspace of a normed vector space $X$. If $E$ is finite-dimensional, then $E$ is topologically complemented --- i.e., there exists $F\subseteq X$ closed such that $X = E\oplus F$, or, equivalently, there exists $P\in \mathcal{B}\left(X\right)$ with $P^2 = P$ and $\Ran\left(P\right) = E$.
+\end{proposition}
+\begin{proof}
+  Since $\Dim(E) = n$, $E$ admits an Auerbach basis, $\set{\left(u_i,\varphi_i\right)}_{i=1}^{n}$. For each $i \in \set{1,\dots,n}$, the Hahn--Banach theorem allows an extension to $\psi_i\in X^{\ast}$ with $\norm{\varphi_i}_{\text{op}} = \norm{\psi_i}_{\text{op}} = 1$.\newline
+
+  We will define $P: X\rightarrow X$ by
+  \begin{align*}
+    P(x) &= \sum_{k=1}^{n}\psi_k(x)u_k.
+  \end{align*}
+  We can see that $P$ is linear, and $\Ran(P) \subseteq E$. Note that $P(y) = y$ for all $y\in E$, since
+  \begin{align*}
+    P\left(u_j\right) &= \sum_{k=1}^{n}\psi_k\left(u_j\right)u_j\\
+                      &= \sum_{k=1}^{n}\varphi_k\left(u_j\right)u_j\\
+                      &= \sum_{k=1}^{n}\delta_{kj}u_j\\
+                      &= u_j
+  \end{align*}
+  for each $j$. It follows that, for $y = \sum_{j=1}^{n}\alpha_ju_j$,
+  \begin{align*}
+    P\left(y\right) &= \sum_{j=1}^{n}\alpha_jP\left(u_j\right)\\
+                    &= \sum_{j=1}^{n}\alpha_ju_j\\
+                    &= y.
+  \end{align*}
+  Thus, $\Ran\left(P\right) = E$ and $P^2 = P$.
+\end{proof}
+\begin{exercise}
+  If $Z$ is a normed vector space with $z_0\in Z$ and $\psi\in Z^{\ast}$ fixed, prove that the map $T: Z\rightarrow Z$ defined by $T(z) = \psi(z)z_0$ is continuous.
+\end{exercise}
+\begin{solution}
+  \begin{align*}
+    \norm{T(z)} &= \norm{\psi(z)z_0}\\
+                &= \norm{z_0}\norm{\psi(z)}\\
+                &\leq \norm{z_0}\norm{\psi}_{\text{op}}\norm{z},
+  \end{align*}
+  meaning $\norm{T}_{\text{op}}\leq \norm{z_0}\norm{\psi}_{\text{op}}$, so $T$ is bounded.
+\end{solution}
+\subsection{Properties of Reflexive Spaces}%
+\begin{definition}
+  A normed vector space $X$ is reflesive if $\iota_X: X\hookrightarrow X^{\ast\ast}$ is surjective.
+\end{definition}
+\begin{proposition}
+  Let $X$ be a normed vector space, $E\subseteq X$ a subspace. The following are true.
+  \begin{enumerate}[(1)]
+    \item If $X$ is finite-dimensional, then $X$ is reflexive.
+    \item If $X$ is reflexive, then $E$ is reflexive.
+    \item If $X$ is reflexive, then $X/E$ is reflexive.
+    \item $X$ is reflexive if and only if $X^{\ast}$ is reflexive.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  To prove $(1)$, let $\mathcal{B} = \set{u_1,\dots,u_n}$ be a basis for $X$. Since $X$ is finite-dimensional, all linear operators on $X$ are continuous. In particular, $X^{\ast} = X' = \mathcal{L}\left(X,\F\right)$. Consider the linear functional $\ve_I: X\rightarrow \F$ defined by
+  \begin{align*}
+    \ve_i\left(\sum_{j=1}^{n}\alpha_ju_j\right) = \alpha_i.
+  \end{align*}
+  Then $\mathcal{B}' = \set{\ve_1,\dots,\ve_n}$ is a basis for $X^{\ast}$, so $\Dim\left(X\right) = \Dim\left(X^{\ast}\right)$. Similarly, $\Dim\left(X^{\ast}\right) = \Dim\left(X^{\ast\ast}\right)$. Since $\iota_X: X\rightarrow X^{\ast\ast}$ is injective, the rank-nullity theorem has $\iota_X$ is also surjective. Thus, $X$ is reflexive.\newline
+  
+  To prove $(2)$, we can see that if $\iota_X: X\rightarrow X^{\ast\ast}$ is a bijection, then $\iota_{X}|_{E}: E\rightarrow E^{\ast\ast}$ is also a bijection, so $E$ is reflexive.\newline
+
+  To see the forward direction of $(4)$, we let $X$ be reflexive, and consider $\iota_{X^{\ast}}: X^{\ast}\hookrightarrow X^{\ast\ast\ast}$. We will show that $\iota_{X^{\ast}}$ is surjective.\newline
+
+  Let $h\in X^{\ast\ast\ast}$, so $h: X^{\ast\ast}\rightarrow \F$ is bounded linear. Let $\varphi = h\circ \iota_X\in X^{\ast}$.\newline
+
+  We claim that $\iota_{X^{\ast}}\left(\varphi\right) = h$. In order to do this, we will show that $\iota_{X^{\ast}}\left(\varphi\right)\left(\xi\right) = h\left(\xi\right)$ for all $\xi\in X^{\ast\ast}$. For each $\xi\in X^{\ast\ast}$, we know that $\xi = \iota_{X}\left(x\right) = \hat{x}$ for some $x\in X$ since $X$ is reflexive. Thus,
+  \begin{align*}
+    \iota_{X^{\ast}}\left(\varphi\right)\left(\xi\right) &= \hat{\varphi}\left(\xi\right)\\
+                                                         &= \xi\left(\varphi\right)\\
+                                                         &= \hat{x}\left(\varphi\right)\\
+                                                         &= \varphi(x).
+  \end{align*}
+  Alternatively, we have
+  \begin{align*}
+    h\left(\xi\right) &= h\left(\hat{x}\right)\\
+                      &= h\left(\iota_X\left(x\right)\right)\\
+                      &- h\circ \iota_X\left(x\right)\\
+                      &= \varphi(x).
+  \end{align*}
+  For the converse, assuming $X^{\ast}$ is reflexive, we have shown that $X^{\ast\ast}$ is reflexive. However, since $\iota_X\left(X\right) \subseteq X^{\ast\ast}$, it is the case that $X$ is reflexive.
 \end{proof}
 
 \end{document}

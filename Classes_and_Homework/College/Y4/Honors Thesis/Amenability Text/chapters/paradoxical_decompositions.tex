@@ -265,7 +265,9 @@ Since we have shown that $SO(3)$ is paradoxical, as it contains a paradoxical su
   There is a countable subset $D$ of $S^{2}$ such that $S^{2}\setminus D$ is $SO(3)$-paradoxical.
 \end{theorem}
 \begin{proof}
-  Let $A$ and $B$ be the rotations in $SO(3)$ that serve as the generators of the subgroup isomorphic to $F(a,b)$. Since $A$ and $B$ are rotations, so too is any reduced word over $\set{A,A^{-1},B,B^{-1}}$. Thus, any such non-empty word contains two fixed points.\newline
+  Let $A$ and $B$ be the rotations in $SO(3)$ that serve as the generators of the subgroup isomorphic to $F(a,b)$.\newline
+
+  Since $A$ and $B$ are rotations, so too is any reduced word over $\set{A,A^{-1},B,B^{-1}}$. Thus, any such non-empty word contains two fixed points.\newline
 
   We let
   \begin{align*}
@@ -304,8 +306,10 @@ Unfortunately, the Hausdorff paradox is not enough for us to be able to prove th
 
   We refine the partition of $A$ to $A_{ij}$ by taking $A_{ij} = g_i^{-1}\left(B_{i}\cap B_j\right)$, where $i = 1,\dots,n$ and $j = 1,\dots,m$. Then, $\left(h_jg_i\right)\cdot A_{ij}$ maps the refined partition of $A$ to a refined partition of $C$, meaning $A$ and $C$ are $G$-equidecomposable.
 \end{proof}
-\begin{fact}
-  For $A\sim_{G} B$, there is a bijection $\phi: A\rightarrow B$ by taking $C_{i} = C\cap A_i$, and mapping $\phi\left(C_i\right) = g_i\cdot C_i$.
+\begin{fact}\label{fact:bijections}
+  For $A\sim_{G} B$, there is a bijection $\phi: A\rightarrow B$ by taking $C_{i} = C\cap A_i$, and mapping $\phi\left(C_i\right) = g_i\cdot C_i$.\newline
+
+  In particular, this means that for any subset $C\subseteq A$, it is the case that $C\sim \phi(C)$.
 \end{fact}
 
 We can now use this equidecomposability to glean information about the existence of paradoxical decompositions.
@@ -409,5 +413,79 @@ To prove the Banach--Tarski paradox, we need a slightly larger group than $SO(3)
            &= B\left(0,1\right)\setminus \set{0}.
   \end{align*}
   Therefore, $B(0,1)$ is $E(3)$-equidecomposable.
+\end{proof}
+In order to prove the general case of the Banach--Tarski paradox, we need one more piece of mathematical machinery.\newline
+
+Our relation of $A \sim_{G} B$ is useful, but in order to show the general case, we want to refine the relation slightly.
+\begin{definition}
+  Let $G$ act on a set $X$ with $A,B\subseteq X$. We write $A\preceq_{G}B$ if $A$ is equidecomposable with a subset of $B$.
+\end{definition}
+\begin{fact}\label{fact:preorder}
+  The relation $\preceq_{G}$ is a reflexive and transitive relation.
+\end{fact}
+\begin{proof}
+  To see reflexivity, we can see that since $A\sim_{G}A$, and $A\subseteq A$, $A\preceq_{G} A$.\newline
+
+  To see transitivity, let $A\preceq_{G}B$ and $B\preceq_{G}C$. Then, there exist $g_1,\dots,g_n\in G$ such that $g_i\cdot A_i = B_{\alpha,i}$ for each $i$, where $A\sim_{G}B_{\alpha}\subseteq B$. Similarly, there exist $h_1,\dots,h_m\in G$ such that $h_j\cdot B_j= C_{\beta,j}$ for each $j$, where $B\sim_{G}C_{\beta}\subseteq C$.\newline
+
+  We take a refinement of $B$ by taking intersections $B_{\alpha,ij} = B_{\alpha,i}\cap B_j$, with $i=1,\dots,n$ and $j = 1,\dots,m$. We define $C_{\beta,\alpha,ij} = h_j\cdot B_{\alpha,ij}$ for each $j = 1,\dots,m$. Then, $h_jg_i\cdot A_i = C_{\beta,\alpha,ij}$, meaning $A\sim_{G}C_{\beta,\alpha,ij}\subseteq C_{\beta}\subseteq C$, so $A\preceq_{G}C$.
+\end{proof}
+
+We know from Fact \ref{fact:bijections} that $A\preceq_{G}B$ implies the existence of a bijection $\phi: A\rightarrow B'\subseteq B$, meaning $\phi: A\hookrightarrow B$ is an injection. Similarly, if $B\preceq_{G}A$, then Fact \ref{fact:bijections} implies the existence of an injection $\psi: B\hookrightarrow A$.\newline
+
+One may ask if an analogue of the Cantor--Schröder--Bernstein theorem exists in the case of the relation $\preceq_{G}$, implying that the preorder established in Fact \ref{fact:preorder} is indeed a partial order. The following theorem establishes this result.
+\begin{theorem}
+  Let $G$ act on $X$, and let $A,B\subseteq X$. If $A\preceq_{G}B$ and $B\preceq_{G}A$, then $A\sim_{G}B$.
+\end{theorem}
+\begin{proof}
+  Let $B'\subseteq B$ with $A\sim_{G}B'$, and let $A'\subseteq A$ with $B\sim_{G}A'$. Then, we know from Fact \ref{fact:bijections} that there exist bijections $\phi: A\rightarrow B'$ and $\psi: B\rightarrow A'$.\newline
+
+  Define $C_0 = A\setminus A'$, and $C_{n+1} = \psi\left(\phi\left(C_n\right)\right)$. We set
+  \begin{align*}
+    C &= \bigcup_{n\geq 0}C_{n}.
+  \end{align*}
+  Since $\psi^{-1}\left(\psi\left(\phi\left(C_n\right)\right)\right) = \phi\left(C_n\right)$, we have
+  \begin{align*}
+    \psi^{-1}\left(A\setminus C\right) &= B\setminus \phi(C).
+  \end{align*}
+  Having established in Fact \ref{fact:bijections} that for any subset of $C\subseteq A$, $C\sim_{G} \phi(C)$, we also see that $A\setminus C \sim_{G} B\setminus \phi(C)$.\newline
+
+  Thus, we can see that
+  \begin{align*}
+    A &= \left(A\setminus C\right)\sqcup C\\
+      &\sim_{G}\left(B\setminus \phi(C)\right)\sqcup \phi(C)\\
+      &\sim B.
+  \end{align*}
+  
+\end{proof}
+Finally, we are able to prove the general Banach--Tarski paradox. Recall that the paradox says the following.
+\begin{proposition}[Banach--Tarski Paradox]
+  Let $A$ and $B$ be bound subsets of $\R^3$ with nonempty interior. Then, $A\sim_{E(3)}B$.
+\end{proposition}
+\begin{proof}
+  By symmetry, it is enough to show that $A\preceq_{E(3)} B$.\newline
+
+  Since $A$ is bounded, there exists $r > 0$ such that $A\subseteq B(0,r)$.\newline
+
+  Let $x_0\in B^{\circ}$. Then, there exists $\ve > 0$ such that $B\left(x_0,\ve\right) \subseteq B$.\newline
+
+  Since $B(0,r)$ is compact (hence totally bounded), there are translations $g_1,\dots,g_n$ such that
+  \begin{align*}
+    B\left(0,r\right) \subseteq g_1\cdot B\left(x_0,\ve\right) \cup \cdots \cup g_n\cdot B\left(x_0,\ve\right).
+  \end{align*}
+  We select translations $h_1,\dots,h_n$ such that $h_j\cdot B\left(x_0,\ve\right) \cap h_k\cdot B\left(x_0,\ve\right) = \emptyset$ for $j\neq k$. We set
+  \begin{align*}
+    S &= \bigcup_{j=1}^{n}h_j\cdot B\left(x_0,\ve\right).
+  \end{align*}
+  Each $h_j\cdot B\left(x_0,\ve\right)\subseteq S$ is $E(3)$-equidecomposable with any arbitrary closed ball subset of $B\left(x_0,\ve\right)$, it is the case that $S\preceq B\left(x_0,\ve\right)$.\newline
+
+  Thus, we have
+  \begin{align*}
+    A &\subseteq B\left(0,r\right)\\
+      &\subseteq g_1\cdot B\left(x_0,\ve\right)\cup\cdots\cup b_n\cdot B\left(x_0,\ve\right)\\
+      &\preceq S\\
+      &\preceq B\left(x_0,\ve\right)\\
+      &\preceq B.
+  \end{align*}
 \end{proof}
 
