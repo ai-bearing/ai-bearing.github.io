@@ -1387,4 +1387,129 @@ The common joke is that the axiom of choice is obviously true, the well-ordering
     \end{proof}
     Let $\gamma_{\Q} = \set{f|_{\Q}\mid f\in \Gamma_{C}}$. Let $\varphi: \Gamma_{C}\rightarrow \Gamma_{\Q}$ defined by $\varphi(f) = f|_{\Q}$. Then, $\varphi$ is injective. Thus, $\left\vert \Gamma_{C} \right\vert \leq \left\vert \Gamma_{\Q} \right\vert \leq \left\vert \R \right\vert^{\left\vert \Q \right\vert} < \left\vert \R \right\vert^{\left\vert \R \right\vert}$ since $\left\vert \Q \right\vert < \left\vert \R \right\vert$, so $\left\vert \Gamma_{C} \right\vert < \left\vert \Gamma \right\vert$.
   \end{example}
+\section{Computability and Provability}%
+\subsection{Turing Machines}%
+We have currently seen many algorithms --- however, it's very hard to explain what exactly an algorithm is. Informally, algorithms are computable procedures to solve a problem.
+\begin{example}[An Algorithm to find Prime Numbers]
+  In short, given $n\in \N$, for each $k = \in \set{2,3,4,\dots,n-1}$, we check if $k | n$.\newline
+
+  This is not an efficient algorithm. However, it is an algorithm. In a more specific form, we can see that this algorithm is specified below.
+  \begin{enumerate}[(1)]
+    \item Let $k = 2$.
+    \item If $k = n$, output \texttt{yes} and stop.
+    \item If $k | n$, output \texttt{no} and stop.
+    \item Increment $k$: \texttt{k <- k+1}.
+    \item Go back to step $2$.
+  \end{enumerate}
+\end{example}
+\begin{definition}[Informal Definition for Computability]
+  A function $f: \N\rightarrow \N$ is computable if there exists an algorithm $\alpha$ such that for each $n\in\N$, $\alpha$ outputs $f(n)$ given input $n$.
+\end{definition}
+\begin{question}
+Is there an algorithm to decide if an arbitrary equation has solutions in the positive integers?
+\end{question}
+\begin{answer}
+  The answer is \textbf{no}. This is known as Hilbert's Tenth Problem.
+\end{answer}
+\begin{question}
+  Is there an algorithm to verify the validity of a proof in mathematics?
+\end{question}
+\begin{answer}
+  The answer is \textbf{yes}. This is the basis of the programming language Lean.
+\end{answer}
+\begin{question}
+  Let
+  \begin{align*}
+    p(n) &= \begin{cases}
+      1 & \text{$n$ is prime}\\
+      0 & \text{else}
+    \end{cases}.
+  \end{align*}
+\end{question}
+\begin{answer}
+  The answer is \textbf{yes}. We showed an algorithm for $p$ earlier.
+\end{answer}
+\begin{question}
+  Let $F(n)$ be the $n$th Fibonacci number. Is $F$ computable?
+\end{question}
+\begin{answer}
+  \textbf{Yes}.
+\end{answer}
+\begin{question}
+  Let $f(n)$ be the $n$th digit of $\pi$. Is $f$ computable?
+\end{question}
+\begin{answer}
+  \textbf{Yes}.
+\end{answer}
+\begin{question}
+  Let $P$ be the set of all computer programs in C.\newline
+
+  Let $P$ be ordered lexicographically. Define a function $f(n)$ by
+  \begin{align*}
+    f(n) &= \begin{cases}
+      1 & \text{$n$th program stops for every input.}\\
+      0 & \text{else}
+    \end{cases}.
+  \end{align*}
+  Is $f$ computable?
+\end{question}
+\begin{answer}
+  The answer is \textbf{no}. This is known as the halting problem, and it is provable.
+\end{answer}
+In order to understand all these results, we need a precise definition of \textit{computable}.\newline
+
+There are several approaches to computability:
+\begin{itemize}
+  \item Turing machines;
+  \item recursive functions;
+  \item $\lambda$ calculus;
+  \item unlimited register machines (URMs);
+  \item computable by (quantum) computers.
+\end{itemize}
+All of these have been proven equivalent. For the purposes of this course, we will look at Turing machines.
+\begin{definition}[Turing Machine]
+A Turing machine consists of the following:
+\begin{itemize}
+  \item an infinite tape divided into discrete segments;
+  \item each segment can contain one symbol (such as $1$) or can be left blank;
+  \item the Turing machine is given as much space and time as necessary to compute;
+  \item the machine has a ``head'' that can read and write the tape, and can move left and right;
+  \item the machine has a finite number of internal states that;
+  \item instructions for the Turing machine are $4$-tuples, $\left(a,b,c,d\right)$: if in state $a$, reading symbol $b$, then do $c$, then enter state $d$.
+\end{itemize}
+\end{definition}
+\begin{example}
+  Let
+  \begin{align*}
+    I_1 &= q_11Rq_1
+    I_2 &= q_1B1q_2
+    I_3 &= q_211q_3.
+  \end{align*}
+  Here, $I_1$ essentially says ``if current state is $q_1$, and reading symbol $1$, move right, then enter state $q_1$.''\newline
+
+  Similarly, $I_2$ says ``if current state is $q_1$, and reading symbol blank, \textit{write} $1$, and enter state $q_3$.''\newline
+
+  Consider a tape that reads $\dots B111B\dots$. The head starts at the left-most non-blank element, and starts with state $q_1$.
+  \begin{itemize}
+    \item The machine performs $I_1$, moving the head to the middle $1$, and remains at state $q_1$.
+    \item The machine performs $I_1$, moving the head to the right-most $1$, and remains at state $q_1$.
+    \item The machine performs $I_1$, moving the head to the blank element to the right of the right-most $1$, and remains at state $q_1$.
+    \item The machine now performs $I_2$, and writes $1$ over the blank element, and enters state $q_2$.
+    \item The machine now performs $I_3$, and enters state $q_3$.
+    \item Since there are no instructions that start with state $q_3$, the machine halts.
+  \end{itemize}
+  Note that at the start of the Turing machine, there are always finitely many non-blank squares.
+\end{example}
+\begin{notation}
+  For input, each $n\in \N$ is represented by $n+1$ consecutive $1$s on the tape.\newline
+
+  For output, the total number of $1$s is the output.
+\end{notation}
+\begin{definition}[Computable]
+  A function $f$ is computable if there exists a Turing machine that computes $f$
+\end{definition}
+\begin{definition}[Partial/Total Function]
+  A partial function is a function $f: A\rightarrow \N$ where $A\subseteq \N$. If $A = \N$, then $f$ is also a total function.
+\end{definition}
+
 \end{document}

@@ -165,7 +165,7 @@ A measure assigns a nonnegative ``length'' or ``volume'' to measurable sets.
       \begin{align*}
         F_1 &= E_1\\
         F_2 &= E_2\setminus E_1\\
-            &\vdots
+            &\vdots\\
         F_n &= E_n\setminus \left(\bigcup_{k=1}^{n-1}E_k\right).
       \end{align*}
       Since each $F_n$ is measurable, and $F_n\subseteq E_n$, we have
@@ -174,6 +174,61 @@ A measure assigns a nonnegative ``length'' or ``volume'' to measurable sets.
                                              &= \sum_{n=1}^{\infty}F_n\\
                                              &\leq \sum_{n=1}^{\infty}\mu\left(E_n\right).
       \end{align*}
+    \item We write $F_n$ as the respective disjoint union for $\set{E_n}_{n\geq 1}$. We have $\bigsqcup_{k=1}^{n}F_k = E_n$. Then,
+      \begin{align*}
+        \mu\left(\bigcup_{n\geq 1}E_n\right) &= \sum_{n=1}^{\infty}\mu\left(F_n\right)\\
+                                             &= \lim_{n\rightarrow\infty}\left(\sum_{k=1}^{n}\mu\left(F_k\right)\right)\\
+                                             &= \lim_{n\rightarrow\infty}\mu\left(\bigsqcup_{k=1}^{n}F_k\right)\\
+                                             &= \lim_{n\rightarrow\infty}\mu\left(E_n\right).
+      \end{align*}
   \end{enumerate}
 \end{proof}
+\begin{definition}[Counting Measure]
+  If $\Omega$ is any set, the \textbf{counting measure} on $\left(\Omega,P\left(\Omega\right)\right)$ assigns $\left\vert A \right\vert$ for each $A\in P\left(\Omega\right)$ finite, and $\infty$ for any infinite subset.
+\end{definition}
+\begin{definition}[Restricting Measures]
+  If $\left(\Omega,\mathcal{M},\mu\right)$ is a measure space, $\mathcal{B}$ is a $\sigma$-algebra on $\Omega$ with $\mathcal{B}\subseteq \mathcal{M}$, the restriction $\mu|_{\mathcal{B}}$ is a measure on $\left(\Omega,\mathcal{B}\right)$.\newline
 
+  If $E\in \mathcal{M}$, we can restrict $\mu$ to $\mathcal{M}_{E}$ (the restriction of $\mathcal{M}$ to $E$), yielding the measure space $\left(E,\mathcal{M}_{E},\mu|_{\mathcal{M}_E}\right)$. We denote this restricted measure $\mu_{E}$, such that $\mu_{E}\left(M\cap E\right) = \mu\left(M\cap E\right)$ for all $M\in \mathcal{M}_{E}$.
+\end{definition}
+\begin{definition}[Pushforward Measure]
+  Let $\left(\Omega,\mathcal{M},\mu\right)$ be a measure space, and let $\left(\Lambda,\mathcal{N}\right)$ be a measurable space. Let $f: \Omega\rightarrow \Lambda$ be measurable. The map
+  \begin{align*}
+    f_{\ast}\mu: \mathcal{N}\rightarrow [0,\infty]
+  \end{align*}
+  defined by
+  \begin{align*}
+    f_{\ast}\mu\left(E\right) &= \mu\left(f^{-1}\left(E\right)\right)
+  \end{align*}
+  defines a measure on $\left(\Lambda,\mathcal{N}\right)$. This is known as the pushforward measure of $\mu$.\newline
+
+  If $\mathcal{N}$ on $\Lambda$ is produced by $f$, then the pushforward measure is necessarily defined on $\mathcal{N}$, and that any function $g: \Lambda\rightarrow \F$ is measurable if and only if $g\circ f$ is measurable.
+\end{definition}
+\begin{definition}[Disjoint Union]
+  Let $\set{\left(\Omega_n,\mathcal{M}_n,\mu_n\right)}$ be a countable family of measure spaces.\newline
+
+  We define the co-product of this family by taking
+  \begin{align*}
+    \Sigma := \bigsqcup_{n=1}^{\infty}\Omega_n,
+  \end{align*}
+  to be our set equipped with the canonical inclusion map $\iota_{n}\left(x\right) = \left(x,n\right)$, such that for each $n$,
+  \begin{align*}
+    \mathcal{M} &:= \set{E\subseteq \Sigma\mid \iota_{n}^{-1}\left(E\right)\in \mathcal{M}_n}.
+  \end{align*}
+  The measure is defined by
+  \begin{align*}
+    \mu: \mathcal{M}\rightarrow [0,\infty]\\
+    \mu(E) := \sum_{n=1}^{\infty}\mu_{n}\left(\iota_{n}^{-1}\left(E\right)\right).
+  \end{align*}
+  We can identify each $\Omega_n$ with the subset $\Omega_{n}^{\ast} = \set{\left(x,n\right)\mid x\in \Omega_n}\subseteq \Sigma$, with $\iota_{n}^{-1}\left(E\right)\subseteq \Omega_{n}$ identified with $E\cap \Omega_{n}^{\ast}$.\newline
+
+  The family $\set{\Omega_{n}^{\ast}}_{n\geq 1}$ forms a measurable partition of $\Sigma$, and that $\mu|_{\Omega_{n}^{\ast}}$ are the pushforwards of $\mu_{n}$ by $\iota_{n}$.\newline
+
+  Note that a map $f: \Sigma\rightarrow \C$ is measurable if and only if $f\circ \iota_{n}: \Omega_n\rightarrow \C$ is measurable for all $n$.\newline
+
+  If $\left(f_n: \Omega_n\rightarrow \C\right)_{n}$ is a sequence of measurable maps, the disjoint union
+  \begin{align*}
+    f = \bigsqcup_{n\geq 1}f_n: \Sigma\rightarrow \C
+  \end{align*}
+  defined by $f\left(x,n\right) = f_n(x)$, is measurable.
+\end{definition}

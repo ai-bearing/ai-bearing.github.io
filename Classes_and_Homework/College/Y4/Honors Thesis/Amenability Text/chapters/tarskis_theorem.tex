@@ -1,0 +1,171 @@
+Ultimately, the reason the Banach--Tarski paradox ``works'' is because the paradoxical group $F(a,b)$, lacks a property known as amenability. Readers may be surprised to hear that amenability and non-paradoxicality are distinct --- that is, a group is amenable if and only if it is non-paradoxical. This fact is formalized in Tarski's theorem.
+\begin{theorem}[Tarski's Theorem]\label{thm:tarski}
+  Let $G$ be a group that acts on a set $X$, and let $E\subseteq X$ be nonempty. There is a finitely additive translation-invariant measure $\mu: P(X)\rightarrow [0,\infty]$ with $\mu(E)\in (0,\infty)$ if and only if $E$ is not $G$-paradoxical.
+\end{theorem}
+In fact, we can prove the converse now.
+\begin{proof}[of the Converse of Tarski's Theorem]
+  Let $E$ be $G$-paradoxical. Suppose toward contradiction that such a translation-invariant finitely additive $\nu$ existed with $\nu(E) \in (0,\infty)$.
+
+  Let $A_1,\dots,A_n,B_1,\dots,B_m\subseteq E$ be pairwise disjoint, and let $t_1,\dots,t_n,s_1,\dots,f_m\in G$ such that
+  \begin{align*}
+    E &= \bigsqcup_{i=1}^{n}t_i\cdot A_i\\
+      &= \bigsqcup_{j=1}^{m}s_j\cdot B_j.
+  \end{align*}
+  Then, it would be the case that
+  \begin{align*}
+    \nu(E) &= \nu\left(\bigsqcup_{i=1}^{n}t_i\cdot A_i\right)\\
+           &= \sum_{i=1}^{n}\nu\left(t_i\cdot A_i\right)\\
+           &= \sum_{i=1}^{n}\nu\left(A_i\right),
+  \end{align*}
+  and
+  \begin{align*}
+    \nu(E) &= \sum_{j=1}^{m}\nu\left(B_j\right).
+  \end{align*}
+  However, this yields
+  \begin{align*}
+    \nu\left(E\right) &= \nu\left(\left(\bigsqcup_{i=1}^{n}t_i\cdot A_i\right)\sqcup \left(\bigsqcup_{j=1}^{m}s_j\cdot B_j\right)\right)\\
+                      &= \sum_{i=1}^{n}\nu\left(A_i\right) + \sum_{j=1}^{m}\nu\left(B_j\right)\\
+                      &= 2\nu(E),
+  \end{align*}
+  implying that $\nu(E) = 0$ or $\nu(E) = \infty$.
+\end{proof}
+
+\section{A Little Bit of Graph Theory}%
+To prove the forward direction of Tarski's theorem, we need to develop some machinery from graph theory that will allow us to prove that a certain semigroup we will construct in the next section satisfies the cancellation identity.\newline
+
+We start by defining graphs and paths, before proving a special case of Hall's theorem, ultimately extending to the infinite case with König's theorem.
+\begin{definition}[Graphs and Paths]
+  A \textbf{graph} is a triple $\left(V,E,\phi\right)$, with $V,E$ nonempty sets and $\phi: E\rightarrow P_{2}(V)$ a map from $E$ to the set of all unordered subset pairs of $V$.\newline
+
+  For $e\in E$, if $\phi(e) = \set{v,w}$, then we say $v$ and $w$ are the \textbf{endpoints} of $e$, and $e$ is \textbf{incident} on $v$ and $w$.\newline
+
+  A \textbf{path} in $\left(V,E,\phi\right)$ is a finite sequence $\left(e_1,\dots,e_n\right)$ of edges, with a finite sequence of vertices $\left(v_0,\dots,v_n\right)$, such that $\phi\left(e_k\right) = \set{v_{k-1},v_k}$.\newline
+
+  The \textbf{degree} of a vertex, $\deg(v)$, is the number of edges incident on $v$.\newline
+
+  We define the \textbf{neighbors} of $S\subseteq V$ to be the set of all vertices $v\in V\setminus S$ such that $v$ is an endpoint to an edge incident on $S$. We denote this set $N(S)$.
+\end{definition}
+
+\begin{definition}[Bipartite Graphs and $k$-Regularity]
+  Let $\left(V,E,\phi\right)$ be a graph, with $k\in \N$.
+  \begin{enumerate}[(i)]
+    \item If $\deg(v) = k$ for each $v\in V$, we say $\left(V,E,\phi\right)$ is \textbf{$k$-regular}.
+    \item If $V = X\sqcup Y$, with each edge in $E$ having one endpoint in $X$ and one endpoint in $Y$, then we say $V$ is \textbf{bipartite}, and write $\left(X,Y,E,\phi\right)$.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[Perfect Matching]
+  Let $\left(X,Y,E,\phi\right)$ be a bipartite graph. Let $A\subseteq X$ and $B\subseteq Y$. A \textbf{perfect matching} of $A$ and $B$ is a subset $F\subseteq E$ with
+  \begin{enumerate}[(i)]
+    \item each element of $A\cup B$ is an endpoint of exactly one $f\in F$;
+    \item all endpoints of edges in $F$ are in $A\cup B$.
+  \end{enumerate}
+\end{definition}
+\begin{definition}[Hall Condition]
+  We say a bipartite graph $\left(X,Y,E,\phi\right)$ satisfies the \textbf{Hall Condition} on $X$ if, for all $S\subseteq X$, $\left\vert N(S) \right\vert \geq \left\vert S \right\vert$.\newline
+
+  Equivalently, we say a (finite) collection of not necessarily distinct finite sets $\mathcal{X} = \set{X_i}_{i=1}^{n}$ satisfies the marriage condition if and only if for all subcollections $\mathcal{Y}_k = \set{X_{i_k}}_{k=1}^{m}$,
+  \begin{align*}
+    \left\vert \mathcal{Y}_k \right\vert \leq \left\vert \bigcup_{k=1}^{m}X_{i_k} \right\vert.
+  \end{align*}
+\end{definition}
+\begin{remark}
+These two formulations of the Hall condition are equivalent regarding an $X$-perfect matching.
+\end{remark}
+\begin{theorem}[Hall's Theorem for Finite $k$-Regular Bipartite Graphs]\label{thm:hall_finite}
+  Let $\left(X,Y,E,\phi\right)$ be a $k$-regular bipartite graph for some $k\in \N$, and let $V = X\sqcup E$ be finite. Then, there is a perfect matching of $X$ and $Y$.
+\end{theorem}
+\begin{proof}
+  Note that since $\left\vert E \right\vert = k\left\vert K \right\vert = k\left\vert Y \right\vert$, it is the case that $\left\vert X \right\vert = \left\vert Y \right\vert$.\newline
+
+  Let $M\subseteq V$ be any subset. We will show that $\left\vert N(M) \right\vert\geq \left\vert M \right\vert$ --- that is, $\left(X,Y,E,\phi\right)$ satisfies the Hall condition.\newline
+
+  Let $M_X = M\cap X$ and $M_Y = M\cap Y$, where $M = M_X\sqcup M_Y$. Let $\left[M_X,N\left(M_X\right)\right]$ be the set of edges with endpoints in $M_X$ and $N\left(M_X\right)$, and $\left[M_Y,N\left(M_Y\right)\right]$ be the set of edges with endpoints in $M_Y$ and $N\left(M_Y\right)$. We also let $\left[X,N\left(M_X\right)\right]$ denote the set of edges with endpoints in $X$ and $N\left(M_X\right)$, and similarly, $\left[Y,N\left(M_Y\right)\right]$ is the set of edges with endpoints in $Y$ and $N\left(M_Y\right)$.\newline
+
+  We can see that $\left[M_X,N\left(M_X\right)\right]\subseteq \left[X,N\left(M_X\right)\right]$, and similarly, $\left[M_Y,N\left(M_Y\right)\right]\subseteq \left[Y,N\left(M_Y\right)\right]$.\newline
+
+  Since $\left\vert \left[M_X,N\left(M_X\right)\right] \right\vert = k\left\vert M_X \right\vert$ and $\left\vert \left[X,N\left(M_X\right)\right] \right\vert = k\left\vert N\left(M_X\right) \right\vert$, we have
+  \begin{align*}
+    \left\vert M_X \right\vert\leq \left\vert N\left(M_X\right) \right\vert,
+  \end{align*}
+  and similarly,
+  \begin{align*}
+    \left\vert M_Y \right\vert\leq \left\vert N\left(M_Y\right) \right\vert.
+  \end{align*}
+  Thus, $\left\vert M \right\vert\leq \left\vert N\left(M\right) \right\vert$.\newline
+
+  We will now show that there is an $X$-perfect matching. Suppose toward contradiction that $F$ is a maximal perfect matching on $A\subseteq X$ and $B\subseteq Y$ with $X\setminus A \neq \emptyset$.\newline
+
+  Then, there is $x\in X\setminus A$. Consider $Z\subseteq V$ consisting of all vertices $z$ such that there exists a $F$-alternating path $\left(e_1,\dots,e_n\right)$ between $z\in Z$ and $x$.\newline
+
+  It cannot be the case that $Z\cap Y$ is empty, since the number of neighbors of $x$ is greater than or equal to $1$ by the Hall condition --- if it were the case that $Z\cap Y$ were empty, we could add an edge to $F$ consisting of $x$ and one element of $N\left(\set{x}\right)$, which would contradict the maximality of $F$.\newline
+
+  Consider a path traversing along $Z$, $\left(e_1,\dots,e_n\right)$. It must be the case that $e_n\in F$, or else we would be able to ``flip'' the matching $F$ by exchanging $e_{i}$ with $e_{i+1}$ for $e_i\in F$, which would contradict the maximality of $F$ yet again. Thus, every element of $Z\cap Y$ is satisfied by $F$, so $Z\cap Y\subseteq B$.\newline
+
+  Since each element in $Z\cap Y$ is paired with exactly one element of $Z\cap X$ (with one left over), it is the case that $\left\vert Z\cap X \right\vert = \left\vert Z\cap Y \right\vert + 1$.\newline
+
+  Suppose toward contradiction that there exists $y\in N\left(Z\cap X\right)$ with $y\notin Z\cap Y$. Then, there exists $v\in Z\cap X$ and $e\in E$ such that $\phi(e) = \set{v,y}$. However, this means $v$ is connected via a path to $x$, meaning $y\in Z$, so $y\in Z\cap Y$. Thus, we must have $N\left(Z\cap X\right) = Z\cap Y$.\newline
+
+  Therefore,
+  \begin{align*}
+    \left\vert Z\cap X \right\vert &= \left\vert Z\cap Y \right\vert + 1\\
+                                   &= \left\vert N\left(Z\cap X\right) \right\vert + 1,
+  \end{align*}
+  which contradicts the fact that $\left(X,Y,E,\phi\right)$ satisfies the Hall condition. Therefore, $A = X$.\newline
+
+  By symmetry, there is a perfect matching of $X$ and $Y$ in $\left(X,Y,E,\phi\right)$.
+\end{proof}
+\begin{remark}
+  An equivalent formulation to Hall's theorem states that there is a \textit{system of distinct representatives} on $\mathcal{X}$, which is a set $\set{x_{k}}_{k=1}^{n}$ such that $x_{k}\in X_{k}$ and $x_{i}\neq x_j$ for $i\neq j$.\newline
+
+  This implies the existence of an injection $f: \mathcal{X}\hookrightarrow \bigcup_{k=1}^{n}X_{k}$, such that $f\left(X_k\right) \in X_k$.
+\end{remark}
+%\begin{definition}[Choice Function]
+%  Let $\mathcal{X} = \set{X_{i}}_{i\in I}$ be a collection of sets. A function $f: \mathcal{X}\rightarrow \bigcup_{i\in I}X_i$ is called a choice function if, for each $i\in I$, $f\left(X_{i}\right)\in X{i}$.\newline
+%
+%  We also say $f: \mathcal{X}\rightarrow \bigcup_{i\in I}X_i$ is a choice function if $f\in \prod_{i\in I}X_i$.
+%\end{definition}
+%
+%\begin{theorem}[Tychonoff's Theorem]
+%  If $\set{X_{i}}_{i\in I}$ is a family of compact topological spaces
+%\end{theorem}
+\begin{theorem}[Infinite Hall's Theorem]
+  Let $\mathcal{G} = \set{X_{i}}_{i\in I}$ be a collection of (not necessarily distinct) finite sets. If, for every finite subcollection $\mathcal{Y} = \set{X_{i_k}}_{k=1}^{n}$,
+  \begin{align*}
+    n\leq \left\vert \bigcup_{k=1}^{n}X_{i_k} \right\vert,
+  \end{align*}
+  then there is a choice function on $G$.
+\end{theorem}
+\begin{proof}
+  We endow each $X_i\in \set{X_{i}}_{i\in I}$ with the discrete topology. Since each $X_i$ is finite, each $X_i$ is compact.\newline
+
+  Thus, by Tychonoff's theorem, it is the case that $\prod_{i\in I}X_{i}$ is compact.\newline
+
+  For every finite subset $Y\subseteq \mathcal{G}$, we define
+  \begin{align*}
+    S_Y &= \set{\left.f\in \prod_{i\in I}X_i\right|f|_{Y}\text{ is injective}}.
+  \end{align*}
+  The injectivity of $f|_{Y}$ is equivalent to the existence of a system of distinct representatives on $Y$. Since $Y$ satisfies the Hall condition, each $S_{Y}$ is nonempty. Additionally, for any net of functions $f_{\alpha}\in S_{Y}$ with $\lim_{\alpha}f_{\alpha} = f$, it is the case that $f_{\alpha}|_{Y}$ is injective, so $f|_{Y}$ is injective, meaning $S_{Y}$ is closed.\newline
+
+  We define $F = \set{S_{Y}\mid Y\subseteq \mathcal{G}\text{ finite}}$. For finite $Y_{1},Y_{2}\subseteq \mathcal{G}$, every system of distinct representatives in $Y_1\cup Y_2$ is necessarily a system of distinct representatives on $Y_1$ and a system of distinct representatives on $Y_{2}$, meaning $S_{Y_1\cup Y_2}\subseteq S_{Y_1}\cap S_{Y_2}$. Thus, $F$ has the finite intersection property.\newline
+
+  Since $\prod_{i\in I}X_i$ is compact, $\bigcap F$ is nonempty, where the intersection is taken over all finite subsets of $\mathcal{G}$. For any $f\in \bigcap F$, $f$ is necessarily a choice function.
+\end{proof}
+\begin{remark}
+  This is equivalent to the existence of an injection $f: \mathcal{G}\hookrightarrow \bigcup_{i\in I}X_i$.
+\end{remark}
+
+We will use this infinite case of Hall's theorem to prove König's theorem. 
+\begin{theorem}[König's Theorem]
+  Let $\left(X,Y,E,\phi\right)$ be a $k$-regular bipartite graph (not necessarily finite). Then, there is a perfect matching of $X$ and $Y$.
+\end{theorem}
+\begin{proof}
+  If $k = 1$, it is clear that there is a perfect matching in $\left(X,Y,E,\phi\right)$ consisting of the edges in $\left(X,Y,E,\phi\right)$.\newline
+
+  Let $k\geq 2$. Since any finite subset of $X$ satisfies the Hall condition, as displayed in the proof of Theorem \ref{thm:hall_finite}, there is some $X$-perfect matching in $\left(X,Y,E,\phi\right)$. We call this $X$-perfect matching $F$. There is an injection $f: X\hookrightarrow Y$ following the edges in $F$.\newline
+
+  Similarly, since any finite subset of $Y$ satisfies the Hall condition, there is some $Y$-perfect matching in $\left(X,Y,E,\phi\right)$. We call this $Y$-perfect matching $G$. There is an injection $g: Y\hookrightarrow X$ following the edges of $G$.\newline
+
+  Consider the subgraph $\left(X,Y,F\cup G,\phi|_{F\cup G}\right)$. The injections $f$ and $g$ still hold in this graph. By the Cantor--Schröder--Bernstein theorem, there is a bijection $h: X\rightarrow Y$ in $\left(X,Y,F\cup G,\phi|_{F\cup G}\right)$.
+\end{proof}
+
