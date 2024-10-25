@@ -1476,5 +1476,310 @@ We can see that
   \begin{align*}
     \vec{F}(t) &= \begin{pmatrix}k_1e^{-2t}\\k_2e^{-t}\end{pmatrix}.
   \end{align*}
+  Consider the IVP with 
+  \begin{align*}
+    \vec{Y}(0) &= \begin{pmatrix}1\\1\end{pmatrix}.
+  \end{align*}
+  Then, we get
+  \begin{align*}
+    k_1 &= 1\\
+    k_2 &= 1,
+  \end{align*}
+  meaning the solution to the particular IVP is
+  \begin{align*}
+    \vec{F}(t) &= \begin{pmatrix}e^{-2t}\\e^{-t}\end{pmatrix}.
+  \end{align*}
+  Note that we can write a closed form function, $x = y^2$, which allows us to draw a solution curve on the phase plane.
 \end{example}
+\begin{example}[A Partially Decoupled System]
+Consider the system
+\begin{align*}
+  \diff{x}{t} &= 3x + 2y\\
+  \diff{y}{t} &= -y.
+\end{align*}
+Since $\diff{x}{t}$ depends on both $x$ and $y$, but $\diff{y}{t}$ depends only on $y$, we can solve for $y$ independent of $x$, and substitute.
+\begin{align*}
+  y(t) &= k_2e^{-t}
+\end{align*}
+Substituting, we have
+\begin{align*}
+  \diff{x}{t} - 3x &= 2k_2e^{-t}.
+\end{align*}
+Using the integrating factor $\mu(t) = e^{-3t}$, we have
+\begin{align*}
+  e^{-3t}\diff{x}{t} - 3xe^{-3t} &= 2k_2e^{-4t}\\
+  \diff{}{t}\left(xe^{-3t}\right) &= 2k_2e^{-4t}\\
+  xe^{-3t} &= -\frac{1}{2}k_2e^{-4t} + C\\
+  x &= -\frac{1}{2}k_2e^{-t} + k_1e^{3t}.
+\end{align*}
+Thus, we have
+\begin{align*}
+  \vec{F}(t) &= \begin{pmatrix}-\frac{1}{2}k_2e^{-t} + k_1e^{3t} \\ k_2e^{-t}\end{pmatrix}.
+\end{align*}
+Consider the initial condition
+\begin{align*}
+  \vec{Y}(0) &= \begin{pmatrix}1 \\ 0\end{pmatrix}
+\end{align*}
+Then, substituting into our equation, we get $k_2 = 0$, $k_1 = 1$, so our solution is
+\begin{align*}
+  \vec{F}(t) &= \begin{pmatrix}e^{3t}\\0\end{pmatrix}.
+\end{align*}
+\end{example}
+\subsection{Euler's Method for Systems of Differential Equations}%
+Consider a first order autonomous system
+\begin{align*}
+\diff{x}{t} &= f(x,y)\\
+\diff{y}{t} &= g(x,y),
+\end{align*}
+with $x(0) = x_0$ and $y(0) = y_0$.\newline
+
+To approximate this solution, we can use the phase diagram. Converting to vector notation, we have
+\begin{align*}
+  \vec{F}(x,y) &= \begin{pmatrix}f(x,y)\\g(x,y)\end{pmatrix}\\
+  \diff{\vec{Y}}{t} &= \vec{F}\left(\vec{Y}\right).
+\end{align*}
+Starting from $\left(x_0,y_0\right)$ in the phase diagram, we get the first step, $\left(x_1,y_1\right) = \left(x_0 ,y_0\right) + \left(\delta t\right) \vec{F}\left(x_0,y_0\right)$. Similarly, we inductively find
+\begin{align*}
+  \left(x_{k+1},y_{k+1}\right) &= \left(x_k,y_k\right) + \delta t \vec{F}\left(x_k,y_k\right).
+\end{align*}
+Componentwise, we have
+\begin{align*}
+  x_{k+1} &= x_k + \left(\delta t\right)f\left(x_k,y_k\right)\\
+  y_{k+1} &= y_k + \left(\delta t\right) g\left(x_k,y_k\right).
+\end{align*}
+\begin{example}
+  Consider the system
+  \begin{align*}
+    \diff{x}{t} &= -y\\
+    \diff{y}{t} &= x-y
+  \end{align*}
+  with the initial condition 
+  \begin{align*}
+    \vec{Y}(0) &= \begin{pmatrix}1\\1\end{pmatrix},
+  \end{align*}
+  and step size $\delta t = 0.25$. We hope to approximate the solution at $t = 0.5$.
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c|c}
+      $k$ & $t_k$ & $x_k$ & $y_k$ & $f\left(x_k,y_k\right)$ & $g\left(x_k,y_k\right)$\\
+      \hline
+      $0$ & $0$ & $1$ & $1$ & $-1$ & $0$\\
+      $1$ & $0.25$ & $0.75$ & $1$ & $-1$ & $-0.25$\\
+      $2$ & $0.5$ & $0.5$ & $0.9375$ & --- & ---
+    \end{tabular}
+  \end{center}
+\end{example}
+\begin{example}
+  Consider the Lotka--Volterra model
+  \begin{align*}
+    \diff{R}{t} &= 2R - 1.2RF\\
+    \diff{F}{t} &= -F + 0.9RF
+  \end{align*}
+  with initial condition $R(0) = 1$ and $F(0) = 1$. Using Euler's method with $\delta t = 1$, we can approximate the population of rabbits and foxes after 3 time steps.
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c|c}
+      $k$ & $t_k$ &$ R_k$ & $F_k$ & $f\left(R_k,F_k\right)$ & $g\left(R_k,F_k\right)$\\
+      \hline
+      $0$ & $0$ & $1$ & $1$ & $0.8$ & $-0.1$\\
+      $1$ & $1$ & $1.8$ & $0.9$ & $1.656$ & $0.558$\\
+      $2$ & $2$ & $3.456$ & $1.458$ & $0.865$ & $3.077$\\
+      $3$ & $3$ & $4.321$ & $4.535$ & --- & ---
+    \end{tabular}
+  \end{center}
+\end{example}
+\subsection{Existence and Uniqueness of Solutions}%
+Just as with single equations, systems of differential equations have a corresponding existence and uniqueness theorem.
+\begin{theorem}[Existence and Uniqueness for Systems of Ordinary Differential Equations]
+  Let 
+  \begin{align*}
+    \diff{\vec{Y}}{t} &= \vec{F}\left(t,\vec{Y}\right),
+  \end{align*}
+  Suppose $t_0$ is an initial time and $\vec{Y}_0$ is an initial value.\newline
+
+  If $\vec{F}$ is continuously differentiable,\footnote{We say $\vec{F}$ is continuously differentiable if all the partial derivatives of $f$ and $g$, $f_t,f_x,f_y,g_t,g_x,g_y$ exist and are continuous on some open subset of $txy$-space, where $\left(t_0,x_0,y_0\right)$ is contained in this open subset.} then there is $\ve > 0$ and a function $\vec{Y}(t)$ defined on $t_0-\ve < t < t_0 + \ve$ such that $\vec{Y}(t)$ satisfies the initial value problem,
+  \begin{align*}
+    \diff{\vec{Y}}{t} &= \vec{F}\left(t,\vec{Y}\right),~\vec{Y}\left(t_0\right) = \vec{Y}_0.
+  \end{align*}
+  This solution is unique for all $t\in \left(t_0-\ve,t_0+\ve\right)$.
+\end{theorem}
+\begin{example}
+  Consider the following system of equations.
+  \begin{align*}
+    \diff{x}{t} &= x^2 + 1\\
+    \diff{y}{t} &= 1,
+  \end{align*}
+  under the initial condition $\left(x_0,y_0\right) = \left(0,0\right)$.\newline
+
+  To verify the existence and uniqueness of a solution, we take the partial derivatives
+  \begin{align*}
+    \pd{f}{t} &= 0\\
+    \pd{f}{x} &= 2x\\
+    \pd{f}{y} &= 0\\
+    \pd{g}{t} &= 0\\
+    \pd{g}{x} &= 0\\
+    \pd{g}{y} &= 0.
+  \end{align*}
+  Thus, since all partial derivatives are continuous in a neighborhood around $(0,0,0)$ in $txy$-space, there is a unique solution for this equation.\newline
+
+  Solving the equation, we get
+  \begin{align*}
+    \int_{}^{} \frac{1}{x^2 + 1}\:dx &= \int_{}^{} \:dt\\
+    \arctan(x) &= t + C\\
+    x &= \tan \left(t+C\right)\\
+    C &= 0\\
+    x(t) &= \tan t\\
+    y(t) &= t,
+  \end{align*}
+  thus, we get the solution.
+  \begin{align*}
+    \vec{Y}(t) &= \begin{pmatrix}\tan(t)\\t\end{pmatrix}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Consider an autonomous two-dimensional system
+  \begin{align*}
+    \diff{\vec{Y}}{t} &= \vec{F}\left(\vec{Y}\right),
+  \end{align*}
+  of the form
+  \begin{align*}
+    \diff{x}{t} &= f\left(x,y\right)\\
+    \diff{y}{t} &= g\left(x,y\right).
+  \end{align*}
+  We can draw two conclusions from this case.
+  \begin{enumerate}[(1)]
+    \item Unless a solution is a simple closed curve on the phase plane, solutions cannot intersect themselves at any point.
+    \item If two solution curves intersect at any point on the $xy$-plane, they are the same solution.
+  \end{enumerate}
+  \begin{lemma}
+    Suppose $\vec{Y}_1$ is a solution to the autonomous system
+    \begin{align*}
+      \diff{\vec{Y}}{t} &= \vec{F}\left(\vec{Y}\right).
+    \end{align*}
+    Then, $\vec{Y}_1\left(t-t_0\right)$ is a solution to the system for any constant $t-t_0$.
+  \end{lemma}
+  \begin{proof}
+    Given $\vec{Y}_1(t)$ is a solution, so
+    \begin{align*}
+      \diff{}{t}\left(\vec{Y}_1\left(t\right)\right) &= \vec{F}\left(\vec{Y}_1(t)\right). 
+    \end{align*}
+    We want to show that
+    \begin{align*}
+      \diff{}{t} \left(\vec{Y}_1\left(t-t_0\right)\right) &= \vec{F}\left(\vec{Y}_1\left(t-t_0\right)\right).
+    \end{align*}
+    Let $\tau = t-t_0$. Then,
+    \begin{align*}
+      \diff{}{t}\left(\vec{Y}_1(\tau)\right) &= \diff{}{\tau}\left(\vec{Y}_1(\tau)\right)\diff{\tau}{t}\\
+                                             &= \diff{}{\tau}\left(\vec{Y}_1\left(\tau\right)\right)\\
+                                             &= \vec{F}\left(\vec{Y}\left(\tau\right)\right).
+    \end{align*}
+  \end{proof}
+  \begin{theorem}
+    Let $\vec{Y}_1(t)$ and $\vec{Y}_2(t)$ be solutions to
+    \begin{align*}
+      \diff{\vec{Y}}{t} &= \vec{F}\left(\vec{Y}\right).
+    \end{align*}
+    If $\vec{Y}_1\left(t_1\right) = \vec{Y}_2\left(t_2\right) = \vec{Y_0}$ for some $t_1\neq t_2$, Then, $\vec{Y}_2\left(t\right) = \vec{Y}_1\left(t-c\right)$ for some $c = t_2 - t_1$.
+  \end{theorem}
+  \begin{proof}
+    Since $\vec{Y}_1(t)$ is a solution, $\vec{Y}_1(t-c)$ is a solution. Specifically,
+    \begin{align*}
+      \vec{Y}_1\left(t-c\right) &= \vec{Y}_1\left(t-\left(t_2 - t_1\right)\right).
+    \end{align*}
+    We can see that
+    \begin{align*}
+      \vec{Y}_1\left(t_2 - c\right) &= \vec{Y}_1\left(t_1\right)\\
+                                    &= Y_0\\
+                                    &= \vec{Y}_2\left(t_2\right).
+    \end{align*}
+    Thus, $Y_1\left(t-c\right) = Y_2\left(t\right)$ for all $t$ (by the uniqueness theorem).
+  \end{proof}
+  For an autonomous system of equations with uniqueness, there are thus three types of solution curves on the phase plane.
+  \begin{itemize}
+    \item Simple closed curves;
+    \item simple open curves;
+    \item singular points (equilibrium solutions).
+  \end{itemize}
+  Here, ``simple'' refers to the fact that the curves do not intersect themselves.
+\end{example}
+\section{Solving Systems of Linear Differential Equations}%
+Consider a system
+\begin{align*}
+  \diff{x}{t} &= ax + by\\
+  \diff{y}{t} &= cx + dy.
+\end{align*}
+This is what is known as a linear system with constant coefficients, where the coefficients are $a,b,c,d$. Note that this system is autonomous, so solution curves do not intersect. We can also express this system as follows.
+\begin{align*}
+  \underbrace{\begin{pmatrix}\diff{x}{t}\\\diff{y}{t}\end{pmatrix}}_{\diff{\vec{Y}}{t}} &= \underbrace{\begin{pmatrix}a & b \\ c & d\end{pmatrix}}_{A} \underbrace{\begin{pmatrix}x\\y\end{pmatrix}}_{\vec{Y}}.
+\end{align*}
+Thus, this system is of the form
+\begin{align*}
+  \diff{\vec{Y}}{t} &= A\vec{Y}.
+\end{align*}
+\begin{theorem}
+  If $A$ is a nonsingular matrix, then the only equilibrium point for the linear system
+  \begin{align*}
+    \diff{\vec{Y}}{t} &= A\vec{Y}
+  \end{align*}
+  is the origin.
+\end{theorem}
+\begin{proof}
+  Note if $\vec{Y}_0 = \begin{pmatrix}x_0\\y_0\end{pmatrix}$ is an equilibrium solution, then
+  \begin{align*}
+    \begin{pmatrix}0\\0\end{pmatrix} &= \begin{pmatrix}a & b \\ c & d\end{pmatrix} \begin{pmatrix}x_0\\y_0\end{pmatrix},
+  \end{align*}
+  meaning
+  \begin{align*}
+    ax_0 + by_0 &= 0\\
+    cx_0 + dy_0 &= 0.
+  \end{align*}
+  In the first equation, solving for $x_0$, we have
+  \begin{align*}
+    x_0 &= -\frac{b}{a}y_0,
+  \end{align*}
+  and substituting,
+  \begin{align*}
+    c\left(-\frac{b}{a}\right)y_0 + dy_0 &= 0\\
+    \left(ad-bc\right)y_0 &= 0.
+  \end{align*}
+  Since $\det(A)\neq 0$, $ad-bc\neq 0$. Thus, $y_0 = x_0 = 0$.
+\end{proof}
+There is also a linearity principle for systems of equations.
+\begin{theorem}[Linearity Principle]
+  Let $\diff{\vec{Y}}{t} = A\vec{Y}$ be a linear system of equations.
+  \begin{enumerate}[(1)]
+    \item If $\vec{Y}(t)$ is a solution, and $k$ is any constant, then $k\vec{Y}(t)$ is a solution.
+    \item If $\vec{Y}_1(t)$ and $\vec{Y}_2(t)$ are solutions, then $\vec{Y}_1(t)+ \vec{Y}_2(t)$ is also a solution.
+  \end{enumerate}
+\end{theorem}
+\begin{example}\hfill
+  \begin{enumerate}[(1)]
+    \item 
+      \begin{align*}
+        \diff{}{t}\left(k\vec{Y}(t)\right) &=  k \diff{\vec{Y}}{t}\\
+                                           &= k\left(A\vec{Y}\right)\\
+                                           &= A\left(k\vec{Y}\right).
+      \end{align*}
+    \item 
+      \begin{align*}
+        \diff{}{t}\left(\vec{Y}_1(t) + \vec{Y}_2(t)\right) &= \diff{\vec{Y}_1}{t} + \diff{\vec{Y}_2}{t}\\
+                                                           &= A\vec{Y}_1 + A\vec{Y}_2\\
+                                                           &= A\left(\vec{Y}_1 + \vec{Y}_2\right).
+      \end{align*}
+  \end{enumerate}
+\end{example}
+Essentially, all linear combinations of solutions to $\diff{\vec{Y}}{t} = A\vec{Y} $ are solutions.
+\begin{example}
+  Consider
+  \begin{align*}
+    \diff{\vec{Y}}{t} &= \begin{pmatrix}2 & 3 \\ 0 & -4\end{pmatrix} \vec{Y},
+  \end{align*}
+  with $\vec{Y}(0) = \begin{pmatrix}2\\-3\end{pmatrix}$.\newline
+
+  Suppose we are given two solutions, 
+  \begin{align*}
+    \vec{Y}_1(t) &= \begin{pmatrix}e^{2t}\\0\end{pmatrix}\\
+    \vec{Y}_2(t) &= \begin{pmatrix}-e^{-4t}\\2e^{-4t}\end{pmatrix}.
+  \end{align*}
+  Then, we can see that any linear combination of $\vec{Y}_1(t)$ and $\vec{Y}_2(t)$. In particular, we need to find the particular linear combination such that $\left(a\vec{Y}_1 + b\vec{Y}_2\right)(0) = \begin{pmatrix}2\\-3\end{pmatrix} $.
+\end{example}
+
 \end{document}

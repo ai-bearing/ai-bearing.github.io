@@ -1,0 +1,125 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Set Theory and Foundations: Homework 9}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{4.1}%
+\begin{problem}
+  Write a Turing machine that computes the constant function $C_0(n) = 0$.
+\end{problem}
+\begin{solution}
+  The Turing machine with the instructions
+  \begin{align*}
+    q_1 1 B q_2\\
+    q_2 B R q_3\\
+    q_3 1 B q_2
+  \end{align*}
+  computes $C_0(n)$.
+  \begin{itemize}
+    \item The Turing machine deletes the first $1$, then moves into state $q_2$.
+    \item The Turing machine reads the blank, moves right, and enters state $q_3$.
+    \item The Turing machine reads the next input in state $q_3$ --- if $1$, then blank, and go back into $q_2$, and if blank, it stops.
+  \end{itemize}
+\end{solution}
+\section{4.2}%
+\begin{problem}
+  Write a Turing machine that computes the identity function $f(m) = m$ on $\N$. Then write a machine for the identity function on $\N^{n}$.
+\end{problem}
+\begin{solution}
+  The Turing machine with instructions
+  \begin{align*}
+    q_1 1 B q_2
+  \end{align*}
+  computes $f(m) = m$.\newline
+
+  The Turing machine with instructions
+  \begin{align*}
+    q_1 1 B q_2\\
+    q_2 B R q_3\\
+    q_3 1 R q_3\\
+    q_3 B R q_4\\
+    q_4 B B q_5\\
+    q_4 1 B q_2
+  \end{align*}
+  computes $\id_{\N^{n}}$.
+\end{solution}
+\section{4.3}%
+\begin{problem}
+  Write a Turing machine that computes the function
+  \begin{align*}
+    Z(n) &= \begin{cases}
+      1 & n = 0\\
+      0 & n \geq 1
+    \end{cases}.
+  \end{align*}
+\end{problem}
+\begin{solution}
+  The Turing machine with the instructions
+  \begin{align*}
+    q_1 1 R q_2\\
+    q_2 1 B q_3\\
+    q_3 B L q_4\\
+    q_4 1 B q_5\\
+    q_5 B R q_5\\
+    q_5 1 1 q_6\\
+    q_6 1 B q_7\\
+    q_7 B R q_6
+  \end{align*}
+  computes $Z(n)$.
+\end{solution}
+\section{4.4}%
+\begin{problem}
+  Write a Turing machine that computes $f\left(m,n\right) = \left\vert m-n \right\vert$.
+\end{problem}
+\begin{solution}
+  The Turing machine with the instructions
+  \begin{align*}
+    q_1 1 B q_2\\
+    q_2 B R q_3\\
+    q_3 1 R q_3\\
+    q_3 B R q_4\\
+    q_4 1 R q_5\\
+    q_5 1 R q_5\\
+    q_5 B L q_6\\
+    q_6 1 B q_7\\
+    q_7 B L q_8\\
+    q_8 1 L q_8\\
+    q_8 B L q_9\\
+    q_9 1 L q_9\\
+    q_9 B R q_1
+  \end{align*}
+  computes $f\left(m,n\right) = \left\vert m-n \right\vert$. In short, for an input tape
+  \begin{align*}
+    B,\underbrace{1,1,\dots,1}_{m+1},B,\underbrace{1,1,\dots,1}_{n+1},B
+  \end{align*}
+  the machine successively deletes the left-most $1$ on the tape denoting $m$ and deletes the right-most $1$ on the tape denoting $n$, until it reaches the end of one of the domain elements (since both $q_1$ and $q_4$ are not defined for blank inputs).
+\end{solution}
+\section{4.6}%
+\begin{problem}
+  Show that there is no Turing machine that can determine if a given Turing machine acting no a given input $m$ will yield an output that contains the symbol $s_k$ for a fixed $k\geq 1$.
+\end{problem}
+\section{Extra Problem 2}%
+\begin{problem}
+  Write a Turing machine that computes the function $f(n) = 0$ if $n$ is even and $f(n) = 1$ if $n$ is odd.
+\end{problem}
+\begin{solution}
+
+\end{solution}
+
+\end{document}

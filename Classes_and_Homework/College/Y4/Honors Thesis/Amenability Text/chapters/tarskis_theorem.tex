@@ -1,9 +1,9 @@
-Ultimately, the reason the Banach--Tarski paradox ``works'' is because the paradoxical group $F(a,b)$, lacks a property known as amenability. Readers may be surprised to hear that amenability and non-paradoxicality are distinct --- that is, a group is amenable if and only if it is non-paradoxical. This fact is formalized in Tarski's theorem.
+Ultimately, the reason the Banach--Tarski paradox ``works'' is because the paradoxical group $F(a,b)$, lacks a property known as amenability. Readers may be surprised to hear that amenability and non-paradoxicality are equivalent --- that is, a group is amenable if and only if it is non-paradoxical. This fact is formalized in Tarski's theorem.
 \begin{theorem}[Tarski's Theorem]\label{thm:tarski}
   Let $G$ be a group that acts on a set $X$, and let $E\subseteq X$ be nonempty. There is a finitely additive translation-invariant measure $\mu: P(X)\rightarrow [0,\infty]$ with $\mu(E)\in (0,\infty)$ if and only if $E$ is not $G$-paradoxical.
 \end{theorem}
-In fact, we can prove the converse now.
-\begin{proof}[of the Converse of Tarski's Theorem]
+In fact, we can prove one of the directions of Tarski's theorem now.
+\begin{proof}[of the Forward Direction of Tarski's Theorem]
   Let $E$ be $G$-paradoxical. Suppose toward contradiction that such a translation-invariant finitely additive $\nu$ existed with $\nu(E) \in (0,\infty)$.
 
   Let $A_1,\dots,A_n,B_1,\dots,B_m\subseteq E$ be pairwise disjoint, and let $t_1,\dots,t_n,s_1,\dots,f_m\in G$ such that
@@ -21,9 +21,9 @@ In fact, we can prove the converse now.
   \begin{align*}
     \nu(E) &= \sum_{j=1}^{m}\nu\left(B_j\right).
   \end{align*}
-  However, this yields
+  However, this also yields
   \begin{align*}
-    \nu\left(E\right) &= \nu\left(\left(\bigsqcup_{i=1}^{n}t_i\cdot A_i\right)\sqcup \left(\bigsqcup_{j=1}^{m}s_j\cdot B_j\right)\right)\\
+    \nu\left(E\right) &= \nu\left(\left(\bigsqcup_{i=1}^{n}A_i\right)\sqcup \left(\bigsqcup_{j=1}^{m}B_j\right)\right)\\
                       &= \sum_{i=1}^{n}\nu\left(A_i\right) + \sum_{j=1}^{m}\nu\left(B_j\right)\\
                       &= 2\nu(E),
   \end{align*}
@@ -31,7 +31,7 @@ In fact, we can prove the converse now.
 \end{proof}
 
 \section{A Little Bit of Graph Theory}%
-To prove the forward direction of Tarski's theorem, we need to develop some machinery from graph theory that will allow us to prove that a certain semigroup we will construct in the next section satisfies the cancellation identity.\newline
+To prove the reverse direction of Tarski's theorem, we need to develop some machinery from graph theory that will allow us to prove that a certain semigroup we will construct in the next section satisfies the cancellation identity.\newline
 
 We start by defining graphs and paths, before proving a special case of Hall's theorem, ultimately extending to the infinite case with König's theorem.
 \begin{definition}[Graphs and Paths]
@@ -156,7 +156,7 @@ These two formulations of the Hall condition are equivalent regarding an $X$-per
 \end{remark}
 
 We will use this infinite case of Hall's theorem to prove König's theorem. 
-\begin{theorem}[König's Theorem]
+\begin{theorem}[König's Theorem]\label{thm:konig}
   Let $\left(X,Y,E,\phi\right)$ be a $k$-regular bipartite graph (not necessarily finite). Then, there is a perfect matching of $X$ and $Y$.
 \end{theorem}
 \begin{proof}
@@ -168,3 +168,192 @@ We will use this infinite case of Hall's theorem to prove König's theorem.
 
   Consider the subgraph $\left(X,Y,F\cup G,\phi|_{F\cup G}\right)$. The injections $f$ and $g$ still hold in this graph. By the Cantor--Schröder--Bernstein theorem, there is a bijection $h: X\rightarrow Y$ in $\left(X,Y,F\cup G,\phi|_{F\cup G}\right)$.
 \end{proof}
+\section{Type Semigroups}%
+\begin{definition}
+  Let $G$ be a group that acts on a set $X$.
+  \begin{enumerate}[(i)]
+    \item We define $X^{\ast} = X\times \N_0$, and
+      \begin{align*}
+        G^{\ast} &= \set{\left(g,\pi\right)\mid g\in G,\pi\in\sym\left(\N_0\right)}.
+      \end{align*}
+    \item If $A\subseteq X^{\ast}$, the values of $n$ for which there is an element of $A$ whose second coordinate is $n$ are called the \textbf{levels} of $A$.
+  \end{enumerate}
+\end{definition}
+\begin{fact}\label{fact:type_semigroup_equidecomposability}
+  If $E_1,E_2\subseteq X$, then $E_{1}\sim_{G}E_2$ if and only if $E_1\times \set{n}\sim_{G^{\ast}}E_{2}\times \set{m}$ for all $m,n\in \N_{0}$
+\end{fact}
+\begin{proof}[of Fact \ref{fact:type_semigroup_equidecomposability}]
+  Let $E_{1}\sim_{G}E_2$. Then, there exist pairwise disjoint $A_1,\dots,A_n\subset E_1$, pairwise disjoint $B_1,\dots,B_n\subset E_2$, and elements $g_1,\dots,g_n\in G$ such that $g_i\cdot A_i = B_i$. We select the permutation $\pi_{i}\in \sym\left(\N_0\right)$ such that $\pi_{i}(n) = m$ and $\pi_i(m) = n$ for each $i$. Then,
+  \begin{align*}
+    \left(g_i,\pi_i\right)\cdot \left(A_{i}\cdot \set{n}\right) &= B_{i}\cdot \set{m}.
+  \end{align*}
+
+  Similarly, if $E_{1}\times \set{n} \sim_{G^{\ast}}E_2\times \set{m}$, then of the pairwise disjoint subsets
+  \begin{align*}
+    A_1\times \set{n},\dots,A_n\times \set{n}\subset E_1\times \set{n}
+  \end{align*}
+  and
+  \begin{align*}
+    B_1\times\set{m},\dots,B_n\times\set{m}\subset E_2\times \set{m},
+  \end{align*}
+  we set $A_1,\dots,A_n\subset E_1$ and $B_1,\dots,B_n\subset E_2$. Similarly, for
+  \begin{align*}
+    \left(g_1,\pi_1\right),\dots,\left(g_n,\pi_n\right)\in G^{\ast}
+    \intertext{such that}
+    \left(g_i,\pi_i\right)\cdot A_i\times \set{n} = B_i\times\set{m},
+  \end{align*}
+  we select $g_1,\dots,g_n\in G$. Then, by definition,
+  \begin{align*}
+    g_i\cdot A_i = B_i
+  \end{align*}
+  for each $i$. Thus, $E_1\sim_{G}E_2$.
+\end{proof}
+
+\begin{definition}\ref{def:type_semigroup}
+  Let $G$ be a group that acts on $X$, and let $G^{\ast}$, $X^{\ast}$ be defined as above.
+  \begin{enumerate}[(i)]
+    \item A set $A\subseteq X^{\ast}$ is said to be \textbf{bounded} if it has finitely many levels.
+    \item If $A\subseteq X^{\ast}$ is bounded, the equivalence class of $A$ with respect to $G^{\ast}$-equidecomposability is called the \textbf{type} of $A$, which is denoted $\left[A\right]$.
+    \item If $E\subseteq X$, we write $\left[E\right] = \left[E\times \set{0}\right]$.
+    \item Let $A,B\subseteq X^{\ast}$ be bounded with $k\in \N_{0}$ such that for
+      \begin{align*}
+        B' := \set{\left(b,n+k\right)\mid \left(b,n\right)\in B},
+      \end{align*}
+      we have $B'\cap A = \emptyset$. Then, $\left[A\right] + \left[B\right] = \left[A\sqcup B'\right]$. Note that $\left[B'\right] = \left[B\right]$.
+    \item We define
+      \begin{align*}
+        \mathcal{S} &= \set{\left[A\right]\mid A\subseteq X^{\ast}\text{ bounded}}
+      \end{align*}
+      under the addition defined in (iv) to be the \textbf{type semigroup} of the action of $G$ on $X$.
+  \end{enumerate}
+\end{definition}
+
+\begin{fact}\label{fact:type_semigroup_well_defined}
+  Addition is well-defined in $\left(\mathcal{S},+\right)$, and $\left(\mathcal{S},+\right)$ is a well-defined commutative semigroup with identity $\left[\emptyset\right]$.
+\end{fact}
+\begin{proof}[of Fact \ref{fact:type_semigroup_well_defined}]
+  To show that addition is well-defined, we let $\left[A_1\right] = \left[A_2\right]$, and $\left[B_1\right] = \left[B_2\right]$. Without loss of generality, $A_1\cap B_1 = \emptyset$ and $A_2\cap B_2 = \emptyset$.\newline
+
+  By the definition of the type, $A_1\sim_{G^{\ast}}A_2$ and $B_1\sim_{G^{\ast}}B_2$, meaning
+  \begin{align*}
+    A_1\sqcup B_1\sim_{G^{\ast}} A_2\sqcup B_2,
+  \end{align*}
+  so
+  \begin{align*}
+    \left[A_1\right] + \left[B_1\right] &= \left[A_1\sqcup B_1\right]\\
+                                        &= \left[A_2\sqcup B_2\right]\\
+                                        &= \left[A_2\right] + \left[A_2\right],
+  \end{align*}
+  meaning addition is well-defined.\newline
+
+  Since addition is well-defined, and $A\sqcup B = B\sqcup A$, we can see that addition is also commutative. We also have
+  \begin{align*}
+    \left[A\right] + \left[\emptyset\right] &= \left[A\sqcup \emptyset\right]\\
+                                            &= \left[A\right],
+  \end{align*}
+  so $\left[\emptyset\right]$ is the identity on $\mathcal{S}$.\newline
+
+  Finally, since for any $\left[A\right],\left[B\right]\in \mathcal{S}$, $A$ and $B$ have finitely many levels, it is the case that $A\cup B$ has finitely many levels for any $A$ and $B$, so $\left[A\right] + \left[B\right] \in \mathcal{S}$. 
+\end{proof}
+
+\begin{definition}
+  For any commutative semigroup $\mathcal{S}$ with $\alpha \in S$ and $n\in \N$, we define
+  \begin{align*}
+    n\alpha := \underbrace{\alpha + \cdots + \alpha}_{\text{$n$ times}}
+  \end{align*}
+\end{definition}
+\begin{definition}
+  For $\alpha,\beta \in \mathcal{S}$, if there exists $\gamma \in \mathcal{S}$ such that $\alpha + \gamma = \beta$, we write $\alpha \leq \beta$.
+\end{definition}
+\begin{fact}\label{fact:type_semigroup_paradoxicality}
+  If $G$ is a group acting on $X$ with corresponding type semigroup $\mathcal{S}$, then the following are true.
+  \begin{enumerate}[(i)]
+    \item If $\alpha,\beta\in \mathcal{S}$ with $\alpha \leq \beta$ and $\beta \leq \alpha$, then $\alpha = \beta$.
+    \item A set $E\subseteq X$ is $G$-paradoxical if and only if $\left[E\right] = 2\left[E\right]$.
+  \end{enumerate}
+\end{fact}
+\begin{proof}[of Fact \ref{fact:type_semigroup_paradoxicality}]
+  Let $G$ act on $X$, and let $\mathcal{S}$ be the corresponding type semigroup.
+  \begin{enumerate}[(i)]
+    \item If $\left[A\right]\leq \left[B\right]$, then there exists $C_1\in \mathcal{S}$ such that $\left[A\right] + \left[C_1\right] = \left[B\right]$. Without loss of generality, $C_1\cap A= \emptyset$, meaning $\left[B\right] = \left[A\sqcup C_1\right]$. Thus, $A\sqcup C_1 \sim_{G^{\ast}} B$, meaning $B\preceq_{G^{\ast}}A$.\newline
+
+      Similarly, if $\left[B\right]\leq \left[A\right]$, then $B\preceq_{G^{\ast}}A$. By Theorem \ref{thm:csb_for_equidecomposability}, it is thus the case that $A\sim_{G^{\ast}}B$.
+    \item Let $E$ be $G$-paradoxical. Then, $E\sim_{G}\bigsqcup_{i=1}^{n}A_i$ and $E\sim_{G}\bigsqcup_{j=1}^{m}B_j$ for some disjoint subsets $A_1,\dots,A_n,B_1,\dots,B_m\subset E$. Thus, we have
+      \begin{align*}
+        \left[E\right] &= \left[\left(\bigsqcup_{i=1}^{n}A_i\right)\sqcup \left(\bigsqcup_{j=1}^{m}B_j\right)\right]\\
+                       &= \left[\bigsqcup_{i=1}^{n}A_i\right] + \left[\bigsqcup_{j=1}^{m}B_j\right]\\
+                       &= 2\left[E\right].
+      \end{align*}
+      Similarly, if $\left[E\right] = 2\left[E\right]$, then there exist $A$ and $B$ such that
+      \begin{align*}
+        \left[E\right] &= \left[A\right] + \left[B\right]\\
+                       &= \left[A\sqcup B\right],
+      \end{align*}
+      meaning $A$ and $B$ are each $G$-equidecomposable with $E$, so $E$ is $G$-paradoxical.
+  \end{enumerate}
+\end{proof}
+We can now prove the cancellation identity, which we will be useful as we construct our desired finitely additive measure.
+\begin{theorem}[Cancellation Identity on $\mathcal{S}$]
+  Let $\mathcal{S}$ be the type semigroup for some group action, and let $\alpha,\beta\in \mathcal{S}$, $n\in \N$ such that $n\alpha = n\beta$. Then, $\alpha = \beta$.
+\end{theorem}
+\begin{proof}
+  Let $n\alpha = n\beta$. Then, there are two disjoint bounded subsets $E,E'\subseteq X^{\ast}$ with $E\sim_{G^{\ast}}E'$, and pairwise disjoint subsets $A_1,\dots,A_n\subseteq E$, $B_1,\dots,B_n\subseteq E'$ such that
+  \begin{itemize}
+    \item $E = A_1\cup\cdots\cup A_n$, $E' = B_1\cup\cdots\cup B_n$
+    \item $\left\vert A_j \right\vert = \alpha$ and $\left[B_j\right] = \beta$ for each $j=1,\dots,n$.
+  \end{itemize}
+  Let $\chi: E\rightarrow E'$ be a bijection as in Fact \ref{fact:bijections}, with $\phi_j: A_1\rightarrow A_j$, $\psi_j: B_1\rightarrow B_j$ also being bijections as in Fact \ref{fact:bijections}; here we define $\phi_1$ and $\psi_1$ to be the identity map.\newline
+
+  For each $a\in A_1$ and $b\in B_1$, we define
+  \begin{align*}
+    \overline{a} &= \set{a,\phi_2(a),\dots,\phi_n(a)}\\
+    \overline{b} &= \set{b,\psi_2(b),\dots,\psi_n(b)}.
+  \end{align*}
+  We construct a graph by letting $X = \set{\overline{a}\mid a\in A_1}$ and $Y = \set{\overline{b}\mid b\in B_1}$, and, for each $j$, define edges $\set{\overline{a},\overline{b}}$ if $\chi\left(\phi_j(a)\right)\in \overline{b}$.\newline
+
+  Since $\chi$ is a bijection, for each $j=1,\dots,n$, $\chi\left(\phi_j(a)\right)$ must be an element of $B_k$ for some $k$, and since $\set{B_k}_{k=1}^{n}$ are disjoint, $\chi\left(\phi_j(a)\right)$ is an element of exactly one $B_k$. Thus, the graph is $n$-regular.\newline
+
+  By König's Theorem (Theorem \ref{thm:konig}), this graph has a perfect matching $F$. As a result, for each $\overline{a}\in X$, there is a unique $\overline{b}\in Y$ and a unique edge $\set{\overline{a},\overline{b}}\in F$ such that $\chi\left(\phi_j(a)\right) = \psi_k(b)$ for some $j,k\in \set{1,\dots,n}$.\newline
+
+  We define
+  \begin{align*}
+    C_{j,k} &= \set{a\in A_1\mid \set{\overline{a},\overline{b}}\in F,~\chi\left(\phi_j(a)\right) = \psi_k(b)}\\
+    D_{j,k} &= \set{b\in B_1\mid \set{\overline{a},\overline{b}}\in F,~\chi\left(\phi_j(a)\right) = \psi_k(b)}.
+  \end{align*}
+  Therefore, we must have $\psi_{k}^{-1}\circ \chi\circ \phi_j$ is a bijection from $C_{j,k}$ to $D_{j,k}$, so $C_{j,k}\sim_{G^{\ast}}D_{j,k}$.\newline
+
+  Since $C_{j,k}$ and $D_{j,k}$ are partitions of $A_1$ and $B_1$ respectively, it follows that $A_1\sim_{G^{\ast}}B_1$, so $\alpha = \beta$.
+\end{proof}
+\begin{corollary}\label{corollary:paradoxical_elements}
+  Let $\mathcal{S}$ be the type semigroup of some group action, and let $\alpha\in \mathcal{S}$ and $n\in \N$ such that $\left(n+1\right)\alpha \leq n\alpha$. Then, $\alpha = 2\alpha$.
+\end{corollary}
+\begin{proof}
+  We have
+  \begin{align*}
+    2\alpha + n\alpha &= \left(n+1\right)\alpha + \alpha\\
+                      &\leq n\alpha + \alpha\\
+                      &= \left(n+1\right)\alpha\\
+                      &\leq n\alpha.
+  \end{align*}
+  Inductively repeating this argument, we get $n\alpha \geq 2n\alpha$; since $n\alpha \leq 2n\alpha$ by definition, we must have $n\alpha = 2n\alpha$, so $\alpha = 2\alpha$.
+\end{proof}
+\begin{remark}
+  We will call such an $\alpha$ a paradoxical element.
+\end{remark}
+Now that we are aware of paradoxical elements and the relationship between $G$-paradoxicality and the properties of the type (Fact \ref{fact:type_semigroup_paradoxicality}), we will now relate these properties to finitely additive measures of sets by using the following lemma.
+\begin{lemma}
+  Let $\mathcal{S}$ be a commutative semigroup, with $\mathcal{S}_0\subseteq \mathcal{S}$ finite, and $\epsilon\in \mathcal{S}_0$ satisfying the following assumptions:
+  \begin{enumerate}[(a)]
+    \item $\left(n+1\right)\epsilon \nleq n\epsilon$ for all $n\in \N$ (i.e., that $\epsilon$ is non-paradoxical);
+    \item for each $\alpha\in \mathcal{S}$, there is $n\in \N$ such that $\alpha \leq n\epsilon$.
+  \end{enumerate}
+  Then, there is a set function $\nu: \mathcal{S}_0\rightarrow [0,\infty]$ that satisfies the following conditions:
+  \begin{enumerate}[(i)]
+    \item $\nu\left(\epsilon\right) = 1$;
+    \item for $\alpha_1,\dots,\alpha_n,\beta_1,\dots,\beta_m\in \mathcal{S}_0$ with $\alpha_1+\cdots+\alpha_n\leq \beta_1+\cdots\beta_m$,
+      \begin{align*}
+        \sum_{j=1}^{n}\nu\left(\alpha_j\right) \leq \sum_{j=1}^{m}\nu\left(\beta_j\right).
+      \end{align*}
+  \end{enumerate}
+\end{lemma}
+

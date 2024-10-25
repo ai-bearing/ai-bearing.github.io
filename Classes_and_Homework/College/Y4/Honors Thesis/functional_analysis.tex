@@ -9,9 +9,7 @@
 \usepackage{newpxtext,eulerpx}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \renewcommand*{\hbar}{\hslash}
-\DeclareMathOperator{\Graph}{graph}
-\DeclareMathOperator{\supp}{supp}
-\DeclareMathOperator{\Bil}{Bil}
+\newcommand{\K}{\mathbb{K}}
 
 \pagestyle{fancy} %better headers
 \fancyhf{}
@@ -2186,7 +2184,77 @@ Now, we can associate bounded linear functionals with regular measures.
       \end{align*}
   \end{enumerate}
 \end{theorem}
-The following proof is adapted from Folland's \textit{Real Analysis}.
+The following proof is adapted from Folland's \textit{Real Analysis}. In order to provide a complete proof of the Riesz Representation theorem, we need some previously established theorems and lemmas.
+\begin{lemma}
+  Let $A$ and $B$ be disjoint subsets of a normal space $X$.\footnote{A normal space is a space where, if $A$ and $B$ are disjoint closed subsets, then there exist disjoint open subsets $U$ and $V$ such that $A\subseteq U$ and $B\subseteq V$.} Let $\Delta = \set{k2^{-n}\mid n\geq 1, 0 < k < 2^n}$ be the set of dyadic rationals in $\left(0,1\right)$.\newline
+
+  There is a family $\set{U_r\mid r\in \Delta}$ of open sets in $X$ such that $A\subseteq U_r\subset B^{c}$ for all $r\in \Delta$, and $\overline{U_r}\subset U_s$ for $r < s$.
+\end{lemma}
+\begin{proof}
+  Since $X$ is normal, there exist disjoint open sets $V$ and $W$ such that $A\subset V$ and $B\subset W$.\newline
+
+  Let $U_{1/2} = V$. Since $W^{c}$ is closed, it is the case that
+  \begin{align*}
+    A\subset U_{1/2}\subset \overline{U_{1/2}}\subset W^{c}\subset B^{c}.
+  \end{align*}
+  We select $U_{r}$ for $r = k2^{-n}$ by inducting on $n$.\newline
+
+  Suppose we have chosen $U_r$ for $r = k2^{-n}$ for $0 < k < 2^{n}$ and $n\leq N-1$. To find $U_r$ for $r = \left(2j+1\right)2^{-N}$ (where $0\leq j \leq 2^{N-1}$), we see that
+  \begin{align*}
+    \overline{U_{j2^{1-N}}}\cap \left(U_{\left(j+1\right)2^{1-N}}\right)^c = \emptyset,
+  \end{align*}
+  where we have defined $\overline{U_0}= A$ and $U_1^c = B$. So, we can select $U_{r}$ such that
+  \begin{align*}
+    A\subset \overline{U_{j2^{1-N}}}\subset U_r \subset \overline{U_r} \subset U_{\left(j+1\right)2^{1-N}}\subset B^{c}.
+  \end{align*}
+\end{proof}
+\begin{theorem}[Urysohn's Lemma]
+  Let $X$ be a normal space. Then, if $A$ and $B$ are disjoint closed sets in $X$, there exists $f\in C\left(X,[0,1]\right)$ such that $f(A) = 0$ and $f(B) = 1$.
+\end{theorem}
+\begin{proof}
+  Let $U_r$ be defined by the previous lemma for $r\in \Delta$. Set $U_1 = X$.\newline
+
+  For $x\in X$, define $f(x) = \inf\set{r\mid x\in U_r}$. Since $A\subset U_r \subset B^{c}$ for $0 < r < 1$, we have $f(x) = 0$ for $x\in A$ and $f(x) = 1$ for $x\in B$, and $0 \leq f(x) \leq 1$ for all $x\in X$.\newline
+
+  Now, we need to show that $f$ is continuous. \newline
+
+  We can see that $f(x) < \alpha$ if and only if $x\in U_{r}$ for some $r < \alpha$, which happens if and only if $x\in \bigcup_{r < \alpha}U_r$. Thus, $f^{-1}\left(\left(-\infty,\alpha\right)\right) = \bigcup_{r < \alpha}U_r$.\newline
+
+  Additionally, $f(x) > \alpha$ if and only if $x\notin U_r$ for some $r > \alpha$, which happens if and only if $x\notin \overline{U_s}$ for some $s > \alpha$, thus $x\in \bigcup_{s > \alpha}\left(\overline{U}_{s}\right)^c$, meaning $f^{-1}\left(\left(\alpha,\infty\right)\right) = \bigcup_{s > \alpha}\left(\overline{U_s}\right)^c$ is open.\newline
+
+  Since the open half lines generate the topology on $\R$, we have $f$ is continuous.
+\end{proof}
+\begin{proposition}
+  Let $X$ be a locally compact Hausdorff space, and $K\subset U\subset X$, where $K$ is compact, and $U$ is open. Then, there exists an open set $V$ with compact closure such that $K\subset V\subset \overline{V}\subset U$.
+\end{proposition}
+\begin{proof}
+  Since $X$ is locally compact, we can choose a compact neighborhood $N_x$ for each $x\in K$ with $N_x\subset U$. Then
+  \begin{align*}
+    K\subset \bigcup_{x\in K}N_x^{\circ}
+  \end{align*}
+  is an open cover of $K$. Let $\set{N_{x_i}}_{i=1}^{n}$ be a finite subcover, and let $V = \bigcup_{i=1}^{n}N_{x_i}^{\circ}$. Then, $K\subset V$, and $\overline{V} = \bigcup_{i=1}^{n}N_{x_i}$ is compact and contained in $U$.
+\end{proof}
+\begin{theorem}[Urysohn's Lemma for Locally Compact Hausdorff Spaces]
+  Let $X$ be a locally compact Hausdorff space, and $K\subset U\subset X$ with $K$ compact and $U$ open. Then, there exists $f\in C_c\left(X,[0,1]\right)$ such that $f = 1$ on $K$ and $\supp(f) \subset U$.
+\end{theorem}
+\begin{proof}
+  Let $V$ be open such that $K\subset V\subset \overline{V}\subset U$. Then, $\overline{V}$ is normal, so there exists $f\in C\left(\overline{V},[0,1]\right)$ such that $f = 1$ on $K$ and $f = 0$ on $\partial V$, as $\partial V \subset \overline{V}$ is closed and $\partial V \cap K = \emptyset$. We extend $f$ to $X$ by setting $f = 0$ on $\overline{V}^{c}$.\newline
+
+  Let $E\subseteq [0,1]$ be closed. If $0\notin E$, then $f^{-1}\left(E\right) = \left(f|_{\overline{V}}\right)^{-1}\left(E\right)$, and if $0\in E$, then $f^{-1}\left(E\right) = \left(f|_{\overline{V}}\right)^{-1}\left(E\right) \cup V^c$, as $\partial V\subseteq \left(f|_{\overline{V}}\right)^{-1}\left(E\right)$. Thus, $f^{-1}\left(E\right)$ is closed, so $f$ is continuous.
+\end{proof}
+\begin{proposition}[Partition of Unity]
+    If $K$ is a compact set in a locally compact Hausdorff space $\Omega$ with an open cover $\set{U_j}_{j=1}^{n}$, then there is a partition of unity\footnote{A collection of functions in $C\left(X,[0,1]\right)$ such that their sum is $1$ on $E$ and every neighborhood has only finitely many nonzero functions.} on $K$ consisting of compactly supported functions $g_j$ such that $\supp\left(g_j\right)\subseteq U_j$.
+\end{proposition}
+\begin{proof}
+  For each $x\in K$, there is a compact neighborhood $N_x$ such that $N_x\subseteq U_j$ for some $j$. The set $\set{N_x^{\circ}\mid x\in K}$ is an open cover of $K$, meaning there exist $x_1,\dots,x_m$ such that $K\subseteq \bigcup_{k=1}^{m}N_{x_k}$.\newline
+
+  Let $F_j$ be the union of the set of $N_{x_k}$ that are a subset of $U_j$. Then, $F_j\subseteq U_j$ is compact, so by Urysohn's lemma, there are $g_1,\dots,g_n\in C_c\left(\Omega\right)$ such that $g_j = 1$ on $F_j$ and $\supp\left(g_j\right) \subseteq U_j$.\newline
+
+  Since $F_j$ covers $K$, it is the case that $\sum_{k=1}^{n}g_k \geq 1$ on $K$. By Urysohn's Lemma, there $f\in C_c\left(\Omega,[0,1]\right)$ such that $f = 1$ on $K$ and $\supp(f) \subseteq \set{x\mid \sum_{k=1}^{n}g_k(x) > 0}$.\newline
+
+  Define $g_{n+1} = 1 - f$, meaning $\sum_{k=1}^{n+1}g_{k} > 0$ everywhere. For $j = 1,\dots,n$, let $h_j = \frac{g_j}{\sum_{k=1}^{n+1}g_k}$. Then, $\supp\left(h_j\right) = \supp\left(g_j\right)$, $\supp\left(h_j\right) \subseteq U_j$, and $\sum_{j=1}^{n}h_j = 1$ on $K$.
+\end{proof}
+With these results in mind, we can now begin the proof of the Riesz Representation theorem.
 \begin{notation}
   For an open set $U$, we let $f\prec U$ denote $f\in C_c\left(\Omega,[0,1]\right)$ and $\supp(f) \subset U$.
 \end{notation}
@@ -2214,20 +2282,9 @@ The following proof is adapted from Folland's \textit{Real Analysis}.
   \end{align*}
   defines an outer measure.\newline
 
-  Let $U = \bigcup_{j=1}^{\infty}U_j$ and $f\in C_c\left(\Omega\right)$ with $f\prec U$. Let $K = \supp\left(f\right)$. Since $K$ is compact, $K\subseteq \bigcup_{i=1}^{n}U_i$ for some $n$.
-  \begin{proposition}
-    If $K$ is a compact set in a locally compact Hausdorff space $\Omega$ with an open cover $\set{U_j}_{j=1}^{n}$, then there is a partition of unity\footnote{A collection of functions in $C\left(X,[0,1]\right)$ such that their sum is $1$ on $E$ and every neighborhood has only finitely many nonzero functions.} on $K$ consisting of compactly supported functions $g_j$ such that $\supp\left(g_j\right)\subseteq U_j$.
-  \end{proposition}
-  \begin{proof}
-    For each $x\in K$, there is a compact neighborhood $N_x$ such that $N_x\subseteq U_j$ for some $j$. The set $\set{N_x^{\circ}\mid x\in K}$ is an open cover of $K$, meaning there exist $x_1,\dots,x_m$ such that $K\subseteq \bigcup_{k=1}^{m}N_{x_k}$.\newline
+  Let $U = \bigcup_{j=1}^{\infty}U_j$ and $f\in C_c\left(\Omega\right)$ with $f\prec U$. Let $K = \supp\left(f\right)$. Since $K$ is compact, $K\subseteq \bigcup_{i=1}^{n}U_i$ for some $n$.\newline
 
-    Let $F_j$ be the union of the set of $N_{x_k}$ that are a subset of $U_j$. Then, $F_j\subseteq U_j$ is compact, so by Urysohn's lemma, there are $g_1,\dots,g_n\in C_c\left(\Omega\right)$ such that $g_j = 1$ on $F_j$ and $\supp\left(g_j\right) \subseteq U_j$.\newline
-
-    Since $F_j$ covers $K$, it is the case that $\sum_{k=1}^{n}g_k \geq 1$ on $K$. By Urysohn's Lemma, there $f\in C_c\left(\Omega,[0,1]\right)$ such that $f = 1$ on $K$ and $\supp(f) \subseteq \set{x\mid \sum_{k=1}^{n}g_k(x) > 0}$.\newline
-
-    Define $g_{n+1} = 1 - f$, meaning $\sum_{k=1}^{n+1}g_{k} > 0$ everywhere. For $j = 1,\dots,n$, let $h_j = \frac{g_j}{\sum_{k=1}^{n+1}g_k}$. Then, $\supp\left(h_j\right) = \supp\left(g_j\right)$, $\supp\left(h_j\right) \subseteq U_j$, and $\sum_{j=1}^{n}h_j = 1$ on $K$.
-  \end{proof}
-  With this proposition, we can construct $g_i \prec U_i$ with $\sum_{i=1}^{n}g_j = 1$ on $K$. Then, $f = \sum_{i=1}^{n}fg_i$, with $fg_i\prec U_i$. Thus,
+  By the partition of unity proposition, we can construct $g_i \prec U_i$ with $\sum_{i=1}^{n}g_j = 1$ on $K$. Then, $f = \sum_{i=1}^{n}fg_i$, with $fg_i\prec U_i$. Thus,
   \begin{align*}
     \varphi(f) &= \sum_{i=1}^{n}\varphi\left(fg_i\right)\\
                &\leq \sum_{i=1}^{n}\mu\!\left(U_i\right)\\
@@ -2862,14 +2919,14 @@ Now, we can look at the dual of a quotient space.
   \end{align*}
   For the converse, assuming $X^{\ast}$ is reflexive, we have shown that $X^{\ast\ast}$ is reflexive. However, since $\iota_X\left(X\right) \subseteq X^{\ast\ast}$, it is the case that $X$ is reflexive.
 \end{proof}
-\subsection{Tensor Products of Banach Spaces}%
+\subsection{Tensor Products in Vector Spaces}%
 In order to understand tensor products and their norms in the case of Banach spaces, we begin by examining tensor products and linear functionals over general vector spaces.
 \begin{definition}[Bilinear Map]
   Let $X,Y,Z$ be vector spaces.\newline
 
 A map $b: X\times Y \rightarrow Z$ is bilinear if for all $x\in X$ and $y\in Y$, $b\left(x,\cdot\right): Y\rightarrow Z$ and $b\left(\cdot,y\right):X\rightarrow Z$ are linear.\newline
 
-We write $\Bil(X,Y,Z)$ to denote the collection of all bilinear maps with domain $X\times Y$ and codomain $Z$.
+We write $\Bil(X,Y;Z)$ to denote the collection of all bilinear maps with domain $X\times Y$ and codomain $Z$.
 \end{definition}
 \begin{definition}[Tensor Product]
   Let $X$ and $Y$ be $\F$-vector spaces. A tensor product of $X$ and $Y$ is a pair $\left(V,b\right)$ where $V$ is a $\F$-vector space and $b: X\times Y\rightarrow V$ is a bilinear map satisfying the universal property where, for any vector space $Z$ and any bilinear map $\beta: X\times Y\rightarrow Z$, there is a unique linear map $T_{\beta}$ such that $T_{\beta}\circ b = \beta$.\newline
@@ -2914,5 +2971,474 @@ Let $N = \Span\left(E_1\cup E_2\cup E_3\cup E_4\right)$, where we define
   E_{3} &:= \set{\delta_{\left(\alpha x,y\right)} - \alpha \delta_{\left(x,y\right)}\mid x\in X,y\in Y,\alpha\in \F}\\
   E_{4} &:= \set{\delta_{\left(x,\alpha y\right)} - \alpha \delta_{\left(x,y\right)}\mid x\in X,y\in Y,\alpha\in \F}.
 \end{align*}
-We define the tensor product of $X$ and $Y$ as $X\otimes Y = \F\left(X\times Y\right)/N$.\footnote{The construction of $N$ essentially ``mods out'' all the expected relations between inputs of a bilinear map. For instance, $b\left(x_1 + x_2,y\right) = b\left(x_1,y\right) + b\left(x_2,y\right)$.}
+We define the tensor product of $X$ and $Y$ as $X\otimes Y = \F\left(X\times Y\right)/N$.\footnote{The construction of $N$ essentially ``mods out'' all the expected relations between inputs of a bilinear map. For instance, $b\left(x_1 + x_2,y\right) = b\left(x_1,y\right) + b\left(x_2,y\right)$.} Elementary tensors are of the form $x\otimes y = \delta_{\left(x,y\right)} + N$. The following are some equivalences over $\otimes$ that follow our definition of the tensor product.
+\begin{lemma}
+  Let $X,Y$ be $\F$-vector spaces. Then, for $x,x_1,x_2\in X$, $y,y_1,y_2\in Y$, and $\alpha\in \F$, we have
+  \begin{itemize}
+    \item $\displaystyle \alpha\left(x\otimes y\right) = \alpha x\otimes y = x\otimes \alpha y$;
+    \item $\displaystyle \left(x_1 + x_2\right)\otimes y = x_1\otimes y + x_2\otimes y$;
+    \item $x\otimes \left(y_1 + y_2\right) = x\otimes y_1 + x\otimes y_2$.
+  \end{itemize}
+\end{lemma}
+The natural map $b: X\times Y\rightarrow X\otimes Y$ defined by $b\left(x,y\right) = x\otimes y$ is, as a result, bilinear. Additionally, $0_{X\otimes Y} = 0_{X}\otimes y = x\otimes 0_{Y}$ for any $x,y$.
+\begin{proposition}[Existence of Tensor Product]
+  Let $X,Y$ be $\F$-vector spaces, and $X\otimes Y$ be defined as above. Let $b: X\times Y\rightarrow X\otimes Y$ also be defined as above. Then, the pair $\left(X\otimes Y, b\right)$ is a tensor product.
+\end{proposition}
+\begin{proof}
+  We need to show the universal property. Let $Z$ be a space, and suppose $\beta: X\times Y \rightarrow Z$ is a bilinear map.\newline
+
+  By the universal property of the free vector space, there is a unique linear map $\overline{\beta:} \F\left(X\times Y\right)\rightarrow Z$ satisfying $\overline{\beta}\left(\delta_{\left(x,y\right)}\right) = \beta\left(x,y\right)$.\newline
+
+  Note that, for $x_1,x_2\in X$ and $y\in Y$, we have
+  \begin{align*}
+    \overline{\beta}\left(\delta_{\left(x_1+x_2,y\right)} - \delta_{\left(x_1,y\right)} - \delta_{\left(x_2,y\right)}\right) &= \overline{\beta}\left(\delta_{\left(x_1+x_2,y\right)}\right) - \overline{\beta}\left(\delta_{\left(x_1,y\right)}\right) - \overline{\beta}\left(\delta_{\left(x_2,y\right)}\right)\\
+                                                                                                                             &= \beta\left(x_1 + x_2,y\right) - \beta\left(x_1,y\right) - \beta\left(x_2,y\right)\\
+                                                                                                                             &= \beta\left(x_1,y\right) + \beta\left(x_2,y\right) - \beta\left(x_1,y\right) - \beta\left(x_2,y\right)\\
+                                                                                                                             &= 0
+  \end{align*}
+  Similarly, this means $\overline{\beta}$ sends $E_1\cup E_2\cup E_3 \cup E_4$ to $0$, meaning $\overline{\beta}$ send $N$ to $0$.\newline
+
+  By the First Isomorphism Theorem, there is a unique linear map $T_{\beta}: \F\left(X\times Y\right)/N\rightarrow Z$ satisfying $T_{\beta}\circ \pi = \overline{\beta}$, where $\pi$ is the canonical quotient map.\newline
+
+  Thus, we have
+  \begin{align*}
+    T_{\beta}\circ b\left(x,y\right) &= T_{\beta}\left(x\otimes y\right)\\
+                                     &= T_{\beta}\circ \pi\left(\delta_{\left(x,y\right)}\right)\\
+                                     &= \overline{\beta}\left(\delta_{\left(x,y\right)}\right)\\
+                                     &= \beta\left(x,y\right).
+  \end{align*}
+  The uniqueness of $T_{\beta}$ follows from the fact that $X\otimes Y$ is spanned by elementary tensors.
+\end{proof}
+We can now turn our attention to tensor products of linear operators and linear functionals.
+\begin{proposition}
+  Let $X,Y,V,W$ be vector spaces over $\F$.
+  \begin{enumerate}[(1)]
+    \item If $T\in \mathcal{L}\left(X,V\right)$ and $S\in \mathcal{L}\left(Y,W\right)$, there is a unique linear map
+      \begin{align*}
+        T\overline{\otimes}S : X\otimes Y \rightarrow V\otimes W
+      \end{align*}
+      satisfying $T\overline{\otimes}S\left(x\otimes y\right) = T\left(x\right)\otimes S\left(y\right)$ for all $x\in X$ and $y\in Y$.
+    \item For every $\varphi\in X'$ and $\psi\in Y'$, there is a linear map $\varphi\times \psi\in \left(X\otimes Y\right)'$ satisfying $\left(\varphi\times \psi\right)\left(x\otimes y\right) = \varphi(x)\psi(y)$ for all $x\in X$ and $y\in Y$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item The map $X\times Y\rightarrow V\otimes W$ given by $\left(x,y\right)\mapsto T(x)\otimes S(y)$ is a bilinear map. Thus, by the universal property, there is a unique linear map $T\overline{\otimes}S: X\otimes Y\rightarrow V\otimes W$ satisfying the required condition.
+    \item The map $X\times Y\rightarrow \F$ given by $\left(x,y\right)\mapsto \varphi(x)\psi(f)$ is bilinear, meaning the universal property gives a map $\varphi\times\psi: X\otimes Y\rightarrow \F$.
+  \end{enumerate}
+\end{proof}
+\begin{proposition}
+  Let $X$ and $Y$ be vector spaces over $\F$. If $\set{x_1,\dots,x_n}$ is linearly independent and
+  \begin{align*}
+    \sum_{j=1}^{n}x_j\otimes y_j = 0,
+  \end{align*}
+  then $y_j = 0$ for all $j$.
+\end{proposition}
+\begin{proof}
+  For every $\varphi\in X'$ and $\psi\in Y'$, we have
+  \begin{align*}
+    0 &= \left(\varphi\times\psi\right)\left(\sum_{j=1}^{n}x_j\otimes y_j\right)\\
+      &= \sum_{j=1}^{n}\varphi\left(x_j\right)\psi\left(y_j\right)\\
+      &= \sum_{j=1}^{n}\varphi\left(\psi\left(y_j\right)x_j\right)\\
+      &= \varphi\left(\sum_{j=1}^{n}\psi\left(y_j\right)x_j\right),
+  \end{align*}
+  meaning $\sum_{j=1}^{n}\psi\left(y_j\right)x_j = 0$. Since $x_j$ are linearly independent, $\psi\left(y_j\right) = 0$ for all $j$ and all $\psi$, so $y_j = 0$.
+\end{proof}
+\subsection{Tensor Products of Banach Spaces}%
+Now that we have a better understanding of tensor products (especially the dual space of a tensor product), we can start examining norms on tensor products of Banach spaces.
+\subsubsection{Injective Tensor Product}%
+We start by defining the injective norm. We know that for $\varphi\in X'$ and $\psi\in Y'$, there is a linear functional $\varphi\times \psi \in \left(X\otimes Y\right)'$ that satisfies $\left(\varphi\times\psi\right)\left(x\otimes y\right) = \varphi(x)\psi(y)$.\newline
+
+We can translate this into a norm on any normed spaces $X$ and $Y$, since $X^{\ast}\subseteq X'$ and $Y^{\ast}\subseteq Y'$.
+\begin{proposition}
+  Let $X$ and $Y$ be normed vector spaces. Given $t\in X\otimes Y$, we define
+  \begin{align*}
+    \norm{t}_{\vee} &= \sup_{\varphi\in B_{X^{\ast}},\psi\in B_{Y^{\ast}}} \left\vert \left(\varphi\times\psi\right)\left(t\right) \right\vert
+  \end{align*}
+  to be the injective norm on $X\times Y$. The injective norm has the cross property --- that is,
+  \begin{align*}
+    \norm{x\otimes y}_{\vee} &= \norm{x}\norm{y}
+  \end{align*}
+  for all $x\in X$ and $y\in Y$.
+\end{proposition}
+\begin{proof}
+  We start by showing the supremum is finite. For any representation
+  \begin{align*}
+    t &= \sum_{k=1}^{n}x_k\otimes y_k,
+  \end{align*}
+  and any $\varphi\in B_{X^{\ast}}$, $\psi\in B_{Y^{\ast}}$, we have
+  \begin{align*}
+    \norm{\left(\varphi\times\psi\right)\left(t\right)} &= \left\vert \sum_{k=1}^{n}\varphi\left(x_k\right)\psi\left(y_k\right) \right\vert\\
+                                                        &\leq \sum_{k=1}^{n}\left\vert \varphi\left(x_k\right) \right\vert\left\vert \psi\left(y_k\right) \right\vert\\
+                                                        &\leq \sum_{k=1}^{n}\norm{x_k}\norm{y_k},
+  \end{align*}
+  recalling that $\norm{x} = \sup_{\varphi\in B_{X^{\ast}}}\left\vert \varphi(x) \right\vert$.\newline
+
+  The triangle inequality and homogeneity of the injective norm are clear from its definition. We will now prove that the norm is positive definite.\newline
+
+  Let $\norm{t}_{\vee} = 0$. We express $t$ as
+  \begin{align*}
+    t = \sum_{k=1}^{n}x_k\otimes y_k,
+  \end{align*}
+  where $\set{y_1,\dots,y_n}$ are linearly independent.\newline
+
+  We have that for all $\varphi\in B_{X^{\ast}}$ and $\psi\in B_{Y^{\ast}}$,
+  \begin{align*}
+    0 &= \left(\varphi\times\psi\right)\left(t\right)\\
+      &= \sum_{k=1}^{n}\varphi\left(x_k\right)\psi\left(y_k\right)\\
+      &= \psi\left(\sum_{k=1}^{n}\varphi\left(x_k\right)y_k\right).
+  \end{align*}
+  Since this is true for all $\psi\in B_{Y^{\ast}}$, the Hahn--Banach separation result holds that
+  \begin{align*}
+    \sum_{k=1}^{n}\varphi\left(x_k\right)y_k = 0
+  \end{align*}
+  in $Y$. Since $\set{y_1,\dots,y_n}$ are linearly independent, we also get that $\varphi\left(x_k\right) = 0$ for all $k$ and all $\varphi\in B_{X^{\ast}}$, so $x_k = 0$ for all $k$, and $t = 0$.\newline
+
+  To see that the injective norm is cross, we have $\sup_{\varphi\in B_{Z^{\ast}}}\left\vert \varphi(z) \right\vert = \norm{z}$. Thus,
+  \begin{align*}
+    \norm{x\otimes y}_{\vee} &= \sup_{\varphi\in B_{X^{\ast}},\psi\in B_{Y^{\ast}}}\left\vert \varphi(x)\psi(y) \right\vert\\
+                             &= \sup_{\varphi\in B_{X^{\ast}}}\left\vert \varphi(x) \right\vert  \sup_{\psi\in B_{Y^{\ast}}}\left\vert \psi(y) \right\vert\\
+                             &= \norm{x}\norm{y}.
+  \end{align*}
+\end{proof}
+\begin{definition}
+  If $X$ and $Y$ are normed spaces, the completion of $X\otimes Y$ with respect to the injective norm $\norm{\cdot}_{\vee}$ is called the injective tensor product of $X$ and $Y$, denoted $X\check{\otimes}Y$.
+\end{definition}
+\begin{exercise}
+  Let $X$ and $Y$ be normed spaces, and let $\varphi\in X^{\ast}$, $\psi\in Y^{\ast}$. Show that $\varphi\times \psi\in \left(X\check{\otimes}Y\right)^{\ast}$, and $\norm{\varphi\times\psi} = \norm{\varphi}\norm{\psi}$.
+\end{exercise}
+\begin{solution}
+  Let $\varphi\times \psi\in \left(X\check\otimes Y\right)^{\ast}$. Then,
+  \begin{align*}
+    \norm{\varphi\times\psi} &= \sup_{\norm{x\otimes y}_{\vee} = 1}\left\vert \left(\varphi\times\psi\right)\left(x\otimes y\right) \right\vert\\
+                             &= \sup_{\norm{x\otimes y}_{\vee} = 1}\left\vert \varphi(x) \right\vert\left\vert \psi(y) \right\vert\\
+                             &= \sup_{\norm{x}\norm{y} = 1}\left\vert \varphi(x) \right\vert\left\vert \psi(y) \right\vert\\
+                             &= \norm{\varphi}\norm{\psi}.
+  \end{align*}
+\end{solution}
+Thanks to the injective tensor product, we are able to continuously extend bounded linear operators in a manner that preserves operator norm.
+\begin{proposition}
+  Let $X,Y,V,W$ be normed vector spaces, and let $T\in \mathcal{B}\left(X,V\right)$, $S\in \mathcal{B}\left(Y,W\right)$.
+  \begin{enumerate}[(1)]
+    \item The operator $T\otimes S: X\otimes Y \rightarrow V\otimes W$ is continuous with respect to the injective norm, and extends continuously to a bounded linear operator $T\check\otimes S\in \mathcal{B}\left(X\check\otimes Y,V\check\otimes W\right)$ with $\norm{T\check\otimes S}_{\text{op}} = \norm{T}_{\text{op}}\norm{S}_{\text{op}}$.
+    \item If $T$ and $S$ are isometric, so is $T\check\otimes S$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Set $T_1 = \frac{1}{\norm{T}_{\text{op}}}T$, and $S_1 = \frac{1}{\norm{S}_{\text{op}}}S$. Let $t = \sum_{k=1}^{n}x_k\otimes y_k$ in $X\otimes Y$. Then,
+  \begin{align*}
+    \norm{T\otimes S(t)}_{\vee} &= \norm{\sum_{k=1}^{n}T\left(x_k\right)\otimes S\left(y_k\right)}_{\vee}\\
+                                &= \sup_{\varphi\in B_{V^{\ast}},\psi\in B_{W^{\ast}}}\left\vert \sum_{k=1}^{n}\varphi\left(T\left(x_k\right)\right)\psi\left(S\left(y_k\right)\right) \right\vert\\
+                                &= \norm{T}\norm{S} \sup_{\varphi\in B_{V^{\ast}},\psi\in B_{W^{\ast}}}\left\vert \sum_{k=1}^{n} \varphi\left(T_{1}\left(x_{k}\right)\right)\psi\left(S_{1}\left(y_k\right)\right)\right\vert\\
+                                &= \norm{T}\norm{S} \sup_{\varphi\in B_{V^{\ast}},\psi\in B_{W^{\ast}}}\left\vert \sum_{k=1}^{n}T_1^{\ast}\left(\varphi\right)\left(x_k\right)S_{1}^{\ast}\left(\psi\right)\left(y_k\right) \right\vert\\
+                                &\leq \norm{T}\norm{S}\sup_{\omega\in B_{X^{\ast}},\tau\in B_{Y^{\ast}}}\left\vert \sum_{k=1}^{n}\omega\left(x_k\right)\tau\left(y_k\right) \right\vert\\
+                                &= \norm{T}\norm{S}\norm{t}_{\vee}.
+  \end{align*}
+  The inequality in the final line follows from the fact that $T_{1}$ and $S_1$ are contractions, so $T_1^{\ast}\left(B_{V^{\ast}}\right)\subseteq B_{X^{\ast}}$ and $S_{1}^{\ast}\left(B_{W^{\ast}}\right)\subseteq B_{Y^{\ast}}$. Thus, we have $\norm{T\otimes S} \leq \norm{T}\norm{S}$.\newline
+
+  If $x\in B_{X}$ and $y\in B_{Y}$, then $\norm{x\otimes y}_{\vee} = \norm{x}\norm{y} \leq 1$. Thus,
+  \begin{align*}
+    \norm{T\otimes S} &\geq \norm{T\left(x\right)\otimes S\left(y\right)}_{\vee}\\
+                      &= \norm{T(x)}\norm{S(y)}.
+  \end{align*}
+  Taking the supremum, we get
+  \begin{align*}
+    \norm{T\otimes S}\geq \norm{T}\norm{S}.
+  \end{align*}
+  The norm-preserving continuous extension to $T\check\otimes S$ follows from the norm-preserving continuous extension to the completion in the case of an ordinary Banach space.\newline
+
+  If $T$ and $S$ are isometries, then $T_1 = T$ and $S_1 = S$, so $T_{1}^{\ast}\left(B_{V^{\ast}}\right) = B_{X^{\ast}}$ and $S_{1}^{\ast}\left(B_{W^{\ast}}\right) = B_{Y^{\ast}}$. Thus, $T\otimes S$ is an isometry.
+\end{proof}
+\begin{proposition}
+  Let $X$ and $Y$ be normed spaces. There is a canonical isometric embedding $X\check\otimes Y \hookrightarrow \mathcal{B}\left(Y^{\ast},X\right)$.
+\end{proposition}
+\begin{proof}
+  For $x\in X$ and $y\in Y$, we consider the linear map $\theta_{x,y}: Y^{\ast}\rightarrow X$ given by $\theta_{x,y}\left(\varphi\right) = \varphi(y)x$. By the Hahn--Banach theorems, $\norm{\theta_{x,y}} = \norm{x}\norm{y}$.\newline
+
+  Next, the map $X\times Y\rightarrow \mathcal{B}\left(Y^{\ast},X\right)$ given by $\left(x,y\right)\mapsto \theta_{x,y}$ is bilinear. Thus, there is a unique linear map $u: X\otimes Y \rightarrow \mathcal{B}\left(Y^{\ast},X\right)$ with $x\otimes y \rightarrow \theta_{x,y}$.\newline
+
+  Let $t = \sum_{k=1}^{n}x_k\otimes y_k$ in $X\otimes Y$. Then,
+  \begin{align*}
+    \norm{u(t)} &= \norm{\sum_{k=1}^{n}\theta_{x_k,y_k}}\\
+                &= \sup_{\psi\in B_{Y^{\ast}}}\norm{\left(\sum_{k=1}^{n}\theta_{x_k,y_k}\right)\left(\psi\right)}\\
+                &= \sup_{\psi\in B_{Y^{\ast}}}\norm{\sum_{k=1}^{n}\psi\left(y_k\right)x_k}\\
+                &= \sup_{\psi\in B_{Y^{\ast}},\varphi\in B_{X^{\ast}}}\left\vert \varphi\left(\sum_{k=1}^{n}\psi\left(y_k\right)x_k\right) \right\vert\\
+                &= \sup_{\psi\in B_{Y^{\ast}},\varphi\in B_{X^{\ast}}}\left\vert \sum_{k=1}^{n}\psi\left(y_k\right)\varphi\left(x_k\right) \right\vert\\
+                &= \norm{t}_{\vee}.
+  \end{align*}
+  Note that we use the Hahn--Banach norming results to convert from $\norm{x}$ to $\varphi(x)$ and vice versa.\newline
+
+  Thus, $u$ is an isometry, so $u$ extends to an isometry $U: X\check\otimes Y^{\ast}\hookrightarrow \mathcal{B}\left(Y^{\ast},X\right)$.
+\end{proof}
+\begin{remark}
+  We can construct similar isometric embeddings $X\check\otimes Y\hookrightarrow \mathcal{B}\left(X^{\ast},Y\right)$. These embeddings yield other injective norms.
+  \begin{align*}
+    \norm{\sum_{k=1}^{n}x_k\otimes y_k}_{\vee} &= \sup_{\psi\in B_{Y^{\ast}}}\norm{\sum_{k=1}^{n}\psi\left(y_k\right)x_k}\\
+                                               &= \sup_{\varphi\in B_{X^{\ast}}}\norm{\sum_{k=1}^{n}\varphi\left(x_k\right)y_k}.
+  \end{align*}
+\end{remark}
+\begin{example}
+  Let $\Omega$ and $\Lambda$ be compact Hausdorff spaces. We claim that
+  \begin{align*}
+    C\left(\Omega\right)\check\otimes C\left(\Lambda\right) \cong C\left(\Omega\times\Lambda\right).
+  \end{align*}
+  For $f\in C\left(\Omega\right)$ and $g\in C\left(\Lambda\right)$, there is a continuous function $f\times g: \Omega\times\Lambda \rightarrow \F$ given by $\left(f\times g\right)\left(x,y\right) = f(x)g(y)$.\newline
+
+  Since $\left(f,g\right)\mapsto f\times g $ is a bilinear map from $C\left(\Omega\right)\times C\left(\Lambda\right)$ to $C\left(\Omega\times\Lambda\right)$, there is a unique linear map $u: C\left(\Omega\right)\otimes C\left(\Lambda\right)\rightarrow C\left(\Omega\times\Lambda\right)$ satisfying $u\left(f\otimes g\right) = f\times g$. We will show that $u$ is isometric under the injective norm.\newline
+
+  If $t = \sum_{k=1}^{n}f_k\otimes g_k$ in $C\left(\Omega\right)\otimes C\left(\Lambda\right)$, then
+  \begin{align*}
+    \norm{t}_{\vee} &= \sup_{\psi\in B_{C\left(\Lambda\right)^{\ast}}}\norm{\sum_{k=1}^{n}\psi\left(g_k\right)f_k}\\
+                    &= \sup_{\psi\in B_{C\left(\Lambda\right)^{\ast}}} \sup_{x\in\Omega}\left\vert \sum_{k=1}^{n}\psi\left(g_k\right)f_k(x) \right\vert\\
+                    &= \sup_{\psi\in B_{C\left(\Lambda\right)^{\ast}}} \sup_{x\in\Omega}\left\vert \psi\left(\sum_{k=1}^{n}g_kf_k(x) \right)\right\vert\\
+                    &= \sup_{x\in\Omega}\norm{\sum_{k=1}^{n}f_k(x)g_k}\\
+                    &= \sup_{x\in\Omega,y\in \Lambda}\left\vert \sum_{k=1}^{n}f_k(x)g_k(y) \right\vert\\
+                    &= \sup_{\left(x,y\right)\in \Omega\times\Lambda}\left\vert \sum_{k=1}^{n}\left(f_k\times g_k\right)\left(\left(x,y\right)\right) \right\vert\\
+                    &= \norm{\sum_{k=1}^{n}\left(f_k\times g_k\right)}\\
+                    &= \norm{u(t)}.
+  \end{align*}
+  Thus, $u$ extends to an isometry, $C\left(\Omega\right)\check\otimes C\left(\Lambda\right)\rightarrow C\left(\Omega\times\Lambda\right)$.\newline
+
+  We will now show that $u$ is onto. Since
+  \begin{align*}
+    \left(f_1\times g_1\right)\left(f_2\times g_2\right) &= f_1f_2\times g_1g_2\\
+    \overline{\left(f\times g\right)} &= \overline{f}\times \overline{g}\\
+    \1_{\Omega}\times\1_{\Lambda} &= \1_{\Omega\times\Lambda},
+  \end{align*}
+  we see that $\Span\set{f\times g\mid f\in C\left(\Omega\right),g\in C\left(\Lambda\right)}$ is a self-adjoint, unital, separating subalgebra of $C\left(\Omega\times\Lambda\right)$. Thus, by the Stone--Weierstrass theorem, $\overline{\Ran}(u) = C\left(\Omega\times\Lambda\right)$. However, since $u$ is isometric, its range is closed, meaning $u$ is surjective.
+\end{example}
+\subsubsection{Projective Tensor Product}%
+Loosely speaking, the projective tensor product preserves the space of bilinear forms, $\Bil\left(X,Y;Z\right)$.
+\begin{definition}
+  Let $X,Y,Z$ be normed spaces, and let $b: X\times Y\rightarrow Z$ be a bilinear map. We define the bilinear operator norm as
+  \begin{align*}
+    \norm{b}_{\text{op}} &= \sup_{x\in B_X,y\in B_Y}\norm{b\left(x,y\right)}.
+  \end{align*}
+  If $\norm{b}_{\text{op}} < \infty$, then we say $b$ is bounded bilinear.
+\end{definition}
+\begin{proposition}
+  Let $X,Y,Z$ be normed spaces, and suppose $b: X\times Y\rightarrow Z$ be bilinear. Then, $b$ is continuous if and only if $b$ is bounded bilinear.
+\end{proposition}
+\begin{proposition}
+  Let $X,Y,Z$ be Banach spaces. The space of all bounded bilinear maps under pointwise addition and scalar multiplication with the norm $\norm{\cdot}_{\text{op}}$ is a Banach space.
+\end{proposition}
+\begin{proposition}
+  Let $X$ and $Y$ be normed spaces. The formula
+  \begin{align*}
+    \norm{t}_{\wedge} &= \inf\set{\sum_{k=1}^{n}\norm{x_k}\norm{y_k}\mid t = \sum_{k=1}^{n}x_k\otimes y_k}
+  \end{align*}
+  defines a norm on $X\otimes Y$ called the projective norm. The projective norm is a cross norm, and satisfies $\norm{t}_{\vee}\leq \norm{t}_{\wedge}$.
+\end{proposition}
+\begin{proof}
+  The norm is clearly homogeneous.\newline
+
+  If $t,t'\in X\otimes Y$ and have representations $t = \sum_{k=1}^{n}x_k\otimes y_k$ and $t' = \sum_{j=1}^{m}u_j\otimes v_j$, then
+  \begin{align*}
+    t + t' &= \sum_{k=1}^{n}x_k\otimes y_k + \sum_{j=1}^{m}u_j\otimes v_j\\
+    \norm{t + t'}_{\wedge} &\leq \sum_{k=1}^{n}\norm{x_k}\norm{y_k} + \sum_{j=1}^{m}\norm{u_j}\norm{v_j}.
+    \intertext{Taking the infimum over representations of $t$, we have}
+    \norm{t + t'}_{\wedge} &\leq \norm{t} + \sum_{j=1}^{m}\norm{u_j}\norm{v_j},
+    \intertext{and taking the infimum over representations of $t'$,}
+    \norm{t+t'} &\leq \norm{t} + \norm{t'}.
+  \end{align*}
+  Note that for $t = \sum_{k=1}^{n}x_k\otimes y_k$, we have
+  \begin{align*}
+    \norm{t}_{\vee} &= \sup_{\varphi\in B_{X^{\ast}}\psi\in B_{Y^{\ast}}}\left\vert \sum_{k=1}^{n}\varphi\left(x_k\right)\psi\left(y_k\right) \right\vert\\
+                    &\leq \sum_{k=1}^{n}\left\vert \varphi\left(x_k\right) \right\vert\left\vert \varphi\left(y_k\right) \right\vert\\
+                    &\leq \sum_{k=1}^{n}\norm{x_k}\norm{y_k}.
+  \end{align*}
+  Taking the infimum over all representations, we have $\norm{t}_{\vee}\leq \norm{t}_{\wedge}$.\newline
+
+  If $\norm{t}_{\wedge} = 0$, then $\norm{t}_{\vee} = 0$, so $t = 0$ since $\norm{t}_{\vee}$ is a norm.\newline
+
+  For $x\in X$ and $y\in Y$, we have
+  \begin{align*}
+    \norm{x}\norm{y} &= \norm{x\otimes y}_{\vee}\\
+                     &\leq \norm{x\otimes y}_{\wedge}\\
+                     &\leq \norm{x}\norm{y}.
+  \end{align*}
+\end{proof}
+\begin{definition}
+  If $X$ and $Y$ are normed spaces, the Banach space completion of $X\otimes Y$ with respect to the projective norm $\norm{\cdot}_{\wedge}$ is called the projective tensor product of $X$ and $Y$, denoted $X\hat\otimes Y$.
+\end{definition}
+\begin{proposition}
+  Let $X,Y,Z$ be normed spaces.
+  \begin{enumerate}[(1)]
+    \item If $b$ is bounded bilinear, $b\in \Bil\left(X,Y;Z\right)$. Then, there is a unique $T_{b}\in \mathcal{B}\left(X\hat\otimes Y,Z\right)$ such that
+      \begin{align*}
+        T_{b}\left(x\otimes y\right) &= b\left(x,y\right),
+      \end{align*}
+      and $\norm{T_{b}}_{\text{op}} = \norm{b}_{\text{op}}$.
+    \item If $T\in \mathcal{B}\left(X\hat\otimes Y,Z\right)$, there is a $b\in \Bil\left(X,Y;Z\right)$ with $T_b = T$, where $T_b$ is given as above.
+    \item The map $b \mapsto T_{b}$ from $\Bil\left(X,Y;Z\right)$ to $\mathcal{B}\left(X\hat\otimes Y,Z\right)$ is a linear isometric isomorphism.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Since $b$ is bilinear, the universal property for tensor products gives a unique linear $T_{b}:X\otimes Y\rightarrow Z$ such that $T_{b}\left(x\otimes y\right) = b\left(x,y\right)$. For $t = \sum_{k=1}^{n}x_k\otimes y_k\in X\otimes Y$, we have
+      \begin{align*}
+        \norm{T_b\left(t\right)} &= \norm{\sum_{k=1}^{n}b\left(x_k,y_k\right)}\\
+                                 &\leq \sum_{k=1}^{n}\norm{b\left(x_k,y_k\right)}\\
+                                 &\leq \sum_{k=1}^{n}\norm{b}_{\text{op}}\norm{x_k}\norm{y_k}.
+      \end{align*}
+      Taking the infimum, we have
+      \begin{align*}
+        \norm{T_b\left(t\right)} &\leq \norm{b}_{\text{op}}\norm{t}_{\wedge},
+      \end{align*}
+      so
+      \begin{align*}
+        \norm{T_b}_{\text{op}} &\leq \norm{b}_{\text{op}}.
+      \end{align*}
+      For $x\in B_X$, $y\in B_Y$ we have $\norm{x\otimes y}_{\wedge}\leq 1$, meaning
+      \begin{align*}
+        \norm{b\left(x,y\right)} &= \norm{T_b\left(x\otimes y\right)}\\
+                                 &\leq \norm{T_b}_{\text{op}}.
+      \end{align*}
+      Taking the supremum, we get $\norm{b}_{\text{op}}\leq \norm{T_b}_{\text{op}}$. It is the case that $T_{b}$ has a norm-preserving continuous extension to $X\hat\otimes Y\rightarrow Z$.
+    \item Define $b(x,y) = T\left(x\otimes y\right)$. It is the case that $b$ is bilinear and bounded, since
+      \begin{align*}
+        \norm{b\left(x,y\right)} &= \norm{T\left(x\otimes y\right)}\\
+                                 &\leq \norm{T}_{\text{op}}\norm{x\otimes y}_{\wedge}\\
+                                 &= \norm{T}_{\text{op}}\norm{x}\norm{y}.
+      \end{align*}
+      Since $T_{b}\left(x\otimes y\right) = b\left(x,y\right) = T\left(x\otimes y\right)$, $T$ agrees with $T_{b}$ on $X\otimes Y$. Since both $T$ and $T_{b}$ are continuous with respect to the projective norm, they agree on $X\hat\otimes Y$.
+    \item Since $b\mapsto T_{b}$ is linear, and we have shown this to be an isometric isomorphism, it is the case that this is an isometric isomorphism.
+  \end{enumerate}
+\end{proof}
+We can now identify the dual of the projective tensor product.
+\begin{proposition}
+  Let $X$ and $Y$ be normed spaces. Then,
+  \begin{align*}
+    \left(X\hat\otimes Y\right)^{\ast}\cong \mathcal{B}\left(X,Y^{\ast}\right)
+  \end{align*}
+  are isometrically isomorphic.
+\end{proposition}
+\begin{proof}
+  Consider the map $T: \left(X\hat\otimes Y\right)^{\ast}\rightarrow \mathcal{B}\left(X,Y^{\ast}\right)$ defined by $\psi \mapsto T_{\psi}$, where $T_{\psi}\left(x\right)\left(y\right) = \psi\left(x\otimes y\right)$. It is the case that $T_{\psi}\left(x\right)$ is a linear operator on $Y$, and
+  \begin{align*}
+    \left\vert T_{\psi}\left(x\right)\left(y\right) \right\vert &= \left\vert \psi\left(x\otimes y\right) \right\vert\\
+                                                                &\leq \norm{\psi}\norm{x\otimes y}_{\wedge}\\
+                                                                &= \norm{\psi}\norm{x}\norm{y},
+  \end{align*}
+  so $\norm{T_{\psi}\left(x\right)}_{\text{op}}\leq \norm{\psi}\norm{x}$, so $T_{\psi}\in Y^{\ast}$. It is also clear that $T_{\psi}$ is linear on $x$, so $\norm{T_{\psi}}_{\text{op}}\leq \norm{\psi}$, meaning $T$ is a contraction.\newline
+
+  We now define $\eta: \mathcal{B}\left(X,Y^{\ast}\right)\rightarrow \left(X\hat\otimes Y\right)^{\ast}$. Fixing $T\in \mathcal{B}\left(X,Y^{\ast}\right)$, we have a map $X\times Y\rightarrow \F$ defined by $T\left(x\right)\left(y\right)$ that is both bilinear and bounded:
+  \begin{align*}
+    \sup_{x\in B_X,y\in B_Y}\left\vert T\left(x\right)\left(y\right) \right\vert &= \sup_{x\in B_X}\norm{T\left(x\right)}\\
+                                                                                 &= \norm{T}.
+  \end{align*}
+  Thus, there is some $\eta\left(T\right)\in \left(X\hat\otimes Y\right)^{\ast}$ with $\eta\left(T\right)\left(x\otimes y\right) = T\left(x\right)\left(y\right)$, and $\norm{\eta\left(T\right)}_{\text{op}} = \norm{T}$. We have $\eta$ is linear, and
+  \begin{align*}
+    \eta\left(T_{\psi}\right)\left(x\otimes y\right) &= T_{\psi}\left(x\right)\left(y\right)\\
+                                                     &= \psi\left(x\otimes y\right).
+  \end{align*}
+  Since both $\eta\left(T_{\psi}\right)$ and $\psi$ are continuous and linear, we get $\eta\left(T_{\psi}\right) = \psi$. Since both $T$ and $\eta$ are contractions, we must have $T$ is an isometric isomorphism.
+\end{proof}
+\subsection{Finite-Rank and Compact Operators}%
+\begin{definition}
+  A linear map $T: X\rightarrow Y$ between vector spaces is said to be finite-rank if $\Dim\left(\Ran\left(T\right)\right) < \infty$.\newline
+
+  The collection of finite-rank operators, $F\left(X,Y\right)$, forms an ideal in $\mathcal{L}\left(X,Y\right)$.
+\end{definition}
+Not all finite rank operators are bounded, but we can look at ones that are.
+\begin{definition}
+  Let $X$ and $Y$ be normed spaces. We write
+  \begin{align*}
+    \F\left(X,Y\right) &= \mathcal{B}\left(X,Y\right)\cap F\left(X,Y\right)
+  \end{align*}
+  to denote the set of all bounded finite-rank operators between $X$ and $Y$. We also write $\F\left(X\right) = \F\left(X,X\right)$.
+\end{definition}
+\begin{proposition}
+  Let $X$ and $Y$ be normed spaces. For each $x\in X$ and $\psi\in Y^{\ast}$, there is a rank-one operator
+  \begin{align*}
+    L_{x,\psi}: Y\rightarrow X
+  \end{align*}
+  defined by
+  \begin{align*}
+    L_{x,\psi}\left(y\right) &= \psi(y)x.
+  \end{align*}
+  The following are true.
+  \begin{enumerate}[(1)]
+    \item Each $L_{x,\psi}$ is bounded with $\norm{L_{x,\psi}}_{\text{op}} = \norm{\psi}\norm{x}$.
+    \item The map $X\times Y^{\ast}\rightarrow \mathcal{B}\left(Y,X\right)$ mapping $\left(x,\psi\right)\mapsto L_{x,\psi}$ is bilinear.
+    \item Each $T\in \F\left(Y,X\right)$ can be written as
+      \begin{align*}
+        T &= \sum_{k=1}^{n}L_{x_k,\psi_k},
+      \end{align*}
+      where $\set{x_1,\dots,x_n}$ is a Hamel basis for $\Ran(T)$ and $\psi_1,\dots,\psi_n\in Y^{\ast}$. Moreover, every operator of this form is bounded and of finite rank.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item We compute
+      \begin{align*}
+        \norm{L_{x,\psi}}_{\text{op}} &= \sup_{y\in B_Y}\norm{L_{x,\psi}(y)}\\
+                                      &= \sup_{y\in B_{Y}}\norm{\psi(y)x}\\
+                                      &= \sup_{y\in B_Y}\left\vert \psi(y) \right\vert\norm{x}\\
+                                      &= \norm{\psi}_{\text{op}}\norm{x}.
+      \end{align*}
+    \item This is clear from the definition of $L_{x,\psi}$.
+    \item Let $\set{x_1,\dots,x_n}$ be a Hamel basis for $\Ran(T)$. There is then a bicontinuous isomorphism $\varphi: \ell_{\infty}^{n}\rightarrow \Ran(T)$ with $\varphi\left(e_k\right) = x_k$ for each $k$.\newline
+
+      We set $\psi_k = \pi_k\circ\varphi^{-1}\circ T$, where $\pi_{k}: \ell_{\infty}^{n}\rightarrow \F$ is the projection to the $k$th coordinate.\newline
+
+      Since $T$ is bounded, $\psi_{k}\in Y^{\ast}$, so for every $y\in Y$, we have
+      \begin{align*}
+        \sum_{k=1}^{n}L_{x_k,\psi_k}(y) &= \sum_{k=1}^{n}\psi_k\left(y\right)x_k\\
+                                        &= \sum_{k=1}^{n}\pi_k\circ\varphi^{-1}\circ T (y)x_k\\
+                                        &= \sum_{k=1}^{n}\pi_k\circ\varphi^{-1}\circ T (y)\varphi\left(e_k\right)\\
+                                        &= \varphi\left(\sum_{k=1}^{n}\pi_k\circ\varphi^{-1}\circ T(y)e_k\right)\\
+                                        &= \varphi\left(\varphi^{-1}\left(T(y)\right)\right)\\
+                                        &= T(y).
+      \end{align*}
+      Here, we use the fact that $z = \sum_{k=1}^{n}\pi_{k}(z)e_k$ for each $z\in \ell_{\infty}^{n}$.\newline
+
+      Since $\Ran(T)\subseteq \Span\set{x_1,\dots,x_n}$, $\Ran(T)$ is finite-rank, and is bounded by its definition.
+  \end{enumerate}
+\end{proof}
+\begin{exercise}
+  Let $E = E^2$ be a bounded finite-rank idempotent operator on a Banach space $X$. Show that we can write
+  \begin{align*}
+    E &= \sum_{k=1}^{n}L_{x_k,\varphi_k},
+  \end{align*}
+  where $\set{x_1,\dots,x_n}$ is a Hamel basis for $\Ran(E)$ and $\varphi_{k}\in X^{\ast}$ with $\varphi_{k}\left(x_j\right) = \delta_{kj}$.
+\end{exercise}
+\begin{solution}
+  Since $\Ran(E)$ is finite, $\Ran(E)$ has an Auerbach basis, $\set{\left(x_i,\varphi_k\right)}_{i=1}^{n}$ such that $\varphi_{i}\left(x_j\right) = \delta_{ij}$. We can necessarily write
+  \begin{align*}
+    E(x) &= \sum_{k=1}^{n}\varphi_{k}\left(x\right)x_k
+  \end{align*}
+  for each $x\in X$, which means
+  \begin{align*}
+    E &= \sum_{k=1}^{n}L_{x_k\varphi_{k}}.
+  \end{align*}
+\end{solution}
+\begin{proposition}
+  Let $X$ and $Y$ be normed spaces. There is an isometric isomorphism $L: X\otimes Y^{\ast}\rightarrow \F\left(Y,X\right)$ with $X\otimes Y$ equipped with the injective norm. Additionally, $L$ extends to an isometric isomorphism $\widetilde{L}: X\check\otimes Y^{\ast}\rightarrow \overline{\F\left(Y,X\right)}^{\norm{\cdot}_{\text{op}}}$.
+\end{proposition}
+\begin{proof}
+  For every $x\in X$ and $y\in Y^{\ast}$, we consider $L_{x,\psi}: Y\rightarrow X$ as defined above. By the universal property of tensor products, there is a linear map $L: X\otimes Y^{\ast}\rightarrow \mathcal{B}\left(Y,X\right)$ satisfying $L\left(x\otimes \psi\right) = L_{x,\psi}$.\newline
+
+  We will show this map is isometric with $X\otimes Y^{\ast}$ equipped with the injective norm. If $t = \sum_{k=1}^{n}x_k\otimes \psi_k$ is in $X\otimes Y^{\ast}$, then
+  \begin{align*}
+    \norm{L\left(t\right)} &= \norm{\sum_{k=1}^{n}L_{x_k,\psi_k}}\\
+                           &= \sup_{y\in Y}\norm{\left(\sum_{k=1}^{n}L_{x_k,\psi_k}\right)\left(y\right)}\\
+                           &= \sup_{y\in Y}\norm{\sum_{k=1}^{n}\psi_k(y)x_k}\\
+                           &= \sup_{y\in B_Y,\varphi\in B_{X^{\ast}}}\left\vert \varphi\left(\sum_{k=1}^{n}\psi_k(y)x_k\right) \right\vert\\
+                           &= \sup_{y\in B_Y,\varphi\in B_{X^{\ast}}}\left\vert \sum_{k=1}^{n}\psi_k(y)\varphi(x_k) \right\vert\\
+                           &= \sup_{y\in B_Y,\varphi\in B_{X^{\ast}}}\left\vert \left(\sum_{k=1}^{n}\varphi\left(x_k\right)\psi_k\right)(y) \right\vert\\
+                           &= \sup_{\varphi\in B_{X^{\ast}}}\norm{\sum_{k=1}^{n}\varphi\left(x_k\right)\psi_k}\\
+                           &= \norm{t}_{\vee}.
+  \end{align*}
+  Since $L$ is surjective, and $L$ is an isometry, it is the case that $L$ is an isometric isomorphism. We can extend $L$ to get an isometric isomorphism $X\check\otimes Y^{\ast} = \overline{\F\left(Y,X\right)}^{\norm{\cdot}_{\text{op}}}$.
+\end{proof}
+\begin{remark}
+  We can view $X\otimes Y^{\ast}$ as being contained in $\mathcal{B}\left(Y,X\right)$, since every $t\in X\otimes Y^{\ast}$ represents a finite rank operator from $Y$ to $X$ with $\norm{t}_{\wedge} = \norm{t}_{\text{op}}$.
+\end{remark}
+\begin{definition}
+  Let $X$ and $Y$ be normed spaces. A linear map $T: X\rightarrow Y$ is said to be compact if $\overline{T}\left(B_X\right)\subseteq Y$ is compact.\newline
+
+  We write $\K\left(X,Y\right)$ to denote the set of all compact operators from $X$ to $Y$.
+\end{definition}
+
 \end{document}

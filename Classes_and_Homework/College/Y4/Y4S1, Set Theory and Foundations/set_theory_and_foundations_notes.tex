@@ -21,7 +21,7 @@
 \RaggedRight
 \tableofcontents
 \section{Cardinality and Countability}%
-\subsection{Section 1.1: Countable Sets}%
+\subsection{Countable Sets}%
 \begin{definition}[Denumerable Set]
   A set S is denumerable if there exists a function $f: S\rightarrow \N$ with $f$ a bijection. We also say $S$ is countably infinite.
 \end{definition}
@@ -134,7 +134,7 @@
 
   In order to prove this, we need to show that every injection from a finite set to itself is a bijection.
 \end{example}
-\subsection{Section 1.2: Uncountable Sets}%
+\subsection{Uncountable Sets}%
 \begin{definition}[Uncountable Set]
 A set is uncountable if it is not countable.
 \end{definition}
@@ -270,7 +270,7 @@ The power set of a set $S$ is
 
   This result implies that ``almost all'' real numbers, in a sense, are unable to be described.
 \end{example}
-\subsection{Section 1.3: Cantor--Schröder--Bernstein Theorem}%
+\subsection{Cantor--Schröder--Bernstein Theorem}%
 \begin{example}
   If we have $|A| \leq |B|$ and $|B| \leq |A|$, it does not necessarily imply $|A| = |B|$.\newline
 
@@ -1481,8 +1481,8 @@ A Turing machine consists of the following:
 \begin{example}
   Let
   \begin{align*}
-    I_1 &= q_11Rq_1
-    I_2 &= q_1B1q_2
+    I_1 &= q_11Rq_1\\
+    I_2 &= q_1B1q_2\\
     I_3 &= q_211q_3.
   \end{align*}
   Here, $I_1$ essentially says ``if current state is $q_1$, and reading symbol $1$, move right, then enter state $q_1$.''\newline
@@ -1506,10 +1506,129 @@ A Turing machine consists of the following:
   For output, the total number of $1$s is the output.
 \end{notation}
 \begin{definition}[Computable]
-  A function $f$ is computable if there exists a Turing machine that computes $f$
+  A function $f$ is computable if there exists a Turing machine that computes $f$.
 \end{definition}
 \begin{definition}[Partial/Total Function]
   A partial function is a function $f: A\rightarrow \N$ where $A\subseteq \N$. If $A = \N$, then $f$ is also a total function.
 \end{definition}
+This is nice and all, but we need to be able to use multiple inputs too. For instance, we may want to calculate $f(m,n) = m + n$.
+\begin{notation}[Multiple Inputs]
+  The convention is
+  \begin{align*}
+    f\left(x , y\right)
+  \end{align*}
+  by taking
+  \begin{align*}
+    \underbrace{1,\dots,1}_{x+1},B,\underbrace{1,\dots,1}_{y+1}
+  \end{align*}
+\end{notation}
+With this definition of multiple inputs, we can define a function $f: A\subseteq \N^{n}\rightarrow \N$ to be computable if it can be represented by a Turing machine.\newline
+
+If $f: \Q\rightarrow \Q$, we can represent $x\in \Q$ by $\left(s,m,n\right)$, where $s$ denotes the sign.\newline
+
+We can even represent Turing machines with natural numbers. We do this by ordering all the Turing machines lexicographically. Then, we have $T_{0},T_{1},T_{2},\dots$ via this process.
+\begin{question}
+  Is there a Turing machine $U$ such that $U\left(n,x\right)$ gives the same output as $T_{n}(x)$.
+\end{question}
+\begin{answer}
+  \textbf{Yes}. We call $U\left(n,x\right)$ a \textit{universal} Turing machine.
+\end{answer}
+An alternative way we can specify the state of a Turing machine, instead of using the tuple $\left(a,b,c,d\right)$ with $a,d = q_{i}$, $b = B,1$, and $c = B,1,L,R$, we let the instruction be in the form $\left(n_1,n_2,n_3,n_4\right)\in \N^{4}$, where $n_1,n_4$ denote the initial and final states, $n_2 = 0,1$ depending on whether the read instruction is blank or $1$, and $n_3$ is $0,1,2,3$ depending on if the instruction is $B$, $1$, $R$, or $L$ respectively.\newline
+
+\begin{question}
+  Is there a Turing machine that can tell whether or not a different Turing machine will halt for a given input.
+\end{question}
+We want a Turing machine, $T_{H}\left(n,x\right)$, where we ask if $T_{n}(x)$ halts.
+\begin{answer}
+  \textbf{No}.
+\end{answer}
+\begin{theorem}[Halting Problem]
+  Let
+  \begin{align*}
+    H\left(n,x\right) &= \begin{cases}
+      1 & \text{if $T_{n}(x)$ halts}\\
+      0 & $\text{if $T_{n}\left(x\right)$ does not halt}$
+    \end{cases}.
+  \end{align*}
+  Then, $H$ is not computable.
+\end{theorem}
+\begin{proof}
+  Suppose $H$ is computable. Define
+  \begin{align*}
+    G\left(n\right) &= \begin{cases}
+      0 & \text{if $H\left(n,n\right) = 0$}\\
+      \text{undefined} & \text{if $H\left(n,n\right) = 1$}
+    \end{cases}.
+  \end{align*}
+  We start by showing that $G$ is computable. Suppose $H$ is computed by some Turing machine $T_{H}$. Then, $T_{H}(x) = H\left(n,x\right)$. Suppose $q_1,\dots,q_{k}$ are the only states $T_{H}$. Without loss of generality, we assume $T_{H}$ halts if and only if $T_{H}$ enters state $q_{k}$. We can also modify $T_{H}$ such that if the output is $1$, then the head ends up at the square with $1$. We add an instruction, $q_{k}11q_{k}$ to construct $T_{G}$. The new Turing machine, $T_{G}$, does not halt. If $T_{G}$ sees $n+1$ $1$s, we make $T_{G}$ duplicate this input into $1,\dots,1,B,1,\dots,1$, then run $T_{H}$\newline
+
+  Now that we have shown that $G$ is computable, there is some $n\in \N$ such that $T_n$ computes $G$. Thus, $T_n(x)$ halts if and only if $G(x) = 0$. So, $T_{n}(n)$ halts if and only if $G(n) = 0$, which halts if and only if $H(n,n) = 0$, which is true if and only if $T_{n}(n)$ doesn't halt. $\bot$
+\end{proof}
+\subsection{Recursive Functions, Decidable Sets, and Enumerable Sets}%
+Now, we can look at the class of functions that ``ought'' to be computable. For instance, the following functions are computable.
+\begin{itemize}
+  \item $Z(n) = 0$ for all $n\in \N$;
+  \item $S(n) = n+1$ for all $n\in \N$;
+  \item $P_{i}^{(k)} \left(n_1,\dots,n_k\right) = n_{i}$ for all $n_1,\dots,n_k\in \N$;
+  \item all compositions of these functions: if $f\left(t_1,\dots,t_m\right)$ and $g_1,\dots,g_m$ are computable, then
+    \begin{align*}
+      h\left(x_1,\dots,x_n\right) &= f\left(g_1\left(x_1,\dots,x_n\right),\dots,g_m\left(x_1,\dots,x_n\right)\right).
+    \end{align*}
+\end{itemize}
+\begin{example}
+  The function $f(x,y) = y+1$ is equal to
+  \begin{align*}
+    f(x,y) &= S\left(P_{2}^{(2)}\left(x,y\right)\right).
+  \end{align*}
+  Similarly, the function
+  \begin{align*}
+    g\left(x,y,z\right)  &= P_{1}^{(2)} \left(S\left(S\left(P_{3}^{(3)}\left(x,y,z\right)\right)\right),P_{1}^{(3)}\left(x,y,z\right)\right)
+  \end{align*}
+  is computable.
+\end{example}
+Some primitive recursive functions are as follows.
+\begin{example}\hfill
+  \begin{itemize}
+    \item $h\left(n+1\right) = g\left(h\left(n\right)\right)$ with $h(0)$ equal to some constant;
+    \item $h\left(m,n+1\right) = g\left(m,n,h\left(m,n\right)\right)$.
+  \end{itemize}
+\end{example}
+\begin{definition}[General Format of Primitive Recursion]
+\begin{align*}
+  h\left(m_1,\dots,m_k,n+1\right) &= g\left(m_1,\dots,m_k,n,h\left(m_1,\dots,m_k,n\right)\right),
+\end{align*}
+where $h\left(m_1,\dots,m_k,0\right) = f\left(m_1,\dots,m_k\right)$. Here, $f\left(m_1,\dots,m_k\right)$ is written in terms of $Z,S,P_{i}^{(k)}$. We say $h$ is obtained from $f$ and $g$ by primitive recursion.
+\end{definition}
+\begin{definition}[Primitive Recursive Function]
+  Any function obtained from $Z,S,P_{i}^{(k)}$, composition, and primitive recursion, is called a primitive recursive function.
+\end{definition}
+Not every computable function is primitive recursive. For instance, the Ackermann function,
+\begin{align*}
+  A\left(m,n\right) &= \begin{cases}
+    n+1 & m=0\\
+    A\left(m-1,1\right) & m > 0,n = 0\\
+    A\left(m-1,A\left(m,n-1\right)\right) & m > 0,n > 0
+  \end{cases},
+\end{align*}
+is computable, but not primitive recursive.
+\begin{theorem}
+  Primitive recursive functions are able to be computed by Turing machines. The converse is not true.
+\end{theorem}
+\subsection{Goodstein Sequences}%
+Consider the number written as sums of powers of $2$:
+\begin{align*}
+  7 &= 2^{2} + 2^{1} + 2^{0}.
+  \intertext{We replace every instance of $2$ with $3$, and subtract $1$ yielding}
+    &\rightarrow 3^3 + 3^1.
+    \intertext{We replace $3$ with $4$, and delete $1$, and get}
+    &\rightarrow 4^4 + 3\cdot 4^0.
+\end{align*}
+At first glance, this sequence seems to be growing without bound. However, it is actually possible to prove that this sequence, known as the Goodstein sequence, converges to $0$ as $n$ grows without bound.\newline
+
+Note that the way we write our original number is using \textit{hereditary} base notation. In other words
+\begin{align*}
+  2^5 + 2^2 + 1 &= 2^{2^2 + 1} + 2^{2} + 1,
+\end{align*}
+and continue this replacing sequence.
 
 \end{document}
