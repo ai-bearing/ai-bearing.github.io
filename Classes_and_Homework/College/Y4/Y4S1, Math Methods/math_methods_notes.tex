@@ -15,6 +15,7 @@
 \usetikzlibrary{3d}
 \usepackage[nomarkers]{endfloat}
 \renewcommand{\efloatseparator}{\vspace{10pt}}
+\newcommand{\ep}{\epsilon}
 
 \usepackage[outline]{contour} % glow around text
 \tikzset{>=latex} % for LaTeX arrow head
@@ -3426,7 +3427,7 @@ Note that the expansion coefficients are the elements of the column vector $\mat
 \begin{example}[Vector Spaces of Periodic Functions]
 Consider the set of functions $f$ such that $f(x + T) = f(x)$ for some fixed period $T$. This \textit{is} a vector space, since we can add two functions with the same period to yield another function with that same period.\newline
 
-Finding a basis is much more difficult. However, we know that sine and cosine have a periodicity. In particular, $\sin(2\pi n/T)$ and $\cos(2\pi n/T)$ can form a (Schauder) basis for the set of functions with period $T$.
+Finding a basis is much more difficult. However, we know that sine and cosine have a periodicity. In particular, $\sin(2\pi n/T)$ and $\cos(2\pi n/T)$ can form a Schauder basis for the set of functions with period $T$.
 \begin{align*}
   f(t) &= \sum_{n=0}^{\infty} a_n\cos(2\pi nt/T) + b_n\sin(2\pi nt/T).
 \end{align*}
@@ -3718,4 +3719,170 @@ Thus, we recover the triangle inequality.
 We define $\cos\theta = \frac{\left\vert \braket{A}{B} \right\vert}{\norm{A}\norm{B}}$. The geometric interpretation of $\braket{A}{B}$ is, then, the projection of $\ket{B}$ onto $\ket{A}$.\newline
 
 Note that the inner product, norm, and the Cauchy--Schwarz inequality are completely basis-independent.
+\subsubsection{Orthonormal Sets and Bases}%
+Now that we have shown that the inner product is basis-independent, we can select a basis to make our lives a lot easier. Specifically, we can select $\set{\ket{\hat{e}_i}}_{i\in I}$ to be a (Schauder) basis such that
+\begin{align*}
+  \braket{\hat{e}_i}{\hat{e}_j} &= \delta_{ij}.
+\end{align*}
+In the case of the inner product between two vectors, this basis collapses to yield the standard inner product on $\C^n$:
+\begin{align*}
+  \braket{A}{B} &= \sum_{i,j}\overline{a_i}b_j \braket{\hat{e}_i}{\hat{e}_j}\\
+                &= \sum_{i}\overline{a_i}b_i.
+\end{align*}
+For instance, the standard basis on $\C^2$ is
+\begin{align*}
+  \hat{e}_{1} &= \begin{pmatrix}1\\0\end{pmatrix}\\
+  \hat{e}_{2} &= \begin{pmatrix}0\\1\end{pmatrix}.
+\end{align*}
+\begin{example}[A Non-Standard Basis]
+Let
+\begin{align*}
+  \ket{\epsilon_{1,2}} &= \frac{1}{\sqrt{2}}\left(\pm \ket{\hat{e}_1} + \ket{e_2}\right).
+\end{align*}
+Then,
+\begin{align*}
+  \braket{\epsilon_{1,2}}{\epsilon_{1,2}} &= \frac{1}{\sqrt{2}}\frac{1}{\sqrt{2}}\left(\pm\bra{\hat{e}_1} + \bra{\hat{e}_2}\right)\left(\ket{\hat{e}_1} + \ket{\hat{e}_2}\right)\\
+                                  &= \frac{1}{2}\left(\braket{\hat{e}_1}{\hat{e}_1} + \braket{\hat{e}_1}{\hat{e}_2} + \braket{\hat{e}_2}{\hat{e}_1} + \braket{\hat{e}_2}{\hat{e}_2}\right)\\
+                                  &= 1.\\
+  \braket{\epsilon_1}{\epsilon_2} &= \frac{1}{\sqrt{2}}\frac{1}{\sqrt{2}}\left(\bra{\hat{e}_1} + \bra{\hat{e}_2}\right)\left(-\ket{\hat{e}_1} + \ket{\hat{e}_2}\right)\\
+                                  &= \frac{1}{2}\left(-\braket{\hat{e}_1}{\hat{e}_1} + \braket{\hat{e}_1}{\hat{e}_2} - \braket{\hat{e}_1}{\hat{e}_2} + \braket{\hat{e}_2}{\hat{e}_2}\right)\\
+                                  &=0.
+\end{align*}
+\end{example}
+\begin{example}[Using an Orthonormal Basis]
+With the previous example, we have
+\begin{align*}
+  \ket{\hat{\epsilon}_1} &= \frac{1}{\sqrt{2}}\begin{pmatrix}1\\1\end{pmatrix}\\
+  \ket{\hat{\epsilon}_2} &= \frac{1}{\sqrt{2}} \begin{pmatrix}-1\\1\end{pmatrix}.
+\end{align*}
+Consider the vectors
+\begin{align*}
+  \ket{v} &= \begin{pmatrix}-1\\2\end{pmatrix}\\
+  \ket{w} &= \begin{pmatrix}1\\-i\end{pmatrix}.
+\end{align*}
+We wish to expand these vectors along the $\set{\ket{\epsilon_1},\ket{\epsilon_2}}$ basis.\newline
+
+To do this, we can project using the inner product's projection properties:
+\begin{align*}
+  v_1 &= \braket{\hat{\epsilon}_1}{v}\\
+      &= \frac{1}{\sqrt{2}} \overline{\begin{pmatrix}1 & 1\end{pmatrix}} \begin{pmatrix}-1\\2\end{pmatrix}\\
+      &= \frac{1}{\sqrt{2}}\\
+  v_2 &= \braket{\hat{\epsilon}_2}{v}\\
+      &= \frac{1}{\sqrt{2}}\overline{ \begin{pmatrix}-1 & 1\end{pmatrix} } \begin{pmatrix}-1\\2\end{pmatrix}\\
+      &= \frac{3}{\sqrt{2}}\\
+  v &= \frac{1}{\sqrt{2}}\ket{\hat{\epsilon}_1} + \frac{3}{\sqrt{2}}\ket{\hat{\epsilon}_2}\\
+  \\
+  w_1 &= \braket{\hat{\epsilon}_1}{w}\\
+      &= \frac{1}{\sqrt{2}} \overline{ \begin{pmatrix}1 & 1\end{pmatrix} } \begin{pmatrix}1\\-i\end{pmatrix}\\
+      &= \left(1-i\right)\frac{1}{\sqrt{2}}\\
+  w_2 &= \braket{\hat{\epsilon}_2}{w}\\
+      &= \frac{1}{\sqrt{2}} \overline{ \begin{pmatrix}-1 & 1\end{pmatrix} } \begin{pmatrix}1\\-i\end{pmatrix}\\
+      &= \left(-1-i\right)\frac{1}{\sqrt{2}}\\
+  w &= \frac{1-i}{\sqrt{2}}\ket{\hat{\epsilon}_1} + \frac{-1-i}{\sqrt{2}}\ket{\hat{\epsilon}_2}.
+\end{align*}
+\end{example}
+\begin{example}[Using a Complex-Valued Basis]
+  Consider the basis
+  \begin{align*}
+    \ket{\hat{e}_{I}} &= \frac{1}{\sqrt{5}} \begin{pmatrix}1\\2i\end{pmatrix}\\
+    \ket{\hat{e}_{II}} &= \frac{1}{\sqrt{5}} \begin{pmatrix}2\\ -i\end{pmatrix}.
+  \end{align*}
+  This is an orthonormal basis.
+  \begin{align*}
+    \braket{\hat{e}_{I}}{\hat{e}_{II}} &= \frac{1}{\sqrt{5}}\frac{1}{\sqrt{5}} \begin{pmatrix}1 & -2i\end{pmatrix} \begin{pmatrix}2\\-i\end{pmatrix}\\
+                                       &= 0.
+  \end{align*}
+  The components of a vector
+  \begin{align*}
+    \ket{A} &= \begin{pmatrix}a_1\\a_2\end{pmatrix}
+  \end{align*}
+  on this basis are
+  \begin{align*}
+    a_{I} &= \braket{\hat{e}_{I}}{A}\\
+          &= \frac{1}{\sqrt{5}} \overline{ \begin{pmatrix}1 & 2i\end{pmatrix} } \begin{pmatrix}a_1\\a_2\end{pmatrix}\\
+          &= \frac{a_1 - 2ia_2}{\sqrt{5}}\\
+    a_{II} &= \braket{\hat{e}_{II}}{A}\\
+           &= \frac{1}{\sqrt{5}} \overline{ \begin{pmatrix}2 & -i\end{pmatrix} } \begin{pmatrix}a_1\\a_2\end{pmatrix}\\
+           &= \frac{2a_1 + ia_2}{\sqrt{5}}\\
+    A &= \left(\frac{a_1 - 2ia_2}{\sqrt{5}}\right)\ket{\hat{e}_{I}} + \left(\frac{2a_1 + ia_2}{\sqrt{5}}\right)\ket{\hat{e}_{II}}.
+  \end{align*}
+  We can see that
+  \begin{align*}
+    \norm{A}^2 &= \left\vert a_1 \right\vert^2 + \left\vert a_2 \right\vert^2.
+  \end{align*}
+  It can also be shown\footnote{I will not show this, though, because I don't want to.} that
+  \begin{align*}
+    \norm{A}^2 &= \left\vert a_{I} \right\vert^2 + \left\vert a_{II} \right\vert^2\\
+               &= \left\vert a_1 \right\vert^2 + \left\vert a_2 \right\vert^2.
+  \end{align*}
+\end{example}
+\begin{example}
+  Consider the vectors
+  \begin{align*}
+    \ket{\ep_1} &= \begin{pmatrix}1\\1\\1\end{pmatrix}\\
+    \ket{\ep_2} &= \begin{pmatrix}1\\-2\\1\end{pmatrix}\\
+    \ket{\ep_3} &= \begin{pmatrix}1\\0\\-1\end{pmatrix}.
+  \end{align*}
+  This is an orthogonal basis, but not an orthonormal basis. To normalize these vectors, we divide out by the magnitude.
+  \begin{align*}
+    \ket{\hat{\ep}_{1}} &= \frac{1}{\sqrt{3}} \begin{pmatrix}1\\1\\1\end{pmatrix}\\
+    \ket{\hat{\ep}_{2}} &= \frac{1}{\sqrt{6}}\begin{pmatrix}1\\-2\\1\end{pmatrix}\\
+    \ket{\hat{\ep}_{3}} &= \frac{1}{\sqrt{2}} \begin{pmatrix}1\\0\\-1\end{pmatrix}.
+  \end{align*}
+  We project the arbitrary vector
+  \begin{align*}
+    A &= \begin{pmatrix}a_1\\a_2\\a_3\end{pmatrix}
+  \end{align*}
+  onto each basis element to obtain a new representation.
+  \begin{align*}
+    \braket{\hat{\ep}_{1}}{A} &= \frac{1}{\sqrt{3}} \left(a_1 + a_2 + a_3\right)\\
+    \braket{\hat{\ep}_{2}}{A} &= \frac{1}{\sqrt{6}}\left(a_1 - 2a-2 + a_3\right)\\
+    \braket{\hat{\ep}_{3}}{A} &= \frac{1}{\sqrt{2}} \left(a_1 - a_3\right).
+  \end{align*}
+  Thus, we can write
+  \begin{align*}
+    A &= \frac{a_1 + a_2 + a_3}{\sqrt{3}}\ket{\hat{\ep}_{1}} + \frac{a_1 - 2a_2 + a_3}{\sqrt{6}}\ket{\hat{\ep}_{2}} + \frac{a_1 - a_3}{\sqrt{2}}\ket{\hat{\ep}_{3}}.
+  \end{align*}
+  We can actually write in terms of the non-normalized basis, by dividing each $\ket{\hat{\ep}_{i}}$ by its corresponding normalization constant.
+  \begin{align*}
+    A &= \frac{a_1 + a_2 + a_3}{3}\ket{\ep_{1}} + \frac{a_1 - 2a_2 + a_3}{6}\ket{\ep_{2}} + \frac{a_1 - a_3}{2}\ket{\ep_{3}}
+  \end{align*}
+\end{example}
+\begin{example}[Pauli Basis]
+Consider the three Pauli matrices
+\begin{align*}
+  \sigma_{1} &= \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix}\\
+  \sigma_2 &= \begin{pmatrix}0 & -i\\i & 0\end{pmatrix}\\
+  \sigma_3 &= \begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix}.
+\end{align*}
+We can construct an inner product on these matrices. Specifically, we see that the Frobenius inner product\footnote{$\braket{A}{B} = \tr\left(A^{\ast}B\right)$}
+\begin{align*}
+  \braket{\sigma_i}{\sigma_j} &= \tr\left(\sigma^{\ast}_i \sigma_j\right)\\
+                              &= 2\delta_{ij},
+\end{align*}
+meaning that we need to redefine our inner product. Specifically, we take
+\begin{align*}
+  \braket{\sigma_i}{\sigma_j} &= \frac{1}{2}\tr\left(\sigma_{i}^{\ast}\sigma_j\right).
+\end{align*}
+Note that with the Pauli matrices, $\sigma_{i}^{\ast} = \sigma_j$. If we add
+\begin{align*}
+  \sigma_0 &= \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix},
+\end{align*}
+we now form a complete orthonormal basis in $\Mat_{2}(\C)$.\newline
+
+If $A$ is any complex-valued matrix, then
+\begin{align*}
+  A &= \sum_{\alpha=0}^{3}a_{\alpha}\sigma_{\alpha}\\
+    &= \sum_{\alpha=0}^{3}\braket{\sigma_{\alpha}}{A}\sigma_{\alpha}\\
+    &= \sum_{\alpha = 0}^{3}\frac{1}{2}\tr\left(\sigma_{\alpha}^{\ast}A\right)\sigma_{\alpha}.\\
+    &= \frac{1}{2}\tr(A) I_{2} + \frac{1}{2}\sum_{i=1}^{3}\tr\left(\sigma_{i}^{\ast}A\right)\sigma_{i}.
+\end{align*}
+One of the interesting applications of the Pauli basis is that, using the Pauli basis, we can represent any $\mathbf{v}\in \R^{3}$ and represent with the Pauli matrices.
+\begin{align*}
+  V &= \sum_{i=1}^{3}v_{i}\sigma_{i}\\
+    &= \sum_{i=1}^{3}\braket{\sigma_{i}}{v}\\
+    &= \begin{pmatrix}v_z & v_x - iv_y\\v_x + iv_y & -v_z \end{pmatrix}.
+\end{align*}
+Note that $V = V^{\ast}$ and $\tr(V) = 0$. Thus, using the Pauli basis, we can express any $3$-dimensional vector as a trace-free Hermitian matrix.
+\end{example}
 \end{document}

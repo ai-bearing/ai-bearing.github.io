@@ -9,6 +9,8 @@
 %serif font + different blackboard bold for serif font
 \usepackage{newpxtext,eulerpx}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\DeclareMathOperator{\pred}{pred}
+\DeclareMathOperator{\sub}{sub}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -1567,7 +1569,7 @@ We want a Turing machine, $T_{H}\left(n,x\right)$, where we ask if $T_{n}(x)$ ha
 \subsection{Recursive Functions, Decidable Sets, and Enumerable Sets}%
 Now, we can look at the class of functions that ``ought'' to be computable. For instance, the following functions are computable.
 \begin{itemize}
-  \item $Z(n) = 0$ for all $n\in \N$;
+  \item $C_0(n) = 0$ for all $n\in \N$;
   \item $S(n) = n+1$ for all $n\in \N$;
   \item $P_{i}^{(k)} \left(n_1,\dots,n_k\right) = n_{i}$ for all $n_1,\dots,n_k\in \N$;
   \item all compositions of these functions: if $f\left(t_1,\dots,t_m\right)$ and $g_1,\dots,g_m$ are computable, then
@@ -1597,11 +1599,113 @@ Some primitive recursive functions are as follows.
 \begin{align*}
   h\left(m_1,\dots,m_k,n+1\right) &= g\left(m_1,\dots,m_k,n,h\left(m_1,\dots,m_k,n\right)\right),
 \end{align*}
-where $h\left(m_1,\dots,m_k,0\right) = f\left(m_1,\dots,m_k\right)$. Here, $f\left(m_1,\dots,m_k\right)$ is written in terms of $Z,S,P_{i}^{(k)}$. We say $h$ is obtained from $f$ and $g$ by primitive recursion.
+where $h\left(m_1,\dots,m_k,0\right) = f\left(m_1,\dots,m_k\right)$. Here, $f\left(m_1,\dots,m_k\right)$ is written in terms of $C_0,S,P_{i}^{(k)}$. We say $h$ is obtained from $f$ and $g$ by primitive recursion.
 \end{definition}
 \begin{definition}[Primitive Recursive Function]
-  Any function obtained from $Z,S,P_{i}^{(k)}$, composition, and primitive recursion, is called a primitive recursive function.
+  Any function obtained from $C_0,S,P_{i}^{(k)}$, composition, and primitive recursion, is called a primitive recursive function.
 \end{definition}
+\begin{theorem}
+  Primitive recursive functions are able to be computed by Turing machines. The converse is not true.
+\end{theorem}
+\begin{example}[Addition is Primitive Recursive]
+Show that
+\begin{align*}
+  A\left(m,n\right) &= m+n
+\end{align*}
+is primitive recursive.
+\begin{proof}
+  We can see that
+  \begin{align*}
+    A\left(m,n+1\right) &= S\left(A\left(m,n\right)\right),
+  \end{align*}
+  since $m+n + 1 = \left(m+n\right) + 1$. Additionally,
+  \begin{align*}
+    A\left(m,0\right) &= f\left(m\right)\\
+    \intertext{with}
+    f\left(m\right) &= P_{1}^{(1)}(m).
+  \end{align*}
+  Thus, 
+  \begin{align*}
+    A\left(m,n+1\right) &= g\left(m,n,A\left(m,n\right)\right),
+  \end{align*}
+  with $g\left(x,y,z\right) = S \left(P_{3}^{(3)}\left(m,n,A\left(m,n\right)\right)\right)$. Thus, $A$ is computable by Turing machines.
+\end{proof}
+\end{example}
+\begin{example}[Multiplication is Primitive Recursive]
+  Show that
+  \begin{align*}
+    M\left(m,n\right) &= mn
+  \end{align*}
+  is primitive recursive.
+  \begin{proof}
+    We can see that
+    \begin{align*}
+      M\left(m,n+1\right) &= M\left(m,n\right) + m\\
+                        &= A\left(M\left(m,n\right),m\right).
+    \end{align*}
+    We also have $M\left(m,0\right) = C_{0}(m)$.
+  \end{proof}
+\end{example}
+\begin{example}[Predecessor Function]
+We have the predecessor function
+\begin{align*}
+  \pred(x) &= \begin{cases}
+    x-1 & x \geq 1\\
+    0 & x = 0
+  \end{cases}.
+\end{align*}
+is primitive recursive.
+\begin{proof}
+  Note that
+  \begin{align*}
+    \pred\left(n+1\right) &= n.
+  \end{align*}
+  Thus,
+  \begin{align*}
+    \pred\left(n+1\right) &= g\left(n,\pred(n)\right)
+  \end{align*}
+  where $g\left(x,y\right) = P_{1}^{(2)}(x,y)$.
+\end{proof}
+\end{example}
+\begin{example}[Subtraction Function]
+  Show that 
+  \begin{align*}
+    \sub\left(x,y\right) &= \begin{cases}
+      x-y & x \geq y\\
+      0 & \text{else}
+    \end{cases}
+  \end{align*}
+  is primitive recursive.
+  \begin{proof}
+    Note that we have
+    \begin{align*}
+      \sub\left(x,y+1\right) &= \pred\left(\sub\left(x,y\right)\right)\\
+      \sub\left(x,0\right) &= x.
+    \end{align*}
+  \end{proof}
+\end{example}
+\begin{example}[Characteristic Function for Equality]
+Let
+\begin{align*}
+  E\left(x,y\right) &= \begin{cases}
+    1 & x=y\\
+    0 & x\neq y.
+  \end{cases}
+\end{align*}
+We will show that $E\left(x,y\right)$ is primitive recursive.
+\begin{proof}
+  Let $x\dot{-} y$ denote $\sub\left(x,y\right)$.
+  \begin{align*}
+    E\left(x,y\right) &= \left(1\dot{-}\left(x\dot{-}y\right)\right)\dot{-}\left(x\dot{-}y\right).
+  \end{align*}
+  Written in the form of proven primitive recursive functions, we have
+  \begin{align*}
+    E\left(x,y\right) &= \sub\left(\sub\left(S\left(C_{0}\left(P_{1}^{(2)}\left(x,y\right)\right)\right),\sub\left(x,y\right)\right),\sub\left(y,x\right)\right)
+  \end{align*}
+\end{proof}
+
+\end{example}
+\begin{example}[Computable Functions that is not Primitive Recursive]
 Not every computable function is primitive recursive. For instance, the Ackermann function,
 \begin{align*}
   A\left(m,n\right) &= \begin{cases}
@@ -1610,10 +1714,57 @@ Not every computable function is primitive recursive. For instance, the Ackerman
     A\left(m-1,A\left(m,n-1\right)\right) & m > 0,n > 0
   \end{cases},
 \end{align*}
-is computable, but not primitive recursive.
-\begin{theorem}
-  Primitive recursive functions are able to be computed by Turing machines. The converse is not true.
-\end{theorem}
+is computable, but not primitive recursive. We will show this.\newline
+
+In the sequence of function growth, we have
+\begin{align*}
+  f_{0}\left(n\right) &= n+2\\
+  f_1\left(n\right) &= n\left(2\right)\\
+                    &= \underbrace{f_{0}\circ\cdots\circ f_{0}}_{\text{$n$ times}}(0)\\
+                    &= f_0^{n}(0)\\
+  f_2 &= 2^{n}\\
+      &= \underbrace{f_{1}\circ\cdots\circ f_{1}}_{\text{$n$ times}}(1)\\
+      &= f_{1}^{n}\left(1\right)\\
+      \\
+  f_{k+1}(n) &= f_{k}^{n}(1).\tag*{(\textasteriskcentered)}
+\end{align*}
+These are examples of hyperoperations (beyond exponentiation). Note that if $n=0$, then $f_{k+1}(0) = f_{k}^{0}(1) = 1$.\newline
+
+We define
+\begin{align*}
+  H\left(k,n\right) &= f_{k}(n).\tag*{(\textasteriskcentered\textasteriskcentered)}
+\end{align*}
+Then,
+\begin{align*}
+  H\left(k+1,n+1\right) &= f_{k+1}\left(n+1\right)\tag*{by (\textasteriskcentered\textasteriskcentered)}\\
+                        &= f_{k}^{n+1}(1)\tag*{by (\textasteriskcentered)}\\
+                        &= f_{k}\left(f_{k}^{n}(1)\right) \tag*{by definition of $f^{n+1}_{k}$}\\
+                        &= f_{k}\left(f_{k+1}\left(n\right)\right)\tag*{by (\textasteriskcentered)}\\
+                        &= f_{k}\left(H\left(k+1,n\right)\right)\\
+                        &= H\left(k,H\left(k+1,n\right)\right)\tag*{by (\textasteriskcentered\textasteriskcentered)}.
+\end{align*}
+Thus, we have
+\begin{align*}
+  H\left(k+1,n+1\right) &= H\left(k,H\left(k+1,n\right)\right)
+\end{align*}
+Note that the input on $H$ is always reducing via the lexicographical order. If we want $H\left(0,n\right)$ and $H\left(k,0\right)$, we have
+\begin{align*}
+  H\left(0,n\right) &= n+2\\
+  H\left(k,0\right) &= \begin{cases}
+    2 & k=0\\
+    0 & k=1\\
+    1 & k > 1
+  \end{cases}.
+\end{align*}
+Note that we ended up changing the initial conditions.\newline
+
+Since we can write the Ackermann function in any programming language, we can see that it is computable.\newline
+
+To see that the Ackermann function is not primitive recursive, we will show that for any $f: \N^2\rightarrow \N$, there exists $k$ and $n$ such that $H\left(k,n\right) > f\left(k,n\right)$.\newline
+
+To show this, we show that $C_0,S,P_{i}^{(k)}$ satisfy this condition by ``induction.'' Then, we show that, for any function that is dominated by the Ackermann function, primitive recursion still yields the function being dominated by the Ackermann function.
+\end{example}
+
 \subsection{Goodstein Sequences}%
 Consider the number written as sums of powers of $2$:
 \begin{align*}

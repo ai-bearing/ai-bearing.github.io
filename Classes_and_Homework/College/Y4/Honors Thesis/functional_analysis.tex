@@ -3436,9 +3436,430 @@ Not all finite rank operators are bounded, but we can look at ones that are.
   We can view $X\otimes Y^{\ast}$ as being contained in $\mathcal{B}\left(Y,X\right)$, since every $t\in X\otimes Y^{\ast}$ represents a finite rank operator from $Y$ to $X$ with $\norm{t}_{\wedge} = \norm{t}_{\text{op}}$.
 \end{remark}
 \begin{definition}
-  Let $X$ and $Y$ be normed spaces. A linear map $T: X\rightarrow Y$ is said to be compact if $\overline{T}\left(B_X\right)\subseteq Y$ is compact.\newline
+  Let $X$ and $Y$ be normed spaces. A linear map $T: X\rightarrow Y$ is said to be compact if $\overline{T\left(B_X\right)}\subseteq Y$ is compact.\newline
 
   We write $\K\left(X,Y\right)$ to denote the set of all compact operators from $X$ to $Y$.
 \end{definition}
+\begin{example}
+  Let $k: \left[0,1\right]^2\rightarrow \C$ be continuous. Given $f\in C\left([0,1]\right)$, we define
+  \begin{align*}
+    K\left(f\right): \left[0,1\right]\rightarrow \C
+  \end{align*}
+  by
+  \begin{align*}
+    K\left(f\right)(s) &= \int_{0}^{1} k\left(s,t\right)f(t)\:dt.
+  \end{align*}
+  We will show that $K\left(f\right)$ is continuous and that $K:C\left([0,1]\right)\rightarrow C\left([0,1]\right)$ is a compact operator.\newline
+
+  Fix $f\in C\left([0,1]\right)$, and let $\ve > 0$. Since $k$ is uniformly continuous,\footnote{Continuous and defined over compact domain.} there is $\delta > 0$ such that if $\left(s,t\right),\left(s',t'\right)\in \left[0,1\right]^2$ and $d_2\left(\left(s,t\right),\left(s',t'\right)\right) < \delta$, then
+  \begin{align*}
+    \left[k\left(s,t\right) - k\left(s',t'\right)\right] < \frac{\ve}{\norm{f}_u}.
+  \end{align*}
+  If $\left\vert s-s' \right\vert < \delta$, then $d_{2}\left(\left(s,t\right),\left(s',t'\right)\right) < \delta$, so
+  \begin{align*}
+    \left\vert K(f)(s) - K(f)\left(s'\right) \right\vert &\leq \int_{0}^{1} \left\vert k\left(s,t\right)-k\left(s',t'\right) \right\vert\left\vert f(t) \right\vert\:dt\\
+                                                         &\leq \int_{0}^{1} \frac{\ve}{\norm{f}_u}\norm{f}\:dt\\
+                                                         &= \ve.
+  \end{align*}
+  Thus, $K(f)$ is continuous, so $K$ is well-defined.\newline
+
+  It is the case that $K$ is linear, and $\norm{K}_{\text{op}}\leq \norm{k}_{u}$.\newline
+
+  We will show that $K$ is a compact operator by using the Arzela--Ascoli theorem. Consider the set
+  \begin{align*}
+    \mathcal{F} &= \set{K(f)\mid f\in C\left(\left[0,1\right]\right),\norm{f}_{u}\leq 1}.
+  \end{align*}
+  If $s\in [0,1]$, then $\left\vert K(f)(s) \right\vert\leq \norm{k}_{u}$ for all $f\in B_{C\left([0,1]\right)}$, meaning $\mathcal{F}$ is pointwise bounded. Similarly, for $\ve $ and $\delta$ as in the proof of the well-definedness of $K$, then if $\left\vert s-s' \right\vert < \delta$, $\left\vert K(f)(s) - K(f)\left(s'\right) \right\vert\leq \ve$ for all $f\in B_{C\left([0,1]\right)}$, meaning $\mathcal{F}$ is equicontinuous.\newline
+
+  By the Arzela--Ascoli theorem, $\overline{K\left(B_{C\left([0,1]\right)}\right)}$ is compact.
+\end{example}
+We can characterize compact operators in a variety of ways.
+\begin{proposition}
+  Let $X$ and $Y$ be normed spaces, $T: X\rightarrow Y$ is a linear map. Then, we have the following.
+  \begin{enumerate}[(1)]
+    \item If $T\in \F\left(X,Y\right)$, then $T$ is compact.
+    \item If $T\in \mathds{K}\left(X,Y\right)$, then $T\left(B_X\right)$ is totally bounded in $Y$, which implies that $T\in \mathcal{B}\left(X,Y\right)$. If $Y$ is a Banach space, then $T$ is compact if and only if $T\left(B_X\right)$ is totally bounded.
+    \item $T$ is compact if and only if for every bounded sequence $\left(x_n\right)_n$ in $X$, there is a subsequence $\left(x_{n_k}\right)_{k}$ such that $\left(T\left(x_{n_k}\right)\right)_{k}$ converges in $Y$.
+    \item In the following statements:
+      \begin{enumerate}[(i)]
+        \item $T\left(B_X\right)$ is compact in $Y$;
+        \item $T$ is a compact operator;
+        \item $T|_{B_X}: \left(B_{X},w\right)\rightarrow \left(Y,\norm{\cdot}\right)$ is continuous.
+      \end{enumerate}
+      We have (i) $\Rightarrow$ (ii) $\Rightarrow$ (iii). If $X$ is reflexive, then (iii) $\Rightarrow$ (i).
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Let $T$ be bounded and of finite rank. Let $Z = \Ran(T)$. Since $\Dim(Z) < \infty$, $B_{Z}$ is compact, so $\norm{T}B_Z$ is compact. For $x\in B_X$, we have $\frac{T\left(x\right)}{\norm{T}}\in B_{Z}$, so $T\left(x\right)\in \norm{T}B_{Z}$.
+    \item In metric spaces, compact sets are totally bounded, so if $T$ is compact, then $\overline{T\left(B_X\right)}$, hence $T\left(B_X\right)$, is totally bounded in $Y$.\newline
+
+      If $T\left(B_X\right)$ is totally bounded, then there exist $y_1,\dots,y_m$ such that
+      \begin{align*}
+        T\left(B_X\right) &\subseteq \bigcup_{j=1}^{m}U\left(y_j,1\right).
+      \end{align*}
+      We set $C = \max_{j=1}^{m}\set{\norm{y_j}} + 1$, meaning $\norm{T}_{\text{op}} \leq C$.\newline
+
+      If $Y$ is complete, then total boundedness is equivalent to having compact closure (i.e., precompact).
+    \item Let $\left(x_n\right)_n$ be a sequence in $X$. Then, we have $\left(\frac{1}{c}x_n\right)_n$ is a sequence in $B_X$ for some $c > 0$, meaning $\left(T\left(\frac{1}{c}x_n\right)\right)_n$ is a sequence in $T\left(B_X\right)\subseteq \overline{T\left(B_X\right)}$. Since $T$ is compact, $\overline{T\left(B_{X}\right)}$ is compact, so there is a subsequence $\left(\frac{1}{c}x_{n_k}\right)_{k}\rightarrow y$, so $\left(T\left(x_{n_k}\right)\right)\rightarrow cy$.\newline
+
+      Conversely, let $\left(y_n\right)_n$ be a sequence in $\overline{T\left(B_{X}\right)}$ with a convergent subsequence. We approximate $\norm{y_n - z_n} < 1/n$, where $T\left(x_n\right) = z_n$. By our assumption, there is a subsequence $\left(x_{n_k}\right)_{k}$ such that $\left(T\left(x_{n_k}\right)\right)_{k} = z_{n_k}\rightarrow y$ for some $y\in Y$. Then,
+      \begin{align*}
+        \norm{y_{n_k} - y} &\leq \norm{y_{n_k} - z_{n_k}} + \norm{z_{n_k} - y}\\
+                           &\leq \frac{1}{n_k} + \norm{z_{n_k} - y}\\
+                           &< \ve,
+      \end{align*}
+      meaning $\overline{T\left(B_X\right)}$ is sequentially compact, hence compact.
+    \item We can see that (i) implies (ii).\newline
+
+      Let $T$ be compact, and let $\left(x_i\right)_{i}\rightarrow x$ be a weakly convergent net in $B_X$. Consider any subnet $\left(T\left(x_{i_j}\right)\right)_{j}$. Since $\overline{T\left(B_X\right)}$ is compact, there exists a norm-convergent subnet, $\left(T\left(x_{i_{j_k}}\right)\right)_{k}\rightarrow y$. Let $\varphi\in Y^{\ast}$. Then,
+      \begin{align*}
+        \varphi\left(T\left(x_{i_{j_k}}\right)\right)_{k}\xrightarrow{k\rightarrow\infty}\varphi(y).
+      \end{align*}
+      Note that $\varphi\circ T\in X^{\ast}$, and $\left(x_{i_{j_k}}\right)_{k}\rightarrow x$, meaning
+      \begin{align*}
+        \varphi\circ T\left(x_{i_{j_k}}\right)_{k}\rightarrow \varphi\circ T(x).
+      \end{align*}
+      Thus, $\varphi\circ T(x) = \varphi(y)$. Since this is true for all $\varphi\in Y^{\ast}$, we have $T(x) = y$.\newline
+
+      We have $X$ is reflexive if and only if $\left(B_{X},w\right)$ is compact. Thus, if $T|_{B_X}: \left(B_X,w\right)\rightarrow \left(Y,\norm{\cdot}\right)$ is continuous, and $B_{X}$ is weakly compact, then $T\left(B_{X}\right)$ is norm-compact in $Y$. This shows (iii) implying (i).
+  \end{enumerate}
+\end{proof}
+\begin{lemma}
+  Let $T:X\rightarrow Y$ be a compact operator between normed spaces. Then, $\overline{\Ran}(T)$ is separable.
+\end{lemma}
+\begin{proof}
+  Since $\overline{T\left(B_X\right)}$ is compact, it is separable, so there is a set $S = \set{y_{n}}_{n\geq 1}$ in $\overline{T}\left(B_{X}\right)$ with $\overline{S} = \overline{T}\left(B_{X}\right)$.\newline
+
+  We claim $S$ is total\footnote{Linear span is dense.} in $\overline{\Ran}\left(T\right)$.\newline
+
+  Since $T\left(B_{X}\right)\subseteq \Ran(T)$, we can take closures to find
+  \begin{align*}
+    S &\subseteq \overline{T\left(B_{X}\right)}\\
+      &\subseteq \overline{\Ran}\left(T\right).
+  \end{align*}
+  Since $\overline{\Ran}\left(T\right)$ is a subspace, we have $\Span\left(S\right)\subseteq \overline{\Ran}\left(T\right)$. Taking closures yet again, we get $\overline{\Span}\left(S\right)\subseteq \overline{\Ran}\left(T\right)$.\newline
+
+  If $x\in X$, we have
+  \begin{align*}
+    T\left(x\right) &= \norm{x}T\left(\frac{x}{\norm{x}}\right)\\
+                    &\in \norm{x}T\left(B_{X}\right)\\
+                    &\subseteq \norm{x}\overline{T\left(B_{X}\right)}\\
+                    &= \norm{x}\overline{S}\\
+                    &= \overline{\norm{x}S}\\
+                    &\subseteq \overline{\Span}\left(S\right),
+  \end{align*}
+  so $\Ran(T)\subseteq \overline{\Span}\left(S\right)$, meaning $\overline{\Ran}\left(T\right)\subseteq \overline{\Span}\left(S\right)$. Thus, $S$ is total in $\overline{\Ran}(T)$, so $\Ran(T)$ is separable.
+\end{proof}
+\begin{exercise}
+  If $T:X\rightarrow Y$ is a compact operator between normed spaces, and $E\subseteq X$ is a subspace, then $T|_{E}:E\rightarrow Y$ is also compact.
+\end{exercise}
+\begin{solution}
+  Since $E\subseteq X$ is linear, we have $B_{E}\subseteq B_{X}$, so $T|_{E}\left(B_{E}\right) = T\left(B_{E}\right) \subseteq T\left(B_{X}\right)$, meaning
+  \begin{align*}
+    \overline{T|_{E}\left(B_{E}\right)} \subseteq \overline{T\left(B_{X}\right)}.
+  \end{align*}
+  Since $\overline{T\left(B_{X}\right)}$ is compact, so too is $\overline{T|_{E}\left(B_{E}\right)}$.
+\end{solution}
+\begin{proposition}
+  Let $X$ and $Y$ be Banach spaces, and let $T: X\rightarrow Y$ be compact. Then, $T^{\ast}:Y^{\ast}\rightarrow X^{\ast}$ is also compact.
+\end{proposition}
+\begin{proof}
+  We only need show that $T^{\ast}\left(B_{Y^{\ast}}\right)$ is totally bounded.\newline
+
+  Let $\ve > 0$. We know that $T\left(B_{X}\right)$ is totally bounded in $Y$, so there are $x_1,\dots,x_n$ such that
+  \begin{align*}
+    T\left(B_{X}\right)\subseteq \bigcup_{i=1}^{n}U\left(x_{i},\ve/3\right).
+  \end{align*}
+  Consider the finite rank operator $F: Y^{\ast}\rightarrow \ell_{\infty}^{n}$ defined by
+  \begin{align*}
+    F\left(\varphi\right) &= \left(\varphi\left(T\left(x_i\right)\right)\right)_{i=1}^{n}\\
+                          &= \left(T^{\ast}\left(\varphi\right)\left(x_{i}\right)\right)_{i=1}^{n}.
+  \end{align*}
+  We have $F$ is bounded (as it is a composition of bounded linear maps), so $F$ is compact, meaning $F\left(B_{Y^{\ast}}\right)$ is totally bounded in $\ell_{\infty}^{n}$. Thus, there are functionals $\varphi_{1},\dots,\varphi_{m}$ such that
+  \begin{align*}
+    F\left(B_{Y^{\ast}}\right) &\subseteq \bigcup_{i=1}^{n}U\left(\varphi_{i},\ve/3\right).
+  \end{align*}
+  Given $\psi\in B_{Y^{\ast}}$ and $x\in B_{X}$, we select $i$ and $j$ such that
+  \begin{align*}
+    \norm{T\left(x\right) - T\left(x_{i}\right)} &< \ve/3\\
+    \norm{F\left(\psi\right) - F\left(\varphi_{j}\right)}_{\infty} &< \ve/3.
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    \norm{T^{\ast}\left(\psi\right)\left(x\right) - T^{\ast}\left(\varphi_{j}\right)\left(x\right)} &\leq \norm{T^{\ast}\left(\psi\right)\left(x\right) - T^{\ast}\left(\psi\right)\left(x_{i}\right)} + \norm{T^{\ast}\left(\psi\right)\left(x_i\right) - T^{\ast}\left(\varphi_{j}\right)\left(x_i\right)} + \norm{T^{\ast}\left(\varphi_{j}\right)\left(x_i\right) - T^{\ast}\left(\varphi_{j}\right)\left(x\right)}\\
+                                                                                                    &\leq \norm{\psi\left(T\left(x\right) - T\left(x_{i}\right)\right)} + \norm{F\left(\psi\right) - F\left(\varphi_{j}\right)} + \norm{\varphi_{j}\left(T\left(x_i\right) - T\left(x\right)\right)}\\
+                                                                                                    &< \ve.
+  \end{align*}
+  Since $x\in B_X$ was arbitrary, we have $\norm{T^{\ast}\left(\psi\right) - T^{\ast}\left(\varphi_{j}\right)}_{\text{op}}\leq \ve$, and since $\psi\in B_{Y^{\ast}}$ was arbitrary, we also have
+  \begin{align*}
+    T^{\ast}\left(B_{Y^{\ast}}\right) &\subseteq \bigcup_{i=1}^{n}U\left(\varphi_{i},\ve\right).
+  \end{align*}
+\end{proof}
+\begin{exercise}
+  Let $X$ and $Y$ be Banach spaces, and suppose $T:X\rightarrow Y$ is compact.
+  \begin{enumerate}[(1)]
+    \item If $T$ is surjective, show that $\Dim(Y) < \infty$.
+    \item If $T$ has closed range, then $T$ is finite-rank.
+    \item If $X=Y$ and $T$ is idempotent, then $T$ is finite-rank.
+    \item If $X$ is infinite-dimensional and $T$ is injective, then $\Ran(T)$ is not closed.
+    \item If $X$ is infinite-dimensional, then $T$ cannot be isometric.
+  \end{enumerate}
+\end{exercise}
+\begin{solution}\hfill
+  \begin{enumerate}[(1)]
+    \item Let $T$ be surjective. Then, by the Open Mapping Theorem, $T$ is a quotient map, so there exists $\delta > 0$ such that $B_{Y}\subseteq T\left(\frac{1}{\delta}B_X\right)$.\newline
+
+      Let $\left(y_n\right)_n$ be a sequence in $B_{Y}$. Since $T$ is surjective, there exists $\left(x_n\right)_n$ such that $\left(T\left(x_n\right)\right)_n = y_n$. $B_{Y}\subseteq T\left(\frac{1}{\delta}B_X\right)$, we must have $\left(x_n\right)_n\subseteq \frac{1}{\delta}B_{X}$, so $\left(x_n\right)_n$ is bounded. Hence, $y_{n} = \left(T\left(x_n\right)\right)_n$ has a convergent subsequence as $T$ is compact. Thus, $B_{Y}$ is compact, hence $\Dim\left(Y\right) < \infty$.
+    \item Let $Z = T(X)$. Then, $Z\subseteq Y$ is a Banach space as $Z$ is closed and $Y$ is a Banach space. Therefore, $T: X\rightarrow Z$ is surjective, hence an open map, meaning that $Z$ is finite-dimensional by (1).
+    \item Let $T$ be idempotent. Then, we have $X = \ker(T)\oplus \Ran(T)$, and $\Ran(T)$ is closed, meaning that by (2), $\Ran(T)$ is finite-dimensional.
+    \item Let $T$ be injective. Then, $\ker(T) = \set{0}$, and since $X = X/\ker(T) \cong \Ran(T)$ by the First Isomorphism Theorem, $\Ran(T)$ is infinite-dimensional, implying that $T$ is not finite rank. Thus, $\Ran(T)$ is not closed by the contrapositive of (2).
+    \item Let $T$ be isometric. Then, $T^{\ast}: Y^{\ast}\rightarrow X^{\ast}$ is a $1$-quotient map, hence surjective. Since $T^{\ast}$ is compact, it must be the case that $\Dim\left(X^{\ast}\right) < \infty$, so $X$ is also finite-dimensional.
+  \end{enumerate}
+\end{solution}
+Compact operators have special properties related to their eigenspaces, including (but not limited to) the fact that the eigenspaces corresponding to nonzero eigenvalues are finite-dimensional and invariant.
+\begin{proposition}
+  Let $X$ be a Banach space, $T:X\rightarrow Y$ be a compact operator, and $0\neq \lambda\in \F$.
+  \begin{enumerate}[(1)]
+    \item The eigenspace
+      \begin{align*}
+        E_{\lambda}\left(T\right) &= \ker\left(T-\lambda I\right)
+      \end{align*}
+      is $T$-invariant and finite-dimensional.
+    \item The range $\Ran\left(T-\lambda I\right)$ is closed.
+    \item The cokernel $\operatorname{coker}\left(T - \lambda I\right)$ is finite-dimensional.
+    \item The operator $T - \lambda I$ is Fredholm.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item We know that $E_{\lambda}$ is $T$-invariant by the properties of eigenspaces, and since $E_{\lambda}$ is the kernel of a continuous operator, it is evident that it is closed.\newline
+
+      Let $T|_{E_{\lambda}}: E_{\lambda}\rightarrow E_{\lambda}$  be the restriction of $T$ to the invariant subspace. Then, $S$ is compact (as $T$ is compact), and by the definition of the eigenspace, $S = \lambda\id_{E_{\lambda}}$. Thus,
+      \begin{align*}
+        \overline{S\left(B_{E_{\lambda}}\right)} &= \overline{\lambda B_{E_{\lambda}}}\\
+                                                 &= \lambda \overline{B_{E_{\lambda}}}\\
+                                                 &= \lambda B_{E_{\lambda}},
+      \end{align*}
+      is compact. Since $\lambda\neq 0$, $B_{E_{\lambda}}$ is compact, so $\Dim\left(E_{\lambda}\right) < \infty$.
+    \item Since $E_{\lambda}\left(T\right)$ is finite-dimensional, there is a closed subspace $F\subseteq X$ with $X = E_{\lambda}\left(T\right) \oplus F$.\newline
+
+      Let $S = \left(T-\lambda I\right)|_{F}: F\rightarrow X$ be the restriction. Then, $\Ran\left(T-\lambda I\right) = \Ran(S)$, and $S$ is injective. We will show that $S$ is bounded below.\newline
+
+      Suppose there is a sequence of unit vectors $\left(f_n\right)_n$ with $\left(\norm{S\left(f_n\right)}\right)_{n}\rightarrow 0$. Since $T$ is compact, we may assume $\left(T\left(f_n\right)\right)_{n}\rightarrow z$ for some $z\in X$. Thus, $\left(f_n\right)_{n}\rightarrow \lambda^{-1}z$; since $\norm{z} = \lambda \neq 0$, and $F$ is closed, $z\in F$. Thus, $\left(T\left(f_n\right)\right)_{n}\rightarrow \lambda^{-1}T\left(z\right)$, so $T\left(z\right) = \lambda z$, or $S\left(z\right) = 0$.
+    \item Since $\Ran\left(T-\lambda I\right)$ is closed, we find
+      \begin{align*}
+        \operatorname{coker}\left(\left(T-\lambda I\right)^{\ast}\right) &= \left(X/\Ran\left(T-\lambda I\right)\right)^{\ast}\\
+                                                                         &\cong \left(\Ran\left(T-\lambda I\right)\right)^{\perp}\\
+                                                                         &= \ker\left(T^{\ast}-\lambda I\right).
+      \end{align*}
+      Since $T$ is compact, $T^{\ast}$ is also compact, meaning $\ker\left(T^{\ast}-\lambda I\right)$ is finite-dimensional, hence $\operatorname{coker}\left(T-\lambda I\right)$ is finite dimensional.
+    \item This follows from both $\ker\left(T-\lambda I\right)$ and $\operatorname{coker}\left(T-\lambda I\right)$ being finite-dimensional.
+  \end{enumerate}
+\end{proof}
+\begin{corollary}
+  If $X$ is a Banach space, and $P\in \mathds{K}(X)$ is idempotent, then $P$ is finite-rank.
+\end{corollary}
+\begin{proof}
+  Note that $E_{1}\left(P\right) = \Ran\left(P\right)$, so by the previous proposition, $P$ is finite-rank.
+\end{proof}
+\begin{theorem}[Algebraic Properties of the Space of Compact Operators]
+  Let $X,Y,Z$ be Banach spaces.
+  \begin{enumerate}[(1)]
+    \item $\mathds{K}\left(X,Y\right)\subseteq \mathcal{B}\left(X,Y\right)$ is a closed linear subspace.
+    \item If $S\in \mathcal{B}\left(Y,Z\right)$ and $T\in \mathds{K}\left(X,Y\right)$, then $S\circ T\in \mathds{K}\left(X,Z\right)$. Additionally, if $R\in \mathcal{B}\left(Z,X\right)$, then $T\circ R\in \mathds{K}\left(Z,Y\right)$.
+    \item $\mathds{K}\left(X\right)\subseteq \mathcal{B}\left(X\right)$ is a closed ideal.
+    \item $I_{X}\in \mathds{K}\left(X\right)$ if and only if $\Dim\left(X\right) < \infty$, in which case $\mathds{K}\left(X\right) = \mathcal{B}\left(X\right)$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Let $T,S\in \mathds{K}\left(X,Y\right)$ and $\alpha \in \C$. Let $\left(x_n\right)_n$ be a bounded sequence in $X$. Since $T$ is compact, there exists a subsequence such that $\left(T\left(x_{n_k}\right)\right)_{k}$ converges in $Y$. Since $S$ is convergent, there exists a subseequence such that $\left(S\left(x_{n_{k_{j}}}\right)\right)_{j}$ converges in $Y$. Thus, $\left(S + \alpha T\right)\left(x_{n_{k_{j}}}\right)_{j}$ converges in $Y$, so $S + \alpha T$ is compact.\newline
+
+      Let $\left(\norm{T_n - T}_{\text{op}}\right)_{n}\rightarrow 0$, where $\left(T_{n}\right)_{n}$ is a sequence in $\mathds{K}\left(X,Y\right)$. We will show that $T\left(B_X\right)$ is totally bounded.\newline
+
+      Let $\ve > 0$. There is $N$ such that $\norm{T_{N} - T} < \ve$, and since $T_{N}\left(B_X\right)$ is totally bounded, there exist $y_{1},\dots,y_m$ such that $T_{N}\left(B_{X}\right)\subseteq \bigcup_{j=1}^{m}U\left(y_j,\ve/2\right)$.\newline
+
+      For $x\in B_X$, we can find $j$ such that $\norm{T_{N}\left(x\right) - y_j} < \ve/2$, meaning
+      \begin{align*}
+        \norm{T\left(x\right) - y_j} &\leq \norm{T\left(x\right) - T_{N}\left(x\right)} + \norm{T_{N}\left(x\right) - y_j}\\
+                                     &\leq \norm{T - T_N}\norm{x} + \frac{\ve}{2}\\
+                                     &< \ve,
+      \end{align*}
+      meaning $T\left(B_{X}\right)\subseteq \bigcup_{j=1}^{m}U\left(y_j,\ve\right)$, so $T\left(B_X\right)$ is totally bounded, meaning $T$ is compact.
+    \item Let $\left(x_n\right)_n$ be bounded in $X$. Then, there exists a subsequence such that $\left(T\left(x_{n_k}\right)\right)_{k}\rightarrow y$ in $Y$. Since $S$ is continuous, $\left(S\left(T\left(x_{n_{k}}\right)\right)\right)_{k}\rightarrow S(y)$ in $Z$, so $S\circ T\in \mathds{K}\left(X,Z\right)$.\newline
+
+      Since $R\left(B_{Z}\right)\subseteq \norm{R}_{\text{op}}B_X$, we have
+      \begin{align*}
+        T\circ R\left(B_{Z}\right) &\subseteq T\left(\norm{R}_{\text{op}}B_X\right)\\
+                                   &= \norm{R}_{\text{op}}T\left(B_{X}\right)\\
+                                   &\subseteq \norm{R}_{\text{op}}\overline{T\left(B_{X}\right)}.
+      \end{align*}
+      Since $T$ is compact, $\overline{T\left(B_{X}\right)}$ is compact, meaning $\overline{T\circ R\left(B_{Z}\right)}$ is compact, so $T\circ R\in \mathds{K}\left(Z,Y\right)$.
+    \item This fact follows from (1) and (2).
+    \item We have $X$ is finite-dimensional if and only if $B_{X}$ is compact if and only if $I\left(B_{X}\right)$ is compact, if and only if $I$ is compact. Since any ideal that contains the multiplicative identity is the whole algebra, we know $\mathds{K}\left(X\right) = \mathcal{B}\left(X\right)$.
+  \end{enumerate}
+  
+\end{proof}
+\begin{remark}
+  Since the compact operators form a closed subspace and every bounded finite-rank operator is compact, we have
+  \begin{align*}
+    \overline{\F\left(X\right)}^{\norm{\cdot}_{\text{op}}} \subseteq \mathds{K}\left(X\right),
+  \end{align*}
+  where $X$ is a Banach space. This inclusion is sometimes strict. Banach spaces for which $\overline{\F\left(X\right)}^{\norm{\cdot}_{\text{op}}} = \mathds{K}\left(X\right)$ are said to have the approximation property.\newline
+
+  Hilbert spaces have the approximation property.
+\end{remark}
+\section{Locally Convex Topological Vector Spaces}%
+Now that we have a proper understanding of normed vector spaces and operators on them, we can investigate further into a more general structure that normed vector spaces fall into --- topological vector spaces. 
+\subsection{Topological Vector Spaces}%
+\begin{definition}
+  Let $X$ be a vector space over $\F$, and let $\tau$ be a topology on $X$. We say $\tau$ is compatible with the vector space structure of $X$ if
+  \begin{enumerate}[(1)]
+    \item for every $x\in X$, $\set{x}$ is closed;
+    \item scalar multiplication:
+      \begin{align*}
+        m: \F\times X\rightarrow X\\
+        m\left(\lambda,x\right) = \lambda x
+      \end{align*}
+      is continuous (where $\F\times X$ is endowed with the product topology);
+    \item vector addition
+      \begin{align*}
+        a: X\times X\rightarrow X\\
+        a\left(x,y\right) = x + y
+      \end{align*}
+      is continuous (where $X\times X$ is endowed with the product topology).
+  \end{enumerate}
+  A topological vector space is a pair $\left(X,\tau\right)$ where $X$ is a vector space and $\tau$ is a topology on $X$ that is compatible with the vector space structure of $X$.
+\end{definition}
+\begin{remark}
+  Since the topologies we are dealing with are not necessarily first countable,\footnote{Every point has a countable neighborhood system on it.} we have to use nets instead of sequences to understand ideas such as convergence.
+\end{remark}
+\begin{proposition}
+  Let $X$ be a topological vector space, and fix $x_0\in X$, $\alpha \neq 0$. Then,
+  \begin{enumerate}[(1)]
+    \item $T_{x_0}:X\rightarrow X$ defined by $T_{x_0}\left(x\right) = x + x_0$ is a homeomorphism;
+    \item $m_{\alpha}: X\rightarrow X$ defined by $m_{\alpha}\left(x\right) = \alpha x$ is a homeomorphism.
+  \end{enumerate}
+\end{proposition}
+\begin{corollary}
+  Let $X$ be a TVS, with $U\subseteq X$ open, $C\subseteq X$ closed, and $K\subseteq X$ compact. Let $x_0\in X$ and $\alpha \neq 0$.\newline
+
+  Then, $x_0 + U$ and $\alpha U$ are open, $x_0 + C$ and $\alpha C$ are closed, and $x_0 + K$ and $\alpha K$ are compact.
+\end{corollary}
+To show that the topology on a topological vector space is Hausdorff, we begin by showing a useful fact. 
+\begin{lemma}
+  Let $X$ be a topological vector space. Suppose $V\subseteq X$ is a neighborhood of $0_{X}$. There is a symmetric\footnote{A subset $W$ of $X$ such that $W = -W$.} open neighborhood of $0_{X}$ such that $W + W \subseteq V$.
+\end{lemma}
+\begin{proof}
+  We assume $V$ is open. Since $a: X\times X \rightarrow X$ is continuous, the preimage $a^{-1}\left(V\right)\subseteq X\times X$ is an open neighborhood of $\left(0_X,0_X\right)$ in the product topology of $X\times X$, meaning there are neighborhoods $W_1\times W_2$ of $\left(0_X,0_X\right)$ with $W_1,W_2$ open. Note that $W_1 + W_2\subseteq V$. If $W_3 = W_1\cap W_2$, then $W_3$ is an open neighborhood of $0_X$ with $W_3 + W_3\subseteq V$. Setting $W = W_3\cap \left(-W_3\right)$, we have $W$ is symmetric with $W + W \subseteq V$.
+\end{proof}
+\begin{proposition}
+  If $\left(X,\tau\right)$ is a topological vector space, then $\tau$ is Hausdorff.
+\end{proposition}
+\begin{proof}
+  Let $x,y\in X$ with $x\neq y$. Since $\set{y}$ is closed, there is $U\subseteq X$ with $x\in U\subseteq \set{y}^{c}$. Translating $V = U-X$, $V$ is thus an open neighborhood of $0_X$. There is then a symmetric open neighborhood $W$ with $W+W\subseteq V$.\newline
+
+  We have $x + W$ and $y+W$ are open neighborhoods of $x$ and $y$ respectively. We claim $\left(x+W\right)\cap \left(y+W\right) = \emptyset$.\newline
+
+  Suppose toward contradiction that this is not the case. Then, there is some $w,w'\in W$ such that $x+w = y + w'$. Thus,
+  \begin{align*}
+    y &= x+w-w'\\
+      &\in x + W + \left(-W\right)\\
+      &= x + W + W\\
+      &\subseteq x + V\\
+      &= x + \left(U-X\right)\\
+      &= U,
+  \end{align*}
+  meaning $y\in \set{y}^{c}$, which is a contradiction.\newline
+
+  Thus, $\tau$ is Hausdorff.
+\end{proof}
+We can now look at subspaces and quotient spaces of topological vector spaces.
+\begin{proposition}
+  Let $X$ be a topological vector space, and let $E\subseteq X$ be a linear subspace.
+  \begin{enumerate}[(1)]
+    \item $E$ is a topological vector space under the subspace topology.
+    \item $\overline{E}$ is also a subspace.
+    \item Assuming $E$ is closed, $X/E$ endowed with the quotient topology is a topological vector space, and $\pi: X\rightarrow X/E$ is an open map.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Since every element of $E$ is an element of $X$, we must have $\set{x}$ closed in $E$ as $\set{x}$ is closed in $X$. Similarly, since scalar multiplication is continuous in $X$, and $E$ is a subspace, scalar multiplication is closed in $X$, and similarly is vector addition.
+    \item We know that the subspace topology on $E$ is compatible with the vector space structure of $E$. Let $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$ and $\left(y_{\alpha}\right)_{\alpha}\rightarrow y$ be nets in $E$, and let $\lambda\in \F$. Then,
+      \begin{align*}
+        \left(x_{\alpha} + \lambda y_{\alpha}\right)_{\alpha}\rightarrow x + \lambda y,
+      \end{align*}
+      so $\overline{E}$ is also a subspace.
+    \item We will show that $\pi$ is an open map. If $U\subseteq X$ is open, then
+      \begin{align*}
+        \pi^{-1}\left(\pi\left(U\right)\right) &= U + E\\
+                                               &= \bigcup_{x\in E}x + U,
+      \end{align*}
+      meaning $\pi^{-1}\left(\pi\left(U\right)\right)$ is open, so $\pi\left(U\right)$ is open by the definition of the quotient topology.\newline
+
+      We need to show that the quotient topology is compatible with the vector space structure.\newline
+
+      Let $x+E\neq y+E$ in $X/E$. Then, $\left(x-y\right)\notin E$, so there exists $U$ with $x-y\in U\subseteq E^{c}$. Then, $y\in x+U$ and $x+U$ is open, meaning
+      \begin{align*}
+        y+E &= \pi(y)\\
+            &\in \pi\left(x+U\right)\\
+            &\subseteq X/E.
+      \end{align*}
+      Since $\pi$ is open, $x+U$ is open. We claim that $x+E\notin x+U$.\newline
+
+      If $x+E = \pi\left(x+u\right) = x+u+E$, then $u\in E$, which is a contradiction as $U\subseteq E^{c}$. Thus $\set{x+E}^{c}$ is open, so $X/E$ is a $T1$ topology.\newline
+
+      Let $a : X\times X\rightarrow X$ and $\overline{a}: X/E\times X/E\rightarrow X/E$ denote the addition maps. The following diagram commutes.
+      \begin{center}
+        % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAA0AdTvAW3gAE7EAF9S6TLnyEUARnJVajFm3YB6AKLc+g9RtHiQGbHgJEATAur1mrRB00GJJ6UXmzFNlfeEjFMKABzeCJQADMAJwheJDIQHAgkAGZrZTsQOhBqBjoAIxgGAAVJUxkQCKxAgAscJxBI6NjqBKR5JVs2bjQsbSx+OC6sOoaYxDaWxEt27xBuCBoYCIYsMBhgOhFhqNGU+MTJ7LyC4pczewrq2tSO+0HRChEgA
+\begin{tikzcd}
+X\times X \arrow[rd, "a"'] \arrow[r, "\pi\times\pi"] & X/E\times X/E \arrow[r, "\overline{a}"] & X/E \\
+                                                     & X \arrow[ru, "\pi"']                    &    
+\end{tikzcd}
+      \end{center}
+      We can see that for open $V\subseteq X/E$, $\left(\overline{a}\right)^{-1}\left(V\right) = \left(\pi\times\pi\right)\left(a^{-1}\left(\pi^{-1}\left(V\right)\right)\right)$, which is open as $\pi$ is open and $a$ is continuous.\newline
+
+      Similarly, we can see that $\overline{m}:\F\times X/E\rightarrow X/E$ is continuous.
+  \end{enumerate}
+\end{proof}
+\begin{proposition}
+  Let $\left(X,\tau\right)$ be a topological vector space. Then, the collection of all closed subspaces, 
+  \begin{align*}
+    \mathcal{M} = \set{M\mid M\subseteq X\text{ closed subspace}}
+  \end{align*}
+  is a lattice ordered by inclusion.
+\end{proposition}
+\begin{proof}
+  If $M,N\subseteq X$, then
+  \begin{align*}
+    M\wedge N &= M\cap N
+  \end{align*}
+  is is the largest closed subspace contained in both $M$ and $N$, while
+  \begin{align*}
+    M\vee N &= \overline{M+N}^{\tau}
+  \end{align*}
+  is the smallest closed subspace containing both $M$ and $N$.
+\end{proof}
+\begin{definition}
+  Let $\left(X,\tau\right)$ be a topological vector space. A local base for $X$ is a neighborhood base of $0_X$. The family $\mathcal{O}_{0}\subseteq \tau$ is defined such that
+  \begin{itemize}
+    \item $0_X\in V$ for all $V\in \mathcal{O}_{0}$
+    \item $\mathcal{O}_{0}$ is directed by reverse inclusion --- that is, if $U\in \tau$ with $0_X\in U$, then there exists $B\in \mathcal{O}_{0}$ with $B\subseteq U$.
+  \end{itemize}
+  Note that for any $x\in X$, we can find a neighborhood base for $x$ by taking $x + B$ for all $B\in \mathcal{O}_0$.
+\end{definition}
+\begin{definition}
+  A map $T: X\rightarrow Y$ between topological vector spaces is uniformly continuous if, for all $V\in \mathcal{O}_{0_Y}$, there exists $U\in \mathcal{O}_{0_{X}}$ such that if $x_1,x_2\in X$ with $x_1-x_2\in U$, then $T\left(x_1\right) - T\left(x_2\right)\in V$.
+\end{definition}
+\begin{proposition}
+  Let $X$ and $Y$ be topological vector spaces, and let $T: X\rightarrow Y$ be linear. Then, the following are equivalent.
+  \begin{enumerate}[(1)]
+    \item $T$ is continuous at $0_X$;
+    \item $T$ is continuous;
+    \item $T$ is uniformly continuous.
+  \end{enumerate}
+\end{proposition}
 
 \end{document}
