@@ -3885,4 +3885,228 @@ One of the interesting applications of the Pauli basis is that, using the Pauli 
 \end{align*}
 Note that $V = V^{\ast}$ and $\tr(V) = 0$. Thus, using the Pauli basis, we can express any $3$-dimensional vector as a trace-free Hermitian matrix.
 \end{example}
+\subsubsection{Constructing an Orthonormal Basis: Gram--Schmidt Decomposition}%
+The ultimate question behind linear algebra is what basis to choose.\newline
+
+However, even if we are given a basis, it may not be an orthonormal basis.
+\begin{method}
+Consider a set of $n$ linearly independent vectors in $\C^n$, $\set{\ket{\phi_{1}},\ket{\phi_n},\dots,\ket{\phi_{n}}}$. From these $n$ vectors, we want to create a set of $n$ orthonormal vectors.\newline
+
+Starting with $ \ket{\phi_1} $, we normalize to make
+\begin{align*}
+  \ket{ \hat{e}_1 } &= \frac{\ket{\phi_1}}{\sqrt{\braket{\phi_1}{\phi_1}}}.
+\end{align*}
+To get $ \ket{\hat{e}_2} $, we take $\ket{\phi_2}$ and remove the component of $\ket{\phi_2}$ along the ``direction'' of $\ket{\hat{e}_1}$. This gives us
+\begin{align*}
+  \ket{e_2} &= \ket{\phi_2}  - \braket{\hat{e}_1}{\phi_2}\ket{\hat{e}_1}.
+\end{align*}
+Now, we normalize to get
+\begin{align*}
+  \ket{\hat{e}_2} &= \frac{ \ket{e_2} }{\sqrt{\braket{e_2}{e_2}}}.
+\end{align*}
+Note that
+\begin{align*}
+  \braket{\hat{e}_1}{\hat{e}_2} &= \braket{\hat{e}_1}{\phi_2} - \braket{\hat{e}_1}{\phi_2}\braket{\hat{e}_1}{\hat{e}_1}\\
+                                &= 0.
+\end{align*}
+For $ \ket{ \hat{e}_3 } $, we start by taking $\ket{\phi_3}$, removing the components along the $\ket{\hat{e}_1}$ and $\ket{\hat{e}_2}$ directions, giving
+\begin{align*}
+  \ket{e_3} &= \ket{\phi_3} - \braket{\hat{e}_1}{\phi_3}\ket{\hat{e}_1} - \braket{\hat{e}_2}{\phi_3}\ket{\hat{e}_2}.
+\end{align*}
+Normalizing, we get
+\begin{align*}
+  \ket{\hat{e}_3} &= \frac{\ket{e_3}}{\sqrt{\braket{e_3}{e_3}}}.
+\end{align*}
+In the general form, we have
+\begin{align*}
+  \ket{e_m} &= \ket{\phi_m} - \sum_{\ell=1}^{m-1}\braket{\hat{e}_{\ell}}{\phi_m}\ket{\hat{e}_{\ell}}\\
+  \ket{\hat{e}_m} &= \frac{\ket{e_m}}{\sqrt{\braket{e_m}{e_m}}}.
+\end{align*}
+\end{method}
+\begin{example}
+  Consider the vectors
+  \begin{align*}
+    \ket{\phi_1} &= \begin{pmatrix}1\\-i\\1\end{pmatrix}\\
+    \ket{\phi_2} &= \begin{pmatrix}i\\0\\i\end{pmatrix}\\
+    \ket{\phi_3} &= \begin{pmatrix}1\\i\\-1\end{pmatrix}.
+  \end{align*}
+ This set is linearly independent. We start with
+ \begin{align*}
+   \ket{\hat{e}_1} &= \frac{1}{\sqrt{3}} \begin{pmatrix}1\\-i\\1\end{pmatrix}.
+ \end{align*}
+ Then,
+ \begin{align*}
+   \ket{e_2} &= \ket{\phi_2} - \braket{\hat{e}_1}{\phi_2}\ket{\hat{e}_1}\\
+             &= \begin{pmatrix}i\\0\\i\end{pmatrix} - \left[\overline{\left(\frac{1}{\sqrt{3}}\right) \begin{pmatrix}1 & -i & 1\end{pmatrix} } \begin{pmatrix}i\\0\\i\end{pmatrix}\right] \left(\frac{1}{3}\right) \begin{pmatrix}1\\-i\\1\end{pmatrix}\\
+             &= \begin{pmatrix}i\\0\\i\end{pmatrix} - \frac{2i}{3} \begin{pmatrix}1\\-i\\1\end{pmatrix}\\
+             &= \frac{1}{3} \begin{pmatrix}i\\-2\\i\end{pmatrix}.
+ \end{align*}
+ Normalizing, we get
+ \begin{align*}
+   \ket{\hat{e}_2} &= \frac{1}{\sqrt{6}} \begin{pmatrix}i\\-2\\i\end{pmatrix}.
+ \end{align*}
+ Finally, to get $\ket{\hat{e}_3}$, we take
+ \begin{align*}
+   \ket{e_3} &= \ket{\phi_3} - \braket{\hat{e}_1}{\phi_3}\ket{\hat{e}_1} - \braket{\hat{e}_2}{\phi_3}\ket{\hat{e}_2}\\
+             &= \begin{pmatrix}1\\i\\-1\end{pmatrix} - \left[\frac{1}{\sqrt{3}} \overline{ \begin{pmatrix}1 & -i & 1\end{pmatrix} } \begin{pmatrix}1\\i\\-1\end{pmatrix}\right] \left(\frac{1}{\sqrt{3}}\right) \begin{pmatrix}1\\-i\\1\end{pmatrix} - \left[\frac{1}{\sqrt{6}} \overline{ \begin{pmatrix}i & -2 & i\end{pmatrix} } \begin{pmatrix}1\\i\\-1\end{pmatrix}\right] \left(\frac{1}{\sqrt{6}}\right) \begin{pmatrix}i\\-2\\i\end{pmatrix}\\
+             &= \begin{pmatrix}1\\0\\-1\end{pmatrix}.
+ \end{align*}
+ Thus,
+ \begin{align*}
+   \ket{\hat{e}_3} &= \frac{1}{\sqrt{2}} \begin{pmatrix}1\\0\\-1\end{pmatrix}.
+ \end{align*}
+ The orthonormal basis is, as follows:
+ \begin{align*}
+   \ket{\hat{e}_1} &= \frac{1}{\sqrt{3}} \begin{pmatrix}1\\-i\\1\end{pmatrix}\\
+   \ket{\hat{e}_2} &= \frac{1}{\sqrt{6}} \begin{pmatrix}i\\-2\\i\end{pmatrix}\\
+   \ket{\hat{e}_3} &= \frac{1}{\sqrt{2}} \begin{pmatrix}1\\0\\-1\end{pmatrix}.
+ \end{align*}
+\end{example}
+\begin{example}[Gram--Schmidt with Matrices]
+Let
+\begin{align*}
+  \ket{M_1} &= \begin{pmatrix}1 & 1 \\ 1 & 1\end{pmatrix}\\
+  \ket{M_2} &= \begin{pmatrix}0 & i \\ i & 0\end{pmatrix}\\
+  \ket{M_3} &= \begin{pmatrix}1 & 0 \\ 0 & i\end{pmatrix}\\
+  \ket{M_4} &= \begin{pmatrix}0 & -1 \\ 1 & 0\end{pmatrix}.
+\end{align*}
+These matrices are linearly independent, but it is not the case that
+\begin{align*}
+  \braket{M_i}{M_j} &= \frac{1}{2}\tr\left(M_{i}^{\ast}M_j\right)\\
+                    &\neq \delta_{ij}.
+\end{align*}
+Let
+\begin{align*}
+  \ket{\hat{e}_1} &= \frac{\ket{M_1}}{\norm{\ket{M_1}}}\\
+                  &= \begin{pmatrix} 1 & 1 \\ 1 & 1\end{pmatrix} \frac{1}{\sqrt{\frac{1}{2}\tr\left(M_{1}^{\ast}M_{1}\right)}}\\
+                  &= \frac{1}{\sqrt{2}} \begin{pmatrix}1 & 1\\ 1 & 1\end{pmatrix}.
+\end{align*}
+Then, we have
+\begin{align*}
+  \ket{e_2} &= \ket{M_2} - \braket{\hat{e}_1}{M_2}\ket{\hat{e}_1}\\
+            &= \begin{pmatrix}0 & i \\ i & 0\end{pmatrix} - \frac{1}{2}\tr\left(\hat{e}_1^{\ast}M_2\right)\frac{1}{\sqrt{2}} \begin{pmatrix}1 & 1 \\ 1 & 1\end{pmatrix}\\
+            &= \begin{pmatrix}0 & i \\ i & 0\end{pmatrix} - \frac{i}{2} \begin{pmatrix}1 & 1 \\ 1 & 1\end{pmatrix}\\
+            &= \frac{i}{2} \begin{pmatrix}-1 & 1 \\ 1 & -1\end{pmatrix}.
+\end{align*}
+Normalizing, we get
+\begin{align*}
+  \ket{\hat{e}_2} &= \frac{\ket{e_2}}{\norm{\ket{e_2}}}\\
+                  &= \frac{i}{\sqrt{2}} \begin{pmatrix}-1 & 1 \\ 1 & -1\end{pmatrix}.
+\end{align*}
+Continuing, we get
+\begin{align*}
+  \ket{\hat{e}_3} &= \frac{1-i}{\sqrt{2}} \begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix}\\
+  \ket{\hat{e}_4} &= \begin{pmatrix}0 & -1 \\ 1 & 0\end{pmatrix}.
+\end{align*}
+
+\end{example}
+\subsubsection{Completeness}%
+The most important fact of a basis is that it can support any vector in $V$.
+\begin{align*}
+  \ket{v} &= \sum_{i=1}^{n}\braket{\hat{e}_i}{v}\ket{\hat{e}_i}.
+\end{align*}
+This is redundant in finite dimensions, but in infinite dimensions, we actually need our basis to support any vector.\newline
+
+Consider
+\begin{align*}
+  \ket{A} &= \sum_{\ell}a_{\ell}\ket{\hat{e}_{\ell}}\\
+          &= \sum_{\ell}\braket{\hat{e}_{\ell}}{A}\ket{\hat{e}_{\ell}}.
+          \intertext{Since $\braket{\hat{e}_{\ell}}{A}$ is a number, we can switch the order, yielding}
+          &= \sum_{\ell}\ket{\hat{e}_{\ell}}\braket{\hat{e}_{\ell}}{A}\\
+          &= \left(\sum_{\ell}\ket{\hat{e}_{\ell}}\bra{\hat{e}_{\ell}}\right)\ket{A}\\
+          &= I_{n} \ket{A}.
+\end{align*}
+\begin{definition}[Completeness Relation]
+The completeness relation states
+\begin{align*}
+  \sum_{\ell}\ket{\hat{e}_{\ell}}\bra{\hat{e}_{\ell}} &= \id_{V}.
+\end{align*}
+\end{definition}
+We let $\mathcal{P}_{\ell} = \ket{\hat{e}_{\ell}}\bra{\hat{e}_{\ell}}$ be the projection onto the subspace $\Span\left(\ket{\hat{e}_{\ell}}\right)$. Note that
+\begin{align*}
+  \mathcal{P} &= \sum_{\ell}\mathcal{P}_{\ell}
+\end{align*}
+satisfies the definition of the projection operator, $\mathcal{P}^2 = \mathcal{P}$:
+\begin{align*}
+  \mathcal{P}^2 &= \left(\sum_{\ell}\ket{\hat{e}_{\ell}}\bra{\hat{e}_{\ell}}\right) \left(\sum_{m}\ket{\hat{e}_{m}}\bra{\hat{e}_{m}}\right)\\
+                &= \sum_{\ell,m}\ket{\hat{e}_{\ell}}\braket{\hat{e}_{\ell}}{\hat{e}_{m}}\bra{\hat{e}_{m}}\\
+                &= \sum_{\ell,m}\ket{\hat{e}_{\ell}}\delta_{\ell m}\bra{\hat{e}_{m}}\\
+                &= \sum_{\ell}\ket{\hat{e}_{\ell}}\bra{\hat{e}_{\ell}}.
+\end{align*}
+We sometimes write $\ket{A}\bra{B}$ to be the outer product, which is the unique operator such that, for any $C\in V$, we have
+\begin{align*}
+  \left(\ket{A}\bra{B}\right)\ket{C} &= \ket{A} \braket{B}{C}.
+\end{align*}
+\begin{example}[Completeness Relation in $\R^3$]
+  Consider
+  \begin{align*}
+    \ket{\hat{e}_1} &= \begin{pmatrix}1\\0\\0\end{pmatrix}\\
+    \ket{\hat{e}_2} &= \begin{pmatrix}0\\1\\0\end{pmatrix}\\
+    \ket{\hat{e}_3} &= \begin{pmatrix}0\\0\\1\end{pmatrix}.
+  \end{align*}
+  Note that we have
+  \begin{align*}
+    \ket{\hat{e}_1}\bra{\hat{e}_1} &= \begin{pmatrix}1 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0\end{pmatrix}\\
+    \ket{\hat{e}_2}\bra{\hat{e}_2} &= \begin{pmatrix}0 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 0\end{pmatrix}\\
+    \ket{\hat{e}_3}\bra{\hat{e}_3} &= \begin{pmatrix}0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 1\end{pmatrix},
+  \end{align*}
+  so the completeness relation is satisfied.
+\end{example}
+\begin{definition}[Complete Orthonormal Basis]
+  A set $\set{\ket{\hat{e}_{i}}}_{i\in I}$ of normalized vectors is said to be a complete orthonormal basis if
+  \begin{align*}
+    \braket{\hat{e}_i}{\hat{e}_j} &= \delta_{ij}\\
+    \sum_{i\in I}\ket{\hat{e}_i}\bra{\hat{e}_i} &= \id.
+  \end{align*}
+\end{definition}
+Note that we get
+\begin{align*}
+  \ket{A} &= \id_{V}\ket{A}\\
+          &= \left(\sum_{\ell} \ket{\hat{e}_{\ell}}\bra{\hat{e}_{\ell}}\right)\ket{A}\\
+          &= \sum_{\ell}\braket{\hat{e}_{\ell}}{A}\ket{\hat{e}_{\ell}}\\
+          &= \sum_{\ell}a_{\ell}\ket{\hat{e}_{\ell}}.
+\end{align*}
+Additionally, this allows us to decompose along any complete basis:
+\begin{align*}
+  \ket{A} &= \sum_{\ell}a_{\ell}\ket{\hat{e}_{\ell}}\\
+          &= \sum_{\ell}a_{\ell}\id_{V}\ket{\hat{e}_{\ell}}\\
+          &= \sum_{\ell}a_{\ell}\left(\sum_{k}\ket{\hat{\ve}_k}\bra{\hat{\ve}_k}\right)\ket{\hat{e}_{\ell}}\\
+          &= \sum_{k,\ell}a_{\ell}\braket{\hat{\ve}_{k}}{\hat{e}_{\ell}}\ket{\hat{\ve}_k}\\
+          &= \sum_{k}\underbrace{\left(\sum_{\ell}a_{\ell}\braket{\hat{\ve}_k}{\hat{e}_{\ell}}\right)}_{a_{k}'}\ket{\hat{\ve}_k}\\
+          &= \sum_{k}a_k'\ket{\hat{\ve}_k}.
+\end{align*}
+\begin{example}[Quantum Mechanics]
+  Fundamental particles like protons, electrons, etc. have an intrinsic angular momentum, known as spin. This angular momentum has a value $\frac{1}{2}\hbar$, where $\hbar = \frac{h}{2\pi}$ is the reduced Planck constant.\newline
+
+  We represent
+  \begin{align*}
+    \ket{\psi} &= a\ket{\hat{e}_{\uparrow}} + b\ket{\hat{e}_{\downarrow}},
+  \end{align*}
+  subject to the fact that
+  \begin{align*}
+    E_{\psi}\left(\uparrow\right) &= \left\vert \braket{\hat{e}_{\uparrow}}{\psi} \right\vert^2\\
+    E_{\psi}\left(\downarrow\right) &= \left\vert \braket{\hat{e}_{\downarrow}}{\psi} \right\vert^2.
+  \end{align*}
+  However, since we have to measure \textit{some} probability, we must have
+  \begin{align*}
+    \underbrace{\left\vert \braket{\hat{e}_{\uparrow}}{\psi} \right\vert^2}_{\left\vert a \right\vert^2} + \underbrace{\left\vert \braket{\hat{e}_{\downarrow}}{\psi} \right\vert^2}_{\left\vert b \right\vert^2} &= \braket{\psi}{\psi}\\
+                                                                                                                              &= 1
+  \end{align*}
+  On the $z$ basis, we have
+  \begin{align*}
+    \ket{\hat{e}_{\uparrow}} &= \begin{pmatrix}1\\0\end{pmatrix}\\
+    \ket{\hat{e}_{\downarrow}} &= \begin{pmatrix}0\\1\end{pmatrix}.
+  \end{align*}
+  However, on the $x$ basis, we have
+  \begin{align*}
+    \ket{\hat{e}_{+}} &= \frac{1}{\sqrt{2}}\begin{pmatrix}1\\1\end{pmatrix}\\
+    \ket{\hat{e}_{-}} &= \frac{1}{\sqrt{2}}\begin{pmatrix}1\\-1\end{pmatrix}.
+  \end{align*}
+  However, despite this basis change, since these are a complete orthonormal basis for $\C^2$, we must have
+  \begin{align*}
+    \left\vert \braket{\hat{e}_{\uparrow}}{\psi} \right\vert^2 + \left\vert \braket{\hat{e}_{\downarrow}}{\psi} \right\vert^2 &= \left\vert \braket{\hat{e}_{+}}{\psi} \right\vert^2 + \left\vert \braket{\hat{e}_{-}}{\psi} \right\vert^2.
+  \end{align*}
+  
+\end{example}
+
 \end{document}

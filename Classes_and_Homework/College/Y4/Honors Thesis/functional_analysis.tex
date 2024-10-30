@@ -10,6 +10,7 @@
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \renewcommand*{\hbar}{\hslash}
 \newcommand{\K}{\mathbb{K}}
+\DeclareMathOperator{\conv}{conv}
 
 \pagestyle{fancy} %better headers
 \fancyhf{}
@@ -3861,5 +3862,300 @@ X\times X \arrow[rd, "a"'] \arrow[r, "\pi\times\pi"] & X/E\times X/E \arrow[r, "
     \item $T$ is uniformly continuous.
   \end{enumerate}
 \end{proposition}
+\begin{proof}
+  To see (i) implies (ii), we let $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$ be a net convergent in $X$, so $\left(x_{\alpha} - x\right)_{\alpha}\rightarrow 0_{X}$ by continuity of addition. Since $T$ is continuous at the origin, $\left(T\left(x_{\alpha} - x\right)\right)_{\alpha}\rightarrow T\left(0_{X}\right) = 0_{Y}$. Since $T$ is linear, we have $\left(T\left(x_{\alpha}\right) - T\left(x\right)\right)_{\alpha}\rightarrow 0_{Y}$, and since addition is continuous, we have $\left(T\left(x_{\alpha}\right)\right)_{\alpha}\rightarrow T(x)$.\newline
+
+  It is clear that (ii) implies (i).\newline
+
+  To see that (iii) implies (i), we let $V\in \mathcal{O}_{0_Y}$, meaning there exists $U\in \mathcal{O}_{0_X}$ such that $x_1-x_2\in U$ implies $T\left(x_1\right) - T\left(x_2\right)\in V$. Taking $x_2 = 0$, we have $T(U)\subseteq V$.\newline
+
+  To see that (i) implies (iii), let $V\in \mathcal{O}_{0_Y}$. By continuity, there is $U\in \mathcal{O}_{0_X}$ such that $T\left(U\right)\subseteq V$. If $x_1,x_2\in X$ with $x_1 - x_2\in U$, then $T\left(x_1 - x_2\right)\in V$. Since $T$ is linear, we have $T\left(x_1\right) - T\left(x_2\right)\in V$.
+\end{proof}
+\begin{definition}
+  We say that two topological vector spaces $X$ and $Y$ are isomorphic if there is a linear isomorphism $T: X\rightarrow Y$ that is a homeomorphism. We write $X\cong Y$ as topological vector spaces.
+\end{definition}
+\begin{definition}
+  A subset of a vector space $A\subseteq X$ is said to be balanced if, for every $\alpha\in \F$ with $\left\vert \alpha \right\vert \leq 1$, we have $\alpha A \subseteq A$.
+\end{definition}
+\begin{lemma}
+  Let $X$ be a topological vector space, and suppose $U$ is a neighborhood of the origin $0_X$. Then, there exists a balanced open set $W_{U}$ with $0\in W_{U}\subseteq U$.
+\end{lemma}
+\begin{proof}
+  Since $m: \F\times X\rightarrow X$ is continuous, $m^{-1}\left(U\right)$ is an open neighborhood of $\left(0,0_{X}\right)$ in the product topology. There must exist $V\in \mathcal{O}_{0_X}$ and $\delta > 0$ such that $\left(-\delta,\delta\right)\times V\subseteq m^{-1}\left(U\right)$. We have $m\left(\left(-\delta,\delta\right)\times V\right)\subseteq U$, so $\alpha V\subseteq U$ whenever $\left\vert \alpha \right\vert < \delta$. Thus, we have
+  \begin{align*}
+    W_{U} &= \bigcup_{\left\vert \alpha \right\vert < \delta} \alpha V
+  \end{align*}
+  is the set we are looking for.
+\end{proof}
+\begin{proposition}
+  Every topological vector space admits a local base consisting of balanced sets.
+\end{proposition}
+\begin{proof}
+  Let $\mathcal{O}_{0_{X}}$ be a local base for the topological vector space $X$. For each $U\in \mathcal{O}_{0_X}$, there is $W_{U}\subseteq U$ with $W_{U}$ balanced. Thus, $\set{W_{U}}_{U\in \mathcal{O}_{0_X}}$ is a local base consisting of balanced sets.
+\end{proof}
+\begin{proposition}
+  Let $X$ be a topological vector space of dimension $n$. Then, $X\cong \ell_{2}^{n}$ as topological vector spaces.
+\end{proposition}
+\begin{proof}
+  Let $\set{b_1,\dots,b_n}$ be a basis for $X$, and consider the map $\varphi: \ell_{2}^{n}\rightarrow X$ given by
+  \begin{align*}
+    \varphi\left(\lambda\right) &= \sum_{j=1}^{n}\lambda\left(j\right)b_j,
+  \end{align*}
+  where
+  \begin{align*}
+    \lambda &= \sum_{j=1}^{n}\lambda(j)e_j.
+  \end{align*}
+  It is clear that $\varphi$ is a linear isomorphism. Additionally, we claim that $\varphi$ is continuous.\newline
+
+  If $\left(\lambda_{k}\right)_{k}\xrightarrow{k\rightarrow\infty}\lambda$ in $\ell_{2}^{n}$, then $\lambda_{k}\left(j\right)\xrightarrow{k\rightarrow\infty}\lambda(j)$ for each $j$. Thus, $\lambda_{k}\left(j\right)b_j\xrightarrow{k\rightarrow\infty}\lambda(j)b_j$ for each $j$, since multiplication is continuous. Using the fact that addition is continuous, we get
+  \begin{align*}
+    \left(\varphi\left(\lambda_{k}\right)\right)_{k} &\xrightarrow{k\rightarrow\infty}\sum_{j=1}^{n}\lambda(j)b_j.
+  \end{align*}
+  To show that the inverse is continuous, we need a compactness argument.\newline
+
+  We claim that, for $B = B_{\ell_{2}^{n}}$, $\varphi(B)$ contains an open neighborhood of $0_{X}$.\newline
+
+  The unit sphere, $S = S_{\ell_{2}^{n}}$, is compact since it is closed and bounded, so $\varphi(S) \subseteq X$ is compact. Note that $0_{X}\notin \varphi(S)$ since $\varphi$ is injective. So, for every $x\in \varphi(S)$, we choose $U_{x},V_x$ such that $U_x\cap V_x = \emptyset$, $0_{X}\in U_X$, and $x\in V_x$.\newline
+
+  Now, we have an open cover
+  \begin{align*}
+    \varphi(S) \subseteq \bigcup_{x\in\varphi(S)}V_{x},
+  \end{align*}
+  which admits a finite subcover
+  \begin{align*}
+    \varphi(S) \subseteq \bigcup_{j=1}^{n}V_{x_j}.
+  \end{align*}
+  Set
+  \begin{align*}
+    U &= \bigcap_{j=1}^{n}U_{x_j},
+  \end{align*}
+  noting that $U\cap \varphi(S) = \emptyset$.\newline
+
+  There is an open and balanced $W$ with $0_{X}\in W\subseteq U$. We will show that $W\subseteq \varphi(B)$.\newline
+
+  Suppose toward contradiction that there is $w\in W\setminus \varphi(B)$. Since $\varphi$ is onto, we can write $w = \varphi(z)$ for some $z\in B^{c}$. We have
+  \begin{align*}
+    \varphi\left(\frac{1}{\norm{z}}z\right) &= \frac{1}{\norm{z}}\varphi(z)\\
+                                            &= \frac{1}{\norm{z}} w,
+  \end{align*}
+  which belongs to $W$ since $\norm{z} > 1$ and $W$ is balanced. However, $\frac{1}{\norm{z}}z\in S$, and $W\cap \varphi(S) = \emptyset$, which is our contradiction.\newline
+
+  If $V\subseteq \ell_{2}^{n}$ is an open neighborhood of the origin $0_{\ell_{2}^{n}}$, then there is $\delta > 0$ such that $\delta B \subseteq V$. Set $W' = \delta W$, which is yet again an open neighborhood of $0_{X}$. We have
+  \begin{align*}
+    W' &= \delta W\\
+       &\subseteq \delta \varphi(B)\\
+       &= \varphi\left(\delta B\right)\\
+       &\subseteq \varphi(V),
+  \end{align*}
+  implying that $\varphi^{-1}\left(W\right) \subseteq \varphi^{-1}\left(\varphi(V)\right) = V$, so $\varphi^{-1}$ is continuous at $0_X$, hence continuous.
+\end{proof}
+\begin{corollary}
+  Let $X$ be a topological vector space with finite dimension, and let $Y$ be an arbitrary topological vector space. Then, any linear map $T: X\rightarrow Y$ is continuous.
+\end{corollary}
+\begin{proof}
+  We have an isomorphism of topological vector spaces $\varphi: \ell_{2}^{n}\rightarrow X$. Since $\Ran(T)$ is finite dimensional and inherits the subspace topology on $Y$, there is also an isomorphism of topological vector spaces $\psi: \Ran(T) \rightarrow \ell_{2}^{m}$ for some $m\leq n$.\newline
+
+  We know that $S = \psi\circ T \circ \varphi$ is continuous since any map between finite-dimensional normed spaces is continuous, so $T = \psi^{-1}\circ S \circ \varphi^{-1}$ is continuous.
+\end{proof}
+We can extend notions of completeness to the case of a TVS using generalized versions of Cauchy sequences.
+\begin{definition}
+  Let $X$ be a topological vector spaces.
+\begin{enumerate}[(1)]
+  \item A sequence $\left(x_n\right)_n$ in $X$ is called Cauchy if $U\in \mathcal{O}_{0_X}$, there exists $N$ such that for all $m,n\geq N$, $x_m - x_n\in U$.
+  \item A net $\left(x_{\alpha}\right)_{\alpha \in A}$ is called Cauchy if, for every $U\in \mathcal{O}_{0_X}$, there exists $\gamma\in A$ such that for all $\alpha,\beta \geq \gamma$, $x_{\alpha} - x_{\beta}\in U$.
+  \item We say $X$ is complete if every Cauchy net converges in $X$.
+\end{enumerate}
+\end{definition}
+\begin{proposition}
+  A convergent net $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$ in a topological vector space is always Cauchy.
+\end{proposition}
+\begin{proof}
+  Let $V\in \mathcal{O}_{0_X}$. We find symmetric $W\in \mathcal{O}_{0_X}$ with $W+W \subseteq V$. Note that $x + W\in \mathcal{O}_{x}$, so for all large $\alpha$, we have $x_{\alpha}\in x + W$. If $\alpha$ and $\beta$ are sufficiently large, we have
+  \begin{align*}
+    x_{\alpha} - x_{\beta} &= \left(x_{\alpha} - x\right) + \left(x-x_{\beta}\right)\\
+                           &\in W + \left(-W\right)\\
+                           &= W + W\\
+                           &\subseteq V.
+  \end{align*}
+\end{proof}
+\begin{exercise}
+  Suppose $\left(x_{\alpha}\right)_{\alpha}$ is a Cauchy net in a topological vector space $X$ that admits a convergent subnet $\left(x_{\alpha_{\beta}}\right)_{\beta}\rightarrow x$. Show that $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$.
+\end{exercise}
+\begin{solution}
+  Let $V\in \mathcal{O}_{0_X}$, and $W\subseteq V$ symmetric such that $W+W \subseteq V$. Then, there exists $\gamma_1$ such that for all $\beta \geq \gamma_1$, $x_{\alpha_{\beta}}- x \in W$. Similarly, there exists $\gamma_2$ such that for all $\alpha,\alpha_{\beta}\geq \gamma_2$, $x_{\alpha}-x_{\alpha_{\beta}} \in W$. Thus, we get $\gamma$ such that $\gamma \geq \gamma_1$ and $\gamma \geq \gamma_{2}$. For all $\alpha,\alpha_{\beta} \geq \gamma$, we have
+  \begin{align*}
+    x_{\alpha} - x &= \left(x_{\alpha} - x_{\alpha_{\beta}}\right) + \left(x_{\alpha_{\beta}} - x\right)\\
+                   &\in W + W\\
+                   &\subseteq V.
+  \end{align*}
+  Thus, $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$.
+\end{solution}
+\begin{proposition}
+  If $X$ is a first countable topological vector space, then $X$ is complete if and only if every Cauchy sequence converges.
+\end{proposition}
+\begin{proof}
+  We only need to show sufficiency. Assume that every Cauchy sequence converges. Let $\left(x_{\alpha}\right)_{\alpha}$ be a Cauchy net in $X$. Since $X$ is first countable, there is a countable local base $\left(V_{n}\right)_n$. Without loss of generality, we may take $V_1\supseteq V_2\supseteq V_3\supseteq \cdots$. We inductively construct $\left(\alpha_{n}\right)_{n}\subseteq A$ with $\alpha_{1}\leq \alpha_{2}\leq \alpha_{3}\leq \cdots$, with, for $\alpha,\beta \geq \alpha_{n}$, $x_{\alpha} - x_{\beta}\in V_{n}$.\newline
+
+  Then, $\left(x_{\alpha_{n}}\right)_{n}$ is a Cauchy sequence in $X$, and thus converges. Therefore, $\left(x_{\alpha}\right)_{\alpha}$ converges.
+\end{proof}
+\begin{corollary}
+  If $X$ is a normed spaces, then $X$ is complete as a topological vector space if and only if $X$ is a Banach space.
+\end{corollary}
+\begin{proposition}
+  Let $X$ be a topological vector space, and suppose $E\subseteq X$ is a subspace.
+  \begin{enumerate}[(1)]
+    \item If $E$ is complete as a topological vector space, then $E\subseteq X$ is closed.
+    \item If $E\subseteq X$ is closed and $X$ is complete, then $E$ is complete.
+  \end{enumerate}
+\end{proposition}
+\begin{proposition}
+  Let $X$ and $Y$ be topological vector spaces, and suppose $\varphi: X\rightarrow Y$ is an isomorphism of topological vector spaces. Then, $X$ is complete if and only if $Y$ is complete.
+\end{proposition}
+\begin{proof}
+  Let $\left(x_{\alpha}\right)_{\alpha}$ be a Cauchy net in $X$. Then, for $V\in \mathcal{O}_{0_Y}$, for large $\alpha,\beta$, $x_{\alpha} - x_{\beta}\in V$. We then have $\varphi\left(x_{\alpha}\right) - \varphi\left(x_{\beta}\right)\in U$ for some $U\in \mathcal{O}_{0_Y}$, as $\varphi$ is an isomorphism (hence linear).\newline
+
+  We thus have $\left(x_{\alpha}\right)_{\alpha}$ is Cauchy if and only if $\left(\varphi\left(x_{\alpha}\right)\right)_{\alpha}$ (as $\varphi$ is a homeomorphism) is Cauchy, hence $X$ is complete if and only if $Y$ is complete.
+\end{proof}
+\begin{corollary}
+  Let $X$ be a topological vector space, and suppose $E\subseteq X$ is a subspace. If $\Dim(E) < \infty$, then $E$ is closed.
+\end{corollary}
+\begin{proof}
+  Endowing $E$ with the subspace topology, we see that $E$ is a finite-dimensional topological vector space, so $E\cong \ell_{2}^{n}$ for some $n$. Since $\ell_{2}^{n}$ is a Banach space, it is complete as a topological vector space, meaning $E$ is complete as a topological vector space, meaning $E$ is closed.
+\end{proof}
+\subsection{Local Convexity}%
+Topological vector spaces that arise in functional analysis are generally constructed as weak topologies. These spaces always admit a local base of convex sets.
+\begin{definition}
+  Let $X$ be a vector space.
+  \begin{enumerate}[(1)]
+    \item A subset $C\subseteq X$ is called convex if, for any elements $x_1,x_2\in C$, and $t\in [0,1]$, we have $\left(1-t\right)x_1 + tx_2\in C$.
+    \item Given a subset $A\subseteq X$, the convex hull of $A$ is defined as
+      \begin{align*}
+        \conv(A) &= \bigcap\set{C\mid A\subseteq C\subseteq X,~C\text{ convex}}.
+      \end{align*}
+      Equivalently,
+      \begin{align*}
+        \conv(A) &= \set{\sum_{j=1}^{n}t_jx_j\mid n\in\N,t_j\in [0,1],x_j=a,\sum_{j=1}^{n}t_j = 1}.
+      \end{align*}
+  \end{enumerate}
+\end{definition}
+\begin{definition}
+  A topological vector space is called locally convex if it admits a local base of convex sets. Such a space is called a locally convex topological vector space, abbreviated LCTVS.
+\end{definition}
+\begin{exercise}
+  Let $U$ be an open and balanced set in a topological vector space $X$. Prove that $\conv(U)$ is open and balanced.
+\end{exercise}
+\begin{solution}
+  We will show that the interior of any convex set is convex. Let $S$ be convex, $U = S^{\circ}$. Since $tS + \left(1-t\right)S = S$ by convexity, we have $tU + \left(1-t\right)U \subseteq S$, so $tU + \left(1-t\right)U \subseteq S^{\circ}$. Since $S^{\circ}$ is the smallest open set that contains $tU + \left(1-t\right)U$, it is the case that $tU + \left(1-t\right)U = U$.\newline
+
+  In particular, it must be the case that for any convex $C$ with $U\subseteq C\subseteq X$, we must have $U\subseteq C^{\circ}\subseteq X$ with $C^{\circ}$ convex. Thus, $\conv(U)$ is open.\newline
+
+  Since $U$ is balanced, we know that $\alpha U\subseteq U$ for all $\left\vert \alpha \right\vert \leq 1$. Since $U\subseteq \conv(U)$, we have $\alpha U \subseteq \conv(U)$, so $\conv(\alpha U) \subseteq \conv U$, so $\alpha \conv(U) \subseteq \conv(U)$, so $\conv(U)$ is balanced.
+\end{solution}
+\begin{proposition}
+  Every locally convex topological vector space has a local base of balanced convex sets.
+\end{proposition}
+\begin{proof}
+  Let $\mathcal{O}_{0_X}$ be a local base for $X$ consisting of convex sets. We construct the family $\set{W_{U}}_{U\in \mathcal{O}_{0_X}}$, which is a local base consisting of balanced sets with $W_{U}\subseteq U$ for each $U\in \mathcal{O}_{0_X}$. For each $U$, we set $V_{U} = \conv\left(W_{U}\right)$. Since $V_{U}\subseteq U$ for each $U$, as $U$ is convex, and $V_{U}$ is open, convex, and balanced, we have $\set{V_{U}}_{U\in \mathcal{O}_{0_X}}$ as our desired local base.
+\end{proof}
+\begin{proposition}[Preservation of Local Convexity]
+  Let $X$ be a locally convex topological vector space, and suppose $E\subseteq X$ is a subspace.
+  \begin{enumerate}[(1)]
+    \item Equipped with the subspace topology, $E$ is a locally convex topological vector space.
+    \item If $E$ is closed, $X/E$ with the quotient topology is a locally convex topological vector space.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We have shown that $E$ and $X/E$ are topological vector spaces earlier. We now only need to show that $E$ and $X/E$ admit local bases of convex sets. Let $\mathcal{O}_{0_X}$ be a local base for $X$ consisting of convex sets.
+  \begin{enumerate}[(1)]
+    \item We can see that $\set{U\cap E}_{U\in \mathcal{O}_{0_X}}$ is a local base of $E$ consisting of convex sets.
+    \item The projection $\pi: X\rightarrow X/E$ is an open map, so the family $\set{\pi\left(U\right)\mid U\in \mathcal{O}_{0_X}}$ is a local base for $X/E$.\newline
+
+      If $y_1 = \pi\left(x_1\right)$ and $y_2 = \pi\left(x_2\right)$ are in $\pi(U)$ for some $x_1,x_2\in U\in \mathcal{O}_{0_X}$, and $t\in [0,1]$, we have
+      \begin{align*}
+        \left(1-t\right)y_1 + ty_2 &= \left(1-t\right)\pi\left(x_1\right) + t\pi\left(x_2\right)\\
+                                   &= \pi\left(\left(1-t\right)x_1 + tx_2\right)\\
+                                   &\in \pi(U),
+      \end{align*}
+      since $U$ is convex. Thus, $\set{\pi\left(U\right)\mid U\in \mathcal{O}_{0_X}}$.
+  \end{enumerate}
+\end{proof}
+\subsection{Structure of Locally Convex Topological Vector Spaces}%
+So far, we have mostly been discussing the properties of the topologies on locally convex topological vector spaces, but it is valuable to understand just exactly \textit{from where} this topology comes from. In particular, we will construct the topology on a given vector space as an initial topology for a separating family of seminorms.
+\begin{definition}
+  Let $X$ be a vector space, and let $\mathcal{P}$ be a family of seminorms on $X$. For each $x\in X$  and $p\in \mathcal{P}$, we consider the maps
+  \begin{align*}
+    f_{p,z}:X\rightarrow [0,\infty)
+  \end{align*}
+  defined by $f_{p,z}(x) = p\left(x-z\right)$.\footnote{This is effectively equivalent to defining $f_{p,z}$ as a semimetric induced by $p$ in relation to a fixed $z$.} We write $\tau_{\mathcal{P}}$ to be the topology induced by the family
+  \begin{align*}
+    \mathcal{F}_{\mathcal{P}} &= \set{f_{p,z}\mid p\in \mathcal{P},z\in X}.
+  \end{align*}
+  Specifically, $\tau_{\mathcal{P}}$ is the topology induced by the family of open sets
+  \begin{align*}
+    \xi &= \set{f_{p,z}^{-1}\left(U\right)\mid p\in \mathcal{P},z\in X,U\subseteq [0,\infty)\text{ open}}.
+  \end{align*}
+\end{definition}
+\begin{remark}
+  Note that $\tau_{\mathcal{P}}$ is the initial topology induced by the family of semimetrics, $\mathcal{F}_{\mathcal{P}}$, not the family of seminorms $\mathcal{P}$. The convergence of nets is defined by $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$ if and only if $\left(f_{p,z}\left(x_{\alpha}\right)\right)_{\alpha}\rightarrow f_{p,z}\left(x\right)$ for all $p\in \mathcal{P}$ and $z\in X$.\newline
+
+  Equivalently, $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$ if and only if $\left(p\left(x_{\alpha}-z\right)\right)_{\alpha}\rightarrow p\left(x-z\right)$ for all $p\in \mathcal{P}$ and $z\in X$.
+\end{remark}
+\begin{definition}[Separating Family]
+A family of seminorms $\mathcal{P}$ on a vector space $X$ is called separating if, for all nonzero $x\in X$, there is $p\in \mathcal{P}$ such that $p(x)\neq 0$.
+\end{definition}
+Note that, by this definition, $\mathcal{F}_{\mathcal{P}}$ separates the points of $X$, as for $x\neq x'$, there is $p\in \mathcal{P}$ with $p\left(x-x'\right)\neq 0$, so $f_{p,x'}\left(x\right)\neq f_{p,x'}\left(x'\right)$.\newline
+
+We will start by showing that the topology $\tau_{\mathcal{P}}$ on $X$ admits a local base of balanced, convex sets.
+\begin{theorem}
+  Let $X$, $\mathcal{P}$, $\mathcal{F}_{\mathcal{P}}$, and $\tau_{\mathcal{P}}$ be defined as above.
+  \begin{enumerate}[(1)]
+    \item Given $p\in \mathcal{P}$, $z\in X$, and $\ve > 0$, the set
+      \begin{align*}
+        U_{p}\left(z,\ve\right) &= \set{x\in X\mid p\left(x-z\right) < \ve}
+      \end{align*}
+      is a convex open neighborhood of $z$. Addiitonally, $U_{p}\left(z,\ve\right)$ is balanced.
+    \item The convergence of a net $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$ holds if and only if $p\left(x_{\alpha}-x\right)\rightarrow 0$ for all $p\in \mathcal{P}$.
+    \item If $\mathcal{P}$ is a separating family, then $\left(X,\tau_{\mathcal{P}}\right)$ is a locally convex topologival vector space. A neighborhood base at $z\in X$ is given by
+      \begin{align*}
+        \mathcal{O}_{z} &= \set{\bigcap_{j=1}^{n}U_{p_j}\left(z,\ve\right)\mid p_1,\dots,p_n\in \mathcal{P},\ve > 0}.
+      \end{align*}
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Since $[0,\ve)\subseteq [0,\infty)$ is open, and $f_{p,z}$ is continuous, we have $U_{p}\left(z,\ve\right) = f_{p,z}^{-1}\left([0,\ve)\right)$ is open. We also know $z\in U_{p}\left(z,\ve\right)$.\newline
+
+      For $x_1,x_2\in U_{p}\left(z,\ve\right)$ and $t\in [0,1]$, we have
+      \begin{align*}
+        p\left(\left(1-t\right)x_1 + tx_2 - z\right) &= p\left(\left(1-t\right)x_{1} - \left(1-t\right)z + tx_2 - tz\right)\\
+                                                     &\leq p\left(\left(1-t\right)\left(x_1 - z\right)\right) + p\left(t\left(x_2 - z\right)\right)\\
+                                                     &= \left(1-t\right)p\left(x_1 - z\right) + tp\left(x_2 - z\right)\\
+                                                     &< \left(1-t\right)\ve + t\ve\\
+                                                     &= \ve,
+      \end{align*}
+      meaning $U_{p}\left(z,\ve\right)$ is convex.\newline
+
+      If $x\in U_{p}\left(0,\ve\right)$, then for $\alpha \in \F$ with $\left\vert \alpha \right\vert \leq 1$, we have $p\left(\alpha x\right) = \left\vert \alpha \right\vert p(x) \leq p(x) < \ve$, so $\alpha x \in U_{p}\left(0,\ve\right)$.
+    \item Taking $z=x$ in the net convergence criterion that $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$ if and only if $\left(p\left(x_{\alpha} - z\right)\right)_{\alpha}\rightarrow p\left(x-z\right)$ for all $p\in \mathcal{P}$ and $z\in X$ gives one direction.\newline
+
+      In the reverse direction, let $z\in X$. Then, by the reverse triangle inequality, since $p\left(x_{\alpha} - x\right) = p\left(x_{\alpha} - z + z -x\right)$, we have
+      \begin{align*}
+        \left\vert p\left(x_{\alpha} - z\right) + p\left(x - z\right) \right\vert \leq p\left(x_{\alpha} - x\right).
+      \end{align*}
+      Since, by assumption $p\left(x_{\alpha} - x\right)\rightarrow 0$, we must have $p\left(x_{\alpha} - z\right)\rightarrow p\left(x - z\right)$, meaning $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$ by the net convergence criterion.
+    \item Since $\mathcal{P}$ is a separating family, $\mathcal{F}_{\mathcal{P}}$ separates the points of $X$, so $\tau_{\mathcal{P}}$ is Hausdorff.\newline
+
+      We must now show that $\tau_{\mathcal{P}}$ is compatible with the vector space structure.
+      \begin{enumerate}[(i)]
+        \item Let $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$ and $\left(y_{\alpha}\right)_{\alpha}\rightarrow y$. Then, for arbitrary $p\in \mathcal{P}$, we have
+          \begin{align*}
+            0 &\leq p\left(\left(x_{\alpha} + y_{\alpha}\right) - \left(x+y\right)\right)\\
+              &\leq p\left(x_{\alpha} - x\right) + p\left(y_{\alpha} - y\right)\\
+              &\rightarrow 0,
+          \end{align*}
+          meaning $\left(x_{\alpha} + y_{\alpha}\right) \rightarrow \left(x+y\right)$.
+      \end{enumerate}
+  \end{enumerate}
+\end{proof}
 
 \end{document}

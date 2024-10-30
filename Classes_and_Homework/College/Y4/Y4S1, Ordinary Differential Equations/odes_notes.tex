@@ -1780,6 +1780,146 @@ Essentially, all linear combinations of solutions to $\diff{\vec{Y}}{t} = A\vec{
     \vec{Y}_2(t) &= \begin{pmatrix}-e^{-4t}\\2e^{-4t}\end{pmatrix}.
   \end{align*}
   Then, we can see that any linear combination of $\vec{Y}_1(t)$ and $\vec{Y}_2(t)$. In particular, we need to find the particular linear combination such that $\left(a\vec{Y}_1 + b\vec{Y}_2\right)(0) = \begin{pmatrix}2\\-3\end{pmatrix} $.
-\end{example}
+\begin{recall}
+  Recall that two vectors,
+  \begin{align*}
+    \begin{pmatrix}x_1\\y_1\end{pmatrix}, \begin{pmatrix}x_2\\y_2\end{pmatrix}
+  \end{align*}
+  are linearly independent in $\R^2$ if they do not lie on the same line through the origin. Alternatively, it is not the case that
+  \begin{align*}
+    \begin{pmatrix}x_2\\y_2\end{pmatrix} &= a \begin{pmatrix}x_1\\y_1\end{pmatrix}
+  \end{align*}
+  for some $a \neq 0$, or that
+  \begin{align*}
+    s_1 \begin{pmatrix}x_1\\y_1\end{pmatrix}  + s_2 \begin{pmatrix}x_2\\y_2\end{pmatrix} &=  \begin{pmatrix}0\\0\end{pmatrix}
+  \end{align*}
+  if and only if $s_1 = s_2 = 0$.
+\end{recall}
+\begin{definition}[Wronskian]
+  In general, the Wronskian of $\vec{Y}_1(t)$ and $\vec{Y}_2(t)$ is
+  \begin{align*}
+    W\left(\vec{Y}_1,\vec{Y}_2\right) &= \det \begin{pmatrix}Y_{1x}(t) & Y_{2x}(t) \\ Y_{1y}(t) & Y_{2y}(t)\end{pmatrix}
+  \end{align*}
+\end{definition}
+Our Wronskian is
+\begin{align*}
+  \det \begin{pmatrix}e^{2t} & -e^{-4t} \\ 0 & 2e^{-4t}\end{pmatrix} &= 2e^{-2t}\\
+                   &\neq 0
+\end{align*}
+Thus, we can see that $\vec{Y}_1$ and $\vec{Y}_2$ are linearly independent.\newline
 
+In general, if $W\left(\vec{Y}_1,\vec{Y}_2\right)\left(t_0\right)\neq 0$ for some $t_0$, then $\vec{Y}_1(t)$ and $\vec{Y}_2(t)$ are linearly independent.
+\end{example}
+\begin{theorem}[General Solution of Systems of Linear Equations]
+  Let $\vec{Y}_1(t)$, $\vec{Y}_2(t)$ be solutions of the linear system
+  \begin{align*}
+    \diff{\vec{Y}}{t} &= A\vec{Y}.
+  \end{align*}
+  If $\vec{Y}_1(0)$ and $\vec{Y}_2(0)$ are linearly independent, then for any initial condition $\vec{Y}\left(0\right) = \begin{pmatrix}x_0\\y_0\end{pmatrix}$, we can find constants $k_1$ and $k_2$ such that $k_1\vec{Y}_1\left(t\right) + k_2\vec{Y}(t)$ is the solution to the initial value problem.\newline
+
+  The general solution is of the form $k_1\vec{Y}_1(t) + k_2\vec{Y}_2(t)$.
+\end{theorem}
+\subsection{Straight Line Solutions}%
+Let
+\begin{align*}
+  \diff{\vec{Y}}{t} &= \begin{pmatrix}a & b \\ c & d\end{pmatrix} \vec{Y}.
+\end{align*}
+We begin by examining the corresponding vector field for this system, where we have $\vec{F}\left(\vec{Y}\right) = A\vec{Y}$. We are specifically looking for straight line solutions in the phase plane.\newline
+
+At a point $\left(x,y\right)$, the direction field for $\diff{\vec{Y}}{t}$ must be in the same (or opposite) direction to the vector pointing towards $\left(x,y\right)$.
+\begin{center}
+  \includegraphics[width=7cm]{images/straight_line_solution.png}
+\end{center}
+Mathematically, we want to find a nonzero vector $\vec{v} = \begin{pmatrix}x\\y\end{pmatrix}$ and a number $\lambda$ such that
+\begin{align*}
+  A\vec{v} = \lambda \vec{v}.
+\end{align*}
+\begin{itemize}
+  \item If $\lambda > 0$, then at $\vec{v}$, the vector field points away from the origin.
+  \item If $\lambda < 0$, then at $\vec{v}$, the vector field points towards the origin.
+\end{itemize}
+The number $\lambda$ is the eigenvalue of $A$ and the vector $\vec{v}$ is the eigenvector corresponding to $\lambda$.
+\begin{note}\hfill
+  \begin{enumerate}[(1)]
+    \item Given $A$, if $\vec{v}$ is an eigenvector for the eigenvalue $\lambda$, then so too is any $k\vec{v}$ for $k\in \R$.
+    \item Given an eigenvector $\vec{v}$ for $\lambda$, the entire line through the origin $\Span\left(\vec{v}\right)$ are all eigenvectors for $\lambda$.
+  \end{enumerate}
+\end{note}
+\begin{example}
+  Consider the differential equation
+  \begin{align*}
+    \diff{\vec{Y}}{t} &= \begin{pmatrix}4 & -2 \\ 3 & -1\end{pmatrix} \vec{Y}.
+  \end{align*}
+  To find the eigenvalue of $A$, we take
+  \begin{align*}
+    \left(A - \lambda I\right)\vec{v} &= 0\\
+    \begin{pmatrix}4-\lambda & -2 \\ 3 & -1 - \lambda\end{pmatrix} \begin{pmatrix}x\\y\end{pmatrix} &= 0,
+  \end{align*}
+  meaning we must have
+  \begin{align*}
+    \det\left(A - \lambda I\right) &= 0.
+  \end{align*}
+  to find non-trivial solutions. Calculating, we have
+  \begin{align*}
+    \det \begin{pmatrix}4-\lambda & -2 \\ 3 & -1-\lambda\end{pmatrix} &= \left(4-\lambda\right)\left(-1-\lambda\right) + 6\\
+                                  &= \left(\lambda - 4\right)\left(\lambda + 1\right) + 6\\
+                                  &= \lambda^2 - 3\lambda + 2\\
+                                  &= \left(\lambda - 2\right)\left(\lambda - 1\right).
+  \end{align*}
+  We have eigenvalues of $\lambda_2 = 2$ and $\lambda_1 = 1$.\newline
+
+  To find the corresponding eigenvectors, we start with $\lambda_1 = 1$.
+  \begin{align*}
+    \begin{pmatrix}3 & -2 \\ 3 & -2\end{pmatrix} \begin{pmatrix}x\\y\end{pmatrix} &= \begin{pmatrix}0\\0\end{pmatrix}\\
+    3x - 2y &= 0\\
+    3x -2y &= 0,
+  \end{align*}
+  meaning we have $y = \frac{3}{2}x$, or $\vec{v}_1 = \begin{pmatrix}2\\3\end{pmatrix}$. Similarly, we have
+  \begin{align*}
+    \begin{pmatrix}2 & -2 \\ 3 & -3\end{pmatrix} \begin{pmatrix}x\\y\end{pmatrix} &= \begin{pmatrix}0\\0\end{pmatrix},
+  \end{align*}
+  meaning we have $2x = 2y$, so $x = y$. Thus, $\vec{v}_{2} = \begin{pmatrix}1\\1\end{pmatrix}$.
+\begin{definition}[Straight-Line Solution]
+  If $\lambda$ is an eigenvalue associated with eigenvector $\vec{v} = \begin{pmatrix}x\\y\end{pmatrix}$. Then,
+  \begin{align*}
+    \vec{Y}_{\lambda}(t) &= e^{\lambda t}\vec{v}
+  \end{align*}
+  is a solution of $\diff{\vec{Y}}{t} = A\vec{Y}$.\newline
+
+  If $A$ has two distinct eigenvalues, $\lambda_1$ and $\lambda_2$, then the corresponding eigenvectors are linearly independent, meaning there are two straight line solutions on the phase plane.
+\end{definition}
+\begin{exercise}
+  Verify that the straight line solutions of the previous example are indeed straight line solutions.
+\end{exercise}
+Thus, we have $\vec{Y}_1(t) = e^{t} \begin{pmatrix}2\\3\end{pmatrix}$ and $\vec{Y}_2(t) = e^{2t} \begin{pmatrix}1\\1\end{pmatrix}$. Thus, the general solution is
+\begin{align*}
+  \vec{Y}(t) &= k_1\vec{Y}_1(t) + k_2\vec{Y}_2(t)\\
+             &= \begin{pmatrix}2k_1e^{t} + k_2e^{2t}\\ 3k_1e^{t} + k_2e^{2t}\end{pmatrix}.
+\end{align*}
+Examining the phase plane, we see the following.
+\begin{center}
+  \includegraphics[width=7cm]{images/straight_line_2.png}
+\end{center}
+\end{example}
+\begin{theorem}
+  Suppose $A$ has a real eigenvalue $\lambda$ and associated vector $\vec{v}$.\newline
+
+  Then, the linear system
+  \begin{align*}
+    \diff{\vec{Y}}{t} &= A\vec{Y}
+  \end{align*}
+  has the straight line solution
+  \begin{align*}
+    \vec{Y}(t) &= e^{\lambda t}\vec{v}.
+  \end{align*}
+  Moreover, if $\lambda_1$ and $\lambda_2$ are distinct real eigenvalues of $A$ with corresponding eigenvectors $\vec{v}_1$ and $\vec{v}_2$, the straight line solutions
+  \begin{align*}
+    \vec{Y}_1(t) &= e^{\lambda_1 t}\vec{v}_1\\
+    \vec{Y}_2(t) &= e^{\lambda_2 t}\vec{v}_2,
+  \end{align*}
+  are linearly independent, so the general solution to the system is
+  \begin{align*}
+    \vec{Y}(t) &= k_1e^{\lambda_1 t}\vec{v}_1 + k_2e^{\lambda_2 t}\vec{v}_2.
+  \end{align*}
+\end{theorem}
 \end{document}
