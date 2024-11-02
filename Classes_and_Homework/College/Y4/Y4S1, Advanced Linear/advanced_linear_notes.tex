@@ -12,6 +12,7 @@
 \usepackage{epigraph}
 \renewcommand{\epigraphflush}{flushleft}
 \renewcommand{\sourceflush}{flushleft}
+\DeclareMathOperator{\Tr}{Tr}
 %\DeclareMathOperator{\Hom}{Hom}
 
 \pagestyle{fancy} %better headers
@@ -3626,7 +3627,7 @@ K\otimes_{F}V \arrow[r, "T_{K}"]         & K\otimes_{F}W
   \begin{remark}
     This shows that $\C\otimes_{\R}V \cong V_{\C}$.
   \end{remark}
-  \subsection{Tensor Products of Vector Spaces}%
+  \subsection{Tensor Products of Vector Spaces and the Trace}%
   \begin{example}
     In multivariable calculus,
     \begin{align*}
@@ -3954,7 +3955,7 @@ V\times W \arrow[rd, "t"'] \arrow[r, "\iota",hookrightarrow] & V\otimes W \arrow
   \begin{definition}[Trace]
     Let $A\in \Mat_{n}\left(F\right)$, $A = \left(a_{ij}\right)$. Then,
     \begin{align*}
-      \tr(A) &= \sum_{i=1}^{n}a_{ii}.
+      \operatorname{Tr}(A) &= \sum_{i=1}^{n}a_{ii}.
     \end{align*}
   \end{definition}
   Recall that
@@ -4002,14 +4003,14 @@ V\times W \arrow[rd, "t"'] \arrow[r, "\iota",hookrightarrow] & V\otimes W \arrow
     \end{align*}
     We really need to show that
     \begin{align*}
-      t\left(v_1 + cv_2,\varphi\right)\left(\right) &= t\left(v_1,\varphi\right)\left(w\right) + ct\left(v_2,\varphi\right)\left(w\right)\\
-      t\left(v,\varphi_1 + c\varphi_2\right)\left(\right) &= t\left(v,\varphi_1\right)\left(w\right) + ct\left(v,\varphi_2\right)\left(w\right).
+      t\left(v_1 + cv_2,\varphi\right)\left(w\right) &= t\left(v_1,\varphi\right)\left(w\right) + ct\left(v_2,\varphi\right)\left(w\right)\\
+      t\left(v,\varphi_1 + c\varphi_2\right)\left(w\right) &= t\left(v,\varphi_1\right)\left(w\right) + ct\left(v,\varphi_2\right)\left(w\right).
     \end{align*}
     Computing, we have
     \begin{align*}
-      t\left(v_1 + cv_2,\varphi\right)\left(\right) &= \varphi\left(w\right)\left(v_1 + cv_2\right)\\
+      t\left(v_1 + cv_2,\varphi\right)\left(w\right) &= \varphi\left(w\right)\left(v_1 + cv_2\right)\\
                                                       &= \varphi\left(w\right)v_1 + c\varphi\left(w\right)v_2\\
-                                                      &= t\left(v_1,\varphi\right)\left(\right) + ct\left(v_2,\varphi\right)\left(w\right).
+                                                      &= t\left(v_1,\varphi\right)\left(w\right) + ct\left(v_2,\varphi\right)\left(w\right).
     \end{align*}
     Similarly,
     \begin{align*}
@@ -4017,8 +4018,210 @@ V\times W \arrow[rd, "t"'] \arrow[r, "\iota",hookrightarrow] & V\otimes W \arrow
     \end{align*}
     Thus, there is a well-defined map 
     \begin{align*}
-      \mathcal{T}: V\otimes_{F}V' \rightarrow \Hom_{F}\left(V,V\right).
+      \mathcal{T}: V\otimes_{F}V' &\rightarrow \Hom_{F}\left(V,V\right)\\
+      v\otimes \varphi &\mapsto \left(w\mapsto \varphi(w) v\right).
     \end{align*}
-    
+    In particular, we have
+    \begin{align*}
+      \mathcal{T}\left(v\otimes \varphi\right)\left(w\right) &= \varphi\left(w\right)v.
+    \end{align*}
+    Since both $V\otimes V'$ and $\Hom_{F}\left(V,V\right)$ have dimension $n^2$, it is enough to show that $\mathcal{T}$ is injective.\newline
+
+    Let $\mathcal{B} = \set{v_1,\dots,v_n}$ be a basis for $V$, and $\mathcal{B}' = \set{v_1',\dots,v_n'}$ a basis for $V'$. Suppose we have
+    \begin{align*}
+      \mathcal{T}\left(\sum_{i,j}a_{i,j}\left(v_{i}\otimes v_{j}'\right)\right) &= 0_{\Hom_{F}\left(V,V\right)}
+    \end{align*}
+    for some $a_{i,j}\in \F$. Take $v_m\in \mathcal{B}$. Then, we have
+    \begin{align*}
+      0_{V} &= \mathcal{T}\left(\sum_{i,j}a_{i,j}\left(v_i\otimes v_j'\right)\right)\left(v_{m}\right)\\
+            &= \sum_{i,j}a_{i,j}\mathcal{T}\left(v_{i}\otimes v_{j}'\right)\left(v_{m}\right)\\
+            &= \sum_{i,j}a_{i,j}v_{j}'\left(v_m\right)v_i\\
+            &= \sum_{i} a_{i,m}v_i,\\
+      a_{i,m} &= 0.
+    \end{align*}
+    However, since $m$ was arbitrary, we have $a_{i,j} = 0$ for each $i,j$, so $\mathcal{T}$ is injective, hence $\mathcal{T}$ is an isomorphism.
   \end{proof}
+  Recall that we have
+  \begin{align*}
+    \Hom_{F}\left(V,V\right) \times \Hom_{F}\left(V,V\right) &\rightarrow \Hom_{F}\left(V,V\right)\\
+    \left(S,T\right) \xmapsto{\text{comp}} S\circ T.
+  \end{align*}
+  Therefore, we have the following diagram
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAAoA1AHW4jwC28AAScA5AEpegkV178sQuKMkgAvqXSZc+QijIAmKrUYs2vABIQBAfWAAxNV1Kcp3GcsvW7j56-WaIBjYeAREBuTG9MysiCA8fB4qAVohuuGkRtTRZnFetg5OnC4S6sYwUADm8ESgAGYATtZIAIzUOBBIAMzZprEg0jAAHjjAAMbWaGopII3NiGQgHa3UDHQARjAMAAraoXogDViVABY4IL0x5twCdDgnY4zAACpq0ooivLf3jwwv0xp6k0BEhFstEBEQAwsGB+lA6HAThULiYrnluNtsMIALzCL53B5PV4APWAAFoWm9uGMsA0xnj3MNRhMBFMGTS6cJnjM5iCIe1OogeqjcgMbgTfv8ymogA
+\begin{tikzcd}
+  \left(V\otimes V'\right)\times \left(V\otimes V'\right) \arrow[dd, "\mathcal{T}\times \mathcal{T}"'] \arrow[rr, "\Phi", dashed] &  & V\otimes V' \arrow[dd, "\mathcal{T}"] \\
+                                                                                                                                                      &  &                                       \\
+{\Hom_{F}\left(V,V\right)\times \Hom_{F}\left(V,V\right)} \arrow[rr, "\text{comp}"]                                                                                         &  & {\Hom_{F}\left(V,V\right)}                      
+\end{tikzcd}
+  \end{center}
+  We define
+  \begin{align*}
+    \Phi: \left(V\otimes_{F}V'\right)\times \left(V\otimes_{F}V'\right) &\longrightarrow V\otimes_{F}V'\\
+    \left(v\otimes \varphi, w\otimes \psi\right) &\longmapsto \varphi\left(w\right)v \otimes \psi.
+  \end{align*}
+  We need to verify that this map allows the diagram to commute. Let $x\in V$. Then, we have
+  \begin{align*}
+    \mathcal{T}\left(v\otimes \varphi\right)\circ \mathcal{T}\left(w\otimes \psi\right)\left(x\right) &= \mathcal{T}\left(v\otimes \varphi\right)\left(\psi(x) w\right)\\
+                                                                                                      &= \psi(x)\mathcal{T}\left(v\otimes \varphi\right)\left(w\right)\\
+                                                                                                      &= \psi(x)\varphi(w)v.
+  \end{align*}
+  In the other direction, we have
+  \begin{align*}
+    \mathcal{T}\circ \Phi \left(v\otimes \varphi,w\otimes \psi\right)(x) &= \mathcal{T}\left(\varphi(w)v \otimes \psi\right)(x)\\
+                                                                         &= \varphi(w)\mathcal{T}\left(v\otimes \psi\right)\left(x\right)\\
+                                                                         &= \varphi(w)\psi(x).
+  \end{align*}
+  Indeed, the diagram does commute, and $\Phi$ is our map that corresponds to composition of functions.\newline
+
+  Returning to the trace, let $T\in \Hom_{F}\left(V,V\right)$, with $\mathcal{B} = \set{v_1,\dots,v_n}$ a basis for $V$, and we write
+  \begin{align*}
+    A &= \left[T\right]_{\mathcal{B}}.
+  \end{align*}
+  Note that
+  \begin{align*}
+    a_{ij} &= v_{i}'\left(T\left(v_j\right)\right).
+  \end{align*}
+  In particular, we have
+  \begin{align*}
+    \operatorname{Tr}\left(A\right) &= \sum_{i=1}^{n}a_{ii}\\
+                      &= \sum_{i=1}^{n}v_i'\left(T\left(v_i\right)\right)
+  \end{align*}
+  Let
+  \begin{align*}
+    s: V\times V' &\rightarrow F\\
+    \left(v,\varphi\right) &\mapsto \varphi(v).
+  \end{align*}
+  This map is bilinear, meaning we have
+  \begin{align*}
+    S: V\otimes V' &\rightarrow F\\
+    v\otimes \varphi &\mapsto \varphi(v).
+  \end{align*}
+  Thus, we have the map
+  \begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12AJCAWwH1gAMQC+ACgBqpCQEoQI0uky58hFGQBMVWoxZsJnCHl7wABBIDk8xSAzY8BIhvLb6zVohBD52mFADm8ESgAGYATnxIZCA4EEjOOu5snDhhpgC8pgDKnADGWGG5pgAqAHrAALQAjCLWoRG8SFXUsVHUbnqexXUg4ZGIzTFxiAkMdABGMAwACsoOaiBhWP4AFjgg7boeIFk+IkA
+\begin{tikzcd}
+{\Hom_{F}(V,V)} \arrow[rr, "\tr = S\circ T^{-1}"] &  & F \\
+                                                  &  &   \\
+V\otimes V' \arrow[uu, "T"] \arrow[rruu, "S"']    &  &  
+\end{tikzcd}
+  \end{center}
+  We know that $\mathcal{T}\left(v_{i}\otimes v_{j}'\right) = T_{ij}\in \Hom_{F}\left(V,V\right)$. Since $\mathcal{T}$ is an isomorphism, we know that $\set{T_{ij} | T_{ij} = \mathcal{T}\left(v_{i}\otimes v_j\right)}_{i,j}$ is a basis of $\Hom_{F}\left(V,V\right)$.\newline
+
+  We take
+  \begin{align*}
+    \operatorname{Tr}\left(T_{k,\ell}\right) &= \operatorname{Tr}\left(\mathcal{T}\left(v_{k}\otimes v_{\ell}'\right)\right)\\
+                                             &= \sum_{i=1}^{n}v_{i}'\left(\mathcal{T}\left(v_{k}\otimes v_{\ell}\right)\left(v_i\right)\right)\\
+                                             &= \sum_{i=1}^{n}v_{i}'\left(v_{\ell}'\left(v_i\right) v_k\right)\\
+                                             &= \sum_{i=1}^{n}v_{\ell}'\left(v_i\right)v_{i}'\left(v_k\right)\\
+                                             &= v_{\ell}'\left(v_k\right)\\
+                                             &= \begin{cases}
+                                               1 & k = \ell\\
+                                               0 & \text{else}
+                                             \end{cases}.
+  \end{align*}
+  We also have
+  \begin{align*}
+    \tr\left(T_{k,\ell}\right) &= \left(S\circ \mathcal{T}^{-1}\right)\left(T_{k,\ell}\right)\\
+                               &= \left(S\circ \mathcal{T}^{-1}\right)\left(\mathcal{T}\left(v_{k}\otimes v_{\ell}'\right)\right)\\
+                               &= S\left(v_{k}\otimes v_{\ell}'\right)\\
+                               &= v_{\ell}'\left(v_k\right)\\
+                               &= \begin{cases}
+                                 1 & k = \ell\\
+                                 0 & \text{else}
+                               \end{cases}.
+  \end{align*}
+  Thus, $\operatorname{Tr} = \tr$ as they agree on the basis elements.\newline
+
+  We immediately see that $\operatorname{Tr}$ is a linear map.
+  \begin{corollary}
+    Let $A,B\in \Mat_{n}\left(F\right)$. We have $\Tr\left(AB\right) = \Tr\left(BA\right)$.
+  \end{corollary}
+  \begin{proof}
+    Define 
+    \begin{align*}
+      t_1: \Hom_{F}\left(V,V\right)\times \Hom_{F}\left(V,V\right) &\rightarrow F\\
+      \left(S,T\right) &\mapsto \tr\left(S\circ T\right)\\
+      \\
+      t_{2}:\Hom_{F}\left(V,V\right)\times \Hom_{F}\left(V,V\right) &\rightarrow F\\
+      \left(S,T\right) &\mapsto \tr\left(T\circ S\right).
+    \end{align*}
+    These are both bilinear maps, meaning we have maps
+    \begin{align*}
+      T_1: \Hom_{F}\left(V,V\right)\otimes \Hom_{F}\left(V,V\right) &\rightarrow F\\
+      \left(S\otimes T\right) &\mapsto \tr\left(S\circ T\right)\\
+      \\
+      T_2: \Hom_{F}\left(V,V\right)\otimes \Hom_{F}\left(V,V\right) &\rightarrow F\\
+      \left(S\otimes T\right) &\mapsto \tr\left(T\circ S\right).
+    \end{align*}
+    Let $v\otimes \varphi,w\otimes \psi\in V\otimes V'$. We need to show that
+    \begin{align*}
+      \tr\left(\mathcal{T}\left(v\otimes \varphi\right)\circ\mathcal{T}\left(w\otimes \psi\right)\right) &= \tr\left(\mathcal{T}\left(w\otimes \psi\right)\circ \mathcal{T}\left(v\otimes \varphi\right)\right).
+    \end{align*}
+    Recall that $\mathcal{T}\left(v\otimes \varphi\right)\circ \mathcal{T}\left(w\otimes \psi\right) \leftrightarrow \varphi(w)v\otimes \psi$, so we have
+    \begin{align*}
+      \tr\left(\mathcal{T}\left(v\otimes \varphi\right)\circ \mathcal{T}\left(w\otimes \psi\right)\right) &= \tr\left(\varphi(w) v\otimes \psi\right)\\
+                                                                                                          &= \varphi(w)\tr\left(v\otimes \psi\right)\\
+                                                                                                          &= \varphi(w)\psi(v)\\
+      \tr\left(\mathcal{T}\left(w\otimes \psi\right)\circ \mathcal{T}\left(v\otimes \varphi\right)\right) &= \tr\left(\psi(v) w\otimes \varphi\right)\\
+                                                                                                          &= \psi(v)\tr\left(w\otimes \varphi\right)\\
+                                                                                                          &= \varphi(w)\psi(v).
+    \end{align*}
+  \end{proof}
+  \subsection{Tensor Algebras, Exterior Algebras, and the Determinant}%
+  Now that we understand the trace, we want to build some more structure to understand the determinant.\newline
+
+
+    Recall that we have
+    \begin{align*}
+      \left(U\otimes V\right) \otimes W &\cong U\otimes \left(V\otimes W\right),
+    \end{align*}
+    so we may write
+    \begin{align*}
+      U\otimes V \otimes W.
+    \end{align*}
+  By induction, given $V_1,\dots,V_n$, we may write
+  \begin{align*}
+    V\otimes \cdots \otimes V_n
+  \end{align*}
+  as a unique vector space up to isomorphism.\newline
+
+  Elements in $V_1\otimes \cdots \otimes V_n$ look like
+  \begin{align*}
+    \sum_{}a_{i_1,\dots,i_{n}}\left(v_{i_1}\otimes\cdots\otimes v_{i_n}\right),
+  \end{align*}
+  where $v_{i_j}\in V_j$.\newline
+
+  We write
+  \begin{align*}
+    \mathcal{T}^{k}\left(V\right) &= \underbrace{V\otimes \cdots \otimes V}_{\text{$k$ copies}}
+  \end{align*}
+  \begin{definition}
+    Let $V_1,\dots,V_n$ be $F$-vector spaces. A map
+    \begin{align*}
+      t: V_1\times\cdots\times V_n\rightarrow W
+    \end{align*}
+    is said to be multilinear if it is linear in each variable separately.\newline
+
+    The collection of multilinear maps is denoted $\Hom_{F}\left(V_1,\dots,V_n;W\right)$.
+  \end{definition}
+  \begin{exercise}
+    Show that $\Hom_{F}\left(V_1,\dots,V_n;W\right)$ is a vector space.
+  \end{exercise}
+  We set
+  \begin{align*}
+    \mathcal{T}^{0}(V) &= F\\
+    \mathcal{T}^{1}(V) &= V.
+  \end{align*}
+  We can define a very large vector space
+  \begin{align*}
+    \mathcal{T}(V) &= \bigoplus_{k\geq 0}\mathcal{T}^{k}(V).
+  \end{align*}
+  Now, we can map
+  \begin{align*}
+    \mathcal{T}\left(V\right)\times \mathcal{T}\left(V\right) \rightarrow \mathcal{T}\left(V\right)
+  \end{align*}
+  meaning we can define a type of multiplication on $\mathcal{T}\left(V\right)$. We say $\mathcal{T}\left(V\right)$ is a $F$-\textit{algebra}, which is effectively a vector space that includes multiplication. Specifically, this is a tensor algebra.\newline
+
+  We will cut this space down to get an exterior algebra, from which we will get the determinant.
 \end{document}
