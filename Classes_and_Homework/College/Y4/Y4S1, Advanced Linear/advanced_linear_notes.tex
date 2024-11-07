@@ -13,6 +13,7 @@
 \renewcommand{\epigraphflush}{flushleft}
 \renewcommand{\sourceflush}{flushleft}
 \DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Alt}{Alt}
 %\DeclareMathOperator{\Hom}{Hom}
 
 \pagestyle{fancy} %better headers
@@ -3481,7 +3482,7 @@ V \arrow[rd, "S"'] \arrow[r, "\iota_V"] & K\otimes_{F}V \arrow[d, "T"] \\
 
   We have shown that $\set{1\otimes v}$ spans $K\otimes_{F}V$. To determine a $K$-linear map on $K\otimes_{F}V$, it is enough to see what $T$ does to $1\otimes v$.\newline
 
-  Since $T\left(1\otimes v\right) = S(v)$, if $\widetilde{T}$ also made the diagram commute, then $S(v) = \widetilde(1\otimes v)$, meaning $T = \widetilde{T}$. Thus, $T$ is unique.
+  Since $T\left(1\otimes v\right) = S(v)$, if $\tilde{T}$ also made the diagram commute, then $S(v) = \tilde(1\otimes v)$, meaning $T = \tilde{T}$. Thus, $T$ is unique.
   \end{proof}
   \begin{proposition}
     Let $K/F$ be an extension of fields. Then,
@@ -3794,7 +3795,7 @@ V\times W \arrow[rd, "t"'] \arrow[r, "\iota",hookrightarrow] & V\otimes W \arrow
       \tilde{t}: V\times W \rightarrow \left(U\otimes_{F}V\right)\otimes_{F}W\\
       \left(v,w\right) \mapsto \left(u\otimes v\right)\otimes w.
     \end{align*}
-    Continuing the process, we get $\widetilde{S}: U\otimes_{F} \left(V\otimes_{F} W\right)\rightarrow \left(U\otimes_{F} V\right)\otimes_{F} W$, mapping $u\otimes \left(v\otimes w\right)\mapsto \left(u\otimes v\right)\otimes w$. These are inverses of each other.
+    Continuing the process, we get $\tilde{S}: U\otimes_{F} \left(V\otimes_{F} W\right)\rightarrow \left(U\otimes_{F} V\right)\otimes_{F} W$, mapping $u\otimes \left(v\otimes w\right)\mapsto \left(u\otimes v\right)\otimes w$. These are inverses of each other.
   \end{proof}
   \begin{theorem}
     Let $U,V,W$ be $F$-vector spaces. There is an isomorphism
@@ -4182,7 +4183,7 @@ V\otimes V' \arrow[uu, "T"] \arrow[rruu, "S"']    &  &
     \end{align*}
   By induction, given $V_1,\dots,V_n$, we may write
   \begin{align*}
-    V\otimes \cdots \otimes V_n
+    V_1\otimes \cdots \otimes V_n
   \end{align*}
   as a unique vector space up to isomorphism.\newline
 
@@ -4208,20 +4209,238 @@ V\otimes V' \arrow[uu, "T"] \arrow[rruu, "S"']    &  &
   \begin{exercise}
     Show that $\Hom_{F}\left(V_1,\dots,V_n;W\right)$ is a vector space.
   \end{exercise}
-  We set
-  \begin{align*}
-    \mathcal{T}^{0}(V) &= F\\
-    \mathcal{T}^{1}(V) &= V.
-  \end{align*}
-  We can define a very large vector space
-  \begin{align*}
-    \mathcal{T}(V) &= \bigoplus_{k\geq 0}\mathcal{T}^{k}(V).
-  \end{align*}
-  Now, we can map
-  \begin{align*}
-    \mathcal{T}\left(V\right)\times \mathcal{T}\left(V\right) \rightarrow \mathcal{T}\left(V\right)
-  \end{align*}
-  meaning we can define a type of multiplication on $\mathcal{T}\left(V\right)$. We say $\mathcal{T}\left(V\right)$ is a $F$-\textit{algebra}, which is effectively a vector space that includes multiplication. Specifically, this is a tensor algebra.\newline
+  \begin{theorem}
+    Let $V_1,\dots,V_n,W$ be $F$-vector spaces, and let $\iota: V_1\times\cdots\times V_n\rightarrow V_1\otimes \cdots \otimes V_n$ by $\iota\left(v_1,\dots,v_n\right) = v_1\otimes\cdots\otimes v_n$.
+    \begin{enumerate}[(1)]
+      \item Given $T\in \Hom_{F}\left(V_1\otimes\cdots\otimes V_n,W\right)$, then $T\circ \iota \in \Hom_{F}\left(V_1,\dots,V_n;W\right)$.
+      \item Given $t\in \Hom_{F}\left(V_1,\dots,V_n;W\right)$, there is a unique linear map $T\in \Hom_{F}\left(V_1\otimes\cdots\otimes V_n,W\right)$ such that $t = T\circ \iota$.
+    \end{enumerate}
+  \end{theorem}
+  \begin{proof}
+    Proof is an exercise. Adapt the proof from $V_1\otimes V_2$.
+  \end{proof}
+  \begin{corollary}
+    Let $V_1,\dots,V_k$ be vector spaces of dimension $n_1,\dots,n_k$. Let
+    \begin{align*}
+      \mathcal{B}_i &= \set{e_{1}^{i},\dots,e_{n_i}^{i}}
+    \end{align*}
+    be bases for $V_i$. Then,
+    \begin{align*}
+      \mathcal{B} &= \set{e_{i_1}^{1}\otimes e_{i_2}^{2}\otimes\cdots\otimes e_{i_k}^{k}}
+    \end{align*}
+    is a basis for $V_1\otimes\cdots V_k$.\newline
 
-  We will cut this space down to get an exterior algebra, from which we will get the determinant.
+    In particular,
+    \begin{align*}
+      \Dim_{F}\left(V_1\otimes\cdots\otimes V_k\right) &= \prod_{j=1}^{k}\Dim_{F}\left(V_j\right).
+    \end{align*}
+    
+  \end{corollary}
+  \begin{example}
+    Let $V = V_1 = V_2 = V_3 = \C$, $F = \R$.\newline
+
+    We have $\mathcal{B}_1 = \mathcal{B}_2 =\mathcal{B}_3 = \set{1,i}$. For the basis of $V_1\otimes V_2\otimes V_3$, we then have
+    \begin{align*}
+      \mathcal{B} &= \set{1\otimes 1\otimes 1,i\otimes 1\otimes 1,1\otimes i \otimes 1, 1\otimes 1\otimes i,\dots,i\otimes i\otimes i}.
+    \end{align*}
+  \end{example}
+  \begin{definition}[Exterior Product]
+    Let $k\geq 1$ We define the $k$th exterior product of $V$, denoted $\Lambda^{k}\left(V\right)$, by
+    \begin{align*}
+      \Lambda^{k}\left(V\right) &= \mathcal{T}^{k}\left(V\right) / \mathcal{A}_{k}\left(V\right),
+    \end{align*}
+    where 
+    \begin{align*}
+      \mathcal{A}_k\left(V\right) &= \Span\set{v_1\otimes\cdots\otimes v_k | \text{ $v_i = v_j$ for some $i\neq j$}}
+    \end{align*}
+    We write
+    \begin{align*}
+      v_1\otimes \cdots \otimes v_k + \mathcal{A}_k\left(V\right) &= v_1\wedge\cdots\wedge v_k.
+    \end{align*}
+    We call this an elementary wedge product. Elements in $\Lambda^{k}\left(V\right)$ are finite sums of elementary wedge products.\newline
+
+    We have
+    \begin{align*}
+      \left(v_1 + \tilde{v}_1\right)\wedge v_2\wedge\cdots\wedge v_k &= v_1\wedge v_2\wedge \cdots \wedge v_k + \tilde{v}_1 \wedge v_2\wedge \cdots \wedge v_k\\
+      v_1\wedge \cdots \wedge v_{j-1}\wedge cv_j \wedge v_{j+1}\wedge \cdots v_{k} &= c\left(v_1\wedge\cdots\wedge v_k\right).
+    \end{align*}
+    We also have
+    \begin{align*}
+      v_1\cdots\wedge v_k = 0_{\Lambda^{k}\left(V\right)}
+    \end{align*}
+    if $v_i = v_j$ for some $i\neq j$.\newline
+
+    Let $v,w\in V$. Then, we have
+    \begin{align*}
+      0_{\Lambda^{2}\left(V\right)} &= \left(v+w\right)\wedge \left(v+w\right)\\
+                                    &= v\wedge v + w\wedge w + w\wedge v + v\wedge w\\
+                                    &= w\wedge v + v\wedge w,
+    \end{align*}
+    meaning
+    \begin{align*}
+      v\wedge w = -w\wedge v.
+    \end{align*}
+    More generally, we have
+    \begin{align*}
+      v_1\wedge \cdots \wedge v_i \wedge v_{i+1}\wedge \cdots \wedge v_k &= -v_1\wedge\cdots\wedge v_{i+1}\wedge v_i\wedge\cdots \wedge v_k
+    \end{align*}
+  \end{definition}
+  \begin{definition}[Alternating Maps]
+    Let $V,W$ be $F$-vector spaces. Let $t\in \Hom_{F}\left(V,\dots,V;W\right)$. If
+    \begin{align*}
+      t\left(v_1,\dots,v_k\right) = 0_{W}
+    \end{align*}
+    whenever $v_i = v_j$ for some $i\neq j$, then we say $t$ is alternating.\newline
+
+    We denote the set of alternating maps
+    \begin{align*}
+      \Alt^{k}\left(V;W\right).
+    \end{align*}
+    We set $\Alt^{0}\left(V;W\right) = F$.
+  \end{definition}
+  \begin{example}[Cross Product]
+    Let $V = W = \R^3$, and define $t: V\times V \rightarrow W$ by $t\left(v_1,v_2\right) = v_1\times v_2$. We saw before that $t\in \Hom_{F}\left(V,V;W\right)$, and we remember from calculus that $v\times v = 0$. Thus, we also have $t\in \Alt^{2}\left(V,W\right)$.
+  \end{example}
+  \begin{example}[Determinant]
+    Let $\det: \Mat_{n}\left(F\right)\rightarrow F$ be the regular determinant map.\newline
+
+    Given $A\in \Mat_{n}\left(F\right)$, we can write
+    \begin{align*}
+      A &= \begin{pmatrix}a_{11} & \cdots & \cdots & a_{1n} \\ a_{21} & \cdots &\cdots & \vdots \\ \vdots & \ddots & \ddots & \vdots \\ a_{n1} & \cdots & \cdots & a_{nn}\\ \end{pmatrix}\\
+        &= \begin{pmatrix}v_{1} & v_{2} & \cdots & v_{n}\end{pmatrix},
+    \end{align*}
+    where $v_{i}$ is the $i$th column of $A$. We can identify $\Mat_{n}\left(F\right)$ with $F^n\times\cdots\times F^n$, meaning we can imagine $\det: F^{n}\times\cdots\times F^{n}\rightarrow F$.\newline
+
+    We have $\det$ is multilinear; for instance,
+    \begin{align*}
+      \det\left(v_1,\dots,v_{j} + c\tilde{v}_j,\cdots v_n\right) &= \det\left(v_1,\dots,v_n\right) + c\det\left(v_1,\dots,\tilde{v}_{j},\dots,v_n\right).
+    \end{align*}
+    \begin{exercise}
+      Prove using induction.
+    \end{exercise}
+    It is also the case that $\det$ is alternating --- i.e., that $\det\left(v_1,\dots,v_n\right) = 0$ if $v_i = v_j$ for some $i\neq j$.\newline
+
+    This shows that $\det$ is an alternating map.
+  \end{example}
+  \begin{exercise}\hfill
+    \begin{enumerate}[(a)]
+      \item Show that $\Alt^{k}_{F}\left(V;W\right)$ is an $F$-subspace of $\Hom_{F}\left(V,\dots,V;W\right)$.
+      \item Show that $\Alt^{1}\left(V;F\right) = \Hom_{F}\left(V,F\right) = V'$.
+      \item If $\Dim_{F}\left(V\right) = n$, show that $\Alt^{k}\left(V;F\right) = 0$ for all $k > n$.
+    \end{enumerate}
+  \end{exercise}
+  \begin{theorem}[Universal Property for Alternating Linear Maps]
+    Let $V,W$ be $F$-vector spaces, $k > 0$. Define
+    \begin{align*}
+      \iota: V\times\cdots\times V &\rightarrow \Lambda^{k}\left(V\right)\\
+      \left(v_1,\dots,v_k\right) &\mapsto v_1\wedge\cdots\wedge v_k.
+    \end{align*}
+    \begin{enumerate}[(1)]
+      \item $\iota\in \Alt^{k}\left(V,\Lambda^{k}\left(V\right)\right)$
+      \item If $T\in \Hom_{F}\left(\Lambda^{k}\left(V\right),W\right)$, then $T\circ\iota\in \Alt^{k}\left(V,W\right)$
+      \item If $t\in \Alt^{k}\left(V,W\right)$, then there is a unique $T\in \Hom_{F}\left(\Lambda^{k}\left(V\right),W\right)$ such that $t = T\circ \iota$ making the following diagram commute.
+    \end{enumerate}
+    \begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADUAdTvAW3m4BjKBBxxufeAAJ2IAL6l0mXPkIoATOSq1GLNtwAydXgCModAHrAA1nIAU7AJTzFIDNjwEimgIzb6zKyIIADq8towUADm8ESgAGYAThC8SGQgOBBImiAMdCYwDAAKyp5qIIlYUQAWOCDUAXrBdQoJyamIPtSZ2Q26QSAAKi5tKWndWZ19gfqc+Dh04XJAA
+\begin{tikzcd}
+V\times\cdots\times V \arrow[rrd, "t"'] \arrow[rr, "\iota"] &  & \Lambda^{k}(V) \arrow[d, "T"] \\
+                                                            &  & W                            
+\end{tikzcd}
+    \end{center}
+  \end{theorem}
+  \begin{proof}\hfill
+    \begin{enumerate}[(1)]
+      \item We have the composition
+        \begin{center}
+          % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADUAdTvAW3m4BjKBBxxufeAAJ2IAL6l0mXPkIoAjOSq1GLNt150cAC0GNgAFTkA9YAGs58xSAzY8BIgCYt1es1aIINwAMnS8AEZQdLYOABTsAJROSm6qRGTq2n56gdwMMABmOLE0APqa3CJipGVg3ABOWADmxjhJCikqHhqkmb66AbTl3KJY-OKcwqITo+NSZXbJLsruasjefTr+bGXq3ADuMFBNMEJVE4fHMPOli3LaRycIKKAF9RC8SGQgOBBI6h0QG8Pv9qL8kJ5AcDPogAMxgv6IAAsYLoWAYbEMaDg4Kh7xhKJ+iIArKj0Zi6Njcc5oUh4USkKSQOEYGAoEgALSw74MOgshgABRWaUCjRaOBA-W2uU4+BwdElPzRGMCWJxf3uciAA
+\begin{tikzcd}
+V\times\cdots\times V \arrow[r]                                                           & \mathcal{T}^{k} \arrow[r]                      & \Lambda^{k}(V)            \\
+{\left(v_1,\dots,v_n\right)} \arrow[r, maps to] \arrow[rr, "\iota"', maps to, bend right] & v_1\otimes\cdots\otimes v_k \arrow[r, maps to] & v_1\wedge\cdots\wedge v_k
+\end{tikzcd}
+        \end{center}
+    \end{enumerate}
+    implying that $\iota$ is multilinear.
+  \item We have
+    \begin{align*}
+      t\left(v_1 + c\tilde{v}_1,\dots,v_k\right) &= T\circ \iota \left(v_1 + c\tilde{v}_1,\dots,v_k\right)\\
+                                                     &= T\left(\left(v_1 + c\tilde{v}_1\right)\wedge v_2\wedge\cdots\wedge v_k\right)\\
+                                                     &= T\left(v_1\wedge v_2\wedge\cdots\wedge v_k\right) + cT\left(\tilde{v}_1\wedge v_2\wedge\cdots\wedge v_k\right)\\
+                                                     &= T\left(\iota\left(v_1,\dots,v_k\right)\right) + cT\left(\iota\left(\tilde{v}_1,\dots,v_k\right)\right)\\
+                                                     &= t\left(v_1,\dots,v_k\right) + ct\left(\tilde{v}_1,\dots,v_k\right).
+    \end{align*}
+    Let $v_i = v_j$ with $i\neq j$. Then,
+    \begin{align*}
+      t\left(v_1,\dots,v_k\right) &= T\left(\iota\left(v_1,\dots,v_k\right)\right)\\
+                                  &= T\left(0\right)\\
+                                  &= 0,
+    \end{align*}
+    as $\iota$ is alternating, meaning $t$ is also alternating.
+  \item Let $t\in \Alt^{k}\left(V;W\right)$. We have
+    \begin{align*}
+      t: V\times\cdots\times V\rightarrow W
+    \end{align*}
+    and $t\in \Hom_{F}\left(V,\dots,V;W\right)$. By the universal property of the tensor product, we have
+    \begin{align*}
+      T: \mathcal{T}^{k}\left(V\right)\rightarrow W,
+    \end{align*}
+    with $T\left(v_1\otimes\cdots\otimes v_k\right) = t\left(v_1,\dots,v_k\right)$.\newline
+
+    We have
+    \begin{align*}
+      T|_{\mathcal{A}_{k}\left(V\right)} = 0
+    \end{align*}
+    because $T$ agrees with $t$ and $t$ is alternating.
+  \end{proof}
+  \begin{example}
+    Let $V$ be a $F$-vector space with $\Dim_{F}\left(V\right) = 1$. Let $v\neq 0_V$, so $\mathcal{B} = \set{v}$ is a basis for $V$.\newline
+
+    Consider $\Lambda^{k}\left(V\right)$. Elements in this set are finite sums
+    \begin{align*}
+      \omega &= \sum_{i\in I}\omega_i,
+    \end{align*}
+    where
+    \begin{align*}
+      \omega_i &= a_{1i}v\wedge\cdots\wedge a_{ki} v
+    \end{align*}
+    for some $a_{ji}\in F$, or
+    \begin{align*}
+      \omega_i &= a_{1i}\cdots a_{ki}\left(v\wedge\cdots\wedge v\right).
+    \end{align*}
+    If $k\geq 2$, then we have $v\wedge v\in \omega_i$, so $\omega_i = 0$. We have
+    \begin{align*}
+      \Lambda^{k}\left(V\right)&= 0 \tag*{$k\geq 2$}\\
+      \lambda^{k}\left(V\right) &= V \tag*{$k=1$}\\
+      \lambda^{k}\left(V\right) &= F. \tag*{$k=0$}
+    \end{align*}
+    Now, we let $V$ be a $2$-dimensional $F$-vector space, with basis $\mathcal{B} = \set{v_1,v_2}$.\newline
+
+    Let $k = 2$. A typical element in $\Lambda^{2}\left(V\right)$ is a finite sum
+    \begin{align*}
+      \omega &= \sum_{i\in I}\omega_i\\
+             \omega_i &= \left(a_iv_1 + b_iv_2\right)\wedge \left(c_iv_1 + d_iv_2\right)
+    \end{align*}
+    for some $a_i,b_i,c_i,d_i\in F$. Then, we have
+    \begin{align*}
+      \omega_i &= a_iv_1\wedge c_iv_1 + a_iv_1 \wedge d_iv_2 + b_iv_2\wedge c_iv_1 + b_iv_2 \wedge d_iv_2\\
+               &= \left(a_id_i - b_ic_i\right)\left(v_1\wedge v_2\right).
+    \end{align*}
+    Thus, we have
+    \begin{align*}
+      \Lambda^{2}\left(V\right) &= \Span\set{v_1\wedge v_2}
+    \end{align*}
+    is a $1$-dimensional vector space.\newline
+
+    We will show that
+    \begin{align*}
+      \Lambda^{k}\left(V\right)\hookrightarrow \mathcal{T}^{k}\left(V\right).
+    \end{align*}
+    Note that $\Lambda^{k}\left(V\right)$ is a quotient, so we have the following diagram
+    \begin{center}
+      % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12AZOgWwCModAHrAA1gF8AFADUAlCAml0mXPkIoAjOSq1GLNp150cACwDGjYABUJoybIVKV2PASIAmHdXrNWiDm4+QRFxaXkAAgBeCKMTCytbe3C5AHo4s0sGYABBCQB9MMdFXRgoAHN4IlAAMwAnCF4kMhAcCCRtVrosBjZTCAgxRWUQesaO6jakD2dRhqbEFqnELxB+GDAoJABmYgkKCSA
+\begin{tikzcd}
+\Lambda^{k}(V) \arrow[r, hook] \arrow[rr, bend left] & \mathcal{T}^{k}(V) \arrow[r] & \Lambda^{k}(V) = \mathcal{T}^{k}(V)/\mathcal{A}_{k}(V)
+\end{tikzcd}
+    \end{center}
+  \end{example}
+  
 \end{document}

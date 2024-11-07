@@ -1764,6 +1764,134 @@ To see that the Ackermann function is not primitive recursive, we will show that
 
 To show this, we show that $C_0,S,P_{i}^{(k)}$ satisfy this condition by ``induction.'' Then, we show that, for any function that is dominated by the Ackermann function, primitive recursion still yields the function being dominated by the Ackermann function.
 \end{example}
+Note that the Ackermann function is total, but not primitive recursive. However, we may ask the opposite question.
+\begin{question}
+  Is every primitive recursive function total?
+\end{question}
+\begin{answer}
+  Yes. Since composition, primitive recursion, and the primitive recursive functions all respect totality, all primitive recursive functions are total.
+\end{answer}
+Thus, we necessarily have to conclude that non-total functions are not primitive recursive.
+\begin{example}
+  The function $q\left(n,d\right) $ defined by
+  \begin{align*}
+    q\left(n,d\right) &= \begin{cases}
+      \frac{n}{d} & d|n\\
+      \text{undef} & \text{else}
+    \end{cases}
+  \end{align*}
+  is not primitive recursive as it is not total.\newline
+
+  However, $q$ is computable. We can write an algorithm as follows.
+  \begin{description}[font=\normalfont\scshape]\itemsep=-2pt
+    \item[Input:] $\left(n,d\right)$
+    \item[Step 1:] Let $k = 0$.
+    \item[Step 2:] If $kd = n$, then output $k$, and stop.
+    \item[Step 3:] Increment $k$.
+    \item[Step 4:] Return to Step 2.
+  \end{description}
+  We can write
+  \begin{align*}
+    q\left(n,d\right) &= \min\set{k\in\N | kd = n},
+  \end{align*}
+  with the convention $\min\emptyset = \text{undef}$.
+\end{example}
+\begin{remark}
+The Church--Turing thesis states that any ``reasonable'' method of defining computability is equivalent to Turing-computability.
+\end{remark}
+\begin{definition}
+  Let $f: \N^{m+1}\rightarrow \N$. Define $h: \N^{m}\rightarrow \N$ by
+  \begin{align*}
+    h\left(x_1,\dots,x_m\right) &= \min\set{z\in \N| f\left(x_1,\dots,x_m,z\right) = 0},
+  \end{align*}
+  with the convention that $\min\emptyset = \text{undef}$. We say $h$ is obtained from $f$ by minimalization.\newline
+
+  We write
+  \begin{align*}
+    h\left(x_1,\dots,x_m\right) &= \min_{z}\left(f\left(x_1,\dots,x_m,z\right) = 0\right)\\
+                                &= \mu z \left(f\left(x_1,\dots,x_m,z\right) = 0\right).
+  \end{align*}
+\end{definition}
+\begin{example}
+  Returning to our function $q$, we can write
+  \begin{align*}
+    q\left(n,d\right) &= \min_{z}\left(f\left(n,d,z\right) = 0\right)\\
+    f\left(n,d,z\right) &= \left\vert n-dz \right\vert.
+  \end{align*}
+\end{example}
+\begin{definition}
+  A function $f$ is (generally) recursive if $f$ can obtained from $S$, $C_0$, and $P_{i}^{(k)}$ by composition, primitive recursion, and minimalization.
+\end{definition}
+\begin{theorem}
+  Every recursive function is computable.
+\end{theorem}
+\begin{theorem}
+  Every computable function is recursive.
+\end{theorem}
+\begin{example}
+  Let
+  \begin{align*}
+    s_q\left(n\right) &= \begin{cases}
+      \sqrt{n} & \text{if $n$ is perfect square}\\
+      \text{undef} & \text{else}
+    \end{cases}.
+  \end{align*}
+  We will show $s_q$ is recursive.
+  \begin{align*}
+    s_q\left(n\right) &= \min_{z}\left(\left\vert z^2 - n \right\vert = 0\right).
+  \end{align*}
+  Note that $\left\vert z^2 - n \right\vert = \left(z^2 \dot{-} n\right) + \left(n\dot{-} z^2\right)$.
+\end{example}
+\begin{definition}[]
+  The range of $f$ is
+  \begin{align*}
+    \Ran(f) &= \set{b | \left(a,b\right)\in f}.
+  \end{align*}
+\end{definition}
+\begin{definition}[Recursively Enumerable Set]
+  A set $S\subseteq \N$ is recursively enumerable if there exists a computable function (i.e., Turing-computable or recursive) $f$ such that
+  \begin{align*}
+    S &= \Ran(f).
+  \end{align*}
+\end{definition}
+\begin{question}
+  Is $\emptyset$ a function?
+\begin{answer}
+  Yes.
+\end{answer}
+Is $\emptyset$ recursively enumerable?
+\begin{answer}
+  Yes (vacuous truth).
+\end{answer}
+\end{question}
+\begin{example}
+  Let $S = \set{n\in \N | n\text{ is prime}}$. Is $S$ recursively enumerable?\newline
+
+  We can imagine a function $f$ written in our favorite programming language\footnote{I'm fond of \LaTeX.} that yields this set, so it is the case that $S$ is recursively enumerable.\newline
+
+  We can show this by having
+  \begin{align*}
+    \pi(n) &= \begin{cases}
+      1 & \text{$n$ is prime}\\
+      0 & \text{else}
+    \end{cases},
+  \end{align*}
+  which we then show is recursive.\newline
+
+  Afterward, we define a function $P$ by
+  \begin{align*}
+    P(n) &= p_{n},
+  \end{align*}
+  where $p_0 = 2$.\newline
+
+  Then, $S = \Ran(P)$.\newline
+
+  We define
+  \begin{align*}
+    P\left(n+1\right) &= \min_{z}\left(\left(z > p(n)\right) \wedge \left(\pi(z) = 1\right)\right).
+  \end{align*}
+  It now remains to be shown that the relation $z > p(n)$ is recursive.
+\end{example}
 
 \subsection{Goodstein Sequences}%
 Consider the number written as sums of powers of $2$:

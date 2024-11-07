@@ -4418,12 +4418,611 @@ We can have $\det(R) = \pm 1$. However, only $\det(R) = 1$ yields a proper rotat
 
 When it comes to improper rotations, the ``closest'' to the identity is the pure reflection:
 \begin{align*}
-  B_0 &= \begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix}.
+  B(0) &= \begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix}.
 \end{align*}
 Note that this yields
 \begin{align*}
-  B_0 \mathbf{v} &=  \begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix} \begin{pmatrix}v_x\\v_y\end{pmatrix}\\
+  B(0) \mathbf{v} &=  \begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix} \begin{pmatrix}v_x\\v_y\end{pmatrix}\\
                  &= \begin{pmatrix}v_x \\ -v_y\end{pmatrix}.
 \end{align*}
+\begin{example}[Arbitrary Axes]
+  Consider an arbitrary axis $\hat{n}$ that we want to reflect across. In particular, we have $\cos\phi = \hat{n}\cdot \hat{i}$.\newline
+
+  In order to reflect an arbitrary vector $\ket{v}$ about $\hat{n}$, we rotate to the $x$ axis by $\theta$, reflect, then rotate back.
+  \begin{align*}
+    R\left(\phi\right) B(0) R^{-1}\left(\phi\right)\left(\mathbf{v}\right) &= \begin{pmatrix}\cos\phi & -\sin\phi \\ \sin\phi & \cos\phi\end{pmatrix} \begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix} \begin{pmatrix}\cos\phi & \sin\phi \\ -\sin\phi & \cos\phi\end{pmatrix} \left(\mathbf{v}\right)\\
+     &= \begin{pmatrix}\cos\left(2\phi\right) & \sin\left(2\phi\right) \\ \sin\left(2\phi\right) & -\cos\left(2\phi\right)\end{pmatrix} \left(\mathbf{v}\right).
+  \end{align*}
+  When we consider a reflection about the $x$ axis, followed by a reflection about the $y$ axis, we get
+  \begin{align*}
+    B\left(\frac{\pi}{2}\right) B\left(0\right) &= \begin{pmatrix}-1 & 0 \\ 0 & -1\end{pmatrix},
+  \end{align*}
+  which is our desired rotation by $\pi$.\newline
+
+  In particular, any reflection $B\left(\phi\right)$ can be written as $R\left(\theta\right)B\left(0\right)$.\newline
+
+  Consider
+  \begin{align*}
+    T &= \begin{pmatrix}3/5 & 4/5\\ 4/5 & -3/5\end{pmatrix}\\
+    \tan\left(\theta\right) &= \frac{1}{2}\\
+    T &= \begin{pmatrix}3/5 & -4/5\\4/5 & 3/5\end{pmatrix} \begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix}\\
+      &= R\left(53^{\circ}\right)B\left(0\right).
+  \end{align*}
+\end{example}
+\begin{example}[Two Reflections]
+Let $\phi_1$ be the angle from the $x$ axis for mirror $1$, and $\phi_2$ the angle from the $x$ axis for mirror $1$. Then, we have
+\begin{align*}
+  B\left(\phi_2\right) B\left(\phi_1\right) &= \begin{pmatrix}\cos\left(2\phi_2\right) & \sin\left(2\phi_2\right) \\ \sin\left(2\phi_2\right) & -\cos\left(2\phi_2\right)\end{pmatrix} \begin{pmatrix}\cos\left(2\phi_1\right) & \sin\left(2\phi_1\right) \\ \sin\left(2\phi_1\right) & -\cos\left(2\phi_1\right)\end{pmatrix}\\
+                                            &= \begin{pmatrix}\cos \left(2\left(\phi_2 - \phi_1\right)\right) & -\sin\left(2\left(\phi_2 - \phi_1\right)\right) \\ \sin\left(2\left(\phi_2 - \phi_1\right)\right) & \cos\left(2\left(\phi_2 - \phi_1\right)\right)\end{pmatrix}\\
+                                            &= R\left(2\left(\phi_2 - \phi_1\right)\right).
+\end{align*}
+\end{example}
+\begin{example}[Reflections in Three Dimensions]
+  Consider the transformation $\left(x,y,z\right) \mapsto \left(x,-y,-z\right)$. The matrix for this transformation is
+  \begin{align*}
+    T &= \begin{pmatrix}1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1\end{pmatrix},
+  \end{align*}
+  which has determinant $1$, meaning it is a rotation.\newline
+
+  The actual reflections in three dimensions are as follows
+  \begin{align*}
+    B_x &= \begin{pmatrix}-1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{pmatrix}\\
+    B_y &= \begin{pmatrix}1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1\end{pmatrix}\\
+    B_z &= \begin{pmatrix}1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & -1\end{pmatrix}.
+  \end{align*}
+  Here, the subscript denotes the direction perpendicular in which the ``mirror'' of the plane sits.\newline
+
+  Note that if we take their product, we get
+  \begin{align*}
+    P &= B_xB_yB_z\\
+      &= \begin{pmatrix}-1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1\end{pmatrix}.
+  \end{align*}
+  We call $P$ the parity operator. The operator maps $\mathbf{r} \mapsto -\mathbf{r}$.\newline
+
+  In two dimensions, we can decompose an improper rotation into a rotation multiplied by a reflection --- however, in three dimensions, we prefer to decompose into a rotation multiplied by a parity flip.
+  \begin{align*}
+    B &= RP.
+  \end{align*}
+\end{example}
+\subsubsection{Rotations in $\R^3$}%
+In two dimensions, we only need one parameter (angle of rotation) to specify a rotation. However, in $\R^3$, we need three parameters --- angle of rotation and axis of rotation.\newline
+
+The simplest way to do this is by embedding $\R^2$ into $\R^3$. We take the matrix
+\begin{align*}
+  R_z\left(\phi\right) &= \begin{pmatrix}\cos\phi & -\sin\phi & 0 \\ \sin\phi & \cos\phi & 0 \\ 0 & 0 & 1\end{pmatrix},
+\end{align*}
+which is a rotation about $z$. Similarly, we embed
+\begin{align*}
+  R_x &= \begin{pmatrix}1 & 0 & 0 \\ 0 & \cos\phi & -\sin\phi \\ 0 & \sin\phi & \cos\phi\end{pmatrix}\\
+  R_y &= \begin{pmatrix}\cos\phi & 0 & \sin\phi \\ 0 & 1 & 0 \\ -\sin\phi & 0 & \cos\phi\end{pmatrix}.
+\end{align*}
+We refer to $\set{R_x,R_y,R_z}$ as the canonical rotation matrices.\newline
+
+Note that, aside from the number of parameters changing, rotations do not commute.
+\begin{align*}
+  R_x\left(\alpha\right)R_y\left(\beta\right) &\neq R_y\left(\beta\right)R_x\left(\alpha\right).
+\end{align*}
+\begin{example}[Non-Commutative Rotations]
+  \begin{align*}
+    R_x\left(\pi/2\right)R_y\left(\pi/2\right) &= \begin{pmatrix}1 & 0 & 0\\ 0 & 0 & -1 \\ 0 & 1 & 0\end{pmatrix} \begin{pmatrix}0 & 0 & 1\\ 0 & 1 & 0 \\ -1 & 0 & 0\end{pmatrix}\\
+                                               &= \begin{pmatrix}0 & 0 & 1 \\ 1 & 0 & 0 \\ 0 & 1 & 0\end{pmatrix}\\
+    R_y\left(\pi/2\right)R_x\left(\pi/2\right) &= \begin{pmatrix}0 & 1 & 0 \\ 0 & 0 & -1 \\ -1 & 0 & 0\end{pmatrix}.
+  \end{align*}
+  Note that $\left(R_xR_y\right)^3 = I_3$ and $\left(R_yR_x\right)^3 = I_3$. Thus, we know that $R\left(\phi\right) = R_xR_y$ is equal to a rotation of $2\pi/3$.\newline
+
+  If we try to rotate the axis of rotation, we must have $R\hat{n} = \hat{n}$.\newline
+
+  Using eigenvalues, we can find $\hat{n}$ to be
+  \begin{align*}
+    \hat{n} &= \frac{1}{\sqrt{3}} \begin{pmatrix}1\\1\\1\end{pmatrix}.
+  \end{align*}
+  Similarly, for $R' = R_yR_x$, we find
+  \begin{align*}
+    \hat{n}' &= \frac{1}{\sqrt{3}}\begin{pmatrix}1\\1\\-1\end{pmatrix}.
+  \end{align*}
+\end{example}
+\subsubsection{Similarity Transformations}%
+Since the physical world\footnote{Who cares about that?} is necessarily independent of coordinate systems, we have to make sure that all the matrix actions are also able to be converted between coordinate systems.\newline
+
+Consider the angular momentum, which is the result of the moment of inertia tensor acting on $\vec{\omega}$.
+\begin{align*}
+  \mathbf{L} &= I\vec{\omega}.
+\end{align*}
+We apply a symmetry transformation, $S$, to both $\mathbf{L}$ and $\vec{\omega}$. Thus, we get
+\begin{align*}
+  \mathbf{L}' &= S\mathbf{L}\\
+              &= SI\vec{\omega}.
+\end{align*}
+We want to obtain
+\begin{align*}
+  \mathbf{L}' &= I'\vec{\omega}'.
+\end{align*}
+We want to obtain $S\vec{\omega} = \vec{\omega}'$. We can multiply by $I$, yielding
+\begin{align*}
+  \mathbf{L}' &= SI\left(S^{-1}S\right)\vec{\omega}\\
+              &= \left(SIS^{-1}\right)\left(S\vec{\omega}\right)\\
+              &= I'\left(S\vec{\omega}\right)\\
+              &= I'\vec{\omega}'.
+\end{align*}
+Therefore, any matrix will necessarily transform by $I' = SIS^{-1}$. Note that if $S$ is a rotation matrix, then $I' = RIR^{T}$, while if $S$ is a unitary matrix, then $I = SIS^{\ast}$.\newline
+
+In general, for $S\in \text{GL}\left(\C\right)$, we call $S$ a similarity transformation. We call $S$ the change of basis matrix.\newline
+
+Note that matrices in the same similarity class have identical trace and determinant. If $T' = STS^{-1}$, then
+\begin{align*}
+  \tr\left(T'\right) &= \tr\left(STS^{-1}\right)\\
+                     &= \tr\left(S^{-1}ST\right)\\
+                     &= \tr\left(T\right),
+\end{align*}
+and
+\begin{align*}
+  \det\left(T'\right) &= \det\left(STS^{-1}\right)\\
+                      &= \det\left(S\right)\det\left(T\right)\det\left(S^{-1}\right)\\
+                      &= \det\left(T\right).
+\end{align*}
+\begin{example}
+  We start by rotating by $\pi/2$ about $z$. Then, we get $x\mapsto y$  and $y\mapsto -x$, so we have
+  \begin{align*}
+    R_z\left(\pi/2\right) &= \begin{pmatrix}0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1\end{pmatrix}.
+  \end{align*}
+  We might ask how $R_x$ changes as a result of this application. Thus, we get
+  \begin{align*}
+    R_x'\left(\alpha\right) &= R_z\left(\pi/2\right)R_x\left(\alpha\right)\left(R_z\left(\pi/2\right)\right)^{T}\\
+                            &= \begin{pmatrix}0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1\end{pmatrix} \begin{pmatrix}1 & 0 & 0\\ 0 & \cos\alpha & -\sin\alpha \\ 0 & \sin\alpha & \cos\alpha\end{pmatrix} \begin{pmatrix}0 & 1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 1\end{pmatrix}\\
+                            &= \begin{pmatrix}\cos\alpha & 0 & \sin\alpha \\ 0 & 1 & 0 \\ -\sin\alpha & 0 & \cos\alpha\end{pmatrix}\\
+                            &= R_y\left(\alpha\right).
+  \end{align*}
+\end{example}
+Note that, since the trace is invariant under similarity transformations, we must have
+\begin{align*}
+  \tr\left(R_{n}\right) &= \tr\left(SR_{x}S^{-1}\right)\\
+                        &= \tr\left(R_x\right)\\
+                        &= 1 + 2\cos\phi,
+\end{align*}
+meaning
+\begin{align*}
+  \cos\phi &= \frac{1}{2}\left(\tr\left(R_{n}\right) - 1\right).
+\end{align*}
+\begin{example}
+  Since
+  \begin{align*}
+    A &= \frac{1}{2} \begin{pmatrix}-1 & 1 & \sqrt{2} \\ -1 & 1 & -\sqrt{2} & -\sqrt{2} &-\sqrt{2} & 0\end{pmatrix}
+  \end{align*}
+  satisfies
+  \begin{align*}
+    AA^{T} &= I_{3},
+  \end{align*}
+  we have $A$ is a rotation of $2\pi/3$ about
+  \begin{align*}
+    \hat{n} &= \frac{1}{\sqrt{3}} \begin{pmatrix}0\\\sqrt{2}\\-1\end{pmatrix}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Consider
+  \begin{align*}
+    T &= \begin{pmatrix}3 & 0 & -1\\0 & -2 & 0 \\ -1 & 0 & 3\end{pmatrix}.
+  \end{align*}
+  We want to transform $T$ with the matrix
+  \begin{align*}
+    S &= \begin{pmatrix}1 & 0 & 1 \\ 1 & 0 & -1 \\ 0 & \sqrt{2} & 0\end{pmatrix}.
+  \end{align*}
+  We can see that $S$ is not orthogonal --- however, $\frac{1}{\sqrt{2}}S$ is. Thus, we have
+  \begin{align*}
+    T' &= \frac{1}{2}STS^{T}\\
+       &= \begin{pmatrix}2 & 0 & 0 \\ 0 & 4 & 0 \\ 0 & 0 & -2\end{pmatrix}.
+  \end{align*}
+  We know that $T$ and $T'$ are the same operator, but $T'$ is much easier to use than $T$, so we would prefer to work in $T'$.
+\end{example}
+\subsubsection{Generating Rotations}%
+Rotations in $\R^3$ do not commute. However, we know that the rotation by $\varphi = 0$ is the identity, which does commute. We let $\ve > 0$ be a very small angle of rotation. Then, approximating to second order, we have
+{\renewcommand{\arraystretch}{1.5}
+\begin{align*}
+  R_z\left(\ve\right) &= \begin{pmatrix}1-\frac{1}{2}\ve^2 & -\ve & 0 \\ \ve & 1-\frac{1}{2}\ve^2 & 0 \\ 0 & 0 & 1\end{pmatrix}\\
+  R_x\left(\ve\right) &= \begin{pmatrix}1 & 0 & 0 \\ 0 & 1-\frac{1}{2}\ve^2 & -\ve \\ 0 & \ve & 1-\frac{1}{2}\ve^2\end{pmatrix}\\
+  R_y\left(\ve\right) &= \begin{pmatrix}1-\frac{1}{2}\ve^2 & 0 & \ve \\ 0 & 1 & 0 \\ -\ve & 0 & 1-\frac{1}{2}\ve^2\end{pmatrix}.
+\end{align*}
+Keeping everything through second order, we calculate
+\begin{align*}
+  R_x\left(\ve\right)R_y\left(\ve\right) &= \begin{pmatrix}1-\frac{1}{2}\ve^2 & 0 & \ve \\ \ve^2 & 1-\frac{1}{2}\ve^2 & -\ve \\ -\ve & \ve & 1-\ve^2\end{pmatrix}\\
+  R_y\left(\ve\right)R_x\left(\ve\right) &= \begin{pmatrix}1-\frac{1}{2}\ve^2 & \ve^2 & \ve \\ 0 & 1-\frac{1}{2}\ve^2 & -\ve & -\ve & \ve & 1-\ve^2\end{pmatrix}.
+\end{align*}
+Calculating the commutator, we get
+\begin{align*}
+  \left[R_x\left(\ve\right),R_y\left(\ve\right)\right] &= R_x\left(\ve\right)R_y\left(\ve\right) - R_y\left(\ve\right)R_x\left(\ve\right)\\
+                                                       &= \begin{pmatrix}0 & -\ve^2 & 0 \\ \ve^2 & 0 & 0 \\ 0 & 0 & 0\end{pmatrix}\\
+                                                       &= R_z\left(\ve^2\right) - I_{3}.
+\end{align*}
+In the limit as $\ve \rightarrow 0$, since $R_z\left(\ve^2\right)$ falls at a higher order, it is the case that infinitesimal rotations do commute.\newline
+
+To explore the commutator further, we introduce introduce the Hermitian matrix
+\begin{align*}
+  L_3 &= \begin{pmatrix}0 & -i & 0 \\ i & 0 & 0 \\ 0 & 0 & 0\end{pmatrix},
+\end{align*}
+meaning we now have
+\begin{align*}
+  R_z\left(\ve\right) &= I_{3} - i\ve L_{3},
+\end{align*}
+We can also introduce
+\begin{align*}
+  L_1 &= \begin{pmatrix}0 & 0 & 0 \\ 0 & 0 & -i \\ 0 & i & 0\end{pmatrix}\\
+  L_2 &= \begin{pmatrix}0 & 0 & i \\ 0 & 0 & 0 \\ -i & 0 & 0\end{pmatrix}.
+\end{align*}
+Now, we have
+\begin{align*}
+  R_x\left(\ve\right) &= I_{3} - i\ve L_{1}\\
+  R_y\left(\ve\right) &= I_{3} - i\ve L_{2}.
+\end{align*}
+For general $n$, we have
+\begin{align*}
+  R_n\left(\ve\right) &= I_{3} - i\ve \hat{n}\cdot \mathbf{L},
+\end{align*}
+where
+\begin{align*}
+  \hat{n}\cdot \mathbf{L} &= \sum_{i}n_iL_{i}.
+\end{align*}
+These matrices encode how $R_n$ deviates from $I_{3}$, and are known as the generators of rotations.\newline
+}
+To understand how $L_{i}$ are given the moniker of generator, we take advantage of the continuity of rotations,
+\begin{align*}
+  R_z\left(\phi + d\phi\right) &= R_z\left(d\phi\right)R_z\left(\phi\right)\\
+                               &= \left(1-id\phi L_{3}\right)R_{z}\left(\phi\right),
+\end{align*}
+meaning
+\begin{align*}
+  dR_z &= R_z\left(\phi + d\phi\right) - R_z\left(\phi\right)\\
+       &= -id\phi L_{3}R_z\left(\phi\right).
+\end{align*}
+Integrating, using $R_z\left(0\right) = I_{3}$, we get
+\begin{align*}
+  R_z\left(\phi\right) &= e^{-i\phi L_{3}}.
+\end{align*}
+Similarly, we get
+\begin{align*}
+  R_x\left(\phi\right) &= e^{-i\phi L_{1}}\\
+  R_y\left(\phi\right) &= e^{-i\phi L_{2}}.
+\end{align*}
+Note that, since $L_{i}^{T} = -L_{i}$, we have
+\begin{align*}
+  R_{i}R_{i}^T &= I_{3}.
+\end{align*}
+The commutation relation on $L_{i}$ are found as follows
+\begin{align*}
+  \left[L_{i},L_{j}\right] &= i\ve_{ijk}L_{k}.
+\end{align*}
+Thus, $L_{i}$ along with $\left[\cdot,\cdot\right]$ form a Lie algebra.
+\subsection{Eigenstuff}%
+Recalling that for a rotation about $\hat{n}$, we must have
+\begin{align*}
+  R\hat{n} &= \hat{n},
+\end{align*}
+we may want to solve for $\hat{n}$.\newline
+
+However, if $B$ is an improper rotation, we have
+\begin{align*}
+  B\mathbf{v} &= \pm\mathbf{v},
+\end{align*}
+meaning there are two distinct directions that the operation of the matrix $B$ reduces to scalar multiplication.\newline
+
+In general, we write
+\begin{align*}
+  M\mathbf{v} &= \lambda \mathbf{v}\\
+  M\ket{v} &= \lambda \ket{v}.
+\end{align*}
+We say $\lambda$ is an eigenvalue for $M$, and $\ket{v}$ is the eigenvector corresponding to $\lambda$.\newline
+
+Recall the equation for angular momentum,
+\begin{align*}
+  \mathbf{L} &= I\vec{\omega}\\
+             &= \lambda \vec{\omega},
+\end{align*}
+then the particular $\omega$ for which $I\vec{\omega} = \lambda \vec{\omega}$ are known as the principal axes.
+\subsubsection{Finding Eigenvalues}%
+To find the eigenvalues, we take
+\begin{align*}
+  A\ket{v} &= \lambda \ket{v}\\
+  \left(A - \lambda I_{n}\right)\ket{v} &= 0.
+\end{align*}
+The dumb answer is to set $\ket{v} = 0$ --- however, since $\ket{v} = 0$ has no information to give us, we specifically need to find the values of $\lambda$ for which $A - \lambda I_{n}\notin \text{GL}_{n}\left(\C\right)$. We must have
+\begin{align*}
+  \det\left(A - \lambda I_{n}\right) = 0.
+\end{align*}
+\begin{example}
+  \renewcommand{\arraystretch}{1.5}
+  Let
+  \begin{align*}
+    A &= \begin{pmatrix}5 & 2\sqrt{2} \\ 2\sqrt{2} & 3\end{pmatrix}.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \det\left(A - \lambda I_{2}\right) &= \lambda^2 - 8\lambda + 7,
+  \end{align*}
+  meaning
+  \begin{align*}
+    \lambda_1 &= 1\\
+    \lambda_2 &= 7.
+  \end{align*}
+  We say the set $\set{\lambda_1,\lambda_2}$ is the spectrum of the operator.\newline
+
+  To find the eigenvectors, we take
+  \begin{align*}
+    A \ket{v} &= \lambda \ket{v}\\
+    \begin{pmatrix}5 & 2\sqrt{2} \\ 2\sqrt{2} & 3\end{pmatrix} \begin{pmatrix}a\\b\end{pmatrix} &= 7 \begin{pmatrix}a\\b\end{pmatrix}\\
+    -2a + 2\sqrt{2}b &= 0\\
+    2\sqrt{2}a - 4b\\
+    a &= \sqrt{2} b\\
+    \ket{v_2} &= \begin{pmatrix}\sqrt{2}\\1\end{pmatrix}.
+  \end{align*}
+  Similarly, for $\lambda_1$, we have
+  \begin{align*}
+    \ket{v_1} &= \begin{pmatrix}1\\-\sqrt{2}\end{pmatrix}.
+  \end{align*}
+
+\end{example}
+\begin{example}
+  \renewcommand{\arraystretch}{1.5}
+  Let
+  \begin{align*}
+    B &= \begin{pmatrix}-1 & -1 & 5 \\ -1 & 5 & -1 \\ 5 & -1 & -1\end{pmatrix}\\
+    \det\left(B - \lambda I_{3}\right) &= \left(\lambda - 3\right)\left(\lambda - 6\right)\left(\lambda + 6\right).
+  \end{align*}
+  Taking $\det\left(B - \lambda I_{3}\right) = 0$, we have
+  \begin{align*}
+    \lambda_1 &= 3\\
+    \lambda_2 &= 6\\
+    \lambda_2 &= -6
+  \end{align*}
+  Solving for the eigenvectors, we have
+  \begin{align*}
+    \ket{\hat{v}_1} &= \frac{1}{\sqrt{3}}\begin{pmatrix}1\\1\\1\end{pmatrix}\\
+    \ket{\hat{v}_2} &= \frac{1}{\sqrt{6}} \begin{pmatrix}1\\-2\\1\end{pmatrix}\\
+    \ket{\hat{v}_3} &= \frac{1}{\sqrt{2}}\begin{pmatrix}1\\0\\-1\end{pmatrix}.
+  \end{align*}
+\end{example}
+\begin{example}[Complex Matrices]
+Let
+\begin{align*}
+  C_1 &= \begin{pmatrix}1 & 2 \\ -2 & 1\end{pmatrix}
+\end{align*}
+The characteristic polynomial is
+\begin{align*}
+  \lambda^2 -2\lambda + 5 &= 0,
+\end{align*}
+so the spectrum is $\lambda_{1,2} = 1 \pm 2i$, meaning we get
+\begin{align*}
+  \ket{\hat{v}_1} &= \frac{1}{\sqrt{2}} \begin{pmatrix}1\\i\end{pmatrix}\\
+  \ket{\hat{v}_2} &= \frac{1}{\sqrt{2}} \begin{pmatrix}1\\-i\end{pmatrix}.
+\end{align*}
+On the other hand,
+\begin{align*}
+  C_2 &= \begin{pmatrix}1 & 2i \\ -2i & 1\end{pmatrix}
+\end{align*}
+has the same eigenvectors as $C_1$, but has real eigenvalues.\newline
+
+Meanwhile,
+\begin{align*}
+  C_3 &= \begin{pmatrix}0 & 2 \\ -2 & 0\end{pmatrix}
+\end{align*}
+has purely imaginary eigenvalues, $\lambda_{1,2} = \pm 2i$.
+\end{example}
+\begin{example}[Repeated Eigenvalue]
+Consider the matrix
+\begin{align*}
+  E &= \begin{pmatrix}3 & -8 & -2 \\ -8 & -9 & -4 \\ -2 & -4 & 6\end{pmatrix}.
+\end{align*}
+The characteristic polynomial for $E$ is
+\begin{align*}
+  \left(\lambda + 14\right)\left(\lambda - 7\right)^2 &= 0.
+\end{align*}
+As a double root, we must have $\lambda_2 = \lambda_3 = 7$, meaning we have a doubly degenerate spectrum thanks to $7$.\newline
+
+Solving for $\ket{v_1}$, we have
+\begin{align*}
+  \ket{v_1} &= \begin{pmatrix}2\\4\\1\end{pmatrix},
+\end{align*}
+while solving for $\lambda = 7$, we get the system of equations
+\begin{align*}
+  4a + 8b + 2c &= 0\\
+  8a + 16b + 4c &= 0\\
+  2a + 4b + c &- 0.
+\end{align*}
+These equations are not linearly independent, but also this equation is equivalent to a single condition $c = -2\left(a + 2b\right)$. Solving for each of $a,b,c = 0$, we have
+\begin{align*}
+  \ket{v_{c=0}} &= \begin{pmatrix}-2\\1\\0\end{pmatrix}\\
+  \ket{v_{a=0}} &= \begin{pmatrix}0\\1\\-4\end{pmatrix}\\
+  \ket{v_{b=0}} &= \begin{pmatrix}1\\0\\-2\end{pmatrix}.
+\end{align*}
+These vectors are not linearly independent, meaning we can find any $\ket{u} = \alpha \ket{v_1} + \beta\ket{v_2}$. In particular, we can pick the degenerate eigenvectors to be orthogonal to each other.
+\begin{align*}
+  \ket{v_2} &= \begin{pmatrix}1\\0\\-2\end{pmatrix}\\
+  \ket{v_3} &= \begin{pmatrix}8\\-5\\4\end{pmatrix}.
+\end{align*}
+
+\end{example}
+\begin{example}[Non-Orthogonal Eigenvectors]
+Consider
+\begin{align*}
+  E &= \begin{pmatrix}-2 & -4 & -3 \\ 3 & 5 & 3 \\ -2 & -2 & -1\end{pmatrix},
+\end{align*}
+from which we obtain eigenvalues of $1$, $-1$, and $2$. Their corresponding eigenvectors are
+\begin{align*}
+  \ket{v_1} &= \begin{pmatrix}1\\0\\-1\end{pmatrix}\\
+  \ket{v_{-1}} &= \begin{pmatrix}1\\-1\\1\end{pmatrix}\\
+  \ket{v_{2}} &= \begin{pmatrix}1\\-1\\0\end{pmatrix}.
+\end{align*}
+Though linearly independent, these eigenvectors are not orthogonal, and it is not possible to choose a basis for which these eigenvectors are orthogonal.
+\end{example}
+\begin{example}[Common Eigenvectors]
+  Eigenvalues must correspond to different eigenvectors to form a basis. However, different matrices can have the same eigenvectors. For instance, the matrix
+  \begin{align*}
+    F &= \begin{pmatrix}4 & 5 & 1 \\ -1 & -2 & -1 \\ -3 & -3 & 0\end{pmatrix}
+  \end{align*}
+  has the spectrum $\lambda = \set{3,0,-1}$, but the same eigenvectors as $E$.\newline
+
+  These matrices also have something else in common --- it is the case that $EF = FE$.
+\end{example}
+\begin{example}[Defective Matrix]
+  Consider the matrix
+  \begin{align*}
+    G &= \begin{pmatrix}1 & -1 & 1 \\ 1 & 3 & -1 \\ 1 & 1 & -1\end{pmatrix}.
+  \end{align*}
+  We get a double degeneracy, $\lambda_1 = 1$, $\lambda_{2,3} = 2$, with
+  \begin{align*}
+    \ket{v_1} &= \begin{pmatrix}-1\\1\\3\end{pmatrix},
+  \end{align*}
+  but there is only one eigenvector corresponding to $\lambda_{2,3}$.\newline
+
+  We call $G$ a defective matrix, in that it does not have a third eigenvector.
+\end{example}
+\subsubsection{Normal Matrices}%
+In order to generally study eigenvectors and eigenvalues, we are interested in a particular class of matrices.
+\begin{definition}[Normal Matrices]
+A matrix $N$ is known as normal if
+\begin{align*}
+  \left[N,N^{\ast}\right] &= 0.
+\end{align*}
+In other words, $NN^{\ast} = N^{\ast}N$.
+\end{definition}
+Normal matrices have orthogonal eigenbasis, which makes doing analysis much easier.
+\begin{example}[Hermitian Operators]
+  Recall that an operator is Hermitian if $H = H^{\ast}$. Hermitian matrices are normal, as
+  \begin{align*}
+    \left[H,H^{\ast}\right] &= \left[H,H\right]\\
+                            &= 0.
+  \end{align*}
+  If $\lambda$ is an eigenvalue of $H$ with corresponding eigenvector $\ket{v}$, we have
+  \begin{align*}
+    \lambda \braket{v}{v} &= \bra{v}\lambda\ket{v}\\
+                          &= \bra{v}H\ket{v}\\
+                          &= \overline{\bra{v}H^{\ast}\ket{v}}\\
+                          &= \overline{\bra{v}H\ket{v}}\\
+                          &= \overline{\bra{v}\lambda\ket{v}}\\
+                          &= \overline{\lambda} \braket{v}{v}.
+  \end{align*}
+  Thus, $\lambda = \overline{\lambda}$, meaning it is necessarily the case that $\lambda\in \R$.\newline
+
+  Additionally, for distinct eigenvalues $\lambda_{1,2}$ with corresponding eigenvectors $\ket{v_{1,2}}$, we must have
+  \begin{align*}
+    \lambda_2\braket{v_1}{v_2} &= \braket{v_1}{Hv_2}\\
+                               &= \braket{H^{\ast}v_1}{v_2}\\
+                               &= \braket{Hv_1}{v_2}\\
+                               &= \overline{\lambda_1}\braket{v_1}{v_2},\\
+                               &= \lambda_1\braket{v_1}{v_2},
+                               \intertext{meaning}
+    \left(\lambda_1 - \lambda_2\right)\braket{v_1}{v_2} &= 0.
+  \end{align*}
+  Since $\lambda_1 \neq \lambda_2$, we necessarily have $\braket{v_1}{v_2} = 0$, or that $v_1$ and $v_2$ are orthogonal.\newline
+
+  Thus, for non-degenerate eigenvalues, the eigenvectors of a Hermitian operator are orthogonal --- for degenerate eigenvalues, we are able to choose the eigenvectors to be orthogonal.\newline
+
+  Therefore, the eigenvectors of a $n\times n$ Hermitian matrix form an orthogonal basis for $\C^n$.\newline
+
+  Note that there exist anti-Hermitian matrices, with $Q^{\ast} = -Q$. Then, it is the case that $Q = iH$ for some $H$, meaning the eigenvalues of $Q$ are pure imaginary, with orthogonal eigenvectors.\newline
+
+  Note that any matrix $A$ can be written as $A = H + Q$, where $H$ is Hermitian and $Q$ is anti-Hermitian.
+\end{example}
+\begin{example}[Unitary Matrices]
+  Recall that an operator is unitary if $U^{\ast}U = I_{n}$. Thus, we have
+  \begin{align*}
+    \left[U,U^{\ast}\right] &= \left[U,U^{-1}\right]\\
+                            &= UU^{-1} - U^{-1}U\\
+                            &= 0.
+  \end{align*}
+  If $\lambda$ is an eigenvalue of $U$ with corresponding eigenvector $\ket{v}$, we have
+  \begin{align*}
+    \left\vert \lambda \right\vert^2\braket{v}{v} &= \bra{v}\overline{\lambda} \lambda\ket{v}\\
+                                                  &= \bra{\lambda v}{\lambda v}\\
+                                                  &= \braket{Uv}{Uv}\\
+                                                  &= \bra{v}U^{\ast}U\ket{v}\\
+                                                  &= \braket{v}{v},
+  \end{align*}
+  meaning $\left\vert \lambda \right\vert^2 = 1$, so $\lambda = e^{i\alpha}$. Every unitary operator has as its eigenvalues a pure phase.\newline
+
+  Note that, since unitary operators preserve relative orientation and magnitude, it must be the case that, in the case of e.g. time evolution, the operator for time evolution must be a unitary.\newline
+
+  Following an identical derivation, we can see that the eigenvectors of a unitary operator $U$ form a basis for $\C^n$.
+\end{example}
+\subsubsection{Diagonalization}%
+\begin{table}
+  \centering
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{cc|cc}
+    Matrix & Criterion & Eigenvalues & Eigenbasis\\
+    \hline\hline
+    Hermitian & $H^{\ast} = H$ & Real & $\C^n$\\
+    Anti-Hermitian & $Q^{\ast} = -Q$ & Imaginary & $\C^n$\\
+    Symmetric & $S^{T} = S$ & Real & $\R^n$\\
+    Anti-symmetric & $A^{T} = -A$ & Imaginary & $\R^n$\\
+    Unitary & $U^{\ast} = U^{-1}$ & Pure Phase & $\C^n$\\
+    Orthogonal & $O^{T} = O^{-1}$ & Pure Phase & $\R^n$
+  \end{tabular}
+  \caption{Some Normal Matrices}
+\end{table}
+Given a normalized eigenvector $\ket{\hat{v}}$ of a normal matrix $T$, we can project the eigenvalue by taking
+\begin{align*}
+  \lambda &= \bra{\hat{v}}T\ket{\hat{v}}.
+\end{align*}
+In particular, this is true if we rotate the basis. If $\ket{\hat{v}'} = U^{\ast}\ket{v}$. Then, we have
+\begin{align*}
+  \lambda &= \bra{\hat{v}}T \ket{\hat{v}}\\
+          &= \bra{\hat{v}}\left(UU^{\ast}\right)T \left(UU^{\ast}\right)\ket{\hat{v}}\\
+          &= \bra{U^{\ast}\hat{v}}U^{\ast} T U\ket{U^{\ast}\hat{v}}\\
+          &= \ket{\hat{v}'}U^{\ast}TU\ket{\hat{v}'}.
+\end{align*}
+Thus, we can see that the eigenvalue is basis-independent.\newline
+
+It would be more efficient if we could construct all the eigenvalues at the same time. We can do this by constructing a matrix
+\begin{align*}
+  U &= \begin{pmatrix} \hat{v}_1 & \hat{v}_2 & \cdots & \hat{v}_n\end{pmatrix},
+\end{align*}
+where each $\hat{v}_i$ are normalized eigenvectors. Then, we take
+\begin{align*}
+  TU &= \begin{pmatrix}\lambda_1\hat{v}_1 & \lambda_2\hat{v}_2 & \cdots & \lambda_n\hat{v}_n\end{pmatrix}\\
+     &= U\Lambda,
+\end{align*}
+where
+\begin{align*}
+  \Lambda &= \begin{pmatrix}\lambda_1 & 0 & \cdots & 0 \\ 0 & \lambda_2 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \lambda_n\end{pmatrix}
+\end{align*}
+is the collection of eigenvalues. Thus, we obtain
+\begin{align*}
+  \Lambda &= U^{\ast}TU,
+\end{align*}
+which means $\Lambda$ is a unitary transformation induced by the vector rotation $\ket{\hat{v}'} = U^{\ast}\ket{\hat{v}}$. The matrices $\Lambda$ and $T$ are different matrix representations of the same operator $\mathcal{T}$, meaning this transformation $\Lambda = U^{\ast}TU$ diagonalizes the matrix. In particular, on the diagonal basis, $\Lambda$ has the standard basis representation for its eigenvectors.\newline
+
+What makes normal operators special is that they are \textit{unitarily} diagonalizable.
+\begin{example}
+  \renewcommand{\arraystretch}{1.5}
+  Consider
+  \begin{align*}
+    B &= \begin{pmatrix}-1 & -1 & 5 \\ -1 & 5 & -1 \\ 5 & -1 & -1\end{pmatrix},
+  \end{align*}
+  which has normalized eigenvectors
+  \begin{align*}
+    \ket{v_1} &= \frac{1}{\sqrt{3}}\begin{pmatrix}1\\1\\1\end{pmatrix}\\
+    \ket{v_2} &= \frac{1}{\sqrt{6}} \begin{pmatrix}1\\-2\\1\end{pmatrix}\\
+    \ket{v_3} &= \frac{1}{\sqrt{2}}\begin{pmatrix}1\\0\\-1\end{pmatrix}.
+  \end{align*}
+  Then, the unitary matrix
+  \begin{align*}
+    U &= \begin{pmatrix}\frac{1}{\sqrt{3}} & \frac{1}{\sqrt{6}} & \frac{1}{\sqrt{2}}\\\frac{1}{\sqrt{3}} & -\frac{2}{\sqrt{6}} & 0\\ \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{6}} & -\frac{1}{\sqrt{2}}\end{pmatrix},
+  \end{align*}
+  meaning we now have the diagonalization
+  \begin{align*}
+    U^{\ast}BU &= \begin{pmatrix}3 & 0 & 0 \\ 0 & 6 & 0 \\ 0 & 0 & -6\end{pmatrix}.
+  \end{align*}
+\end{example}
+\begin{example}[Matrix Powers]
+  \renewcommand{\arraystretch}{1.5}
+If $T$ is a unitarily diagonalizable matrix, we can take
+\begin{align*}
+  T^{m} &= U\left(U^{\ast}TU\right)\left(U^{\ast}TU\right)\cdots \left(U^{\ast}TU\right)U^{\ast}\\
+        &= U\Lambda^{m}U^{\ast},
+\end{align*}
+meaning we find
+\begin{align*}
+  \Lambda^{m} &= \begin{pmatrix}\lambda_{1}^{m} & 0 & \cdots & 0 \\ 0 & \lambda_{2}^m & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \lambda_{n}^{m}\end{pmatrix}.
+\end{align*}
+
+\end{example}
 
 \end{document}

@@ -1,0 +1,113 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Set Theory and Foundations of Mathematics: Homework 10}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{4.7}%
+\begin{problem}
+  Show that the function $P\left(x,y\right) = x^y$ is primitive recursive.
+\end{problem}
+\begin{solution}
+  We have
+  \begin{align*}
+    P\left(x,y+1\right) &= M\left(x,P(x,y)\right),\\
+    P\left(x,0\right) &= 1\\
+    &= S\left(C_0\left(x\right)\right)
+  \end{align*}
+  We have
+  \begin{align*}
+    P\left(x,y+1\right) &= g\left(x,y,P\left(x,y\right)\right)
+    \intertext{where}
+    g\left(x,y,z\right) &= M\left(P_{1}^{(3)}\left(x,y,z\right),P_{3}^{(3)}\left(x,y,z\right)\right)
+    \intertext{and}
+    P\left(x,0\right) &= f(x)\\
+                      &= S\left(C_0\left(x\right)\right).
+  \end{align*}
+  It is the case that $P$ is computed by primitive recursion on $f$ and $g$, since $M\left(x,y\right)$ is primitive recursive by a previous result.
+\end{solution}
+
+\section{4.8}%
+\begin{problem}
+  Given a primitive recursive function $p\left(x_1,\dots,x_n,y\right)$, show that the function
+  \begin{align*}
+    h\left(x_1,\dots,x_n,z\right) &= \prod_{k=0}^{z}p\left(x_1,\dots,x_n,k\right)
+  \end{align*}
+  is primitive recursive.
+\end{problem}
+\section{Extra Problem 1}%
+\begin{problem}
+  Show that every primitive recursive function is total.
+\end{problem}
+\begin{solution}[Proof 1]
+  Let $f$ be primitive recursive. Then, $f$ is obtained via $S,C_0,P_{i}^{(k)}$ by composition and primitive recursion. We want to show that composition and primitive recursion preserve totality.\newline
+
+  Turning our attention to composition, we have
+  \begin{align*}
+    h\left(x_1,\dots,x_n\right) &= f\left(g_1\left(x_1,\dots,x_n\right),\dots,g_m\left(x_1,\dots,x_n\right)\right).
+  \end{align*}
+  We will use the established result that if $f$ and $g_1,\dots,g_m$ are total functions, then $h$ is total.\newline
+
+  In primitive recursion, we have
+  \begin{align*}
+    h\left(x_1,\dots,x_n,y+1\right) &= g\left(x_1,\dots,x_n,y,h\left(x_1,\dots,x_n,y\right)\right)\\
+    h\left(x_1,\dots,x_n,0\right) &= f\left(x_1,\dots,x_n\right).
+  \end{align*}
+  We will use the established result that if $f,g$ are total, then $h$ is total.\newline
+
+  Additionally, we will use the established result that $S,C_0,P_{i}^{(k)}$ are total.\newline
+
+  We say $h$ has depth $n$ if $h$ is obtained by one application of composition or primitive recursion with one or more functions of depth less than or equal to $n-1$, one of which has depth exactly equal to $n-1$. We say $h$ has depth $0$ if $h = S,C_0,P_{i}^{(k)}$.\newline
+
+  We then use induction on the depth of $h$ to prove the totality of $h$.
+  \begin{description}[font=\normalfont]
+    \item[$d = 0$:] $h = S,C_0,P_{i}^{(k)}$, so by the previous result, $h$ is total.
+    \item[$d = n+1$:] If every function with depth $n$ is total, then for $h$ with depth $n+1$, $h$ is obtained by composition of functions with depth $n$, or 
+  \end{description}
+\end{solution}
+\begin{solution}[Proof 2]
+Instead of using depth, we will let
+\begin{align*}
+  PR_0 &= \set{S,C_0,P_i^{(k)}},
+\end{align*}
+where $i\leq k\in \N$. We let
+\begin{align*}
+  PR_{n+1} &= \set{h|h\text{ is obtained by one composition or one primitive recursion from functions in $PR_n$}}\cup PR_n
+\end{align*}
+Then,
+\begin{align*}
+  PR &= \bigcup_{i=1}^{\infty} PR_i
+\end{align*}
+consists of all primitive recursive functions.\newline
+
+We want to show that if $h\in PR_{n}$ is total, then $h\in PR_{n+1}$ is total.
+\end{solution}
+\section{Extra Problem 2}%
+\begin{problem}
+\end{problem}
+\begin{solution}
+  Let $g\left(n,x\right) = f\left(n\right) = A\left(n,n\right)$. Suppose toward contradiction that $f$ is primitive recursive. Then, for all $n,x > M$
+  \begin{align*}
+    A\left(n,x\right) &> g\left(n,x\right)\\
+                      &= f\left(n\right)\\
+                      &= A\left(n,n\right).
+  \end{align*}
+  However, since $x > M$ and $n > M$, we can take $n = x$, meaning $A\left(n,n\right) > A\left(n,n\right)$, which is a contradiction.
+\end{solution}
+
+\end{document}

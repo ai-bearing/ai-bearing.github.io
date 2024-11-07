@@ -4346,7 +4346,7 @@ Thus, we can formally characterize locally convex topological vector spaces.
   \begin{align*}
     \varphi\left(z\right) &= \sum_{n=1}^{\infty}\lambda_nz_n,
   \end{align*}
-  where $z\in c_0^{\ast}$. Therefore, we have
+  where $z\in c_0$. Therefore, we have
   \begin{align*}
     \varphi\left(e_n\right) &= \lambda_n.
   \end{align*}
@@ -4417,7 +4417,23 @@ Thus, we can formally characterize locally convex topological vector spaces.
   \end{align*}
 \end{exercise}
 \begin{solution}[]
-  [Consult Rainone about Problem]
+  %[Consult Rainone about Problem]
+  %C_c is dense in L_1
+  We are aware that $L_{\infty}\left(\Omega,\mu\right) = \left(L_{1}\left(\Omega,\mu\right)\right)^{\ast}$, so for each $f\in L_{\infty}$, there is a unique $\varphi_{f}\in L_{1}$ such that $\varphi_{f}(g) = \int_{\Omega}fg\:d\mu$.\newline
+
+  Additionally, we know that, since $C_c\left(\Omega\right)\subseteq L_{1}\left(\Omega\right)$ is dense, there is a sequence $\left(h_n\right)_n\subseteq C_c\left(\Omega\right) = C\left(\Omega\right)$ such that $\left(h_n\right)_n\rightarrow f$.\newline
+
+  Starting with the case of $f$ positive, we have $\left(h_n\right)_n\rightarrow f$ is increasing, so by the dominated convergence theorem, we have
+  \begin{align*}
+    \varphi_{h_n}\left(g\right) &= \int_{\Omega}^{} h_n g\:d\mu\\
+                                &\rightarrow \int_{\Omega}^{} f g\:d\mu\\
+                                &= \varphi_{f}\left(g\right).
+  \end{align*}
+  For $\Ran(f)\in \R$, we split $f$ into $f = f_{+} - f_{-}$, and apply the previous process to each of $f_{+}$ and $f_{-}$.\newline
+
+  Finally, for $\Ran(f) \in \C$, we split $f$ into $f = \left(u_{+} - u_{-}\right) + i\left(v_{+} - v_{-}\right)$, and apply to each of $u_{\pm}$ and $v_{\pm}$.\newline
+
+  Therefore, we have $\overline{C\left(\Omega,\mu\right)}^{w^{\ast}} = \left(L_{1}\left(\Omega,\mu\right)\right)^{\ast}\cong L_{\infty}\left(\Omega,\mu\right)$.
 \end{solution}
 \begin{example}[Strong Operator Topology]
   Let $\left(X,\norm{\cdot}\right)$ be a normed space. For each $x\in X$, consider
@@ -4489,5 +4505,463 @@ Thus, we can formally characterize locally convex topological vector spaces.
   \end{align*}
   defined by $S_n(z) = z_1e_n$, where $\left(e_n\right)_n$ are canonical coordinate vectors. Then, since $z_1e_n\xrightarrow{w} 0$, we have $\left(S_n\right)_n\rightarrow 0$ in the WOT, but since $\norm{S_n\left(e_1\right)} = \norm{e_n} = 1$, which does not converge to $0$ in the SOT.
 \end{example}
+\begin{example}[Strict Topology]
+  Let $\Omega$ be a locally compact Hausdorff space. For each $\phi\in C_0\left(\Omega\right)$, define a seminorm
+  \begin{align*}
+    p_{\phi}: C_b\left(\Omega\right)\rightarrow [0,\infty)
+  \end{align*}
+  by $p_{\phi}\left(f\right) = \norm{\phi f}$.\newline
+
+  Note that $C_0\left(\Omega\right)\subseteq C_b\left(\Omega\right)$ is not only a closed subspace, but is also an ideal --- i.e., $\phi f\in C_0\left(\Omega\right)$ for any $\phi\in C_0\left(\Omega\right)$ and $f\in C_b\left(\Omega\right)$.\newline
+
+  To verify that $p_{\phi}$ is a seminorm, we let $f\in C_b\left(\Omega\right)$ be nonzero. Then, $S = \supp(f)\neq \emptyset$, so there is $\phi\in C_c\left(\Omega\right)$ with $\supp\left(\phi\right)\subseteq S$. By Urysohn's Lemma, there is $K\subseteq \supp\left(\phi\right)$ with $\phi = 1$ on $K$. We must have $\sup_{x\in K}\left\vert \phi(x)f(x) \right\vert \neq 0$, so $\norm{\phi f}_{u}\neq 0$ necessarily.\newline
+
+  The family $\beta = \set{p_{\varphi} | \phi\in C_0\left(\Omega\right)}$ is a separating family of seminorms on $C_b\left(\Omega\right)$, so there is a locally convex topology $\tau_{\beta}$ (which we will abuse notation and refer to as $\beta$). This is known as the strict topology on $C_b\left(\Omega\right)$.\newline
+
+  Convergence in the strict topology is as follows: for all $\phi\in C_0\left(\Omega\right)$,
+  \begin{align*}
+    \left(f_{\alpha}\right)_{\alpha}\xrightarrow{\beta}f \Leftrightarrow \left(\phi f_{\alpha}\right)_{\alpha}\rightarrow \phi f.
+  \end{align*}
+\end{example}
+\begin{exercise}
+  Show that $\left(C_b(\Omega),\beta\right)$ is complete as a topological vector space, and $\overline{C_0\left(\Omega\right)}^{\beta} = C_b\left(\Omega\right)$.
+\end{exercise}
+\begin{solution}[]
+  Let $\left(f_{\alpha}\right)_{\alpha}$ be a Cauchy net in $\left(C_b\left(\Omega\right),\beta\right)$. Let $x\in V$ such that $V$ is open and precompact, with $K = \overline{V}$. We have $\left(f_{\alpha}|_{K}\right)_{\alpha}$ is uniformly Cauchy, so there is $f_{K}\in C\left(K\right)$ with $\norm{f_{\alpha}-f}_{u}\rightarrow 0$ on $K$. Thus, we have $\left\vert f_{\alpha}(x) - f_{K}(x) \right\vert \rightarrow 0$ for all $x\in K$.\newline
+
+  We define $f(x) = f_K(x)$. We must now verify that $f$ is well-defined. To this end, if $L = \overline{U}$ with $x\in U$, then it is the case that
+  \begin{align*}
+    \left\vert f_{K}\left(x\right) -  f_{L}(x) \right\vert &\leq \left\vert f_{K}(x) - f_{\alpha}(x)  \right\vert + \left\vert f_{\alpha}(x) - f_{L}(x) \right\vert\\
+                                                           &\leq \ve,
+  \end{align*}
+  so $\norm{f_{K}(x) - f_{L}(x)}_{u} \leq \ve$ for arbitrary $\ve$, so $f_K(x) = f_L(x)$.\newline
+
+  Seeing as $C_0(\Omega)$ is an ideal, it is the case that, for $\left(f_{\alpha}\right)_{\alpha}$ uniformly Cauchy in $\left(C_b\left(\Omega\right),\beta\right)$ and $\phi\in C_0\left(\Omega\right)$, that $\left(\phi f_{\alpha}\right)_{\alpha}$ is uniformly Cauchy in $C_0$, implying that $\left(\phi f_{\alpha}\right)_{\alpha}\rightarrow H_{\phi}$ for some $H_{\phi}\in C_0\left(\Omega\right)$. In particular, for any $K\subseteq \Omega$ compact, we must have $\left(\phi f\right)_{\alpha}\rightarrow \phi f$, so $H_{\phi} = \phi f$.\newline
+
+  We must now show that $f\in C_b\left(\Omega\right)$. Suppose it were not the case that $f$ were bounded. Then there would exist $\left(x_n\right)_n\subseteq \Omega$ such that $\left\vert f\left(x_n\right) \right\vert \geq n$ for each $n$. We can find $\phi\in C_0\left(\Omega\right)$ such that $\phi\left(x_n\right)  = \frac{1}{n}$, meaning that $\left\vert \phi\left(x_n\right)f\left(x_n\right) \right\vert \geq 1$ for each $n$, so $\norm{\phi\left(x_n\right)f\left(x_n\right)}_{n} \geq 1$, which is a contradiction of the fact that $\phi f\in C_0\left(\Omega\right)$.\newline
+
+  Therefore, we must have $f\in C_b\left(\Omega\right)$, so $\left(C_b\left(\Omega\right),\beta\right)$ is complete as a topological vector space.
+\end{solution}
+\begin{example}[Functions of Rapid Decrease]
+  Consider the space of all infinitely-differentiable functions,
+  \begin{align*}
+    C^{\infty}\left(\R\right) &= \set{\phi: \R\rightarrow \C | \frac{d^k}{dx^k}\left(\phi\right)\text{ exists and is continuous for all }k\geq 0}.
+  \end{align*}
+  Considering the norm
+  \begin{align*}
+    \norm{\phi}_{n,k} &= \sup_{x\in \R}\left\vert x^n \frac{d^{k}}{dx^k}\left(\phi\right)\left(x\right) \right\vert\\
+                      &= \norm{x^n\frac{d^{k}}{dx^k}\left(\phi\right)}_{u},
+  \end{align*}
+  we let
+  \begin{align*}
+    \mathcal{J} &= \set{\phi\in C^{\infty}\left(\R\right) | \norm{\phi}_{n,k} < \infty\text{ for all $n,k\in \Z_{+}$}}.
+  \end{align*}
+  Functions in $\mathcal{J}$ have derivatives that decay faster than the inverse of any polynomial --- the family $\norm{\cdot}_{n,k}$ is separating for $\mathcal{J}$, which yields a locally convex topological vector space known as the functions of rapid decrease.
+\end{example}
+\subsection{Norms and Metrics on Locally Convex Spaces}%
+Given a locally convex topological vector space, we may ask if the topology is compatible with a particular norm.
+\begin{definition}
+  Let $X$ be a vector space.
+  \begin{enumerate}[(1)]
+    \item A metric $d$ on $X$ is called translation-invariant if
+      \begin{align*}
+        d\left(x + z,y+z\right) &= d\left(x,y\right)
+      \end{align*}
+      for all $x,y,z\in X$.
+    \item If $X$ is a locally convex topological vector space whose topology is compatible with a translation-invariant complete metric, we say $X$ is a Fréchet space.
+  \end{enumerate}
+\end{definition}
+\begin{proposition}
+  Let $X$ be a vector space, and let $\mathcal{P} = \set{p_n | n\in \N}$ be a countable separating family of seminorms on $X$. We let $\tau_{\mathcal{P}}$ be the locally convex topology generated by the family of seminorms on $\mathcal{P}$.\newline
+
+  The form $d: X\times X\rightarrow [0,\infty)$ defined by
+  \begin{align*}
+    d\left(x,y\right) &= \sum_{n=1}^{\infty}2^{-n}\frac{p_n\left(x-y\right)}{1 + p_n\left(x-y\right)}
+  \end{align*}
+  is a translation-invariant metric, with
+  \begin{align*}
+    \id_{X}: \left(X,\tau_{\mathcal{P}}\right) \rightarrow \left(X,d\right)
+  \end{align*}
+  a linear isomorphism and homeomorphism.
+\end{proposition}
+\begin{proof}
+  Since $p_n$ is a family of seminorms, the collection $\left(p_n\left((\cdot) - (\cdot)\right)\right)_n$ is a separating family of semimetrics on $X$, meaning that $d$ is a translation-invariant metric.\newline
+
+  Suppose $\left(x_{\alpha}\right)_{\alpha}$ is a net in $X$ with $d\left(x_{\alpha},x\right)\rightarrow 0$. We will show that $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$ in $\tau_{\mathcal{P}}$.\newline
+
+  For each $n\geq 1$, we have
+  \begin{align*}
+    0 &\leq \rho_n\left(x_{\alpha},x\right)\\
+      &= \frac{p_n\left(x_{\alpha} - x\right)}{1 + p_n\left(x_{\alpha} - x\right)}\\
+      &\leq 2^n d\left(x_{\alpha},x\right),
+  \end{align*}
+  meaning that $\rho_{n}\left(x_{\alpha},x\right)\rightarrow 0$. Note that $p_n\left(x_{\alpha} - x\right) = \frac{\rho_{n}\left(x_{\alpha},x\right)}{1-\rho_{n}\left(x_{\alpha},x\right)}$, so $p_n\left(x_{\alpha},x\right)\rightarrow 0$ for every $n\geq 1$.\newline
+
+  It follows that $\left(x_{\alpha}\right)_{\alpha}\xrightarrow{\tau_{\mathcal{P}}} x$ by the definition of the topology $\tau_{\mathcal{P}}$.\newline
+
+  Let $\left(x_{\alpha}\right)_{\alpha}\rightarrow x$, and let $\ve > 0$. Find $N$ such that $\sum_{n > N}2^{-n} < \ve/2$.\newline
+
+  For each $n = 1,\dots,N$, it is the case that $p_n\left(x_{\alpha}-x\right)\rightarrow 0$, so $\rho_{n}\left(x_{\alpha},x\right)\rightarrow 0$. Thus, there is $\alpha_0$ such that for all $\alpha \geq \alpha_0$, $\rho_{n}\left(x_{\alpha},x\right) < \ve/2$.\newline
+  
+  Thus, for $\alpha \geq \alpha_0$, we have
+  \begin{align*}
+    d\left(x_{\alpha},x\right) &= \sum_{n=1}^{\infty}\rho_{n}\left(x_{\alpha},x\right)\\
+                               &= \sum_{n=1}^{N}2^{-n}\rho_{n}\left(x_{\alpha},x\right) + \sum_{n > n}2^{-n}\rho_{n}\left(x_{\alpha},x\right)\\
+                               &\leq \sum_{n=1}^{N}2^{-n}\left(\ve/2\right) + \sum_{n > n}2^{-n}\\
+                               &\leq \ve/2 + \ve/2\\
+                               &= \ve.
+  \end{align*}
+  Thus, $d\left(x_{\alpha},x\right)\rightarrow 0$.
+\end{proof}
+\begin{example}
+  Let $X$ be the vector space $C\left(\R\right)$. For each $n\geq 1$, we define
+  \begin{align*}
+    p_n: X\rightarrow [0,\infty)
+  \end{align*}
+  by
+  \begin{align*}
+    p_n\left(f\right) = \sup_{\tiny x\in [-n,n]}\left\vert f(x) \right\vert.
+  \end{align*}
+  It is the case that the set $\mathcal{P} = \set{p_n | n\geq 1}$ is a separating family of seminorms. Thus, $\left(X,\tau_{\mathcal{P}}\right)$ is metrizable with the Fréchet metric,
+  \begin{align*}
+    d_{F}\left(f,g\right) &= \sum_{n=1}^{\infty}2^{-n}\frac{p_n\left(f-g\right)}{1 + p_n\left(f-g\right)}.
+  \end{align*}
+  It is the case that the Fréchet metric is complete. To see this, we let $\left(f_n\right)_n$ be a sequence of functions Cauchy in the Fréchet metric.\newline
+
+  We start by showing that for a fixed $x$, $\left(f_n(x)\right)_n$ is Cauchy in $\R$. Setting
+  \begin{align*}
+    \rho_{k}\left(f,g\right) &= \frac{p_k\left(f-g\right)}{1 + p_k\left(f-g\right)},
+  \end{align*}
+  we have that, for any $\ve > 0$,
+  \begin{align*}
+    \frac{\left\vert f_n(x)-f_m(x) \right\vert}{1 + \left\vert f_n(x) - f_m(x) \right\vert} &\leq \rho_{k}\left(f_n,f_m\right)\\
+                                                                                            &< 2^{k}\ve,
+  \end{align*}
+  where $k$ is such that $x\in \left[-k,k\right]$. Then, it is necessarily the case that the sequence $\left(f_n\right)_n$ is uniformly Cauchy in $\left[-k,k\right]$, hence $\left(f_n(x)\right)_n$ is Cauchy in $\left[-k,k\right]$.\newline
+
+  We define $f(x) = \lim_{n\rightarrow\infty}f_n(x)$ for each $x\in \R$. We must show that $\left(f_n\right)_n\xrightarrow{d_{F}} f$.\newline
+
+  For $\ve > 0$, we find $K$ such that $\sum_{k > K}2^{-k} < \ve/2$. Then, there exists $N$ such that for all $n\geq N$, we have $\rho_{k}\left(f_n,f\right) < \ve/2$ for each $k=1,\dots,K$. Therefore, for $n\geq N$, we have
+  \begin{align*}
+    d_F\left(f_n,f\right) &= \sum_{k=1}^{\infty}2^{-k}\rho_{k}\left(f_n,f\right)\\
+                          &= \sum_{k=1}^{K}2^{-k}\rho_{k}\left(f_n,f\right) + \sum_{k > K}2^{-k}\rho_k\left(f_n,f\right)\\
+                          &\leq \sum_{k=1}^{K}2^{-k}\left(\ve/2\right) + \ve/2\\
+                          &\leq \ve/2 + \ve/2\\
+                          &= \ve.
+  \end{align*}
+  Thus, $\left(f_n\right)_n$ converges to $f$ --- since, for any $k$, $\left(f_n\right)_n\xrightarrow{\norm{\cdot}_{u}} f$ on $\left[-k,k\right]$, it is the case that $f$ is continuous on any such $\left[-k,k\right]$, meaning $f\in C\left(\R\right)$.
+\end{example}
+\begin{example}[Functions of Rapid Decrease]
+  We will show that the space $\mathcal{J}$ of functions of rapid decrease is a Fréchet space.\newline
+
+  Since there are countably many seminorms, we know that there is a translation-invariant metric. We must show that this metric is complete.\newline
+
+  Let $\left(\phi_j\right)_j$ be Cauchy. It follows that $\left(x^{n}\frac{d^{k\phi_{j}}}{dx^{k}}\right)_{j}$ is uniformly Cauchy for all $n,k\in \Z^{+}$, so there are $\psi_{n,k}\in C\left(\R\right)$ such that $\left(x^n\diff{^k\phi_j}{dx^k}\right)_j\rightarrow \psi_{n,k}$ uniformly.\newline
+
+  Set $\psi = \psi_{0,0}$. The fundamental theorem of calculus gives
+  \begin{align*}
+    \phi_j\left(x\right) &= \phi_j\left(0\right) + \int_{0}^{x} \phi_j'(t)\:dt,
+  \end{align*}
+  with $\left(\phi_j\right)_j\rightarrow \psi$ uniformly and $\left(\phi_j'\right)_j\rightarrow \psi_{0,1}$ uniformly. Together, we get
+  \begin{align*}
+    \psi\left(x\right) &= \psi\left(0\right) + \int_{0}^{x} \psi_{0,1}(t)\:dt,
+  \end{align*}
+  meaning $\psi\in C^1\left(\R\right)$, with $\psi' = \psi_{0,1}$. Thus, we get $x^n\diff{^k\psi}{x^k} = \psi_{n,k}$, meaning $\psi\in \mathcal{J}$ and $\left(\phi_j\right)_j\rightarrow \psi$ in the metric.
+\end{example}
+We may next ask when we can apply a norm to a locally convex topological vector space.\newline
+
+Note that if $\left(X,\norm{\cdot}\right)$ is a normed vector space, then $U_X = \set{x | \norm{x} < 1}$ is open and bounded --- as it turns out, this condition is sufficient.
+\begin{definition}
+  Let $X$ be a topological vector space. A subset $A\subseteq X$ is said to be bounded if for every neighborhood $U\in \mathcal{N}_{0_X}$, there is $t > 0$ such that $A\subseteq tU$.
+\end{definition}
+\begin{lemma}
+  Let $X$ be a topological vector space. If $C\subseteq X$ is an open, convex, balanced, bounded subset with $0_X\in C$, then the Minkowski functional
+  \begin{align*}
+    \mu_{C}: X&\rightarrow [0,\infty)\\
+    \mu_{C}(x) &= \inf\set{s > 0 | x\in sC}
+  \end{align*}
+  is a norm.
+\end{lemma}
+\begin{proof}
+  We are aware that $\mu_{C}$ is a seminorm. Now, we show that if $x\neq 0$, then $\mu_{C}\left(x\right) \neq 0$.\newline
+
+  Since $X$ is Hausdorff, there exist open sets $U,V\subseteq X$ with $0\in U,x\in V,U\cap V = \emptyset$. Since $C$ is bounded, there is $t > 0$ such that $C\subseteq tU$, meaning $\frac{1}{t}C \subseteq U$. Thus, we have $\set{z | \mu_{C}(z) < \frac{1}{t}} = \frac{1}{t}C \subseteq U$. Since $x\notin U$, $\mu_{C}\left(x\right) \geq \frac{1}{t} > 0$.
+\end{proof}
+\begin{proposition}
+  Let $\left(X,\tau\right)$ be a locally convex topological vector space. Then, $X$ is normable if and only if $X$ contains a nonempty open and bounded set.
+\end{proposition}
+\begin{proof}
+  If $X$ is equipped with a norm, then the set $C = U_X$ is nonempty, open, and bounded.\newline
+
+  Let $\emptyset\neq U\subseteq X$ be open and bounded. Pick $x\in U$, and note that $V = U-x$ is a nonempty, open, and bounded neighborhood of $0_X$. Since $X$ is locally compact, we can find an open, balanced, and convex $C\subseteq V$ containing $0_X$. Note that $C$ is also bounded since $V$ is. Thus, $\mu_{C}$ is our desired norm.\newline
+
+  We claim that $\left(X,\tau\right)\rightarrow \left(X,\mu_{C}\right)$ is an isomorphism of topological vector spaces.\newline
+
+  If $\left(x_{\alpha}\right)_{\alpha}\xrightarrow{\tau} 0$, then $\left(\mu_{C}\left(x_{\alpha}\right)\right)_{\alpha}\rightarrow \mu_{C}\left(0\right) = 0$, since $\mu_{C}$ is continuous. Thus, $\mu_{C}\left(x_{\alpha} - 0\right)\rightarrow 0$, so $\left(x_{\alpha}\right)\xrightarrow{\mu_{C}}0$.\newline
+
+  If $\left(x_{\alpha}\right)_{\alpha}\xrightarrow{\mu_{C}}0$, we must show that $\left(x_{\alpha}\right)_{\alpha}\rightarrow{\tau}0$. Let $V\in \mathcal{N}_{0_X}$. Since $C$ is bounded, there is $t > 0$ with $C\subseteq tV$. We find $\alpha_0$ such that for $\alpha \geq \alpha_0$, $\mu_{C}\left(x_{\alpha}\right) < \frac{1}{t}$. This implies that $x_{\alpha}\in \frac{1}{t}C \subseteq V$.
+\end{proof}
+\subsection{Hahn--Banach Theorems for Locally Convex Topological Vector Spaces}%
+Remembering our Hahn--Banach results on normed vector spaces (such as extension and separation results), we can expand them to locally convex spaces.
+\subsubsection{Hahn--Banach Extension Theorems}%
+\begin{definition}
+  Let $X$ be a topological vector space. The continuous dual of $X$ is the collection 
+  \begin{align*}
+    X^{\ast} = \set{\varphi\in X' | \varphi\text{ is continuous}}.
+  \end{align*}
+\end{definition}
+In normed vector spaces, a linear functional is continuous if and only if it is bounded. We can find an analogous result for general topological vector spaces.
+\begin{proposition}
+  Let $X$ be a topological vector space. Suppose $\varphi\in X'$ is a linear functional. The following are equivalent
+  \begin{enumerate}[(i)]
+    \item $\varphi$ is uniformly continuous;
+    \item $\varphi$ is continuous;
+    \item $\varphi$ is continuous at $0$;
+    \item $\ker\left(\varphi\right)\subseteq X$ is closed
+    \item For $X$ a locally convex topological vector space whose topology is generated by a family of separating seminorms $\mathcal{P}$, then there exists $K > 0$ and $p_1,\dots,p_n\in \mathcal{P}$ such that
+      \begin{align*}
+        \left\vert \varphi(x) \right\vert \leq K \max_{j=1}^{n}\left\vert p_j(x) \right\vert.
+      \end{align*}
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We have shown the first three cases. It is also the case that (ii) implies (iv), as $\ker\left(\varphi\right) = \varphi^{-1}\left(\set{0}\right)$.\newline
+
+  To show that (iv) implies (ii), we form the quotient $X/\ker\left(\varphi\right)$, which is a topological vector space. By the first isomorphism theorem, the following diagram commutes
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAA0QBfU9TXfIRQBGclVqMWbADrSAYt14gM2PASJlh4+s1aIOAelkBrGACcAFLPpm0ACywBKbuJhQA5vCKgAZmYgAtkhkIDgQSABM1Ax0AEYwDAAK-GpCIGZY7nY4INQ6UvrWdLYOir7+QYghYUiiEroy0mhYZSB+gZHUNYh1MfFJKYJsGVk5eZJ6ILIA7liweAywwEUlWFwuXEA
+\begin{tikzcd}
+X \arrow[d, "\varphi"'] \arrow[r, "\pi"]           & \F \\
+X/\ker(\varphi) \arrow[ru, "\widetilde{\varphi}"'] &   
+\end{tikzcd}
+  \end{center}
+  where $\widetilde{\varphi}\left(x + \ker\left(\varphi\right)\right) = \varphi(x)$ is injective. Thus, $\Dim\left(X/\ker\left(\varphi\right)\right) = 1$, so $\widetilde{\varphi}$ is continuous. Since $\pi$ is also continuous, $\varphi = \widetilde{\varphi}\circ \pi$ is also continuous.\newline
+
+  We can now show that (v) implies (iii). If $\left(x_{\alpha}\right)_{\alpha}$ is a net in $X$ converging to $0_X$, then $\left(p\left(x_{\alpha}\right)\right)_{\alpha}\rightarrow 0$ for all $p\in \mathcal{P}$, including $p_1,\dots,p_n$, so $\left(\varphi\left(x_{\alpha}\right)\right)_{\alpha}\rightarrow 0$.\newline
+
+  Let $\varphi$ be continuous at $0_X$. Since $\varphi\left(0_X\right) = 0$, $\varphi^{-1}\left(U_{\F}\right)$ is an open neighborhood of $0_X$, meaning there are $\ve > 0$ and $p_1,\dots,p_n$ such that
+  \begin{align*}
+    \varphi\left(\bigcap_{j=1}^{n}U_{p_j}\left(0,\ve\right)\right) \subseteq U_{\F}.
+  \end{align*}
+  We set $K = 2/\ve$.\newline
+
+  Let $y\in X$ be arbitrary. If $p_j\left(y\right) = 0$ for all $j=1,\dots,n$, then $p_j\left(ty\right) = 0$ for all $t > 0$, meaning $\left\vert \varphi\left(ty\right) \right\vert < 1$ for all $t > 0$, meaning $\left\vert \varphi\left(y\right) \right\vert < \frac{1}{t}$ for all $t > 0$, meaning $\varphi\left(y\right) = 0$.\newline
+
+  If $p_i\left(y\right) \neq 0$ for some $i\in \set{1,\dots,n}$, then $z = \frac{\ve y}{2\max\left(p_i\left(y\right)\right)}$ belongs to $\bigcap_{j=1}^{n}U_{p_j}\left(0,\ve\right)$. Thus, we have $\left\vert \varphi\left(z\right) \right\vert < 1$, so $\left\vert \varphi\left(y\right) \right\vert < K\max_{j=1}^{n}\left\vert p_j\left(y\right) \right\vert$.
+\end{proof}
+\begin{theorem}[Hahn--Banach Extension for Locally Convex Spaces]
+  Let $X$ be a locally convex topological vector space, and suppose $E\subseteq X$ is a subspace. If $\varphi\in E^{\ast}$, there is $\psi\in X^{\ast}$ such that $\psi|_{E} = \varphi$.
+\end{theorem}
+\begin{proof}
+  Let $\mathcal{P}$ be a family of seminorms on $X$. We can see that $\mathcal{P}_{E} = \set{p|_{E} | p\in \mathcal{P}}$ defines the subspace topology on $E$, which is also locally convex. Since $\varphi\in E^{\ast}$, there are $p_1,\dots,p_n\in \mathcal{P}_{E}$ and $K > 0$ such that
+  \begin{align*}
+    \left\vert \varphi\left(x\right) \right\vert \leq K\max_{j=1}^{n}\left\vert p_j(x) \right\vert
+  \end{align*}
+  for all $x\in E$. We define $q: X\rightarrow [0,\infty)$ by $q(x) = K\max_{j=1}^{n}p_j\left(x\right)$. Then, $q$ is a seminorm with $\left\vert \varphi\left(x\right) \right\vert \leq q(x)$ for all $x\in E$. Applying the Hahn--Banach--Minkowski extension theorem, we get a linear map $\psi: X\rightarrow \F$ with $\left\vert \psi\left(x\right) \right\vert \leq q(x) = K\max_{j=1}^{n}\left\vert p_j\left(x\right) \right\vert$ for all $x\in X$, meaning $\psi\in X^{\ast}$.
+\end{proof}
+The following corollary is akin to the existence of the norming functional we had exhibited in the case of the Hahn--Banach extension theorems on normed spaces.
+\begin{corollary}
+  Let $X$ be a locally convex topological vector space. Suppose $\set{x_1,\dots,x_n}\subseteq X$ is a linearly independent subset, and $\alpha_1,\dots,\alpha_n\in\F$. Then, there exists $\varphi\left(x_j\right) = \alpha_j$ for all $j$.
+\end{corollary}
+\begin{proof}
+  Let
+  \begin{align*}
+    E &= \Span\left(\set{x_1,\dots,x_n}\right),
+  \end{align*}
+  and define $\psi: E\rightarrow \F$ by
+  \begin{align*}
+    \psi\left(\sum_{j=1}^{n}\lambda_jx_j\right) &= \sum_{j=1}^{n}\lambda_j\alpha_j.
+  \end{align*}
+  We see $\psi$ is continuous as $\Dim\left(E\right) = n$. We apply the extension result.
+\end{proof}
+The following corollary is a direct implication of the above theorem.
+\begin{corollary}
+  Let $X$ be a locally convex topological vector space. Suppose $x\in X$ is nonzero. There exists $\varphi\in X^{\ast}$ with $\varphi\left(x\right) \neq 0$.\newline
+
+  Thus, $X^{\ast}$ separates points.
+\end{corollary}
+\subsubsection{Separation Results}%
+It is often useful to separate points with continuous functionals --- now that we have shown that $X^{\ast}$ separates the points of $X$, we want to be able to separate points from closed sets using linear functionals.\newline
+
+Consider two disjoint, open, convex sets $A,B$ of $\R^2$, and suppose a line $y = mx + b$ lies ``below'' $A$ and ``above'' $B$. The linear map $\varphi: \R^2\rightarrow \R$ defined by $\varphi\left(x,y\right) = y-mx$ is such that $A\subseteq \set{x | \varphi\left(x\right) > b}$, and $B\subseteq \set{x | \varphi\left(x\right) < b}$, meaning the hyperplane $\set{\left(x,y\right)\in \R^2 | \varphi\left(x,y\right) = b}$ separates the convex sets $A$ and $B$.
+\begin{exercise}
+  Let $X$ be a topological vector space. Prove that an affine hyperplane is either closed or dense in $X$.
+\end{exercise}
+\begin{solution}
+  Let $H = x_0 + E$ be an affine hyperplane. Then, $E\subseteq X$ is a maximal proper subspace of $X$ by the definition of a hyperplane. At the same time, we have $E\subseteq \overline{E}$, meaning either $\overline{E} = X$, in which case $E$ is dense, or $\overline{E} = E$, in which case $E$ is closed.\newline
+
+  Similarly, this means $H$ is either closed (as it is a translate of $E$) or is equal to $X$.
+\end{solution}
+\begin{definition}
+  Let $X$ be a topological vector space over $\R$.
+  \begin{enumerate}[(1)]
+    \item An open-half space is a set of the form
+      \begin{align*}
+        \set{x\in X | u(x) > t}\text{ or }\set{x\in X | u(x) < t}
+      \end{align*}
+      for $0\neq u\in X^{\ast}$ and $t\in \R$.
+    \item A closed half space is a set of the form
+      \begin{align*}
+        \set{x\in X | u(x) \geq t}\text{ or }\set{x\in X | u(x) \leq t}
+      \end{align*}
+      for $0\neq u\in X^{\ast}$ and $t\in \R$.
+  \end{enumerate}
+\end{definition}
+\begin{theorem}[Hahn--Banach Separation Theorem for Topological Vector Spaces]
+  Let $X$ be a topological vector space over $\F$. Let $A$ and $B$ be convex disjoint subsets of $X$. If $A$ is open, there exists $\varphi\in X^{\ast}$, with $\varphi = u + iv$, and a scalar $t\in \R$, such that
+  \begin{align*}
+    u(a) < t \leq u(b)
+  \end{align*}
+  for all $a\in A$ and $b\in B$.
+\end{theorem}
+\begin{proof}
+  We start by letting $\F = \R$. Let $x_0\in A$ and $y_0\in B$, and set $z = y_0 - x_0$. Then, the set $A - B + z$ is open, convex, and contains $0$, so $\mu_{C}:X\rightarrow [0,\infty)$ is a Minkowski functional with $C = \set{x | \mu_{C}\left(x\right) < 1}$.\newline
+
+  Since $A\cap B = \emptyset$, we know that $z\notin C$, so $\mu_{C}\left(z\right) \geq 1$. Define $u_0: z\R \rightarrow \R$ by $u_0\left(sz\right) = s$. If $s\geq 0$, then $u_{0}\left(sz\right) = s \leq s\mu_{C}\left(z\right) = \mu_{C}\left(sz\right)$, and if $s < 0$, then $u_0\left(sz\right) = s \leq \mu_{C}\left(sz\right)$. Either way, $u_0$ is dominated by the Minkowski functional $\mu_{C}$, so by the Hahn--Banach--Minkowski extension theorem, there is an $\R$-linear $u: X\rightarrow \R$ such that $u|_{z\R} = u_0$ and $u\leq \mu_{C}$ on $X$.\newline
+
+  We claim that $u$ is continuous. We only need check that $u$ is continuous at the origin. Let $\ve > 0$, and let $V = \ve C \cap \left(-\ve\right)C$, which is an open neighborhood of $0_X$, as
+  \begin{align*}
+    x\in V &\Rightarrow x\in \ve C\\
+           &\Rightarrow \ve^{-1}x\in C\\
+           &\Rightarrow u\left(\ve^{-1} x\right)\leq \mu_{C}\left(\ve^{-1}x\right)< 1\\
+           &\Rightarrow u(x) < \ve.
+  \end{align*}
+  Additionally,
+  \begin{align*}
+    x\in V &\Rightarrow x\in -\ve C\\
+           &\Rightarrow -\ve^{-1}x \in C\\
+           &\Rightarrow u\left(-\ve^{-1}x\right) \leq \mu_{C}\left(-\ve^{-1}x\right) < 1\\
+           &\Rightarrow u(x) > -\ve,
+  \end{align*}
+  meaning $u\left(V\right) \subseteq \left(-\ve,\ve\right)$.\newline
+
+  If $a\in A$ and $b\in B$, then $a-b+z\in C$, so $u\left(a-b+z\right) \leq \mu_{C}\left(a-b+z\right) < 1$. Since $u(z) = 1$, we have $u\left(a\right) - u\left(b\right) + 1 < 1$, so $u(a) < u(b)$.\newline
+
+  Let $t = \sup_{a\in A}u(a)$. Then, $t\leq u(b)$ for all $b\in B$, meaning $u(a) \leq t \leq u(b)$ for all $a\in A$ and $b\in B$.\newline
+
+  If $u\left(a_0\right) = t$ for some $a_0\in A$, we consider the map $f: \R\rightarrow X$ defined by $r\mapsto a_0 + rz$. Since $f\left(0\right) = a_0$, there exists $\delta > 0$ such that $\left\vert r \right\vert < \delta$ implies $a_0 + rz \in A$, meaning $t + r = u\left(a_0\right) + r = u\left(a_0 + rz\right) \leq t$ for all $r\in \left(-\delta,\delta\right)$, meaning if $r = \delta/2$, we get a contradiction. Thus, $u(a) < t \leq u(b)$ for all $a\in A$ and $b\in B$.\newline
+
+  If $\F = \C$, we construct the $\R$-linear continuous $u: X\rightarrow \R$ as above,, and set $\varphi\left(x\right) = u(x) + iv\left(x\right)$, where $v(x) = -u\left(ix\right)$. Thus, $\varphi\in X^{\ast}$, and the inequality holds.
+\end{proof}
+\begin{remark}
+  If $A$ and $B$ are both open, then we can find strict inequalities in the above statement.
+\end{remark}
+Now, we can prove the fact that we can separate two closed convex sets with at least one compact via a double hyperplane, provided the space is locally convex.
+\begin{theorem}[Hahn--Banach Separation Theorem for Locally Convex Topological Vector Spaces]
+  Let $X$ be a locally convex topological vector space, and suppose $C,K\subseteq X$ are convex, closed, and disjoint subsets of $X$. Assume $K$ is compact. Then, there exist $\varphi\in X^{\ast}$ with $\varphi = u + iv$, $t\in \R$, and $\delta > 0$, such that
+  \begin{align*}
+    u\left(x\right) \leq t < t + \delta \leq u(y)
+  \end{align*}
+  for all $x\in C$ and $y\in K$. This is to say that $K$ and $C$ live in disjoint closed half-spaces.
+\end{theorem}
+\begin{proof}
+  If $y\in K$, then $C-y$ is closed, and $0_X\in \left(C-y\right)^{c}$. Thus, for each $y\in K$, there is an open, convex, and balanced set $V_y\subseteq X$ with $0_X\in V_y\subseteq \left(C-y\right)^{c}$. Thus, we have
+  \begin{align*}
+    K\subseteq \bigcup_{y\in K}\left(y + \frac{1}{3}V_y\right),
+  \end{align*}
+  so by compactness, there are $y_1,\dots,y_n\in K$ with
+  \begin{align*}
+    K\subseteq \bigcup_{j=1}^{n}\left(y_j + \frac{1}{3}V_{y_j}\right).
+  \end{align*}
+  The set
+  \begin{align*}
+    V &= \bigcap_{j=1}^{n}\frac{1}{3}V_{y_j}
+  \end{align*}
+  is open, convex, and contains zero. The sets
+  \begin{align*}
+    K+V &= \bigcup_{y\in K}y+V\\
+    C+V &= \bigcup_{x\in C}\left(x+V\right)
+  \end{align*}
+  are both open and convex with $K\subseteq K+V$ and $C\subseteq C+V$. We claim that $\left(K+V\right)\cap \left(C+V\right) = \emptyset$. Suppose $y+v = x + v'$ for some $y\in K$, $x\in C$, and $v,v'\in V$. There is necessarily $i\in \set{1,\dots,n}$ with $y\in y_i + \frac{1}{3}V_{y_i}$, and $v,v'\in y_i + \frac{1}{3}V_{y_i}$. Thus,
+  \begin{align*}
+    x &= y + v - v'\\
+      &\in y_i + \frac{1}{3}V_{y_i} + \frac{1}{3}V_{y_i} - \frac{1}{3}V_{y_i}\\
+      &= y_i + \frac{1}{3}V_{y_i} + \frac{1}{3}V_{y_i} + \frac{1}{3}V_{y_i}\\
+      &\subseteq y_i + V_{y_i}.
+  \end{align*}
+  Thus, we have $x-y_i\in V_{y_i}\cap \left(C - y_i\right)$, which contradicts the fact that $V_{y_i}\subseteq \left(C - y_i\right)^{c}$.\newline
+
+  We apply the separation result on topological vector spaces to the open, convex, disjoint sets $K+V$ and $C+V$, meaning we get $\varphi\in X^{\ast}$ with $\varphi = u + iv$ such that
+  \begin{align*}
+    u(a) < t < u(b)
+  \end{align*}
+  for all $a\in C+V$ and $b\in K+V$. In particular, we have that the inequality holds true for $a=x\in C$ and $b=y\in K$. Moreover, since $K$ is compact, $\inf_{y\in K}u(y) = u\left(y_0\right)$ for some $y_0\in K$. Thus,
+  \begin{align*}
+    u\left(x\right) < t < u\left(y_0\right)\leq u\left(y\right)
+  \end{align*}
+  for every $x\in C$ and $y\in K$. We set $\delta = u\left(y_0\right) - t$.
+\end{proof}
+The following result will be very useful as we go further into the weak and weak* topologies.
+\begin{corollary}
+  Let $X$ be a vector space admitting locally convex topologies $\tau_1\subseteq \tau_2$. Moreover, suppose $\left(X,\tau_1\right)^{\ast} = \left(X,\tau_2\right)^{\ast}$. If $C\subseteq X$ is a convex subset, then $\overline{C}^{\tau_1} = \overline{C}^{\tau_2}$.
+\end{corollary}
+\begin{proof}
+  Since every $\tau_1$-closed subset is $\tau_2$-closed, we have
+  \begin{align*}
+    \overline{C}^{\tau_1} &= \bigcap\set{D|D\supseteq C,D\text{ is $\tau_1$-closed}}\\
+                          &\supseteq \bigcap{\set D|D\supseteq C,D\text{ is $\tau_2$-closed}}\\
+                          &= \overline{C}^{\tau_2}.
+  \end{align*}
+  Suppose toward contradiction that $\overline{C}^{\tau_2}\subset \overline{C}^{\tau_1} $, and let $x_0\in \overline{C}^{\tau_1} \setminus \overline{C}^{\tau_2}$. Since $\overline{C}^{\tau_2}$ is $\tau_2$-closed, and since $\tau_2$ is locally convex, there is an open and convex neighborhood $U$ of $x_0$ with $U\cap \overline{C}^{\tau_2} = \emptyset$.\newline
+
+  By the Hahn--Banach separation theorems applied to $\left(X,\tau_2\right)$, there is a hyperplane in $X$ that separates $U$ from $C$. In particular, there exists $\alpha \in \R$ and $\varphi\in \left(X,\tau_2\right)^{\ast}$ with $u = \re\left(\varphi\right)$, such that
+  \begin{align*}
+    u\left(x_0\right) < \alpha \leq u\left(y\right)
+  \end{align*}
+  for all $y\in C$.\newline
+
+  We have $x_0\in \overline{C}^{\tau_1}$, so there is a net $\left(y_i\right)_i\in C$ with $\left(y_i\right)_i\xrightarrow{\tau_1}x_0$. By the hypothesis, we also see that $u = \left(X,\tau_1\right)\rightarrow \R$ is continuous, so $\left(u\left(y_i\right)\right)_i\rightarrow u\left(x_0\right)$, meaning $u\left(x_0\right) \geq \alpha$, contradicting the fact that $u\left(x_0\right) < \alpha$.
+\end{proof}
+\subsection{Weak Topologies}%
+Let $X$ be a vector space over $\F$. The algebraic dual $X'$ is the set of all linear functionals on $X$.\newline
+
+Let $W\subseteq X'$ be a nonempty subset. For each $\varphi\in W$, we consider the map
+\begin{align*}
+  p_{\varphi}: X\rightarrow [0,\infty)
+\end{align*}
+with $p_{\varphi}\left(x\right) = \left\vert \varphi\left(x\right) \right\vert$. Note that each $p_{\varphi}$ is a seminorm. Since each member of $W$ is a linear map, the family $W$ is separating if and only if, for every nonzero $x\in X$, there is $\varphi\in W$ with $\varphi(x) \neq 0$.\newline
+
+Moreover, for $W$ separating, the collection
+\begin{align*}
+  \mathcal{P}_{W} &= \set{p_{\varphi} | \varphi\in W}
+\end{align*}
+is a separating family of seminorms. We may construct the collection of maps
+\begin{align*}
+  \mathcal{F}_{\mathcal{P}_{W}} &= \set{p_{\varphi}\left((\cdot) - z\right) | \varphi\in W,z\in X},
+\end{align*}
+and define $\tau_{\mathcal{P}_{W}}$ to be the initial topology induced by $\mathcal{F}_{\mathcal{P}_{W}}$. This is the locally convex topology generated by the family of seminorms $\mathcal{P}_{W}$.\newline
+
+Alternatively, we may consider $\sigma\left(X,W\right)$, which is the initial topology\footnote{The coarsest topology such that every map in $W$ is continuous.} on $X$ induced by the family $W$. As it turns out, these topologies coincide.
+\begin{proof}
+  If $\left(x_{\alpha}\right)_{\alpha}$ is a net in $X$, then for each $\varphi\in W$, we have
+  \begin{align*}
+    \left(x_{\alpha}\right)_{\alpha}\xrightarrow{\tau_{\mathcal{P}_{W}}}x &\Leftrightarrow p_{\varphi}\left(x_{\alpha} - x\right)\rightarrow 0\\
+                                                                          &\Leftrightarrow \left\vert \varphi\left(x_{\alpha} - x\right) \right\vert\rightarrow 0\\
+                                                                          &\Leftrightarrow \left\vert \varphi\left(x_{\alpha}\right) - \varphi\left(x\right) \right\vert \rightarrow 0\\
+                                                                          &\Leftrightarrow \left(\varphi\left(x_{\alpha}\right)\right)_{\alpha}\rightarrow \varphi\left(x\right)\\
+                                                                          &\Leftrightarrow \left(x_{\alpha}\right)_{\alpha}\xrightarrow{\sigma\left(X,W\right)}x.
+  \end{align*}
+\end{proof}
+It follows that for $W\subseteq X'$ a separating family, then $\left(X,\sigma\left(X,W\right)\right)$ is a locally convex topological vector space.
+\begin{definition}
+  Let $X$ be a $\F$-vector space.
+  \begin{enumerate}[(1)]
+    \item If $W\subseteq X$ is a separating family, then the initial topology on $X$ generated by $W$, denoted $\sigma\left(X,W\right)$, is called the weak topology on $X$ induced by $W$.
+    \item If $\left(X,\norm{\cdot}\right)$ is a normed vector space, then $w = \sigma\left(X,X^{\ast}\right)$ is the weak topology on $X$.
+    \item If $\left(X,\norm{\cdot}\right)$ is a normed vector space, then $w^{\ast} = \sigma\left(X^{\ast},\iota\left(X\right)\right)$ is called the weak* topology on $X^{\ast}$. Here, $\iota: X\hookrightarrow X^{\ast\ast}$ denotes the canonical embedding.
+  \end{enumerate}
+\end{definition}
+Recall that the definition of convergence in the weak topology is
+\begin{align*}
+  \left(x_{\alpha}\right)_{\alpha}\xrightarrow{w}x &\Leftrightarrow \left(\varphi\left(x_{\alpha}\right)\right)_{\alpha}\rightarrow \varphi\left(x\right),
+\end{align*}
+for all $\varphi\in X^{\ast}$, while convergence in the weak* topology is
+\begin{align*}
+  \left(\varphi_{\alpha}\right)_{\alpha}\xrightarrow{w^{\ast}}\varphi &\Leftrightarrow \left(\varphi_{\alpha}\left(x\right)\right)_{\alpha}\rightarrow \varphi\left(x\right)
+\end{align*}
+for all $x\in X$.
+\begin{exercise}
+  Suppose $T: X\rightarrow Y$ is a linear map between Banach spaces that is $w$-$w$ continuous. Prove that $T$ is bounded.
+\end{exercise}
 
 \end{document}
