@@ -36,8 +36,3 @@ Here are the class notes I have written up so far.
 
 ### Intermediate Macroeconomics
 - [Full Notes](https://ai-bearing.github.io/Classes_and_Homework/College/Y2/Y2S2, Econ 251/classnotes/econ_251_notes.pdf)
-
-## Fall 2022
-- [Topology Notes](https://aiyer.notion.site/Topology-Final-Exam-Notes-4603c14e5cb94f45a867fca3164d27a5)
-- [Intermediate Microeconomics Notes](https://aiyer.notion.site/Intermediate-Microeconomics-Final-Exam-Notes-2269f691b5e943508a237ff043d5d358)
-- [Intermediate Micro Practice Exams](https://aiyer.notion.site/Intermediate-Micro-Practice-Exams-3e77552d3a6b4735bc5c7397f241dfcb)

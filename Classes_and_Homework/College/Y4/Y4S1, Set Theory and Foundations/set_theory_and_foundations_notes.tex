@@ -1892,6 +1892,95 @@ Is $\emptyset$ recursively enumerable?
   \end{align*}
   It now remains to be shown that the relation $z > p(n)$ is recursive.
 \end{example}
+\begin{definition}
+For $S\subseteq \N$, the characteristic function of $S$ is
+\begin{align*}
+  \chi_{S}(n) &= \begin{cases}
+    1 & n\in S\\
+    0 & n\notin S
+  \end{cases}
+\end{align*}
+\end{definition}
+\begin{definition}
+  A set $S\subseteq \N$ is decidable if $\chi_S$ is computable.
+\end{definition}
+\begin{example}
+  Let $P$ be the set of all prime numbers.\newline
+
+  We will show that $P$ is decidable.
+\end{example}
+\begin{definition}
+  A set $S$ is semi-decidable if the function
+  \begin{align*}
+    f_{S}\left(n\right) &= \begin{cases}
+      1 & n\in S\\
+      \text{undef} & n\notin S
+    \end{cases}
+  \end{align*}
+  is computable.
+\end{definition}
+\begin{example}
+  Let
+  \begin{align*}
+    f(n) &= 1 \begin{cases}
+      1 & \text{there are $n$ consecutive $7$s in the decimal expansion of $\pi$}\\
+      \text{undef} & \text{else}
+    \end{cases}.
+  \end{align*}
+  Then, $f$ is computable.\newline
+
+  Let $S = \set{n | f(n) = 1}$. Then, $S$ is a semi-decidable set since $f$ is computable.
+\end{example}
+Recall that a set $S\subseteq \N$ is called recursively enumerable if $S= \Ran(f)$ for some total computable function $f$.
+\begin{theorem}
+  A set $S$ is recursively enumerable if and only if $S$ is semi-decidable.
+\end{theorem}
+\begin{proof}
+  We want to show that
+  \begin{align*}
+    f_S(n) &= \begin{cases}
+      1 & n\in S\\
+      \text{undef} & \text{else}
+    \end{cases}
+  \end{align*}
+  is computable if and only if $S = \Ran\left(g\right)$, where $g$ is some total computable function.\newline
+
+  Let $S = \Ran(g)$ with $g$ total and computable. We can write an algorithm
+  \begin{description}[font=\normalfont\scshape]\itemsep=-2pt
+    \item[Input:] $n\in \N$.
+    \item[Step 1:] Let $k = 0$.
+    \item[Step 2:] Compute $g(k)$. If $g(k) = n$, output $1$ and stop.
+    \item[Step 3:] Increment $k$ and go to Step 2.
+  \end{description}
+  Since $g$ is a total function, Step 2 is always computable, and if $n\in S$, Step 2 will stop; if $n\notin S$, this algorithm will not stop.\newline
+
+  Let $S$ be semi-decidable. We write a ``diagonal argument'' by evaluating one step of $f_S(0)$, then the second step of $f_S(0)$, then the first step of $f_S(1)$, etc. We do this such that we can run countably many Turing machines ``in parallel.''
+\end{proof}
+
+\begin{theorem}
+  A set $S$ is decidable if and only if $S$ and $\N\setminus S$ are semi-decidable.
+\end{theorem}
+\begin{proof}
+  Let $S$ be decidable. Then, there is a Turing machine that computes $\chi_S$. We call this Turing machine $T_S$. We construct a new Turing machine, $T'$, such that, given $n$, if $T_S(n)$ outputs $1$ and stops, we have $T'(n)$ outputs $1$ and stops. If $T_s\left(n\right) $ outputs $0$ and stops, then $T'\left(n\right)$ loops forever.\newline
+
+  Let $S$ and $\N\setminus S$ be semi-decidable. There are two functions,
+  \begin{align*}
+    f_S &= \begin{cases}
+      1 & n\in S\\
+      \text{undef} & \text{else}
+    \end{cases}\\
+      f_{\N\setminus S} &= \begin{cases}
+        1 & n\notin S\\
+        \text{undef} & \text{else}
+      \end{cases}.
+  \end{align*}
+  We write an algorithm such that we run the Turing machines for $f_S$ and $f_{\N\setminus S}$ in parallel.\newline
+  \begin{enumerate}[(1)]
+    \item Perform one step of the Turing machine for $f_{S}$; if it outputs $1$ and stops, we output $1$ and stop.
+    \item Perform one step of the Turing machine for $f_{\N\setminus S}$; if it outputs $1$ and stops, we output $0$ and stop.
+    \item Return to (1).
+  \end{enumerate}
+\end{proof}
 
 \subsection{Goodstein Sequences}%
 Consider the number written as sums of powers of $2$:
