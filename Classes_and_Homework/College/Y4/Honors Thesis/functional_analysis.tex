@@ -23,7 +23,7 @@
 \RaggedRight
 \tableofcontents
 \section{Introduction}%
-This is going to be part of the notes for my Honors thesis independent study, which will be focused on amenability and $C^{\ast}$-algebras. This section of notes will be focused on the essential results in functional analysis, starting from normed vector spaces, working our way up through locally convex topological vector spaces and the Krein--Milman theorem.\newline
+This is going to be part of the notes for my Honors thesis independent study, which will be focused on amenability and $C^{\ast}$-algebras. This section of notes will be focused on the essential results in functional analysis, starting from normed vector spaces, working our way up through locally convex topological vector spaces and the Banach--Alaoglu theorem.\newline
 
 The primary source for this section is going to be Timothy Rainone's \textit{Functional Analysis-En Route to Operator Algebras}, which has not been published yet.\newline
 
@@ -5108,5 +5108,357 @@ If $T:X\rightarrow Y$ is a bounded linear map, we know that the adjoint map $T^{
   \end{align*}
   Prove that $N$ is norm-closed and $\prescript{\perp}{}N = \set{0}$.
 \end{exercise}
+\begin{solution}
+  To see that $N$ is norm-closed, we let $\left(x_i\right)_i$ be a sequence in $N$ converging to $x\in \ell_1$. We want to show that $\sum_{k\geq 1}x(k) = 0$. We can see that,
+  \begin{align*}
+    \sum_{k\geq 1}x_i(k) &\rightarrow \sum_{k\geq 1}x(k),
+  \end{align*}
+  and since $\sum_{k\geq 1}x_i(k) = 0$ for each $i$, it is the case that $\sum_{k\geq 1}x(k) = 0$, so $x\in N$.\newline
+
+  Suppose toward contradiction there exists $\left(x_k\right)_k\in \prescript{\perp}{}N$ with $\left(x_k\right)_k\neq 0$. For some $j$ with $x(j) \neq 0$, we construct $\left(a_j\right)_j\in N$ by finding $i$ with $0 < \left\vert x(i) \right\vert < \left\vert x(j) \right\vert$, and setting $\left(a_j\right)_j$ to be $0$ everywhere except for $-1$ at index $i$ and $1$ at index $j$. Then,
+  \begin{align*}
+    \sum_{k\geq 1}a_kx_k \neq 0,
+  \end{align*}
+  which is a contradiction. Thus, $\prescript{\perp}{}N = \set{0}$.
+\end{solution}
+\begin{proposition}
+  Let $X$ be a Banach space, and suppose $N\subseteq X^{\ast}$ is a $w^{\ast}$-closed subspace. Then, $N$ is a dual space with the induced $w^{\ast}$ topology coinciding with the subspace $w^{\ast}$ topology inherited from $X^{\ast}$.
+\end{proposition}
+\begin{proof}
+  Consider the norm-closed subspace $\prescript{\perp}{}N\subseteq X$, and the quotient space $X/\left(\prescript{\perp}{}N\right)$. Then, the $1$-quotient map $\pi: X\rightarrow X/\left(\prescript{\perp}{}N\right)$ induces the isometric isomorphism
+  \begin{align*}
+    \pi^{\ast}: \left(X/\left(\prescript{\perp}{}N\right)\right)^{\ast}\rightarrow \left(\prescript{\perp}{}N\right)^{\perp}.
+  \end{align*}
+  Since $N$ is a $w^{\ast}$-closed subspace, and so too is $\left(\prescript{\perp}{}N\right)^{\perp} = \overline{\Span}^{w^{\ast}}\left(N\right)$, it is the case that $N = \left(\prescript{\perp}{}N\right)^{\perp}$.\newline
+
+  Thus, $N$ has a predual, and $\pi^{\ast}$ is a $w^{\ast}$-$w^{\ast}$ homomorphism.
+\end{proof}
+We are aware that the closed unit ball is norm-compact if and only if the vector space is finite-dimensional. We can use the following theorem to see that the weak* topology is coarse enough such that in \textit{any} normed vector space, the closed unit ball is compact in the weak* topology.
+\begin{theorem}[Banach--Alaoglu Theorem]
+  Let $X$ be a normed vector space.
+  \begin{enumerate}[(1)]
+    \item The closed unit ball $B_{X^{\ast}}$ is compact in the $w^{\ast}$ topology.
+    \item A subset $C\subseteq X$ is $w^{\ast}$-compact if and only if $C$ is $w^{\ast}$-closed and norm bounded.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Let $\overline{\mathbb{D}} = \set{z\in \C | \left\vert z \right\vert \leq 1}$ denote the closed unit disc in $C$. The set
+      \begin{align*}
+        Z &= \prod_{x\in B_X} \overline{\mathbb{D}}
+      \end{align*}
+      equipped with the product topology is compact by Tychonoff's theorem.\newline
+
+      Let $F: \left(B_{X^{\ast}},w^{\ast}\right)\rightarrow Z$ be defined by $F\left(\varphi\right) = \left(\varphi(x)\right)_{x\in B_X}$.\newline
+
+      Note that
+      \begin{align*}
+        \left\vert \varphi(x) \right\vert &\leq \norm{\varphi}_{\text{op}}\norm{x}\\
+                                          &\leq 1,
+      \end{align*}
+      so $F$ is well-defined.\newline
+
+      We claim that $F$ is an embedding. By the definition of the product topology, we must have
+      \begin{align*}
+        \left(\varphi_{\alpha}\right)_{\alpha}\xrightarrow{w^{\ast}} &\Leftrightarrow \left(\varphi_{\alpha}\left(x\right)\right)\rightarrow \varphi\left(x\right)\\
+                                                                     &\Leftrightarrow \left(\varphi_{\alpha}\left(x\right)\right)_{x\in B_X}\rightarrow \left(\varphi(x)\right)_{x\in B_X}\\
+                                                                     &\Leftrightarrow F\left(\varphi_{\alpha}\right)\rightarrow F\left(\varphi\right).
+      \end{align*}
+      We must now show that $F$ is injective. If $F\left(\varphi_1\right) = F\left(\varphi_2\right)$, then $\left(\varphi_1\left(x\right)\right)_{x\in B_X} = \left(\varphi_2\left(x\right)\right)_{x\in B_X}$, so $\varphi_1\left(x\right) = \varphi_2\left(x\right)$ for each $x\in B_X$, meaning $\varphi_1 = \varphi_2$ upon rescaling.\newline
+
+      We now claim that $\Ran(F) \subseteq Z$ is closed. Let $\left(F\left(\varphi_{\alpha}\right)\right)_{\alpha}$ be a net in $\Ran(F)$ converging to $\beta\in Z$. Let $\beta = \left(\beta_x\right)_{x\in B_X}$.\newline
+
+      Since $F\left(\varphi_{\alpha}\right) = \left(\varphi_{\alpha}(x)\right)_{x\in B_X}$, so for each $x\in B_X$, we have $\left(\varphi_{\alpha}\left(x\right)\right) \rightarrow \beta_x$. Note that for $x\neq 0$, we have
+      \begin{align*}
+        \varphi_{\alpha}\left(x\right) &= \norm{x}\varphi_{\alpha}\left(\frac{x}{\norm{x}}\right)\\
+                                       &\rightarrow \norm{x}\beta_{\frac{x}{\norm{x}}},
+      \end{align*}
+      and that $\left(\varphi_{\alpha}(0)\right)_{\alpha}\rightarrow 0$. Thus, for any $x\in X$, $\varphi(x) = \lim_{\alpha}\varphi_{\alpha}(x)$ exists. Additionally, $\varphi: X\rightarrow \F$ is linear, and for each $x\in B_X$, we have
+      \begin{align*}
+        \left\vert \varphi(x) \right\vert &= \left\vert \lim_{\alpha}\varphi_{\alpha}(x) \right\vert\\
+                                          &=\lim_{\alpha}\left\vert \varphi_{\alpha}\left(x\right) \right\vert\\
+                                          &\leq 1,
+      \end{align*}
+      meaning $\norm{\varphi}_{\text{op}} \leq 1$, so $\varphi\in B_{X^{\ast}}$. Thus, $\ran(F)$ is closed.\newline
+
+      Since $\ran(F)$ is a closed subspace of a compact space, $\ran(F)$ is compact, so $\left(B_{X^{\ast}},w^{\ast}\right)$ is compact.
+    \item If $C\subseteq X^{\ast}$ is norm-bounded and $w^{\ast}$-closed, then $C$ is a $w^{\ast}$-closed subset of $\delta B_{X^{\ast}}$ for some $\delta > 0$. Since $B_{X^{\ast}}$ is $w^{\ast}$-compact, $C$ is $w^{\ast}$-compact.\newline
+
+      If $C$ is $w^{\ast}$-compact, then $C$ is $w^{\ast}$-closed as the $w^{\ast}$ topology is Hausdorff. Set $x\in X$. The map $\hat{x}:X^{\ast}\rightarrow \F$ is $w^{\ast}$-continuous, so $\hat{x}\left(C\right)\subseteq \F$ is compact, hence bounded.\newline
+
+      Thus, $\sup_{\varphi\in C}\left\vert \varphi(x) \right\vert < \infty$, so $\sup_{\varphi\in C}\norm{\varphi}_{\text{op}} < \infty$ by the Uniform Boundedness Principle, so $C$ is norm-bounded.
+  \end{enumerate}
+\end{proof}
+\begin{example}[Banach Limits]
+  Consider the sequence of bounded functions $\left(\mu_{n}\right)_n$ in $\ell_{\infty}^{\ast}$ given by
+  \begin{align*}
+    \mu_{n}\left(\left(z_k\right)_k\right) &= \frac{1}{n}\sum_{k=1}^{n}z_k.
+  \end{align*}
+  We can see that $\norm{\mu_{n}}_{\text{op}} = 1$ for each $n$, meaning there is a subnet $\left(\mu_{n_j}\right)_j\xrightarrow{w^{\ast}}L$ for some $L\in B_{\ell_{\infty}^{\ast}}$.\newline
+
+  If $\left(z_k\right)_k\rightarrow z$, then $\mu_{n}\left(\left(z_k\right)_k\right)\xrightarrow{n\rightarrow\infty}z$, meaning $L\left(\left(z_k\right)_k\right) = z$. In other words, $L$ is a bounded linear functional extending the limit. We call $L$ the Banach limit.\newline
+
+  We have shown earlier that $\phi\left(\lambda\right)\left(z\right) = \sum_{k=1}^{\infty}\lambda_kz_k$ mapping $\ell_1$ to $\ell_{\infty}^{\ast}$ is a linear isometry. However, if $\phi\left(\lambda\right) = L$ for some $\lambda = \left(\lambda_k\right)_k$, then $\lambda_n = L\left(e_n\right) = 0$, implying $\lambda = 0$, which is a contradiction as $L\neq 0$. This is another way to prove that $\phi$ is not onto.
+\end{example}
+\begin{exercise}
+  Let $X$ be a separable normed space, and let $\left(x_n\right)_n$ be a dense subset of $B_{X}$. Show that
+  \begin{align*}
+    d\left(\varphi,\psi\right) &= \sum_{n=1}^{\infty}2^{-n}\left\vert \varphi\left(x_n\right) - \psi\left(x_n\right) \right\vert
+  \end{align*}
+  defines a metric on $B_{X^{\ast}}$, and the map
+  \begin{align*}
+    \id_{B_{X^{\ast}}}: \left(B_{X^{\ast}},d\right)\rightarrow \left(B_{X^{\ast}},w^{\ast}\right)
+  \end{align*}
+  is a homeomorphism.
+\end{exercise}
+\begin{solution}
+  For $\varphi\in B_{X^{\ast}}$, we define
+  \begin{align*}
+    p_k\left(\varphi\right) &= \left\vert \varphi\left(x_k\right) \right\vert.
+  \end{align*}
+  By the Hahn--Banach separation results, we know that $\set{p_k | k\in \N}$ is a collection of separating seminorms. Additionally, it is the case that $p_k\left(\varphi\right) \leq 1$ for all $k$. Thus, the Fréchet metric, defined by
+  \begin{align*}
+    d\left(\varphi,\psi\right) &= \sum_{k=1}^{\infty}2^{-k}p_k\left(\varphi - \psi\right)\\
+                               &= \sum_{k=1}^{\infty}2^{-k}\left\vert \left(\varphi - \psi\right)\left(x_k\right) \right\vert
+  \end{align*}
+  is indeed a metric.\newline
+
+  To show that the identity map is a homeomorphism, we see that, 
+  \begin{align*}
+    \left(\varphi_{\alpha}\right)_n\xrightarrow{d} \varphi &\Leftrightarrow \left(\varphi_{\alpha}\left(x_k\right)\right)_{\alpha} \rightarrow \varphi\left(x_k\right)\tag*{$\forall x_k\in \left(x_k\right)_k$}\\
+                                                           &\Leftrightarrow \left(\varphi_{\alpha}\left(x\right)\right)_{\alpha}\rightarrow \varphi\left(x\right) \tag*{$\forall x\in B_{X}$}\\
+                                                           &\Leftrightarrow \left(\varphi_{\alpha}\right)_{\alpha}\xrightarrow{w^{\ast}}\varphi.
+  \end{align*}
+  Thus, the identity map is necessarily a continuous bijection with continuous inverse.
+\end{solution}
+\begin{corollary}
+  If $X$ is a normed space, there is a compact Hausdorff space $\Omega$ and a linear embedding $X\hookrightarrow C\left(\Omega\right)$. If $X$ is separable, then $\Omega$ is metrizable.
+\end{corollary}
+\begin{proof}
+  We know that $B_{X^{\ast}}$ with the weak* topology is compact Hausdorff. Every $x\in X$ gives rise to an evaluation function
+  \begin{align*}
+    e_x: B_{X^{\ast}}\rightarrow \C
+  \end{align*}
+  defined by $e_x\left(\varphi\right) = \varphi\left(x\right)$.\newline
+
+  By the definition of the weak* topology, $e_x$ is continuous. We consider the map $e: X\rightarrow C\left(B_{X^{\ast}}\right)$ defined by $e(x) = e_x$. Then, since $\varphi $ is linear, $e$ is linear. Additionally,
+\begin{align*}
+  \norm{e_x}_{u} &= \sup_{\varphi\in B_{X^{\ast}}}\left\vert e_x\left(\varphi\right) \right\vert\\
+                 &= \sup_{\varphi\in B_{X^{\ast}}} \left\vert \varphi(x) \right\vert\\
+                 &= \norm{x}.
+\end{align*}
+In the exercise, we showed that if $X$ is separable, then $B_{X^{\ast}}$ is metrizable.
+\end{proof}
+If $X$ is a reflexive space, we can fully understand the double dual, but if $X$ is not reflexive, we will need Goldstine's theorem to approximate elements of the double dual.
+\begin{theorem}[Goldstine's Theorem]
+  Let $X$ be a normed space. Set $B = \iota_{X}\left(B_X\right)\subseteq B_{X^{\ast\ast}}$. Then, $\overline{B}^{w^{\ast\ast}} = B_{X^{\ast\ast}}$.
+\end{theorem}
+\begin{proof}
+  By the Banach--Alaoglu theorem, we know that $B_{X^{\ast\ast}}$ is $w^{\ast\ast}$-compact, so $C = \overline{B}^{w^{\ast\ast}}$ is also $w^{\ast\ast}$-compact. Additionally, since $\iota_X$ is linear and $B_{X}$ is convex, $B$ is also convex, so $C$ is convex as $C$ is the closure of a convex set.\newline
+
+  Suppose toward contradiction there exists $\xi \in B_{X^{\ast\ast}}\setminus C$. By the Hahn--Banach theorems for separation by hyperplanes, there is a $w^{\ast\ast}$-continuous linear $F: X^{\ast\ast}\rightarrow \F$, $\ve > 0$, and $t\in \R$ such that
+  \begin{align*}
+    \re\left(F\right)\left(\eta\right) < t < t + \ve < \re\left(F\right)\left(\xi\right)
+  \end{align*}
+  for all $\xi\in C$.\newline
+
+  We know that there is some $\varphi\in X^{\ast}$ such that $F = \iota_{X^{\ast}}\left(\varphi\right) = \hat{\varphi}$. Substituting, we have
+  \begin{align*}
+    \re\left(\eta\left(\varphi\right)\right) < t < t + \ve < \re\left(\eta\left(\varphi\right)\right).
+  \end{align*}
+  In particular, this also holds for $\eta = \hat{x}$, where $x\in B_X$, so
+  \begin{align*}
+    \re\left(\varphi(x)\right) < t < t + \ve < \re\left(\xi\left(\varphi\right)\right)
+  \end{align*}
+  for all $x\in B_X$. Since $0 \in B_X$, we must have $t > 0$. Dividing by $t$, and setting $\psi = \frac{1}{t}\varphi$, $\delta = \frac{1}{t}\ve$, we have
+  \begin{align*}
+    \re\left(\psi(x)\right) < 1 < 1 + \delta < \re\left(\xi\left(\psi\right)\right).
+  \end{align*}
+  For each $x\in B_X$, we also have
+  \begin{align*}
+    \left\vert \psi(x) \right\vert &= \sgn\left(\psi(x)\right)\\
+                                   &= \psi\left(\sgn\left(\psi(x)\right)x\right)\\
+                                   &= \re\left(\psi\left(\sgn\left(\psi(x)\right)x\right)\right)\\
+                                   &\leq 1.
+  \end{align*}
+  Thus, $\norm{\psi} \leq 1$, so
+  \begin{align*}
+    1 + \delta &< \re\left(\xi\left(\psi\right)\right)\\
+               &\leq \left\vert \xi\left(\psi\right) \right\vert\\
+               &\leq \norm{\xi}\norm{\psi}\\
+               &\leq 1,
+  \end{align*}
+  which is a contradiction. Thus, no such $\xi$ exists, meaning $C = B_{X^{\ast\ast}}$.
+\end{proof}
+\begin{exercise}
+  If $X$ is a normed space, prove that $\overline{\iota_{X}\left(S_X\right)}^{w^{\ast\ast}} = S_{X^{\ast\ast}}$.
+\end{exercise}
+\begin{solution}
+  Since $S_X$ is convex, so too is $\iota_{X}\left(S_X\right)$, so $S = \overline{\iota_{X}\left(S_X\right)}^{w^{\ast\ast}}$ is $w^{\ast\ast}$-compact.\newline
+
+  If it were the case that there were some $\xi\in  S_{X^{\ast\ast}}\setminus S$, then by a similar pattern of reasoning to the proof of Goldstine's theorem, we would see that $\norm{\xi} > 1$.
+\end{solution}
+\begin{exercise}
+  Let $X$ be a normed space. Prove that $X$ is reflexive if and only if $\left(B_X,w\right)$ is compact.
+\end{exercise}
+\begin{solution}[]
+  [Consult Rainone on Solution]
+\end{solution}
+We can use the Banach--Alaoglu theorem to obtain insights into continuous function spaces.\newline
+
+Note that $B_{C_{0}\left(\Omega\right)^{\ast}}$ is $w^{\ast}$-compact, but it may not be the case that $S\left(\Omega\right)$, the state space, is $w^{\ast}-closed$. For instance, the evaluation functionals $\delta_n: C_0\left(\R\right)\rightarrow \C$ given by $\delta_n\left(f\right) = f(n)$ are elements of $S\left(C_0\left(\R\right)\right)$, but $\left(\delta_n\right)_n\xrightarrow{w^{\ast}} 0$ as $f(n)\rightarrow 0$ as $n\rightarrow\infty$.\newline
+
+However, when $\Omega$ is compact, the state space is always compact in the $w^{\ast}$-topology.
+\begin{proposition}
+  Let $\Omega$ be a compact Hausdorff space. The state space $S\left(C\left(\Omega\right)\right)$ is convex and $w^{\ast}$-compact.
+\end{proposition}
+\begin{proof}
+  We have shown that the state space is convex, so we show that $S\left(\Omega\right)$ is $w^{\ast}$-closed. If $\left(\varphi_i\right)_{i\in I}$ is a net in $S\left(\Omega\right)$ with $\left(\varphi_i\right)_i\xrightarrow{w^{\ast}}\varphi$, then for $f\geq 0$, we have $\varphi_i\left(f\right)\rightarrow \varphi(f)$. Since, $\varphi_i(f)\geq 0$, we must have $\varphi(f) \geq 0$.\newline
+
+  Additionally, since $1 = \varphi_i\left(\1_{\Omega}\right) \rightarrow \varphi\left(\1_{\Omega}\right)$, we must have $\norm{\varphi} = 1$. Thus, $\varphi$ is a state.
+\end{proof}
+\begin{corollary}
+  If $\tau: \Omega\rightarrow\Omega$ is a self-homeomorphism of a compact Hausdorff space, there exists an invariant regular Borel probability measure $\mu\in \mathcal{P}_{r}\left(\Omega,\tau\right)$. Moreover, $\mathcal{P}_{r}\left(\Omega,\tau\right)$ is $w^{\ast}$-compact.
+\end{corollary}
+\begin{proof}
+  We identify $S\left(\Omega\right) = \mathcal{P}_{r}\left(\Omega\right)$. Since $\tau$ is a homeomorphism, $T_{\tau^{\ast}}|_{S\left(\Omega\right)}: S\left(\Omega\right)\rightarrow S\left(\Omega\right)$ is an affine bijection.\newline
+
+  Since $T_{\tau}^{k} = T_{\tau^{k}}$, we have $\left(T_{\tau}^{\ast}\right)^{k} = \left(T_{\tau^k}\right)^{\ast}$. Thus, for any $\mu\in \mathcal{P}_{r}\left(\Omega\right)$ and $f\in C\left(\Omega\right)$, we have
+  \begin{align*}
+    \left(T_{\tau}^{\ast}\right)^{k}\left(\mu\right)\left(f\right) &= \left(T_{\tau^k}\right)^{\ast}\left(\mu\right)\left(f\right)\\
+                                                                   &= \mu\left(T_{\tau^k}\left(f\right)\right)\\
+                                                                   &= \mu\left(f\circ \tau^{k}\right).
+  \end{align*}
+  Fix $\mu\in \mathcal{P}_{r}\left(\Omega\right)$. For each $n\in \N$, we consider the state
+  \begin{align*}
+    \mu_{n} &= \frac{1}{n}\sum_{k=0}^{n-1}\left(T^{\ast}_{\tau}\right)^k\left(\mu\right).
+  \end{align*}
+  Since $S\left(\Omega\right)$ is $w^{\ast}$-compact, there is a subnet $\left(\mu_{n_i}\right)_{i}\xrightarrow{w^{\ast}}\mu_{\infty}$ for some $\mu_{\infty}\in \mathcal{P}_{r}\left(\Omega\right)$. We see that
+  \begin{align*}
+    \left\vert \mu_{n}\left(f\right) - \mu_{n}\left(f\circ \tau\right) \right\vert &= \left\vert \frac{1}{n}\sum_{k=0}^{n-1}\mu\left(f\circ \tau^k\right) - \frac{1}{n}\sum_{k=0}^{n-1}\mu\left(f\circ \tau^{k+1}\right) \right\vert\\
+                                                                                   &= \frac{1}{n}\left\vert \sum_{k=0}^{n-1} \mu\left(f\circ \tau^k\right) - \mu\left(f\circ \tau^{k+1}\right)\right\vert\\
+                                                                                   &= \frac{1}{n}\left\vert \mu\left(f\right) - \mu\left(f\circ \tau^{n}\right) \right\vert\\
+                                                                                   &= \frac{1}{n}\left\vert \mu\left(f - f\circ \tau^{n}\right) \right\vert\\
+                                                                                   &\leq \frac{1}{n}\norm{f - f\circ \tau^{n}}_{u}\\
+                                                                                   &\leq \frac{2}{n}\norm{f}_{u}.
+  \end{align*}
+  Taking the limit along the subnet, we have $\mu_{\infty}\left(f\right) = \mu_{\infty}\left(f\circ \tau\right)$. Thus, we have
+  \begin{align*}
+    \int_{\Omega}^{} f\:d\mu_{\infty} &= \int_{\Omega}^{} f\circ\tau\:d\mu_{\infty}\\
+                                      &= \int_{\Omega}^{} f\:d\left(\tau_{\ast}\mu_{\infty}\right).
+  \end{align*}
+  Thus, $\mu_{\infty} = \tau_{\ast}\mu_{\infty}$, so $\mu_{\infty}$ is invariant.\newline
+
+  Since $T_{\tau}^{\ast}$ is $w^{\ast}$-$w^{\ast}$ continuous, $\mathcal{P}_{r}\left(\Omega,\tau\right)$ is $w^{\ast}$-closed in $\mathcal{P}_{r}\left(\Omega\right)$, so it is $w^{\ast}$-compact.
+\end{proof}
+Now that we know the state space is compact if the underlying set is compact, we may be interested to see how we can implement this for the case where $\Omega$ is only locally compact rather than compact.\newline
+
+By Urysohn's lemma, we can characterize the topology of a locally compact Hausdorff space by its continuous bounded functions, $C_{b}\left(\Omega\right)$.\newline
+
+Fixing a locally compact Hausdorff space $\Omega$, for every $x\in \Omega$, there is an evaluation linear functional $\delta_{x}: C_{b}\left(\Omega\right)\rightarrow \F$ defined by $\delta_{x}\left(f\right) = f(x)$. These functionals are known as characters (or pure states) on $C_{b}\left(\Omega\right)$. We have
+\begin{align*}
+  \left\vert \delta_{x}\left(f\right) \right\vert &= \left\vert f(x) \right\vert\\
+                                                  &\leq \norm{f}_{u}.
+\end{align*}
+Additionally, we can define $g_x\in C\left(\Omega,[0,1]\right)$ by $g_x(x) = 1$ by taking $x\in K$ for some compact neighborhood $K$, and applying Urysohn's lemma to define $g = 1$ on $K$ and $0$ outside a compact superset of $K$. Then, $\norm{g}_{u} = 1$ and $\delta_{x}\left(g_x\right)=  1$, meaning $\norm{\delta_{x}}_{\text{op}} = 1$.\newline
+
+We have the map
+\begin{align*}
+  \Delta: \Omega\rightarrow B_{C_b\left(\Omega\right)^{\ast}}
+\end{align*}
+defined by $\Delta(x) = \delta_{x}$. We claim that $\Delta$ is an embedding, where $B_{C_b\left(\Omega\right)^{\ast}}$ is equipped with the $w^{\ast}$ topology.
+\begin{proof}
+  If $\Delta\left(x\right) = \Delta\left(y\right)$, then $\delta_{x} = \delta_{y}$, so 
+  \begin{align*}
+    f(x) &= \delta_{x}\left(f\right)\\
+         &= \delta_{y}\left(f\right)\\
+         &= f(y)
+  \end{align*}
+  for every $f\in C_b\left(\Omega\right)$. Since $C_b\left(\Omega\right)$ separates points, Urysohn's lemma provides $x = y$.\newline
+
+  If $x\in \Omega$ and $\left(x_{\alpha}\right)_{\alpha}$ is a net in $\Omega$, then
+  \begin{align*}
+    \left(\Delta\left(x_{\alpha}\right)\right)_{\alpha}\xrightarrow{w^{\ast}}\Delta\left(x\right) &\Leftrightarrow \left(\delta_{x_{\alpha}}\right)_{\alpha}\xrightarrow{w^{\ast}}\delta_{x}\\
+                                                                                                  &\Leftrightarrow \left(\delta_{x_{\alpha}}\left(f\right)\right)_{\alpha}\rightarrow \delta_{x}\left(f\right)\\
+                                                                                                  &\Leftrightarrow \left(f\left(x_{\alpha}\right)\right)_{\alpha}\rightarrow f(x)\\
+                                                                                                  &\Leftrightarrow \left(x_{\alpha}\right)_{\alpha}\rightarrow x.
+  \end{align*}
+\end{proof}
+We can now construct a compactification of the locally compact Hausdorff space $\Omega$.
+\begin{theorem}[Stone--Čech Compactification]
+  Let $\Omega$ be a locally compact Hausdorff space. There exists a compact space $\beta\Omega$, called the Stone--Čech compactification of $\Omega$, and a map $\Delta: \Omega\rightarrow \beta\Omega$ such that the following are true.
+  \begin{enumerate}[(1)]
+    \item $\Delta$ is an embedding.
+    \item $\Delta\left(\Omega\right)\subseteq \beta\Omega$ is dense.
+    \item For each $f\in C_{b}\left(\Omega\right)$, there exists a unique continuous extension $f^{\beta}: \beta\Omega\rightarrow \F$ such that the following diagram commutes.
+      \begin{center}
+        % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12B5AWxgHM6IAL6l0mXPkIoAjOSq1GLNpwBGMHHU68BQ0eOx4CROTIX1mrRB3YAxEQphR+8IqABmAJwg8kZEDgQSABM1BbK1u4g1Ax06gwAChJG0iCeWPwAFjgiYiBePn7UgUhyipYq7AAiMAyauR7evohlJYih5RH5AHrAahp0wg7CQA
+\begin{tikzcd}
+\Omega \arrow[rd, "f"'] \arrow[r, "\Delta",hookrightarrow] & \beta\Omega \arrow[d, "f^{\beta}"] \\
+                                            & \F                                
+\end{tikzcd}
+      \end{center}
+    \item The map $C_b\left(\Omega\right)\rightarrow C\left(\beta\Omega\right)$ mapping $f\mapsto f^{\beta}$ is an isometric isomorphism of Banach spaces.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Letting $\Delta: \Omega\rightarrow B_{C_b\left(\Omega\right)^{\ast}}$ be the map given by $\Delta(x) = \delta_{x}$, and defining $\beta\Omega = \overline{\Delta\left(\Omega\right)}^{w^{\ast}}$, we verify (1) and (2).\newline
+
+  To verify (3), if $f\in C_b\left(\Omega\right)$, we define
+  \begin{align*}
+    f^{\beta}:\beta\Omega\rightarrow \F
+  \end{align*}
+  by
+  \begin{align*}
+    f^{\beta}\left(\varphi\right) &= \varphi\left(f\right)
+  \end{align*}
+  for all $\varphi\in \beta\Omega\subseteq B_{C_b\left(\Omega\right)^{\ast}}$.\newline
+
+  If $\left(\varphi_{\alpha}\right)_{\alpha}\xrightarrow{w^{\ast}}\varphi$ in $\beta\Omega$, then for each $f\in C_b\left(\Omega\right)$, we have $\varphi_{\alpha}\left(f\right) \rightarrow \varphi\left(f\right)$, so $f^{\beta}\left(\varphi_{\alpha}\right)\rightarrow f^{\beta}\left(\varphi\right)$. Thus, $f^{\beta}$ is continuous.\newline
+
+  Finally, we see that for $x\in \Omega$ and $f\in C_b\left(\Omega\right)$,
+  \begin{align*}
+    f^{\beta}\circ \Delta\left(x\right) &= f^{\beta}\left(\delta_{x}\right)\\
+                                        &= \delta_{x}\left(f\right)\\
+                                        &= f(x).
+  \end{align*}
+  The uniqueness of $f^{\beta}$ follows from the fact that $f^{\beta}$ is densely defined in $\beta\Omega$.\newline
+
+  To show (4), for $f,g\in C_{b}\left(\Omega\right)$ and $\alpha\in \C$, we have
+  \begin{align*}
+    \left(f + \alpha g\right)^{\beta} &= f^{\beta} + \alpha g^{\beta},
+  \end{align*}
+  since both of these expressions agree on $\Delta\left(\Omega\right)$, which is a dense subset of $\beta\Omega$. If $g\in C\left(\beta\Omega\right)$, we define $f = g\circ\Delta$, meaning $f$ is continuous and bounded, with $f^{\beta} = g$.\newline
+
+  Finally, since $\beta\Omega$ is compact, $f^{\beta}\left(\beta\Omega\right)$ is closed, so
+  \begin{align*}
+    f^{\beta}\left(\beta\Omega\right) &= f^{\beta}\left(\overline{\Delta\left(\Omega\right)}\right)\\
+                                      &\subseteq \overline{f^{\beta}\left(\Delta\left(\Omega\right)\right)}\\
+                                      &= \overline{f\left(\Omega\right)}\\
+                                      &= \overline{f^{\beta}\left(\Delta\left(\Omega\right)\right)}\\
+                                      &\subseteq \overline{f^{\beta}\left(\beta\Omega\right)}\\
+                                      &= f^{\beta}\left(\beta\Omega\right).
+  \end{align*}
+  We get
+  \begin{align*}
+    \norm{f}_{u} &= \sup f\left(\Omega\right)\\
+                 &= \sup \overline{f\left(\Omega\right)}\\
+                 &= \sup f^{\beta}\left(\beta\Omega\right)\\
+                 &= \norm{f^{\beta}}_{u}.
+  \end{align*}
+  Thus, $f \mapsto f^{\beta}$ is a surjective isometry.
+\end{proof}
+\begin{remark}
+  The Stone--Čech compactification is a very large set. For instance, $\Card\left(\beta \N\right) = \mathfrak{c}^{\mathfrak{c}}$.
+\end{remark}
+\begin{remark}
+  With the Stone--Čech compactification, we can finally characterize $\ell_{\infty}\left(\N\right)^{\ast}$, which is the space of all regular Borel measures on $C\left(\beta \N\right)$.
+\end{remark}
+\begin{exercise}
+  Let $I$ be a set with the discrete topology. Show that $\beta I$ is Stonean --- that is, the closure of every open set is clopen.
+\end{exercise}
+\begin{solution}[]
+  [Consult Rainone on solution]
+\end{solution}
 
 \end{document}

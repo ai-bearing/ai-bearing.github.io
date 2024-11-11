@@ -12,6 +12,7 @@ Here are the class notes I have written up so far.
 ### Honors Thesis: Amenability and C*-Algebras
 #### [Paradoxical Decompositions and Tarski's Theorem](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/amenability_notes.pdf)
 #### [A Foray into Functional Analysis](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/functional_analysis.pdf)
+#### [Invariant States and Means on Groups](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/invariant_states.pdf)
 ## Summer Reading
 ### [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)
 ### [Banach Algebras and Operator Theory](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/banach_algebras_operator_theory.pdf)

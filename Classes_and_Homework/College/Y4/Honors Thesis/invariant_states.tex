@@ -1,0 +1,111 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Invariant States and Means on Groups}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\tableofcontents
+\section{Introduction}%
+This is going to be a part of my Honors thesis independent study, focused on amenability and $C^{\ast}$-algebras. This section of notes will be a deeper dive into group amenability. These notes will be taken from the notes my professor has prepared on group amenability, with supplementation from Volker Runde's \textit{Lectures on Amenability} and Pierre de la Harpe's \textit{Topics in Geometric Group Theory}.\newline
+
+I do not claim any of this work to be original.
+\section{Amenable Groups and Subgroups}%
+Let $G$ be a group, with $P(G)$ denoting the power set.
+\begin{definition}
+  An invariant mean on $G$ is a set function $m: P(G)\rightarrow [0,1]$, which satisfies, for all $t\in G$ and $E,F\subseteq G$,
+  \begin{enumerate}[(1)]
+    \item $m(G) = 1$;
+    \item $m\left(E\sqcup F\right) = M(E) + m(F)$;
+    \item $m\left(tE\right) = m\left(E\right)$.
+  \end{enumerate}
+  We say $G$ is amenable if it admits a mean.\newline
+
+  We can also say that $m$ is a translation-invariant probability measure on $\left(G,P(G)\right)$.
+\end{definition}
+\begin{proposition}[Amenability of Subgroups and Quotient Groups]
+  Let $G$ be amenable, with $H\leq G$.
+  \begin{enumerate}[(1)]
+    \item $H$ is amenable;
+    \item for $H\trianglelefteq G$, $G/H$ is amenable.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Let $R$ be a right transversal for $H$ (i.e., selecting one element of each right coset of $H$ to make up $R$).\newline
+
+      If $m$ is a mean for $G$, we set
+      \begin{align*}
+        \lambda: \mathcal{P}\left(H\right) \rightarrow [0,1]
+      \end{align*}
+      by $\lambda(E) = m\left(ER\right)$. We have
+      \begin{align*}
+        \lambda\left(H\right) &= m\left(HR\right)\\
+                              &= m\left(G\right)\\
+                              &= 1.
+      \end{align*}
+      We claim that if $E\cap F = \emptyset$, then $ER\cap FR = \emptyset$, since if we suppose toward contradiction that $ER \cap FR \neq \emptyset$, then $xr_1 = yr_2$ for some $ x\in E,y\in F$ and $r_1,r_2\in R$. Then, we must have $r_2r_1^{-1} = y^{-1}x \in H$, meaning $r_1 = r_2$ and $x = y$, which means $E\cap F \neq \emptyset$.\newline
+
+      Thus, we have
+      \begin{align*}
+        \lambda\left(E\sqcup F\right) &= m\left(\left(E\sqcup F\right)R\right)\\
+                                      &= m\left(ER\sqcup FR\right)\\
+                                      &= m\left(ER\right) + m\left(FR\right)\\
+                                      &= \lambda(E) + \lambda(F),
+      \end{align*}
+      and
+      \begin{align*}
+        \lambda\left(sE\right) &= m\left(sER\right)\\
+                               &= m\left(ER\right)\\
+                               &= \lambda\left(E\right).
+      \end{align*}
+    \item For the canonical projection map $\pi: G\rightarrow G/H$ defined by $\pi(t) = tH$, we define
+      \begin{align*}
+        \lambda: P\left(G/H\right)\rightarrow [0,1]
+      \end{align*}
+      by $\lambda\left(E\right) = m\left(\pi^{-1}\left(E\right)\right)$. We have
+      \begin{align*}
+        \lambda\left(G/H\right) &= m\left(\pi^{-1}\left(G/H\right)\right)\\
+                                &= m\left(G\right)\\
+                                &= 1,
+      \end{align*}
+      and
+      \begin{align*}
+        \lambda\left(E\sqcup F\right) &= m\left(\pi^{-1}\left(E\sqcup F\right)\right)\\
+                                      &= m\left(\pi^{-1}\left(E\right)\sqcup \pi^{-1}\left(F\right)\right)\\
+                                      &= m\left(\pi^{-1}\left(E\right)\right) + m\left(\pi^{-1}\left(F\right)\right)\\
+                                      &= \lambda\left(E\right) + \lambda\left(F\right).
+      \end{align*}
+      To show translation-invariance, we let $sH = \pi\left(s\right)\in G/H$, and $E\subseteq G/H$. Note that
+      \begin{align*}
+        \pi^{-1}\left(\pi\left(s\right)E\right) &= s\pi^{-1}\left(E\right),
+      \end{align*}
+      since for $r\in s\pi^{-1}\left(E\right)$, we have $r = st$ for $\pi(t)\in E$, so $\pi\left(r\right) = \pi\left(st\right) = \pi\left(s\right)\pi\left(t\right) \in \pi\left(s\right)E$.\newline
+
+      Additionally, if $r\in \pi^{-1}\left(\pi\left(s\right)E\right)$, then $\pi\left(r\right) \in \pi\left(s\right)E $, so $\pi\left(s^{-1}r\right)\in E$, and $s^{-1}r\in \pi^{-1}\left(E\right)$. Thus, we have
+      \begin{align*}
+        \lambda\left(\pi\left(s\right)E\right) &= m\left(\pi^{-1}\left(\pi\left(s\right)E\right)\right)\\
+                                               &= m\left(s\pi^{-1}\left(E\right)\right)\\
+                                               &= m\left(\pi^{-1}\left(E\right)\right)\\
+                                               &= \lambda\left(E\right).
+      \end{align*}
+      
+  \end{enumerate}
+\end{proof}
+\section{Understanding Free Groups}%
+In the \href{https://blog.avinashiyer.xyz/Classes_and_Homework/College/Y4/Honors\%20Thesis/amenability_notes.pdf}{Tarski's Theorem} notes, we discussed a little bit the ramifications of the free group on two generators being paradoxical. In order to better understand free groups, we will draw information from Pierre de la Harpe's \textit{Topics in Geometric Group Theory}.
+\end{document}
