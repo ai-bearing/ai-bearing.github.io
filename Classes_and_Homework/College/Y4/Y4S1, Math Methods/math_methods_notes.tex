@@ -5200,7 +5200,240 @@ This yields a generalized eigenvalue equation $\lambda = \omega^2$. The eigenval
   \end{align*}
   Here, $\ket{\Phi_1}$ denotes perfect symmetry (i.e., both masses moving in the same direction), while $\ket{\Phi_2}$ denotes perfect antisymmetry (i.e., both masses moving in opposite directions).\newline
 
-  We say $\ket{\Phi_1}$ and $\ket{\Phi_2}$ are normal modes.
+  We say $\ket{\Phi_1}$ and $\ket{\Phi_2}$ are normal modes.\newline
+
+  The solution is the set of all linear combinations of the normal modes.
+  \begin{align*}
+    \ket{Q(t)} &= A_1\cos\left(\omega_1 t + \delta_1\right) \ket{\Phi_1} + A_2\cos\left(\omega_2 t + \delta_2\right) \ket{\Phi_2}
+  \end{align*}
+  We find
+  \begin{align*}
+    q_{i}(t) &= \braket{q_i}{Q(t)}.
+  \end{align*}
+  For example,
+  \begin{align*}
+    q_{1,2}(t) &= \braket{q_1}{Q(t)}\\
+           &= A_1\cos\left(\omega_1 t + \delta_1\right) \pm A_2 \cos\left(\omega_2 t + \delta_2\right).
+  \end{align*}
+  We find normal modes by taking certain initial conditions.\newline
+
+  Consider
+  \begin{align*}
+    q_1(0) &= 0\\
+    q_2(0) &= b\\
+    \dot{q}_{1,2}(0) &= 0.
+  \end{align*}
+  Note that the latter condition means that $\delta_{1,2} = 0$. 
+  \begin{align*}
+    \begin{pmatrix}q_1\\q_2\end{pmatrix} &= A_1\cos\left(\omega_2 t\right) \begin{pmatrix}1\\1\end{pmatrix} + A_2\cos\left(\omega_2 t\right) \begin{pmatrix}1\\-1\end{pmatrix},
+  \end{align*}
+  meaning we get the solution of
+  \begin{align*}
+    q_{1,2}(t) &= \frac{a}{2} \left(\cos\left(\omega_1 t\right) \pm \cos\left(\omega_2 t\right)\right) + \frac{b}{2} \left(\cos\left(\omega_1 t\right) \mp \cos\left(\omega_2 t\right)\right).
+  \end{align*}
+  Note that neither $q_1$ nor $q_2$ have definite frequency.
+\end{example}
+\begin{example}[Double Pendulum]
+  Consider a double pendulum, with length $\ell$, masses $m$, and angles $\theta_1,\theta_2$.\newline
+
+  Using Lagrangians, we can find the equations of motion to be
+  \begin{align*}
+    2\ddot{\theta}_1 + \ddot{\theta_2} &= -\frac{2g}{\ell}\theta_1\\
+    \ddot{\theta}_1 + \ddot{\theta_2} &= -\frac{g}{\ell}\theta_2,
+  \end{align*}
+  which we can rewrite as
+  \begin{align*}
+    M\ket{\ddot{Q}} &= -K\ket{Q},
+  \end{align*}
+  where
+  \begin{align*}
+    M &= \begin{pmatrix}2 & 1 \\ 1 & 1\end{pmatrix}\\
+    K &= \frac{g}{\ell} \begin{pmatrix}2 & 0 \\ 0 & 1\end{pmatrix}.
+  \end{align*}
+  This is a generalized eigenvalue problem. Using the ansatz, we find that
+  \begin{align*}
+    \omega_{1,2}^2 &= \left(2 \pm \sqrt{2}\right) \frac{g}{\ell}\\
+    \ket{\Phi_{1,2}} &= \begin{pmatrix}1\\ \mp\sqrt{2}\end{pmatrix}.
+  \end{align*}
+  Note that
+  \begin{align*}
+    M^{-1}K &= \frac{g}{\ell} \begin{pmatrix}2 & -1 \\ -2 & 2\end{pmatrix},
+  \end{align*}
+  which is not a normal matrix, so the modes are not purely orthogonal. However, they are generally orthogonal, in the sense that $\bra{\Phi_1}M\ket{\Phi_2} = 0$.
+\end{example}
+\begin{example}[Higher Dimensions]
+  Consider a three mass system with constant mass $m$ and spring constant $k$. The equations of motion for this system are
+  \begin{align*}
+    m\ddot{q}_1 &= -kq_1 - k\left(q_1 - q_2\right)\\
+    m\ddot{q}_1 &= -k\left(q_2 - q_1\right) - k\left(q_2 - q_3\right)\\
+    m\ddot{q}_3 &= -k\left(q_3 - q_2\right) - kq_3.
+  \end{align*}
+  Our eigenvalue problem is 
+  \begin{align*}
+    k \begin{pmatrix}2 & -1 & 0 \\ -1 & 2 & -1 \\ 0 & -1 & 2\end{pmatrix} \begin{pmatrix}\phi_1\\\phi_2\\\phi_3\end{pmatrix} &= m\omega^2 \begin{pmatrix}\phi_1\\\phi_2\\\phi_3\end{pmatrix}.
+  \end{align*}
+  
+  Solving for the normal modes and frequencies, we have
+  \begin{align*}
+    \omega_1^2 &= \left(2-\sqrt{2}\right) \frac{k}{m}\\
+    \omega_2^2 &= \frac{2k}{m}\\
+    \omega_3^2 &= \left(2 + \sqrt{2}\right) \frac{k}{m}\\
+    \\
+    \ket{\Phi_1} &= \begin{pmatrix}1\\\sqrt{2}\\1\end{pmatrix}\\
+    \ket{\Phi_2} &= \begin{pmatrix}1\\0\\-1\end{pmatrix}\\
+    \ket{\Phi_3} &= \begin{pmatrix}1\\-\sqrt{2}\\1\end{pmatrix}.
+  \end{align*}
+  We say the mode with the greatest symmetry has the lowest frequency --- in this case, it is the normal mode corresponding to $\ket{\Phi_1}$, which is where all the masses oscillate in the same direction.
+\end{example}
+\begin{example}
+  If we remove the left-most and right-most springs from the wall, we have a different eigenvalue problem
+  \begin{align*}
+    k \begin{pmatrix}1 & -1 & 0 \\ -1 & 2 & -1 \\ 0 & -1 & 1 \end{pmatrix} \begin{pmatrix}\phi_1\\\phi_2\\\phi_3\end{pmatrix} &= m\omega^2 \begin{pmatrix}\phi_1\\\phi_2\\\phi_3\end{pmatrix}.
+  \end{align*}
+  Solving for the eigenvalues, we get
+  \begin{align*}
+    \omega_1^2 &= 0\\
+    \omega_2^2 &= \frac{k}{m}\\
+    \omega_3^2 &= \frac{3k}{m}\\
+    \\
+    \ket{\Phi_1} &= \begin{pmatrix}1\\1\\1\end{pmatrix}\\
+    \ket{\Phi_2} &= \begin{pmatrix}1\\0\\-1\end{pmatrix}\\
+    \ket{\Phi_3} &= \begin{pmatrix}1\\-2\\1\end{pmatrix}.
+  \end{align*}
+  We call $\ket{\Phi}$ a zero mode --- since we do not have connection to the wall, we have translational symmetry.\footnote{Chemists love this stuff.}
+\end{example}
+\begin{example}[A Bracelet]
+  Consider a bracelet of masses and springs --- i.e., the masses $m$ are all connected to each other with spring constant $k$ in a circle.\newline
+
+  We will get
+  \begin{align*}
+    T &= M^{-1} K\\
+      &= \frac{k}{m} \begin{pmatrix}2 & -1 & 0 & -1 \\ -1 & 2 & -1 & 0 \\ 0 & -1 & 2 & -1 \\ -1 & 0 & -1 & 2\end{pmatrix}.
+  \end{align*}
+  Note that each row of $T$ is a discrete right shift of the first row.\newline
+
+  Instead of solving the eigenvalue problem directly, we will use symmetry. Note that, since every row is a discrete right shift of the first row, we have the symmetry operation
+  \begin{align*}
+    S &= \begin{pmatrix}0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 1 & 0 & 0 & 0\end{pmatrix},
+  \end{align*}
+  which maps $q_{n}\mapsto q_{n+1}$ modulo $4$. Note that this means
+  \begin{align*}
+    TS &= ST,
+  \end{align*}
+  so we can solve for the eigenbasis of $S$ and obtain the same eigenbasis for $T$. Since $S^{4} = I_4$, we must have the eigenvalues $s$ of $S$ satisfy $s^{4} = 1$. The eigenvalues are, thus,
+  \begin{align*}
+    s_{\ell} &= e^{i\pi \ell/2}.
+  \end{align*}
+  The eigenvectors have components $\braket{q_n}{s_{\ell}} = e^{i\pi \ell n/2}$ for $n$ ranging from $0$ to $3$ corresponding to the four eigenvectors.
+  \begin{align*}
+    \ket{s_0} &= \begin{pmatrix}1\\1\\1\\1\end{pmatrix}\\
+    \ket{s_1} &= \begin{pmatrix}1\\i\\-1\\-i\end{pmatrix}\\
+    \ket{s_2} &= \begin{pmatrix}1\\-1\\1\\-1\end{pmatrix}\\
+    \ket{s_3} &= \begin{pmatrix}1\\-1\\-1\\i\end{pmatrix}.
+  \end{align*}
+  Each $\ket{s_{\ell}}$ has a phase difference of $\ell \pi/2$ between adjacent masses, but neighboring masses in $\ket{s_{1,3}}$ are $\pm \pi/2$ out of phase, meaning they describe waves travelling in opposite directions. This is because their eigenvalues are complex conjugates --- $\overline{s_1} = s_3$.\newline
+
+  We know that each of $\ket{s_{i}}$ are eigenvectors for $T$. We now find
+  \begin{align*}
+    T\ket{s_{\ell}} &= \omega^2_{\ell}\ket{s_{\ell}},
+    \intertext{giving}
+    \omega_0^2 &= 0\\
+    \omega_1^2 &= 2k/m\\
+    \omega_2^2 &= 4k/m\\
+    \omega_3^2 &= 2k/m.
+  \end{align*}
+  The benefit of having a symmetry operator is that we don't have to take any determinants.\newline
+
+  We can now take
+  \begin{align*}
+    \ket{\Phi_0} &= \ket{s_0}\\
+    \ket{\Phi_2} &= \ket{s_2},
+  \end{align*}
+  as the eigenvectors are real. However, when it comes to the complex eigenvectors $\ket{s_1}$ and $\ket{s_3}$, we need to take linear combinations that yield proper normal modes (note that $\omega_1^2 = \omega_3^2$).\newline
+
+  In particular, we can consider the normal modes for $\omega_1^2$ and $\omega_3^2$ as standing waves --- we add and subtract to yield proper normal modes.
+  \begin{align*}
+    \ket{\Phi_1} &= \frac{1}{2}\left(\ket{s_1} + \ket{s_3}\right)\\
+    \ket{\Phi_3} &= \frac{1}{2i} \left(\ket{s_1} - \ket{s_3}\right).
+  \end{align*}
+  Both $\ket{\Phi_1}$ and $\ket{\Phi_3}$ are eigenvectors of $T$ (but not $S$), which are normal modes.\newline
+
+  Expanding to the $N$ bracelet, the eigenvalues $s$ of $S$ are the $N$ roots of unity,
+  \begin{align*}
+    s_{\ell} &= e^{2i\pi \ell/N},
+  \end{align*}
+  with the $n$th components
+  \begin{align*}
+    \braket{q_n}{s_{\ell}} &= e^{2i \pi \ell n/N}.
+  \end{align*}
+  The $N\times N$ version of the matrix is
+  \begin{align*}
+    T &= \frac{k}{m} \begin{pmatrix}2 & -1 & 0 & 0 & \cdots & 0 & -1 \\ -1 & 2 & -1 & 0 & \cdots & 0 & 0\\0 & -1 & 2 & -1 & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \vdots & \ddots & 0 & -1 \\ -1 & 0 & 0 & 0 & \cdots& -1  & 2\end{pmatrix}.
+  \end{align*}
+  Since we have limited ourselves to nearest neighbor interactions, we can find the eigenfrequencies by considering one bead and its two neighbors. In other words, we only need to look at a $3\times 3$ submatrix within $T$.\newline
+
+  With $\phi_n$, the $n$th component of a $T$ eigenvector on the position basis, the eigenvalue equation is
+  \begin{align*}
+    \omega^2\phi_n &= \frac{k}{m}\left(-\phi_{n+1} + 2\phi_n - \phi_{n-1}\right),
+  \end{align*}
+  so we take $\phi_n = \braket{q_n}{\phi_{\ell}}$ to find
+  \begin{align*}
+    \omega_{\ell}^2 &= \frac{k}{m}\left(-e^{2\pi i \ell/N} + 2 - e^{-2\pi i \ell/N}\right)\\
+                    &=\frac{2k}{m}\left(1-\cos\left(2\pi \ell/N\right)\right)\\
+                    &= \frac{4k}{m}\sin^2\left(\pi \ell/N\right).
+  \end{align*}
+\end{example}
+\begin{example}[The Finite Chain]
+  Having solved the $N$ bracelet we may turn our attention to a chain of identical masses and springs with arbitrary $N$. Given as the number of masses increases, so does the difficult of calculation, but oddly when we go to infinity, the solution becomes much easier.\newline
+
+  An infinite chain is invariant under the shift $q_n \mapsto q_{n+1}$, so there is an infinite symmetry operator $S$ with $1$ along the superdiagonal, with $0$ everywhere else.\newline
+
+  The symmetry of the chain is the same as that of the bracelet, meaning we have similar eigenvalues (but with arbitrary $\alpha$ in place of $2\pi \ell/N$).
+  \begin{align*}
+    s_{\alpha} &= e^{i\alpha},
+  \end{align*}
+  where $\alpha$ is real. Since $S\ket{s_{\alpha}} = e^{i\alpha}\ket{s_{\alpha}}$, the eigenvectors are represented as infinite column vectors with adjacent entries shifted in phase by $e^{\pm i \alpha}$.
+  \begin{align*}
+    \ket{s_{\alpha}} &= \begin{pmatrix}\vdots \\ e^{-2i\alpha} \\ e^{-i\alpha} \\ 1 \\ e^{i\alpha} \\ e^{2i\alpha}\\ \vdots\end{pmatrix}.
+  \end{align*}
+  It is easier to represent the individual amplitudes as $\braket{q_n}{s_{\alpha}} = e^{in\alpha}$ for $n\in \Z$. Since $S$ and $T$ commute in the infinite-dimensional case, we have
+  \begin{align*}
+    T\ket{s_\alpha} &= \omega_{\alpha}^{2}\ket{s_{\alpha}},
+  \end{align*}
+  from which we calculate
+  \begin{align*}
+    \omega_{\alpha}^2 &= \frac{k}{m}\left(-e^{i\alpha} + 2 - e^{-i\alpha}\right)\\
+                      &= \frac{2k}{m}\left(1-\cos\alpha\right).
+  \end{align*}
+  When $\alpha = 0$, we have the zero mode, and every other value of $\alpha$ is doubly degenerate, meaning the bracelet with the normal mode $\ket{\Phi_{\alpha}}$ is given by real linear combinations of $\ket{s_{\alpha}}$ and $\ket{s_{-\alpha}}$.\newline
+
+  On the finite chain, we maintain that $q_0 = 0$ must be fixed, and $q_{N+1} = 0$. Thus, we get the normal modes of the form
+  \begin{align*}
+    \ket{\Phi_{\alpha}} = \ket{s_{\alpha}} - \ket{s_{-\alpha}}.
+  \end{align*}
+  This property holds position $n=0$ fixed, and at position $n = N+1$, we get
+  \begin{align*}
+    q_{N+1} &= \braket{q_{N+1}}{\Phi_{\alpha}}\\
+            &= e^{i\alpha \left(N+1\right)} - e^{-i\alpha \left(N+1\right)}\\
+            &= 2i\sin\left(\alpha\left(N+1\right)\right).
+  \end{align*}
+  The only way for $q_{N+1} = 0$ to hold is to take
+  \begin{align*}
+    \alpha &= \frac{\ell \pi}{N+1}
+  \end{align*}
+  for each of $\ell = 1,2,\dots,N$.\newline
+
+  Earlier, we had no conditions on $\alpha$ beyond $\alpha$ being real. By imposing the boundary conditions, we find that we need to quantize the system. The chain has normal modes
+  {\renewcommand{\arraystretch}{1.5}
+  \begin{align*}
+    \ket{\Phi_{\ell}} &= \begin{pmatrix}\sin\left(\frac{\ell \pi}{N+1}\right) \\ \sin\left(\frac{2\ell \pi}{N+1}\right) \\\vdots \\ \sin\left(\frac{N\ell \pi}{N+1}\right)\end{pmatrix}
+  \end{align*}
+  }
+  The eigenfrequencies are
+  \begin{align*}
+    \omega_{\ell}^2 &= \frac{4k}{m}\sin^2\left(\frac{\ell \pi}{2\left(N+1\right)}\right).
+  \end{align*}
+  
 \end{example}
 
 \end{document}

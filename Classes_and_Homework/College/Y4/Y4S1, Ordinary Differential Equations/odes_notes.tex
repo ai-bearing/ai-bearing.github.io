@@ -1998,12 +1998,150 @@ We begin turning our attention to the case when
                             &= e^{4t}\cos\left(2t\right) \begin{pmatrix}1\\1\end{pmatrix} + ie^{4t}\cos\left(2t\right) \begin{pmatrix}0\\1\end{pmatrix} + ie^{4t}\sin\left(2t\right) \begin{pmatrix}1\\1\end{pmatrix} - e^{4t}\sin\left(2t\right) \begin{pmatrix}0\\1\end{pmatrix}\\
                             &= \underbrace{e^{4t} \begin{pmatrix}\cos\left(2t\right) \\ \cos\left(2t\right) - \sin\left(2t\right)\end{pmatrix}}_{\re\left(\vec{Y}_{1}(t)\right)} + i\underbrace{\left(e^{4t} \begin{pmatrix}\sin\left(2t\right)\\ \cos\left(2t\right) + \sin\left(2t\right)\end{pmatrix}\right)}_{\im\left(\vec{Y}_1(t)\right)}
   \end{align*}
-  Note that $\re\left(\vec{Y}_1(0)\right)$ and $\im\left(\vec{Y}_1(0)\right)$ are linearly independent, and $\re\left(\vec{Y}_1(t)\right)$ and $\im\left(\vec{Y}_2(t)\right)$ are real solutions.\newline
+  Note that $\re\left(\vec{Y}_1(0)\right)$ and $\im\left(\vec{Y}_1(0)\right)$ are linearly independent, and $\re\left(\vec{Y}_1(t)\right)$ and $\im\left(\vec{Y}_1(t)\right)$ are real solutions.\newline
 
   The general solution is, thus
   \begin{align*}
-    \vec{Y}(t) &= k_1\re\left(\vec{Y}_1(t)\right) + k_2\im\left(\vec{Y}_2(t)\right).
+    \vec{Y}(t) &= k_1\re\left(\vec{Y}_1(t)\right) + k_2\im\left(\vec{Y}_1(t)\right).
   \end{align*}
+\end{example}
+\begin{theorem}[Complex Eigenvalues and Solutions]
+  Suppose $\vec{Y}(t)$ is a complex-valued solution to the linear system of differential equation
+  \begin{align*}
+    \diff{\vec{Y}}{t} &= A\vec{Y}.
+  \end{align*}
+  Suppose
+  \begin{align*}
+    \vec{Y}(t) &= \re\left(\vec{Y}(t)\right) + i\im\left(\vec{Y}(t)\right),
+  \end{align*}
+  where both real and imaginary parts are real-valued functions of $t$. Then, $\re\left(\vec{Y}(t)\right)$ and $\im\left(\vec{Y}(t)\right)$ are both solutions to $\diff{\vec{Y}}{t} = A\vec{Y}$. The general solution is of the form
+  \begin{align*}
+    \vec{Y}(t) &= k_1\re\left(\vec{Y}(t)\right) + k_2\im\left(\vec{Y}(t)\right).
+  \end{align*}
+\end{theorem}
+\begin{example}
+  Let $\lambda = \alpha \pm i\beta$. The complex-valued solution is
+  \begin{align*}
+    \vec{Y}(t) &= e^{\left(\alpha + i\beta\right)t} \vec{v},
+  \end{align*}
+  where $\vec{v}$ is the eigenvector corresponding to $\lambda = \alpha + i\beta$.\newline
+
+  Splitting up, we get
+  \begin{align*}
+    \vec{Y}(t) &= e^{\alpha t}e^{i\beta t}v\\
+               &= e^{\alpha t}\left(\cos\left(\beta t\right) + i\sin\left(\beta t\right)\right)\vec{v}.
+  \end{align*}
+  Since $\vec{v}$ is constant, the long-term behavior of the solution curves is affected by $t$.
+\begin{itemize}
+  \item If $\alpha > 0$, then $e^{\alpha t} \rightarrow \infty$ as $t\rightarrow\infty$, so our solutions move away from the origin. If $\beta \neq 0$, then they do so in a spiral pattern.
+    \begin{center}
+      \includegraphics[width=10cm]{images/positive_real_part.pdf}
+    \end{center}
+  \item If $\alpha < 0$, then $e^{\alpha t}\rightarrow 0$ as $t\rightarrow\infty$, so our solutions move toward the origin. If $\beta \neq 0$, they do so in a spiral pattern.
+    \begin{center}
+      \includegraphics[width=10cm]{images/negative_real_part.pdf}
+    \end{center}
+  \item If $\alpha = 0$ and $\beta \neq 0$, we have a purely periodic solution.
+    \begin{center}
+      \includegraphics[width=10cm]{images/zero_real_part.pdf}
+    \end{center}
+\end{itemize}
+\end{example}
+Recall that when we find the eigenvalues of a matrix $A$, we see that
+\begin{align*}
+  \det \begin{pmatrix}a-\lambda & b \\ c & d-\lambda\end{pmatrix} &= 0\\
+  \lambda^2 - \underbrace{\left(a+d\right)}_{\tr(A)}\lambda + \underbrace{\left(ad-bc\right)}_{\det (A)} &= 0.
+\end{align*}
+Solving using the quadratic formula we get
+\begin{align*}
+  \lambda &= \frac{\left(a+d\right) \pm \sqrt{\left(a+d\right)^2 - 4\left(ad-bc\right)}}{2}.
+\end{align*}
+We can see that the real part of $\lambda$ is
+\begin{align*}
+  \re\left(\lambda\right) &= \frac{a+d}{2}.
+\end{align*}
+This is a quick way to evaluate a whether the origin is a spiral source vs. spiral sink.
+\subsection{Phase Portraits for Repeated Eigenvalues}%
+Consider
+\begin{align*}
+  \diff{\vec{Y}}{t} &= \begin{pmatrix}-2 & 1 \\ 0 & -2\end{pmatrix} \vec{Y}
+\end{align*}
+our linear system. There are repeated eigenvalues of $\lambda = -2$. The corresponding eigenvector is
+\begin{align*}
+  \vec{v} &= \begin{pmatrix}1\\0\end{pmatrix}.
+\end{align*}
+We can see the straight line solution of the form
+\begin{align*}
+  \vec{Y}_1(t) &= e^{-2t} \begin{pmatrix}1\\0\end{pmatrix}.
+\end{align*}
+To see the general solutions, we start by converting into the system.
+\begin{align*}
+  \diff{x}{t} &= -2x + y\\
+  \diff{y}{t} &= -2y.
+\end{align*}
+Since this system is partially decoupled, we are indeed able to solve it.
+\begin{align*}
+  y(t) &= k_1e^{-2t}\\
+  \diff{x}{t} &= -2x + k_1e^{-2t}\\
+  \diff{x}{t} + 2x &= k_1e^{-2t}\\
+  e^{2t}\diff{x}{t} + 2xe^{2t} &= k_1\\
+  \diff{}{t}\left(xe^{2t}\right) &= k_1\\
+  xe^{2t} &= k_1t + k_2\\
+  x &= k_1te^{-2t} + k_2e^{-2t}.
+\end{align*}
+Our general solution is, thus
+\begin{align*}
+  \vec{Y}(t) &= \begin{pmatrix}k_1te^{-2t} + k_2e^{-2t}\\ k_2e^{-2t}\end{pmatrix}.
+\end{align*}
+Including the initial condition of $x(0) = x_0$, $y(0) = y_0$, we get
+\begin{align*}
+  \vec{Y}(t) &= \begin{pmatrix}y_0te^{-2t} + x_0e^{-2t} \\ y_0e^{-2t}\end{pmatrix}\\
+             &= te^{-2t} \underbrace{\begin{pmatrix}y_0\\0\end{pmatrix}}_{\vec{v}} + e^{-2t} \underbrace{\begin{pmatrix}x_0\\y_0\end{pmatrix}}_{\vec{Y}(0)}.
+\end{align*}
+\begin{theorem}
+  Let $\diff{\vec{Y}}{t} = A\vec{Y}$ be a linear system where $A$ is a $2\times 2$ matrix with a repeated real eigenvalue $\lambda$, but with only one eigenline. Then, the general solution is the following.
+  \begin{align*}
+    \vec{Y}(t) &= e^{\lambda t} \vec{v}_0 + te^{\lambda t}\vec{v}_1,
+  \end{align*}
+  where $\vec{v}_0$ is an arbitrary initial condition, and $\vec{v}_1$ is determined as follows:
+  \begin{align*}
+    \vec{v}_1 &= \left(A- \lambda I\right)\vec{v}_0.
+  \end{align*}
+  If $\vec{v}_1 = 0$, then $\vec{v}_0$ is an eigenvector, and $\vec{Y}(t)$ is a straight line solution. Otherwise, $\vec{v}_1$ is an eigenvector.
+\end{theorem}
+\begin{example}
+  Let
+  \begin{align*}
+    \diff{\vec{Y}}{t} &= \begin{pmatrix}-1 & 2 \\ -2 & 3\end{pmatrix} \vec{Y}.
+  \end{align*}
+  The eigenvalues of this matrix are $\lambda = 1$. We let
+  \begin{align*}
+    \vec{v}_0 &= \begin{pmatrix}x_0\\y_0\end{pmatrix},
+  \end{align*}
+  and
+  \begin{align*}
+    \vec{v}_1 &= \left(A - \lambda I\right)\vec{v}_0\\
+              &= \begin{pmatrix}-2 & 2 \\ -2 & 2\end{pmatrix} \begin{pmatrix}x_0\\y_0\end{pmatrix}\\
+              &= \begin{pmatrix}-2x_0 + 2y_0 \\ -2x_0 + 2y_0\end{pmatrix}.
+  \end{align*}
+  Thus, our solution is
+  \begin{align*}
+    \vec{Y}(t) &= e^{t} \begin{pmatrix}x_0\\y_0\end{pmatrix} + te^{t} \begin{pmatrix}-2x_0 + 2y_0\\-2x_0 + 2y_0\end{pmatrix}.
+  \end{align*}
+  To create solutions, we let the initial condition change over time, and find the desired eigenvectors.\newline
+
+  For instance, if our initial condition is $\vec{v}_0 = \begin{pmatrix}1\\0\end{pmatrix}$, then $\vec{v}_1 = \begin{pmatrix}-2\\-2\end{pmatrix}$, and our solutions look as follows.
+  \begin{center}
+    \includegraphics[width=10cm]{images/repeated_eigenvalues.png}
+  \end{center}
+\end{example}
+\begin{example}[Qualitative Analysis]
+  Note that we can take
+  \begin{align*}
+    \vec{Y}(t) &= e^{\lambda t}\vec{v}_0 + te^{\lambda t}\vec{v}_1\\
+               &= e^{\lambda t}\left(\vec{v}_1 + t\vec{v}_1\right).
+  \end{align*}
+  As $t\rightarrow\infty$, the solution asymptotically approaches the direction $\vec{v}_1$. This is more readily apparent if $\lambda > 0$.
 
 \end{example}
 

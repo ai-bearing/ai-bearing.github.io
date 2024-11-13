@@ -1,0 +1,91 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Set Theory and Foundations of Mathematics: Homework 11}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{4.11}%
+\begin{problem}
+  Show that if $A$ is a decidable set, then so is its complement. Then, show that if $A$ and $B$ are decidable sets, then so are $A\cup B$ and $A\cap B$.
+\end{problem}
+\begin{solution}
+  Let $f_A$ be the function that computes $\chi_A$, and let $f_B$ be the function that computes $\chi_B$.\newline
+
+  We define $g_A$, which computes $\N\setminus A$, by composing $f_A$ with the partial function that computes $1$ if the input is $0$ and computes $0$ if the input is $1$.\newline
+
+  To define $f_{A\cup B}$ and $f_{A\cap B}$, we take
+  \begin{align*}
+    f_{A\cup B} &= f_A + f_B - \left(f_A\right)\left(f_B\right)\\
+    f_{A\cap B} &= \left(f_A\right)\left(f_B\right),
+  \end{align*}
+  in which we use the multiplication and addition operations composed with $f_A$ and $f_B$.
+\end{solution}
+\section{Extra Problem 1}%
+\begin{problem}
+  Give an example of a relation that is not computable.
+\end{problem}
+\begin{solution}
+  Let $\set{T_m}_{m\in\N}$ be a denumeration of the set of all Turing machines with one input. We define the relation $R\subseteq \N\times \N$ with the membership $\left(m,n\right)\in R$ if and only if $T_{m}\left(n\right)$ halts.\newline
+
+  Since it is not possible to compute the halting problem, we know that the relation $R$ is not computable.
+\end{solution}
+\section{Extra Problem 2}%
+\begin{problem}
+  Suppose $R,S,T$ are relations with $\left(a,b\right)\in T$ if and only if $\left(a,b\right)\in R$ or $\left(a,b\right)\in S$.
+\end{problem}
+\section{Extra Problem 3}%
+\begin{problem}
+  Prove that if $R\subseteq \N\times \N$ is computable, then so too is $\N\times \N\setminus R$.
+\end{problem}
+\section{Extra Problem 4}%
+\begin{problem}
+  Show that the relation $a|b$ is primitive recursive.
+\end{problem}
+\begin{solution}
+  The relation $a|b$ means there exists $k$ such that $ak = b$.\newline
+
+  So, we know that $a|b$ if and only if
+  \begin{align*}
+    \left(\left(0\right)\left(a\right) = b\right) \wedge \left(\left(1\right)\left(a\right) = b\right) \wedge \cdots \wedge \left(ba = b\right).
+  \end{align*}
+  
+\end{solution}
+
+\section{Extra Problem 7}%
+\begin{problem}
+  Let
+  \begin{align*}
+    \pi(n) &= \begin{cases}
+      1 & \text{$n$ prime}\\
+      0 & \text{else}
+    \end{cases}.
+  \end{align*}
+  Show that $\pi$ is primitive recursive.
+\end{problem}
+\begin{solution}
+  We know that $n$ is prime if and only if the only $k$ with $k > 1$ and $k | n$ is $k=n$.\newline
+
+  Take
+  \begin{align*}
+    \pi\left(n\right) &= \left(1\dot{-}D\left(2,n\right)\right)\left(1-\dot{-}D\left(3,n\right)\right)\cdots \left(1\dot{-}D\left(n-1,n\right)\right)\\
+                      &= \prod_{i=2}^{n-1}\left(1\dot{-}D\left(i,n\right)\right).
+  \end{align*}
+  
+\end{solution}
+
+\end{document}
