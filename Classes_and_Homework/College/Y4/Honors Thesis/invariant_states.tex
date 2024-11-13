@@ -468,5 +468,163 @@ To prove this, we state a different version of the Ping Pong Lemma that we will 
   Since we have verified that the conditions for the Ping Pong Lemma hold for each of the conditions, we have that $\set{a,b}\subseteq SO(3)$ generate a group isomorphic to the free group on two generators.
 \end{proof}
 \section{The Normed Space $\ell_{\infty}(G)$}%
+\begin{definition}
+  Let $G$ be a group.
+  \begin{enumerate}[(1)]
+    \item The space $\mathcal{F}\left(G,\R\right)$ is defined by
+      \begin{align*}
+        \mathcal{F}\left(G,\R\right) = \set{f | f: G\rightarrow \R\text{ is a function}}.
+      \end{align*}
+    \item A function $f\in \mathcal{F}\left(G,\R\right)$ is positive if $f(x) \geq 0$ for all $x\in G$.
+    \item A function $f\in \mathcal{F}\left(G,\R\right)$ is simple if $\Ran(f)$ is finite. We say
+      \begin{align*}
+        \Sigma &= \set{f: \mathcal{F}\left(G,\R\right) | f\text{ is simple}}.
+      \end{align*}
+  \end{enumerate}
+\end{definition}
+\begin{fact}
+  $\Sigma\subseteq \mathcal{F}\left(G,\R\right)$ is a subspace. To see this, if $f,g$ are such that $\Ran(f),\Ran(g)$ are finite, and $\alpha \in \R$, then
+  \begin{align*}
+    \Ran\left(f + \alpha g\right) &\leq \Ran\left(f\right) + \Ran\left(g\right),
+  \end{align*}
+  so $f + \alpha g$ has finite range.
+\end{fact}
+\begin{definition}
+  For $E\subseteq G$, set
+  \begin{align*}
+    \1_{E}: G\rightarrow \R
+  \end{align*}
+  defined by
+  \begin{align*}
+    \1_{E}\left(x\right) &= \begin{cases}
+      1 & x\in E\\
+      0 & x\notin E
+    \end{cases}.
+  \end{align*}
+  This is the characteristic function of $E$.
+\end{definition}
+\begin{fact}
+  \begin{align*}
+    \Span\set{\1_{E} | E\subseteq G} &= \Sigma.
+  \end{align*}
+\end{fact}
+\begin{proof}
+  We see that $\1_{E}\in \Sigma$ for any $E\subseteq G$, and $\Sigma$ is a subspace.\newline
+
+  If $\phi\in \Sigma$, with $\Ran\left(\phi\right) = \set{t_1,\dots,t_n}$ with $t_i$ distinct, we set
+  \begin{align*}
+    E_i &= \phi^{-1}\left(\set{t_i}\right),
+  \end{align*}
+  meaning
+  \begin{align*}
+    \phi &= \sum_{i=1}^{n}t_i\1_{E_i}.
+  \end{align*}
+\end{proof}
+\begin{definition}\hfill
+  \begin{enumerate}[(1)]
+    \item A function $f\in \mathcal{F}\left(G,\R\right)$ is bounded if there exists $M > 0$ such that $\Ran(f) \subseteq \left[-M,M\right]$.
+    \item The space $\ell_{\infty}(G)$ is defined by
+      \begin{align*}
+        \ell_{\infty}\left(G\right) &= \set{f\in \mathcal{F}\left(G,\R\right) | f\text{ is bounded}}.
+      \end{align*}
+    \item The norm on $\ell_{\infty}(G)$ is defined by
+      \begin{align*}
+        \norm{f} &= \sup_{x\in G}\left\vert f(x) \right\vert.
+      \end{align*}
+  \end{enumerate}
+\end{definition}
+\begin{proposition}
+  The space $\ell_{\infty}(G)$ is complete, Additionally, $\overline{\Sigma} = \ell_{\infty}\left(G\right)$.
+\end{proposition}
+\begin{proof}
+  Let $\left(f_n\right)_n$ be Cauchy. For $x\in G$, it is the case that
+  \begin{align*}
+    \left\vert f_n(x) - f_m(x) \right\vert &= \left\vert \left(f_n - f_m\right)(x) \right\vert\\
+                                           &\leq \norm{f_n - f_m},
+  \end{align*}
+  meaning $\left(f_n(x)\right)_n$ is Cauchy in $\R$. We define $f(x) = \lim_{n\rightarrow\infty}f_n(x)$. We must show that $f\in \ell_{\infty}(G)$ and $\norm{f_n - f} \rightarrow 0$.
+  \begin{align*}
+    \left\vert f(x) \right\vert &= \left\vert \lim_{n\rightarrow\infty} f_n(x) \right\vert\\
+                                &= \lim_{n\rightarrow\infty} \left\vert f_n(x) \right\vert\\
+                                &\leq \limsup_{n\rightarrow\infty}\norm{f_n}\\
+                                &\leq C,
+  \end{align*}
+  as Cauchy sequences are always bounded. Thus, $\sup_{x\in G}\left\vert f(x) \right\vert \leq C$.\newline
+
+  Given $\ve > 0$, we find $N$ such that for all $m,n\geq N$, $\norm{f_n - f_m} \leq \ve$. Thus, for $x\in G$, we have
+  \begin{align*}
+    \left\vert f_n(x) - f)m(x) \right\vert &\leq \norm{f_n - f_m}\\
+                                           &\leq \ve.
+  \end{align*}
+  Taking $m\rightarrow\infty$, we get $\left\vert f_n(x) - f(x) \right\vert \leq \ve$ for all $n\geq N$, meaning $\norm{f_n - f} \leq \ve$ for all $n\geq N$.\newline
+
+  Now, for $f\in \ell_{\infty}(G)$, let $\Ran(f) \subseteq \left[-M,M\right]$ for some $M > 0$. Let $\ve > 0$. Since $\left[-M,M\right]$ is compact, it is totally bounded, so we can find intervals $I_1,\dots,I_n$ with $\left[-M,M\right] = \bigsqcup_{k=1}^{n}I_k$, with the length of each $I_k$ less than $\ve$.\newline
+
+  Set $E_k = f^{-1}\left(I_k\right)$. Pick $t_k\in I_k$. Then, we set
+  \begin{align*}
+    \phi = \sum_{i=1}^{n}t_k \1_{E_k}.
+  \end{align*}
+  We see that $\norm{\phi - f} < \ve$.
+\end{proof}
+\begin{corollary}
+  For any $f\in \ell_{\infty}(G)$, there is a sequence $\left(\phi_n\right)_n$ in $\Sigma$ with $\norm{\phi_n - f} \rightarrow 0$. If $f \geq 0$, then it is possible to select $\phi_n \geq 0$.
+\end{corollary}
+\begin{proposition}
+  Let $G$ be a group. There is an action
+  \begin{align*}
+    G \xrightarrow{\lambda_s} \operatorname{Isom}\left(\ell_{\infty}(G)\right)
+  \end{align*}
+  defined by
+  \begin{align*}
+    \lambda_{s}\left(f\right)\left(t\right) &= f\left(s^{-1}t\right).
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  We have
+  \begin{align*}
+    \lambda_{s}\left(f + \alpha g\right)\left(t\right) &= \left(f + \alpha g\right)\left(s^{-1}t\right)\\
+                                                       &= f\left(s^{-1}t\right) + \alpha g\left(s^{-1}t\right)\\
+                                                       &= \lambda_s\left(f\right)\left(t\right) + \alpha \lambda_s\left(g\right)\left(t\right)\\
+                                                       &= \left(\lambda_s\left(f\right) + \alpha \lambda_s\left(g\right)\right)\left(t\right).
+  \end{align*}
+  Thus, $\lambda_s$ is a linear operator.\newline
+
+  We have
+  \begin{align*}
+    \norm{\lambda_s(f)} &= \sup_{t\in G}\left\vert \lambda_s\left(f\right)\left(t\right) \right\vert\\
+                        &= \sup_{t\in G}\left\vert f\left(s^{-1}t\right) \right\vert\\
+                        &= \norm{f},
+  \end{align*}
+  hence
+  \begin{align*}
+    \norm{\lambda_s\left(f\right) - \lambda_s\left(f\right)} &= \norm{\lambda_s\left(f-g\right)}\\
+                                                             &= \norm{f-g}.
+  \end{align*}
+  Thus, $\lambda_s$ is an isometry.\newline
+
+  We have
+  \begin{align*}
+    \lambda_s\circ \lambda_r\left(f\right)\left(t\right) &= \lambda_r\left(f\right)\left(s^{-1}t\right)\\
+                                                         &= f\left(r^{-1}s^{-1}t\right)\\
+                                                         &= f\left(\left(sr\right)^{-1}t\right)\\
+                                                         &= \lambda_{sr}\left(f\right)\left(t\right),
+  \end{align*}
+  meaning $\lambda_s\circ \lambda_r = \lambda_{sr}$.
+\end{proof}
+\begin{remark}
+  By a similar process, we find that $\lambda_{s}\left(\1_{E}\right) = \1_{sE}$ for any subset $E\subseteq G$ and $s\in G$.
+\end{remark}
+\begin{definition}
+  A state on $\ell_{\infty}\left(G\right)$ is a continuous linear functional $\mu\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$ that satisfies the following.
+  \begin{enumerate}[(1)]
+    \item $\mu$ is positive;
+    \item $\mu\left(\1_{G}\right) = 1$.
+  \end{enumerate}
+  A state is called left-invariant if
+  \begin{align*}
+    \mu\left(\lambda_{s}\left(f\right)\right) &= \mu\left(f\right).
+  \end{align*}
+  
+\end{definition}
 
 \end{document}

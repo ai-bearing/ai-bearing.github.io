@@ -1,0 +1,284 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Functional Analysis: Hilbert Spaces and Operators}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\tableofcontents
+\section{Introduction}%
+This is going to be part of my notes for my Honors Thesis independent study, focused on Amenability and $C^{\ast}$-algebras. This set of notes will be focused on the theory of Hilbert spaces and bounded linear operators on Hilbert spaces. The primary source for this section of notes will be Timothy Rainone's \textit{Functional Analysis: En Route to Operator Algebras}.\newline
+
+I do not claim any of this work to be original.
+\section{Hilbert Spaces}%
+In quantum mechanics, the state of a non-relativistic particle is given by a vector in some Hilbert space, which evolves by moving around that space. Specifically, the state of such a particle is determined entirely by the wave function $\xi = \xi\left(x,t\right)$, where $x\in \R$ is position and $t$ is time. The wave function is a probability distribution satisfying
+\begin{align*}
+  \int_{\R}^{} \left\vert \xi\left(x,t\right) \right\vert^2\:d\lambda &= 1.
+\end{align*}
+In particular, $\xi$ is an element of the space $L_{2}\left(\R,\lambda\right)$. The observables on $\xi$ are modeled as operators on $L_{2}\left(\R,\lambda\right)$.
+\subsection{Theory of Hilbert Spaces}%
+In undergraduate linear algebra, the dot product of vectors in $\R^n$m, $v\cdot w$, is intimately tied to the geometry of $\R^n$ through the equations
+\begin{align*}
+  v\cdot v &= \norm{v}^2\\
+  v\cdot w &= \norm{v}\norm{w}\cos\theta.
+\end{align*}
+Inner product spaces help generalize these properties.
+\begin{definition}
+  Let $X$ be a vector space over a field $\F$.
+  \begin{enumerate}[(1)]
+    \item An inner product on $X$ is a map 
+      \begin{align*}
+        \iprod{\cdot}{\cdot}: X\times X &\rightarrow \F\\
+        \left(x,y\right) &\mapsto \iprod{x}{y}
+      \end{align*}
+      which satisfies the following conditions for all $x,y,z\in X$ and $\lambda,\mu\in \F$.
+    \begin{enumerate}[(i)]
+      \item $ \iprod{\lambda x + \mu y}{z} = \lambda \iprod{x}{z} + \mu \iprod{y}{z} $;
+      \item $ \iprod{x}{y} = \overline{ \iprod{y}{x} } $;
+      \item $ \iprod{x}{x} \geq 0 $;
+      \item $ \iprod{x}{x} = 0 \Rightarrow x = 0_{X} $.
+    \end{enumerate}
+    If $ \iprod{\cdot}{\cdot} $ satisfies (i)--(iii), but not necessarily (iv), then it is called a semi-inner product.
+  \item If $ \iprod{\cdot}{\cdot} $ is an inner product on $X$, the pair $\left(X, \iprod{\cdot}{\cdot}\right)$ is called an inner product space.
+  \end{enumerate}
+\end{definition}
+\begin{remark}
+  A semi inner product also satisfies, for all $x,y,z\in X$ and $\lambda,\mu \in \F$,
+  \begin{align*}
+    \iprod{x}{\lambda y + \mu z} &= \overline{\lambda} \iprod{x}{z} + \overline{\mu} \iprod{y}{z}.
+  \end{align*}
+  A semi-inner product is linear in the first variable and conjugate linear in the second variable.
+\end{remark}
+\begin{definition}
+  Let $X$ be a complex vector space. A map
+  \begin{align*}
+    F: X\times X \rightarrow \C
+  \end{align*}
+  which is linear in the first variable and conjugate linear in the second variable is called a sesquilinear form on $X$.
+\end{definition}
+A fundamental fact about sesquilinear forms is that for any given sesquilinear form, we are able to pass it into a form that only consists of the same elements in both inputs.
+\begin{lemma}[Polarization Identity]
+Let $F: X\times X \rightarrow \C$ be a sesquilinear form on $X$. For all $x,y\in X$, we have
+\begin{align*}
+  4 F\left(x,y\right) &=  F\left(x+y,x+y\right) + iF\left(x+iy,x+iy\right) - F\left(x-y,x-y\right) + iF\left(x-iy,x-iy\right)\\
+                      &= \sum_{k=0}^{3}i^{k}F\left(x + i^{k}y,x + i^{k}y\right).
+\end{align*}
+\end{lemma}
+\begin{proof}
+  Taking each expression
+  \begin{align*}
+    F\left(x+y,x+y\right) &= F\left(x,x\right) + F\left(x,y\right) + F\left(y,x\right) + F\left(y,y\right)\\
+    iF\left(x + iy,x + iy\right) &= iF\left(x,x\right) - F\left(y,x\right) + F\left(x,y\right) + iF\left(y,y\right)\\
+    -F\left(x-y,x-y\right) &= -F\left(x,x\right) + F\left(x,y\right) + F\left(y,x\right) - F\left(y,y\right)\\
+    -iF\left(x-iy,x-iy\right) &= -iF\left(x,x\right) -F\left(y,x\right) + F\left(x,y\right) - iF\left(y,y\right).
+  \end{align*}
+  Adding these expressions up, we get the polarization identity.
+\end{proof}
+The following fact follows from the polarization identity.
+\begin{fact}
+  If $F$ and $G$ are two sesquilinear forms that agree on the diagonal --- i.e., $F(x,x) = G(x,x)$ --- then $F$ and $G$ agree everywhere.
+\end{fact}
+
+\begin{fact}
+  Let $X$ be an inner product space, and suppose $z_1,z_2\in X$ are such that $ \iprod{x}{z_1} = \iprod{x}{z_2} $ for all $x\in X$. Then, $z_1 = z_2$.
+\end{fact}
+\begin{proof}
+  We have $ \iprod{x}{z_1} = \iprod{x}{z_2} $. Then, $ \iprod{x}{z_1 - z_2} = 0 $ for all $x\in X$, so $ \iprod{z_1 - z_1}{z_1 - z_2} = 0 $, so $z_1 - z_2 = 0$.
+\end{proof}
+Let's see some inner product spaces.
+\begin{example}[Finite-Dimensional Space]
+  The finite dimensional space $\C^n$ admits an inner product space given by
+  \begin{align*}
+    \iprod{\xi}{\eta} &= \sum_{j=1}^{n}\xi_j \overline{\eta_j},
+  \end{align*}
+  where $\xi$ and $\eta$ are $n$ dimensional vectors over $\C$.
+\end{example}
+\begin{example}[Sequence Space]
+  The space of square-summable sequences,
+  \begin{align*}
+    \ell_2 &= \set{\left(\lambda_k\right)_k | \sum_{n=1}^{\infty}\left\vert \lambda_n \right\vert^2 := \norm{\lambda}^2 < \infty}
+  \end{align*}
+  is an inner product space with the inner product
+  \begin{align*}
+    \iprod{\lambda}{\mu} &= \sum_{n=1}^{\infty}\lambda_n \overline{\mu_n}.
+  \end{align*}
+  The Cauchy--Schwarz inequality provides for this to be a well-defined inner product.
+  \begin{align*}
+    \sum_{n=1}^{N}\left\vert \lambda_n \overline{\mu_n} \right\vert &\leq \left(\sum_{n=1}^{N}\left\vert \lambda_n \right\vert^2\right)^{1/2}\left(\sum_{n=1}^{N}\left\vert \mu_n \right\vert^2\right)^{1/2}\\
+                                                                    &\leq \norm{\lambda}_2\norm{\mu}_2\\
+                                                                    &< \infty.
+  \end{align*}
+\end{example}
+\begin{example}[Continuous Functions]
+  The space $X = C\left([0,1]\right)$ admits an inner product given by
+  \begin{align*}
+    \iprod{f}{g} &= \int_{0}^{1} f(t)\overline{g(t)}\:dt.
+  \end{align*}
+\end{example}
+\begin{example}[Sesquilinear Form on Continuous Function Space]
+  Let $\Omega$ be a locally compact Hausdorff space and suppose $\varphi: C_0\left(\Omega\right)\rightarrow \F$ is a positive linear functional. We know that $\varphi = \varphi_{\mu}$ for some positive regular finite measure $\mu$ on $\left(\Omega,\mathcal{B}_{\Omega}\right)$, and
+  \begin{align*}
+    \varphi_{\mu}\left(f\right) &= \int_{\Omega}^{} f\:d\mu.
+  \end{align*}
+  We get a semi inner product on $C_{0}\left(\Omega\right)$ by
+  \begin{align*}
+    \iprod{\cdot}{\cdot}_{\varphi}: C_0\left(\Omega\right)\times C_0\left(\Omega\right) &\rightarrow \F\\
+    \left(f,g\right) &\mapsto \int_{\Omega}^{} f\overline{g}\:d\mu.
+  \end{align*}
+  We claim that, when $\mu$ has full support, $ \iprod{\cdot}{\cdot}_{\varphi} $ is an inner product.\newline
+
+  Suppose $g\in C_0\left(\Omega\right)$ with $g\geq 0$ and $g \neq 0$. Then, there is a nonempty open subset $U\subseteq \Omega$ and $\delta > 0$ such that $g(x) \geq \delta$ for all $x\in U$. Since $\mu$ has full support, it must be the case that $\mu\left(U\right) > 0$, so
+  \begin{align*}
+    \varphi\left(g\right) &= \int_{\Omega}^{} g\:d\mu\\
+                          &\geq \int_{\Omega}^{} \delta \1_{U}\:d\mu\\
+                          &= \delta \mu\left(U\right)\\
+                          &> 0.
+  \end{align*}
+  Thus, if $ \iprod{f}{f}_{\varphi} = 0 $, then $\varphi\left(\left\vert f \right\vert^2\right) = 0$, so $f = 0$.
+\end{example}
+\begin{example}[Hilbert--Schmidt Operators]
+  Let $\mathbb{M}_{n}$ be the $\ast$-algebra of $n\times n$ matrices over the complex numbers. Let $\tr: \mathbb{M}_{n}\rightarrow \C$ denote the trace. The trace is a linear, positive, faithful functional satisfying $\tr\left(a^{\ast}\right) = \overline{\tr\left(a\right)}$ for all $a\in \mathbb{M}_{n}$. The trace induces an inner product
+  \begin{align*}
+    \iprod{a}{b}_{\text{HS}} = \tr\left(b^{\ast}a\right),
+  \end{align*}
+  where the subscript HS stands for Hilbert--Schmidt.
+\end{example}
+\begin{definition}
+  Let $X$ be an inner product space.
+  \begin{enumerate}[(1)]
+    \item We say two vectors $x,y\in X$ are orthogonal if $ \iprod{x}{y} = 0 $. We write $x\perp y$.
+    \item Let $z\neq 0$ be a fixed vector in $X$. We define the one dimensional projection
+      \begin{align*}
+        P_{z}\left(x\right) &= \frac{ \iprod{x}{z} }{ \iprod{z}{z} } z.
+      \end{align*}
+      Note that $P_{z}$ is linear and its range is the one-dimensional subspace $\Span(z)$.
+  \end{enumerate}
+\end{definition}
+\begin{note}
+There are a lot of propositions, lemmas, and exercises in this section of my professor's textbook, but I'm not going to be going through all of them since we learn a lot of this in Real Analysis II.
+\end{note}
+We can turn any semi-inner product space into a seminormed vector space using the semi-inner product. If the semi-inner product is a true inner product, then we can use the inner product to define a norm.
+\begin{definition}
+  Let $X$ be a semi-inner product space. For each $x\in X$, we set
+  \begin{align*}
+    \norm{x} &= \iprod{x}{x}^{1/2}.
+  \end{align*}
+\end{definition}
+\begin{theorem}[Pythagoras]
+  Let $X$ be a semi-inner product space, and suppose $x_1,x_2,\dots,x_n$ are pairwise orthogonal. Then,
+  \begin{align*}
+    \norm{\sum_{j=1}^{n}x_j}^2 &= \sum_{j=1}^{n}\norm{x_j}^2
+  \end{align*}
+\end{theorem}
+\begin{corollary}
+  Let $X$ be an inner product space, and fix $z\neq 0$ in $X$. Then, for all $x,y\in X$, we have
+  \begin{enumerate}[(1)]
+    \item $\norm{x}^2 = \norm{x-P_z(x)}^2 + \norm{P_z(x)}^2$;
+    \item $\norm{P_z(x)} \leq \norm{x}$;
+    \item $\left\vert \iprod{x}{z} \right\vert \leq \norm{x}\norm{y}$, with equality if and only if $x$ and $y$ are linearly independent (the Cauchy--Schwarz inequality);
+    \item $\norm{x + y} \leq \norm{x} + \norm{y}$;
+    \item $\norm{\cdot}$ is a norm on $X$.
+  \end{enumerate}
+\end{corollary}
+\begin{proposition}
+  If $X$ is an inner product space, then the inner product
+  \begin{align*}
+    \iprod{\cdot}{\cdot}:X\times X \rightarrow \F
+  \end{align*}
+  is continuous.
+\end{proposition}
+We often start with a semi-inner product, then construct an inner product by quotient out by the null space.
+\begin{proposition}
+  Let $ \iprod{\cdot}{\cdot} $ be a semi-inner product on $X$.
+  \begin{enumerate}[(1)]
+    \item The set
+      \begin{align*}
+        N = \set{x\in X | \iprod{x}{x} = 0}
+      \end{align*}
+      is a subspace of $X$.
+    \item The map
+      \begin{align*}
+        \iprod{x+N}{y+N}_{X/N} &= \iprod{x}{y}
+      \end{align*}
+      is an inner product on the quotient space $X/N$.
+  \end{enumerate}
+\end{proposition}
+\begin{proposition}[Parallelogram Law]
+Let $X$ be an inner product space. Then,
+\begin{align*}
+  \norm{x+y}^2 + \norm{x-y}^2 &= 2\norm{x}^2 + 2\norm{y}^2.
+\end{align*}
+\end{proposition}
+Recall that Banach spaces include ideas regarding isometric isomorphisms --- however, we cannot immediately assume this extends to inner product spaces since they include an inherent geometric structure as well. As it turns out, this automatically appears from the definition of an isometry.
+\begin{proposition}
+  Let $X$ and $Y$ be inner product spaces. Suppose $V: X\rightarrow Y$ is a linear transformation. The following are equivalent.
+  \begin{enumerate}[(i)]
+    \item $V$ is an isometry;
+    \item for each $x,x'\in X$, we have $ \iprod{V\left(x\right)}{V\left(x'\right)}_{Y} = \iprod{x}{x'}_{X} $.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  To show that (ii) implies (i), we see that for $x\in X$, 
+  \begin{align*}
+    \norm{V\left(x\right)}^2 &= \iprod{V\left(x\right)}{V\left(x\right)}\\
+                &= \iprod{x}{x}\\
+                &= \norm{x}^2.
+  \end{align*}
+  We define the sesquilinear forms
+  \begin{align*}
+    F\left(x,x'\right) &= \iprod{V\left(x\right)}{V\left(x'\right)}_{Y}\\
+    G\left(x,x'\right) &= \iprod{x}{x'}.
+  \end{align*}
+  Since $V$ is norm-preserving, we have
+  \begin{align*}
+    F\left(x,x\right) &= \norm{V\left(x\right)}^2\\
+                      &= \norm{x}^2\\
+                      &= G\left(x,x\right),
+  \end{align*}
+  so by the polarization identity, $F$ and $G$ agree everywhere.
+\end{proof}
+\begin{definition}
+  Let $X$ and $Y$ be inner product spaces. A surjective linear isometry $U: X\rightarrow Y$ is called a unitary operator.\newline
+
+  Equivalently, a unitary operator is a linear isomorphism $U: X\rightarrow Y$ that preserves the inner product. We say $X$ and $Y$ are unitarily isomorphic.
+\end{definition}
+\begin{example}[A Nonunitary Isometry]
+  Consider the right shift on $\ell_2$, defined by
+  \begin{align*}
+    R\left(\xi_1,\xi_2,\dots,\right) &= \left(0,\xi_1,\xi_2,\dots\right).
+  \end{align*}
+  Then, $R$ is not onto, but for each $\xi,\eta\in \ell_2$, we have $ \iprod{R\left(\xi\right)}{R\left(\eta\right)} = \iprod{\xi}{\eta} $. Thus, $R$ is isometric but not unitary.
+\end{example}
+\begin{definition}[Hilbert Space]
+  A Hilbert space is an inner product space $\mathcal{H}$ over $\C$ such that the norm $\norm{x}^2 = \iprod{x}{x}$ is complete.
+\end{definition}
+\begin{example}
+  The space $\ell_2$ of all square-summable sequences is a Hilbert space.
+\end{example}
+\begin{example}
+  If $\left(\Omega,\mathcal{M},\mu\right)$ is any measure space, then $L_{2}\left(\Omega,\mu\right)$ is a Hilbert space with inner product
+  \begin{align*}
+    \iprod{f}{g} &= \int_{\Omega}^{} f\overline{g}\:d\mu.
+  \end{align*}
+  
+\end{example}
+\subsection{Orthogonal Projections}%
+Recall that closed subspaces of Banach spaces may not always admit a topological complement (for instance, $c_0\subseteq \ell_{\infty}$). However, in a Hilbert space, a closed subspace always admits an orthogonal projection operator (hence a topological complement).
+\begin{theorem}[Hilbert Projection Theorem]
+  Let $\mathcal{H}$ be a Hilbert space. Suppose $C\subseteq \mathcal{H}$ is a closed and convex set. Given $x\in \mathcal{H}$, there is a unique $y_x\in C$ such that $\dist_{C}\left(x\right) = d\left(x,y_x\right)$. We say $y_x$ is the point in $C$ closest to $x$
+\end{theorem}
+\end{document}

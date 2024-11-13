@@ -11,8 +11,9 @@ Here are the class notes I have written up so far.
 ### [Set Theory and Foundations of Mathematics](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Set Theory and Foundations/set_theory_and_foundations_notes.pdf)
 ### Honors Thesis: Amenability and C*-Algebras
 #### [Paradoxical Decompositions and Tarski's Theorem](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/amenability_notes.pdf)
-#### [A Foray into Functional Analysis](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/functional_analysis.pdf)
+#### [Functional Analysis: Topological Vector Spaces](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/topological_vector_spaces.pdf)
 #### [Invariant States and Means on Groups](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/invariant_states.pdf)
+#### [Functional Analysis: Hilbert Spaces](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/hilbert_space_operators.pdf)
 ## Summer Reading
 ### [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)
 ### [Banach Algebras and Operator Theory](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/banach_algebras_operator_theory.pdf)
