@@ -5392,7 +5392,7 @@ This yields a generalized eigenvalue equation $\lambda = \omega^2$. The eigenval
   \begin{align*}
     s_{\alpha} &= e^{i\alpha},
   \end{align*}
-  where $\alpha$ is real. Since $S\ket{s_{\alpha}} = e^{i\alpha}\ket{s_{\alpha}}$, the eigenvectors are represented as infinite column vectors with adjacent entries shifted in phase by $e^{\pm i \alpha}$.
+  where $\alpha$ is real. Since $S\ket{s_{\alpha}} = e^{i\alpha}\ket{s_{\alpha}}$, the eigenvectors are represented as infinite column vectors with adjacent entries shifted in phase by $e^{\pm i \alpha}$.\footnote{Eagle-eyed readers may notice that we need to verify that this basis is complete (closed linear span is the entire space) --- we will get to this in due course.}
   \begin{align*}
     \ket{s_{\alpha}} &= \begin{pmatrix}\vdots \\ e^{-2i\alpha} \\ e^{-i\alpha} \\ 1 \\ e^{i\alpha} \\ e^{2i\alpha}\\ \vdots\end{pmatrix}.
   \end{align*}
@@ -5433,7 +5433,115 @@ This yields a generalized eigenvalue equation $\lambda = \omega^2$. The eigenval
   \begin{align*}
     \omega_{\ell}^2 &= \frac{4k}{m}\sin^2\left(\frac{\ell \pi}{2\left(N+1\right)}\right).
   \end{align*}
-  
+  We then recover
+  \begin{align*}
+    \phi_{n}^{\left(\ell\right)} &= \braket{q_n}{\Phi_{\ell}}\\
+                                 &= \sin\left(\frac{n\ell \pi}{N+1}\right),
+  \end{align*}
+  which are the eigenvectors for the given eigenvalues. Here, $n$ denotes the mass, and $\ell$ denotes the normal mode.\newline
+
+  We must now verify that the set $\set{\Phi_{j}}_{j=0}^{N-1}$ are indeed orthogonal.
+  \begin{align*}
+    \braket{\Phi_{\ell}}{\Phi_{m}} &= \sum_{k=1}^{N}\sin\left(k\frac{\ell \pi}{N+1}\right) \sin\left(k \frac{m\pi}{N+1}\right)\\
+                                   &\vdots\\
+                                   &= \frac{N+1}{2}\delta_{\ell m}.
+  \end{align*}
+  Thus, our full solution is
+  \begin{align*}
+    \ket{Q(t)} &= \sum_{\ell = 0}^{N-1}A_{\ell}\cos\left(\omega_{\ell} + \delta_{\ell}\right) \ket{\Phi_{\ell}}.
+  \end{align*}
 \end{example}
+\section{Orthogonal Functions}%
+Now, we turn our attention to infinite-dimensional vector spaces.
+\subsection{To Infinity and Beyond}%
+\subsubsection{A Continuum Limit}%
+In the previous example, we verified that for each normal mode, the $n$th mass has amplitude
+\begin{align*}
+  \phi_{n}^{(\ell)} &= \braket{q_n}{\Phi_{\ell}}\\
+                    &= \sin\left(\frac{n\ell \pi}{N+1}\right).
+\end{align*}
+These are discrete values, though. We are interested in taking the ``length'' of our chain go to infinity as we continually add masses into the space between $0$ and $N+1$.\newline
+
+Specifically, we are taking a \textit{continuum limit}. We take $N\rightarrow\infty$ as $a\rightarrow 0$ such that $L = \left(N+1\right)a$ is held fixed. This converts the discrete chain of masses into a continuous string of uniform mass density $\mu$ and tension $T$. The normal modes are then standing waves.\newline
+
+We define $x = na$. Then, the argument of our sine function becomes
+\begin{align*}
+  \frac{n\ell \pi}{N+1} &= \frac{\ell \pi \left(na\right)}{a}\\
+                        &\xrightarrow{N\rightarrow\infty} \frac{\ell \pi x}{L}.
+\end{align*}
+Our discrete $n$ component column vector manifests as a continuous $x$-dependent function
+{\renewcommand{\arraystretch}{1.5}
+  \begin{align*}
+    \begin{pmatrix}\sin \left(\frac{\ell \pi}{N+1}\right) \\ \sin\left(\frac{2\ell \pi}{N+1}\right) \\\vdots \\ \sin\left(\frac{N\ell \pi}{N+1}\right) \end{pmatrix} & \xrightarrow{N\rightarrow\infty} \sin\left(\frac{\ell \pi}{L} x\right).
+\end{align*}
+}
+Our normal modes are represented not as column vectors with discrete components, but as continuous functions:
+\begin{align*}
+  \phi_{\ell}\left(x\right)  \sin\left(\frac{\ell \pi}{L}x\right).
+\end{align*}
+The normal mode frequencies become
+\begin{align*}
+  \omega_{\ell} &= 2\sqrt{\frac{\kappa}{m}} \sin\left(\frac{\ell \pi}{2\left(N+1\right)}\right)\\
+                &= 2\sqrt{\frac{\kappa}{m}} \sin\left(\frac{\ell \pi a}{2L}\right)\\
+                &\approx \sqrt{\frac{\kappa}{m}}\left(\frac{\ell \pi a}{L}\right)\\
+                &\xrightarrow{a\rightarrow 0} \sqrt{\frac{T}{\mu}} \left(\frac{\ell \pi}{L}\right)\\
+                &= v k_{\ell},
+\end{align*}
+where $v = \sqrt{\frac{T}{\mu}}$ is the speed of the wave, and $k_{\ell} = \frac{\ell \pi}{L}$ is the wave number.\newline
+
+We posit that the functions $\set{\phi_{\ell}}_{\ell = 0}^{\infty}$ form a (Schauder) basis in infinite-dimensional vector space. Our function of normal modes would be
+\begin{align*}
+  q\left(x,t\right) &= \sum_{\ell = 0}^{\infty}A_{\ell}\sin\left(k_{\ell}x\right)\cos\left(\omega_{\ell}t + \delta_{\ell}\right).
+\end{align*}
+Essentially, as we go to infinity, we have
+\begin{itemize}
+  \item a countably infinite number of normal modes;
+  \item a continuum number of positions.
+\end{itemize}
+\subsubsection{Inner Product of Functions}%
+Just as we can convert Riemann sums to integrals, we can also take the continuum limit of inner product of vectors $\ket{\phi}$ and $\ket{\psi}$.
+\begin{align*}
+  \braket{\psi}{\phi} &= \sum_{n=1}^{N}\overline{\psi_n} \phi_n\\
+                      &\xrightarrow{N\rightarrow\infty} \int_{a}^{b} \overline{\psi\left(x\right)}\phi(x)\:dx.
+\end{align*}
+We can consider an orthogonal basis $\set{\ket{\phi_n}}_{n=1}^{\infty}$ given by
+\begin{align*}
+  \braket{\phi_{\ell}}{\phi_{m}} &= \int_{a}^{b} \overline{\phi_{\ell}\left(x\right)} \phi_{m}\left(x\right)\:dx\\
+                                 &= k_{m}\delta_{\ell m}
+\end{align*}
+Just as we can expand a vector along an orthogonal basis in the discrete case, we can expand $f$ along a continuous basis:
+\begin{align*}
+  f(x) &= \sum_{m}c_m\phi_{m}\left(x\right),
+\end{align*}
+where
+\begin{align*}
+  c_n &= \frac{1}{k_n}\braket{\phi_n}{f}\\
+      &= \frac{1}{k_n}\int_{a}^{b} \overline{\phi_n(x)}f(x)\:dx.
+\end{align*}
+There is one caveat, though --- in order to have the Cauchy--Schwarz inequality
+\begin{align*}
+  \left\vert \int_{a}^{b} \overline{f(x)}g(x)\:dx \right\vert^2 &\leq \left(\int_{a}^{b} \left\vert f(x) \right\vert^2\:dx\right) \left(\int_{a}^{b} \left\vert g(x) \right\vert^2\:dx\right)
+\end{align*}
+mean anything, we need our vectors to have finite norm. That is,
+\begin{align*}
+  \braket{f}{f} &= \int_{a}^{b} \left\vert f(x) \right\vert^2\:dx\\
+                &< \infty.
+\end{align*}
+These functions are known as square-integrable. The space of complex-valued square-integrable functions is known as $L_{2}\left(\Omega,\mu\right)$, where $\Omega$ is some domain, and $\mu$ is a measure on the domain.
+\subsection{Polynomials}%
+We know that the set of monomials, $\set{x_{\ell}}_{\ell=1}^{\infty}$, is a linear basis for the set of polynomials. We are interested in creating an orthonormal basis.
+\subsubsection{Legendre Polynomials}%
+The inner product
+\begin{align*}
+  \braket{\phi_m}{\phi_n} = \int_{a}^{b} \phi_m(x)\phi_n(x)\:dx
+\end{align*}
+needs fixed integration limits. We find
+\begin{align*}
+  \braket{\chi_m}{\chi_{\ell}} &= \int_{-1}^{1} x^{m}x^{\ell}\:dx\\
+                               &= \begin{cases}
+                                 \frac{2}{\ell + m + 1} & \ell + m\in 2\Z\\
+                                 0 & \ell + m \in \Z\setminus 2\Z
+                               \end{cases}.
+\end{align*}
 
 \end{document}

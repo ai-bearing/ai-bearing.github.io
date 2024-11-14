@@ -1,0 +1,134 @@
+\documentclass[12pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+%\pagestyle{fancy} %better headers
+%\fancyhf{}
+%\rhead{Avinash Iyer}
+%\lhead{}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{center}
+  \textbf{Math 395: Homework 7}\break
+  \textbf{Due: November 14, 2024}\break
+  \textbf{Name: Avinash Iyer}\break
+  \textbf{Collaborators: Carly Venenciano, Gianluca Crescenzo, Noah Smith, Ben Langer Weida, Chris Swanson}
+\end{center}
+\section{Problem 16}%
+\begin{problem}
+  Use the definition to compute the determinant of a $3\times 3$ matrix over a field $F$. Check that your result agrees with the familiar definition of the determinant of a matrix.
+\end{problem}
+\begin{solution}
+  Let $\mathcal{E} = \set{e_1,e_2,e_3}$ be the standard basis. Let $T\in \Hom_{F}\left(F^3,F^3\right)$ be defined by the following set of maps
+  \begin{align*}
+    e_1 &\mapsto ae_1 + de_2 + ge_3\\
+    e_2 &\mapsto be_1 + ee_2 + he_3\\
+    e_3 &\mapsto ce_1 + fe_2 + ie_3.
+  \end{align*}
+  The matrix for this linear transformation is
+  \begin{align*}
+    \left[T\right]_{\mathcal{E}_3} &= \begin{pmatrix}a & b & c \\ d & e & f \\ g & h & i\end{pmatrix}.
+  \end{align*}
+  We apply the definition of the determinant to find
+  {\footnotesize \begin{align*}
+    \Lambda^{3}\left(T\right)\left(e_1\wedge e_2\wedge e_3\right) &= T\left(e_1\right)\wedge T\left(e_2\right)\wedge T\left(e_3\right)\\
+                                                                  &= \left(ae_1 + de_2 + ge_3\right)\wedge \left(be_1 + ee_2 + he_3\right)\wedge \left(ce_1 + fe_2 + ie_3\right)\\
+                                                                  &= ae_1\wedge \left(\left(ee_2 + he_3\right)\wedge \left(fe_2 + ie_3\right)\right) + de_2\wedge \left(\left(\left(be_1 + he_3\right)\right)\wedge \left(ce_1 + ie_3\right)\right)\\
+                                                                  &+ ge_3\wedge \left(\left(be_1 + ee_2\right)\wedge \left(ce_1 + fe_2\right)\right)\\
+                                                                  \\
+                                                                  &= ae_1\wedge \left(\left(ei-hf\right)\left(e_2\wedge e_3\right)\right) + de_2\wedge \left(bi-ch\right)\left(e_1\wedge e_3\right) + ge_3\wedge \left(bf-ce\right)\left(e_1\wedge e_2\right)\\
+                                                                  &= \underbrace{\left(a\left(ei-hf\right) - d\left(bi-ch\right) + g\left(bf-ce\right)\right)}_{\det(T)}\left(e_1\wedge e_2\wedge e_3\right).
+  \end{align*}
+  }
+  Taking the cofactor expansion of $\left[T\right]_{\mathcal{E}}$ along the first column, we get
+  \begin{align*}
+    \operatorname{Det}\left(\left[T\right]_{\mathcal{E}}\right) &= a \operatorname{Det} \begin{pmatrix}e & f \\ h & i\end{pmatrix} - d\operatorname{Det} \begin{pmatrix}b & c \\ h & i\end{pmatrix} + g\operatorname{Det} \begin{pmatrix}b & c \\ e & f\end{pmatrix}\\
+                                                                &= a\left(ei-hf\right) - d\left(bi-ch\right) + g\left(bf-ce\right).
+  \end{align*}
+  Thus, the cofactor expansion and the definition of the determinant are equal to each other.
+\end{solution}
+\section{Problem 17}%
+\begin{problem}
+  Let $v_1,\dots,v_k\in V$. Prove that $v_1\wedge\cdots\wedge v_k = 0_{\Lambda^{k}\left(V\right)}$ if $v_1,\dots,v_k$ are linearly dependent.
+\end{problem}
+\begin{solution}
+  Without loss of generality, let $v_1 = \sum_{i=2}^{k}a_iv_i$ for some $a_i\in F$. Then,
+  \begin{align*}
+    v_1\wedge\cdots\wedge v_k &= \left(\sum_{i=2}^{k}a_{i}v_{i}\right)\wedge v_2\wedge\cdots\wedge v_k\\
+                              &= \sum_{i=2}^{k}a_i\left(v_i\wedge v_2\wedge \cdots \wedge v_k\right)\\
+                              &= 0_{\Lambda^{k}\left(V\right)}\label{eq:p17l3}\tag*{(\textasteriskcentered)}
+  \end{align*}
+  To recover \ref{eq:p17l3}, we used the fact that $v_i\wedge v_i = 0$ for any $v_i$.
+\end{solution}
+\section{Problem 20}%
+\begin{problem}
+  Use the definition from this chapter to prove that if $A\in \text{GL}_{n}\left(F\right)$, then $\det\left(A^{-1}\right) = \det\left(A\right)^{-1}$, without using the fact that $\det\left(AB\right) = \det\left(A\right)\det\left(B\right)$.
+\end{problem}
+\begin{solution}
+  Let $T_A$ be the transformation corresponding to $A\in \text{GL}_{n}\left(F\right)$. Let $\mathcal{E}_n = \set{e_1,\dots,e_n}$ be the standard basis for $F^n$, and let $\mathcal{C}_n = \set{v_1,\dots,v_n}$ be a basis for $F^n$ defined by $v_i = T_A\left(e_i\right)$. It is the case that $\mathcal{C}_n$ exists, as $T_A$ is a bijective linear transformation.\newline
+
+  We can thus see that
+  \begin{align*}
+    \Lambda^{n}\left(T_A^{-1}\right)\left(e_1\wedge\cdots\wedge e_n\right) &= \left(\frac{1}{\det\left(T_A\right)}\right) \left(\det\left(T_A\right)\right)\Lambda^{n}\left(T_A^{-1}\right)\left(e_1\wedge\cdots\wedge e_n\right)\\
+                                                                           &= \frac{1}{\det\left(T_A\right)}\Lambda^{n}\left(T_A^{-1}\right)\left(\det\left(T_A\right)\left(e_1\wedge\cdots\wedge e_n\right)\right)\\
+                                                                           &= \frac{1}{\det\left(T_A\right)}\Lambda^{n}\left(T_A^{-1}\right)\circ \Lambda^{n}\left(T_A\right)\left(e_1\wedge\cdots\wedge e_n\right)\\
+                                                                           &= \frac{1}{\det\left(T_A\right)}\Lambda^{n}\left(T_A^{-1}\right)\left(T_A\left(e_1\right)\wedge\cdots\wedge T_A\left(e_n\right)\right)\\
+                                                                           &= \frac{1}{\det\left(T_A\right)}\Lambda^{n}\left(T_A^{-1}\right)\left(v_1\wedge\cdots\wedge v_n\right)\\
+                                                                           &= \frac{1}{\det\left(T_A\right)} \left(T_{A}^{-1}\left(v_1\right)\wedge\cdots\wedge T_A^{-1}\left(v_n\right)\right)\\
+                                                                           &= \frac{1}{\det\left(T_A\right)}\left(e_1\wedge\cdots\wedge e_n\right).
+  \end{align*}
+  Thus, it is the case that $\det\left(T_A^{-1}\right) = \left(\det\left(T_A\right)\right)^{-1}$, so $\det\left(A^{-1}\right) = \left(\det\left(A\right)\right)^{-1}$.
+\end{solution}
+\section{Exercise}%
+\begin{problem}
+  Let $B\in \Mat_{n}\left(F\right)$. Define $\varphi$ on $V = F^n$ by taking
+  \begin{align*}
+    \varphi\left(v,w\right) &= \left(Bv\right)\cdot w.
+  \end{align*}
+  Show $\varphi\in \Hom_{F}\left(F^n,F^n;F\right)$. What is the relationship between $\varphi_B$ and $\varphi$.
+\end{problem}
+\begin{solution}
+  To see that $\varphi\in \Hom_{F}\left(F^n,F^n;F\right)$, we let $v,v_1,v_2,w,w_1,w_2\in F^n$, and let $\alpha\in F$. Then,
+  \begin{align*}
+    \varphi\left(v,w_1 + \alpha w_2\right) &= \left(Bv\right)\cdot \left(w_1 + \alpha w_2 \right)\\
+                                           &= \left(Bv\right)\cdot w_1 + \left(Bv\right)\cdot \left(\alpha w_2\right)\\
+                                           &= \left(Bv\right)\cdot w_1 + \alpha \left(Bv\right)\cdot w_2\\
+                                           &= \varphi\left(v,w_1\right) + \alpha \varphi\left(v,w_2\right)\\
+                                           \\
+    \varphi\left(v_1 + \alpha v_2,w\right) &= \left(B\left(v_1 + \alpha v_2\right)\right)\cdot w\\
+                                           &= \left(Bv_1 + B\left(\alpha v_2\right)\right)\cdot w\\
+                                           &= \left(Bv_1 + \alpha Bv_2\right)\cdot w\\
+                                           &= \left(Bv_1\right) \cdot w + \alpha \left(Bv_2\right)\cdot w\\
+                                           &= \varphi\left(v_1,w\right) + \alpha \varphi\left(v_2,w\right).
+  \end{align*}
+  Thus, we can see that $\varphi$ is bilinear.\newline
+
+  To see how $\varphi$ relates to
+  \begin{align*}
+    \varphi_{B}\left(v,w\right) &= v^{T}Bw,
+  \end{align*}
+  we observe that for $v,w\in F^n$,
+  \begin{align*}
+    v\cdot w &= w^{T}v.
+  \end{align*}
+  Thus, we see that
+  \begin{align*}
+    \varphi\left(v,w\right) &= \left(Bv\right)\cdot w\\
+                            &= w^{T}Bv\\
+                            &= \varphi_{B}\left(w,v\right).
+  \end{align*}
+
+\end{solution}
+
+\end{document}

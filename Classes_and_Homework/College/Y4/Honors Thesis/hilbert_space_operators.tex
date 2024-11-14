@@ -281,4 +281,176 @@ Recall that closed subspaces of Banach spaces may not always admit a topological
 \begin{theorem}[Hilbert Projection Theorem]
   Let $\mathcal{H}$ be a Hilbert space. Suppose $C\subseteq \mathcal{H}$ is a closed and convex set. Given $x\in \mathcal{H}$, there is a unique $y_x\in C$ such that $\dist_{C}\left(x\right) = d\left(x,y_x\right)$. We say $y_x$ is the point in $C$ closest to $x$
 \end{theorem}
+\begin{proof}
+  Set $d = \dist_{C}(x)$. If $x\in C$, we take $y=x$, so we assume $x\notin C$.\newline
+
+  We find a sequence $\left(y_n\right)_{n\geq 1}$ with $d\left(x,y_n\right)\rightarrow d$ decreasing. Set $z_n = y_n - x$. We have $\norm{z_n}\rightarrow d$ decreasing, meaning $\norm{z_n}^2 \rightarrow d^2$ decreasing. Given $\ve > 0$, there is $N\in \N$ such that for $n\geq N$,
+  \begin{align*}
+    \norm{z_n}^2 < d^2 + \ve.
+  \end{align*}
+  We claim that $\left(y_n\right)_{n}$ is a Cauchy sequence in $C$. If $p,q\in \N$, we see that
+  \begin{align*}
+    y_p - y_q &= z_p - z_q\\
+    \norm{\frac{1}{2}\left(z_p + z_q\right)} &= \norm{\frac{1}{2}\left(y_p + y_q\right) - x}\\
+                                             &\geq d,
+  \end{align*}
+  as $\frac{1}{2}\left(y_p + y_q\right)$ belongs to $C$. Thus, for $p,q \geq N$, we have
+  \begin{align*}
+    \norm{y_p - y_q}^2 &= \norm{z_p - z_q}^2\\
+                       &= 2\norm{z_p}^2 + 2\norm{z_q}^2 - \norm{z_p + z_q}^2\\
+                       &= 2\norm{z_p}^2 + 2\norm{z_q}^2 - 4\norm{\frac{1}{2}\left(z_p + z_q\right)}^2\\
+                       &\leq 2d^2 + 2\ve + 2d^2 + 2\ve - 4d^2\\
+                       &= 4\ve.
+  \end{align*}
+  Since $C$ is closed, we thus have $d = \lim_{n\rightarrow\infty}d\left(x,y_n\right) = d\left(x,y\right)$ for $\left(y_n\right)_n \rightarrow y$ for some $y\in C$.\newline
+
+  To see uniqueness, suppose $y_1,y_2\in C$ with $d\left(x,y_i\right) = d$. Set $z = y_j - x$ for each $j$. We have
+  \begin{align*}
+    0 &\leq \norm{z_1 - z_2}^2\\
+      &= 2\norm{z_1}^2 + 2\norm{z_2}^2 - 4\norm{\frac{1}{2}\left(z_1 + z_2\right)}^2,
+  \end{align*}
+  meaning
+  \begin{align*}
+    0 &\leq \norm{y_1 - y_2}^2\\
+      &= 2\norm{y_1 - x}^2 + 2\norm{y_2 - x}^2 - 4\norm{\frac{1}{2}\left(y_1 + y_2\right) - x}^2\\
+      &\leq 2d^2 + 2d^2 - 4d^2\\
+      &= 0.
+  \end{align*}
+  Thus, $y_1 = y_2$.
+\end{proof}
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space, and let $M\subseteq \mathcal{H}$ be a closed subspace. We define
+  \begin{align*}
+    P_M: \mathcal{H}\rightarrow \mathcal{H}
+  \end{align*}
+  by $P_M\left(x\right) = y_x$, where $y_x$ is the unique point from the Hilbert projection theorem.\newline
+
+  We call $P_M$ the orthogonal projection of $\mathcal{H}$ onto $M$.
+\end{definition}
+\begin{fact}
+  There are some facts about the orthogonal projection that are useful for us to know.
+  \begin{itemize}
+    \item $P_M(x) = x \Leftrightarrow x\in M$;
+    \item $\Ran\left(P_M\right) = M$;
+    \item $P_M \circ P_M = P_M$ (i.e., that $P_M$ is idempotent).
+  \end{itemize}
+\end{fact}
+\begin{definition}
+  Let $X$ be an inner product space, and suppose $S\subseteq X$ is an arbitrary subset. We define the perp of $S$, $S^{\perp}$, to be
+  \begin{align*}
+    S^{\perp} &= \set{x\in X | \iprod{x}{y} = 0\text{ for all $y\in S$}}.
+  \end{align*}
+  
+\end{definition}
+\begin{exercise}
+  Let $S\subseteq \mathcal{H}$ be an arbitrary subset. Prove the following.
+  \begin{enumerate}[(1)]
+    \item $S^{\perp}$ is always a closed subspace of $\mathcal{H}$.
+    \item $S\subseteq \left(S^{\perp}\right)^{\perp}$.
+    \item $S\cap S^{\perp} = \set{0}$.
+  \end{enumerate}
+\end{exercise}
+\begin{solution}\hfill
+  \begin{enumerate}[(1)]
+    \item For $x,x'\in S^{\perp}$ and $\alpha \in \C$, we have for all $y\in S$,
+      \begin{align*}
+        \iprod{x + \alpha x'}{y} &= \iprod{x}{y} + \alpha \iprod{x'}{y}\\
+                                 &= 0,
+      \end{align*}
+      so $S^{\perp}$ is a subspace. Additionally, for any sequence $\left(x_n\right)_n\subseteq S^{\perp}$ with $\left(x_n\right)_n\rightarrow x$ in $X$, the continuity of the inner product gives
+      \begin{align*}
+        \iprod{x_n}{y} &\rightarrow \iprod{x}{y}\\
+                       &= 0.
+      \end{align*}
+    \item For $t\in S$, we have, for all $x\in S^{\perp}$,
+      \begin{align*}
+        \iprod{x}{t} &= 0\\
+                     &= \iprod{t}{x},
+      \end{align*}
+      meaning $t \in \left(S^{\perp}\right)^{\perp}$.
+    \item If $t\in S\cap S^{\perp}$, then $t\in S$ and $t\in S^{\perp}$, so
+      \begin{align*}
+        \iprod{t}{t} &= 0,
+      \end{align*}
+      so $t = 0$.
+  \end{enumerate}
+\end{solution}
+One of the features of Hilbert spaces is that closed subspaces are always complemented. 
+\begin{theorem}
+  Let $M\subseteq \mathcal{H}$ be a closed subspace of a Hilbert space $\mathcal{H}$. Then, the following are true.
+  \begin{enumerate}[(1)]
+    \item $x-P_M\left(x\right)\in M^{\perp}$ for all $x\in \mathcal{H}$.
+    \item $\mathcal{H} = M\oplus M^{\perp}$.
+    \item $\left(M^{\perp}\right)^{\perp} = M$.
+    \item Let $P$ and $Q$ denote the projection operators onto $M$ and $M^{\perp}$ according to the decomposition $\mathcal{H} = M\oplus M^{\perp}$. Then, $P = P_M$ and $Q = P_{M^{\perp}}$.
+    \item $P_M$ is linear, $P_M^2 = P_M$, $\Ran\left(P_M\right) = M$, $\norm{P_M} = 1$, and $\ker\left(P_M\right) = M^{\perp}$.
+    \item $\mathcal{H}/M \cong M^{\perp}$ are isometrically isomorphic.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Let $y = P_M(x)$, and set $z = x-y$. We know that $\norm{z} = \dist_{M}(x) = d$. Let $0\neq \xi\in M$. Set $\zeta = P_{\xi}(z) = \frac{ \iprod{z}{\xi} }{ \iprod{\xi}{\xi} }\xi$.\newline
+
+      We claim that $\zeta = 0$. Note that
+      \begin{align*}
+        \norm{z - \zeta}&= \norm{x - y-\zeta}\\
+                        &= \norm{x - \left(y + \zeta\right)}\\
+                        &\geq d,
+      \end{align*}
+      as $y + \zeta \in M$.\newline
+
+      On the other hand, we have
+      \begin{align*}
+        \norm{z - \zeta}^2 + \norm{\zeta}^2 &= \norm{z}^2\\
+                                            &= d^2.
+      \end{align*}
+      Thus, $\norm{ z - \zeta } \leq d$. With $\norm{z - \zeta} = d$, we have $\norm{x - y - \zeta} = d$. Thus, we must have $y + \zeta = y$, so $\zeta = 0$.
+    \item If $x\in \mathcal{H}$, we have
+      \begin{align*}
+        x &= P_M\left(x\right) + x - P_M\left(x\right),
+      \end{align*}
+      and since $M\cap M^{\perp} = \set{0}$, we have $\mathcal{H} = M\oplus M^{\perp}$.
+    \item It is the case that $M\subseteq \left(M^{\perp}\right)^{\perp}$. Let $x\in \left(M^{\perp}\right)^{\perp}$. Write $x = y + z$ according to the decomposition $\mathcal{H} = M\oplus M^{\perp}$. Then, $z = x - y \in \left(M^{\perp}\right)^{\perp}\cap \left(M^{\perp}\right) = \set{0}$, so $x = y\in M$, so $M = \left(M^{\perp}\right)^{\perp}$.
+    \item By the way we have defined $P$ and $Q$, we must have $P(x)  = P_M(x)$ for every $x\in \mathcal{H}$. Let $\widetilde{P}$ and $\widetilde{Q}$ be the bounded linear projections according to the decomposition $\mathcal{H} = M^{\perp}\oplus \left(M^{\perp}\right)^{\perp}$. Since $M = \left(M^{\perp}\right)^{\perp}$, we have $\widetilde{Q} = P$. Additionally, we must have $\widetilde{P} = P_{M^{\perp}}$. Thus,
+      \begin{align*}
+        Q &= I - P\\
+          &= I - \widetilde{Q}\\
+          &= \widetilde{P}\\
+          &= P_{M^{\perp}}.
+      \end{align*}
+    \item By the Pythagorean theorem, we have
+      \begin{align*}
+        \norm{x}^2 &= \norm{P_M(x)}^2 + \norm{x-P_M(x)}^2
+      \end{align*}
+      for every $x\in \mathcal{H}$, so $\norm{P_M(x)}\leq \norm{x}$, meaning $\norm{P_M} \leq 1$. Since $P_{M}^2 = P_{M}$, we also have $\norm{P_M} \geq 1$.
+    \item Notice that $P_{M^{\perp}}:\mathcal{H}\rightarrow M^{\perp}$ is a $1$-quotient map with the kernel $\ker\left(P_{M^{\perp}}\right) = M$. Thus, we have $\mathcal{H}/M \cong M^{\perp}$.
+  \end{enumerate}
+\end{proof}
+\begin{corollary}
+  The following are true.
+  \begin{enumerate}[(1)]
+    \item The quotient of a Hilbert space is a Hilbert space.
+    \item If $M\subsetneq \mathcal{H}$, then $M^{\perp}\neq \set{0}$. Additionally, if $M^{\perp} = \mathcal{H}$, then $M = \set{0}$.
+    \item For any subset $S\subseteq \mathcal{H}$, we have $\left(S^{\perp}\right)^{\perp} = \overline{\Span}\left(S\right)$.
+  \end{enumerate}
+\end{corollary}
+\begin{exercise}
+  Let $\left(\Omega,\mathcal{M},\mu\right)$ be a measure space, and let $E\subseteq \mathcal{M}$ be measurable. We look at the set of essentially $E$-supported square-integrable functions:
+  \begin{align*}
+  M_{E} &= \set{\xi\in L_{2}\left(\Omega,\mu\right) | \xi|_{E^{c}} = 0 \text{ $\mu$-a.e.}}.
+  \end{align*}
+  \begin{enumerate}[(1)]
+    \item Show that $M_{E}$ is a closed subspace of $L_{2}\left(\Omega,\mu\right)$, and prove that the orthogonal projection onto $M_{E}$ is given by
+      \begin{align*}
+        P_{M_E}\left(\xi\right) &= \xi \1_{E}.
+      \end{align*}
+    \item Note that the restriction $\left(E,\mathcal{M}|_{E},\mu_{E}\right)$ is a measure space, where
+      \begin{align*}
+        \mathcal{M}_E &= \set{F\cap E | F\in \mathcal{M}}\\
+        \mu_{E} &= \mu|_{\mathcal{M}_E}.
+      \end{align*}
+      Prove that $L_{2}\left(E,\mu_E\right)$ and $M_{E}$ are unitarily isomorphic.
+  \end{enumerate}
+\end{exercise}
+
 \end{document}

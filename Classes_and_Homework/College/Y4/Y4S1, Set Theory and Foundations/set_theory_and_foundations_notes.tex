@@ -1981,7 +1981,33 @@ Recall that a set $S\subseteq \N$ is called recursively enumerable if $S= \Ran(f
     \item Return to (1).
   \end{enumerate}
 \end{proof}
-\subsection{Completeness}%
+\begin{example}
+  Consider the function $p(n)$, which returns the $n$th prime.\newline
+
+  We want to find $z = p(n)$ to be such that
+  \begin{align*}
+    \left(\pi(z) = 1\right) \wedge \left(\sum_{x=0}^{z}\pi(x)\right) = n.
+  \end{align*}
+  We want to be able to find a bound on $p(n)$ to evaluate this. From the proof of infinitely many prime numbers, we know that there must be some prime $q$ such that
+  \begin{align*}
+    p < q \leq p! + 1.
+  \end{align*}
+  We want to find $p(n+1)$, which we know is located somewhere along
+  \begin{align*}
+    p(n) < p\left(n+1\right) \leq \left(p(n)\right)! + 1.
+  \end{align*}
+  We take
+  \begin{align*}
+    p(n+1) &= \sum_{z=p(n)+ 1}^{\left(p(n)\right)! + 1} z f\left(p(n),z\right),
+  \end{align*}
+  where
+  \begin{align*}
+    f\left(x,z\right) &= \pi(z) \left( \prod_{i=x+1}^{z-1}\left(1\dot{-}\pi(i)\right)\right)
+  \end{align*}
+  
+\end{example}
+
+\subsection{Completeness and Incompleteness}%
 \begin{definition}
 Let $S$ be a set, and let $f: S\times S\rightarrow S$. We say $\left(S,f\right)$ is zeetoowy if
 \begin{align*}
@@ -2011,7 +2037,64 @@ We will use a different approach to define a zeetoowy set.
   \end{align*}
   A model for $\Gamma$ is a set $S$ and a binary operation $\square$ on $S$ such that the pair $\left(S,\square\right)$ satisfies $\Gamma$.
 \end{definition}
-With our model, we can say that $\left(\set{0,1},+\right)$ is a model for $\Gamma$, as well as $\left(\set{\emptyset,\N},\triangle\right)$.
+With our model, we can say that $\left(\set{0,1},+\right)$ is a model for $\Gamma$, as well as $\left(\set{\emptyset,\N},\triangle\right)$.\newline
+
+We can alternatively consider a set of formulae
+\begin{align*}
+  \Gamma &= \set{y\square y = z, y\square z = y, z\square z = z, \forall x\left(x=y\vee x=z\right),\forall a \forall b \left(a\square b = b\square a\right)}\\
+  \Gamma' &= \Gamma \cup \set{1\neq 0}.
+\end{align*}
+We can substitute with constant symbols, and $\square $ with a binary function.
+\begin{align*}
+  \Gamma &= \set{1\square 1 = 0, 1\square 0 = 1, 0\square 0 = 0, \forall x\left(x=1\vee x=0\right),\forall a \forall b \left(a\square b = b\square a\right)}\\
+  \Gamma' &= \Gamma \cup \set{1\neq 0}.
+\end{align*}
+Now, a model for $\Gamma$ is a set $S$, a function
+\begin{align*}
+  f: S\times S \rightarrow S,
+\end{align*}
+and a choice of elements $z\in S$ for the symbol $0$ and $y\in S$ for the symbol $1$.
+\begin{example}
+  Let $S = \set{\emptyset,\R}$, and $0 = \emptyset$, $1 = \R$. Then, we say $f\left(a,b\right) = a\triangle b$.\newline
+
+  We need to verify that all formulae in $\Gamma$ are satisfied by our function and choice of elements.
+\end{example}
+\begin{example}
+  Let $P$ be the formula: $\forall x \left(x + x = 0\right)$. 
+  \begin{question}
+    Is $P$ true in every model of $\Gamma'$?
+  \end{question}
+  \begin{answer}
+    Yes.
+  \end{answer}
+  \begin{question}
+    Is $P$ true in every model of $\Gamma$?
+  \end{question}
+  \begin{answer}
+    Yes.
+  \end{answer}
+  Note that the set $S = \set{\emptyset}$, with the assignment of $1 = 0 = \emptyset$, and the operation of symmetric difference, then this is a model for $\Gamma$ but not for $\Gamma'$
+\end{example}
+\begin{example}
+  We prove $p$ from $\Gamma$.
+  \begin{enumerate}[(1)]
+    \item $\forall x \left(x=0 \vee x = 1\right)$ (in $\Gamma$)
+    \item $0 + 0 = 0$ (in $\Gamma$)
+    \item $1 + 1 = 0$ (in $\Gamma$)
+    \item $0 + 0 = 0 \wedge 1 + 1 = 0$ (by (2) and (3) and rules of logic)
+    \item $\forall x \left(x = 0 \vee x = 1\right) \wedge \left(0 + 0 = 0\wedge 1 + 1 = 0\right)$ (by (1) and (4) and rules of logic)
+    \item $\forall x \left( \left(x = 0 \wedge 0 + 0 = 0 \wedge 1 + 1 = 0\right) \vee \left(x = 1 \wedge 0 + 0 = 0 \wedge 1 + 1 = 0\right)\right)$ (by (5) and rules of logic)
+    \item $\forall x\left(\left(x = 0 \wedge 0 + 0 = 0 \right)\vee \left(x=1 \wedge 1 + 1 = 0\right)\right)$ (by (6) and rules of logic)
+    \item $\forall x \left(x + x = 0 \vee x + x = 0\right)$ (by (7) and rules of logic)
+    \item $\forall x \left(x + x = 0\right)$ (by (8) and rules of logic)
+  \end{enumerate}
+\end{example}
+
+\begin{definition}
+  A proof of a formula $R$ from a set $\Omega$ of formulae is a list of formulae such that the last formula is $R$, and every formula in the list is either an element of $\Omega$ or is obtained from previous formulae in the list by axioms of logic.
+\end{definition}
+
+
 \subsection{Goodstein Sequences}%
 Consider the number written as sums of powers of $2$:
 \begin{align*}
