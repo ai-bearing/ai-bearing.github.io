@@ -14,6 +14,7 @@
 \renewcommand{\sourceflush}{flushleft}
 \DeclareMathOperator{\Tr}{Tr}
 \DeclareMathOperator{\Alt}{Alt}
+\DeclareMathOperator{\conj}{conj}
 %\DeclareMathOperator{\Hom}{Hom}
 
 \pagestyle{fancy} %better headers
@@ -4932,6 +4933,232 @@ V\times\cdots\times V \arrow[r]                                                 
       \varphi\left(x,y\right) &= \sum_{j=1}^{n}\left(x_{2j-1}y_{2j} - x_{2j}y_{2j-1}\right).
     \end{align*}
     This is a bilinear form.
+  \end{example}
+  \begin{definition}
+    Let $\varphi\in \Hom_{F}\left(V,V;F\right)$. We say $\varphi$ is right non-degenerate if, given $w_0\in V$ such that
+    \begin{align*}
+      \varphi\left(v,w_0\right) = 0
+    \end{align*}
+    for every $v\in V$, then $w_0 = 0$.\newline
+
+    Similarly, $\varphi$ is left non-degenerate if, given $v_0\in V$ such that
+    \begin{align*}
+      \varphi\left(v_0,w\right) = 0
+    \end{align*}
+    for every $w\in V$, then $v_0 = 0$.\newline
+
+    If $\varphi$ is both left non-degenerate and right non-degenerate, we say $\varphi$ is non-degenerate.
+  \end{definition}
+  \begin{example}
+    Let $\varphi\in \Hom_{F}\left(F^n,F^n;F\right)$ be the usual dot product. Suppose $\varphi$ is right degenerate --- i.e., there exists $w_0\in F^n$ such that $\varphi\left(v,w_0\right) = 0$ for all $v\in F^n$. In particular, we have 
+    \begin{align*}
+      \varphi\left(e_i,w_0\right) &= w_{0,i}\\
+                                  &= 0,
+    \end{align*}
+    so $w_{0,i} = 0$ for each $i$. Thus, we must have $w_0 = 0$, so $\varphi$ is right non-degenerate.\newline
+
+    Similarly, $\varphi$ is left non-degenerate.
+  \end{example}
+  \begin{exercise}
+    Show that $\varphi_{p,q}$ is left and right non-degenerate.
+  \end{exercise}
+  \begin{example}
+    Let $V = F^{3}$ and define $\varphi\left(x,y\right) = x_1y_1 + x_2y_2$ for $x = \left(x_1,x_2,x_3\right)$ and $y = \left(y_1,y_2,y_3\right)$.\newline
+
+    It is the case that $\varphi$ is a bilinear form, but $\varphi$ is both left and right degenerate, as selecting either $x$ or $y$ to be $ v = \left(0,0,1\right)$, $\varphi\left(x,v\right) = 0$ for all $x$ and $\varphi\left(v,y\right) = 0$ for all $y$.
+  \end{example}
+  If $V$ is finite-dimensional, we will see that left and right non-degenerate are equivalent. However, if $V$ is infinite-dimensional, they are not equivalent.\footnote{In the sequence space $\ell_2$, using the left and right shift operators allows us to find this.}\newline
+
+  Recall that we had $V\cong V'$, but that this isomorphism is not canonical. We will see that the isomorphisms for $V$ and $V'$ are in bijection with non-degenerate forms. This doesn't work in the infinite-dimensional case since $V$ is not necessarily isomorphic to $V'$.\newline
+
+  Let $\varphi\in \Hom_{F}\left(V,V;F\right)$. Fix some element $v_0\in V$. The map
+  \begin{align*}
+    \varphi\left(\cdot,v_0\right)\in V',
+  \end{align*}
+  as $\varphi$ is bilinear, so $\varphi\left(\cdot,v_0\right)$ is linear. This gives a map
+  \begin{align*}
+    R_{\varphi}: V &\rightarrow V'\\
+    v_0 &\mapsto \varphi\left(\cdot,v_0\right).
+  \end{align*}
+  We write this as $R_{\varphi}\left(v_0\right) = \varphi\left(\cdot,v_0\right)$.\newline
+
+  Let $v_1,v_2\in V$, and $a\in F$. Then,
+  \begin{align*}
+    R_{\varphi}\left(v_1 + av_2\right)\left(w\right) &= \varphi\left(w,v_1 + av_2\right)\\
+                                                     &= \varphi\left(w,v_1\right) + a\varphi\left(w,v_2\right)\\
+                                                     &= R_{\varphi}\left(v_1\right)\left(w\right) + aR_{\varphi}\left(v_2\right)\left(w\right).
+  \end{align*}
+  Thus, we see that $R_{\varphi}\in \Hom_{F}\left(V,V'\right)$.\newline
+
+  Similarly, we can have $L_{\varphi}\left(v\right) = \varphi\left(v,\cdot\right)$, so by a similar argument, we get
+  \begin{align*}
+    L_{\varphi}\in \Hom_{F}\left(V,V'\right).
+  \end{align*}
+  \begin{lemma}
+    A bilinear form $\varphi$ is non-degenerate if and only if $L_{\varphi}$ and $R_{\varphi}$ are injections.
+  \end{lemma}
+  \begin{proof}
+    Suppose $L_{\varphi}$ and $R_{\varphi}$ are injections. Suppose we have $w_0$ such that $\varphi\left(v,w_0\right) = 0$ for all $v\in V$. Thus,
+    \begin{align*}
+      0 &= \varphi\left(v,w_0\right)\\
+        &= R_{\varphi}\left(w_0\right)\left(v\right)
+    \end{align*}
+    for all $v\in V$, so $R_{\varphi}\left(w_0\right)$ is the zero map. However, we said that $R_{\varphi}\left(w_0\right)$ is injective, $w_0 = 0$. Thus, $\varphi$ is right non-degenerate.\newline
+
+    Similarly, if $\varphi\left(v_0,w\right) = 0$ for all $w\in V$, then $L_{\varphi}\left(v_0\right)$ is the zero map, so $v_0 = 0$. Thus, $\varphi$ is left non-degenerate.\newline
+
+    Assume $L_{\varphi}$ or $R_{\varphi}$ is not injective. Let $R_{\varphi}$ be not injective. Then, there exists $w_0\in V$ such that
+    \begin{align*}
+      R_{\varphi}\left(w_0\right) &= 0_{V'},
+    \end{align*}
+    so $R_{\varphi}\left(w_0\right)\left(v\right) = 0$, so $\varphi\left(v,w_0\right) = 0$ for all $v\in V$, so $\varphi$ is right degenerate.
+  \end{proof}
+  \begin{corollary}
+    If $V$ is finite-dimensional, then $\varphi$ is non-degenerate if and only if $L_{\varphi}$ and $R_{\varphi}$ are isomorphisms.
+  \end{corollary}
+  \begin{proof}
+    If $\Dim_{F}\left(V\right) < \infty$, then $\Dim_{F}\left(V\right) = \Dim_{F}\left(V'\right)$, so injective is the same as bijective.
+  \end{proof}
+  \begin{definition}
+    We define the left and right kernels of $\varphi$ to be
+    \begin{align*}
+      \ker_{R}\left(\varphi\right) &= \set{w\in V | \varphi\left(v,w\right) = 0 \text{ for all $v\in V$}}\\
+      \ker_{L}\left(\varphi\right) &= \set{w\in V | \varphi\left(w,v\right) = 0\text{ for all $v\in V$}}
+    \end{align*}
+  \end{definition}
+  \begin{theorem}
+    Let $\Dim_{F}\left(V\right) < \infty$, $\varphi\in \Hom_{F}\left(V,V;F\right)$. The maps $R_{\varphi}$ and $L_{\varphi}$ are dual to each other. In other words, given
+    \begin{align*}
+      L_{\varphi}: V \rightarrow V',
+    \end{align*}
+    we consider the dual map
+    \begin{align*}
+      L_{\varphi}': V'' \rightarrow V'.
+    \end{align*}
+    If we identify $V\cong V''$ (where each $\hat{v}$ is identified with the element $v$), then $L_{\varphi}' = R_{\varphi}$, and similarly, $R_{\varphi}' = L_{\varphi}$.
+  \end{theorem}
+  \begin{proof}
+    Recall that given $T\in \Hom_{F}\left(V,W\right)$, we have a dual map $T': W'\rightarrow V'$ defined by
+    \begin{align*}
+      T'\left(\varphi\right)\left(v\right) &= \varphi\left(T\left(v\right)\right).
+    \end{align*}
+    Recall the canonical isomorphism given by $v\mapsto \hat{v}$, where $\hat{v}\left(\varphi\right) = \varphi\left(v\right)$.\newline
+
+    Let $v,w\in V$. We have
+    \begin{align*}
+      L_{\varphi}'\left(\hat{v}\right)\left(w\right) &= \hat{v}\left(L_{\varphi}\left(w\right)\right)\\
+                                                     &= \hat{v}\left(L_{\varphi}\left(w,\cdot\right)\right)\\
+                                                     &= L_{\varphi}\left(w,v\right)\\
+                                                     &= \varphi\left(w,v\right)\\
+                                                     &= R_{\varphi}\left(v\right)\left(w\right).
+    \end{align*}
+    Thus, $L_{\varphi}' = R_{\varphi}$.\newline
+
+    Thus, if $V$ is finite dimensional, then $\varphi$ being non-degenerate is equivalent to $\varphi$ being left non-degenerate or right non-degenerate.
+  \end{proof}
+  \begin{lemma}
+    Let $\Dim_{F}\left(V\right) < \infty$. There is a bijection between isomorphisms $V \rightarrow V'$ and non-degenerate bilinear forms.
+  \end{lemma}
+  \begin{proof}
+    Given such a $\varphi$, we have $R_{\varphi}\in \Hom_{F}\left(V,V'\right)$. Since $\varphi$ is non-degenerate, $R_{\varphi}$ is an injective, so $R_{\varphi}$ is an isomorphism.\newline
+
+    Suppose we have $T: V\rightarrow V'$ is an isomorphism. Define $\varphi\left(v,w\right) = T(w)(v)$. This is non-degenerate, as $T$ is an isomorphism.
+  \end{proof}
+  \begin{definition}[Conjugation]
+    Let $F$ be a field, $\conj: F\rightarrow F$ a map such that
+    \begin{enumerate}[(1)]
+      \item $\conj\left(\conj\left(x\right)\right) = x$
+      \item $\conj\left(x+y\right) = \conj\left(x\right) + \conj\left(y\right)$
+      \item $\conj\left(xy\right) = \conj\left(x\right)\conj\left(y\right)$.
+    \end{enumerate}
+    We call $\conj$ a conjugation map. We say it is nontrivial if it is not the identity map.
+  \end{definition}
+  \begin{example}
+    If $F = \C$, and we define $\conj\left(z\right) = \overline{z}$ is a conjugation map.
+  \end{example}
+  \begin{example}
+    Let $F + \Q\left(\sqrt{d}\right) = \set{a + b\sqrt{d} | a,b\in \Q}$ with $d$ not a perfect square. The map
+    \begin{align*}
+      a + b\sqrt{d} &\xmapsto{\conj} a-b\sqrt{d}
+    \end{align*}
+    is a conjugation map.
+  \end{example}
+  Henceforth, we refer to conjugation maps by taking $x \mapsto \overline{x}$.
+  \begin{lemma}
+    Let $F$ be a field with nontrivial conjugation. Assume $\operatorname{char}\left(F\right) \neq 2$.
+    \begin{enumerate}[(1)]
+      \item Let $F_0 = \set{z\in F | z = \overline{z}}$. Then, $F_0$ is a proper subfield of $F$.
+      \item There is a nonzero element $j\in F$ such that $\overline{j} = -j$.
+      \item Every element of $F$ can be written as a $z = x + yj$ for some $x,y\in F_0$.
+    \end{enumerate}
+  \end{lemma}
+  \begin{proof}
+    Exercise.
+  \end{proof}
+  
+  \begin{definition}
+    Let $V$ be an $F$-vector space, where $F$ is a field with conjugation. A conjugation map on $V$ is a map $\conj: V\rightarrow V$ such that
+    \begin{enumerate}[(1)]
+      \item $\conj\left(\conj\left(v\right)\right) = v$
+      \item $\conj\left(v + w\right) = \conj\left(v\right) + \conj\left(w\right)$.
+      \item $\conj\left(av\right) = \overline{a}\conj(v)$.
+    \end{enumerate}
+  \end{definition}
+  \begin{example}
+    If $V$ is an $F$-vector space of dimension $n$ and $F$ has conjugation, we can define conjugation on $V$ by taking
+    \begin{align*}
+      \left[v\right]_{\mathcal{B}}\begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix}  &\xmapsto{\conj} \begin{pmatrix}\overline{x_1}\\\vdots\\\overline{x_n}\end{pmatrix} = \left[w\right]_{\mathcal{B}}.
+    \end{align*}
+    We set $\conj(v) = w$.
+  \end{example}
+  \begin{definition}
+    Let $V,W$ be $F$-vector spaces, where $F$ has conjugation. We say $T: V\rightarrow W$ is conjugate linear if
+    \begin{enumerate}[(1)]
+      \item $T\left(v_1 + v_2\right) = T\left(v_1\right) + T\left(v_2\right)$
+      \item $T\left(av\right) = \overline{a}T\left(v\right)$.
+    \end{enumerate}
+    We say $T$ is a conjugate isomorphism if it is conjugate linear and bijective.\newline
+
+    We can define a new vector space $\overline{V}$ by having $\overline{V} = V$ as a set, but with
+    \begin{align*}
+      m: F\times \overline{V} &\rightarrow \overline{V}\\
+      \left(a,v\right) &\mapsto a\cdot v = \overline{a}v.
+    \end{align*}
+    
+  \end{definition}
+  \begin{exercise}
+    Verify that $\overline{V}$ is a $F$-vector space.
+  \end{exercise}
+  We may ask what linear maps look like in $\Hom_{F}\left(\overline{V},W\right)$. 
+  \begin{align*}
+    T\left(v_1 + v_2\right) &= T\left(v_1\right) + T\left(v_2\right)\\
+    T\left(a\cdot v\right) &= aT\left(v\right)\\
+    T\left(a\overline{v}\right) &= \overline{a}T\left(v\right).
+  \end{align*}
+  Thus, we have $T$ is conjugate linear on $V$ if and only if it is linear on $\overline{V}$.
+  \begin{definition}[Sesquilinear Form]
+    Let $\varphi: V\times V \rightarrow F$ be a map that is linear in the first variable and conjugate linear in the second variable. Their collection is denoted $\Hom_{F}\left(V,\overline{V};W\right)$.
+  \end{definition}
+  \begin{example}
+    Let $V = \C^n$. Define
+    \begin{align*}
+      \varphi: \C^n\times \C^n
+    \end{align*}
+    by
+    \begin{align*}
+      \varphi\left(v,w\right) &= v^{T}\overline{w}\\
+                              &= \sum_{i=1}^{n}v_i\overline{w_i}.
+    \end{align*}
+  \end{example}
+  \begin{example}
+    Let $V\in F^{n}$, where $F$ has conjugation. Let $A\in \Mat_{n}\left(F\right)$. Define
+    \begin{align*}
+      \varphi_{A}: V\times V\rightarrow F
+    \end{align*}
+    by
+   \begin{align*}
+     \varphi_{A}\left(v,w\right) &=v^{T} A \overline{w}.
+   \end{align*}
   \end{example}
   
 \end{document}
