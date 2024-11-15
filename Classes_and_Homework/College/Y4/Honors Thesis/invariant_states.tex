@@ -24,7 +24,7 @@
 This is going to be a part of my Honors thesis independent study, focused on amenability and $C^{\ast}$-algebras. This section of notes will be a deeper dive into group amenability. These notes will be taken from the notes my professor has prepared on group amenability, with supplementation from Volker Runde's \textit{Lectures on Amenability} and Pierre de la Harpe's \textit{Topics in Geometric Group Theory}.\newline
 
 I do not claim any of this work to be original.
-\section{Amenable Groups and Subgroups}%
+\section{Basics of Amenable Groups and Subgroups}%
 Let $G$ be a group, with $P(G)$ denoting the power set.
 \begin{definition}
   An invariant mean on $G$ is a set function $m: P(G)\rightarrow [0,1]$, which satisfies, for all $t\in G$ and $E,F\subseteq G$,
@@ -467,7 +467,7 @@ To prove this, we state a different version of the Ping Pong Lemma that we will 
   \end{enumerate}
   Since we have verified that the conditions for the Ping Pong Lemma hold for each of the conditions, we have that $\set{a,b}\subseteq SO(3)$ generate a group isomorphic to the free group on two generators.
 \end{proof}
-\section{States on $\ell_{\infty}(G)$}%
+\section{States and Means on $\ell_{\infty}(G)$}%
 \begin{definition}
   Let $G$ be a group.
   \begin{enumerate}[(1)]
@@ -699,5 +699,128 @@ To prove this, we state a different version of the Ping Pong Lemma that we will 
     \end{align*}
     for all $i\in I$, so we must necessarily have $\varphi\left(f\right) \geq 0$, and similarly, since $\varphi_i\left(\1_{G}\right) = 1$ for each $i\in I$, we also have $\varphi\left(\1_G\right) = 1$.
 \end{proof}
+\begin{proposition}
+  If $\mu\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$ is a state, then $m: P(G) \rightarrow [0,1]$ defined by $m(E) = \mu\left(\1_{E}\right)$ is a finitely additive probability measure on $G$. Moreover, if $\mu$ is invariant, then $m$ is a mean.
+\end{proposition}
+\begin{proof}
+  We have
+  \begin{align*}
+    m(G) &= \mu\left(\1_{G}\right)\\
+         &= 1\\
+    m\left(\emptyset\right) &= \mu\left(0\right)\\
+                            &= 0\\
+    m\left(E\sqcup F\right) &= \mu\left(\1_{E\sqcup F}\right)\\
+                            &= \mu\left(\1_{E} + \1_{F}\right)\\
+                            &= \mu\left(\1_{E}\right) + \mu\left(\1_{F}\right)\\
+                            &= m\left(E\right) + m\left(F\right).
+  \end{align*}
+  Additionally, since $0\leq \1_{E}\leq \1_G$, we have $0\leq \mu\left(\1_{E}\right) \leq 1$, so $0 \leq m(E) \leq m(G) = 1$.\newline
+
+  If $\mu$ is invariant, then
+  \begin{align*}
+    m\left(sE\right) &= \mu\left(\1_{sE}\right)\\
+                     &= \mu\left(\lambda_{s}\left(\1_{E}\right)\right)\\
+                     &= \mu\left(\1_{E}\right)\\
+                     &= m\left(E\right).
+  \end{align*}
+\end{proof}
+\begin{proposition}
+  If $G$ admits a mean, then $\left(\ell_{\infty}\left(G\right)\right)^{\ast}$ admits an invariant state.
+\end{proposition}
+\begin{proof}
+  Let $m$ be a finitely-additive probability measure. Define
+  \begin{align*}
+    \mu_0: \Sigma \rightarrow \R
+  \end{align*}
+  by
+  \begin{align*}
+    \mu_0\left(\sum_{k=1}^{n}t_k\1_{E_k}\right) &= \sum_{k=1}^{n}t_km\left(E_k\right).
+  \end{align*}
+  Since $m$ is finitely additive, it is the case that $\mu_0$ is well-defined, linear, and positive.\newline
+
+  Note that $\mu_0\left(\1_{G}\right) = m(G) = 1$.\newline
+
+  If $m$ is a mean, then for $f = \sum_{k=1}^{n}t_kE_k$,
+  \begin{align*}
+    \mu_0\left(\lambda_s\left(f\right)\right) &= \mu_{0}\left(\lambda_{s}\left(\sum_{k=1}^{n}t_k\1_{E_k}\right)\right)\\
+                                              &= \mu_0\left(\sum_{k=1}^{n}t_k\1_{sE_k}\right)\\
+                                              &= \sum_{k=1}^{n}t_km\left(sE_k\right)\\
+                                              &= \sum_{k=1}^{n}t_km\left(E_k\right)\\
+                                              &= \mu_0\left(f\right).
+  \end{align*}
+  Additionally, we see that
+  \begin{align*}
+    \left\vert \mu_0\left(f\right) \right\vert &= \left\vert \sum_{k=1}^{n}t_km\left(E_k\right) \right\vert\\
+                                               &\leq \sum_{k=1}^{n}\left\vert t_k \right\vert m\left(E_k\right)\\
+                                               &\leq \sum_{k=1}^{n}\norm{f}m\left(E_k\right)\\
+                                               &= \norm{f}\sum_{k=1}^{n}m\left(E_k\right)\\
+                                               &\leq \norm{f}.
+  \end{align*}
+  Thus, $\mu_0$ is continuous, so $\mu_0$ is uniformly continuous.\newline
+
+  Since $\overline{\Sigma} = \ell_{\infty}(G)$, we see that $\mu_0$ extends to a continuous linear functional $\mu: \ell_{\infty}\left(G\right) \rightarrow \R$, with $\mu\left(\1_{G}\right) = \mu_{0}\left(\1_{G}\right) = 1$.\newline
+
+  If $f \geq 0$, we find a sequence $\left(\phi_n\right)_n$ in $\Sigma$ with $\phi_n\geq 0$, $\norm{\phi_n - f}\xrightarrow{n\rightarrow\infty} 0$, and we set
+  \begin{align*}
+    \mu\left(f\right) &= \lim_{n\rightarrow\infty}\mu\left(\phi_n\right)\\
+                      &= \lim_{n\rightarrow\infty}\mu_0\left(\phi_n\right)\\
+                      &\geq 0,
+  \end{align*}
+  meaning $\mu$ is a state.\newline
+
+  If $f\in \ell_{\infty}\left(G\right)$, $s\in G$, and $\left(\phi_n\right)_n$ in $\Sigma$ with $\left(\phi_n\right)_n\rightarrow f$, then
+  \begin{align*}
+    \norm{\lambda_s\left(\phi_n\right) - \lambda_s\left(f\right)} &= \norm{\lambda_s\left(\phi_n - f\right)}\\
+                                                                  &= \norm{\phi_n - f}\\
+                                                                  &\rightarrow 0
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    \mu\left(\lambda_s\left(\phi_n\right)\right) &= \mu_0\left(\lambda_s\left(\phi_n\right)\right)\\
+                                                 &= \mu_0\left(\phi_n\right)\\
+                                                 &= \mu\left(\phi_n\right)\\
+                                                 &\rightarrow \mu\left(f\right),
+  \end{align*}
+  so $\mu\left(f\right) = \mu\left(\lambda_s\left(f\right)\right)$. Thus, $\mu\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$ is an invariant state.
+\end{proof}
+\section{Using Invariant States}%
+\begin{proposition}
+  $\Z$ is amenable.
+\end{proposition}
+\begin{proof}
+  We know that $\lambda_{1}: \ell_{\infty}\left(\Z\right) \rightarrow \ell_{\infty}\left(\Z\right)$, defined by
+  \begin{align*}
+    \lambda_{1}\left(f\right)\left(k\right) &= f\left(k-1\right)
+  \end{align*}
+  is an isometry.\newline
+
+  We set $Y = \Ran\left(\id - \lambda_{1}\right) \subseteq \ell_{\infty}\left(\Z\right)$.\newline
+
+  We claim that $\dist_{Y}\left(\1_{\Z}\right) \geq 1$.\newline
+
+  Suppose toward contradiction that there is $y\in Y$ with $\norm{\1_{\Z} - y}_{u} = \rho < 1$. Then, $y = f - \lambda_1\left(f\right)$ for some $f\in \ell_{\infty}\left(\Z\right)$, meaning
+  \begin{align*}
+    \norm{\1 - \left(f - \lambda_1\left(f\right)\right)} &= \rho.
+  \end{align*}
+  Thus, for all $k\in \Z$, we have
+  \begin{align*}
+    \left\vert 1 - \left(f(k) - f\left(k-1\right)\right) \right\vert \leq \rho,
+  \end{align*}
+  meaning $\left\vert f\left(k\right) - f\left(k-1\right) \right\vert \geq 1-\rho > 0$. However, such an $f$ cannot be bounded.\newline
+
+  Since $\dist_{\overline{Y}}\left(\1_{Z}\right) = \dist_{Y}\left(\1_{Z}\right) \geq 1$, the Hahn--Banach theorem provides $\mu\in \left(\ell_{\infty}\left(\Z\right)\right)^{\ast}$ with $\norm{\mu} = 1$, $\mu|_{\overline{Y}} = 0$, and $\mu\left(\1\right) = \dist_{Y}\left(\1_{\Z}\right) \geq 1$.\newline
+
+  Since $\norm{\mu} = 1$ and $\mu\left(\1\right) \geq 1$, we must have $\mu\left(\1\right) = 1$.\newline
+
+  Since $\norm{\mu} = \mu\left(\1_{\Z}\right) = 1$, it is the case that $\mu$ is a state on $\ell_{\infty}\left(\Z\right)$. Since $\mu\left(y\right) = 0$ for all $y\in Y$, we have
+  \begin{align*}
+    \mu\left(f - \lambda_1(f)\right) = 0\\
+    \mu\left(f\right) &= \mu\left(\lambda_1(f)\right), 
+  \end{align*}
+  so inductively, we have $\mu\left(f\right) = \mu\left(\lambda_k\left(f\right)\right)$ for all $k\in \Z$, meaning $\mu$ is an invariant state on $\ell_{\infty}\left(\Z\right)$. Thus, $\Z$ is amenable.
+\end{proof}
+\begin{proposition}
+  If $N\trianglelefteq G$ and $G/N$ are amenable, then $G$ is amenable.
+\end{proposition}
 
 \end{document}
