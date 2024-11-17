@@ -7,7 +7,7 @@
 \usepackage{mathdots}
 
 %serif font + different blackboard bold for serif font
-\usepackage{newpxtext,eulerpx}
+\usepackage{newpxtext,eulerpx,eucal}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \DeclareMathOperator{\pred}{pred}
 \DeclareMathOperator{\sub}{sub}
@@ -2007,7 +2007,7 @@ Recall that a set $S\subseteq \N$ is called recursively enumerable if $S= \Ran(f
   
 \end{example}
 
-\subsection{Completeness and Incompleteness}%
+\subsection{Gödel's Theorems}%
 \begin{definition}
 Let $S$ be a set, and let $f: S\times S\rightarrow S$. We say $\left(S,f\right)$ is zeetoowy if
 \begin{align*}
@@ -2091,9 +2091,81 @@ and a choice of elements $z\in S$ for the symbol $0$ and $y\in S$ for the symbol
 \end{example}
 
 \begin{definition}
-  A proof of a formula $R$ from a set $\Omega$ of formulae is a list of formulae such that the last formula is $R$, and every formula in the list is either an element of $\Omega$ or is obtained from previous formulae in the list by axioms of logic.
-\end{definition}
+  A proof of a formula $R$ from a set $\Omega$ of formulae is a list of formulae such that the last formula is $R$, and every formula in the list is either an element of $\Omega$ or is obtained from previous formulae in the list by axioms of logic.\newline
 
+  If $\Omega$ proves $R$, we write $\Omega \vdash R$.
+\end{definition}
+\begin{question}[]
+Let $q$ be the formula
+\begin{align*}
+  \exists a \exists b \left(a + b \neq a\right).
+\end{align*}
+Does $\Gamma$ prove $q$?\newline
+
+Does $\Gamma'$ prove $q$?
+\end{question}
+\begin{answer}[]
+  There is a model $M$ of $\Gamma$ in which $q$ is false. So, we say $\Gamma$ cannot prove $q$, since any formula $p$ that can be proved by $\Gamma$ is true in every model of $\Gamma$.
+\end{answer}
+We may ask whether everything that can be proven is true. This is known as Gödel's \textit{completeness} theorem.\newline
+
+We start by considering a model of arithmetic. There are two ways to do arithmetic:
+\begin{itemize}
+  \item constructive: using ZFC, we define numbers (as elements of $\omega$), addition, and multiplication;
+  \item axiomatic: listing rules that any set satisfying the rules yields an arithmetic.
+\end{itemize}
+\begin{definition}[Peano Arithmetic]
+  We define
+  \begin{itemize}
+    \item a constant symbol: $0$;
+    \item binary operations: $\left(+\right)$, $\left(\cdot\right)$;
+    \item a unary operation: $S$ (for successor).
+  \end{itemize}
+  There are seven axioms.
+  \begin{enumerate}[(1)]
+    \item $\forall x \left(0 + x = x\right)$
+    \item $\forall x \left(0\cdot x = 0\right)$
+    \item $\forall x \forall y \left(x + S\left(y\right) = S\left(x+y\right)\right)$
+    \item $\forall x \forall y \left(x\cdot S(y) = x\cdot y + x\right)$
+    \item $\forall x \left(0 \neq S(x)\right)$
+    \item $\forall x \forall y \left(S(x) = S(y) \Rightarrow x=y\right)$
+    \item For every formula $\phi(x)$, the following is an axiom: $\left(\phi(0) \wedge \forall x \left(\phi(x)\Rightarrow \phi\left(S(x)\right)\right)\right)\Rightarrow \forall x \left(\phi(x)\right)$.
+  \end{enumerate}
+\end{definition}
+\begin{theorem}
+  If we let $\omega$ be our set, $0 = \emptyset$, $\left(+\right)$ defined by ordinal addition, $\left(\cdot\right)$ defined by ordinal multiplication, and $S(x) = x\cup \set{x}$, then this is a model for PA.
+\end{theorem}
+\begin{theorem}
+  There exists a model of PA that is not isomorphic to $\omega$.
+\end{theorem}
+Let $\Gamma$ be any set of formulae. Let $P$ be a formula. We may ask some questions.
+\begin{enumerate}[(1)]
+  \item If $\Gamma \vdash P$, does this imply that $P$ is true in every model of $\Gamma$?
+  \item If $P$ is true in every model of $\Gamma$, then does $\Gamma \vdash P$?
+  \item If $\Gamma$ is consistent, does this imply that $\Gamma$ has a model?
+  \item If $\Gamma$ has a model, does this imply that $\Gamma$ is consistent?
+\end{enumerate}
+\begin{remark}
+  We say (1) is the soundness theorem, and (2) is the adequacy theorem.
+\end{remark}
+
+\begin{definition}[Consistency]
+A set of formulae, $\Gamma$, is said to be inconsistent if there exists a formula $P$ such that $\Gamma \vdash P$ and $\Gamma \vdash \lnot P$.\newline
+
+Else, we say $\Gamma$ is consistent.
+\end{definition}
+\begin{theorem}[Gödel's Completeness Theorem]
+  It is the case that all of (1), (2), (3), and (4) are true.
+\end{theorem}
+\begin{theorem}[Gödel's Incompleteness Theorem]
+
+\end{theorem}
+\begin{proof}
+  \textbf{Part 1:} We number all Turing machines.
+  \begin{lemma}[]
+    Given any fixed $n\in \N$, we can write a formula $F$ in Peano arithmetic such that $F$ is true if and only if $T_{n}(n)$ halts.
+  \end{lemma}
+\end{proof}
 
 \subsection{Goodstein Sequences}%
 Consider the number written as sums of powers of $2$:

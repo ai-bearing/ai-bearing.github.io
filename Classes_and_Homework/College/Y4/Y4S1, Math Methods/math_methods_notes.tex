@@ -6,7 +6,7 @@
 %\usepackage{bbold} %better blackboard bold
 
 %serif font + different blackboard bold for serif font
-\usepackage{newpxtext,eulerpx}
+\usepackage{newpxtext,eulerpx,eucal}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \pagestyle{fancy}
 \usetikzlibrary{angles, quotes, intersections}
@@ -5543,5 +5543,114 @@ needs fixed integration limits. We find
                                  0 & \ell + m \in \Z\setminus 2\Z
                                \end{cases}.
 \end{align*}
+The normalization condition $\braket{\hat{P}_0}{\hat{P}_0} = 1$ yields the zeroth basis vector
+\begin{align*}
+  \ket{\hat{P}_0} &= \frac{1}{\sqrt{2}}.
+\end{align*}
+To find $\ket{\chi_1}$, we need to remove the component orthogonal to $\ket{\hat{P}_0}$ --- since $x^0$ and $x^1$ have opposite parity, we have
+\begin{align*}
+  \hat{P}_1(x) &= cx,
+\end{align*}
+with the normalization condition yielding
+\begin{align*}
+  \hat{P}_1(x) &= \sqrt{\frac{3}{2}} x.
+\end{align*}
+Evaluating $\ket{\hat{P}_2}$, we find
+\begin{align*}
+  \ket{\hat{P}_2} &= c\left(\ket{\chi_2} - \ket{\hat{P}_0}\braket{\hat{P}_0}{\chi_2} - \ket{\hat{P}_1}\braket{\hat{P}_1}{\chi_2}\right)\\
+                  &= c\left(x^2 - \frac{1}{3}\right).
+\end{align*}
+Normalizing, we get
+\begin{align*}
+  \hat{P}_2(x) &= \sqrt{\frac{5}{2}}\frac{1}{2} \left(3x^2 - 1\right).
+\end{align*}
+Note that each of the $\hat{P}_{\ell}$ is multiplied by a factor of $\sqrt{\frac{1}{2}\left(2\ell + 1\right)}$. We then define the orthogonal (rather than orthonormal) polynomials $P_{\ell}(x) = \sqrt{\frac{2}{2\ell + 1}}\hat{P}_{\ell}(x)$. We get
+\begin{align*}
+  \braket{P_{\ell}}{P_{m}} &= \int_{-1}^{1} P_\ell(x)P_m(x)\:dx\\
+                           &= \frac{2}{2\ell + 1} \delta_{\ell m}.
+\end{align*}
+The orthogonal set $\set{P_{\ell}(x)}_{\ell=0}^{\infty}$ are known as the Legendre polynomials. 
+\begin{center}
+  \includegraphics[width=10cm]{images/legendre_polynomials.pdf}
+\end{center}
+We can expand any function for $|x| \leq 1$.
+\begin{align*}
+  f(x) &= \sum_{\ell=0}^{\infty}c_{\ell}P_{\ell}(x)\\
+  c_{\ell} &= \frac{1}{\braket{P_{\ell}}{P_{\ell}}} \braket{P_{\ell}}{f}\\
+           &= \frac{2\ell + 1}{2} \int_{-1}^{1} P_{\ell}(x)f(x)\:dx.
+\end{align*}
+\subsubsection{Laguerre and Hermite Polynomials}%
+We want to expand our domain while still maintaining a basis of polynomials. In order to do this, we have to add a weight function to control the respective norms. As long as our weight function is strictly positive, we can preserve our polynomials. Note that in the case of the Legendre polynomials, our weight function is $1$.\newline
+
+For instance, consider the inner product
+\begin{align*}
+  \braket{\chi_{\ell}}{\chi_{m}} &= \int_{0}^{\infty} x^{\ell}x^{m}e^{-x}\:dx.
+\end{align*}
+All the integrals are of the form
+\begin{align*}
+  \int_{0}^{\infty} x^{n}e^{-x}\:dx &= \Gamma\left(n+1\right)\\
+                                    &= n!.
+\end{align*}
+When we do the Gram--Schmidt process using this new inner product, we generate the Laguerre polynomials, which are a complete \textit{orthonormal} basis (cf. Legendre polynomials) for functions defined on $[0,\infty)$.
+\begin{center}
+  \includegraphics[width=10cm]{images/laguerre_polynomials.pdf}
+\end{center}
+Now, if we want to move toward functions defined on $\left(-\infty,\infty\right)$, we need a different weight. Specifically, if we use the Gaussian weight $e^{-x^2}$, we can generate the Hermite polynomials through the inner product
+\begin{align*}
+  \braket{\chi_\ell}{\chi_m} &= \int_{-\infty}^{\infty} x^{\ell}x^{m}e^{-x^2}\:dx.
+\end{align*}
+\begin{center}
+  \includegraphics[width=10cm]{images/hermite_polynomials.pdf}
+\end{center}
+We may ask ``why don't we use Taylor series?'' While Taylor series are very useful, the systems of complete orthogonal functions don't depend on local derivatives, and instead only depend on the convergence properties over the whole space.
+\subsubsection{Finding Orthogonal Polynomials}%
+There were three ways to create these orthogonal polynomials.
+\begin{itemize}
+  \item The method we used, which was Gram--Schmidt.
+  \item Solving the eponymous differential equation.
+  \item The method we will be using in this section --- generating functions.
+\end{itemize}
+\begin{example}[Finding the Legendre Polynomials]
+The electric potential at $\mathbf{r}$ of a point charge $q$ at $\mathbf{x}$ is given by the expression
+\begin{align*}
+  V\left(\mathbf{r}\right) &= \frac{1}{4\pi \epsilon_0} \frac{1}{\left\Vert \mathbf{r} - \mathbf{x} \right\Vert}.
+\end{align*}
+We select $\mathbf{r} = r\hat{k}$ and $\mathbf{x} = x\hat{k}$, such that
+\begin{align*}
+  \frac{1}{\norm{\mathbf{r} - \mathbf{x}}} &= \frac{1}{\left\vert r - x \right\vert}.
+\end{align*}
+For $x < r$, we can write this as a binomial expansion
+\begin{align*}
+  \frac{1}{r\left(1 - x/r\right)} &= \frac{1}{r} \sum_{\ell = 0}^{\infty}\left(\frac{x}{r}\right)^{\ell}.
+\end{align*}
+For $x > r$, we would factor out $x$ to obtain an equivalent expression in terms of powers of $r/x$.\newline
+
+To resolve this, we define
+\begin{align*}
+  \frac{1}{\left\vert r-x \right\vert} &= \frac{1}{r_{>}} \sum_{\ell=0}^{\infty}\left(\frac{r_{<}}{r_{>}}\right)^{\ell}.
+\end{align*}
+If we were to move off the $z$ axis by an angle $\theta$, we need the expression to introduce some $\theta$-dependence that reduces to $1$ for $\theta = 0$. We introduce a family of functions $P_{\ell}\left(\cos\theta\right)$ with the condition that $P_{\ell}(1) = 1$.
+\begin{align*}
+  \frac{1}{\norm{\mathbf{r} - \mathbf{x}}} &= \sum_{\ell = 0}^{\infty}\frac{r_{ < }^{\ell}}{r^{\ell + 1}_{ > }}P_{\ell}\left(\cos\theta\right)\\
+                                           &= \frac{1}{r_{ > }} \sum_{\ell = 0}^{\infty} t^{\ell}P_{\ell}\left(\cos\theta\right).
+\end{align*}
+By the law of cosines, we know that
+\begin{align*}
+  \norm{\mathbf{r} - \mathbf{x}} &= \sqrt{r^2 + x^2 - 2rx\cos\theta}\\
+                                 &= r_{ > }\sqrt{1 + t^2 - 2st},
+\end{align*}
+where we define $s = \cos\theta$ and $t = \frac{r_{ < }}{r_{ > }}$.\newline
+
+Thus, we get
+\begin{align*}
+  \underbrace{\frac{1}{\sqrt{1 - 2st + t^2}}}_{G\left(s,t\right)} &= \sum_{\ell = 0}^{\infty}t^{\ell}P_{\ell}\left(s\right).
+\end{align*}
+The expansion defines $P_{\ell}(s)$ as Taylor coefficients of the power series expansion in $T$. We take derivatives of the closed form of $G$ to extract these values.
+\begin{align*}
+  P_{\ell}\left(s\right) &= \frac{1}{\ell!}\frac{\partial^{\ell}}{\partial t^{\ell}}G\left(s,t\right)\bigr\vert_{t=0}.
+\end{align*}
+
+\end{example}
+\subsection{Trigonometric Functions and Fourier Series}%
 
 \end{document}

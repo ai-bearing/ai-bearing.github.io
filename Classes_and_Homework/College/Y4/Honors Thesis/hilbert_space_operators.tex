@@ -9,6 +9,9 @@
 \usepackage{newpxtext,eulerpx}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \renewcommand*{\hbar}{\hslash}
+\DeclareMathOperator{\hdim}{hdim}
+\DeclareMathOperator{\hDim}{hdim}
+\DeclareMathOperator{\Hdim}{hdim}
 
 \pagestyle{fancy} %better headers
 \fancyhf{}
@@ -31,7 +34,7 @@ In quantum mechanics, the state of a non-relativistic particle is given by a vec
 \end{align*}
 In particular, $\xi$ is an element of the space $L_{2}\left(\R,\lambda\right)$. The observables on $\xi$ are modeled as operators on $L_{2}\left(\R,\lambda\right)$.
 \subsection{Theory of Hilbert Spaces}%
-In undergraduate linear algebra, the dot product of vectors in $\R^n$m, $v\cdot w$, is intimately tied to the geometry of $\R^n$ through the equations
+In undergraduate linear algebra, the dot product of vectors in $\R^n$, $v\cdot w$, is intimately tied to the geometry of $\R^n$ through the equations
 \begin{align*}
   v\cdot v &= \norm{v}^2\\
   v\cdot w &= \norm{v}\norm{w}\cos\theta.
@@ -452,5 +455,49 @@ One of the features of Hilbert spaces is that closed subspaces are always comple
       Prove that $L_{2}\left(E,\mu_E\right)$ and $M_{E}$ are unitarily isomorphic.
   \end{enumerate}
 \end{exercise}
+\begin{solution}[]\hfill
+  \begin{enumerate}[(1)]
+    \item If $\xi$ and $\eta$ are two functions that are essentially $E$-supported, then the sum $\xi + \alpha \eta$, where $\alpha\in \C$, is also essentially $E$-supported. Similarly, if $\left(\xi_n\right)_n\rightarrow \xi$ is a sequence of essentially $E$-supported functions converging in norm to $\xi$, then we have $\left(\xi_m - \xi_{n}\right)|_{E^{c}} = 0$ for each $\xi_{m},\xi_{n}$, so $\xi$ is also essentially $E$-supported.\newline
+
+      To show that $P_{M_E}$ defined by $P_{M_E}\left(\xi\right) = \xi \1_{E}$ is the orthogonal projection onto $M_{E}$, we show that $P_{M_E}$ is idempotent and maps all members of $M_{E}$ to themselves. For $\xi\in L_{2}\left(\Omega,\mu\right)$, we see that
+      \begin{align*}
+        P_{M_E}^2\left(\xi\right) &= P_{M_E}\left(\xi \1_{E}\right)\\
+                                  &= \xi\left(\1_{E}\right)\left(\1_{E}\right)\\
+                                  &= \xi \1_{E}\\
+                                  &= P_{M_E}\left(\xi\right).
+      \end{align*}
+      Additionally, for any $\xi\in M_{E}$, we have that $\xi \1_{E} \equiv \xi$ since $\xi|_{E^c} = 0$ $\mu$-a.e. Thus, $P_{M_E}$ is an idempotent operator that preserves the closed subspace $M_{E}$, so by the Hilbert projection theorem, it is necessarily the only (up to $\mu$-a.e. equivalence) orthogonal projection onto $M_{E}$.
+    \item Consult with Rainone on Solution
+  \end{enumerate}
+\end{solution}
+\begin{proposition}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $\set{M_i}_{i=1}^{n}$ is a finite family of mutually orthogonal closed subspaces. Write $M = \sum_{i=1}^{n}M_i$ for the internal sum.
+  \begin{enumerate}[(1)]
+    \item $M\subseteq \mathcal{H}$ is a closed subspace, and $M = \bigoplus_{i=1}^{n}M_i$ is the internal direct sum.
+    \item $P_{M} = \sum_{i=1}^{n}P_{M_i}$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  To see (1), we know that since $M_i\perp M_j$ for each $i\neq j$, it is the case that $M_i\cap M_j = \set{0}$ for each $i\neq j$, so it is indeed a direct sum.\newline
+
+  To see (2), let $x\in \mathcal{H}$, and write $x = y + z$ according to the decomposition $\mathcal{H} = M\oplus M^{\perp}$. Since $M_j\subseteq M$, we have $\ker\left(P_{M_j}\right) \supseteq M^{\perp}$ for each $j$. Thus, $P_{M_j}(z) = 0$ for every $j$.\newline
+
+  Since $M = \bigoplus_{i=1}^{n}M_i$, we write $y = \sum_{i=1}^{n}y_i$, with $y_i\in M_i$ uniquely. Since $M_i$ are mutually orthogonal, we know that $M_i\subseteq M_{j}^{\perp} = \ker\left(P_{M_j}\right)$ for each $i\neq j$. We compute
+  \begin{align*}
+    P_{M_j}\left(x\right) &= P_{M_j}\left(y + z\right)\\
+                          &= P_{M_j}\left(y\right)\\
+                          &= P_{M_j}\left(\sum_{i=1}^{n}y_i\right)\\
+                          &= \sum_{i=1}^{n}P_{M_j}\left(y_i\right)\\
+                          &= y_j.
+  \end{align*}
+  Thus, we get
+  \begin{align*}
+    \left(\sum_{i=1}^{n}P_{M_i}\right)\left(x\right) &= \sum_{i=1}^{n}P_{M_i}\left(x\right)\\
+                                                     &= \sum_{i=1}^{n}y_i\\
+                                                     &= y\\
+                                                     &= P_{M}\left(x\right).
+  \end{align*}
+  
+\end{proof}
 
 \end{document}
