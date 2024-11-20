@@ -7,6 +7,7 @@
 
 %serif font + different blackboard bold for serif font
 \usepackage{newpxtext,eulerpx}
+\usepackage{eucal}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \renewcommand*{\hbar}{\hslash}
 \DeclareMathOperator{\hdim}{hdim}
@@ -467,7 +468,7 @@ One of the features of Hilbert spaces is that closed subspaces are always comple
                                   &= P_{M_E}\left(\xi\right).
       \end{align*}
       Additionally, for any $\xi\in M_{E}$, we have that $\xi \1_{E} \equiv \xi$ since $\xi|_{E^c} = 0$ $\mu$-a.e. Thus, $P_{M_E}$ is an idempotent operator that preserves the closed subspace $M_{E}$, so by the Hilbert projection theorem, it is necessarily the only (up to $\mu$-a.e. equivalence) orthogonal projection onto $M_{E}$.
-    \item Consult with Rainone on Solution
+    \item 
   \end{enumerate}
 \end{solution}
 \begin{proposition}
@@ -524,7 +525,7 @@ We can now turn our attention to understanding the continuous dual of Hilbert sp
                                               &= \left(\varphi_{z_1} + \overline{\alpha}\varphi_{z_2}\right) \left(x\right).
   \end{align*}
 \end{proof}
-If $\mathcal{H}$ is a Hilbert space, then the map $\mathcal{H}\rightarrow H^{\ast}$ given by $z\mapsto \varphi_z$ is a bijection. This is known as the Riesz Representation Theorem (not to be confused for the Riesz representation Theorem for measures on $C_c\left(\Omega\right)$).
+If $\mathcal{H}$ is a Hilbert space, then the map $\mathcal{H}\rightarrow \mathcal{H}^{\ast}$ given by $z\mapsto \varphi_z$ is a bijection. This is known as the Riesz Representation Theorem (not to be confused for the Riesz representation Theorem for measures on $C_c\left(\Omega\right)$).
 \begin{theorem}[Riesz Representation Theorem]
   Let $\mathcal{H}$ be a Hilbert space. If $\varphi\in H^{\ast}$, then there exists a unique $z\in \mathcal{H}$ such that $\varphi = \varphi_z$.
 \end{theorem}
@@ -544,4 +545,546 @@ If $\mathcal{H}$ is a Hilbert space, then the map $\mathcal{H}\rightarrow H^{\as
 \begin{theorem}
   Every Hilbert space is reflexive.
 \end{theorem}
+\begin{proof}
+  Let $\iota: \mathcal{H}\rightarrow \mathcal{H}^{\ast\ast}$ be the canonical embedding. Let $f\in \mathcal{H}^{\ast\ast}$, and define $\psi: \mathcal{H}\rightarrow \C$ by $\psi(x) = \overline{f\left(\varphi_x\right)}$. For all $x_1,x_2\in \mathcal{H}$ and $\lambda\in \C$, we have
+  \begin{align*}
+    \psi\left(x_1 + \lambda x_2\right) &= \overline{f\left(\varphi_{x_1 + \lambda x_2}\right)}\\
+                                       &= \overline{f\left(\varphi_{x_1} + \overline{\lambda}\varphi_{x_2}\right)}\\
+                                       &= \overline{f\left(\varphi_{x_1}\right) + \overline{\lambda}f\left(\varphi_{x_2}\right)}\\
+                                       &= \overline{f\left(\varphi_{x_1}\right)} + \lambda \overline{f\left(\varphi_{x_2}\right)}\\
+                                       &= \psi\left(x_1\right) + \lambda \psi\left(x_2\right).
+  \end{align*}
+  Moreover,
+  \begin{align*}
+    \left\vert \psi\left(x\right) \right\vert &= \left\vert \overline{f\left(\varphi_{x}\right)} \right\vert\\
+                                              &= \left\vert f\left(\varphi_x\right) \right\vert\\
+                                              &\leq \norm{f}\norm{\varphi_x}\\
+                                              &= \norm{f}\norm{x}.
+  \end{align*}
+  Thus, $\psi\in \mathcal{H}^{\ast}$, so we know that $\psi = \varphi_{z}$ for some $z\in H$. Thus,
+  \begin{align*}
+    \overline{f\left(\varphi_x\right)} &= \psi\left(x\right)\\
+                                       &= \varphi_z\left(x\right)\\
+                                       &= \iprod{x}{z}\\
+                                       &= \overline{ \iprod{z}{x} },
+  \end{align*}
+  so $f\left(\varphi_x\right) = \iprod{z}{x} = \varphi_x\left(z\right) = \hat{z}\left(\varphi_x\right)$, so $f = \hat{z}$, so $\iota$ is surjective.
+\end{proof}
+\subsection{Orthonormal Sets and Orthonormal Bases}%
+\begin{definition}
+  Let $X$ be an inner product space, and let $A$ be an indexing set.
+  \begin{enumerate}[(1)]
+    \item A subset $\set{x_{\alpha}}_{\alpha\in A}$ is called orthogonal if $ \iprod{x_{\alpha}}{x_{\beta}} = 0 $ for $\alpha \neq \beta$.
+    \item An orthonormal set is an orthogonal set consisting of unit vectors. The set $\set{e_{\alpha}}_{\alpha \in A}$ is orthonormal if
+      \begin{align*}
+        \iprod{e_{\alpha}}{e_{\beta}} &= \begin{cases}
+          1 & \alpha = \beta\\
+          0 = \alpha \neq \beta
+        \end{cases}.
+      \end{align*}
+  \end{enumerate}
+\end{definition}
+\begin{exercise}
+  Show every orthogonal set is linearly independent.
+\end{exercise}
+\begin{solution}
+  Let $\set{x_{\alpha}}_{\alpha\in A}$ be an orthogonal set. Then, for
+  \begin{align*}
+    \sum_{i=1}^{n}a_ix_{\alpha_i} &= 0,
+  \end{align*}
+  we take
+  \begin{align*}
+    \iprod{x_{\alpha_j}}{\sum_{i=1}^{n}a_ix_{\alpha_i}} &= a_j\norm{x_{\alpha_j}}^2\\
+                                                        &= 0,
+  \end{align*}
+  so $a_i = 0$ for all $i$.
+\end{solution}
+\begin{remark}
+  Given an inner product space $X$ and a finite linearly independent subset $F = \set{x_1,\dots,x_n}$, we can always use the Gram--Schmidt process to generate an orthonormal subset $G = \set{u_1,\dots,u_n}\subseteq X$ with $\Span(G) = \Span(F)$. Inductively, we take
+  \begin{align*}
+    v_1 &= x_1\\
+    v_{k} &= x_k - \sum_{j=1}^{k-1}\frac{ \iprod{x_k}{v_j} }{ \iprod{v_j}{v_j} }v_j\\
+    u_k &= \frac{1}{\norm{v_k}}v_k.
+  \end{align*}
+\end{remark}
+\begin{exercise}
+  Let $A$ be an arbitrary set, and consider the Hilbert space $\ell_{2}\left(A\right)$. Show that $\set{e_{\alpha}}_{\alpha \in A}\subseteq \ell_{2}\left(A\right)$ is an orthonormal set.
+\end{exercise}
+\begin{example}
+  The family of continuous functions $\left(e_n\colon \mathbb{T}\rightarrow \C\right)_{n\in \Z}$ is an orthonormal basis for the arc length measure space $\left(\mathbb{T},\mathcal{L}_{\mathbb{T}},\nu\right)$.
+  \begin{align*}
+    \iprod{e_n}{e_m} &= \int_{\mathbb{T}}^{} e_{n}\overline{e_{m}}\:d\nu\\
+                     &= \int_{\mathbb{T}}^{} e_{n}e_{-m}\:d\nu\\
+                     &= \int_{\mathbb{T}}^{} e_{n-m}\:d\nu\\
+                     &= \delta_{mn}.
+  \end{align*}
+\end{example}
+\begin{theorem}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $\left(e_{\alpha}\right)_{\alpha \in A}$ is an orthonormal family in $\mathcal{H}$.
+  \begin{enumerate}[(1)]
+    \item If $\left(c_{\alpha}\right)_{\alpha\in A}\in \ell_{2}\left(A\right)$, then $\sum_{\alpha \in A}c_{\alpha}e_{\alpha}$ is summable in $\mathcal{H}$, and
+      \begin{align*}
+        \norm{\sum_{a\in A}c_{\alpha}e_{\alpha}} &= \norm{\left(c_{\alpha}\right)_{\alpha}}.
+      \end{align*}
+    \item The map $T: \ell_{2}\left(A\right)\rightarrow \mathcal{H}$ defined by $T\left(\xi\right) = \sum_{\alpha \in A}\xi\left(\alpha\right)e_{\alpha}$ is a linear isometry.
+    \item If $x\in \mathcal{H}$, then $\sum_{\alpha \in A}\left\vert \iprod{x}{e_{\alpha}} \right\vert^{2}\leq \norm{x}^2$. This is known as Bessel's inequality.
+    \item If $M = \overline{\Span}\left(\set{e_{\alpha}}_{\alpha \in A}\right)$, then $P_{M}\left(x\right) = \sum_{\alpha \in A} \iprod{x}{e_{\alpha}}e_{\alpha}$ is the orthogonal projection onto $M$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item We let $\mathcal{F}$ be the collection of finite subsets of $A$ directed by inclusion. For $F\in \mathcal{F}$, we define
+      \begin{align*}
+        s_F &= \sum_{\alpha \in F}c_{\alpha}e_{\alpha}\\
+        c_{F} &= \sum_{\alpha \in F}\left\vert c_{\alpha} \right\vert^2.
+      \end{align*}
+      By the Pythagorean theorem, we have
+      \begin{align*}
+        \norm{s_F}^2 &= \norm{\sum_{\alpha \in F}c_{\alpha}e_{\alpha}}^2\\
+                     &= \sum_{\alpha \in F}\norm{c_{\alpha}e_{\alpha}}^2\\
+                     &= \sum_{\alpha \in F}\left\vert c_{\alpha} \right\vert^2\\
+                     &= c_F.
+      \end{align*}
+      We claim the net $\left(s_{F}\right)_{F\in \mathcal{F}}$ is Cauchy in $\mathcal{H}$. For $F$ and $G$ in $\mathcal{F}$, we set
+      \begin{align*}
+        d_{\alpha} &= \begin{cases}
+          c_{\alpha} & \alpha\in F\\
+          -c_{\alpha} & \alpha \in G
+        \end{cases}.
+      \end{align*}
+      Then,
+      \begin{align*}
+        \norm{s_{F} - s_{G}}^2 &= \norm{\sum_{\alpha \in F}c_{\alpha}e_{\alpha} - \sum_{\alpha \in G}c_{\alpha}e_{\alpha}}^2\\
+                               &= \norm{\sum_{\alpha \in F\triangle G}d_{\alpha}e_{\alpha}}\\
+                               &= \sum_{\alpha \in F\triangle G}\left\vert d_{\alpha} \right\vert^2\\
+                               &= c_{F\triangle G}.
+      \end{align*}
+      Let $\ve > 0$. Since $\sum_{\alpha \in A}\left\vert c_{\alpha} \right\vert^2$ is summable, there is a finite $F_0\subseteq A$ such that for all $F\in \mathcal{F}$ with $F\cap F_0 = \emptyset$, we have $c_F\leq \ve^2$.\newline
+
+      If $F$ and $G$ are finite subsets of $A$ with $F\supseteq F_0$ and $G\supseteq F_0$, then $F_0\subseteq F\cap G$, so $\left(F\triangle G\right)\cap F_0 = \emptyset$, so
+      \begin{align*}
+        \norm{s_F - s_G}^2 &= c_{F\triangle G}\\
+                           &< \ve^2.
+      \end{align*}
+      We define $s = \sum_{\alpha \in A}c_{\alpha}e_{\alpha}$. This limit exists since $\mathcal{H}$ is complete and Cauchy nets converge. The norm of $s$ is computed as
+      \begin{align*}
+        \norm{s}^2 &= \sum_{\alpha \in A}\left\vert c_{\alpha} \right\vert^2.
+      \end{align*}
+    \item This follows directly from (1).
+    \item Let $F\subseteq A$ be finite, and set $M_F = \Span\set{e_{\alpha} | \alpha \in F}$. Since $M_F$ is finite-dimensional, $M_F$ is closed. For $x\in \mathcal{H}$ and $\beta \in A\setminus F$, the orthogonality of $\left(e_{\alpha}\right)_{\alpha \in A}$ provides
+      \begin{align*}
+        \iprod{x - \sum_{\alpha \in F} \iprod{x}{e_{\alpha}}e_{\alpha}}{e_{\beta}} &= 0.
+      \end{align*}
+      Thus, we write
+      \begin{align*}
+        x &= x -\sum_{\alpha \in F} \iprod{x}{e_{\alpha}}e_{\alpha} + \sum_{\alpha \in F} \iprod{x}{e_{\alpha}}e_{\alpha},
+      \end{align*}
+      which gives $P_{M_F} = \sum_{\alpha \in F} \iprod{x}{e_{\alpha}}e_{\alpha}$. Using the Pythagorean theorem, we get
+      \begin{align*}
+        \sum_{\alpha \in F} \left\vert \iprod{x}{e_{\alpha}} \right\vert^2 &= \norm{P_{M_F}\left(x\right)}^2\\
+                                                                           &\leq \norm{x}^2.
+      \end{align*}
+      The inequality follows by taking the supremum,
+      \begin{align*}
+        \sum_{\alpha \in A} \left\vert \iprod{x}{e_{\alpha}} \right\vert^2 &= \sup_{F\subseteq A}\left(\sum_{\alpha \in F}\left\vert \iprod{x}{e_{\alpha}} \right\vert^2\right)\\
+                                                                           &\leq \norm{x}^2.
+      \end{align*}
+    \item Fix $x\in \mathcal{H}$, and for each $\alpha \in A$, we set $c_{\alpha} = \iprod{x}{e_{\alpha}}$. We have $\left(c_{\alpha}\right)_{\alpha \in A}\in \ell_2\left(A\right)$, so $\sum_{\alpha \in A}c_{\alpha}e_{\alpha}$ is norm-summable in $\mathcal{H}$. Continuity of the inner product yields
+      \begin{align*}
+        \iprod{x - \sum_{\alpha \in A} \iprod{x}{e_{\alpha}}e_{\alpha}}{e_{\beta}} &= 0,
+      \end{align*}
+      so $x - \sum_{\alpha \in A} \iprod{x}{e_{\alpha}}e_{\alpha} \in M^{\perp}$, meaning $P_{M}(x) = \sum_{\alpha \in A} \iprod{x}{e_{\alpha}}e_{\alpha}$.
+  \end{enumerate}
+\end{proof}
+\begin{corollary}
+  If $\mathcal{H}$ is a Hilbert space, and $\set{x_{\alpha}}_{\alpha\in A}$ is an orthogonal set such that $\sum_{\alpha \in A}\norm{x_{\alpha}}^2$ is summable, then $\sum_{\alpha \in A}x_\alpha$ is summable and
+  \begin{align*}
+    \norm{\sum_{\alpha \in A}x_{\alpha}}^2 &= \sum_{\alpha \in A}\norm{x_{\alpha}}^2.
+  \end{align*}
+\end{corollary}
+\begin{proof}
+  Set $e_{\alpha} = \frac{1}{\norm{x_{\alpha}}}x_{\alpha}$, and $c_{\alpha} = \norm{x_{\alpha}}$ in the proof of the theorem above.
+\end{proof}
+\begin{example}
+  If $\left(e_n\right)_{n\geq 1}$ is the set of standard coordinate vectors in $\ell_2$, then $\sum_{n\in \N}\frac{1}{n}e_n$ is summable, but the series does not converge absolutely.
+\end{example}
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space. An orthonormal basis in $\mathcal{H}$ is a maximal orthonormal set $E$. That is, if $E\subsetneq E'$, then $E'$ is not an orthonormal basis.
+\end{definition}
+\begin{lemma}
+  Let $\mathcal{H}$ be a Hilbert space. Every orthonormal set in $\mathcal{H}$ is contained in an orthonormal basis.
+\end{lemma}
+\begin{proof}
+  Let $F\subseteq \mathcal{H}$ be an orthonormal set. Let
+  \begin{align*}
+    \mathcal{E} &= \set{E\subseteq \mathcal{H} | F\subseteq E,~E \text{ orthonormal}},
+  \end{align*}
+  and order $\mathcal{E}$ by inclusion. For any chain $\mathcal{C}$ in $\mathcal{E}$, then $U = \bigcup_{C\in \mathcal{C}}C$ is an upper bound for $\mathcal{C}$, as for any two vectors $e_{\alpha},e_{\beta}\in U$, both $e_{\alpha}$ and $e_{\beta}$ are contained in some $C\in \mathcal{C}$, so $ \iprod{e_{\alpha}}{e_{\beta}} = \delta_{\alpha \beta}$. Applying Zorn's lemma, we get the desired result.
+\end{proof}
+Orthonormal bases, like Schauder bases, have dense linear span in a Hilbert space.
+\begin{theorem}
+  Let $\mathcal{H}$ be a Hilbert space, and $E = \left(e_{\alpha}\right)_{\alpha \in A}$ be an orthonormal set. Let $M = \overline{\Span}\set{e_{\alpha} | \alpha \in A}$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $E$ is an orthonormal basis;
+    \item $M^{\perp} = \set{0}$;
+    \item $M = \mathcal{H}$;
+    \item for each $x\in \mathcal{H}$, we have $x = \sum_{\alpha \in A} \iprod{x}{e_{\alpha}}e_{\alpha}$;
+    \item for each $x\in \mathcal{H}$, we have $\norm{x}^2 = \sum_{\alpha \in A} \left\vert \iprod{x}{e_{\alpha}} \right\vert^2$ (known as Parseval's identity);
+    \item for each $x,y\in \mathcal{H}$, we have $ \iprod{x}{y} = \sum_{\alpha \in A} \iprod{x}{e_{\alpha}} \overline{ \iprod{y}{e_{\alpha}} }$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  To see (i) implies (ii), we suppose there is $v\in M^{\perp}$ with $\norm{v} = 1$. Then, $\set{v}\cup E$ is an orthonormal set containing $E$, which contradicts the maximality of $E$.\newline
+
+  The equivalence of (ii) and (iii) follows from the fact that $\mathcal{H}^{\perp} = \set{0}$ and $\set{0}^{\perp} = \mathcal{H}$.\newline
+
+  To see that (iii) implies (i), we suppose there is $v\in \mathcal{H}$ such that $v\notin E$ and $\set{v}\cup E$ is an orthonormal set. THen, for each $\alpha \in A$, we have $ \iprod{v}{e_{\alpha}} = 0 $, so $ \iprod{v}{x} = 0 $ for each $x\in \Span\set{e_{\alpha} | \alpha \in A}$. Since the inner product is continuous, we have $ \iprod{v}{x} = 0 $ for each $x\in \overline{\Span}\set{e_{\alpha} | \alpha \in A} = M = \mathcal{H}$, implying that $\norm{v} =0$.\newline
+
+  To see that (iii) implies (iv), recall that we proved that $P_M(x) = \sum_{\alpha \in A} \iprod{x}{e_{\alpha}}e_{\alpha}$, but since $M = \mathcal{H}$, we have $P_M(x) = x$.\newline
+
+  We see that (v) follows from (iv) by the previous theorem.\newline
+
+  To see that (v) implies (i), if $ \iprod{v}{e_{\alpha}} = 0 $ for each $\alpha \in A$, we must have $\norm{v} = 0$, so $E $ is a maximal orthonormal set.\newline
+
+  To see that (vi) implies (v), we let $x = y$ in the hypothesis of (vi).\newline
+
+  To see that (iv) implies (vi), we let $x,y\in \mathcal{H}$. We let $x = \sum_{\alpha \in A} \iprod{x}{e_{\alpha}}e_{\alpha}$, and $y = \sum_{\beta\in A} \iprod{y}{e_{\beta}} e_{\beta}$. By the continuity of the inner product and the orthonormality of $E$, we have
+  \begin{align*}
+    \iprod{x}{y} &= \iprod{\sum_{\alpha \in A} \iprod{x}{e_{\alpha}}e_{\alpha}}{ \sum_{\beta\in A} \iprod{y}{e_{\beta}}e_{\beta} }\\
+                 &= \sum_{\alpha,\beta \in A} \iprod{x}{e_{\alpha}} \overline{\iprod{y}{e_{\beta}}} \iprod{e_{\alpha}}{e_{\beta}}\\
+                 &= \sum_{\alpha \in A} \iprod{x}{e_{\alpha}} \overline{ \iprod{y}{e_{\beta}} }.
+  \end{align*}
+  
+\end{proof}
+For an orthonormal basis $\set{e_{\alpha}}_{\alpha \in A}$ and a given $x\in \mathcal{H}$, we often refer to the terms $ \iprod{x}{e_{\alpha}} $ as the Fourier coefficients of $x$ with respect to the basis $\set{e_{\alpha}}_{\alpha \in A}$.\newline
+
+Recall that any two vector spaces $X$ and $Y$ are isomorphic if and only if $\Dim(X) = \Dim(Y)$. A similar idea holds for Hilbert spaces.
+\begin{proposition}[]
+Let $\mathcal{H}$ be a Hilbert space. Any two orthonormal bases for $\mathcal{H}$ have the same cardinality.
+\end{proposition}
+\begin{proof}
+  Let $E = \set{e_{\alpha}}_{\alpha \in A}$ and $F = \set{f_{\beta}}_{\beta \in B}$ be two orthonormal bases for $\mathcal{H}$. If $E$ is finite, then it must be a Hamel basis as orthogonal sets are independent and finite orthonormal bases are spanning by Parseval's identity. Thus, $\Dim(\mathcal{H}) < \infty$, and since $F$ is independent, $F$ is finite, so it must be a Hamel basis, with $\Card(E) = \Card(F)$.\newline
+
+  Suppose $A$ and $B$ are both infinite. For each $\beta \in B$, consider
+  \begin{align*}
+    A_{\beta} \coloneq \set{\alpha | \iprod{f_{\beta}}{e_{\alpha}} \neq 0}.
+  \end{align*}
+  Since
+  \begin{align*}
+    \norm{f_{\beta}}^2 &= \sum_{\alpha \in A} \left\vert \iprod{f_{\beta}}{e_{\alpha}} \right\vert^2\\
+                       &= 1
+  \end{align*}
+  is summable, $A_{\beta}$ must be countable. Additionally, $A\subseteq \bigcup_{\beta \in B}A_{\beta}$, since
+  \begin{align*}
+    \norm{e_{\alpha}}^2 &= \sum_{\beta \in B}\left\vert \iprod{e_{\alpha}}{f_{\beta}} \right\vert^2.
+  \end{align*}
+  Since $\Card\left(A_{\beta}\right) \leq \aleph_0\leq \Card(B)$, we get
+  \begin{align*}
+    \Card(A) \leq \Card\left(\bigcup_{\beta \in B}A_{\beta}\right)\leq \Card(B).
+  \end{align*}
+  Similarly, $\Card(B) \leq \Card(A)$, so $\Card(A) = \Card(B)$ by Cantor--Schröder--Bernstein.
+\end{proof}
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space. The Hilbert dimension of $\mathcal{H}$, written $\hdim(\mathcal{H})$, is the cardinality of $E$ for any orthonormal basis $E$ of $\mathcal{H}$.
+\end{definition}
+We can characterize all Hilbert spaces with countable Hilbert dimension.
+\begin{proposition}
+  Let $\mathcal{H}$ be a Hamel basis with $\dim(H) = n < \infty$. Then, $\mathcal{H} \cong \ell_2^{n}$ are unitarily isomorphic.
+\end{proposition}
+\begin{proof}
+  Let $\set{v_1,\dots,v_n}$ be a Hamel basis for $\mathcal{H}$. Applying the Gram--Schmidt process, we obtain an orthonormal set $\set{u_1,\dots,u_n}$ with the same span as $\set{v_1,\dots,v_n}$. The map $T\colon \ell_{2}^{n}\rightarrow \mathcal{H}$ given by $T\left(e_j\right) = u_j$ is a surjective isometry.
+\end{proof}
+\begin{proposition}
+  Let $\mathcal{H}$ be an infinite-dimensional Hilbert space. The following are equivalent.
+  \begin{enumerate}[(i)]
+    \item $\mathcal{H}$ is separable;
+    \item $\hdim\left(\mathcal{H}\right) = \aleph_0$;
+    \item $\mathcal{H}\cong \ell_2$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Let $\set{x_k}_{k=1}^{\infty}\subseteq \mathcal{H}$ be norm-dense, and let $\left(e_{\alpha}\right)_{\alpha}$ be an orthonormal basis. Note that for $\alpha \neq \beta$, we have
+  \begin{align*}
+    \norm{e_{\alpha} - e_{\beta}}^2 &= \iprod{e_{\alpha} - e_{\beta}}{e_{\alpha} - e_{\beta}}\\
+                                    &= 2,
+  \end{align*}
+  so $\norm{e_{\alpha} - e_{\beta}} = \sqrt{2}$. For each $\alpha \in A$, the density of $\set{x_k}_{k=1}^{\infty}$ allows us to find $J\left(\alpha\right)\in \N$ such that
+  \begin{align*}
+    \norm{e_{\alpha} - x_{J_{\alpha}}} < \frac{1}{2}.
+  \end{align*}
+  We have a map $J: A\rightarrow \N$. We claim that $J$ is injective. If not, then there are $\alpha,\beta \in A$ with $\alpha\neq \beta$, $J\left(\alpha\right) = J\left(\beta\right)$. We then have
+  \begin{align*}
+    \sqrt{2} &= \norm{e_{\alpha} - e_{\beta}}\\
+             &\leq \norm{e_{\alpha} - x_{J\left(\alpha\right)}} + \norm{x_{J\left(\alpha\right)} - e_{\beta}}\\
+             &= \norm{e_{\alpha} - x_{J\left(\alpha\right)}} + \norm{x_{J\left(\beta\right)} - e_{\beta}}\\
+             &< 1.
+  \end{align*}
+  Thus, $J$ is injective, so $A$ is countable.\newline
+
+  If $\left(f_n\right)_{n\in \N}$ is an orthonormal basis for $\mathcal{H}$, then we have $\mathcal{H} \cong \ell_2\left(\N\right) = \ell_2$.\newline
+
+  If $\left(e_n\right)_{n\geq 1}$ is the canonical orthonormal basis for $\ell_2$, then we know that $\Span\left(E\right)$ is dense in $\ell_2$, so $E$ is a countable total subset of $\ell_2$, so $\mathcal{H}$ is separable.
+\end{proof}
+\subsection{Tensor Products and Direct Sums of Hilbert Spaces}%
+We have shown that closed subspaces and quotient spaces of Hilbert spaces are Hilbert spaces. Now, we turn our attention to external direct sums and tensor products.
+\subsubsection{Direct Sums}%
+In linear algebra, we learn that, for a normal $n\times n$ matrix, we can decompose $\ell_2^{n}$ into orthogonal pieces that the matrix acts on by scalar multiplication. In order to understand the spectral theorem for normal operators on Hilbert spaces, we need to understand such a decomposition.
+\begin{proposition}
+  Let $\set{\mathcal{H}_i}_{i\in I}$ be a family of Hilbert spaces. The set
+  \begin{align*}
+    \bigoplus_{i\in I}\mathcal{H}_i = \set{\left(x_i\right)_{i\in I} | x_i\in \mathcal{H}_i\text{ and } \sum_{i\in I}\norm{x_i}^2\text{ is summable}}
+  \end{align*}
+  equipped with pointwise operations is a vector space, with inner product
+  \begin{align*}
+    \iprod{x}{y} &\coloneq \sum_{i\in I} \iprod{x_i}{y_i}
+  \end{align*}
+  for $\left(x_i\right)_{i\in I},\left(y_i\right)_{i\in I}\in \bigoplus_{i\in I}\mathcal{H}_i$ that induces the complete norm
+  \begin{align*}
+    \norm{\left(x_i\right)_i} &\coloneq \left(\sum_{i\in I}\norm{x_i}^2\right)^{1/2}.
+  \end{align*}
+    The Hilbert space $\bigoplus_{i\in I}\mathcal{H}_i$ is known as the external direct sum of the family $\set{\mathcal{H}_i}_{i\in I}$.
+\end{proposition}
+\begin{example}
+  If $I$ is a set, and for each $i\in I$, we have $\mathcal{H}_{i} = \C$, then $\bigoplus_{i\in I}\mathcal{H}_{i} = \ell_2\left(I\right)$.
+\end{example}
+\begin{example}
+  If we fix a Hilbert space $\mathcal{H}$, the external direct sum $\bigoplus_{n\geq 1}\mathcal{H}$ is often denoted by $\mathcal{H}^{\infty}$ or $\ell_2\left(\mathcal{H}\right)$.
+\end{example}
+\begin{example}
+  Let $\set{\left(\Omega_n,\mathcal{M}_n,\mu_n\right)}_{n}$ be a countable family of measure spaces, and let $\left(\Sigma,\mathcal{M},\mu\right)$ be the coproduct of these spaces, defined by
+  \begin{align*}
+    \Sigma &\coloneq \coprod_{n=1}^{\infty}\Omega_n\\
+    \mathcal{M}&\coloneq \set{E\subseteq \Sigma | \iota_n^{-1}\left(E\right)\in \mathcal{M}_n\text{ for all $n$}}\\
+    \mu\left(E\right) &= \sum_{n=1}^{\infty}\mu_n\left(\iota_n^{-1}\left(E\right)\right).
+  \end{align*}
+  Then, the map
+  \begin{align*}
+    V: L_{2}\left(\Sigma,\mu\right) \rightarrow \bigoplus_{n\geq 1}L_2\left(\Omega_n,\mu_n\right),
+  \end{align*}
+  defined by
+  \begin{align*}
+    V\left(\xi\right) &= \left(\xi\circ \iota_n\right)_n
+  \end{align*}
+  is a well-defined unitary isomorphism.\newline
+
+  Let $\xi \in L_{2}\left(\Sigma,\mu\right)$. Since each $\iota_n: \Omega_n\rightarrow \Sigma$ is measurable, $\xi\circ \iota_n: \Omega_n\rightarrow \C$ is also measurable. Additionally, if $\xi$ is $0$ $\mu$-a.e., then so is $\xi\circ \iota_n$. Moreover, we have
+  \begin{align*}
+    \norm{V\left(\xi\right)}^2 &= \norm{\left(\xi\circ \iota_n\right)_n}^2\\
+                               &= \sum_{n\geq 1}\norm{\xi\circ \iota_n}^2\\
+                               &= \sum_{n\geq 1}\int_{\Omega_n}^{} \left\vert \xi\circ \iota_n(x) \right\vert^2\:d\mu_n\\
+                               &= \sum_{n\geq 1}\int_{\Omega_n}^{} \left\vert \xi \right\vert^2\circ \iota_n(x)\:d\mu_n\\
+                               &= \int_{\Sigma}^{} \left\vert \xi \right\vert^2\:d\mu\\
+                               &= \norm{\xi}^2.
+  \end{align*}
+  This shows $V$ is a well-defined linear map. Our calculation shows that $V$ is an isometry.\newline
+
+  We only need to write an inverse, for which which we define
+  \begin{align*}
+    W: \bigoplus_{n\geq 2}L_{2}\left(\Omega_n,\mu_n\right)\rightarrow L_2\left(\Sigma,\mu\right),
+  \end{align*}
+  defined by
+  \begin{align*}
+    W\left(\left(\xi_n\right)_n\right) &= \xi,
+  \end{align*}
+  where
+  \begin{align*}
+    \xi &\coloneq \coprod_{n\geq 1}\left(\xi_n: \Omega\rightarrow \C\right)\\
+    \xi\left(x,n\right) &= \xi_n\left(x\right).
+  \end{align*}
+\end{example}
+
+\section{Bounded Operators on Hilbert Spaces}%
+Hilbert spaces are, according to John Conway, anyway, ``boring,'' so we are interested in understanding the effects of operators on Hilbert spaces.\newline
+
+In the case of quantum mechanics, a particle with wave function $\xi$ moving along the $x$ axis has position equivalent to its expected value,
+\begin{align*}
+  \int_{\R}^{} x \left\vert \xi\left(x\right) \right\vert^2\:d\lambda &= \iprod{\id_{\R} \xi}{\xi},
+\end{align*}
+where the $x$ coordinate is now an observable of an operator $\xi\xmapsto{Q} \id_{R}\xi$, which is known as position. This operator is only defined on its domain, as it is not bounded.\newline
+
+Similarly, linear momentum is the map $\xi\xmapsto{P} \xi'$ (on the domain that it is defined), yielding
+\begin{align*}
+  \iprod{P\left(\xi\right)}{\xi} &= \int_{\R}^{} \diff{\xi}{x}\overline{\xi(x)}\:d\lambda,
+\end{align*}
+from which we get the uncertainty principle
+\begin{align*}
+  PQ\left(\xi\right) &= I\left(\xi\right) + QP\left(\xi\right).
+\end{align*}
+\subsection{Structure of $\mathcal{B}\left(\mathcal{H}\right)$}%
+If $X$ is a Banach space, then $\mathcal{B}\left(X\right)$, the space of bounded linear operators on $X$, is a unital Banach algebra. We will study the structure of $\mathcal{B}\left(\mathcal{H}\right)$, which is the space of bounded linear operators on a Hilbert space.
+\subsubsection{Algebraic-Analytic Structure}%
+\begin{fact}
+  Let $T,S\colon \mathcal{H}\rightarrow \mathcal{K}$ be linear maps between Hilbert spaces.
+  \begin{enumerate}[(1)]
+    \item We have $T=S$ if and only if $ \iprod{T(x)}{y} = \iprod{S(x)}{y} $ for all $x\in \mathcal{H}, y\in \mathcal{K}$.
+    \item If $\mathcal{H} = \mathcal{K}$, then $T = S$ if and only if $ \iprod{T(x)}{x} = \iprod{S(x)}{x} $ for all $x\in \mathcal{H}$.
+  \end{enumerate}
+\end{fact}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item This follows from the fact that $ \iprod{x}{z_1} = \iprod{x}{z_2} $ for all $x$ if and only if $z_1 = z_2$.
+    \item We define the sesquilinear forms $F\colon \mathcal{H}\times \mathcal{H}\rightarrow \C$, $G\colon \mathcal{H}\times \mathcal{H}\rightarrow \C$ by
+      \begin{align*}
+        F\left(x,y\right) &= \iprod{T(x)}{y}\\
+        G\left(x,y\right) &= \iprod{S(x)}{y}.
+      \end{align*}
+      We see that $T = S$ if and only if $F = G$, if and only if $F$ and $G$ agree on the diagonal, meaning $ \iprod{T(x)}{x} = \iprod{S(x)}{x} $ for all $x\in \mathcal{H}$.
+  \end{enumerate}
+\end{proof}
+\begin{fact}
+  If $T\colon \mathcal{H}\rightarrow \mathcal{K}$ is a linear map, then
+  \begin{align*}
+    \norm{T}_{\text{op}} &= \sup\set{\left\vert \iprod{T(x)}{y} \right\vert | x\in B_{\mathcal{H}},y\in B_{\mathcal{K}}}.
+  \end{align*}
+\end{fact}
+\begin{proof}
+  By the Riesz Representation theorem, we have that $B_{K^{\ast}} = \set{ \iprod{\cdot}{y} | y\in B_{\mathcal{K}} }$, meaning we have
+  \begin{align*}
+    \norm{T(x)} &= \sup_{y\in B_{\mathcal{K}}}\left\vert \iprod{T(x)}{y} \right\vert.
+  \end{align*}
+  Taking the supremum over $x\in B_{\mathcal{Y}}$ yields
+  \begin{align*}
+    \norm{T}_{\text{op}} &= \sup_{x\in B_{\mathcal{H}}} \norm{T(x)}\\
+                         &= \sup\set{ \left\vert \iprod{T(x)}{y} \right\vert | x\in B_{\mathcal{H}},y\in B_{\mathcal{K}} }.
+  \end{align*}
+\end{proof}
+\begin{definition}
+  Let $F: \mathcal{H}\times \mathcal{K}\rightarrow \C$ be a sesquilinear form. We define the norm
+  \begin{align*}
+    \norm{F} &\coloneq \sup\set{\left\vert F(x,y) \right\vert | x\in B_{\mathcal{H}},y\in B_{\mathcal{K}}}.
+  \end{align*}
+  We say $F$ is bounded if $\norm{F} < \infty $.
+\end{definition}
+\begin{proposition}
+  If $F: \mathcal{H}\times \mathcal{K}\rightarrow \C$ is a bounded sesquilinear form, then there exists a unique $S\in B\left(\mathcal{K},\mathcal{H}\right)$ such that
+  \begin{align*}
+    F\left(x,y\right) &= \iprod{x}{S(y)}.
+  \end{align*}
+\end{proposition}
+\begin{proof}[]
+Fix $y\in \mathcal{K}$, and consider the linear functional $\varphi: \mathcal{H}\rightarrow \C$ given by $\varphi(x) = F\left(x,y\right)$. Since $\varphi$ is linear, we have
+\begin{align*}
+  \left\vert \varphi(x) \right\vert &= \left\vert F\left(x,y\right) \right\vert\\
+                                    &\leq \norm{F}\norm{y}
+\end{align*}
+for all $x\in B_{\mathcal{H}}$, meaning $\varphi\in \mathcal{H}^{\ast}$. Thus, there is a unique $z\in \mathcal{H}$ such that $\varphi = \varphi_z$. We define $S(y) \coloneq z$. Doing this for each $y\in \mathcal{K}$, we get a map $S: \mathcal{K}\rightarrow \mathcal{H}$ such that
+\begin{align*}
+  F\left(x,y\right) &= \iprod{x}{S(y)}.
+\end{align*}
+We show that $S$ is linear and bounded. Let $y_1,y_2\in \mathcal{K}$ and $\alpha \in \mathcal{C}$. For all $x\in \mathcal{H}$, we have
+\begin{align*}
+  \iprod{x}{S\left(y_1 + \alpha y_2\right)} &= F\left(x,y_1 + \alpha y_2\right)\\
+                                            &= F\left(x,y_1\right) + \overline{\alpha}F\left(x,y_2\right)\\
+                                            &= \iprod{x}{S\left(y_1\right)} + \overline{\alpha} \iprod{x}{S\left(y_2\right)}\\
+                                            &= \iprod{x}{S\left(y_1\right) + \alpha S\left(y_2\right)}.
+\end{align*}
+Thus, $S$ is linear. We also have
+\begin{align*}
+  \norm{S}_{\text{op}} &= \sup\set{\left\vert \iprod{x}{S(y)} \right\vert | x\in B_{\mathcal{H}},y\in B_{\mathcal{K}}}\\
+                       &= \sup\set{\left\vert F(x,y) \right\vert | x\in B_{\mathcal{H}},y\in B_{\mathcal{K}}}\\
+                       &= \norm{F}.
+\end{align*}
+For uniqueness, we see that if $ \iprod{x}{S_1(y)} = F(x,y) = \iprod{x}{S_2(y)} $, then $S_1 = S_2$ necessarily.
+\end{proof}
+\begin{theorem}
+  Let $\mathcal{H}, \mathcal{K},\mathcal{L}$ be Hilbert spaces. If $T\in \mathcal{B}\left(\mathcal{H},\mathcal{K}\right)$, then there is a unique bounded operator $T^{\ast}\in \mathcal{B}\left(\mathcal{K},\mathcal{H}\right)$ such that 
+  \begin{align*}
+    \iprod{T(x)}{y} &= \iprod{x}{T^{\ast}\left(y\right)}
+  \end{align*}
+  for all $x\in \mathcal{H}$ and $y\in \mathcal{K}$. We call $T^{\ast}$ the Hilbert space adjoint of $T$. Moreover, the following are true for $T,S\in \mathcal{B}\left(\mathcal{H},\mathcal{K}\right)$, $R\in \mathcal{B}\left(\mathcal{K},\mathcal{L}\right)$, and $\lambda \in \C$:
+  \begin{enumerate}[(1)]
+    \item $\left(T + \lambda S\right)^{\ast} = T^{\ast} + \overline{\lambda}S^{\ast}$;
+    \item $T^{\ast\ast} = T$;
+    \item $\left(R\circ T\right)^{\ast} = T^{\ast}\circ R^{\ast}$;
+    \item if $T$ is invertible, then $\left(T^{-1}\right)^{\ast} = \left(T^{\ast}\right)^{-1}$;
+    \item $\norm{T^{\ast}} = \norm{T}$;
+    \item $\norm{T^{\ast}T} = \norm{T}^2$ (known as the $C^{\ast}$-property).
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  We define $F: \mathcal{H}\times \mathcal{K}\rightarrow \C$ by $F\left(x,y\right) = \iprod{T(x)}{y}$. We have $F$ is a sesquilinear form, and
+  \begin{align*}
+    \norm{F} &= \sup\set{\left\vert F(x,y) \right\vert | x\in B_{\mathcal{H}},y\in B_{\mathcal{K}}}\\
+             &= \sup\set{\left\vert \iprod{T(x)}{y} \right\vert | x\in B_{\mathcal{H}},y\in B_{\mathcal{K}}}\\
+             &= \norm{T}_{\text{op}}.
+  \end{align*}
+  Thus, there is a unique operator $S_T\in \mathcal{B}\left(\mathcal{K},\mathcal{H}\right)$ such that $ \iprod{T(x)}{y} = \iprod{x}{S_T(y)} $, with $\norm{S_T} = \norm{T}$. We define $T^{\ast} = S_T$.\newline
+
+  We will show (6).
+  \begin{align*}
+    \norm{T^{\ast}T} &= \sup_{\substack{x\in B_{\mathcal{H}}\\y\in B_{\mathcal{K}}}} \left\vert \iprod{T^{\ast} T (x)}{y} \right\vert\\
+                     &\geq \sup_{x\in B_{\mathcal{H}}} \left\vert \iprod{T^{\ast}T\left(x\right)}{x} \right\vert\\
+                     &= \sup_{x\in B_{\mathcal{H}}}\left\vert \iprod{T(x)}{T(x)} \right\vert\\
+                     &= \sup_{x\in B_{\mathcal{H}}} \norm{T(x)}^2\\
+                     &= \left(\sup_{x\in B_{\mathcal{H}}}\norm{T(x)}\right)^2\\
+                     &= \norm{T}^2\\
+                     &= \norm{T}\norm{T}\\
+                     &= \norm{T^{\ast}}\norm{T}\\
+                     &\geq \norm{T^{\ast}T}.
+  \end{align*}
+\end{proof}
+\begin{exercise}
+  Let $\mathcal{H}$ and $\mathcal{K}$ be Hilbert spaces, and suppose $T\in \mathcal{B}\left(\mathcal{H},\mathcal{K}\right)$. Write $T^{\ast}\in \mathcal{B}\left(\mathcal{K},\mathcal{H}\right)$ to be the (Hilbert space) adjoint, and $T^{\dagger}: K^{\ast}\rightarrow H^{\ast}$ to be the Banach space adjoint. Let $\rho_{\mathcal{H}}:\mathcal{H}\rightarrow \mathcal{H}^{\ast}$ be the conjugate linear isometry $x\mapsto \varphi_x$, and let $\rho_{\mathcal{K}}: \mathcal{K}\rightarrow \mathcal{K}^{\ast}$ to be the conjugate linear isometry $y \mapsto \varphi_{y}$. Show that the following diagram commutes.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkQAdDgW3pwAsAxk2ABpAL4hxpdJlz5CKchWp0mrdl14DhjYAAlJ02djwEiZYqoYs2iTjz5CREgHrAu9ODiMyQGUwUiZSsaGw17LSddA3F3T28jVRgoAHN4IlAAMwAnCG4kMhAcCCRlEEZ6ACMYRgAFOTNFEBysVP4cEDD1OxAAFXiOLx8pP1z8wpoSpAAmbttNDhz+CAB9D0cdF3FfbLyCxHLpxABmGkqa+sag+1b2zvmIh2W1je1nPUNdkHGDueLSqdHr0BhsoPRUukcklxEA
+\begin{tikzcd}
+\mathcal{K}^{\ast} \arrow[r, "T^{\dagger}"]                        & \mathcal{H}^{\ast}                           \\
+\mathcal{K} \arrow[r, "T^{\ast}"'] \arrow[u, "\rho_{\mathcal{K}}"] & \mathcal{H} \arrow[u, "\rho_{\mathcal{H}}"']
+\end{tikzcd}
+  \end{center}
+\end{exercise}
+\begin{proof}
+  Let $x\in \mathcal{H}$, $y\in \mathcal{K}$. By the Riesz representation theorem, we have $\varphi_{x} = \iprod{\cdot}{x}$ and $\varphi_{y} = \iprod{\cdot}{y}$. Thus, we have
+  \begin{align*}
+    T^{\dagger}\left(\varphi_y\right)\left(\left(x\right)\right) &= \varphi_{y}\left(T\left(x\right)\right)\\
+                                                                 &= \iprod{T(x)}{y}\\
+                                                                 &= \iprod{x}{T^{\ast}(y)}\\
+                                                                 &= \varphi_{x}\left(T^{\ast}\left(y\right)\right).
+  \end{align*}
+  
+\end{proof}
+\begin{corollary}
+  The adjoint map $\ast: \mathcal{B}\left(\mathcal{H}\right)\rightarrow \mathcal{B}\left(\mathcal{H}\right)$ defined by $T\mapsto T^{\ast}$ is an involution, meaning $\mathcal{B}\left(\mathcal{H}\right)$ is a unital $\ast$-algebra. If $\Dim\left(\mathcal{H}\right) > 1$, then $\mathcal{B}\left(\mathcal{H}\right)$ is noncommutative.
+\end{corollary}
+\begin{definition}
+  A Banach $\ast$-algebra is a Banach algebra $A$ with an involution satisfying
+  \begin{align*}
+    \norm{a^{\ast}} = \norm{a}
+  \end{align*}
+  for all $a\in A$. If $A$ is a Banach $\ast$-algebra that satisfies the $C^{\ast}$-property, then $A$ is called a $C^{\ast}$-algebra.
+\end{definition}
+We can now look at some examples of operators and adjoints.
+\begin{example}
+  Let $a = \left(a_{ij}\right)_{i,j}\in \Mat_{m,n}\left(\C\right)$, with the linear operator
+  \begin{align*}
+    T_{a}\colon \ell_{2}^{n}\rightarrow \ell_{2}^{m}
+  \end{align*}
+  defined by $T_a\left(\xi\right) = a\xi$. Since $\ell_2^{n}$ is finite-dimensional, $T_a$ is bounded. The conjugate transpose $a^{\ast} = \left(\overline{a_{ji}}\right)_{i,j}$ is an $n\times m$ matrix satisfying
+  \begin{align*}
+    \iprod{T_{a}\left(\xi\right)}{\eta} &= \iprod{a\eta}{\xi}\\
+                                        &= \left(a\xi\right)^{\ast}\eta\\
+                                        &= \xi^{\ast}a^{\ast}\eta\\
+                                        &= \iprod{\xi}{a^{\ast}\eta}\\
+                                        &= \iprod{\xi}{T_{a^{\ast}}\left(\eta\right)},
+  \end{align*}
+  meaning $T_{a}^{\ast} = T_{a^{\ast}}$.
+\end{example}
+\subsubsection{Topologies on $\mathcal{B}\left(\mathcal{H}\right)$}%
+Given a Banach space $X$, we can introduce two locally convex topologies on $\mathcal{B}\left(X\right)$ --- namely, the weak operator topology and the strong operator topology, both of which are weaker than the norm topology.
+\begin{lemma}
+  Let $\mathcal{H}$ be a Hilbert space, and let $\left(T_{\alpha}\right)_{\alpha}$ be a net in $\mathcal{B}\left(\mathcal{H}\right)$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $\left(T_{\alpha}\right)_{\alpha}\xrightarrow{\text{WOT}}T$;
+    \item for all $\xi,\eta\in \mathcal{H}$, $ \iprod{T_{\alpha}\left(\xi\right)}{\eta}\rightarrow \iprod{T\left(\xi\right)}{\eta} $;
+    \item for all $\xi,\eta\in B_{\mathcal{H}}$, $ \iprod{T_{\alpha}\left(\xi\right)}{\eta}\rightarrow \iprod{T\left(\xi\right)}{\eta} $;
+    \item for all $\xi\in \mathcal{H}$, $ \iprod{T_{\alpha}\left(\xi\right)}{\xi} \rightarrow \iprod{T\left(\xi\right)}{\xi} $;
+    \item for all $\xi\in B_{\mathcal{H}}$, $ \iprod{T_{\alpha}\left(\xi\right)}{\xi} \rightarrow \iprod{T\left(\xi\right)}{\xi} $.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  We only need to prove the equivalence between (i) and (ii). The rest follow from scaling or the polarization identity.\newline
+
+  We know that $\left(T_{\alpha}\right)_{\alpha}\xrightarrow{\text{WOT}}T$ in $\mathcal{B}\left(\mathcal{H}\right)$ if and only if $\varphi\left(T_{\alpha}\left(\xi\right)\right)\rightarrow \varphi\left(T\left(\xi\right)\right)$ for each $\xi\in \mathcal{H}$ and $\varphi\in \mathcal{H}^{\ast}$. By the Riesz representation theorem, each $\varphi\in \mathcal{H}^{\ast}$ is of the form $\varphi\left(\cdot\right) = \iprod{\cdot}{\eta}$.
+\end{proof}
+
 \end{document}

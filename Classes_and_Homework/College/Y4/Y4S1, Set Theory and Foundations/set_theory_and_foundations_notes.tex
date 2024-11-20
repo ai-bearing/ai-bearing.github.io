@@ -2133,11 +2133,19 @@ We start by considering a model of arithmetic. There are two ways to do arithmet
   \end{enumerate}
 \end{definition}
 \begin{theorem}
-  If we let $\omega$ be our set, $0 = \emptyset$, $\left(+\right)$ defined by ordinal addition, $\left(\cdot\right)$ defined by ordinal multiplication, and $S(x) = x\cup \set{x}$, then this is a model for PA.
+  If we let $\omega$ be our set, $0 = \emptyset$, $\left(+\right)$ defined by ordinal addition, $\left(\cdot\right)$ defined by ordinal multiplication, and $S(x) = x\cup \set{x}$, then this is a model for PA.\newline
+
+  This is known as the standard model of PA.
 \end{theorem}
 \begin{theorem}
   There exists a model of PA that is not isomorphic to $\omega$.
 \end{theorem}
+\begin{remark}
+  A formula may be true in the standard model of PA, but not in every model. For instance, Goodstein's theorem (see below) is true in the standard model of PA, but not in every model.\newline
+
+  The theorem can be proven in ZFC, but not in PA.
+\end{remark}
+
 Let $\Gamma$ be any set of formulae. Let $P$ be a formula. We may ask some questions.
 \begin{enumerate}[(1)]
   \item If $\Gamma \vdash P$, does this imply that $P$ is true in every model of $\Gamma$?
@@ -2154,17 +2162,69 @@ A set of formulae, $\Gamma$, is said to be inconsistent if there exists a formul
 
 Else, we say $\Gamma$ is consistent.
 \end{definition}
+\begin{theorem}
+  A set of formulae $\Gamma$ is consistent if and only if $\Gamma$ has a model.
+\end{theorem}
 \begin{theorem}[Gödel's Completeness Theorem]
-  It is the case that all of (1), (2), (3), and (4) are true.
+  A formula is true in every model of PA if and only if it is provable from the axioms of PA.
 \end{theorem}
-\begin{theorem}[Gödel's Incompleteness Theorem]
+\begin{remark}
+  Gödel's completeness theorem holds for any model.
+\end{remark}
+\begin{example}
+  Let $\phi$ be the formula
+  \begin{align*}
+    \forall n \exists p \left(p \text{ is prime } \wedge p\geq n\right).
+  \end{align*}
+  Note that
+  \begin{align*}
+    p\text{ is prime} \coloneq \forall k  \left(\left(\exists q\left(qk = p\right)\right) \Rightarrow k=1 \vee k=p\right).
+  \end{align*}
+  The formula $\phi$ states that there are infinitely many prime numbers.
+\end{example}
+We know that there exist statements that are true in the standard model of PA that aren't provable from PA (like Goodstein's theorem), so we may ask if there is a set $\Gamma$ of formulae such that every formula that is true in the standard model of PA can be proven from $\Gamma$.\newline
 
+The cheesy answer is to set $\Gamma$ to be the set true formulae in the standard model of PA. However, we may want to qualify this desire.
+\begin{itemize}
+  \item We want to be able to list all the formulae.
+  \item Given any formula, we want to be able to determine whether or not it is in $\Gamma$.
+\end{itemize}
+In other words, we want a decidable set of axioms --- i.e., that given any formula $f$, there is an algorithm to determine whether or not $f$ is in the list of axioms.
+\begin{theorem}[Gödel's Incompleteness Theorem]
+  There is no decidable set of axioms to prove every statement that is true in every model of arithmetic.
 \end{theorem}
-\begin{proof}
-  \textbf{Part 1:} We number all Turing machines.
+\begin{proof}\hfill
+  \begin{description}
+    \item[Part 1:] We number all Turing machines.
+  \end{description}
   \begin{lemma}[]
-    Given any fixed $n\in \N$, we can write a formula $F$ in Peano arithmetic such that $F$ is true if and only if $T_{n}(n)$ halts.
+    Given any fixed $n\in \N$, we can write a formula $F$ in Peano arithmetic such that $F$ is true in the standard model of Peano arithmetic if and only if $T_{n}(n)$ does not halt.
   \end{lemma}
+  \begin{description}
+    \item[Part 2:] Number all formulae in Peano arithmetic, ordered lexicographically.
+      \begin{lemma}[]
+        There exists a computable function $k(n)$ such that for each $n$, $F_{k(n)}$ is true if and only if $T_{n}(n)$ does not halt.
+      \end{lemma}
+      Since $k(n)$ is computable, there exists a Turing machine $NH$ that computes $k$. In other words, $NH(n) = k(n)$.
+    \item[Part 3:] There exists an algorithm for trying to find a proof of any given formula from the Peano axioms. Given any formula $F$, if $F$ has a proof from the Peano axioms, this algorithm will eventually stop and output ``true.'' Else, the algorithm will not halt.
+    \item[Part 4:] There exists a Turing machine, $IP$, such that for every natural number $n\in \N$, $IP(n)$ halts if and only if $F_{n}$ has a proof in Peano arithmetic.
+    \item[Part 5:] Let $IPNH$ be the Turing machine found by composing $NH$ with $IP$. We take
+      \begin{align*}
+        IPNH \left(n\right) &= IP\left(NH\left(n\right)\right).
+      \end{align*}
+      Since $IP$ and $NH $ are computable, there is $z$ such that $IPNH = T_{z}$. Let $y = NH(z) = k(z)$. Then, we have $F_y$ is true if and only if $T_{z}(z)$ does not halt.
+  \end{description}
+  Thus, we get
+  \begin{align*}
+    F_y\text{ is true} &\Leftrightarrow T_z\left(z\right)\text{ does not halt}\\
+                       &\Leftrightarrow IPNH\left(z\right)\text{ does not halt}\\
+                       &\Leftrightarrow IP\left(NH\left(z\right)\right)\text{ does not halt}\\
+                       &\Leftrightarrow IP\left(y\right)\text{ does not halt}\\
+                       &\Leftrightarrow F_Y\text{ does not have a proof in PA.}
+  \end{align*}
+  Thus, if $F_y$ were false, then $F_y$ would have a proof from PA, but every provable formula in every model of PA is true (by Gödel's completeness theorem). Thus, $F_y$ must be true.\newline
+
+  Here, $F_y$ is effectively equivalent to the statement ``I am not provable.''
 \end{proof}
 
 \subsection{Goodstein Sequences}%

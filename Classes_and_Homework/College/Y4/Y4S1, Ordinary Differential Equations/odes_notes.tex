@@ -2258,4 +2258,171 @@ The following diagram\footnote{Taken from \href{https://tex.stackexchange.com/qu
 \begin{center}
   \includegraphics[width=15cm]{images/trace_determinant.pdf}
 \end{center}
+\begin{example}[Bifurcations for Systems of Equations]
+  Consider the family of systems (where $a$ is a parameter)
+  \begin{align*}
+    \diff{\vec{Y}}{t} &= \begin{pmatrix}-2 & a \\ -2 & 0\end{pmatrix} \vec{Y}.
+  \end{align*}
+  We find that
+  \begin{align*}
+    \det A &= 2a\\
+    \tr A &= -2.
+  \end{align*}
+  Using the trace-determinant plane, we find the equation
+  \begin{align*}
+    \det A &= \frac{1}{4}\left(\tr A\right)^2\\
+    2a &= 1
+  \end{align*}
+  characterizes the bifurcation values. 
+  \begin{itemize}
+    \item If $a > \frac{1}{2}$, the origin is a spiral sink.
+    \item If $0 < a < \frac{1}{2}$, the origin is a sink.
+    \item If $a < 0$, the origin is a saddle.
+    \item If $a = \frac{1}{2}$, the origin is a nodal sink or sink star point.
+    \item If $a = 0$, we have a line of attracting fixed points (as one of our eigenvalues is negative).
+  \end{itemize}
+  The bifurcation values are thus at $a = 0$ and $a = \frac{1}{2}$.
+  \begin{center}
+    \includegraphics[width=10cm]{images/bifurcation_trace_determinant_1.png}
+  \end{center}
+\end{example}
+\section{Understanding Nonlinear Systems}%
+\subsection{Equilibrium Point Analysis}%
+We will start by examining a special system known as the Van der Pol system of equations.
+\begin{align*}
+  \diff{x}{t} &= y\\
+  \diff{y}{t} &= -x + \left(1-x^2\right)y.
+\end{align*}
+\begin{center}
+  \includegraphics[width=10cm]{images/van_der_pol_equation.pdf}
+\end{center}
+We can start by finding the equilibrium solutions. Taking $\diff{x}{t} = 0$, we find $y = 0$, from which we place into $\diff{y}{t} = -x + \left(1-x^2\right)\left(0\right) = 0$, so $x = 0$.\newline
+
+The only equilibrium point is the origin. Note that we can see the origin is a type of spiral source as we zoom in close to the origin.
+\begin{center}
+  \includegraphics[width=10cm]{images/van_der_pol_equation_near_origin.pdf}
+\end{center}
+We can justify this by approximating the nonlinear system with a linear system.\newline
+
+When we are very close to the origin such as at $x=y=0.1$, the term $x^2 y$ is orders of magnitude smaller than $x$ and $y$. We can then analyze the linearized system
+\begin{align*}
+  \diff{x}{t} &= y\\
+  \diff{y}{t} &= -x + y,
+\end{align*}
+which is
+\begin{align*}
+  \diff{\vec{Y}}{t} &= \begin{pmatrix}0 & 1 \\ -1 & 1\end{pmatrix} \vec{Y}.
+\end{align*}
+Solving this system of equations, we find eigenvalues 
+\begin{align*}
+  \det\left(A - \lambda I\right) &= \lambda\left(\lambda - 1\right) + 1\\
+  \lambda^2 - \lambda + 1 &= 0\\
+  \left(\lambda - \frac{1}{2}\right)^2 &= -\frac{3}{4}\\
+  \lambda &= \frac{1}{2} \pm \frac{\sqrt{3}}{2}i.
+\end{align*}
+We can see that this is a complex solution, and specifically that the origin is a spiral source (as the real part is positive). Note that, near the origin, we can see that the linearization (on the right) and the original system (on the left) are very similar.
+\begin{center}
+  \includegraphics[width=15cm]{images/van_der_pol_linearization.pdf}
+\end{center}
+Considering an arbitrary nonlinear system
+\begin{align*}
+  \diff{x}{t} &= f\left(x,y\right)\\
+  \diff{y}{t} &= g\left(x,y\right)
+\end{align*}
+with equilibrium point $\left(a,b\right)$, where $f\left(a,b\right) = 0 = g\left(a,b\right)$, we can use techniques from multivariable calculus to find the linear approximation of $f\left(x,y\right)$ near $\left(a,b\right)$.
+\begin{align*}
+  f\left(x,y\right) &\approx f\left(a,b\right) + \pd{f}{x}\Bigr\vert_{\left(a,b\right)}\left(x-a\right) + \pd{f}{y}\Bigr\vert_{\left(a,b\right)}\left(y-b\right).
+\end{align*}
+Thus, to linearize our system near the equilibrium point, we find
+\begin{align*}
+  f\left(x,y\right) &\approx \diff{f}{x}\Bigr\vert_{\left(a,b\right)}\left(x-a\right) + \diff{f}{y} \Bigr\vert_{\left(a,b\right)}\left(y-b\right)\\
+  g\left(x,y\right) &\approx \diff{g}{x}\Bigr\vert_{\left(a,b\right)}\left(x-a\right) + \diff{g}{y}\Bigr\vert_{\left(a,b\right)}\left(y-b\right).
+\end{align*}
+Note that we can view this as the system
+{ \renewcommand{\arraystretch}{1.75}
+  \begin{align*}
+    \diff{\vec{Y}}{t} &= \begin{pmatrix}\diff{f}{x}\Bigr\vert_{\left(a,b\right)} & \diff{f}{y} \Bigr\vert_{\left(a,b\right)} \\ \diff{g}{x}\Bigr\vert_{\left(a,b\right)} & \diff{g}{y}\Bigr\vert_{\left(a,b\right)}\end{pmatrix} \begin{pmatrix}x-a\\y-b\end{pmatrix}
+  \end{align*}
+}
+We can now take the change of variables $u = x-a$ and $v = y-b$, to yield
+{\renewcommand{\arraystretch}{1.75}
+  \begin{align*}
+    \begin{pmatrix}\diff{u}{t} \\ \diff{v}{t}\end{pmatrix} &= \underbrace{\begin{pmatrix}\diff{f}{x}\Bigr\vert_{\left(a,b\right)} & \diff{f}{y} \Bigr\vert_{\left(a,b\right)} \\ \diff{g}{x}\Bigr\vert_{\left(a,b\right)} & \diff{g}{y}\Bigr\vert_{\left(a,b\right)}\end{pmatrix}}_{J|_{(a,b)}} \begin{pmatrix}u\\v\end{pmatrix}.
+  \end{align*}
+}
+This is our new linearized system, 
+\begin{align*}
+  \diff{\vec{U}}{t} &= J\left(a,b\right) \vec{U},
+\end{align*}
+where
+\begin{align*}
+  \vec{U} &= \begin{pmatrix}u\\v\end{pmatrix}.
+\end{align*}
+\begin{example}
+  Consider the system
+  \begin{align*}
+    \diff{x}{t} &= x-y\\
+    \diff{y}{t} &= x^2 + y^2 - 2.
+  \end{align*}
+  We find the equilibrium solutions $\left(-1,-1\right),\left(1,1\right)$.\newline
+
+  To find the linearization, find the Jacobian
+  \begin{align*}
+    J|_{\left(x,y\right)} &= \begin{pmatrix}1 & -1 \\ 2x & 2y\end{pmatrix}\\
+    J|_{\left(1,1\right)} &= \begin{pmatrix}1 & -1 \\ 2 & 2\end{pmatrix}\\
+    J|_{\left(-1,-1\right)}  &= \begin{pmatrix}1 & -1 \\ -2 & -2\end{pmatrix}.
+  \end{align*}
+  \begin{itemize}
+    \item Evaluating the eigenvalues for $J|_{\left(1,1\right)}$, we find
+      \begin{align*}
+        \left(1-\lambda\right)\left(2-\lambda\right) + 2 &= 0\\
+        \lambda^2 - 3\lambda + 4 &= 0\\
+        \lambda &= \frac{3}{2} \pm \frac{\sqrt{7}}{2}i,
+      \end{align*}
+      implying that the equilibrium point $\left(1,1\right)$ is a spiral source.
+    \item Evaluating the eigenvalues for $J|_{\left(-1,-1\right)}$, we find
+      \begin{align*}
+        \left(\lambda - 1\right)\left(\lambda + 2\right)- 2 &= 0\\
+        \lambda^2 + \lambda - 4 &= 0\\
+        \left(\lambda + \frac{1}{2}\right)^2 &= \frac{5}{4}\\
+        \lambda &= \frac{1}{2}\pm \frac{\sqrt{5}}{2}.
+      \end{align*}
+      Since there is one positive eigenvalue and one negative eigenvalue, we see that this equilibrium point is a saddle.
+  \end{itemize}
+  We can see in the plot below that near our equilibrium points, our linearization works decently well.
+  \begin{center}
+    \includegraphics[width=7.5cm]{images/linearizing_system_1.pdf}\break
+
+    \includegraphics[width=15cm]{images/linearizing_system_1_zoomed.pdf}
+  \end{center}
+\end{example}
+Unfortunately, there are places where linearization may fail.
+\begin{example}[Linearization's Failure]
+  Consider the linearization
+  \begin{align*}
+    \diff{x}{t} &= y - \left(x^2 + y^2\right)x\\
+    \diff{y}{t} &= -x-\left(x^2 + y^2\right)y.
+  \end{align*}
+  Note that $\left(0,0\right)$ is an equilibrium solution. Solving the Jacobian, we find
+  \begin{align*}
+    J|_{\left(x,y\right)} &= \begin{pmatrix}-3x^2 - y^2 & 1-2yx\\-1-2xy & -3y^2 - x^2\end{pmatrix}
+  \end{align*}
+  Evaluating at the equilibrium solution, we find
+  \begin{align*}
+    \diff{\vec{U}}{t} &=  \begin{pmatrix}0 & 1 \\ -1 & 0\end{pmatrix} \begin{pmatrix}u\\v\end{pmatrix}.
+  \end{align*}
+  The eigenvalues are $\lambda = \pm i$. Thus, we find that the origin is a center. Presumably.
+  \begin{center}
+    \includegraphics[width=10cm]{images/linearizing_system_2.pdf}
+  \end{center}
+  However, we see that solutions spiral towards the origin (very slowly).
+\end{example}
+Thus, we are forced to see that we cannot rely on the linearization method to solve borderline cases.\newline
+
+In particular, the borderline cases on the trace-determinant plane occur at the points where
+\begin{itemize}
+  \item $T = 0$ (i.e., centers);
+  \item $D = \frac{1}{4}T^2$ (i.e., repeated eigenvalues);
+  \item $D = 0$ (i.e., attracting/repelling fixed points).
+\end{itemize}
 \end{document}

@@ -2547,7 +2547,7 @@ Let $\mathbf{F}\left(\mathbf{r}\right)$ be a vector field. Then, the following a
   \end{align*}
   which is much easier to do. Notice that
   \begin{align*}
-    \norm{\mathbf{r} - \mathbf{s}}^2 &= \iprod{\mathbf{r}-\mathbf{s}}{\mathbf{r}-\mathbf{s}}\\
+    \norm{\mathbf{r} - \mathbf{s}}^2 &= \braket{\mathbf{r}-\mathbf{s}}{\mathbf{r}-\mathbf{s}}\\
                                      &= \norm{\mathbf{r}}^2 + \norm{\mathbf{s}}^2 - 2\norm{\mathbf{r}}\norm{\mathbf{s}}\cos\theta,
   \end{align*}
   meaning, with $\norm{\mathbf{r}} = r$ and $\norm{\mathbf{s}} = a$,
@@ -5652,5 +5652,169 @@ The expansion defines $P_{\ell}(s)$ as Taylor coefficients of the power series e
 
 \end{example}
 \subsection{Trigonometric Functions and Fourier Series}%
+We can take polynomials and construct orthogonal and orthonormal bases from them with the inner product
+\begin{align*}
+  \braket{\phi}{\psi} &= \int_{a}^{b} \overline{\phi(x)}\psi(x)w(x)\:dx.
+\end{align*}
+Now, we want to look at a basis for periodic functions --- specifically, consisting of sines and cosines.
+\subsubsection{Constructing an Orthonormal Basis of Sines and Cosines}%
+Consider the family $\set{\sin a\xi, \cos b\xi}$, where $a$ and $b$ are any positive real numbers. We calculate the integrals of $\sin a \xi \sin b \xi$, $\cos a\xi \cos b\xi$, and $\sin a\xi \cos b\xi$.
+\begin{align*}
+  \int_{-\pi}^{\pi} \sin a \xi \sin b \xi\:d\xi &= \frac{1}{2}\int_{-\pi}^{\pi} \left(\cos\left(\left(a-b\right)\xi\right) - \cos\left(\left(a+b\right)\xi\right)\right)\:d\xi\\
+                                                &= \int_{0}^{\pi} \left(\cos\left(\left(a-b\right)\xi\right) - \cos\left(\left(a-\xi\right)\xi\right)\right)\:d\xi\\
+                                                &= \left[\frac{\sin\left(\left(a-b\right)\xi\right)}{a-b} - \frac{\sin\left(\left(a+b\right)\xi\right)}{a+b}\right] \bigr\vert_{0}^{\pi}\\
+                                                &= \frac{\sin\left(\left(a-b\right)\pi\right)}{a-b} - \frac{\sin\left(\left(a+b\right)\pi\right)}{a+b}.
+\end{align*}
+In order for $\sin a\xi$ and $\sin b\xi$ to be orthogonal, we need this integral to vanish for all $a\neq b$, meaning we must restrict $a$ and $b$ to be integers.\newline
+
+To evaluate when $a = b$, we see
+\begin{align*}
+  \lim_{\delta \rightarrow 0}\frac{\sin\left(\delta \pi\right)}{\pi} &= \pi.
+\end{align*}
+Thus, $\set{\sin n\xi}_{n\in \N}$ is an orthogonal set.\newline
+
+However, $\set{\sin n\xi}_{n\in \N}$ isn't particularly useful for non-odd functions. A similar calculation with $\cos a\xi \cos a\xi$ yields
+\begin{align*}
+                                                \int_{-\pi}^{\pi} \cos a\xi \cos b\xi\:d\xi &= \frac{\sin\left(\left(a-b\right)\pi\right)}{a-b} + \frac{\sin\left(\left(a+b\right)\pi\right)}{a+b},
+\end{align*}
+so $\set{\cos n\xi}_{n\in \N}$ is also an orthogonal set. Finally, 
+\begin{align*}
+  \int_{-\pi}^{\pi} \sin a\xi \cos b\xi\:d\xi &= 0,
+\end{align*}
+since this is an odd integrand with a symmetric interval.\newline
+
+Thus, we see that $\set{\sin n\xi, \cos n\xi}_{n\in \N}$ is an orthogonal set of functions.\newline
+
+We let $\phi_n^{-}\left(\xi\right) = \sin n\xi$ and $\phi_n^+ = \cos n\xi$. Then, we have
+\begin{align*}
+  \braket{\phi_n^-}{\phi_m^-} &= \begin{cases}
+    \pi \delta_{mn} & n\neq 0\\
+    0 & n=m=0
+  \end{cases}\\
+    \braket{\phi_n^+}{\phi_m^{+}} &= \begin{cases}
+      \pi \delta_{mn} & n\neq 0\\
+      2\pi & n=m=0
+    \end{cases}\\
+      \braket{\phi_n^{-}}{\phi_m^{+}} &= 0.
+\end{align*}
+We can now expand any periodic function $f\left(\xi\right)$ on the basis $\set{\phi_{n}^{\pm}\left(\xi\right)}_{n\in\N}$ by taking
+\begin{align*}
+  f\left(\xi\right) &= \sum_{n=0}^{\infty}a_n\phi_n^{+}\left(\xi\right) + \sum_{n=0}^{\infty}b_n\phi_n^{-}\left(\xi\right).
+\end{align*}
+We find $a_n$ and $b_n$ by using projections
+\begin{align*}
+  a_n &= \frac{1}{k_n} \braket{\phi_n^+}{f}\\
+      &= \frac{1}{\pi}\int_{-\pi}^{\pi} \cos\left(n\xi\right)f\left(\xi\right)\:d\xi\\
+  b_n &= \frac{1}{k_n} \braket{\phi_n^{-}}{f}\\
+      &= \frac{1}{\pi} \int_{-\pi}^{\pi} \sin\left(n\xi\right)f\left(\xi\right)\:d\xi.
+\end{align*}
+Here, $k_n = \pi$ for all $n\neq 0$, but seeing as our normalization constant is different at $n=0$ for $\phi_n^{+}$, we need an extra factor of $2$. Our expansion is now
+\begin{align*}
+  f\left(\xi\right) &= \frac{a_0}{2} + \sum_{n=1}^{\infty}\left(a_n\cos\left(n\xi\right) + b_n\sin\left(n\xi\right)\right),
+\end{align*}
+where we take the sum starting from $n=1$. This is known as the Fourier series representation for $f$.
+\begin{example}
+  We will expand $f\left(\xi\right) = \xi$, where $\left\vert \xi \right\vert < \pi$.\newline
+
+  Since $f$ is an odd function, it must be the case that $a_n = 0$ for each $n$. Thus, we calculate
+  \begin{align*}
+    b_n &= \frac{1}{\pi}\int_{-\pi}^{\pi} \sin\left(n\xi\right)f\left(\xi\right)\:d\xi\\
+        &= \frac{1}{\pi}\int_{-\pi}^{\pi} \xi\sin\left(n\xi\right)\:d\xi\\
+        &= \frac{1}{2\pi}\int_{0}^{\pi} \xi\sin\left(n\xi\right)\:d\xi\\
+        &= \left(-1\right)^{n+1} \frac{2}{n},
+  \end{align*}
+  yielding the Fourier series representation
+  \begin{align*}
+    \xi &= 2\sum_{n=1}^{\infty}\frac{\left(-1\right)^{n+1}}{n}\sin\left(n\xi\right).
+  \end{align*}
+  The following image depicts the Fourier series expansion to order 10.
+  \begin{center}
+    \includegraphics[width=10cm]{images/fourier_series_x.pdf}
+  \end{center}
+\end{example}
+\begin{example}
+  We will expand $f\left(\xi\right) = \left\vert \xi \right\vert$, where $\left\vert \xi \right\vert < \pi$.\newline
+
+  Since $f$ is an even function, it is the case that $b_n = 0$ for each $n$. 
+  \begin{align*}
+    a_n &= \frac{1}{\pi}\int_{-\pi}^{\pi} \cos\left(n\xi\right)f\left(\xi\right)\:d\xi\\
+        &= \frac{2}{\pi}\int_{0}^{\pi} \xi \cos\left(n\xi\right)\:d\xi\\
+        &= \frac{2}{\pi n^2} \left(\left(-1\right)^n-1\right)\\
+        &= \begin{cases}
+          -\frac{4}{\pi n^2} & n\text{ odd}\\
+          0 & n\text{ even}
+        \end{cases}.
+  \end{align*}
+  We used the trick
+  \begin{align*}
+    \cos\left(n\pi\right) &= \left(-1\right)^n
+  \end{align*}
+  to simplify the integral.\newline
+
+  We also need to separately obtain $a_0$, 
+  \begin{align*}
+  a_0 &= \frac{1}{\pi}\int_{-\pi}^{\pi} \left\vert \xi \right\vert\:d\xi\\
+      &= \frac{2}{\pi}\int_{0}^{\pi} \xi\:d\xi\\
+      &= \pi.
+  \end{align*}
+  Thus, we get the series
+  \begin{align*}
+    \left\vert \xi \right\vert &= \frac{\pi}{2} - \frac{4}{\pi}\sum_{n\text{ odd}} \frac{1}{n^2}\cos\left(n\xi\right).
+  \end{align*}
+  The following depicts the Fourier series expansion to order $5$.
+  \begin{center}
+    \includegraphics[width=10cm]{images/fourier_series_abs_x.pdf}
+  \end{center}
+\end{example}
+\subsubsection{Different Domains}%
+Most physical applications don't use the phase, $\xi$, but instead use distance or time. We set $\xi = \frac{\pi x}{L}$.\newline
+
+We then find
+\begin{align*}
+  a_n &= \frac{1}{L}\int_{-L}^{L} \cos\left(\frac{n \pi x}{L}\right)f(x)\:dx
+  b_n &= \frac{1}{L}\int_{-L}^{L} \sin\left(\frac{n \pi x}{L}\right)f(x)\:dx,
+\end{align*}
+and
+\begin{align*}
+  f(x) &= \frac{a_0}{2} \sum_{n=1}^{\infty}a_n\cos\left(\frac{n\pi x}{L}\right) + b_n\sin\left(\frac{n\pi x}{L}\right).
+\end{align*}
+Here, the series has period $2L$, which is a superposition of standing waves with wavelength $\lambda_n = \frac{2L}{n}$.\newline
+
+Note that there is no real requirement\footnote{Heh.} that $f$ not be complex-valued. Since $e^{ix} = \cos\left(x\right) + i\sin \left(x\right)$, we can have $\ket{n} = e^{in\pi x/L}$. We take
+\begin{align*}
+  f(x) &= \sum_{n=-\infty}^{\infty}c_ne^{i\pi n x / L},
+\end{align*}
+where
+\begin{align*}
+  c_n &= \frac{1}{2L} \int_{-L}^{L} \overline{e^{in\pi x/L}}f(x)\:dx.
+\end{align*}
+Note that the normalization is now $2L$ rather than $L$. The rule of thumb is that we divide by the half period for the real Fourier series, while we divide by the full period for the complex Fourier series.\newline
+
+We may find
+\begin{align*}
+  c_0 &= \frac{1}{2}a_0\\
+  c_n &= \frac{1}{2}\left(a_n - ib_n\right)\\
+  c_{-n} &= \frac{1}{2}\left(a_n + ib_n\right).
+\end{align*}
+\begin{example}
+  Consider $f(x) = \left\vert x \right\vert$ for $\left\vert x \right\vert < L$. We take
+  \begin{align*}
+    c_n &= \frac{1}{2L} \int_{-\pi}^{\pi} e^{-in\pi x/L}\left\vert x \right\vert\:dx\\
+        &= \frac{1}{4L}\int_{0}^{\pi} e^{-in\pi x/L}x\:dx\\
+        &= \frac{L}{\pi^2n^2}\left( \left(-1\right)^n - 1 \right)\\
+        &= \begin{cases}
+          \frac{-2L}{\pi^2n^2} & n\text{ odd}\\
+          0 & n\text{ even}
+        \end{cases}\\
+    c_{0} &= \frac{1}{2L}\int_{-L}^{L} \left\vert x \right\vert\:dx\\
+          &=\frac{L}{2}.
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    \left\vert x \right\vert &= c_0 + \left(c_1e^{i\pi x/L} + c_{-1}e^{-i \pi x/L}\right) + \left(c_{3}e^{3i\pi x/L} + c_{-3}e^{-3i\pi x/L}\right) + \cdots\\
+                             &= \frac{L}{2}-\frac{4L}{\pi^2} \left(\cos\left(\frac{\pi x}{L}\right) + \frac{1}{9}\cos\left(\frac{3\pi x}{L} + \cdots\right)\right).
+  \end{align*}
+  
+\end{example}
 
 \end{document}
