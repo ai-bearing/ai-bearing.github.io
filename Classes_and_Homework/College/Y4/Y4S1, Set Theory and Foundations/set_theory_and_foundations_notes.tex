@@ -2196,11 +2196,9 @@ In other words, we want a decidable set of axioms --- i.e., that given any formu
 \begin{proof}\hfill
   \begin{description}
     \item[Part 1:] We number all Turing machines.
-  \end{description}
-  \begin{lemma}[]
-    Given any fixed $n\in \N$, we can write a formula $F$ in Peano arithmetic such that $F$ is true in the standard model of Peano arithmetic if and only if $T_{n}(n)$ does not halt.
-  \end{lemma}
-  \begin{description}
+      \begin{lemma}[]
+        Given any fixed $n\in \N$, we can write a formula $F$ in Peano arithmetic such that $F$ is true in the standard model of Peano arithmetic if and only if $T_{n}(n)$ does not halt.
+      \end{lemma}
     \item[Part 2:] Number all formulae in Peano arithmetic, ordered lexicographically.
       \begin{lemma}[]
         There exists a computable function $k(n)$ such that for each $n$, $F_{k(n)}$ is true if and only if $T_{n}(n)$ does not halt.
@@ -2226,21 +2224,76 @@ In other words, we want a decidable set of axioms --- i.e., that given any formu
 
   Here, $F_y$ is effectively equivalent to the statement ``I am not provable.''
 \end{proof}
+\begin{remark}
+  A corollary to Gödel's incompleteness theorem is that you cannot create a model of ZFC using ZFC.
+\end{remark}
 
-\subsection{Goodstein Sequences}%
-Consider the number written as sums of powers of $2$:
-\begin{align*}
-  7 &= 2^{2} + 2^{1} + 2^{0}.
-  \intertext{We replace every instance of $2$ with $3$, and subtract $1$ yielding}
-    &\rightarrow 3^3 + 3^1.
-    \intertext{We replace $3$ with $4$, and delete $1$, and get}
-    &\rightarrow 4^4 + 3\cdot 4^0.
-\end{align*}
-At first glance, this sequence seems to be growing without bound. However, it is actually possible to prove that this sequence, known as the Goodstein sequence, converges to $0$ as $n$ grows without bound.\newline
+\subsection{Goodstein's Theorem}%
+\begin{example}
+  Start with $k = 521$. We write
+  \begin{align*}
+    G_2\left(k\right) &= 2^{9} + 2^{3} + 1\\
+           &= 2^{2^3 + 1}+ 2^{2+1} + 1\\
+           &= 2^{2^{2+1}+1} + 2^{2+1}+1.
+  \end{align*}
+  This is $k$ written in hereditary base 2 notation. To construct the next element of the sequence, we replace $2$ with $3$, and subtract $1$.
+  \begin{align*}
+    G_3\left(k\right) &= \left(3^{3^{3+1}+1} + 3^{3+1} + 1\right) - 1\\
+                      &= 3^{3^{3+1}+1} + 3^{3+1}\\
+                      &\approx 10^{39}.
+  \end{align*}
+  Repeating, we take
+  \begin{align*}
+    G_4\left(k\right) &= 4^{4^{4+1}+1} + 4^{4+1} - 1\\
+                      &= 4^{4^{4+1}+1} + \left(3\right)\left(4^{4}\right) + \left(3\right)\left(4^{3}\right) + \left(3\right)\left(4^{2}\right) + \left(3\right)\left(4\right) + 3\\
+                      &\approx 10^{617}\\
+                      \\
+    G_{5}\left(k\right) &= 5^{5^{5+1}+1} + \left(3\right)\left(5^{5}\right) + \left(3\right)\left(5^{3}\right) + \left(3\right)\left(5^2\right) + \left(3\right)\left(5\right) + 2\\
+                        &\approx 10^{10922}.
+  \end{align*}
+  This sequence seems to be growing without bound, especially when we start with a larger input of $k$.
+\end{example}
+However, there is a surprising result --- and an even more surprising result about its provability.
+\begin{theorem}[Goodstein's Theorem]
+  For any natural number $m > 1$, there is $n$ such that $G_n\left(m\right) = 0$.
+\end{theorem}
+\begin{theorem}
+  Goodstein's theorem cannot be proven in Peano arithmetic.
+\end{theorem}
+Note that, in the statement of Goodstein's theorem, we could replace $n$ with $2^n$ of $n\uparrow\uparrow n$, and it would still return to zero.
+\begin{example}
+  We can start with $k=12$. We may ask what value of $n$ yields $G_n\left(12\right) = 0$.\newline
 
-Note that the way we write our original number is using \textit{hereditary} base notation. In other words
+  As it turns out, $n$ is larger than Graham's number.
+\end{example}
+\begin{proof}[Proof of Goodstein's Theorem]
+  Consider $H_n(k)$ to be the ordinal obtained from $G_n(k)$ by replacing all instances of $n$ with $\omega$.
+  \begin{example}
+    If
+    \begin{align*}
+      G_2(k) &= 2^{2^{2+1}+1}+  2^{2+1} + 1\\
+      H_{2}(k) &= \omega^{\omega^{\omega + 1}+1} + \omega^{\omega + 1} + 1.
+    \end{align*}
+    Then,
+    \begin{align*}
+      G_3(k) &= 3^{3^{3+1}+1}+  3^{3+1}\\
+      H_3(k) &= \omega^{\omega^{\omega + 1}+1} + \omega^{\omega + 1}.
+    \end{align*}
+    Note that $H_3(k) < H_2(k)$. We also have
+    \begin{align*}
+      G_4(k) &= 4^{4^{4+1}+1} + \left(3\right)\left(4^{4}\right) + \left(3\right)\left(4^{3}\right) + \left(3\right)\left(4^{2}\right) + \left(3\right)\left(4\right) + 3\\
+      H_4(k) &= \omega^{\omega^{\omega + 1} + 1} + \omega^{\omega} 3 + \omega^{3}3 + \omega^23 + \omega 3 + 3.
+    \end{align*}
+    Note still that $H_4(k) < H_3(k)$.
+  \end{example}
+  To prove the theorem, we prove that $H_n(k) > H_{n+1}(k) > \cdots$, and use the axiom of regularity to show that it ends.
+\end{proof}
+\begin{remark}
+Formally, the axiom of regularity states that
 \begin{align*}
-  2^5 + 2^2 + 1 &= 2^{2^2 + 1} + 2^{2} + 1,
+  \forall x \exists y \in x \forall z\in x\left(y\in z \vee y = \emptyset\right).
 \end{align*}
-and continue this replacing sequence.
+In other words, every $x$ has an element $y$ such that no element of $x$ is an element of $y$.
+\end{remark}
+
 \end{document}

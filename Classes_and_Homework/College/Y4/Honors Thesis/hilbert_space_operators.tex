@@ -13,6 +13,7 @@
 \DeclareMathOperator{\hdim}{hdim}
 \DeclareMathOperator{\hDim}{hdim}
 \DeclareMathOperator{\Hdim}{hdim}
+\newcommand{\sa}{\text{s.a.}}
 
 \pagestyle{fancy} %better headers
 \fancyhf{}
@@ -892,6 +893,124 @@ In linear algebra, we learn that, for a normal $n\times n$ matrix, we can decomp
     \xi\left(x,n\right) &= \xi_n\left(x\right).
   \end{align*}
 \end{example}
+\begin{lemma}
+  Let $\set{\mathcal{H}_{i}}_{i\in I}$ be a family of Hilbert spaces. For each $k\in I$, the maps
+  \begin{align*}
+    \pi_k\colon \bigoplus_{i\in I}\mathcal{H}_i \rightarrow \mathcal{H}_k\\
+    \iota_k\colon \bigoplus_{i\in I}\mathcal{H}_i,
+  \end{align*}
+  given by
+  \begin{align*}
+    \pi_k\left(\left(x_i\right)_i\right) &= x_k\\
+    \iota_k\left(x\right) &= \left(x_i\right)_i\text{ where $x_{i\neq k} = 0$, $x_k = x$}
+  \end{align*}
+  are bounded linear operators, with
+  \begin{align*}
+    \iprod{\pi_k\left(\left(x_i\right)_i\right)}{y} &= \iprod{\left(x_i\right)_i}{\iota_k\left(y\right)}.
+  \end{align*}
+\end{lemma}
+Breaking apart an operator into smaller parts is often useful, such as in the spectral theorem.
+\begin{proposition}
+  Let $\mathcal{H}$ be a Hilbert space, and let $\set{M_i}_{i\in I}$ be a collection of pairwise orthogonal closed subspaces of $\mathcal{H}$. The following are equivalent
+  \begin{enumerate}[(i)]
+    \item The internal sum $\sum_{i\in I}M_i$ is dense in $\mathcal{H}$.
+    \item Given $x\in \mathcal{H}$, there are unique $x_i\in M_i$ such that
+      \begin{align*}
+        x &= \sum_{i\in I}x_i
+      \end{align*}
+      is a norm convergent sum. We have $x_i = P_{M_i}\left(x\right)$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We see that (ii) implies (i) by the definition of the internal sum and summability.\newline
+
+  To see that (i) implies (ii), let $x\in \mathcal{H}$, and we set $x_i = P_{M_i}\left(x\right)$. Since $M_i$ are mutually orthogonal, it follows that $\left(x_i\right)_i$ are mutually orthogonal vectors.\newline
+
+  Let $F\subseteq I$ be finite, and set $P = \sum_{i\in F}P_{M_i}$. We know that $P$ is the orthogonal projection onto $\sum_{i\in F}M_{i}$. By the Pythagorean theorem, we have that
+  \begin{align*}
+    \sum_{i\in F}\norm{x_i}^2 &= \norm{\sum_{i\in F}x_i}^2\\
+                              &= \norm{\sum_{i\in F}P_{M_i}(x)}^2\\
+                              &= \norm{P(x)}^2\\
+                              &\leq \norm{x}^2.
+  \end{align*}
+  Taking the supremum across finite subsets, we have $\sum_{i\in I}\norm{x_i}^2 \leq \norm{x}^2$. Thus, $\sum_{i\in I}x_i$ is summable in $\mathcal{H}$ to $z$, and that $\norm{z}^2 = \sum_{i\in I}\norm{x_i}^2$.\newline
+
+  We claim that $x = z$. Let $y\in M_i$ be arbitrary, and note that $ \iprod{z}{y} = \iprod{x_i}{y} $. Thus, we have
+  \begin{align*}
+    \iprod{x-z}{y} &= \iprod{x}{y} - \iprod{z}{y} \\
+                   &= \iprod{x}{P_{M_i}(y)} - \iprod{x_i}{y}\\
+                   &= \iprod{P_{M_i}(x)}{y} - \iprod{x_i}{y}\\
+                   &= \iprod{x_i}{y} - \iprod{x_i}{y}\\
+                   &= 0.
+  \end{align*}
+  Since $y$ is arbitrary, we have $x - z\in M_i^{\perp}$. Since $i$ is arbitrary, we see that $x-z$ is orthogonal to $\sum_{i\in I}M_i$. Since the latter is dense in $\mathcal{H}$, continuity of the inner product shows that $x - z\in \mathcal{H}^{\perp} = \set{0}$.\newline
+
+  For uniqueness, suppose $x = \sum_{i\in I}x_i'$ is an norm-convergent sum with $x_i'\in M_i$ for all $i\in I$. For $j\in I$, we have
+  \begin{align*}
+    x_j' &= P_j\left(x\right)\\
+         &= P_j\left(\sum_{i\in I}x_i'\right)\\
+                      &= \sum_{i\in I}P_j\left(x_i'\right)\\
+                      &= x_j'
+  \end{align*}
+\end{proof}
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $\mathcal{M} = \set{M_i}_{i\in I}$ is a collection of mutually orthogonal closed subspaces that satisfy the conditions above. Then, we say $\mathcal{H}$ is the internal direct sum of the family $\mathcal{M}$, and write
+  \begin{align*}
+    \mathcal{H} &= \bigoplus_{i\in I}M_i.
+  \end{align*}
+\end{definition}
+\begin{exercise}
+  Let $\mathcal{H} = \bigoplus_{i\in I}M_i$ be an internal direct sum. Viewing each $M_i$ as a Hilbert space, prove that
+  \begin{align*}
+    U\colon \bigoplus_{i\in I}M_i \rightarrow H\\
+    \left(x_i\right)_{i\in I} \xmapsto{U} \sum_{i\in I}x_i
+  \end{align*}
+  is unitary. In other words, the external direct sum of the spaces $M_i$ is unitarily isomorphic to $\mathcal{H}$.
+\end{exercise}
+\begin{solution}
+  To see that $U$ is an isometry, we can see that for $x = \sum_{i\in I}x_i$,
+  \begin{align*} 
+    \norm{U\left(\left(x_i\right)_i\right)}^2 &= \norm{\sum_{i\in I}x_i}^2\\
+                                              &= \sum_{i\in I} \norm{x_i}^2\\
+                                              &= \norm{\left(x_i\right)_i}^2.
+  \end{align*}
+  Additionally, for any $x\in \mathcal{H}$, we can find an indexed family $\left(x_i\right)_i$ such that $\sum_{i\in I}x_i = x$. Thus, we can select the indexed family $\left(x_i\right)_i$ in $\bigoplus_{i\in I}M_i$ such that $U\left(\left(x_i\right)_i\right) = x$.\newline
+
+  Thus, $U$ is a surjective isometry, so $U$ is unitary.
+\end{solution}
+\begin{exercise}
+  Let $\mathcal{H} = \bigoplus_{i\in I}M_i$ be an internal direct sum, and let $j\in I$ be fixed, $x\in M_j^{\perp}$. Prove that $x$ has the form
+  \begin{align*}
+    x &= \sum_{\substack{i\in I\\i\neq j}}x_i,
+  \end{align*}
+  a norm-convergent sum, where $x_i \in M_i$.
+\end{exercise}
+\begin{solution}
+  Note that we have proved $x_i = P_{M_i}\left(x\right)$. Thus, $x_j = P_{M_j}\left(x\right) = 0$, so we have
+  \begin{align*}
+    x &= \sum_{i\in I}P_{M_i}\left(x\right)\\
+      &= \sum_{\substack{i\in I\\i\neq j}}P_{M_i}\left(x\right)\\
+      &= \sum_{\substack{i\in I\\i\neq j}}x_i.
+  \end{align*}
+\end{solution}
+\begin{corollary}
+  Suppose $\mathcal{H}=\bigoplus_{i\in I}M_i$ is an internal direct sum, and let $P_i = P_{M_i}$ be the orthogonal projections onto each $M_i$. Then,
+  \begin{align*}
+    I_{\mathcal{H}} &= \sum_{i\in I}P_{i}
+  \end{align*}
+  in the strong operator topology. That is,
+  \begin{align*}
+    x &= \sum_{i\in I}P_i\left(x\right)\\
+    \norm{x}^2 &= \sum_{i\in I}\norm{P_i\left(x\right)}^2.
+  \end{align*}
+\end{corollary}
+\begin{exercise}
+  Let $\left(\Omega,\mathcal{L},\mu\right)$ be a measure space, and let $\bigsqcup_{n\geq 1}E_n = \Omega$ be a measurable partition. Show that there is an internal sum
+  \begin{align*}
+    L_2\left(\Omega,\mu\right) &= \bigoplus_{n\geq 1}M_{E_n}\\
+                               &\cong \bigoplus_{n\geq 1}L_{2}\left(E_n,\mu_{E_n}\right).
+  \end{align*}
+\end{exercise}
 
 \section{Bounded Operators on Hilbert Spaces}%
 Hilbert spaces are, according to John Conway, anyway, ``boring,'' so we are interested in understanding the effects of operators on Hilbert spaces.\newline
@@ -1230,5 +1349,385 @@ Given a Banach space $X$, we can introduce two locally convex topologies on $\ma
   \end{align*}
   with $\norm{F} \leq 1$. Thus, there is $T\in \mathcal{B}\left(\mathcal{H}\right)$ with $\norm{T}_{\text{op}} = \norm{F} \leq 1$ and $ \iprod{T\left(\xi\right)}{\eta} = F\left(\xi,\eta\right) $, meaning $\phi(T) = \left(z_{\xi,\eta}\right)_{\xi,\eta}$.
 \end{proof}
+\begin{proposition}
+  Let $\mathcal{H}$ be a Hilbert space, and let $\varphi: \mathcal{B}\left(\mathcal{H}\right)\rightarrow \C$ be a linear functional. The following are equivalent.
+  \begin{enumerate}[(i)]
+    \item There exist $\xi_1,\dots,\xi_n$ and $\eta_1,\dots,\eta_n$ in $\mathcal{H}$ such that
+      \begin{align*}
+        \varphi\left(T\right) &= \sum_{j=1}^{n} \iprod{T\left(\xi_j\right)}{\eta_j}.
+      \end{align*}
+    \item $\varphi$ is WOT-continuous.
+    \item $\varphi$ is SOT-continuous.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  The implication (i) to (ii) follows from the definition of $\varphi$ as a finite sum of inner products. The implication (ii) to (iii) follows from the fact that left and right multiplication is WOT-continuous.\newline
+
+  We only need to show that (iii) implies (i). Let $\varphi$ be SOT continuous. There exists $K > 0$ and $\xi_1,\dots,\xi_n\in \mathcal{H}$ with
+  \begin{align*}
+    \left\vert \varphi(T) \right\vert &\leq K\max_{j=1}^{n}\norm{T\left(\xi_j\right)}\\
+                                      &\leq K \left(\sum_{j=1}^{n}\norm{T\left(\xi_j\right)}\right)^{1/2}
+  \end{align*}
+  Consider the subspace $\mathcal{K}_0\subseteq \bigoplus_{j=1}^{n}\mathcal{H}$ given by
+  \begin{align*}
+    \mathcal{K}_0 &= \set{\left(T\left(\xi_1\right),\dots,T\left(\xi_n\right)\right) | T\in \mathcal{B}\left(\mathcal{H}\right)}.
+  \end{align*}
+  Let $\mathcal{K} = \overline{\mathcal{K}_0}$. By the above inequality, the linear functional
+  \begin{align*}
+    \psi_0\left(\left(T\left(\xi_1\right),\dots,T\left(\xi_n\right)\right)\right) &\coloneq \varphi(T)
+  \end{align*}
+  is continuous, meaning it extends continuously to a bounded linear functional on $\mathcal{K}$. There exists a vector $\eta = \left(\eta_1,\dots,\eta_n\right)\in \mathcal{K}$ such that $\psi\left(\xi\right) = \iprod{\xi}{\eta}$ for all $\xi\in \mathcal{K}$. Thus, we get
+  \begin{align*}
+    \varphi\left(T\right) &= \psi\left(\left(T\left(\xi_1\right),\dots,T\left(\xi_n\right)\right)\right)\\
+                          &= \iprod{\left(T\left(\xi_1\right),\dots,T\left(\xi_n\right)\right)}{\left(\eta_1,\dots,\eta_n\right)}\\
+                          &= \sum_{j=1}^{n} \iprod{T\left(\xi_j\right)}{\eta_j}.
+  \end{align*}
+\end{proof}
+\begin{remark}
+  The above result implies that $\left(\mathcal{B}\left(\mathcal{H}\right),\text{WOT}\right)^{\ast} = \left(\mathcal{B}\left(\mathcal{H}\right),\text{SOT}\right)^{\ast}$.
+\end{remark}
+
+\begin{corollary}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $C\subseteq \mathcal{B}\left(\mathcal{H}\right)$ is a convex subset. Then, $\overline{C}^{\text{WOT}} = \overline{C}^{\text{SOT}}$.
+\end{corollary}
+\begin{proof}
+  Since WOT is weaker than SOT, and we have shown $\left(\mathcal{B}\left(\mathcal{H}\right),\text{WOT}\right)^{\ast} = \left(\mathcal{B}\left(\mathcal{H}\right),\text{SOT}\right)^{\ast}$, the result follows from the analogous result on locally convex topological vector spaces.
+\end{proof}
+Particular WOT-closed self-adjoint subalgebras of $\mathcal{B}\left(\mathcal{H}\right)$ are one of the central subjects of the study of operator algebras. 
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space. A von Neumann algebra acting on $\mathcal{H}$ is a WOT-closed unital *-subalgebra $N\subseteq \mathcal{B}\left(\mathcal{H}\right)$.
+\end{definition}
+\begin{exercise}
+  Let $\set{N_i}_{i\in I}$ be a family of von Neumann algebras acting on $\mathcal{H}$. Prove that $\bigcap_{i\in I}N_i$ is a von Neumann algebra.
+\end{exercise}
+\begin{solution}
+  Since $\set{N_i}_{i\in I}$ is a family of WOT-closed unital *-subalgebras, each $N_i$ is WOT-closed, so the intersection $N \coloneq \bigcap_{i\in I}N_i$ is WOT-closed. Additionally, since the identity map is in each $N_i$, it is also in $N$, and for any $A\in N$, we must have $A\in N_i$ for all $i\in I$, so $A^{\ast}\in N_i$ for all $N_i$, so $A^{\ast}\in N$. Finally, since the intersection of subrings is a subring, it is the case that $N$ is a WOT-closed unital *-subalgebra.
+\end{solution}
+\begin{example}
+  Let $\mathcal{S} \subseteq \mathcal{B}\left(\mathcal{H}\right)$ be a family of bounded operators. We define the von Neumann algebra generated by $\mathcal{S}$ to be the smallest von Neumann algebra containing $\mathcal{S}$.
+  \begin{align*}
+    W^{\ast}\left(\mathcal{S}\right) &= \bigcap\set{N\subseteq \mathcal{B}\left(\mathcal{H}\right) | N\text{ is a von Neumann algebra and }N\supseteq \mathcal{S}}.
+  \end{align*}
+\end{example}
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $\mathcal{S}\subseteq \mathcal{B}\left(\mathcal{H}\right)$ is a nonempty collection of bounded operators. The commutant of $\mathcal{S}$ is
+  \begin{align*}
+    \mathcal{S}' &= \set{T\in \mathcal{B}\left(\mathcal{H}\right) | TS = ST\text{ for all }S\in \mathcal{S}}.
+  \end{align*}
+  The double commutant of $\mathcal{S}$ is $\mathcal{S}'' = \left(\mathcal{S}'\right)'$.
+\end{definition}
+\begin{exercise}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $\emptyset\neq \mathcal{S},\mathcal{T}\subseteq \mathcal{B}\left(\mathcal{H}\right)$ are subsets.
+  \begin{enumerate}[(1)]
+    \item The commutant $\mathcal{S}'$ is a unital subalgebra of $\mathcal{B}\left(\mathcal{H}\right)$.
+    \item If $\mathcal{S}$ is self-adjoint, then $\mathcal{S}'$ is a unital *-subalgebra of $\mathcal{B}\left(\mathcal{H}\right)$.
+    \item If $\mathcal{S}\subseteq \mathcal{T}$, then $\mathcal{T}' \subseteq \mathcal{S}'$.
+    \item $\mathcal{S}\subseteq \mathcal{S}''$.
+    \item $\mathcal{S}''' = \mathcal{S}'$.
+  \end{enumerate}
+\end{exercise}
+\begin{solution}[]\hfill
+  \begin{enumerate}[(1)]
+    \item If $Q,S\in \mathcal{S}$ and $\alpha \in \C$, we have, for $T\in \mathcal{S}'$,
+      \begin{align*}
+        \left(Q + \alpha S\right)T &= QT + \alpha ST\\
+                                   &= TQ + \alpha TS\\
+                                   &= T\left(Q + \alpha S\right),
+      \end{align*}
+      and
+      \begin{align*}
+        \left(SQ\right)T &= S\left(QT\right)\\
+                         &= S\left(TQ\right)\\
+                         &= \left(ST\right)Q\\
+                         &= \left(TS\right)Q\\
+                         &= T\left(SQ\right).
+      \end{align*}
+      Finally, since $TI = IT$ for $I = \id$, $\mathcal{S}$ is a unital subalgebra of $\mathcal{B}\left(\mathcal{H}\right)$.
+    \item If $\mathcal{S}$ is *-closed, we have, for $T\in \mathcal{S}$ and $S\in \mathcal{S}'$, we have
+      \begin{align*}
+        S^{\ast}T^{\ast} &= \left(TS\right)^{\ast}\\
+                         &= \left(ST\right)^{\ast}\\
+                         &= T^{\ast}S^{\ast},
+      \end{align*}
+      so $S^{\ast}\in \mathcal{S}$.
+    \item Let $\mathcal{S}\subseteq \mathcal{T}$. Then, for $Q\in \mathcal{T}'$, we must have, for all $T\in \mathcal{S}$, $TQ = QT$, so $Q\in \mathcal{S}'$.
+    \item Let $T\in \mathcal{S}$. Then, for any $Q\in \mathcal{S}'$, we have $TQ = QT$, so $T\in \left(\mathcal{S}'\right)'= \mathcal{S}''$.
+    \item Consult Rainone
+  \end{enumerate}
+\end{solution}
+\begin{lemma}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $\mathcal{S}\subseteq \mathcal{B}\left(\mathcal{H}\right)$ is a subset. Then, $\mathcal{S}'$ is WOT-closed, so it is SOT-closed.
+\end{lemma}
+\begin{proof}
+  Let $\left(T_{\alpha}\right)_{\alpha}$ be a net in $\mathcal{S}'$ converging in WOT to an operator $T\in \mathcal{B}\left(\mathcal{H}\right)$. For $S\in \mathcal{S}$, we have
+  \begin{align*}
+    TS &= \lim_{\alpha}T_{\alpha}S\\
+       &= \lim_{\alpha}ST_{\alpha}\\
+       &= ST,
+  \end{align*}
+  where the limits are taken in the weak operator topology. Thus, $T\in \mathcal{S}'$.
+\end{proof}
+\begin{corollary}
+  If $\mathcal{H}$ is a Hilbert space, and $\mathcal{S}\subseteq \mathcal{B}\left(\mathcal{H}\right)$ is a self-adjoint subset of operators, then $\mathcal{S}'$ is a von Neumann algebra acting on $\mathcal{H}$. Also, $\mathcal{S}''$ is a von Neumann algebra containing $\mathcal{S}$.
+\end{corollary}
+There are also various locally convex topologies on $\mathcal{B}\left(\mathcal{H}\right)$.
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space. The locally convex topology on $\mathcal{B}\left(\mathcal{H}\right)$ generated by the family of seminorms $\set{q_{\xi} | \xi\in \mathcal{H}}$, defined by
+  \begin{align*}
+    q_{\xi}\left(T\right) &= \norm{T\left(\xi\right)} + \norm{T^{\ast}\left(\xi\right)},
+  \end{align*}
+  is known as the strong* operator topology, or S*OT.
+\end{definition}
+\begin{proposition}
+  Let $\mathcal{H}$ be a Hilbert space. The identity maps
+  \begin{align*}
+    \left(\mathcal{B}\left(\mathcal{H}\right),\norm{\cdot}_{\text{op}}\right) \xrightarrow{\id}\left(\mathcal{B}\left(\mathcal{H}\right),\text{S*OT}\right)\xrightarrow{\id}\left(\mathcal{B}\left(\mathcal{H}\right),\text{SOT}\right)\xrightarrow{\id}\left(\mathcal{B}\left(\mathcal{H}\right),\text{WOT}\right)
+  \end{align*}
+  are continuous. If $\Dim\left(\mathcal{H}\right)=\infty$, then the inverses are not continuous.
+\end{proposition}
+\begin{proof}
+  Consult Rainone.
+\end{proof}
+\subsubsection{Order on $\mathcal{B}\left(\mathcal{H}\right)$}%
+Since $\mathcal{B}\left(\mathcal{H}\right)$ is a *-algebra, we can talk about self-adjoint elements. We write
+\begin{align*}
+  \mathcal{B}\left(\mathcal{H}\right)_{\sa} &= \set{T\in \mathcal{B}\left(\mathcal{H}\right)|T = T^{\ast}}
+\end{align*}
+to denote the collection of self-adjoint operators.
+\begin{example}
+  Given $\lambda = \left(\lambda_n\right)_n$, the multiplication operator $D_{\lambda}\in \mathcal{B}\left(\ell_2\right)$ is self-adjoint if and only if $\lambda_n\in \R$ for all $n$.
+\end{example}
+Note that since adjoint operators are unique, we can say that $T = T^{\ast}$ if and only if $ \iprod{T\left(\xi\right)}{\eta} = \iprod{\xi}{T\left(\eta\right)} $. We can use the polarization identity to show another criterion for self-adjoint elements.
+\begin{lemma}
+  An operator $T\in \mathcal{B}\left(\mathcal{H}\right)$ is self-adjoint if and only if $ \iprod{T\left(\xi\right)}{\xi}\in \R $ for all $\xi\in \mathcal{H}$.
+\end{lemma}
+\begin{proof}\hfill
+  We have
+  \begin{align*}
+    \iprod{T\left(\xi\right)}{\xi} &= \iprod{\xi}{T^{\ast}\left(\xi\right)}\\
+                                   &= \iprod{\xi}{T\left(\xi\right)}\\
+                                   &= \overline{ \iprod{T\left(\xi\right)}{\xi} },
+  \end{align*}
+  meaning $ \iprod{T\left(\xi\right)}{\xi}\in \R $.\newline
+
+  In the reverse direction, we define $F\left(x,y\right) = \iprod{T\left(x\right)}{y}$ and $ G\left(x,y\right) = \iprod{x}{T\left(y\right)} $. Along the diagonal, we have
+  \begin{align*}
+    F\left(x,x\right) &= \iprod{T\left(x\right)}{x}\\
+                      &= \overline{ \iprod{T\left(x\right)}{x} }\\
+                      &= \iprod{x}{T\left(x\right)}\\
+                      &= G\left(x,x\right),
+  \end{align*}
+  so $F = G$, meaning $ \iprod{T\left(x\right)}{x} = \iprod{x}{T\left(x\right)} $, so $T = T^{\ast}$.
+\end{proof}
+\begin{proposition}
+  Let $A$ be a Banach *-algebra. The self-adjoint elements $A_{\sa}$ form a Banach space over $\R$.
+\end{proposition}
+\begin{proof}
+  The self-adjoint elements $A_{\sa}$ form a vector space over $\R$. To see this, let $x,y\in A_{\sa}$, $\alpha\in \R$. Then,
+  \begin{align*}
+    \left(x + \alpha y\right)^{\ast} &= x^{\ast} + \overline{\alpha}y^{\ast}\\
+                                     &= x^{\ast} + \alpha y^{\ast}\\
+                                     &= x + \alpha y,
+  \end{align*}
+  so $x + \alpha y$ is self-adjoint.\newline
+
+  We show that $A_{\sa}$ is norm-closed. Let $\left(a_n\right)_n$ be a sequence in $A_{\sa}$ that converges in norm to an element $a\in A$. Then, $\left(a_n\right)_n = \left(a_n^{\ast}\right)_n\rightarrow a^{\ast}$, since the adjoint operator is continuous. This implies $a^{\ast} = a$.
+\end{proof}
+If $A = \mathcal{B}\left(\mathcal{H}\right)$, then we can say more about the qualities of $A_{\sa}$.
+\begin{proposition}
+  The self-adjoint operators $\mathcal{B}\left(\mathcal{H}\right)_{\sa}\subseteq \mathcal{B}\left(\mathcal{H}\right)$ are closed in WOT, meaning they are closed in SOT.
+\end{proposition}
+\begin{proof}
+  Let $\left(T_{\alpha}\right)_{\alpha}$ be a net in $\mathcal{B}\left(\mathcal{H}\right)_{\sa}$ converging in WOT to $T\in \mathcal{B}\left(\mathcal{H}\right)$. We have
+  \begin{align*}
+    \iprod{T\left(\xi\right)}{\xi} &= \lim_{\alpha} \iprod{T_{\alpha}\left(\xi\right)}{\xi}.
+  \end{align*}
+  Since each $T_{\alpha}$ is self-adjoint, we know that $ \iprod{T_{\alpha}\left(\xi\right)}{\xi}\in \R$ for every $\xi\in \mathcal{H}$, meaning $ \iprod{T\left(\xi\right)}{\xi}\in \R $ for every $\xi\in \mathcal{H}$, so $T$ is self-adjoint.
+\end{proof}
+\begin{definition}
+  For $T\in \mathcal{B}\left(\mathcal{H}\right)$, we define the numerical range of $T$ to be
+  \begin{align*}
+    W(T) &= \set{ \iprod{T\left(\xi\right)}{\xi} | \xi\in B_{\mathcal{H}} }
+  \end{align*}
+  and the numerical radius of $T$ to be
+  \begin{align*}
+    \nu\left(T\right) &= \sup_{\xi \in B_{\mathcal{H}}} \left\vert \iprod{T\left(\xi\right)}{\xi} \right\vert.
+  \end{align*}
+\end{definition}
+We see that for all $\xi$,
+\begin{align*}
+  \left\vert \iprod{T\left(\xi\right)}{\xi} \right\vert &\leq \nu\left(T\right)\norm{\xi}^2,
+\end{align*}
+and by Cauchy--Schwarz,
+\begin{align*}
+  \nu\left(T\right) &\leq \norm{T}_{\text{op}}.
+\end{align*}
+When $T$ is self-adjoint, we can say more.
+\begin{proposition}
+  If $T = T^{\ast}$, then $\nu\left(T\right) = \norm{T}_{\text{op}}$.
+\end{proposition}
+\begin{proof}
+  Using the fact that $T$ is self-adjoint, we get
+  \begin{align*}
+    4\re\left( \iprod{T\left(x\right)}{y}\right) &= \iprod{T\left(x+y\right)}{x+y} - \iprod{T\left(x-y\right)}{x-y}
+  \end{align*}
+  for $x,y\in \mathcal{H}$. Using the parallelogram law, we get
+  \begin{align*}
+    \left\vert 4\re\left(T\left(x,y\right)\right) \right\vert &\leq \left\vert \iprod{T\left(x+y\right)}{x+y} \right\vert + \left\vert \iprod{T\left(x-y\right)}{x-y} \right\vert\\
+                                                              &\leq \nu\left(\norm{x+y}^2 + \norm{x-y}^2\right)\\
+                                                              &= 2\nu\left(T\right)\left(\norm{x}^2 + \norm{y}^2\right),
+  \end{align*}
+  giving
+  \begin{align*}
+    \left\vert \re\left( \iprod{T\left(x\right)}{y}\right) \right\vert &\leq \frac{1}{2}\nu\left(T\right)\left(\norm{x}^2 + \norm{y}^2\right).
+  \end{align*}
+  Let $x,y\in B_{\mathcal{H}}$, and set $\lambda = \sgn\left( \iprod{T\left(x\right)}{y}\right)$. Then, $\left\vert \overline{\lambda} \right\vert = 1$, yielding
+  \begin{align*}
+    \left\vert \iprod{T\left(x\right)}{x} \right\vert &= \lambda \iprod{T\left(x\right)}{y}\\
+                                                      &= \iprod{T\left(x\right)}{\overline{\lambda}y}\\
+                                                      &= \left\vert \re\left( \iprod{T\left(x\right)}{\overline{\lambda}y}\right) \right\vert\\
+                                                      &\leq \frac{1}{2}\nu\left(T\right) \left(\norm{x} + \norm{\overline{\lambda}y}^2\right)\\
+                                                      &= \frac{1}{2}\nu\left(T\right)\left(\norm{x}^2 + \norm{y}^2\right)\\
+                                                      &\leq \frac{1}{2}\nu\left(T\right)\left(2\right)\\
+                                                      &= \nu\left(T\right).
+  \end{align*}
+  Thus, taking the supremum, we get
+  \begin{align*}
+    \norm{T}_{\text{op}} &\leq \nu\left(T\right).
+  \end{align*}
+\end{proof}
+We can now establish an ordering of $\mathcal{B}\left(\mathcal{H}\right)_{\sa}$ by constructing a cone of positive elements.
+\begin{definition}[]
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $T\in \mathcal{B}\left(\mathcal{H}\right)$. We say $T$ is a positive operator if $W(T) \subseteq [0,\infty)$. In other words, for all $\xi\in \mathcal{H}$,
+  \begin{align*}
+    \iprod{T\left(\xi\right)}{\xi} &\geq 0.
+  \end{align*}
+  We write $\mathcal{B}\left(\mathcal{H}\right)_{+}$ for all the positive operators in $\mathcal{B}\left(\mathcal{H}\right)$.
+\end{definition}
+\begin{exercise}
+  Suppose $T\in \mathcal{B}\left(\mathcal{H}\right)_{+}$. Prove that the sesquilinear form $\left(\xi,\eta\right)\mapsto \iprod{T\left(\xi\right)}{\eta}$ is a semi-inner product. Using the Cauchy--Schwarz inequality, show that
+  \begin{align*}
+    \norm{T\left(\xi\right)}^2 &\leq \iprod{T\left(\xi\right)}{\xi} \iprod{T^3\left(\xi\right)}{\xi}.
+  \end{align*}
+\end{exercise}
+\begin{example}
+  Given $\lambda = \left(\lambda_n\right)_n\in \ell_{\infty}$, the multiplication operator $D_{\lambda}\in \mathcal{B}\left(\ell_2\right)$ is positive if and only if $\lambda_n\geq 0$ for all $n$. For $\xi = \left(\xi_n\right)_n$, we have
+  \begin{align*}
+    \iprod{D_{\lambda}\left(\xi\right)}{\xi} &= \sum_{n=1}^{\infty}\lambda_n\left\vert \xi_n \right\vert^2,
+  \end{align*}
+  which is greater than or equal to zero for $\lambda_n \geq 0$. Conversely, if $D_{\lambda}\in \mathcal{B}\left(\ell_2\right)_{+}$, then $ \iprod{D_{\lambda}\left(e_n\right)}{e_n} = \lambda_n \geq 0 $ for all $n\geq 1$.\newline
+
+  Similarly, if $f\in L_{\infty}\left(\Omega,\mu\right)$, then the multiplication operator $M_{f}\in \mathcal{B}\left(L_{2}\left(\Omega,\mu\right)\right)$ is positive if and only if $f(x)\geq 0$ $\mu$-a.e.
+\end{example}
+\begin{example}
+  If $M\subseteq \mathcal{H}$ is a closed subspace, and $P_{M}\in \mathcal{B}\left(\mathcal{H}\right)$ is the orthogonal projection, then $P_M \geq 0$. This is because
+  \begin{align*}
+    \iprod{P_M(x)}{x} &= \iprod{P_M(x)}{P_M(x)}\\
+                      &= \norm{P_M(x)}^2\\
+                      &\geq 0.
+  \end{align*}
+\end{example}
+\begin{proposition}
+  The positive operators $\mathcal{B}\left(\mathcal{H}\right)_{+}$ form a WOT-closed cone in $\mathcal{B}\left(\mathcal{H}\right)_{\sa}$. Thus, $\mathcal{B}\left(\mathcal{H}\right)_{+}$ is SOT-closed and norm-closed.\footnote{The positive operators, as well as self-adjoint operators, are convex.}
+\end{proposition}
+\begin{proof}
+  Note that $\mathcal{B}\left(\mathcal{H}\right)_{+}\subseteq \mathcal{B}\left(\mathcal{H}\right)_{\sa}$.\newline
+
+  Let $\left(T_{\alpha}\right)_{\alpha}$ be a net in $\mathcal{B}\left(\mathcal{H}\right)_{+}$ converging in WOT to $T\in \mathcal{B}\left(\mathcal{H}\right)$. Thus, we have
+  \begin{align*}
+    \iprod{T\left(\xi\right)}{\xi} &= \lim_{\alpha} \iprod{T_{\alpha}\left(\xi\right)}{\xi}\\
+                                   &\geq 0,
+  \end{align*}
+  so $T$ is positive.\newline
+
+  To see that $\mathcal{B}\left(\mathcal{H}\right)_{+}$ is a cone, let $T,S\in \mathcal{B}\left(\mathcal{H}\right)$, and let $t\in [0,\infty)$. We see that for any $\xi\in \mathcal{H}$,
+  \begin{align*}
+    \iprod{\left(T+S\right)\left(\xi\right)}{\xi} &= \iprod{T\left(\xi\right)}{\xi} + \iprod{S\left(\xi\right)}{\xi}\\
+                                                  &\geq 0\\
+                                                  \\
+    \iprod{tT\left(\xi\right)}{\xi} &= t \iprod{T\left(\xi\right)}{\xi}\\
+                                    &\geq 0.
+  \end{align*}
+  Thus, $T+S$ and $tT$ belong to $\mathcal{B}\left(\mathcal{H}\right)_{+}$.\newline
+
+  Suppose $T$ and $-T$ are in $\mathcal{B}\left(\mathcal{H}\right)_{+}$. Then, we have $ \iprod{T\left(\xi\right)}{\xi} \geq 0 $ and $ - \iprod{T\left(\xi\right)}{\xi} \geq 0 $, so $ \iprod{T\left(\xi\right)}{\xi} = 0 $ for every $\xi \in \mathcal{H}$, meaning $\nu\left(T\right) = 0$. Since $T$ is self-adjoint, we have $\norm{T}_{\text{op}} = 0$.
+\end{proof}
+We can now define an ordering on the space of self-adjoint operators.
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $S,T\in \mathcal{B}\left(\mathcal{H}\right)_{\sa}$. We have $T\leq S$ if and only if $S-T\in \mathcal{B}\left(\mathcal{H}\right)$, which is true if and only if $ \iprod{T\left(\xi\right)}{\xi} \leq \iprod{S\left(\xi\right)}{\xi} $ for all $\xi \in \mathcal{H}$.
+\end{definition}
+\begin{remark}
+  This ordering is generally not well-behaved. For instance, the product of positive operators is not necessarily positive, and it is not necessarily the case that $S\leq T$ implies $S^2 \leq T^2$.
+\end{remark}
+\begin{proposition}
+  Let $\mathcal{H}$ and $\mathcal{K}$ be Hilbert spaces.
+  \begin{enumerate}[(1)]
+    \item If $T\in \mathcal{B}\left(\mathcal{H},\mathcal{K}\right)$, then $T^{\ast}T \geq 0$.
+    \item If $T\geq 0$, then $W^{\ast}TW \geq 0$ For all $W\in \mathcal{B}\left(\mathcal{H}\right)$.
+    \item If $S\leq T$ in $\mathcal{B}\left(\mathcal{H}\right)_{\sa}$, then $W^{\ast}SW \leq W^{\ast}TW$ for all $W\in \mathcal{B}\left(\mathcal{H}\right)$.
+    \item If $0 \leq S \leq T$, then $\norm{S}_{\text{op}} \leq \norm{T}_{\text{op}}$.
+    \item If $T$ is positive, then $T\leq I$ if and only if $\norm{T}_{\text{op}}\leq 1$.
+    \item If $T$ is self-adjoint and $r\geq 0$, then $-rI \leq T \leq rI$ if and only if $\norm{T}_{\text{op}} \leq r$.
+    \item For $T$ self-adjoint, we have $-\norm{T}_{\text{op}}I \leq T \leq \norm{T}_{\text{op}}I$, meaning $I$ is an order unit for $\mathcal{B}\left(\mathcal{H}\right)_{\sa}$, and $\norm{T}_{\text{op}} = \inf\set{r | -rI \leq T \leq rI}$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Given $\xi\in \mathcal{H}$, we have $ \iprod{T^{\ast}T\left(\xi\right)}{\xi} = \iprod{T\left(\xi\right)}{T\left(\xi\right)} = \norm{T\left(\xi\right)}^2 \geq 0 $.
+    \item For $\xi\in \mathcal{H}$ and $W\in \mathcal{B}\left(\mathcal{H}\right)$, we have $ \iprod{W^{\ast}TW\left(\xi\right)}{\xi} = \iprod{T\left(W\left(\xi\right)\right)}{\xi} \geq 0$.
+    \item If $S\leq T$, then $T - S \geq 0$, so $W^{\ast}TW - W^{\ast}SW = W^{\ast}\left(S-T\right)W \geq 0$.
+    \item Let $0 \leq S \leq T$. Then,
+      \begin{align*}
+        \norm{S}_{\text{op}} &= \sup_{\xi\in B_{\mathcal{H}}} \iprod{S\left(\xi\right)}{\xi}\\
+                             &\leq \sup_{\xi\in B_{\mathcal{H}}} \iprod{T\left(\xi\right)}{\xi}\\
+                             &= \norm{T}_{\text{op}}.
+      \end{align*}
+    \item If $0 \leq T \leq I$, then $\norm{T}_{\text{op}}\leq \norm{I}_{\text{op}}$. Conversely, if $T\geq 0$ and $\norm{T}_{\text{op}}\leq 1$, then for $\xi\in \mathcal{B}\left(\mathcal{H}\right)$,
+      \begin{align*}
+        \iprod{I\left(\xi\right)}{\xi} &= \iprod{\xi}{\xi}\\
+                                       &\leq \norm{\xi}^2\\
+                                       &= 1\\
+                                       &\geq \norm{T}_{\text{op}}\\
+                                       &= \sup_{\xi\in \mathcal{B}\left(\mathcal{H}\right)} \iprod{T\left(\xi\right)}{\xi}.
+      \end{align*}
+    \item We have
+      \begin{align*}
+        -rI \leq T \leq rI &\Leftrightarrow \iprod{-r\xi}{\xi} \leq \iprod{T\left(\xi\right)}{\xi} \leq \iprod{r\xi}{\xi}\\
+                           &\Leftrightarrow -r \leq \iprod{T\left(\xi\right)}{\xi} \leq r\\
+                           &\Leftrightarrow \left\vert \iprod{T\left(\xi\right)}{\xi} \right\vert \leq r\\
+                           &\Leftrightarrow \nu\left(T\right)\leq r\\
+                           &\Leftrightarrow \norm{T}_{\text{op}}\leq r.
+      \end{align*}
+    \item Follows directly from (6).
+  \end{enumerate}
+\end{proof}
+\begin{exercise}
+  If $S,T\in \mathcal{B}\left(\mathcal{H}\right)$ are such that $S^{\ast}S\leq T^{\ast}T$, show that $\ker\left(T\right) \subseteq \ker\left(S\right)$.
+\end{exercise}
+\begin{solution}
+  We are aware that $S^{\ast}S\leq T^{\ast}T$ if and only if for all $\xi$, $ \iprod{S^{\ast}S\left(\xi\right)}{\xi} \leq \iprod{T^{\ast}T\left(\xi\right)}{\xi} $, meaning $\norm{S\left(\xi\right)}^2 \leq \norm{T\left(\xi\right)}^2$.\newline
+
+  Thus, if $\xi \in \ker\left(T\right)$, then $\norm{S\left(\xi\right)}^2 = 0$, so $S\left(\xi\right) = 0$, so $\xi \in \ker\left(S\right)$.
+\end{solution}
+\begin{proposition}[Douglas Factorization]
+  Let $S,T\in \mathcal{B}\left(\mathcal{H}\right)$ be such that $S^{\ast}S\leq T^{\ast}T$. Then, there is a contraction $R\in \mathcal{B}\left(\mathcal{H}\right)$ such that $RT = S$.
+\end{proposition}
+\begin{proof}
+  We see the map $R_0: \Ran\left(T\right)\rightarrow \Ran\left(S\right)$ defined by $R_0\left(T\left(x\right)\right) = S\left(x\right)$ is well-defined and linear. Additionally,
+  \begin{align*}
+    \norm{R_0\left(T\left(x\right)\right)}^2 &= \norm{S\left(x\right)}^2\\
+                                             &= \iprod{S(x)}{S(x)}\\
+                                             &= \iprod{S^{\ast}S\left(x\right)}{x}\\
+                                             &\leq \iprod{T^{\ast}T\left(x\right)}{x}\\
+                                             &= \iprod{T\left(x\right)}{T\left(x\right)}\\
+                                             &= \norm{T\left(x\right)}^2,
+  \end{align*}
+  meaning $R_0$ is contractive.\newline
+
+  We can extend $R_0$ continuously to $R_1: \overline{\Ran}\left(T\right)\rightarrow \mathcal{H}$. Define $R: \mathcal{H}\rightarrow \mathcal{H}$ by the direct sum decomposition $R\left(x+y\right) = R_1\left(x\right)$, where $x\in \overline{\Ran}\left(T\right)$ and $y\in \overline{\Ran}\left(T\right)^{\perp}$.\footnote{It is the case that $\ker\left(T^{\ast}\right) = \overline{\Ran}\left(T\right)$.}
+\end{proof}
+\begin{proposition}
+  Let $\mathcal{H}$ be a Hilbert space, and let $\left(T_{\alpha}\right)_{\alpha}$ be a norm-bounded increasing net in $\mathcal{B}\left(\mathcal{H}\right)_{\sa}$. Then, there is $T\in \mathcal{B}\left(\mathcal{H}\right)_{\sa}$ such that $T = \lim_{\alpha}T_{\alpha}$ in SOT, and $\sup_{\alpha}T_{\alpha} = T$.
+\end{proposition}
 
 \end{document}

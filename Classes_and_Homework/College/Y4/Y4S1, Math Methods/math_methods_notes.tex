@@ -5912,7 +5912,7 @@ if and only if $\ket{f} = \ket{S}$.\newline
 
 Thus, for the sequence of partial sums $S_N$, we want the norm difference between $f$ and $S_N$ to approach $0$, yielding
 \begin{align*}
-  \lim_{N\rightarrow\infty} &= \lim_{N\rightarrow\infty}\int_{a}^{b} \left\vert f(x)-S_N(x) \right\vert w(x)\:dx\\
+  \lim_{N\rightarrow\infty}\norm{f- S_N}^2 &= \lim_{N\rightarrow\infty}\int_{a}^{b} \left\vert f(x)-S_N(x) \right\vert w(x)\:dx\\
                             &= 0.
 \end{align*}
 We then say $S_N$ converges to $f$ in the $L_2$ norm, or that $\left(S_N\right)_N\xrightarrow{L_2} f$.\newline
@@ -5925,5 +5925,83 @@ We let $\sigma$ be the error between $f$ and $S_N$, giving
            &= \braket{f}{f} - \sum_{n=1}^{N}s_n\braket{\hat{\phi}_n}{f} - \sum_{n=1}^{n}\overline{s_n}\braket{\hat{\phi}_n}{f} + \sum_{n=1}^{N}\left\vert s_n \right\vert^2\\
            &= \braket{f}{f} - \sum_{n=1}^{N}\left\vert \braket{\hat{\phi}_n}{f} \right\vert^2 + \sum_{n=1}^{N}\left\vert s_n - \braket{\hat{\phi}_n}{f} \right\vert^2,
 \end{align*}
-meaning that what minimizes $\sigma^2$ is $s_n = \braket{\hat{\phi}_n}{f}$.
+meaning that what minimizes $\sigma^2$ is $s_n = \braket{\hat{\phi}_n}{f}$. Thus, we get
+\begin{align*}
+  \sigma^2_{\text{min}} &= \braket{f}{f} - \sum_{n=1}^{N}\left\vert \braket{\hat{\phi}_n}{f} \right\vert^2.
+\end{align*}
+This leads to Bessel's inequality,
+\begin{align*}
+  \braket{f}{f} &\geq \sum_{n=1}^{N}\left\vert s_n \right\vert^2.
+\end{align*}
+Note that this error goes to zero as $n$ goes to infinity, from which we get Parseval's theorem:
+\begin{align*}
+  \braket{f}{f} &= \sum_{n=1}^{\infty}\left\vert s_n \right\vert^2.
+\end{align*}
+Moving from Bessel's inequality to Parseval's identity shows that our orthogonal expansion is faithful --- i.e., that there are no ``remaining'' orthogonal functions in our set $\set{\ket{\hat{\phi}_n}}_{n}$.\newline
+
+If our basis is orthogonal rather than orthonormal, we pick up a factor of $k_n$, defined by $\braket{\phi_n}{\phi_m} = k_n\delta_{mn}$. Thus, Parseval's theorem becomes
+\begin{align*}
+  \braket{f}{f} &= \sum_{n=1}^{\infty}k_n\left\vert s_n \right\vert^2.
+\end{align*}
+In Fourier coefficients, we have
+\begin{align*}
+  \frac{1}{2\pi}\int_{-\pi}^{\pi} \left\vert f(x) \right\vert^2\:dx &= \sum_{n=-\infty}^{\infty}\left\vert c_n \right\vert^2.
+\end{align*}
+\begin{example}
+  Consider a complex Fourier series, which satisfies Parseval's identity through
+  \begin{align*}
+    \frac{1}{2\pi}\int_{-\pi}^{\pi} \left\vert f(x) \right\vert^2\:dx &= \sum_{n=-\infty}^{\infty}\left\vert c_n \right\vert^2.
+  \end{align*}
+  We can find the Fourier coefficients of $f(x) = \left\vert x \right\vert$ to be $c_n = -\frac{2L}{\pi^2n^2}$, $c_0 = \frac{L}{2}$. For $L = \pi$, we get
+  \begin{align*}
+    \frac{1}{2\pi}\int_{-\pi}^{\pi} \left\vert x \right\vert^2\:dx &= \frac{\pi^2}{3},
+  \end{align*}
+  and using the expansion coefficients, we get
+  \begin{align*}
+    \sum_{n=-\infty}^{\infty} &= \left(\frac{\pi}{2}\right)^2 + 2\sum_{n\text{ odd}}^{\infty} \frac{4}{\pi^2n^4}.
+  \end{align*}
+  This yields the result
+  \begin{align*}
+    \sum,_{n\text{ odd}}^{\infty}\frac{1}{n^4} &= \frac{\pi^4}{96}.
+  \end{align*}
+\end{example}
+Let $\set{\ket{\phi_n}}_{n}$ be an orthogonal basis.
+\begin{align*}
+  S_N &= \sum_{n=1}^{N}s_n\phi_n(x)\\
+      &= \sum_{n=1}^{N}\left(\frac{1}{k_n}\int_{a}^{b} \overline{\phi_n(t)}f(t)\:dt\right) \phi_n(x)\\
+      &= \int_{a}^{b} f(t)\left(w(t)\sum_{n=1}^{N}\frac{1}{k_n}\overline{\phi_n(t)}\phi_n(x)\right)\:dt.
+\end{align*}
+We can see that if $\set{\ket{\phi_n}}_{n}$ is a complete basis, then $S_N$ converges to $f(x)$ as $N$ goes to infinity. Thus, we need the completeness relation\footnote{Eagle-eyed readers may recognize this as a reproducing kernel for $L_2\left([a,b]\right)$.}
+\begin{align*}
+  \delta\left(x-t\right) &= w(t)\sum_{n=1}^{\infty}\frac{1}{k_n}\overline{\phi_n\left(t\right)}\phi_n(x).
+\end{align*}
+In the case of the Fourier basis $e^{inx}$, with $w = 1$ and $k_n = \frac{1}{2\pi}$, we get the result
+\begin{align*}
+  \delta\left(x-t\right) &= \frac{1}{2\pi}\sum_{n=-\infty}^{\infty}e^{in\left(x-t\right)}.
+\end{align*}
+Note that the sum over this basis is real, and approaches the delta distribution.\newline
+
+To use the symmetry, we need to express the reproducing kernel slightly differently:
+\begin{align*}
+  \delta\left(x-t\right) &= \sqrt{w(x)w(t)}\sum_{n=1}^{\infty}\frac{1}{k_n}\overline{\phi_n(t)}\phi_n(x).
+\end{align*}
+Absorbing $\hat{\phi}_n(x) = \sqrt{\frac{w(x)}{k_n}}\phi_n(x)$, we get
+\begin{align*}
+  \delta\left(x-t\right) &= \sum_{n=1}^{\infty}\overline{\hat{\phi}_n(t)} \hat{\phi}_n(x).
+\end{align*}
+Recall that in the finite case, we had the completeness relation
+\begin{align*}
+  \sum_{n=1}^{N}\ket{n}\bra{n} &= I_N.
+\end{align*}
+\begin{example}
+We can use this reproducing kernel to construct the projection operator $\ket{\phi_n}\bra{\phi_n}$.
+\begin{align*}
+  \braket{f}{g} &= \int_{a}^{b} \overline{f(x)}g(x)w(x)\:dx\\
+                &= \int_{a}^{b}\int_{a}^{b} \overline{f(x)}\delta\left(x-t\right)g(t)w(t)\:dx dt\\
+                &= \int_{a}^{b}\int_{a}^{b} \overline{f(x)} \left(w(x)\sum_{n=1}^{\infty}\frac{1}{k_n}\overline{\phi_n(t)}\phi_n(x)\right) g(t)w(t)\:dx dt\\
+                &= \sum_{n=1}^{\infty}\frac{1}{k_n} \left(\int_{a}^{b} \overline{f(x)}\phi_n(x)w(x)\:dx\right)\left(\int_{a}^{b} \overline{\phi_n(t)}g(t)w(t)\:dt\right)\\
+                &= \sum_{n=1}^{\infty}\frac{1}{k_n} \overline{\braket{\phi_n}{f}} \braket{\phi_n}{g}.
+\end{align*}
+\end{example}
+
 \end{document}
