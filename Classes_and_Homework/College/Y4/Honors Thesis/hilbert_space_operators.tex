@@ -1607,9 +1607,37 @@ We can now establish an ordering of $\mathcal{B}\left(\mathcal{H}\right)_{\sa}$ 
 \begin{exercise}
   Suppose $T\in \mathcal{B}\left(\mathcal{H}\right)_{+}$. Prove that the sesquilinear form $\left(\xi,\eta\right)\mapsto \iprod{T\left(\xi\right)}{\eta}$ is a semi-inner product. Using the Cauchy--Schwarz inequality, show that
   \begin{align*}
-    \norm{T\left(\xi\right)}^2 &\leq \iprod{T\left(\xi\right)}{\xi} \iprod{T^3\left(\xi\right)}{\xi}.
+    \norm{T\left(\xi\right)}^2 &\leq \iprod{T\left(\xi\right)}{\xi}^{1/2} \iprod{T^3\left(\xi\right)}{\xi}^{1/2}.
   \end{align*}
 \end{exercise}
+\begin{solution}
+  Let $F: \mathcal{H}\rightarrow \mathcal{H}$ be defined by $\left(x,y\right) \rightarrow \iprod{T\left(x\right)}{y}$. We have
+  \begin{align*}
+    F\left(\lambda x_1 + \mu x_2,y\right) &= \iprod{T\left(\lambda x_1 + \mu x_2\right)}{y}\\
+                                          &= \iprod{T\left(\lambda x_1\right) + T\left(\mu x_2\right)}{y}\\
+                                          &= \lambda \iprod{T\left(x_1\right)}{y} + \mu \iprod{T\left(x_2\right)}{y}\\
+                                          &= \lambda F\left(x_1,y\right) + \mu F\left(x_2,y\right)\\
+                                          \\
+    F\left(x,y\right) &= \iprod{T\left(x\right)}{y}\\
+                      &= \overline{ \iprod{y}{T\left(x\right)} }\\
+                      &= \overline{ \iprod{T^{\ast}\left(y\right)}{x} }\\
+                      &= \overline{ \iprod{T\left(y\right)}{x} }\\
+                      &= \overline{F\left(y,x\right)}\\
+                      \\
+    F\left(x,x\right) &= \iprod{T\left(x\right)}{x}\\
+                      &\geq 0.
+  \end{align*}
+  Thus, $F$ is a semi-inner product.\newline
+
+  We use the Cauchy--Schwarz inequality on $F$ to find
+  \begin{align*}
+    F\left(T\left(\xi\right),\xi\right) &\leq F\left(\xi,\xi\right)^{1/2}F\left(T\left(\xi\right),T\left(\xi\right)\right)^{1/2}\\
+    \iprod{T^2\left(\xi\right)}{\xi} &\leq \iprod{T\left(\xi\right)}{\xi}^{1/2} \iprod{T\left(T\left(\xi\right)\right)}{T\left(\xi\right)}\\
+    \norm{T\left(\xi\right)}^2 &\leq \iprod{T\left(\xi\right)}{\xi}^{1/2} \iprod{T^3\left(\xi\right)}{\xi}^{1/2}.
+  \end{align*}
+  
+\end{solution}
+
 \begin{example}
   Given $\lambda = \left(\lambda_n\right)_n\in \ell_{\infty}$, the multiplication operator $D_{\lambda}\in \mathcal{B}\left(\ell_2\right)$ is positive if and only if $\lambda_n\geq 0$ for all $n$. For $\xi = \left(\xi_n\right)_n$, we have
   \begin{align*}
@@ -1728,6 +1756,122 @@ We can now define an ordering on the space of self-adjoint operators.
 \end{proof}
 \begin{proposition}
   Let $\mathcal{H}$ be a Hilbert space, and let $\left(T_{\alpha}\right)_{\alpha}$ be a norm-bounded increasing net in $\mathcal{B}\left(\mathcal{H}\right)_{\sa}$. Then, there is $T\in \mathcal{B}\left(\mathcal{H}\right)_{\sa}$ such that $T = \lim_{\alpha}T_{\alpha}$ in SOT, and $\sup_{\alpha}T_{\alpha} = T$.
+\end{proposition}
+\begin{proof}
+  Set $C = \sup_{\alpha}\norm{T_{\alpha}}_{\text{op}}$.\newline
+
+  For $\xi\in \mathcal{H}$, we see that $ \left( \iprod{T_{\alpha}\left(\xi\right)}{\xi}\right)_{\alpha}$ is a bounded increasing net in $\R$, since
+  \begin{align*}
+    \left\vert \iprod{T_{\alpha}\left(\xi\right)}{\xi} \right\vert &\leq \norm{T_{\alpha}}_{\text{op}}\norm{\xi}^2\\
+                                                                   &\leq C\norm{\xi}^2,
+  \end{align*}
+  and is increasing by the definition of the ordering on $\mathcal{B}\left(\mathcal{H}\right)_{\sa}$. Thus, this net is convergent in $\R$. \newline
+
+  Since $\left(\xi,\eta\right)\mapsto \iprod{T_{\alpha}\left(\xi\right)}{\eta}$ is a sesquilinear form, we may use the polarization identity to write
+  \begin{align*}
+    F\left(\xi,\eta\right) &= \lim_{\alpha} \left( \sum_{k=0}^{3}i^{k} \iprod{T_{\alpha}\left(\xi + i^k\eta\right)}{\xi + i^{k}\eta}\right),
+  \end{align*}
+  which defines a sesquilinear form with
+  \begin{align*}
+    \left\vert F\left(\xi,\eta\right) \right\vert &= \left\vert \lim_{\alpha} \iprod{T_{\alpha}\left(\xi\right)}{\eta} \right\vert\\
+                                                  &\leq C\norm{\xi}\norm{\eta}.
+  \end{align*}
+  Thus, there is a unique $T\in \mathcal{B}\left(\mathcal{H}\right)$ with $F\left(\xi,\eta\right) = \iprod{T\left(\xi\right)}{\eta}$, and $\norm{T}_{\text{op}} = \norm{F}_{\text{op}} \leq C$. By our definition of $F$, we have $\left(T_{\alpha}\right)_{\alpha}\xrightarrow{\text{WOT}} T$, and $T^{\ast} = T$.\newline
+
+  Since $\sup_{\alpha} \iprod{T_{\alpha}\left(\xi\right)}{\xi} = \iprod{T\left(\xi\right)}{\xi}$ for each $\xi\in \mathcal{H}$, we see that $T_{\alpha}\leq T$ for every $\alpha$, and no lesser $S\in \mathcal{B}\left(\mathcal{H}\right)_{\sa}$ has this property. Thus, $\sup_{\alpha}T_{\alpha} = T$.\newline
+
+  Finally, we must show that $\left(T_{\alpha}\right)_{\alpha}\xrightarrow{\text{SOT}}T$. If $\alpha_0$ is fixed in the indexing set, and $\alpha \geq \alpha_0$, then we have $0 \leq T - T_{\alpha}\leq T - T_{\alpha_0}$, so $\norm{T - T_{\alpha}}_{\text{op}}\leq \norm{T - T_{\alpha_0}}_{\text{op}}$. Thus, we have
+  \begin{align*}
+    \norm{\left(T - T_{\alpha}\right)\left(\xi\right)}^2 &\leq \iprod{\left(T - T_{\alpha}\right)\left(\xi\right)}{\xi}^{1/2} \iprod{\left(T - T_{\alpha}\right)^3\left(\xi\right)}{\xi}^{1/2}\\
+                                                         &\leq \iprod{\left(T - T_{\alpha}\right)\xi}{\xi}^{1/2}\norm{T - T_{\alpha}}_{\text{op}}^{3/2}\norm{\xi}\\
+                                                         &\leq \iprod{\left(T-T_{\alpha}\right)\left(\xi\right)}{\xi} \norm{T - T_{\alpha_0}}_{\text{op}}^{3/2}\norm{\xi}\\
+                                                         &\rightarrow 0.
+  \end{align*}
+  Thus, $\left(T_{\alpha}\right)_{\alpha}\xrightarrow{\text{SOT}}T$.
+\end{proof}
+\subsection{Special Classes of Operators}%
+\begin{lemma}
+  Let $\mathcal{H},\mathcal{K}$ be Hilbert spaces. For any bounded operator $T \in \mathcal{B}\left(\mathcal{H},\mathcal{K}\right)$, the following are true.
+  \begin{enumerate}[(1)]
+    \item $\ker\left(T^{\ast}\right) = \Ran\left(T\right)^{\perp}$
+    \item $\ker\left(T\right) = \Ran\left(T^{\ast}\right)^{\perp}$
+    \item $\ker\left(T\right)^{\perp} = \overline{\Ran}\left(T^{\ast}\right)$
+    \item $\ker\left(T^{\ast}\right)^{\perp} = \overline{\Ran}\left(T\right)$
+  \end{enumerate}
+\end{lemma}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item For $y\in \mathcal{K}$, we have, for all $x\in \mathcal{H}$,
+      \begin{align*}
+        T^{\ast}\left(y\right) = - &\Leftrightarrow \iprod{x}{T^{\ast}\left(y\right)} = 0\\
+                                   &\Leftrightarrow \iprod{T\left(x\right)}{y} = 0\\
+                                   &\Leftrightarrow y\in \Ran\left(T\right)^{\perp}.
+      \end{align*}
+    \item Apply (1) to $T^{\ast}$.
+    \item Taking orthogonal complements, we get
+      \begin{align*}
+        \ker\left(T\right)^{\perp} &= \left(\Ran\left(T^{\ast}\right)^{\perp}\right)^{\perp}\\
+                                   &= \overline{\Ran}\left(T^{\ast}\right).
+      \end{align*}
+    \item Apply (3) to $T^{\ast}$.
+  \end{enumerate}
+\end{proof}
+\subsubsection{Normal Operators}%
+Recall from linear algebra that a square matrix $a\in \Mat_{n}\left(\C\right)$ is called normal if $a^{\ast}a = aa^{\ast}$. These matrices are unitarily diagonalizable, which we studied in linear algebra. However, we can define normal operators in any *-algebras.
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space. A bounded operator $T\in \mathcal{B}\left(\mathcal{H}\right)$ is called normal if $TT^{\ast} = T^{\ast}T$.
+\end{definition}
+\begin{example}\hfill
+  \begin{enumerate}[(1)]
+    \item All self-adjoint operators are normal, as are all positive operators and orthogonal projections.
+    \item The right shift operator $R: \ell_2\rightarrow \ell_2$ is not normal, since $RR^{\ast} \neq I$ and $R^{\ast}R = I$. Similarly, the left shift operator is not normal.
+    \item The multiplication operator $D_{\lambda}:\ell_2\rightarrow \ell_2$, where $\lambda \in \ell_{\infty}$, is normal. This is because all multiplication operators commute. Similarly, the multiplication operators $M_{f}\in \mathcal{B}\left(L_{2}\left(\Omega,\mu\right)\right)$ with $f\in L_{\infty}\left(\Omega,\mu\right)$, are also normal.
+  \end{enumerate}
+\end{example}
+\begin{lemma}
+  A bounded operator $T\in \mathcal{B}\left(\mathcal{H}\right)$ is normal if and only if, for all $x\in \mathcal{H}$,
+  \begin{align*}
+    \norm{T\left(x\right)} &= \norm{T^{\ast}\left(x\right)}.
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  For all $x\in \mathcal{H}$, we have
+  \begin{align*}
+    \norm{T(x)} = \norm{T^{\ast}\left(x\right)} &\Leftrightarrow \norm{T\left(x\right)}^2 = \norm{T^{\ast}\left(x\right)}^2\\
+                                                &\Leftrightarrow \iprod{T\left(x\right)}{T\left(x\right)} = \iprod{T^{\ast}\left(x\right)}{T^{\ast}\left(x\right)}\\
+                                                &\Leftrightarrow \iprod{T^{\ast}T\left(x\right)}{x} = \iprod{TT^{\ast}\left(x\right)}{x}\\
+                                                &\Leftrightarrow T^{\ast}T = TT^{\ast}.
+  \end{align*}
+\end{proof}
+\begin{exercise}
+  Prove that the adjoint map is SOT-continuous on the set of normal operators.
+\end{exercise}
+\begin{solution}
+  Let $\left(T_{\alpha}\right)_{\alpha} \xrightarrow{\text{SOT}} T$. Then,
+  \begin{align*}
+    \norm{\left(T_{\alpha}^{\ast}- T^{\ast}\right)\left(x\right)} &= \norm{\left(T_{\alpha} - T\right)^{\ast}\left(x\right)}\\ 
+                                                               &\norm{\left(T_{\alpha} - T\right)\left(x\right)}\\
+                                                               &\rightarrow 0.
+  \end{align*}
+\end{solution}
+We know that the numerical radius coincides with the operator norm for self-adjoint operators. The same holds for normal operators.
+\begin{exercise}
+  If $T\in \mathcal{B}\left(\mathcal{H}\right)$ is normal, prove that $\nu\left(T\right) = \norm{T}_{\text{op}}$.
+\end{exercise}
+%\begin{proof}
+%  We know that $T^{\ast}T =  TT^{\ast} = \left(T^{\ast}T\right)^{\ast}$, meaning
+%  \begin{align*}
+%    \nu\left(T^{\ast}T\right) &= \norm{T^{\ast}T}\\
+%                              &= \norm{T}^2.
+%  \end{align*}
+%\end{proof}
+\begin{proposition}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $T\in \mathcal{B}\left(\mathcal{H}\right)$ is normal. The following are true.
+  \begin{enumerate}[(1)]
+    \item $\ker\left(T\right) = \ker\left(T^{\ast}\right) = \left(\Ran\left(T\right)\right)^{\perp}$.
+    \item $T$ is injective if and only if $\Ran\left(T\right)\subseteq \mathcal{H}$ is dense.
+    \item $T$ is invertible if and only if $T$ is bounded below.
+  \end{enumerate}
 \end{proposition}
 
 \end{document}
