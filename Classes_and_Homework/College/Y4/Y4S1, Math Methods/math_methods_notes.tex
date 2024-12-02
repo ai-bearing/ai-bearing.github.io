@@ -6005,6 +6005,7 @@ We can use this reproducing kernel to construct the projection operator $\ket{\p
 \end{align*}
 \end{example}
 \subsection{Fourier Transform}%
+\subsubsection{From Fourier Series to Fourier Transform}%
 Consider the differential equation
 \begin{align*}
   \diff{^2f}{x} &= -k^2 f,
@@ -6080,7 +6081,14 @@ We claim that $\mathcal{F}$ is a unitary operator.
                 &= \int_{-\infty}^{\infty} \left\vert \widehat{f}\left(k\right) \right\vert^2\:dk\\
                 &= \braket{\mathcal{F}\left[f\right]}{\mathcal{F}\left[f\right]}.
 \end{align*}
-The result that the Fourier transform is unitary is known as Plancherel's theorem. This is the Fourier transform analogue of Parseval's result that $L_{2}\left(\mathbb{T},\mu\right)\cong \ell_2\left(\Z\right)$.
+The result that the Fourier transform is unitary is known as Plancherel's theorem. This is the Fourier transform analogue of Parseval's result that $L_{2}\left(\mathbb{T},\mu\right)\cong \ell_2\left(\Z\right)$.\newline
+
+We can also take the Fourier transform in $n$ dimensions.
+\begin{align*}
+  \widehat{f}\left(\mathbf{k}\right) &= \frac{1}{\left(2\pi\right)^{n/2}}\int_{}^{} e^{-i\mathbf{k}\cdot \mathbf{r}}f\left(\mathbf{r}\right)\:d^n r\\
+  f\left(\mathbf{r}\right) &= \frac{1}{\left(2\pi\right)^{n/2}}\int_{}^{} e^{i\mathbf{k}\cdot \mathbf{r}}\widehat{f}\left(\mathbf{k}\right)\:d^n k
+\end{align*}
+
 \begin{example}
   Consider $f(x) = e^{-a|x|}$. We want to verify Plancherel's theorem.
   \begin{align*}
@@ -6102,6 +6110,68 @@ The result that the Fourier transform is unitary is known as Plancherel's theore
                                                           &= \sqrt{\frac{2\pi}{a}}e^{b^2/2a}.
   \end{align*}
 \end{example}
+\subsubsection{Physical Application of Fourier Transform}%
+There are physical interpretations of the Fourier transform.\footnote{Who cares about that?}
+\begin{example}
+  \begin{center}
+    \includegraphics[width=10cm]{images/fourier_transform_example.pdf}
+  \end{center}
+  Most of the time, we do not have an infinite single frequency.\footnote{Citation needed.} Consider a wave packet defined by
+  \begin{align*}
+    f(x) &= \begin{cases}
+      \cos k_0 x & |x| < L\\
+      0 & |x| > L
+    \end{cases},
+  \end{align*}
+  which can be interpreted as an idealized version of someone playing an instrument with one particular frequency.\newline
+
+  We have
+  \begin{align*}
+    \widehat{f}(k) &= \mathcal{F}\left[f\right]\\
+                   &= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} e^{-ikx}f(x)\:dx\\
+                   &= \frac{1}{\sqrt{2\pi}}\int_{-L}^{L} \cos\left(k_0x\right)e^{-ikx}\:dx\\
+                   &= \frac{1}{\sqrt{2\pi}}\frac{1}{2}\int_{-L}^{L} \left(e^{-i\left(k-k_0\right)x} + e^{-i\left(k + k_0\right)x}\right)\:dx.
+  \end{align*}
+  For $L\rightarrow\infty$, we have
+  \begin{align*}
+    \mathcal{F}\left[\cos k_0 x\right] &= \sqrt{\frac{\pi}{2}}\left(\df\left(k-k_0\right) + \df\left(k + k_0\right)\right)
+  \end{align*}
+  For finite limits, we need more than one frequency (indeed, an infinite number of frequencies).\newline
+
+  When we evaluate the finite case, we get
+  \begin{align*}
+    \mathcal{F}\left[f\right] &= \frac{1}{\sqrt{2\pi}} \left(\frac{\sin\left(\left(k + k_0\right)L\right)}{k + k_0} + \frac{\sin\left(\left(k-k_0\right)L\right)}{k-k_0}\right)\\
+                              &\approx \frac{1}{\sqrt{2\pi}} \frac{\sin\left(\left(k-k_0\right)L\right)}{k-k_0},
+  \end{align*}
+  where we used the fact that the spectrum is dominated by values of $k$ close to $k_0$. The ``volume'' at which we need to hit our tuning forks is proportional to the square of the amplitude. Thus, we get
+  \begin{align*}
+    I &\propto \left\vert \frac{\sin\left(\left(k-k_0\right)L\right)}{k-k_0} \right\vert^2
+  \end{align*}
+  \begin{center}
+    \includegraphics[width=10cm]{images/spectrum_wave_packet.pdf}
+  \end{center}
+  This spectrum is dominated along the value $k = k_0 \pm \Delta k$, where $\Delta k = \frac{\pi}{L}$.\newline
+
+  The reciprocal relationship between $\Delta k$ and $L$ is to be expected --- as time goes on, we become more ``certain'' of the frequency (so to speak), and need fewer tuning forks.\newline
+
+  Recall that since $\Delta x = 2L$, we get
+  \begin{align*}
+    \Delta x  \Delta k &= 2\pi,
+  \end{align*}
+  which means that the uncertainty is independent of $L$. In other words, if we have a more localized sound, we need more turning forks, and if we have a more lengthened sound, we need fewer turning forks.\newline
+
+  Generally, we write the uncertainty principle as
+  \begin{align*}
+    \Delta x \Delta k \geq 1.
+  \end{align*}
+  This generalized uncertainty principle rears its head in quantum mechanics. We say that the momentum $p= \hbar k$, where $\hbar = \frac{h}{2\pi}$ is the reduced Planck constant. We then obtain
+  \begin{align*}
+    \Delta x \Delta p &\geq \hbar.
+  \end{align*}
+\end{example}
+
+\subsubsection{Symmetries}%
+
 There are lots of symmetries between a function and its Fourier transform.
 \begin{example}[Scaling]
   We have
@@ -6118,7 +6188,86 @@ There are lots of symmetries between a function and its Fourier transform.
                                    &= e^{-ika}\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} f\left(y\right)e^{-iky}\:dy\\
                                    &= e^{-ika}\widehat{f}(k).
   \end{align*}
-  
 \end{example}
+\begin{example}[Fourier Transform of the Derivative]
+  We use integration by parts to find
+  \begin{align*}
+  \mathcal{F}\left[\diff{f}{x}\right] &= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} e^{-ikx}\frac{df}{dx}\:dx\\
+                                      &= \frac{1}{\sqrt{2\pi}}e^{-ikx}f(x)\Bigr\vert_{-\infty}^{\infty} - \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}\diff{}{x}\left(e^{-ikx}\right)f(x) \:dx\\
+                                      &= -\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \left(-ik\right)e^{-ikx}f(x)\:dx\\
+                                      &= \left(ik\right)\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} e^{-ikx}f(x)\:dx\\
+                                      &= \left(ik\right) \widehat{f}\left(k\right)
+  \end{align*}
+  This allows us to convert differential equations to algebraic equations.
+\end{example}
+\begin{example}[Solving a Linear Differential Equations]
+  Consider a random linear differential equation
+  \begin{align*}
+    \mathcal{L}_x\left(f(x)\right) &= r(x).
+  \end{align*}
+  We may want to solve for $f(x)$ in the long way. However, we can map via $\mathcal{F}$ to get
+  \begin{align*}
+    \widehat{\mathcal{L}}_k \widehat{f}\left(k\right) &= \widehat{r}\left(k\right).
+  \end{align*}
+  We solve for $\widehat{f}(k)$ by taking $\widehat{\mathcal{L}}_{k}^{-1}\left(\widehat{r}(k)\right)$, and then take $\mathcal{F}^{-1}$.\newline
+
+  Note that in $k$ space, solving $\widehat{f}\left(k\right) = \widehat{\mathcal{L}}_{k}^{-1}\left(\widehat{r}\left(k\right)\right)$ is just down to dividing by $k$.
+\end{example}
+\begin{example}
+  Consider
+  \begin{align*}
+    f''(x) - f(x) &= e^{-|x|}.
+  \end{align*}
+  This yields
+  \begin{align*}
+    -k^2\widehat{f}(k)-\widehat{f}(k) &+ -\sqrt{\frac{2}{\pi}}\frac{1}{1 + k^2}\\
+    \widehat{f}(k) &= \sqrt{\frac{2}{\pi}}\frac{1}{\left(1 + k^2\right)^2}.
+  \end{align*}
+  Then, we take the inverse Fourier transform.
+  \begin{align*}
+    f(x) &= \sqrt{\frac{2}{\pi}} \mathcal{F}^{-1}\left[\frac{1}{\left(1 + k^2\right)^2}\right]\\
+         &= \frac{1}{\pi} \int_{-\infty}^{\infty} \frac{e^{ikx}}{\left(1 + k^2\right)^2}\:dk\\
+         &= \frac{1}{2}\left(1 + |x|\right)e^{-|x|}.
+  \end{align*}
+\end{example}
+\begin{example}[Damped Driven Oscillator]
+Consider the differential equation
+\begin{align*}
+  \left(\diff{^2}{t^2} + 2\beta \diff{}{t} + \omega_0^{2}\right)u(t) &= f(t),
+\end{align*}
+which describes the motion of a damped oscillator with driving force $f$ and damping factor $\beta$.\newline
+
+Taking the Fourier transform, we get
+\begin{align*}
+  \left(-\omega'^2 + 2i\beta \omega' + \omega_0^2\right)\widehat{u}\left(\omega'\right) &= \widehat{f}\left(\omega'\right).
+\end{align*}
+We then take the inverse Fourier transform to get
+\begin{align*}
+  u(t) &= \mathcal{F}^{-1}\left[\frac{\widehat{f}\left(\omega'\right)}{\omega_0^2 - \omega'^2 + 2i\beta\omega'}\right].
+  \intertext{For $f(t) = f_0\cos\left(\omega t\right)$, which is a periodic driving force, we get}
+       &= f_0\frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} \frac{\sqrt{\frac{\pi}{2}}\left(\df\left(\omega' - \omega\right) + \df\left(\omega' + \omega\right)\right)}{\omega_0^2 - \omega'^2 + 2i\beta\omega'}e^{i\omega' t}\:d\omega'\\
+       &= \frac{1}{2}f_0\left(\frac{e^{i\omega t}}{\omega_0 - \omega^2 + 2i\beta \omega} + \frac{e^{-i\omega t}}{\omega_0^2 - \omega^2 - 2i\beta\omega}\right)\\
+       &= f_0\frac{\left(\omega_0^2 - \omega^2\right)\cos\left(\omega t\right) + 2\beta \omega \sin\left(\omega t\right)}{\left(\omega_0^2 - \omega^2\right)^2 + 4\beta^2\omega^2}
+\end{align*}
+Note that this result does not require any initial conditions. 
+\end{example}
+
+
+\begin{table}
+  \centering \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{c|c|c}
+    Symmetry & $x$ space & $k$ space\\
+    \hline\hline
+    Scaling & $\displaystyle f(ax)$ & $ \displaystyle \frac{1}{a}\widehat{f}\left(k/a\right)$\\
+    Translation/Phase Shift & $\displaystyle f\left(x-a\right)$ & $\displaystyle e^{-ika}\widehat{f}\left(k\right)$\\
+    Damping/Frequency Shift & $\displaystyle e^{-bx}f(x)$ & $\displaystyle \widehat{f}\left(k-ib\right)$\\
+    Real/Reflection & $\displaystyle \overline{f(x)} = f\left(x\right)$ & $\overline{\widehat{f}\left(k\right)} = \widehat{f}\left(-k\right)$\\
+    Even/Real & $f\left(-x\right) = f(x)$ & $\overline{\widehat{f}\left(k\right)} = \widehat{f}\left(k\right)$\\
+    Odd/Imaginary & $f\left(-x\right) = -f\left(x\right)$ & $\overline{\widehat{f}\left(k\right)} = -\widehat{f}\left(k\right)$\\
+    Derivative/Multiplication & $\diff{^n f}{x^n}$ & $\left(ik\right)^n \widehat{f}\left(k\right)$\\
+    Multiplication/Derivative & $\left(-ix\right)^n f(x)$ & $\diff{^n\widehat{f}}{k^n}$
+  \end{tabular}
+  \caption{Fourier Transform Symmetries}
+\end{table}
 
 \end{document}

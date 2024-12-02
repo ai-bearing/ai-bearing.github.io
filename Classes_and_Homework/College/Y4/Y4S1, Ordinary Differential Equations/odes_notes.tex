@@ -2517,6 +2517,7 @@ In particular, the borderline cases on the trace-determinant plane occur at the 
   \item $D = 0$ (i.e., attracting/repelling fixed points).
 \end{itemize}
 \section{Laplace Transforms}%
+\subsection{Basics of Laplace Transform}%
 We can use a different method to solve differential equations. 
 \begin{definition}[Laplace Transform]
   Let $f(t)$ be a function defined on $[0,\infty)$. The Laplace transform of $f(t)$ defined as
@@ -2574,5 +2575,113 @@ Note that the Laplace transform is a linear operator:
   \mathcal{L}\left[f(t) + g(t)\right] &= \mathcal{L}\left[f(t)\right] + \mathcal{L}\left[g(t)\right]\\
   \mathcal{L}\left[af(t)\right] &= a\mathcal{L}\left[f(t)\right].
 \end{align*}
-The Laplace transform exists for all functions that are bounded above by some exponential function.
+The Laplace transform exists for all functions that are bounded above by some exponential function.\newline
+
+Since there is a one-to-one correspondence between $F(s)$ and $f(t)$, the inverse Laplace transform exists. We say $f(t)$ is the inverse Laplace transform of $F(s)$. The inverse Laplace transform is also a linear operator.
+\begin{align*}
+  \mathcal{L}^{-1}\left[\alpha F(s) + \beta G(s)\right] &= \alpha \mathcal{L}^{-1}\left[F(s)\right] + \beta \mathcal{L}^{-1}\left[G(s)\right].
+\end{align*}
+\subsection{Laplace Transform of Discontinuous Functions}%
+Consider the Heaviside step function
+\begin{align*}
+  u_{a}\left(t\right) &= \begin{cases}
+    0 & t < a\\
+    1 & t \geq a
+  \end{cases},
+\end{align*}
+where $a \geq 0$. We want to find its Laplace transform.
+\begin{align*}
+  \mathcal{L}\left[u_a\left(t\right)\right] &= \int_{0}^{\infty} e^{-st}u_a\left(t\right)\:dt\\
+                                            &= \int_{a}^{\infty} e^{-st}u_a\left(t\right)\:dt\\
+                                            &= \lim_{b\rightarrow\infty}\left(\int_{a}^{b} u_a\left(t\right)e^{-st}\:dt\right)\\
+                                            &= \lim_{b\rightarrow\infty}\left(-\frac{1}{s}e^{-st}\Bigr\vert_{a}^{b}\right)\\
+                                            &= \frac{1}{s}e^{-sa}\text{ provided $s > 0$.}
+\end{align*}
+\begin{theorem}[Second Shifting Theorem]
+  If $\mathcal{L}\left[f(t)\right] = F(s)$, then 
+  \begin{align*}
+    \mathcal{L}\left[u_a(t)f\left(t-a\right)\right] = e^{-as}F(s)
+  \end{align*}
+  
+\end{theorem}
+\begin{theorem}[First Shifting Theorem]
+  If $F(s) = \mathcal{L}\left[f(t)\right]$, then
+  \begin{align*}
+    F\left(s-a\right) &= \mathcal{L}\left[e^{at}f(t)\right].
+  \end{align*}
+  
+\end{theorem}
+\subsection{Solving Differential Equations with the Laplace Transform}%
+To begin solving differential equations with the Laplace transform, we need to apply the Laplace transform to the derivative. This gives
+\begin{align*}
+  \mathcal{L}\left[\frac{dy}{dt}\right] &= \int_{0}^{\infty} e^{-st}\diff{y}{t}\:dt\\
+                                        &= y(t)e^{-st}\bigr\vert_{0}^{\infty} - \left(-s\right)\int_{0}^{\infty} ye^{-st}\:dt\\
+                                        &= -y(0) + s\mathcal{L}\left[y\right].
+\end{align*}
+Similarly, we get
+\begin{align*}
+  \mathcal{L}\left[\diff{^2y}{t^2}\right] &= s^2\mathcal{L}\left[y\right] - sy(0) - \diff{y}{t}\Bigr\vert_{t=0}\\
+  \mathcal{L}\left[\diff{^n y}{t^n}\right] &= s^n \mathcal{L}\left[y\right] - s^{n-1}y(0) - s^{n-2}\diff{y}{t}\Bigr\vert_{t=0} - \cdots - s\diff{^{n-2}y}{t^{n-2}}\Bigr\vert_{t=0} - \diff{^{n-1}y}{t^{n-1}}\Bigr\vert_{t=0}.
+\end{align*}
+\begin{example}
+  Let
+  \begin{align*}
+    \diff{y}{t} &= 3y + e^{2t},
+  \end{align*}
+  with $y(0) = 1$. While we could use integrating factors to solve this equation, we will apply the Laplace transform to solve this problem.
+  \begin{align*}
+    s\mathcal{L}\left[y\right] - y(0) &= \mathcal{L}\left[3y + e^{2t}\right]\\
+    s\mathcal{L}\left[y\right] - y(0) &= 3\mathcal{L}\left[y\right] + \frac{1}{s-2}\\
+    \left(s-3\right)\mathcal{L}\left[y\right] &= 1 + \frac{1}{s-2}\\
+    \mathcal{L}\left[y\right] &= \frac{1}{s-3} + \frac{1}{\left(s-2\right)\left(s-3\right)}\\
+                              &= \frac{1}{s-3} + \frac{1}{s-3} - \frac{1}{s-2}\\
+                              &= \frac{2}{s-3} - \frac{1}{s-2}.
+  \end{align*}
+  Thus, using the inverse Laplace transform, we get
+  \begin{align*}
+    y\left[t\right] &= 2e^{3t} - e^{2t}.
+  \end{align*}
+  
+\end{example}
+\begin{example}[Damped Harmonic Oscillator with External Force]
+  Consider a spring and mass system with an external force $F_{\text{ext}}$ in the positive direction, the force $F_{\text{spring}} = -kx$, where $0$ is the equilibrium position for the spring, and the friction force $F_{\text{friction}} = -c\diff{x}{t}$.\newline
+
+  We find the net force as
+  \begin{align*}
+    F_{\text{net}} &= F_{\text{ext}} - kx - c\diff{x}{t}.
+  \end{align*}
+  Newton's second law says that $F_\text{net} = m \diff{^2x}{t^2}$, meaning we find the differential equation
+  \begin{align*}
+    m \diff{^2x}{t^2} + c \diff{x}{t} + kx &= F_{\text{ext}}.
+  \end{align*}
+  In general, a damped harmonic oscillator has its function as a solution to the equation
+  \begin{align*}
+    \diff{^2y}{t^2} + p\diff{y}{t} + qy &= f(t).
+  \end{align*}
+\end{example}
+\begin{example}
+  We will solve the second-order equation
+  \begin{align*}
+    \diff{^2y}{t^2} - 4\diff{y}{t} + 5y &= 2e^{t},
+  \end{align*}
+  with initial values of $y(0) = 3$ and $y'(0) = 1$. We will solve this equation using a Laplace transform.
+  \begin{align*} 
+    \mathcal{L}\left[\diff{^2y}{t^2} - 4\diff{y}{t} + 5y\right] &= \mathcal{L}\left[2e^{t}\right]\\
+    s^2\mathcal{L}\left[y\right] - sy(0) - y'(0) - 4\left(s\mathcal{L}\left[y\right] - y(0)\right) + 5\mathcal{L}\left[y\right] &= \frac{2}{s-1}\\
+    \mathcal{L}\left[y\right]\left(s^2 - 4s + 5\right) &= \frac{2}{s-1} + 3s - 11,
+  \end{align*}
+  giving
+  \begin{align*}
+    \mathcal{L}\left[y\right] &= \frac{2}{\left(s-1\right)\left(\left(s-2\right)^2 + 1\right)} + \frac{3s - 6}{\left(s-2\right)^2 + 1} - \frac{5}{\left(s-2\right)^2 + 1}\\
+                              &= \frac{1}{s-1} - \frac{s-2}{\left(s-2\right)^2 + 1} + \frac{1}{\left(s-2\right)^2 + 1} + 3\left(\frac{s-2}{\left(s-2\right)^2 + 1}\right) - 5\left(\frac{1}{\left(s-2\right)^2 + 1}\right).
+  \end{align*}
+  Applying the first shift theorem and inverse Laplace transforms we get the solution
+  \begin{align*}
+    y(t) &= e^{t} - e^{2t}\cos\left(t\right) + e^{2t}\sin\left(t\right) + 3e^{2t}\cos\left(t\right) - 5e^{2t}\sin\left(t\right)\\
+         &= e^{t} + 2e^{2t}\cos\left(t\right) - 4e^{2t}\sin\left(t\right)
+  \end{align*}
+  
+\end{example}
+
+
 \end{document}
