@@ -14,6 +14,7 @@
 \DeclareMathOperator{\hDim}{hdim}
 \DeclareMathOperator{\Hdim}{hdim}
 \newcommand{\sa}{\text{s.a.}}
+\newcommand{\M}{\mathbb{M}}
 
 \pagestyle{fancy} %better headers
 \fancyhf{}
@@ -1188,6 +1189,52 @@ We can now look at some examples of operators and adjoints.
   \end{align*}
   meaning $T_{a}^{\ast} = T_{a^{\ast}}$.
 \end{example}
+\begin{example}
+  The canonical projection
+  \begin{align*}
+    \pi_k\colon \bigoplus_{i\in I}\mathcal{H}_i \rightarrow \mathcal{H}_k
+  \end{align*}
+  and canonical injection
+  \begin{align*}
+    \iota_k\colon \mathcal{H}_k \rightarrow \bigoplus_{i\in I}\mathcal{H}_i,
+  \end{align*}
+  defined by
+  \begin{align*}
+    \pi_k\left(\left(x_i\right)_i\right) &= x_k\\
+    \iota_k\left(x_k\right) &= \begin{cases}
+      x_k & i=k\\
+      0 & i\neq k
+    \end{cases}
+  \end{align*}
+  are adjoints.
+\end{example}
+\begin{example}
+  Let $\mathcal{H}$ and $\mathcal{K}$ be Hilbert spaces. For every pair of nonzero vectors $x\in \mathcal{H}$ and $y\in \mathcal{K}$, we define the rank-one bounded operator $\theta_{x,y}: \mathcal{K}\rightarrow \mathcal{H}$ by $\theta_{x,y}\left(z\right) = \iprod{z}{y}x$.\newline
+
+  In physics, $\theta_{x,y} = \ket{x}\bra{y}$.\newline
+
+  By the Cauchy--Schwarz inequality, we have
+  \begin{align*}
+    \norm{\theta_{x,y}\left(z\right)} &= \norm{\iprod{z}{y}x}\\
+                                      &= \left\vert \iprod{z}{y} \right\vert \norm{x}\\
+                                      &\leq \norm{z}\norm{y}\norm{x},
+  \end{align*}
+  meaning $\norm{\theta_{x,y}}_{\text{op}} \leq \norm{x}\norm{y}$. Alternatively, we also know that
+  \begin{align*}
+    \theta_{x,y}\left(\frac{y}{\norm{y}}\right) &= \norm{x}\norm{y},
+  \end{align*}
+  meaning that $\norm{\theta_{x,y}}_{\text{op}} = \norm{x}\norm{y}$.\newline
+
+  The adjoint of $\theta_{x,y}$ is $\theta_{y,x}$. We can see this by taking, for $z\in \mathcal{K}$ and $u\in \mathcal{H}$,
+  \begin{align*}
+    \iprod{\theta_{x,y}\left(z\right)}{u} &= \iprod{ \iprod{z}{y}x }{u}\\
+                                          &= \iprod{z}{y} \iprod{x}{u}\\
+                                          &= \iprod{z}{y} \overline{\iprod{u}{x}}\\
+                                          &= \iprod{z}{ \iprod{u}{x}y }\\
+                                          &= \iprod{z}{ \theta_{y,x}\left(u\right) }.
+  \end{align*}
+\end{example}
+
 \subsubsection{Topologies on $\mathcal{B}\left(\mathcal{H}\right)$}%
 Given a Banach space $X$, we can introduce two locally convex topologies on $\mathcal{B}\left(X\right)$ --- namely, the weak operator topology and the strong operator topology, both of which are weaker than the norm topology.
 \begin{lemma}
@@ -1944,11 +1991,12 @@ We know that the numerical radius coincides with the operator norm for self-adjo
       \begin{align*}
         \nu\left(T^{2^{n}}\right) &\leq \nu\left(T\right)^{2^n}.
       \end{align*}
-    \item Let $T$ be normal. Then, we have
+    \item Let $T$ be normal. Then, $A = T^{\ast}T$ is self-adjoint, so $\norm{A}^2 = \norm{A^{\ast}A} = \norm{A^2}$. Additionally, since $T^{\ast}T = TT^{\ast}$, we have $\left(T^{\ast}T\right)^{2^n} = \left(T^{\ast}\right)^{2^n}T^{2^n}$. Combining, this gives
       \begin{align*}
         \norm{T}^{2^n} &= \left(\norm{T^{\ast}T}^{2^n}\right)^{1/2}\\
-                       &= \left(\norm{\left(T^{\ast}T\right)^{2^n}}\right)^{1/2}\tag*{$T^{\ast}T$ is self-adjoint.}\\
-                       &= \left(\norm{\left(T^{\ast}\right)^{2^n}\left(T\right)^{2^n}}\right)^{1/2}\\
+                       &= \norm{\left(T^{\ast}T\right)^{2^n}}^{1/2}\\
+                       &= \norm{\left(T^{\ast}\right)^{2^n}T^{2^n}}^{1/2}\\
+                       &= \norm{\left(T^{2^n}\right)^{\ast}T^{2^n}}^{1/2}\\
                        &= \norm{T^{2^n}}.
       \end{align*}
       Thus, we see that
@@ -2540,6 +2588,248 @@ We can prove some simple properties of invariant and reducing subspaces.
         R_M &= \set{T\in \mathcal{B}\left(\mathcal{H}\right) | M\text{ reduces }T}
       \end{align*}
       is a von Neumann algebra.
+  \end{enumerate}
+\end{exercise}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Since $M$ reduces $T$, $M$ is invariant for $T$ and $T^{\ast}$, so $T^{\ast}\left(M^{\perp}\right)\subseteq M^{\perp}$, meaning $T^{\ast}\left(M\right) \subseteq M$.\newline
+
+      Similarly, since $M$ reduces $T$ and $M$ reduces $S$, we have
+      \begin{align*}
+        TS\left(M\right)&\subseteq T\left(M\right)\\
+        &\subseteq M.
+      \end{align*}
+      Similarly, $TS\left(M^{\perp}\right) \subseteq M^{\perp}$.
+    \item Let $M$ reduce a net of bounded operators $\left(T_{\alpha}\right)_{\alpha}$ with $\left(T_{\alpha}\right)_{\alpha}\xrightarrow{\text{WOT}}T$. Then, we have, for all $\eta\in M^{\perp}$ and $\xi \in M$,
+      \begin{align*}
+        0 &= \iprod{T_{\alpha}\left(\xi\right)}{\eta}\\
+          &\rightarrow \iprod{T\left(\xi\right)}{\eta},
+      \end{align*}
+      so $T\left(\xi\right)\in M$. Thus, $T\left(M\right)\subseteq M$, so $M$ is invariant for $T$. Similarly, we also find $M^{\perp}$ is invariant for $T$, so $M$ is reducing for $T$.
+    \item We see that the collection $R_M$ is a WOT-closed subalgebra of $\mathcal{B}\left(\mathcal{H}\right)$, so $R_M$ is a von Neumann algebra.
+  \end{enumerate}
+\end{solution}
+\begin{definition}
+  Let $B\subseteq \mathcal{B}\left(\mathcal{H}\right)$ be a collection of bounded operators on a Hilbert space $\mathcal{H}$. A closed subspace $M\subseteq \mathcal{H}$ is said to be invariant/reducing for $B$ if $M$ is invariant/reducing for every $b\in B$.
+\end{definition}
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space, $S\subseteq \mathcal{H}$ a set of vectors, and let $B\subseteq \mathcal{B}\left(\mathcal{H}\right)$ be a collection of bounded operators. Set
+  \begin{align*}
+    \left[BS\right] &= \overline{\Span}\set{b\left(\eta\right) | b\in B,\eta \in S}.
+  \end{align*}
+  If $S = \set{\xi}$, then we write $\left[B\xi\right]$. If $B\subseteq \mathcal{B}\left(\mathcal{H}\right)$ is a subspace, and $\xi\in \mathcal{H}$, then
+  \begin{align*}
+    \left[B\xi\right] &= \overline{\set{b\left(\xi\right) | b\in B}}.
+  \end{align*}
+\end{definition}
+\begin{exercise}
+  If $B\subseteq \mathcal{B}\left(\mathcal{H}\right)$ is a subalgebra of bounded operators on a Hilbert space $\mathcal{H}$ and $S\subseteq \mathcal{H}$ is a collection of vectors, prove that $\left[BS\right]$ is invariant for $B$. If $B$ is a $\ast$-subalgebra, prove that $\left[BS\right]$ is reducing for $B$.
+\end{exercise}
+\begin{solution}
+  Let $B$ be a subalgebra. Then, for any $\xi\in \left[BS\right]$, we see that $b\left(\xi\right)\in \left[BS\right]$ for every $b\in B$, meaning $b\left(\left[BS\right]\right)\subseteq \left[BS\right]$ for each $b\in B$, so $\left[BS\right]$ is invariant.\newline
+
+  Similarly, for a $\ast$-subalgebra $B$, since $b\left(\left[BS\right]\right)\subseteq \left[BS\right]$, and $b^{\ast}\left(\left[BS\right]\right)\subseteq \left[BS\right]$ for each $b\in B$, it is the case that $\left[BS\right]$ is reducing for $B$.
+\end{solution}
+We can understand invariant and reducing subspaces through purely algebraic expressions as well.
+\begin{lemma}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $M\subseteq \mathcal{H}$ is a closed subspace with orthogonal projection $P = P_M$.
+  \begin{enumerate}[(1)]
+    \item $M$ is invariant for $T\in \mathcal{B}\left(H\right)$ if and only if $PTP = TP$.
+    \item $M$ is reducing for $T\in \mathcal{B}\left(H\right)$ if and only if $PT = TP$.
+    \item $M$ is reducing for the family $B\subseteq \mathcal{B}\left(\mathcal{H}\right)$ if and only if $P\in B'$, where $B'$ is the commutant of $B$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item If $PTP = TP$, then $T\left(M\right) = TP\left(M\right) = PTP\left(M\right)\subseteq \Ran\left(P\right) = M$. Conversely, if $M$ is invariant for $T$, then $TP(x)\in M$ for any $x\in \mathcal{H}$, so $PTP(x) = x$.
+    \item We know that $M$ and $M^{\perp}$ are invariant for $T$, so we have $PTP = TP$ and $\left(I-P\right)T\left(I-P\right) = T\left(I-P\right)$, meaning $TP = PT$.
+    \item Follows from (2).
+  \end{enumerate}
+\end{proof}
+We can now understand the characterization of partial isometries, which are (effectively) a combination of a projection and isometry.
+\begin{proposition}
+  Let $T: \mathcal{H}\rightarrow \mathcal{K}$ be a bounded linear operator between Hilbert spaces, and let $L = \ker\left(T\right)^{\perp}$, $M = \Ran\left(T\right)$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $T^{\ast}T$ is the orthogonal projection onto $L$;
+    \item $TT^{\ast}$ is the orthogonal projection onto $M$, which is a closed subspace;
+    \item $T|_{L}\colon L\rightarrow K$ is an isometry;
+    \item $TT^{\ast}T = T$;
+    \item $T^{\ast}TT^{\ast} = T^{\ast}$.
+  \end{enumerate}
+  All of these cases imply that $T|_{L}\colon L\rightarrow M$ is an isometric isomorphism of Hilbert spaces.
+\end{proposition}
+\begin{proof}
+  The equivalence between (iv) and (v) follows from adjoints.\newline
+
+  To show that (v) implies (i), we see that $T^{\ast}T$ is self-adjoint, and that
+  \begin{align*}
+    \left(T^{\ast}T\right)\left(T^{\ast}T\right) &= \left(T^{\ast}TT^{\ast}\right)T\\
+                                                 &= T^{\ast}T,
+  \end{align*}
+  so $T^{\ast}T$ is an idempotent. Thus, $T^{\ast}T$ is the orthogonal projection onto $\Ran\left(T^{\ast}T\right)$, which is close since $T^{\ast}T$ is idempotent. We also see that
+  \begin{align*}
+    \Ran\left(T^{\ast}T\right)&\subseteq \Ran\left(T^{\ast}\right)\\
+                              &\subseteq \overline{\Ran\left(T^{\ast}\right)}\\
+                              &= \ker\left(T\right)^{\perp}\\
+                              &= L.
+  \end{align*}
+  Since $T^{\ast}TT^{\ast} = T^{\ast}$, we get $\Ran\left(T^{\ast}\right)\subseteq \Ran\left(T^{\ast}T\right)$. Taking closures, we get
+  \begin{align*}
+    L &= \ker\left(T\right)^{\perp}\\
+      &= \overline{\Ran\left(T^{\ast}\right)}\\
+      &\subseteq \Ran\left(T^{\ast}T\right),
+  \end{align*}
+  meaning $T^{\ast}T$ is the orthogonal projection onto $L$.\newline
+
+  To see the implication (ii) to (v), we see that if $S\in \mathcal{B}\left(\mathcal{H},\mathcal{K}\right)$ satisfies $S^{\ast}S = 0$, then $S = 0$ by the $C^{\ast}$ identity. We will show that $T^{\ast}TT^{\ast} - T^{\ast} = 0$, by seeing
+  \begin{align*}
+    \left(T^{\ast}TT^{\ast} - T^{\ast}\right)^{\ast}\left(T^{\ast}TT^{\ast} - T^{\ast}\right) &= \left(TT^{\ast}T - T\right)\left(T^{\ast}TT^{\ast} - T^{\ast}\right)\\
+                                                                                              &= TT^{\ast}TT^{\ast}TT^{\ast} - TT^{\ast}TT^{\ast} - TT^{\ast}TT^{\ast} + TT^{\ast}\\
+                                                                                              &= TT^{\ast}TT^{\ast} - TT^{\ast} - TT^{\ast} + TT^{\ast}\\
+                                                                                              &= 0.
+  \end{align*}
+  Similarly, the implication (i) to (iv) follows from replacing $TT^{\ast}$ with $T^{\ast}T$.\newline
+
+  The implication (iv) to (ii) follows from the fact that $TT^{\ast}$ is a self-adjoint idempotent with closed range, meaning $\Ran\left(TT^{\ast}\right) = \Ran\left(T\right) = M$.\newline
+
+  To see the implication (i) to (iii), we see that if $x\in L$ and $T^{\ast}T = P_{L}$, then
+  \begin{align*}
+    \norm{T\left(x\right)}^2 &= \iprod{T\left(x\right)}{T\left(x\right)}\\
+                             &= \iprod{T^{\ast}T\left(x\right)}{x}\\
+                             &= \iprod{x}{x}\\
+                             &= \norm{x}^2,
+  \end{align*}
+  meaning $T|_{L}:L\rightarrow\mathcal{K}$ is an isometry.\newline
+
+  If $T|_{L}:L\rightarrow \mathcal{K}$ is an isometry, we know that $ \iprod{T\left(x\right)}{T\left(z'\right)} = \iprod{z}{z'} $ for all $z,z'\in L$. Let $x\in \mathcal{H}$ be arbitrary. Note that $T^{\ast}T\left(x\right)\in \Ran\left(T^{\ast}\right)\subseteq \ker\left(T\right)^{\perp}$, so we write $x = y +z$ by the decomposition $\mathcal{H} = \ker\left(T\right) \oplus L$. We have $T^{\ast}T\left(x\right) = T^{\ast}T\left(z\right)$. For any $z'\in L$, we compute
+  \begin{align*}
+    \iprod{x - T^{\ast}T\left(x\right)}{z'} &= \iprod{z - T^{\ast}T\left(z\right)}{z'}\\
+                                            &= \iprod{z}{z'} - \iprod{T^{\ast}T\left(z\right)}{z'}\\
+                                            &= \iprod{z}{z'} - \iprod{T\left(z\right)}{T\left(z'\right)}\\
+                                            &= 0.
+  \end{align*}
+  This means $x-T^{\ast}T\left(x\right) \in L^{\perp}$. The decomposition
+  \begin{align*}
+    x &= TT^{\ast}\left(x\right) + \left(x - TT^{\ast}\left(x\right)\right)
+  \end{align*}
+  implies $TT^{\ast}\left(x\right) = P_{L}\left(x\right)$. Since $x$ was arbitrary, we have $TT^{\ast} = P_{L}$.
+\end{proof}
+\begin{definition}
+  An operator $T\in \mathcal{B}\left(\mathcal{H},\mathcal{K}\right)$ satisfying one of the above conditions is known as a partial isometry with initial projection $T^{\ast}T$ and final projection $TT^{\ast}$.
+\end{definition}
+\begin{exercise}
+  Let $x$ and $y$ be unit vectors in $\mathcal{H}$. Prove that the rank-one operator $\theta_{x,y}$ is a partial isometry with initial projection $\theta_{y,y}$ and final projection $\theta_{x,x}$.
+\end{exercise}
+Partial isometries and unitaries are primarily useful to compare projections, which aid in the classification of von Neumann algebras.
+\begin{exercise}
+  Consider the following relations on the set of projections $\mathcal{B}\left(\mathcal{H}\right)$.
+  \begin{enumerate}[(a)]
+    \item For $P,Q\in \mathcal{P}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$, we define $P\sim Q$ if there exists $V\in \mathcal{B}\left(\mathcal{H}\right)$ with $V^{\ast}V = P$ and $VV^{\ast} = Q$. This is known as Murray--von Neumann equivalence. Prove that this defines an equivalence relation on $\mathcal{P}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$.
+    \item For $P,Q\in \mathcal{B}\left(\mathcal{H}\right)$, we set $P\sim_{u} Q$ if there exists $U\in \mathcal{U}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$ such that $UPU^{\ast} = Q$. This is known as unitary equivalence. Prove that $\sim_{u}$ defines an equivalence relation on $\mathcal{P}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$.
+    \item Prove that $P\sim_{u}Q \Rightarrow P\sim Q$.
+  \end{enumerate}
+\end{exercise}
+\begin{solution}
+  \begin{enumerate}[(a)]
+    \item Reflexivity follows from $P^{\ast} = P$. Symmetry follows from the fact that $U = V^{\ast}$ yields $U^{\ast}U = Q$ and $UU^{\ast} = P$. Transitivity follows from composition.
+    \item Reflexivity follows from $I\in \mathcal{U}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$, symmetry from $U \in \mathcal{U}\left(\mathcal{B}\left(\mathcal{H}\right)\right)\Rightarrow U^{\ast}\in \mathcal{U}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$, and transitivity from $U,V\in \mathcal{U}\left(\mathcal{B}\left(\mathcal{H}\right)\right) \Rightarrow UV\in \mathcal{U}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$.
+    \item Setting $V = UP$ in the unitary equivalence, we find that
+      \begin{align*}
+        V^{\ast}V &= \left(UP\right)^{\ast}\left(UP\right)\\
+                  &= P^{\ast}U^{\ast}UP\\
+                  &= P^{\ast}P\\
+                  &= P\\
+        VV^{\ast} &= \left(UP\right)\left(UP\right)^{\ast}\\
+                  &= UPP^{\ast}U^{\ast}\\
+                  &= UP^2U^{\ast}\\
+                  &= UPU^{\ast}\\
+                  &= Q.
+      \end{align*}
+  \end{enumerate}
+\end{solution}
+\begin{exercise}
+  Let $\mathcal{H}$ be a Hilbert space. Prove the following.
+  \begin{enumerate}[(a)]
+    \item $P\sim Q$ if and only if $\Rank\left(P\right) = \Rank\left(Q\right)$.
+    \item $P\sim_{u} Q$ if and only if $\Ran\left(P\right) = \Rank\left(Q\right)$ and $\Rank\left(I-P\right) = \Rank\left(I-Q\right)$.
+  \end{enumerate}
+\end{exercise}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Let $P\sim Q$. Then, there exists $V\in \mathcal{B}\left(\mathcal{H}\right)$ such that $V^{\ast}V = P$ and $VV^{\ast} = Q$. Notice that for $x\in \mathcal{H}$, we have
+      \begin{align*}
+        \norm{VP\left(x\right)}^2 &= \iprod{VP\left(x\right)}{VP\left(x\right)}\\
+                                  &= \iprod{VV^{\ast}V\left(x\right)}{VV^{\ast}V\left(x\right)}\\
+                                  &= \iprod{V\left(x\right)}{V\left(x\right)}\\
+                                  &= \iprod{V^{\ast}V\left(x\right)}{x}\\
+                                  &= \iprod{P\left(x\right)}{x}\\
+                                  &= \iprod{P\left(x\right)}{P\left(x\right)}\\
+                                  &= \norm{P\left(x\right)}^2.
+      \end{align*}
+      By definition, we must have $V$ is the partial isometry with initial projection $P$ and final projection $Q$. In particular, this means $V|_{\Ran\left(P\right)}\colon \Ran\left(P\right)\rightarrow \Ran\left(Q\right)$ is an isometric isomorphism, meaning that $\hdim\left(\Ran\left(P\right)\right) =\hdim\left(\Ran\left(Q\right)\right)$, so $\Rank\left(P\right) = \Rank\left(Q\right)$.\newline
+
+      If $\Rank\left(P\right) = \Rank\left(Q\right)$, then there exists an isometric isomorphism $T\colon \Ran\left(P\right)\rightarrow \Ran\left(Q\right)$. Defining $V$ to be equal to $T$ on $\Ran\left(P\right)$ and $0$ elsewhere, we then have $V^{\ast}V = P$ and $VV^{\ast} = Q$.
+    \item If $P\sim_{u}Q$, then $P$ and $Q$ are Murray--von Neumann equivalent, so $\Rank\left(P\right) = \Rank\left(Q\right)$. Similarly, we have
+      \begin{align*}
+        U^{\ast}\left(I-P\right)U &= I-U^{\ast}PU\\
+                                  &= I-Q,
+      \end{align*}
+      so $I-P$ and $I-Q$ are Murray--von Neumann equivalent, so $\Rank\left(I-P\right) = \Rank\left(I-Q\right)$.\newline
+
+      If $\Rank\left(P\right) = \Rank\left(Q\right)$, then there exists $V\in \mathcal{B}\left(\mathcal{H}\right)$ such that $V^{\ast}V = P$ and $VV^{\ast} = Q$. Similarly, there exists $T\in \mathcal{B}\left(\mathcal{H}\right)$ such that $T^{\ast}T = I-P$ and $TT^{\ast} = I-Q$.
+  \end{enumerate}
+\end{solution}
+
+\begin{fact}
+  If $P$ and $Q$ are projections in $\mathcal{B}\left(\mathcal{H}\right)$ with $\norm{P-Q}_{\text{op}} < 1$, then $P$ and $Q$ are unitarily equivalent.
+\end{fact}
+\begin{proof}
+  Suppose $0\neq \xi\in \Ran\left(P\right)$. If $Q\left(\xi\right) = 0$, then
+  \begin{align*}
+    \norm{\xi} &= \norm{P\left(\xi\right)}\\
+               &= \norm{P\left(\xi\right) - Q\left(\xi\right)}\\
+               &= \norm{\left(P-Q\right)\left(\xi\right)}\\
+               &\leq \norm{P-Q}_{\text{op}} \norm{\xi}\\
+               & < \xi.
+  \end{align*}
+  Thus, $Q\left(\xi\right) \neq 0$, meaning $Q|_{\Ran\left(P\right)}\colon \Ran\left(P\right)\rightarrow \Ran\left(Q\right)$ is injective. It follows that $\Rank\left(P\right) \leq \Rank\left(Q\right)$. Similarly, we must have $\Rank\left(Q\right) \leq \Rank\left(P\right)$, meaning $\Rank\left(Q\right) = \Rank\left(P\right)$.\newline
+
+  Note that $\norm{P^{\perp} - Q^{\perp}}_{\text{op}} = \norm{Q - P}_{\text{op}} < 1$, meaning $\Rank\left(P^{\perp}\right) = \Rank\left(Q^{\perp}\right)$. Thus, $P\sim_{u}Q$.
+\end{proof}
+\subsection{Direct Sums and Diagonalizable Operators}%
+To move towards constructing the matrix algebra $\Mat_{n}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$ and prove the Double Commutant theorem, we begin by constructing the matrix representation of an operator.
+\begin{proposition}
+  Let $\set{\mathcal{H}_{i}}_{i\in I}$ be a family of Hilbert spaces, and suppose for each $i\in I$, we have a bounded operator $T_i\in \mathcal{B}\left(\mathcal{H}_i\right)$. If $\sup_{i\in I}\norm{T_i}_{\text{op}} < \infty$, then $T\colon \bigoplus_{i\in I}\mathcal{H}_i \rightarrow \bigoplus_{i\in I}\mathcal{H}_i$, defined by
+  \begin{align*}
+    T\left(\left(\xi_i\right)_i\right) &= \left(T_i\left(\xi_i\right)\right)_{i}
+  \end{align*}
+  is a well-defined bounded linear operator with $\norm{T}_{\text{op}} = \sup_{i\in I}\norm{T_i}_{\text{op}}$.
+\end{proposition}
+\begin{proof}
+  For $\xi = \left(\xi_i\right)_i$ in $\bigoplus_{i\in I}\mathcal{H}_i$, we compute
+  \begin{align*}
+    \norm{T\left(\xi\right)}^2 &= \norm{\left(T_i\left(\xi_i\right)\right)_i}^2\\
+                               &= \sum_{i\in I}\norm{T_i\left(\xi_i\right)}^2\\
+                               &\leq \sum_{i\in I}\norm{T_i}^2_{\text{op}}\norm{\xi_i}^2\\
+                               &\leq \sup_{i\in I}\norm{T_i}^2_{\text{op}}\sum_{i\in I}\norm{\xi_i}^2\\
+                               &= \left(\sup_{i\in I}\norm{T_i}_{\text{op}}\right)^2\norm{\xi}^2,
+  \end{align*}
+  meaning $T$ is well-defined and $\norm{T}_{\text{op}} \leq \sup_{i\in I}\norm{T_i}_{\text{op}}$. Since $T$ restricts to $T_i$ on each $\mathcal{H}_i$, it follows that $\norm{T}_{\text{op}} \geq \norm{T_i}_{\text{op}}$ for every $i\in I$.
+\end{proof}
+\begin{definition}
+  We call $T$ as defined above the external direct sum of the family $\set{T_i}_{i\in I}$. We write $T = \bigoplus_{i\in I}T_i$.\newline
+
+  If $\mathcal{H}_i = \mathcal{H}$ and $T_i = T$ for all $i\in I$, we write $\bigoplus_{i\in I}T$ acting on $\bigoplus_{i\in I}\mathcal{H}$ as the $I$-fold amplification of $T$.\newline
+
+  We write $T^{(\infty)}$ for $\bigoplus_{n\in \N}T$, and $T^{(n)}$ for $\bigoplus_{k=1}^{n}T$.
+\end{definition}
+\begin{exercise}
+  Suppose $\bigoplus_{i\in I}T_i$ and $\bigoplus_{i\in I}S_i$ are external direct sums acting on $\bigoplus_{i\in I}\mathcal{H}_i$, and let $\alpha$ be a scalar. Prove the following algebraic properties.
+  \begin{enumerate}[(a)]
+    \item $\displaystyle \alpha \left(\bigoplus_{i\in I}T_i\right) + \bigoplus_{i\in I}S_i = \bigoplus_{i\in I}\left(\alpha T_i + S_i\right)$.
+    \item $\displaystyle \left(\bigoplus_{i\in I}T_i\right) \circ \left(\bigoplus_{i\in I}S_i\right) = \bigoplus_{i\in I}\left(T_iS_i\right)$.
+    \item $\displaystyle \left(\bigoplus_{i\in I}T_i\right)^{\ast}= \bigoplus_{i\in I}T_i^{\ast}$.
+    \item $\displaystyle \left(\bigoplus_{i\in I}T_i\right)^{n}= \bigoplus_{i\in I}T_i^{n}$.
   \end{enumerate}
 \end{exercise}
 

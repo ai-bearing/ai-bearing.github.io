@@ -2455,7 +2455,7 @@ However, in the general case, we need to parametrize our line integral.
   \end{align*}
   Along the path $C_1$, which goes from $(0,0)$ to $(1,0)$, then $(1,0)$ to $(1,1)$, the work is given by
   \begin{align*}
-    \int_{C}^{} \mathbf{B}\cdot\:d\vec{\ell} &= \int_{C_1}^{} x^2y\:dx-xy^2\:dy
+    \int_{C}^{} \mathbf{B}\cdot\:d\vec{\ell} &= \int_{C_1}^{} x^2y\:dx-xy^2\:dy\\
                                              &= \int_{0}^{1} x^2y\bigr\vert_{y=0}\:dx - \int_{0}^{1} xy^2\bigr\vert_{x=1}\:dy\\
                                              &= -\frac{1}{3}.
   \end{align*}
@@ -6269,5 +6269,125 @@ Note that this result does not require any initial conditions.
   \end{tabular}
   \caption{Fourier Transform Symmetries}
 \end{table}
+\subsubsection{Bases and the Fourier Transform}%
+When we calculate the orthogonality of plane waves, we find
+\begin{align*}
+  \int_{\R}^{} e^{ikx}e^{-ik'x}\:dx &= 2\pi \delta\left(k-k'\right).
+\end{align*}
+While this is not the Kronecker delta, we can consider the set $\set{\frac{1}{\sqrt{2\pi}}e^{ikx}}$ is a complete orthonormal basis, where we take the continuum limit
+\begin{align*}
+  \frac{1}{2\pi}\int_{\R}^{} e^{ikx}e^{-ikx'}\:dk &= \delta\left(x-x'\right).
+\end{align*}
+This means orthogonality in $x$-space is completeness in $k$-space, and vice versa. We can consider $f(x)$ as the projection of $\ket{f}$ onto the $x$ basis, and similarly, $\widehat{f}\left(k\right)$ as the projection of $\ket{f}$ onto the $k$ basis.
+\begin{align*}
+  f(x) &= \braket{x}{f}\\
+  \widehat{f}\left(k\right) &= \braket{k}{f}.
+\end{align*}
+Note that by inserting completeness, we get
+\begin{align*}
+  \widehat{f}\left(k\right) &= \braket{k}{f}\\
+                            &= \int_{\R}^{} \braket{k}{x}\braket{x}{f}\:dx\\
+                            &= \int_{\R}^{} \braket{k}{x}f(x)\:dx,
+\end{align*}
+where
+\begin{align*}
+  \braket{k}{x} &= \frac{1}{\sqrt{2\pi}}e^{-ikx}.
+\end{align*}
+This allows us to find
+\begin{align*}
+  \braket{x}{k} &= \overline{\braket{k}{x}}\\
+                &= \frac{1}{\sqrt{2\pi}}e^{ikx}.
+\end{align*}
+We can consider the map $\braket{x}{k}$ as a unitary map between spaces.
+\begin{example}[Poisson's Equation]
+  Poisson's equation says that
+  \begin{align*}
+    \nabla^2 \Phi\left(\mathbf{r}\right) &= -\frac{\rho\left(\mathbf{r}\right)}{\epsilon_0}
+  \end{align*}
+  This equation is hard to solve if $\rho$ is a complicated function. However, we can solve this by taking Fourier transforms.
+  \begin{align*}
+    \mathcal{F}\left[\nabla^2 \Phi\left(\mathbf{r}\right)\right] &= \mathcal{F}\left[-\frac{\rho\left(\mathbf{r}\right)}{\epsilon_0}\right]\\
+    \left(i\mathbf{k}\cdot i\mathbf{k}\right)\widehat{\Phi}\left(\mathbf{k}\right) &= -\frac{1}{\epsilon_0}\widehat{\rho}\left(\mathbf{k}\right)\\
+    \widehat{\Phi}\left(k\right) &= \frac{1}{\epsilon_0} \frac{\widehat{\rho}\left(k\right)}{k^2}\\
+    \Phi\left(x\right) &= \frac{1}{\epsilon_0}\mathcal{F}^{-1}\left(\frac{\widehat{\rho}\left(\mathbf{k}\right)}{k^2}\right).
+  \end{align*}
+  In the case of a point charge, we have
+  \begin{align*}
+    \rho\left(\mathbf{r}\right) &= q\df\left(\mathbf{r} - \mathbf{s}\right)\\
+    \Phi\left(\mathbf{r}\right) &= \frac{1}{\epsilon_0}\mathcal{F}^{-1}\left(\frac{\widehat{\rho}\left(\mathbf{r}\right)}{k^2}\right)\\
+                                &= \frac{q}{\left(2\pi\right)^{3/2}\epsilon_0}\frac{1}{\left(2\pi\right)^{3/2}}\int_{\R^3}^{} \frac{e^{i\mathbf{k}\cdot\left(\mathbf{r}-\mathbf{s}\right)}}{k^2}\:d^3k,
+  \end{align*}
+  where we have used
+  \begin{align*}
+    \mathcal{F}\left[\df\left(\mathbf{r}-\mathbf{s}\right)\right] &= \frac{1}{\left(2\pi\right)^{3/2}}e^{-i\mathbf{k}\cdot \mathbf{s}}.
+  \end{align*}
+  Now, we get
+  \begin{align*}
+    \Phi\left(\mathbf{r}\right) &= \frac{q}{\left(2\pi\right)^3\epsilon_0}\int_{\R^3}^{} \frac{e^{ik\left\vert \mathbf{r}-\mathbf{s} \right\vert\cos\theta}}{k^2}k^2\:dkd\left(\cos\theta\right)d\phi\\
+                                &= \frac{q}{\left(2\pi\right)^2\epsilon_0} \int_{\R^3}^{}\frac{e^{ik\left\vert \mathbf{r}-\mathbf{s} \right\vert\cos\theta}}{k^2}k^2\:dkd\left(\cos\theta\right)
+  \end{align*}
+  where we use spherical coordinates with the trick $d\tau = k^2\: dkd\left(\cos\theta\right)d\phi$. This gives us
+  
+  \begin{align*}
+    \Phi\left(\mathbf{r}\right) &= \frac{q}{\left(2\pi\right)^2\epsilon_0}\int_{0}^{\infty} k^2\:dk\underbrace{\int_{-1}^{1} e^{ik\left\vert \mathbf{r}-\mathbf{s} \right\vert u}\:du}_{=2\sin\left(k\left\vert \mathbf{r}-\mathbf{s} \right\vert\right)}\\
+                                &= \frac{1}{2\pi^2\epsilon_0}\int_{0}^{\infty} \frac{\sin\left(k\left\vert \mathbf{r}-\mathbf{s} \right\vert\right)}{k\left\vert \mathbf{r}-\mathbf{s} \right\vert}\:dk\\
+                                &= \frac{q}{2\pi^2\epsilon_0}\frac{1}{\left\vert \mathbf{r}-\mathbf{s} \right\vert}\int_{0}^{\infty} \frac{\sin\left(\xi\right)}{\xi}\:d\xi\tag*{$\xi = k\left\vert \mathbf{r}-\mathbf{s} \right\vert$}\\
+                                &= \frac{q}{4\pi\epsilon_0}\frac{1}{\left\vert \mathbf{r}-\mathbf{s} \right\vert}.
+  \end{align*}
+\end{example}
+\begin{example}[Fraunhofer Diffraction]
+Diffraction occurs when a wave moves through a slit.\newline
+
+There are two types of diffraction --- near-field diffraction, known as Fresnel diffraction, and far-field diffraction, known as Fraunhofer diffraction.\newline
+
+To discuss Fraunhofer diffraction, we have to understand spherical waves. We know that $\psi\left(\mathbf{r}\right) = Ae^{i\mathbf{k}\cdot \mathbf{r}}$ represents a plane wave moving in the direction of $\mathbf{k}$. A spherical wave is one that moves in the radial direction,
+\begin{align*}
+  \Psi\left(r,t\right) &= \psi\left(r\right)e^{-i\omega t}\\
+                       &= A\frac{e^{i\left(kr-\omega t\right)}}{r},
+\end{align*}
+where $\frac{1}{r}$ accounts for the decrease in wave amplitude.\newline
+
+Huygens's principle says that, on a spherical wave front, we can pretend that any point on the front is a source for a plane wave; by adding up the waves from these sources together, we can obtain the next wave front.\newline
+
+When we impose an aperture, in order to find the wave at some point $P = (x,y,z)$ at a value of $z$ that is large relative to the wavelength, we take the superposition of all the wave fronts at the slit.
+\begin{align*}
+  \psi\left(P\right) &= A\int_{S}^{} \frac{e^{ikr}}{r}\:du dv,
+\end{align*}
+where $S$ is the surface in the $uv$-plane (distinct from the $xy$-plane). We see that $r^2 = \left(x-u\right)^2 + \left(y-v\right)^2 + z^2$. If we set $R = \sqrt{x^2 + y^2 + z^2}$ to be the distance from the origin in the $uv$-plane, and consider $u$ and $v$ to be really small, we get
+\begin{align*}
+  r &\approx \left(x^2-2xu + y^2-2yv + z^2\right)^{1/2}\\
+    &= R\left(1 - \frac{2\left(xu+yv\right)}{R^2}\right)^{1/2}\\
+    &\approx R\left(1-\frac{xu + yv}{R^2}\right),
+\end{align*}
+where we use the binomial approximation in the last line.\newline
+
+Now, we have, for sufficiently small $u$ and $v$,
+\begin{align*}
+  \psi\left(P\right) &= A\frac{e^{ikR}}{R}\int_{S}^{} e^{-ik\left(xu + yv\right)/R}\:dudv.
+\end{align*}
+By defining
+\begin{align*}
+  \mathbf{k}_{\perp} &= \left(k_x,k_y\right)\\
+                     &= \left(kx/R,ky/R\right)\\
+                     &= k\left(\sin\theta\cos\phi,\sin\theta\sin\phi\right),
+\end{align*}
+our integral looks very much like a Fourier transform,
+\begin{align*}
+  \psi\left(P\right) &= A\frac{e^{ikR}}{R}\int_{S}^{} e^{-i\left(k_xu + k_yv\right)}\:dudv.
+\end{align*}
+However, we need two more things --- we need a function, and the integral to be over all of space. We introduce a mask function. In the case of a slit, we take
+\begin{align*}
+  f\left(u,v\right) &= \begin{cases}
+    1 & \text{slit open}\\
+    0 & \text{slit closed}
+  \end{cases}.
+\end{align*}
+Now, we can find
+\begin{align*}
+  \psi\left(P\right) &= A\frac{e^{ikR}}{R}\int_{\R^2}^{} f\left(u,v\right)e^{-i\left(k_xu+k_yv\right)}\:dudv\\
+                     &= 2\pi A \frac{e^{ikR}}{R}\widehat{f}\left(\mathbf{k}_{\perp}\right).
+\end{align*}
+
+\end{example}
 
 \end{document}
