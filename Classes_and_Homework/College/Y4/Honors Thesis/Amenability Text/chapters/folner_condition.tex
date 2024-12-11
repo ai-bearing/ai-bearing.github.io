@@ -571,7 +571,7 @@ Owing to the correspondence between invariant states and means, we are now able 
   Continuing in this fashion, we see that $G$ is amenable.
 \end{proof}
 \section{Følner's Condition and Approximate Means}%
-While showing the existence of an invariant state is necessary and sufficient for showing a group is amenable, as well as showing the group is non-paradoxical, it is often difficult to find invariant states. However, we can often more easily create a sequence (or net) of finitely supported functions whose limit is an invariant state. In order to do this, we will show the equivalence between the existence of a special sequence of subsets known as a Følner sequence, approximate means, and invariant states.
+While showing the existence of an invariant state is necessary and sufficient for showing a group is amenable, as well as showing the group is non-paradoxical, it is often difficult to find invariant states. However, we can often more easily create a sequence (or net) of finitely supported functions whose limit is an invariant state. This will require the use of the Følner condition.
 \begin{definition}
   A group is said to satisfy the {Følner condition} if, for every $\ve > 0$ and $E\subseteq G$, there is a nonempty finite subset $F\subseteq G$ such that for all $t\in E$,
   \begin{align*}
@@ -648,6 +648,7 @@ While showing the existence of an invariant state is necessary and sufficient fo
   \end{align*}
   meaning that $\Z$ satisfies the Følner condition.
 \end{example}
+We have thus far proven that $G$ satisfies the Følner condition if and only if $G$ admits a Følner sequence, and that $G$ is amenable if and only if $G$ admits an invariant state. We will now begin harmonizing these two characterizations through the use of approximate means, eventually showing that $G$ satisfies the Følner condition if and only if $G$ admits an approximate mean, and that $G$ admits an approximate mean if and only if $G$ is amenable.
 \begin{definition}
   For a group $G$, we define
   \begin{align*}
@@ -699,11 +700,12 @@ We only need to show that $\norm{\varphi_f} = 1$. We see that
   for any $f\in \prob(G)$.
 \end{proof}
 \begin{definition}
-  For a countable group $G$, a sequence $\left(f_k\right)_k$ is called an {approximate mean} if, for all $s\in G$,
+  For a countable group $G$, a sequence $\left(f_k\right)_k$ is called an approximate mean if, for all $s\in G$,
   \begin{align*}
     \norm{f_k - \lambda_s\left(f_k\right)}_{1} &\xrightarrow{k\rightarrow \infty}0.
-  \end{align*}
+  \end{align*}\label{def:approximate_mean}
 \end{definition}
+To begin the forward direction regarding the equivalence between the Følner condition, approximate means, and means, we begin by showing that the existence of a Følner sequence implies the existence of an approximate mean. Then, we will show that the existence of an approximate mean implies the existence of an invariant state (hence mean).
 \begin{proposition}
   If $G$ admits a Følner sequence $\left(F_k\right)_k$, then $G$ admits an approximate mean.
 \end{proposition}
@@ -751,3 +753,119 @@ We only need to show that $\norm{\varphi_f} = 1$. We see that
   for all $\ve > 0$, so $\mu\left(g\right) = \mu\left(\lambda_{s}\left(g\right)\right)$.
 \end{proof}
 
+We will now commence with the reverse direction, starting by showing that amenability implies the existence of an approximate mean, and then showing that the existence of an approximate mean implies that the Følner condition is satisfied.
+\begin{proposition}
+  If $G$ is amenable, then $G$ admits an approximate mean.
+\end{proposition}
+\begin{proof}
+  Suppose $G$ does not admit an approximate mean. Then, there exists a finite subset $E_0\subseteq G$ and $\ve_0 > 0$ such that for all $s\in E_0$ and all $f\in \Prob(G)$, we have $\norm{f - \lambda_s\left(f\right) \geq \ve_0}$.\newline
+
+  Consider the set
+  \begin{align*}
+    X &= \bigoplus_{\left\vert E_0 \right\vert} \ell_1\left(G\right),
+  \end{align*}
+  endowed with the norm
+  \begin{align*}
+    \norm{\left(f_s\right)_{s\in E_0}} &= \sum_{s\in E_0}\sum_{t\in G}\left\vert f_s(t) \right\vert\\
+                                       &= \sum_{s\in E_0}\norm{f_s}_{1},
+  \end{align*}
+  and let
+  \begin{align*}
+    C &= \set{\left(f - \lambda_s\left(f\right)\right)_{s\in E_0} | f\in \Prob(G)}.
+  \end{align*}
+  Since $\Prob(G)$ is convex, it is the case that $C$ is convex, and since $\left\vert E_0 \right\vert$ is finite, $C$ is necessarily bounded. Note that $0\notin \overline{C}$.\newline
+
+  By the Hahn--Banach separation theorem for convex sets, there is a real-valued $\varphi\in X^{\ast}$ such that $\varphi\left(C\right)\geq 1$. Here,
+  \begin{align*}
+    X^{\ast} &\cong \bigoplus_{\left\vert E_0 \right\vert}\ell_1\left(G\right)^{\ast}\\
+             &\cong \sum_{\left\vert E_0 \right\vert}\ell_{\infty}\left(G\right),
+  \end{align*}
+  endowed with the norm
+  \begin{align*}
+    \norm{\left(g_s\right)_{s\in E_0}} &= \max_{s\in E_0}\left(\sup_{t\in G}\left\vert g_s(t) \right\vert\right)\\
+                                       &= \max_{s\in E_0}\norm{g_s}_{\infty}.
+  \end{align*}
+  We let $\varphi = \left(\varphi_{g_s}\right)_{s\in E_0}$, where $g_s\in \ell_{\infty}\left(G\right)$ is defined by the duality
+  \begin{align*}
+    \varphi_{g_s}\left(f\right) &= \sum_{t\in G}f(t)g_s(t).
+  \end{align*}
+  Thus, for all $f\in \Prob(G)$, we have
+  \begin{align*}
+    1 &\leq \varphi\left(\left(f - \lambda_s\left(f\right)\right)_{s\in E_0}\right)\\
+      &= \sum_{s\in E_0}\varphi_{g_s}\left(f - \lambda-s\left(f\right)\right)\\
+      &= \sum_{s\in E_0}\sum_{t\in G}\left(f - \lambda_s\left(f\right)\right)(t)g_s(t)\\
+      &= \sum_{s\in E_0}\left(\sum_{t\in G}f(t)g_s(t) - \sum_{t\in G}f\left(s^{-1}t\right)g_s(t)\right)\\
+      &= \sum_{s\in E_0}\left(\sum_{t\in G}f(t)g_s(t) - \sum_{r\in G}f\left(r\right)g_s\left(sr\right)\right)\\
+      &= \sum_{s\in E_0}\left(\sum_{r\in G}f(r)g_s(r) - \sum_{r\in G}f(r)\lambda_{s^{-1}}\left(g\right)(r)\right)\\
+      &= \sum_{s\in E_0}\sum_{r\in G}f(r)\left(g_s - \lambda_{s^{-1}}\left(g\right)\right)(r).
+      \intertext{Note that this holds for any $f\in \Prob(G)$, including the case of $f = \delta_t$ for a given $t\in G$. We must have}
+      &= \sum_{s\in E_0}\sum_{r\in G}\delta_{t}\left(r\right)\left(g_s\left(r\right) - \lambda_{s^{-1}}\left(g_s\right)\right)\left(r\right)\\
+      &= \sum_{s\in E_0}\left(g_s - \lambda_{s^{-1}}\left(g\right)\right)\left(t\right).
+      \intertext{In particular, we must have}
+      &\geq \1_{G}.
+  \end{align*}
+  Since $G$ is amenable, there is a mean $\mu\colon \ell_{\infty}\left(G\right)\rightarrow \C$ with $\mu\left(g_s\right) = \mu\left(\lambda_{s^{-1}}\left(g_s\right)\right)$, meaning
+  \begin{align*}
+    0 &= \mu\left(\sum_{s\in E_0}\left(g_s - \lambda_{s^{-1}}\left(g_s\right)\right)\left(t\right)\right)\\
+      &\geq \mu\left(\1_{G}\right)\\
+      &= 1,
+  \end{align*}
+  which is a contradiction.
+\end{proof}
+To show that the existence of an approximate mean implies the Følner condition, we require the following lemma.
+\begin{lemma}
+  Let $f\colon S\rightarrow \R$ be finitely supported with $\sum_{s\in S}f(s) = 1$. Then, there exist subsets $\set{F_i}_{i=1}^{n}$, where $F_1\supseteq F_2\supseteq \cdots \supseteq F_n$, and constants $\set{c_i}_{i=1}^{n}$, such that
+  \begin{align*}
+    f &= \sum_{i=1}^{n}c_i\1_{F_i},
+  \end{align*}
+  where
+  \begin{align*}
+    \sum_{i=1}^{n}c_i\left\vert F_i \right\vert &= 1.
+  \end{align*}
+  This is known as the layer cake representation for $f$.\label{lemma:layer_cake_representation}
+\end{lemma}
+\begin{proof}[Proof of Lemma \ref{lemma:layer_cake_representation}:]
+  We define $F_1 = \supp\left(f\right)$, and take $c_1 = \min\left(\Ran\left(f\right)\right)$. Taking $E_1 = f^{-1}\left(c_1\right)$ (as a set-theoretic inverse), we define $F_2 = F_1\setminus E_1$.\newline
+
+  Take $d_1 = \min\left(f\left(F_2\right)\right)$, and define $c_2 = d_1 - c_1$. Then, defining $E_2 = f^{-1}\left(d_1\right)$, $F_3 = F_2 \setminus E_2$, and $d_2 = \min\left(f\left(F_3\right)\right)$, we define $c_3 = d_2 - c_2 - c_1$.\newline
+
+  Continuing in this pattern, we find $d_{i-1} = \min\left(f\left(F_i\right)\right)$, $E_i = f^{-1}\left(d_{i-1}\right)$, and $c_i = d_{i-1} - \sum_{j=1}^{i-1}c_i$.\newline
+
+  This yields a decomposition $F_1\supseteq F_2\supseteq \cdots \supseteq F_n$, where $\sum_{i=1}^{n}c_i\1_{F_i} = f$ by construction.\newline
+
+  We now verify that $\sum_{i=1}^n c_i\left\vert F_i \right\vert = 1$.
+  \begin{align*}
+    1 &= \sum_{s\in S}f(s)\\
+      &= \sum_{s\in S}\sum_{i=1}^{n}c_i\1_{F_i}\left(s\right).
+      \intertext{By definition, if $s\in F_j$ for some $j$, we see that $c_j$ is summed for $\left\vert F_j \right\vert$ many times. Thus, we obtain}
+      &= \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
+  \end{align*}
+\end{proof}
+
+We will use the layer cake decomposition to prove that if $G$ admits an approximate mean, then $G$ satisfies the Følner condition.
+\begin{proposition}
+  Let $G$ admit an approximate mean. Then, $G$ satisfies the Følner condition.
+\end{proposition}
+\begin{proof}
+  Let $\left(f_k\right)_k$ be an approximate mean, as in Definition \ref{def:approximate_mean}. Fix a finite nonempty set $S \subseteq G$. Then, by the definition of an approximate mean, there must exist some $N\in\N$ such that for all $k\geq N$ and all $s\in G$,
+  \begin{align*}
+    \norm{f_k - \lambda_s\left(f_k\right)}_{1} &\leq \frac{\ve}{|S|}.
+  \end{align*}
+  In particular, this holds for $f_N$ and for all $s\in S$.\newline
+
+  Since $f_N\in \Prob(G)$ is finitely supported and $\sum_{s\in G}f_N(s) = 1$, we may use Lemma \ref{lemma:layer_cake_representation} to rewrite $f_N$ as
+  \begin{align*}
+    f_N &= \sum_{i=1}^{n}c_i\1_{F_i},
+  \end{align*}
+  where $F_1 \supseteq F_2\supseteq \cdots \supseteq F_n$, and $\sum_{i=1}^{n}c_i\left\vert F_i \right\vert = 1$. 
+\end{proof}
+
+Thus far, we have shown the following to be equivalent for a discrete group $G$:
+\begin{enumerate}[(1)]
+  \item $G$ is non-paradoxical;
+  \item $G$ is amenable;
+  \item $G$ admits an invariant state;
+  \item $G$ admits an approximate mean;
+  \item $G$ satisfies the Følner condition.
+\end{enumerate}
+The equivalence between (1) and (2) follows from Tarski's theorem (Theorem \ref{thm:tarski}), the equivalence between (2) and (3) follows from Propositions \ref{prop:state_implies_mean} and \ref{prop:mean_implies_state}, and the equivalence between (3), (4), and (5) follows from 

@@ -3020,5 +3020,383 @@ Recall that if $\mathcal{H} = \bigoplus_{i\in I}$ is an internal direct sum, the
     \item A bounded operator $T\in \mathcal{B}\left(\mathcal{H}\right)$ is said to be diagonalizable if it is block-diagonalizable with each $M_i$ having $\Dim\left(M_i\right) = 1$.
   \end{itemize}
 \end{definition}
+\begin{proposition}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $M\subseteq \mathcal{H}$ reduces $T\in \mathcal{B}\left(\mathcal{H}\right)$. Setting $T_M = T|_{M}$ and $T_{M^{\perp}} = T|_{M^{\perp}}$. Then,
+  \begin{align*}
+    T &= T_{M}\oplus T_{M^{\perp}}.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Since $M$ reduces $T$, both $M$ and $M^{\perp}$ are invariant for $T$, so $T = T_{M} \oplus T_{M^{\perp}}$.
+\end{proof}
+\begin{proposition}
+  Let $\mathcal{M} = \set{M_i}_{i\in I}$ be a family of closed subspaces of $\mathcal{H}$, with $\mathcal{H} = \sum_{i\in I}M_i$. Write $P_i$ to be the orthogonal projection to be the orthogonal projection onto $M_i$. For every $T\in \mathcal{B}\left(\mathcal{H}\right)$, the unconditional sum $\sum_{i\in I}P_iTP_i$ converges in the strong operator topology.\newline
+
+  Letting $\mathbb{E}_{\mathcal{M}}\colon \mathcal{B}\left(\mathcal{H}\right)$ be defined by
+  \begin{align*}
+    \mathbb{E}_{\mathcal{M}}\left(T\right) &= \sum_{i\in I}P_iTP_i,
+  \end{align*}
+  the following are true:
+  \begin{enumerate}[(1)]
+    \item $\mathbb{E}_{\mathcal{M}}$ is linear, positive, contractive, and faithful;
+    \item 
+      \begin{align*}
+        \Ran\left(\mathbb{E}_{\mathcal{M}}\right) = R_{\mathcal{M}} = \set{T\in \mathcal{B}\left(\mathcal{H}\right) | T\text{ is block diagonal with respect to $\mathcal{M}$}},
+      \end{align*}
+      and $\mathbb{E}_{\mathcal{M}}\left(S\right) = S$ for every $S\in R_{\mathcal{M}}$;
+    \item If $T\in \mathcal{B}\left(\mathcal{H}\right)$ and $S\in R_{\mathcal{M}}$, then
+      \begin{align*}
+        \mathbb{E}_{\mathcal{M}}\left(ST\right) &= S\circ \mathbb{E}_{\mathcal{M}}\left(T\right)\\
+        \mathbb{E}_{\mathcal{M}}\left(TS\right) &= \mathbb{E}_{\mathcal{M}}\left(T\right) \circ S.
+      \end{align*}
+  \end{enumerate}
+  We say $\mathbb{E}_{\mathcal{M}}$ is the conditional expectation onto $R_{\mathcal{M}}$.
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item For a given $\xi\in \mathcal{H}$, we find
+      \begin{align*}
+        \sum_{i\in I}\norm{P_iTP_i\left(\xi\right)}^2 &\leq \sum_{i\in I}\norm{TP_i\left(\xi\right)}^2\\
+                                                      &\leq \norm{T}_{\text{op}}^2\sum_{i\in I}\norm{P_i\left(\xi\right)}^2\\
+                                                      &= \norm{T}_{\text{op}}^2\norm{\xi}^2.
+      \end{align*}
+      Thus, $\sum_{i\in I}P_iTP_i\left(\xi\right)$ is summable in $\mathcal{H}$, and
+      \begin{align*}
+        \norm{\sum_{i\in I}P_iTP_i\left(\xi\right)}^2 &= \sum_{i\in I}\norm{P_iTP_i\left(\xi\right)}^2\\
+                                                      &\leq \norm{T}_{\text{op}}^2\norm{\xi}^2.
+      \end{align*}
+      The map $S\colon \mathcal{H}\rightarrow \mathcal{H}$ defined by
+      \begin{align*}
+        S\left(\xi\right) &= \sum_{i\in I}P_iTP_i\left(\xi\right)
+      \end{align*}
+      is well-defined, linear, and bounded with $\norm{S}_{\text{op}}\leq \norm{T}_{\text{op}}$. It follows that $\mathbb{E}_{\mathcal{M}}$ is contractive, as well as linearity and positivity, as $\mathcal{B}\left(\mathcal{H}\right)_{+}$ is SOT-closed.\newline
+
+      If $T^{\ast}T \geq 0$ and $E_{\mathcal{M}}\left(T^{\ast}T\right) = 0$, then we must have $P_iT^{\ast}TP_i = 0$ for every $i\in I$, as if a net of positive operators converges in SOT to $0$, every member of the net must be zero. Thus, we have
+      \begin{align*}
+        \norm{TP_i}^2 &= \norm{\left(TP_i\right)^{\ast}\left(TP_i\right)}\\
+                      &= \norm{P_iT^{\ast}TP_i}\\
+                      &= 0,
+      \end{align*}
+      so $TP_i = 0$ for all $i\in I$. Given $\xi\in \mathcal{H}$, we obtain
+      \begin{align*}
+        T\left(\xi\right) &= T\left(\sum_{i\in I}P_i\left(\xi\right)\right)\\
+                          &= \sum_{i\in I}TP_i\left(\xi\right)\\
+                          &= 0,
+      \end{align*}
+      meaning $T = 0$ and $\mathbb{E}_{\mathcal{M}}$ is a faithful map.
+    \item Multiplication by a fixed operator is SOT-continuous, so for all $j\in I$, we see that
+      \begin{align*}
+        P_j \mathbb{E}_{\mathcal{M}}\left(T\right) &= E_{\mathcal{M}}\left(T\right)P_{j}\\
+                                                   &= P_jTP_j,
+      \end{align*}
+      which means each $M_j$ reduces $\mathbb{E}_{\mathcal{M}}\left(T\right)$, so $E_{\mathcal{M}}\left(T\right)\in R_{\mathcal{M}}$. If each $M_i$reduces $S\in \mathcal{B}\left(\mathcal{H}\right)$, then $SP_i = P_iS = P_iSP_i$< so>
+      \begin{align*}
+        \mathbb{E}_{\mathcal{M}}\left(S\right) &= \sum_{i\in I}P_iSP_i\\
+                                               &= \sum_{i\in I}SP_i\\
+                                               &= S\left(\sum_{i\in I}P_i\right)\\
+                                               &= SI\\
+                                               &= S.
+      \end{align*}
+    \item Since we have $SP_i = P_iS = P_iSP_i$, we have
+      \begin{align*}
+        \mathbb{E}_{\mathcal{M}}\left(ST\right) &= \sum_{i\in I}P_iSTP_i\\
+                                                &= \sum_{i\in I}SP_iTP_i\\
+                                                &= S\left(\sum_{i\in I}P_iTP_i\right)\\
+                                                &= S\circ \mathbb{E}_{\mathcal{M}}\left(T\right).
+      \end{align*}
+      Similarly, $\mathbb{E}_{\mathcal{M}}\left(TS\right) = \mathbb{E}_{\mathcal{M}}\left(T\right) \circ S$.
+  \end{enumerate}
+\end{proof}
+We can now study the spectral decomposition of a diagonalizable operator.
+\begin{proposition}
+  Let $T\in \mathcal{B}\left(\mathcal{H}\right)$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $T$ is diagonalizable;
+    \item there is an orthonormal basis $\left(e_i\right)_{i\in I}$ of $\mathcal{H}$ and a bounded family $\left(\mu_i\right)_{i\in I}$ of scalars with $T\left(e_i\right) = \mu_ie_i$ for each $i\in I$;
+    \item there is an internal direct sum decomposition, $\mathcal{H} = \bigoplus_{j\in J}E_j$, with $E_j\neq \set{0}$ for all $j$, and a family $\set{\lambda_j}_{j\in J}$ of distinct scalars such that
+      \begin{align*}
+        T &= \bigoplus_{j\in J}\lambda_j\id_{E_j}.
+      \end{align*}
+  \end{enumerate}
+  Moreover, the following are true.
+  \begin{enumerate}[(1)]
+    \item The collection $\set{\mu_i}_{i\in I}$ is a complete list of eigenvalues for $T$, and $\set{\lambda_j}_{j\in J}$ is a complete list of \textit{distinct} eigenvalues for $T$.
+    \item If $E_{\lambda_j}\left(T\right) = \ker\left(T - \lambda_jI\right)$ is the eigenspace for $\lambda_j$, then $E_j = E_{\lambda_j}$.
+    \item If $P_j$ denotes the orthogonal projection onto $E_j$, then
+      \begin{align*}
+        T &= \sum_{j\in J}\lambda_jP_j
+      \end{align*}
+      in SOT.
+    \item $\norm{T}_{\text{op}} = \sup_{j\in J}\left\vert \lambda_j \right\vert$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  To see (i) implies (ii), let $T$ be diagonalizable. Then, there is an internal direct sum decomposition $\mathcal{H} = \sum_{i\in I}M_i$, with each $M_i$ reducing $T$, and $\Dim\left(M_i\right) = 1$ for each $i$. We assume $M_i = \Span\left(e_i\right)$, for $e_i\in \mathcal{H}$ and $\norm{e_i} = 1$.\newline
+
+  Since $M_i$ reduces $T$, we must have $T\left(e_i\right) = \mu_ie_i$ for scalars $\mu_i\in \C$. We see that $\left\vert \mu_i \right\vert = \norm{\mu_ie_i} \leq \norm{T}_{\text{op}}$, so we find our respective families $\left(e_i\right)_{i\in I}$ and $\left(\mu_i\right)_{i\in I}$.\newline
+
+  To see (ii) implies (i), for each $i\in I$ we set $M_i = \Span\left(e_i\right)$, so $\mathcal{H} = \bigoplus_{i\in I}M_i$, and each $M_i$ is invariant under $T$. This yields $T$ as diagonalizable with respect to $\set{M_i}_{i\in I}$.\newline
+
+  To see (ii) implies (iii), we partition $I$ into $I = \bigsqcup_{j\in J}I_j$, where $i,i'\in I_j$ implies $\mu_i = \mu_{i'}$, and $i\in I_j,i'\in I_{j'}$ with $j\neq j'$ implies $\mu_{i} \neq \mu_{i'}$. For each $j\in J$, we set
+  \begin{align*}
+    E_j &= \overline{\Span}\set{e_i|i\in I_j},
+  \end{align*}
+  and $\lambda_j = \mu_i$ for any $i\in I_j$. It is the case that $\set{E_j}_{j\in J}$ are mutually orthogonal, and the sum $\sum_{j\in J}E_j$ is dense in $\mathcal{H}$ by the definition of an orthonormal basis. Thus, $\mathcal{H} = \bigoplus_{j\in J}E_j$.\newline
+
+  Since $T\left(e_i\right) = \mu_ie_i$ for each $i\in I$, linearity and continuity of $T$ imply that $T_{E_j} = \lambda_j\id_{E_j}$. Thus, each $E_j$ is invariant for $T$, meaning it is reducing, so we have $T = \bigoplus_{j\in J}\lambda_j\id_{E_j}$.\newline
+
+  To see (iii) implies (ii), for each $j\in J$, let $\mathcal{E}_{j}$ be an orthonormal basis for $E_j$. Then, $\mathcal{E} = \bigoplus_{j\in J}\mathcal{E}_j$ is an orthonormal basis for $\mathcal{H}$. If $e\in \mathcal{E}$, then $e\in \mathcal{E}_j$ for some $j$, so $T\left(e\right) = \lambda_je_j$.\newline
+
+  We now turn our attention towards evaluating facts (1)--(3).
+  \begin{enumerate}[(1)]
+    \item All the $\mu_i$ are eigenvalues for $T$, just by definition. Suppose $\lambda$ is an eigenvalue for $T$. That is, there exists $x\neq 0$ with $T\left(x\right) = \lambda x$. By Parseval's theorem, we can write $x = \sum_{i\in I} \iprod{x}{e_i} e_i$. Thus,
+      \begin{align*}
+        T\left(x\right) &= T\left(\sum_{i\in I} \iprod{x}{e_i}e_i\right)\\
+                        &= \sum_{i\in I} \iprod{x}{e_i}T\left(e_i\right)\\
+                        &= \sum_{i\in I} \iprod{x}{e_i}\mu_ie_i.
+      \end{align*}
+      We also have
+      \begin{align*}
+        T\left(x\right) &= \lambda x\\
+                        &= \lambda\left(\sum_{i\in I} \iprod{x}{e_i}e_i\right)\\
+                        &= \sum_{i\in I} \iprod{x}{e_i}\lambda e_i.
+      \end{align*}
+      For each $k\in I$, we apply the rank-one projection onto $\Span\left(e_k\right)$ to both expressions, yielding
+      \begin{align*}
+        \iprod{x}{e_k}\mu_ke_k &= \iprod{x}{e_k}\lambda e_k
+      \end{align*}
+      for each $k\in I$. Thus, $ \iprod{x}{e_k}\left(\mu_k - \lambda\right) = 0 $ for every $k\in I$. If $\lambda \notin \set{\mu_i}_{i\in I}$, then $ \iprod{x}{e_k} = 0 $ for all $k\in I$, implying $x = 0$, which is a contradiction. Thus, $\lambda = \mu_i$ for some $i\in I$.
+    \item By the definition of $E_j$, it is the case that $E_j \subseteq E_{\lambda_j}\left(T\right)$. Suppose $T\left(x\right) = \lambda_j x$ for some $x\in \mathcal{H}$. Then, we find, by (3)
+      \begin{align*}
+        \sum_{k\in I}\lambda_jP_k\left(x\right) &= \lambda_j\left(\sum_{k\in I}P_k\left(x\right)\right)\\
+                                                &= \lambda_j x\\
+                                                &= T\left(x\right)\\
+                                                &= \sum_{k\in J}\lambda_kP_k\left(x\right),
+      \end{align*}
+      meaning $\left(\lambda_j - \lambda_k\right)P_k\left(x\right) = 0$ for all $k\in I$. If $k\neq j$, we must have $P_k\left(x\right) = 0$, so $x = P_j\left(x\right) \in E_j$.
+    \item Since $T$ is reduced by $\set{E_j}_{j\in J}$, we find that, for $P_j$ defined as the orthogonal projection onto $E_j$,
+      \begin{align*}
+        T &= \sum_{j\in J}P_jTP_j\\
+          &= \sum_{j\in J}TP_j\\
+          &= \sum_{j\in J}\lambda P_j
+      \end{align*}
+      in SOT.
+    \item By construction, $\sup_{i\in I}\left\vert \mu_i \right\vert = \sup_{j\in J}\left\vert \lambda_j \right\vert$. We must have $\norm{T}_{\text{op}} \geq \norm{T\left(e_i\right)} = \left\vert \mu_i \right\vert$, so $\norm{T}_{\text{op}} \geq \sup_{i\in I}\left\vert \mu_i \right\vert$.\newline
+
+      Given $x\in \mathcal{H}$, we use Parseval's theorem to compute
+      \begin{align*}
+        \norm{T\left(x\right)}^2 &= \norm{T\left(\sum_{i\in I} \iprod{x}{e_i}e_i\right)}^2\\
+                                 &= \norm{\sum_{i\in I} \iprod{x}{e_i}T\left(e_i\right)}^2\\
+                                 &= \norm{\sum_{i\in I} \iprod{x}{e_i}\mu_ie_i}^2\\
+                                 &= \sum_{i\in I}\left\vert \iprod{x}{e_i} \right\vert^2 \left\vert \mu_i \right\vert^2\\
+                                 &\leq \left(\sup_{i\in I}\left\vert \mu_i \right\vert^2\right)\sum_{i\in I} \left\vert \iprod{x}{e_i} \right\vert^2\\
+                                 &= \left(\sum_{i\in I}\left\vert \mu_i \right\vert^2\right)\norm{x}^2.
+      \end{align*}
+      Thus, $\norm{T}_{\text{op}} \leq \sup_{i\in I}\left\vert \mu_j \right\vert$, so $\norm{T}_{\text{op}} = \sup_{i\in I}\left\vert \mu_i \right\vert = \sup_{j\in J}\left\vert \lambda_j \right\vert$.
+  \end{enumerate}
+\end{proof}
+\begin{corollary}
+  If $T\in \mathcal{B}\left(\mathcal{H}\right)$ is diagonalizable, then so is $T^{\ast}$. Additionally, $T$ is normal.
+\end{corollary}
+\begin{proof}
+  Let $\left(e_i\right)_{i\in I}$ and $\left(\mu_i\right)_{i\in I}$ be as above. For all $i,j\in I$, we have
+  \begin{align*}
+    \iprod{e_j}{T^{\ast}\left(e_i\right)} &= \iprod{T\left(e_j\right)}{e_i}\\
+                                          &= \iprod{\mu_je_j}{e_i}\\
+                                          &= \mu_j \iprod{e_j}{e_i}\\
+                                          &= \mu_i \iprod{e_j}{e_i}\\
+                                          &= \iprod{e_j}{\overline{\mu_i}e_i}.
+  \end{align*}
+  Thus, we find $ \iprod{x}{T^{\ast}\left(e_i\right)} = \iprod{x}{\overline{\mu_i}e_i} $ for every $x\in \Span\set{e_j|j\in I}$, and by continuity, it follows that $T^{\ast}\left(e_i\right) = \overline{\mu_i}e_i$. It follows that $T^{\ast}$ is diagonalizable.\newline
+
+  Note that $T^{\ast}T\left(e_i\right) = \left\vert \mu_i \right\vert^2e_i = TT^{\ast}\left(e_i\right)$ for all $i\in I$. Thus, $T^{\ast}T\left(x\right) = TT^{\ast}\left(x\right)$ for all $x\in \mathcal{H}$, so $T$ is normal.
+\end{proof}
+\begin{example}
+  If $\lambda = \left(\lambda_n\right)_n$ belongs to $\ell_{\infty}$, then $D_{\lambda}$ is diagonalizable, since $D\left(e_n\right) = \lambda_ne_n$, where $\left(e_n\right)_n$ is the standard basis on $\ell_2$. Thus, $\left(\lambda_n\right)_n$ is a complete list of eigenvalues.
+\end{example}
+\subsection{The Matrix Algebra and Double Commutant Theorem}%
+Fix a Hilbert space $\mathcal{H}$, and let
+\begin{align*}
+  \Mat_n\left(\mathcal{B}\left(\mathcal{H}\right)\right) &= \set{\left(T_{ij}\right)_{i,j=1}^{n} | T_{ij}\in \mathcal{B}\left(\mathcal{H}\right)}.
+\end{align*}
+This is a $\ast$-algebra that is $\ast$-isomorphic to $\Mat_n\left(\C\right) \otimes \mathcal{B}\left(\mathcal{H}\right)$. We would like to view each matrix $\left(T_{ij}\right)_{i,j=1}^{n}$ as an operator on the $n$-fold direct sum $\mathcal{H}^{(n)}$, similar to the way $n\times n$ matrix acts on a vector in $\ell_2^{n}$.
+\begin{proposition}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $\left(T_{ij}\right)_{i,j=1}^{n}\in \Mat_{n}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$. The map $\left[T_{ij}\right]\colon \mathcal{H}^{(n)}\rightarrow \mathcal{H}^{(n)}$, defined by
+  \begin{align*}
+    \left[T_{ij}\right]\left(\xi_j\right)_{j=1}^{n}\left(\sum_{j=1}^{n}T_{ij}\left(\xi_j\right)\right)_{i=1}^{n}
+  \end{align*}
+  defines a bounded operator with 
+  \begin{align*}
+    \norm{T_{ij}}_{\text{op}} &\leq \left(\sum_{i,j=1}^{n}\norm{T_{ij}}_{\text{op}}^2\right)^{1/2}.
+  \end{align*}
+  Moreover, the map $\left(T_{ij}\right)_{i,j=1}^{n}\mapsto \left[T_{ij}\right]$ is a unital $\ast$-isomorphism of $\ast$-algebras.
+\end{proposition}
+\begin{proof}
+  Using the Cauchy--Schwarz inequality, we find
+  \begin{align*}
+    \norm{\left[T_{ij}\right]\left(\xi_j\right)_{j=1}^{n}}^2 &= \norm{\left(\sum_{j=1}^{n}T_{ij}\left(\xi_j\right)\right)_{i=1}^{n}}^2\\
+                                                             &= \sum_{i=1}^{n}\norm{\sum_{j=1}^{n}T_{ij}\left(\xi_j\right)}^2\\
+                                                             &\leq \sum_{i=1}^{n}\left(\sum_{j=1}^{n}\norm{T_{ij}\left(\xi_j\right)}\right)^2\\
+                                                             &\leq \sum_{i=1}^{n}\left(\sum_{j=1}^{n}\norm{T_{ij}}_{\text{op}}\norm{\xi_j}\right)^2\\
+                                                             &\leq \sum_{i=1}^{n}\left(\sum_{j=1}^{n}\norm{T_{ij}}_{\text{op}}^2\right)\left(\sum_{j=1}^{n}\norm{\xi_{j}}^2\right)\\
+                                                             &= \left(\sum_{i,j=1}^{n}\norm{T_{ij}}_{\text{op}}^2\right)\norm{\left(\xi_j\right)_{j=1}^{n}}^2.
+  \end{align*}
+  Thus,
+  \begin{align*}
+    \norm{\left[T_{ij}\right]}_{\text{op}} \leq \left(\sum_{i,j=1}^{n}\norm{T_{ij}}_{\text{op}}^2\right)^{1/2}.
+  \end{align*}
+  If $\left(T_{ij}\right)_{i,j=1}^{n}$ and $\left(S_{ij}\right)_{i,j=1}^{n}$ are in $\Mat_{n}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$, and $\alpha \in \C$, we can see that
+  \begin{align*}
+    \alpha \left[T_{ij}\right] + \left[S_{ij}\right] &= \left[\alpha T_{ij} + S_{ij}\right]
+  \end{align*}
+  as operators on $\mathcal{H}^{(n)}$. To evaluate multiplication, we see
+  \begin{align*}
+    \left[T_ij\right]\circ \left[S_{ij}\right]\left(\xi_{j}\right)_{j} &= \left[T_{ij}\right]\left(\left(\sum_{j=1}^{n}S_{kj}\left(\xi_j\right)\right)_{k}\right)\\
+                                                                       &= \left(\sum_{k=1}^{n}T_{ik}\left(\sum_{j=1}^{n}S_{kj}\left(\xi_j\right)\right)\right)_i\\
+                                                                       &= \left(\sum_{j,k=1}^{n}T_{ik}S_{kj}\left(\xi_j\right)\right)\\
+                                                                       &= \left(\sum_{j=1}^{n}\left(\sum_{k=1}^{n}T_{ik}S_{kj}\right)\left(\xi_j\right)\right)_{i}\\
+                                                                       &= \left[\left(\sum_{k=1}^{n}T_{ik}S_{kj}\right)_{j}\right]\left(\xi_j\right)_j\\
+                                                                       &= \left[\left(T_{ij}\right)\left(S_{ij}\right)\right]\left(\xi_j\right)_j.
+  \end{align*}
+  Evaluating the adjoint, we find
+  \begin{align*}
+    \iprod{\left[T_{ij}\right]\left(\xi_i\right)_i}{\left(\eta_i\right)_i} &= \iprod{\left(\sum_{j=1}^{n}T_{ij}\left(\xi_j\right)\right)_i}{\left(\eta_i\right)_i}\\
+                                                                           &= \sum_{i=1}^n \iprod{\sum_{j=1}^{n}T_{ij}\left(\xi_j\right)}{\eta_i}\\
+                                                                           &= \sum_{i,j=1}^{n} \iprod{T_{ij}\left(\xi_j\right)}{\eta_i}\\
+                                                                           &= \sum_{i,j=1}^{n} \iprod{\xi_j}{T_{ij}^{\ast}\left(\eta_i\right)}\\
+                                                                           &= \sum_{j=1}^{n} \iprod{\xi_j}{\sum_{i=1}^{n}T_{ij}^{\ast}\left(\eta_i\right)}\\
+                                                                           &= \iprod{\left(\xi_j\right)_j}{\left(\sum_{i=1}^{n}T_{ij}^{\ast}\left(\eta_i\right)\right)_{j}}\\
+                                                                           &= \iprod{\left(\xi_j\right)_j}{\left[T_{ij}\right]\left(\eta_j\right)_j}.
+  \end{align*}
+  Thus, $\left[T_{ij}\right]^{\ast} = \left[T_{ij}^{\ast}\right]$, meaning the map $\left(T_{ij}\right)_{i,j}\mapsto \left[T_{ij}\right]$ is an injective $\ast$-homomorphism.\newline
+
+  To show surjectivity, let $T\in \mathcal{B}\left(\mathcal{H}^{(n)}\right)$ be arbitrary. Set $T_{ij} = \pi_iT\iota_j$, where $\pi_i\colon \mathcal{H}^{(n)}\rightarrow \mathcal{H}$ and $\iota_j\colon \mathcal{H}\rightarrow \mathcal{H}^{(n)}$ are the canonical projections and injections respectively. We claim that $\left[T_{ij}\right] = T$ on $\mathcal{H}^{(n)}$.\newline
+
+  If $\xi = \left(\xi_i\right)_i \in \mathcal{H}^{(n)}$, then
+  \begin{align*}
+    \left[T_{ij}\right]\left(\xi\right) &= \left(\sum_{j=1}^{n}T_{ij}\left(\xi_j\right)\right)_{i=1}^{n}\\
+                                        &= \left(\sum_{j=1}^{n}\pi_iT\iota_j\left(\xi_j\right)\right)_{i=1}^{n}\\
+                                        &= \left(\pi_iT\left(\sum_{j=1}^{n}\iota_j\xi_j\right)\right)_{i=1}^{n}\\
+                                        &= \left(\pi_iT\left(\xi\right)\right)_{i=1}^{n}\\
+                                        &= T\left(\xi\right).
+  \end{align*}
+\end{proof}
+\begin{remark}
+  We will let $\diag\left(T_1,\dots,T_n\right)$ denote the operator $\left[T_{ij}\right]$ where $T_{ii} = T_i$ and $T_{ij} = 0$ for $i\neq j$. If $T\in \mathcal{B}\left(\mathcal{H}\right)$, the $n$-fold amplification $T^{(n)}$ on $\mathcal{H}^{(n)}$ is precisely $\diag\left(T,\dots,T\right)$.
+\end{remark}
+Since $\mathcal{B}\left(\mathcal{H}^{(n)}\right)$ is a $C^{\ast}$-algebra, we may identify $\Mat_{n}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$ with $\mathcal{B}\left(\mathcal{H}^{(n)}\right)$, and use the given complete $C^{\ast}$-norm to find one on $\Mat_{n}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$.
+\begin{corollary}[]
+  If $\mathcal{H}$ is a Hilbert space, and $n\geq 1$ is an integer, the $\ast$-algebra is a $C^{\ast}$-algebra when equipped with the norm
+  \begin{align*}
+    \norm{\left(T_{ij}\right)_{i,j=1}^{n}} = \norm{\left[T_{ij}\right]}_{\text{op}}.
+  \end{align*}
+\end{corollary}
+We may now use the $n$-fold amplifications to resolve some properties of the double commutant. Recall that if $A\subseteq \mathcal{B}\left(\mathcal{H}\right)$ is a $\ast$-subalgebra of bounded operators, then $A''$ is a von Neumann algebra containing $A$. The Double Commutant Theorem actually shows that, under some mild conditions, $A''$ is actually the von Neumann algebra generated by $A$.
+\begin{definition}[]
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $A\subseteq \mathcal{B}\left(\mathcal{H}\right)$ is a subset. We define
+  \begin{align*}
+    A^{(n)} &= \set{a^{(n)} | a\in A}
+  \end{align*}
+  to be the $n$-fold amplification of $A$. The kernel of $A$ is defined to be
+  \begin{align*}
+    \ker\left(A\right) &= \set{\xi\in \mathcal{H} | a\left(\xi\right) = 0,~\forall a\in A}.
+  \end{align*}
+  We say $A$ acts non-degenerately on $\mathcal{H}$ if $\ker\left(A\right) = \set{0}$.
+\end{definition}
+\begin{exercise}
+  Let $A\subseteq \mathcal{B}\left(\mathcal{H}\right)$ be a $\ast$-subalgebra of operators. Prove that $A$ acts non-degenerately on $\mathcal{H}$ if and only if $\left[A \mathcal{H}\right] = \mathcal{H}$. If $A$ is unital, show that $A$ acts non-degenerately.
+\end{exercise}
+\begin{solution}
+  We have that $A$ acts degenerately if and only if $\ker\left(A\right)\neq \set{0}$, meaning there exists some $\xi\neq 0$ such that $a\left(\xi\right) = 0$ for all $a\in A$, meaning that $\overline{\Span}\set{a\left(\xi\right) | a\in A} = 0$, meaning $\xi\in \left[A\mathcal{H}\right]^{\perp}$, so $\left[A\mathcal{H}\right]^{\perp}\neq \mathcal{H}$. The reverse direction follows from the fact that if $A$ is a $\ast$-subalgebra with $\left[A\mathcal{H}\right] = \mathcal{H}$, then $\mathcal{H}^{\perp} = \set{0}$, so $a\xi = 0$ for all $a\in A$ if and only if $\xi = 0$.
+\end{solution}
+\begin{lemma}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $A\subseteq \mathcal{B}\left(\mathcal{H}\right)$ is a $\ast$-subalgebra.
+  \begin{enumerate}[(1)]
+    \item The collection $A^{(n)}\subseteq \mathcal{B}\left(\mathcal{H}^{(n)}\right)$ is also a $\ast$-subalgebra.
+    \item If $\ker\left(A\right) = \set{0}$, then $\ker\left(A^{(n)}\right) = \set{0}$. Thus, if $A$ acts non-degenerately, then so does $A^{(n)}$.
+    \item If $x\in A''$, then $x^{(n)}\in \left(A^{(n)}\right)''$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item This result follows from the properties of $A^{(n)} = \bigoplus_{i=1}^{n}A$.
+    \item If $\ker\left(A\right) = \set{0}$, then $ \diag\left(A,\dots,A\right)\left(\xi_j\right)_j = 0$ if and only if $\xi_j = 0$ for all $j$. Thus, $\ker\left(A^{(n)}\right) = \set{0}$.
+    \item We identify $\Mat_{n}\left(\mathcal{B}\left(\mathcal{H}\right)\right)$ with $\mathcal{B}\left(\mathcal{H}^{(n)}\right)$. Let $x\in A''$, and $T = \left(T_{ij}\right)_{ij}\in \left(A^{(n)}\right)'$. Then,
+      \begin{align*}
+        \left(T_{ij}a\right)_{ij} &= \left(T_{ij}\right)_{ij}a^{(n)}\\
+                                               &= a^{(n)}\left(T_{ij}\right)_{ij}\\
+                                               &= \left(aT_{ij}\right)_{ij},
+      \end{align*}
+      meaning $T_{ij}a = aT_{ij}$ for all $a\in A$ and all $i,j$. Thus, for all $i,j$, we have $T_{ij}\in A'$, meaning $xT_{ij} = T_{ij}x$ for all $i,j$. Thus,
+      \begin{align*}
+        \left(T_{ij}\right)_{ij}x^{(n)} &= \left(T_{ij}x\right)_{ij}\\
+                                        &= \left(xT_{ij}\right)_{ij}\\
+                                        &= x^{(n)}\left(T_{ij}\right)_{ij}.
+      \end{align*}
+      Thus, $x^{(n)}\in \left(A^{(n)}\right)''$.
+  \end{enumerate}
+\end{proof}
+\begin{lemma}
+  Let $\mathcal{H}$ be a Hilbert space with $\xi\in \mathcal{H}$, and let $A\subseteq \mathcal{B}\left(\mathcal{H}\right)$ be a $\ast$-subalgebra that acts non-degenerately.
+  \begin{enumerate}[(1)]
+    \item The closed subspace $\mathcal{K} = \left[A\xi\right]$ reduces $A$, and $\xi\in \mathcal{K}$.
+    \item If $b\in A''$ and $\ve > 0$, there is $a\in A$ with $\norm{a\left(\xi\right) - b\left(\xi\right)} < \ve$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item We have established that $\mathcal{K}$ reduces $A$ earlier. Now, we show that $\xi\in \mathcal{K}$. Let $P$ be the orthogonal projection onto $\mathcal{K}$. Thus, $P\in A'$, so $P^{\perp} = I-P \in A'$. Since $a\left(\xi\right) \in \mathcal{K}$ for all $a\in A$, we have
+      \begin{align*}
+        aP^{\perp}\left(\xi\right) &= P^{\perp}a\left(\xi\right)\\
+                                   &= 0
+      \end{align*}
+      for all $a\in A$. Since $\ker\left(A\right) = \set{0}$, we must have $P^{\perp}\left(\xi\right) = 0$, so $P\left(\xi\right) = \xi$, so $\xi\in \mathcal{K}$.
+    \item With $P$ as the orthogonal projection onto $\mathcal{K}$, we see that $bP = Pb$, since $P\in A'$ Thus, using $P\left(\xi\right) = \xi$, we have
+      \begin{align*}
+        b\left(\xi\right)&= bP\left(\xi\right)\\
+                         &= Pb\left(\xi\right)\\
+                         &\in \mathcal{K},
+      \end{align*}
+      meaning, by the definition of the closed span, there is an $a\in A$ with $\norm{a\left(\xi\right) - b\left(\xi\right)} < \ve$.
+  \end{enumerate}
+\end{proof}
+\begin{proof}
+  Since $A\subseteq A''$, and $A''$ is WOT-closed, we see that $\overline{A}^{\text{SOT}}\subseteq \overline{A}^{\text{WOT}} \subseteq A''$. It is thus sufficient to show that $A'' \subseteq \overline{A}^{\text{SOT}}$.\newline
+  
+  Let $b\in A''$, and consider a basic SOT-open neighborhood of $b$, which is of the form
+  \begin{align*}
+    U &= \bigcap_{j=1}^{n}\set{T\in \mathcal{B}\left(\mathcal{H}\right) | \norm{T\left(\xi_j\right) - b\left(\xi_j\right)} < \ve},
+  \end{align*}
+  where $\ve > 0$ and $\xi_1,\dots,\xi_n\in \mathcal{H}$. We only need to show that $U\cap A$ is nonempty. Set $\xi = \left(\xi_1,\dots,\xi_n\right)\in \mathcal{H}^{(n)}$ (as a column vector).\newline
+
+  We are aware that $A^{(n)}\subseteq \mathcal{B}\left(\mathcal{H}^{(n)}\right)$ is a $\ast$-subalgebra with $\ker\left(A^{(n)}\right) = \set{0}$ and $b^{(n)}\subseteq \left(A^{(n)}\right)''$. Thus, we find $a^{(n)}$ with
+  \begin{align*}
+    \left(\sum_{j=1}^{n}\norm{a\left(\xi_j\right) - b\left(\xi_j\right)}^2\right)^{(1/2)} &= \norm{ \begin{pmatrix}a\left(\xi_1\right) - b\left(\xi_1\right)\\\vdots\\ a\left(\xi_n\right) - b\left(\xi_n\right)\end{pmatrix} }_{\mathcal{H}^{(n)}}\\
+                                                                                          &= \norm{a^{(n)}\left(\xi\right) - b^{(n)}\left(\xi\right)}_{\mathcal{H}^{(n)}}\\
+                                                                                          &< \ve,
+  \end{align*}
+  meaning that $\norm{a\left(\xi_j\right) - b\left(\xi_j\right)} < \ve$ for all $j = 1,\dots,n$, so $a\in U$.
+\end{proof}
+\begin{corollary}
+  Let $A\subseteq \mathcal{B}\left(\mathcal{H}\right)$ be a unital $\ast$-subalgebra of operators. Then, $A$ is a von Neumann algebra if and only if $A = A''$.
+\end{corollary}
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space. A MASA (maximal abelian self-adjoint algebra) in $\mathcal{B}\left(\mathcal{H}\right)$ is a maximal commutative $\ast$-algebra $N\subseteq \mathcal{B}\left(\mathcal{H}\right)$. A MASA is a maximal element of the set
+  \begin{align*}
+    \mathcal{A} &= \set{A\subseteq \mathcal{B}\left(\mathcal{H}\right) | A\text{ is a commutative $\ast$-algebra}}
+  \end{align*}
+  ordered by inclusion.
+\end{definition}
+\begin{remark}
+  MASAs do exist --- since $\set{0}$  is an abelian self-adjoint subalgebra, and the union of any chain in $\mathcal{A}$ is also an abelian self-adjoint subalgebra, so Zorn's lemma provides a maximal element.
+\end{remark}
+\begin{proposition}
+  Let $A$ be a commutative $\ast$-subalgebra of $\mathcal{B}\left(\mathcal{H}\right)$. Then, $A$ is a MASA if and only if $A = A'$.
+\end{proposition}
+\begin{proof}
+  Let $A$ be a MASA. Since $A$ is commutative, we see that $A\subseteq A'$. Let $u\in A'$ be self-adjoint. The $\ast$-algebra $B$ generated by $A$ and $u$ is commutative and contains $A$, so by maximality, we must have $B = A$, meaning $u\in A$. Additionally, $A'$ is a $\ast$-subalgebra, so for a given $x\in A'$, we may write the Cartesian decomposition $x = u + iv$, where $u,v\in A'$ are self-adjoint. Thus, $u,v\in A$, so $x\in A$, so $A = A'$.\newline
+
+  Conversely, if $A = A'$, and $B$ is a commutative $\ast$-subalgebra of $\mathcal{B}\left(\mathcal{H}\right)$ that contains $A$, we must have $B\subseteq B' \subseteq A' = A$, so $A = B$, meaning $A$ is a MASA.
+\end{proof}
 
 \end{document}
