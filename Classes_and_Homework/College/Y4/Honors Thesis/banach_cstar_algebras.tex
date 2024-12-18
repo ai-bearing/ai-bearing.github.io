@@ -1,0 +1,1210 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%serif font + different blackboard bold for serif font
+\usepackage{newpxtext,eulerpx,eucal,eufrak}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\T}{\mathbb{T}}
+\DeclareMathOperator{\op}{op}
+%\newcommand{\sa}{\text{s.a.}}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\tableofcontents
+\section{Introduction}%
+This is going to be part of my notes for my Honors Thesis independent study focused on Amenability and $C^{\ast}$-algebras. This set of notes will be focused on the theory of Banach algebras and $C^{\ast}$-algebras. The primary source for this section of notes will be Timothy Rainone's \textit{Functional Analysis: En Route to Operator Algebras}.\newline
+
+I do not claim any of this work to be original.
+\section{Algebras and $\ast$-Algebras}%
+A lot of the structures we encounter in functional analysis, like $\B\left(X\right)$, are not only vector spaces, but also come with an algebraic structure with them. We will learn these more in depth before venturing into the study of Banach and $C^{\ast}$-algebras.
+\subsection{Definitions and Examples}%
+We will let $\F = \R$ or $\C$.
+\begin{definition}
+  An $\F$-algebra is a vector space $A$ over the field $\F$ with a multiplication operation $\left(a,b\right)\mapsto a \cdot b$ satisfying the following for all $a,b,c\in A$ and $\alpha \in \F$;
+  \begin{itemize}
+    \item $a\cdot \left(b\cdot c\right) = \left(a\cdot b\right)\cdot c$;
+    \item $a\cdot \left(b+c\right) = a\cdot b + a\cdot c$;
+    \item $\alpha \left(a\cdot b\right) = \left(\alpha a\right)\cdot b = a\cdot \left(\alpha b\right)$.
+  \end{itemize}
+  An algebra is called unital if there is a unique $1_A\in A$ such that $1_A\cdot a = a\cdot 1_A = a$.\newline
+
+  We say the algebra is commutative if multiplication is commutative, else it is called noncommutative.
+\end{definition}
+\begin{remark}
+  Usually, $\F = \C$ unless otherwise specified, and we drop the multiplication sign, writing $ab$ for $a\cdot b$.
+\end{remark}
+\begin{remark}
+  If $A$ is an $\F$-vector space with basis $B$, we can always extend an associative map $B\times B\rightarrow B$ to multiplication in $A$ by defining multiplication by the associative map on the basis elements.
+\end{remark}
+\begin{example}[Functions]
+  Let $\Omega$ be any nonempty set. The function space $\mathcal{F}\left(\Omega,\F\right)$, equipped with pointwise addition, scalar multiplication, and pointwise multiplication is an algebra.\newline
+
+  In general, if $A$ is an $\F$-algebra, then $\mathcal{F}\left(\Omega,A\right)= \set{f| f\colon \Omega\rightarrow A}$ is an $\F$-algebra. If $A$ is unital, then the constant map $u(x) = 1_A$ is the unit for $F\left(\Omega,A\right)$.
+\end{example}
+\begin{example}[Linear Maps]
+  If $X$ is a vector space over $\F$, then $\mathcal{L}\left(X\right)$, the space of all linear maps from $X$ to itself, is a unital $\F$-algebra with multiplication as composition.
+\end{example}
+\begin{example}[Polynomials in One Variable]
+  If $x$ is an abstract variable, then the linear space of all polynomials,
+  \begin{align*}
+    \F\left[x\right] &= \set{\sum_{k=0}^{n}a_kx^k | a_k\in \F,n\in \Z_{+}}
+  \end{align*}
+  is an $\F$-algebra. We define multiplication via ordinary multiplication of polynomials,
+  \begin{align*}
+    \left(\sum_{i=0}^{n}a_ix^i\right)\left(\sum_{j=0}^{m}b_jx^j\right) &= \sum_{k=0}^{m+n}\left(\sum_{i=0}^{k}a_ib_{k-i}\right)x^k.
+  \end{align*}
+  If we let $x^0 = 1$, this space is a commutative unital algebra.
+\end{example}
+\begin{example}[General Polynomial]
+  If we have a set $S = \set{x_i}_{i\in I}$ of abstract symbols, then $\F \left\langle S \right\rangle$ is the space of all (not necessarily commuting) polynomials with symbols in $S$, where multiplication is defined by concatenation. This is a unital algebra.\newline
+
+  If the symbols in $S$ commute, then this is a commutative algebra, and we wrie $F\left[S\right]$.
+\end{example}
+\begin{example}
+  If $x$ is an abstract symbol, then
+  \begin{align*}
+    \F\left(x\right) &= \set{\frac{p(x)}{q(x)} | p,q\in \F[x],q\neq 0}
+  \end{align*}
+  is the unital commutative algebra of all rational functions.
+\end{example}
+\begin{definition}
+  Let $A$ be an $\F$-algebera, and let $a\in A$ be fixed. For $p \in \F[x]$, we define
+  \begin{align*}
+    p(a) &= \sum_{k\geq 0}\alpha_ka^k.
+  \end{align*}
+  It is assumed that $\alpha_0 = 0$ when $A$ does not have a unit.\newline
+
+  Generally, if $a_1,\dots,a_n\in A$ and $p = \sum_{I}c_Ix^I$ in $\F \left\langle x_1,\dots,x_n \right\rangle$, then
+  \begin{align*}
+    p\left(a_1,\dots,a_n\right) &= \sum_{I}c_Ia^I,
+  \end{align*}
+  where $a^I = a_1^{i_1}a_2^{i_2}\dots a_n^{i_n}$, and $\left(i_1,\dots,i_n\right) = I \in \Z^{n}_{+}$ is a multi-index.
+\end{definition}
+\begin{remark}
+  The binomial theorem only holds for commutative algebras.
+\end{remark}
+\begin{definition}
+  Let $A$ be an algebra over $\C$. An involution on $A$ is a self-map $\ast\colon A\rightarrow A$ that satisfies the following, for all $a,b\in A$ and $\alpha \in C$:
+  \begin{enumerate}[(1)]
+    \item $\left(a + \alpha b\right)^{\ast} = a^{\ast} + \overline{\alpha}b^{\ast}$;
+    \item $\left(ab\right)^{\ast} = b^{\ast}a^{\ast}$;
+    \item $a^{\ast\ast} = a$.
+  \end{enumerate}
+  If $A$ admits an involution, then $A$ is known as a $\ast$-algebra.
+\end{definition}
+\begin{example}
+  The complex numbers, $\C$, is a unital commutative $\ast$-algebra with the usual operations, where $z\xmapsto{\ast}\overline{z}$ is the involution.
+\end{example}
+\begin{example}
+  We can define an involution on $\mathcal{F}\left(\Omega,\C\right)$ by taking $f^{\ast}\left(x\right) = \overline{f(x)}$.\newline
+
+  If $A$ is a $\ast$-algebra, we may define the involution as $f^{\ast}\left(x\right) = f\left(x\right)^{\ast}$.
+\end{example}
+\begin{example}[The Free $\ast$-Algebra]
+  Let $E = \set{x_i}_{i\in I}$ be a set of abstract symbols. We may add a set of symbols disjoint from $E$, called $E^{\ast} = \set{x_i^{\ast}}_{i\in I}$, and let $S = E\cup E^{\ast}$.\newline
+
+  We consider $\C \left\langle S \right\rangle$, which is the set of general polynomials over $S$. The involution $\ast\colon \C \left\langle S \right\rangle \rightarrow \C \left\langle S \right\rangle$ can be defined by
+  \begin{align*}
+    \left(\alpha x_{i_1}^{\epsilon_1}x_{i_2}^{\epsilon_2}\cdots x_{i_n}^{\epsilon_n}\right)^{\ast} &= \overline{\alpha} x_{i_n}^{\delta_n}\cdots x_{i_2}^{\delta_2}x_{i_1}^{\delta_1},
+  \end{align*}
+  where $\epsilon_j \in \set{1,\ast}$ for each $j=1,\dots,n$, and
+  \begin{align*}
+    \delta_j &= \begin{cases}
+      \ast & \epsilon_j = 1\\
+      1 & \epsilon_j = \ast
+    \end{cases}.
+  \end{align*}
+  The $\ast$-algebra, $\C \left\langle E\cup E^{\ast} \right\rangle$ is referred to as the free $\ast$-algebra generated by $E$, denoted $\A^{\ast}\left(E\right)$.
+\end{example}
+\begin{example}[Matrix Algebra]
+  Let $A$ be an algebra, and let
+  \begin{align*}
+    \Mat_n\left(A\right) &= \set{\left(a_{ij}\right)_{ij} | 1 \leq i,j \leq n, a_{ij}\in A}.
+  \end{align*}
+  This is an algebra with element-wise addition and scalar multiplication, as well as traditional matrix multiplication. If $A$ is unital, then $\diag\left(1_A,\dots,1_A\right)$ is the unit for $\Mat_n\left(A\right)$. When $n\geq 2$, this algebra is non-commutative. If $A$ is a $\ast$-algebra, then $\Mat_n\left(A\right)$ is a $\ast$-algebra with the involution $\left(a_{ij}\right)_{ij}^{\ast} = \left(a_{ji}^{\ast}\right)_{ij}$.
+\end{example}
+\begin{example}
+  Let $\left(\Omega,\mathcal{M}\right)$ be a measurable space, and let $L_0\left(\Omega,\mathcal{M}\right)$ be the space of measurable functions. This is a $\ast$-algebra when equipped with pointwise operations and involution.\newline
+
+  If $\mu$ is a measure, then $L\left(\Omega,\mathcal{M}\right)$ of $\mu$-equivalence classes is also a $\ast$-algebra when equipped with multiplication of equivalence classes and the involution
+  \begin{align*}
+    \left[f\right]_{\mu}^{\ast} &= \left[\overline{f}\right]_{\mu}.
+  \end{align*}
+\end{example}
+\subsection{Algebraic Constructions}%
+Algebras, like vector spaces and other algebraic objects, admit various sub-objects and super-objects. 
+\subsubsection{Subalgebras, Ideals, Products, Sums, and Tensor Products}%
+\begin{definition}
+  Let $A$ be a $\ast$-algebra over $\C$, $B\subseteq A$.
+  \begin{enumerate}[(1)]
+    \item If $B\subseteq A$ is a linear subspace that is closed under multiplication, then $B$ is known as a subalgebra. If $1_A\in B$, then $B$ is unital.
+    \item If $B\subseteq A$ is a subalgebra such that, for $b\in B$ and $a\in A$, then $ab,ba\in B$, then we say $B$ is an ideal.
+    \item If, for all $x\in B$, $x^{\ast}\in B$, then $B$ is called self-adjoint or $\ast$-closed.
+    \item If $B$ is a subalgebra that is $\ast$-closed, then we say $B$ is a $\ast$-subalgebra.
+    \item If $B$ is an ideal that is $\ast$-closed, then we say $B$ is a $\ast$-ideal.
+  \end{enumerate}
+\end{definition}
+\begin{example}
+  If $\Omega$ is a nonempty set with $\mathcal{F}\left(\Omega,\C\right)$ its corresponding $\ast$-algebra, then $\ell_{\infty}\left(\Omega\right)\subseteq \mathcal{F}\left(\Omega,\C\right)$ is a unital $\ast$-subalgebra.\newline
+
+  If $\left(\Omega,\mathcal{M}\right)$ is a measurable space, then $B_{\infty}\left(\Omega,\mathcal{M}\right)$, the space of bounded measurable functions, is a $\ast$-subalgebra of $\ell_{\infty}\left(\Omega\right)$ and of $L_0\left(\Omega,\mathcal{M}\right)$.\newline
+
+  If $\mu$ is a measure on $\left(\Omega,\mathcal{M}\right)$, then $L_{\infty}\left(\Omega,\mu\right)$ of $\mu$-essentially bounded functions is a unital $\ast$-subalgebra of $L\left(\Omega,\mu\right)$. Moreover, $B_{\infty}\left(\Omega,\mu\right)\subseteq L_{\infty}\left(\Omega,\mu\right)$ is a unital $\ast$-subalgebra.\newline
+  
+  If $\Omega$ is a LCH\footnote{locally compact Hausdorff} space, then the string of $\ast$-subalgbras is
+  \begin{align*}
+    C_c\left(\Omega\right)\subseteq C_0\left(\Omega\right)\subseteq C_b\left(\Omega\right)\subseteq\ell_{\infty}\left(\Omega\right)\subseteq \mathcal{F}\left(\Omega,\C\right).
+  \end{align*}
+  It is also the case that $C_c\left(\Omega\right)\subseteq C_0\left(\Omega\right)\subseteq C_b\left(\Omega\right)$ is a string of $\ast$-ideals.\newline
+
+  It is not the case that $C_b\left(\Omega\right)\subseteq B_{\infty}\left(\Omega\right)$ is a $\ast$-ideal.\newline
+
+  If $\mu$ is a Radon measure, then the string of $\ast$-subalgebras is
+  \begin{align*}
+    C_c\left(\Omega,\mu\right) \subseteq C_0\left(\Omega,\mu\right)\subseteq C_b\left(\Omega,\mu\right) \subseteq B_{\infty}\left(\Omega,\mu\right)\subseteq L_{\infty}\left(\Omega,\mu\right).
+  \end{align*}
+\end{example}
+\begin{example}
+  If $\Omega\subseteq \C$ is a compact subset of the complex plane, then the set $P\left(\Omega\right)$ of polynomials forms a unital subalgebra of $C\left(\Omega\right)$, but not a $\ast$-subalgebra. However,
+  \begin{align*}
+    \mathcal{Q}\left(\Omega\right) &= \set{q\colon \Omega\rightarrow \C | q(z) = \sum_{k,l=0}^{m}c_{k,l}z^k \overline{z}^l,c_{k,l}\in \C},
+  \end{align*}
+  the space of Laurent polynomials, is a unital $\ast$-subalgebra of $C\left(\Omega\right)$.\newline
+
+  If $\Omega = \mathbb{T}$, then $\mathcal{Q}\left(\Omega\right)$ becomes the unital $\ast$-subalgebra of trigonometric polynomials,
+  \begin{align*}
+    \mathcal{T} &= \set{\sum_{k=-n}^{n}c_kz^k | n\in \N,c_k\in \C}.
+  \end{align*}
+\end{example}
+\begin{definition}
+  Let $A$ be an algebra, and let $S\subseteq A$ be a subset. The subalgebra (or ideal) generated by $S$, denoted $\operatorname{alg}\left(S\right)$ or $\operatorname{ideal}\left(S\right)$, is the smallest subalgebra or ideal that contains $S$:
+  \begin{align*}
+    \operatorname{alg}\left(S\right) &= \bigcap\set{B | B\supseteq S,B\subseteq A\text{ is a subalgebra}}\\
+    \operatorname{ideal}\left(S\right) &= \bigcap\set{B | B\supseteq S,B\subseteq A\text{ is an ideal}}.
+  \end{align*}
+  Similarly, we may define $\ast$-$\operatorname{alg}\left(S\right)$ and $\ast$-$\operatorname{ideal}\left(S\right)$.
+\end{definition}
+\begin{example}
+  Let $X$ be a vector space, and let $\mathcal{L}\left(X\right)$ be the unital algebra of linear operators on $X$. The collection $\F\left(X\right)\subseteq \mathcal{L}\left(X\right)$ of finite-rank operators forms an ideal. If $\Dim\left(V\right) = \infty$, then this ideal is proper.\newline
+
+  If $X$ is infinite-dimensional, then $\F\left(X\right)$ is a non-commutative, non-unital subalgebra.
+\end{example}
+\begin{definition}
+  An algebra $A$ is called simple if it has no nontrivial ideals.
+\end{definition}
+\begin{example}
+  The algebra $\Mat_n\left(\C\right)$ is simple.\newline
+
+  To see this, if $I\subseteq \Mat_n\left(\C\right)$ is a nontrivial ideal, and $0 \neq a\in I$, we select $a_{ij}\neq 0$. For every $k\in \set{1,\dots,n}$, we have
+  \begin{align*}
+    e_{kk} &= \frac{1}{a_{ij}}\left(a_{ij}e_{kk}\right)\\
+           &= \frac{1}{a_{ij}}\left(e_{ki}ae_{jk}\right)\\
+           &\in I,
+  \end{align*}
+  meaning $I_n = \sum_{k}e_{kk}$ is in $I$, so $I = \Mat_n\left(\C\right)$ is not proper.
+\end{example}
+\begin{definition}
+  If
+  \begin{align*}
+    \mathcal{I}_p\left(A\right) &= \set{I | I\subsetneq A\text{ is an ideal}}
+  \end{align*}
+    is the collection of proper ideals ordered by inclusion, we call a maximal element in $\mathcal{I}_p\left(A\right)$ a maximal ideal.
+\end{definition}
+\begin{theorem}
+  If $A$ is a unital algebra, then every proper ideal $J\subseteq A$ is contained in some maximal ideal $M$.
+\end{theorem}
+\begin{proof}
+  Order $\mathcal{J} = \set{I | J\subseteq I\subsetneq A,I\text{ is an ideal}}$ by inclusion. If $\left(I_{\lambda}\right)_{\lambda\in \Lambda}$ is a chain in $\mathcal{J}$, then $I = \bigcup_{\lambda\in\Lambda} I_{\lambda}$ is an ideal in $A$ containing $J$. If $I = A$, then $1_A\in I_{\lambda}$ for some $\lambda$, which contradicts the definition. Thus, $I$ is proper and belongs to $\mathcal{J}$, so by Zorn's lemma, there is some maximal element $M$ in $\mathcal{J}$.
+\end{proof}
+We can characterize the maximal ideals of the space $C\left(\Omega\right)$, where $\Omega$ is compact. This will be very useful in the future.
+\begin{proposition}
+  Let $\Omega$ be a compact Hausdorff space. If $I\subseteq C\left(\Omega\right)$ is a maximal ideal, then there is $x_0\in \Omega$ such that
+  \begin{align*}
+    I &= N_{x_0}\\
+      &= \set{f\in C\left(\Omega\right) | f\left(x_0\right) = 0}.
+  \end{align*}
+  Moreover, for every $x\in \Omega$, $N_x$ is a maximal ideal.
+\end{proposition}
+\begin{proof}
+  Suppose $I\neq N_x$ for every $x\in \Omega$. Since $N_x$ is a proper ideal, and $I$ is maximal, this implies that there is some $f_x\in I\setminus N_x$, meaning $f_x\left(x\right) \neq 0$.\newline
+
+  Let $U_x = f_x^{-1}\left(\C\setminus \set{0}\right)$. We must have $x\in U_x$ for all $x\in \Omega$, so
+  \begin{align*}
+    \Omega &= \bigcup_{x\in \Omega}U_x.
+  \end{align*}
+  Now, $\Omega$ is compact, so we select $\set{x_1,\dots,x_j}\subseteq \Omega$ such that
+  \begin{align*}
+    \Omega &= \bigcup_{j=1}^{n}U_{x_j}.
+  \end{align*}
+  Define
+  \begin{align*}
+    f &= \sum_{j=1}^{n}\left\vert f_{x_j} \right\vert^2.
+  \end{align*}
+  We have $f\in I$, and $f > 0$ on $\Omega$ by construction, so $f$ is invertible in $C\left(\Omega\right)$. This implies that $\frac{1}{f}\in C\left(\Omega\right)$, so $\1_{\Omega} = f\frac{1}{f} \in I$, which means $I = C\left(\Omega\right)$, a contradiction.\newline
+
+  Now, we fix $x\in \Omega$. If it is the case that $N_x$ is not maximal, then there is some maximal ideal $I$ such that $N_x\subseteq I$. We know that $I = N_y$ for some $y\in \Omega$, so $N_x\subseteq N_y$. This means any continuous function that vanishes at $x$ must vanish at $y$. However, by Urysohn's lemma, this is only possible if $x = y$, so $N_x = I = N_y$, so $N_x$ is maximal.
+\end{proof}
+
+\begin{definition}
+  Let $A$ be an algebra, $J\subseteq A$ is an ideal. Then, $A/J$ admits multiplication
+  \begin{align*}
+    \left(a+J\right)\cdot \left(b+J\right) &= ab + J
+  \end{align*}
+  that makes $A/J$ into an algebra. If $1_A\in A$, then $A/J$ has unit $1_A + J$, and if $A$ is commutative, so too is $A/J$.\newline
+
+  If $A$ is a $\ast$-algebra, and $J$ is a $\ast$-ideal, then $A/J$ is a $\ast$-algebra with involution
+  \begin{align*}
+    \left(a + J\right)^{\ast} &= a^{\ast} + J.
+  \end{align*}
+\end{definition}
+\begin{definition}
+  If $\set{A_i}_{i\in I}$ is a family of $\ast$-algebras, the product and coproduct are respectively defined by
+  \begin{align*}
+    \prod_{i\in I}A_i &= \set{f\colon I\rightarrow \bigcup_{i\in I}A_i | f(i)\in A_i}\\
+    \bigoplus_{i\in I}A_i &= \set{f\in \prod_{i\in I}A_i | \Card\left(\supp\left(f\right)\right) < \infty}.
+  \end{align*}
+  Note that $\bigoplus_{i\in I}A_i\subseteq \prod_{i\in I}A_i$ is a $\ast$-ideal.
+\end{definition}
+\begin{example}[The Universal $\ast$-Algebra]
+  Let $E = \set{x_i}_{i\in I}$ be a collection of abstract symbols, and let $\A^{\ast}\left(E\right)$ be the free $\ast$-algebra generated by $E$. Given $R\subseteq \A^{\ast}\left(E\right)$, let $I\left(R\right)$ be the $\ast$-ideal generated by $R$. The quotient $\ast$-algebra
+  \begin{align*}
+    \A^{\ast}\left(E|R\right) &= \A^{\ast}\left(E\right) / I\left(R\right)
+  \end{align*}
+  is called the universal $\ast$-algebra generated by $E$ with relations $R$. We write $\pi_R\left(x_i\right)= z_i$.
+\end{example}
+\begin{definition}
+  Let $A$ and $B$ be $\ast$-algebras. The linear space $A\otimes B$ admits a multiplication
+  \begin{align*}
+    \left(a\otimes b\right)\left(a'\otimes b'\right) &= aa' \otimes bb'
+  \end{align*}
+  and an involution
+  \begin{align*}
+    \left(a\otimes b\right)^{\ast} &= a^{\ast}\otimes b^{\ast}.
+  \end{align*}
+\end{definition}
+\subsubsection{The Group $\ast$-Algebra}%
+Let $\Gamma$ be a group, and let $\C\left[\Gamma\right]$ be the free vector space on $\Gamma$. For each $f,g\in \C\left[\Gamma\right]$, we define $f\times g$ by convolution:
+\begin{align*}
+  f\times g \left(s\right) &= \sum_{t\in \Gamma}f\left(t\right)g\left(t^{-1}s\right)\\
+                           &= \sum_{r\in \Gamma}f\left(sr^{-1}\right)g\left(r\right).
+\end{align*}
+This sum is finite since $f$ and $g$ have finite support.\newline
+
+This multiplication has the unit $1_{\C\left[\Gamma\right]} = \delta_{e}$.\newline
+
+The involution $f\mapsto f^{\ast}$ in $\C\left[\Gamma\right]$ is defined by
+\begin{align*}
+  f^{\ast}\left(t\right) &= \overline{f\left(t^{-1}\right)}.
+\end{align*}
+We can verify that this forms an involution.
+\begin{align*}
+  \left(f\cdot g\right)^{\ast}\left(s\right) &= \overline{f\cdot g\left(s^{-1}\right)}\\
+                                             &= \overline{\sum_{t\in \Gamma}f\left(t\right)g\left(t^{-1}s^{-1}\right)}\\
+                                             &= \sum_{t\in \Gamma}\overline{f\left(t\right)g\left(t^{-1}s^{-1}\right)}\\
+                                             &= \sum_{r\in \Gamma}\overline{f\left(r^{-1}\right)g\left(rs^{-1}\right)}\\
+                                             &= \sum_{r\in \Gamma}\overline{g\left(\left(sr^{-1}\right)^{-1}\right)f\left(r^{-1}\right)}\\
+                                             &= \sum_{r\in \Gamma}g^{\ast}\left(sr^{-1}\right)f^{\ast}\left(r\right)\\
+                                             &= g^{\ast}\cdot f^{\ast}\left(s\right).
+\end{align*}
+The $\ast$-algebra $\C\left[\Gamma\right]$ is known as the group $\ast$-algebra.
+\subsection{Distinguished Elements}%
+\begin{definition}
+  Let $A$ be a $\ast$-algebra.
+  \begin{enumerate}[(1)]
+    \item An element $e\in A$ is said to be idempotent if $e^2 = e$. We write $E(A)$ for the set of idempotents in $A$.
+    \item If $A$ is unital, then $x\in A$ is said to be invertible if there exists a unique $y\in A$ with $xy=yx = 1_A$. We call $y$ the inverse of $x$, and write $x^{-1}$. We write $\operatorname{GL}\left(A\right)$ to be the set of all invertible elements in $A$.
+    \item An element $x\in A$ is said to be Hermitian or self-adjoint if $x = x^{\ast}$. We write $A_{\sa}$ for the set of self-adjoint elements in $A$.
+    \item An element $a\in A$ is said to be positive if $a = b^{\ast}b$ for some $b\in A$. We write $A_{+}$ for the set of all positive elements in $A$.
+    \item A projection in $A$ is a self-adjoint idempotent --- that is, $p^2 = p^{\ast} = p$. We write $\mathcal{P}\left(A\right)$ to be the set of projections in $A$.
+    \item If $A$ is unital, an element $u\in A$ is said to be unitary if $u^{\ast}u = uu^{\ast}=  1_A$. We write $\mathcal{U}\left(A\right)$ to be the set of all unitaries in $A$.
+    \item An element $z\in A$ is called normal if $z^{\ast}z = zz^{\ast}$. We write $\operatorname{Nor}\left(A\right)$ for the collection of normal elements in $A$.
+  \end{enumerate}
+\end{definition}
+\begin{fact}
+  Let $A$ be a $\ast$-algebra.
+  \begin{itemize}
+    \item The following inclusions hold:
+      \begin{itemize}
+        \item $\mathcal{P}\left(A\right) \subseteq A_{+}\subseteq A_{\sa} \subseteq \operatorname{Nor}\left(A\right)$;
+        \item $\mathcal{U}\left(A\right) \subseteq \operatorname{Nor}\left(A\right)$.
+      \end{itemize}
+    \item The linear span of $A_{\sa}$ is $A$. If $x\in A$, then
+      \begin{align*}
+        h &= \frac{1}{2}\left(x + x^{\ast}\right)\\
+        k &= \frac{i}{2}\left(x^{\ast} - x\right)
+      \end{align*}
+      are self-adjoint with $x = h + ik$.
+    \item The self-adjoint elements of $A$ form a real vector space.
+    \item If $A$ is unital, then $\operatorname{GL}\left(A\right)$ is $\ast$-closed, with $\left(x^{\ast}\right)^{-1} = \left(x^{-1}\right)^{\ast}$.
+    \item If $A$ is unital, then $\mathcal{U}\left(A\right)\subseteq \operatorname{GL}\left(A\right)$ is a subgroup with $u^{-1} = u^{\ast}$ for all $u\in \mathcal{U}\left(A\right)$.
+  \end{itemize}
+\end{fact}
+\begin{example}
+  The spectral theorem from linear algebra states that if a matrix $a\in\Mat_n\left(\C\right)$ is normal, then there is a unitary matrix $u$ with $a = udu^{\ast}$, where $d = \diag\left(\lambda_1,\dots,\lambda_n\right)$ is a diagonal matrix, and $\lambda_1,\dots,\lambda_n$ is a complete list of eigenvalues.\newline
+
+  Self-adjoint elements in $\Mat_n\left(\C\right)$ are matrices that are conjugate symmetric.\newline
+
+  A square matrix $a$ is invertible if and only if $\det\left(a\right) \neq 0$.
+\end{example}
+\begin{example}
+  Let $\mathcal{F}\left(\Omega\right)$ be the set of all $\C$-valued functions on $\Omega$. Every element in $\mathcal{F}\left(\Omega\right)$ is normal. The following hold:
+  \begin{itemize}
+    \item $f\in \mathcal{F}\left(\Omega\right)_{\sa}$ if and only if $f\left(\Omega\right)\subseteq \R$;
+    \item $f\in \mathcal{F}\left(\Omega\right)_{+}$ if and only if $f\left(\Omega\right)\subseteq [0,\infty)$;
+    \item $u\in \mathcal{U}\left(\mathcal{F}\left(\Omega\right)\right)$ if and only if $u\left(\Omega\right)\subseteq \T$;
+    \item $\mathcal{P}\left(\mathcal{F}\left(\Omega\right)\right) = \set{\1_{E} | E\subseteq \Omega}$.
+  \end{itemize}
+\end{example}
+\subsection{Algebra Homomorphisms}%
+Now, we can learn about morphisms in the category of algebras and $\ast$-algebras.
+\begin{definition}
+  Let $A$ and $B$ be $\F$-algebras.
+  \begin{enumerate}[(1)]
+    \item An algebra homomorphism is a linear map $\varphi\colon A\rightarrow B$ that is multiplicative.
+    \item A character on $A$ is a nonzero homomorphism $h \colon A\rightarrow \F$. We write
+      \begin{align*}
+        \Omega\left(A\right) &= \set{h | h\text{ is a character on $A$}}.
+      \end{align*}
+    \item An algebra isomorphism is a bijective algebra homomorphism.
+    \item If $A$ and $B$ are $\ast$-algebras, $\varphi\colon A\rightarrow B$ is said to be $\ast$-preserving if $\varphi\left(a^{\ast} \right) = \varphi\left(a\right)^{\ast}$.
+    \item If $A$ and $B$ are $\ast$-algebras, then a $\ast$-homomorphism (or $\ast$-isomorphism) is a homomorphism (or isomorphism) that is $\ast$-preserving.
+    \item An automorphism of a $\ast$-algebra is a $\ast$-isomorphism $\alpha\colon A\rightarrow A$. We write
+      \begin{align*}
+        \operatorname{Aut}\left(A\right) &= \set{\alpha | \alpha \colon A\rightarrow A\text{ is a $\ast$-automorphism}}.
+      \end{align*}
+    \item If $A$ and $B$ are $\ast$-algebras, then $\phi\colon A\rightarrow B$ is said to be positive if $\varphi\left(A_{+}\right) \subseteq B_{+}$.
+    \item A positive map between $\ast$-algebras is called faithful if $\ker\left(\phi\right) \cap A_{+} = \set{0}$.
+  \end{enumerate}
+\end{definition}
+\begin{theorem}[First Isomorphism Theorem]
+  Let $A,B$ be $\ast$-algebras, and let $I\subseteq A$ be a $\ast$-ideal. If $\varphi\colon A\rightarrow B$ is a $\ast$-homomorphism with $I\subseteq \ker\left(\varphi\right)$, then there exists a unique algebra $\ast$-homomorphism $\phi\colon A/I\rightarrow B$ such that $\phi\circ \pi = \varphi$.\newline
+
+  If $I = \ker\left(\varphi\right)$, then $\phi$ is injective, and $\phi\colon A/\ker\left(\varphi\right)\rightarrow \Ran\left(\varphi\right)$ is a $\ast$-isomorphism.\newline
+
+   If $A$, $B$, and $\varphi$ are unital, then so is $\phi$.
+\end{theorem}
+\begin{example}[Universal Property of the Universal $\ast$-Algebra]
+  Let $\A^{\ast}\left(E|R\right)$ be the universal $\ast$-algebra generated by $E= \set{x_i}_{i\in I}$ and $R\subseteq \A^{\ast}\left(E\right)$. Let $B $ be a $\ast$-algebra admitting elements $\set{b_i}_{i\in I}$ indexed by the same set $I$ that satisfies the relations in $R$.\newline
+
+  The evaluation $\ast$-homomorphism, $\A^{\ast}\left(E\right)\rightarrow B$ defined by $x_i \mapsto b_i$ sends $I(R)$ to $0$, so there is a unique $\ast$-homomorphism, $x_i + I(R)\rightarrow b_i$.
+\end{example}
+\begin{corollary}
+  If $A$ is an algebra, and $h\in \Omega\left(A\right)$ is a character, then $\ker\left(h\right)\subseteq A$ is a maximal ideal, and $A/\ker\left(h\right)\cong \C$ are isomorphic as algebras.
+\end{corollary}
+\subsection{Unitization}%
+It is often the case that algebras lack a unit. However, we can create a ``unitized'' version of an algebra $A$, $\widetilde{A}$, such that $A\subseteq \widetilde{A}$ is an essential ideal.
+\begin{definition}
+  Let $A$ be an algebra, $J\subseteq A$ an ideal. We say $J$ is essential if for any other ideal $I\subseteq A$, $I\cap J \neq \set{0}$.
+\end{definition}
+\begin{proposition}
+  Let $A$ be a complex algebra.
+  \begin{enumerate}[(1)]
+    \item The set $A\times \C$, equipped with
+      \begin{align*}
+        \left(a,\alpha\right) + \left(b,\beta\right) &= \left(a+b,\alpha + \beta\right)\\
+        z\left(a,\alpha\right) &= \left(za,z\alpha\right)\\
+        \left(a,\alpha\right)\left(b,\beta\right) &= \left(ab + \beta a + \alpha b,\alpha \beta\right)
+      \end{align*}
+      is a unital algebra, with unit $1_{\widetilde{A}} = (1,0)$. We denote this algebra $\widetilde{A}$.
+    \item If $A$ is a $\ast$-algebra, then $\widetilde{A}$ is a $\ast$-algebra, with
+      \begin{align*}
+        \left(a,\alpha\right)^{\ast} &= \left(a^{\ast},\alpha\right).
+      \end{align*}
+    \item The map $\iota_A\colon A\rightarrow \widetilde{A}$, given by $\iota_A\left(a\right) = \left(a,0\right)$ is an injective $\ast$-homomorphism, and $\pi_A\colon \widetilde{A} \rightarrow \C$ is a surjective $\ast$-homomorphism.\newline
+
+      The image, $\iota_A\left(A\right)\subseteq \widetilde{A}$ is a maximal $\ast$-ideal.
+    \item If $A$ is nonunital, then $\iota_A\left(A\right)\subseteq \widetilde{A}$ is an essential ideal.
+  \end{enumerate}
+\end{proposition}
+\section{Banach and $C^{\ast}$-Algebras}%
+In the notes on Hilbert space operators, we established the spectral theorem for compact normal operators. In order to establish the spectral theorem for all normal operators, we will study the unital $C^{\ast}$-algebra generated by the normal operator. This will hinge on understanding the abstract theory of Banach algebras and $C^{\ast}$-algebras.\newline
+
+We start with some examples of Banach and $C^{\ast}$-algebras, as well as discussing some constructions of and with $C^{\ast}$-algebras.
+\subsection{Examples}%
+\begin{definition}
+  A Banach $\ast$-algebra is a Banach algebra $A$ with an involution map $A\rightarrow A$, $a\mapsto a^{\ast}$, satisfying
+  \begin{align*}
+    \norm{a^{\ast}} &= \norm{a}.
+  \end{align*}
+  If $A$ is a Banach $\ast$-algebra that satisfies the $C^{\ast}$ property, $\norm{a^{\ast}a} = \norm{a}^2$, for every $a\in A$, then $A$ is called a $C^{\ast}$-algebra.
+\end{definition}
+We know that $\ast$-algebras admit a variety of distinguished elements. We can add two more to that list.
+\begin{definition}
+  Let $A$ be a $C^{\ast}$-algebra, and $w\in A$.
+  \begin{itemize}
+    \item We say $w$ is an isometry if $w^{\ast}w = 1_A$.
+    \item If $w$ is an isometry, and $ww^{\ast} \neq 1_A$, then we say $w$ is a proper isometry.
+  \end{itemize}
+\end{definition}
+We may also speak of partial isometries.
+\begin{lemma}
+  If $A$ be a $C^{\ast}$-algebra with $v\in A$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $v^{\ast}v$ is a projection;
+    \item $vv^{\ast}v = v$;
+    \item $vv^{\ast}$ is a projection;
+    \item $v^{\ast}vv^{\ast} = v^{\ast}$.
+  \end{enumerate}
+  Such an element is called a partial isometry.
+\end{lemma}
+\begin{proof}
+  We obtain the implication (i) implying (ii) through verifying
+  \begin{align*}
+    \left(vv^{\ast}v - v\right)^{\ast}\left(vv^{\ast}v - v\right) &= 0,
+  \end{align*}
+  meaning $vv^{\ast}v - v = 0$. Similarly, the implication (iii) implying (iv) is similar.
+\end{proof}
+\begin{example}
+  The complex numbers $\C$ with involution $z\mapsto \overline{z}$ and norm $z\mapsto \left\vert z \right\vert$ is a $C^{\ast}$-algebra.
+\end{example}
+\begin{example}
+  We know that $\B\left(\mathcal{H}\right)$, the space of bounded linear operators on a Hilbert space, is a $C^{\ast}$-algebra.
+\end{example}
+\begin{example}
+  If $n\geq 2$, then $\Mat_N\left(\C\right)$ is a unital noncommutative $\ast$-algebra. We know that $\left(\Mat_n\left(\C\right),\norm{\cdot}_{\text{op}}\right)$ is a Banach space.\newline
+
+  We want to show that $\left(\Mat_n\left(\C\right),\norm{\cdot}_{\text{op}}\right)$ is a $C^{\ast}$-algebra isomorphic to $\B\left(\ell_2^{n}\right)$.\newline
+
+  We can establish a unital isomorphism $\Mat_n\left(\C\right)\rightarrow \mathcal{L}\left(\C^n\right)$ by sending the matrix $a$ to its corresponding transformation $T_a$.\newline
+
+  Since $\C^n$ is a finite-dimensional Hilbert space, $\B\left(\ell_2^n\right) = \mathcal{L}\left(\C^n\right)$. We have a unital isomorphism of algebras $T\left(a\right) = T_a$ between $\Mat_n\left(\C\right)$ and $\B\left(\ell_2^n\right)$.\newline
+
+  By the definition of the operator norm, $\norm{a}_{\text{op}} = \norm{T_a}_{\text{op}}$, so $T\colon \Mat_n\left(\C\right)\rightarrow \B\left(\ell_2^n\right)$ is an isometry.\newline
+
+  If $a,b\in \Mat_n\left(\C\right)$, then
+  \begin{align*}
+    \norm{ab}_{\text{op}} &= \norm{T_{ab}}_{\text{op}}\\
+                          &= \norm{T_aT_b}_{\text{op}}\\
+                          &\leq \norm{T_a}_{\text{op}}\norm{T_b}_{\text{op}}\\
+                          &= \norm{a}_{\text{op}}\norm{b}_{\text{op}}.
+  \end{align*}
+  Next, $\norm{I_n}_{\text{op}}=\norm{T_{I_n}}_{\text{op}} = \norm{\id_{\ell_2^n}}_{\text{op}} = 1$, and
+  \begin{align*}
+    \norm{a^{\ast}}_{\text{op}} &= \norm{T_{a^{\ast}}}_{\text{op}}\\
+                                &= \norm{T_{a}^{\ast}}_{\text{op}}\\
+                                &= \norm{T_a}_{\text{op}}\\
+                                &= \norm{a}_{\text{op}}.
+  \end{align*}
+  Similarly,
+  \begin{align*}
+    \norm{a^{\ast}a}_{\text{op}} &= \norm{a}_{\text{op}}^2.
+  \end{align*}
+  Thus, $\left(\Mat_n\left(\C\right),\norm{\cdot}_{\text{op}}\right)$ is a $C^{\ast}$-algebra.
+\end{example}
+\begin{example}
+  The space $\ell_{\infty}\left(\Omega\right)$ of bounded functions on $\Omega$ is a unital and commutative $\ast$-algebra under pointwise operations, which is also a Banach space under $\norm{\cdot}_{u}$.\newline
+
+  We can also see that $\norm{fg}_{u} \leq \norm{f}_{u}\norm{g}_{u}$, and $\norm{f^{\ast}f}= \norm{f}_u$ for all $f,g\in \ell_{\infty}\left(\Omega\right)$, meaning $\ell_{\infty}\left(\Omega\right)$ is a unital and commutative Banach algebra.\newline
+
+  Finally,
+  \begin{align*}
+    \norm{f^{\ast}f}_{u} &= \sup_{x\in \Omega}\left\vert \left(f^{\ast}f\right)\left(x\right) \right\vert\\
+                         &= \sup_{x\in \Omega}\left\vert f^{\ast}\left(x\right)f\left(x\right) \right\vert\\
+                         &= \sup_{x\in \Omega}\left\vert \overline{f\left(x\right)} f\left(x\right)\right\vert\\
+                         &= \sup_{x\in \Omega}\left\vert f\left(x\right) \right\vert^2\\
+                         &= \norm{f}^2_u.
+  \end{align*}
+\end{example}
+\begin{lemma}
+  Let $B$ be a Banach algebra/Banach $\ast$-algebra/$C^{\ast}$-algebra. If $A\subseteq B$ is a norm closed subalgebra/$\ast$-subalgebra, then $A$ is a Banach algebra/Banach $\ast$-algebra/$C^{\ast}$-algebra.
+\end{lemma}
+\begin{definition}
+  If $B$ is a $C^{\ast}$-algebra, and $A\subseteq B$ is a norm-closed $\ast$-subalgebra, then $A$ is a $C^{\ast}$-subalgebra of $B$.\newline
+
+  If $B$ is unital, then $A\subseteq B$ is a unital $C^{\ast}$-subalgebra if $1_B\in A$.\newline
+
+  If $\mathcal{H}$ is a Hilbert space, then a $C^{\ast}$-subalgebra $A\subseteq \B\left(\mathcal{H}\right)$ is sometimes called a concrete $C^{\ast}$-algebra.
+\end{definition}
+\begin{example}
+  The compact operators, $\mathbb{K}\left(\mathcal{H}\right)$ is an operator norm-closed $\ast$-subalgebra of $\B\left(\mathcal{H}\right)$. It is unital if and only if $\Dim\left(\mathcal{H}\right) < \infty$.
+\end{example}
+\begin{example}
+  Let $\left(\Omega,\mathcal{M}\right)$ be a measurable space, The bounded measurable functions, $B_{\infty}\left(\Omega\right)$, is a unital $\ast$-subalgebra.\newline
+
+  Equipped with the $\infty$ norm, $B_{\infty}\left(\Omega\right)$ is a Banach space, meaning $B_{\infty}\left(\Omega\right)\subseteq \ell_{\infty}\left(\Omega\right)$ is norm-closed, and is thus a unital commutative $C^{\ast}$-algebra.
+\end{example}
+\begin{example}
+  Let $\left(\Omega,\mathcal{M},\mu\right)$ be a measure space. The essentially bounded functions, $L_{\infty}\left(\Omega,\mu\right)$, is a Banach space with the $\esssup$ norm. It is also the case that $L_{\infty}\left(\Omega,\mu\right)$ is a unital commutative $\ast$-algebra. We can show that $\norm{f^{\ast}f}_{\infty} = \norm{f}_{\infty}^2$, so $L_{\infty}\left(\Omega,\mu\right)$ is a unital $C^{\ast}$-algebra.
+\end{example}
+\begin{example}
+  Let $\Omega$ be a LCH space. We know that $C_b\left(\Omega\right)$ and $C_0\left(\Omega\right)$ are $\ast$-subalgebras of $\ell_{\infty}\left(\Omega\right)$. We also know these are uniform norm-closed, meaning $C_b\left(\Omega\right)$ and $C_0\left(\Omega\right)$ are $C^{\ast}$-algebras. The $C^{\ast}$-algebra $C_b\left(\Omega\right)$ is always unital, but $C_0\left(\Omega\right)$ is unital if and only if $\Omega$ is compact.\newline
+
+  Note that if $\Omega$ is given the discrete topology, then $\ell_{\infty}\left(\Omega\right) = C_b\left(\Omega\right)$, as any function on a discrete space is continuous.\newline
+
+  The map $C_b\left(\Omega\right)\rightarrow C\left(\beta\Omega\right)$, given by $f\mapsto f^{\beta}$ is an isometric isomorphism of Banach spaces. We can also verify that this is a $\ast$-isomorphism, as $\left(fg\right)^{\beta} = f^{\beta}g^{\beta}$, as these agree on the dense subset $\Delta\left(\Omega\right)\subseteq \beta\Omega$. Similarly, $\left(f^{\ast}\right)^{\beta} = \left(f^{\beta}\right)^{\ast}$. Thus, $C_b\left(\Omega\right)$ and $C\left(\beta\Omega\right)$ are isomorphic as $C^{\ast}$-algebras.\newline
+
+  We get the isometric $\ast$-isomorphism $\ell_{\infty} = C_b\left(\N\right) = C\left(\beta\N\right)$.
+\end{example}
+\subsection{Constructions}%
+We are interested in constructing new $C^{\ast}$-algebras from old.
+\subsubsection{Generating Sets}%
+We may start with closures.
+\begin{lemma}
+  Let $B$ be a Banach algebra/Banach $\ast$-algebra, and let $A\subseteq B$ be a subalgebra/$\ast$-subalgebra. The closure, $\overline{A}\subseteq B$, is a \textit{Banach} subalgebra/$\ast$-subalgebra.\newline
+
+  If $B$ is a $C^{\ast}$-algebra with $A\subseteq B$ a $\ast$-subalgebra, then $\overline{A}$ is a $C^{\ast}$-subalgebra of $B$.
+\end{lemma}
+Given a collection of operators $S\subseteq \B\left(\mathcal{H}\right)$, we are interested in constructing the picture of the smallest $C^{\ast}$-subalgebras of $\B\left(\mathcal{H}\right)$ containing $S$. In a more general case, we may consider any $C^{\ast}$-algebra $B$ and the subset $S\subseteq \B\left(\mathcal{H}\right)$.
+\begin{definition}
+  Let $B$ be a Banach algebra/$\ast$-algebra, and let $S\subseteq B$ be any subset. The Banach algebra/$\ast$-algebra generated by $S$ is the smallest Banach subalgebra/$\ast$-subalgebra containing $S$.\newline
+
+  If $B$ is a $C^{\ast}$-algebra, then the $C^{\ast}$-subalgebra generated by $S$ is the smallest $C^{\ast}$-subalgebra of $B$ containing $S$, denoted
+  \begin{align*}
+    C^{\ast}\left(S\right) &= \bigcap \set{A | S\subseteq A,A\subseteq B\text{ is a $C^{\ast}$-subalgebra}}.
+  \end{align*}
+\end{definition}
+Notationally, we write $C^{\ast}\left(a_1,\dots,a_n\right)$ if $\set{a_1,\dots,a_n}$ is a finite subset of $B$.\newline
+
+Obviously, we need a more workable picture of the $C^{\ast}$-subalgebra generated by a set, at the very least we need something we can imagine.
+\begin{lemma}
+  Let $B$ be a Banach algebra and suppose $S\subseteq B$ is any subset.
+  \begin{enumerate}[(1)]
+    \item The Banach algebra generated by $S$ is the closed span of the set of finite words in $S$. In other words, it is equal to $\overline{\Span}\left(W\right)$, where
+      \begin{align*}
+        W &= \set{x_1x_2\cdots x_n | n\in \N,x_j\in S}.
+      \end{align*}
+    \item If $B$ is a Banach $\ast$-algebra or $C^{\ast}$-algebra, then the Banach $\ast$-algebra or $C^{\ast}$-algebra generated by $S$ is the closed span of the set of finite words in $S$ and $S^{\ast}$. In other words, it is equal to $\overline{\Span}\left(W\right)$, where
+      \begin{align*}
+        W &= \set{x_1x_2\cdots x_n | n\in \N, x_j\in S\cup S^{\ast}}.
+      \end{align*}
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  We will prove (2).\newline
+
+  Note that $S$ is closed under multiplication and involution, so $\Span\left(W\right)$ is a $\ast$-algebra containing $S$, so $\overline{\Span}\left(W\right)$ is a $C^{\ast}$-subalgebra of $B$ containing $S$, so $C^{\ast}\left(S\right)\subseteq \overline{\Span}\left(W\right)$.\newline
+
+  In the reverse inclusion, any $C^{\ast}$-subalgebra of $B$ containing $S$ must contain $\Span\left(W\right)$, so $\overline{\Span}\left(W\right)\subseteq C^{\ast}\left(S\right)$.
+\end{proof}
+\begin{proposition}
+  Let $B$ be a $C^{\ast}$-algebra, and suppose $a\in B$ is a normal element. The $C^{\ast}$-algebra generated by $a$, $C^{\ast}\left(a\right)$, is a commutative $C^{\ast}$-subalgebra. If $B$ is unital, then $C^{\ast}\left(a,1_B\right)$ is a unital commutative $C^{\ast}$-algebra.
+\end{proposition}
+\begin{proof}
+  We see that, in the notation of the lemma, if $S = \set{a}$ or $S = \set{1_B,a}$, if $w_1,w_2\in W$, we have $w_1w_2 = w_2w_1$ (since $aa^{\ast} = a^{\ast}a$), so $\Span\left(W\right)$ is a commutative $\ast$-subalgebra, hence $\overline{\Span}\left(W\right)$ is commutative.
+\end{proof}
+\begin{example}
+  Let $\iota\colon [0,1]\rightarrow \C$ be the inclusion map, $\iota\left(t\right) = t$. By the Stone--Weierstrass theorem, we have
+  \begin{align*}
+    C^{\ast}\left(\iota,\1_{[0,1]}\right) = C\left([0,1]\right)\\
+    C^{\ast}\left(\iota\right) &= \set{f\in C\left([0,1]\right) | f(0) = 0}\\
+                               &\cong C_0\left((0,1]\right).
+  \end{align*}
+  Note that if $\iota\colon \mathbb{T}\rightarrow \C$ is the inclusion $\iota(z) = z$, then $C^{\ast}\left(\iota\right) = C^{\ast}\left(\mathbb{T}\right)$.
+\end{example}
+\begin{exercise}
+  Let $\Delta$ be the Cantor set. Let
+  \begin{align*}
+    \mathcal{C} &= \set{\1_C | C\subseteq \Delta\text{ is clopen}}.
+  \end{align*}
+  Show that $C^{\ast}\left(\mathcal{C}\right) = C\left(\Delta\right)$.
+\end{exercise}
+\begin{solution}
+  Since $\mathcal{C}$ separates points and contains the constant function $\1_{\Delta}$, the Stone--Weierstrass theorem provides that $C^{\ast}\left(\mathcal{C}\right) = C\left(\Delta\right)$.
+\end{solution}
+\begin{definition}
+  Recall that the definition of the right shift is such that $R^{\ast} = L$, where $L$ is the left shift. We know that $R^{\ast}R = I$, but $RR^{\ast} \neq I$, since it has a nontrivial kernel.\newline
+
+  The Toeplitz algebra is the $C^{\ast}$-algebra generated by the right shift. In other words,
+  \begin{align*}
+    \mathcal{T} &= C^{\ast}\left(R\right).
+  \end{align*}
+\end{definition}
+\begin{exercise}
+  Prove that the Toeplitz algebra contains the compact operators.
+\end{exercise}
+\begin{solution}
+  We start by showing that the rank-one projection of $e_j$ onto $e_i$, where $\left(e_n\right)_n$ are the canonical orthonormal basis of $\ell_2$, is generated by the right shift as follows.
+  \begin{align*}
+    \theta_{e_i,e_j} &= R^{i-1}\left(I - RR^{\ast}\right)\left(R^{\ast}\right)^{j-1}.
+  \end{align*}
+  Note that we only need to show this equivalence when applied to $e_n$:
+  \begin{align*}
+    \theta_{e_i,e_j}\left(e_n\right) &= \iprod{e_n}{e_j}e_i\\
+                                     &= \delta_{nj}e_i.
+  \end{align*}
+  Applying in steps, we start with
+  \begin{align*}
+    R^{i-1}\left(I-RR^{\ast}\right)\left(R^{\ast}\right)^{j-1}\left(e_n\right) &= R^{i-1}\left(I-RR^{\ast}\right)\left(e_{n-j+1}\right)\\
+                                                                               &= \begin{cases}
+                                                                                 R^{i-1}\left(e_{n-j+1}\right) & n=j\\
+                                                                                 R^{i-1}\left(0\right) & n\neq j
+                                                                               \end{cases}\\
+                                                                               &= \delta_{nj}e_i.
+  \end{align*}
+  Thus, since the rank-one projections are contained in the Toeplitz algebra, the finite-rank operators are contained in the Toeplitz algebra, hence the compact operators are contained in the Toeplitz algebra.
+\end{solution}
+\begin{example}
+  Consider the following isometries on $\ell_2$:
+  \begin{align*}
+    V\left(\alpha_1,\alpha_2,\alpha_3,\dots\right) &= \left(\alpha_1,0,\alpha_2,0,\alpha_3,0,\dots\right)\\
+    W\left(\alpha_1,\alpha_2,\alpha_3,\dots\right) &= \left(0,\alpha_1,0,\alpha_2,0,\alpha_3,\dots\right).
+  \end{align*}
+  The operators $V$ and $W$ satisfy
+  \begin{align*}
+    V^{\ast}V &= I\\
+    W^{\ast}W &= I\\
+    VV^{\ast} + WW^{\ast} &= I.
+  \end{align*}
+  The Cuntz algebra, $\mathcal{O}_2$, is the $C^{\ast}\left(V,W\right)$.
+\end{example}
+\subsubsection{Products, Sums, and Quotients}%
+In the category of $C^{\ast}$-algebras, we can also look at products and coproducts.
+\begin{definition}
+  Let $\set{A_i}_{i\in I}$ be a family of Banach algebras/Banach $\ast$-algebras/$C^{\ast}$-algebras. Then, we define the following two constructions with pointwise operations and the $\infty$ norm.
+  \begin{enumerate}[(1)]
+    \item The $\ell_{\infty}$ product is defined as
+      \begin{align*}
+        \prod_{i\in I}A_i &= \set{\left(a_i\right)_i | a_i\in A_i,\norm{\left(a_i\right)_i} = \sup_{i\in I}\norm{a_i} < \infty}.
+      \end{align*}
+    \item For the case of $I = \N$, we may consider the $c_0$ sum
+      \begin{align*}
+        \bigoplus_{n\in \N}A_n &= \set{a = \left(a_n\right)_n | a_n\in A_n,\lim_{n\rightarrow\infty}\norm{a_n}}
+      \end{align*}
+      as a subset of the $\ell_{\infty}$ product of $\set{A_n}_{n\in \N}$. This is a closed $\ast$-ideal.
+    \item In the case where $I = \N$ and $A_n = A$ is fixed, we write $\ell_{\infty}\left(A\right) = \prod_{n\in\N} A_n$ and $c_0\left(A\right) = \bigoplus_{n\in\N}A_n$.
+    \item For a finite family $\set{A_n}_{n=1}^{N}$, the $c_0$ sum equals the $\ell_{\infty}$ product. We decorate the notation to write $A_1 \oplus_{\infty}\cdots\oplus_{\infty}A_N$.
+  \end{enumerate}
+\end{definition}
+\begin{example}
+  For $n_1,\dots,n_r\in \N$, the $C^{\ast}$-algebra
+  \begin{align*}
+    M &= \Mat_{n_1}\left(\C\right) \oplus_{\infty}\Mat_{n_2}\oplus_{\infty}\oplus_{\infty}\cdots\oplus_{\infty}\Mat_{n_r}\left(\C\right)
+  \end{align*}
+  is finite-dimensional. It is actually the case that every finite-dimensional $C^{\ast}$-algebra is of this form.
+\end{example}
+We can also take quotients.
+\begin{proposition}
+  Let $A$ be a normed $\ast$-algebra. Let $I\subseteq A$ be a closed $\ast$-ideal. The quotient space $A/I$ equipped with the quotient norm is a normed $\ast$-algebra.\newline
+
+  If $A$ is complete, then so is $A/I$. If $A$ is commutative or unital, then so is $A/I$.
+\end{proposition}
+\begin{proof}
+  We know that $A/I$ with its quotient norm is a normed vector space, and that $A/I$ is a $\ast$-algebra. We need to show that the quotient norm is submultiplicative and that the involution is isometric.\newline
+
+  Let $a,b\in A$ and $\ve > 0$. Then, there are $x,y$ such that $\norm{a + I} + \ve \geq \norm{a-x}$, and $\norm{b+I} + \ve \geq \norm{b-y}$. Note that $ay + xb - xy\in I$, so
+  \begin{align*}
+    \norm{\left(a+I\right)\left(b+I\right)} &= \norm{ab + I}\\
+                                            &= \dist_{I}\left(ab\right)\\
+                                            &\leq \norm{ab - \left(ay + xb - xy\right)}\\
+                                            &= \norm{\left(a-x\right)\left(b-y\right)}\\
+                                            &\leq \norm{a-x}\norm{b-y}\\
+                                            &\leq \left(\norm{a + I} + \ve\right)\left(\norm{b+I} + \ve\right).
+  \end{align*}
+  Sending $\ve \rightarrow 0$, we get submultiplicativity. Regarding the involution, we get
+  \begin{align*}
+    \norm{\left(a + I\right)^{\ast}} &= \norm{a^{\ast} + I}\\
+                                     &= \inf_{x\in I}\norm{a^{\ast}-x}\\
+                                     &= \inf_{y\in I}\norm{a^{\ast}-y^{\ast}}\\
+                                     &= \inf_{y\in I}\norm{\left(a-y\right)^{\ast}}\\
+                                     &= \inf_{y\in I}\norm{a-y}\\
+                                     &= \norm{a+I}.
+  \end{align*}
+  Completeness follows from the case of the quotient space in Banach spaces.
+\end{proof}
+\subsubsection{Ideals in $C_0\left(\Omega\right)$}%
+Earlier, we characterized the maximal ideal space of $C\left(\Omega\right)$, where $\Omega$ was compact Hausdorff. We are interested in applying this to characterizing the closed ideals of $C_0\left(\Omega\right)$, where $\Omega$ is a LCH space.
+\begin{definition}
+  Let $\Omega$ be a LCH space.
+  \begin{enumerate}[(a)]
+    \item For a subset $K\subseteq \Omega$, we write $N_K$ to be continuous hull of $K$, i.e.
+      \begin{align*}
+        N_K &= \set{f\in C_0\left(\Omega\right) | f(x)=0,~\forall x\in K}.
+      \end{align*}
+      If $K = \set{x}$, we write $N_x$.
+    \item For any map $f\colon \Omega\rightarrow \C$, we denote the zero set of $f$ by
+      \begin{align*}
+        Z\left(f\right) &= f^{-1}\left(\set{0}\right).
+      \end{align*}
+    \item If $I\subseteq C_0\left(\Omega\right)$ is any subset, the kernel of $I$ is
+      \begin{align*}
+        \ker\left(I\right) &= \bigcap_{f\in I}Z\left(f\right).
+      \end{align*}
+  \end{enumerate}
+\end{definition}
+\begin{fact}\hfill
+  \begin{enumerate}[(1)]
+    \item If $K\subseteq \Omega$ is nonempty, then $N_K$ is a closed proper $\ast$-ideal in $C_0\left(\Omega\right)$.
+    \item If $I\subseteq C_0$ is any subset, then $\ker\left(I\right) \subseteq \Omega$ is closed.
+    \item If $K\subseteq L\subseteq \Omega$, then $N_K\supseteq N_L$.
+    \item If $I\subseteq J\subseteq C_0\left(\Omega\right)$, then $\ker\left(I\right)\supseteq \ker\left(J\right)$.
+  \end{enumerate}
+\end{fact}
+To show that every closed ideal in $C_0\left(\Omega\right)$ is of the form $N_K$ for some closed $K\subseteq \Omega$, we start with the case of $C_c\left(\Omega\right)$. We will finish the proof by taking closures.
+\begin{lemma}
+  Let $\Omega$ be a LCH space, and let $I\subseteq C_0\left(\Omega\right)$ be an ideal. If $g\in C_c\left(\Omega\right)$ with $\supp\left(g\right)\cap \ker\left(I\right) = \emptyset$, then $g\in I$.
+\end{lemma}
+\begin{proof}
+  Let $g\in C_c\left(\Omega\right)$ and $C = \supp\left(g\right)$. For each $x\in C$, define $h_x\in I$ such that $h_x\left(x\right) \neq 0$ on $C$, and let $U_x$ be the open neighborhood on which $h_x \neq 0$. The open cover $\set{U_x}_{x\in C}$ admits a finite subcover,
+  \begin{align*}
+    C\subseteq \bigcup_{j=1}^{n}U_{x_j}.
+  \end{align*}
+  We define the function
+  \begin{align*}
+    h &= \sum_{j=1}^{n}\left\vert h_{x_j} \right\vert^2,
+  \end{align*}
+  which belongs to $I$ and is strictly positive on $C$ by construction. Since $C$ is compact, $\inf_{C}\left(h\right) > 0$. Let
+  \begin{align*}
+    f(x) &= \begin{cases}
+      \frac{g(x)}{h(x)} & x\in C\\
+      0 & x\notin C
+    \end{cases}.
+  \end{align*}
+  Then, $f$ is supported on $C$, and $g = fh$, so $g\in I$.
+\end{proof}
+\begin{proposition}
+  Let $\Omega$ be a LCH space. If $I\subseteq C_0\left(\Omega\right)$ is a closed proper ideal, then $K = \ker\left(I\right)$, and $I = N_K$.
+\end{proposition}
+\begin{proof}
+  Set $J = \set{g\in C_c\left(\Omega\right) | \supp\left(g\right)\cap K = \emptyset}$. By the above lemma, we know that $J\subseteq I$. If $K$ were empty, we would have $J = C_c\left(\Omega\right)$, implying
+  \begin{align*}
+    C_0\left(\Omega\right) &= \overline{C_c\left(\Omega\right)}\\
+                           &= \overline{J}\\
+                           &\subseteq \overline{I}\\
+                           &= I,
+  \end{align*}
+  which would contradict the assumption that $I$ is a proper ideal.\newline
+
+  We can see that $I\subseteq N_K$ by the definition of $N_K$. We will now show that every function in $N_K$ can be approximated arbitrarily by a member in $J$. We will establish the reverse inclusion, $J\subseteq N_K$.\newline
+
+  Let $f\in N_K$, $\ve > 0$, and set
+  \begin{align*}
+    C_{\ve} &= \set{x\in \Omega | \left\vert f(x) \right\vert > \ve}.
+  \end{align*}
+  Since $f$ vanishes at infinity, $C_{\ve}$ is compact, and $C_{\ve}\cap K = \emptyset$. By Urysohn's lemma, there is $g\in C_c\left(\Omega,[0,1]\right)$ with $g|_{C_{\ve}} = 1$ and $\supp\left(g\right)\subseteq K^{c}$. Thus, $h = fg\in J$, and $\norm{f-h}_{u} \leq \ve$.
+\end{proof}
+\begin{proposition}
+  Let $\Omega$ be a LCH space. If $K\subseteq \Omega$ is closed, then $K = \ker\left(N_K\right)$.
+\end{proposition}
+\begin{proof}
+  We can see that $K\subseteq \ker\left(N_K\right)$. If the inclusion is strict, then there is a point $x\in \ker\left(N_K\right)\setminus K$, and, by Urysohn's lemma, there is an $f\in C_c\left(\Omega,[0,1]\right)$ with $f|_{K} = 0$ and $f\left(x\right) = 1$. Thus, $f\in N_K$.\newline
+
+  Since $x\in \ker\left(N_K\right)$, we must also have $f\left(x\right) = 0$, which is a contradiction. Thus, $K = \ker\left(N_K\right)$.
+\end{proof}
+We arrive at the following characterization of the closed ideals of $C_0\left(\Omega\right)$.
+\begin{corollary}
+  Let $\Omega$ be a LCH space. There is an order-reversing one-to-one correspondence between closed subsets of $\Omega$ and closed ideals of $C_0\left(\Omega\right)$, given by
+  \begin{align*}
+    \Omega\supseteq K\leftrightarrow N_K\subseteq C_0\left(\Omega\right).
+  \end{align*}
+\end{corollary}
+\begin{exercise}
+  Show that every maximal ideal of $C_0\left(\Omega\right)$ is of the form $N_x$.
+\end{exercise}
+\begin{solution}
+  Via the containment ordering, we see that every maximal element of $\Omega$ with this ordering is of the form $\set{x}$, meaning that every ideal of the form $N_x$ is maximal.
+\end{solution}
+Indeed, we may go further. Letting $\Omega$ be a LCH space, and $\Lambda\subseteq \Omega$ be open, we know that both $\Lambda$ and $\Lambda^{c}$ are locally compact. We can identify $C_0\left(\Lambda\right)$ with the closed ideal $N_K$, where $K = \Lambda^{c}$.\newline
+
+Given $f\in C_0\left(\Lambda\right)$, define
+\begin{align*}
+  f'(x) &= \begin{cases}
+    f(x) & x\in \Lambda\\
+    0 & x\in \Lambda^{c}
+  \end{cases}.
+\end{align*}
+Clearly, $f'\in C_0\left(\Omega\right)$, and by definition, $f\in N_K$. Additionally, the inclusion map $\iota\colon C_0\left(\Omega\right)\rightarrow N_K$, defined by $f\mapsto f'$, is an isometric $\ast$-homomorphism.
+\begin{exercise}
+  If $g\in N_K$, then $g|_{\Lambda} \in C_0\left(\Lambda\right)$, and $\left(g|_{\Lambda}\right)' = g$.
+\end{exercise}
+\begin{solution}
+  If $g\in N_K$, then $g = 0$ on $\Lambda^{c}$, so for all $\ve > 0$, there is some compact $S\subseteq \Lambda$ such that $\left\vert g|_{S^{c}} \right\vert < \ve$. Thus, $g\in C_0\left(\Lambda\right)$.\newline
+
+  By the definition of $\iota$, we must have $g \mapsto g'$ is an isometric $\ast$-homomorphism, and since $g$ is $0$ on $\Lambda^{c}$, we have that $\left(g|_{\Lambda}\right)' = g$.
+\end{solution}
+Thus, we come to the conclusion that every closed ideal in $C_0\left(\Omega\right)$ is of the form $C_0\left(\Lambda\right)$, where $\Lambda\subseteq \Omega$ is open.
+\subsubsection{$C^{\ast}$-norms}%
+We are interested in turning $\ast$-algebras into Banach $\ast$-algebras or $C^{\ast}$-algebras. To do this, we can actually use the Banach space completion, $\overline{\iota\left(A\right)}^{\norm{\cdot}_{\text{op}}}\subseteq A^{\ast\ast}$, where $\iota$ is the canonical injection.
+\begin{lemma}
+  If $A_0$ is a normed $\ast$-algebra, then its Banach space completion is a Banach $\ast$-algebra, and the inclusion $A_0\hookrightarrow A$ is an injective $\ast$-homomorphism.
+\end{lemma}
+\begin{proof}
+  We know that $A$ is a Banach space, and the inclusion $A_0\hookrightarrow A$ is an isometry. We show that $A$ has an algebra structure that extends $A_0$, and the norm on $A$ is submultiplicative.\newline
+
+  Let $x,y\in A$, and let $\left(x_n\right)_n,\left(y_n\right)_n$ be sequences in $A_0$ converging to $x$ and $y$ respectively. Then, $\sup_{n}\norm{x_n} = C_1 < \infty$ and $\sup_{n}\norm{y_n} = C_2 < \infty$, since convergent sequences are bounded. For $m,n\in \N$, we have
+  \begin{align*}
+    \norm{x_ny_n - x_my_m} &= \norm{x_ny_n - x_ny_m + x_ny_m - x_my_m}\\
+                           &\leq \norm{x_n\left(y_n - y_m\right)} + \norm{\left(x_n-x_m\right)y_m}\\
+                           &\leq C_1\norm{y_n - y_m} + C_2\norm{x_n - x_m},
+  \end{align*}
+  meaning $\left(x_ny_n\right)_n$ is Cauchy in $A$, and converges to $x\cdot y = \lim_{n\rightarrow\infty}x_ny_n$.\newline
+
+  The map $\left(x,y\right) \mapsto x\cdot y$ extends the multiplication on $A_0$, and endows $A$ with the structure of an algebra.\newline
+
+  For $x,y\in A$, and $\left(x_n\right)_n,\left(y_n\right)_n$ sequences in $A_0$ converging to $x$ and $y$ respectively, we get
+  \begin{align*}
+    \norm{xy} &= \norm{\lim_{n\rightarrow\infty}x_ny_n}\\
+              &= \lim_{n\rightarrow\infty}\norm{x_ny_n}\\
+              &\leq \lim_{n\rightarrow\infty}\norm{x_n}\norm{y_n}\\
+              &= \norm{x}\norm{y}.
+  \end{align*}
+  Thus, $A$ is a Banach algebra.\newline
+
+  To see that $A$ is a Banach $\ast$-algebra, we show that $A$ admits the involution defined by, for $x\in A$ and $\left(x_n\right)_n\subseteq A_0$ with $\left(x_n\right)_n\rightarrow x$,
+  \begin{align*}
+    x^{\ast} &= \lim_{n\rightarrow\infty}x_n^{\ast}.
+  \end{align*}
+  Similarly, we find that
+  \begin{align*}
+    \norm{x^{\ast}} &= \lim_{n\rightarrow\infty}\norm{x_n^{\ast}}\\
+                    &= \lim_{n\rightarrow\infty}\norm{x_n}\\
+                    &= \norm{x},
+  \end{align*}
+  so $A$ is a Banach $\ast$-algebra.
+\end{proof}
+\begin{definition}
+  Let $A_0$ be a $\ast$-algebra. A $C^{\ast}$-norm on $A_0$ is a norm satisfying
+  \begin{enumerate}[(i)]
+    \item $\norm{ab}\leq \norm{a}\norm{b}$;
+    \item $\norm{a^{\ast}} = a$;
+    \item $\norm{a^{\ast}a} = \norm{a}^2$
+  \end{enumerate}
+  for all $a,b\in A_0$. We can define $C^{\ast}$-seminorms analogously.
+\end{definition}
+On any given $\ast$-algebra, there can be many $C^{\ast}$-norms.
+\begin{example}
+  Let $\mathcal{T}$ be the unital $\ast$-algebra of trigonometric polynomials in $C\left(\T\right)$. For every closed infinite set $F\subseteq \T$, we have a $C^{\ast}$-\textit{norm}, given by
+  \begin{align*}
+    \norm{p}_{F} &= \sup_{z\in F}\left\vert p(z) \right\vert.
+  \end{align*}
+  This is pretty clearly a $C^{\ast}$-seminorm, but it isn't clear at first sight that this is a norm. We can show this as follows.\newline
+
+  Suppose $\norm{p}_{F} = 0$, meaning $p(z) = 0$ for all $z\in F$. Write
+  \begin{align*}
+    p(z) &= \sum_{k=-n}^{n}c_kz^{k}\\
+    q(z) &= z^n p(z).
+  \end{align*}
+  Then, $q(z)$ is a polynomial, that vanishes on $F$. However, since $q$ is a polynomial with degree $2n$, $q$ can have at most $2n$ distinct roots by the fundamental theorem of algebra. Thus, $q = 0$, so $p = 0$.
+\end{example}
+We can generate $C^{\ast}$-norms and seminorms via morphisms into $C^{\ast}$-algebras.
+\begin{lemma}
+  Let $A_0$ be a $\ast$-algebra, and let $\phi\colon A_0\rightarrow B$ be a $\ast$-homomorphism into a $C^{\ast}$-algebra $B$. Then,
+  \begin{align*}
+    \norm{a}_{\phi} &= \norm{\phi(a)}
+  \end{align*}
+  defines a $C^{\ast}$-seminorm on $A_0$. If $\phi$ is injective, then $\norm{\cdot}_{\phi}$ is a norm.
+\end{lemma}
+\begin{proof}
+  We will prove that this is a $C^{\ast}$-(semi)norm.
+  \begin{align*}
+    \norm{ab}_{\phi} &= \norm{\phi\left(ab\right)}\\
+                     &= \norm{\phi\left(a\right)\phi\left(b\right)}\\
+                     &\leq \norm{\phi\left(a\right)}\norm{\phi\left(b\right)}\\
+                     &= \norm{a}_{\phi}\norm{b}_{\phi}\\
+                     \\
+    \norm{a^{\ast}}_{\phi} &= \norm{\phi\left(a^{\ast}\right)}\\
+                           &= \norm{\phi\left(a\right)^{\ast}}\\
+                           &= \norm{\phi\left(a\right)}\\
+                           &= \norm{a}_{\phi}\\
+                           \\
+    \norm{a^{\ast}a}_{\phi} &= \norm{\phi\left(a^{\ast}a\right)}\\
+                            &= \norm{\phi\left(a\right)^{\ast}\phi\left(a\right)}\\
+                            &= \norm{\phi\left(a\right)}^2\\
+                            &= \norm{a}_{\phi}^2.
+  \end{align*}
+\end{proof}
+We can pass from seminorms to norms by modding out by the null set.
+\begin{lemma}
+  Let $p$ be a $C^{\ast}$-seminorm on the $\ast$-algebra $A_0$. The set
+  \begin{align*}
+    N_p = \set{x\in A | p\left(x\right) = 0}
+  \end{align*}
+  is a $\ast$-ideal, and the map
+  \begin{align*}
+    \norm{a + N_p}_{A/N_p} &= p(a)
+  \end{align*}
+  is a well-defined $C^{\ast}$-norm on $A_0/N_p$.
+\end{lemma}
+Now that we have defined a $C^{\ast}$-norm, we can extend this norm to the norm completion of the $\ast$-algebra $A_0$.
+\begin{lemma}
+  Let $\norm{\cdot}$ be a $C^{\ast}$-norm on a $\ast$-algebra $A_0$. The norm completion $A$ is a $C^{\ast}$-algebra, and the inclusion $A_0\hookrightarrow A$ is an isometric $\ast$-homomorphism.
+\end{lemma}
+\begin{proof}
+  We know that $A$ is a Banach $\ast$-algebra, and the inclusion is an isometric $\ast$-homomorphism. We only need to check that the $C^{\ast}$ property holds in $A$. Let $x\in A$, $\left(x_n\right)_n\rightarrow x$ in $A_0$. Then,
+  \begin{align*}
+    \norm{x^{\ast}x} &= \lim_{n\rightarrow\infty}\norm{x_n^{\ast}x_n}\\
+                     &= \lim_{n\rightarrow\infty}\norm{x_n}^2\\
+                     &= \norm{x}^2.
+  \end{align*}
+\end{proof}
+\begin{definition}
+  Let $A_0$ be a $\ast$-algebra equipped with $C^{\ast}$-seminorm $p$. The norm completion of the $\ast$-algebra $A_0/N_p$ with respect to $\norm{\cdot}_{A_0/N_p}$ is called the Hausdorff completion, or enveloping $C^{\ast}$-algebra, of the pair $\left(A_0,p\right)$.
+\end{definition}
+\subsubsection{Universal $C^{\ast}$-Algebras}%
+We are now interested in a sort of maximal Hausdorff completion of $A_0$.
+\begin{definition}
+  Let $A_0$ be a $\ast$-algebra, and let $\mathcal{P}$ be the collection of all $C^{\ast}$-seminorms on $A_0$. For each $a\in A_0$, we set
+  \begin{align*}
+    \norm{a}_u = \sup_{p\in \mathcal{P}}p\left(a\right).
+  \end{align*}
+  If $\norm{a}_u < \infty$ for all $a\in A_0$, then $\norm{\cdot}_{u}$ defines a $C^{\ast}$-seminorm on $A_0$, called the universal $C^{\ast}$-seminorm. In this case, the universal enveloping $C^{\ast}$-algebra of $A_0$ is the enveloping algebra of $\left(A_0,\norm{\cdot}_u\right)$.
+\end{definition}
+Recall that given a set of generators $E = \set{x_i}_{i\in I}$ and relations $R \subseteq \A^{\ast}\left(E\right)$, we can construct the quotient $\ast$-algebra $\A^{\ast}\left(E|R\right) = \A\left(E\right)/I(R)$, where $I(R)$ is the $\ast$-ideal generated by $R$ contained in the free $\ast$-algebra on $E$. We write $z_i = x_i + I(R)$.\newline
+
+We also saw that $\A^{\ast}\left(E|R\right)$ admits a universal property, wherein if $B$ is any $\ast$-algebra admitting elements $\set{b_i}_{i\in I}$ that satisfy $R$, then there is a $\ast$-homomorphism $\phi_B\colon \A^{\ast}\left(E|R\right) \rightarrow B$, defined by $\phi_B\left(z_i\right) = b_i$.\newline
+
+We can define a universal $C^{\ast}$-algebra by looking at the universal enveloping algebra of $\A^{\ast}\left(E|R\right)$, provided it exists.
+\begin{definition}
+  Let $E$ be a set of abstract symbols, and $R\subseteq \A^{\ast}\left(E\right)$ is a set of relations. If the universal $C^{\ast}$-algebra of $\A\left(E|R\right)$ exists --- i.e., if $\norm{a}_u < \infty$ for all $a\in \A^{\ast}\left(E|R\right)$ --- then we write $C^{\ast}\left(E|R\right)$ to denote this $C^{\ast}$-algebra, and call it the universal $C^{\ast}$-algebra generated by $E$ with relations $R$.
+\end{definition}
+Just as in the case of the universal $\ast$-algebra, we see that the universal $C^{\ast}$-algebra admits an analogous universal property.
+\begin{proposition}
+  Let $E = \set{x_i}_{i\in I}$ be a set of abstract symbols, and let $R\subseteq \A^{\ast}\left(E\right)$ be a collection of relations. Let $C^{\ast}\left(E|R\right)$ exist. If $B$ is a $C^{\ast}$-algebra admitting elements $\set{b_i}_{i\in I}$ that satisfy the relations, then there is a unique contractive $\ast$-homomorphism $\varphi_B\colon C^{\ast}\left(E|R\right) \rightarrow B$, defined by $\varphi_B\left(v_i\right) = b_i$, where $v_i = \left(x_i + I(R)\right) + N_u$.
+\end{proposition}
+\begin{proof}
+  By the universal property of $\A^{\ast}\left(E|R\right)$, we have $\phi_B\colon \A^{\ast}\left(E|R\right) \rightarrow B$, defined by $\phi_B\left(z_i\right) = b_i$, where $z_i = x_i + I(R)$.\newline
+
+  We have the $C^{\ast}$-seminorm given by $a\mapsto \norm{\phi_B\left(a\right)}$, where $\norm{\phi_B\left(a\right)} \leq \norm{a}_u$ for all $a\in \A^{\ast}\left(E|R\right)$. Additionally, we must have that $\phi_B$ kills the $\ast$-ideal
+  \begin{align*}
+    N_u &= \set{a\in \A^{\ast}\left(E\vert R\right) | \norm{a}_u = 0}.
+  \end{align*}
+  By the first isomorphism theorem, we get the $\ast$-homomorphism $\widetilde{\phi_B}\colon \A^{\ast}\left(E|R\right)/N_u\rightarrow B$, given by $z_i + N_u \mapsto b_i$. This map is still contractive, so we can continuously extend $\widetilde{\phi_B}$ to the desired contractive $\ast$-homomorphism, $\varphi_B \colon C^{\ast}\left(E|R\right)\rightarrow B$, mapping $z_i + N_u \mapsto b_i$.\newline
+
+  Uniqueness follows from the fact that $\A^{\ast}\left(E|R\right)/N_u$ is dense in its completion.
+\end{proof}
+\begin{example}
+  It is sometimes the case that $C^{\ast}\left(E|R\right)$ doesn't exist. Consider $E = \set{x}$ and $R = \set{x-x^{\ast}}$. We write $z = x + I(R)$. For a $t > 0$, we find a $C^{\ast}$-algebra $B_t$ and a self-adjoint $b_t\in B_t$ with $\norm{b_t} = t$.\newline
+
+  For each $t > 0$, the universal property for $\A^{\ast}\left(E|R\right)$ gives a $\ast$-homomorphism $\phi_t\colon \A^{\ast}\left(E|R\right)\rightarrow B_t$, with $\phi_t\left(z\right) = b_t$. We get a $C^{\ast}$-seminorm $p_t$ on $\A^{\ast}\left(E|R\right)$ given by $p_t\left(a\right)= \norm{\phi_t(a)} = t$, meaning that the universal $C^{\ast}$-seminorm is
+  \begin{align*}
+    \norm{z}_u &\geq \sup_{t > 0}p_t\left(z\right)\\
+               &= \sup_{t > 0}\norm{\phi_t\left(z\right)}\\
+               &= \sup_{t > 0}\norm{b_t}\\
+               &= \sup_{t > 0}t\\
+               &= \infty.
+  \end{align*}
+\end{example}
+To verify that the universal $C^{\ast}$-seminorm is finite for every element in $\A^{\ast}\left(E|R\right)$, we can use a simpler characterization.
+\begin{lemma}
+  Let $E = \set{x_i}_{i\in I}$ be a set of symbols and suppose $R\subseteq \A^{\ast}\left(E|R\right)$ is a collection of relations. Write $z_i = x_i + I(R)$. If there is a $C \geq 0$ for with $p\left(z_i\right) \leq C$ for every $i\in I$ and every $C^{\ast}$-seminorm $p$ on $\A^{\ast}\left(E|R\right)$, then $C^{\ast}\left(E|R\right)$ exists.
+\end{lemma}
+We can consider the $C^{\ast}$-algebra of $n\times n$ matrices over $\C$, and construct this $C^{\ast}$-algebra using the universal $C^{\ast}$-algebra.
+\begin{example}
+  Let $n\geq 1$, and let $E_n = \set{x_{ij} | 1 \leq i,j \leq n}$. Let
+  \begin{align*}
+    R &= \set{x_{ij}^{\ast} - x_{ji},x_{ij}x_{kl} - \delta_{jk}x_{il} | i,j\in \set{1,\dots,n}}
+  \end{align*}
+  be our set of relations.\footnote{The first set of relations denotes the (conjugate) transpose, $x_{ij}^{\ast} = x_{ji}$ and the second set of relations denotes $x_{ij}x_{kl} = \delta_{jk}x_{il}$, which is the index notation definition of matrix multiplication.} Let $z_{ij} = x_{ij} + I(R)$. Then, if $p$ is any $C^{\ast}$-seminorm on $\A^{\ast}\left(E_n|R\right)$, we have
+  \begin{align*}
+    p\left(z_{jj}\right)^2 &= p\left(z_{jj}^{\ast}z_{jj}\right)\\
+                           &= p\left(z_{jj}z_{jj}\right)\\
+                           &= p\left(z_{jj}\right),
+  \end{align*}
+  so $p\left(z_{jj}\right) \subseteq \set{0,1}$, and we also have
+  \begin{align*}
+    p\left(z_{ij}\right)^2 &= p\left(z_{ij}^{\ast}z_{ij}\right)\\
+                           &= p\left(z_{ji}z_{ij}\right)\\
+                           &= p\left(z_{jj}\right)\\
+                           &\in \set{0,1}.
+  \end{align*}
+  Thus, $C^{\ast}\left(E_n|R\right)$ exists. Write $v_{ij} = z_{ij} + N_u$. We will show that $C^{\ast}\left(E_n|R\right)$ is not trivial.\newline
+
+  The matrix units $\set{e_{ij} | 1\leq i,j \leq n}$ satisfy the relations, so by the universal property of $C^{\ast}\left(E_n|R\right)$, we have a contractive $\ast$-homomorphism $\varphi\colon C^{\ast}\left(E_n|R\right) \rightarrow \Mat_n\left(\C\right)$ given by $\varphi\left(v_{ij}\right) = e_{ij}$. Since $\Span\left(\set{e_{ij}}_{i,j}\right) = \Mat_n\left(\C\right)$, we must have $C^{\ast}\left(E_n|R\right) \cong \Mat_n\left(\C\right)$.\newline
+
+  Consequently, $C^{\ast}\left(E_n|R\right)$ is simple. Additionally, if $B$ is any other $C^{\ast}$-algebra admitting elements $\set{b_{ij} | 1\leq i,j \leq n}$ with $b_{ij}^{\ast} = b_{ji}$ and $b_{ij}b_{kl} = \delta_{kl}b_{il}$, then there is a unique injective $\ast$-homomorphism between $\Mat_n\left(\C\right)$ and $B$ such that $\varphi\left(e_{ij}\right)\cong b_{ij}$.\newline
+
+  We can also obtain $\Mat_n\left(\C\right)$ another way. Consider $F_n = \set{x_1,\dots,x_n}$ and the relations
+  \begin{align*}
+    R' &= \set{x_{i}^{\ast}x_j - \delta_{ij}x_1 | i,j=1,\dots,n}.
+  \end{align*}
+  We write $z_i = x_i + I(R)$. If $p$ is any $C^{\ast}$-seminorm on $\A^{\ast}\left(F_n|R'\right)$, then
+  \begin{align*}
+    p\left(z_i\right)^2 &= p\left(z_i^{\ast}z_i\right)\\
+                        &= p\left(z_1\right),
+  \end{align*}
+  so $p\left(z_i\right)\in \set{0,1}$ for all $i$. Thus, $C^{\ast}\left(F_n|R'\right)$ exists.\newline
+
+  Write $v_i =z_i + N_u$, and set
+  \begin{align*}
+    b_{ij} &= v_iv_j^{\ast}.
+  \end{align*}
+  We have $b_{ij}^{\ast} = b_{ji}$, and since $v_i^{\ast}v_i = v_1$ is a projection for every $i$, each $v_i$ is a partial isometry, meaning
+  \begin{align*}
+    b_{ij}b_{kl} &= v_{i}\left(v_j^{\ast}v_k\right)v_l^{\ast}\\
+                 &= v_i\left(\delta_{jk}v_1\right)v_l^{\ast}\\
+                 &= v_i\left(\delta_{jk}v_i^{\ast}v_i\right)v_l^{\ast}\\
+                 &= \delta_{jk}\left(v_iv_i^{\ast}v_i\right)v_l^{\ast}\\
+                 &= \delta_{jk}v_iv_l^{\ast}.
+  \end{align*}
+  Thus, there is a $\ast$-homomorphism between $\Mat_n\left(\C\right)$ and $C^{\ast}\left(F_n|R'\right)$, given by $\psi\left(e_{ij}\right) = b_{ij}$. Since $\Mat_n\left(\C\right)$ is simple, $\psi$ is injective.\newline
+
+  We also have
+  \begin{align*}
+    \psi\left(e_{i1}\right) &= b_{i1}\\
+                            &= v_iv_1^{\ast}\\
+                            &= v_iv_1\\
+                            &= v_iv_i^{\ast}v_i\\
+                            &= v_i,
+  \end{align*}
+  so $\psi$ is onto. Thus $C^{\ast}\left(F_n|R'\right)\cong \Mat_n\left(\C\right)$.
+\end{example}
+\begin{example}
+  Let $E = \set{1,x}$ and
+  \begin{align*}
+    R &= \set{x^{\ast}x - 1,xx^{\ast}-1,1x-x,x1-x,1^2-1,1^{\ast}-1}.
+  \end{align*}
+  We see that $\A^{\ast}\left(E|R\right)$ is unital with unit $1 + I(R)$, and that $x+I(R)$ is invertible with inverse $x^{\ast} + I(R)$. Writing $z = x + I(R)$, we see that
+  \begin{align*}
+    \A^{\ast}\left(E|R\right) &= \set{\sum_{k\in \Z}\alpha_kz^k | \alpha_k\in \C,\text{finitely many nonzero}},
+  \end{align*}
+  where $z^{-1} = z^{\ast}$ and $z^0 = 1$.\newline
+
+  If $p$ is any seminorm on $\A^{\ast}\left(E|R\right)$, we have
+  \begin{align*}
+    p\left(1\right)^2 &= p\left(1^{\ast}1\right)\\
+                      &= p\left(1^2\right)\\
+                      &= p\left(1\right),
+  \end{align*}
+  so $p\left(1\right) \in \set{0,1}$, and
+  \begin{align*}
+    p\left(z\right)^2 &= p\left(z^{\ast}z\right)\\
+                      &= p\left(1\right)\\
+                      &\in \set{0,1}.
+  \end{align*}
+  Thus, $C^{\ast}\left(E|R\right)$ exists. We write $u = z + N_u$. The universal property states that if $w$ is a unitary in any unital $C^{\ast}$-algebra $B$, then there is a surjective $\ast$-homomorphism between $C^{\ast}\left(E|R\right)$ and $C^{\ast}\left(w\right)\subseteq B$, given by $u\mapsto w$.\newline
+
+  Eventually, we wil show that $C^{\ast}\left(E|R\right)\cong C\left(\T\right)$.
+\end{example}
+\subsubsection{Representations and the Group $C^{\ast}$-algebra}%
+We can realize $\ast$-algebras as $\ast$-subalgebras of bounded operators on a Hilbert space. This allows us to get a $C^{\ast}$-norm for free, and get a $C^{\ast}$-algebra by completion.
+\begin{definition}
+  Let $A_0$ be a $\ast$-algebra. A representation of $A_0$ is a pair $\left(\pi_0,\mathcal{H}\right)$, where $\mathcal{H}$ is a Hilbert space and $\pi_0\colon A\rightarrow \B\left(\mathcal{H}\right)$ is a $\ast$-homomorphism. We will refer to the representation by $\pi_0$ if the Hilbert space is understood.\newline
+
+  If $A_0$ is unital, and $\pi\left(1_A\right) = I_{\mathcal{H}}$, then we say $\pi$ is a unital representation.
+\end{definition}
+\begin{lemma}
+  Let $A_0$ be a $\ast$-algebra, and suppose $\left(\pi_0,\mathcal{H}\right)$ is a representation of $A_0$. Then,
+  \begin{align*}
+    \norm{a}_{\pi_0} &= \norm{\pi_0\left(a\right)}_{\text{op}}
+  \end{align*}
+  is a $C^{\ast}$-seminorm on $A_0$. If $\pi_0$ is injective, then $\norm{\cdot}_{\pi_0}$ is a $C^{\ast}$-norm.
+\end{lemma}
+\begin{lemma}
+  Let $A_0$ and $B_0$ be normed $\ast$-algebras with respective completions $A$ and $B$. If $\varphi_0\colon A_0\rightarrow B_0$ is a bounded $\ast$-homomorphism, then the continuous extension $\varphi\colon A\rightarrow B$ is a $\ast$-homomorphism.
+\end{lemma}
+\begin{proof}
+  Let $x,y\in A$ with $\left(x_n\right)_n\rightarrow x$ and $\left(y_n\right)_n\rightarrow y$ sequences in $A_0$. Then,
+  \begin{align*}
+    \varphi\left(xy\right) &= \varphi\left(\lim_{n\rightarrow\infty}x_ny_n\right)\\
+                           &= \lim_{n\rightarrow\infty}\varphi\left(x_ny_n\right)\\
+                           &= \lim_{n\rightarrow\infty}\varphi_0\left(x_ny_n\right)\\
+                           &= \lim_{n\rightarrow\infty}\varphi_0\left(x_n\right)\varphi_0\left(y_n\right)\\
+                           &= \lim_{n\rightarrow\infty}\varphi\left(x_n\right)\varphi\left(y_n\right)\\
+                           &= \varphi\left(x\right)\varphi\left(y\right).
+  \end{align*}
+  A similar process, using the continuity of the involution, gives $\varphi\left(x^{\ast}\right) = \varphi\left(x\right)^{\ast}$.
+\end{proof}
+\begin{corollary}
+  Let $A_0$ be a $\ast$-algebra, and suppose $\pi\colon A_0\rightarrow \B\left(\mathcal{H}\right)$ is an injective representation. The completion $A$ of $A_0$ with respect to the $C^{\ast}$-norm $\norm{\cdot}_{\pi_0}$ is a $C^{\ast}$-algebra, and the continuous extension $\pi\colon A\rightarrow \B\left(\mathcal{H}\right)$ is an isometric $\ast$-homomorphism.
+\end{corollary}
+The $C^{\ast}$-algebra that arises from a group is an important example of a $C^{\ast}$-algebra.\footnote{It's partially the subject of my Honors thesis.}\newline
+
+Given a group $\Gamma$, we can construct the group $\ast$-algebra, $\C\left[\Gamma\right]$. An element $a\in \C\left[\Gamma\right]$ is a finitely supported complex-valued function on $\Gamma$, written as a finite sum
+\begin{align*}
+  a &= \sum_{s\in\Gamma}a(s)\delta_s,
+\end{align*}
+where $\delta_s\colon \Gamma\rightarrow \C$ is the indicator function for $s$, $\delta_s\left(t\right) = \delta_{st}$.\newline
+
+Unit\textit{ary} representations of $\Gamma$ are related to representations of the group $\ast$-algebra $\C\left[\Gamma\right]$.
+\begin{proposition}
+  Let $\Gamma$ be a group, and let $\mathcal{H}$ be a Hilbert space.
+  \begin{enumerate}[(1)]
+    \item If $u\colon \Gamma\rightarrow \mathcal{U}\left(\mathcal{H}\right)$ is a unitary representation of $\Gamma$, then the map $\pi_u\colon \C\left[\Gamma\right]\rightarrow \B\left(\mathcal{H}\right)$ given by
+      \begin{align*}
+        \pi_u\left(a\right) &= \sum_{s\in \Gamma}a(s)u_s
+      \end{align*}
+      is a representation of $\C\left[\Gamma\right]$.
+    \item If $\pi\colon \C\left[\Gamma\right] \rightarrow \B\left(\mathcal{H}\right)$ is a unit\textit{al} representation, then the map $u\colon \Gamma\rightarrow \mathcal{U}\left(\mathcal{H}\right)$, given by
+      \begin{align*}
+        u(s) &= \pi\left(\delta_s\right)
+      \end{align*}
+      is a unit\textit{ary} representation of $\Gamma$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item The map $s\mapsto u_s\in \B\left(\mathcal{H}\right)$ extends to a linear map $\pi_u\colon \C\left[\Gamma\right]\rightarrow \B\left(\mathcal{H}\right)$, satisfying $\pi_u\left(\delta_s\right) = u_s$ by the universal property of the free vector space.\newline
+
+      For $s,t\in \Gamma$, we have
+      \begin{align*}
+        \pi_u\left(\delta_s\delta_t\right) &= \pi_u\left(\delta_{st}\right)\\
+                                           &= u_{st}\\
+                                           &= u_su_t\\
+                                           &= \pi_u\left(\delta_s\right)\pi_u\left(\delta_t\right)\\
+                                           \\
+        \pi_u\left(\delta_s^{\ast}\right) &= \pi_u\left(\delta_{s}^{-1}\right)\\
+                                          &= u_{s^{-1}}\\
+                                          &= u_{s}^{\ast}\\
+                                          &= \pi_u\left(\delta_s\right)^{\ast}.
+      \end{align*}
+      Using the linearity of $\pi_u$, we see that $\pi_u$ is multiplicative and $\ast$-preserving.
+    \item Every $\delta_s\in \C\left[\Gamma\right]$ is unitary, and since unital $\ast$-homomorphisms map unitaries to unitaries, we know that each $u(s)$ is unitary. Moreover, for $s,t\in \Gamma$, we have
+      \begin{align*}
+        u\left(st\right) &= \pi\left(\delta_{st}\right)\\
+                         &= \pi\left(\delta_s\delta_t\right)\\
+                         &= \pi\left(\delta_s\right)\pi\left(\delta_t\right)\\
+                         &= u(s)u(t),
+      \end{align*}
+      meaning $u$ is a unitary representation.
+  \end{enumerate}
+\end{proof}
+For the group $\Gamma$ is a group with neutral element $e$, we have defined the group $\ast$-algebra and the left-regular representation $\lambda\colon \Gamma\rightarrow \mathcal{U}\left(\ell_2\left(\Gamma\right)\right)$. We thus get a representation of the group $\ast$-algebra
+\begin{align*}
+  \pi_{\lambda}\left(a\right) &= \sum_{s\in \Gamma}a(s)\lambda_s.
+\end{align*}
+We claim that $\pi_{\lambda}$ is injective. Suppose $\pi_{\lambda}\left(a\right) = 0$ for some $a = \sum_{s\in\Gamma}a(s)\delta_s\in \C\left[\Gamma\right]$. Evaluating $\delta_e$, we have
+\begin{align*}
+  0 &= \pi_{\lambda}\left(a\right)\left(\delta_e\right)\\
+    &= \left(\sum_{s\in\Gamma}a(s)\lambda_s\right)\left(\delta_e\right)\\
+    &= \sum_{s\in\Gamma}a(s)\lambda_s\left(\delta_e\right)\\
+    &= \sum_{s\in\Gamma}\left(\delta_s\right).
+\end{align*}
+Since the vectors $\set{\delta_t}_{t\in\Gamma}$ are linearly independent, we must have $a(s) = 0$ for all $s\in \Gamma$, so $a = 0$.\newline
+
+Thus, we have a $C^{\ast}$-norm on $\C\left[\Gamma\right]$ given by $\norm{a}_{\lambda} = \norm{\pi_{\lambda}(a)}_{\text{op}}$. The $\norm{\cdot}_{\lambda}$-completion of $\C\left[\Gamma\right]$ is a $C^{\ast}$-algebra denoted by $C^{\ast}_{\lambda}\left(\Gamma\right)$. This is known as the left-regular group $C^{\ast}$-algebra.\newline
+
+Similarly, we may begin with the right-regular representation $\rho\colon \C\left[\Gamma\right]\rightarrow \mathcal{U}\left(\ell_2\left(\Gamma\right)\right)$, and construct the representation
+\begin{align*}
+  \pi_{\rho}\left(a\right) &= \sum_{s\in\Gamma}a(s)\rho_s,
+\end{align*}
+which induces the $C^{\ast}$-norm $\norm{\cdot}_{\rho}$ on $\C\left[\Gamma\right]$, which gives rise to the right-regular group $C^{\ast}$-algebra, $C^{\ast}_{\rho}\left(\Gamma\right)$.\newline
+
+We often refer to $C^{\ast}_{\lambda}\left(\Gamma\right)$ as the reduced group $C^{\ast}$-algebra of $\Gamma$, often denoted $C_{r}^{\ast}\left(\Gamma\right)$.\newline
+
+There is also a full group $C^{\ast}$-algebra, with the full norm defined by
+\begin{align*}
+  \norm{a}_{u} &= \sup\set{\norm{\pi(a)} | \pi\colon \C\left[\Gamma\right]\rightarrow \B\left(\mathcal{H}_{\pi}\right)\text{ is a representation}}.
+\end{align*}
+To see that this quantity is finite, note that for every representation $\pi\colon \C\left[\Gamma\right]\rightarrow \B\left(\mathcal{H}_{\pi}\right)$, the elements $\pi\left(\delta_s\right)$ are unitaries in $\B\left(\mathcal{H}\right)$, hence having norm $1$. So, we have
+\begin{align*}
+  \norm{\pi(a)} &= \norm{\pi\left(\sum_{s\in\Gamma}a(s)\delta_s\right)}\\
+                &= \norm{\sum_{s\in\Gamma}a(s)\pi\left(\delta_s\right)}\\
+                &\leq \sum_{s\in\Gamma}\norm{a(s)\delta_s}\\
+                &= \sum_{s\in\Gamma}\left\vert a(s) \right\vert,
+\end{align*}
+so $\norm{a}_{u}\leq \sum_{s\in\Gamma}\left\vert a(s) \right\vert < \infty$. This is a $C^{\ast}$-norm, as if $\norm{a}_{u} = 0$, then $\norm{a}_{\lambda}=0$, as $\pi_{\lambda}$ is one of the representations, and since $\norm{\cdot}_{\lambda}$ is a norm, we must have $a = 0$. Thus, completing $\C\left[\Gamma\right]$ with respect to $\norm{\cdot}_u$ yields the full (or universal) group $C^{\ast}$-algebra, denoted $C^{\ast}\left(\Gamma\right)$.\newline
+
+The full group $C^{\ast}$-algebra admits a universal property.
+\begin{proposition}
+  Let $\Gamma$ be a discrete group. Given any unitary representation $u\colon \Gamma\rightarrow \mathcal{U}\left(\mathcal{H}\right)$, there is a contractive $\ast$-homomorphism $\pi_u\colon C^{\ast}\left(\Gamma\right)\rightarrow \B\left(\mathcal{H}\right)$ satisfying $\pi_u\left(\delta_s\right) = u(s)$ for every $s\in\Gamma$.
+\end{proposition}
+\begin{proof}
+  We have a representation $\pi_u\colon \C\left[\Gamma\right]\rightarrow \B\left(\mathcal{H}\right)$ that extends $u\colon \Gamma\rightarrow \mathcal{U}\left(\mathcal{H}\right)$. By definition, the universal norm provides $\norm{\pi(a)}_{u} \leq \norm{a}_u$.\newline
+
+  The continuous extension $\pi_u\colon C^{\ast}\left(\Gamma\right)\rightarrow \B\left(\mathcal{H}\right)$ is contractive and a $\ast$-homomorphism.
+\end{proof}
+\end{document}

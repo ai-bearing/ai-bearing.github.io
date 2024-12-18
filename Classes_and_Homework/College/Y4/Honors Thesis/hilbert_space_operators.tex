@@ -10,10 +10,10 @@
 \usepackage{eucal}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \renewcommand*{\hbar}{\hslash}
-\DeclareMathOperator{\hdim}{hdim}
-\DeclareMathOperator{\hDim}{hdim}
-\DeclareMathOperator{\Hdim}{hdim}
-\newcommand{\sa}{\text{s.a.}}
+%\DeclareMathOperator{\hdim}{hdim}
+%\DeclareMathOperator{\hDim}{hdim}
+%\DeclareMathOperator{\Hdim}{hdim}
+%\newcommand{\sa}{\text{s.a.}}
 %\newcommand{\M}{\mathbb{M}}
 \newcommand{\K}{\mathbb{K}}
 \newcommand{\B}{\mathbb{B}}
@@ -1176,7 +1176,7 @@ For uniqueness, we see that if $ \iprod{x}{S_1(y)} = F(x,y) = \iprod{x}{S_2(y)} 
   for all $a\in A$. If $A$ is a Banach $\ast$-algebra that satisfies the $C^{\ast}$-property, then $A$ is called a $C^{\ast}$-algebra.
 \end{definition}
 We can now look at some examples of operators and adjoints.
-\begin{example}
+\begin{example}[Matrices]
   Let $a = \left(a_{ij}\right)_{i,j}\in \Mat_{m,n}\left(\C\right)$, with the linear operator
   \begin{align*}
     T_{a}\colon \ell_{2}^{n}\rightarrow \ell_{2}^{m}
@@ -1191,7 +1191,7 @@ We can now look at some examples of operators and adjoints.
   \end{align*}
   meaning $T_{a}^{\ast} = T_{a^{\ast}}$.
 \end{example}
-\begin{example}
+\begin{example}[Projection and Inclusion into Direct Sum]
   The canonical projection
   \begin{align*}
     \pi_k\colon \bigoplus_{i\in I}\mathcal{H}_i \rightarrow \mathcal{H}_k
@@ -1210,7 +1210,7 @@ We can now look at some examples of operators and adjoints.
   \end{align*}
   are adjoints.
 \end{example}
-\begin{example}
+\begin{example}[Rank-One Operator]
   Let $\mathcal{H}$ and $\mathcal{K}$ be Hilbert spaces. For every pair of nonzero vectors $x\in \mathcal{H}$ and $y\in \mathcal{K}$, we define the rank-one bounded operator $\theta_{x,y}: \mathcal{K}\rightarrow \mathcal{H}$ by $\theta_{x,y}\left(z\right) = \iprod{z}{y}x$.\newline
 
   In physics, $\theta_{x,y} = \ket{x}\bra{y}$.\newline
@@ -1235,6 +1235,62 @@ We can now look at some examples of operators and adjoints.
                                           &= \iprod{z}{ \iprod{u}{x}y }\\
                                           &= \iprod{z}{ \theta_{y,x}\left(u\right) }.
   \end{align*}
+\end{example}
+\begin{example}[Shift Operators]
+  The right shift on $\ell_2$ is defined by $R\left(\xi_1,\xi_2,\dots\right) = \left(0,\xi_1,\xi_2,\dots\right)$.\newline
+
+  The left shift on $\ell_2$ is defined by $L\left(\xi_1,\xi_2,\xi_3,\dots\right) = \left(\xi_2,\xi_3,\dots\right)$.\newline
+
+  We have that $R^{\ast} = L$, as
+  \begin{align*}
+    \iprod{R\left(\xi\right)}{\eta} &= \sum_{n=1}^{\infty}\xi_n \overline{\eta_{n+1}}\\
+                                    &= \iprod{\xi}{L\left(\eta\right)}.
+  \end{align*}
+
+\end{example}
+\begin{example}[Multiplication Operators in $\ell_{\infty}$]
+  Let $\lambda = \left(\lambda_n\right)_n\in \ell_{\infty}$. The map
+  \begin{align*}
+    D_{\lambda}\left(\left(\xi_n\right)_n\right) &= \left(\lambda_n\xi_n\right)_n
+  \end{align*}
+  is well-defined, linear, and bounded, where $\left(\xi_n\right)_n\in \ell_2$. Moreover, $\norm{D_{\lambda}}_{\text{op}} = \norm{\lambda}_{\infty}$.\newline
+
+  We compute its adjoint as follows:
+  \begin{align*}
+    \iprod{D_{\lambda}\left(\xi\right)}{\eta} &= \sum_{n\geq 1}\lambda_n\xi_n \overline{\eta_n}\\
+                                              &= \sum_{n\geq 1}\xi_n \overline{\overline{\lambda_n}\eta_n}\\
+                                              &= \iprod{\xi}{D_{\overline{\lambda}}\left(\eta\right)}.
+  \end{align*}
+  This means that $D\colon \ell_{\infty}\rightarrow \B\left(\ell_2\right)$, defined by $\lambda \mapsto D_{\lambda}$, is an isometric $\ast$-homomorphism. Similarly, $D\colon \ell_{\infty}\left(\Z\right)\rightarrow \B\left(\ell_2\left(\Z\right)\right)$ is an isometric $\ast$-isomorphism.
+\end{example}
+\begin{example}[Multiplication Operators in $L_{\infty}$]
+  Let $\left(\Omega,\mathcal{M},\mu\right)$ be a measure space. For each $f\in L_{\infty}\left(\Omega,\mu\right)$, we define $M_{f}\left(\xi\right) = f\xi$. Note that $\norm{M_f}_{\text{op}} \leq \norm{f}_{\infty}$.\newline
+
+  NWe can compute the adjoint as follows:
+  \begin{align*}
+    \iprod{M_{f}\left(\xi\right)}{\eta} &= \int_{\Omega}^{} M_f\left(\xi\right) \overline{\eta}\:d\mu\\
+                                        &= \int_{\Omega}^{} f\xi \overline{\eta}\:d\mu\\
+                                        &= \int_{\Omega}^{} \xi \overline{\overline{f}\eta}\:d\mu\\
+                                        &= \iprod{\xi}{M_{\overline{f}}\left(\eta\right)}.
+  \end{align*}
+  The map $M\colon L_{\infty}\left(\Omega,\mu\right)\rightarrow \B\left(L_{2}\left(\Omega,\mu\right)\right)$, defined by $f\mapsto M_f$ is a contractive $\ast$-homomorphism.\newline
+
+  If $\left(\Omega,\mathcal{M},\mu\right)$ is semi-finite, then the $\ast$-homomorphism becomes an isometry. Let $f$ be essentially bounded, and let $\ve > 0$. We can find $F_\ve$ measurable with $0 < \mu\left(F_{\ve}\right) < \infty$ such that
+  \begin{align*}
+    F_{\ve} \subseteq \set{x | \left\vert f(x)  \right\vert > \norm{f}_{\infty} - \ve}.
+  \end{align*}
+  Set 
+  \begin{align*}
+    \xi &= \frac{\1_{F_{\ve}}}{\mu\left(F_{\ve}\right)^{1/2}}.
+  \end{align*}
+  This is a unit vector in $L_2\left(\Omega,\mu\right)$. Then,
+  \begin{align*}
+    \norm{M_f}_{\text{op}}^2 &\geq \norm{M_f\left(\xi\right)}^2\\
+                             &= \frac{1}{\mu\left(F_{\ve}\right)} \int_{F_{\ve}}^{} \left\vert f \right\vert^2\:d\mu\\
+                             &\geq \frac{1}{\mu\left(F_{\ve}\right)}\int_{F_{\ve}}^{} \left(\norm{f}_{\infty} - \ve\right)\:d\mu\\
+                             &= \left(\norm{f}_{\infty}- \ve\right)^2.
+  \end{align*}
+  Thus, $\norm{M_f}_{\text{op}} \geq \norm{f}_{\infty} - \ve$ for arbitrary $\ve$, so $\norm{M_f}_{\text{op}} \geq \norm{f}_{\infty}$.
 \end{example}
 
 \subsubsection{Topologies on $\B\left(\mathcal{H}\right)$}%
@@ -3514,7 +3570,7 @@ We may use the notation $x\otimes \overline{y}$ to denote the rank=one bounded o
   Moreover, $\F\left(\mathcal{H}\right)\subseteq \B\left(\mathcal{H}\right)$ is a $\ast$-ideal.
 \end{corollary}
 \begin{proof}
-  We have already shown that $\F\left(\mathcal{H}\right)\subseteq \B\left(\mathcal{H}\right)$ is an algebraic ideal, as $\mathcal{H}$ is a Banach spaces. The only thing we need to show is that $\F\left(\mathcal{H}\right)$ is self-adjoint.\newline
+  We have already shown that $\F\left(\mathcal{H}\right)\subseteq \B\left(\mathcal{H}\right)$ is an algebraic ideal, as $\mathcal{H}$ is a Banach space. The only thing we need to show is that $\F\left(\mathcal{H}\right)$ is self-adjoint.\newline
 
   Let $T$ be finite-rank with $T = \sum_{j=1}^{n}\theta_{x_j,y_j}$. We find
   \begin{align*}
@@ -3626,9 +3682,7 @@ Recall that a diagonalizable operator is able to be written as a SOT-convergent 
   \end{align*}
   Thus, the sequence of partial sums is $\norm{\cdot}_{\text{op}}$-Cauchy, so the infinite series $S = \sum_{n=1}^{\infty}\lambda_nP_n$ converges in $\B\left(\mathcal{H}\right)$.\newline
 
-  Now, we show $S = T$. If $n\geq 1$ and $x\in E_n$, then $T\left(x\right) = \lambda_n x = S\left(x\right)$. If $E_0 \neq \set{0}$, and $x\in E_0$, then $T\left(x\right) = 0 = S\left(x\right)$.\newline
-
-  Since $\mathcal{H} = \bigoplus_{n\geq 0}E_n$, every $x\in \mathcal{H}$ can be written as a norm-convergent series
+  Now, we show $S = T$. If $n\geq 1$ and $x\in E_n$, then $T\left(x\right) = \lambda_n x = S\left(x\right)$. If $E_0 \neq \set{0}$, and $x\in E_0$, then $T\left(x\right) = 0 = S\left(x\right)$. Since $\mathcal{H} = \bigoplus_{n\geq 0}E_n$, every $x\in \mathcal{H}$ can be written as a norm-convergent series
   \begin{align*}
     x &= \sum_{n=0}^{\infty}x_n,
   \end{align*}
@@ -3892,5 +3946,193 @@ We can refine these properties in the case of normal operators.
   \end{align*}
   These approximate eigenvalues belong to the continuous spectrum. To see this, we see that if $\lambda \in \sigma_r\left(L\right)$, then we must have $\overline{\lambda}\in \sigma\left(L^{\ast}\right)$. However, $L^{\ast} = R$, which has no eigenvalues, meaning $\sigma_c\left(L\right) = \mathbb{T}$. Since $\norm{L}_{\text{op}} = 1$, we get the spectrum of $\overline{\mathbb{D}}$, decomposed into $\sigma_p\left(L\right) = \mathbb{D}$ and $\sigma_c\left(L\right) = \mathbb{T}$.
 \end{example}
+\begin{example}[Spectrum of the Right Shift]
+  The right shift operator is defined by
+  \begin{align*}
+    R\left(\xi_1,\xi_2,\xi_3,\dots\right) &= \left(0,\xi_1,\xi_2,\xi_3,\dots\right)
+  \end{align*}
+  for a given $\left(\xi_k\right)_k\in \ell_2$. We will show that the right shift has no eigenvalues.\newline
 
+  Suppose toward contradiction that $R\left(\xi\right) = \lambda \xi$ for some $\xi\neq 0$. Since $R$ is injective, we must have $\lambda \neq 0$. Then, we have
+  \begin{align*}
+    \left(0,\xi_1,\xi_2,\dots\right) &= \left(\lambda \xi_1,\lambda \xi_2,\dots\right),
+  \end{align*}
+  meaning $\lambda \xi_1 =0$. Since $\lambda \neq 0$, we have $\xi_1 = 0$. Similarly, $\xi_2 = \xi_1/\lambda = 0$, etc. Inductively, we have $\xi_n = 0$, meaning $\xi = 0$, which is a contradiction.\newline
+
+  If $\left\vert \lambda \right\vert < 1$, then $\left\vert \overline{\lambda} \right\vert < 1$, so $\overline{\lambda}\in \sigma_p\left(R\right) = \sigma_p\left(R^{\ast}\right)$. Since $R$ has no eigenvalues, we have $\lambda \in \sigma_r\left(R\right)$, so $\mathbb{D}\subseteq \sigma_r\left(R\right)$.\newline
+
+  Since $\sigma\left(R\right)$ is closed, and contains $\mathbb{D}$ as a residual spectrum, it is the case that $\mathbb{T}\subseteq \sigma\left(R\right)$. Let $\lambda \in \mathbb{T}$. If $\lambda\in \sigma_r\left(R\right)$, then we would have $\overline{\lambda}\in \sigma_p\left(L\right)$, which cannot be the case. Thus, $\mathbb{T}\subseteq \sigma_c\left(R\right)$, as $\sigma_p\left(R\right) = \emptyset$.\newline
+
+  Since $\norm{R}_{\text{op}} = 1$, we must have $\sigma\left(R\right)\subseteq \overline{\mathbb{D}}$. Thus, we decompose $\sigma\left(R\right) = \overline{\mathbb{D}}$ by $\sigma_p\left(R\right) = \emptyset$, $\sigma_c\left(R\right) = \mathbb{T}$, and $\sigma_r\left(R\right) = \mathbb{D}$.
+\end{example}
+\begin{example}[Spectrum of the Bilateral Shifts]
+  Consider the left bilateral shift $U\colon \ell_2\left(\Z\right) \rightarrow \ell_2\left(\Z\right)$, given by
+  \begin{align*}
+    U\left(\xi\right)\left(n\right) &= \xi\left(n+1\right).
+  \end{align*}
+  We have proven that $U$ is unitary, meaning it is normal.\newline
+
+  We will show that $U$ has no eigenvalues, meaning $\sigma\left(U\right) = \sigma_c\left(U\right)$. Suppose toward contradiction that $U\left(\xi\right) = \lambda \left(\xi\right)$ for some $0 \neq \xi\in \ell_2\left(\Z\right)$ and scalar $\lambda$. Since $U$ is isometric, we get
+  \begin{align*}
+    \left\vert \lambda \right\vert\norm{\xi} &= \norm{\lambda \xi}\\
+                                             &= \norm{U\left(\xi\right)}\\
+                                             &= \norm{\xi},
+  \end{align*}
+  so $\left\vert \lambda \right\vert = 1$. Writing $\left(\xi_k\right)_{k\in \Z}$, we see that $\lambda \xi_k = \xi_{k+1}$, meaning we get
+  \begin{align*}
+    \lambda^k\xi_0 &= \xi_k.
+  \end{align*}
+  Since $\xi\neq 0$, we must have $\xi_0 \neq 0$, but taking absolute values, we get
+  \begin{align*}
+    \left\vert \xi_0 \right\vert &= \left\vert \lambda \right\vert^k \left\vert \xi_0 \right\vert\\
+                                 &= \left\vert \lambda^k\xi_0 \right\vert\\
+                                 &= \left\vert \xi_k \right\vert\\
+                                 &\rightarrow 0,
+  \end{align*}
+  which is absurd. Thus, $\sigma_p\left(U\right) = \emptyset$.\newline
+
+  Let $\lambda\in \mathbb{T}$, and consider the unit vector
+  \begin{align*}
+    \xi_n &= \frac{1}{\sqrt{2n+1}}\sum_{k=-n}^{n}\lambda^ke_k.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \norm{\left(U - \lambda I\right)\left(\xi_n\right)} &= \norm{\frac{1}{\sqrt{2n+1}}\left(\sum_{k=-n}^{n}\lambda^ke_{k-1} - \sum_{k=-n}^{n}\lambda^{k+1}e_k\right)}\\
+                                                        &= \frac{1}{\sqrt{2n+1}} \norm{\sum_{k=-\left(n+1\right)}^{n+1} \lambda^{k+1}e_k - \sum_{k=-n}^{n}\lambda^{k}e_k}\\
+                                                        &= \frac{1}{\sqrt{2n+1}}\norm{\lambda^{-n}e_{-\left(n+1\right)}- \lambda^{n+1}e_n}\\
+                                                        &\leq \frac{2}{\sqrt{2n+1}}\\
+                                                        &\rightarrow 0.
+  \end{align*}
+  Thus, every such $\lambda$ is an approximate eigenvalue, so $\mathbb{T}\subseteq \sigma_c\left(U\right)$. Since $\norm{U}_{\text{op}} = 1$, we have $\sigma(U) = \mathbb{T}$.\newline
+
+  Similarly, we know that the spectrum of the right bilateral shift, $V$, is $\sigma(V) = \mathbb{T}$.
+\end{example}
+\begin{example}[Spectrum of a Multiplication Operator]
+  Consider $f\in L_{\infty}\left([0,1]\right)$, and let $M_f$ be the corresponding multiplication operator.\newline
+
+  We will soon see that $\sigma\left(M_f\right) = \essran\left(f\right)$.\newline
+
+  Consider $f(x) = x$. Then, the operator $T = M_f$ has no eigenvalues, but a continuum of approximate eigenvalues. If $T\left(\xi\right) = \lambda \xi$ with $0\neq \xi \in L_2\left([0,1]\right)$, for almost every $x\in [0,1]$, we have $x\xi\left(x\right) = \lambda \xi\left(x\right)$, meaning $\left(x - \lambda\right)\xi\left(x\right) = 0$, which means $\xi\left(x\right) = 0$ almost everywhere.\newline
+
+  However, at the same time, every $\lambda\in [0,1]$ is an approximate eigenvalue for $T$. Consider the vectors
+  \begin{align*}
+    f_n &= \sqrt{\frac{n}{2}}\1_{\left(\lambda-1/n,\lambda+1/n\right)}.
+  \end{align*}
+  Then, $\norm{f_n} = 1$, and
+  \begin{align*}
+    \norm{\left(T - \lambda I\right)\left(f_n\right)}^2 &= \int_{0}^{1} \left\vert tf_n\left(t\right) - \lambda f_n\left(t\right) \right\vert\:dt\\
+                                                        &= \sqrt{\frac{n}{2}}\int_{\lambda-1/n}^{\lambda+1/n} \left(t - \lambda\right)^2\:dt\\
+                                                        &= \frac{\sqrt{2n}}{3}\frac{1}{n^2}\\
+                                                        &\rightarrow 0.
+  \end{align*}
+  As a positive operator, $T$ is normal, so we have $\left[0,1\right] \subseteq \sigma_c\left(T\right) = \sigma\left(T\right) \subseteq \left[0,1\right]$, so $\sigma\left(T\right) = \left[0,1\right]$.
+\end{example}
+\subsubsection{Spectral Theorem for Compact Normal Operators}%
+We will prove that every compact normal operator is diagonalizable, and thus is of the form
+\begin{align*}
+  T &= \sum_{n\geq 1}\lambda_nP_n,
+\end{align*}
+where $\lambda_n$ are eigenvalues and $P_n$ are orthogonal projections onto the eigenspace $E_{\lambda_n}$.
+\begin{theorem}
+  Let $T\in \B\left(\mathcal{H}\right)$ be compact normal acting on an infinite-dimensional Hilbert space $\mathcal{H}$. Then, the following are true:
+  \begin{enumerate}[(1)]
+    \item $\sigma\left(T\right) = \set{0}\cup \sigma_p\left(T\right)\subseteq D\left(0,\norm{T}_{\text{op}}\right)$;
+    \item every nonzero $\lambda\in \sigma\left(T\right)$ is isolated;
+    \item $\sigma\left(T\right)$ is countable;
+    \item there is an eigenvalue $\lambda\in \sigma\left(T\right)$ with $\left\vert \lambda \right\vert = \norm{T}_{\text{op}}$;
+    \item either $\sigma\left(T\right)$ is finite, or can be written as a sequence $\left(\lambda_k\right)_{k\geq 1}$, with $\norm{T}_{\text{op}} = \left\vert \lambda_1 \right\vert > \left\vert \lambda_2 \right\vert > \cdots$, converging to $\lambda_0 = 0$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item We have shown that if $T$ is compact, then any $\lambda\in \sigma_{ap}\left(T\right)$ is in $\sigma_p\left(T\right)$, and that $\sigma\left(T\right)\subseteq D\left(0,\norm{T}_{\text{op}}\right)$.
+    \item Suppose toward contradiction that $\left(\lambda_n\right)_n$ is a sequence in $\sigma\left(T\right)$ with $\left(\lambda_n\right)_n\rightarrow z\in \C$ with $z\neq 0$. We may assume all $\lambda_n$ are eigenvalues, so for each $\lambda_n$, let $u_n\in E_{\lambda_n}\left(T\right)$ be of norm $1$. THen, $\left(u_n\right)_n$ forms an orthonormal sequence in $\mathcal{H}$, and $\left(u_n\right)_n\xrightarrow{w}0$. We get that $\left(T\left(u_n\right)\right)_n\xrightarrow{\norm{\cdot}} 0$ since $\mathcal{H}$ is reflexive. Thus, we have
+      \begin{align*}
+        \left\vert z \right\vert &= \lim_{n\rightarrow\infty} \left\vert \lambda_n \right\vert\\
+                                 &= \lim_{n\rightarrow\infty}\norm{\lambda_nu_n}\\
+                                 &= \lim_{n\rightarrow\infty}\norm{T\left(u_n\right)}\\
+                                 &= 0,
+      \end{align*}
+      which is a contradiction.
+    \item Since $T$ is compact, $\overline{\Ran}\left(T\right)$ is a separable Hilbert space. For each distinct $0\neq \lambda\in \sigma_p\left(T\right)$, let $u_\lambda\in E_\lambda\left(T\right)$ be such that $\norm{u_\lambda}= 1$. Then, the family $\set{u_{\lambda} | \lambda\in \sigma_p\left(T\right)}$ is orthonormal.\newline
+
+      We can see that each $u_{\lambda}$ belongs to $\Ran\left(T\right)$, as
+      \begin{align*}
+        u_{\lambda} &= \lambda^{-1}\left(\lambda u_{\lambda}\right)\\
+                    &= T\left(\lambda^{-1}u_{\lambda}\right).
+      \end{align*}
+      Thus, it must be the case that $\sigma_p$ is countable.
+    \item Since $T$ is compact, the restriction $T|_{B_{\mathcal{H}}}\colon \left(B_{\mathcal{H}},w\right)\rightarrow \left(\mathcal{H},\norm{\cdot}\right)$ is continuous. Consider the map
+      \begin{align*}
+        f\colon \left(B_{\mathcal{H}},w\right)\rightarrow [0,\infty)
+      \end{align*}
+      defined by $f\left(x\right) = \left\vert \iprod{T\left(x\right)}{x} \right\vert$. Then, $f$ is continuous. If $\left(x_{i}\right)_{i\in I}\xrightarrow{w} x$ in $B_{\mathcal{H}}$, then
+      \begin{align*}
+        \left\vert f\left(x_i\right)-f\left(x\right) \right\vert &= \left\vert \iprod{T\left(x_i\right)}{x_i} - \iprod{T\left(x\right)}{x} \right\vert\\
+                                                                 &\leq \left\vert \iprod{T\left(x_i\right)}{x_i} - \iprod{T\left(x_i\right)}{x} \right\vert + \left\vert \iprod{T\left(x\right)}{x_i} - \iprod{T\left(x\right)}{x} \right\vert\\
+                                                                 &= \left\vert \iprod{T\left(x_i\right) - T\left(x\right)}{x_i} \right\vert + \left\vert \iprod{T\left(x\right)}{x_i - x} \right\vert\\
+                                                                 &\leq \norm{T\left(x_i\right) - T\left(x\right)} + \left\vert \iprod{T\left(x\right)}{x_i - x} \right\vert\\
+                                                                 &\rightarrow 0.
+      \end{align*}
+      Since $\mathcal{H}$ is reflexive, $B_{\mathcal{H}}$ is compact, so there is $x_0\in B_{\mathcal{H}}$ with
+      \begin{align*}
+        \left\vert \iprod{T\left(x_0\right)}{x_0} \right\vert &= f\left(x_0\right)\\
+                                                              &= \sup_{x\in B_{\mathcal{H}}} f(x)\\
+                                                              &= \sup_{x\in B_{\mathcal{H}}} \left\vert \iprod{T\left(x\right)}{x} \right\vert\\
+                                                              &= \nu\left(T\right).
+      \end{align*}
+      Since $T$ is normal, the numerical radius of $T$ is equal to its operator norm. Thus, we get
+      \begin{align*}
+        \norm{T}_{\text{op}} &= \nu\left(T\right)\\
+                             &= \left\vert \iprod{T\left(x_0\right)}{x_0} \right\vert\\
+                             &\leq \norm{T\left(x_0\right)}\norm{x_0}\\
+                             &\leq \norm{T}_{\text{op}}\norm{x_0}\\
+                             &leq \norm{T}_{\text{op}}.
+      \end{align*}
+      Thus, $\norm{x_0} = 1$, and $ \iprod{T\left(x_0\right)}{x_0} = \norm{T\left(x_0\right)}\norm{x_0} $. Thus, by the reverse Cauchy--Schwarz inequality, we get $T\left(x_0\right) = \lambda x_0$. Thus,
+      \begin{align*}
+        \left\vert \lambda \right\vert &= \left\vert \lambda \right\vert\norm{x_0}^2\\
+                                       &= \left\vert \iprod{\lambda x_0}{x_0} \right\vert\\
+                                       &= \left\vert \iprod{T\left(x_0\right)}{x_0} \right\vert\\
+                                       &= \norm{T}_{\text{op}}.
+      \end{align*}
+      If $\sigma\left(T\right)$ is finite, we are done, so we assume $\sigma\left(T\right)$ is countably infinite.\newline
+
+      For a given $0 < t < \norm{T}_{\text{op}}$, the set $D_t = \set{z | t \leq \left\vert z \right\vert \leq \norm{T}_{\text{op}}}$ is compact, so $D_t\cap \sigma\left(T\right)$ is finite (or else $\sigma\left(T\right)$ would admit a nonzero accumulation point). We also see that $D\left(0,\norm{T}_{\text{op}}\right)$ is compact, and contains $\sigma\left(T\right)$, which is infinite, so we must have $0$ as the sole accumulation point.
+  \end{enumerate}
+\end{proof}
+\begin{theorem}[Spectral Theorem for Compact Normal Operators]
+  Let $T\in \B\left(\mathcal{H}\right)$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $T$ is compact and normal;
+    \item $T$ is compact and diagonalizable.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  In the statement (ii) implies (i), we have shown that all diagonalizable operators are automatically normal.\newline
+
+  In the reverse direction, we let 
+  \begin{align*}
+    \mathcal{E} = \set{E\subseteq \mathcal{H} | E\text{ is an orthonormal set of eigenvectors for }T},
+  \end{align*}
+  ordered by inclusion. Since $\mathcal{E} \neq \emptyset$, and $\bigcup_{i\in I} E_i$ is an upper bound for any chain $\mathcal{C} = \set{E_i}_{i\in I}$, we find there is a maximal element, $E_0$. Set $\mathcal{K} = \overline{\Span}\left(E_0\right)$.\newline
+
+  We claim that $\mathcal{K} = \mathcal{H}$. If $\mathcal{K}\neq \mathcal{H}$, then $\mathcal{K}^{\perp}\neq \set{0}$. We know that $\mathcal{K}$ is invariant under $T$, and since $T$ is normal, $\mathcal{K}$ is invariant under $T^{\ast}$. Thus, $\mathcal{K}^{\perp}$ reduces $T$, so we let $S = T|_{\mathcal{K}^{\perp}}\colon \mathcal{K}^{\perp}\rightarrow \mathcal{K}^{\perp}$ be the restriction to $\mathcal{K}^{\perp}$. We know that $S$ is compact and normal, so there is a unit vector $v\in \mathcal{K}^{\perp}$ and a scalar $\lambda$ with $\left\vert \lambda \right\vert = \norm{S}$ and $S\left(v\right) = \lambda v$. Thus, $E_0\cup \set{v}$ belongs to $\mathcal{E}$, contradicting  maximality.\newline
+
+  Since $E_0$ is orthonormal, and $\Span\left(E_0\right)$ is dense in $\mathcal{H}$, it is the case that $E_0$ is an orthonormal basis consisting of eigenvectors of $T$, so $T$ is diagonalizable.
+\end{proof}
+Now, we can define the $\ell_{\infty}$ functional calculus.
+\begin{theorem}
+  Let $T$ be a compact normal operator on an infinite-dimensional Hilbert space $\mathcal{H}$. We define the map $\varphi_T\colon \ell_{\infty}\left(\sigma\left(T\right)\right)\rightarrow \B\left(\mathcal{H}\right)$ by
+  \begin{align*}
+    \varphi_T\left(f\right) &= \bigoplus_{n\geq 1}f\left(\lambda_n\right)\id_{E_n}.
+  \end{align*}
+  The following are true:
+  \begin{enumerate}[(1)]
+    \item $\varphi_T$ is a unital $\ast$-homomorphism with $\varphi_T\left(p\right) = p\left(T\right)$ for every $p\in \C[x]$;
+    \item $\varphi_T\left(f\right)$ is diagonalizable with $\norm{\varphi_T\left(f\right)}_{\text{op}} = \norm{f}_{\infty}$.
+    \item if $S\in \B\left(\mathcal{H}\right)$ is such that $ST = TS$, then $S\varphi_T\left(f\right) = \varphi_T\left(f\right)S$ for all $f\in \ell_{\infty}\left(\sigma\left(T\right)\right)$.
+    \item $W^{\ast}\left(T\right) = \set{T}'' = \Ran\left(\varphi_T\right)$.
+  \end{enumerate}
+\end{theorem}
 \end{document}
