@@ -14,6 +14,7 @@
 \newcommand{\A}{\mathbb{A}}
 \newcommand{\T}{\mathbb{T}}
 \DeclareMathOperator{\op}{op}
+\newcommand{\GL}{\text{GL}}
 %\newcommand{\sa}{\text{s.a.}}
 
 \pagestyle{fancy} %better headers
@@ -447,6 +448,22 @@ Now, we can learn about morphisms in the category of algebras and $\ast$-algebra
 \begin{corollary}
   If $A$ is an algebra, and $h\in \Omega\left(A\right)$ is a character, then $\ker\left(h\right)\subseteq A$ is a maximal ideal, and $A/\ker\left(h\right)\cong \C$ are isomorphic as algebras.
 \end{corollary}
+\begin{proof}
+  Since $h\neq 0$, and $h\colon A\rightarrow \C$ is a linear functional, it is the case that $\Ran\left(h\right) = \C$.\footnote{Just find $f\in A$ such that $h(f) = k$, then take $1 = h\left(f/k\right)$.} By the first isomorphism theorem, we have $A/\ker\left(h\right) \cong \C$ as algebras. \newline
+
+  Since $\C$ is simple, $A/\ker\left(h\right)$ is simple, so $\ker\left(h\right) \subseteq A$ is a maximal ideal.
+\end{proof}
+There are some algebras that do not admit characters.
+\begin{example}
+  Let $A = \Mat_n\left(\C\right)$ for $n\geq 2$. If $h\colon \Mat_n\left(\C\right)\rightarrow \C$ is a character, then $\ker\left(h\right)\subseteq \Mat_n\left(\C\right)$ is a proper ideal. However, since $\Mat_n\left(\C\right)$ is simple, $\ker\left(h\right) = 0$. However, this means
+  \begin{align*}
+    n^2 &= \Mat_n\left(\C\right)\\
+        &\leq \Dim\left(\C\right)\\
+        &= 1,
+  \end{align*}
+  which is a contradiction. Thus, $\Omega\left(\Mat_n\left(\C\right)\right) = \emptyset$.
+\end{example}
+
 \subsection{Unitization}%
 It is often the case that algebras lack a unit. However, we can create a ``unitized'' version of an algebra $A$, $\widetilde{A}$, such that $A\subseteq \widetilde{A}$ is an essential ideal.
 \begin{definition}
@@ -500,6 +517,13 @@ When we talk about elements of $\widetilde{A}$, we write $\left(a,\alpha\right) 
     \item If $A$ is nonunital, and $h\colon A\rightarrow \C$ is a character on $A$, then $\overline{h}\left(a,\alpha\right) = h(a) + \alpha$ is a character on $\widetilde{A}$ extending $h$.
   \end{enumerate}
 \end{proposition}
+\begin{proof}
+  We will prove (3).
+  \begin{description}[font=\normalfont]
+    \item[(3)] If $h$ is a character on $A$, then $|ker\left(h\right) \neq A$. If it were the case that $\ker\left(\overline{h}\right) = \widetilde{A}$, then since $A\subseteq \widetilde{A}$ is an essential ideal, $\ker\left(h\right) = \ker\left(\overline{h}\right) \cap A = \widetilde{A} \cap A = A$, which is a contradiction. Thus, $\overline{h}$ is a character.
+  \end{description}
+\end{proof}
+
 \begin{proposition}
   Let $X$ be a noncompact LCH space, and let $X_{\infty}$ be the one-point compactification of $X$. There is a unital $\ast$-homomorphism $\varphi\colon \widetilde{C_0}\left(X\right)\rightarrow C\left(X_{\infty}\right)$ that maps $C_0\left(X\right)$ onto the ideal $I = \set{f | f\left(\infty\right) = 0}\subseteq C\left(X_{\infty}\right)$.
 \end{proposition}
@@ -542,6 +566,139 @@ We have seen the character space on $C(X)$ earlier when $X$ is compact Hausdorff
          &= \delta_x(f)
   \end{align*}
   for every $f\in C_0\left(X\right)$, so $\delta$ is onto. Since $C_0\left(X\right)$ separates points, $\delta$ is injective.
+\end{proof}
+We are interested in identifying the character space of a nonunital algebra with a subset of the character space of its unitization. Note that the projection $\pi\colon \widetilde{A}\rightarrow \C$ given by $\left(a,\alpha\right)\mapsto \alpha$ is a character, but $\pi\vert_{A}$ is not a character on $A$. This is indeed the desired character that will extend the character space on $A$.
+\begin{proposition}
+  Let $A$ be a nonunital algebra. The map $\Omega\left(A\right)\rightarrow \Omega\left(\widetilde{A}\right)$, given by $h\mapsto \overline{h}$, is injective. \newline
+
+  Moreover, $\Omega\left(\widetilde{A}\right) = \Omega\left(A\right)\cup \set{\pi}$, where $\pi\colon \widetilde{A}\rightarrow \C$ is given by $\left(a,\alpha\right)\mapsto \alpha$.
+\end{proposition}
+\begin{proof}
+  It is clear from the definition of $\overline{h}$ that $h\mapsto \overline{h}$ is well-defined and injective. Moreover, if $\phi\in \Omega\left(\widetilde{A}\right)$ is such that $h = \phi|_{A}\neq 0$, then $h\in \Omega\left(A\right)$ is such that $\overline{h} = \phi$. Since $\phi$ is unital, we have
+  \begin{align*}
+    \phi\left(a + \alpha 1_{\widetilde{A}}\right) &= \phi\left(a\right) + \alpha\\
+                                                  &= h\left(a\right) + \alpha\\
+                                                  &= \overline{h}\left(a + \alpha 1_{\widetilde{A}}\right).
+  \end{align*}
+  Thus, if $\phi\in \Omega\left(\widetilde{A}\right)$ is such that $\phi|_{A} = 0$, then $\phi = \pi$.
+\end{proof}
+\subsection{Algebraic Spectrum}%
+\begin{definition}
+  Let $A$ be a unital $\F$-algebra. Let $a\in A$.
+  \begin{enumerate}[(1)]
+    \item The resolvent of $a$ is the set
+      \begin{align*}
+        \rho\left(a\right) &= \set{\lambda\in\F | a-\lambda 1_A \in \GL\left(A\right)}.
+      \end{align*}
+    \item The spectrum of $a$ is the complement of the resolvent, $\sigma\left(a\right) = \F\setminus \rho\left(a\right)$.
+  \end{enumerate}
+\end{definition}
+We may refine the definition for the case of a nonunital algebra.
+\begin{definition}
+  Let $A$ be a nonunital algebra, and let $a\in A$. We define
+  \begin{align*}
+    \rho\left(a\right) &= \rho\left(\iota_A\left(a\right)\right),
+  \end{align*}
+  where $\iota_A\colon A\hookrightarrow \widetilde{A}$ is the canonical embedding of $A$ into its unitization. We define $\sigma\left(a\right) = \F\setminus \rho\left(a\right)$.
+\end{definition}
+\begin{exercise}
+  Prove that similar elements in an algebra have the same resolvent.
+\end{exercise}
+\begin{solution}
+  Let $a = zbz^{-1}$ for some $z\in \GL\left(\widetilde{A}\right)$. We will show that $\rho\left(a\right) = \rho\left(a\right)$.\newline
+
+  Let $\lambda\in \rho\left(a\right)$. Then, $a - \lambda 1_A \in \GL\left(A\right)$. Note that since $z\in \GL\left(A\right)$, and $\GL\left(A\right)$ is a group, we have $z\left(a-\lambda 1_A\right) z^{-1}\in \GL\left(A\right)$, so $b - \lambda 1_A\in \GL\left(A\right)$.
+\end{solution}
+\begin{example}
+  If $A = \C$, then for every $z\in \C$, the spectrum $\sigma\left(z \right) = \set{z}$. This is because every non-zero number is invertible.
+\end{example}
+\begin{example}
+  Let $A = \Mat_n\left(\C\right)$. Then, $\lambda$ is an eigenvalue for a matrix $a\in A$ if and only if $a - \lambda I_n$ is not invertible. In this case, we say $\sigma\left(a\right) = \sigma_p\left(a\right)$, the point spectrum of $a$.
+\end{example}
+\begin{example}
+  Let $A = \ell_{\infty}\left(\Omega\right)$. We find
+  \begin{align*}
+    \lambda\in \rho\left(f\right) &\Leftrightarrow f - \lambda \1_{\Omega} \in \GL\left(A\right)\\
+                                  &\Leftrightarrow \inf_{x\in\Omega}\left\vert f(x)-\lambda \right\vert > 0\\
+                                  &\Leftrightarrow \lambda\notin \overline{\Ran}\left(f\right).
+  \end{align*}
+  Thus, $\sigma\left(f\right) = \overline{\Ran}\left(f\right)$.
+\end{example}
+\begin{example}
+  Let $\Omega$ be compact Hausdorff, and let $A = C\left(\Omega\right)$. If $f\in A$, we have
+  \begin{align*}
+    \lambda\in \rho\left(f\right) &\Leftrightarrow f - \lambda \1_{\Omega}\in \GL\left(A\right)\\
+                                  &\Leftrightarrow f(x) - \lambda \neq 0\\
+                                  &\Leftrightarrow \lambda\notin \Ran\left(f\right).
+  \end{align*}
+  Thus, $\sigma\left(f\right) = \Ran\left(f\right)$.\newline
+
+  If $\Omega$ is a noncompact LCH space with one-point compactification $\Omega_{\infty}$, then if $A = C_0\left(\Omega\right)$, we find
+  \begin{align*}
+    \sigma\left(f\right) &= \Ran\left(f\right) \cup \set{0}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Let $A = L_{\infty}\left(\Omega,\mu\right)$, where $\left(\Omega,\mu\right)$ is a measure space. Fix $f\in A$. To understand $\sigma\left(f\right)$, we must understand the essential range of $f$.\newline
+
+  Write $U\left(z,\ve\right)$ for the open disk centered at $z\in \C$ with radius $\ve > 0$. The essential range of $f$ if
+  \begin{align*}
+    \essran\left(f\right) &= \set{\lambda\in \F | \mu\left(f^{-1}\left(U\left(\lambda,\ve\right)\right)\right) > 0,~\forall \ve > 0}.
+  \end{align*}
+  The essential range can also be viewed as the support of the pushforward measure $f_{\ast}\mu$ on $\C$, where $f_{\ast}\mu\left(E\right) = \mu\left(f^{-1}\left(E\right)\right)$ for measurable $E\subseteq \C$.\newline
+
+  A number $\lambda\notin \essran\left(f\right)$ if and only if $f - \lambda 1_A$ is essentially bounded below. Thus, we see that $\lambda\in \rho(f)$ if and only if $\lambda\notin \essran\left(f\right)$. Thus, $\sigma\left(f\right) = \essran\left(f\right)$.
+\end{example}
+\begin{proposition}
+  Let $\varphi\colon A\rightarrow B$ be a unital algebra homomorphism. Then, $\sigma\left(\varphi\left(a\right)\right)\subseteq \sigma\left(a\right)$, with equality if $\varphi$ is bijective.
+\end{proposition}
+\begin{proof}
+  If $\lambda\in \rho\left(a\right)$, then $a - \lambda 1_A \in \GL\left(A\right)$. Thus, $\varphi\left(a\right) - \lambda 1_B\in \GL\left(B\right)$, so $\lambda\in \rho\left(\varphi\left(a\right)\right)$. Thus, $\rho\left(a\right) \subseteq \rho\left(\varphi\left(a\right)\right)$, so $\sigma\left(\varphi\left(a\right)\right)\subseteq \sigma\left(a\right)$.\newline
+
+  If $\varphi$ is bijective, then $\varphi^{-1}\colon B\rightarrow A$ is also a unital homomorphism, meaning
+  \begin{align*}
+    \sigma\left(a\right) &= \sigma\left(\varphi^{-1}\left(\varphi\left(a\right)\right)\right)\\
+                         &\subseteq \sigma\left(\varphi\left(a\right)\right).
+  \end{align*}
+\end{proof}
+\begin{corollary}
+  If $A$ is an algebra, and $h\in \Omega\left(A\right)$, then $h\left(a\right)\in \sigma\left(a\right)$. We have
+  \begin{align*}
+    \set{h\left(a\right) | h\in \Omega\left(A\right)}\subseteq \sigma\left(a\right).
+  \end{align*}
+\end{corollary}
+\begin{proof}
+  Assume $A$ is unital. Taking $B = \C$ in the above proposition, and noting $\sigma\left(z\right) = \set{z}$, we prove the statement.\newline
+
+  If $A$ is nonunital, then $h(a) = \overline{h}\left(\iota_A\left(a\right)\right)$.
+\end{proof}
+\begin{fact}
+  Let $A$ be a unital algebra with $a,b\in A$. Then, $\sigma\left(ab\right)\cup \set{0} = \sigma\left(ba\right)\cup \set{0}$.
+\end{fact}
+\begin{proof}
+  If $\lambda\neq 0$ belongs to $\rho\left(ab\right)$, then $ab - \lambda 1_A \in \GL\left(A\right)$, meaning $\lambda^{-1}ab - 1_{A}\in \GL\left(A\right)$. Thus, $\lambda^{-1}ba - 1_A\in \GL\left(A\right)$, so $ba - \lambda 1_A\in \GL\left(A\right)$, so $\lambda \in \rho\left(ba\right)$. Thus, $\rho\left(ba\right)\setminus\set{0} \subseteq \rho\left(ab\right)\setminus \set{0}$, so, repeating this argument, we get $\rho\left(ba\right)\setminus \set{0} = \rho\left(ab\right)\setminus \set{0}$.
+\end{proof}
+\begin{proposition}[Spectral Mapping]
+  Let $A$ be a unital $\C$-algebra, and let $a\in A$ with $\sigma\left(a\right)\neq \emptyset$. If $p\in \C\left[x\right]$, then $\sigma\left(p(a)\right) = p\left(\sigma(a)\right)$.
+\end{proposition}
+\begin{proof}
+  Splitting $p$, we take
+  \begin{align*}
+    p(z) &= \alpha \prod_{j=1}^{n}\left(z-\alpha_j\right)
+  \end{align*}
+  for $\alpha,\alpha_1,\dots,\alpha_n\in \C$. Then,
+  \begin{align*}
+    p\left(a\right) &= \alpha \prod_{j=1}^{n}\left(a-\alpha_j 1_{A}\right).
+  \end{align*}
+  The factors $a - \alpha_j1_A$ commute, and since $\GL(A)$ is a group, we get
+  \begin{align*}
+    p(a)\in \GL\left(A\right) &\Leftrightarrow a - \alpha_j1_A \in \GL\left(A\right)\\
+                              &\Leftrightarrow \alpha_j\in \rho\left(a\right)\\
+                              &\Leftrightarrow \alpha_j\notin \sigma\left(a\right)\\
+                              &\Leftrightarrow p(z)\neq 0~\forall z\in \sigma\left(A\right)\\
+                              &\Leftrightarrow 0\notin p\left(\sigma\left(a\right)\right).
+  \end{align*}
+  Thus, $p\left(a\right)\notin \GL\left(A\right)$ if and only if $0\in p\left(\sigma\left(a\right)\right)$.
 \end{proof}
 
 \section{Banach and $C^{\ast}$-Algebras}%
@@ -1447,6 +1604,69 @@ We know that if $A$ is nonunital and $L$ is injective, then $\overline{L}$ is in
   \begin{enumerate}[(1)]
     \item If $A$ is nonunital, then $\norm{\cdot}_1$ and $\norm{\cdot}_L$ are equal.
     \item If $A$ is unital, then there is an isometric $\ast$-isomorphism between $A\oplus \C \rightarrow A^1$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We will prove (2).
+  \begin{description}[font=\normalfont]
+    \item[(2)] Consider the $\ast$-isomorphism $A\oplus \C \rightarrow \widetilde{A}$, given by $\left(a,z\right) = a + zp$, where $p = 1_{\widetilde{A}} - 1_{A}$. We only need to show that this is an isometry when $A\oplus \C$ is equipped with the infinity norm and $\widetilde{A}$ is equipped with $\norm{\cdot}_1$.\newline
+
+      Note that
+      \begin{align*}
+        \overline{L}\left(a + zp\right) &= \overline{L}\left(\left(a-z1_{A},z\right)\right)\\
+                                        &= L_{a-z1_A} + z\id_A\\
+                                        &= L_a - z\id_A + z\id_A\\
+                                        &= L_a.
+      \end{align*}
+      Thus,
+      \begin{align*}
+        \norm{a+zp}_1 &= \max\left(\norm{L_a}_{\op},\left\vert z \right\vert\right)\\
+                      &= \max\left(\norm{a},\left\vert z \right\vert\right)\\
+                      &= \norm{\left(a,z\right)}_{\infty}.
+      \end{align*}
+  \end{description}
+\end{proof}
+\subsection{Gelfand Theory}%
+Diving deeper into the theory of $C^{\ast}$-algebras, we are interested in characterizing $C^{\ast}$-algebras, ultimately realizing commutative $C^{\ast}$-algebras as continuous function algebras, and non-commutative $C^{\ast}$-algebras as bounded operators on Hilbert spaces.
+\subsubsection{Properties of the Spectrum}%
+We can create an analytic characterization of invertibility in a Banach algebra.
+\begin{proposition}[Carl Neumann Series]
+  Let $A$ be a unital Banach algebra. If $x\in A$ with $\norm{x} < 1$, then $1_A-x\in \GL\left(A\right)$, and
+  \begin{align*}
+    \left(1_A - x\right)^{-1} &= \sum_{k=0}^{\infty}x^k.
+  \end{align*}
+  Moreover,
+  \begin{align*}
+    \norm{\left(1_A - x\right)^{-1}} \leq \frac{1}{1-\norm{x}}.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Since $A$ is a normed algebra, we have $\norm{x^k} \leq \norm{x}^k$, so
+  \begin{align*}
+    \sum_{k=0}^{\infty}\norm{x^k} &\leq \sum_{k=0}^{\infty}\norm{x}^{\infty}\\
+                                  &= \frac{1}{1-\norm{x}},
+  \end{align*}
+  so the series $\sum_{k=0}^{\infty}x^k$ converges absolutely, hence converges as $A$ is complete. Note that this also means $\lim_{n\rightarrow\infty}x^n = 0$. We compute
+  \begin{align*}
+    \left(1_A - x\right)\left(\sum_{k=0}^{\infty}x^k\right) &= \lim_{n\rightarrow\infty}\left(1_A - x\right)\left(\sum_{k=0}^{n}x^k\right)\\
+                                                            &= \lim_{n\rightarrow\infty}\left(\sum_{k=0}^{n}x^k - \sum_{k=0}^{n}x^{k+1}\right)\\
+                                                            &= \lim_{n\rightarrow\infty}\left(1_A  - x^{n+1}\right)\\
+                                                            &= 1_A.
+  \end{align*}
+  Similarly, $\left(\sum_{k=0}^{\infty}x^k\right)\left(1_A - x\right) = 1_A$.
+\end{proof}
+\begin{corollary}
+  Let $A$ be a unital Banach algebra, and let $a\in A$ with $\norm{1_A - a} < 1$. Then, $a\in \GL\left(A\right)$, and
+  \begin{align*}
+    a^{-1} &= \sum_{k=0}^{\infty}\left(1_A - a\right)^k\\
+    \norm{a^{-1}} &\leq \frac{1}{1-\norm{1_A - a}}.
+  \end{align*}
+\end{corollary}
+\begin{proposition}
+  Let $A$ be a unital Banach algebra.
+  \begin{enumerate}[(1)]
+    \item The group of invertible elements, $\GL\left(A\right)\subseteq A$, is open.
+    \item The inverse map, $i\colon \GL\left(A\right)\rightarrow \GL\left(A\right)$, given by $i\left(a\right) = a^{-1}$, is a homeomorphism.
   \end{enumerate}
 \end{proposition}
 
