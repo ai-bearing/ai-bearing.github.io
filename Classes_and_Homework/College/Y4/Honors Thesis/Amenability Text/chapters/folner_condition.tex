@@ -441,7 +441,7 @@ Owing to the correspondence between invariant states and means, we are now able 
 \begin{proof}
   We define the left shift, $\lambda_1\colon \ell_{\infty}\left(\Z\right) \rightarrow \ell_{\infty}\left(\Z\right)$, by
   \begin{align*}
-    \ell_{\infty}\left(f\right)\left(k\right) &= f\left(k-1\right).
+    \lambda_1\left(f\right)\left(k\right) &= f\left(k-1\right).
   \end{align*}
   This is an action as in Proposition \ref{prop:translation_action}. \newline
 
@@ -560,7 +560,7 @@ Owing to the correspondence between invariant states and means, we are now able 
   All abelian groups are amenable.
 \end{corollary}
 \begin{proof}
-  Every abelian group is the direct union of its finitely generated subgroups.
+  Every abelian group is the direct limit of its finitely generated subgroups.
 \end{proof}
 \begin{corollary}
   All solvable groups are amenable.
@@ -676,8 +676,9 @@ We only need to show that $\norm{\varphi_f} = 1$. We see that
   \left\vert \varphi_f\left(g\right) \right\vert &= \left\vert \sum_{t\in G}g(t)f(t) \right\vert\\
                                                  &\leq \sum_{t\in G}\left\vert g(t) \right\vert\left\vert f(t) \right\vert\\
                                                  &\leq \norm{g}_{\infty}\sum_{t\in G}\left\vert f(t) \right\vert\\
-                                                 &= \norm{g}_{\infty}.
+                                                 &= \norm{g}_{\infty},
 \end{align*}
+so $\norm{\varphi_f} \leq 1$. Since $\varphi_f\left(\1_G\right) = 1$, we must have $\norm{\varphi_f} = 1$.
 \end{proof}
 \begin{proposition}
   There is an action $\lambda\colon G\xrightarrow \Isom\left(\ell_{1}\left(G\right)\right)$ such that $\prob(G)$ is invariant.
@@ -831,6 +832,16 @@ To show that the existence of an approximate mean implies the Følner condition,
   This is known as the layer cake representation for $f$.
 \end{lemma}
 \begin{proof}[Proof of Lemma \ref{lemma:layer_cake_representation}:]
+%  Let $\set{r_1,\dots,r_n}$ be the range of $f$, ordered with $r_1 < r_2 < \cdots < r_n$.\newline
+%
+%  We define $E_{j} = \set{s | f(s) \geq r_j}$ for each $j=1,\dots,n$, and set $c_1 = r_1$, $c_2 = r_2 - r_1$, and $c_j = r_j - r_{j-1}$ for each $j$.\newline
+%
+%  This gives a decomposition of $f$ as
+%  \begin{align*}
+%    f &= \sum_{j=1}^{n}c_j\1_{E_j},
+%  \end{align*}
+%  which is necessarily equal to $f$ at each point by construction.
+%
   We define $F_1 = \supp\left(f\right)$, and take $c_1 = \min\left(\Ran\left(f\right)\right)$. Taking $E_1 = f^{-1}\left(c_1\right)$ (as a set-theoretic inverse), we define $F_2 = F_1\setminus E_1$.\newline
 
   Take $d_1 = \min\left(f\left(F_2\right)\right)$, and define $c_2 = d_1 - c_1$. Then, defining $E_2 = f^{-1}\left(d_1\right)$, $F_3 = F_2 \setminus E_2$, and $d_2 = \min\left(f\left(F_3\right)\right)$, we define $c_3 = d_2 - c_2 - c_1$.\newline
@@ -847,6 +858,10 @@ To show that the existence of an approximate mean implies the Følner condition,
       &= \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
   \end{align*}
 \end{proof}
+\begin{remark}
+  Instead of using this construction where we take set-theoretic inverses and remove ``residual'' sets, there is an alternative method of construction that involves ordering the range as $r_1 < r_2< \cdots < r_n$, and constructing the set $F_k = \set{s | f(s) \geq r_k}$.
+\end{remark}
+
 
 We will use the layer cake decomposition to prove that if $G$ admits an approximate mean, then $G$ satisfies the Følner condition.
 \begin{proposition}
@@ -863,7 +878,36 @@ We will use the layer cake decomposition to prove that if $G$ admits an approxim
   \begin{align*}
     f_N &= \sum_{i=1}^{n}c_i\1_{F_i},
   \end{align*}
-  where $F_1 \supseteq F_2\supseteq \cdots \supseteq F_n$, and $\sum_{i=1}^{n}c_i\left\vert F_i \right\vert = 1$. 
+  where $F_1 \supseteq F_2\supseteq \cdots \supseteq F_n$, and $\sum_{i=1}^{n}c_i\left\vert F_i \right\vert = 1$.\newline
+
+  For a given $1 \leq i \leq n$, for each $s\in S$ and $t\in sF_i\triangle F_i$, we have
+  \begin{align*}
+    f_N\left(t\right) - f_N\left(s^{-1}t\right) &= \begin{cases}
+      c_i & t\in F_i\setminus sF_i\\
+      -c_i & t\in sF_i \setminus F_i
+    \end{cases}.
+  \end{align*}
+  Thus, we see that $\left\vert f_N\left(t\right)-\lambda_s\left(f_N\right)\left(t\right) \right\vert\geq c_i$ on $sF_i\triangle F_i$. Thus, for each $s\in S$,
+  \begin{align*}
+    \sum_{i=1}^{n}c_i\left\vert sF_i \triangle F_i \right\vert &\leq \sum_{t\in S}\left\vert f_N\left(t\right) -  \lambda_s\left(f\right)\left(t\right)\right\vert\\
+                                                               &< \frac{\ve}{\left\vert S \right\vert}\\
+                                                               &= \frac{\ve}{\left\vert S \right\vert} \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    \sum_{s\in S}\sum_{i=1}^{n}c_i\left\vert sF_i\triangle F_i \right\vert &< \frac{\ve}{\left\vert S \right\vert}\sum_{s\in S}\sum_{i=1}^{n}c_i\left\vert F_i \right\vert\\
+                                                                           &= \ve \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
+  \end{align*}
+  Thus, by the pigeonhole principle, there must exist some $1\leq i \leq n$ for which
+  \begin{align*}
+    \sum_{s\in S}c_i\left\vert sF_i\triangle F_i \right\vert < \ve c_i\left\vert F_i \right\vert.
+  \end{align*}
+  Setting $F = F_i$, we find that, for all $s\in S$,
+  \begin{align*}
+    \frac{\left\vert sF\triangle F \right\vert}{\left\vert F \right\vert} &\leq \sum_{s\in S}\frac{\left\vert sF\triangle F \right\vert}{\left\vert F \right\vert}\\
+                                                                          &< \ve.
+  \end{align*}
+  
 \end{proof}
 
 Thus far, we have shown the following to be equivalent for a discrete group $G$:
