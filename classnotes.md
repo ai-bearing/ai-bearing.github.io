@@ -4,17 +4,20 @@ title: "Class Notes"
 permalink: /classnotes.html
 ---
 Here are the class notes I have written up so far.
+## Honors Thesis: Amenability and C*-Algebras
+### [Paradoxical Decompositions and Tarski's Theorem](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/amenability_notes.pdf)
+### [Functional Analysis: Topological Vector Spaces](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/topological_vector_spaces.pdf)
+### [Invariant States and Means on Groups](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/invariant_states.pdf)
+### [Functional Analysis: Hilbert Spaces](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/hilbert_space_operators.pdf)
+#### [Functional Analysis: Banach and C*-Algebras](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/banach_cstar_algebras.pdf)
+## Spring 2025
+### Miscellaneous
+#### [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
 ## Fall 2024
 ### [Mathematical Methods of Physics](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Math Methods/math_methods_notes.pdf)
 ### [Advanced Linear Algebra](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Advanced Linear/advanced_linear_notes.pdf)
 ### [Ordinary Differential Equations](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Ordinary Differential Equations/odes_notes.pdf)
 ### [Set Theory and Foundations of Mathematics](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Set Theory and Foundations/set_theory_and_foundations_notes.pdf)
-### Honors Thesis: Amenability and C*-Algebras
-#### [Paradoxical Decompositions and Tarski's Theorem](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/amenability_notes.pdf)
-#### [Functional Analysis: Topological Vector Spaces](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/topological_vector_spaces.pdf)
-#### [Invariant States and Means on Groups](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/invariant_states.pdf)
-#### [Functional Analysis: Hilbert Spaces](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/hilbert_space_operators.pdf)
-#### [Functional Analysis: Banach and C*-Algebras](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/banach_cstar_algebras.pdf)
 ## Summer Reading
 ### [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)
 ### [Banach Algebras and Operator Theory](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/banach_algebras_operator_theory.pdf)

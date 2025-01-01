@@ -2436,7 +2436,383 @@ C(\Omega(D)) \arrow[r, "\pi"]               & C(\Omega(C))
   Let $A$ and $B$ be $C^{\ast}$-algebras. A $\ast$-homomorphism, $\phi\colon A\rightarrow B$, is injective if and only if it is isometric.
 \end{proposition}
 \begin{proof}
-  We assume $A$, $B$, and $\phi$ are unital. Let $a\in A$, and set $x = a^{\ast}a$. Then, $\phi(x)$ is a normal element in $B$. Set $C = C^{\ast}\left(x,1_A\right)\subseteq A$, and $D = C^{\ast}\left(\phi(x),1_B\right)\subseteq B$, which are unital and commutative $C^{\ast}$-algebras. By continuity, we see that $\phi|_{C}\left(C\right)\subseteq D$.
+  We assume $A$, $B$, and $\phi$ are unital. Let $a\in A$, and set $x = a^{\ast}a$. Then, $\phi(x)$ is a normal element in $B$. Set $C = C^{\ast}\left(x,1_A\right)\subseteq A$, and $D = C^{\ast}\left(\phi(x),1_B\right)\subseteq B$, which are unital and commutative $C^{\ast}$-algebras. By continuity, we see that $\phi|_{C}\left(C\right)\subseteq D$.\newline
+
+  We will use the following commutative diagram to organize the argument.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAGEQBfU9TXfIRQBGclVqMWbACLdeIDNjwEiZYePrNWiDgAoAOvoDyAWxgBzOrvYBKG3L5LBRUeuqapO9geNnLu6TtucRgoc3giUAAzACcIEyQyEBwIJFEJLTZDNAALLAAfAH1gdi4HEFj4pAAmahSkAGZ3SW0QbKxyyoTEJPrEWpAGOgAjGAYABX5lIRAYrHMcnBBmzJ1DSxMTOkLOHmi47vS+pozPNv0NrcLZLgouIA
+\begin{tikzcd}
+C \arrow[r, "\phi|_{C}"] \arrow[d, "\gamma_C"'] & D \arrow[d, "\gamma_D"] \\
+C(\Omega(C)) \arrow[r, "\pi"]                   & C(\Omega(D))           
+\end{tikzcd}
+  \end{center}
+  Here, $\gamma_C$ and $\gamma_D$ are the isometric $\ast$-isomorphic Gelfand maps, and $\pi = \gamma_D\circ \phi|_{C}\circ \gamma_C^{-1}$. Since $\pi$ is an injective unital homomorphism between continuous function spaces, $\pi$ is isometric. We see that
+  \begin{align*}
+    \norm{x} &= \norm{\gamma_C\left(x\right)}\\
+             &= \norm{\pi\left(\gamma_C\left(x\right)\right)}\\
+             &= \norm{\gamma_D\left(\phi\left(x\right)\right)}\\
+             &= \norm{\phi\left(x\right)},
+  \end{align*}
+  so
+  \begin{align*}
+    \norm{a}^2 &= \norm{a^{\ast}a}\\
+               &= \norm{x}\\
+               &= \norm{\phi\left(x\right)}\\
+               &= \norm{\phi\left(a^{\ast}a\right)}\\
+               &= \norm{\phi\left(a\right)^{\ast}\phi\left(a\right)}\\
+               &= \norm{\phi\left(a\right)}^2,
+  \end{align*}
+  meaning $\phi$ is isometric.\newline
+
+  In the non-unital case, we unitize $\phi$ to yield the unital $\ast$-homomorphism $\widetilde{\phi}\colon \widetilde{A}\rightarrow \widetilde{B}$. Since $\phi$ is injective, so is $\widetilde{\phi}$, and $\widetilde{\phi}$ is isometric. Since $\widetilde{\phi}\circ \iota_A = \phi$, and $\iota_A$ is isometric, it follows that $\phi$ is isometric.
 \end{proof}
+We may now consider the Gelfand transform of $\ell_1\left(\Z\right)$ (where multiplication is given by convolution).
+\begin{example}
+  We have identified the character space $\Omega\left(\ell_1\left(\Z\right)\right)$ with $\T$. For a given $z$, the Gelfand transform is
+  \begin{align*}
+    \gamma\left(f\right)\left(h_z\right) &= \hat{f}\left(h_z\right)\\
+                                         &= h_z\left(f\right)\\
+                                         &= \sum_{n\in\Z}f(n)z^n\\
+                                         &\coloneq \hat{f}(z).
+  \end{align*}
+  Recall that if $\varphi\in C\left(\T\right)$, the Fourier transform of $\varphi$ is the function
+  \begin{align*}
+    \check{\varphi}\left(n\right) &= \frac{1}{2\pi}\int_{0}^{2\pi} \varphi\left(e^{it}\right)e^{-int}\:dt.
+  \end{align*}
+  The formal Fourier series of $\varphi$ is the power series
+  \begin{align*}
+    \varphi &\sim \sum_{n\in\Z}\check\varphi\left(n\right)z^n.
+  \end{align*}
+  Suppose $\varphi\in C\left(\T\right)$ with $\varphi= \hat{f}$ for some $f\in\ell_1\left(\Z\right)$. The Fourier coefficient of $\varphi$ is
+  \begin{align*}
+    \check\varphi\left(n\right) &= \frac{1}{2\pi}\int_{0}^{2\pi} \varphi\left(e^{it}\right)e^{-int}\:dt\\
+                                &= \frac{1}{2\pi}\int_{0}^{2\pi} \hat{f}\left(e^{it}\right)e^{-int}\:dt\\
+                                &= \frac{1}{2\pi}\int_{0}^{2\pi} \left(\sum_{k\in\Z}f(k)e^{ikt}\right)e^{-int}\:dt\\
+                                &= \frac{1}{2\pi}\sum_{k\in\Z}f(k) \int_{0}^{2\pi} e^{i\left(k-n\right)t}\:dt\\
+                                &= f(n).
+  \end{align*}
+  Thus, $\check f = \check \varphi = f$ as functions on $\Z$.\newline
+
+  We claim that the range of the Gelfand transform is
+  \begin{align*}
+    C &= \set{\varphi\in C\left(\T\right) | \sum_{n\in\Z}\check\varphi\left(n\right)z^n\text{ converges absolutely on $\T$}}.
+  \end{align*}
+  If $\varphi\in \gamma\left(\ell_1\left(\Z\right)\right)$, then $\varphi=\hat{f}$ for some $f\in\ell_1\left(\Z\right)$, and we computed that $\check\varphi\left(n\right) = f(n)$ for all $n\in\Z$, so $\sum_{n\in\Z}\check\varphi\left(n\right)z^n= \sum_{n\in\Z}f(n)z^n$ converges absolutely for all $z\in\T$.\newline
+
+  Conversely, if the Fourier series of $\varphi$ converges absolutely, then by taking $z = 1$, we get that $\left(\check\varphi\left(n\right)\right)_{n\in\Z}\in\ell_1\left(\Z\right)$. Set $f(n) = \check\varphi\left(n\right)$, and observe
+  \begin{align*}
+    \check f\left(z\right) &= \hat f\left(h_z\right)\\
+                         &= h_z\left(f\right)\\
+                         &= \sum_{n\in \Z}f(n)z^n\\
+                         &= \sum_{n\in\Z}\check\varphi\left(n\right)z^n\\
+                         &= \varphi\left(z\right).
+  \end{align*}
+\end{example}
+\subsubsection{Continuous Functional Calculus}%
+Now, we may use the Gelfand--Naimark theorem to apply continuous functions to elements of $C^{\ast}$-algebras.\newline
+
+Fix a commutative unital Banach algebra $A$. If $a\in A$, we know that the function $\hat{a}\colon \Omega\left(A\right)\rightarrow \sigma\left(a\right)$, given by $\hat{a}\left(h\right) = h\left(a\right)$ is continuous and onto when $\Omega\left(A\right)$ is endowed with the weak* topology. By duality, we get an injective unital $\ast$-homomorphism
+\begin{align*}
+  T_{\hat{a}}\colon C\left(\sigma\left(a\right)\right) \rightarrow C\left(\Omega\left(A\right)\right),
+\end{align*}
+given by $T_{\hat{a}} = f\circ \hat{a}$.\newline
+
+We are interested in the cases where $T_{\hat a}$ is surjective, which requires $\hat{a}$ to be injective.
+\begin{proposition}
+  Let $A$ be a commutative and unital Banach algebra. Let $a\in A$. The map $\hat{a}\colon \Omega\left(A\right)\rightarrow \sigma\left(a\right)$ is injective if any of the following conditions hold:
+  \begin{enumerate}[(i)]
+    \item $A$ is generated by $a$ and $1_A$, 
+      \begin{align*}
+        A &= \overline{\set{p\left(a\right)| p\in \C\left[x\right]}}^{\norm{\cdot}};
+      \end{align*}
+    \item $a\in \GL\left(A\right)$, and $A$ is generated as a Banach algebra by $a$ and $a^{-1}$, that is
+      \begin{align*}
+        A &= \overline{\set{\sum_{n=-N}^{N}c_na^n | N\in\N,c_n\in\C}}^{\norm{\cdot}};
+      \end{align*}
+    \item $A$ is a $C^{\ast}$-algebra generated by $a$ and $1_A$, that is $A = C^{\ast}\left(a,1_A\right)$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item If $\hat{a}\left(h_1\right) = \hat a \left(h_2\right)$, where $h_1,h_2\in \Omega\left(A\right)$, then $h_1\left(a\right) = h_2\left(a\right)$. Since $h_1,h_2$ are multiplicative and linear, we have $h_1\left(p(a)\right) = h_2\left(p(a)\right)$ for all $p\in \C\left[x\right]$. Since $h_1,h_2$ are continuous and agree on a dense subset, $h_1 = h_2$.
+    \item Assuming $h_1,h_2\in\Omega\left(A\right)$ with $h_1\left(a\right) = h_2\left(a\right)$, since $a$ is invertible, we know that $h_i\left(a\right)\neq 0$ and $h_i\left(a^{-1}\right) = h_i\left(a\right)^{-1}$ for each $i$. Thus, $h_1\left(a^{-1}\right) = h_2\left(a^{-1}\right)$. Since characters are multiplicative and linear, we see that $h_1\left(q(a)\right) = h_2\left(q(a)\right)$ for all Laurent polynomials $q(z) = \sum_{n=-N}^{N}c_nz^n$. By continuity, $h_1 = h_2$.
+    \item Characters on a $C^{\ast}$-algebra are always self-adjoint, so if $h_1\left(a\right) = h_2\left(a\right)$, then $\overline{h_1\left(a\right)} = \overline{h_2\left(a\right)}$. Multiplicativity means $h_1\left(w\right) = h_2\left(w\right)$ for all words $w$, and by linearity, $h_1 = h_2$ on $\Span\left(W\right)$. By continuity, $h_1 = h_2 = C^{\ast}\left(a,1_A\right) = \overline{ \Span }\left(W\right)$.
+  \end{enumerate}
+\end{proof}
+\begin{corollary}
+  Let $A$ be a $C^{\ast}$-algebra. Suppose $a\in A$ is normal.
+  \begin{enumerate}[(1)]
+    \item If $A$ is unital, and $C^{\ast}\left(a,1_A\right) = A$, then
+      \begin{align*}
+        T_{\hat{a}}\left(f\right) &= f\circ \hat{a}
+      \end{align*}
+      is a unital isometric $\ast$-isomorphism.
+    \item If $A$ is nonunital, and $C^{\ast}\left(a\right) = A$, then $C^{\ast}\left(a,1_{\widetilde{A}}\right) = \widetilde{A}$, and the unital isometric $\ast$-isomorphism
+      \begin{align*}
+        T_{\hat{a}}\colon C\left(\sigma\left(a\right)\right)\rightarrow C\left(\Omega\left(\widetilde{A}\right)\right)
+      \end{align*}
+      restricts to a $\ast$-isomorphism
+      \begin{align*}
+        \set{f\in C\left(\sigma\left(a\right)\right) | f(0) = 0}\rightarrow C_0\left(\Omega\left(A\right)\right).
+      \end{align*}
+  \end{enumerate}
+\end{corollary}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Since the Gelfand transform $\hat{a}\colon \Omega\left(A\right)\rightarrow \sigma\left(a\right)$ is continuous and onto, $\hat{a}$ is injective, hence a homeomorphism. By duality, $T_{\hat{a}}\colon C\left(\sigma\left(a\right)\right)\rightarrow C\left(\Omega\left(A\right)\right)$ is a unital isometric $\ast$-homomorphism.
+    \item Since $A$ is nonunital, and $\widetilde{A} = C^{\ast}\left(a,1_{\widetilde{A}}\right)$, we have that $0\in\sigma\left(a\right)$, and $\Omega\left(\widetilde{A}\right) = \Omega\left(A\right) \cup \set{\pi}$. We identify $C_0\left(\Omega\left(A\right)\right)$ with the ideal $\set{g\in C\left(\Omega\left(\widetilde{A}\right)\right) | g\left(\pi\right) = 0}\subseteq C\left(\Omega\left(\widetilde{A}\right)\right)$. \newline
+
+      Note that if $f\in C\left(\sigma\left(a\right)\right)$ with $f(0) = 0$, then
+      \begin{align*}
+        T_{\hat{a}}\left(f\right)\left(\pi\right) &= f\circ \hat{a}\left(\pi\right)\\
+                                                  &= f\left(\pi\left(a\right)\right)\\
+                                                  &= f\left(0\right)\\
+                                                  &= 0,
+      \end{align*}
+      so $T_{\hat{a}}\in C_0\left(\Omega\left(A\right)\right)$. Conversely, if $g\left(\pi\right) = 0$ and $g = T_{\hat{a}}\left(f\right)$ for some $f\in C\left(\sigma\left(a\right)q\right)$, then
+      \begin{align*}
+        f\left(0\right) &= f\left(\pi\left(a\right)\right)\\
+                        &= f\circ\hat{a}\left(\pi\right)\\
+                        &= T_{\hat{a}}\left(f\right)\left(\pi\right)\\
+                        &= g\left(\pi\right)\\
+                        &= 0.
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+\begin{definition}[Continuous Functional Calculus]
+  Let $B$ be a unital $C^{\ast}$-algebra, and suppose $a\in B$ is normal. Let $A = C^{\ast}\left(a,1_B\right)$ be the commutative unital $C^{\ast}$-subalgebra $B$ generated by $a$. The functional calculus at $a$ is the isometric $\ast$-isomorphism $\phi_a\colon C\left(\sigma\left(a\right)\right)\rightarrow A$, given by $\phi_a = \gamma_A^{-1}\circ T_{\hat{a}}$.\newline
+
+  We will write $f(a)$ for $\phi_a\left(f\right)$ for $f\in C\left(\sigma\left(a\right)\right)$.
+\end{definition}
+\begin{theorem}[Properties of the Continuous Functional Calculus]
+  Let $B$ be a unital $C^{\ast}$-algebra, and let $a\in B$ be normal. Set $A = C^{\ast}\left(a,1_B\right)$, and let
+  \begin{align*}
+    \phi_a\colon C\left(\sigma\left(a\right)\right)\rightarrow A
+  \end{align*}
+  be the continuous functional calculus. The following hold:
+  \begin{enumerate}[(1)]
+    \item $\phi_a\left(p\right) = p(a)$ for all polynomials $\C\left[x\right]$ --- in particular, $\phi_a\left(\iota\right) = a$ and $\phi_a\left(\1_{\sigma\left(a\right)}\right) = 1_B$, where $\iota\colon \sigma\left(a\right)\rightarrow \C$ is inclusion;
+    \item $\phi_a\left(f\right) = f(a)$ is a normal element in $A$ for every $f\in C\left(\sigma\left(a\right)\right)$;
+    \item $\sigma\left(f\left(a\right)\right) = f\left(\sigma\left(a\right)\right)$ for all $f\in C\left(\sigma\left(a\right)\right)$ (known as spectral mapping);
+    \item if $f\in C\left(\sigma\left(a\right)\right)$ and $g\in C\left(\sigma\left(f\left(a\right)\right)\right)$, then $g\circ f\in C\left(\sigma\left(a\right)\right)$, and $g\left(f\left(a\right)\right) = g\circ f\left(a\right)$;
+    \item if $\pi\colon B\rightarrow C$ is a unital $\ast$-homomorphism between unital $C^{\ast}$-algebras, then
+      \begin{enumerate}[(i)]
+        \item $\sigma\left(\pi\left(a\right)\right)\subseteq \sigma\left(a\right)$;
+        \item $\pi\left(a\right)$ is normal and if $f\in C\left(\sigma\left(a\right)\right)$, then $f\left(\pi\left(a\right)\right) = \pi\left(f\left(a\right)\right)$;
+      \end{enumerate}
+    \item if $0\in \sigma\left(a\right)$ and $f\in C\left(\sigma\left(a\right)\right)$ with $f\left(0\right) = 0$, o4 if $0\notin \sigma\left(a\right)$, then $\phi_a\left(f\right) \in C^{\ast}\left(a\right)$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Since $\phi_a$ is a unital morphism, $\phi_a\left(\1_{\sigma\left(a\right)}\right) = 1_B$. Next, we note that $T_{\hat{a}}\left(\iota\right) = \iota\circ \hat{a} = \hat{a}$, and $\gamma_A^{-1}\left(\hat{a}\right) = a$. Thus, $\phi_a\left(\iota\right) = a$. Since $\phi_a$ is a homomorphism, we see that $\phi_a\left(p\right) = p(a)$.
+    \item The image of any normal element under a $\ast$-homomorphism is normal.
+    \item Since $\phi_a$ is an algebra isomorphism, we know that $\sigma\left(\phi_a\left(f\right)\right) = \sigma\left(f\right)$ for all $f\in C\left(\sigma\left(a\right)\right)$. In particular, we have
+      \begin{align*}
+        \sigma\left(f(a)\right) &= \sigma\left(\phi_a\left(f\right)\right)\\
+                                &= \sigma\left(f\right)\\
+                                &= \Ran\left(f\right)\\
+                                &= f\left(\sigma\left(a\right)\right).
+      \end{align*}
+    \item We note that for any character $h\in \Omega\left(A\right)$ and any continuous $k\in C\left(\sigma\left(a\right)\right)$, that $h\left(k\left(a\right)\right) = k\left(h\left(a\right)\right)$. This follows from the definition of the continuous functional calculus:
+      \begin{align*}
+        h\left(k\left(a\right)\right) &= h\left(\phi_a\left(k\right)\right)\\
+                                      &= \widehat{\phi_a\left(k\right)}\left(h\right)\\
+                                      &= \gamma_A\left(\phi_a\left(k\right)\right)\left(h\right)\\
+                                      &= \left(\gamma_A\circ \phi_a\right)\left(k\right)\left(h\right)\\
+                                      &= T_{\hat{a}}\left(k\right)\left(h\right)\\
+                                      &= k\circ \hat{a}\left(h\right)\\
+                                      &= k\left(h\left(a\right)\right).
+      \end{align*}
+      We know that $f(a)$ is normal, so $f(a)$ admits the continuous functional calculus, $\phi_{f(a)}\colon C\left(\sigma\left(f\left(a\right)\right)\right) \rightarrow C^{\ast}\left(f(a),1_B\right)$. Thus, if $g\colon \sigma\left(f\left(a\right)\right)\rightarrow \C$ is continuous, then $g\left(f\left(a\right)\right) = \phi_{f(a)}(g)$ is a valid expression. Since $\sigma\left(f\left(a\right)\right) = f\left(\sigma\left(a\right)\right)$, we have $g\circ f\colon \sigma\left(a\right)\rightarrow \C$ is well-defined and continuous, defined by $g\circ f\left(a\right) = \phi_a\left(g\circ f\right)$.\newline
+
+      Let $h\in \Omega\left(A\right)$ be arbitrary. Using the above expression with $k = g\circ f$, we get
+      \begin{align*}
+        h\left(g\circ f(a)\right) &= g\circ f\left(h(a)\right).
+      \end{align*}
+      Replacing $a$ with $f(a)$ in the expression $h\left(k\left(a\right)\right) = k\left(h\left(a\right)\right)$, and setting $k = g\in C\left(\sigma\left(f\left(a\right)\right)\right)$, we get
+      \begin{align*}
+        h\left(g\left(f\left(a\right)\right)\right) &= g\left(h\left(f\left(a\right)\right)\right)\\
+                                                    &= g\left(f\left(h\left(a\right)\right)\right)\\
+                                                    &= g\circ f\left(h\left(a\right)\right).
+      \end{align*}
+      Thus, we get $h\left(g\left(f\left(a\right)\right)\right) = h\left(g\circ f\left(a\right)\right)$. Since both $g\circ f(a)$ and $g\left(f\left(a\right)\right)$ belong to $A$, and since characters separate points, we must have $g\circ f\left(a\right) = g\left(f\left(a\right)\right)$.
+    \item Since normal elements are preserved under $\ast$-homomorphisms, we have that $\pi\left(a\right)$ is normal in $C$. The $C^{\ast}$-subalgebra, $A_1 = C^{\ast}\left(\pi\left(a\right),1_C\right)\subseteq C$ is thus unital and commutative. We thus have $\sigma\left(\pi\left(a\right)\right)\subseteq \sigma\left(a\right)$. Dualizing the inclusion map $\iota\colon \sigma\left(\pi\left(a\right)\right)\rightarrow \sigma\left(a\right)$, we get the restriction map $\rho\colon C\left(\sigma\left(a\right)\right)\rightarrow C\left(\sigma\left(\pi\left(a\right)\right)\right)$.\newline
+
+      The unital $\ast$-homomorphism $\pi\colon A\rightarrow A_1$ induces an adjoint map $\pi^{\ast}\colon \Omega\left(A_1\right)\rightarrow \Omega\left(A\right)$, given by $\pi^{\ast}\left(h\right) = h\circ \pi$. Since $\pi^{\ast}$ consists of a character composed with a unital $\ast$-homomorphism, it is also a character. We see that $\pi^{\ast}$ is continuous between these character spaces. If $\left(h_{\alpha}\right)_{\alpha}\rightarrow h$ in $\Omega\left(A_1\right)$, then
+      \begin{align*}
+        \left(h_{\alpha}\right)_{\alpha}\xrightarrow{w^{\ast}}h &\Rightarrow \left(h_{\alpha}\left(z\right)\right)_{\alpha}\rightarrow h\left(z\right)\tag*{$z\in A_1$}\\
+                                                                &\Rightarrow \left(h_{\alpha}\left(\pi\left(x\right)\right)\right)_{\alpha}\rightarrow h\left(\pi\left(x\right)\right) \tag*{$x\in A$}\\
+                                                                &\Rightarrow \left(h_{\alpha}\circ\pi\left(x\right)\right)_{\alpha} \rightarrow h\circ\pi \left(x\right)\\
+                                                                &\Rightarrow \pi^{\ast}\left(h_{\alpha}\right)\xrightarrow{w^{\ast}} \pi^{\ast}\left(h\right).
+      \end{align*}
+      Dualizing $\pi^{\ast}\colon \Omega\left(A_1\right)\rightarrow \Omega\left(A\right)$, we get the unital $\ast$-homomorphism $T_{\pi^{\ast}}\colon C\left(\Omega\left(A\right)\right)\rightarrow C\left(\Omega\left(A_1\right)\right)$. The following diagram expresses the results we have so far.
+      \begin{center}
+        % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAGEAKAHW+wHMAtnU50AlGJABfUuky58hFAEZyVWoxZsuvAPKCY-EQEEJ02SAzY8BIgCY11es1aIQx83OuL7pZeuctN2MAfWVPS3kbJRI-AM1XDh4+LCERXjQsUQlJGS8FWxU4pwTtZP1DEzCzKXUYKH54IlAAMwAnCEEkMhAcCCRlPJB2zoHqPqQ7IZGuxAde-sQAZmmO2Z6JxAAWVdHt8cWAVl3Zw4OkFYsZsYWkY4opIA
+\begin{tikzcd}
+C\left(\sigma(a)\right) \arrow[r] \arrow[d] & C\left(\Omega(A)\right) \arrow[r] \arrow[d] & A \arrow[d] \\
+C\left(\sigma\left(\pi\left(a\right)\right)\right) \arrow[r]      & C\left(\Omega\left(A_1\right)\right) \arrow[r]         & A_1        
+\end{tikzcd}
+      \end{center}
+      Here, the top row expresses the continuous functional calculus on $a$, and the bottom row is the continuous functional calculus on $\pi(a)$. We claim that both squares in this diagram commute.\newline
+
+      For $f\in C\left(\sigma\left(a\right)\right)$ and $h\in \Omega\left(A_1\right)$, we have
+      \begin{align*}
+        T_{\pi^{\ast}}\circ T_{\hat{a}}\left(f\right)\left(h\right) &= T_{\pi^{\ast}}\left(f\circ \hat{a}\right)\left(h\right)\\
+                                                                    &= f\circ\hat{a}\circ\pi^{\ast}\left(h\right)\\
+                                                                    &= f\circ\hat{a}\circ\left(h\circ\pi\right)\\
+                                                                    &= f\left(h\left(\pi\left(a\right)\right)\right)\\
+                                                                    &= f\circ \widehat{\pi\left(a\right)}\left(h\right)\\
+                                                                    &= T_{\widehat{\pi\left(a\right)}}\circ \rho\left(f\right)\left(h\right),
+      \end{align*}
+      so the left square commutes. For the right square, it is enough to verify that $\gamma_{A_1}\circ\pi = T_{\pi^{\ast}}\circ \gamma_A$. We have
+      \begin{align*}
+        \gamma_{A_1}\circ\pi = G_{\pi^{\ast}}\circ\gamma_A &\Leftrightarrow \gamma_{A_1}\circ\pi \left(a\right) = T_{\pi^{\ast}}\circ \gamma_A\left(a\right)\\
+                                                           &\Leftrightarrow \widehat{\pi\left(a\right)} = \hat{a}\circ \pi^{\ast}\\
+                                                           &\Leftrightarrow \widehat{\pi\left(a\right)}\left(h\right) = \hat{a}\circ\pi^{\ast}\left(h\right)\\
+                                                           &\Leftrightarrow h\left(\pi\left(a\right)\right) = \hat{a}\left(h\circ\pi\right)\\
+                                                           &\Leftrightarrow h\left(\pi\left(a\right)\right) = h\left(\pi\left(a\right)\right).
+      \end{align*}
+      Since the above diagram commutes, we have $\phi_{\pi\left(a\right)}\circ\rho = \pi\circ \phi_{a}$.\newline
+
+      If $f\in C\left(\sigma\left(a\right)\right)$, then
+      \begin{align*}
+        f\left(\pi\left(a\right)\right) &= \phi_{\pi\left(a\right)}\circ \rho\left(f\right)\\
+                                        &= \pi\circ \phi_a\left(f\right)\\
+                                        &= \pi\left(f\left(a\right)\right).
+      \end{align*}
+    \item We may uniformly approximate $f$ by a sequence of functions $p_n\colon \sigma\left(a\right)\rightarrow \C$, where each $p_n$ is of the form
+      \begin{align*}
+        p_n\left(z\right) &= \sum_{k,l=1}^{m}c_{k,l}z^k\overline{z}^{l},
+      \end{align*}
+      with no constant term. For each $n\geq 1$, we see that $p_n\left(a\right)\in C^{\ast}\left(a\right)$, as each $p_n$ contains no constant term. Using the result from (1), and the fact that each $\phi_{a}$ is continuous, we get
+      \begin{align*}
+        \phi_a\left(f\right) &= \phi_a\left(\lim_{n\rightarrow\infty}p_n\right)\\
+                             &= \lim_{n\rightarrow\infty}\phi_a\left(p_n\right)\\
+                             &= \lim_{n\rightarrow\infty}p_n\left(a\right)\\
+                             &\in C^{\ast}\left(a\right).
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+When we want to carry out the continuous functional calculus in non-unital algebras, we need a slightly modified approach. If $B$ is nonunital and $a\in B$ is normal, then $\phi_a\colon C\left(\sigma\left(a\right)\right)\rightarrow C^{\ast}\left(a,1_{\widetilde{B}}\right)$ is our continuous functional calculus. Note that $0\in\sigma\left(a\right)$, so $\phi_a\left(f\right)\in C^{\ast}\left(a\right)$ if $f\in C\left(\sigma\left(a\right)\right)$ with $f(0) = 0$.
+\begin{corollary}
+  If $B$ is a $C^{\ast}$-algebra, and $a$ is normal, then there is an isometric $\ast$-isomorphism
+  \begin{align*}
+    \psi_a\colon C_0\left(\sigma\left(a\right)\setminus \set{0}\right) \rightarrow C^{\ast}\left(a\right)
+  \end{align*}
+  that satisfies $\psi_a\left(\iota\right) = a$, where $\iota\colon \sigma\left(a\right)\setminus \set{0}\rightarrow \C$ is inclusion.
+\end{corollary}
+\begin{proof}
+  If $0\notin \sigma\left(a\right)$, then we set $\psi_a = \phi_a$, and apply the previous theorem.\newline
+
+  Suppose $0\in\sigma\left(a\right)$. We identify
+  \begin{align*}
+    C_0\left(\sigma\left(a\right)\setminus \set{0}\right) = \set{f\in C\left(\sigma\left(a\right)\right) | f(0) = 0}.
+  \end{align*}
+  We restrict $\psi_a = \phi_a|_{C_0\left(\sigma\left(a\right)\setminus{0}\right)}$, and apply the previous theorem.
+\end{proof}
+We can provide an alternative proof of a previous result.
+\begin{proposition}
+  Let $\pi\colon A\rightarrow B$ be a $\ast$-homomorphism between $C^{\ast}$-algebras.
+  \begin{enumerate}[(1)]
+    \item If $a\in A$ is normal and $\pi$ is injective, then $\sigma\left(\pi\left(a\right)\right) = \sigma\left(a\right)$.
+    \item The map $\pi$ is injective if and only if it is isometric.
+  \end{enumerate}
+\end{proposition}
+\begin{proof} We assume that $A,B,\pi$ are unital.
+  \begin{enumerate}[(1)]
+    \item We already know that $\sigma\left(\pi\left(a\right)\right)\subseteq \sigma\left(a\right)$.\newline
+
+      Suppose the inclusion is not strict. By Urysohn's lemma, we may find a nonzero $f\in C\left(\sigma\left(a\right)\right)$ such that $f\vert_{\sigma\left(\pi\left(a\right)\right)} = 0$. If $\phi_a\colon C\left(\sigma\left(a\right)\right)\rightarrow C^{\ast}\left(1,a\right)$ is the continuous functional calculus at $a$, then $\phi_a\left(f\right) = f(a)\neq 0$.\newline
+
+      Since $\pi$ is injective, we get $0 \neq \pi\left(f\left(a\right)\right) = f\left(\pi\left(a\right)\right) = 0$, which is a contradiction.
+    \item It is clear that isometric maps are injective.\newline
+
+      Suppose $\pi$ is injective. Let $x\in A$, and set $a = x^{\ast}x$. Since $a$ is normal, $\sigma\left(a\right) = \sigma\left(\pi\left(a\right)\right)$, hence $r\left(a\right) = r\left(\pi\left(a\right)\right)$. Thus, we have
+      \begin{align*}
+        \norm{\pi\left(a\right)} &= r\left(\pi\left(a\right)\right)\\
+                                 &= r\left(a\right)\\
+                                 &= \norm{a}.
+      \end{align*}
+      Thus, via the $C^{\ast}$ identity, we get
+      \begin{align*}
+        \norm{x}^2 &= \norm{x^{\ast}x}\\
+                   &= \norm{a}\\
+                   &= \norm{\pi(a)}\\
+                   &= \norm{\pi\left(x^{\ast}x\right)}\\
+                   &= \norm{\pi\left(x\right)^{\ast}\pi\left(x\right)}\\
+                   &= \norm{\pi\left(x\right)}^2.
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+We are interested in understanding the spectra of elements in $C^{\ast}$-algebras through the functional calculus.
+\begin{proposition}
+  Let $B$ be a $C^{\ast}$-algebra, and let $a\in B$ be normal. The following hold:
+  \begin{enumerate}[(1)]
+    \item $a\in B_{\sa}$ if and only if $\sigma\left(a\right)\subseteq \R$;
+    \item $a\in \mathcal{P}\left(B\right)$ if and only if $\sigma\left(a\right)\subseteq \set{0,1}$;
+    \item if $B$ is unital, then $a\in \mathcal{U}\left(B\right)$ if and only if $\sigma\left(a\right)\subseteq \T$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  If $B$ is not unital, we unitize and consider the calculus $\phi_a\colon C\left(\sigma\left(a\right)\right)\rightarrow C^{\ast}\left(a,1_{\widetilde{B}}\right)$, recalling that $\sigma\left(a\right) = \sigma_{\widetilde{B}}(a)$. We assume $B$ is unital, and let $f = \id_{\sigma\left(a\right)}$.
+  \begin{enumerate}[(1)]
+    \item Since $\phi_a$ is injective, self-adjoint, and since $\phi_a\left(f\right) = a$, we have
+      \begin{align*}
+        a^{\ast} = a &\Leftrightarrow \phi_a\left(f\right) = \phi_a\left(f\right)^{\ast}\\
+                     &\Leftrightarrow \phi_a\left(f\right) = \phi_a\left(f^{\ast}\right)\\
+                     &\Leftrightarrow f = f^{\ast}\\
+                     &\Leftrightarrow f\left(\lambda\right) = \overline{f\left(\lambda\right)}\\
+                     &\Leftrightarrow \lambda = \overline{\lambda}\\
+                     &\Leftrightarrow \sigma\left(a\right)\subseteq \R.
+      \end{align*}
+    \item Similarly,
+      \begin{align*}
+        a = a^2 &\Leftrightarrow \phi_a\left(f\right) = \phi_a\left(f\right)^2\\
+                &\Leftrightarrow \phi_a\left(f\right) = \phi_a\left(f^2\right)\\
+                &\Leftrightarrow f = f^2\\
+                &\Leftrightarrow f\left(\lambda\right) = f\left(\lambda\right)^2\\
+                &\Leftrightarrow \lambda = \lambda^2\\
+                &\Leftrightarrow \sigma\left(a\right)\subseteq \set{0,1}.
+      \end{align*}
+    \item Since $\phi_a$ is unital, we have
+      \begin{align*}
+        a^{\ast}a = 1_{B} &\Leftrightarrow \phi_a\left(f\right)^{\ast}\phi_a\left(f\right) = \phi_a\left(\1_{\sigma\left(a\right)}\right)\\
+                          &\Leftrightarrow \phi_a\left(f^{\ast}f\right) = \phi_a\left(\1_{\sigma\left(a\right)}\right)\\
+                          &\Leftrightarrow f^{\ast}f = \1_{\sigma\left(a\right)}\\
+                          &\Leftrightarrow \overline{f\left(\lambda\right)}f\left(\lambda\right) = 1\\
+                          &\Leftrightarrow \left\vert \lambda \right\vert^2 =1\\
+                          &\Leftrightarrow \left\vert \lambda \right\vert\in 1\\
+                          &\Leftrightarrow \sigma\left(a\right) \subseteq \T.
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+An important fact is that in any unital algebra, the inverse of an invertible element $a\in \GL\left(A\right)$ can be obtained using the functional calculus.
+\begin{fact}
+  Let $A$ be a unital $C^{\ast}$-algebra. Suppose $a\in A$ is normal and invertible. Then, $a^{-1} = g(a)$, where $g(z) = z^{-1}$. Moreover,
+  \begin{align*}
+    \sigma\left(a^{-1}\right) &= \set{z^{-1} | z\in\sigma\left(a\right)}.
+  \end{align*}
+\end{fact}
+\begin{proof}
+  Since $a$ is invertible, $0\notin \sigma\left(a\right)$, so $g$ is defined and continuous on $\sigma\left(a\right)$. Then, where $\iota\colon \sigma\left(a\right)\hookrightarrow \C$ is inclusion, we have
+  \begin{align*}
+    \phi_a\left(g\right)a &= \phi_a\left(g\right)\phi_a\left(\iota\right)\\
+                          &= \phi_a\left(g\iota\right)\\
+                          &= \phi_a\left(\1_{\sigma\left(a\right)}\right)\\
+                          &= 1_A.
+  \end{align*}
+  Similarly, $a\phi_a\left(g\right) = 1_A$. Since inverses are unique, we have $a^{-1} = \phi_a\left(g\right)$.
+\end{proof}
+\begin{exercise}
+  Let $A$ be a unital $C^{\ast}$-algebra, and suppose $a\in A$ is normal and invertible. Prove that $a^{-1}\in C^{\ast}\left(a\right)$, and $C^{\ast}\left(a\right) = C^{\ast}\left(a,1_A\right)$.
+\end{exercise}
+\begin{solution}
+  We only need to show the first statement, as the second statement follows directly.\newline
+
+  Note that we have an isometric $\ast$-isomorphism $\psi_a\colon C_0\left(\sigma\left(a\right)\setminus \set{0}\right)\rightarrow C^{\ast}\left(a\right)$. Since $\sigma\left(a\right)\setminus \set{0} = \sigma\left(a\right)$, and $\sigma\left(a\right)$ is compact, we must have an isometric $\ast$-isomorphism between $C\left(\sigma\left(a\right)\right)$ and $C^{\ast}\left(a\right)$.\newline
+
+  Since $0\notin \sigma\left(a\right)$, we have $g(z) = z^{-1}\in C\left(\sigma\left(a\right)\right)$, so $a^{-1}\in C^{\ast}\left(a\right)$.
+\end{solution}
 
 \end{document}
