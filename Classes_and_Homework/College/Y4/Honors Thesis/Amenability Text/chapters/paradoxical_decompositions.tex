@@ -1,216 +1,218 @@
-The primary goal of this section will be to introduce the idea of a paradoxical decomposition (and its effects on the analytic properties of $\R^3$) through the Banach--Tarski Paradox. The ultimate goal is to prove the following statement.
+The primary goal of this section will be to introduce the idea of a paradoxical decomposition (and its effects on the analytic properties of $\R^3$) through the Banach--Tarski Paradox.
 \begin{restatable}[General Banach--Tarski Paradox]{proposition}{banachtarski}
   If $A$ and $B$ are bounded subsets of $\R^3$ with nonempty interior, 
   there is a partition of $A$ into finitely many disjoint subsets 
   such that a sequence of isometries applied to these subsets yields $B$.
 \label{prop:banachtarski}
 \end{restatable}
-The existence of the Banach--Tarski paradox throws a wrench into a major idea that we may have about subsets of $\R^3$ --- namely, that they always have some ``volume'' to them that is invariant under isometry, similar to how ``area'' in $\R^2$ is invariant under isometry.
-\section{Essentials of Group Actions}
-We begin by discussing some of the basic properties of group actions.
-\begin{definition}[Group Action]
-  Let $G$ be a group, and $A$ be a set. A left group action of $G$ onto $A$ is a map $\alpha\colon G\times A\rightarrow A$ that satisfies
-  \begin{itemize}
-    \item $\alpha\left(g_1,\left(g_2,a\right)\right) = \alpha\left(g_1g_2,a\right)$ for all $g_1,g_2\in G$ and $a\in A$;
-    \item $\alpha\left(e_G,a\right) = a$ for all $a\in A$.
-  \end{itemize}
-  For the sake of brevity, we write $\alpha \left(g,a\right) = g\cdot a$.
-\end{definition}
-Every group action can be represented by a permutation on $A$.
-\begin{definition}[Permutation Representation]
-  For each $g$, the map $\sigma_g\colon A\rightarrow A$ defined by $\sigma_g\left(a\right) = g\cdot a$ is a permutation of $A$. There is a homomorphism associated to these actions, $\varphi\colon G\rightarrow \operatorname{Sym}(A)$, where $\operatorname{Sym}(A)$ is the symmetric group on the elements of $A$.
-\end{definition}
-The permutation representation can run in the opposite direction in the following sense --- given a nonempty set $A$ and a homomorphism $\psi\colon G\rightarrow \sym(A)$, we can take $g\cdot a = \psi(g)(a)$, where $\psi(g) = \sigma_g\in \sym(A)$ is a permutation.\newline
+The Banach--Tarski paradox throws a wrench into a common belief that we have about $\R^3$ --- specifically, that every subset of $\R^3$ has a \textit{finitely additive} ``volume'' that is invariant under isometry.\footnote{Note that if we desire countable additivity, the axiom of choice shows that there does not exist a countably additive measure on $P\left(\R\right)$ that is also translation-invariant. Finite additivity is a weaker condition than countable additivity that allows for the existence of well-behaved measures on $P\left(\R\right)$ and $P\left(\R^2\right)$, but even this fails in $\R^3$ and above.} Later, we will see that this property \textit{does} exist for $\R$ and $\R^2$, as we will show that their isometry groups are abelian, and (as we will see in Chapter 5) thus contain a property known as amenability.\newline
 
-Just as we can pass group actions into permutation representations, and discuss ideas like the kernel of homomorphisms, we can also discuss the kernel of an action.
-\begin{definition}[Kernel]
-  The {kernel} of the action of $G$ on $A$ is the set of elements in $g$ that act trivially on $A$:
-  \begin{align*}
-    \set{g\in G\mid \forall a\in A,~g\cdot a = a}.
-  \end{align*}
-  The kernel of the group action is the kernel of the permutation representation $\varphi\colon G\rightarrow \sym(A)$.
-\end{definition}
-\begin{definition}[Stabilizer]
-  For each $a\in A$, we define the {stabilizer} of $a$ under $G$ to be the set of elements in $G$ that fix $a$:
-  \begin{align*}
-    G_a &= \set{g\in G\mid g\cdot a = a}.
-  \end{align*}
-\end{definition}
-\begin{remark}
-The kernel of the group action is the intersection of the stabilizers of every element of $A$.\newline
-
-For each $a\in A$, $G_{a}$ is a subgroup of $G$.
-\end{remark}
-\begin{definition}[Faithful Action]
-  An action is {faithful} if the kernel of the action is the identity, $e_G$. Equivalently, the permutation representation $\varphi\colon G\rightarrow \sym(A)$ is injective.
-\end{definition}
-The following definition will be useful in the future as we dig deeper into the idea of paradoxical groups.
-\begin{definition}[Free Action]
-For a set $X$ with $G$ acting on $X$, the action of $G$ on $X$ is free if, for every $x\in X$, $g\cdot x = x$ if and only if $g = e_G$.
-\end{definition}
-The most important theorem relating to group actions is the orbit-stabilizer theorem. As we prove the following theorem, we will reveal the definition of an orbit as a type of equivalence class.
-\begin{theorem}[Orbit-Stabilizer Theorem]
-  Let $G$ be a group that acts on a nonempty set $A$. We define a relation $a\sim b$ if and only if $a = g\cdot b$ for some $g\in G$. This is an equivalence relation, with the number of elements in $\left[a\right]_{\sim}$ found by taking the index of the stabilizer of $a$ in $G$, $\left\vert G:G_a \right\vert$.
-\end{theorem}
-\begin{proof}
-  We start by seeing that $a\sim a$, as $e_G\cdot a = a$. Similarly, if $a\sim b$, then there exists $g\in G$ such that $a = g\cdot b$. Thus,
-  \begin{align*}
-    g^{-1}\cdot a &= g^{-1}\cdot \left(g\cdot b\right)\\
-                  &= g^{-1}g\cdot b\\
-                  &= e\cdot b\\
-                  &= b,
-  \end{align*}
-  meaning that $b\sim a$. Finally, if we have $a\sim b$ and $b\sim c$, we have $a = g\cdot b$ and $b = h\cdot c$ for some $g,h\in G$. Therefore,
-  \begin{align*}
-    a &= g\cdot \left(h\cdot c\right)\\
-      &= \left(gh\right)\cdot c,
-  \end{align*}
-  meaning $a\sim c$. Thus, the relation $\sim$ is reflexive, symmetric, and transitive, so it is an equivalence relation.\newline
-
-  We claim there is a bijection between the left cosets of $G_a$ and the elements of $\left[a\right]_{\sim}$.\newline
-
-  Define $C_a = \set{g\cdot a\mid g\in G}$, which is the set of elements in the equivalence class of $a$. Define the map $g\cdot a \mapsto gG_a$. Since $g\cdot a$ is always an element of $C_a$, this map is surjective. Additionally, since $g\cdot a = h\cdot a$ if and only if $\left(h^{-1}g\right)\cdot a = a$, we have $h^{-1}g \in G_a$, which is only true if $gG_a = hG_a$. Thus, the map is injective.\newline
-
-  Since there is a one to one map between the equivalence classes of $a$ under the action of $G$, and the number of left cosets of $G_a$, we know that the number of equivalence classes of $a$ under the action of $G$ is $\left\vert G:G_a \right\vert$.
-\end{proof}
-\begin{definition}[Orbit]
-  Let $G$ act on $A$, and let $a\in A$. The {orbit} of $a$ under $G$ is the set
-\begin{align*}
-  G\cdot a &= \set{g\cdot a\in A\mid g\in G}
-\end{align*}
-\end{definition}
-\section{Free Groups, Free Products, and the Ping Pong Lemma}%
-A fundamental fact that we will use to show the general Banach--Tarski is the fact that the group of isometries on $\R^3$ (also known as the Euclidean group $\text{E}(3)$) contains a copy of the free group on two generators. We will need to understand some basic facts about free groups to deepen our understanding. This understanding will evolve into the fundamental result of this section --- the Ping Pong Lemma.
-\subsection{Essentials of Free Groups}%
-\begin{definition}
-  Let $G$ be a group, and $S\subseteq G$ be a subset. We define the subgroup {generated by} $S$ to be
-  \begin{align*}
-    \left\langle S \right\rangle_{G} &= \bigcap \set{H | S\subseteq H,~H\text{ a subgroup}}.
-  \end{align*}
-  We say $S$ generates $G$ if $\left\langle S \right\rangle_{G} = G$.\newline
-
-  Generated subgroups can be broadly characterized as follows:
-  \begin{align*}
-    \left\langle S \right\rangle_{G} &= \set{s_1^{a_1}s_2^{a_2}\cdots s_n^{a_n} | n\in\N,~s_1,\dots,s_n\in S,~a_1,\dots,a_n\in \set{-1,1}}.
-  \end{align*}
-  We say $\left\langle S \right\rangle_{G}$ is finitely generated if $\Card(S) < \infty$.
-\end{definition}
-There are two major ways we can conceive of the free group. One way (used in \cite{loh_geometric_group_theory}) characterizes the free group directly through the universal property --- the traditional definition of the free group is then shown to satisfy the universal property.\newline
-
-We will not be using this method, though, instead we will be using the construction in \cite{delaHarpe_topics_in_geometric_group_theory}. For the sake of completeness, we will state the universal property here before moving towards the more detailed exposition.
-\begin{definition}
-  Let $S$ be a set. A group $F$ containing $S$ is said to be freely generated if, for every group $G$, and every map $\phi\colon S\rightarrow G$, there is a unique group homomorphism $\varphi\colon F\rightarrow G$ that extends $\varphi$. The following diagram, where $\iota$ denotes the inclusion of $S$ into $F$, commutes:
-  \begin{center}
-\begin{tikzcd}
-S \arrow[d, "\iota"', hook] \arrow[r, "\phi"] & G \\
-F \arrow[ru, "\varphi"']                      &  
-\end{tikzcd}
-  \end{center}
-We say $F$ is the {free group} generated by $S$.
-\end{definition}
-To start the construction of the free group, we begin by defining the free \textit{monoid}, which will them become a free product, of which the free group is a special example.
-\begin{definition}[Free Monoid]
-  A {monoid} is a set with multiplication that is associative and contains a neutral element.\newline
-
-  Given a set $A$, the free monoid on $A$ is the set $W(A)$ of all finite sequences of elements of $A$. We write an element $W(A)$ as $w = a_1a_2\cdots a_n$, with $a_j\in A$ For each $j$. We identify $A$ with the subset $W(A)$ of words with length $1$.\newline
-
-  The operation on $W(A)$ is concatenation.
-\end{definition}
-
-\begin{definition}
-  Let $\set{\Gamma_i}_{i\in I}$ be a family of groups. Set $A = \coprod_{i\in I}\Gamma_i = \set{\left(g_i,i\right) | g_i\in \Gamma_i,~i\in I}$ to be the coproduct of the family $\set{\Gamma_i}_{i\in I}$.\newline
-
-  Let $\sim$ be the equivalence relation generated by
-  \begin{align*}
-    we_iw' &\sim ww'\\
-    wabw' &\sim wcw',
-  \end{align*}
-  for all $w,w'\in W(A)$, where $e_i\in \Gamma_i$ is the neutral element, and $a,b,c\in \Gamma_i$ with $ab = c$ for some $i\in I$.\newline
-
-  The quotient $W(A) / \sim$ with the operation of concatenation is a group, known as the {free product} of the groups $\set{\Gamma_i}_{i\in I}$. We write it as
-  \begin{align*}
-    \bigstar_{i\in I}\Gamma_i.
-  \end{align*}
-  The inverse of the equivalence class for $w = a_1a_2\cdots a_n$ is $w^{-1} = a_{n}^{-1}a_{n-1}^{-1}\cdots a_{1}^{-1}$. The neutral element is $\epsilon$, denoting the empty word.\newline
-
-  A word $w = a_1a_2\cdots a_n\in W(A)$ with $a_j\in \Gamma_{i_j}$ is said to be {reduced} if $i_{j + 1}\neq i_j$ and $a_j \neq e_{i_j}$ for each $j$.\label{def:free_product}
-\end{definition}
-It is the case that free products exist.
-\begin{proposition}
-  Let $\set{\Gamma_i}_{i\in I}$ be a family of groups, with $A = \coprod_{i\in I}\Gamma_i$, and $\bigstar_{i\in I}\Gamma_i = W(A) / \sim$ as in Definition \ref{def:free_product}.\newline
-
-  Then, any element in $\bigstar_{i\in I}\Gamma_i$ is represented by a unique reduced word in $W(A)$.\label{prop:reduced_words}
-\end{proposition}
-\begin{proof}
-  We start by showing existence. Consider an integer $n \geq 0$ and a reduced word $w = a_1a_2\cdots a_n$ in $W(A)$, an element $a\in A$, and the word $aw \in W(A)$.\newline
-
-  If $k$ is the index for which $a_1\in \Gamma_k$, we set
-  \begin{align*}
-    \mathcal{R}\left(aw\right) &= \begin{cases}
-      w & a = e_i\\
-      aa_1a_2\cdots a_n & a\in \Gamma_i,~a\neq e_i,~i\neq k\\
-      ba_2\cdots a_n & a\in \Gamma_k,aa_1 = b\neq e_k\\
-      a_2\cdots a_n & a\in \Gamma_k, a = a_1^{-1} \in \Gamma_k.
-    \end{cases}
-  \end{align*}
-  Then, $\mathcal{R}\left(aw\right)$ is another reduced word, and $\mathcal{R}\left(aw\right) \sim aw$ by our construction, meaning that any word $w\in W(A)$ is equivalent to some reduced word by inducting on the length of $w$.\newline
-
-  Now, we show uniqueness. For each $a\in A$, let $T\left(a\right) $ be the map $ w\xmapsto{T(a)} \mathcal{R}\left(aw\right)$, which is a self-map on the set of reduced words. For each $w = b_1b_2\cdots b_n$, we set $T(w) = T\left(b_1\right)T\left(b_2\right)\cdots T\left(b_n\right)$. For $a,b,c\in \Gamma_i$ with $ab = c$, we have $T\left(a\right)T\left(b\right) = T\left(c\right)$, and $T\left(e_i\right) = \epsilon$ for all $i\in I$.\newline
-
-  If $w$ is a reduced word, notice that $T\left(w\right)\left(\epsilon\right) = w$.\newline
-
-  Let $w$ be some word in $W(A)$ with $w_1,w_2$ being reduced words equivalent to $w$ under the equivalence relation $\sim$. Since $w_1\sim w_2$, we have $T\left(w_1\right) = T\left(w_2\right)$, and
-  \begin{align*}
-    w_1 &= T\left(w_1\right)\left(\epsilon\right)\\
-        &= T\left(w_2\right)\left(\epsilon\right)\\
-        &= w_2.
-  \end{align*}
-  Since $w_1 = w_2$, it is the case that the reduced representations of any word $w\in W(A)$ are unique.
-\end{proof}
-\begin{corollary}
-  If $\set{\Gamma_i}_{i\in I}$ and $\Gamma = \bigstar_{i\in I}\Gamma_i$ are as in Definition \ref{def:free_product}, then for each $i_0\in I$, the canonical inclusion
-  \begin{align*}
-    \iota\colon \Gamma_{i_0}\hookrightarrow \Gamma,
-  \end{align*}
-  where an element $a\in \Gamma_{i_0}$ maps to its one-letter reduced word representation in $\Gamma$, is injective.
-\end{corollary}
-\begin{proof}
-  For any $a\in \Gamma_{i_0}\setminus \set{e_{i_0}}$, the one-letter reduced word representation $\iota(a)$ is unique, and not equivalent to the empty word, meaning $\ker\left(\iota\right) = \set{e_{i_0}}$, so $\iota$ is injective.
-\end{proof}
-
-We can now define the free group as a special type of free product.
-\begin{definition}
-  Let $X$ be a set. The {free group} over $X$ is the free product of the (formal) infinite cyclic groups generated by elements $a\in X$:
-  \begin{align*}
-    F(X) &= \bigstar_{a\in X}\left\langle a \right\rangle.
-  \end{align*}
-  As the free product is in one-to-one correspondence with the collection of reduced words over a collection $\set{\Gamma_i}_{i\in I}$, it is also the case that $F(X)$ is the collection of reduced words with the ``alphabet'' in $X\sqcup X^{-1}$.\newline
-
-  Given a free group $F(X)$, its rank is equal to $\left\vert X \right\vert$.\label{def:free_group_as_product}
-\end{definition}
-We can now state and prove a universal property for free products of groups, which we will then apply to the case of the free group.
-\begin{theorem}[Universal Property for Free Products]
-  Let $\Gamma$ be a group, and let $\set{\Gamma_{i}}_{i\in I}$ be a family of groups. Let $\set{h_i\colon \Gamma_i\rightarrow \Gamma}_{i\in I}$ be a family of homomorphisms.\newline
-
-  Then, there exists a unique homomorphism $h\colon \bigstar_{i\in I}\Gamma_i \rightarrow \Gamma$ that extends each $h_{i_{0}}$. The following diagram commutes:
-  \begin{center}
-    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12BxOgW17oB9YFkHEAviHGl0mXPkIoAjOSq1GLNpx786UmSAzY8BImSVr6zVog7sARlgDmcHHQBOwrJyxgABACS4tp8Al6S4mowUE7wRKAAZu4QvEhkIDgQSABM1Ax09jAMAApyJoog7s4AFjgg1Faatj4QbvqJyamI6ZlIKurWbNVeYhEGSSk51L2I-fmFJWUKbFVOtfUDTSDVUhTiQA
-\begin{tikzcd}
-\Gamma_{i_0} \arrow[d, "\iota"'] \arrow[r, "h_{i_0}"] & \Gamma \\
-\bigstar_{i\in I}\Gamma_{i} \arrow[ru, "h"']          &       
-\end{tikzcd}
-  \end{center}
-  In particular, if $\Gamma$ is a group, and $\phi\colon X\rightarrow \Gamma$ is a set map, there exists a unique homomorphism $\Phi\colon F(X)\rightarrow \Gamma$ such that $\Phi(x) = \phi(x)$ for each $x\in X$.
-\end{theorem}
-\begin{proof}
-  For a reduced word $a_1a_2\cdots a_n\in \bigstar_{i\in I}\Gamma_i$, where $a_j\in \Gamma_{i_j}\setminus \set{e_{i_j}}$, and $i_{j+1} \neq i_j$ for each $j$, we set
-  \begin{align*}
-    h\left(w\right) &= h_{i_1}\left(a_1\right)h_{i_2}\left(a_2\right)\cdots h_{i_n}\left(a_n\right),
-  \end{align*}
-  which defines $h$ uniquely in terms of the homomorphisms $h_{i}$.
-\end{proof}
-\subsection{The Ping Pong Lemma}%
-If we are given an arbitrary group, we may be curious as to whether or not the group (or a subgroup of it) is freely generated. The Ping Pong Lemma allows us to ascertain various sufficient conditions that yield a free group.
+To develop paradoxical decompositions, we will begin by developing and proving the Ping Pong Lemma, which will allow us to find freely generated subgroups of linear groups. This will allow us to show that the group of isometries of $\R^3$ is paradoxical, which will enable us to prove the Banach--Tarski paradox.
+%\section{Essentials of Group Actions}
+%We begin by discussing some of the basic properties of group actions.
+%\begin{definition}[Group Action]
+%  Let $G$ be a group, and $A$ be a set. A left group action of $G$ onto $A$ is a map $\alpha\colon G\times A\rightarrow A$ that satisfies
+%  \begin{itemize}
+%    \item $\alpha\left(g_1,\left(g_2,a\right)\right) = \alpha\left(g_1g_2,a\right)$ for all $g_1,g_2\in G$ and $a\in A$;
+%    \item $\alpha\left(e_G,a\right) = a$ for all $a\in A$.
+%  \end{itemize}
+%  For the sake of brevity, we write $\alpha \left(g,a\right) = g\cdot a$.
+%\end{definition}
+%Every group action can be represented by a permutation on $A$.
+%\begin{definition}[Permutation Representation]
+%  For each $g$, the map $\sigma_g\colon A\rightarrow A$ defined by $\sigma_g\left(a\right) = g\cdot a$ is a permutation of $A$. There is a homomorphism associated to these actions, $\varphi\colon G\rightarrow \operatorname{Sym}(A)$, where $\operatorname{Sym}(A)$ is the symmetric group on the elements of $A$.
+%\end{definition}
+%The permutation representation can run in the opposite direction in the following sense --- given a nonempty set $A$ and a homomorphism $\psi\colon G\rightarrow \sym(A)$, we can take $g\cdot a = \psi(g)(a)$, where $\psi(g) = \sigma_g\in \sym(A)$ is a permutation.\newline
+%
+%Just as we can pass group actions into permutation representations, and discuss ideas like the kernel of homomorphisms, we can also discuss the kernel of an action.
+%\begin{definition}[Kernel]
+%  The {kernel} of the action of $G$ on $A$ is the set of elements in $g$ that act trivially on $A$:
+%  \begin{align*}
+%    \set{g\in G\mid \forall a\in A,~g\cdot a = a}.
+%  \end{align*}
+%  The kernel of the group action is the kernel of the permutation representation $\varphi\colon G\rightarrow \sym(A)$.
+%\end{definition}
+%\begin{definition}[Stabilizer]
+%  For each $a\in A$, we define the {stabilizer} of $a$ under $G$ to be the set of elements in $G$ that fix $a$:
+%  \begin{align*}
+%    G_a &= \set{g\in G\mid g\cdot a = a}.
+%  \end{align*}
+%\end{definition}
+%\begin{remark}
+%The kernel of the group action is the intersection of the stabilizers of every element of $A$.\newline
+%
+%For each $a\in A$, $G_{a}$ is a subgroup of $G$.
+%\end{remark}
+%\begin{definition}[Faithful Action]
+%  An action is {faithful} if the kernel of the action is the identity, $e_G$. Equivalently, the permutation representation $\varphi\colon G\rightarrow \sym(A)$ is injective.
+%\end{definition}
+%The following definition will be useful in the future as we dig deeper into the idea of paradoxical groups.
+%\begin{definition}[Free Action]
+%For a set $X$ with $G$ acting on $X$, the action of $G$ on $X$ is free if, for every $x\in X$, $g\cdot x = x$ if and only if $g = e_G$.
+%\end{definition}
+%The most important theorem relating to group actions is the orbit-stabilizer theorem. As we prove the following theorem, we will reveal the definition of an orbit as a type of equivalence class.
+%\begin{theorem}[Orbit-Stabilizer Theorem]
+%  Let $G$ be a group that acts on a nonempty set $A$. We define a relation $a\sim b$ if and only if $a = g\cdot b$ for some $g\in G$. This is an equivalence relation, with the number of elements in $\left[a\right]_{\sim}$ found by taking the index of the stabilizer of $a$ in $G$, $\left\vert G:G_a \right\vert$.
+%\end{theorem}
+%\begin{proof}
+%  We start by seeing that $a\sim a$, as $e_G\cdot a = a$. Similarly, if $a\sim b$, then there exists $g\in G$ such that $a = g\cdot b$. Thus,
+%  \begin{align*}
+%    g^{-1}\cdot a &= g^{-1}\cdot \left(g\cdot b\right)\\
+%                  &= g^{-1}g\cdot b\\
+%                  &= e\cdot b\\
+%                  &= b,
+%  \end{align*}
+%  meaning that $b\sim a$. Finally, if we have $a\sim b$ and $b\sim c$, we have $a = g\cdot b$ and $b = h\cdot c$ for some $g,h\in G$. Therefore,
+%  \begin{align*}
+%    a &= g\cdot \left(h\cdot c\right)\\
+%      &= \left(gh\right)\cdot c,
+%  \end{align*}
+%  meaning $a\sim c$. Thus, the relation $\sim$ is reflexive, symmetric, and transitive, so it is an equivalence relation.\newline
+%
+%  We claim there is a bijection between the left cosets of $G_a$ and the elements of $\left[a\right]_{\sim}$.\newline
+%
+%  Define $C_a = \set{g\cdot a\mid g\in G}$, which is the set of elements in the equivalence class of $a$. Define the map $g\cdot a \mapsto gG_a$. Since $g\cdot a$ is always an element of $C_a$, this map is surjective. Additionally, since $g\cdot a = h\cdot a$ if and only if $\left(h^{-1}g\right)\cdot a = a$, we have $h^{-1}g \in G_a$, which is only true if $gG_a = hG_a$. Thus, the map is injective.\newline
+%
+%  Since there is a one to one map between the equivalence classes of $a$ under the action of $G$, and the number of left cosets of $G_a$, we know that the number of equivalence classes of $a$ under the action of $G$ is $\left\vert G:G_a \right\vert$.
+%\end{proof}
+%\begin{definition}[Orbit]
+%  Let $G$ act on $A$, and let $a\in A$. The {orbit} of $a$ under $G$ is the set
+%\begin{align*}
+%  G\cdot a &= \set{g\cdot a\in A\mid g\in G}
+%\end{align*}
+%\end{definition}
+%\section{Free Groups, Free Products, and the Ping Pong Lemma}%
+%A fundamental fact that we will use to show the general Banach--Tarski is the fact that the group of isometries on $\R^3$ (also known as the Euclidean group $\text{E}(3)$) contains a copy of the free group on two generators. We will need to understand some basic facts about free groups to deepen our understanding. This understanding will evolve into the fundamental result of this section --- the Ping Pong Lemma.
+%\subsection{Essentials of Free Groups}%
+%\begin{definition}
+%  Let $G$ be a group, and $S\subseteq G$ be a subset. We define the subgroup {generated by} $S$ to be
+%  \begin{align*}
+%    \left\langle S \right\rangle_{G} &= \bigcap \set{H | S\subseteq H,~H\text{ a subgroup}}.
+%  \end{align*}
+%  We say $S$ generates $G$ if $\left\langle S \right\rangle_{G} = G$.\newline
+%
+%  Generated subgroups can be broadly characterized as follows:
+%  \begin{align*}
+%    \left\langle S \right\rangle_{G} &= \set{s_1^{a_1}s_2^{a_2}\cdots s_n^{a_n} | n\in\N,~s_1,\dots,s_n\in S,~a_1,\dots,a_n\in \set{-1,1}}.
+%  \end{align*}
+%  We say $\left\langle S \right\rangle_{G}$ is finitely generated if $\Card(S) < \infty$.
+%\end{definition}
+%There are two major ways we can conceive of the free group. One way (used in \cite{loh_geometric_group_theory}) characterizes the free group directly through the universal property --- the traditional definition of the free group is then shown to satisfy the universal property.\newline
+%
+%We will not be using this method, though, instead we will be using the construction in \cite{delaHarpe_topics_in_geometric_group_theory}. For the sake of completeness, we will state the universal property here before moving towards the more detailed exposition.
+%\begin{definition}
+%  Let $S$ be a set. A group $F$ containing $S$ is said to be freely generated if, for every group $G$, and every map $\phi\colon S\rightarrow G$, there is a unique group homomorphism $\varphi\colon F\rightarrow G$ that extends $\varphi$. The following diagram, where $\iota$ denotes the inclusion of $S$ into $F$, commutes:
+%  \begin{center}
+%\begin{tikzcd}
+%S \arrow[d, "\iota"', hook] \arrow[r, "\phi"] & G \\
+%F \arrow[ru, "\varphi"']                      &  
+%\end{tikzcd}
+%  \end{center}
+%We say $F$ is the {free group} generated by $S$.
+%\end{definition}
+%To start the construction of the free group, we begin by defining the free \textit{monoid}, which will them become a free product, of which the free group is a special example.
+%\begin{definition}[Free Monoid]
+%  A {monoid} is a set with multiplication that is associative and contains a neutral element.\newline
+%
+%  Given a set $A$, the free monoid on $A$ is the set $W(A)$ of all finite sequences of elements of $A$. We write an element $W(A)$ as $w = a_1a_2\cdots a_n$, with $a_j\in A$ For each $j$. We identify $A$ with the subset $W(A)$ of words with length $1$.\newline
+%
+%  The operation on $W(A)$ is concatenation.
+%\end{definition}
+%
+%\begin{definition}
+%  Let $\set{\Gamma_i}_{i\in I}$ be a family of groups. Set $A = \coprod_{i\in I}\Gamma_i = \set{\left(g_i,i\right) | g_i\in \Gamma_i,~i\in I}$ to be the coproduct of the family $\set{\Gamma_i}_{i\in I}$.\newline
+%
+%  Let $\sim$ be the equivalence relation generated by
+%  \begin{align*}
+%    we_iw' &\sim ww'\\
+%    wabw' &\sim wcw',
+%  \end{align*}
+%  for all $w,w'\in W(A)$, where $e_i\in \Gamma_i$ is the neutral element, and $a,b,c\in \Gamma_i$ with $ab = c$ for some $i\in I$.\newline
+%
+%  The quotient $W(A) / \sim$ with the operation of concatenation is a group, known as the {free product} of the groups $\set{\Gamma_i}_{i\in I}$. We write it as
+%  \begin{align*}
+%    \bigstar_{i\in I}\Gamma_i.
+%  \end{align*}
+%  The inverse of the equivalence class for $w = a_1a_2\cdots a_n$ is $w^{-1} = a_{n}^{-1}a_{n-1}^{-1}\cdots a_{1}^{-1}$. The neutral element is $\epsilon$, denoting the empty word.\newline
+%
+%  A word $w = a_1a_2\cdots a_n\in W(A)$ with $a_j\in \Gamma_{i_j}$ is said to be {reduced} if $i_{j + 1}\neq i_j$ and $a_j \neq e_{i_j}$ for each $j$.\label{def:free_product}
+%\end{definition}
+%It is the case that free products exist.
+%\begin{proposition}
+%  Let $\set{\Gamma_i}_{i\in I}$ be a family of groups, with $A = \coprod_{i\in I}\Gamma_i$, and $\bigstar_{i\in I}\Gamma_i = W(A) / \sim$ as in Definition \ref{def:free_product}.\newline
+%
+%  Then, any element in $\bigstar_{i\in I}\Gamma_i$ is represented by a unique reduced word in $W(A)$.\label{prop:reduced_words}
+%\end{proposition}
+%\begin{proof}
+%  We start by showing existence. Consider an integer $n \geq 0$ and a reduced word $w = a_1a_2\cdots a_n$ in $W(A)$, an element $a\in A$, and the word $aw \in W(A)$.\newline
+%
+%  If $k$ is the index for which $a_1\in \Gamma_k$, we set
+%  \begin{align*}
+%    \mathcal{R}\left(aw\right) &= \begin{cases}
+%      w & a = e_i\\
+%      aa_1a_2\cdots a_n & a\in \Gamma_i,~a\neq e_i,~i\neq k\\
+%      ba_2\cdots a_n & a\in \Gamma_k,aa_1 = b\neq e_k\\
+%      a_2\cdots a_n & a\in \Gamma_k, a = a_1^{-1} \in \Gamma_k.
+%    \end{cases}
+%  \end{align*}
+%  Then, $\mathcal{R}\left(aw\right)$ is another reduced word, and $\mathcal{R}\left(aw\right) \sim aw$ by our construction, meaning that any word $w\in W(A)$ is equivalent to some reduced word by inducting on the length of $w$.\newline
+%
+%  Now, we show uniqueness. For each $a\in A$, let $T\left(a\right) $ be the map $ w\xmapsto{T(a)} \mathcal{R}\left(aw\right)$, which is a self-map on the set of reduced words. For each $w = b_1b_2\cdots b_n$, we set $T(w) = T\left(b_1\right)T\left(b_2\right)\cdots T\left(b_n\right)$. For $a,b,c\in \Gamma_i$ with $ab = c$, we have $T\left(a\right)T\left(b\right) = T\left(c\right)$, and $T\left(e_i\right) = \epsilon$ for all $i\in I$.\newline
+%
+%  If $w$ is a reduced word, notice that $T\left(w\right)\left(\epsilon\right) = w$.\newline
+%
+%  Let $w$ be some word in $W(A)$ with $w_1,w_2$ being reduced words equivalent to $w$ under the equivalence relation $\sim$. Since $w_1\sim w_2$, we have $T\left(w_1\right) = T\left(w_2\right)$, and
+%  \begin{align*}
+%    w_1 &= T\left(w_1\right)\left(\epsilon\right)\\
+%        &= T\left(w_2\right)\left(\epsilon\right)\\
+%        &= w_2.
+%  \end{align*}
+%  Since $w_1 = w_2$, it is the case that the reduced representations of any word $w\in W(A)$ are unique.
+%\end{proof}
+%\begin{corollary}
+%  If $\set{\Gamma_i}_{i\in I}$ and $\Gamma = \bigstar_{i\in I}\Gamma_i$ are as in Definition \ref{def:free_product}, then for each $i_0\in I$, the canonical inclusion
+%  \begin{align*}
+%    \iota\colon \Gamma_{i_0}\hookrightarrow \Gamma,
+%  \end{align*}
+%  where an element $a\in \Gamma_{i_0}$ maps to its one-letter reduced word representation in $\Gamma$, is injective.
+%\end{corollary}
+%\begin{proof}
+%  For any $a\in \Gamma_{i_0}\setminus \set{e_{i_0}}$, the one-letter reduced word representation $\iota(a)$ is unique, and not equivalent to the empty word, meaning $\ker\left(\iota\right) = \set{e_{i_0}}$, so $\iota$ is injective.
+%\end{proof}
+%
+%We can now define the free group as a special type of free product.
+%\begin{definition}
+%  Let $X$ be a set. The {free group} over $X$ is the free product of the (formal) infinite cyclic groups generated by elements $a\in X$:
+%  \begin{align*}
+%    F(X) &= \bigstar_{a\in X}\left\langle a \right\rangle.
+%  \end{align*}
+%  As the free product is in one-to-one correspondence with the collection of reduced words over a collection $\set{\Gamma_i}_{i\in I}$, it is also the case that $F(X)$ is the collection of reduced words with the ``alphabet'' in $X\sqcup X^{-1}$.\newline
+%
+%  Given a free group $F(X)$, its rank is equal to $\left\vert X \right\vert$.\label{def:free_group_as_product}
+%\end{definition}
+%We can now state and prove a universal property for free products of groups, which we will then apply to the case of the free group.
+%\begin{theorem}[Universal Property for Free Products]
+%  Let $\Gamma$ be a group, and let $\set{\Gamma_{i}}_{i\in I}$ be a family of groups. Let $\set{h_i\colon \Gamma_i\rightarrow \Gamma}_{i\in I}$ be a family of homomorphisms.\newline
+%
+%  Then, there exists a unique homomorphism $h\colon \bigstar_{i\in I}\Gamma_i \rightarrow \Gamma$ that extends each $h_{i_{0}}$. The following diagram commutes:
+%  \begin{center}
+%    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAB12BxOgW17oB9YFkHEAviHGl0mXPkIoAjOSq1GLNpx786UmSAzY8BImSVr6zVog7sARlgDmcHHQBOwrJyxgABACS4tp8Al6S4mowUE7wRKAAZu4QvEhkIDgQSABM1Ax09jAMAApyJoog7s4AFjgg1Faatj4QbvqJyamI6ZlIKurWbNVeYhEGSSk51L2I-fmFJWUKbFVOtfUDTSDVUhTiQA
+%\begin{tikzcd}
+%\Gamma_{i_0} \arrow[d, "\iota"'] \arrow[r, "h_{i_0}"] & \Gamma \\
+%\bigstar_{i\in I}\Gamma_{i} \arrow[ru, "h"']          &       
+%\end{tikzcd}
+%  \end{center}
+%  In particular, if $\Gamma$ is a group, and $\phi\colon X\rightarrow \Gamma$ is a set map, there exists a unique homomorphism $\Phi\colon F(X)\rightarrow \Gamma$ such that $\Phi(x) = \phi(x)$ for each $x\in X$.
+%\end{theorem}
+%\begin{proof}
+%  For a reduced word $a_1a_2\cdots a_n\in \bigstar_{i\in I}\Gamma_i$, where $a_j\in \Gamma_{i_j}\setminus \set{e_{i_j}}$, and $i_{j+1} \neq i_j$ for each $j$, we set
+%  \begin{align*}
+%    h\left(w\right) &= h_{i_1}\left(a_1\right)h_{i_2}\left(a_2\right)\cdots h_{i_n}\left(a_n\right),
+%  \end{align*}
+%  which defines $h$ uniquely in terms of the homomorphisms $h_{i}$.
+%\end{proof}
+\section{The Ping Pong Lemma}%
+To move towards paradoxical decompositions, we need to find a simple and easily applicable criterion for knowing when an arbitrary group contains a freely generated subgroup. This is the domain of the Ping Pong Lemma, which we will prove in this section to show the existence of a freely generated subgroup of $\text{SO}(3)$. Later, this freely generated subgroup will be indispensable in proving the Banach--Tarski paradox.
 \begin{theorem}[Ping Pong Lemma]
   Let $G$ be a group that acts on a set $X$, and let $\Gamma_1,\Gamma_2$ be subgroups of $G$. Let $\Gamma = \left\langle \Gamma_1,\Gamma_2 \right\rangle$. Assume $\Gamma_1$ contains at least $3$ elements, and $\Gamma_2$ contains at least $2$ elements.\newline
 
@@ -319,7 +321,7 @@ In terms of an isometry of $\R^3$, the group $\text{SO}(3)$ denotes the set of a
   Thus, by Theorem \ref{thm:ping_pong} and Corollary \ref{corollary:ping_pong_doubles}, it is the case that $\left\langle a,b \right\rangle\cong F(a,b)$.
 \end{proof}
 
-\section{Paradoxical Decompositions in $\R^3$}%
+\section{Introducing Paradoxical Decompositions}%
 With knowledge of free groups in mind, we can turn our attention to ``paradoxical'' actions that seem to recreate a set by using some of its disjoint proper subsets.
 \begin{definition}[Paradoxical Decompositions and Paradoxical Groups]
   Let $G$ be a group that acts on a set $X$, with $E\subseteq X$. We say $E$ is $G${-paradoxical} if there exist pairwise disjoint proper subsets $A_1,\dots,A_n$ and $B_1,\dots,B_m$ of $E$ and group elements $g_1,\dots,g_n,h_1,\dots,h_m\in G$ such that
@@ -406,8 +408,8 @@ Now that we understand a little more about paradoxical groups, we now want to un
 \begin{remark}
   This proof requires the axiom of choice, as we invoked it to define $M$ to contain exactly one element from every orbit in $X$.
 \end{remark}
-
-Now that we have established $F(a,b)$ as being a paradoxical group, we wish to use it to construct paradoxical decompositions of the unit sphere $S^2 \subseteq \R^3$.
+\section{Paradoxical Decompositions in $\R^3$: the Weak Banach--Tarski Paradox}%
+Now that we have established $F(a,b)$ as being a paradoxical group, we wish to use it to construct paradoxical decompositions of the unit sphere $S^2\subseteq \R^3$.
 \begin{fact}
   If $H$ is a paradoxical group, and $H\leq G$, then $G$ is a paradoxical group.
 \end{fact}
@@ -505,19 +507,19 @@ Since we have shown that $\text{SO}(3)$ is paradoxical, as it contains a paradox
   There is a countable subset $D$ of $S^{2}$ such that $S^{2}\setminus D$ is $\text{SO}(3)$-paradoxical.
 \end{theorem}
 \begin{proof}
-  Let $A$ and $B$ be the rotations in $\text{SO}(3)$ that serve as the generators of the subgroup isomorphic to $F(a,b)$.\newline
+  Let $A$ and $B$ be the rotations in $\text{SO}(3)$ that serve as the generators of the subgroup isomorphic to $F(a,b)$ (as in \ref{thm:free_group_so3}).\newline
 
-  Since $A$ and $B$ are rotations, so too is any reduced word over $\set{A,A^{-1},B,B^{-1}}$. Thus, any such non-empty word contains two fixed points.\newline
+  Since $A$ and $B$ are rotations, so too is any element of $\left\langle A,B \right\rangle$. Thus, any such non-empty word contains two fixed points.\newline
 
   We let
   \begin{align*}
     F &= \set{x\in S^{2}\mid s\text{ is a fixed point for some word }w}.
   \end{align*}
-  Since $F(A,B)$ is countably infinite, so too is $F$. Thus, the union of all these fixed points under the action of all such words $w$ is countable.
+  Since $\left\langle A,B \right\rangle$ is countably infinite, so too is $F$. Thus, the union of all these fixed points under the action of all such words $w$ is countable.
   \begin{align*}
-    D &= \bigcup_{w\in F(A,B)} w\cdot F.
+    D &= \bigcup_{w\in \left\langle A,B \right\rangle} w\cdot F.
   \end{align*}
-  Therefore, $F(A,B)$ acts freely on $S^{2}\setminus D$, so $S^{2}\setminus D$ is $\text{SO}(3)$-paradoxical.
+  Therefore, $\left\langle A,B \right\rangle$ acts freely on $S^{2}\setminus D$, so $S^{2}\setminus D$ is $\text{SO}(3)$-paradoxical.
 \end{proof}
 
 Unfortunately, the Hausdorff paradox is not enough for us to be able to prove the Banach--Tarski paradox. In order to do this, we need to be able to show that two sets are ``similar'' under the action of a group.
@@ -613,7 +615,7 @@ We will now show that $S^{2}$ is $\text{SO}(3)$ paradoxical.
 
   In particular, this means $S^{2}$ is also $\text{SO}(3)$-paradoxical.
 \end{proof}
-
+\section{The Full Banach--Tarski Paradox}%
 To prove the Banach--Tarski paradox, we need a slightly larger group than $\text{SO}(3)$ --- one that includes translations in addition to the traditional rotations.
 \begin{definition}[Euclidean Group]
   The {Euclidean group}, $\text{E}(n)$, consists of all isometries of a Euclidean space. An isometry of a Euclidean space consists of translations, rotations, and reflections.
@@ -699,7 +701,9 @@ One may ask if an analogue of the Cantor--Schröder--Bernstein theorem exists in
 \end{proof}
 
 Finally, we are able to prove Proposition \ref{prop:banachtarski}. We restate the proposition here, followed by its proof.
+\begin{tcolorbox}[blanker,breakable,left=3mm,before skip=10pt, after skip=10pt, borderline west={1pt}{0pt}{blue!50!white},sharp corners,]
 \banachtarski*
+\end{tcolorbox}
 \begin{proof}[Proof of Proposition \ref{prop:banachtarski}:]
   By symmetry, it is enough to show that $A\preceq_{\text{E}(3)} B$.\newline
 

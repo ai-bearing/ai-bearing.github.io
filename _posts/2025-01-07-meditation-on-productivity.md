@@ -1,0 +1,17 @@
+---
+layout: post
+title: "A Meditation on Productivity Culture"
+permalink: "/posts/productivity_culture.html"
+---
+
+I have a weird, almost morbid fascination with productivity culture, as it exists on YouTube, real life, etc (à la Ali Abdaal). I've occasionally tempted myself to try some of their productivity hacks (like journaling, the various notetaking apps, etc.) that they've talked about on their channels, and honestly it's been to no avail for me. However, that got me thinking about a different thing: why, exactly, even if I'm secure enough in my study and work habits to have a pretty strong "productivity system," am I yet tempted to try the other methods out there? It's not like the adjustment period is any less if I tried to switch.
+
+To an extent, I think the productivity craze is aimless. Most of these people are YouTube, and orient their productivity systems (so to speak) around everything it takes to manage a YouTube channel (or channels), not for students in mathematics (in my case), or just general people living their every day lives. To an extent, this means that watching all these productivity videos is _un_productive, insofar as it's not actually helping me become more productive. It's not an investment, it's entertainment.
+
+If I were to make a YouTube video detailing my productivity system — the LaTeX, Neovim, Github Pages, etc. — that my life required (or at least, that I made it require), it would be entertainment for the three people who would ever watch such a video. This system is overkill and totally not necessary to be a good (or great) college student, researcher, or just general life participant. Yet, it's still _my_ system, and I will embrace it with every fiber of my being, as it has allowed _me_ to be the best student I've ever been.
+
+However, at the same time, the productivity craze is, I think, helpful. We need to feel as if we are a part of a community, working towards something, in order to channel our capabilities and push our boundaries. For the people who embrace this through productivity, that's definitely a positive. Additionally, unlike a lot of other obsessions that people may develop (like video games), it improves their lives — and through the miracle of capitalism, all of ours.
+
+I think the problem with productivity culture stems from the fact that productivity and "hustle," as e.g. Gary Vaynerchuk promotes, are two different creatures entirely. In economic terms, productivity is about output per hour worked — a productive society like the United States is rich because it produces a lot, and does so without dedicating lots of labor-hours to said production. This separates productivity from hustle — productivity values efficiency, talent, and ingenuity, while hustle purely values hard work. Hard work is important, sure, but if one dedicates 12 hours a day towards digging a ditch and filling it back up again, that is not productivity.
+
+This becomes especially pertinent when it comes to productivity culture on YouTube (and the like). As said earlier, the productivity that YouTubers hawk is based on their personal experience _as YouTubers_, rather than based on those of us who work in the real economy. I cannot create the perfect "second brain" to be able to understand the readings and exercises in mathematics, but I can only study, take notes, do the exercises myself, and learn the slow, long, and hard way. This is productivity, not spending hours on YouTube learning about productivity systems. It isn't the most efficient, but it is what I am designed for.

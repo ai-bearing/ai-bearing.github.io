@@ -1,580 +1,578 @@
-Having proven Tarski's theorem, we can turn our attention to a more definite understanding of amenability. We will use theorems and techniques from functional analysis to help understand the space $\ell_{\infty}\left(G\right)$, which will open a wide variety of characterizations for amenability, beyond that which was established in Tarski's theorem.
-\section{Means and Invariant States}%
-\begin{definition}
-  Let $G$ be a group, with $P(G)$ denoting its power set.\newline
-
-  An invariant {mean} on $G$ is a set function $m\colon P(G)\rightarrow [0,1]$ which satisfies, for all $t\in G$ and $E,F\subseteq G$,
-  \begin{itemize}
-    \item $m(G) = 1$;
-    \item $m\left(E\sqcup F\right) = m(E) + m(F)$;
-    \item $m\left(tE\right) = m\left(E\right)$.
-  \end{itemize}
-  We say $G$ is amenable if $G$ admits a mean.\newline
-
-  The mean $m$ is, in other words, a translation-invariant probability measure on the measurable space $\left(G,P(G)\right)$.
-\end{definition}
-We have shown in the proof of Theorem \ref{thm:tarski} that an equivalent condition for amenability is that the group is not paradoxical.\newline
-
-Using some essential results in group theory, we can establish some preliminary results on subgroups and quotient groups.
-\begin{proposition}\label{prop:subgroups_quotientgroups_amenability}
-  Let $G$ be an amenable group with $H\leq G$. Then, the following are true:
-  \begin{enumerate}[(1)]
-    \item $H$ is amenable;
-    \item for $H\trianglelefteq G$, $G/H$ is amenable.
-  \end{enumerate}
-\end{proposition}
-\begin{proof}\hfill
-  \begin{enumerate}[(1)]
-    \item Let $R$ be a right transversal for $H$, wherein we select one element of each right coset of $H$ to make up $R$.\newline
-
-      If $m$ is a mean for $G$, we set $\lambda\colon P(H)\rightarrow [0,1]$ defined by
-      \begin{align*}
-        \lambda(E) = m\left(ER\right).
-      \end{align*}
-       We have
-      \begin{align*}
-        \lambda(H) &= m\left(HR\right)\\
-                   &= m\left(G\right)\\
-                   &= 1.
-      \end{align*}
-      We claim that if $E\cap F = \emptyset$, then $ER \cap FR = \emptyset$. Suppose toward contradiction this is not the case. Then, $xr_1 = yr_2$ for some $x\in E$, $y\in F$, and $r_1,r_2\in R$. Then, we must have $r_2r_1^{-1} = y^{-1}x \in H$, meaning $r_1 = r_2$ as, by definition, $R$ contains exactly one element of each right coset. Thus, $x=y$, so $E\cap F \neq \emptyset$.\newline
-
-      We then have
-      \begin{align*}
-        \lambda\left(E\sqcup F\right) &= m\left(\left(E\sqcup F\right)R\right)\\
-                                      &= m\left(ER\sqcup FR\right)\\
-                                      &= m\left(ER\right) + m\left(FR\right)\\
-                                      &= \lambda\left(E\right) + \lambda\left(F\right),
-      \end{align*}
-      and
-      \begin{align*}
-        \lambda\left(sE\right) &= m\left(sER\right)\\
-                               &= m\left(ER\right)\\
-                               &= \lambda\left(E\right).
-      \end{align*}
-    \item Let $\pi\colon G\rightarrow G/H$ be the canonical projection, defined by $\pi\left(t\right) = tH$. We define
-      \begin{align*}
-        \lambda\colon P\left(G/H\right) \rightarrow [0,1]
-      \end{align*}
-      by $\lambda(E) = m\left(\pi^{-1}\left(E\right)\right)$. We have
-      \begin{align*}
-        \lambda\left(G/H\right) &= m\left(\pi^{-1}\left(G/H\right)\right)\\
-                                &= m\left(G\right)\\
-                                &= 1,
-      \end{align*}
-      and
-      \begin{align*}
-        \lambda\left(E\sqcup F\right) &= m\left(\pi^{-1}\left(E\sqcup F\right)\right)\\
-                                      &= m\left(\pi^{-1}\left(E\right)\sqcup \pi^{-1}\left(F\right)\right)\\
-                                      &= m\left(\pi^{-1}\left(E\right)\right) + m\left(\pi^{-1}\left(F\right)\right)\\
-                                      &= \lambda(E) + \lambda(F).
-      \end{align*}
-      To show translation-invariance, we let $sH = \pi(s)\in G/H$, and $E\subseteq G/H$. Note that
-      \begin{align*}
-        \pi^{-1}\left(\pi(s)E\right) &= s\pi^{-1}\left(E\right),
-      \end{align*}
-      since for $r\in s\pi^{-1}(E)$, we have $r = st$ for $t\in \pi(E)$, so $\pi\left(r\right) =\pi\left(st\right) = \pi\left(s\right)\pi\left(t\right)\in \pi\left(s\right)E$.\newline
-
-      Additionally, if $r\in \pi^{-1}\left(\pi(s)E\right)$, we have $\pi(r)\in \pi(s)E$, so $\pi\left(s^{-1}r\right)\in E$, meaning $s^{-1}r\in \pi^{-1}(E)$.\newline
-
-      Thus,
-      \begin{align*}
-        \lambda\left(\pi\left(s\right)E\right) &= m\left(\pi^{-1}\left(\pi\left(s\right)E\right)\right)\\
-                                               &= m\left(s\pi^{-1}\left(E\right)\right)\\
-                                               &= m\left(\pi^{-1}\left(E\right)\right)\\
-                                               &= \lambda\left(E\right).
-      \end{align*}
-  \end{enumerate}
-\end{proof}
-
-Now that we understand some useful properties of means in relation to groups and subgroups, we turn our attention toward finding means on groups. In order to do this, we turn our attention towards the space $\ell_{\infty}\left(G\right)$, which allows us to use theories from functional analysis to better understand means on $G$.
-\begin{definition}
-  Let $G$ be a group.
-  \begin{enumerate}[(1)]
-    \item The space $\mathcal{F}\left(G,\R\right)$ is defined by
-      \begin{align*}
-        \mathcal{F}\left(G,\R\right) &= \set{f | f\colon G\rightarrow \R\text{ is a function}}.
-      \end{align*}
-    \item A function $f\in \mathcal{F}\left(G,\R\right)$ is called positive if $f(x) \geq 0$ for all $x\in G$.
-    \item A function $f\in \mathcal{F}\left(G,\R\right)$ is called simple if $\ran(f)$ is finite. We let
-      \begin{align*}
-        \Sigma &= \set{f\in \mathcal{F}\left(G,\R\right) | f\text{ is simple}}.
-      \end{align*}
-  \end{enumerate}
-\end{definition}
-\begin{fact}
-  It is the case that $\Sigma \subseteq \mathcal{F}\left(G,\R\right)$ is a linear subspace.
-\end{fact}
-\begin{definition}
-  For $E\subseteq G$, we define
-  \begin{align*}
-    \1_{E}\colon G\rightarrow \R
-  \end{align*}
-  by
-  \begin{align*}
-    \1_{E}\left(x\right) &= \begin{cases}
-      1 & x\in E\\
-      0 & x\notin E
-    \end{cases}.
-  \end{align*}
-  This is the characteristic function of $E$.
-\end{definition}
-\begin{fact}
-  We have
-  \begin{align*}
-    \Span\set{\1_{E}| E\subseteq G} &= \Sigma.
-  \end{align*}
-\end{fact}
-\begin{proof}
-  We see that $\1_{E}\in \Sigma$ for any $E\subseteq G$, and that $\Sigma$ is a subspace.\newline
-
-  If $\phi\in \Sigma$ with $\Ran\left(\phi\right) = \set{t_1,\dots,t_n}$, where $t_i$ are distinct, we set
-  \begin{align*}
-    E_i &= \phi^{-1}\left(\set{t_i}\right),
-  \end{align*}
-  yielding
-  \begin{align*}
-    \phi &= \sum_{i=1}^{n}t_i\1_{E_i}.
-  \end{align*}
-\end{proof}
-\begin{definition}\hfill
-  \begin{enumerate}[(1)]
-    \item A function $f\in \mathcal{F}\left(G,\R\right)$ is bounded if there exists $M > 0$ such that $\Ran\left(f\right) \subseteq \left[-M,M\right]$.
-    \item The space $\ell_{\infty}\left(G\right)$ is defined by
-      \begin{align*}
-        \ell_{\infty}\left(G\right) &= \set{f\in \mathcal{F}\left(G,\R\right)| f\text{ is bounded}}.
-      \end{align*}
-    \item The norm on $\ell_{\infty}\left(G\right)$ is defined by
-      \begin{align*}
-        \norm{f} &= \sup_{x\in G}\left\vert f(x) \right\vert.
-      \end{align*}
-  \end{enumerate}
-\end{definition}
-\begin{proposition}
-  The space $\ell_{\infty}(G)$ is complete. Additionally, $\overline{\Sigma} = \ell_{\infty}\left(G\right)$.
-\end{proposition}
-\begin{proof}
-  Let $\left(f_n\right)_n$ be $\norm{\cdot}$-Cauchy in $\ell_{\infty}\left(G\right)$. Then, for all $x\in G$, it is the case that
-  \begin{align*}
-    \left\vert f_n(x) - f_m(x) \right\vert &= \left\vert \left(f_n - f_m\right)\left(x\right) \right\vert\\
-                                           &\leq \norm{f_n - f_m},
-  \end{align*}
-  meaning $\left(f_n\left(x\right)\right)_n$ is Cauchy in $\R$. We define $f(x) = \lim_{n\rightarrow\infty}f_n(x)$. We must show that $f\in \ell_{\infty}\left(G\right)$, and $\norm{f_n-f}\rightarrow 0$.\newline
-
-  We have
-  \begin{align*}
-    \left\vert f(x) \right\vert &= \left\vert \lim_{n\rightarrow\infty}f_n\left(x\right) \right\vert\\
-                                &= \lim_{n\rightarrow\infty}\left\vert f_n\left(x\right) \right\vert\\
-                                &\leq \limsup_{n\rightarrow\infty}\norm{f_n}\\
-                                &\leq C,
-  \end{align*}
-  as Cauchy sequences are always bounded. Thus, $\sup_{x\in G}\left\vert f(x) \right\vert\leq C$.\newline
-
-  Given $\ve > 0$, we find $N$ such that for all $m,n\geq N$, $\norm{f_n - f_m} \leq \ve$. Thus, for $x\in G$, we have
-  \begin{align*}
-    \left\vert f_n(x) - f_m(x) \right\vert &\leq \norm{f_n - f_m}\\
-                                           &\leq \ve.
-  \end{align*}
-  Taking $m\rightarrow\infty$, we get $\left\vert f_n(x) - f(x) \right\vert \leq \ve$, for all $n\geq N$, so $\norm{f_n - f}\leq \ve$ for all $n\geq N$.\newline
-
-  For $f\in \ell_{\infty}\left(G\right)$, let $\Ran\left(f\right) \subseteq \left[-M,M\right]$ for some $M > 0$. Let $\ve > 0$. Since $\left[-M,M\right]$ is compact, it is totally bounded, so we can find intervals $I_{1},\dots,I_n$ with $\left[-M,M\right] = \bigsqcup_{k=1}^{n}I_k$, with the length of each $I_k$ less than $\ve$.\newline
-
-  Set $E_k = f^{-1}\left(I_k\right)$. Pick some $t_k\in I_k$. We set
-  \begin{align*}
-    \phi &= \sum_{i=1}^{n}t_k\1_{E_k}.
-  \end{align*}
-  Then, it is the case that $\norm{\phi - f} < \ve$.
-\end{proof}
-\begin{corollary}
-  For any $f\in \ell_{\infty}\left(G\right)$, there is a sequence $\left(\phi_n\right)_n$ of simple functions with $\norm{\phi_n -f}\rightarrow 0$. If $f\geq 0$, then we can select $\phi_n\geq 0$.
-\end{corollary}
-Now that we understand how simple functions relate to $\ell_{\infty}(G)$, we start by defining a translation action on $\ell_{\infty}(G)$, from which we will be able to convert the idea of means into invariant elements of the state space of the dual of $\ell_{\infty}\left(G\right)$.
-\begin{proposition}\label{prop:translation_action}
-  Let $G$ be a group. There is an action
-  \begin{align*}
-    \lambda_s\colon G\rightarrow \Isom\left(\ell_{\infty}\left(G\right)\right)
-  \end{align*}
-  defined by
-  \begin{align*}
-    \lambda_{s}\left(f\right)\left(t\right) &= f\left(s^{-1}t\right)
-  \end{align*}
-\end{proposition}
-\begin{proof}
-  We have
-  \begin{align*}
-    \lambda_s\left(f + \alpha g\right)\left(t\right) &= \left(f + \alpha g\right) \left(s^{-1}t\right)\\
-                                                     &= f\left(s^{-1}t\right) \alpha g\left(s^{-1}t\right)\\
-                                                     &= \lambda_s\left(f\right)\left(t\right) + \alpha \lambda_s\left(g\right)\left(t\right)\\
-                                                     &= \left(\lambda_s\left(f\right) + \alpha \lambda_s\left(g\right)\right)(t).
-  \end{align*}
-  Thus, $\lambda_s$ is linear. Additionally,
-  \begin{align*}
-    \norm{\lambda_s\left(f\right)} &= \sup_{t\in G}\left\vert \lambda_s\left(f\right)\left(t\right) \right\vert\\
-                                   &= \sup_{t\in G}\left\vert f\left(s^{-1}t\right) \right\vert\\
-                                   &= \norm{f},
-  \end{align*}
-  and
-  \begin{align*}
-    \norm{\lambda_s\left(f\right) - \lambda_s\left(g\right)} &= \norm{\lambda_s\left(f-g\right)}\\
-                                                             &= \norm{f-g},
-  \end{align*}
-  meaning $\lambda_s$ is an isometry.\newline
-
-  We have
-  \begin{align*}
-    \lambda_s\circ \lambda_r\left(f\right)\left(t\right) &= \lambda_r\left(f\right)\left(s^{-1}t\right)\\
-                                                         &= \lambda_r\left(r^{-1}s^{-1}t\right)\\
-                                                         &= f\left(\left(sr\right)^{-1}t\right)\\
-                                                         &= \lambda_{sr}\left(f\right)\left(t\right),
-  \end{align*}
-  establishing that $\lambda_s\circ \lambda_r = \lambda_{sr}$.\newline
-
-  By a similar process, we find that $\lambda_{s}\left(\1_{E}\right) = \1_{sE}$ for any $E\subseteq G$ and $s\in G$.
-\end{proof}
-\begin{definition}
-  A {state} on $\ell_{\infty}\left(G\right)$ is a continuous linear functional $\mu\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$ such that the following are true:
-  \begin{itemize}
-    \item $\mu$ is positive;
-    \item $\mu\left(\1_{G}\right) = 1$.
-  \end{itemize}
-  A state is called left-invariant if
-  \begin{align*}
-    \mu\left(\lambda_s\left(f\right)\right) = \mu\left(f\right).
-  \end{align*}
-\end{definition}
-\begin{example}
-  The evaluation functional, $\delta_x\colon \ell_{\infty}\rightarrow \R$, defined by
-  \begin{align*}
-    \delta_{x}\left(f\right) &= f(x),
-  \end{align*}
-  is a state. However, it is not necessarily invariant, as
-  \begin{align*}
-    \delta_x\left(\lambda_s\left(f\right)\right) &= \lambda_s\left(f\right)\left(x\right)\\
-                                                 &= f\left(s^{-1}x\right)\\
-                                                 &\neq f(x).
-  \end{align*}
-  However, we can use the evaluation functional to create an invariant state. If $G$ is finite, we define
-  \begin{align*}
-    \mu &= \frac{1}{\left\vert G \right\vert} \sum_{x\in G}\delta_x,
-  \end{align*}
-  which is indeed an invariant state.
-\end{example}
-We can characterize states slightly differently, which will enable us to show the equivalence between invariant states and means.
-\begin{lemma}\label{lemma:characterizing_states}\hfill
-  \begin{enumerate}[(1)]
-    \item If $\mu$ is a state on $\ell_{\infty}\left(G\right)$, then
-      \begin{align*}
-        \norm{\mu}_{\op} = 1.
-      \end{align*}
-    \item If $\mu\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$ is such that
-      \begin{align*}
-        \norm{\mu}_{\op} &= \mu\left(\1_{G}\right)\\
-                               &= 1,
-      \end{align*}
-      then $\mu$ is positive and a state.
-  \end{enumerate}
-\end{lemma}
-\begin{proof}\hfill
-  \begin{enumerate}[(1)]
-    \item Let $\mu$ be a state. Given $f\in \ell_{\infty}\left(G\right)$, we have
-      \begin{align*}
-        \norm{f}\1_{G} - f &\geq 0\\
-        \norm{f}\1_{G} + f &\geq 0,
-      \end{align*}
-      so
-      \begin{align*}
-        0 &\leq \mu\left(\norm{f}\1_{G} - f\right) \\
-          &= \norm{f}\mu\left(\1_{G}\right) - \mu\left(f\right)
-          \intertext{meaning}
-        \mu\left(f\right) &\leq \norm{f}.
-        \intertext{Additionally,}
-        0 &\leq \mu\left(\norm{f}\1_{G} + f\right)\\
-          &= \norm{f}\mu\left(\1_{G}\right) + \mu\left(f\right),
-          \intertext{meaning}
-        -\mu\left(f\right) &\leq \norm{f}.
-      \end{align*}
-      Thus, we have $\left\vert \mu\left(f\right) \right\vert \leq \norm{f}$, so $\norm{\mu}_{\op} \leq 1$. However, since $\mu\left(\1_{G}\right) = 1$, we must have $\norm{\mu}_{\op} = 1$.
-  \item Suppose $\norm{\mu}_{\op} = \mu\left(\1_{G}\right) = 1$. Let $f\geq 0$. Set $g = \frac{1}{\norm{f}_u}f$.\newline
-
-    Then, $\Ran(g) \subseteq [0,1]$, and $\Ran\left(g - \1_{G}\right) \subseteq \left[-1,1\right]$. Thus, $\norm{g - \1_{G}}_{u} \leq 1$.\newline
-
-    Since $\norm{\mu}_{\op} = 1$, we must have
-    \begin{align*}
-      \left\vert \mu\left(g - \1_{G}\right) \right\vert &\leq 1\\
-      \left\vert \mu\left(g\right) - 1 \right\vert &\leq 1,
-    \end{align*}
-    and since $\mu\left(\1_{G}\right) = 1$, we have $\mu\left(g\right) \in [0,2]$. Thus, $\mu\left(f\right) = \norm{f}\mu\left(g\right) \geq 0$.
-  \end{enumerate}
-\end{proof}
-To show the equivalence between means and invariant states, we need to be able to characterize the state space on $\left(\ell_{\infty}\left(G\right)\right)^{\ast}$. To do this, we make use of some results from functional analysis.\newline
-
-If $X$ is a normed vector space, then the topology on $X^{\ast}$ induced by $X^{\ast\ast}$ is known as the weak* topology. The weak* topology is the topology of pointwise convergence in $X^{\ast}$ --- a net $\left(\varphi_{\alpha}\right)_{\alpha}$ converges to $\varphi$ in the weak* topology if and only if, for all $\hat{x}\in X^{\ast\ast}$, we have
-\begin{align*}
-  \left(\hat{x}\left(\varphi_{\alpha}\right)\right)_{\alpha}\rightarrow \hat{x}\left(\varphi\right),
-\end{align*}
-or by the definition of $X^{\ast\ast}$,
-\begin{align*}
-  \left(\varphi_{\alpha}\left(x\right)\right) \rightarrow \varphi\left(x\right)
-\end{align*}
-for all $x\in X$.\newline
-
-We state some important results in functional analysis here. The proofs of these results can be found in functional analysis textbooks such as \cite{rudin_functional_analysis}.
-\begin{theorem}[Hahn--Banach Continuous Extension Theorem]
-  Let $X$ be a normed vector space, $E\subseteq X$ a subspace, and $\varphi\in E^{\ast}$ a bounded linear functional. Then, there exists a continuous $\psi\in X^{\ast}$ such that $\norm{\varphi}_{\op} = \norm{\psi}_{\op}$, and $\psi|_{E} = \varphi$.
-\end{theorem}
-\begin{theorem}[Hahn--Banach Separation Theorems]
-  Let $X$ be a normed vector space.
-  \begin{enumerate}[(1)]
-    \item Given a nonzero $x_0\in X$, there is a $\varphi\in X^{\ast}$ with $\norm{\varphi}_{\op} = 1$ and $\varphi\left(x_0\right) = \norm{x}$. We call $\varphi$ a norming functional.
-    \item Given a proper closed subspace $E\subseteq X$ and $x_0\in X\setminus E$, there is a $\varphi\in X^{\ast}$ such that $\varphi|_{E} = 0$, $\norm{\varphi}_{\op} = 1$, and $\varphi\left(x\right) = \dist_{E}(x)$ for all $x\in X$.
-  \end{enumerate}
-\end{theorem}
-\begin{theorem}[Banach--Alaoglu Theorem]
-  Let $X$ be a normed vector space.
-  \begin{enumerate}[(1)]
-    \item The closed unit ball in the dual space, $B_{X^{\ast}}$, is compact in the $w^{\ast}$ topology.
-    \item A subset $C\subseteq X$ is $w^{\ast}$-compact if and only if $C$ is $w^{\ast}$-closed and norm bounded.
-  \end{enumerate}
-\end{theorem}
-\begin{corollary}
-  The set of states in $\left(\ell_{\infty}\left(G\right)\right)^{\ast}$ forms a $w^{\ast}$-compact subset of $B_{\left(\ell_{\infty}\left(G\right)\right)^{\ast}}$.
-\end{corollary}
-\begin{proof}
-  From the Banach--Alaoglu Theorem, we only need to show that the set of states, $S\left(\ell_{\infty}\left(G\right)\right)$, is $w^{\ast}$-closed, as every element of $S\left(\ell_{\infty}\left(G\right)\right)$ has norm $1$.\newline
-
-  Let $f\in \ell_{\infty}\left(G\right)$ be positive, and let $\left(\varphi_{i}\right)_i$ be a net in $S\left(\ell_{\infty}\left(G\right)\right)$ with $\left(\varphi_{i}\right)_i\xrightarrow{w^{\ast}} \varphi\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$. From Lemma \ref{lemma:characterizing_states}, we must show that $\varphi$ is positive and $\varphi\left(\1_{G}\right) = 1$.\newline
-
-  We start by seeing that, since each $\varphi_i$ is a state, we have $\varphi_{i}\left(f\right) \geq 0$ for each $i\in I$, so we must have $\varphi\left(f\right) \geq 0$.\newline
-
-  Similarly, since $\varphi_{i}\left(\1_{G}\right) = 1$ for each $i\in I$, and $\left(\varphi_i\right)_i \xrightarrow{w^{\ast}} \varphi$, we have $\varphi\left(\1_{G}\right) = 1$. Thus, by Lemma \ref{lemma:characterizing_states}, we have that $S\left(\ell_{\infty}\left(G\right)\right)$ is $w^{\ast}$-closed.
-\end{proof}
-
-Now, we may show the correspondence between invariant states and means.
-\begin{proposition}\label{prop:state_implies_mean}
-  If $\mu\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$ is a state, then $m\colon P(G)\rightarrow [0,1]$ defined by $m(E) = \mu\left(\1_{E}\right)$ is a finitely additive probability measure on $G$.\newline
-
-  Moreover, if $\mu$ is invariant, then $m$ is a mean.
-\end{proposition}
-\begin{proof}
-  We have
-  \begin{align*}
-    m\left(G\right) &= \mu\left(\1_{G}\right)\\
-                    &= 1\\
-                    \\
-    m\left(\emptyset\right) &= \mu\left(0\right)\\
-                            &= 0\\
-                            \\
-    m\left(E\sqcup F\right) &= \mu\left(\1_{E\sqcup F}\right)\\
-                            &= \mu\left(\1_{E} + \1_{F}\right)\\
-                            &= \mu\left(\1_{E}\right) + \mu\left(\1_{F}\right)\\
-                            &= m\left(E\right) + m\left(F\right).
-  \end{align*}
-  Additionally, since $0 \leq \1_{E}\leq \1_{G}$, we have $0 \leq \mu\left(\1_{E}\right) \leq 1$, so $0 \leq m(E) \leq 1$.\newline
-
-  If $\mu$ is invariant, then
-  \begin{align*}
-    m\left(sE\right) &= \mu\left(\1_{sE}\right)\\
-                     &= \mu\left(\lambda_s\left(\1_{E}\right)\right)\\
-                     &= \mu\left(\1_{E}\right)\\
-                     &= m\left(E\right).
-  \end{align*}
-\end{proof}
-\begin{proposition}\label{prop:mean_implies_state}
-  If $G$ admits a mean, then $\left(\ell_{\infty}\left(G\right)\right)^{\ast}$ admits an invariant state.
-\end{proposition}
-\begin{proof}
-  Let $m$ be a mean. Define $\mu_0\colon \Sigma\rightarrow \R$ by
-  \begin{align*}
-    \mu_0\left(\sum_{k=1}^{n}t_k\1_{E_k}\right) &= \sum_{k=1}^{n}t_km\left(E_k\right).
-  \end{align*}
-  Since $m$ is finitely additive, it is the case that $\mu_0$ is well-defined, linear, and positive, with $\mu_0\left(\1_{G}\right) = m\left(G\right) = 1$.\newline
-
-  Additionally, since $m$ is a mean, then for $f = \sum_{k=1}^{n}t_k\1_{E_k}$, we have
-  \begin{align*}
-    \mu_0\left(\lambda_s\left(f\right)\right) &= \mu_0\left(\lambda_s\left(\sum_{k=1}^{n}t_k\1_{E_k}\right)\right)\\
-                                              &= \mu_0\left(\sum_{k=1}^{n}t_k\1_{sE_k}\right)\\
-                                              &= \sum_{k=1}^{n}t_km\left(sE_k\right)\\
-                                              &= \sum_{k=1}^{n}t_km\left(E_k\right)\\
-                                              &= \mu_0\left(f\right).
-  \end{align*}
-  We see that
-  \begin{align*}
-    \left\vert \mu_0\left(f\right) \right\vert &= \left\vert \sum_{k=1}^{n}t_km\left(E_k\right) \right\vert\\
-                                               &\leq \sum_{k=1}^{n}\left\vert t_k \right\vert m\left(E_k\right)\\
-                                               &\leq \sum_{k=1}^{n}\norm{f}\sum_{k=1}^{n}m\left(E_k\right)\\
-                                               &= \norm{f}\sum_{k=1}^{n}m\left(E_k\right)\\
-                                               &\leq \norm{f},
-  \end{align*}
-  meaning $\mu_0$ is continuous, so $\mu_0$ is uniformly continuous.\newline
-
-  Since $\overline{\Sigma} = \ell_{\infty}\left(G\right)$, uniform continuity provides that $\mu_0$ extends to a continuous linear functional $\mu\colon \ell_{\infty}\left(G\right)\rightarrow \R$ with $\mu\left(\1_{G}\right) = \mu_0\left(\1_{G}\right) = 1$.\newline
-
-  For $f\geq 0$, we find a sequence $\left(\phi_n\right)_n$ in $\Sigma$ with $\phi_n\geq 0$ and $\norm{\phi_n - f} \xrightarrow{n\rightarrow\infty}0$. We set
-  \begin{align*}
-    \mu\left(f\right) &= \lim_{n\rightarrow\infty}\mu\left(\phi_n\right)\\
-                      &= \lim_{n\rightarrow\infty}\mu_0\left(\phi_n\right)\\
-                      &\geq 0,
-  \end{align*}
-  so $\mu$ is a state.\newline
-
-  If $f\in \ell_{\infty}\left(G\right)$, $s\in G$, and $\left(\phi_n\right)_n$ a sequence in $\Sigma$ with $\left(\phi_n\right)_n\rightarrow f$, then
-  \begin{align*}
-    \norm{\lambda_s\left(\phi_n\right) - \lambda_s\left(f\right)} &= \norm{\lambda_s\left(\phi_n - f\right)}\\
-                                                                  &= \norm{\phi_n - f}\\
-                                                                  &\rightarrow 0.
-  \end{align*}
-  Thus, we have
-  \begin{align*}
-    \mu\left(\lambda_s\left(\phi_n\right)\right) &= \mu_0\left(\lambda_s\left(\phi_n\right)\right)\\
-                                                 &= \mu_0\left(\phi_n\right)\\
-                                                 &= \mu\left(\phi_n\right)\\
-                                                 &\rightarrow \mu\left(f\right),
-  \end{align*}
-  so $\mu\left(f\right) = \mu\left(\lambda_s\left(f\right)\right)$. Thus, $\mu\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$ is an invariant state.
-\end{proof}
-\section{Establishing Amenability using Invariant States}%
-Owing to the correspondence between invariant states and means, we are now able to establish the amenability of large classes of groups.
-\begin{proposition}
-  The group of integers, $\Z$, is amenable.
-\end{proposition}
-\begin{proof}
-  We define the left shift, $\lambda_1\colon \ell_{\infty}\left(\Z\right) \rightarrow \ell_{\infty}\left(\Z\right)$, by
-  \begin{align*}
-    \lambda_1\left(f\right)\left(k\right) &= f\left(k-1\right).
-  \end{align*}
-  This is an action as in Proposition \ref{prop:translation_action}. \newline
-
-  We set $Y = \Ran\left(\id - \lambda_1\right)\subseteq \ell_{\infty}\left(\Z\right)$. We claim that $\dist_{Y}\left(\1_{\Z}\right) \geq 1$.\newline
-
-  Suppose toward contradiction that there is $y\in Y$ with $\norm{\1_{\Z} - y}_{u} = r < 1$. Then, $y = f - \lambda_1 f$ for some $f\in \ell_{\infty}(\Z)$, so
-  \begin{align*}
-    \norm{\1_{\Z} - \left(f - \lambda_1\left(f\right)\right)} &= r.
-  \end{align*}
-  Thus, for all $k\in\Z$, we have
-  \begin{align*}
-    \left\vert 1 - \left(f(k) - f(k-1)\right) \right\vert &\leq r,
-  \end{align*}
-  so $\left\vert f(k) - f\left(k-1\right) \right\vert \geq 1-r > 0$. However, such an $f$ cannot be bounded.\newline
-
-  Since $\dist_{\overline{Y}}\left(\1_{\Z}\right) = \dist_{Y}\left(\1_{\Z}\right)$, the Hahn--Banach separation theorems provide $\mu\in \left(\ell_{\infty}\left(\Z\right)\right)^{\ast}$ with $\norm{\mu}_{\op} = 1$, $\mu|_{\overline{Y}} = 0$, and $\mu\left(\1_{\Z}\right) = \dist_{Y}\left(\1_{\Z}\right) \geq 1$.\newline
-
-  Since $\norm{\mu}_{\op} = 1$ and $\mu\left(\1_{\Z}\right) \geq 1$, we must have $\mu\left(\1_{\Z}\right) = 1$.\newline
-
-  Additionally, since $\norm{\mu}_{\op} = \mu\left(\1_{\Z}\right) = 1$, we have that $\mu$ is a state on $\ell_{\infty}\left(\Z\right)$, and since $\mu\left(y\right) = 0$ for all $y\in Y$, we have
-  \begin{align*}
-    \mu\left(f - \lambda_1\left(f\right)\right) &= 0\\
-    \mu\left(f\right) &= \mu\left(\lambda_1\left(f\right)\right).
-  \end{align*}
-  Inductively, this means that $\mu\left(f\right) = \mu\left(\lambda_k\left(f\right)\right)$ for all $k\in \Z$, so $\mu$ is an invariant state on $\ell_{\infty}\left(\Z\right)$. Thus, $\Z$ is amenable.
-\end{proof}
-\begin{proposition}
-  If $N\trianglelefteq G$ and $G/N$ are amenable, then $G$ is amenable.
-\end{proposition}
-\begin{proof}
-  Let $\rho\in \left(\ell_{\infty}\left(G/N\right)\right)^{\ast}$ be an invariant state, and let $p\colon P(N)\rightarrow [0,1]$ be a mean. For $E\subseteq G$, we define $f_E\colon G/N\rightarrow \R$ by
-  \begin{align*}
-    f_E\left(tN\right) &= p\left(N\cap t^{-1}E\right).
-  \end{align*}
-  We start by verifying that $f_E$ is well-defined. For $tN = sN$, we have $s^{-1}t\in N$, so
-  \begin{align*}
-    p\left(N\cap t^{-1}E\right) &= p\left(s^{-1}t\left(N\cap t^{-1}E\right)\right)\\
-                                &= p\left(s^{-1}tN \cap s^{-1}E\right)\\
-                                &= p\left(N\cap s^{-1}E\right).
-  \end{align*}
-  Since $f_E$ is defined through $p$, we can see that $f_E$ is bounded. Additionally,
-  \begin{align*}
-    f_{E\sqcup F}\left(tN\right) &= p\left(N\cap t^{-1}\left(E\sqcup F\right)\right)\\
-                                 &= p\left(N\cap \left(t^{-1}E\sqcup t^{-1}F\right)\right)\\
-                                 &= p\left(\left(N\cap t^{-1}E\right) \sqcup \left(N\cap t^{-1}F\right)\right)\\
-                                 &= p\left(N\cap t^{-1}E\right) + p\left(N\cap t^{-1}F\right)\\
-                                 &= f_E\left(tN\right) + f_F\left(tN\right)\\
-                                 &= \left(f_E + f_F\right)\left(tN\right),
-  \end{align*}
-  and
-  \begin{align*}
-    f\left(sE\right) \left(tN\right) &= p\left(N\cap t^{-1}sE\right)\\
-                                     &= f_E\left(s^{-1}tN\right)\\
-                                     &= \lambda_{sN}\left(f_E\right)\left(tN\right),
-  \end{align*}
-  so $f_{sE} = \lambda_{sN}\left(f_E\right)$. Finally,
-  \begin{align*}
-    f_G\left(tN\right) &= p\left(N\cap t^{-1}G\right)\\
-                       &=p\left(N\right)\\
-                       &= 1,
-  \end{align*}
-  meaning $f_G = \1_{G/N}$.\newline
-
-  We define $m\colon P(G)\rightarrow [0,1]$ by
-  \begin{align*}
-    m(E) &= \rho\left(f_E\right).
-  \end{align*}
-  Then, we have
-  \begin{align*}
-    m\left(E\sqcup F\right) &= m(E) + m(F)\\
-                            \\
-    m\left(G\right) &= 1\\
-    \\
-    m\left(sE\right) &= \rho\left(f_{sE}\right)\\
-                     &= \rho\left(\lambda_{sN}\left(f_{E}\right)\right)\\
-                     &= \rho\left(f_E\right)\\
-                     &= m(E),
-  \end{align*}
-  so $m$ is a mean.
-\end{proof}
-\begin{corollary}
-  The finite direct product of amenable groups is amenable.
-\end{corollary}
-\begin{proof}
-  For $H$ and $K$ amenable groups, we know that $K\cong \left(H\times K\right)/H$ and $H$ are amenable, so $H\times K$ is amenable. Induction provides the general case.
-\end{proof}
-\begin{corollary}
-  Finitely generated abelian groups are amenable.
-\end{corollary}
-\begin{proof}
-  By the fundamental theorem of finitely generated abelian groups, all finitely generated abelian groups are isomorphic to $\Z^{d}\times \Z/n_1\Z\times\cdots\times \Z/{n_k}\Z$.\newline
-
-  Since $\Z^{d}$ is a finite direct product of $\Z$, and the torsion subgroup $\Z/n_1\Z\times\cdots\times \Z/n_k\Z$ is finite, we see that a finitely generated abelian group is a direct product of two amenable groups, hence amenable.
-\end{proof}
-\begin{corollary}
-  If $\set{G_i}_{i\in I}$ is a directed family of amenable groups, then the direct limit,
-  \begin{align*}
-    G &= \bigcup_{i\in I}G_i,
-  \end{align*}
-  is also amenable.
-\end{corollary}
-\begin{proof}
-  Let $\mu_i\in \left(\ell_{\infty}\left(G_i\right)\right)^{\ast}$ be invariant states.\newline
-
-  Set
-  \begin{align*}
-    M_i &= \set{\mu\in S\left(\ell_{\infty}\left(G\right)\right)| \mu\left(\lambda_s\left(f\right)\right) = \mu\left(f\right)\text{ for all }s\in G_i}.
-  \end{align*}
-  We set $\mu\left(f\right) = \mu_i\left(f|_{G_i}\right)$. Since each $G_i$ is amenable, it is the case that each $M_i$ is nonempty. Similarly, seeing as we have established the state space as $w^{\ast}$-closed in $B_{\left(\ell_{\infty}\left(G\right)\right)^{\ast}}$, it is the case that each $M_i$ is $w^{\ast}$-closed in $B_{\left(\ell_{\infty}\left(G\right)\right)^{\ast}}$.\newline
-
-  For $i_1,\dots,i_n$, we find $G_j \supseteq G_{i_1},\dots,G_{i_n}$, which exists since $\set{G_i}_{i\in I}$ is directed. We have that $M_j\subseteq \bigcap_{k=1}^{n}M_{i_k}$, so $\set{M_i}_{i\in I}$ has the finite intersection property.\newline
-
-  Thus, there is $\mu\in \bigcap_{i\in I}M_i$, which is necessarily invariant on $G$.
-\end{proof}
-\begin{corollary}
-  All abelian groups are amenable.
-\end{corollary}
-\begin{proof}
-  Every abelian group is the direct limit of its finitely generated subgroups.
-\end{proof}
-\begin{corollary}
-  All solvable groups are amenable.
-\end{corollary}
-\begin{proof}
-  Let $e_G = G_0 \leq G_1\leq\cdots\leq G_n\leq G$ be such that $G_{j-1}\trianglelefteq G_j$ for $j=1,\dots,n$, and $G_i/G_j$ is abelian.\newline
-
-  Since $G_0$ is abelian, it is amenable, as is $G_1/G_0$, so $G_1$ is amenable. We see then that $G_2$ is amenable as $G_1$ and $G_2/G_1$ are amenable.\newline
-
-  Continuing in this fashion, we see that $G$ is amenable.
-\end{proof}
-\section{Følner's Condition and Approximate Means}%
-While showing the existence of an invariant state is necessary and sufficient for showing a group is amenable, as well as showing the group is non-paradoxical, it is often difficult to establish either of these conditions.\newline
-
-However, we can often more easily create a sequence (or net) of finitely supported functions whose limit is an invariant state. This will require the use of the Følner condition.
+%Having proven Tarski's theorem, we can turn our attention to a more definite understanding of amenability. We will use theorems and techniques from functional analysis to help understand the space $\ell_{\infty}\left(G\right)$, which will open a wide variety of characterizations for amenability, beyond that which was established in Tarski's theorem.
+%\section{Means and Invariant States}%
+%\begin{definition}
+%  Let $G$ be a group, with $P(G)$ denoting its power set.\newline
+%
+%  An invariant {mean} on $G$ is a set function $m\colon P(G)\rightarrow [0,1]$ which satisfies, for all $t\in G$ and $E,F\subseteq G$,
+%  \begin{itemize}
+%    \item $m(G) = 1$;
+%    \item $m\left(E\sqcup F\right) = m(E) + m(F)$;
+%    \item $m\left(tE\right) = m\left(E\right)$.
+%  \end{itemize}
+%  We say $G$ is amenable if $G$ admits a mean.\newline
+%
+%  The mean $m$ is, in other words, a translation-invariant probability measure on the measurable space $\left(G,P(G)\right)$.
+%\end{definition}
+%We have shown in the proof of Theorem \ref{thm:tarski} that an equivalent condition for amenability is that the group is not paradoxical.\newline
+%
+%Using some essential results in group theory, we can establish some preliminary results on subgroups and quotient groups.
+%\begin{proposition}\label{prop:subgroups_quotientgroups_amenability}
+%  Let $G$ be an amenable group with $H\leq G$. Then, the following are true:
+%  \begin{enumerate}[(1)]
+%    \item $H$ is amenable;
+%    \item for $H\trianglelefteq G$, $G/H$ is amenable.
+%  \end{enumerate}
+%\end{proposition}
+%\begin{proof}\hfill
+%  \begin{enumerate}[(1)]
+%    \item Let $R$ be a right transversal for $H$, wherein we select one element of each right coset of $H$ to make up $R$.\newline
+%
+%      If $m$ is a mean for $G$, we set $\lambda\colon P(H)\rightarrow [0,1]$ defined by
+%      \begin{align*}
+%        \lambda(E) = m\left(ER\right).
+%      \end{align*}
+%       We have
+%      \begin{align*}
+%        \lambda(H) &= m\left(HR\right)\\
+%                   &= m\left(G\right)\\
+%                   &= 1.
+%      \end{align*}
+%      We claim that if $E\cap F = \emptyset$, then $ER \cap FR = \emptyset$. Suppose toward contradiction this is not the case. Then, $xr_1 = yr_2$ for some $x\in E$, $y\in F$, and $r_1,r_2\in R$. Then, we must have $r_2r_1^{-1} = y^{-1}x \in H$, meaning $r_1 = r_2$ as, by definition, $R$ contains exactly one element of each right coset. Thus, $x=y$, so $E\cap F \neq \emptyset$.\newline
+%
+%      We then have
+%      \begin{align*}
+%        \lambda\left(E\sqcup F\right) &= m\left(\left(E\sqcup F\right)R\right)\\
+%                                      &= m\left(ER\sqcup FR\right)\\
+%                                      &= m\left(ER\right) + m\left(FR\right)\\
+%                                      &= \lambda\left(E\right) + \lambda\left(F\right),
+%      \end{align*}
+%      and
+%      \begin{align*}
+%        \lambda\left(sE\right) &= m\left(sER\right)\\
+%                               &= m\left(ER\right)\\
+%                               &= \lambda\left(E\right).
+%      \end{align*}
+%    \item Let $\pi\colon G\rightarrow G/H$ be the canonical projection, defined by $\pi\left(t\right) = tH$. We define
+%      \begin{align*}
+%        \lambda\colon P\left(G/H\right) \rightarrow [0,1]
+%      \end{align*}
+%      by $\lambda(E) = m\left(\pi^{-1}\left(E\right)\right)$. We have
+%      \begin{align*}
+%        \lambda\left(G/H\right) &= m\left(\pi^{-1}\left(G/H\right)\right)\\
+%                                &= m\left(G\right)\\
+%                                &= 1,
+%      \end{align*}
+%      and
+%      \begin{align*}
+%        \lambda\left(E\sqcup F\right) &= m\left(\pi^{-1}\left(E\sqcup F\right)\right)\\
+%                                      &= m\left(\pi^{-1}\left(E\right)\sqcup \pi^{-1}\left(F\right)\right)\\
+%                                      &= m\left(\pi^{-1}\left(E\right)\right) + m\left(\pi^{-1}\left(F\right)\right)\\
+%                                      &= \lambda(E) + \lambda(F).
+%      \end{align*}
+%      To show translation-invariance, we let $sH = \pi(s)\in G/H$, and $E\subseteq G/H$. Note that
+%      \begin{align*}
+%        \pi^{-1}\left(\pi(s)E\right) &= s\pi^{-1}\left(E\right),
+%      \end{align*}
+%      since for $r\in s\pi^{-1}(E)$, we have $r = st$ for $t\in \pi(E)$, so $\pi\left(r\right) =\pi\left(st\right) = \pi\left(s\right)\pi\left(t\right)\in \pi\left(s\right)E$.\newline
+%
+%      Additionally, if $r\in \pi^{-1}\left(\pi(s)E\right)$, we have $\pi(r)\in \pi(s)E$, so $\pi\left(s^{-1}r\right)\in E$, meaning $s^{-1}r\in \pi^{-1}(E)$.\newline
+%
+%      Thus,
+%      \begin{align*}
+%        \lambda\left(\pi\left(s\right)E\right) &= m\left(\pi^{-1}\left(\pi\left(s\right)E\right)\right)\\
+%                                               &= m\left(s\pi^{-1}\left(E\right)\right)\\
+%                                               &= m\left(\pi^{-1}\left(E\right)\right)\\
+%                                               &= \lambda\left(E\right).
+%      \end{align*}
+%  \end{enumerate}
+%\end{proof}
+%
+%Now that we understand some useful properties of means in relation to groups and subgroups, we turn our attention toward finding means on groups. In order to do this, we turn our attention towards the space $\ell_{\infty}\left(G\right)$, which allows us to use theories from functional analysis to better understand means on $G$.
+%\begin{definition}
+%  Let $G$ be a group.
+%  \begin{enumerate}[(1)]
+%    \item The space $\mathcal{F}\left(G,\R\right)$ is defined by
+%      \begin{align*}
+%        \mathcal{F}\left(G,\R\right) &= \set{f | f\colon G\rightarrow \R\text{ is a function}}.
+%      \end{align*}
+%    \item A function $f\in \mathcal{F}\left(G,\R\right)$ is called positive if $f(x) \geq 0$ for all $x\in G$.
+%    \item A function $f\in \mathcal{F}\left(G,\R\right)$ is called simple if $\ran(f)$ is finite. We let
+%      \begin{align*}
+%        \Sigma &= \set{f\in \mathcal{F}\left(G,\R\right) | f\text{ is simple}}.
+%      \end{align*}
+%  \end{enumerate}
+%\end{definition}
+%\begin{fact}
+%  It is the case that $\Sigma \subseteq \mathcal{F}\left(G,\R\right)$ is a linear subspace.
+%\end{fact}
+%\begin{definition}
+%  For $E\subseteq G$, we define
+%  \begin{align*}
+%    \1_{E}\colon G\rightarrow \R
+%  \end{align*}
+%  by
+%  \begin{align*}
+%    \1_{E}\left(x\right) &= \begin{cases}
+%      1 & x\in E\\
+%      0 & x\notin E
+%    \end{cases}.
+%  \end{align*}
+%  This is the characteristic function of $E$.
+%\end{definition}
+%\begin{fact}
+%  We have
+%  \begin{align*}
+%    \Span\set{\1_{E}| E\subseteq G} &= \Sigma.
+%  \end{align*}
+%\end{fact}
+%\begin{proof}
+%  We see that $\1_{E}\in \Sigma$ for any $E\subseteq G$, and that $\Sigma$ is a subspace.\newline
+%
+%  If $\phi\in \Sigma$ with $\Ran\left(\phi\right) = \set{t_1,\dots,t_n}$, where $t_i$ are distinct, we set
+%  \begin{align*}
+%    E_i &= \phi^{-1}\left(\set{t_i}\right),
+%  \end{align*}
+%  yielding
+%  \begin{align*}
+%    \phi &= \sum_{i=1}^{n}t_i\1_{E_i}.
+%  \end{align*}
+%\end{proof}
+%\begin{definition}\hfill
+%  \begin{enumerate}[(1)]
+%    \item A function $f\in \mathcal{F}\left(G,\R\right)$ is bounded if there exists $M > 0$ such that $\Ran\left(f\right) \subseteq \left[-M,M\right]$.
+%    \item The space $\ell_{\infty}\left(G\right)$ is defined by
+%      \begin{align*}
+%        \ell_{\infty}\left(G\right) &= \set{f\in \mathcal{F}\left(G,\R\right)| f\text{ is bounded}}.
+%      \end{align*}
+%    \item The norm on $\ell_{\infty}\left(G\right)$ is defined by
+%      \begin{align*}
+%        \norm{f} &= \sup_{x\in G}\left\vert f(x) \right\vert.
+%      \end{align*}
+%  \end{enumerate}
+%\end{definition}
+%\begin{proposition}
+%  The space $\ell_{\infty}(G)$ is complete. Additionally, $\overline{\Sigma} = \ell_{\infty}\left(G\right)$.
+%\end{proposition}
+%\begin{proof}
+%  Let $\left(f_n\right)_n$ be $\norm{\cdot}$-Cauchy in $\ell_{\infty}\left(G\right)$. Then, for all $x\in G$, it is the case that
+%  \begin{align*}
+%    \left\vert f_n(x) - f_m(x) \right\vert &= \left\vert \left(f_n - f_m\right)\left(x\right) \right\vert\\
+%                                           &\leq \norm{f_n - f_m},
+%  \end{align*}
+%  meaning $\left(f_n\left(x\right)\right)_n$ is Cauchy in $\R$. We define $f(x) = \lim_{n\rightarrow\infty}f_n(x)$. We must show that $f\in \ell_{\infty}\left(G\right)$, and $\norm{f_n-f}\rightarrow 0$.\newline
+%
+%  We have
+%  \begin{align*}
+%    \left\vert f(x) \right\vert &= \left\vert \lim_{n\rightarrow\infty}f_n\left(x\right) \right\vert\\
+%                                &= \lim_{n\rightarrow\infty}\left\vert f_n\left(x\right) \right\vert\\
+%                                &\leq \limsup_{n\rightarrow\infty}\norm{f_n}\\
+%                                &\leq C,
+%  \end{align*}
+%  as Cauchy sequences are always bounded. Thus, $\sup_{x\in G}\left\vert f(x) \right\vert\leq C$.\newline
+%
+%  Given $\ve > 0$, we find $N$ such that for all $m,n\geq N$, $\norm{f_n - f_m} \leq \ve$. Thus, for $x\in G$, we have
+%  \begin{align*}
+%    \left\vert f_n(x) - f_m(x) \right\vert &\leq \norm{f_n - f_m}\\
+%                                           &\leq \ve.
+%  \end{align*}
+%  Taking $m\rightarrow\infty$, we get $\left\vert f_n(x) - f(x) \right\vert \leq \ve$, for all $n\geq N$, so $\norm{f_n - f}\leq \ve$ for all $n\geq N$.\newline
+%
+%  For $f\in \ell_{\infty}\left(G\right)$, let $\Ran\left(f\right) \subseteq \left[-M,M\right]$ for some $M > 0$. Let $\ve > 0$. Since $\left[-M,M\right]$ is compact, it is totally bounded, so we can find intervals $I_{1},\dots,I_n$ with $\left[-M,M\right] = \bigsqcup_{k=1}^{n}I_k$, with the length of each $I_k$ less than $\ve$.\newline
+%
+%  Set $E_k = f^{-1}\left(I_k\right)$. Pick some $t_k\in I_k$. We set
+%  \begin{align*}
+%    \phi &= \sum_{i=1}^{n}t_k\1_{E_k}.
+%  \end{align*}
+%  Then, it is the case that $\norm{\phi - f} < \ve$.
+%\end{proof}
+%\begin{corollary}
+%  For any $f\in \ell_{\infty}\left(G\right)$, there is a sequence $\left(\phi_n\right)_n$ of simple functions with $\norm{\phi_n -f}\rightarrow 0$. If $f\geq 0$, then we can select $\phi_n\geq 0$.
+%\end{corollary}
+%Now that we understand how simple functions relate to $\ell_{\infty}(G)$, we start by defining a translation action on $\ell_{\infty}(G)$, from which we will be able to convert the idea of means into invariant elements of the state space of the dual of $\ell_{\infty}\left(G\right)$.
+%\begin{proposition}\label{prop:translation_action}
+%  Let $G$ be a group. There is an action
+%  \begin{align*}
+%    \lambda_s\colon G\rightarrow \Isom\left(\ell_{\infty}\left(G\right)\right)
+%  \end{align*}
+%  defined by
+%  \begin{align*}
+%    \lambda_{s}\left(f\right)\left(t\right) &= f\left(s^{-1}t\right)
+%  \end{align*}
+%\end{proposition}
+%\begin{proof}
+%  We have
+%  \begin{align*}
+%    \lambda_s\left(f + \alpha g\right)\left(t\right) &= \left(f + \alpha g\right) \left(s^{-1}t\right)\\
+%                                                     &= f\left(s^{-1}t\right) \alpha g\left(s^{-1}t\right)\\
+%                                                     &= \lambda_s\left(f\right)\left(t\right) + \alpha \lambda_s\left(g\right)\left(t\right)\\
+%                                                     &= \left(\lambda_s\left(f\right) + \alpha \lambda_s\left(g\right)\right)(t).
+%  \end{align*}
+%  Thus, $\lambda_s$ is linear. Additionally,
+%  \begin{align*}
+%    \norm{\lambda_s\left(f\right)} &= \sup_{t\in G}\left\vert \lambda_s\left(f\right)\left(t\right) \right\vert\\
+%                                   &= \sup_{t\in G}\left\vert f\left(s^{-1}t\right) \right\vert\\
+%                                   &= \norm{f},
+%  \end{align*}
+%  and
+%  \begin{align*}
+%    \norm{\lambda_s\left(f\right) - \lambda_s\left(g\right)} &= \norm{\lambda_s\left(f-g\right)}\\
+%                                                             &= \norm{f-g},
+%  \end{align*}
+%  meaning $\lambda_s$ is an isometry.\newline
+%
+%  We have
+%  \begin{align*}
+%    \lambda_s\circ \lambda_r\left(f\right)\left(t\right) &= \lambda_r\left(f\right)\left(s^{-1}t\right)\\
+%                                                         &= \lambda_r\left(r^{-1}s^{-1}t\right)\\
+%                                                         &= f\left(\left(sr\right)^{-1}t\right)\\
+%                                                         &= \lambda_{sr}\left(f\right)\left(t\right),
+%  \end{align*}
+%  establishing that $\lambda_s\circ \lambda_r = \lambda_{sr}$.\newline
+%
+%  By a similar process, we find that $\lambda_{s}\left(\1_{E}\right) = \1_{sE}$ for any $E\subseteq G$ and $s\in G$.
+%\end{proof}
+%\begin{definition}
+%  A {state} on $\ell_{\infty}\left(G\right)$ is a continuous linear functional $\mu\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$ such that the following are true:
+%  \begin{itemize}
+%    \item $\mu$ is positive;
+%    \item $\mu\left(\1_{G}\right) = 1$.
+%  \end{itemize}
+%  A state is called left-invariant if
+%  \begin{align*}
+%    \mu\left(\lambda_s\left(f\right)\right) = \mu\left(f\right).
+%  \end{align*}
+%\end{definition}
+%\begin{example}
+%  The evaluation functional, $\delta_x\colon \ell_{\infty}\rightarrow \R$, defined by
+%  \begin{align*}
+%    \delta_{x}\left(f\right) &= f(x),
+%  \end{align*}
+%  is a state. However, it is not necessarily invariant, as
+%  \begin{align*}
+%    \delta_x\left(\lambda_s\left(f\right)\right) &= \lambda_s\left(f\right)\left(x\right)\\
+%                                                 &= f\left(s^{-1}x\right)\\
+%                                                 &\neq f(x).
+%  \end{align*}
+%  However, we can use the evaluation functional to create an invariant state. If $G$ is finite, we define
+%  \begin{align*}
+%    \mu &= \frac{1}{\left\vert G \right\vert} \sum_{x\in G}\delta_x,
+%  \end{align*}
+%  which is indeed an invariant state.
+%\end{example}
+%We can characterize states slightly differently, which will enable us to show the equivalence between invariant states and means.
+%\begin{lemma}\label{lemma:characterizing_states}\hfill
+%  \begin{enumerate}[(1)]
+%    \item If $\mu$ is a state on $\ell_{\infty}\left(G\right)$, then
+%      \begin{align*}
+%        \norm{\mu}_{\op} = 1.
+%      \end{align*}
+%    \item If $\mu\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$ is such that
+%      \begin{align*}
+%        \norm{\mu}_{\op} &= \mu\left(\1_{G}\right)\\
+%                               &= 1,
+%      \end{align*}
+%      then $\mu$ is positive and a state.
+%  \end{enumerate}
+%\end{lemma}
+%\begin{proof}\hfill
+%  \begin{enumerate}[(1)]
+%    \item Let $\mu$ be a state. Given $f\in \ell_{\infty}\left(G\right)$, we have
+%      \begin{align*}
+%        \norm{f}\1_{G} - f &\geq 0\\
+%        \norm{f}\1_{G} + f &\geq 0,
+%      \end{align*}
+%      so
+%      \begin{align*}
+%        0 &\leq \mu\left(\norm{f}\1_{G} - f\right) \\
+%          &= \norm{f}\mu\left(\1_{G}\right) - \mu\left(f\right)
+%          \intertext{meaning}
+%        \mu\left(f\right) &\leq \norm{f}.
+%        \intertext{Additionally,}
+%        0 &\leq \mu\left(\norm{f}\1_{G} + f\right)\\
+%          &= \norm{f}\mu\left(\1_{G}\right) + \mu\left(f\right),
+%          \intertext{meaning}
+%        -\mu\left(f\right) &\leq \norm{f}.
+%      \end{align*}
+%      Thus, we have $\left\vert \mu\left(f\right) \right\vert \leq \norm{f}$, so $\norm{\mu}_{\op} \leq 1$. However, since $\mu\left(\1_{G}\right) = 1$, we must have $\norm{\mu}_{\op} = 1$.
+%  \item Suppose $\norm{\mu}_{\op} = \mu\left(\1_{G}\right) = 1$. Let $f\geq 0$. Set $g = \frac{1}{\norm{f}_u}f$.\newline
+%
+%    Then, $\Ran(g) \subseteq [0,1]$, and $\Ran\left(g - \1_{G}\right) \subseteq \left[-1,1\right]$. Thus, $\norm{g - \1_{G}}_{u} \leq 1$.\newline
+%
+%    Since $\norm{\mu}_{\op} = 1$, we must have
+%    \begin{align*}
+%      \left\vert \mu\left(g - \1_{G}\right) \right\vert &\leq 1\\
+%      \left\vert \mu\left(g\right) - 1 \right\vert &\leq 1,
+%    \end{align*}
+%    and since $\mu\left(\1_{G}\right) = 1$, we have $\mu\left(g\right) \in [0,2]$. Thus, $\mu\left(f\right) = \norm{f}\mu\left(g\right) \geq 0$.
+%  \end{enumerate}
+%\end{proof}
+%To show the equivalence between means and invariant states, we need to be able to characterize the state space on $\left(\ell_{\infty}\left(G\right)\right)^{\ast}$. To do this, we make use of some results from functional analysis.\newline
+%
+%If $X$ is a normed vector space, then the topology on $X^{\ast}$ induced by $X^{\ast\ast}$ is known as the weak* topology. The weak* topology is the topology of pointwise convergence in $X^{\ast}$ --- a net $\left(\varphi_{\alpha}\right)_{\alpha}$ converges to $\varphi$ in the weak* topology if and only if, for all $\hat{x}\in X^{\ast\ast}$, we have
+%\begin{align*}
+%  \left(\hat{x}\left(\varphi_{\alpha}\right)\right)_{\alpha}\rightarrow \hat{x}\left(\varphi\right),
+%\end{align*}
+%or by the definition of $X^{\ast\ast}$,
+%\begin{align*}
+%  \left(\varphi_{\alpha}\left(x\right)\right) \rightarrow \varphi\left(x\right)
+%\end{align*}
+%for all $x\in X$.\newline
+%
+%We state some important results in functional analysis here. The proofs of these results can be found in functional analysis textbooks such as \cite{rudin_functional_analysis}.
+%\begin{theorem}[Hahn--Banach Continuous Extension Theorem]
+%  Let $X$ be a normed vector space, $E\subseteq X$ a subspace, and $\varphi\in E^{\ast}$ a bounded linear functional. Then, there exists a continuous $\psi\in X^{\ast}$ such that $\norm{\varphi}_{\op} = \norm{\psi}_{\op}$, and $\psi|_{E} = \varphi$.
+%\end{theorem}
+%\begin{theorem}[Hahn--Banach Separation Theorems]
+%  Let $X$ be a normed vector space.
+%  \begin{enumerate}[(1)]
+%    \item Given a nonzero $x_0\in X$, there is a $\varphi\in X^{\ast}$ with $\norm{\varphi}_{\op} = 1$ and $\varphi\left(x_0\right) = \norm{x}$. We call $\varphi$ a norming functional.
+%    \item Given a proper closed subspace $E\subseteq X$ and $x_0\in X\setminus E$, there is a $\varphi\in X^{\ast}$ such that $\varphi|_{E} = 0$, $\norm{\varphi}_{\op} = 1$, and $\varphi\left(x\right) = \dist_{E}(x)$ for all $x\in X$.
+%  \end{enumerate}
+%\end{theorem}
+%\begin{theorem}[Banach--Alaoglu Theorem]
+%  Let $X$ be a normed vector space.
+%  \begin{enumerate}[(1)]
+%    \item The closed unit ball in the dual space, $B_{X^{\ast}}$, is compact in the $w^{\ast}$ topology.
+%    \item A subset $C\subseteq X$ is $w^{\ast}$-compact if and only if $C$ is $w^{\ast}$-closed and norm bounded.
+%  \end{enumerate}
+%\end{theorem}
+%\begin{corollary}
+%  The set of states in $\left(\ell_{\infty}\left(G\right)\right)^{\ast}$ forms a $w^{\ast}$-compact subset of $B_{\left(\ell_{\infty}\left(G\right)\right)^{\ast}}$.
+%\end{corollary}
+%\begin{proof}
+%  From the Banach--Alaoglu Theorem, we only need to show that the set of states, $S\left(\ell_{\infty}\left(G\right)\right)$, is $w^{\ast}$-closed, as every element of $S\left(\ell_{\infty}\left(G\right)\right)$ has norm $1$.\newline
+%
+%  Let $f\in \ell_{\infty}\left(G\right)$ be positive, and let $\left(\varphi_{i}\right)_i$ be a net in $S\left(\ell_{\infty}\left(G\right)\right)$ with $\left(\varphi_{i}\right)_i\xrightarrow{w^{\ast}} \varphi\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$. From Lemma \ref{lemma:characterizing_states}, we must show that $\varphi$ is positive and $\varphi\left(\1_{G}\right) = 1$.\newline
+%
+%  We start by seeing that, since each $\varphi_i$ is a state, we have $\varphi_{i}\left(f\right) \geq 0$ for each $i\in I$, so we must have $\varphi\left(f\right) \geq 0$.\newline
+%
+%  Similarly, since $\varphi_{i}\left(\1_{G}\right) = 1$ for each $i\in I$, and $\left(\varphi_i\right)_i \xrightarrow{w^{\ast}} \varphi$, we have $\varphi\left(\1_{G}\right) = 1$. Thus, by Lemma \ref{lemma:characterizing_states}, we have that $S\left(\ell_{\infty}\left(G\right)\right)$ is $w^{\ast}$-closed.
+%\end{proof}
+%
+%Now, we may show the correspondence between invariant states and means.
+%\begin{proposition}\label{prop:state_implies_mean}
+%  If $\mu\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$ is a state, then $m\colon P(G)\rightarrow [0,1]$ defined by $m(E) = \mu\left(\1_{E}\right)$ is a finitely additive probability measure on $G$.\newline
+%
+%  Moreover, if $\mu$ is invariant, then $m$ is a mean.
+%\end{proposition}
+%\begin{proof}
+%  We have
+%  \begin{align*}
+%    m\left(G\right) &= \mu\left(\1_{G}\right)\\
+%                    &= 1\\
+%                    \\
+%    m\left(\emptyset\right) &= \mu\left(0\right)\\
+%                            &= 0\\
+%                            \\
+%    m\left(E\sqcup F\right) &= \mu\left(\1_{E\sqcup F}\right)\\
+%                            &= \mu\left(\1_{E} + \1_{F}\right)\\
+%                            &= \mu\left(\1_{E}\right) + \mu\left(\1_{F}\right)\\
+%                            &= m\left(E\right) + m\left(F\right).
+%  \end{align*}
+%  Additionally, since $0 \leq \1_{E}\leq \1_{G}$, we have $0 \leq \mu\left(\1_{E}\right) \leq 1$, so $0 \leq m(E) \leq 1$.\newline
+%
+%  If $\mu$ is invariant, then
+%  \begin{align*}
+%    m\left(sE\right) &= \mu\left(\1_{sE}\right)\\
+%                     &= \mu\left(\lambda_s\left(\1_{E}\right)\right)\\
+%                     &= \mu\left(\1_{E}\right)\\
+%                     &= m\left(E\right).
+%  \end{align*}
+%\end{proof}
+%\begin{proposition}\label{prop:mean_implies_state}
+%  If $G$ admits a mean, then $\left(\ell_{\infty}\left(G\right)\right)^{\ast}$ admits an invariant state.
+%\end{proposition}
+%\begin{proof}
+%  Let $m$ be a mean. Define $\mu_0\colon \Sigma\rightarrow \R$ by
+%  \begin{align*}
+%    \mu_0\left(\sum_{k=1}^{n}t_k\1_{E_k}\right) &= \sum_{k=1}^{n}t_km\left(E_k\right).
+%  \end{align*}
+%  Since $m$ is finitely additive, it is the case that $\mu_0$ is well-defined, linear, and positive, with $\mu_0\left(\1_{G}\right) = m\left(G\right) = 1$.\newline
+%
+%  Additionally, since $m$ is a mean, then for $f = \sum_{k=1}^{n}t_k\1_{E_k}$, we have
+%  \begin{align*}
+%    \mu_0\left(\lambda_s\left(f\right)\right) &= \mu_0\left(\lambda_s\left(\sum_{k=1}^{n}t_k\1_{E_k}\right)\right)\\
+%                                              &= \mu_0\left(\sum_{k=1}^{n}t_k\1_{sE_k}\right)\\
+%                                              &= \sum_{k=1}^{n}t_km\left(sE_k\right)\\
+%                                              &= \sum_{k=1}^{n}t_km\left(E_k\right)\\
+%                                              &= \mu_0\left(f\right).
+%  \end{align*}
+%  We see that
+%  \begin{align*}
+%    \left\vert \mu_0\left(f\right) \right\vert &= \left\vert \sum_{k=1}^{n}t_km\left(E_k\right) \right\vert\\
+%                                               &\leq \sum_{k=1}^{n}\left\vert t_k \right\vert m\left(E_k\right)\\
+%                                               &\leq \sum_{k=1}^{n}\norm{f}\sum_{k=1}^{n}m\left(E_k\right)\\
+%                                               &= \norm{f}\sum_{k=1}^{n}m\left(E_k\right)\\
+%                                               &\leq \norm{f},
+%  \end{align*}
+%  meaning $\mu_0$ is continuous, so $\mu_0$ is uniformly continuous.\newline
+%
+%  Since $\overline{\Sigma} = \ell_{\infty}\left(G\right)$, uniform continuity provides that $\mu_0$ extends to a continuous linear functional $\mu\colon \ell_{\infty}\left(G\right)\rightarrow \R$ with $\mu\left(\1_{G}\right) = \mu_0\left(\1_{G}\right) = 1$.\newline
+%
+%  For $f\geq 0$, we find a sequence $\left(\phi_n\right)_n$ in $\Sigma$ with $\phi_n\geq 0$ and $\norm{\phi_n - f} \xrightarrow{n\rightarrow\infty}0$. We set
+%  \begin{align*}
+%    \mu\left(f\right) &= \lim_{n\rightarrow\infty}\mu\left(\phi_n\right)\\
+%                      &= \lim_{n\rightarrow\infty}\mu_0\left(\phi_n\right)\\
+%                      &\geq 0,
+%  \end{align*}
+%  so $\mu$ is a state.\newline
+%
+%  If $f\in \ell_{\infty}\left(G\right)$, $s\in G$, and $\left(\phi_n\right)_n$ a sequence in $\Sigma$ with $\left(\phi_n\right)_n\rightarrow f$, then
+%  \begin{align*}
+%    \norm{\lambda_s\left(\phi_n\right) - \lambda_s\left(f\right)} &= \norm{\lambda_s\left(\phi_n - f\right)}\\
+%                                                                  &= \norm{\phi_n - f}\\
+%                                                                  &\rightarrow 0.
+%  \end{align*}
+%  Thus, we have
+%  \begin{align*}
+%    \mu\left(\lambda_s\left(\phi_n\right)\right) &= \mu_0\left(\lambda_s\left(\phi_n\right)\right)\\
+%                                                 &= \mu_0\left(\phi_n\right)\\
+%                                                 &= \mu\left(\phi_n\right)\\
+%                                                 &\rightarrow \mu\left(f\right),
+%  \end{align*}
+%  so $\mu\left(f\right) = \mu\left(\lambda_s\left(f\right)\right)$. Thus, $\mu\in \left(\ell_{\infty}\left(G\right)\right)^{\ast}$ is an invariant state.
+%\end{proof}
+%\section{Establishing Amenability using Invariant States}%
+%Owing to the correspondence between invariant states and means, we are now able to establish amenability for large classes of groups.
+%\begin{proposition}
+%  The group of integers, $\Z$, is amenable.
+%\end{proposition}
+%\begin{proof}
+%  We define the left shift, $\lambda_1\colon \ell_{\infty}\left(\Z\right) \rightarrow \ell_{\infty}\left(\Z\right)$, by
+%  \begin{align*}
+%    \lambda_1\left(f\right)\left(k\right) &= f\left(k-1\right).
+%  \end{align*}
+%  This is an action as in Proposition \ref{prop:translation_action}. \newline
+%
+%  We set $Y = \Ran\left(\id - \lambda_1\right)\subseteq \ell_{\infty}\left(\Z\right)$. We claim that $\dist_{Y}\left(\1_{\Z}\right) \geq 1$.\newline
+%
+%  Suppose toward contradiction that there is $y\in Y$ with $\norm{\1_{\Z} - y}_{u} = r < 1$. Then, $y = f - \lambda_1 f$ for some $f\in \ell_{\infty}(\Z)$, so
+%  \begin{align*}
+%    \norm{\1_{\Z} - \left(f - \lambda_1\left(f\right)\right)} &= r.
+%  \end{align*}
+%  Thus, for all $k\in\Z$, we have
+%  \begin{align*}
+%    \left\vert 1 - \left(f(k) - f(k-1)\right) \right\vert &\leq r,
+%  \end{align*}
+%  so $\left\vert f(k) - f\left(k-1\right) \right\vert \geq 1-r > 0$. However, such an $f$ cannot be bounded.\newline
+%
+%  Since $\dist_{\overline{Y}}\left(\1_{\Z}\right) = \dist_{Y}\left(\1_{\Z}\right)$, the Hahn--Banach separation theorems provide $\mu\in \left(\ell_{\infty}\left(\Z\right)\right)^{\ast}$ with $\norm{\mu}_{\op} = 1$, $\mu|_{\overline{Y}} = 0$, and $\mu\left(\1_{\Z}\right) = \dist_{Y}\left(\1_{\Z}\right) \geq 1$.\newline
+%
+%  Since $\norm{\mu}_{\op} = 1$ and $\mu\left(\1_{\Z}\right) \geq 1$, we must have $\mu\left(\1_{\Z}\right) = 1$.\newline
+%
+%  Additionally, since $\norm{\mu}_{\op} = \mu\left(\1_{\Z}\right) = 1$, we have that $\mu$ is a state on $\ell_{\infty}\left(\Z\right)$, and since $\mu\left(y\right) = 0$ for all $y\in Y$, we have
+%  \begin{align*}
+%    \mu\left(f - \lambda_1\left(f\right)\right) &= 0\\
+%    \mu\left(f\right) &= \mu\left(\lambda_1\left(f\right)\right).
+%  \end{align*}
+%  Inductively, this means that $\mu\left(f\right) = \mu\left(\lambda_k\left(f\right)\right)$ for all $k\in \Z$, so $\mu$ is an invariant state on $\ell_{\infty}\left(\Z\right)$. Thus, $\Z$ is amenable.
+%\end{proof}
+%\begin{proposition}
+%  If $N\trianglelefteq G$ and $G/N$ are amenable, then $G$ is amenable.
+%\end{proposition}
+%\begin{proof}
+%  Let $\rho\in \left(\ell_{\infty}\left(G/N\right)\right)^{\ast}$ be an invariant state, and let $p\colon P(N)\rightarrow [0,1]$ be a mean. For $E\subseteq G$, we define $f_E\colon G/N\rightarrow \R$ by
+%  \begin{align*}
+%    f_E\left(tN\right) &= p\left(N\cap t^{-1}E\right).
+%  \end{align*}
+%  We start by verifying that $f_E$ is well-defined. For $tN = sN$, we have $s^{-1}t\in N$, so
+%  \begin{align*}
+%    p\left(N\cap t^{-1}E\right) &= p\left(s^{-1}t\left(N\cap t^{-1}E\right)\right)\\
+%                                &= p\left(s^{-1}tN \cap s^{-1}E\right)\\
+%                                &= p\left(N\cap s^{-1}E\right).
+%  \end{align*}
+%  Since $f_E$ is defined through $p$, we can see that $f_E$ is bounded. Additionally,
+%  \begin{align*}
+%    f_{E\sqcup F}\left(tN\right) &= p\left(N\cap t^{-1}\left(E\sqcup F\right)\right)\\
+%                                 &= p\left(N\cap \left(t^{-1}E\sqcup t^{-1}F\right)\right)\\
+%                                 &= p\left(\left(N\cap t^{-1}E\right) \sqcup \left(N\cap t^{-1}F\right)\right)\\
+%                                 &= p\left(N\cap t^{-1}E\right) + p\left(N\cap t^{-1}F\right)\\
+%                                 &= f_E\left(tN\right) + f_F\left(tN\right)\\
+%                                 &= \left(f_E + f_F\right)\left(tN\right),
+%  \end{align*}
+%  and
+%  \begin{align*}
+%    f\left(sE\right) \left(tN\right) &= p\left(N\cap t^{-1}sE\right)\\
+%                                     &= f_E\left(s^{-1}tN\right)\\
+%                                     &= \lambda_{sN}\left(f_E\right)\left(tN\right),
+%  \end{align*}
+%  so $f_{sE} = \lambda_{sN}\left(f_E\right)$. Finally,
+%  \begin{align*}
+%    f_G\left(tN\right) &= p\left(N\cap t^{-1}G\right)\\
+%                       &=p\left(N\right)\\
+%                       &= 1,
+%  \end{align*}
+%  meaning $f_G = \1_{G/N}$.\newline
+%
+%  We define $m\colon P(G)\rightarrow [0,1]$ by
+%  \begin{align*}
+%    m(E) &= \rho\left(f_E\right).
+%  \end{align*}
+%  Then, we have
+%  \begin{align*}
+%    m\left(E\sqcup F\right) &= m(E) + m(F)\\
+%                            \\
+%    m\left(G\right) &= 1\\
+%    \\
+%    m\left(sE\right) &= \rho\left(f_{sE}\right)\\
+%                     &= \rho\left(\lambda_{sN}\left(f_{E}\right)\right)\\
+%                     &= \rho\left(f_E\right)\\
+%                     &= m(E),
+%  \end{align*}
+%  so $m$ is a mean.
+%\end{proof}
+%\begin{corollary}
+%  The finite direct product of amenable groups is amenable.
+%\end{corollary}
+%\begin{proof}
+%  For $H$ and $K$ amenable groups, we know that $K\cong \left(H\times K\right)/H$ and $H$ are amenable, so $H\times K$ is amenable. Induction provides the general case.
+%\end{proof}
+%\begin{corollary}
+%  Finitely generated abelian groups are amenable.
+%\end{corollary}
+%\begin{proof}
+%  By the fundamental theorem of finitely generated abelian groups, all finitely generated abelian groups are isomorphic to $\Z^{d}\times \Z/n_1\Z\times\cdots\times \Z/{n_k}\Z$.\newline
+%
+%  Since $\Z^{d}$ is a finite direct product of $\Z$, and the torsion subgroup $\Z/n_1\Z\times\cdots\times \Z/n_k\Z$ is finite, we see that a finitely generated abelian group is a direct product of two amenable groups, hence amenable.
+%\end{proof}
+%\begin{corollary}
+%  If $\set{G_i}_{i\in I}$ is a directed family of amenable groups, then the direct limit,
+%  \begin{align*}
+%    G &= \bigcup_{i\in I}G_i,
+%  \end{align*}
+%  is also amenable.
+%\end{corollary}
+%\begin{proof}
+%  Let $\mu_i\in \left(\ell_{\infty}\left(G_i\right)\right)^{\ast}$ be invariant states.\newline
+%
+%  Set
+%  \begin{align*}
+%    M_i &= \set{\mu\in S\left(\ell_{\infty}\left(G\right)\right)| \mu\left(\lambda_s\left(f\right)\right) = \mu\left(f\right)\text{ for all }s\in G_i}.
+%  \end{align*}
+%  We set $\mu\left(f\right) = \mu_i\left(f|_{G_i}\right)$. Since each $G_i$ is amenable, it is the case that each $M_i$ is nonempty. Similarly, seeing as we have established the state space as $w^{\ast}$-closed in $B_{\left(\ell_{\infty}\left(G\right)\right)^{\ast}}$, it is the case that each $M_i$ is $w^{\ast}$-closed in $B_{\left(\ell_{\infty}\left(G\right)\right)^{\ast}}$.\newline
+%
+%  For $i_1,\dots,i_n$, we find $G_j \supseteq G_{i_1},\dots,G_{i_n}$, which exists since $\set{G_i}_{i\in I}$ is directed. We have that $M_j\subseteq \bigcap_{k=1}^{n}M_{i_k}$, so $\set{M_i}_{i\in I}$ has the finite intersection property.\newline
+%
+%  Thus, there is $\mu\in \bigcap_{i\in I}M_i$, which is necessarily invariant on $G$.
+%\end{proof}
+%\begin{corollary}
+%  All abelian groups are amenable.
+%\end{corollary}
+%\begin{proof}
+%  Every abelian group is the direct limit of its finitely generated subgroups.
+%\end{proof}
+%\begin{corollary}
+%  All solvable groups are amenable.
+%\end{corollary}
+%\begin{proof}
+%  Let $e_G = G_0 \leq G_1\leq\cdots\leq G_n\leq G$ be such that $G_{j-1}\trianglelefteq G_j$ for $j=1,\dots,n$, and $G_i/G_j$ is abelian.\newline
+%
+%  Since $G_0$ is abelian, it is amenable, as is $G_1/G_0$, so $G_1$ is amenable. We see then that $G_2$ is amenable as $G_1$ and $G_2/G_1$ are amenable.\newline
+%
+%  Continuing in this fashion, we see that $G$ is amenable.
+%\end{proof}
+While group amenability and the existence of an invariant state on the group are equivalent, as well as showing the group is non-paradoxical, we are interested in establishing a more combinatorial characterization for group amenability. This will eventually involve showing the equivalence between invariant states, the Følner condition, and the existence of an approximate mean.
+\section{Følner's Condition}%
 \begin{definition}\label{def:folner_condition}
   A group is said to satisfy the {Følner condition} if, for every $\ve > 0$ and $E\subseteq G$, there is a nonempty finite subset $F\subseteq G$ such that for all $t\in E$,
   \begin{align*}
@@ -651,6 +649,7 @@ However, we can often more easily create a sequence (or net) of finitely support
   \end{align*}
   meaning that $\Z$ satisfies the Følner condition.
 \end{example}
+\section{Approximate Means, Invariant States, and Følner's Condition}%
 We have thus far proven that $G$ satisfies the Følner condition if and only if $G$ admits a Følner sequence, and that $G$ is amenable if and only if $G$ admits an invariant state.\newline
 
 We will now begin harmonizing these two characterizations through the use of approximate means, eventually showing that $G$ satisfies the Følner condition if and only if $G$ admits an approximate mean, and that $G$ admits an approximate mean if and only if $G$ is amenable.
@@ -906,7 +905,6 @@ We will use the layer cake decomposition to prove that if $G$ admits an approxim
     \frac{\left\vert sF\triangle F \right\vert}{\left\vert F \right\vert} &\leq \sum_{s\in S}\frac{\left\vert sF\triangle F \right\vert}{\left\vert F \right\vert}\\
                                                                           &< \ve.
   \end{align*}
-  
 \end{proof}
 
 Thus far, we have shown the following to be equivalent for a discrete group $G$:
@@ -917,4 +915,4 @@ Thus far, we have shown the following to be equivalent for a discrete group $G$:
   \item $G$ admits an approximate mean;
   \item $G$ satisfies the Følner condition.
 \end{enumerate}
-The equivalence between (1) and (2) follows from Tarski's theorem (Theorem \ref{thm:tarski}), the equivalence between (2) and (3) follows from Propositions \ref{prop:state_implies_mean} and \ref{prop:mean_implies_state}, and the equivalence between (3), (4), and (5) follows from Propositions \ref{prop:folner_implies_approx_mean}, \ref{prop:approx_mean_implies_amenable}, \ref{prop:amenable_implies_approx_mean}, and \ref{prop:approx_mean_implies_folner}.
+The equivalence between (1) and (2) follows from Theorem \ref{thm:tarski}, the equivalence between (2) and (3) follows from Propositions \ref{prop:state_implies_mean} and \ref{prop:mean_implies_state}, and the equivalence between (3), (4), and (5) follows from Propositions \ref{prop:folner_implies_approx_mean}, \ref{prop:approx_mean_implies_amenable}, \ref{prop:amenable_implies_approx_mean}, and \ref{prop:approx_mean_implies_folner}.

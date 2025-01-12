@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Reflections on 2024"
-permalink: "/posts/reflections_on_2023.html"
+permalink: "/posts/reflections_on_2024.html"
 ---
 
 Wow, another year has already passed. Impressive. This was probably the most interesting year I've had so far, with all the ups and downs that such a year could have brought. I think, overall, it was one of the best years I've had, in terms of academics, health, and general overall happiness.
