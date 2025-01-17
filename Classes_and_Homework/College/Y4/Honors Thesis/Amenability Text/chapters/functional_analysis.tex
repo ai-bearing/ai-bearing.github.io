@@ -1,5 +1,5 @@
 \section{Normed Vector Spaces and Algebras}%
-The fundamental unit of functional analysis is functions --- specifically, collections of functions equipped with particular operations and a norm that turn them into vector spaces and algebras. 
+The fundamental unit of functional analysis is functions --- specifically, collections of functions equipped with particular operations and a norm that turn them into vector spaces and algebras. This section will focus on some of the basic facts and theory surrounding normed vector spaces and algebras.
 \begin{definition}\label{def:vector_space_and_algebra}
   Let $\F = \R$ or $\C$ be a field. An $\F$-vector space $X$ is a nonempty set equipped with two operations:
   \begin{align*}
@@ -55,6 +55,9 @@ Vector spaces can also be equipped with notions of length and distance --- thus 
 
   If $X$ is complete with respect to the metric $d\left(x,y\right) = \norm{x-y}$, we call $X$ a Banach space.
 \end{definition}
+\begin{theorem}
+  Let $X$ be a normed vector space. Then, $X$ is complete if and only if, for every sequence of vectors $\left(x_k\right)_k$, if$\sum_{k=1}^{\infty}\norm{x_k}$ converges, then $\sum_{k=1}^{\infty}x_k$ converges.
+\end{theorem}
 \begin{definition}[Open Balls, Closed Balls, Spheres]\label{def:open_closed_balls}
   Let $X$ be a normed vector space.
   \begin{itemize}
@@ -156,9 +159,11 @@ The Baire category theorem is used to prove many important theorems in functiona
 \begin{theorem}[Uniform Boundedness Principle]\label{thm:uniform_boundedness}
   Let $\set{T_i}_{i\in I}$ be a family of maps in $\B\left(X,Y\right)$ such that, for all $x\in X$, $\sup_{i\in I}\norm{T_i(x)} < \infty$. Then, $\sup_{i\in I}\norm{T_i}_{\op} < \infty$.
 \end{theorem}
-Now, we turn our attention towards linear functionals. Consider the following problem in algebra: suppose $X$ is a finite-dimensional vector space, and $Y\subseteq X$ is a subspace. If we have a linear functional $\varphi\colon Y\rightarrow \F$, can this linear functional be extended to the full space? The answer is yes --- if $\mathcal{B} = \set{x_1,\dots,x_m}$ is a basis for $Y$, a fundamental result in linear algebra states that this basis can be extended to a basis for $X$, $\mathcal{C} = \set{x_1,\dots,x_m,x_{m+1},\dots,x_n}$; if we define $c_i = \varphi\left(x_i\right)$ for $1 \leq i \leq m$, we may define $\varphi\left(x_i\right) = 0$ for $m+1 \leq i \leq n$. In other words, we may always extend elements of the algebraic dual from a subspace to the full space.\newline
+Now, we turn our attention towards linear functionals. Consider the following problem in algebra: suppose $X$ is a finite-dimensional vector space, and $Y\subseteq X$ is a subspace. If we have a linear functional $\varphi\colon Y\rightarrow \F$, can this linear functional be extended to the full space?\newline
 
-However, if $X$ is infinite-dimensional and equipped with a norm (or, more generally, a locally convex topology, see [write definition in LCTVS section]), we are also interested in seeing if these extensions preserve continuity. This is the domain of the Hahn--Banach theorems, which establish extension and separation results in normed vector spaces (and, as detailed later, locally convex topological vector spaces, see [Hahn--Banach theorems for LCTVS]).
+The answer is yes --- if $\mathcal{B} = \set{x_1,\dots,x_m}$ is a basis for $Y$, a fundamental result in linear algebra states that this basis can be extended to a basis for $X$, $\mathcal{C} = \set{x_1,\dots,x_m,x_{m+1},\dots,x_n}$; if we define $c_i = \varphi\left(x_i\right)$ for $1 \leq i \leq m$, we may define $\varphi\left(x_i\right) = 0$ for $m+1 \leq i \leq n$. In other words, we may always extend elements of the algebraic dual from a subspace to the full space.\newline
+
+However, if $X$ is infinite-dimensional and equipped with a norm (or, more generally, a locally convex topology, see [write definition in LCTVS section]), we also care about continuity, norm, and whether these extensions preserve continuity and norm. This is the domain of the Hahn--Banach theorems, which establish extension and separation results in normed vector spaces (and, as detailed later, locally convex topological vector spaces, see [Hahn--Banach theorems for LCTVS]).
 \begin{definition}[Minkowski Functional]
   We call a map $p\colon X\rightarrow [0,\infty)$ a Minkowski functional if
   \begin{itemize}
@@ -190,7 +195,48 @@ However, if $X$ is infinite-dimensional and equipped with a norm (or, more gener
   \end{align*}
 \end{corollary}
 \section{Duality}%
-
+Here, we discuss a little bit more of the theory of dual spaces.
+\begin{definition}
+  Let $X$ be a normed vector space. The double dual of $X$, $X^{\ast\ast}$, is the set of all linear functionals
+  \begin{align*}
+    \hat{x}\colon X^{\ast\ast}\rightarrow \C,
+  \end{align*}
+  where $\hat{x}$ is such that $\hat{x}\left(\varphi\right) = \varphi(x)$ for each $\varphi\in X^{\ast}$. We define the canonical isometric embedding $\iota_X\colon X\hookrightarrow X^{\ast\ast}$ by $x\mapsto \hat{x}$.
+\end{definition}
+\begin{definition}
+  Let $X$ be a normed space. A norm completion of $X$ is a pair $\left(Z,j\right)$, where $Z$ is a Banach space, $j\colon X\hookrightarrow Z$ is a linear isometry, and $\overline{\Ran}\left(j\right) = Z$.
+\end{definition}
+\begin{proposition}
+  Let $X$ be a normed space, and set $\widetilde{X} = \overline{\iota_X\left(X\right)}^{\norm{\cdot}_{\op}}\subseteq X^{\ast\ast}$. Then, $\left(\widetilde{X},\iota_X\right)$ is a norm completion of $X$. Additionally, if $\left(Z,j\right)$ is any other norm completion of $X$, then there is an isometric isomorphism $Z\rightarrow \widetilde{X}$.
+\end{proposition}
+\begin{proposition}
+  Let $X$ and $Y$ be normed spaces, and let $T\in \B\left(X,Y\right)$. Then, there is a unique $\widetilde{T}\in B\left(\widetilde{X},\widetilde{Y}\right)$ such that $\widetilde{T}\circ \iota_X = \iota_Y\circ T$. The diagram below commutes.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkQANEAX1PU1z5CKchWp0mrdgE0efEBmx4CRMsXEMWbRCAA6ugO5ZYeRrGAduc-kqFFR6mpqk79Rk1jMxg0q93EwUADm8ESgAGYAThAAtkgATDQ4EEgAzE6S2nqGxjCm5gAqfvJRsUhkIMlIohJa7AUgNIz0AEYwjAAKAsrCIJFYQQAWONYgpXGIFVWIibUu2fg49AD6XLwR0RM10+kgzW2d3XY6-UMjGXWuuosrsv7cQA
+\begin{tikzcd}
+\widetilde{X} \arrow[r, "\widetilde{T}"] & \widetilde{Y}           \\
+X \arrow[r, "T"'] \arrow[u, "\iota_X"]   & Y \arrow[u, "\iota_Y"']
+\end{tikzcd}
+  \end{center}
+  Furthermore, we have $\norm{T}_{\op} = \norm{\widetilde{T}}_{\op}$. If $T$ is isometric, then so is $\widetilde{T}$, and if $T$ is an isometric isomorphism, then so is $\widetilde{T}$.
+\end{proposition}
+\begin{definition}
+  A normed space is called a dual space if there is a normed space $Z$ such that $Z^{\ast} \cong X$ are isometrically isomorphic. We call $Z$ the predual of $X$.
+\end{definition}
+\begin{example}\hfill
+  \begin{itemize}
+    \item We have $c_0^{\ast}\cong \ell_1$, where $c_0$ is the space of all sequence vanishing at infinity, and $\ell_1$ is the space of all absolutely summable sequences.
+    \item We have $\ell_1^{\ast}\cong \ell_{\infty}$, where $\ell_{\infty}$ is space of all bounded sequences.
+    \item If $\mu$ is a $\sigma$-finite measure on the measurable space $\left(\Omega,\mathcal{M}\right)$, and $p,q\in (1,\infty)$ are such that $p^{-1} + q^{-1} = 1$, then $L_{p}\left(\Omega,\mu\right)^{\ast} \cong L_q\left(\Omega,\mu\right)$. Here,
+      \begin{align*}
+        L_p\left(\Omega,\mu\right) &= \set{f\colon \Omega\rightarrow \C | \int_{\Omega}^{} \left\vert f \right\vert^p\:d\mu < \infty}.
+      \end{align*}
+      Additionally, if $\mu$ is semi-finite, then $L_1\left(\Omega,\mu\right)^{\ast}\cong L_{\infty}\left(\Omega,\mu\right)$.
+  \end{itemize}
+\end{example}
+\begin{theorem}[Riesz--Markov Theorem]
+  Let $\Omega$ be a LCH space. Then, $M_r\left(\Omega\right) \cong C_0\left(\Omega\right)^{\ast}$ are isometrically isomorphic, where $M_r\left(\Omega\right)$ is equipped with the norm $\norm{\mu} = \left\vert \mu \right\vert\left(\Omega\right)$ for $\mu\in M_r\left(\Omega\right)$.
+\end{theorem}
 \section{Topological Vector Spaces}%
 \section{Hilbert Spaces and Operators}%
 \section{Banach Algebras and $C^{\ast}$-algebras}%
