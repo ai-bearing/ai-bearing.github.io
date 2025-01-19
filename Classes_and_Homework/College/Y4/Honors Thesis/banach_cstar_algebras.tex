@@ -24,7 +24,7 @@
 \lhead{Banach Algebras and $C^{\ast}$-Algebras}
 
 \setcounter{secnumdepth}{0}
-
+\hbadness=10000
 \begin{document}
 \RaggedRight
 \tableofcontents
@@ -3713,5 +3713,151 @@ Every cyclic representation is nondegenerate, as for any cyclic vector $\xi_{\pi
                 &= \Span\left(\xi\right).
   \end{align*}
 \end{proof}
-Thus, we see that irreducible representations of commutative $C^{\ast}$-algebras are characters. Earlier, we examined a particular representation of $C_{b}\left(\Omega\right)$. Now, we want to characterize representations of unital and commutative $C^{\ast}$-algebras up to unitary equivalence. We may start with cyclic representations.
+Thus, we see that irreducible representations of commutative $C^{\ast}$-algebras are characters. Earlier, we examined a particular representation of $C_{b}\left(\Omega\right)$. Now, we want to characterize representations of unital and commutative $C^{\ast}$-algebras up to unitary equivalence. We may start with cyclic representations, as we know that all representations are direct sums of cyclic representations.
+\begin{proposition}
+  Let $\Omega$ be a compact Hausdorff space, and suppose $\pi\colon C(\Omega)\rightarrow \B\left(\mathcal{H}\right)$ is a unital and cyclic representation. Then, there exists some regular Borel probability measure $\mu$ such that $\pi\sim_{u} M$ on $L_2\left(\Omega,\mu\right)$.
+\end{proposition}
+\begin{proof}
+  Let $\xi$ be a unit cyclic vector for $\pi$, and consider the linear functional $\varphi(f) = \iprod{\pi(f)\left(\xi\right)}{\xi}$. Since $\pi$ is unital and positive, it is the case that $\varphi$ is a state, so by the Riesz--Markov--Kakutani representation theorem, there is a unique Borel probability measure $\mu_{\varphi}$ such that
+  \begin{align*}
+    \iprod{\pi(f)\left(\xi\right)}{\xi} &= \int_{\Omega}^{} f\:d\mu_{\varphi}.
+  \end{align*}
+  Consider the subspace $\mathcal{C}\left(\Omega\right) = \set{\left[g\right]_{\mu} | g\in C\left(\Omega\right)}\subseteq L_2\left(\Omega,\mu\right)$, and let $U_0\colon \mathcal{C}\left(\Omega\right)\rightarrow \mathcal{H}$ be defined by $U_0\left(\left[g\right]_{\mu}\right) = \pi(g)\left(\xi\right)$.\newline
+
+  Note that $U_0$ is isometric, since
+  \begin{align*}
+    \norm{U_0\left(\left[g\right]_{\mu}\right)}^2 &= \norm{\pi(g)(\xi)}^2\\
+                                                  &= \iprod{\pi(g)(\xi)}{\pi(g)(\xi)}\\
+                                                  &= \iprod{\pi(g)^{\ast}\pi(g)(\xi)}{\xi}\\
+                                                  &= \iprod{\pi\left(\left\vert g \right\vert^2\right)\left(\xi\right)}{\xi}\\
+                                                  &= \int_{\Omega}^{} \left\vert g \right\vert^2\:d\mu_{\varphi}\\
+                                                  &= \norm{\left[g\right]_{\mu}}^2,
+  \end{align*}
+  where the last norm is the $L_2$-norm of the equivalence class $\left[g\right]_{\mu}$. Since $\overline{\mathcal{C}\left(\Omega\right)}^{\norm{\cdot}_2} = L_2\left(\Omega,\mu\right)$, and $\left[\pi\left(C\left(\Omega\right)\right)\xi\right] = \mathcal{H}$, $U_0$ extends to a unitary operator $U\colon L_2\left(\Omega\right)\rightarrow \mathcal{H}$.\newline
+
+  Let $f\in C\left(\Omega\right)$. We claim that $U^{\ast}\pi(f)U = M_f$. It suffices to show that $\pi(f)U = UM_f$ on $\mathcal{C}\left(\Omega\right)$. We see
+  \begin{align*}
+    \pi(f)U\left(\left[g\right]_{\mu}\right) &= \pi(f)\pi(g)\left(\xi\right)\\
+                                             &= \pi\left(fg\right)\left(\xi\right)\\
+                                             &= U\left(\left[fg\right]_{\mu}\right)\\
+                                             &= U M_f\left(\left[g\right]_{\mu}\right).
+  \end{align*}
+  Thus, $\pi$ is unitarily equivalent to $M$ as desired.
+\end{proof}
+\begin{corollary}
+  If $\Omega$ is a compact Hausdorff space, and $\pi\colon C\left(\Omega\right)\rightarrow \B\left(\mathcal{H}\right)$ is a unital representation, then there is a family $\left(\mu_i\right)_i$ of regular Borel probability measures on $\Omega$ such that
+  \begin{align*}
+    \left(\pi,\mathcal{H}\right) &\sim_{u} \bigoplus_{i\in I}\left(M,L_2\left(\Omega,\mu_i\right)\right),
+  \end{align*}
+  where for each $i\in I$, $M\colon C\left(\Omega\right)\rightarrow \B\left(L_2\left(\Omega,\mu_i\right)\right)$ is the multiplication operator representation.
+\end{corollary}
+Earlier,\footnote{Specifically, in the topological vector space notes.} we showed that the state space $S\left(\Omega\right)$ of $C\left(\Omega\right)$, when $\Omega$ is a compact Hausdorff space, can be identified with the set of regular probability measures on $\Omega$. We can actually generalize this using the ordering on the self-adjoint elements of a $C^{\ast}$-algebra.
+\begin{definition}
+  Let $A$ be a $C^{\ast}$-algebra.
+  \begin{enumerate}[(1)]
+    \item A linear functional $\varphi\colon A\rightarrow \C$ is called positive if $\varphi\left(A_{+}\right) \subseteq [0,\infty)$. In such a case, we write $\varphi \geq 0$.
+    \item A positive functional $\varphi\colon A\rightarrow \C$ is called faithful if $\ker\left(\varphi\right)\cap A_{+} = \set{0}$.\footnote{In other words, a faithful positive functional is injective when restricted to the positive elements.}
+    \item A state is a positive linear functional $\varphi\colon A\rightarrow \C$ with $\norm{\varphi}_{\op} = 1$. We write $S(A)$ to be the collection of states on $A$. We equip $S(A)$ with the weak* topology inherited from $A^{\ast}$, and call $\left(S(A),w^{\ast}\right)$ the state space of $A$.
+  \end{enumerate}
+\end{definition}
+\begin{example}
+  Let $\Omega$ be a LCH space. We know that any positive functional $\varphi\colon C_0\left(\Omega\right)\rightarrow \C$ is given by integration against a positive finite regular Borel measure,
+  \begin{align*}
+    \varphi\left(f\right) &= \int_{\Omega}^{} f\:d\mu.
+  \end{align*}
+  If $\mu$ is a probability measure, then $\varphi$ is a state.
+\end{example}
+\begin{example}
+  Let $\mathcal{H}$ be a Hilbert space, and let $\xi\in \mathcal{H}$. The linear functional
+  \begin{align*}
+    \omega_{\xi}\left(T\right) &= \iprod{T\left(\xi\right)}{\xi}
+  \end{align*}
+  is positive with norm $\norm{\omega_{\xi}}_{\op} = \norm{\xi}^2$. Thus, $\omega_{\xi}$ is a state on $\B\left(\mathcal{H}\right)$ if and only if $\norm{\xi} = 1$.
+\end{example}
+\begin{example}
+  Let $\pi\colon A\rightarrow \B\left(\mathcal{H}\right)$ be a representation of a $C^{\ast}$-algebra $A$, and let $\xi\in \mathcal{H}$ be a vector. The linear functional $a\mapsto \iprod{\pi(a)(\xi)}{\xi}$ is a positive functional --- later, we will see that every positive functional defined on $A$ is of this form, which follows from the GNS construction.
+\end{example}
+\begin{proposition}
+  Let $A$ be a $C^{\ast}$-algebra. Any positive functional $\varphi\colon A\rightarrow \C$ is bounded.
+\end{proposition}
+\begin{proof}
+  Let $a\in A_{+}$ with $\norm{a}\leq 1$. Since $a$ is normal, there is an isometric $\ast$-isomorphism $\psi_a\colon C_0\left(\sigma\left(a\right)\right)\rightarrow C^{\ast}\left(a\right)$, where $\psi_a\left(\iota\right) = 1$.\newline
+
+  The composition of positive maps\footnote{Recall that all homomorphisms between $C^{\ast}$-algebras are positive and contractive, norm $1$ if isometric.} $\varphi|_{C^{\ast}\left(a\right)}\circ \psi_a\colon C_0\left(\sigma\left(a\right)\right)\rightarrow \C$ is positive, and thus bounded. Set $C = \norm{\varphi\circ \psi_a}_{\op}$. Now, we have
+  \begin{align*}
+    \left\vert \varphi(a) \right\vert &= \left\vert \varphi\circ \psi_a\left(\iota\right) \right\vert\\
+                                      &\leq C\norm{\iota}\\
+                                      &= C\norm{\psi_a\left(\iota\right)}\\
+                                      &= C\norm{a}\\
+                                      &\leq C.
+  \end{align*}
+  If $x\in A$ with $\norm{x}\leq 1$, we write $x = h_{+} - h_{-} + i\left(k_{+} - k_{-}\right)$ for $h_{\pm},k_{\pm}\in A_{+}$, and $\norm{h_{\pm}},\norm{k_{\pm}}\leq 1$. Thus, we get $\norm{\varphi}_{\op}\leq 4C$ by the triangle inequality.
+\end{proof}
+\begin{fact}
+  Let $A$ be a $C^{\ast}$-algebra, and suppose $\varphi\colon A\rightarrow \C$ is a positive functional. Then, $\varphi\left(A_{\sa}\right)\subseteq \R$, $\varphi\left(a^{\ast}\right) = \overline{\varphi\left(a\right)}$ for all $a\in A$, and $\varphi$ respects the ordering of $A$.
+\end{fact}
+\begin{proof}
+  Let $h\in A_{\sa}$. Then, $h = p-q$ with $p,q$ positive, so
+  \begin{align*}
+    \varphi(h) &= \varphi\left(p-q\right)\\
+               &= \varphi\left(p\right) - \varphi\left(q\right)\\
+               &\in \R,
+  \end{align*}
+  since $\varphi(p),\varphi(q)\in \R^{+}$.\newline
+
+  Given $a\in A$, we write the Cartesian decomposition $a = h + ik$, and get
+  \begin{align*}
+    \varphi\left(a^{\ast}\right) &= \varphi\left(\left(h + ik\right)^{\ast}\right)\\
+                                 &= \varphi\left(h^{\ast} - ik^{\ast}\right)\\
+                                 &= \varphi\left(h\right) + i\varphi\left(k\right)\\
+                                 &= \overline{\varphi\left(h\right) + i\varphi\left(k\right)}\\
+                                 &= \overline{\varphi\left(h + ik\right)}\\
+                                 &= \overline{\varphi\left(a\right)}.
+  \end{align*}
+  Finally, if $x\leq y$ in $A_{\sa}$, then $y-x \geq 0$, so $\varphi\left(y\right) - \varphi\left(x\right) = \varphi\left(y-x\right) \geq 0$, so $\varphi\left(x\right)\leq \varphi\left(y\right)$ in $\R$.
+\end{proof}
+\begin{proposition}
+  Let $\phi\colon A\rightarrow \C$ be a positive linear functional on a $C^{\ast}$-algebra.
+  \begin{enumerate}[(1)]
+    \item The pairing
+      \begin{align*}
+        \iprod{a}{b}_{\phi} &= \phi\left(b^{\ast}a\right)
+      \end{align*}
+      defines a semi-inner product on $A$. If $\phi$ is faithful, then $ \iprod{\cdot}{\cdot}_{\phi} $ is an inner product on $A$.
+    \item For all $a,b\in A$, we have
+      \begin{align*}
+        \left\vert \phi\left(b^{\ast}a\right) \right\vert^2 &\leq \phi\left(a^{\ast}a\right)\phi\left(b^{\ast}b\right).
+      \end{align*}
+    \item For all $a\in A$, we have
+      \begin{align*}
+        \left\vert \phi(a) \right\vert^2 &\leq \norm{\phi}_{\op}\phi\left(a^{\ast}a\right).
+      \end{align*}
+    \item The kernel $\ker\left(\phi\right)$ contains the closed subspace
+      \begin{align*}
+        N_{\phi} &= \set{a\in A | \phi\left(a^{\ast}a\right) = 0}.
+      \end{align*}
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Note that since $\phi$ is positive, we have
+      \begin{align*}
+        \iprod{a}{b}_{\phi} &= \phi\left(b^{\ast}a\right)\\
+                            &= \overline{\phi\left(a^{\ast}b\right)}\\
+                            &= \overline{ \iprod{b}{a}_{\phi} }.
+      \end{align*}
+      The rest of the verifications of semi-inner product follow from the definition of $\phi$ as a positive linear functional. To show that $ \iprod{\cdot}{\cdot}_\phi$ is an inner product if and only if $\phi$ is faithful, we see that if $ \iprod{\cdot}{\cdot}_{\phi} $ is an inner product, then $ \iprod{a}{a}_{\phi} = 0 $ if and only if $a = 0$, which holds if and only if $\phi\left(a^{\ast}a\right) = 0$. Since $a^{\ast}a$ is positive, we must have $\phi$ is faithful if and only if $a^{\ast}a \in \ker\left(\phi\right)\cap A_{+} = \set{0}$.
+    \item Since $ \iprod{\cdot}{\cdot}_{\phi} $ is a semi-inner product, this follows from Cauchy--Schwarz.
+    \item If $A$ is unital, we take $b = 1_{A}$, and see that $\phi\left(1_A\right) \leq \norm{\phi}_{\op}$.\newline
+
+      If $A$ is nonunital, let $\left(e_{\alpha}\right)_{\alpha}$ be an approximate identity for $A$. Since $e_{\alpha}$ is a positive contraction, $e_{\alpha}^2$ is contractive, so $\phi\left(e_{\alpha}^2\right)\leq \norm{\phi}_{\op}$. Thus, if $b = e_{\alpha}$, we get
+      \begin{align*}
+        \left\vert \phi\left(e_{\alpha}a\right) \right\vert^2 &\leq \phi\left(a^{\ast}a\right)\phi\left(e_{\alpha}^2\right)\\
+                                                              &\leq \phi\left(a^{\ast}a\right)\norm{\phi}_{\op}.
+      \end{align*}
+      Since $\left(e_{\alpha}a\right)_{\alpha}\rightarrow a$ in $A$, and $\phi$ is continuous, we have $\left(\phi\left(e_{\alpha}a\right)\right)_{\alpha}\rightarrow \phi\left(a\right)$, so we get our desired inequality.
+    \item It is clear from the definition that $N_{\phi}$ is a linear subspace, closed since $a\mapsto \phi\left(a^{\ast}a\right)$ is continuous. Additionally, from (3), we have that $N_{\phi}\subseteq \ker\left(\varphi\right)$.
+  \end{enumerate}
+\end{proof}
+
 \end{document}

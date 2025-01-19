@@ -1,30 +1,4 @@
-We will need a bit of background in point-set topology in order to satisfactorily understand the functional analysis behind the results in Chapters 3, 4, and 5.
-\section{Axioms of Set Theory}%
-In order to garner sufficient understanding of point-set topology, we need to be able to comprehend some of the essential axioms behind the objects known as ``sets.'' This is where the axioms of set theory come into play.
-\begin{definition}[Zermelo--Fraenkel Axioms]
-  In Zermelo--Fraenkel set theory, all objects are sets. In order to maintain convention with the way the rest of this section will refer to sets, all sets will be referred to by capital letters, and all elements of sets by lowercase letters.
-  \begin{itemize}
-    \item Axiom of Existence: $\exists A\left(A = A\right)$. This axiom guarantees a nonempty universe.
-    \item Axiom of Extensionality: $\forall x\left(x\in A \Leftrightarrow x\in B\right)\Rightarrow A = B$. This axiom states that if two sets share the same members, then the sets are equal.
-    \item Axiom Schema of Comprehension: $\exists B\:\forall x\left(x\in B\Leftrightarrow x\in A \wedge\varphi(x)\right)$. This axiom states that for any formula $\varphi(x)$, where $x$ is a free variable, there is a set $B$ such that the members of $B$ are the members of $A$ for which $\varphi$ holds.
-    \item Pairing Axiom: $\forall A\:\forall B\:\exists C\left(\left(A\in Z\right)\wedge \left(B\in Z\right)\right)$. This axiom states that for any sets $A$ and $B$, there is a set $C = \set{A,B}$ that contains the sets $A$ and $B$ as elements.
-    \item Power Set Axiom: $\forall A\:\exists P(A)\:\forall B\left(B\in P(A) \Leftrightarrow B\subseteq A\right)$. We use the shorthand $B\subseteq A$ to write the statement $\forall x \left(x\in B\Rightarrow x\in A\right)$. This axiom states that for any set $A$ there exists a set $P(A)$ such that any element of $P(A)$ is a subset of $A$, and any subset of $A$ is an element of $P(A)$.
-    \item Union Axiom: $\forall \mathcal{A}\:\exists A\:\forall Y\:\forall x\left(\left(x\in Y\wedge Y\in \mathcal{A}\right)\Rightarrow x\in A\right)$. This axiom states that for any collection $\mathcal{A}$, there is a set $A $, denoted $ \bigcup \mathcal{A}$, that contains all the elements of all the sets in the collection $\mathcal{A}$.
-    \item Axiom of Infinity: $\exists A\left(\emptyset\in A\wedge \forall x\left(x\in A\Rightarrow x\cup\set{x}\in A\right)\right)$. This axiom states that there is a set, $A$, such that the empty set is in $A$ and, for any element $x$, if $x\in A$, then so too is the successor, $x\cup \set{x}$.
-    \item Axiom of regularity: $\forall X\left(X\neq\emptyset \Rightarrow\exists Y\left(Y\in X\wedge Y\cap X = \emptyset\right)\right)$. This axiom states that any nonempty set $X$ contains a set $Y$ such that $Y$ and $X$ are disjoint. As a consequence, any chain of sets descending in membership must terminate.
-    \item Axiom Schema of Replacement: $\forall A\:\exists B\:\forall v\left(v\in B\Rightarrow \exists u\left(u\in A\wedge \psi\left(u,v\right)\right)\right)$. The axiom schema of replacement says that for a function-like formula (a formula such that $\psi\left(u,v\right)\wedge \psi\left(u,w\right) \Rightarrow v=w$) $\psi\left(u,v\right)$, there is a set $A$ consisting of exactly those sets/elements $v\in B$ that correspond to $u\in A$.
-  \end{itemize}
-\end{definition}
-The final axiom, the Axiom of Choice, is special, so we will state it separately.
-\begin{definition}[Axiom of Choice]
-  Let $\set{S_i}_{i\in I}$ be an indexed collection of nonempty sets. Then, there exists an indexed set $\set{x_i}_{i\in I}$ such that $x_i\in S_i$ for each $I$.\newline
-
-  Equivalently, if $\set{S_i}_{i\in I}$ is an indexed collection of nonempty sets, then there is some choice function
-  \begin{align*}
-    f\in \prod_{i\in I}S_i.
-  \end{align*}
-\end{definition}
-On its own, this formulation of the Axiom of Choice is not particularly useful. However, there is a statement of the Axiom of Choice which is just as useful.
+\section{Ordering, the Axiom of Choice, and Zorn's Lemma}%
 \begin{definition}[Preorders, Partial Orders, Total Orders, and Well-Orders]
 Let $X$ be a set, and $\preceq $ be a relation on $X$. We say a relation is a preorder if it is reflexive and transitive:
 \begin{itemize}
@@ -44,17 +18,20 @@ If $X$ is a totally ordered set that has the property that, for any nonempty $A\
 \begin{example}\hfill
   \begin{itemize}
     \item The set $\N$ with the usual ordering is a well-ordered set.
-    \item If $A$ is a set, then $P(A)$ with the containment ordering, $A\preceq B$ if $A\supseteq B$, is a partially ordered set.
-    \item Similarly, if $A$ is a set, then $P(A)$ with the inclusion ordering, $A\preceq B$ if $A\subseteq B$, is a partially ordered set.
+    \item If $A$ is a set, then $P(A)$ with the ordering $A\preceq B$ if $A\supseteq B$ is a partially ordered set. This is known as the containment ordering.
+    \item Similarly, if $A$ is a set, then $P(A)$ with the ordering $A\preceq B$ if $A\subseteq B$ is a partially ordered set. This is known as the inclusion ordering.
     \item A collection of functions $\set{\varphi_{i}\colon Z_i\rightarrow Y}_{i\in I}$ ordered by $\varphi_{i}\preceq \varphi_j$ if $Z_i\subseteq Z_j$ and $\varphi_{j}|_{Z_i} = \varphi_i$, is a partially ordered set. This is often known as the extension ordering.
   \end{itemize}
 \end{example}
-
-We can state an equivalent formulation of the Axiom of Choice as follows.
+The axiom of choice, stated below, is a load-bearing part of topology and analysis.
+\begin{definition}
+  Let $\mathcal{A} = \set{A_i}_{i\in I}$ be an indexed collection of sets. There exists an indexed set $\set{x_i}_{i\in I}$ such that $x_i\in S_i$ for each $i\in I$.
+\end{definition}
+Using some of the basic results in order theory, we may state an equivalent formulation of the Axiom of Choice that is also more readily used to prove important results in analysis.
 \begin{theorem}[Zorn's Lemma]
-  If $\left(X,\preceq\right)$ is a partially ordered set with the property that for all $C\subseteq X$ with $C$ totally ordered, $C$ has an upper bound, then $X$ has a maximal element.
+  If $\left(X,\preceq\right)$ is a nonempty partially ordered set with the property that for all $C\subseteq X$ with $C$ totally ordered, $C$ has an upper bound, then $X$ has a maximal element.
 \end{theorem}
-Zorn's lemma is a more useful version of the Axiom of Choice, and can be used to prove the following theorems.
+Zorn's lemma can be used to prove the following theorems.
 \begin{example}\hfill
   \begin{itemize}
     \item Every $\F$-vector space $V$ has a basis $B\subseteq V$ such that the set of all finite linear combinations of elements of $B$ over $\F$ is $V$.
@@ -63,7 +40,7 @@ Zorn's lemma is a more useful version of the Axiom of Choice, and can be used to
   \end{itemize}
 \end{example}
 \section{Metric Spaces}%
-Building upon the basics of set theory, we move towards understanding metric spaces.
+Building upon the basics of sets and orders, we move towards understanding metric spaces.
 \subsection{Basics of Metric Spaces}%
 \begin{definition}[Metrics]\label{def:metrics_and_equivalent_metrics}
   Let $X$ be a set. A distance metric is a function

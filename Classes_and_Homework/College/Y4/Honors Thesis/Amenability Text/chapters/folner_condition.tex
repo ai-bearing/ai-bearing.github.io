@@ -347,7 +347,7 @@ First, we construct a little bit of machinery to understand the growth rate of a
     d_{S}\left(g,h\right) &= \ell_{G,S}\left(g^{-1}h\right).
   \end{align*}
 \end{definition}
-\begin{fact}\label{def:word_metric_equivalent_metrics}
+\begin{fact}\label{fact:word_metric_equivalent_metrics}
   If $S$ and $T$ are finite symmetric generating sets for $G$, then the respective word metrics $d_{S}$ and $d_{T}$ are equivalent (as in the sense of Definition \ref{def:metrics_and_equivalent_metrics}).
 \end{fact}
 \begin{proof}
@@ -376,7 +376,7 @@ First, we construct a little bit of machinery to understand the growth rate of a
   \end{align*}
   Thus, $d_S$ is indeed a metric.\newline
 
-  Let $S$ and $T$ be finite generating symmetric sets for $G$. It is sufficient to show that there exists some $k\in \N$ such that, for all $g\in G$,
+  Let $S$ and $T$ be finite symmetric generating sets for $G$. It is sufficient to show that there exists some $k\in \N$ such that, for all $g\in G$,
   \begin{align*}
     \frac{1}{k}\ell_{G,S}\left(g\right) \leq \ell_{G,T}\left(g\right) \leq k\ell_{G,S}\left(g\right).
   \end{align*}
@@ -396,4 +396,95 @@ First, we construct a little bit of machinery to understand the growth rate of a
     \frac{1}{k}\ell_{G,S}\left(g\right) \leq \ell_{G,T}\left(g\right) \leq k\ell_{G,S}\left(g\right).
   \end{align*}
 \end{proof}
+Now, we may begin defining the growth rate of a group. We will use the fact that all word metrics with respect to a generating set are symmetric in order to show that the growth rate is well-defined (i.e., independent of the generating set for $G$).
+\begin{definition}
+  Let $G$ be a group with finite symmetric generating set $S$. We define
+  \begin{align*}
+    B_{G,S}\left(n\right) &= \set{g\in G | \ell_{G,S}\left(g\right) \leq n};\\
+    \gamma_{G,S}\left(n\right) &= \left\vert B_{G,S}\left(n\right) \right\vert.
+  \end{align*}
+\end{definition}
+The following facts hold for $\gamma$.
+\begin{fact}\label{fact:properties_of_gamma_generating_set}
+  Let $G$ be a finitely generated group. The following facts hold:
+  \begin{enumerate}[(1)]
+    \item $\gamma_{G,S}\left(n\right)$ is an increasing function;
+    \item $\gamma_{G,S}\left(n+m\right)\leq \gamma_{G,S}\left(n\right)\gamma_{G,S}\left(m\right)$;
+    \item $\displaystyle \lim_{n\rightarrow\infty}\left(\gamma_{G,S}\left(n\right)\right)^{1/n} = \rho_{G,S}$ exists;
+    \item if $S$ and $T$ are finite symmetric generating sets for $G$, then there exists $k\in \N$ such that $\gamma_{G,T}\left(n\right)\leq \gamma_{G,S}\left(kn\right)$ for all $n\in\N$, and $\rho_{G,S} = \rho_{G,T}$.
+  \end{enumerate}
+\end{fact}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Since $B_{G,S}\left(n\right)\subseteq B_{G,S}\left(n+1\right)$, we have $\gamma_{G,S}\left(n\right) \leq \gamma_{G,S}\left(n+1\right)$, so $\gamma_{G,S}$ is increasing.
+    \item We start by showing that $B_{G,S}\left(n\right)B_{G,S}\left(m\right) = B_{G,S}\left(n+m\right)$. First, if $g\in B_{G,S}\left(n\right)$ and $h\in B_{G,S}\left(m\right)$, we know that $\ell_{G,S}\left(gh\right) \leq \ell_{G,S}\left(g\right) + \ell_{G,S}\left(h\right)\leq m+n$, so $B_{G,S}\left(n\right)B_{G,S}\left(n\right) \subseteq B_{G,S}\left(n+m\right)$. Additionally, if $g\in B_{G,S}\left(n+m\right)$, we may write
+      \begin{align*}
+        g &= \underbrace{s_{1}\cdots s_{\ell}}_{g_1}\underbrace{s_{\ell+1}\cdots s_{k}}_{g_2},
+      \end{align*}
+      where $k\leq n+m$, $\ell \leq n$, and $k-\ell \leq m$, so $g_1\in B_{G,S}\left(n\right)$ and $g_2\in B_{G,S}\left(m\right)$. Thus, we have $B_{G,S}\left(n\right)B_{G,S}\left(m\right) = B_{G,S}\left(n+m\right)$.\newline
+
+      Now, we have
+      \begin{align*}
+        \gamma_{G,S}\left(n+m\right) &= \left\vert B_{G,S}\left(n+m\right) \right\vert\\
+                                     &= \left\vert B_{G,S}\left(n\right)B_{G,S}\left(m\right) \right\vert\\
+                                     &\leq \left\vert B_{G,S}\left(n\right) \right\vert\left\vert B_{G,S}\left(m\right) \right\vert\\
+                                     &= \gamma_{G,S}\left(n\right)\gamma_{G,S}\left(m\right).
+      \end{align*}
+    \item From (2), we know that $\gamma_{G,S}\left(n\right) \leq \gamma_{G,S}\left(1\right)^{n}$. Inductively, we have
+      \begin{align*}
+        \gamma_{G,S}\left(n+1\right) &\leq \gamma_{G,S}\left(1\right)^{n+1},
+      \end{align*}
+      and thus,
+      \begin{align*}
+        1 \leq \gamma_{G,S}\left(n\right)^{1/n}\leq \gamma_{G,S}\left(1\right).
+      \end{align*}
+    \item We know that there exists $k$ such that $\frac{1}{k}\ell_{G,S} \leq \ell_{G,T}\leq k\ell_{G,S}$ by the proof of Fact \ref{fact:word_metric_equivalent_metrics}. Thus, if $g\in B_{G,T}\left(n\right)$, then $\ell_{G,T}\left(g\right) \leq n$, so $\ell_{G,S}\left(g\right) \leq kn$, so $g\in B_{G,S}\left(kn\right)$ and $B_{G,T}\left(n\right)\subseteq B_{G,T}\left(kn\right)$. We have $\gamma_{G,T}\left(n\right)\leq \gamma_{G,S}\left(kn\right)$.\newline
+
+      Similarly, if $g\in B_{G,S}\left(n\right)$, then $\ell_{G,S}\left(g\right)\leq n$, so $\ell_{G,T}\left(g\right) \leq kn$, and $g\in B_{G,T}\left(kn\right)$. Thus, we get $B_{G,S}\left(n\right)\subseteq B_{G,T}\left(kn\right)$, so $\gamma_{G,S}\left(n\right)\leq \gamma_{G,T}\left(kn\right)$.\newline
+
+      It follows that
+      \begin{align*}
+        \gamma_{G,S}\left(\frac{n}{k}\right)^{1/n} \leq \gamma_{G,T}\left(n\right)^{1/n} \leq \left(\gamma_{G,S}\left(kn\right)^{k}\right)^{1/kn}.
+      \end{align*}
+      Sending $n\rightarrow\infty$, we get $\rho_{G,S}\leq \rho_{G,T}\leq \rho_{G,S}$, so $\rho_{G,S} = \rho_{G,T}$.
+  \end{enumerate}
+\end{proof}
+\begin{definition}
+  Let $G$ be a group with finite symmetric generating set $S$. The quantity
+  \begin{align*}
+    \rho_{G} &= \limsup_{n\rightarrow\infty}\gamma_{G,S}\left(n\right)^{1/n}
+  \end{align*}
+  is known as the growth rate of the group $G$. If we have $\rho = 1$, then we say $G$ is of subexponential growth.
+\end{definition}
+\begin{example}\hfill
+  \begin{itemize}
+    \item All finite groups are of subexponential growth. Note that since $\rho$ is independent of the generating set (as we proved in Fact \ref{fact:properties_of_gamma_generating_set}), we can set $S = G$, and we have $\limsup_{n\rightarrow\infty} \left\vert G \right\vert^{1/n} = 1$.
+    \item Let $\Gamma$ be a finitely generated abelian group. We will show that $\Gamma$ is of subexponential growth.\newline
+
+      We start by showing that $G = \Z^d$ is of subexponential growth. Notice that every element of $\Z^d$ is some linear combination of the set
+      \begin{align*}
+        S &= \set{e_1,e_2,\dots,e_d},\label{eq:generating_set_free_abelian_group}\tag{\textasteriskcentered}
+      \end{align*}
+      where
+      \begin{align*}
+        e_{j} &= (0,0,\dots,\underbrace{1}_{\text{position $j$}},0,0,\dots).
+      \end{align*}
+      Additionally, we see that any element of $B_{G,S}(n)$ is of the form $e_1^{i_1}e_2^{i_2}\dots e_d^{i_d}$, where $\sum_{j=1}^{d} i_j \leq n$. Thus, we must have $\gamma_{G,S}(n) \leq n^{d}$, meaning that 
+      \begin{align*}
+        \rho &= \limsup_{n\rightarrow\infty} \gamma_{G,S}(n)^{1/n}\\
+             &= \limsup_{n\rightarrow\infty}n^{d/n}\\
+             &= 1,
+      \end{align*}
+      so $\Z^d$ is of subexponential growth.\newline
+
+      Now, if $G' = \Z^d\times \Z/k_1\Z\times \cdots \times \Z/k_r\Z$, then since there is a torsion subgroup in $G'$, we must have $\gamma_{G',S'}(n) \leq \gamma_{\Z^{d+r},T}(n)$ for any $n$, where $T$ is a generating set for $\Z^{d+r}$ and $S'$ is a generating set for $G'$. Since
+      \begin{align*}
+        \rho_{\Z^{d+r}} &= \limsup_{n\rightarrow\infty}\gamma_{\Z^{d+r},T}(n)^{1/n}\\
+                        &= 1,
+      \end{align*}
+      and $1 \leq \gamma_{G',S'}(n)$, we must have $\rho_{G'} = 1$.\newline
+
+      Since, by the fundamental theorem of finitely generated abelian groups, it is the case that $\Gamma\cong \Z^{d}\times \Z/k_1\Z\times\cdots\times \Z/k_r\Z$ for some $d,k_1,\dots,k_r\in \N$, $\Gamma$ is of subexponential growth.
+  \end{itemize}
+\end{example}
 
