@@ -171,17 +171,17 @@ However, if $X$ is infinite-dimensional and equipped with a norm (or, more gener
     \item $p\left(tx\right) = tp\left(x\right)$ for all $x\in X$ and $t > 0$.
   \end{itemize}
 \end{definition}
-\begin{theorem}[Hahn--Banach--Minkowski Extension]
+\begin{theorem}[Hahn--Banach--Minkowski Extension]\label{thm:hbm_extension}
   Let $Y\subseteq X$ be a linear subspace of a normed vector space $X$, and let $\phi\in Y^{\ast}$ and $p$ a Minkowski functional be such that for all $y\in Y$, $\phi\left(y\right) \leq p\left(y\right)$. Then, there is a map $\Phi\in X^{\ast}$ such that
   \begin{itemize}
     \item $\Phi|_{Y} = \phi$, and;
     \item $\Phi\left(x\right) \leq p\left(x\right)$ for all $x\in X$.
   \end{itemize}
 \end{theorem}
-\begin{theorem}[Hahn--Banach Continuous Extension]
+\begin{theorem}[Hahn--Banach Continuous Extension]\label{thm:hb_continuous_extension}
   Let $X$ be a normed vector space, and $\phi\in Y^{\ast}$, where $Y\subseteq X$ is a linear subspace. Then, there exists a linear functional $\Phi\in X^{\ast}$ such that $\norm{\Phi} = \norm{\phi}$, and $\Phi|_{Y} = \phi$.\footnote{This extension is not necessarily unique.}
 \end{theorem}
-\begin{theorem}[Hahn--Banach Separation]
+\begin{theorem}[Hahn--Banach Separation]\label{thm:hb_separation}
   Let $X$ be a normed vector space.
   \begin{itemize}
     \item For a fixed $x_0\in X$, there exists a linear functional $\phi\in X^{\ast}$ such that $\phi\left(x_0\right) = \norm{x_0}$.
@@ -197,11 +197,15 @@ However, if $X$ is infinite-dimensional and equipped with a norm (or, more gener
 \section{Duality}%
 Here, we discuss a little bit more of the theory of dual spaces.
 \begin{definition}
-  Let $X$ be a normed vector space. The double dual of $X$, $X^{\ast\ast}$, is the set of all linear functionals
+  Let $X$ be a normed vector space. The linear functional $\hat{x}\colon X^{\ast}\rightarrow \C$, defined by
   \begin{align*}
-    \hat{x}\colon X^{\ast\ast}\rightarrow \C,
+    \hat{x}(\varphi) &= \varphi(x)
   \end{align*}
-  where $\hat{x}$ is such that $\hat{x}\left(\varphi\right) = \varphi(x)$ for each $\varphi\in X^{\ast}$. We define the canonical isometric embedding $\iota_X\colon X\hookrightarrow X^{\ast\ast}$ by $x\mapsto \hat{x}$.
+  is linear, bounded, and has $\norm{\hat{x}}_{\op} = \norm{x}$. We define the embedding $\iota\colon X\rightarrow X^{\ast\ast}$ by
+  \begin{align*}
+    \iota(x) &= \hat{x}.
+  \end{align*}
+  We call $\iota$ the canonical embedding.
 \end{definition}
 \begin{definition}
   Let $X$ be a normed space. A norm completion of $X$ is a pair $\left(Z,j\right)$, where $Z$ is a Banach space, $j\colon X\hookrightarrow Z$ is a linear isometry, and $\overline{\Ran}\left(j\right) = Z$.
@@ -238,6 +242,125 @@ X \arrow[r, "T"'] \arrow[u, "\iota_X"]   & Y \arrow[u, "\iota_Y"']
   Let $\Omega$ be a LCH space. Then, $M_r\left(\Omega\right) \cong C_0\left(\Omega\right)^{\ast}$ are isometrically isomorphic, where $M_r\left(\Omega\right)$ is equipped with the norm $\norm{\mu} = \left\vert \mu \right\vert\left(\Omega\right)$ for $\mu\in M_r\left(\Omega\right)$.
 \end{theorem}
 \section{Topological Vector Spaces}%
+Earlier, we discussed some of the features of normed vector spaces and Banach spaces. Here, we expand our scope to to examine the analytic properties of vector spaces whose topology is not necessarily induced by a norm. 
+\begin{definition}
+  Let $X$ be a $\C$-vector space, and let $\tau$ be a topology on $X$. We say $\tau$ is compatible with the vector space structure of $X$ if
+  \begin{enumerate}[(1)]
+    \item $X$ is T1 (see Definition \ref{def:separation_axioms});
+    \item scalar multiplication, $(\lambda,x)\mapsto \lambda x$ is continuous, where $\C\times X$ is given the product topology;
+    \item vector addition, $(x,y) \mapsto x + y$ is continuous, where $X\times X$ is given the product topology.
+  \end{enumerate}
+  If $X$ is equipped with a topology compatible with the vector space structure of $X$, then $(X,\tau)$ is called a topological vector space. We abbreviate it as TVS.
+\end{definition}
+\begin{remark}
+  It can be shown that if $(X,\tau)$ is a TVS, the topology on $X$ is automatically Hausdorff.
+\end{remark}
+\begin{definition}
+  Let $X$ be a $\C$-vector space.
+  \begin{enumerate}[(1)]
+    \item If $A,B\subseteq X$, then we define
+      \begin{align*}
+        A + B &= \set{x + y | x\in A,y\in B}.
+      \end{align*}
+      If $A = \set{x_0}$, we abbreviate $\set{x_0} + B$ as $x_0 + B$, which is called the translation of $B$.
+    \item If $A\subseteq X$, and $\alpha\in \C$, then
+      \begin{align*}
+        \alpha A &= \set{\alpha x | x\in A}
+      \end{align*}
+      is the scaling of $A$ by $\alpha$. We write $(-1)A = -A$.
+    \item A subset $A\subseteq X$ is called symmetric if $-A = A$.
+    \item A subset $A\subseteq X$ is called balance if $\alpha A\subseteq A$ for all $\left\vert \alpha \right\vert\leq 1$.
+    \item A subset $C\subseteq X$ is called convex if for all $t\in [0,1]$ and $x_1,x_2\in C$, $\left(1-t\right)x_1 + tx_2 \in C$.
+  \end{enumerate}
+  We define
+  \begin{align*}
+    \operatorname{conv}\left(A\right) &= \bigcap\set{C | A\subseteq C\subseteq X,C\text{ is convex}}\\
+                                      &= \set{\sum_{j=1}^{n}t_ja_j | n\in\N,t_j\geq 0,\sum_{j=1}^{n}t_j = 1,a_j\in A}.
+  \end{align*}
+\end{definition}
+\begin{definition}\label{def:lctvs}
+A TVS $\left(X,\tau\right)$ is called locally convex if $X$ admits a neighborhood base (see Definition \ref{def:neighborhoods_and_bases}) consisting of convex sets. We abbreviate as LCTVS.\newline
 
+It can be shown that every LCTVS has a neighborhood base consisting of \textit{balanced} convex sets.
+\end{definition}
+An important structural result in the theory of topological vector spaces is the fact that every locally convex topology is generated by a separating family of seminorms.
+\begin{proposition}\label{prop:structure_of_lctvs}
+  Let $X$ be a $\C$-vector space, and let $\mathcal{P}$ be a family of seminorms on $X$. For each $z\in X$ and $p\in \mathcal{P}$, we define $f_{p,z}\colon X\rightarrow [0,\infty)$ by
+  \begin{align*}
+    f_{p,z}(x) &= p\left(x-z\right).
+  \end{align*}
+  The topology $\tau_{\mathcal{P}}$ is the initial topology on $X$ induced by the family
+  \begin{align*}
+    \mathcal{F}_{\mathcal{P}} &= \set{f_{p,z} | p\in \mathcal{P},z\in X}.
+  \end{align*}
+  If $\mathcal{P}$ is such that for each $x\neq 0$, there is some $p$ such that $p(x)\neq 0$ (i.e., $\mathcal{P}$ separates the points of $X$), then the family $\mathcal{F}_{\mathcal{P}}$ separates points in $X$. It is then the case that $\left(X,\tau_{\mathcal{P}}\right)$ is a LCTVS.\newline
+
+  Convergence of nets in the topology $\tau_{\mathcal{P}}$ is defined by $\left(x_{\alpha}\right)_{\alpha}\xrightarrow{\tau_{\mathcal{P}}}x$ if and only if $p\left(x_{\alpha}-x\right)\rightarrow 0$ for all $p\in \mathcal{P}$.\newline
+
+  Furthermore, if $\left(X,\tau\right)$ is any LCTVS, then there is a corresponding family of separating seminorms $\mathcal{P}$ such that $\id\colon\left(X,\tau\right)\rightarrow \left(X,\tau_{\mathcal{P}}\right)$ is a homeomorphism.
+\end{proposition}
+The Hahn--Banach theorems (such as the extension and separation results) that we established in Theorems \ref{thm:hbm_extension}, \ref{thm:hb_continuous_extension}, and \ref{thm:hb_separation} have corresponding results in topological vector spaces.
+\begin{theorem}[Hahn--Banach Extension for LCTVS]\label{thm:hb_continuous_extension_lctvs}
+  Let $X$ be a LCTVS, and suppose $E\subseteq X$ is a subspace. If $\varphi\in E^{\ast}$, then there is a $\psi\in X^{\ast}$ such that $\psi|_{E} = \varphi$.
+\end{theorem}
+\begin{corollary}
+  Let $X$ be a LCTVS. Let $\set{x_1,\dots,x_n}\subseteq X$ be linearly independent, and $\set{\alpha_1,\dots,\alpha_n}\in \C$. Then, there exists $\varphi\in X^{\ast}$ such that $\varphi\left(x_j\right) = \alpha_j$ for all $j$.
+\end{corollary}
+To provide some context for the Hahn--Banach separation results, consider two open, disjoint, convex subsets $A,B\subseteq \R^n$. The hyperplane separation theorem from convex optimization (see \cite[Chapter 2.6]{convex_optimization}) states that there is a nonzero vector $m\in \R^n$ and some $b\in \R$ such that the map $\varphi\colon \R^n\rightarrow \R$, defined by $\varphi(x) = m^{T}x - b$, is strictly negative for all $x\in A$ and is strictly positive for all $x\in B$. The affine hyperplane defined by $\set{x | \varphi(x) = b}$ is known as a separating hyperplane for $A$ and $B$.\newline
+
+What the Hahn--Banach theorems allow us to do is extend this result beyond $\R^n$ to the case of any TVS --- with a special case if the TVS is locally convex.
+\begin{theorem}[Hahn--Banach Separation for TVS]\label{thm:hb_separation_tvs}
+  Let $X$ be a TVS (that may or may not be locally convex) over $\C$. Let $A$ and $B$ be convex and disjoint subsets of $X$. If $A$ is open, then there exists $\varphi\in X^{\ast}$, with $\varphi = u + iv$, and $t\in \R$ such that
+  \begin{align*}
+    u(a) < t \leq u(b)
+  \end{align*}
+  for all $a\in A$ and $b\in B$.\newline
+
+  If $A$ and $B$ are open, then the inequalities can be taken to be strict.
+\end{theorem}
+The requirement that $A$ and $B$ be open can be relaxed in the case of a LCTVS, where we can separate closed, disjoint, convex sets, so long as one of the sets is compact. Specifically, we are able to separate the sets by a double hyperplanes if the topology on $X$ is locally convex.
+\begin{theorem}[Hahn--Banach Separation for LCTVS]\label{thm:hb_separation_lctvs}
+  Let $X$ be a LCTVS, and suppose $C,K\subseteq X$ are closed, disjoint, convex subsets of $X$, with $K$ compact. Then, there exists $\varphi\in X^{\ast}$, with $\varphi = u + iv$, $t\in \R$, and $\delta > 0$ such that
+  \begin{align*}
+    u(x) \leq t \leq t + \delta \leq u(y)
+  \end{align*}
+  for all $x\in C$ and $y\in K$.
+\end{theorem}
+\begin{proposition}
+  Let $W\subseteq X'$, where $X'$ is the algebraic dual of $X$. For each $\varphi\in W$, consider the seminorm
+  \begin{align*}
+    p_{\varphi}(x) &= \left\vert \varphi(x) \right\vert.
+  \end{align*}
+  We let $\mathcal{P}_{W} = \set{p_{\varphi} | \varphi\in W}$. If $\mathcal{P}_{W}$ separates points, then we may construct the topology $\tau_{\mathcal{P}_{W}}$ as in Proposition \label{prop:structure_of_lctvs}.\newline
+
+  Alternatively, we may consider the initial topology on $X$ induced by the family $W$, written $\sigma\left(X,W\right)$.\newline
+
+  It is the case that $\id\colon \left(X,\tau_{\mathcal{P}_{W}}\right)\rightarrow \left(X,\sigma\left(X,W\right)\right)$ is a homeomorphism.
+\end{proposition}
+\begin{definition}[Norm Topology]\label{def:norm_topology}
+  Let $X$ be a normed vector space. If $\mathcal{P} = \set{\norm{\cdot}}$, then the topology $\tau_{\mathcal{P}}$ is known as the norm topology on $X$.\newline
+
+  Convergence is defined by $\left(x_n\right)_n\xrightarrow{\norm{\cdot}}x$ if and only if $\norm{x_n - x}\rightarrow 0$.
+\end{definition}
+\begin{remark}
+  Normed vector spaces are metric space, and hence first countable (so sequences are sufficient to define convergence).
+\end{remark}
+\begin{definition}[Weak Topology]\label{def:weak_topology}
+  If $X$ is a normed vector space, we say $\sigma\left(X,X^{\ast}\right)$ is the weak topology on $X$.\newline
+
+  Convergence is defined by $\left(x_\alpha\right)_\alpha\xrightarrow{w}x$ if and only if $\left(\varphi\left(x_\alpha\right)\right)_\alpha\rightarrow \varphi\left(x\right)$ for all $\varphi\in X^{\ast}$.
+\end{definition}
+\begin{definition}[Weak* Topology]\label{def:weak_star_topology}
+  If $X$ is a normed vector space, we say $\sigma\left(X^{\ast},\iota(X)\right)$, where $\iota$ is the canonical embedding, is the weak* topology on $X^{\ast}$.\newline
+
+  Convergence is defined by $\left(\varphi_{\alpha}\right)_\alpha\xrightarrow{w^{\ast}} \varphi$ if and only if $\left(\varphi_{\alpha}(x)\right)_{\alpha}\rightarrow \varphi(x)$ for all $x\in X$.
+\end{definition}
+\begin{theorem}[Banach--Alaoglu Theorem]\label{thm:banach_alaoglu}
+  Let $X$ be a normed vector space. 
+  \begin{enumerate}[(1)]
+    \item The unit ball in the dual space, $B_{X^{\ast}}$, is $w^{\ast}$-compact.
+    \item A subset $C\subseteq X^{\ast}$ is $w^{\ast}$-compact if and only if $C$ is $w^{\ast}$-closed and norm bounded.
+  \end{enumerate}
+\end{theorem}
 \section{Hilbert Spaces and Operators}%
 \section{Banach Algebras and \texorpdfstring{$C^{\ast}$-Algebras}{C*-Algebras}}%
