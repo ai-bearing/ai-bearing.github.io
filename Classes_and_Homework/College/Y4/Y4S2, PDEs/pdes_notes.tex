@@ -1,0 +1,88 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright,sfmath,bbold}
+%\renewcommand{\mathcal}{\mathtt}
+
+%Euler:
+\usepackage{newpxtext,eulerpx,eucal,eufrak}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+%kp fonts:
+%\usepackage{kpfonts}
+%\renewcommand{\mathbb}{\mathds}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Partial Differential Equations: Class Notes}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Introduction}%
+Consider the equations
+\begin{align*}
+  y''(x) + y(x) &= e^x\tag*{(1)}\\
+  y^{(17)}(x) + \sin\left(y(x)\right) &= \left(x^{x}\right)^{x}\tag*{(2)}
+\end{align*}
+Before we want to solve these equations, we need to understand what these equations \textit{are}. 
+\begin{enumerate}[(1)]
+  \item This is a second order, inhomogeneous, linear ordinary differential equation.
+  \item This is a 17th order, inhomogeneous, nonlinear ordinary differential equation.
+\end{enumerate}
+Generally, when we have a nonlinear equation, we convert it (using the Jacobian) to the ``nearest'' corresponding linear equation using Taylor approximations. In this case, converting equation (2), we have
+\begin{align*}
+  y^{(17)}(x) + y(x) &= \left(x^{x}\right)^{x}.\tag*{(2')}
+\end{align*}
+Now, equation (2') is linear, so it is able to be solved. It may not be pretty,\footnote{Citation needed.} but it can be solved, using Laplace Transforms or other methods.
+\section{Ordinary Differential Equations}%
+Returning to our equation (1), 
+\begin{align*}
+  y''(x) + y(x) &= e^x,\tag*{(1)}
+\end{align*}
+there is one more fact that we can see --- this is an equation with constant coefficients. The most general form of a $n$th order linear ordinary differential equation is of the form
+\begin{align*}
+  a_n(x)y^{(n)}(x) + a_{n-1}(x)y^{(n-1)}(x) + \cdots + a_1(x)y'(x) + a_0(x)y(x) = g(x).\tag*{(\textdagger)}
+\end{align*}
+Specifically, we also require $a_k(x)\in C(I)$, where $I$ is some interval (specifics will be detailed later).
+\begin{theorem}[Existence and Uniqueness Theorem]
+  Any ordinary differential equation of the form (\textdagger) has unique solutions in $I$.\newline
+
+  There are $n$ linearly independent solutions for $g(x) = 0$.
+\end{theorem}
+The corresponding homogeneous equation for (1) is
+\begin{align*}
+  y''(x) + y(x) &= 0.\tag*{(1')}
+\end{align*}
+The equations (1) and (1') are related by the linearity principle. In particular, if $y_0(x)$ is a solution to (1'), then we can add $\alpha y_0(x)$ to any solution $y_p(x)$ of (1), then we have all the solutions for (1). In particular, the solutions to (1') are
+\begin{align*}
+  y_1(x) &= \sin(x)\\
+  y_2(x) &= \cos(x).
+\end{align*}
+To evaluate that these solutions are linearly independent, we consider the differential operator $L$ from (\textdagger) defined by
+\begin{align*}
+  L\left[y\right] &= \sum_{k=0}^{n}a_k(x)y^{(k)}(x).
+\end{align*}
+We rewrite (\textdagger) as
+\begin{align*}
+  L\left[y\right] &= g(x).
+\end{align*}
+The operator $L$ is linear, so $L$ has the following properties:
+\begin{itemize}
+  \item $L\left[y_1 + y_2\right]$;
+  \item $L\left[cy\right] = cL\left[y\right]$.
+\end{itemize}
+Now, in (1) and (1'), if we set $L\left[y\right] = y''(x) + y(x)$, then evaluating our solutions $y_1$ and $y_2$ to (1'), we get
+\begin{align*}
+  L\left[c_1y_1 + c_2y_2\right] &= c_1L\left[y_1\right] + c_2L\left[y_2\right]\\
+                                &= 0.
+\end{align*}
+Now, we get
+\begin{align*}
+  y_0(x) &= c_1\sin(x) + c_2\sin(x)
+\end{align*}
+as our general solution to (1'). By the linearity principle, all we need is one solution to $L\left[y\right] = e^x$ to find all solutions to (1).
+\end{document}

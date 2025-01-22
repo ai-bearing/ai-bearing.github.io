@@ -53,7 +53,7 @@ Vector spaces can also be equipped with notions of length and distance --- thus 
   \end{align*}
   for all $x\in X$.\newline
 
-  If $X$ is complete with respect to the metric $d\left(x,y\right) = \norm{x-y}$, we call $X$ a Banach space.
+  If $X$ is complete with respect to the metric $d\left(x,y\right) = \norm{x-y}$, we call $X$ a Banach space. If $X$ is a normed algebra that is complete with respect to its induced metric, then we say $X$ is a Banach algebra.
 \end{definition}
 \begin{theorem}
   Let $X$ be a normed vector space. Then, $X$ is complete if and only if, for every sequence of vectors $\left(x_k\right)_k$, if$\sum_{k=1}^{\infty}\norm{x_k}$ converges, then $\sum_{k=1}^{\infty}x_k$ converges.
@@ -379,4 +379,132 @@ The requirement that $A$ and $B$ be open can be relaxed in the case of a LCTVS, 
   \end{enumerate}
 \end{theorem}
 \section{Hilbert Spaces and Operators}%
+In Chapters \ref{ch:left_regular_representation} and \ref{ch:nuclearity}, we discuss the relationship between a group $\Gamma$ and the way the group is represented as an algebra of bounded operators on a Hilbert space. Here, we discuss more exactly what is meant by ``algebra of bounded operators on a Hilbert space.''
+\begin{definition}
+  Let $X$ be a vector space. A semi-inner product on $X$ is a map $ \iprod{\cdot}{\cdot}\colon X\times X \rightarrow \C $ such that
+  \begin{itemize}
+    \item $ \iprod{\alpha x + y}{z} = \alpha \iprod{x}{z} + \iprod{y}{z}$;
+    \item $ \iprod{x}{\alpha y + z} = \overline{\alpha}\iprod{x}{y} + \iprod{x}{z}$;
+    \item $ \iprod{x}{x}\geq 0 $.
+  \end{itemize}
+  If $ \iprod{x}{x} = 0 $ if and only if $ x = 0 $, then $ \iprod{\cdot}{\cdot} $ is an inner product with induced norm $\norm{x}^2 = \iprod{x}{x}$. We call $X$ an inner product space if it is equipped with an inner product.\newline
+
+  If $X$ is an inner product space that is complete with respect to the induced norm, then we say $X$ is a Hilbert space. We usually denote Hilbert spaces by $ \mathcal{H} $.
+\end{definition}
+\begin{theorem}[Polarization Identity]
+  Let $\mathcal{H}$ be a Hilbert space, and let $x,y\in \mathcal{H}$. Then,
+  \begin{align*}
+    \iprod{x}{y} &= \frac{1}{4}\sum_{j=0}^{3} \norm{x + i^jy}^2.
+  \end{align*}
+\end{theorem}
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space. A subset $\set{x_i}_{i\in I}$ is called orthonormal if 
+  \begin{align*}
+    \iprod{x_i}{x_j} &= \begin{cases}
+      1 & i=j\\
+      0 & i\neq j
+    \end{cases}\\
+                     &= \delta_{ij}.
+  \end{align*}
+  A maximal orthonormal set in $\mathcal{H}$ is called an orthonormal basis; equivalently, the set $\set{x_i}_{i\in I}$ is an orthonormal basis if and only if $\Span\left(\set{x_i}_{i\in I}\right)$ is dense in $\mathcal{H}$.
+\end{definition}
+\begin{theorem}[Bessel's Inequality and Parseval's Identity]
+  Let $\set{e_i}_{i\in I}$ be an orthonormal set in a Hilbert space $\mathcal{H}$. Then,
+  \begin{align*}
+    \sum_{i\in I} \left\vert \iprod{x}{e_i} \right\vert^2 &\leq \norm{x}^2.
+  \end{align*}
+  If $\set{e_i}_{i\in I}$ is an orthonormal basis, then
+  \begin{align*}
+    \sum_{i\in I} \left\vert \iprod{x}{e_i} \right\vert^2 &= \norm{x}^2.
+  \end{align*}
+\end{theorem}
+\begin{theorem}\label{thm:projection_theorem}
+  If $M\subseteq \mathcal{H}$ is a closed subspace of a Hilbert space $\mathcal{H}$, then for any $x\in \mathcal{H}$, there is a unique $y_x\in M$ such that $\norm{x-y_x}$ is minimal.\newline
+
+  The map $P_M\colon \mathcal{H}\rightarrow M$, $x\mapsto y_x$ is known as the orthogonal projection onto $M$. Additionally, the map $P_M$ has the following properties:
+  \begin{itemize}
+    \item $P_M$ is linear;
+    \item $P_M^2 = P_M$;
+    \item $\norm{P_M} = 1$ (if $M = \set{0}$, then $\norm{P_M} = 0$).
+  \end{itemize}
+  Setting $M^{\perp}$ to be the range of $I_{\mathcal{H}} - P_M$, it is also the case that $\mathcal{H}/M \cong M^{\perp}$, with $\mathcal{H} = M\oplus M^{\perp}$.
+\end{theorem}
+One of the most important structural results on Hilbert spaces relates the continuous dual of a Hilbert space to the inner product. 
+\begin{theorem}[Riesz Representation Theorem for Hilbert Spaces]
+  Let $\mathcal{H}$ be a Hilbert space, and let $\varphi\in \mathcal{H}^{\ast}$. Then, there is a unique $f_{\varphi}\in \mathcal{H}$ such that
+  \begin{align*}
+    \varphi\left(g\right) &= \iprod{g}{f_{\varphi}}
+  \end{align*}
+  for all $g\in \mathcal{H}$.
+\end{theorem}
+Now that we understand the structure of Hilbert spaces and their closed subspaces, we can now begin understanding bounded operators on Hilbert spaces.
+\begin{definition}
+  Let $T\colon \mathcal{H}\rightarrow \mathcal{H}$ be a bounded operator between Hilbert spaces. We define the adjoint of $T$, $T^{\ast}$, to be the unique operator $T^{\ast}\colon \mathcal{H}\rightarrow \mathcal{H}$ such that
+  \begin{align*}
+    \iprod{T\left(x\right)}{y} &= \iprod{x}{T^{\ast}\left(y\right)}
+  \end{align*}
+  for all $x,y\in \mathcal{H}$. The adjoint satisfies the following properties:
+  \begin{itemize}
+    \item $\left(T + \lambda S\right)^{\ast} = T^{\ast} + \overline{\lambda}S^{\ast}$;
+    \item $T^{\ast\ast} = T$;
+    \item $\left(R\circ T\right)^{\ast} = T^{\ast}\circ R^{\ast}$;
+    \item if $T$ is invertible, then $\left(T^{-1}\right)^{\ast} = \left(T^{\ast}\right)^{-1}$;
+    \item $\norm{T^{\ast}} = \norm{T}$;
+    \item $\norm{T^{\ast}T} = \norm{T}^2$ (known as the $C^{\ast}$-property).
+  \end{itemize}
+\end{definition}
+There are a variety of topologies one can place on the space $\B\left(\mathcal{H}\right)$. We detail three.
+\begin{definition}
+  Let $\left(T_{\alpha}\right)_{\alpha}$ be a net in $\B\left(\mathcal{H}\right)$.
+  \begin{itemize}
+    \item We say $\left(T_{\alpha}\right)_{\alpha}\xrightarrow{\norm{\cdot}_{\op}} T$ if $\norm{T_{\alpha} - T}_{\op}\rightarrow 0$. This is the norm topology on $\B\left(\mathcal{H}\right)$.
+    \item We say $\left(T_{\alpha}\right)_{\alpha}\xrightarrow{ \text{SOT} } T$ if, for all $\xi\in \mathcal{H}$, $\norm{T_{\alpha}\left(x\right) - T(x)}\rightarrow 0$. This is the topology of pointwise convergence on $\B\left(\mathcal{H}\right)$.
+    \item We say $\left(T_{\alpha}\right)_{\alpha}\xrightarrow{\text{WOT}}T$ if, for all $\xi,\eta\in \mathcal{H}$, $ \iprod{T_{\alpha}\left(\xi\right)}{\eta}\rightarrow \iprod{T\left(\xi\right)}{\eta} $.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}\hfill
+  \begin{itemize}
+    \item We say $T\in \B\left(\mathcal{H}\right)$ is normal if $T^{\ast}T = TT^{\ast}$.
+    \item We say $T\in \B\left(\mathcal{H}\right)$ is self-adjoint if $T^{\ast}= T$.
+    \item We say $P\in \B\left(\mathcal{H}\right)$ is a projection if $P^2 = P^{\ast} = P$.
+    \item We say $V\in \B\left(\mathcal{H}\right)$ is an isometry if $V^{\ast}V = I_{\mathcal{H}}$.
+    \item We say $T\in \B\left(\mathcal{H}\right)$ is a \textit{partial} isometry if $TT^{\ast}T = T$.
+    \item We say $U\in \B\left(\mathcal{H}\right)$ is a unitary if $U^{\ast} = U^{-1}$.
+  \end{itemize}
+  We write $\mathcal{U}\left(\mathcal{H}\right)$ to refer to the set of all unitary operators on $\mathcal{H}$. Two operators $T,S\in \B\left(\mathcal{H}\right)$ are called unitarily equivalent if there is $U\in \mathcal{U}\left(\mathcal{H}\right)$ such that $UTU^{\ast} = S$.\newline
+
+  The space of unitary operators, $\mathcal{U}\left(\mathcal{H}\right)$, is a group with respect to operator composition.
+\end{definition}
+\begin{definition}
+  Let $x,y\in \mathcal{H}$. We define the rank-one bounded operator $\theta_{x,y}\colon \mathcal{H}\rightarrow \mathcal{H}$ by
+  \begin{align*}
+    \theta_{x,y}(z) &= \iprod{z}{y}x.
+  \end{align*}
+  If $T\in \B\left(\mathcal{H}\right)$ is such that
+  \begin{align*}
+    T &= \sum_{j=1}^{n}\theta_{x_j,y_j},
+  \end{align*}
+  where $x_j,y_j\in \mathcal{H}$, then $T$ is of finite rank --- i.e., $\Dim\left(\Ran\left(T\right)\right) < \infty$. We write $T\in \F\left(\mathcal{H}\right)$.\newline
+
+  A map $T\in \B\left(\mathcal{H}\right)$ is called compact if $T$ maps bounded sets to sets with compact closure. The space of compact operators is written $\mathbb{K}\left(\mathcal{H}\right)$.
+\end{definition}
+\begin{theorem}
+  The operator norm-closure of the finite rank operators is the compact operators. That is,
+  \begin{align*}
+    \overline{\F\left(\mathcal{H}\right)}^{\norm{\cdot}_{\op}} &= \mathbb{K}\left(\mathcal{H}\right).
+  \end{align*}
+\end{theorem}
 \section{Banach Algebras and \texorpdfstring{$C^{\ast}$-Algebras}{C*-Algebras}}%
+Earlier, we looked at the definition of an algebra
+\begin{definition}
+  A Banach $\ast$-algebra is a complete normed $\ast$-algebra (see Definition \ref{def:star_algebra}) satisfying $\norm{a^{\ast}} = a$. If $A$ is a Banach algebra that satisfies the $C^{\ast}$-property, $\norm{a^{\ast}a} = \norm{a}^2$, then $A$ is called a $C^{\ast}$-algebra.
+\end{definition}
+There are a variety of distinguished elements in $C^{\ast}$-algebras, whose names borrow from their respective names in $\B\left(\mathcal{H}\right)$.
+\begin{definition}
+  Let $A$ be a $C^{\ast}$-algebra.
+  \begin{itemize}
+    \item An element $a\in A$ is called self-adjoint if $a^{\ast} = a$. We write $A_{\sa}$
+  \end{itemize}
+\end{definition}
+

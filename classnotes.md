@@ -11,6 +11,7 @@ Here are the class notes I have written up so far.
 ### [Functional Analysis: Hilbert Spaces](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/hilbert_space_operators.pdf)
 ### [Functional Analysis: Banach and C*-Algebras](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/banach_cstar_algebras.pdf)
 ## Spring 2025
+### [Partial Differential Equations](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, PDEs/pdes_notes.pdf)
 ### Miscellaneous
 #### [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
 ## Fall 2024
