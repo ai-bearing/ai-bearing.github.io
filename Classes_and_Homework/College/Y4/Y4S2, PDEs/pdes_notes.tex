@@ -45,11 +45,11 @@ Returning to our equation (1),
 \end{align*}
 there is one more fact that we can see --- this is an equation with constant coefficients. The most general form of a $n$th order linear ordinary differential equation is of the form
 \begin{align*}
-  a_n(x)y^{(n)}(x) + a_{n-1}(x)y^{(n-1)}(x) + \cdots + a_1(x)y'(x) + a_0(x)y(x) = g(x).\tag*{(\textdagger)}
+  a_n(x)y^{(n)}(x) + a_{n-1}(x)y^{(n-1)}(x) + \cdots + a_1(x)y'(x) + a_0(x)y(x) = g(x).\label{eq:general_linear_ode}\tag{\textdagger}
 \end{align*}
 Specifically, we also require $a_k(x)\in C(I)$, where $I$ is some interval (specifics will be detailed later).
 \begin{theorem}[Existence and Uniqueness Theorem]
-  Any ordinary differential equation of the form (\textdagger) has unique solutions in $I$.\newline
+  Any ordinary differential equation of the form (\textdagger) has unique solutions in the interval $I$.\newline
 
   There are $n$ linearly independent solutions for $g(x) = 0$.
 \end{theorem}
@@ -84,5 +84,93 @@ Now, we get
 \begin{align*}
   y_0(x) &= c_1\sin(x) + c_2\sin(x)
 \end{align*}
-as our general solution to (1'). By the linearity principle, all we need is one solution to $L\left[y\right] = e^x$ to find all solutions to (1).
+as our general solution to (1'). By the linearity principle, all we need is one solution to $L\left[y\right] = e^x$ to find all solutions to (1).\newline
+
+Evaluating \eqref{eq:general_linear_ode} in the most general form, we have the general solution
+\begin{align*}
+  y(x) &= \underbrace{c_1y_1(x) + c_2y_2(x) + \cdots + c_ny_n(x)}_{\text{homogeneous solution}} + y_p(x),
+\end{align*}
+where $y_p(x)$ is the particular solution. In other words, our general solution is
+\begin{align*}
+  y(x) &= \Span\left(y_1(x),y_2(x),\dots,y_n(x)\right) + y_p(x).
+\end{align*}
+For this to work, we need the set $\set{y_1,\dots,y_n}$ to be linearly independent. To do this, we evaluate the Wronskian:
+{\renewcommand{\arraystretch}{1.5}
+  \begin{align*}
+  W(x) &= \det \begin{pmatrix}y_1(x) & y_2(x) & \cdots & y_n(x) \\ y_1'(x)& y_2'(x) & \cdots & y_n'(x) \\ \vdots & \vdots & \ddots & \vdots \\ y_{1}^{(n-1)}(x) & y_2^{(n-1)}(x) & \cdots & y_{n}^{(n-1)}(x)\end{pmatrix}.
+\end{align*}
+}
+Specifically, the set $\set{y_1,\dots,y_n}$ is linearly independent if $W(x)\neq 0$ for all $x\in I$.
+\begin{example}
+  Consider the equation
+  \begin{align*}
+    y''(x) - y(x) &= e^{x}\tag{1}
+  \end{align*}
+  We want to find the general solution to this constant coefficient equation.\newline
+
+  We start by finding two linearly independent homogeneous solutions to the equation, take their span, then add a particular solution.\newline
+
+  The characteristic equation of the homogeneous equation for (1) is
+  \begin{align*}
+    r^2 - 1 &= 0
+  \end{align*}
+  We get $r=\pm 1$, which by the definition of the characteristic equation yields $y_1(x) = e^{x}$ and $y_2(x) = e^{-x}$. To verify that this this solution set is linearly independent
+  {\renewcommand{\arraystretch}{1.25}
+    \begin{align*}
+      W(x) &= \det \begin{pmatrix}e^{x} & e^{-x} \\ e^{x} & -e^{-x}\end{pmatrix}\\
+           &= -2\\
+           &\neq 0.
+  \end{align*}
+  }
+  Thus, our solutions are linearly independent. We get the general form of
+  \begin{align*}
+    y(x) &= c_1e^{x} + c_2e^{-x} + y_p(x).
+  \end{align*}
+  Now, we only have to find a particular solution. This is, unfortunately, the hard part.\newline
+
+  We begin by guessing. But, in a way that doesn't suck. Specifically, we let $y_p(x) = Axe^{x}$. Evaluating, we get
+  \begin{align*}
+    y_p'(x) &= A\left(x+1\right)e^{x}\\
+    y_{p}''(x) &= A\left(x+2\right)e^{x}\\
+    y_{p}''(x) - y_p(x) &= A\left(x+2\right)e^{x} - Axe^{x}\\
+                        &= 2Ae^{x},
+  \end{align*}
+  so $2A = 1$, and $A = \frac{1}{2}$. Thus, we have the end result of
+  \begin{align*}
+    y(x) &= c_1e^{x} + c_2e^{x} + \frac{1}{2}xe^{x}.
+  \end{align*}
+  Evaluating in Mathematica, we take
+  \begin{lstlisting}[style=mathematicastyle]
+    DSolve[y''[x] - y[x] == Exp[x], y[x], x]
+  \end{lstlisting}
+  and we get
+  \begin{align*}
+    y(x) &= c_1e^{x} + c_2e^{-x} + \frac{1}{4}\left(2x-1\right)e^{x},
+  \end{align*}
+  corroborating our solution.\footnote{Only slightly different, but they're the same solution.}
+\end{example}
+\begin{example}
+  Consider the equation
+  \begin{align*}
+    y'''(x) - y(x) &= 0.
+  \end{align*}
+  The particular solution to this equation is $y(x) = 0$. The characteristic equation for this equation is
+  \begin{align*}
+    r^3 - 1 &= 0.
+  \end{align*}
+  Factoring, we get
+  \begin{align*}
+    \left(r-1\right)\left(r^2 + r + 1\right) &=0\\
+    \left(r-1\right)\left(r-\zeta_3\right)\left(r-\zeta_3^2\right) &= 0.
+  \end{align*}
+  Thus, we get
+  \begin{align*}
+    r &= \set{1, e^{\frac{2\pi i}{3}}, e^{\frac{4\pi i}{3}}}.
+  \end{align*}
+  Thus, our solutions are of the form
+  \begin{align*}
+    y(x) &= c_1e^{x} + c_2e^{-\frac{1}{2}x}\cos\left(\frac{\sqrt{3}}{2}x\right) + c_3e^{-\frac{1}{2}x}\sin\left(\frac{\sqrt{3}}{2}x\right).
+  \end{align*}
+\end{example}
+
 \end{document}

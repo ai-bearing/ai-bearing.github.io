@@ -1,9 +1,10 @@
 In general, as we progress through these appendices, we will consistently add additional structure to a set. First, we begin by developing groups, rings, and fields, vector spaces, and algebras. In the following appendices, we will apply metric structures, topologies, and measures, building up to the central structure of functional analysis: normed vector spaces and the operators on these normed vector spaces.\newline
 
-These appendices were largely written to provide essential background for the techniques and results that will appear in the main body of the text. As such, they do not include detailed proofs --- occasionally, we will include outlines for certain proofs in the remarks. The proofs for many of these results can be found in relevant canonical texts.\newline
+These appendices were largely written to provide essential background for the techniques and results that will appear in the main body of the text. As such, they do not include detailed proofs --- occasionally, we will include outlines for certain proofs in the remarks. The proofs for many of these results can be found in relevant (and some not-as-relevant) texts.\newline
 
 We make heavy use of results from algebra and linear algebra in this thesis. Some excellent resources to learn more about algebra and linear algebra are \cite{dummit_and_foote} and \cite{algebra_chapter_0}.
 \section{Group, Rings, (some) Fields}%
+\subsection{Groups}%
 \begin{definition}[Groups]
   Let $A$ be a set, and let $\star$ be a binary operation on $A$. We say $A$ is a group if
   \begin{itemize}
@@ -25,7 +26,7 @@ We make heavy use of results from algebra and linear algebra in this thesis. Som
   Defining the equivalence relation $g\sim g'$ if and only if $g^{-1}g'\in H$, the group of equivalence classes $gH\coloneq \left[g\right]$ is known as the quotient group $G/H$.
 \end{definition}
 \begin{definition}
-  Let $G$ and $H$ be groups. A map $\varphi\colon G\rightarrow H$ is called a (group) homomorphism if, $\varphi$ preserves the group structure, in the sense that
+  Let $G$ and $H$ be groups. A map $\varphi\colon G\rightarrow H$ is called a (group) homomorphism if, $\varphi$ ``preserves the group structure,'' in the sense that
   \begin{align*}
     \varphi\left(ab\right) &= \varphi(a)\varphi(b)\\
     \varphi\left(a^{-1}\right) &= \varphi(a)^{-1}
@@ -87,6 +88,107 @@ We make heavy use of results from algebra and linear algebra in this thesis. Som
     \item $\left(a+b\right)\cdot c = a\cdot c + b\cdot c$;
     \item $\left(a\cdot b\right)\cdot c = a\cdot \left(b\cdot c\right)$.
   \end{itemize}
-  If the multiplication on $A$ is commutative, then we say $A$ is a commutative ring. If $A$ admits an element $1_A$ such that $a\cdot 1_A = 1_A \cdot a = a$, then we say $A$ is a unital ring.
-\end{definition}
+  If the multiplication on $A$ is commutative, then we say $A$ is a commutative ring. If $A$ admits an element $1_A$ such that $a\cdot 1_A = 1_A \cdot a = a$, then we say $A$ is a unital ring.\newline
 
+  When referring to the abelian group of $A$ under $+$, we often write $\left(A,+\right)$.
+\end{definition}
+\begin{definition}[Subrings, Ideals, and Quotient Rings]
+  Let $R$ be a ring. A subset $A\subseteq R$ is known as a subring if $A$ is a subgroup of $\left(R,+\right)$, and $A$ is closed under multiplication. In other words, for all $a,b\in A$, we have
+  \begin{itemize}
+    \item $a-b\in A$;
+    \item $ab \in A$,
+  \end{itemize}
+  where $a-b = a + (-b)$.\newline
+
+  If $I\subseteq R$ is a subring that also has the property that, for all $x\in I$ and $r\in R$, $rx\in I$ and $xr\in I$, then we say $I$ is an ideal.\newline
+
+  Similar to the case of groups and normal subgroups, we can form the quotient ring $R/I$ by defining the equivalence relation $a\sim b$ if $a-b\in I$, and defining $a + I\coloneq \left[a\right]_{\sim}$.
+\end{definition}
+\subsection{Rings and Fields}%
+\begin{definition}[Ring Homomorphism]
+  If $R$ and $S$ are rings, then a map $\varphi\colon R\rightarrow S$ is a ring homomorphism if $\varphi$ ``preserves the ring structure,'' in the sense that, for all $a,b\in R$,
+  \begin{itemize}
+    \item $\varphi\left(a+b\right) = \varphi\left(a\right) + \varphi\left(b\right)$;
+    \item $\varphi\left(ab\right) = \varphi\left(a\right)\varphi\left(b\right)$.
+  \end{itemize}
+  The kernel of the ring homomorphism is defined to be the set of all elements $a\in R$ such that $\varphi\left(a\right) = 0_{S}$.\newline
+
+  If $I \subseteq R$ is an ideal, then the map $\pi\colon R\rightarrow R/I$ that sends $a \mapsto a + I$ is known as the canonical projection.\newline
+
+  If $\varphi$ is a bijection, then $\varphi$ is known as an isomorphism. We write $R\cong S$ if there exists an isomorphism $\varphi\colon R\rightarrow S$.
+\end{definition}
+Analogously, there is a first isomorphism theorem for rings.
+\begin{theorem}[First Isomorphism Theorem for Rings]
+  Let $R$ and $S$ be rings, and let $\varphi\colon R\rightarrow S$ be a ring homomorphism. Then, $\ker\left(\varphi\right)\subseteq R$ is an ideal, and $R/\ker\left(\varphi\right)\cong \img\left(\varphi\right)$.
+\end{theorem}
+\begin{definition}
+  Let $R$ be a unital ring.
+  \begin{itemize}
+    \item If $a,b\in R$ are nonzero elements such that $ab = 0$, then we say $a$ and $b$ are zero divisors in $R$.
+    \item If $R$ is commutative and does not contain any zero divisors, then we say $R$ is an integral domain.
+    \item If an element $a\in R$ is such that there exists some $b$ such that $ab = ba = 1_R$, then we call $a$ a unit.
+    \item If $R$ is a such that every element of $R$ is a unit, then we say $R$ is a division algebra.
+    \item If $R$ is a division algebra that is commutative, then $R$ is a field.
+  \end{itemize}
+\end{definition}
+\begin{remark}
+  Generally, when we deal with fields, we will usually be dealing with the complex numbers, $\C$, unless otherwise stated.
+\end{remark}
+\subsection{Vector Spaces}%
+Certain constructions in linear algebra are extremely important in understanding functional analysis. We provide an overview of the theory of vector spaces and linear transformations in the purely algebraic context. Analytic properties that result from applying norms on these vector spaces will appear in Appendix \ref{ch:functional_analysis}.
+\begin{definition}
+  Let $X$ be some set, and $\F$ some field (generally, we assume $\F = \C$). We say $X$ is an $\F$-vector space if $X$ is equipped with two operations:
+  \begin{itemize}
+    \item scalar multiplication: $m\colon \F\times X \rightarrow X$, which sends $\left(\alpha,x\right)\mapsto \alpha x$; and
+    \item vector addition: $a\colon X\times X \rightarrow X$, which sends $\left(x,y\right)\mapsto x + y$.
+  \end{itemize}
+  In general, $\left(X,+\right)$ is an abelian group, and scalar multiplication satisfies the following identities, for all $\alpha,\beta \in \F$ and $x,y\in X$:
+  \begin{itemize}
+    \item $\alpha \left(\beta x\right) = \left(\alpha\beta\right)x$;
+    \item $\alpha\left(x+y\right) = \alpha x + \alpha y$;
+    \item $\left(\alpha + \beta\right)x = \alpha x + \beta x$;
+    \item $1_{\F}x = x$;
+    \item $0_{\F} x = 0_X$.
+  \end{itemize}
+\end{definition}
+There are certain geometric properties of subsets of vector spaces that we will be using a lot, especially when we discuss locally convex topologies on these vector spaces.
+\begin{definition}\label{def:vector_space_subset_operations}
+  Let $X$ be a $\C$-vector space.
+  \begin{itemize}
+    \item If $A,B\subseteq X$, then we define
+      \begin{align*}
+        A + B &= \set{x + y | x\in A,y\in B}.
+      \end{align*}
+      If $A = \set{x_0}$, we abbreviate $\set{x_0} + B$ as $x_0 + B$, which is called the translation of $B$.
+    \item If $A\subseteq X$, and $\alpha\in \C$, then
+      \begin{align*}
+        \alpha A &= \set{\alpha x | x\in A}
+      \end{align*}
+      is the scaling of $A$ by $\alpha$. We write $(-1)A = -A$.
+    \item A subset $A\subseteq X$ is called symmetric if $-A = A$.
+    \item A subset $A\subseteq X$ is called balanced if $\alpha A\subseteq A$ for all $\left\vert \alpha \right\vert\leq 1$.
+    \item A subset $C\subseteq X$ is called convex if for all $t\in [0,1]$ and $x_1,x_2\in C$, $\left(1-t\right)x_1 + tx_2 \in C$.
+  \end{itemize}
+  We define
+  \begin{align*}
+    \operatorname{conv}\left(A\right) &= \bigcap\set{C | A\subseteq C\subseteq X,C\text{ is convex}}\\
+                                      &= \set{\sum_{j=1}^{n}t_ja_j | n\in\N,t_j\geq 0,\sum_{j=1}^{n}t_j = 1,a_j\in A}.
+  \end{align*}
+\end{definition}
+\begin{definition}
+  Let $X$ be a vector space, and let $\set{x_i}_{i\in I}\subseteq X$ be a subset.
+  \begin{itemize}
+    \item The set $\set{x_i}_{i\in I}$ is called linearly independent if, for any finite linear combination such that
+      \begin{align*}
+        \sum_{i\in I}\alpha_ix_i &= 0_X,
+      \end{align*}
+      it is the case that all $\alpha_i = 0$.
+    \item The set $\set{x_i}_{i\in I}$ is called spanning for $X$ if the set of all finite linear combinations $\sum_{i\in I}\alpha_ix_i$ is equal to $X$.
+    \item The set $\set{x_i}_{i\in I}$ is called a basis for $X$ if it is linearly independent and spanning.
+  \end{itemize}
+\end{definition}
+\begin{remark}
+  Every vector space has a basis. This can be proven with Zorn's Lemma (Theorem \ref{thm:zorns_lemma}) applied on the partially ordered set (Definition \ref{def:ordered_sets}) of linearly independent subsets ordered by inclusion.
+\end{remark}
+
+\subsection{Algebras}%
