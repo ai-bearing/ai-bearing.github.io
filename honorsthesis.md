@@ -15,6 +15,3 @@ I work through some results related to free groups, means, invariant states, and
 I work through chapters 5 and 6 of my professor's functional analysis textbook, focused on the structure of Hilbert spaces and the algebra of bounded operators on a Hilbert space.
 ## [Functional Analysis: Banach and C*-Algebras](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/banach_cstar_algebras.pdf)
 We generalize from the bounded operators on a Hilbert space to discuss Banach algebras and C*-algebras, the latter of which admit representations as bounded operators on Hilbert spaces via the GNS construction.
-
-# Draft Thesis
-## [Characterizing Amenability in Discrete Groups](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/Amenability Text/amenability.pdf)
