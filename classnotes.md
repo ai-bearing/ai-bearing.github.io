@@ -5,11 +5,6 @@ permalink: /classnotes.html
 ---
 Here are the class notes I have written up so far.
 ## Honors Thesis: Amenability and C*-Algebras
-### [Paradoxical Decompositions and Tarski's Theorem](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/amenability_notes.pdf)
-### [Functional Analysis: Topological Vector Spaces](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/topological_vector_spaces.pdf)
-### [Invariant States and Means on Groups](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/invariant_states.pdf)
-### [Functional Analysis: Hilbert Spaces](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/hilbert_space_operators.pdf)
-### [Functional Analysis: Banach and C*-Algebras](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/banach_cstar_algebras.pdf)
 ## Spring 2025
 ### [Partial Differential Equations](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, PDEs/pdes_notes.pdf)
 ### Miscellaneous
