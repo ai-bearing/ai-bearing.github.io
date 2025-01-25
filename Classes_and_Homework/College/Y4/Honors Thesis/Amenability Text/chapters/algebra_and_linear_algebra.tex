@@ -9,6 +9,7 @@ We make heavy use of results from algebra and linear algebra in this thesis. Som
   Let $A$ be a set, and let $\star$ be a binary operation on $A$. We say $A$ is a group if
   \begin{itemize}
     \item $A$ is closed under the operation $\star$;
+    \item $\star$ is associative, such that for all $a,b,c\in A$, $\left(a\star b\right)\star c = a\star \left(b\star c\right)$;
     \item $A$ has an identity element $e_A$, where $a\star e_A = e_A\star a = a$ for any $a\in A$;
     \item for any $a\in A$, there exists $a^{-1}\in A$ such that $a^{-1}\star a = a\star a^{-1} = e$.
   \end{itemize}
@@ -176,6 +177,11 @@ There are certain geometric properties of subsets of vector spaces that we will 
   \end{align*}
 \end{definition}
 \begin{definition}
+  If $X$ is a vector space, and $M\subseteq X$ is a subset such that, for all $x,y\in M$ and $\alpha\in \C$, $\alpha x + y\in M$, then $M$ is called a subspace of $X$.\newline
+
+  If $M$ is a subspace, we may define the equivalence relation $x\sim_{M} y$ if and only if $x-y\in M$. Equivalence classes under the relation $\sim_{M}$ are written $x + M\coloneq \left[x\right]_{\sim}$, and form the quotient space $X/M$.
+\end{definition}
+\begin{definition}
   Let $X$ be a vector space, and let $\set{x_i}_{i\in I}\subseteq X$ be a subset.
   \begin{itemize}
     \item The set $\set{x_i}_{i\in I}$ is called linearly independent if, for any finite linear combination such that
@@ -187,10 +193,93 @@ There are certain geometric properties of subsets of vector spaces that we will 
     \item The set $\set{x_i}_{i\in I}$ is called a basis for $X$ if it is linearly independent and spanning.
   \end{itemize}
 \end{definition}
+\begin{definition}
+  If $X$ is a vector space, and $\mathcal{B}\subseteq X$ is a basis, then $\Dim\left(X\right)\coloneq \left\vert \mathcal{B} \right\vert$.\newline
+
+  If $M\subseteq X$ is a subspace, then the codimension of $M$ is $\Dim\left(X/M\right)$.
+\end{definition}
 \begin{remark}
   Every vector space has a basis. This can be proven with Zorn's Lemma (Theorem \ref{thm:zorns_lemma}) applied on the partially ordered set (Definition \ref{def:ordered_sets}) of linearly independent subsets ordered by inclusion.\newline
 
   Additionally, not only does every vector space have a basis, but for any set, there is a vector space with the set as its basis (see Theorem \ref{thm:free_vector_space}).
 \end{remark}
+Linear algebra is not only the study of vector spaces, but also the study of linear maps on these vector spaces. 
+\begin{definition}
+  Let $X$ and $Y$ be vector spaces. A map $T\colon X\rightarrow Y$ is called linear if for every $x,x_1,x_2\in X$ and $\alpha\in \C$, we have
+  \begin{align*}
+    T\left(x_1 + x_2\right) &= T\left(x_1\right) + T\left(x_2\right)\\
+    T\left(\alpha x\right) &= \alpha T\left(x\right).
+  \end{align*}
+  We write $I_{X} \coloneq \id_{X}$.\newline
 
+  The set of linear maps between $X$ and $Y$ is denoted $\mathcal{L}\left(X,Y\right)$. The set of all linear maps between $X$ and $X$ is abbreviated $\mathcal{L}\left(X\right)$.\newline
+
+  A linear map $\varphi\colon X\rightarrow \C$ is called a linear functional on $X$. The collection of linear functionals on $X$ is called the algebraic dual of $X$, written $X' \coloneq \mathcal{L}\left(X,\C\right)$.\newline
+
+  The space $\mathcal{L}\left(X,Y\right)$ equipped with pointwise operations is a vector space over $\C$.
+\end{definition}
+\begin{definition}[Four Fundamental Subspaces]
+  Let $T\colon X\rightarrow Y$ be a linear map.
+  \begin{itemize}
+    \item The kernel of $T$, $\ker\left(T\right)$, is the set of all $x\in X$ such that $T(x) = 0_X$.
+    \item The range of $T$, $\Ran\left(T\right)$, is the set of all $y\in Y$ such that there exists $x\in X$ with $T(x) = y$.
+    \item The cokernel of $T$ is $\operatorname{coker}(T) = Y/\Ran\left(T\right)$.
+    \item The coimage of $T$ is $\operatorname{coim}\left(T\right) = X/\ker\left(T\right)$.
+  \end{itemize}
+  Note that, by an analogous version of the first isomorphism theorem, we have $\operatorname{coim}\left(T\right) \cong \Ran\left(T\right)$.\newline
+
+  Additionally, $T$ is injective if and only if $\ker\left(T\right) = \set{0}$, and $T$ is surjective if and only if $\operatorname{coker}\left(T\right) = \set{0}$.\newline
+
+  We write $\Dim\left(\Ran\left(T\right)\right) = \operatorname{rank}\left(T\right)$, and $\Dim\left(\ker\left(T\right)\right) = \operatorname{null}\left(T\right)$.
+\end{definition}
+\begin{definition}
+  Let $T\in \mathcal{L}\left(X\right)$, and let $\lambda\in \C$. The eigenspace for $\lambda$ is the subspace $E_{\lambda}\left(T\right) = \ker\left(T - \lambda I\right)$.\newline
+
+  If $E_{\lambda}\left(T\right) \neq \set{0}$, then $\lambda$ is called an eigenvalue for $T$ The nonzero vectors in $E_{\lambda}\left(T\right)$ are called eigenvectors for $T$.\newline
+
+  The set
+  \begin{align*}
+    \sigma_p\left(T\right) &= \set{\lambda | \lambda\text{ is an eigenvalue for }T}
+  \end{align*}
+  is known as the point spectrum of $T$.
+\end{definition}
+\begin{theorem}[Rank--Nullity]
+  If $T\colon X\rightarrow Y$ is a linear map between vector spaces, then $\operatorname{rank}\left(T\right) + \operatorname{null}\left(T\right) = \Dim\left(Y\right)$.
+\end{theorem}
+The separation properties of linear functionals are used heavily in proofs of various results in analysis.
+\begin{proposition}
+  Let $X$ be a vector space. If $0\neq x_0\in X$, then there is a $\varphi\in X'$ such that $\varphi\left(x_0\right) \neq 0$.
+\end{proposition}
+Geometrically, linear functionals are tied to hyperplanes within vector spaces.
+\begin{proposition}
+  Let $X$ be a vector space with $\Dim\left(X\right) \geq 2$, and let $H\subseteq X$ be a subspace. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $H=\ker\left(\varphi\right)$ for some nonzero $\varphi\in X'$;
+    \item $H\subseteq X$ is a maximal \textit{proper} subspace;
+    \item $\Dim\left(X/H\right) = 1$ (i.e., $H$ has codimension $1$).
+  \end{enumerate}
+  A subspace that satisfies any of these equivalent properties is called a hyperplane.\newline
+
+  If $U = H + x_0$ for some fixed $x_0$, then $U$ is known as an affine hyperplane.
+\end{proposition}
 \subsection{Algebras}%
+In our definition of vector spaces, we stated that they are akin to abelian groups, equipped with an operation of scalar multiplication. We may extend the analogy towards ``rings'' that include scalar multiplication, which are known as algebras.
+\begin{definition}
+  Let $A$ be a $\C$-vector space. We say $A$ is an algebra if $A$ admits a multiplication, $\left(a,b\right)\mapsto a\cdot b$, that satisfies, for all $a,b,c\in A$ and $\alpha \in \C$,
+  \begin{itemize}
+    \item $\left(a\cdot b\right)\cdot c = a\cdot \left(b\cdot c\right)$;
+    \item $a\cdot \left(b+c\right) = a\cdot b + a\cdot c$;
+    \item $\left(a+b\right)\cdot c = a\cdot c + b\cdot c$;
+    \item $\left(\alpha a\right)\cdot b = \alpha \left(a\cdot b\right) = a \cdot \left(\alpha b\right)$.
+  \end{itemize}
+  If $A$, considered as a ring, is also unital, then we say $A$ is a unital algebra. If $a\cdot b = b\cdot a$, then we say $A$ is commutative.\newline
+
+  If $A$ also admits a unary operation $\ast\colon A\rightarrow A$ that satisfies, for all $a,b\in A$ and $\alpha \in \C$,
+  \begin{itemize}
+    \item $a^{\ast\ast} = a$;
+    \item $\left(ab\right)^{\ast} = b^{\ast}a^{\ast}$;
+    \item $\left(\alpha a + b\right)^{\ast} = \overline{\alpha}a^{\ast} + b^{\ast}$,
+  \end{itemize}
+  then we say $A$ is a $\ast$-algebra.
+\end{definition}
+
