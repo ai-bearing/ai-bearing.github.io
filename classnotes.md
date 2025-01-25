@@ -4,7 +4,6 @@ title: "Class Notes"
 permalink: /classnotes.html
 ---
 Here are the class notes I have written up so far.
-## Honors Thesis: Amenability and C*-Algebras
 ## Spring 2025
 ### [Partial Differential Equations](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, PDEs/pdes_notes.pdf)
 ### Miscellaneous
