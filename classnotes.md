@@ -6,6 +6,7 @@ permalink: /classnotes.html
 Here are the class notes I have written up so far.
 ## Spring 2025
 ### [Partial Differential Equations](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, PDEs/pdes_notes.pdf)
+### [Algebraic Geometry](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, Algebraic Geometry/algebraic_geometry.pdf)
 ### Miscellaneous
 #### [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
 ## Fall 2024
