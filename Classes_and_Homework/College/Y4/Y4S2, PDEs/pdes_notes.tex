@@ -21,6 +21,7 @@
 \setcounter{secnumdepth}{0}
 
 \begin{document}
+\renewcommand{\arraystretch}{1.5}
 \RaggedRight
 \section{Introduction}%
 Consider the equations
@@ -95,7 +96,7 @@ where $y_p(x)$ is the particular solution. In other words, our general solution 
   y(x) &= \Span\left(y_1(x),y_2(x),\dots,y_n(x)\right) + y_p(x).
 \end{align*}
 For this to work, we need the set $\set{y_1,\dots,y_n}$ to be linearly independent. To do this, we evaluate the Wronskian:
-{\renewcommand{\arraystretch}{1.5}
+{
   \begin{align*}
   W(x) &= \det \begin{pmatrix}y_1(x) & y_2(x) & \cdots & y_n(x) \\ y_1'(x)& y_2'(x) & \cdots & y_n'(x) \\ \vdots & \vdots & \ddots & \vdots \\ y_{1}^{(n-1)}(x) & y_2^{(n-1)}(x) & \cdots & y_{n}^{(n-1)}(x)\end{pmatrix}.
 \end{align*}
@@ -172,5 +173,139 @@ Specifically, the set $\set{y_1,\dots,y_n}$ is linearly independent if $W(x)\neq
     y(x) &= c_1e^{x} + c_2e^{-\frac{1}{2}x}\cos\left(\frac{\sqrt{3}}{2}x\right) + c_3e^{-\frac{1}{2}x}\sin\left(\frac{\sqrt{3}}{2}x\right).
   \end{align*}
 \end{example}
+Recall that the most general second order constant-coefficient linear differential equation is 
+\begin{align*}
+  y'' + ay' + by &= 0,
+\end{align*}
+with characteristic equation 
+\begin{align*}
+  r^2 + ar + b &=0.
+\end{align*}
+The solutions to the characteristic equation are
+\begin{align*}
+  r &= -\frac{a}{2} \pm \frac{\sqrt{a^2 - 4b}}{2}.
+\end{align*}
+There are a few cases:
+\begin{enumerate}[(1)]
+  \item $r_1\neq r_2$ with $r_1,r_2\in \R$;
+  \item $r_1 = r_2$ with $r_1,r_2\in \R$;
+  \item $r_1 = c + id$, $r_2 = c - id$, where $c,d\in \R$.
+\end{enumerate}
+The solutions are $y_1 = c_1e^{r_1 x}$ and $y_2 = c_2e^{r_2 x}$.
+\begin{example}[Solving Second-Order Equations]\hfill
+  \begin{enumerate}[(1)]
+    \item Let
+      \begin{align*}
+        y'' - 3y' + 2y &= 0.
+      \end{align*}
+      The characteristic equation is $r^2 - 3r + 2 = 0$, whose solutions are $r=1,r=2$. The general solution is, thus,
+      \begin{align*}
+        y(x) &= c_1 e^x + c_2e^{2x}\tag{\textdagger}
+      \end{align*}
+      The Wronskian is
+      \begin{align*}
+        W(x) &= \det \begin{pmatrix}e^x & e^{2x} \\ e^x & 2e^{2x}\end{pmatrix}\\
+             &= 2e^{3x} - e^{3x}\\
+             &= e^{3x}\\
+             &\neq 0.
+      \end{align*}
+      Thus, the solution is indeed (\textdagger).
+    \item Let
+      \begin{align*}
+        y'' + 6y' + 9y &=0.
+      \end{align*}
+      The characteristic equation is $r^2 + 6r + 9 =0$, with solution $r = -3,-3$. Currently, we only have the solution $y_1(x) = c_1e^{-3x}$.\newline
+
+      Note that in an $n$th order linear ordinary differential equation, we always have $n$ linearly independent solutions. Let's guess. Consider the equation $y_2(x) = c_2xe^{-3x}$.\newline
+
+      We can see that $y_2(x)$ is also a solution to this equation,\footnote{Exercise left for the reader.} but we need to verify linear independence. Taking the Wronskian, we get
+      \begin{align*}
+        W(x) &= \det \begin{pmatrix}e^{-3x} & xe^{-3x} \\ -3e^{-3x} & -3xe^{-3x} + e^{-3x}\end{pmatrix}\\
+             &= e^{-6x} \begin{pmatrix}1 & x \\ -3 & -3x + 1\end{pmatrix}\\
+             &= e^{-6x}\left(-3x + 1 + 3x\right)\\
+             &= e^{-6x}\\
+             &\neq 0.
+      \end{align*}
+      Thus, we have two linearly independent solutions, with the general solution of
+      \begin{align*}
+        y(x) &= c_1e^{-3x} + c_2xe^{-3x}.
+      \end{align*}
+    \item Let
+      \begin{align*}
+        y'' + 4y' + 5 &= 0.
+      \end{align*}
+      The characteristic equation is $r^2 + 4r + 5 = 0$, with solutions of $r = -2 \pm i$. We then have the solutions
+      \begin{align*}
+        y_1(x) &= e^{\left(-2 + i\right)x}\\
+        y_2(x) &= e^{\left(-2-i\right)x}.
+      \end{align*}
+      Unfortunately, we cannot just let these equations stand on their own, because we want \textit{real} solutions. Let's use Euler's theorem, $e^{ix} = \cos x + i\sin x$. Then, we get
+      \begin{align*}
+        y(x) &= c_1e^{\left(-2+i\right)x} + c_2e^{\left(-2-i\right)x}\\
+             &= e^{-2x}\left(c_1e^{ix} + c_2e^{-ix}\right).
+      \end{align*}
+      Let $f(x) = c_1e^{ix} + c_2e^{-ix}$. Using the even/odd decomposition, we get
+      \begin{align*}
+        f(x) &= \frac{1}{2}\left(f(x) + f\left(-x\right)\right) + \frac{1}{2}\left(f(x) - f\left(-x\right)\right)\\
+             &= \left(c_1 + c_2\right)\cos\left(x\right) + i\left(c_1 - c_2\right)\sin\left(x\right).
+      \end{align*}
+      We ``real''-ize our solution by just dropping the value of $i$ in $f(x)$. Thus, we get the full general solution
+      \begin{align*}
+        y(x) &= e^{-2x}\left(d_1\cos\left(x\right) + d_2\sin\left(x\right)\right).
+      \end{align*}
+    \item If we have the equation
+      \begin{align*}
+        y^{(4)} - 25y'',
+      \end{align*}
+      then using a similar process, we get the solution
+      \begin{align*}
+        y(x) = c_1 + c_2 x + c_3e^{5x} + c_4e^{-5x}.
+      \end{align*}
+    \item Considering the equation
+      \begin{align*}
+        y^{(5)} + 4y''' + 4y' = 0,
+      \end{align*}
+      we take the characteristic equation $r^{5}+ 4r^3 + 4r = 0$. Factoring, we get solutions of $r=0,r=\pm i\sqrt{2}$. Thus, we get the solution of
+      \begin{align*}
+        y(x) = c_1 + c_2\cos\left(\sqrt{2}x\right) + c_3\sin\left(\sqrt{2}x\right) + c_4x\cos\left(\sqrt{2}x\right) + c_5x\sin\left(\sqrt{2}x\right).
+      \end{align*}
+  \end{enumerate}
+\end{example}
+\subsection{Reducing our Orders}%
+Let
+\begin{align*}
+  y''(x) + p(x)y'(x) + q(x)y(x) &= 0.
+\end{align*}
+Suppose we know $y_1(x)$. Can we find $y_2(x)$? The answer is yes. We presume
+\begin{align*}
+  y_2(x) &= v(x)y_1(x).
+\end{align*}
+Now, we have
+\begin{align*}
+  y_2 &= vy_1\\
+  y_2' &= v'y_1 + vy_1'\\
+  y_2'' &= v''y_1 + 2v'y_1' + vy_1'',
+\end{align*}
+and inserting into the equation, we get
+\begin{align*}
+  0 &= v''y_1 + 2v'y_1' + vy_1'' + pv'y_1 + pvy_1' + qvy_1\\
+    &= v''y_1 + 2v'y_1' + pv'y_1 + v\underbrace{\left(y_1'' + py_1' + qy_1\right)}_{=0}\\
+    &= v''y_1 + 2v'y_1' + pv'y_1
+\end{align*}
+Now, we have
+\begin{align*}
+  \frac{v''}{v'} &= -2\frac{y_1'}{y_1} - p.\tag{\textasteriskcentered}
+\end{align*}
+Integrating, we get
+\begin{align*}
+  \ln\left(v'\right) &= -2\ln\left(y_1\right) - \int_{}^{} p(x)\:dx.
+\end{align*}
+Taking powers, we get
+\begin{align*}
+  v' &= e^{-2\ln\left(y_1\right) - \int_{}^{} p(x)\:dx}\\
+     &= y_1^{-2} e^{-\int_{}^{} p(x)\:dx}\\
+     &= \frac{e^{-\int_{}^{} p(x)\:dx}}{y_1(x)^2}\\
+  v &= \int_{}^{} \frac{e^{-\int_{}^{} p(x)\:dx}}{y_1(x)^2}\:dx
+\end{align*}
 
 \end{document}
