@@ -212,7 +212,7 @@ The Hahn--Banach extension theorems lend themselves nicely to understanding the 
 \end{corollary}
 \section{Duality}%
 Here, we discuss a little bit more of the theory of dual spaces.
-\begin{definition}
+\begin{definition}\label{def:double_dual_and_canonical_embedding}
   Let $X$ be a normed vector space. The linear functional $\hat{x}\colon X^{\ast}\rightarrow \C$, defined by
   \begin{align*}
     \hat{x}(\varphi) &= \varphi(x)
@@ -292,7 +292,7 @@ An important structural result in the theory of topological vector spaces is the
 
   Furthermore, if $\left(X,\tau\right)$ is any LCTVS, then there is a corresponding family of separating seminorms $\mathcal{P}$ such that $\id\colon\left(X,\tau\right)\rightarrow \left(X,\tau_{\mathcal{P}}\right)$ is a homeomorphism.
 \end{proposition}
-The Hahn--Banach theorems (such as the extension and separation results) that we established in Theorems \ref{thm:hbm_extension}, \ref{thm:hb_continuous_extension}, and \ref{thm:hb_separation} have corresponding results in topological vector spaces.
+The Hahn--Banach theorems (such as the extension and separation results) that we established in Theorems \ref{thm:hbm_extension}, \ref{thm:hb_continuous_extension}, and \ref{thm:hb_separation} have corresponding results in topological vector spaces. The extension results are relatively straightforward.
 \begin{theorem}[Hahn--Banach Extension for LCTVS]\label{thm:hb_continuous_extension_lctvs}
   Let $X$ be a LCTVS, and suppose $E\subseteq X$ is a subspace. If $\varphi\in E^{\ast}$, then there is a $\psi\in X^{\ast}$ such that $\psi|_{E} = \varphi$.
 \end{theorem}
@@ -324,7 +324,7 @@ The requirement that $A$ and $B$ be open can be relaxed in the case of a LCTVS, 
   \begin{align*}
     p_{\varphi}(x) &= \left\vert \varphi(x) \right\vert.
   \end{align*}
-  We let $\mathcal{P}_{W} = \set{p_{\varphi} | \varphi\in W}$. If $\mathcal{P}_{W}$ separates points, then we may construct the topology $\tau_{\mathcal{P}_{W}}$ as in Proposition \label{prop:structure_of_lctvs}.\newline
+  We let $\mathcal{P}_{W} = \set{p_{\varphi} | \varphi\in W}$. If $\mathcal{P}_{W}$ separates points, then we may construct the topology $\tau_{\mathcal{P}_{W}}$ as in Proposition \ref{prop:structure_of_lctvs}.\newline
 
   Alternatively, we may consider the initial topology on $X$ induced by the family $W$, written $\sigma\left(X,W\right)$.\newline
 
@@ -344,7 +344,7 @@ The requirement that $A$ and $B$ be open can be relaxed in the case of a LCTVS, 
   Convergence is defined by $\left(x_\alpha\right)_\alpha\xrightarrow{w}x$ if and only if $\left(\varphi\left(x_\alpha\right)\right)_\alpha\rightarrow \varphi\left(x\right)$ for all $\varphi\in X^{\ast}$.
 \end{definition}
 \begin{definition}[Weak* Topology]\label{def:weak_star_topology}
-  If $X$ is a normed vector space, we say $\sigma\left(X^{\ast},\iota(X)\right)$, where $\iota$ is the canonical embedding, is the weak* topology on $X^{\ast}$.\newline
+  If $X$ is a normed vector space, we say $\sigma\left(X^{\ast},\iota(X)\right)$, where $\iota$ is the canonical embedding (see \ref{def:double_dual_and_canonical_embedding}), is the weak* topology on $X^{\ast}$.\newline
 
   Convergence is defined by $\left(\varphi_{\alpha}\right)_\alpha\xrightarrow{w^{\ast}} \varphi$ if and only if $\left(\varphi_{\alpha}(x)\right)_{\alpha}\rightarrow \varphi(x)$ for all $x\in X$.
 \end{definition}
@@ -368,12 +368,36 @@ In Chapters \ref{ch:left_regular_representation} and \ref{ch:nuclearity}, we dis
 
   If $X$ is an inner product space that is complete with respect to the induced norm, then we say $X$ is a Hilbert space. We usually denote Hilbert spaces by $ \mathcal{H} $.
 \end{definition}
+There are a few important structural results that are established in linear algebra relating to inner product spaces. We detail three that are used extremely often.
 \begin{theorem}[Polarization Identity]
-  Let $\mathcal{H}$ be a Hilbert space, and let $x,y\in \mathcal{H}$. Then,
+  Let $X$ be an inner product space, and let $x,y\in X$. Then,
   \begin{align*}
-    \iprod{x}{y} &= \frac{1}{4}\sum_{j=0}^{3} \norm{x + i^jy}^2.
+    \iprod{x}{y} &= \frac{1}{4}\sum_{k=0}^{3} \norm{x + i^ky}^2.
   \end{align*}
 \end{theorem}
+\begin{theorem}[Cauchy--Schwarz Inequality]
+  Let $X$ be an inner product space, and let $x,y\in X$. Then,
+  \begin{align*}
+    \left\vert \iprod{x}{y} \right\vert &\leq \norm{x}\norm{y}.
+  \end{align*}
+\end{theorem}
+\begin{lemma}
+  If $X$ is any inner product space and $F\colon X\times X \rightarrow \C$ is a sesquilinear form --- i.e., one that satisfies the following properties for all $x,x_1,x_2,y,y_1,y_2\in X$ and $\alpha\in\C$:
+  \begin{itemize}
+    \item $F\left(\alpha x_1+x_2,y\right) = \alpha F\left(x_1,y\right) + F\left(x_2,y\right)$;
+    \item $F\left(x,y_1 + \alpha y_2\right) = F\left(x,y_1\right) + \overline{\alpha}F\left(x,y_2\right)$;
+  \end{itemize}
+  then there exists some $T\in \mathcal{L}\left(X\right)$ such that
+  \begin{align*}
+    F\left(x,y\right) &= \iprod{T\left(x\right)}{y},
+  \end{align*}
+  where $ \iprod{\cdot}{\cdot} $ is the inner product on $X$.
+\end{lemma}
+Note that with these three results, we can show that any two sesquilinear forms $F$ and $G$ are equal along the diagonal --- i.e., if $F(x,x) = G(x,x)$ for all $x$ --- then they are equal everywhere. Additionally, the Cauchy--Schwarz inequality for sesquilinear forms is expressed as
+\begin{align*}
+  \left\vert F\left(x,y\right) \right\vert &\leq F\left(x,x\right)^{1/2}F\left(y,y\right)^{1/2}.
+\end{align*}
+These facts are used implicitly throughout the study of Hilbert spaces and operators on them.
 \begin{definition}
   Let $\mathcal{H}$ be a Hilbert space. A subset $\set{x_i}_{i\in I}$ is called orthonormal if 
   \begin{align*}
@@ -385,8 +409,12 @@ In Chapters \ref{ch:left_regular_representation} and \ref{ch:nuclearity}, we dis
   \end{align*}
   A maximal orthonormal set in $\mathcal{H}$ is called an orthonormal basis; equivalently, the set $\set{x_i}_{i\in I}$ is an orthonormal basis if and only if $\Span\left(\set{x_i}_{i\in I}\right)$ is dense in $\mathcal{H}$.
 \end{definition}
+\begin{remark}
+  Every Hilbert space has an orthonormal basis. This can be found by applying Zorn's lemma on the partially ordered set of all orthonormal subsets of $\mathcal{H}$ ordered by inclusion.
+\end{remark}
+
 \begin{theorem}[Bessel's Inequality and Parseval's Identity]
-  Let $\set{e_i}_{i\in I}$ be an orthonormal set in a Hilbert space $\mathcal{H}$. Then,
+  Let $\set{e_i}_{i\in I}$ be an orthonormal set in a Hilbert space $\mathcal{H}$. Then, for any $x\in \mathcal{H}$,
   \begin{align*}
     \sum_{i\in I} \left\vert \iprod{x}{e_i} \right\vert^2 &\leq \norm{x}^2.
   \end{align*}
@@ -416,7 +444,7 @@ One of the most important structural results on Hilbert spaces relates the conti
 \end{theorem}
 Now that we understand the structure of Hilbert spaces and their closed subspaces, we can now begin understanding bounded operators on Hilbert spaces.
 \begin{definition}
-  Let $T\colon \mathcal{H}\rightarrow \mathcal{H}$ be a bounded operator between Hilbert spaces. We define the adjoint of $T$, $T^{\ast}$, to be the unique operator $T^{\ast}\colon \mathcal{H}\rightarrow \mathcal{H}$ such that
+  Let $T\colon \mathcal{H}\rightarrow \mathcal{H}$ be a bounded operator between Hilbert spaces. We define the adjoint of $T$ to be the unique operator $T^{\ast}\colon \mathcal{H}\rightarrow \mathcal{H}$ such that
   \begin{align*}
     \iprod{T\left(x\right)}{y} &= \iprod{x}{T^{\ast}\left(y\right)}
   \end{align*}
