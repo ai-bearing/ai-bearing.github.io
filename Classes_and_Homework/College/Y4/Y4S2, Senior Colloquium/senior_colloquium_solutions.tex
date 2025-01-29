@@ -1,0 +1,114 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright,sfmath,bbold}
+%\renewcommand{\mathcal}{\mathtt}
+
+%Euler:
+\usepackage{newpxtext,eulerpx,eucal,eufrak}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+\usepackage{homework}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Math 401: Mathematical Problem Solving}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Homework Problems}%
+\begin{problem}[Homework Problem 1]
+  Given an infinite chessboard where each tile is given a strictly positive integral value equal to the average of its four non-diagonal neighbors, must every square have the same value.
+\end{problem}
+\begin{solution}
+  The answer is \textbf{yes}.\newline
+
+  Suppose not. If not every square is the same value, then there must exist a pair of neighboring squares with unequal value. Call these squares $\mathbf{x_1}$ and $\mathbf{x_2}$, where $x_1 > x_2$. Here, $x_1,x_2$ refer to values, while $\mathbf{x_1},\mathbf{x_2}$ refer to the boxes.\newline
+
+  Then, it must be the case that there is some neighbor $\mathbf{x_3}$ such that $x_3 < x_2$. Else, by the average rule, we have
+  \begin{align*}
+    x_2 &\geq \frac{x_2 + x_2 + x_2 + x_1}{4}\\
+        &> x_2,
+  \end{align*}
+  which is a contradiction.\newline
+
+  Via infinite descent, we continue finding boxes $\mathbf{x_{k}}$ such that $x_{k+1} < x_k$, implying that there are infinitely many boxes with integral value less than $x_1$.
+\end{solution}
+\begin{solution}[Alternative Solution]
+  By the well-ordering principle, there is a smallest positive integer in the collection of squares. Let this be in the box $\mathbf{s}$ with value $s$. Then, neighbor of $\mathbf{s}$ must all have the same value, or else $s$ would not have the smallest value.
+\end{solution}
+\begin{problem}[Homework Problem 2]
+Given $n+1$ bit strings of length $n$, where $n\geq 2$, if you can only ask questions of the form ``what is the value of bit $i$ in string $j$,'' determine the minimum number of questions you can ask to guarantee the construction of a string different from any of those $n+1$ strings.
+\end{problem}
+\begin{solution}
+  The answer is $\mathbf{n+2}$.\newline
+
+  For ease of notation, we will number the strings $1,\dots,n+1$, and let $v(j,i)$ yield the value of bit $i$ in string $j$.\newline
+
+  Consider $S = \left(v\left(1,1\right),v\left(2,1\right),v\left(3,1\right)\right)$. By the pigeonhole principle, it is either case that at least two of the values in the tuple $S$ are either $0$ or $1$. Without loss of generality, let $v\left(1,1\right) = v\left(2,1\right) = 1$. Then, consider $S' = v\left(i+1,i\right)$ for bits $2 \leq i \leq n$.\newline
+
+  We will construct the target bit string $t$ by starting with $0$, and if $t\left(i\right) = 1-v\left(i+1,i\right)$.\newline
+
+  For $i\geq 3$, our target string $t$ disagrees with $s_i$ at position $i-1$, and our target string $t$ disagrees with both the first and second string at position $1$. This shows that we can find our target string in $n+2$ questions.\newline
+
+  Now, we show that we cannot guarantee a divergent string in $n+1$ questions. Note that since there are $n$ coordinates, we cannot ask fewer than $n$ questions. On guess number $n+1$, we must ask a question about a coordinate that has already been guessed. If this coordinate is equal to one of the coordinates in our draft target string, then we need to ask at least one more question to be able to guarantee that our string is divergent.
+\end{solution}
+\begin{problem}[Homework Problem 3]
+  Consider a set $\set{a_1,\dots,a_{n+1}}$ of positive integers such that all $a_i \leq 2n$. Show that there are $i,j$ such that $a_i | a_j$.
+\end{problem}
+\begin{problem}[Homework Problem 4]
+Show that for every graph there is an orientation of the edges such that for every vertex the out-degree and in-degree differ by at most $1$.
+\end{problem}
+\begin{solution}
+  Without loss of generality, we assume $G$ is connected. If $G$ is disconnected, we apply the following procedure to each of the connected components.\newline
+
+  If all vertices in $G$ are of even degree, we may apply an orientation on $G$ by following an Eulerian circuit. Every vertex in this directed Eulerian circuit has degree zero.\newline
+
+  If there are any vertices in $G$ of odd degree, we know that there must be an even number of these vertices of odd degree; call them $\set{v_1,\dots,v_{2n}}$. We add vertices $\set{w_1,\dots,w_n}$ and edges such that $w_i$ has an edge to $v_{2i-1}$ and $v_{2i}$. This new graph, call it $G'$, has an Eulerian circuit; we follow this Eulerian circuit to place an orientation on all edges. Since each $v_i$ has only one edge out to a $w_i$ (or one edge in from a $w_i$), we may delete $\set{w_1,\dots,w_n}$ to yield $G$ with an orientation of all edges that has difference at most one between in-degree and out-degree.
+\end{solution}
+\section{Ancillary Problems}%
+\begin{problem}[Ancillary Problem 1]
+  Given a $n\times n$ matrix populated with the numbers $1,\dots,n^2$, show that there are two adjacent entries with difference at least $n$.
+\end{problem}
+\begin{solution}
+  We begin by filling the grid in order --- i.e., populate by starting with $1$, then $2$, etc.
+  \begin{description}[font=\normalfont\scshape,leftmargin=0pt]\itemsep=10pt
+    \item[Case 1:] After filling $1,\dots,k$, there is an empty row and a full row. Now, each column has an empty cell and a filled cell. In particular, in each column there is an empty cell neighboring a filled cell. We have $n$ columns, so by the pigeonhole principle, one of these cells must receive a value at least $k+n$. Since it has a neighbor less than or equal to $k$, we are done.
+    \item[Case 2:] This is the negation of $1$. So, there exists $k$ such that after filling in $1,\dots k$, each row is neither empty nor filled. Now, each row contains an empty cell and a filled cell. By the same argument as in Case 1, but substituting rows for columns, we know that by the pigeonhole principle, one of these cells must receive a value at least $k+n$. Since it has a neighbor less than or equal to $k$, we are done.
+  \end{description}
+\end{solution}
+\begin{problem}[Ancillary Problem 2]
+  Do there exist nine non-overlapping unit squares that touch central unit square $\mathbf{C}$.
+\end{problem}
+\begin{solution}
+  Center the square $\mathbf{C}$ in a square of length $2$, and consider the square of length $2$ as a segment of red rope.
+  \begin{center}
+\begin{tikzpicture}
+    % Central white square with label C
+    \draw[thick, black] (-0.5, -0.5) rectangle (0.5, 0.5); % white square with black border
+    \node at (0, 0) {$C$}; % label in the center
+
+    % Surrounding red square with side length 2
+    \draw[red, thick] (-1, -1) rectangle (1, 1); 
+
+    % Tilted blue square
+    \coordinate (corner) at (1.245, 0); % Corner of the tilted square touching the side of the central square
+    \draw[blue, thick, rotate around={45:(corner)}] 
+        ($(corner) + (-0.5, -0.5)$) rectangle ($(corner) + (0.5, 0.5)$); % Tilted blue square
+
+    % Highlight the red square's border section inside the tilted square
+    \begin{scope}
+        \clip[rotate around={45:(corner)}] 
+            ($(corner) + (-0.5, -0.5)$) rectangle ($(corner) + (0.5, 0.5)$); % Clip to the tilted square
+        \draw[red, ultra thick] (-1, -1) rectangle (1, 1); % Bold red border inside the clipped area
+    \end{scope}
+\end{tikzpicture}
+  \end{center}
+  The length of the red rope contained inside a square that borders $\mathbf{C}$ is at least one; since the perimeter of the red square is $8$, it is not possible for there to be nine squares that touch $\mathbf{C}$.
+\end{solution}
+
+\end{document}

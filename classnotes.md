@@ -8,6 +8,7 @@ Here are the class notes I have written up so far.
 ### [Partial Differential Equations](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, PDEs/pdes_notes.pdf)
 ### [Algebraic Geometry](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, Algebraic Geometry/algebraic_geometry.pdf)
 ### [Data Structures](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, Data Structures/data_structures_notes.pdf)
+### [Senior Colloquium: Mathematical Problem Solving](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, Senior Colloquium/senior_colloquium_solutions.pdf)
 ### Miscellaneous
 #### [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
 ## Fall 2024
