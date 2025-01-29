@@ -1,0 +1,186 @@
+\documentclass[tikz, border=3.15mm]{standalone}
+\usepackage{newpxtext,eulerpx,eucal}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{angles,spath3}
+
+\pgfmathdeclarefunction{sphereX}{2}{%
+    % #1  - azimuth
+    % #2  - elevation
+    \pgfmathparse{sin(#2)*cos(#1)}%
+}
+\pgfmathdeclarefunction{sphereY}{2}{%
+    % #1  - azimuth
+    % #2  - elevation
+    \pgfmathparse{sin(#2)*sin(#1)}%
+}
+\pgfmathdeclarefunction{sphereZ}{2}{%
+    % #1  - azimuth
+    % #2  - elevation
+    \pgfmathparse{cos(#2)}%
+}
+
+\pgfmathdeclarefunction{stereographicProjection}{2}{%
+    % #1  - x or y coord
+    % #2  - z coord
+    \pgfmathparse{#1/(1-#2)}%
+}
+
+\pgfmathsetmacro{\azimuth}{100}
+\pgfmathsetmacro{\elevation}{30}
+
+\pgfmathsetmacro{\pointTheta}{60}
+\pgfmathsetmacro{\pointPhi}{60}
+
+\begin{document}
+\tdplotsetmaincoords{90-\elevation}{\azimuth}
+\begin{tikzpicture}[tdplot_main_coords,scale=2]
+    %% axes
+    % z axis
+    \draw[-latex,very thin] (0,0,-1.5) -- (0,0,1.5);
+    % blank out part on top
+    \fill[tdplot_screen_coords,white] (0,0) circle(1);
+    \draw[dashed,very thin] (0,0,-1.5) -- (0,0,1.5);
+    % initial xy lines
+    \draw[very thin,-latex] 
+      (-2.5,0,0) -- (2.5,0,0) 
+      node[pos=1,below] 
+      {$\scriptstyle \mbox{\scriptsize Re}(z)$};
+    \draw[-latex,very thin] 
+      (0,-1.5,0) -- (0,1.5,0) 
+      node[pos=1,below]
+      {$\scriptstyle \mbox{\scriptsize Im}(z)$};
+    % blank out part on top
+    \tdplotsetrotatedcoords{180}{0}{0}
+    \fill[tdplot_rotated_coords,white] 
+      ({cos(\azimuth)},{sin(\azimuth)}) 
+      arc [
+        start angle=\azimuth
+        ,end angle={\azimuth+180}
+        ,radius=1
+      ] -- cycle;
+    \fill[tdplot_screen_coords,white] 
+      ({cos(0)},{sin(0)}) 
+      arc [
+        start angle=0
+        ,end angle=180
+        ,radius=1
+      ] -- cycle;
+    % final lines
+    \draw[very thin,dashed] (-2.5,0,0) -- (2.5,0,0);
+    \draw[very thin,dashed] (0,-1.5,0) -- (0,1.5,0);
+    \draw[dashed,very thin] (0,0,-1.5) -- (0,0,1.5);
+    \draw[very thin] (0,0,1) -- (0,0,1.5);
+
+    %% Riemann sphere
+    % screen circle
+    \draw[tdplot_screen_coords,very thin] (0,0) circle(1);
+    % xy-plane circle
+    \tdplotsetrotatedcoords{0}{0}{0}
+    \draw[tdplot_rotated_coords,densely dashed,very thin] 
+      (\azimuth:1) 
+      arc [
+        start angle=\azimuth
+        ,end angle={\azimuth+180}
+        ,radius=1
+      ];
+    \draw[tdplot_rotated_coords,very thin] 
+      (\azimuth:1) 
+      arc [
+        start angle=\azimuth
+        ,end angle={\azimuth-180}
+        ,radius=1
+      ];
+
+    % coordinates
+    \coordinate (O) at (0,0);
+    \coordinate (P) at (
+      {sphereX(\pointTheta,\pointPhi)}
+      ,{sphereY(\pointTheta,\pointPhi)}
+      ,{sphereZ(\pointTheta,\pointPhi)}
+    );
+    \coordinate (Pn) at (
+      {sphereX(\pointTheta,\pointPhi)}
+      ,{sphereY(\pointTheta,\pointPhi)}
+      ,{0}
+    );
+    \coordinate (N) at (0,0,1);
+    \coordinate (S) at (0,0,-1);
+    \coordinate (Q) at (
+      {sphereX(\pointTheta+180,180-\pointPhi)}
+      ,{sphereY(\pointTheta+180,180-\pointPhi)}
+      ,{sphereZ(\pointTheta+180,180-\pointPhi)}
+    );
+    \coordinate (z) at (
+      {stereographicProjection(
+        sphereX(\pointTheta,\pointPhi)
+        ,sphereZ(\pointTheta,\pointPhi)
+      )},{stereographicProjection(
+        sphereY(\pointTheta,\pointPhi)
+        ,sphereZ(\pointTheta,\pointPhi)
+      )}
+    );
+    \coordinate (W) at (
+      {stereographicProjection(
+        sphereX(\pointTheta+180,180-\pointPhi)
+        ,sphereZ(\pointTheta+180,180-\pointPhi)
+      )},{stereographicProjection(
+        sphereY(\pointTheta+180,180-\pointPhi)
+        ,sphereZ(\pointTheta+180,180-\pointPhi)
+      )}
+    );
+
+    % geometric constructions
+    %\draw[very thin] (O) -- (P) -- (Pn);
+    %\draw[very thin] (N) -- (z) -- (O);
+    \draw[very thin, densely dotted] (N) -- (P);
+    \draw[very thin, densely dotted] (O) -- (P);
+    \draw[very thin] (P) -- (z);
+    \draw[very thin, densely dashed] (z) -- (O);
+    %\draw[very thin] (O) -- (Q);
+    \draw[densely dotted,red,very thin] (N) -- (Q);
+    \draw[very thin,red,densely dotted] (O) -- (W);
+    \draw[-latex,very thin] 
+      (0.25,0) 
+      arc [
+        start angle=0
+        ,end angle=\pointTheta
+        ,radius=0.25
+      ] node[pos=0.5,below] {$\scriptstyle \phi$};
+    \draw[-latex,very thin,red] 
+      (0.15,0) 
+      arc [
+        start angle=0
+        ,end angle=\pointTheta+180
+        ,radius=0.15
+      ] node[pos=0.95,above]{$\scriptstyle \phi_w$};
+    \tdplotsetrotatedcoords{\pointTheta}{0}{0}
+    \draw[
+      tdplot_rotated_coords
+      ,very thin,-latex
+      ,smooth
+      ,variable=\Vt
+      ,domain=90:90-\pointPhi
+    ] plot 
+      ({0.3*cos(\Vt)},{0},{0.3*sin(\Vt)}) 
+      node[pos=0,above right=5pt,scale=1/3]{$\scriptstyle \theta$};
+    %\draw pic[draw,-,angle eccentricity=1.4, angle radius=0.2cm]
+    %  {right angle=O--Pn--P};
+
+    %%% POINTS %%%
+    \path[tdplot_screen_coords,spath/save=point] (0,0,0) circle(0.025);
+    \fill[][spath/use={point, transform={shift={(W)}}}] 
+      node[above left]{$\scriptstyle W$};
+    \fill[][spath/use={point, transform={shift={(N)}}}] 
+      node[above left]{$\scriptstyle N$};
+    \fill[][spath/use={point, transform={shift={(P)}}}] 
+      node[above right]{$\scriptstyle P$};
+    \fill[][spath/use={point, transform={shift={(z)}}}] 
+      node[right]{$\scriptstyle z$};
+    \fill[][spath/use={point, transform={shift={(Q)}}}] 
+      node[above left]{$\scriptstyle Q$};
+    \fill[][spath/use={point, transform={shift={(O)}}}] 
+      node[below left=5pt]{$\scriptstyle O$};
+    \fill[][spath/use={point, transform={shift={(S)}}}] 
+      node[right]{$\scriptstyle S$};
+\end{tikzpicture}
+\end{document}
