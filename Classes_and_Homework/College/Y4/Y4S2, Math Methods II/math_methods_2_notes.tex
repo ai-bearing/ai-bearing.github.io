@@ -8,6 +8,7 @@
 \usepackage{newpxtext,eulerpx,eucal,eufrak}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \renewcommand*{\hbar}{\hslash}
+\newcommand{\ds}{\displaystyle}
 
 %\usepackage{homework}
 
@@ -187,5 +188,125 @@ Now, what happens if, at \eqref{step:geometric_expansion}, we have $\left\vert \
        &= \sum_{n=1}^{\infty}\underbrace{\left(-\frac{1}{2\pi i}\oint_{C}w\left(\zeta - a\right)^{n-1}\:d\zeta\right)}_{=c_{-n}}\frac{1}{\left(z-a\right)^{n}}\\
        &= \sum_{n=1}^{\infty}\frac{c_{-n}}{\left(z-a\right)^n}
 \end{align*}
-Note that this series has a singularity at $z = a$, but since our series is only defined outside a particular region, that doesn't matter. We call a series in reciprocal powers a Laurent series.
+Note that this series has a singularity at $z = a$, but since our series is only defined outside a particular region, that doesn't matter. We call a series in reciprocal powers a Laurent series. More specifically, Laurent series may include expansions in negative powers as well as positive powers.
+\begin{example}[Annuli]
+  If we have a point $a$, we want to surround $a$ by a special contour to apply Cauchy's integral formula.\newline
+
+  In particular, for any $z$ in the annulus, we get
+  \begin{align*}
+    w(z) &= \frac{1}{2\pi i} \oint_{c_1 - c_2}^{} \frac{w\left( \zeta \right)}{\zeta - z}\:d\zeta\\
+         &= \frac{1}{2\pi i} \oint_{c_1}^{} \frac{w\left( \zeta \right)}{\zeta - z}\:d\zeta - \frac{1}{2\pi i}\oint_{c_2}^{} \frac{w\left( \zeta \right)}{\zeta - z}\:d\zeta\\
+         &= \sum_{n=-\infty}^{\infty}c_n\left( z-a \right)^n\\
+         &= c_0 + \sum_{n=1}^{\infty}\left( c_{-n}\left( z-a \right)^n + c_n\left( z-a \right)^n \right).
+  \end{align*}
+\end{example}
+\begin{example}
+  Consider the function
+  \begin{align*}
+    w(z) &= \frac{1}{z^2 + z - 2}\\
+         &= \frac{1}{\left( z- 1\right)\left( z+2 \right)}\\
+         &= \frac{1}{3}\left( \frac{1}{z-1} - \frac{1}{z+2} \right).
+  \end{align*}
+  Now, we have three regions to expand $w$ in.
+  \begin{itemize}
+    \item If $\left\vert z \right\vert < 1$, then our series is in both $\displaystyle z^n$ and $\displaystyle z^n$.
+    \item If $1 < \left\vert z \right\vert < 2$, then one of our series is going to in $\displaystyle \frac{1}{z^{n}}$ and one is in $\displaystyle z^n$.
+    \item If $\left\vert z \right\vert > 2$, then both of our series are in the form of $\displaystyle \frac{1}{z^n}$ and $\displaystyle \frac{1}{z^n}$
+  \end{itemize}
+  Via tedious, heavily error-prone calculations, we find that
+  \begin{align*}
+    w_1(z) &= -\frac{1}{3}\sum_{n=0}^{\infty}\left( 1 + \left( -1 \right)^n \left( \frac{1}{2} \right)^{n+1} \right)z^n\\
+    w_2(z) &= \frac{1}{3}\sum_{n=0}^{\infty}\left( \frac{1}{z^{n+1}} + \left( -\frac{1}{2} \right)^{n+1}z^n \right)\\
+    w_3(z) &= \frac{1}{3} \sum_{n=0}^{\infty} \left( 1-\left( -2 \right)^n \right)\frac{1}{z^{n+1}}.
+  \end{align*}
+  Sewing all of $w_1,w_2,w_3$ together, then we get a full series representation of $w(z)$.
+\end{example}
+\begin{definition}
+  If $w(z)$ is a function that can be written as $w(z) = \left( z-a \right)^ng(a)$, where $g(a)\neq 0$, then we say $w$ has an $n$-th order zero at $z=a$. If $n = 1$, then we say $w$ has a simple zero at $a$.\newline
+
+  Similarly, if we can write
+  \begin{align*}
+    w(z) &= \frac{g(a)}{\left( z-a \right)^n}
+  \end{align*}
+  with $g(a)\neq 0$, then we say $w$ has a pole of order $n$ at $a$. If $n = 1$, then we say $w$ has a simple pole at $a$.
+\end{definition}
+There are three types of isolated singularities (i.e., isolated points where $w(z)$ is not defined).
+\begin{definition}
+  Let $w$ be an analytic function with isolated singularity at $a$.
+  \begin{itemize}
+    \item If $w$ remains bounded in any neighborhood of $a$, then it must be the case that $c_{-n} = 0$ for all $n > 1$, so the Laurent series is a pure Taylor expansion. We say $z = a$ is a removable singularity.\newline
+
+      For instance, the function
+      \begin{align*}
+        \frac{\sin\left( z-a \right)}{z-a} &= \sum_{n=0}^{\infty}\left( -1 \right)^n \frac{\left( z-a \right)^{2n}}{\left( 2n+1 \right)!}
+      \end{align*}
+      has a removable singularity at $z=a$.
+    \item If not all the $c_{-n}$ are equal to zero, but there is a largest $n > 0$ such that $c_{-n}$ is in the Laurent series expansion, then we say $a$ is an $n$-th order pole. If $n = 1$, we say $a$ is a simple pole.
+    \item If there is no largest value of $n$ such that $c_{-n}$ is in the Laurent series --- i.e., that $c_{-n}\neq 0$ for all $n$ --- then we say that $a$ is an essential singularity.\newline
+
+      One of the most important facts about an essential singularity is that the behavior is path dependent. For instance,
+      \begin{align*}
+        e^{1/z} &= \sum_{n=0}^{\infty}\frac{1}{n!z^n}
+      \end{align*}
+      has an essential singularity at $z = 0$. We see that $e^{1/z}$ diverges as $z \rightarrow 0$ along the positive real axis, but if $z\to 0$ along the negative real axis, we get $e^{1/z}\to 0$.
+  \end{itemize}
+  Singularities can also occur at $\infty$, which occurs when $w(1/z)$ has a singularity at $0$.
+\end{definition}
+\subsubsection{Multivalued Function}%
+Consider the function
+\begin{align*}
+  w(z) &= z^2\\
+       &= \underbrace{\left( x^2 - y^2 \right)}_{u(x,y)} + i\underbrace{\left( 2xy \right)}_{v(x,y)}\\
+       &= r^2e^{2i\varphi}.
+\end{align*}
+Note that if we take a path around the origin going around by an angle of $2\pi$, then the resulting path goes around twice. Note that this means the lines $\varphi$ and $\varphi + \pi$ map to the same point in the $w$ plane.\newline
+
+This isn't such a big deal in and of itself, but if we take $w(z) = z^{1/2}$, we get an issue. Instead of $w$ being a two-to-one function, we now have $w$ is a one-to-two function. This is an implicit problem in $\R$ with the function $w(x) =\sqrt{x}$, which we resolve by taking the ``positive'' square root. This is known as choosing a branch.\newline
+
+We have to do something similar in the complex plane. Note that if we go around by an angle of $2\pi$ in the $z$ plane, then we only go around by an angle of $\pi$ in the $w$-plane. As we keep going around the plane, we jump from branch to branch, which brings issues of continuity.\newline
+
+To resolve this, we create a ``branch cut'' that contours are not allowed to cross. 
+\begin{example}
+  The most common branch cut is to start from the branch point at $z = 0$, in the case of $w(z) = z^{1/2}$ or $w(z) = \ln(z)$, and extend along the real axis, meaning our branch cut is $\left( -\infty,0 \right]$.\newline
+
+  This principal branch restricts \textit{output} values of $\varphi$ to $-\pi < \varphi \leq \pi$.\newline
+
+  For instance, above the cut, we have $\varphi = \pi$, and below the branch cut, we have $\varphi = -\pi$, meaning we have
+  \begin{align*}
+    \sqrt{z} &= \sqrt{r}e^{i\pi /2}\tag*{$\varphi \to \pi$}\\
+             &= i\sqrt{r}\\
+    \sqrt{z} & \sqrt{r}e^{-i\pi/2}\tag*{$\varphi \to -\pi$}\\
+             &= -i\sqrt{r}.
+  \end{align*}
+  This is why the branch cut ``causes'' a discontinuity across the branch, but in $\C\setminus (-\infty,0]$.\newline
+
+  Now, if we have
+  \begin{align*}
+    \sqrt{z_1}\sqrt{z_2} &= \left( r_1e^{i\varphi_1} \right)^{1/2}\left( r_2e^{i\varphi_2} \right)^{1/2}\\
+                         &= \sqrt{r_1r_2}e^{i\left( \varphi_1 + \varphi_2 \right)/2}.
+  \end{align*}
+  However, if we want to calculate $\sqrt{z_1z_2}$, and if $\left\vert \varphi_1 + \varphi_2 \right\vert > \pi$ < then our product $z_1z_2$ crosses the branch cut, and our discontinuity requires $\varphi_1 + \varphi_2 $ to be converted to $\varphi_1 + \varphi_2 \pm 2\pi$ so as to bring the angle sum back into the principal branch. This means we have
+  \begin{align*}
+    \sqrt{z_1z_2} &= \left( r_1r_2e^{i\left( \varphi_1 + \varphi_2 \right)/2} \right)\\
+                  &= \begin{cases}
+                    \sqrt{r_1r_2}e^{i\left( \varphi_1 + \varphi_2 \right)/2} & \left\vert \varphi_1 + \varphi_2 \right\vert \leq \pi\\
+                    -\sqrt{r_1r_2}e^{i\left( \varphi_1+\varphi_2 \right)/2} & \left\vert \varphi_1 + \varphi_2 \right\vert > \pi
+                  \end{cases}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Now, if we have $z_1 = 2e^{i\left( 3\pi/4 \right)}$ and $z_2 = e^{i\left( \pi/2 \right)}$, then we have
+  \begin{align*}
+    \sqrt{z_1} &= \sqrt{2}e^{i3\left( \pi/8 \right)}\\
+    \sqrt{z_2} &= e^{i\left( \pi/4 \right)}.
+  \end{align*}
+  Note that if we take $\sqrt{z_1z_2}$, then the argument of $z_1z_2$ is $5\pi/4$, so we have to change our argument to $-3\pi/4$ to return to the principal branch before we may calculate the square root. This gives
+  \begin{align*}
+    \sqrt{z_1z_2} &= \sqrt{2e^{-i\left( 3\pi/4 \right)}}\\
+                  &= \sqrt{2}e^{-i\pi + i\left( 5\pi/8 \right)}\\
+                  &= -\sqrt{2}e^{i\left( 5\pi/8 \right)}\\
+                  &= -\sqrt{z_1}\sqrt{z_2}.
+  \end{align*}
+  
+\end{example}
 \end{document}
