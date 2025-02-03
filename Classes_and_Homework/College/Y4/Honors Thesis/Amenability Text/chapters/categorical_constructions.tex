@@ -322,7 +322,7 @@ In this section, we detail the construction of the tensor product $V\otimes W$, 
   \end{align*}
 \end{definition}
 Just as we defined the free vector space and free group, we define the tensor product through a universal property --- and, just as with the case of the free group, we will focus more on the construction of the tensor product than on showing uniqueness.
-\begin{theorem}\label{thm:tensor_product_existence}
+\begin{theorem}[Universal Property of Tensor Products]\label{thm:tensor_product_existence}
   Let $V,W,Z$ be vector spaces, and let $b\colon V\times W \rightarrow Z$ be a bilinear map. Then, there exists a vector space, $V\otimes W$ and a linear map $T\colon V\otimes W \rightarrow Z$ such that for any $v\in V$ and $w\in W$, $T\left( v\otimes w \right) = b\left( v,w \right)$. The following diagram, where $\iota\colon V\times W \hookrightarrow V\otimes W$ is defined by $\left( v,w \right)\mapsto v\otimes w$, commutes.
   \begin{center}
       % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADUAdTvAW3gAEAdRABfUuky58hFAEZyVWoxZsunCH0Ejxk7HgJEFcpfWatEIAFpilMKAHN4RUADMAThF5IyIHBCQAJmoGOgAjGAYABSkDWRB3LAcACxwQajNVSzCxCRAPLx9qfyQFZXM2bnwcOnS-OiwGNkgwVl18z29EMpLEYJBQiOjYmTYGGFc0jJULEAAVW1EgA
@@ -344,13 +344,47 @@ Just as we defined the free vector space and free group, we define the tensor pr
   Intuitively, from the way we have defined the tensor product as a linear map that extends a bilinear map, we would find the following properties of tensors desirable, for any $v,v_1,v_2\in V$, $w,w_1,w_2\in W$, and $\alpha\in \C$
   \begin{align*}
     \left( v_1 + v_2 \right)\otimes w &= v_1\otimes w + v_2\otimes w\label{eq:rel_1}\tag{1}\\
-    v\otimes\left( w_1 + w_2 \right) &= v\otimes w_1 + v\otimes w_2\lavel{eq:rel_2}\tag{2}\\
+    v\otimes\left( w_1 + w_2 \right) &= v\otimes w_1 + v\otimes w_2\label{eq:rel_2}\tag{2}\\
     \left( \alpha v \right)\otimes w &= \alpha \left( v\otimes w \right)\label{eq:rel_3}\tag{3}\\
     v\otimes \left( \alpha w \right) &= \alpha \left( v\otimes w \right)\label{eq:rel_4}\tag{4}.
   \end{align*}
   With these four desirable properties in mind, we define a certain set of relations on the free vector space that we will ``mod out'' to obtain our desired tensor product. 
   \begin{itemize}
-    \item To satisfy \eqref{eq:rel_1}, we define the set $N_1 = \set{\delta_{\left( v_1 + v_2,w \right)} - \delta_{\left( v_1,w \right)} - \delta_{\left( v_2,w \right)} | v_1,v_2\in V,w\in W}$, as this will set to zero all equations as in \ref{eq:rel_1}.
+    \item To satisfy \eqref{eq:rel_1}, we define the set $N_1 = \set{\delta_{\left( v_1 + v_2,w \right)} - \delta_{\left( v_1,w \right)} - \delta_{\left( v_2,w \right)} | v_1,v_2\in V,w\in W}$, as this will be equivalent to the statement $\left( v_1 + v_2 \right)\otimes w - v_1\otimes w - v_2\otimes w = 0$.
+    \item To satisfy \eqref{eq:rel_2}, we define the set $N_2 = \set{\delta_{\left( v,w_1 + w_2 \right)} - \delta_{\left( v,w_1 \right)} - \delta_{\left( v,w_2 \right)} | v\in V,w_1,w_2\in W}$, as this will be equivalent to the statement $v\otimes \left( w_1 + w_2 \right) - v\otimes w_1 - v\otimes w_2 = 0$.
+    \item To satisfy \eqref{eq:rel_3}, we define the set $N_3 = \set{\delta_{\left( \alpha v,w \right)} - \alpha \delta_{\left( v,w \right)} | \alpha\in\C,v\in V,w\in W}$, as this will be equivalent to the statement $\left( \alpha v \right)\otimes w - \alpha \left( v\otimes w \right) = 0$.
+    \item To satisfy \eqref{eq:rel_4}, we define the set $N_4 = \set{\delta_{\left(  v,\alpha w \right)} - \alpha \delta_{\left( v,w \right)} | \alpha\in\C,v\in V,w\in W}$, as this will be equivalent to the statement $v\otimes \left( \alpha w \right) - \alpha \left( v\otimes w \right) = 0$.
   \end{itemize}
-\end{proof}
+  We define the ``zero set'' of our tensor product to be
+  \begin{align*}
+    N &= \Span\left( N_1 \cup N_2\cup N_3\cup N_4 \right),
+  \end{align*}
+  and consider the quotient space (Definition \ref{def:subspace_quotient_space_direct_sum}) $\C\left[ V\times W \right]/N$. We define
+  \begin{align*}
+    v\otimes w &\coloneq \delta_{(v,w)} + N.
+  \end{align*}
+  It can be verified that this definition is faithful to our requirements in \eqref{eq:rel_1}--\eqref{eq:rel_4}. Elements of $V\otimes W$ are of the form $\sum_{i\in I}v_i \otimes w_i$. We call elements of the form $v\otimes w$ \textit{elementary tensors}.\newline
 
+  Define $\iota\colon V\times W \rightarrow V\otimes W$ by $\left( v,w \right) \mapsto v\otimes w$, and set $b = T\circ \iota$.\newline
+
+  We verify that this definition satisfies the universal property of tensor products. We let $v_1,v_2,v\in V$, $w_1,w_2,w\in W$, and $\alpha\in \C$. Then,
+  \begin{align*}
+    b\left( v_1 + cv_2,w \right) &= T\left( \iota\left( v_1 + cv_2,w \right) \right)\\
+                                 &= T\left( \left( v_1 + cv_2 \right)\otimes w \right)\\
+                                 &= T\left( v_1\otimes w + c\left( v_2\otimes w \right) \right)\\
+                                 &= T\left( v_1\otimes w \right) + cT\left( v_2\otimes w \right)\\
+                                 &= b\left( v_1,w \right) + cb\left( v_2,w \right)\\
+                                 \\
+    b\left( v,w_1 + cw_2 \right) &= T\left( \iota\left( v,w_1 + cw_2 \right) \right)\\
+                                 &= T\left( v\otimes \left( w_1 + cw_2 \right) \right)\\
+                                 &= T\left( v\otimes w_1 + c\left( v\otimes w_2 \right) \right)\\
+                                 &= T\left( v\otimes w_1 \right) + cT\left( v\otimes w_2 \right)\\
+                                 &= b\left( v,w_1 \right) + cb\left( v,w_2 \right).
+  \end{align*}
+  Thus, by the universal property of the free vector space, there is a unique linear map $\tilde{b}\colon \C\left[ V\times W \right]\rightarrow Z$, defined by $\tilde{b}\left( \delta_{(v,w)} \right) = b\left( v,w \right)$. Note that $\tilde{b}$ vanishes on $N$, so by the first isomorphism theorem there is a unique linear map $T_{b}\colon \C\left[ V\times W \right]/N\rightarrow Z$ that is defined by $T_{b} \circ \pi = \tilde{b}$, where $\pi\colon \C\left[ V\times W \right] \rightarrow \C\left[ V\times W \right]/N$ is the canonical projection.\newline
+
+  Thus, we know that $T = T_{b}$ satisfies the universal property of tensor products.
+\end{proof}
+In linear algebra, we often use the universal property of tensor products to convert from bilinear maps to linear maps. However, when our vector spaces are equipped with a norm --- specifically, if they are Banach spaces --- we are also concerned with ensuring that the norm of on the tensor product is faithful to the underlying vector space structures in one way or the other.\newline
+
+This is the domain of the injective and projective norms. The injective and projective norms will become more relevant when we discuss $C^{\ast}$-algebras, nuclearity, and amenability in Chapter \ref{ch:nuclearity}.
