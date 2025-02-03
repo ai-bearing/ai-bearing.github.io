@@ -509,7 +509,97 @@ Plugging into matrix form, we have
 \end{align*}
 Since the Wronskian is nonzero, we have
 \begin{align*}
-  v_1' &= \begin{pmatrix}y_1 & y_2\\y_1' & y_2'\end{pmatrix}^{-1} \begin{pmatrix}0\\g(x)\end{pmatrix}.
+  \begin{pmatrix}v_1'(x) \\ v_2'(x)\end{pmatrix} &= \begin{pmatrix}y_1 & y_2\\y_1' & y_2'\end{pmatrix}^{-1} \begin{pmatrix}0\\g(x)\end{pmatrix}\\
+                                                 &= \frac{1}{y_1(x)y_2'(x) - y_2(x)y_1'(x)} \begin{pmatrix}-y_2(x)g(x) \\ y_1(x)g(x)\end{pmatrix}\label{eq:variation_parameters}\tag{\textdaggerdbl}
 \end{align*}
+\begin{example}
+  Let
+  \begin{align*}
+    y'' - 2y' + y &= e^x.
+  \end{align*}
+  Solving the homogeneous solution, we have the characteristic equation of $r^2 - 2r + 1 = 0$. Thus, $y_1(x) = e^x$ and $y_2(x) = xe^x$.\newline
+
+  To find $y_p(x)$, we guess $y_p(x) = x^2 e^x$. Using the power of computation in Sage, we get the answer of
+  \begin{lstlisting}[style=pythonstyle,title=Avoiding Variation of Parameters]
+  de = diff(y,x,2) - 2*diff(y,x) + y - e^(x)
+  g = desolve(de,y)
+  latex(expand(g))
+  \end{lstlisting}
+  
+  \begin{align*}
+    y_p(x) &= K_{2} x e^{x}+ K_{1} e^{x} + \frac{1}{2} x^{2} e^{x}.
+  \end{align*}
+  However, this is a very unsatisfying method.\newline
+
+  Using \eqref{eq:variation_parameters}, we can find a different solution. We find
+  \begin{align*}
+    v_1'(x) &= \frac{1}{e^{2x}}\left( \left( -1 \right)\left( xe^{x} \right)\left( e^x \right) \right)\\
+            &= -x,
+  \end{align*}
+  yielding
+  \begin{align*}
+    v_1(x) &= -\frac{x^2}{2} + c_2.
+  \end{align*}
+  Similarly, we get
+  \begin{align*}
+    v_2'(x) &= \frac{1}{e^{2x}}\left( e^x \right)\left( e^x \right)\\
+    v_2(x) &= x + c_2.
+  \end{align*}
+  This gives
+  \begin{align*}
+    y_p(x) &= \frac{1}{2}x^2e^x.
+  \end{align*}
+\end{example}
+\begin{example}
+  Let
+  \begin{align*}
+    y'''(x) - y'(x) &= x + e^{x}.
+  \end{align*}
+  Using the characteristic equation, we have $y_1(x) = 1$, $y_2(x) = e^x$, and $y_3(x) = e^{-x}$.\newline
+
+  Now, using the Wronskian, we get
+  \begin{align*}
+    \begin{pmatrix}v_1' \\ v_2' \\ v_3'\end{pmatrix} &= \begin{pmatrix}1 & e^x & e^{-x} \\ 0 & e^x & -e^{-x} \\ 0 & e^{x} & e^{-x}\end{pmatrix}^{-1} \begin{pmatrix}0\\0\\x + e^{x}\end{pmatrix}.
+  \end{align*}
+  This would suck, but we would be able to find a solution nonetheless.
+\end{example}
+In the general form, with linearly independent homogeneous solutions $y_1,\dots,y_n$, we have the solution of
+\begin{align*}
+  \begin{pmatrix}v_1' \\ \vdots \\ v_n'\end{pmatrix} &= \begin{pmatrix}y_1 & \cdots & y_n \\ \vdots & \ddots & \vdots \\ y_1^{(n-1)} & \cdots & y_n^{(n-1)}\end{pmatrix}^{-1} \begin{pmatrix}0 & \vdots & g(x)\end{pmatrix}\\
+  y(x) &= \sum_{i=1}^{n}c_iy_i(x) + \sum_{i=1}^{n}v_i(x)y_i(x).
+\end{align*}
+\begin{example}[Solving a Coupled System]
+  Before we can start using variation of parameters for systems, we need to recall how to solve constant-coefficient systems.
+  \begin{align*}
+    x'(t) &= 3x(t) + y(t)\\
+    y'(t) &= x(t) + 3y(t).
+  \end{align*}
+  Here, setting
+  \begin{align*}
+    \mathbf{x} &= \begin{pmatrix}x(t)\\y(t)\end{pmatrix},
+  \end{align*}
+  we get system of linear equations
+  \begin{align*}
+    \mathbf{x}'(t) &= \begin{pmatrix}3 & 1 \\ 1 & 3\end{pmatrix} \mathbf{x}\\
+    \begin{pmatrix}x'(t) \\y'(t)\end{pmatrix} &= \begin{pmatrix}3& 1\\1&3\end{pmatrix} \begin{pmatrix}x(t)\\y(t)\end{pmatrix}.
+  \end{align*}
+
+\end{example}
+\begin{remark}
+In the matrix
+\begin{align*}
+  A &= \begin{pmatrix}a & b \\ b & a\end{pmatrix},
+\end{align*}
+the eigenvalues are 
+\begin{align*}
+  \lambda_1 &= a + b\\
+  \lambda_2 &= a-b\\
+  \end{align*}
+  with eigenvectors of
+  \begin{align*}
+  \mathbf{v}_1 &= \begin{pmatrix}1\\1\end{pmatrix}\\
+  \mathbf{v}_2 &= \begin{pmatrix}1\\-1\end{pmatrix}.
+\end{align*}
+\end{remark}
 
 \end{document}
