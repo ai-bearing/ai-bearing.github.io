@@ -1,4 +1,6 @@
-Just as God appears in many forms (or representations) throughout the Bible, such as the Burning Bush in the book of Exodus, so too are groups often dealt with through their representations. The field of representation theory, for instance, focuses on the properties of groups as subgroups of groups of linear transformations, and how the properties of these groups of linear transformations can provide insights into the properties of the groups themselves. Similarly, we will be engaging with the properties of groups through their representations as unitary operators acting on a Hilbert space. Soon enough, we will see that there are impressive insights about a group to be found through these unitary representations.
+Just as God appears in many forms (or representations) throughout the Bible, such as the Burning Bush in the book of Exodus, so too are groups often dealt with through their representations. The field of representation theory, for instance, focuses on the properties of groups as subgroups of groups of linear transformations, and how the properties of these groups of linear transformations can provide insights into the properties of the groups themselves.\newline
+
+Similarly, we will be engaging with the properties of groups through their representations as unitary operators acting on a Hilbert space. Soon enough, we will see that there are impressive insights about a group to be found through the properties of these unitary representations.
 \section{Representing a Group}%
 On a Hilbert space $\mathcal{H}$, we know that the set of unitary operators, $\mathcal{U}\left(\mathcal{H}\right)$, is a group under composition.\footnote{To see this, note that $I_{\mathcal{H}}$ is the identity element, that $U^{\ast}U =UU^{\ast} = I_{\mathcal{H}}$, and that unitarity is preserved under composition.} Given any other group $\Gamma$, it is then tempting to consider how we can ``model'' $\Gamma$ (so to speak) as a subgroup of $\mathcal{U}\left(\mathcal{H}\right)$. This is the essence behind the idea of a unitary representation.
 \begin{definition}
@@ -18,3 +20,110 @@ On a Hilbert space $\mathcal{H}$, we know that the set of unitary operators, $\m
     d_{\omega}\left(\left(a_{k}\right)_{k\in\Z}\right) &= \left(\omega^k a_{k}\right)_{k\in\Z}.
   \end{align*}
 \end{example}
+Via the trivial representation, we know that any group can be unitarily represented --- however, the trivial representation is, unfortunately, quite unable to give us information about properties of the underlying group. In general, the Hilbert space we want to represent the group on should, in some way, be based on the underlying group, and the unitary representation to be based on the group's self-action by left-multiplication (see Definition \ref{def:group_action}).\newline
+
+As for the Hilbert space, we will use the space $\ell_2\left( \Gamma \right)$, which, from Definition \ref{def:three_function_spaces}, is the space of all functions $f\colon \Gamma\rightarrow \C$ such that $\sum_{t\in \Gamma}\left\vert f(t) \right\vert^2 < \infty$.
+\begin{theorem}[The Left-Regular Representation]
+  Let $\Gamma$ be a group. For a fixed $t\in\Gamma$, we define $\lambda_t\colon \ell_2\left( \Gamma \right)\rightarrow \ell_2\left( \Gamma \right)$ by
+  \begin{align*}
+    \lambda_t\left( f \right)\left( s \right) &= f\left( t^{-1}s \right).
+  \end{align*}
+  Then, $\lambda_t$ is an isometry, and the map
+  \begin{align*}
+    \lambda\colon \Gamma\rightarrow \B\left( \ell_2\left( G \right) \right),
+  \end{align*}
+  given by $t\mapsto \lambda_t$, is a unitary representation of $\Gamma$. This is known as the \textit{left-regular representation} of $\Gamma$.
+\end{theorem}
+\begin{proof}
+  For a fixed $t$, the map $\lambda_t\colon \ell_2\left( \Gamma \right)\rightarrow \ell_2\left( \Gamma \right)$ is a well-defined linear isometry, as
+  \begin{align*}
+    \norm{\lambda_t\left( f \right)}_{\ell_2}^2 &= \sum_{s\in\Gamma}\left\vert \lambda_t\left( f \right)\left( s \right) \right\vert^2\\
+                                                &= \sum_{s\in\Gamma}\left\vert f\left( t^{-1}s \right) \right\vert^2\\
+                                                &= \sum_{r\in\Gamma}\left\vert f\left( r \right) \right\vert^2\tag*{$r = t^{-1}s$}\\
+                                                &= \norm{f}_{\ell_2}^2.
+  \end{align*}
+  Now, we know that each $\lambda_s$ has an inverse of $\lambda_{s^{-1}}$, so we know that each $\lambda_s$ is unitary, with $\lambda_s^{\ast} = \lambda_{s^{-1}}$. To evaluate that $\lambda$ is an action, we verify on the orthonormal basis of $\ell_2\left( \Gamma \right)$, $\set{\delta_t}_{t\in\Gamma}$ (see Example \ref{ex:orthonormal_bases}). This gives
+  \begin{align*}
+    \lambda_s\left( \delta_t \right)\left( r \right) &= \delta_t\left( s^{-1}r \right)\\
+                                                     &= \begin{cases}
+                                                       1 & s^{-1}r = t\\
+                                                       0 & s^{-1}r \neq t
+                                                     \end{cases}\\
+                                                     &= \begin{cases}
+                                                       1 & r = st\\
+                                                       0 & r\neq st
+                                                     \end{cases}\\
+                                                     &= \delta_{st}\left( r \right),
+  \end{align*}
+  meaning $\lambda_s\left( \delta_t \right) = \delta_{st}$. Additionally, we see that
+  \begin{align*}
+    \lambda_{s}\circ \lambda_r\left( f \right)\left( t \right) &= \lambda_{r}\left( f \right)\left( s^{-1}t \right)\\
+                                                               &= f\left( r^{-1}s^{-1}t \right)\\
+                                                               &= f\left( \left( sr \right)^{-1}t \right)\\
+                                                               &= \lambda_{sr}\left( f \right)\left( t \right).
+  \end{align*}
+  Thus, we obtain the unitary representation of $\Gamma$, $\lambda\colon\Gamma\rightarrow \mathcal{U}\left( \ell_2\left( \Gamma \right) \right)$.
+\end{proof}
+\begin{remark}
+  The other ``regular representation'' is, predictably, the right-regular representation, given by $s \mapsto \rho_s$, where
+  \begin{align*}
+    \rho_s\left( f \right)\left( t \right) &= f\left( ts \right).
+  \end{align*}
+  The right-regular representation acts on orthonormal basis elements by mapping $\delta_t \mapsto \delta_{ts^{-1}}$.\newline
+
+  It can be shown that the left-regular representation and right-regular representation are isomorphic, in the sense that there is a bijective map $\lambda_s\mapsto \rho_s$ that remains faithful to the underlying group structure. However, we will be working with the left-regular representation as it is more commonly when dealing with unitary representations of groups, though it is important to underscore that this is purely personal preference rather than something innate with the left-regular representation itself.
+\end{remark}
+\section{Almost-Invariant Vectors in the Left-Regular Representation}%
+One of the crucial aspects of the left-regular representation is that yet again we are able to use the tools of functional analysis, as in Section \ref{sec:functional_analysis_and_amenability}, to establish amenability. However, this time, rather than being forced to use the dual space of $\ell_{\infty}\left(\Gamma\right)$, we are able to use the properties of $\ell_2\left( \Gamma \right)$ itself rather than being forced to pass to the dual space.\newline
+
+If $\lambda\colon \Gamma\rightarrow \mathcal{U}\left( \ell_2\left( \Gamma \right) \right)$ is a unitary representation, then we say a (unit) vector $\xi\in \ell_2\left( \Gamma \right)$ is invariant for $\lambda$ if $\lambda_s\left( \xi \right) = \xi$ for all $s\in\Gamma$. The existence of a purely invariant vector is actually a sufficient condition for amenability --- unfortunately, though, not in a manner that is especially interesting.
+\begin{theorem}
+  Let $\Gamma$ be a group, and let $\lambda\colon \Gamma\rightarrow \mathcal{U}\left( \ell_2\left( \Gamma \right) \right)$ be the left-regular representation. Then, $\lambda$ admits an invariant vector if and only if $\Gamma$ is finite.
+\end{theorem}
+\begin{proof}
+  Let $\Gamma$ be finite. Since all functions $f\colon \Gamma\rightarrow \C$ are square-summable, as $\Gamma$ is finite, so too is $\xi = \1_{\Gamma}$. Since $s\Gamma = \Gamma$ for all $s\in\Gamma$, we have $\1_{\Gamma}$ is invariant for $\lambda$.\newline
+
+  Now, let $\lambda\colon \Gamma\rightarrow \mathcal{U}\left( \ell_2\left( \Gamma \right) \right)$ be the left-regular representation, and suppose there is $\xi\in \ell_2\left( \Gamma \right)$ such that for all $s\in\Gamma$, we have
+  \begin{align*}
+    \lambda_s\left( \xi \right) &= \xi.
+  \end{align*}
+  In particular, this means that for all $t\in\Gamma$, we have
+  \begin{align*}
+    \lambda_s\left( \xi \right)\left( t \right) &= \xi\left( s^{-1}t \right)\\
+                                                &= \xi\left( t \right).
+  \end{align*}
+  Now, since this holds for all $s\in\Gamma$, this means that $\xi\left( t \right) = \xi\left( s \right)$ for any $s\neq t$, as we may find $r\in \Gamma$ such that $r^{-1}t = s$ so that $\lambda_r\left( \xi \right)\left( t \right) = \xi\left( s \right)$. Therefore, $\xi = c\1_{\Gamma}$ for some $c\in\C$.\newline
+
+  Now, since $\xi\in \ell_2\left( \Gamma \right)$, we must have that
+  \begin{align*}
+    \sum_{t\in\Gamma}\left\vert \xi(t) \right\vert^2 < \infty.
+  \end{align*}
+  This is equivalent to the condition that
+  \begin{align*}
+    \sum_{t\in\Gamma}\left\vert c \right\vert^2 &< \infty.
+  \end{align*}
+  This can only hold if $\Gamma$ is finite.
+\end{proof}
+Now, finite groups are amenable (by Example \ref{ex:finite_invariant_state}), but sadly that is not very interesting, and this is not helpful for the various infinite groups we hope to establish the amenability of. What is interesting, though, is that the existence of an \textit{almost}-invariant vector for $\lambda$ characterizes amenability.\newline
+
+To prove that the existence of an almost-invariant vector for $\lambda$ is equivalent to amenability, however, we need to use a different version of the approximate mean defined in Definition \ref{def:approximate_mean}. This is also known as Reiter's condition.
+\begin{theorem}[Reiter's Condition]
+  Let $\Gamma$ be a (countable, discrete) group. Then, $\Gamma$ is amenable if and only if, for any $\ve > 0$ and for any finite subset $E\subseteq G$, there is a $\mu\in \Prob(G)$ (see Definition \ref{def:state_on_prob_g}) such that $\norm{\lambda_s\left( \mu \right) - \mu}_{\ell_1} \leq \ve$.
+\end{theorem}
+\begin{proof}
+  We will show that Reiter's condition is equivalent to the existence of an approximate mean.\newline
+
+  Suppose $\Gamma$ is amenable. Then, $\Gamma$ admits a sequence of (unit) vectors, $\left( f_k \right)_k$ such that 
+  \begin{align*}
+    \norm{\lambda_s\left( f_k \right) - f_k}_{\ell_1}\rightarrow 0
+  \end{align*}
+   for all $s\in\Gamma$.\newline
+
+   If $\ve > 0$, then Reiter's condition follows from finding $K$ so large such that $\norm{\lambda_s\left( f_K \right) - f_K}_{\ell_1} < \ve$, and the result then holds for any finite $E\subseteq \Gamma$ as it must hold for all $s\in \Gamma$.\newline
+
+  Now, we suppose that $\Gamma$ satisfies Reiter's condition. Let $\Gamma = \bigcup_{n\geq 1}E_n$, where each of the $E_n$ are finite, and $E_1\subseteq E_2\subseteq \cdots$ are nested. For each $E_n$, we may find a sequence of vectors $\left( f_k \right)_k$ such that $\norm{\lambda_s\left( f_k \right) - f_k}_{\ell_1} < 1/k$ for all $s\in E_n$.
+\end{proof}
+%Finish proof, work with Rainone on it
+
+\section{Using Almost-Invariant Vectors: Kesten's Criterion, Hulanicki's Criterion, and Weak Containment}%
+
