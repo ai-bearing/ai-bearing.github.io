@@ -12,7 +12,7 @@ On a Hilbert space $\mathcal{H}$, we know that the set of unitary operators, $\m
     \item for all $s\in \Gamma$, $U_{s}^{\ast} = U_{s^{-1}}$.
   \end{itemize}
 \end{definition}
-\begin{example}
+\begin{example}\label{ex:some_representations}
   One excellent example of a unitary representation is the representation $1_{\Gamma}\colon \Gamma\rightarrow \C$, defined by $1_{\Gamma}(s) = 1$ for all $s\in\Gamma$. This is known as the trivial representation, and it will play an integral role in establishing amenability.\newline
 
   A more substantive unitary representation is the representation of the circle group, $\mathbb{T}\rightarrow \B\left(\ell_2\left(\Z\right)\right)$, given by $\omega \mapsto d_{\omega}$. Here, $d_{\omega}$ is the multiplication operator defined by
@@ -74,7 +74,7 @@ As for the Hilbert space, we will use the space $\ell_2\left( \Gamma \right)$, w
   It can be shown that the left-regular representation and right-regular representation are isomorphic, in the sense that there is a bijective map $\lambda_s\mapsto \rho_s$ that remains faithful to the underlying group structure. However, we will be working with the left-regular representation as it is more commonly when dealing with unitary representations of groups, though it is important to underscore that this is purely personal preference rather than something innate with the left-regular representation itself.
 \end{remark}
 \section{Almost-Invariant Vectors in the Left-Regular Representation}%
-One of the crucial aspects of the left-regular representation is that yet again we are able to use the tools of functional analysis, as in Section \ref{sec:functional_analysis_and_amenability}, to establish amenability. However, this time, rather than being forced to use the dual space of $\ell_{\infty}\left(\Gamma\right)$, we are able to use the properties of $\ell_2\left( \Gamma \right)$ itself rather than being forced to pass to the dual space.\newline
+One of the crucial aspects of the left-regular representation is that yet again we are able to use the tools of functional analysis, as in Section \ref{sec:functional_analysis_and_amenability}, to establish amenability. However, this time, rather than being forced to use the dual space of $\ell_{\infty}\left(\Gamma\right)$, we are able to use the properties of $\ell_2\left( \Gamma \right)$ itself rather than being forced to pass to the dual space.\footnote{Technically, this is because, from the Riesz Representation Theorem on Hilbert Spaces, the space $\ell_2(\Omega)$ is actually its own dual. Very convenient, indeed.}\newline
 
 If $\lambda\colon \Gamma\rightarrow \mathcal{U}\left( \ell_2\left( \Gamma \right) \right)$ is a unitary representation, then we say a (unit) vector $\xi\in \ell_2\left( \Gamma \right)$ is invariant for $\lambda$ if $\lambda_s\left( \xi \right) = \xi$ for all $s\in\Gamma$. The existence of a purely invariant vector is actually a sufficient condition for amenability --- unfortunately, though, not in a manner that is especially interesting.
 \begin{theorem}
@@ -121,11 +121,88 @@ To prove that the existence of an almost-invariant vector for $\lambda$ is equiv
 
    If $\ve > 0$, then Reiter's condition follows from finding $K$ so large such that $\norm{\lambda_s\left( f_K \right) - f_K}_{\ell_1} < \ve$, and the result then holds for any finite $E\subseteq \Gamma$ as it must hold for all $s\in \Gamma$.\newline
 
-  Now, we suppose that $\Gamma$ satisfies Reiter's condition. Let $\Gamma = \bigcup_{n\geq 1}E_n$, where each of the $E_n$ are finite, and $E_1\subseteq E_2\subseteq \cdots$ are nested. For each $E_n$, we may find a sequence of vectors $\left( f_k \right)_k$ such that $\norm{\lambda_s\left( f_k \right) - f_k}_{\ell_1} < 1/k$ for all $s\in E_n$.
-\end{proof}
-%Finish proof, work with Rainone on it
+   Now, we suppose that $\Gamma$ satisfies Reiter's condition. Let $\Gamma = \bigcup_{n\geq 1}E_n$, where each of the $E_n$ are finite, and $E_1\subseteq E_2\subseteq \cdots$ are nested. For each $E_n$, we may find a sequence of vectors $\left( f_{k,n} \right)_k$ such that $\norm{\lambda_s\left( f_{k,n} \right) - f_{k,n}}_{\ell_1} < 1/k$ for all $s\in E_n$.\newline
 
+   We define $\mu_{n} = f_{n,n}$. Then, for any $s\in \Gamma$, we may find $N$ such that $s\in E_{k}$, for all $k\geq N$, and we know that by the definition, we have $\norm{\lambda_s\left( \mu_{N} \right) - \mu_{N}}_{\ell_1} < \frac{1}{N}$. The sequence $\left( \mu_{n} \right)_{n}$ then forms an approximate mean as in Definition \ref{def:approximate_mean}.
+\end{proof}
+\begin{definition}
+  Let $\Gamma$ be a group and $\lambda\colon \Gamma\rightarrow \mathcal{U}\left( \ell_2\left( \Gamma \right) \right)$ be the left-regular representation of $\Gamma$. We say $\lambda$ admits an \textit{almost-invariant vector} if there is a sequence of unit vectors $\left( \xi_n \right)_n$ in $\ell_2\left( \Gamma \right)$ such that, for all $s\in\Gamma$, we have
+  \begin{align*}
+    \norm{\lambda_s\left( \xi_n \right) - \xi_n}_{\ell_2} &\xrightarrow{n\rightarrow\infty} 0.
+  \end{align*}
+  We call the sequence $\left( \xi_n \right)_n$ the almost-invariant vector for $\lambda$.
+\end{definition}
+\begin{theorem}\label{thm:almost_invariant_vector}
+  Let $\Gamma$ be a group, and $\lambda\colon \Gamma\rightarrow \mathcal{U}\left( \ell_2\left( \Gamma \right) \right)$ be the left-regular representation of $\Gamma$.\newline
+
+  Then, $\Gamma$ is amenable if and only if $\lambda$ admits an almost-invariant vector.
+\end{theorem}
+\begin{proof}
+  Let $\Gamma$ be amenable. Then, by the results in Section \ref{sec:approximate_means}, we know that $\Gamma$ admits a Følner sequence, $\left( F_n \right)_{n}$, such that
+  \begin{align*}
+    \frac{\left\vert sF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert} \rightarrow 0
+  \end{align*}
+  for all $s\in\Gamma$. We define the unit vectors $\xi_n$ by
+  \begin{align*}
+    \xi_n &= \frac{1}{\sqrt{\left\vert F_n \right\vert}} \1_{F_n}.
+  \end{align*}
+  Then, we have that
+  \begin{align*}
+    \norm{\lambda_s\left( \xi_n \right) - \xi_n}_{\ell_2}^2 &= \sum_{t\in\Gamma}\left\vert \lambda_x\left( \xi_n \right)\left( t \right) - \xi_n\left( t \right) \right\vert^2\\
+                                                            &= \sum_{t\in\Gamma}\left\vert \lambda_s\left( \frac{1}{\sqrt{\left\vert F_n \right\vert}}\1_{F_n} \right)(t) - \frac{1}{\sqrt{\left\vert F_n \right\vert}}\1_{F_n}(t) \right\vert\\
+                                                            &= \sum_{t\in\Gamma}\left\vert \frac{1}{\sqrt{\left\vert F_n \right\vert}}\1_{sF_n}(t) - \frac{1}{\sqrt{\left\vert F_n \right\vert}}\1_{F_n}(t) \right\vert\\
+                                                            &= \frac{\left\vert sF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert}\\
+                                                            &\rightarrow 0.
+  \end{align*}
+  Thus, $\lambda$ admits an almost invariant vector.\newline
+
+  Now, suppose there exists an almost-invariant vector $\left( \xi_n \right)_n\in \ell_2\left( \Gamma \right)$. We define $\mu_n = \xi_n^2$. From Hölder's inequality (Theorem \ref{thm:holder_inequality}), we know that $\mu_n\in \ell_1\left( \Gamma \right)$. Substituting into the definition of an approximate mean, we obtain
+  \begin{align*}
+    \norm{\lambda_s\left( \mu_n \right) - \mu_n}_{\ell_1} &= \sum_{t\in\Gamma}\left\vert \lambda_s\left( \xi_n^2 \right)\left( t \right) - \xi_n^2\left( t \right)\right\vert\\
+                                                          &= \sum_{t\in\Gamma}\left\vert \left( \lambda_s\left( \xi_n \right)(t) - \xi_n\left( t \right) \right)\left( \lambda_s\left( \xi_n \right)(t) + \lambda_s\left( t \right) \right) \right\vert\\
+                                                          &= \norm{\left( \lambda_s\left( \xi_n \right) - \xi_n \right)\left( \lambda_s\left( \xi_n \right) + \xi_n \right)}_{\ell_1}\\
+                                                          &\leq \norm{\lambda_s\left( \xi_n \right) - \xi_n}_{\ell_2}\norm{\lambda_s\left( \xi_n \right) + \xi_n}_{\ell_2}\\
+                                                          &\leq 2\norm{\lambda_s\left( \xi_n \right) - \xi_n}_{\ell_2}\\
+                                                          &\rightarrow 0.
+  \end{align*}
+  Thus, $\left( \mu_n \right)_n$ is an approximate mean, hence amenable.
+\end{proof}
 \section{A Potpurri of Characterizations}%
+Now, we may use the almost-invariant vectors criterion to prove amenability via various different methods. We start by diving into some theory behind representations and weak containment, then go into two criteria for amenability that are very intimately tied to the analytic properties of the left-regular representation.
 \subsection{Weak Containment}%
+Loosely speaking, weak containment is a type of approximation property for unitary representations of groups. What we will show in this subsection is that, if $\Gamma$ is a group, and the left-regular representation weakly contains the trivial representation, then the group $\Gamma$ is amenable.
+\begin{definition}
+  Let $\Gamma$ be a group, and let $\pi\colon \Gamma\rightarrow \mathcal{U}\left( \mathcal{H} \right)$ and $\rho\colon \Gamma\rightarrow \mathcal{U}\left( \mathcal{K} \right)$ be two unitary representations on separate Hilbert spaces $\mathcal{H}$ and $\mathcal{K}$. We say $\pi$ is weakly contained in $\rho$, written $\pi\prec \rho$, if, for any finite subset $E\subseteq \Gamma$ and any $\ve > 0$, and for all $\xi\in \mathcal{H}$, there are $\eta_1,\dots,\eta_k$ such that
+  \begin{align*}
+    \left\vert \iprod{\pi(g)\left( \xi \right)}{\xi} - \sum_{i=1}^{n} \iprod{\rho\left( g \right)\left( \eta_i \right)}{\eta_i} \right\vert < \ve
+  \end{align*}
+  for all $g \in E$.
+\end{definition}
+In order to prove the full weak containment result, we will need to make use of some lemmas that show certain convergence properties hold between inner products and norms.
+\begin{lemma}
+  Let $\xi$ be a unit vector, and let $\lambda_g\colon \ell_2\left( \Gamma \right)\rightarrow \ell_2\left( \Gamma \right)$ be given by $\lambda_g\left( t \right) = \xi\left( g^{-1}t \right)$. Then,
+  \begin{enumerate}[(a)]
+    \item $\displaystyle \norm{\lambda_g\left( \xi \right) - \xi}_{\ell_2}^2 \leq 2\left\vert 1- \iprod{\lambda_g\left( \xi \right)}{\xi} \right\vert$
+    \item $\displaystyle \left\vert 1- \iprod{\lambda_g\left( \xi \right)}{\xi} \right\vert \leq \norm{\lambda_g\left( \xi \right) - \xi}_{\ell_2}$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}\hfill
+  \begin{enumerate}[(a)]
+    \item Directly calculating, we have
+      \begin{align*}
+        \norm{\lambda_g\left( \xi \right) - \xi}_{\ell_2}^2 &= \iprod{\lambda_g\left( \xi \right) - \xi}{ \lambda_g\left( \xi \right) - \xi }\\
+                                                            &= \iprod{\lambda_g\left( \xi \right)}{\lambda_g\left( \xi \right)} + \iprod{\xi}{\xi} - \iprod{\lambda_g\left( \xi \right)}{\xi} - \iprod{\xi}{\lambda_g\left( \xi \right)}\\
+                                                            &= \iprod{\lambda_g\left( \xi \right)}{\lambda_g\left( \xi \right)} + \iprod{\xi}{\xi} - 2\re\left( \iprod{\lambda_g\left( \xi \right)}{\xi} \right)\\
+                                                            &= 2 - 2\re\left( \iprod{\lambda_g\left( \xi \right)}{\xi} \right)\\
+                                                            &= 2\re\left( 1- \iprod{\lambda_g\left( \xi \right)}{\xi} \right)\\
+                                                            &\leq 2 \left\vert 1- \iprod{\lambda_g\left( \xi \right)}{\xi} \right\vert.
+      \end{align*}
+      
+  \end{enumerate}
+\end{proof}
+
+\begin{theorem}
+  Let $\Gamma$ be a discrete group. Then, $\Gamma$ is amenable if and only if $1_{\Gamma}\prec \lambda$, where $1_{\Gamma}$ is the trivial representation (see Example \ref{ex:some_representations}) and $\lambda$ is the left-regular representation.
+\end{theorem}
 \subsection{Kesten's Criterion}%
 \subsection{Hulanicki's Criterion}%
