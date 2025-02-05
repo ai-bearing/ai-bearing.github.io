@@ -6,32 +6,27 @@ public class BinarySearch{
     Scanner input = new Scanner(System.in);
     int upperIndex = numbers.length - 1;
     int lowerIndex = 0;
-    int searchIndex = (upperIndex + lowerIndex)/2;
-    /* Start at searchIndex, check value of input vs. numbers[searchIndex].
-     * If input = numbers[SearchIndex], break.
-     * If input > numbers[searchIndex], then change searchIndex to boundaryIndex - (boundaryIndex - searchIndex)/2
-     * if input < numbers[searchIndex], then change boundaryIndex to boundaryIndex/2, searchIndex to searchIndex/2
-     */
+
     System.out.print("Please specify a search key: ");
     int key = input.nextInt();
     System.out.println();
     boolean notFound = true;
-    while(notFound && (upperIndex > lowerIndex)){
+
+    while(notFound && (upperIndex >= lowerIndex)){ //need greater than or equal to
+      int searchIndex = (upperIndex + lowerIndex)/2; // initialize search index to be average of lower and upper values
       System.out.println("Searching for key value " + key + " at index " + searchIndex + "...");
       if(key == numbers[searchIndex]){
-        System.out.println("Finding key value at index " + searchIndex);
+        System.out.println("Found key value " + key + " at index " + searchIndex);
         notFound = false;
       } else if (key > numbers[searchIndex]){
-        //System.out.println("Key too large at index " + searchIndex);
-        lowerIndex = searchIndex;
-        searchIndex = (upperIndex + lowerIndex)/2;
-//        System.out.println("Searching between indices " + lowerIndex + " and " + upperIndex);
+        lowerIndex = searchIndex + 1;
       } else if (key < numbers[searchIndex]){
-        //System.out.println("Key too small at index " + searchIndex);
-        upperIndex = upperIndex / 2;
-        searchIndex = (upperIndex + lowerIndex)/2;
-        //System.out.println("Searching between indices " + lowerIndex + " and " + upperIndex);
+        upperIndex = searchIndex - 1;
       }
+      // Assistance of ChatGPT was used to troubleshoot errors in previous version of code
+    }
+    if(notFound == true){
+      System.out.println("Key value not found.");
     }
     // while(notFound && notAtEdgeIndex){
     //   if(searchIndex == numbers.length-1 || searchIndex == 0){
@@ -47,10 +42,5 @@ public class BinarySearch{
     //     searchIndex = searchIndex / 2;
     //   }
     // }
-     if(notFound == true){
-       System.out.println("Key value not found");
-     } else{
-       System.out.println("Found key value " + key + " at index " + searchIndex);
-     }
   }
 }

@@ -244,6 +244,69 @@ In order to prove the full weak containment result, we will need to make use of 
   \end{align*}
   meaning that $\Gamma$ satisfies Reiter's condition (Theorem \ref{thm:reiter}), and is thus amenable.
 \end{proof}
-
 \subsection{Kesten's Criterion}%
+Kesten's criterion, expanded upon in \ref{kesten_random_walks} and \ref{kesten_means} originated in the study of random walks on groups.\newline
+
+Consider a finitely supported probability measure $\mu$ on a (discrete, finitely generated) group $\Gamma$ with the property that $\mu\left( g \right) = \mu\left( g^{-1} \right)$ for all $g\in \supp\left( \mu \right)$. If our symmetric generating set $S$ is a subset of $\supp\left( \mu \right)$, then we may consider a random walk on the group by sampling elements of $S$ and concatenating them together --- we may ask the probability of returning to $e_{\Gamma}$ in $n$ steps, for some $n$.\newline
+
+Kesten showed that the probability of doing so in a certain number of steps was intimately tied to the spectral radius (or operator norm) of a matrix of probabilities.\newline
+
+We will begin by showing some important results from the theory of self-adjoint operators before establishing Kesten's criterion for the special case where $\supp(\mu) = S$ and $\mu$ has a uniform distribution over $S$ --- i.e., $\mu\left( g \right) = \frac{1}{\left\vert S \right\vert}$. The more general case requires deeper results in spectral theory.
+\begin{lemma}\label{lemma:norm_self_adjoint_operator}
+  Let $\mathcal{H}$ be a Hilbert space, and let $T\in\B\left( \mathcal{H} \right)$ be a self-adjoint operator (see Definition \ref{def:distinguished_operators}). Then, the operator norm of $T$ is determined by
+  \begin{align*}
+    \norm{T}_{\op} &- \sup_{s\in S_{\mathcal{H}}} \left\vert \iprod{T\left( x \right)}{x} \right\vert.
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  Using Cauchy--Schwarz, one of the directions immediately becomes clear:
+  \begin{align*}
+    \left\vert \iprod{T\left( x \right)}{x} \right\vert &\leq \norm{T\left( x \right)}\norm{x}\\
+                                                        &\leq \norm{T}_{\op}\norm{x}^2\\
+                                                        &= \norm{T}_{\op}.
+  \end{align*}
+  To establish the opposite direction requires a bit more work. First, we recall Lemma \ref{lemma:operator_norm_hilbert_space}, which states that
+  \begin{align*}
+    \norm{T}_{\op} &= \sup_{x,y\in S_{\mathcal{H}}}\left\vert \iprod{T\left( x \right)}{y} \right\vert.
+  \end{align*}
+  We set 
+  \begin{align*}
+    \alpha = \sup_{x\in S_{\mathcal{H}}} \left\vert \iprod{T\left( x \right)}{x} \right\vert.
+  \end{align*}
+  Notice that for any nonzero $x\in \mathcal{H}$, we have
+  \begin{align*}
+    \left\vert \iprod{T\left( \frac{x}{\norm{x}} \right)}{\frac{x}{\norm{x}}} \right\vert &\leq \alpha\\
+    \left\vert \iprod{T\left( x \right)}{x} \right\vert &\leq \alpha \norm{x}^2.
+  \end{align*}
+  
+  Recall that if $T$ is self-adjoint, then for any $x\in \mathcal{H}$, $ \iprod{T\left( x \right)}{x} $ is real. This can be shown relatively easily using the properties of adjoints and inner products:
+  \begin{align*}
+    \iprod{T\left( x \right)}{x} &= \iprod{x}{T^{\ast}\left( x \right)}\\
+                                 &= \iprod{x}{T\left( x \right)}\\
+                                 &= \overline{ \iprod{T\left( x \right)}{x} }.
+  \end{align*}
+  Now, let $x,y\in S_{\mathcal{H}}$. We may assume that $ \iprod{T\left( x \right)}{y} \in \R $, as we may multiply $x$ by $\sgn\left( \iprod{T\left( x \right)}{y} \right)$, where $\sgn(z) = \frac{|z|}{z}\in \C$, and by the Polarization Identity (Theorem \ref{thm:polarization}) and the fact that $T$ is self-adjoint, we get
+  \begin{align*}
+    \iprod{T\left( x \right)}{y} &= \frac{1}{4}\left( \iprod{T\left( x+y \right)}{x+y} - \iprod{T\left( x-y \right)}{x-y} \right).
+  \end{align*}
+  Thus, applying absolute values, we obtain
+  \begin{align*}
+    \left\vert \iprod{T\left( x \right)}{y}  \right\vert &= \left\vert \frac{1}{4}\left( \iprod{T\left( x+y \right)}{x+y} - \iprod{T\left( x-y \right)}{x-y} \right) \right\vert\\
+                                                         &\leq \frac{1}{4}\left( \left\vert \iprod{T\left( x+y \right)}{x+y} \right\vert +  \left\vert \iprod{T\left( x-y \right)}{x-y} \right\vert\right)\\
+                                                         &\leq \frac{\alpha}{4} \left( \norm{x+y}^2 + \norm{x-y}^2 \right)\\
+                                                         &\leq \frac{\alpha}{4} \left( 2\norm{x}^2 + 2\norm{y}^2 \right)\\
+                                                         &= \alpha.
+  \end{align*}
+  Thus,
+  \begin{align*}
+    \norm{T}_{\op} &= \sup_{x,y\in S_{\mathcal{H}}} \left\vert \iprod{T\left( x \right)}{y} \right\vert\\
+                   &\leq \alpha,
+  \end{align*}
+  so
+  \begin{align*}
+    \norm{T}_{\op} &= \sup_{x\in S_{\mathcal{H}}} \left\vert \iprod{T\left( x \right)}{x} \right\vert.
+  \end{align*}
+  
+\end{proof}
+
 \subsection{Hulanicki's Criterion}%

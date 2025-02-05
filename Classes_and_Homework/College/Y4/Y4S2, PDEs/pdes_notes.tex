@@ -26,8 +26,8 @@
 \section{Introduction}%
 Consider the equations
 \begin{align*}
-  y''(x) + y(x) &= e^x\tag*{(1)}\\
-  y^{(17)}(x) + \sin\left(y(x)\right) &= \left(x^{x}\right)^{x}\tag*{(2)}
+  \frac{d^2y}{dx^2} + y(x) &= e^x\tag*{(1)}\\
+  \diff{^{17}y}{x^{17}}(x) + \sin\left(y(x)\right) &= \left(x^{x}\right)^{x}\tag*{(2)}
 \end{align*}
 Before we want to solve these equations, we need to understand what these equations \textit{are}. 
 \begin{enumerate}[(1)]
@@ -36,17 +36,17 @@ Before we want to solve these equations, we need to understand what these equati
 \end{enumerate}
 Generally, when we have a nonlinear equation, we convert it (using the Jacobian) to the ``nearest'' corresponding linear equation using Taylor approximations. In this case, converting equation (2), we have
 \begin{align*}
-  y^{(17)}(x) + y(x) &= \left(x^{x}\right)^{x}.\tag*{(2')}
+  \diff{^{17}y}{x^{1y}}(x) + y(x) &= \left(x^{x}\right)^{x}.\tag*{(2')}
 \end{align*}
 Now, equation (2') is linear, so it is able to be solved. It may not be pretty,\footnote{Citation needed.} but it can be solved, using Laplace Transforms or other methods.
 \section{Ordinary Differential Equations}%
 Returning to our equation (1), 
 \begin{align*}
-  y''(x) + y(x) &= e^x,\tag*{(1)}
+  \frac{d^2y}{dx^2} + y(x) &= e^x,\tag*{(1)}
 \end{align*}
 there is one more fact that we can see --- this is an equation with constant coefficients. The most general form of a $n$th order linear ordinary differential equation is of the form
 \begin{align*}
-  a_n(x)y^{(n)}(x) + a_{n-1}(x)y^{(n-1)}(x) + \cdots + a_1(x)y'(x) + a_0(x)y(x) = g(x).\label{eq:general_linear_ode}\tag{\textdagger}
+  a_n(x)\diff{^ny}{x^n}(x) + a_{n-1}(x)\diff{^{n-1}y}{x^{n-1}}(x) + \cdots + a_1(x)\frac{dy}{dx} + a_0(x)y(x) = g(x).\label{eq:general_linear_ode}\tag{\textdagger}
 \end{align*}
 Specifically, we also require $a_k(x)\in C(I)$, where $I$ is some interval (specifics will be detailed later).
 \begin{theorem}[Existence and Uniqueness Theorem]
@@ -56,7 +56,7 @@ Specifically, we also require $a_k(x)\in C(I)$, where $I$ is some interval (spec
 \end{theorem}
 The corresponding homogeneous equation for (1) is
 \begin{align*}
-  y''(x) + y(x) &= 0.\tag*{(1')}
+  \frac{d^2y}{dx^2} + y(x) &= 0.\tag*{(1')}
 \end{align*}
 The equations (1) and (1') are related by the linearity principle. In particular, if $y_0(x)$ is a solution to (1'), then we can add $\alpha y_0(x)$ to any solution $y_p(x)$ of (1), then we have all the solutions for (1). In particular, the solutions to (1') are
 \begin{align*}
@@ -65,7 +65,7 @@ The equations (1) and (1') are related by the linearity principle. In particular
 \end{align*}
 To evaluate that these solutions are linearly independent, we consider the differential operator $L$ from (\textdagger) defined by
 \begin{align*}
-  L\left[y\right] &= \sum_{k=0}^{n}a_k(x)y^{(k)}(x).
+  L\left[y\right] &= \sum_{k=0}^{n}a_k(x)\diff{^{k}y}{x^{k}}.
 \end{align*}
 We rewrite (\textdagger) as
 \begin{align*}
@@ -76,7 +76,7 @@ The operator $L$ is linear, so $L$ has the following properties:
   \item $L\left[y_1 + y_2\right]$;
   \item $L\left[cy\right] = cL\left[y\right]$.
 \end{itemize}
-Now, in (1) and (1'), if we set $L\left[y\right] = y''(x) + y(x)$, then evaluating our solutions $y_1$ and $y_2$ to (1'), we get
+Now, in (1) and (1'), if we set $L\left[y\right] = \frac{d^2y}{dx^2} + y(x)$, then evaluating our solutions $y_1$ and $y_2$ to (1'), we get
 \begin{align*}
   L\left[c_1y_1 + c_2y_2\right] &= c_1L\left[y_1\right] + c_2L\left[y_2\right]\\
                                 &= 0.
@@ -98,14 +98,14 @@ where $y_p(x)$ is the particular solution. In other words, our general solution 
 For this to work, we need the set $\set{y_1,\dots,y_n}$ to be linearly independent. To do this, we evaluate the Wronskian:
 {
   \begin{align*}
-  W(x) &= \det \begin{pmatrix}y_1(x) & y_2(x) & \cdots & y_n(x) \\ y_1'(x)& y_2'(x) & \cdots & y_n'(x) \\ \vdots & \vdots & \ddots & \vdots \\ y_{1}^{(n-1)}(x) & y_2^{(n-1)}(x) & \cdots & y_{n}^{(n-1)}(x)\end{pmatrix}.
+    W(x) &= \det \begin{pmatrix}y_1(x) & y_2(x) & \cdots & y_n(x) \\ \diff{y_1}{x}& \diff{y_2}{x} & \cdots & \diff{y_n}{x} \\ \vdots & \vdots & \ddots & \vdots \\ \diff{^{n-1}y_1}{x^{n-1}} & \diff{^{n-1}y_2}{x^{n-1}} & \cdots & \diff{^{n-1}y_n}{x^{n-1}}\end{pmatrix}.
 \end{align*}
 }
 Specifically, the set $\set{y_1,\dots,y_n}$ is linearly independent if $W(x)\neq 0$ for all $x\in I$.
 \begin{example}
   Consider the equation
   \begin{align*}
-    y''(x) - y(x) &= e^{x}\tag{1}
+    \frac{d^2y}{dx^2} - y(x) &= e^{x}\tag{1}
   \end{align*}
   We want to find the general solution to this constant coefficient equation.\newline
 
@@ -131,9 +131,9 @@ Specifically, the set $\set{y_1,\dots,y_n}$ is linearly independent if $W(x)\neq
 
   We begin by guessing. But, in a way that doesn't suck. Specifically, we let $y_p(x) = Axe^{x}$. Evaluating, we get
   \begin{align*}
-    y_p'(x) &= A\left(x+1\right)e^{x}\\
-    y_{p}''(x) &= A\left(x+2\right)e^{x}\\
-    y_{p}''(x) - y_p(x) &= A\left(x+2\right)e^{x} - Axe^{x}\\
+    \diff{y_p}{x} &= A\left(x+1\right)e^{x}\\
+    \diff{^2y_p}{x^2} &= A\left(x+2\right)e^{x}\\
+     \diff{^2y_p}{x^2}- y_p(x) &= A\left(x+2\right)e^{x} - Axe^{x}\\
                         &= 2Ae^{x},
   \end{align*}
   so $2A = 1$, and $A = \frac{1}{2}$. Thus, we have the end result of
@@ -153,7 +153,7 @@ Specifically, the set $\set{y_1,\dots,y_n}$ is linearly independent if $W(x)\neq
 \begin{example}
   Consider the equation
   \begin{align*}
-    y'''(x) - y(x) &= 0.
+    \diff{^3y}{x^3} - y(x) &= 0.
   \end{align*}
   The particular solution to this equation is $y(x) = 0$. The characteristic equation for this equation is
   \begin{align*}
@@ -274,7 +274,7 @@ The solutions are $y_1 = c_1e^{r_1 x}$ and $y_2 = c_2e^{r_2 x}$.
 \subsection{Reducing our Orders}%
 Let
 \begin{align*}
-  y''(x) + p(x)y'(x) + q(x)y(x) &= 0.
+  \frac{d^2y}{dx^2} + p(x)\frac{dy}{dx} + q(x)y(x) &= 0.
 \end{align*}
 Suppose we know $y_1(x)$. Can we find $y_2(x)$? The answer is yes. We presume
 \begin{align*}
@@ -310,7 +310,7 @@ Taking powers, we get
 \begin{example}
   Consider the equation
   \begin{align*}
-    \cos^2\left(x\right)y''(x) - \sin(x)\cos(x)y' - y(x) = 0.
+    \cos^2\left(x\right)\frac{d^2y}{dx^2} - \sin(x)\cos(x)y' - y(x) = 0.
   \end{align*}
   Putting our equation into standard form, we may be able to find another solution.
   \begin{align*}
@@ -335,7 +335,7 @@ Taking powers, we get
 \begin{example}
   Consider the equation
   \begin{align*}
-    x^2\left(\ln(x)-1\right)y''(x) -xy'(x) + y'(x) = 0.
+    x^2\left(\ln(x)-1\right)\frac{d^2y}{dx^2} -x\frac{dy}{dx} + \frac{dy}{dx} = 0.
   \end{align*}
   We can use the power of inspection to find one solution, $y_1(x) = x$. Dividing out, we have
   \begin{align*}
@@ -359,13 +359,13 @@ Taking powers, we get
 \begin{example}[Cauchy--Euler Equation]
   A second-order Cauchy--Euler equation is of the form
   \begin{align*}
-    ax^2y''(x) + bxy'(x) + cy(x) &= 0.
+    ax^2\frac{d^2y}{dx^2} + bx\frac{dy}{dx} + cy(x) &= 0.
   \end{align*}
   More generally,
   \begin{align*}
     \sum_{k=0}^{n}c_kx^ky^{(k)}(x) &= 0.
   \end{align*}
-  We guess $y(x) = x^r$. Then, $y'(x) = rx^{r-1}$ and $y''(x) = r(r-1)x^{r-2}$. This yields
+  We guess $y(x) = x^r$. Then, $\frac{dy}{dx} = rx^{r-1}$ and $\frac{d^2y}{dx^2} = r(r-1)x^{r-2}$. This yields
   \begin{align*}
     a(r)(r-1)x^r + brx^{r} + cx^r &=x^r \left(a\left(r^2 - r\right) + br + c\right)\\
                                   &= 0.
@@ -472,7 +472,7 @@ Given a set of $n$ linearly independent homogeneous solutions, we want to find a
 
 To find this, we start with the general second-order inhomogeneous equation in standard form:
 \begin{align*}
-  y''(x) + p(x)y'(x) + q(x)y(x) = g(x).
+  \frac{d^2y}{dx^2} + p(x)\frac{dy}{dx} + q(x)y(x) = g(x).
 \end{align*}
 Given $y_1,y_2$, we find $y_p(x)$ by taking
 \begin{align*}
@@ -509,8 +509,8 @@ Plugging into matrix form, we have
 \end{align*}
 Since the Wronskian is nonzero, we have
 \begin{align*}
-  \begin{pmatrix}v_1'(x) \\ v_2'(x)\end{pmatrix} &= \begin{pmatrix}y_1 & y_2\\y_1' & y_2'\end{pmatrix}^{-1} \begin{pmatrix}0\\g(x)\end{pmatrix}\\
-                                                 &= \frac{1}{y_1(x)y_2'(x) - y_2(x)y_1'(x)} \begin{pmatrix}-y_2(x)g(x) \\ y_1(x)g(x)\end{pmatrix}\label{eq:variation_parameters}\tag{\textdaggerdbl}
+  \begin{pmatrix}\diff{v_1}{x} \\ \diff{v_2}{x}\end{pmatrix} &= \begin{pmatrix}y_1 & y_2\\y_1' & y_2'\end{pmatrix}^{-1} \begin{pmatrix}0\\g(x)\end{pmatrix}\\
+                                                 &= \frac{1}{y_1(x)\diff{y_2}{x} - y_2(x)\diff{y_1}{x}} \begin{pmatrix}-y_2(x)g(x) \\ y_1(x)g(x)\end{pmatrix}\label{eq:variation_parameters}\tag{\textdaggerdbl}
 \end{align*}
 \begin{example}
   Let
@@ -533,7 +533,7 @@ Since the Wronskian is nonzero, we have
 
   Using \eqref{eq:variation_parameters}, we can find a different solution. We find
   \begin{align*}
-    v_1'(x) &= \frac{1}{e^{2x}}\left( \left( -1 \right)\left( xe^{x} \right)\left( e^x \right) \right)\\
+    \diff{v_1}{x} &= \frac{1}{e^{2x}}\left( \left( -1 \right)\left( xe^{x} \right)\left( e^x \right) \right)\\
             &= -x,
   \end{align*}
   yielding
@@ -542,7 +542,7 @@ Since the Wronskian is nonzero, we have
   \end{align*}
   Similarly, we get
   \begin{align*}
-    v_2'(x) &= \frac{1}{e^{2x}}\left( e^x \right)\left( e^x \right)\\
+    \diff{v_2}{x} &= \frac{1}{e^{2x}}\left( e^x \right)\left( e^x \right)\\
     v_2(x) &= x + c_2.
   \end{align*}
   This gives
@@ -553,7 +553,7 @@ Since the Wronskian is nonzero, we have
 \begin{example}
   Let
   \begin{align*}
-    y'''(x) - y'(x) &= x + e^{x}.
+    \diff{^3y}{x^3} - \frac{dy}{dx} &= x + e^{x}.
   \end{align*}
   Using the characteristic equation, we have $y_1(x) = 1$, $y_2(x) = e^x$, and $y_3(x) = e^{-x}$.\newline
 
@@ -565,7 +565,7 @@ Since the Wronskian is nonzero, we have
 \end{example}
 In the general form, with linearly independent homogeneous solutions $y_1,\dots,y_n$, we have the solution of
 \begin{align*}
-  \begin{pmatrix}v_1' \\ \vdots \\ v_n'\end{pmatrix} &= \begin{pmatrix}y_1 & \cdots & y_n \\ \vdots & \ddots & \vdots \\ y_1^{(n-1)} & \cdots & y_n^{(n-1)}\end{pmatrix}^{-1} \begin{pmatrix}0 & \vdots & g(x)\end{pmatrix}\\
+  \begin{pmatrix}v_1' \\ \vdots \\ v_n'\end{pmatrix} &= \begin{pmatrix}y_1 & \cdots & y_n \\ \vdots & \ddots & \vdots \\ y_1^{(n-1)} & \cdots & y_n^{(n-1)}\end{pmatrix}^{-1} \begin{pmatrix}0 \\ \vdots \\ g(x)\end{pmatrix}\\
   y(x) &= \sum_{i=1}^{n}c_iy_i(x) + \sum_{i=1}^{n}v_i(x)y_i(x).
 \end{align*}
 \begin{example}[Solving a Coupled System]
@@ -601,5 +601,146 @@ the eigenvalues are
   \mathbf{v}_2 &= \begin{pmatrix}1\\-1\end{pmatrix}.
 \end{align*}
 \end{remark}
+\begin{example}[General $n$-dimensional System of Differential Equations]
+  Consider the system of equations defined by
+  \begin{align*}
+    x_1'(t) &= g_1\left( t,x_1(t),\dots,x_n(t) \right)\\
+            &\vdots\\
+    x_n'(t) &= g_n\left( t,x_1(t),\dots,x_n(t) \right).
+  \end{align*}
+  We will refine this slightly so as to be a system of \textit{linear} equations. Let
+  \begin{align*}
+    \mathbf{x} &= \begin{pmatrix}x_1(t)\\\vdots\\x_n(t)\end{pmatrix}\\
+    \diff{\mathbf{x}}{t} &= \begin{pmatrix}x_1'(t)\\\vdots\\x_n'(t)\end{pmatrix}\\
+    \mathbf{F} &= \begin{pmatrix}f_1(t) \\ \vdots \\ f_n(t)\end{pmatrix}\\
+    \mathbf{x}_{t_0} &= \begin{pmatrix}x_1\left(t_0\right)\\\vdots\\x_n\left(t_0\right)\end{pmatrix}.
+  \end{align*}
+  Now, we have
+  \begin{align*}
+    \diff{\mathbf{x}}{t} &= A\mathbf{x},
+  \end{align*}
+  where $\mathbf{x}\left(t_0\right) = \mathbf{x}_{t_0}$ and $A$ is some matrix that represents some linear transformation.\newline
+
+  Furthermore, we may make an inhomogeneous equation by
+  \begin{align*}
+    \diff{\mathbf{x}}{t} &= A\mathbf{x} + \mathbf{F}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Going back to our example of
+  \begin{align*}
+    \diff{\mathbf{x}}{t} &= \underbrace{\begin{pmatrix}3 & 1 \\ 1 & 3\end{pmatrix}}_{A}\mathbf{x}.
+  \end{align*}
+  We find eigenvalues of $\lambda_1 = 4,\lambda_2 = 2$ and eigenvectors $\mathbf{v}_1 = \begin{pmatrix}1\\1\end{pmatrix}$ and $\mathbf{v}_2 = \begin{pmatrix}1\\-1\end{pmatrix}$. This gives
+  \begin{align*}
+    \mathbf{x}_1 &= e^{4t} \begin{pmatrix}1\\1\end{pmatrix}\\
+    \mathbf{x}_2 &= e^{2t} \begin{pmatrix}1\\-1\end{pmatrix}.
+  \end{align*}
+  In general, if we have two distinct eigenvalues, then our solutions are
+  \begin{align*}
+    \mathbf{x} &= e^{\lambda t} \mathbf{v}
+  \end{align*}
+  Define
+  \begin{align*}
+    \Phi_A(t) &= \begin{pmatrix}\mathbf{x}_1 & \mathbf{x}_2\end{pmatrix}\\
+                       &= \begin{pmatrix}e^{4t} & e^{2t} \\ e^{4t} & -e^{2t}\end{pmatrix}.
+  \end{align*}
+  We call $\Phi_A$ a fundamental matrix for $A$.\newline
+
+  The general solution to the system is given by
+  \begin{align*}
+    \mathbf{x}(t) &= c_1\mathbf{x}_1(t) + c_2\mathbf{x}_2(t)\\
+                  &= c_1 \begin{pmatrix}e^{4t}\\e^{4t}\end{pmatrix} + c_2 \begin{pmatrix}e^{2t} \\ -e^{2t}\end{pmatrix}\\
+                  &= \begin{pmatrix}e^{4t} & e^{2t} \\ e^{4t} & -e^{2t}\end{pmatrix} \begin{pmatrix}c_1\\c_2\end{pmatrix}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Consider the equation
+  \begin{align*}
+    \diff{\mathbf{x}}{t} &= A\mathbf{x},
+  \end{align*}
+  where
+  \begin{align*}
+    A &= \begin{pmatrix}4 & 2 & 1 \\ 0 & 4 & 2 \\ 0 & 0 & 4\end{pmatrix} \label{eq:generalized_eigenvalues_example}\tag{$A$}
+  \end{align*}
+  Notice that we have a triple-repeated eigenvalue,
+  \begin{align*}
+    \lambda_1 &= 4\\
+    \lambda_2 &= 4\\
+    \lambda_3 &= 4.
+  \end{align*}
+  Unfortunately, to find the eigenvectors, this will be a bit harder.
+  \begin{align*}
+    \left( A - 4I \right)\mathbf{v} &= 0\\
+    \begin{pmatrix}0 & 2 & 1 \\ 0 & 0 & 2 \\ 0 & 0 & 0\end{pmatrix} \begin{pmatrix}a\\b\\c\end{pmatrix} &= \begin{pmatrix}0\\0\\0\end{pmatrix}.
+  \end{align*}
+  This gives
+  \begin{align*}
+    \begin{pmatrix}2b + c \\ 2c \\ 0 \end{pmatrix} &= \begin{pmatrix}0\\0\\0\end{pmatrix},
+  \end{align*}
+  so $b = c = 0$, and our eigenvector is
+  \begin{align*}
+    \mathbf{v}_1 &= \begin{pmatrix}1\\0\\0\end{pmatrix}.
+  \end{align*}
+  We may need some more eigenvectors. Currently, our solution is
+  \begin{align*}
+    \mathbf{x}_1(t) &= e^{4t} \begin{pmatrix}1\\0\\0\end{pmatrix}.
+  \end{align*}
+  We need to go into the realm of generalized eigenvectors. If $\lambda$ is repeated, we need to do the following.
+  \begin{enumerate}[(1)]
+    \item Find all the eigenvectors for which $\left( A - \lambda I \right)\mathbf{v} = 0$. If we come up short, then we have a defective system.
+    \item For the remaining eigenvectors, we solve the system
+      \begin{align*}
+        \left( A - \lambda I \right)\mathbf{v}_j &= \mathbf{v}_k,
+      \end{align*}
+      where $\mathbf{v}_k$ is known, and we desire $\mathbf{v}_j$. The $\mathbf{v}_j$ are known as generalized eigenvectors.
+    \item Continue this process until we are done. 
+  \end{enumerate}
+  Now, in this case, we get
+  \begin{align*}
+    \begin{pmatrix}0 & 2 & 1 \\ 0 & 0 & 2 \\ 0 & 0 & 0\end{pmatrix} \begin{pmatrix}a\\b\\c\end{pmatrix} &= \begin{pmatrix}1\\0\\0\end{pmatrix}.
+  \end{align*}
+  This gives
+  \begin{align*}
+    \begin{pmatrix}2b + c \\ 2c \\ 0\end{pmatrix} &= \begin{pmatrix}1\\0\\0\end{pmatrix},
+  \end{align*}
+  and a generalized eigenvector of
+  \begin{align*}
+    \mathbf{v}_2 &= \begin{pmatrix}0\\1/2\\0\end{pmatrix}.
+  \end{align*}
+  Going at it again, we have
+  \begin{align*}
+    \begin{pmatrix}0 & 2 & 1 \\ 0 & 0 & 2 \\ 0 & 0 & 0\end{pmatrix} \begin{pmatrix}a\\b\\c\end{pmatrix} &= \begin{pmatrix}0\\1/2\\0\end{pmatrix},
+  \end{align*}
+  giving the equation
+  \begin{align*}
+    \begin{pmatrix}2b + c\\2c\\0\end{pmatrix} &= \begin{pmatrix}0\\1/2\\0\end{pmatrix},
+  \end{align*}
+  giving
+  \begin{align*}
+    \mathbf{v}_3 &= \begin{pmatrix}0\\-1/8\\1/4\end{pmatrix}.
+  \end{align*}
+  Note that when we take generalized eigenvectors, we ``integrate'' with respect to $t$ before adding. For instance
+  \begin{align*}
+    \mathbf{x}_1 &= e^{\lambda t} \mathbf{v}_1\\
+    \mathbf{x}_2 &= e^{\lambda t} \left( t \mathbf{v}_1 + \mathbf{v}_2 \right)\\
+    \mathbf{x}_3 &= e^{\lambda t} \left( \frac{t^2}{t}\mathbf{v}_1 + t\mathbf{v}_2 + \mathbf{v}_3 \right).
+  \end{align*}
+  Now, our linearly independent solutions to the system in \eqref{eq:generalized_eigenvalues_example} is of the form
+  \begin{align*}
+    \mathbf{x}_1(t) &= e^{4t} \begin{pmatrix}1\\0\\0\end{pmatrix}\\
+    \mathbf{x}_2(t) &= e^{4t} \left( t\begin{pmatrix}1\\0\\0\end{pmatrix} + \begin{pmatrix}0\\1/2\\0\end{pmatrix} \right)\\
+    \mathbf{x}_3 (t) &= e^{4t} \left( \frac{t^2}{t} \begin{pmatrix}1\\0\\0\end{pmatrix} + t \begin{pmatrix}0\\1/2\\0\end{pmatrix} + \begin{pmatrix}0\\-1/8\\1/4\end{pmatrix} \right).
+  \end{align*}
+  This gives the fundamental matrix
+  \begin{align*}
+    \Phi(t) &= \begin{pmatrix}e^{4t} & te^{4t} & \frac{t^2}{2}e^{4t} \\ 0 & \frac{1}{2}e^{4t} & e^{4t}\left( \frac{t}{2} - \frac{1}{8} \right) \\ 0 & 0 & \frac{1}{4}e^{4t}\end{pmatrix}.
+  \end{align*}
+  The general solution is
+  \begin{align*}
+    \mathbf{x}(t) &= \Phi(t) \mathbf{c}.
+  \end{align*}
+  
+\end{example}
 
 \end{document}

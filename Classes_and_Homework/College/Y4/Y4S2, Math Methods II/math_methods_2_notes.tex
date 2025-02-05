@@ -9,6 +9,9 @@
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \renewcommand*{\hbar}{\hslash}
 \newcommand{\ds}{\displaystyle}
+\DeclareMathOperator{\Ln}{Ln}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\Arctan}{Arctan}
 
 %\usepackage{homework}
 
@@ -307,6 +310,128 @@ To resolve this, we create a ``branch cut'' that contours are not allowed to cro
                   &= -\sqrt{2}e^{i\left( 5\pi/8 \right)}\\
                   &= -\sqrt{z_1}\sqrt{z_2}.
   \end{align*}
-  
 \end{example}
+Now, it is possible to have a branch point at $\infty$, by determining if $w\left( \frac{1}{z} \right)$ has a branch point at zero. For instance, if $w = z^{1/2}$, this gives
+\begin{align*}
+  w\left( \frac{1}{z} \right) &= \frac{1}{\zeta^{1/2}}\\
+                              &= \frac{1}{\sqrt{r}} e^{-i\varphi/2},
+\end{align*}
+which has the multivalued behavior around the origin. Thus, $z = \infty$ is a branch point for $z$, and we consider the $(-\infty,0]$ branch cut that connects the branch points at $0$ and $\infty$.
+\begin{example}
+  Consider
+  \begin{align*}
+    w(z) &= \sqrt{\left( z-a \right)\left( z-b \right)}.
+  \end{align*}
+  where $a,b\in\R$ with $a < b$. We expect the only finite branch points to be $a$ and $b$. Introducing polar coordinates, we have
+  \begin{align*}
+    r_1e^{i\varphi_1} &= z-a\\
+    r_2e^{i\varphi_2} &= z-b,
+  \end{align*}
+  giving
+  \begin{align*}
+    w(z) &= \sqrt{r_1r_2}e^{i\varphi_1}e^{i\varphi_2}.
+  \end{align*}
+  Closed contours around \textit{either} $a$ or $b$ are double-valued. However, if our closed contour goes around \textit{both} $a$ and $b$, then both $\varphi_1$ and $\varphi_2$ add up to $2\pi$, meaning we don't have the multivalued behavior.\newline
+
+  Now, to select our branch cut, we need to find out if the point at infinity is a branch point. We take $\zeta = \frac{1}{z}$, and we have
+  \begin{align*}
+    w(\zeta) &= \frac{1}{\zeta} \sqrt{\left( 1-a\zeta \right)\left( 1-b\zeta \right)},
+  \end{align*}
+  which blows up at $\infty$, but only takes a singular value.\footnote{Alternatively, we may see that a positively-oriented contour that surrounds both $a$ and $b$ is a negatively-oriented contour around $\infty$. Since such a contour is valid, $\infty$ is not a branch point.}
+\end{example}
+In general, $z^{1/m}$ for integral $m$ will require $m$ branch cuts.
+\begin{example}
+  Consider the integral
+  \begin{align*}
+    I &= \int_{-\infty}^{\infty} \frac{xe^{ikx}}{\sqrt{x^2 + a^2}}\:dx.
+  \end{align*}
+  This is a hard integral to evaluate. To resolve this, we extend the integrand to the complex plane, and invoke Cauchy's theorem to deform the contour.\newline
+
+  Note that $\sqrt{x^2 + a^2}$ is multivalued, with branch points at $x = \pm ia$. We choose the branch cut such that our integration contour does not cross the branch cut --- i.e., from $-ia$ to $\infty$ to $ia$.\newline
+
+  Now, we may deform the contour so as to closely wrap around the branch cut from $ia$ to $\infty$. Remembering the sign discontinuity over the branch cut, this gives the integral
+  \begin{align*}
+    \int_{i\infty}^{i\infty} \frac{ze^{ikz}}{\sqrt{x^2 + a^2}}\:dz &= \int_{i\infty}^{ia} \frac{ze^{ikz}}{-i\sqrt{x^2 + a^2}}\:dz + \int_{-a}^{\infty} \frac{ze^{ikz}}{i\sqrt{z^2 + a^2}}\:dz\\
+                                                                   &= 2\int_{ia}^{i\infty} \frac{ze^{ikz}}{i\sqrt{z^2 + a^2}}\:dz\\
+                                                                   &= 2\int_{a}^{\infty} \frac{ye^{-ky}}{\sqrt{y^2 - a^2}}\:dy\tag*{$z = iy$}\\
+                                                                   &= 2aK_1\left( ka \right)\\
+                                                                   &\sim e^{-ka}
+  \end{align*}
+  Here, $K_1$ refers to the modified Bessel function.
+\end{example}
+\subsubsection{Logarithms}%
+In the complex plane, we say
+\begin{align*}
+  \ln z &= \ln\left(re^{i\varphi} \right)\\
+        &= \ln r + i\varphi\\
+        &= \ln \left\vert z \right\vert + i\arg(z).
+\end{align*}
+Unfortunately, this $\ln z$ is a multivalued function --- a very multivalued one indeed. This yields many branch points, including $0$ and $\infty$:
+\begin{align*}
+  \ln\left( 1/\zeta \right) &= -\ln\left( \zeta \right).
+\end{align*}
+However, we choose the principal branch, $\pi < \varphi \leq \pi$, giving
+\begin{align*}
+  \Ln z &= \Ln \left\vert z \right\vert + i\Arg(z).
+\end{align*}
+\begin{example}
+  Consider $\ln\left( z_1z_1 \right)$ and $\Ln\left( z_1z_2 \right)$. If we have
+  \begin{align*}
+    z_1 &= 1 + i\\
+    z_2 &= i,
+  \end{align*}
+  then
+  \begin{align*}
+    \arg\left(z_1\right) &= \pi/4\\
+    \arg\left( z_2 \right) &= \pi/2,
+  \end{align*}
+  so
+  \begin{align*}
+    \arg\left( z_1z_2 \right) &= 3\pi/4\\
+                              &= \arg\left(z_1\right) + \arg\left( z_2 \right)\\
+                              &= \Arg\left( z_1z_2 \right).
+  \end{align*}
+  However, if $z_1 = z_2 = -1$, then
+  \begin{align*}
+    \arg\left( z_1z_2 \right) &= \arg\left( z_1 \right) + \arg\left( z_2 \right)\\
+                              &= 2\pi\\
+    \Arg\left( z_1z_2 \right) &= \Arg\left( 1 \right)\\
+                              &= 0.
+  \end{align*}
+  Thus, we get that $\Ln\left( z_1z_2 \right)\neq \Ln\left( z_1 \right) + \Ln\left( z_2 \right)$.
+\end{example}
+\begin{example}[Logarithms vs Inverse Trig]
+  Here, we will derive $\arctan(z)$ in terms of the complex logarithm.\newline
+
+  Recall that
+  \begin{align*}
+    \cos\left( z \right) &= \frac{1}{2}\left( e^{iz} + e^{-iz} \right)\\
+    \sin\left( z \right) &= \frac{1}{2i} \left( e^{iz} - e^{-iz} \right),
+  \end{align*}
+  so we have
+  \begin{align*}
+    z &= \tan\left( w \right)\\
+      &= -i \frac{e^{iw} - e^{-iw}}{e^{iw} + e^{-iw}},
+  \end{align*}
+  which after much tedious, error-prone symbolic manipulation, gives
+  \begin{align*}
+    e^{2iw} &= \frac{i-z}{i+z}.
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    w &= \arctan\left( z \right)\\
+      &= \frac{1}{2i}\ln\left( \frac{i-z}{i+z} \right).
+  \end{align*}
+  Note that since $\ln$ has branch points at $0$ and $\infty$, $\ln\left( \frac{i-z}{i+z} \right)$ has branch points when $z = \pm i$.\newline
+
+  Now, we must choose a branch cut. Specifically, we want our branch cut to continue the real $\arctan(x)$. We dub this $\Arctan(x)$. Along the real axis, we have
+  \begin{align*}
+    \Arctan(x) &= \frac{1}{2i} \Ln\left( \frac{i-x}{i+x} \right)\\
+               &= \frac{1}{2i} \left( \Ln\left\vert \frac{i-x}{i+x} \right\vert + i\Arg\left( \frac{i-x}{i+x} \right) \right)\\
+               &= \frac{1}{2} \Arg\left( \frac{i-x}{i+x} \right).
+  \end{align*}
+  The principal values are from $-\pi$ to $\pi$, so the output of $\Arctan(x)$ ranges from $-\pi/2$ to $\pi/2$.
+\end{example}
+\subsection{Conformal Maps}%
+A conformal map is a special type of map $w\colon \C\rightarrow \C$ that ``preserves angles.'' If, in $z$, we map curves whose intersections are at some angle $\varphi$, then the image of those curves also intersect at the angle $\varphi$.
 \end{document}
