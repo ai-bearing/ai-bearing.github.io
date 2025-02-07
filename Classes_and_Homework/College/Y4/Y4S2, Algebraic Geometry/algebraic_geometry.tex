@@ -346,13 +346,86 @@ Let $I$ be an ideal in a ring $R$, $\pi\colon R\rightarrow R/I$ the canonical pr
   \item Show that $J'$ is finitely generated if $J$ is. Conclude that $R/I$ is Noetherian if $R$ is Noetherian. Thus, we get that $k\left[ x_1,\dots,x_n \right]/I$ is Noetherian for any ideal $I\subseteq k\left[ x_1,\dots,x_n \right]$ by the Hilbert Basis Theorem.
 \end{enumerate}
 \end{exercise}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item We know that $I\subseteq \pi^{-1}\left( J' \right)$, as $ I = \pi^{-1}\left(0 + I\right) \subseteq \pi^{-1}\left( J' \right)$. Notice that, if $a,b\in \pi^{-1}\left(J'\right)$ and $r\in R$, then $a + I,b + I\in J'$ and $r + I\in R/I$. Then, $a-b +I\in J'$, so $a-b\in \pi^{-1}\left( J' \right)$, and $ra + I \in J'$, so $ra\in \pi^{-1}\left( J' \right)$, so $\pi^{-1}\left( J' \right)$ is an ideal of $R$.\newline
+
+      Now, let $a+I,b+I\in \pi(J)$. Then, we know that there exist $c_1,c_2\in J$ such that $a-c_1,b-c_2\in I$. Thus, $\left( a-b \right) + \left( c_2 - c_1 \right)\in I$. Since we have $c_2 - c_1\in J$ as $J$ is an ideal, so $\pi\left( a-b \right) = \pi\left( c_2 - c_1 \right)$, and $\left( a-b \right) + I\in \pi(J)$. Now, let $a + I\in \pi(J)$, and let $r + I\in R/I$. Then, there exist $c_1\in R$, $c_2\in J$ such that $r-c_1\in I$ and $a - c_2\in I$, meaning that $\pi\left( c_1c_2 \right) = \pi\left( ra \right) = ra + I \in \pi(J)$.
+    \item Let $J$ be maximal. Then, $R/J \cong \left( R/I \right)/\left( \pi(J) \right)$, is a field, meaning $\pi(J)\subseteq R/I$ is also maximal. This gives both directions.\newline
+
+    Similarly, if $J$ is prime, then $R/J \cong \left( R/I \right)/\left( \pi(J) \right)$ is an integral domain, so $\pi(J)\subseteq R/I$ is also an integral domain. This gives both directions.\newline
+
+    Let $J$ be a radical ideal. Then, $J = \bigcap\set{\mathfrak{p} | J\subseteq \mathfrak{p},\mathfrak{p}\text{ is prime}}$. We know that for all $\mathfrak{p}$, $\pi\left( \mathfrak{p} \right)\subseteq R/I$ is prime. We know that $\pi(J)\subseteq \pi\left( \mathfrak{p} \right)$ if and only if $J\subseteq \mathfrak{p}$, so $\pi(J) = \bigcap\set{\pi(\mathfrak{p}) | J\subseteq \mathfrak{p},\mathfrak{p}\text{ is prime}}$. In the reverse direction, we se that if $a\in \pi^{-1}(J)$, then $a + I\in J$, so $a^n + I\in J$ for some $n\in \N$, so $a^n\in \pi^{-1}(J)$, so $\pi^{-1}(J)$ is a radical ideal.
+  \item Letting $\left\langle a_1,\dots,a_n \right\rangle = J$, then we know that $ \left\langle \pi\left(a_1\right),\dots,\pi\left(a_n\right) \right\rangle= \pi(J)$. Thus, $\pi(J)$ is finitely generated.\newline
+
+    Since $R$ is an ideal, if $R$ is Noetherian, then $R/I$ is Noetherian, so by the Hilbert Basis Theorem, any ring of the form $k\left[ x_1,\dots,x_n \right]/I$ is Noetherian.
+  \end{enumerate}
+\end{solution}
 
 \subsection{Irreducible Components of an Algebraic Set}%
+An algebraic set can be the union of several smaller algebraic sets. If $V\subseteq \A^n$ is such that $V = V_1 \cup V_2$, where $V_1,V_2$ are algebraic sets and $V_i\neq V$ for each $i$, then we say $V$ is reducible. Else, we say $V$ is irreducible.
+\begin{proposition}
+  An algebraic set $V$ is irreducible if and only if $I(V)$ is prime.
+\end{proposition}
+\begin{proof}
+  If $I(V)$ is not prime, then we have $F_1F_2\in I(V)$ with $F_i\notin I(V)$. Then, $V = \left( V\cap V\left(F_1\right) \right)\cup\left( V\cap V\left(F_2\right) \right)$, with $V\cap V\left( F_i \right)\subsetneq V$, meaning $V$ is irreducible.\newline
+
+  If $V = V_1\cup V_2$ with $V_i\subsetneq V$, then $I\left( V_i \right)\supseteq I(V)$. Let $F_i\in I\left( V_i \right)$ with $F_i\notin I(V)$. Then, $F_1F_2\in I(V)$, so $I(V)$ is not prime.
+\end{proof}
+Now, we want to show that an algebraic set is a finite union of irreducible algebraic sets. To see this, we need to show an equivalent definition of a Noetherian ring.
+\begin{lemma}
+  Let $\mathcal{I}$ be a nonempty collection of ideals in a Noetherian ring $R$. Then, $\mathcal{I}$ has a maximal member.
+\end{lemma}
+\begin{proof}
+  We will choose an ideal from each subset of $\mathcal{I}$. Letting $I_0$ be the chosen ideal for $\mathcal{I}$ itself, we let $\mathcal{I}_1 = \set{I\in \mathcal{I} | I\supsetneq I_0}$, with $I_1$ as the chosen ideal of $\mathcal{I}_1$. Continuing, we define
+  \begin{align*}
+    \mathcal{I}_j &= \set{I\in \mathcal{I} | I\supsetneq I_{j-1}},
+  \end{align*}
+  and select $I_j\in \mathcal{I}_j$. It suffices to show that some $\mathcal{I}_n$ is empty.\newline
+
+  Define $I = \bigcup_{n=0}^{\infty}I_n$ to be an ideal of $R$, and let $F_1,\dots,F_r$ be generators of $I$. We must have $F_i\in I_n$ for all $i$ if $n$ is sufficient large. Then, $I_n = I$, meaning $I_{n+1} = I_{n}$, which is a contradiction.
+\end{proof}
+Effectively, we have shown that every Noetherian ring satisfies the ascending chain condition on its ideals.\newline
+
+It follows that any collection of algebraic sets $\set{V_{\alpha}}$ in $\A^n\left( k \right)$ has a minimal element, by selecting the maximal member of $\set{I\left( V_{\alpha} \right)}$.
+\begin{theorem}
+  Let $V$ be an algebraic set in $\A^n\left( k \right)$. Then, there rae unique irreducible algebraic sets $V_1,\dots,V_m$ such that $V=  V_1\cup \cdots \cup V_m$, and $V_i\nsubseteq V_j$ for all $i\neq j$.
+\end{theorem}
+\begin{proof}
+  Let $\mathcal{I}$ be the set of algebraic sets in $\A^n\left( k \right)$ such that $V$ is not the union of a finite number of irreducible algebraic sets. We wish to show that $\mathcal{I}$ is empty.\newline
+
+  If not, let $V$ be a minimal member of $\mathcal{I}$. Since $V\in \mathcal{I}$, $V$ is not irreducible, so $V = V_1\cup V_2$ with $V_i\subsetneq V$, meaning $V_i\notin \mathcal{I}$, so $V_i = V_{i,1}\cup\cdots V_{i,m_i}$, with $V_{i,j}$ irreducible. However, $V = \bigcup_{i,j} V_{i,j}$, which is a finite union.\newline
+
+  Thus, any algebraic set $V$ may be written as $V = V_1\cup\cdots\cup V_m$ with $V_i$ irreducible. To obtain the second condition, we may discard any $V_i$ with $V_i\subseteq V_j$ with $i\neq j$.\newline
+
+  To show uniqueness, let $V = W_1\cup\cdots\cup W_m$ be another decomposition. Then, $V_i= \bigcup_{j}\left( W_j\cap V_i \right)$, so $V_i\subseteq W_{j(i)}$ for some $j(i)$. Similarly, $W_{j(i)}\subseteq V_k$ for some $k$. However, this means $V_i\subseteq V_k$, so $i = k$, so $V_i = W_{j(i)}$. Likewise, $W_j = V_{i(j)}$ for some $i(j)$.
+\end{proof}
+We call $V_i$ the irreducible components of $V$, and $V = V_1\cup\cdots\cup V_m$ is the decomposition of $V$ into irreducible components.
 \begin{exercise}[Exercise 1.25]\hfill
   \begin{enumerate}[(a)]
     \item Show that $V\left(y-x^2\right)\subseteq \A^2\left(\C\right)$ is irreducible; in fact, $I\left(V\left(y-x^2\right)\right) = \left\langle y-x^2 \right\rangle$.
+    \item Decompose $V\left( y^4-x^2,y^4-x^2y^2+xy^2-x^3 \right)\subseteq \A^2\left( \C \right)$ into irreducible components.
   \end{enumerate}
 \end{exercise}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Suppose there exists $g\in \C\left[ x,y \right]$ such that $g | y-x^2$, meaning there exists $f\in \C\left[ x,y \right]$ such that $fg = y-x^2$. Since $y-x^2$ has degree in $y$ equal to $1$, one of either $f$ or $g$ has degree in $y$ equal to zero.\newline
+
+      Therefore, without loss of generality, $f\in \C\left[ x \right]$. Then, $g = yh_1 + h_2$, where $h_1,h_2\in \C\left[ x \right]$. Note that $h_1\neq 0$, then $fg = fyh_1 + fh_2 = yfh_1 + fh_2$; since $fh_1\neq 0$, we must have $fh_1 = 1$, so $f$ is constant, so $g$ is some constant multiple of $y-x^2$, so $y-x^2$ is irreducible. Thus, $\left\langle y-x^2 \right\rangle$ is maximal, hence prime, so $I\left( V\left( y-x^2 \right) \right) = \left\langle y-x^2 \right\rangle$.
+    \item Factoring, we have irreducible components of
+      \begin{align*}
+        V_1 &= V\left( y^2 - x \right)\\
+        V_2 &= V\left( y^2 + x \right)\\
+        V_3 &= V\left( y-x \right)\\
+        V_4 &= V\left( y+x \right).
+      \end{align*}
+  \end{enumerate}
+\end{solution}
+
+\begin{exercise}[Exercise 1.29]
+  Show that $\A^n\left( k \right)$ is irreducible if $k$ is infinite.
+\end{exercise}
+
 \subsection{Algebraic Subsets of the Plane}%
 \begin{exercise}[Exercise 1.30]
 Let $k = \R$. 
