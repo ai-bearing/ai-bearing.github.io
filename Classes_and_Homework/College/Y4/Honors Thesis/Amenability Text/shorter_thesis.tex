@@ -87,7 +87,7 @@ Predictably, the free group also admits a universal property.
   \end{center}
 \end{theorem}
 One of the useful facts about the free product is that its properties allow us to find subgroups isomorphic to $F(a,b)$. This occurs through a special property of the action of a group on the set.
-\begin{theorem}[Ping Pong Lemma]\label{thm:ping_pong_lemma}
+\begin{theorem}[Ping Pong Lemma]\label{thm:ping_pong}
   Let $G$ be a group that acts on a set $X$, and let $\Gamma_1,\Gamma_2$ be subgroups of $G$, with $\Gamma = \left\langle \Gamma_1,\Gamma_2 \right\rangle$. Assume $\Gamma_1$ contains at least three elements and assume $\Gamma_2$ contains at least two elements.\newline
 
   Let $\emptyset\neq X_1,X_2\subseteq X$ with $X_1\triangle X_2\neq\emptyset$. Suppose that for all $e_G\neq s\in \Gamma_1$ and for all $e_G\neq t\in \Gamma_2$, we have
@@ -134,7 +134,7 @@ First, we begin by discussing some important linear algebra concepts that are mo
   \end{itemize}
   We define the \textit{convex hull} of $A\subseteq X$ by
   \begin{align*}
-    \operatorname{conv}\left(A\right) &= \bigcap\set{C | A\subseteq C\subseteq X,C\text{ is convex}}\\
+    \operatorname{conv}\left(A\right) &\coloneq \bigcap\set{C | A\subseteq C\subseteq X,C\text{ is convex}}\\
                                       &= \set{\sum_{j=1}^{n}t_ja_j | n\in\N,t_j\geq 0,\sum_{j=1}^{n}t_j = 1,a_j\in A}.
   \end{align*}
 \end{definition}
@@ -207,9 +207,9 @@ However, when we deal with normed vector spaces, especially infinite-dimensional
 \begin{definition}
   Let $X$ and $Y$ be normed vector spaces, and let $T\colon X\rightarrow Y$ be a map.
   \begin{itemize}
-    \item The function $T$ is continuous if, for all $c\in X$ and for all $\ve > 0$, there exists $\delta > 0$ such that whenever $\norm{x-c} < \delta$, then $\norm{T(x) - T(c)} < \ve$.
-    \item The function $T$ is uniformly continuous if, for all $\ve > 0$, there exists $\delta > 0 $ such that for all $x,y\in X$, if $\norm{x-y} < \delta$, then $\norm{T(x) - T(y)} < \ve$.
-    \item The function $T$ is Lipschitz continuous if there exists some constant $C > 0$ such that, for all $x,y\in X$, $\norm{T(x)-T(y)}\leq C\norm{x-y}$.
+    \item The function $T$ is \textit{continuous} if, for all $c\in X$ and for all $\ve > 0$, there exists $\delta > 0$ such that whenever $\norm{x-c} < \delta$, then $\norm{T(x) - T(c)} < \ve$.
+    \item The function $T$ is \textit{uniformly continuous} if, for all $\ve > 0$, there exists $\delta > 0 $ such that for all $x,y\in X$, if $\norm{x-y} < \delta$, then $\norm{T(x) - T(y)} < \ve$.
+    \item The function $T$ is \textit{Lipschitz continuous} if there exists some constant $C > 0$ such that, for all $x,y\in X$, $\norm{T(x)-T(y)}\leq C\norm{x-y}$.
   \end{itemize}
 \end{definition}
 \begin{theorem}
@@ -278,7 +278,11 @@ This is the domain of the Hahn--Banach theorems. Both the extension and separati
 \begin{theorem}[Hahn--Banach Continuous Extension]\label{thm:hahn_banach_extension}
   Let $X$ be a normed vector space, and let $Y\subseteq X$ be a subspace. If $\varphi\in Y^{\ast}$ is a continuous linear functional, then there is a (not necessarily unique) continuous $\Phi\in X^{\ast}$ such that $\Phi|_{Y} = \varphi$.
 \end{theorem}
-One of the primary uses of the Hahn--Banach extension is to establish crucial separation results.
+One of the primary uses of the Hahn--Banach extension is to establish crucial separation results.\newline
+
+To provide some context for the separation results, consider two open, disjoint, convex subsets $A,B\subseteq \R^n$. The hyperplane separation theorem from convex optimization (see \cite[Chapter 2.6]{convex_optimization}) states that there is a nonzero vector $m\in \R^n$ and some $b\in \R$ such that the map $\varphi\colon \R^n\rightarrow \R$, defined by $\varphi(x) = m^{T}x - b$, is strictly negative for all $x\in A$ and is strictly positive for all $x\in B$. The affine hyperplane defined by $\set{x | \varphi(x) = b}$ is known as a separating hyperplane for $A$ and $B$.\newline
+
+A similar concept extends to normed vector spaces, but is made stronger by continuity.
 \begin{theorem}[Hahn--Banach Separation Theorems]\label{thm:hahn_banach_separation}
   Let $X$ be a normed vector space. 
   \begin{itemize}
@@ -290,18 +294,1091 @@ One of the primary uses of the Hahn--Banach extension is to establish crucial se
       for all $x\in C$ and all $y\in K$.
   \end{itemize}
 \end{theorem}
-
 \section{What is Amenability?}\label{sec:intro_amenability}%
+The term ``amenable'' was coined by the mathematician M. M. Day, to refer to groups that John von Neumann termed ``meßbar,'' or measurable. We will elaborate more on the relationship between the structure of groups themselves and group amenability in future sections, but going off definitions alone we may establish certain inheritance properties.
+\begin{definition}
+  Let $G$ be a group, and let $P(G)$ be the power set of the group.\newline
+
+  An invariant \textit{mean} on $G$ is a set function $m\colon P(G)\rightarrow [0,1]$ which satisfies, for all $t\in G$ and $E,F\subseteq G$,
+  \begin{itemize}
+    \item $m(G) = 1$;
+    \item $m\left( E\sqcup F \right) = m\left( E \right) + m\left( F \right)$;
+    \item $m\left( tE \right) = m\left( E \right)$.
+  \end{itemize}
+  We say $G$ is \textit{amenable} if $G$ admits a mean.
+\end{definition}
+\begin{proposition}\label{prop:subgroups_quotientgroups_amenability}
+  Let $G$ be an amenable group with $H\leq G$. Then, the following are true:
+  \begin{enumerate}[(1)]
+    \item $H$ is amenable;
+    \item if $H\trianglelefteq G$ is a normal subgroup, then $G/H$ is amenable.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Let $R$ be a right transversal for $H$, wherein we select one element of each right coset of $H$ to make up $R$.\newline
+
+      If $m$ is a mean for $G$, we set $\lambda\colon P(H)\rightarrow [0,1]$ defined by
+      \begin{align*}
+        \lambda(E) = m\left(ER\right).
+      \end{align*}
+       We have
+      \begin{align*}
+        \lambda(H) &= m\left(HR\right)\\
+                   &= m\left(G\right)\\
+                   &= 1.
+      \end{align*}
+      We claim that if $E\cap F = \emptyset$, then $ER \cap FR = \emptyset$. Suppose toward contradiction this is not the case. Then, $xr_1 = yr_2$ for some $x\in E$, $y\in F$, and $r_1,r_2\in R$. Then, we must have $r_2r_1^{-1} = y^{-1}x \in H$, meaning $r_1 = r_2$ as, by definition, $R$ contains exactly one element of each right coset. Thus, $x=y$, so $E\cap F \neq \emptyset$.\newline
+
+      We then have
+      \begin{align*}
+        \lambda\left(E\sqcup F\right) &= m\left(\left(E\sqcup F\right)R\right)\\
+                                      &= m\left(ER\sqcup FR\right)\\
+                                      &= m\left(ER\right) + m\left(FR\right)\\
+                                      &= \lambda\left(E\right) + \lambda\left(F\right),
+      \end{align*}
+      and
+      \begin{align*}
+        \lambda\left(sE\right) &= m\left(sER\right)\\
+                               &= m\left(ER\right)\\
+                               &= \lambda\left(E\right).
+      \end{align*}
+    \item Let $\pi\colon G\rightarrow G/H$ be the canonical projection, defined by $\pi\left(t\right) = tH$. We define
+      \begin{align*}
+        \lambda\colon P\left(G/H\right) \rightarrow [0,1]
+      \end{align*}
+      by $\lambda(E) = m\left(\pi^{-1}\left(E\right)\right)$. We have
+      \begin{align*}
+        \lambda\left(G/H\right) &= m\left(\pi^{-1}\left(G/H\right)\right)\\
+                                &= m\left(G\right)\\
+                                &= 1,
+      \end{align*}
+      and
+      \begin{align*}
+        \lambda\left(E\sqcup F\right) &= m\left(\pi^{-1}\left(E\sqcup F\right)\right)\\
+                                      &= m\left(\pi^{-1}\left(E\right)\sqcup \pi^{-1}\left(F\right)\right)\\
+                                      &= m\left(\pi^{-1}\left(E\right)\right) + m\left(\pi^{-1}\left(F\right)\right)\\
+                                      &= \lambda(E) + \lambda(F).
+      \end{align*}
+      To show translation-invariance, we let $sH = \pi(s)\in G/H$, and $E\subseteq G/H$. Note that
+      \begin{align*}
+        \pi^{-1}\left(\pi(s)E\right) &= s\pi^{-1}\left(E\right),
+      \end{align*}
+      since for $r\in s\pi^{-1}(E)$, we have $r = st$ for $t\in \pi(E)$, so $\pi\left(r\right) =\pi\left(st\right) = \pi\left(s\right)\pi\left(t\right)\in \pi\left(s\right)E$.\newline
+
+      Additionally, if $r\in \pi^{-1}\left(\pi(s)E\right)$, we have $\pi(r)\in \pi(s)E$, so $\pi\left(s^{-1}r\right)\in E$, meaning $s^{-1}r\in \pi^{-1}(E)$.\newline
+
+      Thus,
+      \begin{align*}
+        \lambda\left(\pi\left(s\right)E\right) &= m\left(\pi^{-1}\left(\pi\left(s\right)E\right)\right)\\
+                                               &= m\left(s\pi^{-1}\left(E\right)\right)\\
+                                               &= m\left(\pi^{-1}\left(E\right)\right)\\
+                                               &= \lambda\left(E\right).
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+The following proposition is, in a sense, a kind of converse to Proposition \ref{prop:subgroups_quotientgroups_amenability}, in that if a subgroup is amenable, we can show that its parent group is also amenable, but this is only a sufficient condition if the subgroup has finite index.
+\begin{proposition}\label{prop:finite_index_amenable_subgroup}
+  Let $G$ be a group, and let $H\leq G$ be amenable, with $\left[G:H\right]  = n < \infty$. Then, $G$ is amenable.
+\end{proposition}
+\begin{proof}
+  Let $H\leq G$ be amenable with $\left[G:H\right] = n$. Let $\mu$ be the mean on $H$, and let $\set{g_iH}_{i=1}^{n}$ be a partition of $G$ by the left cosets of $H$. We define the mean on $G$ by taking, for $A\subseteq G$,
+  \begin{align*}
+    \lambda\left(A\right) &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}A\cap H\right).
+  \end{align*}
+  We begin by verifying that this is well-defined. Specifically, we will show that this definition is independent of the coset representatives. Suppose $g_jH = h_j H$. Then, $h_j^{-1}g_j \in H$. Now, we have $g_j^{-1}A \cap H \subseteq H$, so by left-multiplication, we get $\left(h_j^{-1}g_j\right)g_j^{-1}A\cap H \subseteq H$, so $h_j^{-1}A\cap H\subseteq H$. Since $\set{g_i H}_{i=1}^{n}$ is a partition, we get that this definition of the mean on $G$ is independent of the choice of coset representatives.\newline
+
+  Next, we show that this is a finitely additive measure. Let $A,B\subseteq G$ be such that $A\cap B = \emptyset$. Then, we get
+  \begin{align*}
+    \lambda\left(A\sqcup B\right) &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}\left(A\sqcup B\right)\cap H\right)\\
+                                  &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(\left(g_i^{-1}A\cap H\right)\sqcup \left(g_i^{-1}B\cap H\right)\right)\\
+                                  &= \frac{1}{n}\left(\sum_{i=1}^{n}\mu\left(g_i^{-1}A\cap H\right) + \sum_{i=1}^{n}\mu\left(g_i^{-1}B\cap H\right)\right)\\
+                                  &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}A\cap H\right) + \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}B\cap H\right)\\
+                                  &= \lambda\left(A\right) + \lambda\left(B\right).
+  \end{align*}
+  It is relatively simple to see that $\lambda$ is a probability measure, as
+  \begin{align*}
+    \lambda\left(G\right) &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}G\cap H\right)\\
+                          &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(G\cap H\right)\\
+                          &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(H\right)\\
+                          &= 1.
+  \end{align*}
+  Now, we must show that $\lambda$ is translation-invariant. Let $A\subseteq G$ and $t\in G$. Using the translation-invariance of $\mu$, we get
+  \begin{align*}
+    \lambda\left(tA\right) &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}tA\cap H\right)\\
+                           &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}\left(t\left(A\cap H\right)\right)\right)\\
+                           &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}A\cap H\right)\\
+                           &= \lambda\left(A\right).
+  \end{align*}
+  Thus, $G$ is amenable.
+\end{proof}
 \section{Paradoxical Decompositions and Amenability}\label{sec:banach_tarski_tarskis_theorem}%
+Having established the inheritance properties of amenable groups, we will begin discussing the Banach--Tarski paradox, leading into a result known as Tarski's Theorem.\newline
+
+We will show a couple major results in this section:
+\begin{itemize}
+  \item the weak Banach--Tarski paradox;
+  \item the strong Banach--Tarski paradox;
+  \item Tarski's theorem.
+\end{itemize}
+Each of these results will require a bit of machinery before we may prove them, but they are truly foundational in the history of amenability.\newline
+
+The exposition in this section will largely follow that of \cite{amenable_banach_algebras} and \cite{lectures_on_amenability}, with some clarity added to the more terse sections of those books.
+\subsection{The Banach--Tarski Paradox}%
+In the Bible, one of the miracles of Jesus is known as the feeding of the five thousand.\footnote{Fun fact: aside from the resurrection, the feeding of the five thousand is the only miracle of Jesus that is documented in all four gospels.} Jesus is able to feed a large crowd that had only five loaves of bread and two fishes among themselves by praying to God, then breaking the food apart and passing it around the crowd. Unfortunately, such a miracle is not able to be performed in the physical world without some divine intervention, but mathematically, it is not only possible to recreate such a feat, but moreover, it is a fundamental feature of the group of Euclidean isometries of $\R^3$.\newline
+
+This is the substance of the most general form of the Banach--Tarski paradox.
+\begin{restatable}[Strong Banach--Tarski Paradox]{proposition}{banachtarski}\label{prop:banachtarski}
+  Let $A$ and $B$ be bounded subsets of $\R^3$ with nonempty interior. There is a partition of $A$ into finitely many disjoint subsets such that a sequence of isometries applied to these subsets yields $B$.
+\end{restatable}
+The Banach--Tarski paradox throws a wrench into a common belief that we have about $\R^3$ --- specifically, that every subset of $\R^3$ has a \textit{finitely additive} ``volume'' that is invariant under rigid motion.\footnote{Note that if we desire countable additivity, the axiom of choice shows that there does not exist a countably additive measure on $P\left(\R\right)$ that is also translation-invariant (see \cite[Section 1.1]{folland_real_analysis}). Finite additivity is a weaker condition than countable additivity that allows for the existence of well-behaved measures on $P\left(\R\right)$ and $P\left(\R^2\right)$, but even this fails in $\R^3$ and above.} Soon, we will see that such a well-behaved measure \textit{does} exist in $\R$ and $\R^2$ (though we will only use a nonconstructive proof for this purpose).
+\subsubsection{Paradoxical Decompositions}%
+The paradox of the ship of Theseus asks, if on a voyage across the ocean, the crew of a ship repair the ship so that all the parts of the ship are replaced, which part is the real ship? Moreover, if the original parts of the ship are reconstituted into a ship, which one is the ``original'' ship, and which one is the ``copy'' ship?\newline
+
+Thankfully, in mathematics, we do not have to worry about the ramifications of such questions, but the idea of paradoxical actions, and paradoxical groups, borrows from the idea that it is possible, in some circumstances, to reconstitute the whole from only a subset of itself, through the miracle of group actions.
+\begin{definition}[Paradoxical Decompositions and Paradoxical Groups]
+  Let $G$ be a group that acts on a set $X$, with $E\subseteq X$. We say $E$ is $G$\textit{-paradoxical} if there exist pairwise disjoint proper subsets $A_1,\dots,A_n$ and $B_1,\dots,B_m$ of $E$ and group elements $g_1,\dots,g_n,h_1,\dots,h_m\in G$ such that
+  \begin{align*}
+    E &= \bigcup_{j=1}^{n}g_j\cdot A_j
+  \end{align*}
+  and
+  \begin{align*}
+    E &= \bigcup_{j=1}^{m}h_j\cdot B_j.
+  \end{align*}
+  If $G$ acts on itself by left-multiplication, and $G$ satisfies these conditions, we say $G$ is a \textit{paradoxical group}.
+\end{definition}
+\begin{example}
+  The free group on two generators, $F(a,b)$, is a paradoxical group.\newline
+
+  To see that $F(a,b)$ is a paradoxical group, we let $W(x)$ denote the set of words in $F(a,b)$ that start with $x\in \set{a,b,a^{-1},b^{-1}}$. For instance, $ba^2ba^{-1}\in W(b)$.\newline
+
+  Since every word in $F$ is either the empty word, or starts with one of $a,b,a^{-1},b^{-1}$, we see that
+  \begin{align*}
+    F(a,b) &= \set{e_{F(a,b)}} \sqcup W(a) \sqcup W(b) \sqcup W\left(a^{-1}\right) \sqcup W\left(b^{-1}\right).
+  \end{align*}
+  If $w\in F(a,b)\setminus W(a)$, we see that $a^{-1}w\in W\left(a^{-1}\right)$. Thus, $w\in aW\left(a^{-1}\right)$. For any $t\in F(a,b)$ either $t\in W(a)$ or $t\in F(a,b)\setminus W(a) = aW\left(a^{-1}\right)$. Thus, $F\left(a,b\right) $ is equal to $ W(a)\sqcup aW\left(a^{-1}\right)$.\newline
+
+  Similarly, if $t\in F(a,b)$ then either $t\in W(b)$ or $t\in bW\left( b^{-1} \right)$, so $F(a,b) = W(b)\sqcup bW\left( b^{-1} \right)$.\newline
+
+  We have thus constructed
+  \begin{align*}
+    F(a,b) &= W(a)\sqcup aW\left(a^{-1}\right)\\
+           &= W(b)\sqcup bW\left(b^{-1}\right),
+  \end{align*}
+  a paradoxical decomposition of $F(a,b)$ with the action of left-multiplication.
+\end{example}
+Now that we understand a little more about paradoxical groups, we now want to understand the actions of paradoxical groups on sets. Recall that if $G$ is a group that acts on a set $X$, we say the action is free if, for all $x\in X$, $g\cdot x = x$ if and only if $g = e_G$.
+\begin{proposition}
+  Let $G$ be a paradoxical group that acts freely on $X$. Then, $X$ is $G$-paradoxical.
+\end{proposition}
+\begin{proof}
+  Let $A_1,\dots,A_n,B_1,\dots,B_m\subset G$ be pairwise disjoint, and let $g_1,\dots,g_n,h_1,\dots,h_m\in G$ such that
+  \begin{align*}
+    G &= \bigcup_{i=1}^{n}g_iA_i\\
+      &= \bigcup_{j=1}^{m}h_jB_j.
+  \end{align*}
+  Let $M\subseteq X$ contain exactly one element from every orbit in $X$.
+  \begin{claim}
+  The set $\set{g\cdot M\mid g\in G}$ is a partition of $X$.
+  \end{claim}
+  \begin{proof}[Proof of Claim:]
+  Since $M$ contains exactly one element from every orbit in $X$, it is the case that $G\cdot M = X$, so
+  \begin{align*}
+    \bigcup_{g\in G} g\cdot M &= X
+  \end{align*}
+  Additionally, for $x,y\in M$, if $g\cdot x = h\cdot y$, then $\left(h^{-1}g\right)\cdot x = y$, meaning $y$ is in the orbit of $x$ and vice versa, implying $x = y$. Since $G$ acts freely on $X$, we must have $h^{-1}g = e_G$.\newline
+
+  Thus, we can see that $g_1\cdot M \neq g_2\cdot M$, implying $\set{g\cdot M\mid g\in G}$ is a partition of $X$.
+  \end{proof}
+
+  For any given $i$, we define
+  \begin{align*}
+    A_i^{\ast} &= \bigcup_{g\in A_i}g\cdot M,
+  \end{align*}
+  and similarly define, for any given $j$,
+  \begin{align*}
+    B_j^{\ast} &= \bigcup_{h\in B_j}h\cdot M.
+  \end{align*}
+  As a useful shorthand, we can also write $A_i^{\ast} = A_i\cdot M$, and similarly, $B_j^{\ast} = B_j\cdot M$, to denote the union of the elements of $A_i$ and $B_j$ respectively acting on $M$.\newline
+
+  Since $\set{g\cdot M\mid g\in G}$ is a partition of $X$, and $A_1,\dots,A_n,B_1,\dots,B_m\subset G$ are pairwise disjoint, it must be the case that $A_1^{\ast},\dots,A_n^{\ast},B_1^{\ast},\dots,B_m^{\ast}\subset X$ are also pairwise disjoint.\newline
+
+  For the original $g_1,\dots,g_n,h_1,\dots,h_m$ that defined the paradoxical decomposition of $G$, we thus have
+  \begin{align*}
+    \bigcup_{i=1}^{n}g_i\cdot A_i^{\ast} &= \bigcup_{i=1}^{n}\left(g_iA_i\right)\cdot M\\
+                                         &= G\cdot M\\
+                                         &= X,
+  \end{align*}
+  and
+  \begin{align*}
+    \bigcup_{j=1}^{m}h_j\cdot B_j^{\ast} &= \bigcup_{j=1}^{m}\left(h_jB_j\right)\cdot M\\
+                                         &= G\cdot M\\
+                                         &= X.
+  \end{align*}
+  Thus, $X$ is $G$-paradoxical.
+\end{proof}
+\begin{remark}
+  This proof requires the axiom of choice, as we invoked it to define $M$ to contain exactly one element from every orbit in $X$.
+\end{remark}
+There is also a useful converse.
+\begin{proposition}
+  Let $G$ be a group that acts on a set $X$, and suppose that there is a free action of $G$ on $X$ such that $X$ is $G$-paradoxical. Then, $G$ is paradoxical with respect to the action of left-multiplication on itself.
+\end{proposition}
+\begin{proof}
+  Let $A_1,\dots,A_n,B_1,\dots,B_m\subseteq X$ be disjoint subsets of $X$ and $g_1,\dots,g_n,h_1,\dots,h_m\in G$ such that
+  \begin{align*}
+    X &= \bigcup_{i=1}^{n}g_i\cdot A_i\\
+      &= \bigcup_{j=1}^{m}h_j\cdot B_j.
+  \end{align*}
+  Fix a value $x_0\in X$. Now, we define
+  \begin{align*}
+    A_i^{\ast} &= \set{g\in G | g\cdot x_0\in A_i}\\
+    B_j^{\ast} &= \set{g\in G | g\cdot x_0\in B_j}.
+  \end{align*}
+  Notice that since the $A_i$ and $B_j$ are pairwise disjoint, we must also have the $A_i^{\ast}$ and $B_j^{\ast}$ are disjoint. Now, we consider the orbit of $x_0$, $G\cdot x_0$. Notice that
+  \begin{align*}
+    G\cdot x_0 &= X\cap G\cdot x_0\\
+               &= \left( \bigcup_{i=1}^{n}g_i\cdot A_i \right)\cap G\cdot x_0\\
+               &= \bigcup_{i=1}^{n}\left( g_i\cdot A_i\cap G\cdot x_0 \right),
+  \end{align*}
+  and similarly,
+  \begin{align*}
+    G\cdot x_0 &= \bigcup_{j=1}^{m}\left( h_j\cdot B_j \cap G\cdot x_0 \right).
+  \end{align*}
+  Now, this means that for any $g\in G$, we know that $g\cdot x_0\in g_i\cdot A_i$ for some $i$, so $g\cdot x_0 = g_i\cdot a$ for some $a\in A_i$. This gives $\left( g_i^{-1}g \right)\cdot x_0 = a$, so $\left( g_i^{-1}g \right)\cdot x_0 \in A_i$, meaning $g_i^{-1}g\in A_i^{\ast}$. Therefore, we have $g\in g_iA_i^{\ast}$. Since $g$ was arbitrary, we have
+  \begin{align*}
+    G &= \bigcup_{i=1}^{n}g_iA_i^{\ast}.
+  \end{align*}
+  By a similar process, we arrive at
+  \begin{align*}
+    G &= \bigcup_{j=1}^{m}h_jB_j^{\ast},
+  \end{align*}
+  so $G$ is a paradoxical group.
+\end{proof}
+\subsubsection{The Weak Banach--Tarski Paradox}%
+Now that we have established $F(a,b)$ as being a paradoxical group, we wish to use it to construct paradoxical decompositions of the unit sphere $S^2\subseteq \R^3$. Specifically, we will show a weak version of the Banach--Tarski paradox --- one where you can break apart the unit ball into finitely many pieces and reconstitute it into two copies of itself.
+\begin{fact}
+  If $H$ is a paradoxical group, and $H\leq G$, then $G$ is a paradoxical group.
+\end{fact}
+With this fact in mind, we will show that $\text{SO}(3)$ is a paradoxical group.
+\begin{theorem}
+  There are rotations $A$ and $B$ that about lines through the origin in $\R^3$ that generate a subgroup of $\text{SO}(3)$ isomorphic to $F(a,b)$
+\end{theorem}
+\begin{proof}
+  We let
+  \begin{align*}
+    a &= \begin{pmatrix}3/5 & 4/5 & 0 \\ -4/5 & 3/5 & 0 \\ 0 & 0 & 1\end{pmatrix}\\
+    a^{-1} &= \begin{pmatrix}3/5 & -4/5 & 0 \\ 4/5 & 3/5 & 0 \\ 0 & 0 & 1\end{pmatrix}\\
+    b &= \begin{pmatrix}1 & 0 & 0 \\ 0 & 3/5 & -4/5 \\ 0 & 4/5 & 3/5\end{pmatrix}\\
+    b^{-1} &= \begin{pmatrix}1 & 0 & 0 \\ 0 & 3/5 & 4/5 \\ 0 & -4/5 & 3/5\end{pmatrix}.
+  \end{align*}
+  We specify
+  \begin{align*}
+    X &= A_{+} \sqcup A_{-} \sqcup B_{+} \sqcup B_{-} \sqcup \begin{pmatrix}0\\1\\0\end{pmatrix},
+  \end{align*}
+  where
+  \begin{align*}
+    A_{+} &= \set{\frac{1}{5^{k}} \begin{pmatrix}x\\y\\z\end{pmatrix} | k\in \Z, x \equiv 3y\text{ modulo $5$}, z\equiv0\text{ modulo $5$}}\\
+    A_{-} &= \set{\frac{1}{5^{k}} \begin{pmatrix}x\\y\\z\end{pmatrix} | k\in \Z, x \equiv -3y\text{ modulo $5$}, z\equiv 0\text{ modulo $5$}}\\
+    B_{+} &= \set{\frac{1}{5^{k}} \begin{pmatrix}x\\y\\z\end{pmatrix} | k\in \Z, z \equiv 3y\text{ modulo $5$}, x\equiv 0\text{ modulo $5$}}\\
+    B_{-} &= \set{\frac{1}{5^{k}} \begin{pmatrix}x\\y\\z\end{pmatrix} | k\in \Z, z \equiv -3y\text{ modulo $5$}, x\equiv 0\text{ modulo $5$}}.
+  \end{align*}
+  To verify that the conditions of Theorem \ref{thm:ping_pong} hold, we calculate
+  \begin{align*}
+    \begin{pmatrix}3/5 & 4/5 & 0 \\ -4/5 & 3/5 & 0 \\ 0 & 0 & 1\end{pmatrix}\left(\frac{1}{5^k} \begin{pmatrix}x\\y\\z\end{pmatrix}\right) &= \frac{1}{5^{k+1}} \begin{pmatrix}3x + 4y \\ -4x + 3y \\ 5z\end{pmatrix}\tag*{(1)}\\
+    \begin{pmatrix}3/5 & -4/5 & 0 \\ 4/5 & 3/5 & 0 \\ 0 & 0 & 1\end{pmatrix} \left(\frac{1}{5^k} \begin{pmatrix}x\\y\\z\end{pmatrix}\right) &= \frac{1}{5^{k+1}} \begin{pmatrix}3x - 4y \\ 4x + 3y \\ 5z\end{pmatrix}\tag*{(2)}\\
+    \begin{pmatrix}1 & 0 & 0 \\ 0 & 3/5 & -4/5 \\ 0 & 4/5 & 3/5\end{pmatrix}\left(\frac{1}{5^{k}} \begin{pmatrix}x\\y\\z\end{pmatrix}\right) &= \frac{1}{5^{k+1}} \begin{pmatrix}5x \\ 3y- 4z \\ 4y + 3z\end{pmatrix}\tag*{(3)}\\
+    \begin{pmatrix}1 & 0 & 0 \\ 0 & 3/5 & 4/5 \\ 0 & -4/5 & 3/5\end{pmatrix} \left(\frac{1}{5^{k}} \begin{pmatrix}x\\y\\z\end{pmatrix}\right) &= \frac{1}{5^{k+1}} \begin{pmatrix}5x \\ 3y + 4z \\ -4y + 3z\end{pmatrix}.\tag*{(4)}
+  \end{align*}
+  We verify that the conditions for Corollary \ref{corollary:ping_pong_doubles} hold for each of these four conditions.
+  \begin{enumerate}[(1)]
+    \item For any vector
+      \begin{align*}
+        \frac{1}{5^{k}} \begin{pmatrix}x\\y\\z\end{pmatrix} \notin A_{-},
+      \end{align*}
+      we see that $k+1\in \Z$, $x' = 3x + 4y \equiv 3\left(-4x + 3y\right)$  modulo $5$, and that $z' = 5z\equiv 0$ modulo $5$.
+    \item For any vector
+      \begin{align*}
+        \frac{1}{5^{k}} \begin{pmatrix}x\\y\\z\end{pmatrix} \notin A_{+},
+      \end{align*}
+      we see that $k+1\in \Z$, $x' = 3x - 4y\equiv -3\left(4x + 3y\right)$ modulo $5$, and $z' = 5z \equiv 0$ modulo $5$.
+    \item For any vector
+      \begin{align*}
+        \frac{1}{5^{k}} \begin{pmatrix}x\\y\\z\end{pmatrix}\notin B_{-},
+      \end{align*}
+      we see that $k+1\in \Z$, $z' = 4y + 3z \equiv 3\left(3y-4z\right)$ modulo $5$, and $x' = 5x\equiv 0$ modulo $5$.
+    \item For any vector
+      \begin{align*}
+        \frac{1}{5^{k}} \begin{pmatrix}x\\y\\z\end{pmatrix}\notin B_{+},
+      \end{align*}
+      we see that $k+1\in \Z$, $z' = -4y + 3z \equiv -3\left(3y + 4z\right)$ modulo $5$, and $x' = 5x \equiv 0$ modulo $5$.
+  \end{enumerate}
+  Thus, by Theorem \ref{thm:ping_pong} and Corollary \ref{corollary:ping_pong_doubles}, it is the case that $\left\langle a,b \right\rangle\cong F(a,b)$.
+\end{proof}
+\begin{remark}
+  Since $\text{SO}(n)$ contains a subgroup isomorphic to $\text{SO}(3)$ for all $n\geq 3$ (via the block matrices), it is the case that $\text{SO}(n)$ also contains a subgroup isomorphic to $F(a,b)$ for all $n\geq 3$.
+\end{remark}
+Since we have shown that $\text{SO}(3)$ is paradoxical, as it contains a paradoxical subgroup, we can now begin to examine the action of $\text{SO}(3)$ on subsets of $\R^3$.
+\begin{theorem}[Hausdorff Paradox]
+  There is a countable subset $D$ of $S^{2}$ such that $S^{2}\setminus D$ is $\text{SO}(3)$-paradoxical.
+\end{theorem}
+\begin{proof}
+  Let $A$ and $B$ be the rotations in $\text{SO}(3)$ that serve as the generators of the subgroup isomorphic to $F(a,b)$ (as in \ref{thm:free_group_so3}).\newline
+
+  Since $A$ and $B$ are rotations, so too is any element of $\left\langle A,B \right\rangle$. Thus, any such non-empty word contains two fixed points.\newline
+
+  We let
+  \begin{align*}
+    F &= \set{x\in S^{2}\mid x\text{ is a fixed point for some word }w}.
+  \end{align*}
+  Since $\left\langle A,B \right\rangle$ is countably infinite, so too is $F$. Thus, the union of all these fixed points under the action of all such words $w$ is countable.
+  \begin{align*}
+    D &= \bigcup_{w\in \left\langle A,B \right\rangle} w\cdot F.
+  \end{align*}
+  Therefore, $\left\langle A,B \right\rangle$ acts freely on $S^{2}\setminus D$, so $S^{2}\setminus D$ is $\text{SO}(3)$-paradoxical.
+\end{proof}
+
+Unfortunately, the Hausdorff paradox is not enough for us to be able to prove the Banach--Tarski paradox. In order to do this, we need to be able to show that two sets are ``similar'' under the action of a group.
+\begin{definition}[Equidecomposable Sets]
+  Let $G$ act on $X$, and let $A,B\subseteq X$. We say $A$ and $B$ are \textit{$G$-equidecomposable} if there are partitions $\set{A_j}_{j=1}^{n}$ of $A$ and $\set{B_j}_{j=1}^{n}$ of $B$, and elements $g_1,\dots,g_n\in G$, such that for all $j$,
+  \begin{align*}
+    B_j &= g_j\cdot A_j.
+  \end{align*}
+  We write $A\sim_{G}B$ if $A$ and $B$ are $G$-equidecomposable.
+\end{definition}
+\begin{fact}\label{fact:equidecomposability_equivalence_relation}
+  The relation $\sim_{G}$ is an equivalence relation.
+\end{fact}
+\begin{proof}
+  Let $A$, $B$, and $C$ be sets.\newline
+
+  To show reflexivity, we can select $g_1 = g_2 = \cdots = g_n = e_G$. Thus, $A\sim_{G}A$.\newline
+
+  To show symmetry, let $A\sim_{G} B$. Set $\set{A_j}_{j=1}^{n}$ to be the partition of $A$, and set $\set{B_j}_{j=1}^{n}$ to be the partition of $B$, such that there exist $g_1,\dots,g_n\in G$ with $g_j\cdot A_j = B_j$. Then,
+  \begin{align*}
+    g_j^{-1}\cdot \left(g_j\cdot A_j\right) &= g_j^{-1}\cdot B_j\\
+    A_j &= g_j^{-1}\cdot B_j,
+  \end{align*}
+  so $B_j\sim_{G}A_j$.\newline
+
+  To show transitivity, let $A\sim_{G} B$ and $B\sim_{G} C$. Let $\set{A_i}_{i=1}^{n}$ and $\set{B_i}_{i=1}^{n}$ be the partitions of $A$ and $B$ respectively and $g_1,\dots,g_n\in G$ such that $g_i\cdot A_i = B_i$. Let $\set{B_j}_{j=1}^{m}$ and $\set{C_j}_{j=1}^{m}$ be partitions of $B$ and $C$, and $h_1,\dots,h_m\in G$, such that $h_j\cdot B_j = C_j$.\newline
+
+  We refine the partition of $A$ to $A_{ij}$ by taking $A_{ij} = g_i^{-1}\left(B_{i}\cap B_j\right)$, where $i = 1,\dots,n$ and $j = 1,\dots,m$. Then, $\left(h_jg_i\right)\cdot A_{ij}$ maps the refined partition of $A$ to $C$, so $A$ and $C$ are $G$-equidecomposable.
+\end{proof}
+\begin{fact}
+  For $A\sim_{G} B$, there is a bijection $\phi\colon A\rightarrow B$ by taking $C_{i} = C\cap A_i$, and mapping $\phi\left(C_i\right) = g_i\cdot C_i$.\newline
+
+  In particular, this means that for any subset $C\subseteq A$, it is the case that $C\sim \phi(C)$.\label{fact:bijections}
+\end{fact}
+
+We can now use this equidecomposability to glean information about the existence of paradoxical decompositions.
+\begin{proposition}
+  Let $G$ act on $X$, with $E,E'\subseteq X$ such that $E\sim_{G}E'$. Then, if $E$ is $G$-paradoxical, then so too is $E'$.
+\end{proposition}
+
+\begin{proof}
+Let $A_1,\dots,A_n,B_1,\dots,B_m\subset E$ be pairwise disjoint, with $g_1,\dots,g_n,h_1,\dots,h_m\in G$ such that
+\begin{align*}
+  E &= \bigcup_{i=1}^{n}g_i\cdot A_i\\
+    &= \bigcup_{j=1}^{m}h_j\cdot B_j.
+\end{align*}
+We let
+\begin{align*}
+  A &= \bigsqcup_{i=1}^{n}A_i\\
+  B &= \bigsqcup_{j=1}^{m}B_j.
+\end{align*}
+It follows that $A\sim_{G}E$ and $B\sim_{G}E$, since we can take the partition of $A$ to be $A_1,\dots,A_n$, and partition $E$ by taking $g_i\cdot A_i$ for $i=1,\dots,n$, and similarly for $B$.\newline
+
+Since $E\sim_{G}E'$, and $\sim_{G}$ is an equivalence relation, it follows that $A\sim_{G}E'$ and $B\sim_{G}E'$. Thus, there is a paradoxical decomposition of $E'$ in $A_1,\dots,A_n$ and $B_1,\dots,B_m$.
+\end{proof}
+
+We will now show that $S^{2}$ is $\text{SO}(3)$ paradoxical.
+\begin{proposition}
+  Let $D\subseteq S^{2}$ be countable. Then, $S^{2}$ and $S^{2}\setminus D$ are $\text{SO}(3)$-equidecomposable.
+\end{proposition}
+
+\begin{proof}
+  Let $L$ be a line in $\R^3$ such that $L\cap D = \emptyset$. Such an $L$ must exist since $S^{2}$ is uncountable.\newline
+
+  Define $\rho_{\theta}\in \text{SO}(3)$ to be a rotation about $L$ by an angle of $\theta$. For a fixed $n\in \N$ and fixed $\theta\in [0,2\pi)$, define $R_{n,\theta} = \set{x\in D\mid \rho^{n}_{\theta}\cdot x \in D}$. Since $D$ is countable, $R_{n,\theta}$ is necessarily countable.\newline
+
+  We define $W_n = \set{\theta\mid R_{n,\theta}\neq \emptyset}$. Since the map $\theta \mapsto \rho_{\theta}^{n}\cdot x$ into $D$ is injective, it is the case that $W_n$ is countable. Therefore,
+  \begin{align*}
+    W &= \bigcup_{n\in \N}W_n
+  \end{align*}
+  is countable.\newline
+
+  Thus, there must exist $\omega \in [0,2\pi)\setminus W$. We define $\rho_{\omega}$ to be a rotation about $L$ by $\omega$. Then, for every $n,m\in \N$, we have
+  \begin{align*}
+    \rho_{\omega}^n\cdot D \cap \rho_{\omega}^{m}\cdot D &= \emptyset.
+  \end{align*}
+  We define $\widetilde{D} = \bigsqcup_{n=0}^{\infty}\rho^{n}_{\omega}D$. Note that 
+  \begin{align*}
+    \rho_{\omega}\cdot \widetilde{D} &= \rho_{\omega}\cdot\bigsqcup_{n=0}^{\infty}\rho_{\omega}^{n}\cdot D\\
+                                     &= \bigsqcup_{n=1}^{\infty}\rho_{\omega}^{n}\cdot D\\
+                                     &= \widetilde{D} \setminus D,
+  \end{align*}
+  meaning $\widetilde{D}$ and $D$ are $\text{SO}(3)$-equidecomposable.\newline
+
+  Thus, we have
+  \begin{align*}
+    S^{2} &= \widetilde{D}\sqcup \left(S^{2}\setminus \widetilde{D}\right)\\
+          &\sim_{\text{SO}(3)}\left(\rho_{\omega}\cdot \widetilde{D}\right)\sqcup \left(S^{2}\setminus\widetilde{D}\right)\\
+          &= \left(\widetilde{D}\setminus D\right)\sqcup \left(S^{2}\setminus\widetilde{D}\right)\\
+          &= S^{2}\setminus D,
+  \end{align*}
+  establishing $S^{2}$ and $S^{2}\setminus D$ as $\text{SO}(3)$-equidecomposable.\newline
+
+  In particular, this means $S^{2}$ is also $\text{SO}(3)$-paradoxical.
+\end{proof}
+To prove the weak Banach--Tarski paradox, we need a slightly larger group than $\text{SO}(3)$ --- one that includes translations in addition to the traditional rotations.
+\begin{definition}[Euclidean Group]
+  The \textit{Euclidean group}, $\text{E}(n)$, consists of all isometries of a Euclidean space. An isometry of a Euclidean space consists of translations, rotations, and reflections.
+\end{definition}
+\begin{corollary}[Weak Banach--Tarski Paradox]
+  Every closed ball in $\R^3$ is $\text{E}(3)$-paradoxical.
+\end{corollary}
+\begin{proof}
+  We only need to show that $B(0,1)$ is $\text{E}(3)$-paradoxical. To do this, we start by showing that $B(0,1)\setminus \set{0}$ is $\text{SO}(3)$-paradoxical.\newline
+
+  Since $S^{2}$ is $\text{SO}(3)$-paradoxical, there exists pairwise disjoint subsets $A_1,\dots,A_n,B_1,\dots,B_m\subset S^2$ and elements $g_1,\dots,g_n,h_1,\dots,h_m\in \text{SO}(3)$ such that
+  \begin{align*}
+    S^{2} &= \bigcup_{i=1}^{n}g_i\cdot A_i\\
+          &= \bigcup_{j=1}^{m}h_j\cdot B_j.
+  \end{align*}
+  Define
+  \begin{align*}
+    A_i^{\ast} &= \set{tx\mid t\in (0,1], x\in A_i}\\
+    B_j^{\ast} &= \set{ty\mid t\in (0,1], y\in B_j}.
+  \end{align*}
+  Then, $A_1^{\ast},\dots,A_n^{\ast},B_1^{\ast},\dots,B_m^{\ast}\subset B(0,1)\setminus \set{0}$ are pairwise disjoint, and
+  \begin{align*}
+    B(0,1)\setminus \set{0} &= \bigcup_{i=1}^{n}g_i\cdot A_i^{\ast}\\
+                            &= \bigcup_{j=1}^{m}h_j\cdot B_j^{\ast}.
+  \end{align*}
+  Thus, we have established that $B(0,1)\setminus \set{0}$ is $\text{E}(3)$-paradoxical.\newline
+
+  Now, we want to show that $B(0,1)\setminus \set{0}$ and $B(0,1)$ are $\text{E}(3)$-equidecomposable. Let $x\in B(0,1)\setminus \set{0}$, and let $\rho$ be a rotation through $x$ by a line not through the origin such that $\rho^{n}\cdot 0\neq \rho^{m}\cdot 0$ when $n\neq m$.\newline
+
+  Let $D = \set{\rho^{n}\cdot 0\mid n\in \N}$. We can see that $\rho\cdot D = D\setminus \set{0}$, and that $D$ and $\rho\cdot D$ are $\text{E}(3)$-equidecomposable. Thus,
+  \begin{align*}
+    B(0,1) &= D\sqcup \left(B(0,1)\setminus D\right)\\
+           &\sim_{\text{E}(3)}\left(\rho\cdot D\right) \sqcup \left(B(0,1)\setminus D\right)\\
+           &= \left(D\setminus \set{0}\right)\sqcup \left(B\left(0,1\right)\setminus D\right)\\
+           &= B\left(0,1\right)\setminus \set{0}.
+  \end{align*}
+  Therefore, $B(0,1)$ is $\text{E}(3)$-paradoxical.
+\end{proof}
+\subsubsection{The Strong Banach--Tarski Paradox}%
+In order to prove the general case of the Banach--Tarski paradox, we need one more piece of mathematical machinery.\newline
+
+In Fact \ref{fact:equidecomposability_equivalence_relation}, we showed that the relation $A\sim_{G} B$ is an equivalence relation. Using the power of subsets,\footnote{But not the power set (or at least, not directly).} we may extend this to a preorder on any subsets $A$ and $B$ of $X$.
+\begin{definition}
+  Let $G$ act on a set $X$ with $A,B\subseteq X$. We write $A\preceq_{G}B$ if $A$ is equidecomposable with a subset of $B$.
+\end{definition}
+\begin{fact}
+  The relation $\preceq_{G}$ is a reflexive and transitive relation.\label{fact:preorder}
+\end{fact}
+\begin{proof}
+  To see reflexivity, we can see that since $A\sim_{G}A$, and $A\subseteq A$, $A\preceq_{G} A$.\newline
+
+  To see transitivity, let $A\preceq_{G}B$ and $B\preceq_{G}C$. Then, there exist $g_1,\dots,g_n\in G$ such that $g_i\cdot A_i = B_{\alpha,i}$ for each $i$, where $A\sim_{G}B_{\alpha}\subseteq B$. Similarly, there exist $h_1,\dots,h_m\in G$ such that $h_j\cdot B_j= C_{\beta,j}$ for each $j$, where $B\sim_{G}C_{\beta}\subseteq C$.\newline
+
+  We take a refinement of $B$ by taking intersections $B_{\alpha,ij} = B_{\alpha,i}\cap B_j$, with $i=1,\dots,n$ and $j = 1,\dots,m$. We define $C_{\beta,\alpha,ij} = h_j\cdot B_{\alpha,ij}$ for each $j = 1,\dots,m$. Then, $h_jg_i\cdot A_i = C_{\beta,\alpha,ij}$, meaning $A\sim_{G}C_{\beta,\alpha,ij}\subseteq C_{\beta}\subseteq C$, so $A\preceq_{G}C$.
+\end{proof}
+
+We know from Fact \ref{fact:bijections} that $A\preceq_{G}B$ implies the existence of a bijection $\phi\colon A\rightarrow B'\subseteq B$, meaning $\phi\colon A\hookrightarrow B$ is an injection. Similarly, if $B\preceq_{G}A$, then Fact \ref{fact:bijections} implies the existence of an injection $\psi\colon B\hookrightarrow A$.\newline
+
+One may ask if an analogue of the Cantor--Schröder--Bernstein theorem exists in the case of the relation $\preceq_{G}$, implying that the preorder established in Fact \ref{fact:preorder} is indeed a partial order. The following theorem establishes this result.
+\begin{theorem}
+  Let $G$ act on $X$, and let $A,B\subseteq X$. If $A\preceq_{G}B$ and $B\preceq_{G}A$, then $A\sim_{G}B$.\label{thm:csb_for_equidecomposability}
+\end{theorem}
+\begin{proof}
+  Let $B'\subseteq B$ with $A\sim_{G}B'$, and let $A'\subseteq A$ with $B\sim_{G}A'$. Then, we know from Fact \ref{fact:bijections} that there exist bijections $\phi\colon A\rightarrow B'$ and $\psi\colon B\rightarrow A'$.\newline
+
+  Define $C_0 = A\setminus A'$, and $C_{n+1} = \psi\left(\phi\left(C_n\right)\right)$. We set
+  \begin{align*}
+    C &= \bigcup_{n\geq 0}C_{n}.
+  \end{align*}
+  Since $\psi^{-1}\left(\psi\left(\phi\left(C_n\right)\right)\right) = \phi\left(C_n\right)$, we have
+  \begin{align*}
+    \psi^{-1}\left(A\setminus C\right) &= B\setminus \phi(C).
+  \end{align*}
+  Having established in Fact \ref{fact:bijections} that for any subset of $C\subseteq A$, $C\sim_{G} \phi(C)$, we also see that $A\setminus C \sim_{G} B\setminus \phi(C)$.\newline
+
+  Thus, we can see that
+  \begin{align*}
+    A &= \left(A\setminus C\right)\sqcup C\\
+      &\sim_{G}\left(B\setminus \phi(C)\right)\sqcup \phi(C)\\
+      &= B.
+  \end{align*}
+\end{proof}
+
+Finally, we are able to prove Proposition \ref{prop:banachtarski}. We restate the proposition here, followed by its proof.
+\begin{tcolorbox}[blanker,breakable,left=3mm,before skip=10pt, after skip=10pt, borderline west={1pt}{0pt}{blue!50!white},sharp corners,]
+\banachtarski*
+\end{tcolorbox}
+\begin{proof}[Proof of Proposition \ref{prop:banachtarski}:]
+  By symmetry, it is enough to show that $A\preceq_{\text{E}(3)} B$.\newline
+
+  Since $A$ is bounded, there exists $r > 0$ such that $A\subseteq B(0,r)$.\newline
+
+  Let $x_0\in B^{\circ}$. Then, there exists $\ve > 0$ such that $B\left(x_0,\ve\right) \subseteq B$.\newline
+
+  Since $B(0,r)$ is compact (hence totally bounded), there are translations $g_1,\dots,g_n$ such that
+  \begin{align*}
+    B\left(0,r\right) \subseteq g_1\cdot B\left(x_0,\ve\right) \cup \cdots \cup g_n\cdot B\left(x_0,\ve\right).
+  \end{align*}
+  We select translations $h_1,\dots,h_n$ such that $h_j\cdot B\left(x_0,\ve\right) \cap h_k\cdot B\left(x_0,\ve\right) = \emptyset$ for $j\neq k$. We set
+  \begin{align*}
+    S &= \bigcup_{j=1}^{n}h_j\cdot B\left(x_0,\ve\right).
+  \end{align*}
+  Each $h_j\cdot B\left(x_0,\ve\right)\subseteq S$ is $\text{E}(3)$-equidecomposable with any arbitrary closed ball subset of $B\left(x_0,\ve\right)$, it is the case that $S\preceq B\left(x_0,\ve\right)$.\newline
+
+  Thus, we have
+  \begin{align*}
+    A &\subseteq B\left(0,r\right)\\
+      &\subseteq g_1\cdot B\left(x_0,\ve\right)\cup\cdots\cup b_n\cdot B\left(x_0,\ve\right)\\
+      &\preceq S\\
+      &\preceq B\left(x_0,\ve\right)\\
+      &\preceq B.
+  \end{align*}
+\end{proof}
+\subsection{Tarski's Theorem}%
+Ultimately, the reason the Banach--Tarski paradox ``works'' is because the paradoxical group $F(a,b)$, lacks a property known as amenability --- specifically, that a group admitting a paradoxical decomposition is not amenable. Before we go further into the characterizations of amenability, we will show that this statement reverses.\newline
+
+Indeed, every amenable group is \textit{non}-paradoxical.
+\begin{restatable}[Tarski's Theorem]{theorem}{tarski}
+  Let $G$ be a group that acts on a set $X$, and let $E \subseteq X$ be nonempty.\newline
+
+  There is a finitely additive measure $\mu \colon P(X) \to [0, \infty]$ with $\mu(E) \in (0, \infty)$ and $\mu\left( t\cdot E \right) = \mu(E)$ for all $t\in G$ if and only if $E$ is not $G$-paradoxical.
+\label{thm:tarski}
+\end{restatable}
+We can prove one of the directions of Tarski's theorem now.
+\begin{proof}[Proof of the Forward Direction of Theorem \ref{thm:tarski}:]
+  Let $E$ be $G$-paradoxical. Suppose toward contradiction that such a translation-invariant finitely additive $\nu$ existed with $\nu(E) \in (0,\infty)$.\newline
+
+  Let $A_1,\dots,A_n,B_1,\dots,B_m\subseteq E$ be pairwise disjoint, and let $t_1,\dots,t_n,s_1,\dots,f_m\in G$ such that
+  \begin{align*}
+    E &= \bigsqcup_{i=1}^{n}t_i\cdot A_i\\
+      &= \bigsqcup_{j=1}^{m}s_j\cdot B_j.
+  \end{align*}
+  Then, it would be the case that
+  \begin{align*}
+    \nu(E) &= \nu\left(\bigsqcup_{i=1}^{n}t_i\cdot A_i\right)\\
+           &= \sum_{i=1}^{n}\nu\left(t_i\cdot A_i\right)\\
+           &= \sum_{i=1}^{n}\nu\left(A_i\right),
+  \end{align*}
+  and
+  \begin{align*}
+    \nu(E) &= \sum_{j=1}^{m}\nu\left(B_j\right).
+  \end{align*}
+  However, this also yields
+  \begin{align*}
+    \nu\left(E\right) &= \nu\left(\left(\bigsqcup_{i=1}^{n}A_i\right)\sqcup \left(\bigsqcup_{j=1}^{m}B_j\right)\right)\\
+                      &= \sum_{i=1}^{n}\nu\left(A_i\right) + \sum_{j=1}^{m}\nu\left(B_j\right)\\
+                      &= \sum_{i=1}^{n}\nu\left(t_i\cdot A_i\right) + \sum_{j=1}^{m}\nu\left(x_j\cdot B_j\right)\\
+                      &= \nu\left(E\right) + \nu\left(E\right)\\
+                      &= 2\nu\left(E\right).
+  \end{align*}
+  implying that $\nu(E) = 0$ or $\nu(E) = \infty$.
+\end{proof}
+The opposite direction, unfortunately, will be significantly harder to prove. We will need to know some results from graph theory, understand the properties of the type semigroup of an action, and use some results on commutative semigroups to show the existence of a mean.
+\subsubsection{A Little Bit of Graph Theory}%
+To prove the reverse direction of Tarski's theorem, we need to develop some machinery from graph theory that will allow us to prove that a certain semigroup we will construct in the next section satisfies the cancellation identity.\newline
+
+We start by defining graphs and paths, before proving a special case of Hall's theorem, ultimately extending to the infinite case with König's theorem.
+\begin{definition}[Graphs and Paths]
+  A \textit{graph} is a triple $\left(V,E,\phi\right)$, with $V,E$ nonempty sets and $\phi\colon E\rightarrow P_{2}(V)$ a map from $E$ to the set of all unordered subset pairs of $V$.\newline
+
+  For $e\in E$, if $\phi(e) = \set{v,w}$, then we say $v$ and $w$ are the \textit{endpoints} of $e$, and $e$ is \textit{incident} on $v$ and $w$.\newline
+
+  A \textit{path} in $\left(V,E,\phi\right)$ is a finite sequence $\left(e_1,\dots,e_n\right)$ of edges, with a finite sequence of vertices $\left(v_0,\dots,v_n\right)$, such that $\phi\left(e_k\right) = \set{v_{k-1},v_k}$.\newline
+
+  The \textit{degree} of a vertex, $\deg(v)$, is the number of edges incident on $v$.\newline
+
+  We define the \textit{neighbors} of $S\subseteq V$ to be the set of all vertices $v\in V\setminus S$ such that $v$ is an endpoint to an edge incident on $S$. We denote this set $N(S)$.
+\end{definition}
+
+\begin{definition}[Bipartite Graphs and $k$-Regularity]
+  Let $\left(V,E,\phi\right)$ be a graph, with $k\in \N$.
+  \begin{enumerate}[(i)]
+    \item If $\deg(v) = k$ for each $v\in V$, we say $\left(V,E,\phi\right)$ is \textit{$k$-regular}.
+    \item If $V = X\sqcup Y$, with each edge in $E$ having one endpoint in $X$ and one endpoint in $Y$, then we say $V$ is \textit{bipartite}, and write $\left(X,Y,E,\phi\right)$.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[Perfect Matching]
+  Let $\left(X,Y,E,\phi\right)$ be a bipartite graph. Let $A\subseteq X$ and $B\subseteq Y$. A \textit{perfect matching} of $A$ and $B$ is a subset $F\subseteq E$ with
+  \begin{enumerate}[(i)]
+    \item each element of $A\cup B$ is an endpoint of exactly one $f\in F$;
+    \item all endpoints of edges in $F$ are in $A\cup B$.
+  \end{enumerate}
+\end{definition}
+\begin{definition}[Hall Condition]
+  We say a bipartite graph $\left(X,Y,E,\phi\right)$ satisfies the \textit{Hall condition} on $X$ if, for all $S\subseteq X$, $\left\vert N(S) \right\vert \geq \left\vert S \right\vert$.\newline
+
+  Equivalently, we say a (finite) collection of not necessarily distinct finite sets $\mathcal{X} = \set{X_i}_{i=1}^{n}$ satisfies the Hall condition if and only if for all subcollections $\mathcal{Y}_k = \set{X_{i_k}}_{k=1}^{m}$,
+  \begin{align*}
+    \left\vert \mathcal{Y}_k \right\vert \leq \left\vert \bigcup_{k=1}^{m}X_{i_k} \right\vert.
+  \end{align*}
+\end{definition}
+\begin{remark}
+These two formulations of the Hall condition are equivalent regarding an $X$-perfect matching.
+\end{remark}
+\begin{theorem}[Hall's Theorem for Finite $k$-Regular Bipartite Graphs]
+  Let $\left(X,Y,E,\phi\right)$ be a $k$-regular bipartite graph for some $k\in \N$, and let $V = X\sqcup E$ be finite. Then, there is a perfect matching of $X$ and $Y$.\label{thm:hall_finite}
+\end{theorem}
+\begin{proof}
+  Note that since $\left\vert E \right\vert = k\left\vert K \right\vert = k\left\vert Y \right\vert$, it is the case that $\left\vert X \right\vert = \left\vert Y \right\vert$.\newline
+
+  Let $M\subseteq V$ be any subset. We will show that $\left\vert N(M) \right\vert\geq \left\vert M \right\vert$ --- that is, $\left(X,Y,E,\phi\right)$ satisfies the Hall condition.\newline
+
+  Let $M_X = M\cap X$ and $M_Y = M\cap Y$, where $M = M_X\sqcup M_Y$. Let $\left[M_X,N\left(M_X\right)\right]$ be the set of edges with endpoints in $M_X$ and $N\left(M_X\right)$, and $\left[M_Y,N\left(M_Y\right)\right]$ be the set of edges with endpoints in $M_Y$ and $N\left(M_Y\right)$. We also let $\left[X,N\left(M_X\right)\right]$ denote the set of edges with endpoints in $X$ and $N\left(M_X\right)$, and similarly, $\left[Y,N\left(M_Y\right)\right]$ is the set of edges with endpoints in $Y$ and $N\left(M_Y\right)$.\newline
+
+  We can see that $\left[M_X,N\left(M_X\right)\right]\subseteq \left[X,N\left(M_X\right)\right]$, and similarly, $\left[M_Y,N\left(M_Y\right)\right]\subseteq \left[Y,N\left(M_Y\right)\right]$.\newline
+
+  Since $\left\vert \left[M_X,N\left(M_X\right)\right] \right\vert = k\left\vert M_X \right\vert$ and $\left\vert \left[X,N\left(M_X\right)\right] \right\vert = k\left\vert N\left(M_X\right) \right\vert$, we have
+  \begin{align*}
+    \left\vert M_X \right\vert\leq \left\vert N\left(M_X\right) \right\vert,
+  \end{align*}
+  and similarly,
+  \begin{align*}
+    \left\vert M_Y \right\vert\leq \left\vert N\left(M_Y\right) \right\vert.
+  \end{align*}
+  Thus, $\left\vert M \right\vert\leq \left\vert N\left(M\right) \right\vert$.\newline
+
+  We will now show that there is an $X$-perfect matching. Suppose toward contradiction that $F$ is a maximal perfect matching on $A\subseteq X$ and $B\subseteq Y$ with $X\setminus A \neq \emptyset$.\newline
+
+  Then, there is $x\in X\setminus A$. Consider $Z\subseteq V$ consisting of all vertices $z$ such that there exists a $F$-alternating path $\left(e_1,\dots,e_n\right)$ between $z\in Z$ and $x$.\newline
+
+  It cannot be the case that $Z\cap Y$ is empty, since the number of neighbors of $x$ is greater than or equal to $1$ by the Hall condition --- if it were the case that $Z\cap Y$ were empty, we could add an edge to $F$ consisting of $x$ and one element of $N\left(\set{x}\right)$, which would contradict the maximality of $F$.\newline
+
+  Consider a path traversing along $Z$, $\left(e_1,\dots,e_n\right)$. It must be the case that $e_n\in F$, or else we would be able to ``flip'' the matching $F$ by exchanging $e_{i}$ with $e_{i+1}$ for $e_i\in F$, which would contradict the maximality of $F$ yet again. Thus, every element of $Z\cap Y$ is satisfied by $F$, so $Z\cap Y\subseteq B$.\newline
+
+  Since each element in $Z\cap Y$ is paired with exactly one element of $Z\cap X$ (with one left over), it is the case that $\left\vert Z\cap X \right\vert = \left\vert Z\cap Y \right\vert + 1$.\newline
+
+  Suppose toward contradiction that there exists $y\in N\left(Z\cap X\right)$ with $y\notin Z\cap Y$. Then, there exists $v\in Z\cap X$ and $e\in E$ such that $\phi(e) = \set{v,y}$. However, this means $v$ is connected via a path to $x$, meaning $y\in Z$, so $y\in Z\cap Y$. Thus, we must have $N\left(Z\cap X\right) = Z\cap Y$.\newline
+
+  Therefore,
+  \begin{align*}
+    \left\vert Z\cap X \right\vert &= \left\vert Z\cap Y \right\vert + 1\\
+                                   &= \left\vert N\left(Z\cap X\right) \right\vert + 1,
+  \end{align*}
+  which contradicts the fact that $\left(X,Y,E,\phi\right)$ satisfies the Hall condition. Therefore, $A = X$.\newline
+
+  By symmetry, there is a perfect matching of $X$ and $Y$ in $\left(X,Y,E,\phi\right)$.
+\end{proof}
+\begin{remark}
+  An equivalent formulation to Hall's theorem states that there is a system of distinct representatives on the collection $\mathcal{X} = \set{X_k}_{k=1}^{n}$, which is a set $\set{x_{k}}_{k=1}^{n}$ such that $x_{k}\in X_{k}$ and $x_{i}\neq x_j$ for $i\neq j$.\newline
+
+  This implies the existence of an injection $f\colon \mathcal{X}\hookrightarrow \bigcup_{k=1}^{n}X_{k}$, such that $f\left(X_k\right) \in X_k$.
+\end{remark}
+We need some results in topology to prove the infinite case of Hall's theorem.
+\begin{definition}[Choice Function]
+  Let $\mathcal{X} = \set{X_{i}}_{i\in I}$ be a collection of sets. A function $f\colon \mathcal{X}\rightarrow \bigcup_{i\in I}X_i$ is called a choice function if, for each $i\in I$, $f\left(X_{i}\right)\in X{i}$.\newline
+
+  We also say $f\colon \mathcal{X}\rightarrow \bigcup_{i\in I}X_i$ is a choice function if $f\in \prod_{i\in I}X_i$.
+\end{definition}
+
+\begin{theorem}[Tychonoff's Theorem]
+  If $\set{X_{i}}_{i\in I}$ is a family of compact topological spaces
+\end{theorem}
+\begin{theorem}[Infinite Hall's Theorem]
+  Let $\mathcal{G} = \set{X_{i}}_{i\in I}$ be a collection of (not necessarily distinct) finite sets. If, for every finite subcollection $\mathcal{Y} = \set{X_{i_k}}_{k=1}^{n}$,
+  \begin{align*}
+    n\leq \left\vert \bigcup_{k=1}^{n}X_{i_k} \right\vert,
+  \end{align*}
+  then there is a choice function on $G$.
+\end{theorem}
+\begin{proof}
+  We endow each $X_i\in \set{X_{i}}_{i\in I}$ with the discrete topology. Since each $X_i$ is finite, each $X_i$ is compact.\newline
+
+  Thus, by Tychonoff's theorem, it is the case that $\prod_{i\in I}X_{i}$ is compact.\newline
+
+  For every finite subset $Y\subseteq \mathcal{G}$, we define
+  \begin{align*}
+    S_Y &= \set{\left.f\in \prod_{i\in I}X_i\right|f\vert_{Y}\text{ is injective}}.
+  \end{align*}
+  The injectivity of $f\vert_{Y}$ is equivalent to the existence of a system of distinct representatives on $Y$. Since $Y$ satisfies the Hall condition, each $S_{Y}$ is nonempty. Additionally, for any net of functions $f_{\alpha}\in S_{Y}$ with $\lim_{\alpha}f_{\alpha} = f$, it is the case that $f_{\alpha}\vert_{Y}$ is injective, so $f\vert_{Y}$ is injective, meaning $S_{Y}$ is closed.\newline
+
+  We define $F = \set{S_{Y}| Y\subseteq \mathcal{G}\text{ finite}}$. For finite $Y_{1},Y_{2}\subseteq \mathcal{G}$, every system of distinct representatives in $Y_1\cup Y_2$ is necessarily a system of distinct representatives on $Y_1$ and a system of distinct representatives on $Y_{2}$, meaning $S_{Y_1\cup Y_2}\subseteq S_{Y_1}\cap S_{Y_2}$. Thus, $F$ has the finite intersection property.\newline
+
+  Since $\prod_{i\in I}X_i$ is compact, $\bigcap F$ is nonempty, where the intersection is taken over all finite subsets of $\mathcal{G}$. For any $f\in \bigcap F$, $f$ is necessarily a choice function.
+\end{proof}
+\begin{remark}
+  This is equivalent to the existence of an injection $f\colon \mathcal{G}\hookrightarrow \bigcup_{i\in I}X_i$.
+\end{remark}
+We will use this infinite case of Hall's theorem to prove König's theorem. 
+\begin{theorem}[König's Theorem]
+  Let $\left(X,Y,E,\phi\right)$ be a $k$-regular bipartite graph (not necessarily finite). Then, there is a perfect matching of $X$ and $Y$.\label{thm:konig}
+\end{theorem}
+\begin{proof}
+  If $k = 1$, it is clear that there is a perfect matching in $\left(X,Y,E,\phi\right)$ consisting of the edges in $\left(X,Y,E,\phi\right)$.\newline
+
+  Let $k\geq 2$. Since any finite subset of $X$ satisfies the Hall condition, as displayed in the proof of Theorem \ref{thm:hall_finite}, there is some $X$-perfect matching in $\left(X,Y,E,\phi\right)$. We call this $X$-perfect matching $F$. There is an injection $f\colon X\hookrightarrow Y$ following the edges in $F$.\newline
+
+  Similarly, since any finite subset of $Y$ satisfies the Hall condition, there is some $Y$-perfect matching in $\left(X,Y,E,\phi\right)$. We call this $Y$-perfect matching $G$. There is an injection $g\colon Y\hookrightarrow X$ following the edges of $G$.\break
+
+  Consider the subgraph $\left(X,Y,F\cup G,\phi|_{F\cup G}\right)$. The injections $f$ and $g$ still hold in this graph. By the Cantor--Schröder--Bernstein theorem, there is a bijection $h\colon X\rightarrow Y$ in $\left(X,Y,F\cup G,\phi|_{F\cup G}\right)$, which is equivalent to the existence of a perfect matching of $X$ and $Y$.
+\end{proof}
+\subsubsection{Type Semigroups}%
+\begin{definition}\label{def:xstar_gstar}
+  Let $G$ be a group that acts on a set $X$.
+  \begin{enumerate}[(i)]
+    \item We define $X^{\ast} = X\times \N_0$, and
+      \begin{align*}
+        G^{\ast} &= \set{\left(g,\pi\right)| g\in G,\pi\in\sym\left(\N_0\right)}.
+      \end{align*}
+    \item If $A\subseteq X^{\ast}$, the values of $n$ for which there is an element of $A$ whose second coordinate is $n$ are called the \textit{levels} of $A$.
+  \end{enumerate}
+\end{definition}
+\begin{fact}\label{fact:type_semigroup_equidecomposability}
+  If $E_1,E_2\subseteq X$, then $E_{1}\sim_{G}E_2$ if and only if $E_1\times \set{n}\sim_{G^{\ast}}E_{2}\times \set{m}$ for all $m,n\in \N_{0}.$
+\end{fact}
+\begin{proof}
+  Let $E_{1}\sim_{G}E_2$. Then, there exist pairwise disjoint $A_1,\dots,A_n\subset E_1$, pairwise disjoint $B_1,\dots,B_n\subset E_2$, and elements $g_1,\dots,g_n\in G$ such that $g_i\cdot A_i = B_i$. We select the permutation $\pi_{i}\in \sym\left(\N_0\right)$ such that $\pi_{i}(n) = m$ and $\pi_i(m) = n$ for each $i$. Then,
+  \begin{align*}
+    \left(g_i,\pi_i\right)\cdot \left(A_{i}\cdot \set{n}\right) &= B_{i}\cdot \set{m}.
+  \end{align*}
+
+  Similarly, if $E_{1}\times \set{n} \sim_{G^{\ast}}E_2\times \set{m}$, then of the pairwise disjoint subsets
+  \begin{align*}
+    A_1\times \set{n},\dots,A_n\times \set{n}\subset E_1\times \set{n}
+  \end{align*}
+  and
+  \begin{align*}
+    B_1\times\set{m},\dots,B_n\times\set{m}\subset E_2\times \set{m},
+  \end{align*}
+  we set $A_1,\dots,A_n\subset E_1$ and $B_1,\dots,B_n\subset E_2$. Similarly, for
+  \begin{align*}
+    \left(g_1,\pi_1\right),\dots,\left(g_n,\pi_n\right)\in G^{\ast}
+    \intertext{such that}
+    \left(g_i,\pi_i\right)\cdot A_i\times \set{n} = B_i\times\set{m},
+  \end{align*}
+  we select $g_1,\dots,g_n\in G$. Then, by definition,
+  \begin{align*}
+    g_i\cdot A_i = B_i
+  \end{align*}
+  for each $i$. Thus, $E_1\sim_{G}E_2$.
+\end{proof}
+
+\begin{definition}\label{def:type_semigroup}
+  Let $G$ be a group that acts on $X$, and let $G^{\ast}$, $X^{\ast}$ be defined as in \ref{def:xstar_gstar}.
+  \begin{enumerate}[(i)]
+    \item A set $A\subseteq X^{\ast}$ is said to be \textit{bounded} if it has finitely many levels.
+    \item If $A\subseteq X^{\ast}$ is bounded, the equivalence class of $A$ with respect to $G^{\ast}$-equidecomposability is called the \textit{type} of $A$, which is denoted $\left[A\right]$.
+    \item If $E\subseteq X$, we write $\left[E\right] = \left[E\times \set{0}\right]$.
+    \item Let $A,B\subseteq X^{\ast}$ be bounded with $k\in \N_{0}$ such that for
+      \begin{align*}
+        B'= \set{\left(b,n+k\right)| \left(b,n\right)\in B},
+      \end{align*}
+      we have $B'\cap A = \emptyset$. Then, $\left[A\right] + \left[B\right] = \left[A\sqcup B'\right]$. Note that $\left[B'\right] = \left[B\right]$.
+    \item We define
+      \begin{align*}
+        \mathcal{S} &= \set{\left[A\right]| A\subseteq X^{\ast}\text{ bounded}}
+      \end{align*}
+      under the addition defined in (iv) to be the \textit{type semigroup} of the action of $G$ on $X$.
+  \end{enumerate}
+\end{definition}
+
+\begin{fact}
+  Addition is well-defined in $\left(\mathcal{S},+\right)$, and $\left(\mathcal{S},+\right)$ is a well-defined commutative semigroup with identity $\left[\emptyset\right]$.\label{fact:type_semigroup_well_defined}
+\end{fact}
+\begin{proof}
+  To show that addition is well-defined, we let $\left[A_1\right] = \left[A_2\right]$, and $\left[B_1\right] = \left[B_2\right]$. Without loss of generality, $A_1\cap B_1 = \emptyset$ and $A_2\cap B_2 = \emptyset$.\newline
+
+  By the definition of the type, $A_1\sim_{G^{\ast}}A_2$ and $B_1\sim_{G^{\ast}}B_2$, meaning
+  \begin{align*}
+    A_1\sqcup B_1\sim_{G^{\ast}} A_2\sqcup B_2,
+  \end{align*}
+  so
+  \begin{align*}
+    \left[A_1\right] + \left[B_1\right] &= \left[A_1\sqcup B_1\right]\\
+                                        &= \left[A_2\sqcup B_2\right]\\
+                                        &= \left[A_2\right] + \left[A_2\right],
+  \end{align*}
+  meaning addition is well-defined.\newline
+
+  Since addition is well-defined, and $A\sqcup B = B\sqcup A$, we can see that addition is also commutative. We also have
+  \begin{align*}
+    \left[A\right] + \left[\emptyset\right] &= \left[A\sqcup \emptyset\right]\\
+                                            &= \left[A\right],
+  \end{align*}
+  so $\left[\emptyset\right]$ is the identity on $\mathcal{S}$.\newline
+
+  Finally, since for any $\left[A\right],\left[B\right]\in \mathcal{S}$, $A$ and $B$ have finitely many levels, it is the case that $A\cup B$ has finitely many levels for any $A$ and $B$, so $\left[A\right] + \left[B\right] \in \mathcal{S}$. 
+\end{proof}
+
+\begin{definition}
+  For any commutative semigroup $\mathcal{S}$ with $\alpha \in S$ and $n\in \N$, we define
+  \begin{align*}
+    n\alpha = \underbrace{\alpha + \cdots + \alpha}_{\text{$n$ times}}
+  \end{align*}
+\end{definition}
+\begin{definition}
+  For $\alpha,\beta \in \mathcal{S}$, if there exists $\gamma \in \mathcal{S}$ such that $\alpha + \gamma = \beta$, we write $\alpha \leq \beta$.
+\end{definition}
+\begin{fact}\label{fact:type_semigroup_criterion_paradoxicality}
+  If $G$ is a group acting on $X$ with corresponding type semigroup $\mathcal{S}$, then the following are true.
+  \begin{enumerate}[(i)]
+    \item If $\alpha,\beta\in \mathcal{S}$ with $\alpha \leq \beta$ and $\beta \leq \alpha$, then $\alpha = \beta$.
+    \item A set $E\subseteq X$ is $G$-paradoxical if and only if $\left[E\right] = 2\left[E\right]$.
+  \end{enumerate}\label{fact:type_semigroup_paradoxicality}
+\end{fact}
+\begin{proof}
+  Let $G$ act on $X$, and let $\mathcal{S}$ be the corresponding type semigroup.
+  \begin{enumerate}[(i)]
+    \item If $\left[A\right]\leq \left[B\right]$, then there exists $C_1\in \mathcal{S}$ such that $\left[A\right] + \left[C_1\right] = \left[B\right]$. Without loss of generality, $C_1\cap A= \emptyset$, meaning $\left[B\right] = \left[A\sqcup C_1\right]$. Thus, $A\sqcup C_1 \sim_{G^{\ast}} B$, meaning $B\preceq_{G^{\ast}}A$.\newline
+
+      Similarly, if $\left[B\right]\leq \left[A\right]$, then $B\preceq_{G^{\ast}}A$. By Theorem \ref{thm:csb_for_equidecomposability}, it is thus the case that $A\sim_{G^{\ast}}B$.
+    \item Let $E$ be $G$-paradoxical. \newline
+
+      Then, $E\sim_{G}\bigsqcup_{i=1}^{n}A_i$ and $E \sim_{G}\bigsqcup_{j=1}^{m}B_j$ for pairwise disjoint subsets $A_1,\dots,A_n,B_1,\dots,B_m\subset E$. Thus, we have
+      \begin{align*}
+        \left[E\right] &= \left[\left(\bigsqcup_{i=1}^{n}A_i\right)\sqcup \left(\bigsqcup_{j=1}^{m}B_j\right)\right]\\
+                       &= \left[\bigsqcup_{i=1}^{n}A_i\right] + \left[\bigsqcup_{j=1}^{m}B_j\right]\\
+                       &= 2\left[E\right].
+      \end{align*}
+      Similarly, if $\left[E\right] = 2\left[E\right]$, then there exist $A$ and $B$ such that
+      \begin{align*}
+        \left[E\right] &= \left[A\right] + \left[B\right]\\
+                       &= \left[A\sqcup B\right],
+      \end{align*}
+      meaning $A$ and $B$ are each $G$-equidecomposable with $E$, so $E$ is $G$-paradoxical.
+  \end{enumerate}
+\end{proof}
+We can now prove the cancellation identity, which we will be useful as we construct our desired finitely additive measure.
+\begin{theorem}[Cancellation Identity on $\mathcal{S}$]
+  Let $\mathcal{S}$ be the type semigroup for some group action, and let $\alpha,\beta\in \mathcal{S}$, $n\in \N$ such that $n\alpha = n\beta$. Then, $\alpha = \beta$.
+\end{theorem}
+\begin{proof}
+  Let $n\alpha = n\beta$. Then, there are two disjoint bounded subsets $E,E'\subseteq X^{\ast}$ with $E\sim_{G^{\ast}}E'$, and pairwise disjoint subsets $A_1,\dots,A_n\subseteq E$, $B_1,\dots,B_n\subseteq E'$ such that
+  \begin{itemize}
+    \item $E = A_1\cup\cdots\cup A_n$, $E' = B_1\cup\cdots\cup B_n$
+    \item $\left[ A_j \right] = \alpha$ and $\left[B_j\right] = \beta$ for each $j=1,\dots,n$.
+  \end{itemize}
+  Let $\chi\colon E\rightarrow E'$ be a bijection as in Fact \ref{fact:bijections}, with $\phi_j\colon A_1\rightarrow A_j$, $\psi_j\colon B_1\rightarrow B_j$ also being bijections as in Fact \ref{fact:bijections}; here we define $\phi_1$ and $\psi_1$ to be the identity map.\newline
+
+  For each $a\in A_1$ and $b\in B_1$, we define
+  \begin{align*}
+    \overline{a} &= \set{a,\phi_2(a),\dots,\phi_n(a)}\\
+    \overline{b} &= \set{b,\psi_2(b),\dots,\psi_n(b)}.
+  \end{align*}
+  We construct a graph by letting $X = \set{\overline{a}| a\in A_1}$ and $Y = \set{\overline{b}| b\in B_1}$, and, for each $j$, define edges $\set{\overline{a},\overline{b}}$ if $\chi\left(\phi_j(a)\right)\in \overline{b}$.\newline
+
+  Since $\chi$ is a bijection, for each $j=1,\dots,n$, $\chi\left(\phi_j(a)\right)$ must be an element of $B_k$ for some $k$, and since $\set{B_k}_{k=1}^{n}$ are disjoint, $\chi\left(\phi_j(a)\right)$ is an element of exactly one $B_k$. Thus, the graph is $n$-regular.\newline
+
+  By Theorem \ref{thm:konig}, this graph has a perfect matching $F$. As a result, for each $\overline{a}\in X$, there is a unique $\overline{b}\in Y$ and a unique edge $\set{\overline{a},\overline{b}}\in F$ such that $\chi\left(\phi_j(a)\right) = \psi_k(b)$ for some $j,k\in \set{1,\dots,n}$.\newline
+
+  We define
+  \begin{align*}
+    C_{j,k} &= \set{a\in A_1| \set{\overline{a},\overline{b}}\in F,~\chi\left(\phi_j(a)\right) = \psi_k(b)}\\
+    D_{j,k} &= \set{b\in B_1| \set{\overline{a},\overline{b}}\in F,~\chi\left(\phi_j(a)\right) = \psi_k(b)}.
+  \end{align*}
+  Therefore, we must have $\psi_{k}^{-1}\circ \chi\circ \phi_j$ is a bijection from $C_{j,k}$ to $D_{j,k}$, so $C_{j,k}\sim_{G^{\ast}}D_{j,k}$.\newline
+
+  Since $C_{j,k}$ and $D_{j,k}$ are partitions of $A_1$ and $B_1$ respectively, it follows that $A_1\sim_{G^{\ast}}B_1$, so $\alpha = \beta$.
+\end{proof}
+\begin{corollary}\label{cor:non_paradoxicality}
+  Let $\mathcal{S}$ be the type semigroup of some group action, and let $\alpha\in \mathcal{S}$ and $n\in \N$ such that $\left(n+1\right)\alpha \leq n\alpha$. Then, $\alpha = 2\alpha$.\label{corollary:paradoxical_elements}
+\end{corollary}
+\begin{proof}
+  We have
+  \begin{align*}
+    2\alpha + n\alpha &= \left(n+1\right)\alpha + \alpha\\
+                      &\leq n\alpha + \alpha\\
+                      &= \left(n+1\right)\alpha\\
+                      &\leq n\alpha.
+  \end{align*}
+  Inductively repeating this argument, we get $n\alpha \geq 2n\alpha$; since $n\alpha \leq 2n\alpha$ by definition, we must have $n\alpha = 2n\alpha$, so $\alpha = 2\alpha$.
+\end{proof}
+\begin{remark}
+  We will call such an $\alpha$ a paradoxical element.
+\end{remark}
+\subsubsection{Two Results on Commutative Semigroups}%
+Now that we are aware of paradoxical elements and the relationship between $G$-paradoxicality and the properties of the particular elements of the type semigroup (Fact \ref{fact:type_semigroup_paradoxicality}), we will now relate these properties to finitely additive measures of sets by using the following lemma and theorem.
+\begin{lemma}\label{lemma:set_function_existence}
+  Let $\mathcal{S}$ be a commutative semigroup, with $\mathcal{S}_0\subseteq \mathcal{S}$ finite, and $\epsilon\in \mathcal{S}_0$ satisfying the following assumptions:
+  \begin{enumerate}[(a)]
+    \item $\left(n+1\right)\epsilon \nleq n\epsilon$ for all $n\in \N$ (i.e., that $\epsilon$ is non-paradoxical);
+    \item for each $\alpha\in \mathcal{S}$, there is $n\in \N$ such that $\alpha \leq n\epsilon$.
+  \end{enumerate}
+  Then, there is a set function $\nu\colon \mathcal{S}_0\rightarrow [0,\infty]$ that satisfies the following conditions:
+  \begin{enumerate}[(i)]
+    \item $\nu\left(\epsilon\right) = 1$;
+    \item for $\alpha_1,\dots,\alpha_n,\beta_1,\dots,\beta_m\in \mathcal{S}_0$ with $\alpha_1+\cdots+\alpha_n\leq \beta_1+\cdots\beta_m$,
+      \begin{align*}
+        \sum_{j=1}^{n}\nu\left(\alpha_j\right) \leq \sum_{j=1}^{m}\nu\left(\beta_j\right).
+      \end{align*}
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  We will prove this result by inducting on the cardinality of $\mathcal{S}_0$.\newline
+
+  We start with $\left\vert \mathcal{S}_0 \right\vert = 1$. In that case, we define $\nu\left(\epsilon\right) = 1$, satisfying condition (i). To satisfy condition (ii), we see that for $n,m\in \N$ with $n\epsilon \leq m\epsilon$, if $n \geq m+1$, then $\left(m+1\right)\epsilon \leq n\epsilon \leq m\epsilon$, implying that $\epsilon = 2\epsilon$, which contradicts assumption (a).\newline
+
+  Let $\alpha_0\in \mathcal{S}_0\setminus\set{\epsilon}$. The induction hypothesis says there is a set function satisfying conditions (i) and (ii), $\nu\colon \mathcal{S}_0\setminus \set{\alpha_0}\rightarrow [0,\infty]$.\newline
+
+  For $r\in \N$, there are $\gamma_1,\dots,\gamma_p,\delta_1,\dots,\delta_q\in \mathcal{S}\setminus \set{\alpha_0}$ such that
+  \begin{align*}
+    \delta_{1} + \cdots + \delta_q + r\alpha_0 \leq \gamma_1 + \cdots + \gamma_p.\label{set_function_id1}\tag*{(\textdagger)}
+  \end{align*}
+  Consider the set $N$ defined as follows:
+  \begin{align*}
+    N &= \set{\frac{1}{r}\left(\sum_{j=1}^{p}\nu\left(\gamma_j\right) - \sum_{j=1}^{q}\nu\left(\delta_j\right)\right)| \text{$\gamma_j,\delta_j$ satisfy \ref{set_function_id1}}}. \label{set_function_N}\tag*{($\ddag$)}
+  \end{align*}
+  We define the extension of $\nu$ as follows:
+  \begin{align*}
+    \nu\left(\alpha_0\right) &= \inf N.
+  \end{align*}
+  This infimum is well-defined since, by assumption (b), there is some $n\in \N$ such that $\alpha_0 \leq n\epsilon$, and $\nu\left(\epsilon\right)$ is defined.\newline
+
+  Now, we must show that this extension of $\nu$ satisfies condition (ii).\newline
+
+  Let $\alpha_1,\dots,\alpha_n,\beta_1,\dots,\beta_m\in \mathcal{S}_0\setminus \set{\alpha_0}$ and $s,t\in \N_0$ such that
+  \begin{align*}
+    \alpha_1 + \cdots + \alpha_n + s\alpha_0 \leq \beta_1 + \cdots + \beta_m + t\alpha_0.\label{set_function_conditionii}\tag*{(\textasteriskcentered)}
+  \end{align*}
+  We will verify condition (ii) in the three following cases.
+  \begin{description}[font=\normalfont\scshape,leftmargin=0cm]
+    \item[Case 0:] If $s = t = 0$, then the induction hypothesis states that \ref{set_function_conditionii} satisfies condition (ii).
+    \item[Case 1:] Let $s = 0$ and $t > 0$. We want to show that
+      \begin{align*}
+        \sum_{j=1}^{n}\nu\left(\alpha_j\right) \leq t\nu\left(\alpha_0\right) + \sum_{j=1}^{m}\nu\left(\beta_j\right),
+      \end{align*}
+      which implies that
+      \begin{align*}
+        \nu\left(\alpha_0\right) \geq \frac{1}{t}\left(\sum_{j=1}^{n}\nu\left(\alpha_j\right) - \sum_{j=1}^{m}\nu\left(\beta_j\right)\right).
+      \end{align*}
+      By the definition of infimum, it suffices to show that for $r\in \N$ and $\delta_1,\dots,\delta_q,\gamma_1,\dots,\gamma_p\in \mathcal{S}\setminus \set{\alpha_0}$ satisfying \ref{set_function_id1}, it is the case that
+      \begin{align*}
+        \frac{1}{r}\left(\sum_{j=1}^{p}\nu\left(\gamma_j\right)-\sum_{j=1}^{q}\nu\left(\delta_j\right)\right) \geq \frac{1}{t}\left(\sum_{j=1}^{n}\nu\left(\alpha_j\right) - \sum_{j=1}^{m}\nu\left(\beta_j\right)\right).
+      \end{align*}
+      Multiplying \ref{set_function_conditionii} by $r$ on both sides, and adding $t\delta_1 + \cdots + t\delta_q$ to both sides, we have
+      \begin{align*}
+        r\alpha_1 + \cdots + r\alpha_n + t\delta_1 + \cdots + t\delta_q \leq r\beta_1 + \cdots + r\beta_m + t\left(r\alpha_0\right) + t\delta_1 + \cdots + t\delta_q.
+      \end{align*}
+      Substituting \ref{set_function_id1}, we find
+      \begin{align*}
+        r\alpha_1 + \cdots + r\alpha_n + t\delta_1 + \cdots + t\delta_q \leq r\beta_1 + \cdots + r\beta_m + t\gamma_1 + \cdots + t\gamma_p.
+      \end{align*}
+      Applying the induction hypothesis, we have
+      \begin{align*}
+        r\sum_{j=1}^{n}\nu\left(\alpha_j\right) + t\sum_{j=1}^{q}\nu\left(\delta_j\right) \leq r\sum_{j=1}^{m}\nu\left(\beta_j\right) + t\sum_{j=1}^{p}\nu\left(\gamma_j\right),
+      \end{align*}
+      yielding
+      \begin{align*}
+        \frac{1}{r}\left(\sum_{j=1}^{p}\nu\left(\gamma_j\right) - \sum_{j=1}^{q}\nu\left(\delta_j\right)\right) \geq \frac{1}{t}\left(\sum_{j=1}^{n}\nu\left(\alpha_j\right) - \sum_{j=1}^{m}\nu\left(\beta_j\right)\right).
+      \end{align*}
+    \item[Case 2:] Let $s > 0$. For $z_1,\dots,z_t\in N$ \ref{set_function_N}, we need to show that
+      \begin{align*}
+        s\nu\left(\alpha_0\right) + \sum_{j=1}^{n}\nu\left(\alpha_j\right) \leq z_1 + \cdots + z_t + \sum_{j=1}^{n}\nu\left(\beta_j\right).
+      \end{align*}
+      Without loss of generality, we can set $z_1,\dots,z_n = z$, as for each $z\in N$, $z \geq \nu\left(\alpha_0\right)$.\newline
+
+      As in Case 1, we multiply \ref{set_function_conditionii} by $r$, add $t\delta_{1} + \cdots + t\delta_q$ to both sides, and substitute with \ref{set_function_id1}, yielding
+      \begin{align*}
+        r\alpha_1 + \cdots + r\alpha_n + rs\alpha_0 + t\delta_1 + \cdots + t\delta_q &\leq r\beta_1 + \cdots + r\beta_m + t\left(r\alpha_0\right) + t\delta_1 + \cdots + t\delta_q\\
+        r\alpha_1 + \cdots + r\alpha_n + t\delta_1 + \cdots + t\delta_q + rs\alpha_0 &\leq r\beta_1 + \cdots + r\beta_m + t\gamma_1 + \cdots + t\gamma_p.
+      \end{align*}
+      Defining
+      \begin{align*}
+        z &= \frac{1}{r}\left(\sum_{j=1}^{p}\nu\left(\gamma_j\right) - \sum_{j=1}^{q}\nu\left(\delta_j\right)\right),
+      \end{align*}
+      we get
+      \begin{align*}
+        s\nu\left(\alpha_0\right) + \sum_{j=1}^{n}\nu\left(\alpha_j\right) &\leq \sum_{j=1}^{n}\nu\left(\alpha_j\right) + \frac{s}{sr}\left(r\sum_{j=1}^{m}\nu\left(\beta_j\right) - r\sum_{j=1}^{n}\nu\left(\alpha_j\right) + t\sum_{j=1}^{p}\nu\left(\gamma_j\right) - t\sum_{j=1}^{q}\nu\left(\delta_j\right)\right)\\
+                                                                           &= tz + \sum_{j=1}^{m}\nu\left(\beta_j\right).
+      \end{align*}
+  \end{description}
+  Thus, we have shown that $\nu$ extends in a manner that satisfies conditions (i) and (ii).
+\end{proof}
+
+We can ``upgrade'' our finitely additive set function to a semigroup homomorphism as follows.
+\begin{theorem}\label{thm:homomorphism_existence}
+  Let $\left(\mathcal{S},+\right)$ be a commutative semigroup with identity element $0$, and let $\epsilon\in \mathcal{S}$. Then, the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $\left(n+1\right)\epsilon \leq n\epsilon$ for all $n\in \N$;
+    \item there is a semigroup homomorphism $\nu\colon \left(\mathcal{S},+\right)\rightarrow \left([0,\infty],+\right)$ such that $\nu(\epsilon) = 1$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  To show that (ii) implies (i), we let $\nu\colon \left(\mathcal{S},+\right)\rightarrow \left([0,\infty],+\right)$ be a semigroup homomorphism with $\nu\left(\epsilon\right) = 1$. Then,
+  \begin{align*}
+    \nu\left(\left(n+1\right)\epsilon\right) &= \left(n+1\right)\nu\left(\epsilon\right)\\
+                                             &= n+1\\
+                                             &> n\\
+                                             &= n\nu\left(\epsilon\right)\\
+                                             &= \nu\left(n\epsilon\right),
+  \end{align*}
+  meaning that $\left(n+1\right)\epsilon \nleq n\epsilon$.\newline
+
+  To show that (i) implies (ii), we suppose that for each $\alpha \in \mathcal{S}$, there is $n\in \N$ such that $\alpha \leq n\epsilon$ --- for any such $\alpha$ for which this is not the case, we define $\nu\left(\alpha\right) = \infty$.\newline
+
+  For a finite subset $\mathcal{S}_0 \subseteq \mathcal{S}$ with $\epsilon\in \mathcal{S}_0$, we define $M_{\mathcal{S}_0}$ to be the set of all $\kappa\colon \mathcal{S}\rightarrow [0,\infty]$ such that
+  \begin{itemize}
+    \item $\kappa\left(\epsilon\right) = 1$;
+    \item $\kappa\left(\alpha + \beta\right) = \kappa\left(\alpha\right) + \kappa\left(\beta\right)$ for $\alpha,\beta,\alpha + \beta\in \mathcal{S}_0$.
+  \end{itemize}
+  Since we assume condition (i), we know that such a $\kappa$ with $\kappa\left(\epsilon\right) = 1$ exists. Additionally, since
+  \begin{align*}
+    \alpha + \beta \leq \left(\alpha + \beta\right)
+  \end{align*}
+  and
+  \begin{align*}
+    \left(\alpha + \beta\right) \leq \alpha + \beta,
+  \end{align*}
+  it is the case that
+  \begin{align*}
+    \kappa\left(\alpha + \beta\right) \leq \kappa\left(\alpha\right) + \kappa\left(\beta\right) \leq \kappa\left(\alpha + \beta\right),
+  \end{align*}
+  meaning $\kappa\left(\alpha + \beta\right) = \kappa\left(\alpha\right) + \kappa\left(\beta\right)$. Thus, $M_{\mathcal{S}_0}$ is nonempty. It is also the case that $M_{\mathcal{S}_0}$ is closed, since any net of functions $\kappa_{p}\colon \mathcal{S}\rightarrow [0,\infty]$ with $\kappa_{p}\left(\epsilon\right) = 1$ and $\kappa_{p}\left(\alpha + \beta\right) = \kappa_{p}\left(\alpha\right) + \kappa_{p}\left(\beta\right)$ will necessarily satisfy these conditions in the limit.\newline
+
+  We let $\left[0,\infty\right]^{\mathcal{S}} = \set{\kappa| \kappa:\mathcal{S}\rightarrow [0,\infty]}$ be equipped with the product topology. By Tychonoff's theorem, $\left[0,\infty\right]^{\mathcal{S}}$ is compact.\newline
+
+  Since, for any $\mathcal{S}_1,\dots,\mathcal{S}_n$ finite, it is the case that
+  \begin{align*}
+    M_{\mathcal{S}_1\cup\cdots\cup \mathcal{S}_n} \subseteq M_{\mathcal{S}_1} \cap \cdots \cap M_{\mathcal{S}_n},
+  \end{align*}
+  since any such $\kappa\in M_{\mathcal{S}_1\cup\cdots\cup \mathcal{S}_n}$ must necessarily be in every $M_{\mathcal{S}_i}$. Thus, the family
+  \begin{align*}
+    \set{M_{\mathcal{S}_0}| \mathcal{S}_0\subseteq \mathcal{S}\text{ finite}}
+  \end{align*}
+  has the finite intersection property. Thus, by compactness, there is some $\nu$ such that
+  \begin{align*}
+    \nu\in \bigcap\set{M_{\mathcal{S}_0}| \mathcal{S}_0\subseteq \mathcal{S}\text{ finite}},
+  \end{align*}
+  with $\nu\left(\epsilon\right) = 1$ and, for all $\alpha,\beta\in \mathcal{S}$, since $\nu\in M_{\set{\alpha,\beta,\alpha + \beta}}$, $\nu\left(\alpha + \beta\right) = \nu\left(\alpha\right) + \nu\left(\beta\right)$.
+\end{proof}
+\subsubsection{Proof of Tarski's Theorem}%
+Finally, we are able to prove the reverse direction of Tarski's Theorem. We restate the theorem before giving its proof.
+\begin{tcolorbox}[blanker,breakable,left=3mm,before skip=10pt, after skip=10pt, borderline west={1pt}{0pt}{blue!50!white},sharp corners,]
+\tarski*
+\end{tcolorbox}
+\begin{proof}[Proof of the Reverse Direction of Theorem \ref{thm:tarski}:]
+  Let $\mathcal{S}$ be the type semigroup of the action of $G$ on $X$.\newline
+
+  Suppose $E$ is not $G$-paradoxical. Then, $\left[E\right]\neq 2\left[E\right]$ by Fact \ref{fact:type_semigroup_criterion_paradoxicality}, meaning $\left(n+1\right)\left[E\right]\nleq n\left[E\right]$ for all $n\in \N$ by the contrapositive of Corollary \ref{cor:non_paradoxicality}.\newline
+
+  Thus, by Theorem \ref{thm:homomorphism_existence}, there is a map $\nu\colon \mathcal{S}\rightarrow [0,\infty]$ with $\nu\left(\left[E\right]\right) = 1$. The map $\mu\colon P(X)\rightarrow [0,\infty]$ defined by
+  \begin{align*}
+    \mu\left(A\right) &= \nu\left(\left[A\right]\right)
+  \end{align*}
+  is the desired finitely additive measure.
+\end{proof}
 \section{Amenability and Invariant States}\label{sec:invariant_states}%
 \section{Følner's Condition and Amenability}\label{sec:folner_condition}%
 \section{Remarks and Notes}%
+In \cite[48]{brown_and_ozawa}, the authors state that ``amenable groups admit approximately $10^{10^{10}}$ characterizations.'' Unfortunately, despite my best efforts, I was not able to fit all $10^{10^{10}}$ characterizations in this thesis. However, we can provide some details on some of the more advanced characterizations that we did not have space to discuss in this thesis.\newline
+
+Any group $\Gamma$ admits a family of representations $\pi\colon \Gamma\rightarrow \B\left( \mathcal{H} \right)$, where $\mathcal{H}$ is some Hilbert space. The most prominent representation is known as the left-regular representation, $\lambda\colon \Gamma\rightarrow \B\left( \ell_2\left( \Gamma \right) \right)$, given by $s\mapsto \lambda_s$. Here, $\lambda_s\left( \xi \right)\left( t \right) = \xi\left( s^{-1}t \right)$ is a particular group action on the space of square-summable functions, $\ell_2\left( \Gamma \right)$. There are various properties of the left-regular representation, such as Kesten's criterion, weak containment of the trivial representation, and Hulanicki's criterion which enable us to establish amenability without having to deal with the underlying group directly --- these are discussed more in depth in \cite{juschenko_amenability}.
 \section{Apologies and Acknowledgments}%
-This thesis is an abridged version of a longer text that I have been writing. That text would have been my honors thesis, but unfortunately it would have been a bit long. I'm writing it with the aim of creating a thorough overview that properly introduces amenability, starting from discrete groups. That text includes other characterizations of amenability, such as a discussion of the left-regular representation and results that relate properties of the group $C^{\ast}$-algebra and amenability of the underlying group. That text will always be a bit of a work in progress, as the theory of amenability is extremely deep; the case of discrete groups is only one case of the more general theory of amenability in locally compact groups, which dives deeper into functional analysis.\newline
+This thesis is an abridged version of a \href{https://blog.avinashiyer.xyz/Classes_and_Homework/College/Y4/Honors%20Thesis/Amenability%20Text/amenability.pdf}{longer text} that I have been writing. That text would have been my thesis, but unfortunately it's a bit too long. I'm writing it with the aim of creating a thorough overview that properly introduces amenability, starting from discrete groups. That text includes other characterizations of amenability, such as elaboration on the left-regular representation and results that relate properties of the group $C^{\ast}$-algebra and amenability of the underlying group. That text will always be a bit of a work in progress, as the theory of amenability is extremely deep; the case of discrete groups is only one case of the more general theory of amenability in locally compact groups, which dives deeper into functional analysis.\newline
 
 Ultimately, the goal of this whole thesis was to provide a more clear exposition on the topic of amenability, assuming minimal prerequisites. While there are certain leaps of faith that I take for granted (as, otherwise, this thesis would certainly be too long as was my original text), I hope that I did not use any major leaps of argumentation that seemed out of hand.\newline
 
-This entire thesis would not be possible without the assistance and guidance of professor Rainone, who put forth the idea of an independent study on Tarski's theorem, and would not have happened without one of my friends at my REU, Lisa Samoylov, telling me that Dana Williams at Dartmouth was a good graduate student advisor. Unfortunately, he told me that he is probably retiring, but Appendix A in one of his books, \textit{Crossed Product $C^{\ast}$-Algebras}, was ultimately what convinced me to study amenability for my honors thesis. It turned out to be a very good idea.
+This entire thesis would not be possible without the assistance and guidance of professor Rainone, who put forth the idea of an independent study on Tarski's theorem, and would not have happened without one of my friends at my REU, Lisa Samoylov, telling me that Dana Williams at Dartmouth was a good graduate student advisor. Unfortunately, he told me that he is probably retiring, but Appendix A in one of his books, \textit{Crossed Product $C^{\ast}$-Algebras}, was what convinced me that studying amenability would carry over well to future endeavors. It turned out to be a very good idea.
 \nocite{*}
 \printbibliography[title={References}]
 \end{document}
