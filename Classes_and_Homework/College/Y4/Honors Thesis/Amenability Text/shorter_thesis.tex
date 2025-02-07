@@ -11,6 +11,7 @@
 \usepackage[backend=biber,style=alphabetic,sorting=nty]{biblatex}
 \addbibresource{chapters/references.bib}
 
+\usepackage{microtype}
 %\usepackage{homework}
 
 %\pagestyle{fancy} %better headers
@@ -1879,6 +1880,541 @@ Owing to the correspondence between invariant states and means, we are now able 
   Continuing in this fashion, we see that $G$ is amenable.
 \end{proof}
 \section{Følner's Condition and Amenability}\label{sec:folner_condition}%
+Amenability, as stated earlier, is defined by a particular finitely additive, translation-invariant probability measure on the group. Of all the three conditions, the ``finitely additive'' and ``probability measure'' conditions are straightforward --- we may define a measure $\delta_x$ on $P(G)$ by saying that $\delta_x(E) = 1$ if $x\in E$ and $\delta_x(E) = 0$ if $x\notin E$. This is a finitely additive probability measure --- but it is not translation-invariant.\newline
+
+Indeed, the translation-invariance condition is what throws a wrench into our desire to establish means on various types of groups. For instance, we desired a translation-invariant, finitely additive probability measure on $F(a,b)$, but since, for instance $bW\left( b^{-1} \right)$ is effectively equal to $F(a,b)\setminus W(b)$, we see that translating $W\left( b^{-1} \right)$ by $b$ creates a ``bigger'' subset than we desire, closing off our ability to construct a mean.\newline
+
+As the reader may remark by now, this is an extremely nonspecific idea. What does it mean for a set to become ``bigger'' under translation, and how much ``bigger'' does it need to become in order to close off the possibility of establishing a mean on the group?\newline
+
+We can make the idea of ``bigness'' precise by considering the symmetric difference of a translated set and the original set --- if such a symmetric difference is small (or tends to zero as our subsets become sufficiently ``large'' in the group), then we can expect that $m\left( E \right) \approx m\left( tE \right)$. Indeed, this is substance of the Følner condition.
+\subsection{Følner's Condition}%
+\begin{definition}\label{def:folner_condition}
+  A group is said to satisfy the \textit{Følner condition} if, for every $\ve > 0$ and $E\subseteq G$, there is a nonempty finite subset $F\subseteq G$ such that for all $t\in E$,
+  \begin{align*}
+    \frac{\left\vert tF\triangle F \right\vert}{\left\vert F \right\vert}\leq \ve.
+  \end{align*}
+  Equivalently, we can also say that the Følner condition is satisfied if and only if
+  \begin{align*}
+    \frac{\left\vert tF\cap F \right\vert}{\left\vert F \right\vert} \geq 1 - \ve
+  \end{align*}
+  for every $\ve > 0$.
+\end{definition}
+\begin{lemma}\label{lemma:folner_sequences}
+  A countable group $G$ satisfies the Følner condition if and only if $G$ admits a sequence $\left(F_n\right)_n$ with $F_n\subseteq G$ finite such that
+  \begin{align*}
+    \left(\frac{\left\vert tF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert}\right)_n \xrightarrow{n\rightarrow \infty}0
+  \end{align*}
+  for all $t\in G$. Such a sequence is known as a \textit{Følner sequence}.
+\end{lemma}
+\begin{proof}
+  Let $G$ admit a Følner sequence, $\left(F_n\right)_n$. Given $\ve > 0$ and $E\subseteq G$ finite, find $N$ such that for all $s\in E$ and $n\geq N$,
+  \begin{align*}
+    \frac{\left\vert sF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert} &\leq \ve.
+  \end{align*}
+  We take $F = F_N$ in the definition of the Følner condition.\newline
+
+  Let $G$ satisfy the Følner condition. We write $G = \bigcup_{n\geq 1}E_n$, with $E_1\subseteq E_2\subseteq \cdots$, and define $F_n$ such that for all $t\in E_n$,
+  \begin{align*}
+    \frac{\left\vert tF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert} &\leq \frac{1}{n}.
+  \end{align*}
+  Given $t\in G$, then $t\in E_N$ for some $N$, so $t\in E_n$ For all $n\geq N$, so
+  \begin{align*}
+    \frac{\left\vert tF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert} &\leq \frac{1}{n}
+  \end{align*}
+  for all $n\geq N$. Thus,
+  \begin{align*}
+    \left(\frac{\left\vert tF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert}\right)\xrightarrow{n\rightarrow\infty}0.
+  \end{align*}
+\end{proof}
+What makes Følner sequences so powerful is that we only need to determine if they exist on a generating set for our group, assuming our group is finitely generated (and countable).
+\begin{lemma}\label{lemma:folner_condition_generating_set}
+  Let $G$ be a finitely generated group with generating set $S$ (see Definition \ref{def:generating_sets}). If $\left(F_n\right)_n$ is a sequence of finite subsets such that, for all $s\in S$,
+  \begin{align*}
+    \left(\frac{\left\vert sF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert}\right)_n\rightarrow 0,
+  \end{align*}
+  then $\left(F_n\right)_n$ is a Følner sequence for $G$.
+\end{lemma}
+\begin{proof}
+  Note that
+  \begin{itemize}
+    \item $s\left(A\triangle B\right) = sA\triangle sB$;
+    \item $A\triangle C \subseteq \left(A\triangle B\right) \cup \left(B\triangle C\right)$.
+  \end{itemize}
+  We see that for any $s\in S$,
+  \begin{align*}
+    \frac{\left\vert s^{-1}F_n\triangle F_n \right\vert}{\left\vert F_n \right\vert} &= \frac{\left\vert s^{-1}\left(F_n\triangle sF_n\right) \right\vert}{\left\vert F_n \right\vert}\\
+                                                                                     &= \frac{\left\vert F_n\triangle sF_n \right\vert}{\left\vert F_n \right\vert}\\
+                                                                                     &\rightarrow 0.
+  \end{align*}
+  Thus, we may assume that $S$ is symmetric --- i.e., that $\set{s^{-1}| s\in S} = \set{s | s\in S}$.\newline
+
+  For any $s,t\in S$, we have
+  \begin{align*}
+    \frac{\left\vert stF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert} &\leq \frac{\left\vert stF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert} + \frac{\left\vert sF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert}\\
+                                                                                 &= \frac{\left\vert s\left(tF_n\triangle F_n\right) \right\vert}{\left\vert F_n \right\vert} + \frac{\left\vert sF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert}\\
+                                                                                 &= \frac{\left\vert tF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert} + \frac{\left\vert sF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert}\\
+                                                                                 &\rightarrow 0.
+  \end{align*}
+  We use induction to find the general case.
+\end{proof}
+\begin{example}
+  Consider the group $\Z$. Since $\Z$ is generated by the element $\set{1}$, we see that for the sets $F_n = \set{-n,-n+1,\dots,n-1,n}$, that
+  \begin{align*}
+    \frac{\left\vert \left(F_n + 1\right)\triangle F_n \right\vert}{\left\vert F_n \right\vert} &= \frac{2}{2n+1}\\
+                                                                                                &\rightarrow 0,
+  \end{align*}
+  meaning that $\Z$ satisfies the Følner condition.
+\end{example}
+\subsection{Establishing Amenability through Følner Sequences}%
+Now that we have a better understanding of Følner sequences, we will now see how to establish that the existence of a Følner sequences is equivalent to the group being amenable. By the end of this subsection, we will have established the following theorem, incorporating results from the previous sections.
+\begin{theorem}\label{thm:five_amenability_conditions}
+  Let $G$ be a group. The following are equivalent:
+  \begin{itemize}
+    \item $G$ is non-paradoxical;
+    \item $G$ admits a mean;
+    \item $\ell_{\infty}(G)$ admits an invariant state;
+    \item $G$ admits a Følner sequence;
+    \item $G$ satisfies the Følner condition;
+    \item $G$ admits an \textit{approximate mean}.
+  \end{itemize}
+\end{theorem}
+\begin{definition}\label{def:state_on_prob_g}
+  For a group $G$, we define
+  \begin{align*}
+    \operatorname{Prob}\left(G\right) = \set{f\colon G\rightarrow [0,\infty) | \Card\left(\supp(f)\right)  < \infty,~\sum_{t\in G}f(t) = 1}.
+  \end{align*}
+  Note that $\operatorname{Prob}(G) \subseteq B_{\ell_1\left(G\right)}$. For $f\in \operatorname{prob}(G)$, we set $\varphi_f\colon \ell_{\infty}(G)\rightarrow \C$ defined by
+  \begin{align*}
+    \varphi_f\left(g\right) &= \sum_{t\in G}g(t)f(t).
+  \end{align*}
+\end{definition}
+\begin{fact}\label{fact:prob_g_state}
+  For $f\in \operatorname{prob}(G)$, $\varphi_f$ is a state on $\ell_{\infty}\left(G\right)$.
+\end{fact}
+\begin{proof}
+We can see that, by definition, $\varphi_f$ is positive, linear, and has $\varphi_f\left(\1_{G}\right) = 1$.\newline
+
+We only need to show that $\norm{\varphi_f}_{\op} = 1$. We see that
+\begin{align*}
+  \left\vert \varphi_f\left(g\right) \right\vert &= \left\vert \sum_{t\in G}g(t)f(t) \right\vert\\
+                                                 &\leq \sum_{t\in G}\left\vert g(t) \right\vert\left\vert f(t) \right\vert\\
+                                                 &\leq \norm{g}_{\ell_\infty}\sum_{t\in G}\left\vert f(t) \right\vert\\
+                                                 &= \norm{g}_{\ell_\infty},
+\end{align*}
+so $\norm{\varphi_f}_{\op} \leq 1$. Since $\varphi_f\left(\1_G\right) = 1$, we must have $\norm{\varphi_f}_{\op} = 1$.
+\end{proof}
+\begin{proposition}
+  There is an action $\lambda\colon G\rightarrow \Isom\left(\ell_{1}\left(G\right)\right)$ such that $\operatorname{prob}(G)$ is invariant.
+\end{proposition}
+\begin{proof}
+  Let $\lambda_s\left(f\right)\left(t\right) = f\left(s^{-1}t\right)$. Then,
+  \begin{align*}
+    \norm{\lambda_s\left(f\right)}_{\ell_1} &= \sum_{t\in G}\left\vert \lambda_s\left(f\right)\left(t\right) \right\vert\\
+                                     &= \sum_{t\in G}\left\vert f\left(s^{-1}t\right) \right\vert\\
+                                     &= \sum_{r\in G}\left\vert f(r) \right\vert\\
+                                     &= \norm{f}_{\ell_1}.
+  \end{align*}
+  Just as in Proposition \ref{prop:translation_action}, it is the case that $\lambda_s$ is linear. Additionally,
+  \begin{align*}
+    \lambda_r\circ \lambda_s\left(f\right)\left(t\right) &= \lambda_s\left(f\right)\left(r^{-1}t\right)\\
+                                                         &= f\left(s^{-1}r^{-1}\left(t\right)\right)\\
+                                                         &= f\left(\left(rs\right)^{-1}t\right)\\
+                                                         &= \lambda_{rs}\left(f\right)\left(t\right).
+  \end{align*}
+  We see that if $f\in \operatorname{prob}(G)$, then for $f\geq 0$, we have $\lambda_s\left(f\right) \geq 0$, and
+  \begin{align*}
+    \sum_{t\in G}\lambda_s\left(f\right)\left(t\right) &= \sum_{t\in G}f\left(s^{-1}t\right)\\
+                                                       &= \sum_{r\in G}f\left(r\right)\\
+                                                       &= 1
+  \end{align*}
+  for any $f\in \operatorname{prob}(G)$.
+\end{proof}
+\begin{definition}\label{def:approximate_mean}
+  For a countable group $G$, a sequence $\left(f_k\right)_k$ is called an approximate mean if, for all $s\in G$,
+  \begin{align*}
+    \norm{f_k - \lambda_s\left(f_k\right)}_{\ell_1} &\xrightarrow{k\rightarrow \infty}0.
+  \end{align*}
+\end{definition}
+To begin the forward direction regarding the equivalence between the Følner condition, approximate means, and means, we begin by showing that the existence of a Følner sequence implies the existence of an approximate mean. Then, we will show that the existence of an approximate mean implies the existence of an invariant state (hence mean).
+\begin{proposition}\label{prop:folner_implies_approx_mean}
+  If $G$ admits a Følner sequence $\left(F_k\right)_k$, then $G$ admits an approximate mean.
+\end{proposition}
+\begin{proof}
+  Set $f_k = \frac{1}{\left\vert F_k \right\vert}\1_{F_k}\in \operatorname{prob}(G)$. Then,
+  \begin{align*}
+    \norm{f_k - \lambda_s\left(f_k\right)}_{\ell_1} &= \frac{1}{\left\vert F_k \right\vert} \norm{\1_{F_k} - \lambda_s\left(\1_{F_k}\right)}_{\ell_1}\\
+                                                    &= \frac{1}{F_k}\norm{\1_{F_k} - \1_{sF_k}}_{\ell_1}\\
+                                               &= \frac{\left\vert F_k\triangle sF_k \right\vert}{\left\vert F_k \right\vert}\\
+                                               &\rightarrow 0.
+  \end{align*}
+\end{proof}
+\begin{proposition}\label{prop:approx_mean_implies_amenable}
+  If $G$ admits an approximate mean, then $G$ is amenable.
+\end{proposition}
+\begin{proof}
+  Let $\left(f_k\right)_k$ be an approximate mean. We define $\varphi_k = \left(\varphi_{f_k}\right)_k$ (as in Definition \ref{def:state_on_prob_g}) to be a sequence of states on $\ell_{\infty}\left(G\right)$.\newline
+
+  Since the state space on $\ell_{\infty}\left(G\right)$ is $w^{\ast}$-compact, there is a state $\mu$ and a subnet $\left(\varphi_{k_j}\right)_j \xrightarrow{w^{\ast}}\mu$. \newline
+
+  We only need to show that $\mu$ is invariant. Note that
+  \begin{align*}
+    \left\vert \mu\left(g\right) - \mu\left(\lambda_s\left(g\right)\right) \right\vert &\leq \left\vert \mu\left(g\right) - \varphi_{k_j}\left(g\right) \right\vert + \left\vert \varphi_{k_j}\left(g\right) - \varphi_{k_j}\left(\lambda_s\left(g\right)\right) \right\vert + \left\vert \varphi_{k_j}\left(\lambda_s\left(g\right)\right) - \mu\left(\lambda_s\left(g\right)\right) \right\vert
+  \end{align*}
+  for all $g\in \ell_{\infty}\left(G\right)$, $s\in G$, and all $j$.\newline
+
+  Given $\ve > 0$, we find $J$ such that for $j\geq J$,
+  \begin{align*}
+    \left\vert \mu\left(g\right) - \varphi_{k_j}\left(g\right) \right\vert &< \ve/3\\
+    \left\vert \mu\left(\lambda_s\left(g\right)\right) - \varphi_{k_j}\left(\lambda_s\left(g\right)\right)\right\vert &< \ve/3.
+  \end{align*}
+  We also see that
+  \begin{align*}
+    \left\vert \varphi_{k_j}\left(g\right) - \varphi_{k_j}\left(\lambda_s\left(g\right)\right) \right\vert &= \left\vert \sum_{t\in G}g(t)f_{k_j}\left(t\right) - \sum_{t\in G}g\left(s^{-1}t\right)f_{k_j}\left(t\right) \right\vert\\
+                                                                                                           &= \left\vert \sum_{t\in G}g(t)f_{k_j}\left(t\right) - \sum_{r\in G}g(r)f_{k_j}\left(sr\right) \right\vert \tag*{$r = s^{-1}t$}\\
+                                                                                                           &= \left\vert \sum_{t\in G}g(t)\left(f_{k_j}\left(t\right)-\lambda_{s^{-1}}\left(f_{k_j}\right)\left(t\right)\right) \right\vert\\
+                                                                                                           &\leq \norm{g}_{\ell_\infty}\sum_{t\in G}\left\vert f_{k_j}\left(t\right) - \lambda_{s^{-1}}\left(f_{k_j}\right)\left(t\right) \right\vert\\
+                                                                                                           &= \norm{g}_{\ell_\infty}\norm{f_{k_j} - \lambda_{s^{-1}}\left(f_{k_j}\right)}_{\ell_1}\\
+                                                                                                           &< \ve/3
+  \end{align*}
+  for large $j$. Thus, we have
+  \begin{align*}
+    \left\vert \mu\left(g\right) - \mu\left(\lambda_{s}\left(g\right)\right) \right\vert &< \ve,
+  \end{align*}
+  for all $\ve > 0$, so $\mu\left(g\right) = \mu\left(\lambda_{s}\left(g\right)\right)$.
+\end{proof}
+We will now show that amenability implies the existence of an approximate mean, after which we will show that the existence of an approximate mean implies Følner's condition.
+\begin{proposition}\label{prop:amenable_implies_approx_mean}
+  If $G$ is amenable, then $G$ admits an approximate mean.
+\end{proposition}
+\begin{proof}
+  Suppose $G$ does not admit an approximate mean. Then, there exists a finite subset $E_0\subseteq G$ and $\ve_0 > 0$ such that for all $s\in E_0$ and all $f\in \operatorname{Prob}(G)$, we have $\norm{f - \lambda_s\left(f\right)} \geq \ve_0$.\newline
+
+  Consider the set
+  \begin{align*}
+    X &= \bigoplus_{\left\vert E_0 \right\vert} \ell_1\left(G\right),
+  \end{align*}
+  endowed with the norm
+  \begin{align*}
+    \norm{\left(f_s\right)_{s\in E_0}}_{\ell_1} &= \sum_{s\in E_0}\sum_{t\in G}\left\vert f_s(t) \right\vert\\
+                                       &= \sum_{s\in E_0}\norm{f_s}_{\ell_1},
+  \end{align*}
+  and let
+  \begin{align*}
+    C &= \set{\left(f - \lambda_s\left(f\right)\right)_{s\in E_0} | f\in \operatorname{Prob}(G)}.
+  \end{align*}
+  Since $\operatorname{Prob}(G)$ is convex, it is the case that $C$ is convex, and since $\left\vert E_0 \right\vert$ is finite, $C$ is necessarily bounded. Note that $0\notin \overline{C}$.\newline
+
+  By the Hahn--Banach separation for convex sets (Theorem \ref{thm:hb_separation_lctvs}), there is a real-valued $\varphi\in X^{\ast}$ such that $\varphi\left(C\right)\geq 1$. Here,
+  \begin{align*}
+    X^{\ast} &\cong \bigoplus_{\left\vert E_0 \right\vert}\ell_1\left(G\right)^{\ast}\\
+             &\cong \sum_{\left\vert E_0 \right\vert}\ell_{\infty}\left(G\right),
+  \end{align*}
+  endowed with the norm
+  \begin{align*}
+    \norm{\left(g_s\right)_{s\in E_0}}_{\ell_{\infty}} &= \max_{s\in E_0}\left(\sup_{t\in G}\left\vert g_s(t) \right\vert\right)\\
+                                                       &= \max_{s\in E_0}\norm{g_s}_{\ell_{\infty}}.
+  \end{align*}
+  We let $\varphi = \left(\varphi_{g_s}\right)_{s\in E_0}$, where $g_s\in \ell_{\infty}\left(G\right)$ is defined by the duality
+  \begin{align*}
+    \varphi_{g_s}\left(f\right) &= \sum_{t\in G}f(t)g_s(t).
+  \end{align*}
+  Thus, for all $f\in \operatorname{Prob}(G)$, we have
+  \begin{align*}
+    1 &\leq \varphi\left(\left(f - \lambda_s\left(f\right)\right)_{s\in E_0}\right)\\
+      &= \sum_{s\in E_0}\varphi_{g_s}\left(f - \lambda-s\left(f\right)\right)\\
+      &= \sum_{s\in E_0}\sum_{t\in G}\left(f - \lambda_s\left(f\right)\right)(t)g_s(t)\\
+      &= \sum_{s\in E_0}\left(\sum_{t\in G}f(t)g_s(t) - \sum_{t\in G}f\left(s^{-1}t\right)g_s(t)\right)\\
+      &= \sum_{s\in E_0}\left(\sum_{t\in G}f(t)g_s(t) - \sum_{r\in G}f\left(r\right)g_s\left(sr\right)\right)\\
+      &= \sum_{s\in E_0}\left(\sum_{r\in G}f(r)g_s(r) - \sum_{r\in G}f(r)\lambda_{s^{-1}}\left(g\right)(r)\right)\\
+      &= \sum_{s\in E_0}\sum_{r\in G}f(r)\left(g_s - \lambda_{s^{-1}}\left(g_s\right)\right)(r).
+      \intertext{Note that this holds for any $f\in \operatorname{Prob}(G)$, including the case of $f = \delta_t$ for a given $t\in G$. We must have}
+      &= \sum_{s\in E_0}\sum_{r\in G}\delta_{t}\left(r\right)\left(g_s\left(r\right) - \lambda_{s^{-1}}\left(g_s\right)\right)\left(r\right)\\
+      &= \sum_{s\in E_0}\left(g_s - \lambda_{s^{-1}}\left(g_s\right)\right)\left(t\right).
+  \end{align*}
+  This gives
+  \begin{align*}
+    \1_{G} &\leq \sum_{s\in E_0}\left( g_s - \lambda_{s^{-1}}\left(g_s\right) \right)(t).
+  \end{align*}
+  Since $G$ is amenable, there is a mean $\mu\colon \ell_{\infty}\left(G\right)\rightarrow \C$ with $\mu\left(g_s\right) = \mu\left(\lambda_{s^{-1}}\left(g_s\right)\right)$, meaning
+  \begin{align*}
+    0 &= \mu\left(\sum_{s\in E_0}\left(g_s - \lambda_{s^{-1}}\left(g_s\right)\right)\left(t\right)\right)\\
+      &\geq \mu\left(\1_{G}\right)\\
+      &= 1,
+  \end{align*}
+  which is a contradiction.
+\end{proof}
+To show that the existence of an approximate mean implies the Følner condition, we require the following lemma.
+\begin{lemma}\label{lemma:layer_cake_representation}
+  Let $f\colon S\rightarrow \R$ be finitely supported with $\sum_{s\in S}f(s) = 1$. Then, there exist subsets $\set{F_i}_{i=1}^{n}$, where $F_1\supseteq F_2\supseteq \cdots \supseteq F_n$, and constants $\set{c_i}_{i=1}^{n}$, such that
+  \begin{align*}
+    f &= \sum_{i=1}^{n}c_i\1_{F_i},
+  \end{align*}
+  where
+  \begin{align*}
+    \sum_{i=1}^{n}c_i\left\vert F_i \right\vert &= 1.
+  \end{align*}
+  This is known as the layer cake representation for $f$.
+\end{lemma}
+\begin{proof}
+  We define $F_1 = \supp\left(f\right)$, and take $c_1 = \min\left(\Ran\left(f\right)\right)$. Taking $E_1 = f^{-1}\left(c_1\right)$ (as a set-theoretic inverse), we define $F_2 = F_1\setminus E_1$.\newline
+
+  Take $d_1 = \min\left(f\left(F_2\right)\right)$, and define $c_2 = d_1 - c_1$. Then, defining $E_2 = f^{-1}\left(d_1\right)$, $F_3 = F_2 \setminus E_2$, and $d_2 = \min\left(f\left(F_3\right)\right)$, we define $c_3 = d_2 - c_2 - c_1$.\newline
+
+  Continuing in this pattern, we find $d_{i-1} = \min\left(f\left(F_i\right)\right)$, $E_i = f^{-1}\left(d_{i-1}\right)$, and $c_i = d_{i-1} - \sum_{j=1}^{i-1}c_i$.\newline
+
+  This yields a decomposition $F_1\supseteq F_2\supseteq \cdots \supseteq F_n$, where $\sum_{i=1}^{n}c_i\1_{F_i} = f$ by construction.\newline
+
+  We now verify that $\sum_{i=1}^n c_i\left\vert F_i \right\vert = 1$.
+  \begin{align*}
+    1 &= \sum_{s\in S}f(s)\\
+      &= \sum_{s\in S}\sum_{i=1}^{n}c_i\1_{F_i}\left(s\right).
+      \intertext{By definition, if $s\in F_j$ for some $j$, we see that $c_j$ is summed for $\left\vert F_j \right\vert$ many times. Thus, we obtain}
+      &= \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
+  \end{align*}
+\end{proof}
+\begin{remark}
+  Instead of using this construction where we take set-theoretic inverses and remove ``residual'' sets, there is an alternative method of construction that involves ordering the range as $r_1 < r_2< \cdots < r_n$, and constructing the set $F_k = \set{s | f(s) \geq r_k}$.
+\end{remark}
+
+
+We will use the layer cake decomposition to prove that if $G$ admits an approximate mean, then $G$ satisfies the Følner condition.
+\begin{proposition}\label{prop:approx_mean_implies_folner}
+  Let $G$ admit an approximate mean. Then, $G$ satisfies the Følner condition.
+\end{proposition}
+\begin{proof}
+  Let $\left(f_k\right)_k$ be an approximate mean, as in Definition \ref{def:approximate_mean}. Fix a finite nonempty set $S \subseteq G$. Then, by the definition of an approximate mean, there must exist some $N\in\N$ such that for all $k\geq N$ and all $s\in G$,
+  \begin{align*}
+    \norm{f_k - \lambda_s\left(f_k\right)}_{\ell_1} &\leq \frac{\ve}{|S|}.
+  \end{align*}
+  In particular, this holds for $f_N$ and for all $s\in S$.\newline
+
+  Since $f_N\in \operatorname{Prob}(G)$ is finitely supported and $\sum_{s\in G}f_N(s) = 1$, we may use Lemma \ref{lemma:layer_cake_representation} to rewrite $f_N$ as
+  \begin{align*}
+    f_N &= \sum_{i=1}^{n}c_i\1_{F_i},
+  \end{align*}
+  where $F_1 \supseteq F_2\supseteq \cdots \supseteq F_n$, and $\sum_{i=1}^{n}c_i\left\vert F_i \right\vert = 1$.\newline
+
+  For a given $1 \leq i \leq n$, for each $s\in S$ and $t\in sF_i\triangle F_i$, we have
+  \begin{align*}
+    f_N\left(t\right) - f_N\left(s^{-1}t\right) &= \begin{cases}
+      c_i & t\in F_i\setminus sF_i\\
+      -c_i & t\in sF_i \setminus F_i
+    \end{cases}.
+  \end{align*}
+  Thus, we see that $\left\vert f_N\left(t\right)-\lambda_s\left(f_N\right)\left(t\right) \right\vert\geq c_i$ on $sF_i\triangle F_i$. Thus, for each $s\in S$,
+  \begin{align*}
+    \sum_{i=1}^{n}c_i\left\vert sF_i \triangle F_i \right\vert &\leq \sum_{t\in S}\left\vert f_N\left(t\right) -  \lambda_s\left(f\right)\left(t\right)\right\vert\\
+                                                               &< \frac{\ve}{\left\vert S \right\vert}\\
+                                                               &= \frac{\ve}{\left\vert S \right\vert} \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    \sum_{s\in S}\sum_{i=1}^{n}c_i\left\vert sF_i\triangle F_i \right\vert &< \frac{\ve}{\left\vert S \right\vert}\sum_{s\in S}\sum_{i=1}^{n}c_i\left\vert F_i \right\vert\\
+                                                                           &= \ve \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
+  \end{align*}
+  Thus, by the pigeonhole principle, there must exist some $1\leq i \leq n$ for which
+  \begin{align*}
+    \sum_{s\in S}c_i\left\vert sF_i\triangle F_i \right\vert < \ve c_i\left\vert F_i \right\vert.
+  \end{align*}
+  Setting $F = F_i$, we find that, for all $s\in S$,
+  \begin{align*}
+    \frac{\left\vert sF\triangle F \right\vert}{\left\vert F \right\vert} &\leq \sum_{s\in S}\frac{\left\vert sF\triangle F \right\vert}{\left\vert F \right\vert}\\
+                                                                          &< \ve.
+  \end{align*}
+\end{proof}
+\subsection{An Application of Følner's Condition: Groups of Subexponential Growth}%
+Just as at the end of Section \ref{sec:invariant_states}, we established the amenability of all the abelian and solvable groups, so too will we be able to use the Følner condition to establish the amenability of a wide class of groups. Specifically, we will establish that a certain class of groups commonly seen in the field of geometric group theory, the groups of subexponential growth, are amenable.\newline
+
+First, we construct a little bit of machinery to understand the growth rate of a group, then we prove that Følner's condition holds for these special classes of groups.
+\begin{definition}\label{def:word_metric}
+  Let $G$ be a group with finite symmetric generating set $S$ (see Definition \ref{def:generating_sets}). Then, we define the word length of $g\in G$ with respect to $S$ to be
+  \begin{align*}
+    \ell_{G,S}\left(g\right) &= \min\set{n | g = s_1\dots s_n,~s_i\in S},
+  \end{align*}
+  taking $\ell_{G,S}\left(e_G\right) = 0$. We define the word metric on $G$ with respect to $S$ by taking
+  \begin{align*}
+    d_{S}\left(g,h\right) &= \ell_{G,S}\left(g^{-1}h\right).
+  \end{align*}
+\end{definition}
+\begin{fact}\label{fact:word_metric_equivalent_metrics}
+  If $S$ and $T$ are finite symmetric generating sets for $G$, then the respective word metrics $d_{S}$ and $d_{T}$ are equivalent (as in the sense of Definition \ref{def:metrics_and_equivalent_metrics}).
+\end{fact}
+\begin{proof}
+  We start by showing that $d_S$ is indeed a metric. Notice that the following facts necessarily hold by our definition of the word length:
+  \begin{itemize}
+    \item $\ell_{G,S}\left(g\right) = \ell_{G,S}\left(g^{-1}\right)$;
+    \item $\ell_{G,S}\left(gh\right) \leq \ell_{G,S}\left(g\right) + \ell_{G,S}\left(h\right)$.
+  \end{itemize}
+  We thus have:
+  \begin{align*}
+    d_{S}\left(g,h\right) &= \ell_{G,S}\left(g^{-1}h\right)\\
+                          &= \ell_{G,S}\left(h^{-1}g\right)\\
+                          &= d_S\left(h,g\right)\\
+                          \\
+    d_{S}\left(g,h\right) &= \ell_{G,S}\left(g^{-1}h\right)\\
+                          &= \ell_{G.S}\left(g^{-1}kk^{-1}h\right)\\
+                          &\leq \ell_{G,S}\left(g^{-1}k\right) + \ell_{G,S}\left(k^{-1}h\right)\\
+                          &= d_{S}\left(g,k\right) + d_{S}\left(k,h\right)\\
+                          \\
+    d_{S}\left(g,g\right) &= \ell_{G,S}\left(g^{-1}g\right)\\
+                          &= \ell_{G,S}\left(e_G\right)\\
+                          &= 0\\
+    d_{S}\left(g,h\right) = 0 &\Leftrightarrow \ell_{G,S}\left(g^{-1}h\right) = 0\\
+                              &\Leftrightarrow g^{-1}h = e_{G}\\
+                              &\Leftrightarrow g = h.
+  \end{align*}
+  Thus, $d_S$ is indeed a metric.\newline
+
+  Let $S$ and $T$ be finite symmetric generating sets for $G$. It is sufficient to show that there exists some $k\in \N$ such that, for all $g\in G$,
+  \begin{align*}
+    \frac{1}{k}\ell_{G,S}\left(g\right) \leq \ell_{G,T}\left(g\right) \leq k\ell_{G,S}\left(g\right).
+  \end{align*}
+  Set
+  \begin{align*}
+    M &= \max\set{\ell_{G,T}\left(s\right) | s\in S}\\
+    N &= \max\set{\ell_{G,S}\left(t\right) | t\in T}.
+  \end{align*}
+  Now, let $n = \ell_{G,S}\left(g\right)$, such that $g = s_1\cdots s_n$, where $s_i\in S$. Then, we have
+  \begin{align*}
+    \ell_{G,T}\left(g\right) &= \ell_{G,T}\left(s_1\cdots s_n\right)\\
+                             &\leq \ell_{G,T}\left(s_1\right) + \cdots + \ell_{G,T}\left(s_n\right)\\
+                             &\leq M\ell_{G,S}\left(g\right),
+  \end{align*}
+  and similarly, $\ell_{G,S}\left(g\right) \leq N\ell_{G,T}\left(g\right)$. Setting $k = \max\left(M,N\right)$, we get
+  \begin{align*}
+    \frac{1}{k}\ell_{G,S}\left(g\right) \leq \ell_{G,T}\left(g\right) \leq k\ell_{G,S}\left(g\right).
+  \end{align*}
+\end{proof}
+Now, we may begin defining the growth rate of a group. We will use the fact that all word metrics with respect to a generating set are symmetric in order to show that the growth rate is well-defined (i.e., independent of the generating set for $G$).
+\begin{definition}
+  Let $G$ be a group with finite symmetric generating set $S$. We define
+  \begin{align*}
+    B_{G,S}\left(n\right) &= \set{g\in G | \ell_{G,S}\left(g\right) \leq n};\\
+    \gamma_{G,S}\left(n\right) &= \left\vert B_{G,S}\left(n\right) \right\vert.
+  \end{align*}
+\end{definition}
+The following facts hold for $\gamma$.
+\begin{fact}\label{fact:properties_of_gamma_generating_set}
+  Let $G$ be a finitely generated group. The following facts hold:
+  \begin{enumerate}[(1)]
+    \item $\gamma_{G,S}\left(n\right)$ is an increasing function;
+    \item $\gamma_{G,S}\left(n+m\right)\leq \gamma_{G,S}\left(n\right)\gamma_{G,S}\left(m\right)$;
+    \item $\displaystyle \lim_{n\rightarrow\infty}\left(\gamma_{G,S}\left(n\right)\right)^{1/n} = \rho_{G,S}$ exists;
+    \item if $S$ and $T$ are finite symmetric generating sets for $G$, then there exists $k\in \N$ such that $\gamma_{G,T}\left(n\right)\leq \gamma_{G,S}\left(kn\right)$ for all $n\in\N$, and $\rho_{G,S} = \rho_{G,T}$.
+  \end{enumerate}
+\end{fact}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Since $B_{G,S}\left(n\right)\subseteq B_{G,S}\left(n+1\right)$, we have $\gamma_{G,S}\left(n\right) \leq \gamma_{G,S}\left(n+1\right)$, so $\gamma_{G,S}$ is increasing.
+    \item We start by showing that $B_{G,S}\left(n\right)B_{G,S}\left(m\right) = B_{G,S}\left(n+m\right)$. First, if $g\in B_{G,S}\left(n\right)$ and $h\in B_{G,S}\left(m\right)$, we know that $\ell_{G,S}\left(gh\right) \leq \ell_{G,S}\left(g\right) + \ell_{G,S}\left(h\right)\leq m+n$, so $B_{G,S}\left(n\right)B_{G,S}\left(n\right) \subseteq B_{G,S}\left(n+m\right)$. Additionally, if $g\in B_{G,S}\left(n+m\right)$, we may write
+      \begin{align*}
+        g &= \underbrace{s_{1}\cdots s_{\ell}}_{g_1}\underbrace{s_{\ell+1}\cdots s_{k}}_{g_2},
+      \end{align*}
+      where $k\leq n+m$, $\ell \leq n$, and $k-\ell \leq m$, so $g_1\in B_{G,S}\left(n\right)$ and $g_2\in B_{G,S}\left(m\right)$. Thus, we have $B_{G,S}\left(n\right)B_{G,S}\left(m\right) = B_{G,S}\left(n+m\right)$.\newline
+
+      Now, we have
+      \begin{align*}
+        \gamma_{G,S}\left(n+m\right) &= \left\vert B_{G,S}\left(n+m\right) \right\vert\\
+                                     &= \left\vert B_{G,S}\left(n\right)B_{G,S}\left(m\right) \right\vert\\
+                                     &\leq \left\vert B_{G,S}\left(n\right) \right\vert\left\vert B_{G,S}\left(m\right) \right\vert\\
+                                     &= \gamma_{G,S}\left(n\right)\gamma_{G,S}\left(m\right).
+      \end{align*}
+    \item From (2), we know that $\gamma_{G,S}\left(n\right) \leq \gamma_{G,S}\left(1\right)^{n}$. Inductively, we have
+      \begin{align*}
+        \gamma_{G,S}\left(n+1\right) &\leq \gamma_{G,S}\left(1\right)^{n+1},
+      \end{align*}
+      and thus,
+      \begin{align*}
+        1 \leq \gamma_{G,S}\left(n\right)^{1/n}\leq \gamma_{G,S}\left(1\right).
+      \end{align*}
+    \item We know that there exists $k$ such that $\frac{1}{k}\ell_{G,S} \leq \ell_{G,T}\leq k\ell_{G,S}$ by the proof of Fact \ref{fact:word_metric_equivalent_metrics}. Thus, if $g\in B_{G,T}\left(n\right)$, then $\ell_{G,T}\left(g\right) \leq n$, so $\ell_{G,S}\left(g\right) \leq kn$, so $g\in B_{G,S}\left(kn\right)$ and $B_{G,T}\left(n\right)\subseteq B_{G,T}\left(kn\right)$. We have $\gamma_{G,T}\left(n\right)\leq \gamma_{G,S}\left(kn\right)$.\newline
+
+      Similarly, if $g\in B_{G,S}\left(n\right)$, then $\ell_{G,S}\left(g\right)\leq n$, so $\ell_{G,T}\left(g\right) \leq kn$, and $g\in B_{G,T}\left(kn\right)$. Thus, we get $B_{G,S}\left(n\right)\subseteq B_{G,T}\left(kn\right)$, so $\gamma_{G,S}\left(n\right)\leq \gamma_{G,T}\left(kn\right)$.\newline
+
+      It follows that
+      \begin{align*}
+        \gamma_{G,S}\left(\frac{n}{k}\right)^{1/n} \leq \gamma_{G,T}\left(n\right)^{1/n} \leq \left(\gamma_{G,S}\left(kn\right)^{k}\right)^{1/kn}.
+      \end{align*}
+      Sending $n\rightarrow\infty$, we get $\rho_{G,S}\leq \rho_{G,T}\leq \rho_{G,S}$, so $\rho_{G,S} = \rho_{G,T}$.
+  \end{enumerate}
+\end{proof}
+\begin{definition}
+  Let $G$ be a group with finite symmetric generating set $S$. The quantity
+  \begin{align*}
+    \rho_{G} &= \limsup_{n\rightarrow\infty}\gamma_{G,S}\left(n\right)^{1/n}
+  \end{align*}
+  is known as the growth rate of the group $G$. If we have $\rho = 1$, then we say $G$ is of subexponential growth.
+\end{definition}
+\begin{fact}\label{fact:finite_groups_subexponential_growth}
+  All finite groups are of subexponential growth.
+\end{fact}
+\begin{proof}
+Note that since $\rho$ is independent of the generating set (as we proved in Fact \ref{fact:properties_of_gamma_generating_set}), we can set $S = G$, and we have $\limsup_{n\rightarrow\infty} \left\vert G \right\vert^{1/n} = 1$.
+\end{proof}
+\begin{fact}\label{fact:finitely_generated_abelian_groups_subexponential_growth}
+  Let $\Gamma$ be a finitely generated abelian group. Then, $\Gamma$ is of subexponential growth.
+\end{fact}
+\begin{proof}
+  We start by showing that $G = \Z^d$ is of subexponential growth. Notice that every element of $\Z^d$ is some linear combination of the set
+  \begin{align*}
+    S &= \set{e_1,e_2,\dots,e_d},\label{eq:generating_set_free_abelian_group}\tag{\textasteriskcentered}
+  \end{align*}
+  where
+  \begin{align*}
+    e_{j} &= (0,0,\dots,\underbrace{1}_{\text{position $j$}},0,0,\dots).
+  \end{align*}
+  Additionally, we see that any element of $B_{G,S}(n)$ is of the form $e_1^{i_1}e_2^{i_2}\dots e_d^{i_d}$, where $\sum_{j=1}^{d} i_j \leq n$. Thus, we must have $\gamma_{G,S}(n) \leq n^{d}$, meaning that 
+  \begin{align*}
+    \rho &= \limsup_{n\rightarrow\infty} \gamma_{G,S}(n)^{1/n}\\
+         &= \limsup_{n\rightarrow\infty}n^{d/n}\\
+         &= 1,
+  \end{align*}
+  so $\Z^d$ is of subexponential growth.\newline
+
+  Now, if $G' = \Z^d\times \Z/k_1\Z\times \cdots \times \Z/k_r\Z$, then since there is a torsion subgroup in $G'$, we must have $\gamma_{G',S'}(n) \leq \gamma_{\Z^{d+r},T}(n)$ for any $n$, where $T$ is a generating set for $\Z^{d+r}$ and $S'$ is a generating set for $G'$. Since
+  \begin{align*}
+    \rho_{\Z^{d+r}} &= \limsup_{n\rightarrow\infty}\gamma_{\Z^{d+r},T}(n)^{1/n}\\
+                    &= 1,
+  \end{align*}
+  and $1 \leq \gamma_{G',S'}(n)$, we must have $\rho_{G'} = 1$.\newline
+
+  Since, by the fundamental theorem of finitely generated abelian groups (Theorem \ref{thm:fundamental_thm_abelian_gps}), it is the case that $\Gamma\cong \Z^{d}\times \Z/k_1\Z\times\cdots\times \Z/k_r\Z$ for some $d,k_1,\dots,k_r\in \N$, $\Gamma$ is of subexponential growth.
+\end{proof}
+To prove that the groups of subexponential growth are amenable, we use the following lemma from real analysis.
+\begin{lemma}
+  Let $\left(a_n\right)_n$ be a sequence such that $a_n > 0$ for each $n$. Then,
+  \begin{align*}
+    \lim_{n\rightarrow\infty}\frac{a_{n+1}}{a_n} &= \lim_{n\rightarrow\infty} \left(a_n\right)^{1/n}.
+  \end{align*}
+  Similarly,
+  \begin{align*}
+    \limsup_{n\rightarrow\infty}\frac{a_{n+1}}{a_n} &= \limsup_{n\rightarrow\infty}\left(a_n\right)^{1/n}.
+  \end{align*}
+\end{lemma}
+\begin{theorem}\label{thm:subexponential_growth_implies_amenable}
+  Let $\Gamma$ be a finitely generated group of subexponential growth. Then, $\Gamma$ is amenable.
+\end{theorem}
+\begin{proof}
+  To prove that $\Gamma$ is amenable, we show that it satisfies the Følner condition. From the results in Section \ref{sec:approximate_means}, we know that this implies that $\Gamma$ is amenable. Let $S$ be a finite symmetric generating set for $\Gamma$.\newline
+
+  For any $\ve > 0$, we see that there is some $k\in \N$ such that
+  \begin{align*}
+    \left\vert B_{\Gamma,S}\left(k\right) \right\vert^{1/k} &\leq 1 + \ve.
+  \end{align*}
+  Thus, by the lemma above, we must have
+  \begin{align*}
+    \frac{\left\vert B_{\Gamma,S}\left(k+1\right) \right\vert}{\left\vert B_{\Gamma,S} \left(k\right)\right\vert} \leq 1 + \ve.
+  \end{align*}
+  Note that, by Lemma \ref{lemma:folner_condition_generating_set}, we only need to verify that the Følner condition holds on $S$. For any $s\in S$, we have
+  \begin{align*}
+    \frac{\left\vert sB_{\Gamma,S}\left(k\right)\triangle B_{\Gamma,S}\left(k\right) \right\vert}{\left\vert B_{\Gamma,S}(k) \right\vert} &\leq \frac{2\left(\left\vert B_{G,S}\left(k+1\right) \right\vert - \left\vert B_{\Gamma,S}(k) \right\vert\right)}{\left\vert B_{\Gamma,S}(k) \right\vert}\\
+                                                                                                                    &\leq 2\ve.
+  \end{align*}
+  Therefore, $\Gamma$ satisfies the Følner condition, hence is amenable.
+\end{proof}
+\begin{remark}
+  The result in Theorem \ref{thm:subexponential_growth_implies_amenable} can be used along with Fact \ref{fact:finitely_generated_abelian_groups_subexponential_growth} and Corollary \ref{cor:direct_limit_amenable} to prove Corollary \ref{cor:abelian_groups_amenable}.
+\end{remark}
 \section{Remarks and Notes}%
 In \cite[48]{brown_and_ozawa}, the authors state that ``amenable groups admit approximately $10^{10^{10}}$ characterizations.'' Unfortunately, despite my best efforts, I was not able to fit all $10^{10^{10}}$ characterizations in this thesis. However, we can provide some details on some of the more advanced characterizations that we did not have space to discuss in this thesis.\newline
 
