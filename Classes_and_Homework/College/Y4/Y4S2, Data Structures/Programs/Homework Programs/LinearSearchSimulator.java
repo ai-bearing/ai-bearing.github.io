@@ -6,15 +6,15 @@ public class LinearSearchSimulator{
     boolean isInvalid = true;
     int validKey = -1;
     while(isInvalid){
-      System.out.print("Please enter a number: ");
+      System.out.print("Please enter a number between 1 and 8: ");
       int key = input.nextInt();
       if (key <= 8 && key >= 1){
         validKey = key;
         isInvalid = false;
       }
+      System.out.println();
     }
     int targetNum = -1;
-    System.out.println();
     for(int i = 0; i < nums.length; i++){
       System.out.println("Is the number " + nums[i] + "?");
       if(nums[i] == validKey){
