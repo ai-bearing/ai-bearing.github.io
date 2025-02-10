@@ -3,7 +3,9 @@ Tarski's Theorem is one of our first criteria establishing amenability --- that 
 
 To establish the amenability of a large class of groups --- as we will do with abelian and solvable groups in this chapter --- we need tools from functional analysis. Rather than focusing on $G$, we will focus on the space $\ell_{\infty}(G)$, and prove the existence of a mean on $G$ by proving the existence of an analogous construct on $\ell_{\infty}(G)$, known as an invariant state.
 \section{Amenability in Subgroups and Quotient Groups}\label{sec:amenability_subgroups_quotients}%
-We begin by defining a mean on $G$ --- note that this definition is slightly different from the one used in the proof in Theorem \ref{thm:tarski}. However, one can show that they are equivalent by letting $G$ act on itself by left-multiplication and taking $E = G$.
+We begin by defining a mean on $G$ --- note that this definition is slightly different from the one used in the proof in Theorem \ref{thm:tarski}. However, one can show that they are equivalent by letting $G$ act on itself by left-multiplication.\newline
+
+This section will begin by establishing some useful inheritance properties.
 \begin{definition}
   Let $G$ be a group, with $P(G)$ denoting its power set.\newline
 
@@ -87,6 +89,41 @@ We can establish some inheritance properties using the properties of a mean. In 
                                                &= \lambda\left(E\right).
       \end{align*}
   \end{enumerate}
+\end{proof}
+This is a kind of converse to Proposition \ref{prop:subgroups_quotientgroups_amenability}. Here, we establish that if a subgroup is amenable, then its parent group is also amenable, but that this is only a sufficient condition if the subgroup has finite index --- i.e., if the group is ``virtually amenable,'' then it is amenable.
+\begin{proposition}\label{prop:finite_index_amenable_subgroup}
+  Let $G$ be a group, and let $H\leq G$ be amenable, with $\left[G:H\right]  = n < \infty$. Then, $G$ is amenable.
+\end{proposition}
+\begin{proof}
+  Let $H\leq G$ be amenable with $\left[G:H\right] = n$. Let $\mu$ be the mean on $H$, and let $\set{g_iH}_{i=1}^{n}$ be a partition of $G$ by the left cosets of $H$. We define the mean on $G$ by taking, for $A\subseteq G$,
+  \begin{align*}
+    \lambda\left(A\right) &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}A\cap H\right).
+  \end{align*}
+  We begin by verifying that this is well-defined. Specifically, we will show that this definition is independent of the coset representatives. Suppose $g_jH = h_j H$. Then, $h_j^{-1}g_j \in H$. Now, we have $g_j^{-1}A \cap H \subseteq H$, so by left-multiplication, we get $\left(h_j^{-1}g_j\right)g_j^{-1}A\cap H \subseteq H$, so $h_j^{-1}A\cap H\subseteq H$. Since $\set{g_i H}_{i=1}^{n}$ is a partition, we get that this definition of the mean on $G$ is independent of the choice of coset representatives.\newline
+
+  Next, we show that this is a finitely additive measure. Let $A,B\subseteq G$ be such that $A\cap B = \emptyset$. Then, we get
+  \begin{align*}
+    \lambda\left(A\sqcup B\right) &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}\left(A\sqcup B\right)\cap H\right)\\
+                                  &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(\left(g_i^{-1}A\cap H\right)\sqcup \left(g_i^{-1}B\cap H\right)\right)\\
+                                  &= \frac{1}{n}\left(\sum_{i=1}^{n}\mu\left(g_i^{-1}A\cap H\right) + \sum_{i=1}^{n}\mu\left(g_i^{-1}B\cap H\right)\right)\\
+                                  &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}A\cap H\right) + \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}B\cap H\right)\\
+                                  &= \lambda\left(A\right) + \lambda\left(B\right).
+  \end{align*}
+  It is relatively simple to see that $\lambda$ is a probability measure, as
+  \begin{align*}
+    \lambda\left(G\right) &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}G\cap H\right)\\
+                          &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(G\cap H\right)\\
+                          &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(H\right)\\
+                          &= 1.
+  \end{align*}
+  Now, we must show that $\lambda$ is translation-invariant. Let $A\subseteq G$ and $t\in G$. Then, using the translation-invariance of $\mu$, we get
+  \begin{align*}
+    \lambda\left(tA\right) &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}tA\cap H\right)\\
+                           &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}\left(t\left(A\cap H\right)\right)\right)\\
+                           &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}A\cap H\right)\\
+                           &= \lambda\left(A\right).
+  \end{align*}
+  Thus, $G$ is amenable.
 \end{proof}
 \section{Establishing Amenability through Functional Analysis}\label{sec:functional_analysis_and_amenability}%
 Now that we understand some useful properties of means in relation to groups and subgroups, we turn our attention toward finding means on groups. In order to do this, we turn our attention towards the space $\ell_{\infty}\left(G\right)$, which allows us to use theories from functional analysis to better understand means on $G$. For more elaboration on these ideas, we encourage the reader to review the results in Chapters \ref{ch:measure_theory} and \ref{ch:functional_analysis}.
@@ -576,43 +613,9 @@ Owing to the correspondence between invariant states and means, we are now able 
   Continuing in this fashion, we see that $G$ is amenable.
 \end{proof}
 \section{Remarks and Notes}\label{sec:invariant_states_remarks}%
-The following proposition is, in a sense, a kind of converse to Proposition \ref{prop:subgroups_quotientgroups_amenability}, in that if a subgroup is amenable, we can show that the original group is also amenable, but this is only a sufficient condition if the subgroup has finite index.
-\begin{proposition}\label{prop:finite_index_amenable_subgroup}
-  Let $G$ be a group, and let $H\leq G$ be amenable, with $\left[G:H\right]  = n < \infty$. Then, $G$ is amenable.
-\end{proposition}
-\begin{proof}
-  Let $H\leq G$ be amenable with $\left[G:H\right] = n$. Let $\mu$ be the mean on $H$, and let $\set{g_iH}_{i=1}^{n}$ be a partition of $G$ by the left cosets of $H$. We define the mean on $G$ by taking, for $A\subseteq G$,
-  \begin{align*}
-    \lambda\left(A\right) &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}A\cap H\right).
-  \end{align*}
-  We begin by verifying that this is well-defined. Specifically, we will show that this definition is independent of the coset representatives. Suppose $g_jH = h_j H$. Then, $h_j^{-1}g_j \in H$. Now, we have $g_j^{-1}A \cap H \subseteq H$, so by left-multiplication, we get $\left(h_j^{-1}g_j\right)g_j^{-1}A\cap H \subseteq H$, so $h_j^{-1}A\cap H\subseteq H$. Since $\set{g_i H}_{i=1}^{n}$ is a partition, we get that this definition of the mean on $G$ is independent of the choice of coset representatives.\newline
-
-  Next, we show that this is a finitely additive measure. Let $A,B\subseteq G$ be such that $A\cap B = \emptyset$. Then, we get
-  \begin{align*}
-    \lambda\left(A\sqcup B\right) &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}\left(A\sqcup B\right)\cap H\right)\\
-                                  &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(\left(g_i^{-1}A\cap H\right)\sqcup \left(g_i^{-1}B\cap H\right)\right)\\
-                                  &= \frac{1}{n}\left(\sum_{i=1}^{n}\mu\left(g_i^{-1}A\cap H\right) + \sum_{i=1}^{n}\mu\left(g_i^{-1}B\cap H\right)\right)\\
-                                  &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}A\cap H\right) + \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}B\cap H\right)\\
-                                  &= \lambda\left(A\right) + \lambda\left(B\right).
-  \end{align*}
-  It is relatively simple to see that $\lambda$ is a probability measure, as
-  \begin{align*}
-    \lambda\left(G\right) &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}G\cap H\right)\\
-                          &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(G\cap H\right)\\
-                          &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(H\right)\\
-                          &= 1.
-  \end{align*}
-  Now, we must show that $\lambda$ is translation-invariant. Let $A\subseteq G$ and $t\in G$. Then, using the translation-invariance of $\mu$, we get
-  \begin{align*}
-    \lambda\left(tA\right) &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}tA\cap H\right)\\
-                           &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}\left(t\left(A\cap H\right)\right)\right)\\
-                           &= \frac{1}{n}\sum_{i=1}^{n}\mu\left(g_i^{-1}A\cap H\right)\\
-                           &= \lambda\left(A\right).
-  \end{align*}
-  Thus, $G$ is amenable.
-\end{proof}
+%The following proposition is, in a sense, a kind of converse to Proposition \ref{prop:subgroups_quotientgroups_amenability}, in that if a subgroup is amenable, we can show that the original group is also amenable, but this is only a sufficient condition if the subgroup has finite index.
 In Chapter \ref{ch:tarskis_theorem}, we proved that all the amenable groups are precisely those that are non-paradoxical, while in \ref{ch:paradoxical_decompositions}, we proved the Banach--Tarski paradox finding a subgroup of $\text{SO}(3)$ that is isomorphic to $F(a,b)$. This raises an interesting question: are all non-amenable (hence paradoxical) groups ones that contain subgroups isomorphic to $F(a,b)$?\newline
 
-This is the substance of the von Neumann conjecture --- and as it turns out, it is false. There are some groups that are not amenable, but do not contain a subgroup isomorphic to $F(a,b)$. However, at the same time, in \cite{free_subgroups_of_linear_groups}, Jacques Tits proved that in any subgroup of $\text{GL}_n\left(\F\right)$ (where $\F$ is any field with characteristic zero), a subgroup either admits a solvable subgroup of finite index (hence amenable by Corollary \ref{cor:solvable_groups_amenable} and Proposition \ref{prop:finite_index_amenable_subgroup}) or contains a non-abelian freely generated subgroup (which is necessarily not amenable by Theorem \ref{thm:tarski}). This is known as the Tits alternative. In other words, the von Neumann conjecture \textit{is} true for linear groups, so it necessarily means that we cannot represent the counterexample groups to the von Neumann conjecture as linear groups.\newline
+This is the substance of the von Neumann conjecture --- and as it turns out, it is false. There are some groups that are not amenable, but do not contain a subgroup isomorphic to $F(a,b)$. However, at the same time, in \cite{free_subgroups_of_linear_groups}, Jacques Tits proved that in any subgroup of $\text{GL}_n\left(\F\right)$ (where $\F$ is any field with characteristic zero), a subgroup either admits a solvable subgroup of finite index (hence amenable by Corollary \ref{cor:solvable_groups_amenable} and Proposition \ref{prop:finite_index_amenable_subgroup}) or contains a non-abelian freely generated subgroup (which is not amenable by Theorem \ref{thm:tarski}). This is known as the Tits alternative. In other words, the von Neumann conjecture \textit{is} true for linear groups, so it necessarily means that we cannot represent the counterexample groups to the von Neumann conjecture as linear groups.\newline
 
 In the introduction to Chapter 3, we stated that the Banach--Tarski paradox cannot hold for $\R$ and $\R^2$. This is because the rotation group $\text{SO}\left(2\right)$ in $\R^2$ is abelian, and since the isometry group $\text{E}\left(2\right)$ has the abelian subgroup $\text{SO}\left(2\right)$ with finite index, $\text{E}\left(2\right)$ is amenable by Proposition \ref{prop:finite_index_amenable_subgroup}. Similarly, the isometry group $\text{E}(1)$ contains an abelian subgroup $\text{SO}(1)$\footnote{$\text{SO}(1) = \set{1}$.} with finite index.
