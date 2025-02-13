@@ -8,6 +8,7 @@
 \usepackage{newpxtext,eulerpx,eucal,eufrak}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \renewcommand*{\hbar}{\hslash}
+\DeclareMathOperator{\cb}{cb}
 
 %kp fonts:
 %\usepackage{kpfonts}
@@ -642,7 +643,7 @@ We are interested in seeing when unital, positive maps are contractive.
 \begin{proof}
   Note that
   \begin{align*}
-    \begin{pmatrix}\sum_{i=1}^{n}\lambda_ip_i & 0 & \cdots 0 \\ 0 & 0 & \cdots 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & 0 \end{pmatrix} &= \begin{pmatrix}p_1^{1/2}\cdots & p_n^{1/2} \\ 0 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & 0\end{pmatrix} \operatorname{diag}\left( \lambda_1,\dots,\lambda_n \right) \begin{pmatrix}p_1^{1/2} & 0 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ p_n^{1/2} & 0 & \cdots & 0\end{pmatrix}.
+    \begin{pmatrix}\sum_{i=1}^{n}\lambda_ip_i & 0 & \cdots & 0 \\ 0 & 0 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & 0 \end{pmatrix} &= \begin{pmatrix}p_1^{1/2} &\cdots & p_n^{1/2} \\ 0 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & 0\end{pmatrix} \operatorname{diag}\left( \lambda_1,\dots,\lambda_n \right) \begin{pmatrix}p_1^{1/2} & 0 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ p_n^{1/2} & 0 & \cdots & 0\end{pmatrix}.
   \end{align*}
   The norm on the matrix on the left is $\norm{\sum_{i=1}^{n}\lambda_ip_i}$, while the three matrices on the right have norm less than $1$, using the fact that $\norm{a^{\ast}a} = \norm{a}^2$.
 \end{proof}
@@ -795,7 +796,7 @@ If $\phi(1) = 1$, then $\phi$ is a contraction on $A$, though $\phi$ may not be 
 \begin{proof}
   Since we can represent $B$ on $\B\left( \mathcal{H} \right)$, we assume $B = \B\left( \mathcal{H} \right)$ for some Hilbert space $\mathcal{H}$. Fix $x\in \mathcal{H}$ with $\norm{x} = 1$.\newline
 
-  Setting $f(a) = \iprod{\phi(a)(x)}{x}$, we have $f(a) = 1$ and $\norm{f}\leq \norm{\phi}$. If $a$ is positive, then $f(a)$ is positive by the previous lemma, so since $x$ was arbitrary, $\phi(a)$ is also positive.
+  Setting $f(a) = \iprod{\phi(a)(x)}{x}$, we have $f(1) = 1$ and $\norm{f}\leq \norm{\phi}$. If $a$ is positive, then $f(a)$ is positive by the previous lemma, so since $x$ was arbitrary, $\phi(a)$ is also positive.
 \end{proof}
 \begin{proposition}
   Let $A$ be a unital $C^{\ast}$-algebra, and let $M$ be a unital subspace of $A$. If $B$ is a unital $C^{\ast}$-algebra, and $\phi\colon M\rightarrow B$ is a unital contraction, then the map $ \widetilde{\phi}\colon M + M^{\ast}\rightarrow B $, given by
@@ -823,7 +824,85 @@ We may regard $\Mat_n\left( M \right)$ as a subspace of $\Mat_n\left( A \right)$
 
 Similarly, if $S\subseteq A$ is an operator system, then we endow $\Mat_n\left( S \right)$ with the norm and order it inherits from $\Mat_n\left( A \right)$.
 \begin{definition}
-  If $B$ is a $C^{\ast}$-algebra, and $\phi\colon S\rightarrow B$ is a linear map, then $\phi_n\colon \Mat_n\left( S \right)\rightarrow \Mat_n\left( B \right)$ is defined by $\phi_n\left( \left( a_{ij} \right)_{ij} \right) = \left( \phi\left( a_{ij} \right) \right)_{ij}$. We call $\phi$ $n$-positive if $\phi_n$ is positive, and $\phi$ is called completely positive if it is $n$-positive for all $n$.
+  If $B$ is a $C^{\ast}$-algebra, and $\phi\colon S\rightarrow B$ is a linear map, then $\phi_n\colon \Mat_n\left( S \right)\rightarrow \Mat_n\left( B \right)$ is defined by $\phi_n\left( \left( a_{ij} \right)_{ij} \right) = \left( \phi\left( a_{ij} \right) \right)_{ij}$. We call $\phi$ $n$-positive if $\phi_n$ is positive, and $\phi$ is called completely positive if it is $n$-positive for all $n$.\newline
+
+  We call $\phi$ completely bounded if $\sup_{n}\norm{\phi_n}$ is finite. We set
+  \begin{align*}
+    \norm{\phi}_{\cb} &= \sup_{n}\norm{\phi_n}.
+  \end{align*}
+  We say $\phi$ is completely isometric or completely contractive if each $\phi_n$ is isometric and that $\norm{\phi}_{\cb} \leq 1$ respectively.
 \end{definition}
+We investigate some of the properties of classes of completely positive maps such that we may prove when they are automatically completely positive.
+\begin{lemma}
+  Let $A$ be a $C^{\ast}$-algebra, and let $a,b\in A$. Then, the following hold.
+  \begin{enumerate}[(i)]
+    \item We have $\norm{a}\leq 1$ if and only if
+      \begin{align*}
+        \begin{pmatrix}1 & a \\ a^{\ast} & 1\end{pmatrix}
+      \end{align*}
+      is positive in $\Mat_2\left( A \right)$.
+    \item We have
+      \begin{align*}
+        \begin{pmatrix}1 & a \\ a^{\ast} & b\end{pmatrix}
+      \end{align*}
+      is positive in $\Mat_2\left( A \right)$ if and only if $a^{\ast}a \leq b$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  Let $A$ be represented by $\pi\colon A\rightarrow \B\left( \mathcal{H} \right)$, and set $T = \pi(a)$. If $\norm{T}\leq 1$, then for any $x,y\in \mathcal{H}$, we have
+  \begin{align*}
+    \iprod{ \begin{pmatrix}I & T \\ T^{\ast} & I\end{pmatrix} \begin{pmatrix}x\\y\end{pmatrix} }{ \begin{pmatrix}x\\y\end{pmatrix} } &= \iprod{x}{x} + \iprod{T\left( y \right)}{x} + \iprod{x}{T\left( y \right)} + \iprod{y}{y}\\
+                             &\geq \norm{x}^2 - 2\norm{T}_{\op}\norm{y}\norm{x} + \norm{y}^2\\
+                             &\geq 0.
+  \end{align*}
+  Conversely, if $\norm{T}_{\op} > 1$, then there exist unit vectors $x$ and $y$ such that $ \iprod{T\left( y \right)}{x} < -1 $, and the above inner product is negative.\newline
+
+  Now, to see (ii), we begin by assuming that $b\geq a^{\ast}a$. Just as before, we represent $A$ on $\B\left( \mathcal{H} \right)$, and we use the abuse of notation as $b = \pi(b)$ and $a = \pi(a)$. Since $b\geq a^{\ast}a$, we have, for all $y\in \mathcal{H}$,
+  \begin{align*}
+    \iprod{\left( b-a^{\ast}a \right)\left( y \right)}{y} &\geq 0,
+  \end{align*}
+  so that
+  \begin{align*}
+    \iprod{b\left( y \right)}{y} \geq \norm{a\left( y \right)}^2.
+  \end{align*}
+  Thus, in the $2\times 2$ case, we have, for any $ \begin{pmatrix}x \\ y\end{pmatrix} \in \mathcal{H}^{(2)} $,
+  \begin{align*}
+    \iprod{ \begin{pmatrix}1 & a \\ a^{\ast} & b\end{pmatrix} \begin{pmatrix}x\\y\end{pmatrix} }{ \begin{pmatrix}x\\y\end{pmatrix} } &= \iprod{x}{x} + \iprod{a(y)}{x} + \iprod{a^{\ast}\left( x \right)}{y} + \iprod{b\left( y \right)}{y}\\
+                             &\geq \iprod{x}{x} + \iprod{a(y)}{x} + \iprod{a^{\ast}(x)}{y} + \iprod{a(y)}{a(y)}\\
+                             &= \iprod{x}{x} + \iprod{a(y)}{a(y)} + 2\re\left( \iprod{a(y)}{x} \right)\\
+                             &\geq \iprod{x}{x} + \iprod{a(y)}{a(y)} - 2 \norm{a(y)}\norm{x}\\
+                             &= \norm{x}^2 + \norm{a(y)}^2 - 2\norm{a(y)}\norm{x}\\
+                             &\geq 0.
+  \end{align*}
+  Thus, the matrix is positive.\newline
+
+  Now, we suppose that $b\ngeq a^{\ast}a$. Then, there exists some $y\in \mathcal{H}$ such that $ \iprod{b\left( y \right)}{y} < \norm{a(y)}^2 $.
+\end{proof}
+\begin{proposition}
+  Let $S$ be an operator system, $B$ a unital $C^{\ast}$-algebra, and $\phi\colon S\rightarrow B$ a unital $2$-positive map. Then, $\phi$ is contractive.
+\end{proposition}
+\begin{proof}
+  Let $a\in S$ with $\norm{a}\leq 1$. Then,
+  \begin{align*}
+    \phi_2 \begin{pmatrix}1 & a \\ a^{\ast} & 1\end{pmatrix} &= \begin{pmatrix}1 & \phi(a) \\ \phi(a)^{\ast} & 1\end{pmatrix}
+  \end{align*}
+  is positive, hence $\norm{\phi(a)}\leq 1$.
+\end{proof}
+\begin{proposition}[Cauchy--Schwarz for 2-positive Maps]
+  Let $A,B$ be unital $C^{\ast}$-algebras, and let $\phi\colon A\rightarrow B$ be a unital $2$-positive map. Then,
+  \begin{align*}
+    \phi(a)^{\ast}\phi(a) &\leq \phi\left( a^{\ast}a \right)
+  \end{align*}
+  for all $a\in A$.
+\end{proposition}
+\begin{proof}
+  We have that
+  \begin{align*}
+    \begin{pmatrix}1 & a \\ 0 & 0\end{pmatrix}^{\ast} \begin{pmatrix}1 & a \\ 0 & 0\end{pmatrix} &= \begin{pmatrix}1 & \phi(a) \\ \phi(a)^{\ast} & \phi\left( a^{\ast}a \right)\end{pmatrix}\\
+                     &\geq 0,
+  \end{align*}
+  meaning that $\phi(a)^{\ast}\phi(a)\leq \phi\left( a^{\ast}a \right)$ by above.
+\end{proof}
+
 
 \end{document}

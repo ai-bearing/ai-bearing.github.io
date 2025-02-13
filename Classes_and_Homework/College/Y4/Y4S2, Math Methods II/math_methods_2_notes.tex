@@ -12,6 +12,8 @@
 \DeclareMathOperator{\Ln}{Ln}
 \DeclareMathOperator{\Arg}{Arg}
 \DeclareMathOperator{\Arctan}{Arctan}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\res}{Res}
 
 %\usepackage{homework}
 
@@ -66,7 +68,7 @@ The function $w(z)$ is analytic inside the simply connected region $R$ if any of
   \item $w$ satisfies the Cauchy--Riemann equations;
   \item $w'(z)$ is unique and exists;
   \item $\pd{w}{\overline{z}} = 0$.
-  \item $w$ can be expanded as $w(z) = \sum_{n\geq 0}c_n\left( z-a \right)^n$, convergent on some open neighborhood of $a$ for each $a$ on its domain;\footnote{This is the real definition of analytic.}
+  \item $w$ can be expanded as $w(z) = \sum_{n\geq 0}c_n\left( z-a \right)^n$, convergent on some open neighborhood of $a$ for each $a$ on its domain;\footnote{This is technically the real definition of analytic for the case when we're dealing with a function with domain $\R$.}
   \item $w(z)$ is path-independent everywhere in $R$: $\oint_{C}w(z)\:dz = 0$.
 \end{itemize}
 \end{fact}
@@ -111,7 +113,7 @@ Now, when we consider
 \begin{align*}
   I &= \oint_{C}\frac{dz}{z^n},
 \end{align*}
-this integral actually yields $0$ for any $n\neq 1$, despite the fact that $0$ is a singularity for $f(z) = \frac{1}{z^n}$. This $0$ is not a reflection of \eqref{thm:cauchy_integral_thm}, but of the fact that
+this integral actually yields $0$ for any $n\neq 1$, despite the fact that $0$ is a singularity for $f(z) = \frac{1}{z^n}$. This $0$ is not a reflection of \hyperref[thm:cauchy_integral_thm]{Cauchy's integral theorem}, but of the fact that
 \begin{align*}
   z^{-n} &= \frac{d}{dz}\left(\frac{z^{-n+1}}{n+1}\right),
 \end{align*}
@@ -125,7 +127,7 @@ Ultimately, what this shows is that when we integrate any analytic function $f\l
 \begin{theorem}[Cauchy's Integral Formula]
   If $w$ is analytic in a simply connected region and $C$ is a closed contour winding once around a point $z$ in the region, then
   \begin{align*}
-    w(z) &= \frac{1}{2\pi i} \oint_{C}\frac{w\left(\zeta\right)}{\zeta - z}\:d\zeta.
+    w(z) &= \frac{1}{2\pi i} \oint_{C}\frac{w\left(\zeta\right)}{\zeta - z}\:d\zeta.\label{thm:cauchy_integral_formula}\tag{\textasteriskcentered\textasteriskcentered}
   \end{align*}
 \end{theorem}
 Furthermore, this shows that any once-differentiable function is infinitely differentiable, as by differentiating under the integral sign, we get
@@ -278,7 +280,7 @@ To resolve this, we create a ``branch cut'' that contours are not allowed to cro
   \begin{align*}
     \sqrt{z} &= \sqrt{r}e^{i\pi /2}\tag*{$\varphi \to \pi$}\\
              &= i\sqrt{r}\\
-    \sqrt{z} & \sqrt{r}e^{-i\pi/2}\tag*{$\varphi \to -\pi$}\\
+    \sqrt{z} &= \sqrt{r}e^{-i\pi/2}\tag*{$\varphi \to -\pi$}\\
              &= -i\sqrt{r}.
   \end{align*}
   This is why the branch cut ``causes'' a discontinuity across the branch, but in $\C\setminus (-\infty,0]$.\newline
@@ -647,7 +649,142 @@ What makes harmonic functions useful is that, if there are complicated boundary 
   \end{align*}
   Note that $w$ fails to be conformal when $\diff{w}{z} = 0$, meaning that it fails to be conformal at $z = \pm a$.\newline
 
-  This is occasionally used in the real world\footnote{Who cares about that?} to design airfoils.
+  This is occasionally used in the real world\footnote{I guess people do things over there.} to design airfoils.
+\end{example}
+\subsection{Residues}%
+Consider a function $f(z)$ with an $n$th order pole. Then, $f$ can be written as
+\begin{align*}
+  f(z) &= \frac{g(z)}{\left( z-a \right)^n},
+\end{align*}
+where $g(z)$ is analytic and $g(a)\neq 0$. Recalling \hyperref[thm:cauchy_integral_formula]{Cauchy's integral formula}, we see that this expression for $f$ is tantalizingly close to our desired state.\newline
+
+We may expand $g$ in a Taylor series:
+\begin{align*}
+  g(z) &= \sum_{m=0}^{\infty}\frac{g^{(m)}(a)}{m!}\left( z-a \right)^m.
+\end{align*}
+Letting $C$ be a positively oriented contour in the analytic domain of $f$ that encircles the singularity, we get
+\begin{align*}
+  \oint_{C}f(z)\:dz &= \sum_{m=0}^{\infty}\frac{g^{(m)(a)}}{m!} \oint_{C}\left( z-a \right)^{m-n}\:dz.
+\end{align*}
+Note that if $m-n\neq -1$, then the integral on the right vanishes, so we only obtain a nonzero contribution at $m = n-1$. Thus, we get
+\begin{align*}
+  \oint_{C}f(z)\:dz &= 2\pi i \frac{g^{(n-1)(a)}}{(n-1)!}.
+\end{align*}
+\begin{definition}
+  Let $f(z)$ be an analytic function with a pole at $z=a$ with order $n$. We define the residue of $f$ at $a$ as
+  \begin{align*}
+    \Res\left[ f(z),a \right] \coloneq \frac{1}{\left( n-1 \right)!}\lim_{z\rightarrow a}\diff{^{n-1}}{z^{n-1}} \left( \left( z-a \right)^nf(z) \right).
+  \end{align*}
+\end{definition}
+This gives an alternative statement of Cauchy's integral formula, giving
+\begin{align*}
+  \oint_{C}f(z)\:dz &= 2\pi i \Res\left[ f(z),a \right].
+\end{align*}
+However, when we have lots of poles for $f$, and $C$ is a contour that surrounds all the poles, we may deform $C$ such that it surrounds each pole. This gives the residue theorem.
+\begin{theorem}[Residue Theorem]
+  \begin{align*}
+    \oint_{C}f(z)\:dz &= 2\pi i \sum_{a\in C}\Res\left[ f(z),a \right] \label{thm:residue_theorem}\tag{\textdagger\textdagger}
+  \end{align*}
+\end{theorem}
+We can find the residue in a variety of ways.
+\begin{table}[h!]
+  \centering
+  \renewcommand{\arraystretch}{1.75}
+  \begin{tabular}{c|c}
+    Type & Method \\
+    \hline\hline
+    $n$-th order pole & $\displaystyle\frac{1}{\left( n-1 \right)!}\diff{^{n-1}}{z^{n-1}}\left( \left( z-a \right)^nf(z) \right)$\\
+    simple pole & $\displaystyle\lim_{z\rightarrow a}\left( z-a \right)f(z)$\\
+    $f = \frac{p}{q}$,$q(a)$ simple zero & $\displaystyle \frac{p(a)}{q'(a)}$
+    %pole at infinity & $\displaystyle\lim_{z\rightarrow 0} \left( -\frac{1}{z^2}f\left( \frac{1}{z} \right) \right)$
+  \end{tabular}
+  \caption{Finding $\Res\left[ f(z),a \right]$}
+\end{table}
+%\begin{itemize}
+%  \item If we're given a Laurent series, just take the coefficient $c_{-1}$.
+%  \item If we have a simple pole at $z=a$, we get
+%    \begin{align*}
+%      \Res\left[ f(z),a \right] &= \lim_{z\rightarrow a}\left( \left( z-a \right)f(z) \right).
+%    \end{align*}
+%  \item If $f(z) =\frac{p(z)}{q(z)}$ with $p,q$ analytic, and $q(a)$ is a simple zero, we take
+%    \begin{align*}
+%      \Res\left[ f(z),a \right] &= \frac{p(a)}{q'(a)}.
+%    \end{align*}
+%  \item 
+%\end{itemize}
+
+\begin{example}
+  We will find the residue for $\cot(z)$ for each of the residues.
+  \begin{align*}
+    \Res\left[ \cot(z), n\pi\right] &= \lim_{z\rightarrow n\pi} \left( z-n\pi \right)\frac{\cos(z)}{\sin(z)}\\
+                                    &= \left( -1 \right)^{n} \lim_{z\rightarrow n\pi} \frac{z-n\pi}{\sin(z)}\\
+                                    &= \left( -1 \right)^{n} \lim_{z\rightarrow n\pi}\frac{z-n\pi}{\left( -1 \right)^{n}\sin\left( z-n\pi \right)}\\
+                                    &= 1.
+  \end{align*}
+\end{example}
+\begin{example}
+  We may find
+  \begin{align*}
+    \Res\left[ \frac{z}{\sinh(z)},in\pi \right] &= \frac{z}{\diff{}{z}\left( \sinh(z) \right)}\Biggr\vert_{z=in\pi}\\
+                                                &= \frac{in\pi}{\cosh(in\pi)}\\
+                                                &= \left( -1 \right)^nin\pi
+  \end{align*}
+\end{example}
+\begin{example}
+  Let's evaluate 
+  \begin{align*}
+    \oint_{C} \frac{(z-1)\left( z-2 \right)}{z\left( z+1 \right)\left( 3-z \right)}.
+  \end{align*}
+  Finding the residue at each pole, we get
+  \begin{align*}
+    \res\left[ f(z),0 \right] &= \frac{2}{3}\\
+    \res\left[ f(z),-1 \right] &= -\frac{3}{2}\\
+    \res\left[ f(z),3 \right] &= -\frac{1}{6}.
+  \end{align*}
+  These are evaluated using the \href{https://en.wikipedia.org/wiki/Heaviside_cover-up_method}{cover-up method}.\newline
+
+  Now, we may find the integral by taking
+  \begin{align*}
+    \oint_{\left\vert z \right\vert = 2}f(z)\:dz &= -i\frac{5\pi}{3}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Let
+  \begin{align*}
+    f(z) &= \frac{1}{z^2\sinh(z)}\\
+         &= \frac{1}{-iz^2\sin\left( iz \right)}.
+  \end{align*}
+  The simple zeros of $\sinh(z)$ are at $in\pi$, so we have an order $3$ pole at $z = 0$
+  \begin{align*}
+    \res\left[ f(z),0 \right] &= \frac{1}{\left( n-1 \right)!} \diff{^{2}}{z^2} \left[ z^3f(z) \right]\biggr\vert_{z=0}\\
+                              &= \frac{1}{2}\diff{^2}{z^2}\left( \frac{z}{\sinh(z)} \right)\biggr\vert_{z=0}\\
+                              &= -\frac{1}{6}.
+  \end{align*}
+  Thus, integrating about the unit circle, we get
+  \begin{align*}
+    \oint_{\left\vert z \right\vert = 1} &= -\frac{i\pi}{3}.
+  \end{align*}
+  If we were to evaluate via the Laurent series, we would have
+  \begin{align*}
+    \frac{1}{z^2\sinh(z)} &= \frac{1}{z^2}\left( \frac{1}{z + z^2/3 + z^5/5! + \cdots} \right)\\
+                          &= \frac{1}{z^3}\left( \frac{1}{1 + z^2/3! + z^4/5! + \cdots} \right)\\
+                          &\approx \frac{1}{z^3}\left( 1 - \frac{z^2}{3!} + \cdots \right)\\
+                          &= \frac{1}{z^3} - \frac{1}{6z} + \cdots,
+  \end{align*}
+  giving a residue of $-\frac{1}{6}$.\newline
+
+  Instead of using the contour on the unit circle, if we want to use a circle of radius $4$, we get the residues at $z = \pm i\pi$. To evaluate this, we take
+  \begin{align*}
+    \res\left[ f(z),i\pi \right] &= \frac{1}{-\pi^2\left( -1 \right)}\\
+                                 &= \frac{1}{\pi^2}\\
+    \res\left[ f(z),-i\pi \right] &= \frac{1}{\pi^2}.
+  \end{align*}
+  Evaluating the integral, we would get
+  \begin{align*}
+    \oint_{C}f(z)\:dz &= 2\pi i \left( -\frac{1}{6} + \frac{2}{\pi^2} \right)\\
+                      &= -\frac{i\pi}{3} + \frac{4i}{\pi}.
+  \end{align*}
+  
 \end{example}
 
 \end{document}

@@ -897,5 +897,120 @@ the eigenvalues are
   \end{align*}
   Now, we want to find $\Phi(0)$, or $\Phi\left( t_0 \right)$. Furthermore, we need to find $\Phi^{-1}(0)$, or $\Phi^{-1}\left( t_0 \right)$.
 \end{example}
+\begin{example}[Implementing Initial Conditions]
+  Looking back at our equation
+  \begin{align*}
+    \diff{\mathbf{x}}{t} &= A\mathbf{x},
+  \end{align*}
+  we may apply the initial condition of
+  \begin{align*}
+    \mathbf{x}\left( t_0 \right) &= \mathbf{x}_0.
+  \end{align*}
+  We use the matrix
+  \begin{align*}
+    A &= \begin{pmatrix}3 & 1 \\ 1 & 3\end{pmatrix},
+  \end{align*}
+  with the initial condition
+  \begin{align*}
+    \mathbf{x}_0 &= \begin{pmatrix}4\\15\end{pmatrix}.
+  \end{align*}
+  Generally our approach to solving this kind of problem, we take the eigenvectors and eigenvalues, giving
+  \begin{align*}
+    \lambda_1 &= 4\\
+    \mathbf{v}_1 &= \begin{pmatrix}1\\1\end{pmatrix}\\
+    \lambda_2 &= 2\\
+    \mathbf{v}_2 &= \begin{pmatrix}1\\-1\end{pmatrix},
+  \end{align*}
+  and associated solutions of
+  \begin{align*}
+    \mathbf{x}_1 &= \begin{pmatrix}e^{4t}\\e^{4t}\end{pmatrix}\\
+    \mathbf{x}_2 &= \begin{pmatrix}e^{2t} \\ -e^{2t}\end{pmatrix}.
+  \end{align*}
+  Then, we form a fundamental matrix of solutions:
+  \begin{align*}
+    \Phi(t) &= \begin{pmatrix}e^{4t} & e^{2t} \\ e^{4t} & -e^{2t}\end{pmatrix}.
+  \end{align*}
+  Note that, for any vector of constants $\mathbf{c}$, we have
+  \begin{align*}
+    \mathbf{x}(t) &= \Phi(t)\mathbf{c}
+  \end{align*}
+  is a solution of $\diff{\mathbf{x}}{t} = A\mathbf{x}$.\newline
+
+  To find $\mathbf{c}$, we see that
+  \begin{align*}
+    \mathbf{x}_0 &= \Phi(0)\mathbf{c},
+  \end{align*}
+  so that
+  \begin{align*}
+    \mathbf{x}(t) &= \Phi(t)\Phi^{-1}(0)\mathbf{x}_0
+  \end{align*}
+  is the solution to our initial value problem.\newline
+
+  Calculating
+  \begin{align*}
+    \Phi(0) &= \begin{pmatrix}1 & 1 \\ 1 & -1\end{pmatrix},
+  \end{align*}
+  we find
+  \begin{align*}
+    \Phi^{-1}(0) &= \frac{1}{2} \begin{pmatrix}1 & 1\\1 & -1\end{pmatrix}.
+  \end{align*}
+  Thus, we get the solutions of
+  \begin{align*}
+    \mathbf{x}(t) &= \begin{pmatrix}e^{4t} & e^{2t} \\ e^{4t} & -e^{2t} \end{pmatrix} \frac{1}{2}\begin{pmatrix}1 & 1 \\ 1 & -1\end{pmatrix} \begin{pmatrix}4\\15\end{pmatrix}\\
+                  &= \begin{pmatrix}\frac{19}{2}e^{4t} - \frac{11}{2}e^{2t} \\ \frac{19}{2}e^{4t} + \frac{11}{2}e^{2t}\end{pmatrix}.
+  \end{align*}
+  Note that we may define
+  \begin{align*}
+    \Psi(t) &= \Phi(t) \Phi^{-1}(0),
+  \end{align*}
+  giving
+  \begin{align*}
+    \mathbf{x}(t) &= \Psi(t)\mathbf{x}_0.
+  \end{align*}
+  We may calculate
+  \begin{align*}
+    \Psi(t) &= \Phi(t) \Phi^{-1}(0)\\
+            &= \frac{1}{2} \begin{pmatrix}e^{4t} & e^{2t} \\ e^{4t} & -e^{2t}\end{pmatrix} \begin{pmatrix}1 & 1 \\ 1 & -1\end{pmatrix}\\
+            &= \frac{1}{2} \begin{pmatrix}e^{4t} + e^{2t} & e^{4t} - e^{2t} \\ e^{4t} - e^{2t} & e^{4t} + e^{2t}\end{pmatrix}.
+  \end{align*}
+\end{example}
+\begin{example}[The Matrix Exponential]
+  When we have a single first-order equation, such as
+  \begin{align*}
+    \diff{y}{t} &= 3y,
+  \end{align*}
+  with initial condition $y(0)$, we solve it by taking $y(t) = \pi e^{3t}$.\newline
+
+  Similarly, if we're given
+  \begin{align*}
+    \diff{\mathbf{x}}{t} &= A\mathbf{x},
+  \end{align*}
+  we may want to know if there is an analogous $e^{At}$.\newline
+
+  In fact, there is. Using the Taylor expansion, we have
+  \begin{align*}
+    e^{At} &= I + At + A^2 \frac{t^2}{2} + A^{3}\frac{t^3}{6} + \cdots\\
+           &= \sum_{k=0}^{\infty}A^{k}\frac{t^k}{k!}.
+  \end{align*}
+  Note that we may take $P$ to be the matrix of unit eigenvectors of $A$, and $D$ to be the matrix of eigenvalues corresponding to column eigenvectors
+  \begin{align*}
+    A &= PDP^{-1}.
+  \end{align*}
+  This is assuming $A$ can be diagonalized. This gives $D = P^{-1}AP$.\newline
+
+  Now, if $A$ can be diagonalized, we can take
+  \begin{align*}
+    e^{At} &= I  + \left( PDP^{-1} \right)t + \left( PDP^{-1} \right)^2\frac{t^2}{2} + \cdots\\
+           &= \sum_{k=0}^{\infty}\left( PDP^{-1} \right)^{k}\frac{t^k}{k!}\\
+           &= \sum_{k=0}^{\infty}PD^{k}P^{-1}\frac{t^k}{k!}\\
+           &= P\left( \sum_{k=0}^{\infty} D^k\frac{t^k}{k!}\right)P^{-1}.
+  \end{align*}
+  We can find the power on any diagonal matrix much more easily than we can on a general matrix. In particular, this gives
+  \begin{align*}
+    e^{At} &= P \begin{pmatrix}e^{\lambda_1 t} & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & e^{\lambda_n t}\end{pmatrix}P^{-1}
+  \end{align*}
+  
+\end{example}
+
 
 \end{document}

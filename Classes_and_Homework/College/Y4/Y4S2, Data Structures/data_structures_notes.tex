@@ -489,5 +489,56 @@ public class BinarySearch{
   \end{lstlisting}
   Insertion sort swaps downward only if we need to do so; it performs the same amount of comparisons, but it performs way fewer swaps.\newline
 
-  It may be shocking, then, to see that both selection sort and insertion sort have the same time complexity of $O\left(n^2\right)$. However, the advantage of insertion sort over selection sort is that it works well with nearly sorted data much better than selection sort does.
+  It may be shocking, then, to see that both selection sort and insertion sort have the same time complexity of $O\left(n^2\right)$. However, the advantage of insertion sort over selection sort is that it works well with nearly sorted data much better than selection sort does.\newline
+  
+  Now, we want to understand more efficient sorting algorithms. Specifically, we will understand quicksort.\newline
+
+  The quicksort begins by a partitioning algorithm that ``sorts'' our array by selecting a pivot and moving elements to one side or the other of the pivot.
+  \begin{lstlisting}[style=javastyle,title=Partition Algorithm]
+  int partition(int[] numbers, int lowIndex, int highIndex) {
+   // Pick middle element as the pivot
+   int midpoint = lowIndex + (highIndex - lowIndex) / 2;
+   int pivot = numbers[midpoint];
+
+   boolean done = false;
+   while (!done) {
+      while (numbers[lowIndex] < pivot) {
+         lowIndex++;
+      }
+      while (pivot < numbers[highIndex]) {
+         highIndex--;
+      }
+ 
+      // If lowIndex and highIndex have met or crossed each
+      // other, then partitioning is done
+      if (lowIndex >= highIndex) {
+         done = true;
+      }
+      else {
+         // Swap numbers[lowIndex] and numbers[highIndex]
+         int temp = numbers[lowIndex];
+         numbers[lowIndex] = numbers[highIndex];
+         numbers[highIndex] = temp;
+       
+         // Update lowIndex and highIndex
+         lowIndex++;
+         highIndex--;
+      }
+   }
+   return highIndex; // highIndex is weirdly named here; it refers to the upper bound of the lower partition
+  }
+  \end{lstlisting}
+  After we implement our partition algorithm, our algorithm recursively sorts each sub-array using the partition method until we finish.
+  \begin{lstlisting}[style=javastyle,title=Quicksort Algorithm]
+  void quicksort(int[] numbers, int lowIndex, int highIndex) {
+   if (highIndex <= lowIndex) {
+      return;
+   }
+
+   int lowEndIndex = partition(numbers, lowIndex, highIndex); //lowEndIndex denotes the upper bound of the lower partition
+   quicksort(numbers, lowIndex, lowEndIndex);//now, we partition each partite set in our array
+   quicksort(numbers, lowEndIndex + 1, highIndex);
+}
+  \end{lstlisting}
+  Note that worst case run time for quicksort is $O\left(n^2\right)$, but this only occurs if every partition only consists of one element.
 \end{document}
