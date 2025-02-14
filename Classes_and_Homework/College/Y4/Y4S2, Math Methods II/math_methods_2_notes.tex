@@ -695,8 +695,9 @@ We can find the residue in a variety of ways.
     \hline\hline
     $n$-th order pole & $\displaystyle\frac{1}{\left( n-1 \right)!}\diff{^{n-1}}{z^{n-1}}\left( \left( z-a \right)^nf(z) \right)$\\
     simple pole & $\displaystyle\lim_{z\rightarrow a}\left( z-a \right)f(z)$\\
-    $f = \frac{p}{q}$,$q(a)$ simple zero & $\displaystyle \frac{p(a)}{q'(a)}$
-    %pole at infinity & $\displaystyle\lim_{z\rightarrow 0} \left( -\frac{1}{z^2}f\left( \frac{1}{z} \right) \right)$
+    $f = \frac{p}{q}$,$q(a)$ simple zero & $\displaystyle \frac{p(a)}{q'(a)}$\\
+    pole at infinity & $\displaystyle\lim_{z\rightarrow 0} \left( -\frac{1}{z^2}f\left( \frac{1}{z} \right) \right)$\\
+    pole at infinity, $\lim_{|z|\rightarrow\infty}f(z) =0$& $\displaystyle -\lim_{|z|\rightarrow\infty}\left( zf(z) \right)$
   \end{tabular}
   \caption{Finding $\Res\left[ f(z),a \right]$}
 \end{table}
@@ -784,7 +785,94 @@ We can find the residue in a variety of ways.
     \oint_{C}f(z)\:dz &= 2\pi i \left( -\frac{1}{6} + \frac{2}{\pi^2} \right)\\
                       &= -\frac{i\pi}{3} + \frac{4i}{\pi}.
   \end{align*}
-  
 \end{example}
+\begin{example}
+  We will now use the residue theorem to evaluate a real-valued integral. Consider
+  \begin{align*}
+    I &= \int_{-\infty}^{\infty} \frac{1}{x^2 + 1}\:dx.
+  \end{align*}
+  Since this integral goes to zero, we will evaluate
+  \begin{align*}
+    I' &= \oint_{C} \frac{1}{z^2 + 1}\:dz,
+  \end{align*}
+  where $C$ is a semicircle with radius $r$ along the real axis from $-r$ to $r$ ``pointing upward,'' so to speak.\newline
 
+  This gives
+  \begin{align*}
+    \oint_{C} \frac{1}{z^2 + 1}\:dz &= \int_{C_r}f(z)\:dz + \int_{-r}^{r} f(x)\:dx,
+  \end{align*}
+  which, sending $r$ to infinity, is equal to
+  \begin{align*}
+    I &= \int_{-\infty}^{\infty} f(x)\:dx.
+  \end{align*}
+  However, since our expression $\frac{1}{z^2 + 1}$ has poles at $i$ and $-i$, our semicircle gives
+  \begin{align*}
+    \oint_{C}\frac{1}{z^2 + 1} &= 2\pi i\res\left[ f(z),i \right]\\
+                               &= 2\pi i\lim_{z\rightarrow i}\frac{1}{z+i}\\
+                               &= 2\pi i\frac{1}{2i}\\
+                               &= \pi.
+  \end{align*}
+\end{example}
+  If we have a finite number of isolated singularities, we are always able to draw a contour that encloses all of them, which allows us to use the residue theorem.\newline
+
+  Now, we know that we can have poles at infinity --- and that any positively-oriented contour in the plane is a negatively-oriented contour around $\infty$. Thus, if we have a contour surrounding all our finite singularities, we get
+  \begin{align*}
+    \sum_{i}\res\left[ f(z),a_i \right] &= -\res\left[ f(z),\infty \right]\\
+    \res\left[ f(z),\infty \right] + \sum_{i}\left[ f(z),a_i \right] &= 0,
+  \end{align*}
+  as we're doing the same integral, but in negative orientation about $\infty$ and positive orientation about our singularities. \newline
+
+    We have
+    \begin{align*}
+      \res\left[ f(z), \infty\right] &= \res\left[ -\frac{1}{z^2}f\left( \frac{1}{z} \right),0 \right].
+    \end{align*}
+  \begin{example}
+    Now, recalling
+    \begin{align*}
+      f(z) &= \frac{\left( z-1 \right)\left( z-2 \right)}{z\left( z+1 \right)\left( 3-z \right)}.
+    \end{align*}
+    The residues are
+    \begin{align*}
+      \res\left[ f(z),0 \right] &= 2/3\\
+      \res\left[ f(z),-1 \right] &= -3/2\\
+      \res\left[ f(z),3 \right] &= -1/6.
+    \end{align*}
+    Now, calculating the residue at infinity, we have
+    \begin{align*}
+      \res\left[f(z),\infty \right] &= \res\left[ -\frac{1}{z^2}\frac{\left( 1/z-1 \right)\left( 1/z-2 \right)}{1/z\left( 1/z + 1 \right)\left( 3-1/z \right)},0 \right]\\
+                                    &= -\res\left[ \frac{\left( z-1 \right)\left( 2z-1 \right)}{z\left( z+1 \right)\left( 3z-1 \right)} \right]\\
+                                    &= 1.
+    \end{align*}
+  \end{example}
+  Now, if $\lim_{|z|\rightarrow\infty}f(z) = 0$, then $f$ is pure Laurent series. In that case, if there is a residue, then we find the residue by evaluating
+  \begin{align*}
+    \res\left[ f(z),\infty \right] &= -\lim_{|z|\rightarrow\infty} zf(z)
+  \end{align*}
+  \begin{example}
+    Consider functions of the form
+    \begin{align*}
+      f(z) &= \frac{p(z)}{q(z)},
+    \end{align*}
+    where $q$ is a higher-order polynomial than $p$.\newline
+
+    If $q$ has first-order zeros $a$ and second-order zeros at $b$, then
+    \begin{align*}
+      f(z) &= \sum_{k=1}^{n}\frac{A_k}{z-a_k} + \frac{B_k}{z-b_k} + + \frac{C_k}{\left( z-b_k \right)^2}.
+    \end{align*}
+    Note that the coefficients are actually residues. This gives
+    \begin{align*}
+      A_k &= \res\left[ f(z),a_k \right]\\
+      B_k &= \res\left[ f(z),b_k \right]\\
+      C_k &= \res\left[ (z-b_k)f(z),b_k \right].
+    \end{align*}
+    For instance,
+    \begin{align*}
+      \frac{\left( z-1 \right)\left( z-2 \right)}{z\left( z+1 \right)\left( 3-z \right)} &= \frac{2}{3}\frac{1}{z} - \frac{1}{6}\frac{1}{z-3} - \frac{3}{2}\frac{1}{z+1}.
+    \end{align*}
+    Now, we may also have
+    \begin{align*}
+      \frac{\left( z-1 \right)\left( z-2 \right)}{z\left( z+1 \right)^2\left( 3-z \right)} &= \frac{2}{3}\frac{1}{z} - \frac{1}{24}\frac{1}{z-3} - \frac{5}{8}\frac{1}{z+1} - \frac{3}{2}\frac{1}{\left( z+1 \right)^2}.
+    \end{align*}
+  \end{example}
+  
 \end{document}
