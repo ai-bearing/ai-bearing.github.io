@@ -1089,6 +1089,107 @@ Now, we may see some examples that belong to these categories.
     T = \begin{pmatrix}I_n & A \\ A^{\ast} & I_n\end{pmatrix}
   \end{align*}
   is positive, the map
+  \begin{align*}
+    \phi_{2n} \begin{pmatrix}\begin{pmatrix}I_n & A \\ A^{\ast} & I_n\end{pmatrix}\end{pmatrix}  &= \begin{pmatrix} \begin{pmatrix}\phi_n\left( I_n \right) & \phi_n\left( A \right) \\ \phi_n\left( A \right)^{\ast} & \phi_n\left( I_n \right)\end{pmatrix} \end{pmatrix}
+  \end{align*}
+  is positive, so $\norm{\phi_n\left( A \right)} \leq \norm{\phi_n\left( I_n \right)} = \norm{\phi(1)}$.
 \end{proof}
+\subsubsection{Schur Products and Tensor Products}%
+We will apply the previous results on positive and completely positive maps on the Schur product.
+\begin{definition}
+  If $A = \left( a_{ij} \right)_{ij}$ and $B = \left( b_{ij} \right)_{ij}$, then the Schur product is defined by
+  \begin{align*}
+    A\ast B &= \left( a_{ij}b_{ij} \right)_{ij}.
+  \end{align*}
+\end{definition}
+Note that for a fixed $A$, we get a linear map
+\begin{align*}
+  S_A\left( B \right) &= A\ast B.
+\end{align*}
+To study the Schur product, we review some results on tensor products.\newline
 
+Let $A\in \Mat_n\left( \C \right)$ and $B\in \Mat_m\left( \C \right)$. Then, $A\otimes B$ is the linear transformation on $\C^n\otimes \C^m = \C^{nm}$, defined by $A\otimes B\left( x\otimes y \right) = Ax\otimes By$ with the unique linear extension provided by the tensor product.\newline
+
+Note that we have $\norm{A\otimes B} = \norm{A}\norm{B}$, which is shown by writing $A\otimes B = \left( A\otimes I \right)\left( I\otimes B \right)$.\newline
+
+Now, letting $\set{e_1,\dots,e_n}$ and $\set{f_1,\dots,f_m}$ be our canonical orthonormal bases for $\C^n$ and $\C^m$ respectively, we may order our basis as $e_1\otimes f_i$, then $e_2\otimes f_i$, etc., yielding the block matrices for $A\otimes B$ is
+\begin{align*}
+  \begin{pmatrix}a_{11}B & \cdots & a_{1n}B \\ \vdots & \ddots & \vdots \\ a_{n1}B &\cdots & a_{nn}B\end{pmatrix}.
+\end{align*}
+This matrix is known as the Kronecker product of $A$ and $B$. Now, similarly, we may order our basis by $e_i\otimes f_1$, then $e_i\otimes f_2$, etc., yielding a different block matrix of the form
+\begin{align*}
+  \begin{pmatrix}b_{11}A &\cdots & b_{1m}A \\ \vdots & \ddots & \vdots \\ b_{m1}A & \cdots & b_{mm} A\end{pmatrix},
+\end{align*}
+which is the Kronecker product of $B$ and $A$.\newline
+
+Now, since both of these matrices represent the same linear transformation, they are unitarily equivalent, given by the permutation matrix that reorders the basis vectors. One obtains the $(k,\ell)$ entry of the $(i,j)$ block of $b_{ij}A$ by taking the $(i,j)$ entry of the $(k,\ell)$ block $a_{k,\ell}B$. We will call this the \textit{canonical shuffle}.\newline
+
+Now, we let $A$ and $B$ be elements of $\Mat_n\left( \C \right)$, and define $V\colon \C^n\rightarrow \C^n\otimes \C^n$ to be the isometry given by $V\left( e_i \right) = e_i\otimes e_i$. We will show that $V^{\ast}\left( A\otimes B \right)V = A\ast B$. Note that
+\begin{align*}
+  \iprod{V^{\ast}\left( A\otimes B \right)Ve_j}{e_i} &= \iprod{\left( A\otimes B \right)\left( e_j\otimes e_j \right)}{e_i\otimes e_i}\\
+                                                     &= \iprod{Ae_j}{e_i} \iprod{Be_j}{e_i}\\
+                                                     &= a_{ij}b_{ij}\\
+                                                     &= \iprod{A\ast B e_{j}}{e_i}.
+\end{align*}
+Thus,
+\begin{align*}
+  \norm{S_A(B)} &\leq \norm{V^{\ast}\left( A\otimes B \right)V}\\
+                &\leq \norm{A}\norm{B},
+\end{align*}
+so that
+\begin{align*}
+  \norm{S_A}\leq \norm{A}.
+\end{align*}
+Now, if $\left( B_{ij} \right)_{ij}\in \Mat_k\left( \Mat_n\left( \C \right) \right)$, then
+\begin{align*}
+  \left( S_{A} \right)\left( \left( B_{ij} \right)_{ij} \right) &= \left( V^{\ast}\left( A\otimes B_{ij} \right)V \right)_{ij}\\
+                                                                &= \begin{pmatrix}V^{\ast} & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & V^{\ast}\end{pmatrix} A\otimes \begin{pmatrix}B_{11} & \cdots & B_{1n}\\\vdots & \ddots & \vdots \\ B_{n1} & \cdots & B_{nn}\end{pmatrix} \begin{pmatrix}V & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & V\end{pmatrix},
+\end{align*}
+so that $\norm{\left( S_A \right)_k}\leq \norm{A}$. Thus, $\norm{S_A}_{\cb}\leq \norm{A}$.\newline
+
+However, this isn't a really good estimate. For instance, if $A$ is the matrix consisting of all $1$s, then the norm of $A$ is $n$, while $\norm{S_A} = 1$.\newline
+
+We will prove that if $A$ is positive, then $S_A$ is completely positive. Thus, for positive matrices, we are able to obtain $\norm{S_A}_{\cb}$ by finding
+\begin{align*}
+  \norm{S_A} &= \norm{S_A(I)}\\
+             &= \norm{S_A}_{\cb}\\
+             &= \max\set{a_{ii} | i=1,\dots,n}.
+\end{align*}
+Now, if $A$ is not positive, then obtaining this norm is a bit more difficult. We can decompose $A = \left( P_1 - P_2 \right) + i\left( P_3 - P_4 \right)$, and get
+\begin{align*}
+  \norm{S_A}_{\cb} \leq \norm{S_{P_1}}_{\cb}  + \norm{S_{P_2}}_{\cb} + \norm{S_{P_3}}_{\cb} + \norm{S_{P_4}}_{\cb},
+\end{align*}
+but unfortunately this estimate isn't really enough.\newline
+
+Now, we will characterize when the Schur product is completely positive.
+\begin{theorem}
+  Let $A = \left( a_{ij} \right)_{ij}\in \Mat_n\left( \C \right)$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $A$ is positive;
+    \item $S_A\colon \Mat_n\left( \C \right)\rightarrow \Mat_n\left( \C \right)$ is positive;
+    \item $S_A\colon \Mat_n\left( \C \right)\rightarrow \Mat_n\left( \C \right)$ is completely positive.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  We have that (iii) implies (ii), and (ii) implies (i) by choosing $J$ to be the matrix consisting of $1$, which is positive, meaning $S_A\left( J \right) = A$. Thus, we must prove that (i) implies (iii).\newline
+
+  Note that if $A$ and $B$ are positive, then $A\otimes B$ is positive. This follows from the fact that $A\otimes B = \left( A^{1/2}\otimes B^{1/2} \right)^2$.\newline
+
+  Now, if $B\in \Mat_n\left( \C \right)$ is positive, then
+  \begin{align*}
+    S_A\left( B \right) &= V^{\ast}\left( A\otimes B \right)V\\
+                        &= \left( \left( A^{1/2}\otimes B^{1/2} \right)V \right)^{\ast}\left( \left( A^{1/2}\otimes B^{1/2} \right)V \right)
+  \end{align*}
+  is positive, meaning (i) implies (ii).\newline
+
+  Now, to see that (i) implies (iii), we let $B = \left( B_{ij} \right)_{ij}\in \Mat_k\left( \Mat_n\left( \C \right) \right)$, and write $B = \left( X_{ij} \right)_{ij}^{\ast}\left( X_{ij} \right)_{ij}$. We see that
+  \begin{align*}
+    \left( S_{A} \right)_k \left( B \right) &= \left( V^{\ast}\left( A\otimes B_{ij} \right)V \right)\\
+                                            &= \left( \left( A^{1/2}\otimes X_{ij} \right)V \right)^{\ast}\left( \left( A^{1/2}\otimes X_{ij} \right)V \right),
+  \end{align*}
+  meaning $\left( S_A \right)_{k}$ is positive.
+\end{proof}
+There is an analogous theory of Schur products in the space $\B\left( \ell_2 \right)$, where we consider the bounded operators as infinite matrices. If we mandate that $A\in \B\left( \ell_2 \right)_{+}$, then we can use a similar line of argumentation to show that $S_A$ is completely positive., but this requires a bit more care as the matrix consisting of all $1$s regarded as an operator on $\ell_2$ is not a bounded operator.\newline
+
+Now, we can show a pretty useful result, which is that bounded linear functionals are not only positive, but completely positive.
 \end{document}
