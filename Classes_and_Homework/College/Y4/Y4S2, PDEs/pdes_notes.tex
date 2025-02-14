@@ -1009,8 +1009,169 @@ the eigenvalues are
   \begin{align*}
     e^{At} &= P \begin{pmatrix}e^{\lambda_1 t} & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & e^{\lambda_n t}\end{pmatrix}P^{-1}
   \end{align*}
+\end{example}
+  Given $A$ in the system $\diff{\mathbf{x}}{t} = A\mathbf{x}$, we wish to find $e^{At}$, and show that $e^{At} = \Psi(t)$, where $\Psi(t) = \Phi(t)\Phi^{-1}(0)$.
+\begin{example}
+  Let
+  \begin{align*}
+    A &= \begin{pmatrix}4 & 2 \\ 0 & 4\end{pmatrix}.
+  \end{align*}
+  We see that $A$ has repeated eigenvalues of $4$ and $4$.\newline
+
+  Our first eigenvector is
+  \begin{align*}
+    \mathbf{v} &= \begin{pmatrix}1\\0\end{pmatrix}.
+  \end{align*}
+  Now, evaluating
+  \begin{align*}
+    \left( A - 4I \right)\mathbf{v} &= 0\\
+    \begin{pmatrix}0 & 2\\0 & 0\end{pmatrix} \begin{pmatrix}a\\b\end{pmatrix} &= \begin{pmatrix}0\\0\end{pmatrix},
+  \end{align*}
+  giving $2b = 0$.\newline
+
+  Thus, we're going to need a generalized eigenvector. We have
+  \begin{align*}
+    \begin{pmatrix}0 & 2 \\ 0 & 0\end{pmatrix} \begin{pmatrix}a\\b\end{pmatrix} &= \begin{pmatrix}1\\0\end{pmatrix},
+  \end{align*}
+  giving $\left( A - \lambda I \right)\mathbf{w} = \mathbf{v}_1$. Thus, we have $2b = 1$. Thus, we have
+  \begin{align*}
+    \mathbf{w} &= \begin{pmatrix}0\\1/2\end{pmatrix}.
+  \end{align*}
+  Now, we have
+  \begin{align*}
+    \mathbf{x}_1(t) &= e^{4t}\begin{pmatrix}1\\0\end{pmatrix}\\
+                    &= \begin{pmatrix}e^{4t} \\ 0\end{pmatrix}\\
+    \mathbf{x}_2 (t) &= te^{4t} \begin{pmatrix}1\\0\end{pmatrix} + e^{4t} \begin{pmatrix}0\\1/2\end{pmatrix}\\
+                     &= \begin{pmatrix}te^{4t}\\\frac{1}{2}e^{4t}\end{pmatrix}.
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    \mathbf{x}(t) &= c_1 \mathbf{x}_1(t) + c_2\mathbf{x}_2(t)\\
+                  &= \begin{pmatrix}e^{4t} & te^{4t} \\ 0 & \frac{1}{2}e^{4t}\end{pmatrix} \begin{pmatrix}c_1\\c_2\end{pmatrix}.
+  \end{align*}
+  Now, we see that
+  \begin{align*}
+    \Phi(0) &= \begin{pmatrix}1 & 0 \\ 0 & 1/2\end{pmatrix}\\
+    \Phi^{-1}(0) &= \begin{pmatrix}1 & 0 \\ 0 & 2\end{pmatrix}.
+  \end{align*}
+  Therefore, our matrix exponential is
+  \begin{align*}
+    \Psi(t) &= \begin{pmatrix}e^{4t} & te^{4t} \\ 0 & \frac{1}{2}e^{4t}\end{pmatrix} \begin{pmatrix}1 & 0 \\ 0 & 2\end{pmatrix}\\
+            &= \begin{pmatrix}e^{4t} & 2te^{4t} \\ 0 & e^{4t}\end{pmatrix}.
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    \mathbf{x}(t) &= \Psi(t) \mathbf{x}_0\\
+                  &= \begin{pmatrix}e^{4t} & 2te^{4t} \\ 0 & e^{4t}\end{pmatrix} \mathbf{x}_0.
+  \end{align*}
+  We often refer to $\Psi(t)$ as the flow matrix.\newline
+
+  Now, because $\Psi(0) = I$, we have
+  \begin{align*}
+    \Psi\left( t \right)\Psi\left( -t \right) &= I,
+  \end{align*}
+  meaning that $\Psi\left( -t \right) = \Psi\left( t \right)^{-1}$.
+\end{example}
+\begin{example}
+  Consider
+  \begin{align*}
+    A\mathbf{v}_i &= \lambda_i \mathbf{v}_i
+  \end{align*}
+  as the set of eigenvector equations, giving
+  \begin{align*}
+    \begin{pmatrix}A\mathbf{v}_1 & A\mathbf{v}_2 & \cdots & A\mathbf{v}_n\end{pmatrix} &= \begin{pmatrix}\mathbf{v}_1\lambda_1 & \mathbf{v}_2\lambda_2 & \cdots & \mathbf{v}_n\lambda_n\end{pmatrix}\\
+                                 &= \begin{pmatrix}\mathbf{v}_1 & \mathbf{v}_2 & \cdots & \mathbf{v}_n\end{pmatrix} \begin{pmatrix}\lambda_1 & & & \\ & \lambda_2 & &  \\ & & \ddots & \\ & & & \lambda_n\end{pmatrix},
+  \end{align*}
+  giving the expression $AP = PD$, where $P$ is the set of eigenvectors.\newline
+
+  Now, if we have generalized eigenvectors, we have a different case.\newline
+
+  Consider the case of a chain. We know that
+  \begin{align*}
+    \left( A -\lambda I \right)\mathbf{v}_1 &= 0
+  \end{align*}
+  is the expression of an eigenvector. Now, if we have repeated eigenvalues, we get the second equation of
+  \begin{align*}
+    \left( A - \lambda I \right)\mathbf{v}_2 &= \mathbf{ v }_1\\
+    \left( A - \lambda I \right)\mathbf{v}_3 &= \mathbf{v}_1\\
+                                             &\vdots\\
+    \left( A - \lambda I \right)\mathbf{v}_{n} &= \mathbf{v}_{n-1}.
+  \end{align*}
+  We start by changing these equations to give
+  \begin{align*}
+    A\mathbf{v}_1 &= \lambda\mathbf{v}_1 \\
+    A \mathbf{v}_2 &= \lambda \mathbf{v}_2 + \mathbf{v}_1\\
+    A\mathbf{v}_3 &= \lambda \mathbf{v}_3 + \mathbf{v}_2\\
+                  &\vdots\\
+    A\mathbf{v}_n &= \lambda \mathbf{v}_n + \mathbf{v}_{n-1}.
+  \end{align*}
+  We see that these are effectively the eigenvalue equations with a small perturbation. Constructing the matrix, we have
+  \begin{align*}
+    \begin{pmatrix}A \mathbf{v}_1 & A\mathbf{v}_2 & A\mathbf{v}_3 & \cdots & A\mathbf{v}_n\end{pmatrix} &= \begin{pmatrix}\lambda \mathbf{v}_1 & \lambda \mathbf{v}_2 + \mathbf{v}_1 & \lambda \mathbf{v}_3 + \mathbf{v}_2 & \cdots \lambda \mathbf{v}_n + \mathbf{v}_{n-1}\end{pmatrix}\\
+                                  &= \begin{pmatrix}\mathbf{v}_1 & \mathbf{v}_2 & \mathbf{v}_3 & \cdots & \mathbf{v}_n\end{pmatrix}  \underbrace{\begin{pmatrix} \lambda & 1 &  &  &  \\ & \lambda & 1 &  &  \\&  & \lambda & 1 &  \\ &  &  & \ddots & 1 \\&  &  &  & \lambda \end{pmatrix}}_{J}.
+  \end{align*}
+  We call the matrix $J$ the Jordan canonical form of $A$, and we get the expression $AP = PJ$, where $P$ is the matrix of generalized eigenvectors as columns.\newline
+
+  Now, if we have multiple chains, we get multiple blocks. For instance, if we have the chains $\mathbf{v}_1 \rightarrow \mathbf{v}_2 \rightarrow \mathbf{v}_3$, $\mathbf{v}_4\rightarrow \mathbf{v}_5 \rightarrow \mathbf{v}_6 \to \mathbf{v}_7$, and $\mathbf{v}_8$ being standalone, all for the same eigenvalue $\lambda$. This gives the Jordan canonical form of
+  \begin{align*}
+    J &= \begin{pmatrix}
+\lambda & 1 & 0 &  &  &  &  &  \\
+0 & \lambda & 1 & 0 &  &  &  &  \\
+0 & 0 & \lambda & 0 &  &  &  &  \\
+ &  &  & \lambda & 1 & 0 & 0 &  \\
+ &  &  & 0 & \lambda & 1 & 0 &  \\
+ &  &  & 0 & 0 & \lambda & 1 &  \\
+ &  &  & 0 & 0 & 0 & \lambda &  \\
+ &  &  &  &  &  &  & \lambda 
+\end{pmatrix} 
+  \end{align*}
+  The reason block matrices are useful is that they simplify calculations massively. We may consider the block matrices as
+  \begin{align*}
+    \begin{pmatrix}A & B \\ C & D\end{pmatrix} \begin{pmatrix}E & F \\ G & H\end{pmatrix} &= \begin{pmatrix}AE + BG & AF + BH \\ CE + DG & CF + DH\end{pmatrix}.
+  \end{align*}
+  For instance, if we have $4\times 4$ matrices, we convert this multiplication into 8 $2\times 2$ matrix multiplications. On first glance, this doesn't seem more efficient, but if there are a lot of zeros, it does actually become more efficient.
+\end{example}
+\begin{example}
+  In the general case, our flow matrix is of the form
+  \begin{align*}
+    \Psi\left( t \right) &= e^{At}\\
+                         &= Pe^{Jt}P^{-1}.
+  \end{align*}
+  If
+  \begin{align*}
+    J &= \begin{pmatrix}\lambda & 1  & 0 \\ 0 & \lambda & 1 \\ 0 & 0 & \lambda\end{pmatrix},
+  \end{align*}
+  we now want to find $e^{Jt}$.\newline
+
+  Now, if we had
+  \begin{align*}
+    D &= \begin{pmatrix}\lambda_1 & &  \\ & \lambda_2 & \\ & & \lambda_3\end{pmatrix},
+  \end{align*}
+  then
+  \begin{align*}
+    e^{Dt} &= \begin{pmatrix}e^{\lambda_1t} & & \\ & e^{\lambda_2t} & \\ & & e^{\lambda_3t}\end{pmatrix}.
+  \end{align*}
+  Note that the \href{https://en.wikipedia.org/wiki/Jordan–Chevalley_decomposition}{Jordan--Chevalley decomposition} allows us to take
+  \begin{align*}
+    e^{Jt} &= e^{\left( D + N \right)t}\\
+           &= e^{Dt}e^{Nt}.
+  \end{align*}
+  where
+  \begin{align*}
+    N &= \begin{pmatrix}0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0\end{pmatrix}\\
+    N^{2} &= \begin{pmatrix}0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0\end{pmatrix}\\
+    N^3 &= \begin{pmatrix}0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0\end{pmatrix}.
+  \end{align*}
+  We may calculate
+  \begin{align*}
+    e^{Nt} &= I + Nt + \frac{N^2}{2}t^2 + \frac{N^3}{6}t^3 + \cdots\\
+           &= \begin{pmatrix}1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{pmatrix} + \begin{pmatrix}0 & t & 0 \\ 0 & 0 & t \\ 0 & 0 & 0\end{pmatrix} + \begin{pmatrix}0 & 0 & \frac{t^2}{2} \\ 0 & 0 & 0 \\ 0 & 0 & 0\end{pmatrix}.
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    e^{Jt} &= \begin{pmatrix}e^{\lambda t} & & \\ & e^{\lambda t} & \\ & & e^{\lambda t}\end{pmatrix} \begin{pmatrix}1 & t & \frac{t^2}{2} \\ 0 & 1 & t \\ 0 & 0 & 1\end{pmatrix}.
+  \end{align*}
   
 \end{example}
-
 
 \end{document}
