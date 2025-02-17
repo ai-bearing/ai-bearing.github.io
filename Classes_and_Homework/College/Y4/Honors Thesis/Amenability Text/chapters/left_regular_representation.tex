@@ -325,7 +325,7 @@ We will begin by showing some important results from the theory of self-adjoint 
                       &= 1.
   \end{align*}
 \end{proof}
-\begin{theorem}[Kesten's Criterion]
+\begin{theorem}[Kesten's Criterion]\label{thm:kesten_criterion}
   Let $\Gamma$ be a group with finite symmetric generating set $S$. Then, $\Gamma$ is amenable if and only if
   \begin{align*}
     \norm{M(S)}_{\op} &= 1.
@@ -372,4 +372,99 @@ We will begin by showing some important results from the theory of self-adjoint 
   Thus, $\lambda$ admits an almost-invariant vector, and hence is amenable by Theorem \ref{thm:almost_invariant_vector}.
 \end{proof}
 \subsection{Hulanicki's Criterion}%
-Kesten's criterion is especially useful in establishing a similar result known as Hulanicki's criterion.
+Kesten's criterion is especially useful in establishing a similar result known as Hulanicki's criterion. Hulanicki's criterion uses a similar operator that depends on the left-regular representation, and shows that this operator's norm serves as a bound on the sum of any positive, finitely-supported function on the group $\Gamma$.
+\begin{definition}[{\cite[141]{juschenko_amenability}}]
+  Let $f\in \ell_1\left( \Gamma \right)$. We define the bounded operator $\lambda_{f(t)}$ by
+  \begin{align*}
+    \lambda_{f(t)} &= \sum_{t\in\Gamma}f(t)\lambda_t,
+  \end{align*}
+  where $\lambda_t$ denotes the left-regular representation of $\Gamma$ evaluated at $t$.
+\end{definition}
+\begin{theorem}[{\cite[Theorem A.11]{juschenko_amenability}}]
+  If $\Gamma$ is a discrete group, then $\Gamma$ is amenable if and only if, for any positive, finitely-supported function $f\colon \Gamma\rightarrow \C$, we have
+  \begin{align*}
+    \sum_{t\in\Gamma}f(t) &\leq \norm{\lambda_{f(t)}}_{\op}.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Suppose $\Gamma$ is amenable. Let $f\colon \Gamma\rightarrow \C$ be a positive, finitely supported function, and let $\left( F_n \right)_n$ be a Følner sequence in $\Gamma$ such that for any $s\in \supp(f)$, we have
+  \begin{align*}
+    \frac{\left\vert sF_n \triangle F_n\right\vert}{\left\vert F_n \right\vert} &\leq \frac{1}{n}.
+  \end{align*}
+  Letting
+  \begin{align*}
+    \xi_n &= \frac{1}{\sqrt{\left\vert F_n \right\vert}}\1_{F_n},
+  \end{align*}
+  we note that $\norm{\xi_n}_{\ell_2} = 1$, and that this is the exact same almost-invariant vector for $\lambda$ that we used in \ref{thm:almost_invariant_vector}.\newline
+
+  We will now use the fact that, for any $T\in \B\left( \mathcal{H} \right)$,
+  \begin{align*}
+    \sup_{x\in S_{\mathcal{H}}}\left\vert \iprod{T(x)}{x} \right\vert &\leq \norm{T}_{\op},
+  \end{align*}
+  which follows from Lemma \ref{lemma:operator_norm_hilbert_space}.\newline
+
+  This gives, 
+  \begin{align*}
+    \left\vert \iprod{\left( \sum_{t\in\Gamma}f(t)\lambda_t \right)\left( \xi_n \right)}{\xi_n} \right\vert \leq \norm{\lambda_{f(t)}}_{\op},
+  \end{align*}
+  meaning that, since the quantity on the left side is positive
+  \begin{align*}
+    \sup \left\vert \iprod{\left( \sum_{t\in\Gamma}f(t)\lambda_t \right)\left( \xi_n \right)}{\xi_n} \right\vert &= \lim_{n\rightarrow\infty}\left\vert \iprod{\left( \sum_{t\in\Gamma} f(t)\lambda_t\right)\left( \xi_n \right)}{\xi_n} \right\vert \\
+                                                                                                                 &\leq \norm{\lambda_{f(t)}}_{\op}.
+  \end{align*}
+  Now, notice that, since $\xi_n$ is the almost-invariant vector we constructed in the proof of Theorem \ref{thm:almost_invariant_vector}, we have that $\norm{\lambda_t\left( \xi_n \right)-\xi_n}_{\ell_2}\xrightarrow{n\rightarrow\infty} 0$, or that, for all $s\in\Gamma$, $\xi_n\left( t^{-1}s \right)\xrightarrow{n\rightarrow\infty} \xi_n\left( s \right)$. Therefore, 
+  \begin{align*}
+    \lim_{n\rightarrow\infty} \left\vert \iprod{\left( \sum_{t\in\Gamma}f(t)\lambda_t \right)\left( \xi_n \right)}{\xi_n} \right\vert &= \lim_{n\rightarrow\infty}\left\vert \sum_{t,s\in\Gamma}f(t)\lambda_t\left( \xi_n \right)\left( s \right)\overline{\xi_n}\left( s \right) \right\vert\\
+                                                                                                                                      &= \lim_{n\rightarrow\infty}\left\vert \sum_{t,s\in\Gamma}f(t)\xi_n\left( t^{-1}s \right)\overline{\xi_n}\left( s \right) \right\vert\\
+                                                                                                                                      &= \lim_{n\rightarrow\infty}\left\vert \sum_{t,s\in\Gamma}f(t)\left\vert \xi_n\left( s \right) \right\vert^2 \right\vert\\
+                                                                                                                                      &= \sum_{t\in\Gamma}f(t)\left( \sum_{s\in\Gamma}\left\vert \xi_n\left( s \right) \right\vert^{2} \right)\\
+                                                                                                                                      &= \sum_{t\in\Gamma}f(t).
+  \end{align*}
+  Therefore, there is some constant $C$ such that
+  \begin{align*}
+    \sum_{t\in\Gamma}f(t) &\leq C\norm{\lambda_{f(t)}}_{\op}.
+  \end{align*}
+  Now, to show that $C = 1$, we note that by the definition of convolution (see Definition \ref{def:group_star_algebra}), we have
+  \begin{align*}
+    \left( \sum_{t\in\Gamma}f(t) \right)^{n} &= \sum_{t\in\Gamma}\left( f\ast\cdots\ast f \right)\left( t \right).
+  \end{align*}
+  Similarly,
+  \begin{align*}
+    \left( \lambda_{f(t)} \right)^n &= \left( \sum_{t\in\Gamma}f(t)\lambda_t \right)^{n}\\
+                                    &= \sum_{t\in\Gamma}\left( f\ast\cdots\ast f \right)\left( t \right)\lambda_t\\
+                                    &= \lambda_{(f\ast\cdots\ast f)(t)}.
+  \end{align*}
+  Now, by the definition of the operator norm, we have
+  \begin{align*}
+    \norm{\lambda_{(f\ast\cdots\ast f)(t)}}_{\op} &= \norm{\left( \lambda_{f(t)} \right)^n}_{\op}\\
+                                                    &\leq \norm{\lambda_{f(t)}}_{\op}^{n}.
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    \left( \sum_{t\in\Gamma}f(t) \right)^n &= \sum_{t\in\Gamma}\left( f\ast\cdots\ast f \right)\left( t \right)\\
+                                           &\leq C\norm{\lambda_{\left( f\ast\cdots\ast f \right)\left( t \right)}}_{\op}\\
+                                           &\leq C\left( \norm{\lambda_{f(t)}}_{\op}^n \right),
+  \end{align*}
+  giving
+  \begin{align*}
+    \sum_{t\in\Gamma}f(t) &\leq C^{1/n}\norm{\lambda_{f(t)}}_{\op}.
+  \end{align*}
+  Since $n$ was arbitrary, we have that $C = 1$.\newline
+
+  Now, suppose that for all finitely supported $f$, we have
+  \begin{align*}
+    \sum_{t\in\Gamma}f(t) &\leq \norm{\lambda_{f(t)}}_{\op}.
+  \end{align*}
+  If $f = \1_{E}$ for some finite $E\subseteq \Gamma$, we see that
+  \begin{align*}
+    \norm{\lambda_{f(t)}}_{\op} &= \norm{\sum_{t\in\Gamma}f(t)\lambda_t}_{\op}\\
+                                &= \norm{\sum_{t\in E}\lambda_t}_{\op}\\
+                                &= \left\vert E \right\vert.
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    \norm{\frac{1}{\left\vert E \right\vert}\sum_{t\in\Gamma}\lambda_t}_{\op} &= 1.
+  \end{align*}
+  Therefore, by Kesten's criterion (Theorem \ref{thm:kesten_criterion}), we have that $\Gamma$ is amenable.
+\end{proof}
+
