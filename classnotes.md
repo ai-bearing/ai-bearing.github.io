@@ -10,7 +10,7 @@ Here are the class notes I have written up so far.
 ### [Senior Colloquium: Mathematical Problem Solving](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, Senior Colloquium/senior_colloquium_solutions.pdf)
 ### [Mathematical Methods of Physics II](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, Math Methods II/math_methods_2_notes.pdf)
 ### Miscellaneous
-#### [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
+#### [Folland Exercise Workthrough](http://ai.avinash-iyer.com/Classes_and_Homework/College/Y4/Summer%20Reading/folland_solutions.pdf)
 ## Fall 2024
 ### [Mathematical Methods of Physics](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Math Methods/math_methods_notes.pdf)
 ### [Advanced Linear Algebra](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Advanced Linear/advanced_linear_notes.pdf)
