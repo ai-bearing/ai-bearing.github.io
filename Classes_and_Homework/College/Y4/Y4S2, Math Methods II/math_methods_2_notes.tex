@@ -874,5 +874,194 @@ We can find the residue in a variety of ways.
       \frac{\left( z-1 \right)\left( z-2 \right)}{z\left( z+1 \right)^2\left( 3-z \right)} &= \frac{2}{3}\frac{1}{z} - \frac{1}{24}\frac{1}{z-3} - \frac{5}{8}\frac{1}{z+1} - \frac{3}{2}\frac{1}{\left( z+1 \right)^2}.
     \end{align*}
   \end{example}
-  
+  \subsubsection{Integrating around a Circle}%
+  We want to evaluate angular integrals of the form
+  \begin{align*}
+    \int_{0}^{2\pi} f\left( \sin\left( n\varphi \right),\cos\left( m\varphi \right) \right)\:d\varphi.
+  \end{align*}
+  Now, while this is a real integral over a domain, we may reformulate it about the unit circle by using the substitutions
+  \begin{align*}
+    z &= e^{i\varphi}\\
+    d\varphi &= \frac{dz}{iz},
+  \end{align*}
+  which yields
+  \begin{align*}
+    \sin\left( n\varphi \right) &= \frac{1}{2i} \left( z^n - \frac{1}{z^n} \right)\\
+    \cos\left( m\varphi \right) &= \frac{1}{2}\left( z^m + \frac{1}{z^m} \right).
+  \end{align*}
+  Thus, our integral becomes
+  \begin{align*}
+    \int_{0}^{2\pi} f\left( \sin\left( n\varphi \right),\cos\left( m\varphi \right) \right)\:d\varphi &= \oint_{|z|=1} f\left( \frac{1}{2i}\left( z^n - \frac{1}{z^n} \right), \frac{1}{2}\left( z^m + \frac{1}{z^m} \right) \right) \frac{dz}{iz}.
+  \end{align*}
+  \begin{example}
+    Consider
+    \begin{align*}
+      \int_{0}^{2\pi} \sin^2\left( \varphi \right)\:d\varphi &= -\frac{1}{4}\oint_{|z|=1}\left( z-\frac{1}{z} \right)^2 \frac{dz}{iz}\\
+                                                             &= \frac{i}{4}\oint_{|z|=1} \frac{1}{z^3}\left( z^4 -2z^1 + 1 \right)\:dz\\
+                                                             &= -\frac{1}{2}\pi\res\left[ \frac{1}{z^3}\left( z^4 - 2z^1 + 1 \right),0 \right].
+    \end{align*}
+    The residue at $z = 0$ is $-2$ --- this can be found by dividing out by $z^3$.\newline
+
+    Thus, we get the answer of
+    \begin{align*}
+      \int_{0}^{2\pi} \sin^2\left( \varphi \right)\:d\varphi &= \pi.
+    \end{align*}
+  \end{example}
+  \begin{example}
+    Using residues, we can evaluate a lot of integrals that are quite tricky on their face.
+    \begin{align*}
+      \int_{0}^{2\pi} \frac{\cos\left( 2\varphi \right)}{5-4\sin\left( \varphi \right)}\:d\varphi &= \oint_{|z| = 1} \frac{\frac{1}{2}\left( z^2 + \frac{1}{z^2} \right)}{5 - \frac{4}{2i}\left( z - \frac{1}{z} \right)}\frac{dz}{iz}\\
+                                                                                                  &= -\oint_{|z|=1}\frac{z^4 + 1}{2z^2\left( 2z-i \right)\left( z-2i \right)}\:dz.
+    \end{align*}
+    Now, we have a simple pole at $i/2$, a simple pole at $2i$, and a pole of order $2$ at $0$. We only evaluate the residues at $0$ and $i/2$. We get
+    \begin{align*}
+      \res\left[ f(z),0 \right] &= -\frac{d}{dz}\left( \frac{z^4 + 1}{2z^2\left( 2z-i \right)\left( z-2i \right)} \right)\biggr\vert_{z=0}\\
+                                &= -\frac{5i}{8}\\
+      \res\left[ f(z),i/2 \right] &= \frac{17i}{24}.
+    \end{align*}
+    Thus, we get the result of
+    \begin{align*}
+      \int_{0}^{2\pi} \frac{\cos\left( 2\varphi \right)}{5-4\sin\left( \varphi \right)}\:d\varphi &= 2\pi i \left( -\frac{5i}{8} + \frac{17i}{24} \right)\\
+                                                                                                  &= -\frac{\pi}{6}.
+    \end{align*}
+  \end{example}
+  \subsubsection{Integrating along the Real Axis}%
+  If we want to evaluate integrals along the real axis, such as
+  \begin{align*}
+    I &= \int_{-\infty}^{\infty} f(x)\:dx,
+  \end{align*}
+  we may be curious as to how we may evaluate this.\newline
+
+  To do this, we recall that we created a contour in the upper half-plane of large enough radius $r$, and evaluated the residues inside the contour. We consider the contour to be equal to $C = C_r + l_r$, where $l_r$ is along the real axis and $C_r$ closes our contour. Thus, we get
+  \begin{align*}
+    \oint_{C}f(z)\:dz &= \lim_{r\rightarrow\infty} \left( \int_{-r}^{r} f(x)\:dx + \int_{C_r}^{} f(z)\:dz \right).
+  \end{align*}
+  Note that the polar coordinate Jacobian gives us the requirement that $\lim_{|z|\rightarrow\infty}\left\vert zf(z) \right\vert = 0$. \newline
+
+  When $f(z) = \frac{p(z)}{q(z)}$, this is satisfied when $q$ is of degree at least two more than that of $p$.
+  \begin{example}
+    Consider
+    \begin{align*}
+      \int_{-\infty}^{\infty} \frac{2x + 1}{x^4 + 5x^2 + 4}\:dx &= \oint_{C} \frac{2z + 1}{z^4 + 5z^2 + 4}\:dz.
+    \end{align*}
+    Factoring, we get
+    \begin{align*}
+      \oint_{C}\frac{2z+1}{z^4 + 5z^2 + 4}\:dz &= \oint_{C} \frac{2z+1}{\left( z-2i \right)\left( z+2i \right)\left( z-i \right)\left( z+i \right)}\:dz.
+    \end{align*}
+    We only care about the residues in the upper half-plane. We have residues of
+    \begin{align*}
+      \res\left[ f(z),2i \right] &= -\frac{1}{3} + \frac{i}{12}\\
+      \res\left[ f(z),i \right] &= \frac{1}{3} - \frac{i}{6}.
+    \end{align*}
+    Therefore, we have
+    \begin{align*}
+      \int_{-\infty}^{\infty} \frac{2x+1}{x^4 + 5x^2 + 4}\:dx &= 2\pi i \left( \frac{1}{3} - \frac{i}{6} - \frac{1}{3} + \frac{i}{12} \right)\\
+                                                              &= \frac{\pi}{6}.
+    \end{align*}
+    Note that if we chose our contour to be in the lower half-plane, then we would have a \textit{negatively} oriented contour, and evaluate at the residues in the lower half-plane.
+  \end{example}
+  \begin{example}
+    Consider
+    \begin{align*}
+      \int_{-\infty}^{\infty} \frac{1}{x^3 - i}\:dx &= \oint_{C} \frac{1}{z^3 - i}\:dz\\
+                                                    &= \oint_{C} \frac{1}{\left( z +i \right)\left( z - e^{i\pi/6} \right)\left( z - e^{5i\pi/6} \right)}.
+    \end{align*}
+    Closing $C$ in the lower half-plane, we only need the residue at $-i$. This gives
+    \begin{align*}
+      \oint_{C} \frac{1}{z^3 - i} &= -2\pi i\left( -\frac{1}{3} \right)\\
+                                  &= \frac{2\pi i}{3}.
+    \end{align*}
+  \end{example}
+   Consider integrals of the form
+   \begin{align*}
+     \int_{-\infty}^{\infty} g(x)e^{ikx}\:dx,
+   \end{align*}
+   where $k$ is real.\newline
+
+   Now, we want to know when exactly we are allowed to ``close up'' the semicircle contour.\newline
+
+   We start by assuming $k$ is positive. Closing in the upper half-plane so as to ensure exponential decay, we have
+   \begin{align*}
+     \left\vert \int_{C_r}^{} g(z)e^{ikz}\:dz \right\vert &\leq \int_{C_r}^{} \left\vert g(z)e^{ikz} \right\vert\:dz\\
+                                                          &= \int_{0}^{\pi} \left\vert g\left( re^{i\varphi} \right) \right\vert re^{-kr\sin\left( \varphi \right)}\:d\varphi.
+   \end{align*}
+   Since $\sin\left( \varphi \right) \geq 0$ on the range of integration, the integral vanishes as $r\rightarrow\infty$. Therefore, we are allowed to close up the contour whenever $|g(z)|\rightarrow 0$ as $|z|\rightarrow\infty$.
+   \begin{example}
+     Consider the integral
+     \begin{align*}
+       I &= \int_{-\infty}^{\infty} \frac{\cos\left( kx \right)}{x^2 + 4}\:dx.
+     \end{align*}
+     This gives
+     \begin{align*}
+       I &= \re\left( \int_{-\infty}^{\infty} \frac{e^{ikx}}{x^2 + 4}\:dx \right)\\
+         &= \re\left( \oint_{C}\frac{e^{ikz}}{z^2 + 4}\:dz \right)\\
+         &= \oint_{C}^{} \frac{e^{ikz}}{\left( z-2i \right)\left( z+2i \right)}\:dz.
+     \end{align*}
+     We assume $k > 0$. Then, evaluating at $2i$, we have
+     \begin{align*}
+       I &= \frac{\pi}{2}e^{-2k}.
+     \end{align*}
+     Now, if $k < 0$, we close our contour in the lower half-plane, we get
+     \begin{align*}
+       I &= \frac{\pi}{2}e^{2k}.
+     \end{align*}
+     Thus, our integral is always
+     \begin{align*}
+       I &= \frac{\pi}{2}e^{-2\left\vert k \right\vert}.
+     \end{align*}
+   \end{example}
+   \subsubsection{Non-Circular Contours}%
+   Sometimes, semicircles don't work.
+   \begin{example}
+     Consider
+     \begin{align*}
+       \int_{-\infty}^{\infty} \frac{e^{bx}}{e^x + 1}\:dx,
+     \end{align*}
+     where $0 < b < 1$. Writing our integral, we have
+     \begin{align*}
+       I &= \int_{}^{} \frac{e^{bz}}{e^{z} + 1}\:dz
+     \end{align*}
+     This gives poles at $z = \left( 2n + 1 \right)i\pi$, which means we cannot close this contour with a semicircular arc at $\infty$.\newline
+
+     What may work in this case is by drawing a rectangular contour from $-a$ to $a$ such that it encloses exactly one of the poles of our integrand. The vertical segments of this contour go to zero as we send $a\rightarrow\infty$. We call the segment of the contour along the line $a + 2\pi i$ to $a - 2\pi i$ as $I'$.\newline
+
+     This gives
+     \begin{align*}
+       I + I' &= \oint_{C}\frac{e^{bz}}{e^{z} + 1}\:dz.
+     \end{align*}
+     Now, we constructed $I'$ such that
+     \begin{align*}
+       I' &= \int_{\infty}^{-\infty} \frac{e^{b\left( x + 2\pi i \right)}}{e^{x + 2\pi i} + 1} \:dx\\
+          &= -e^{2\pi i b}\int_{-\infty}^{\infty} \frac{e^{bx}}{e^{x} + 1}\:dx\\
+          &= -e^{2\pi i b} I.
+     \end{align*}
+     Therefore, we have
+     \begin{align*}
+       \oint_{C} \frac{e^{bz}}{e^{z} + 1}\:dz &= I\left( 1-e^{2\pi i b} \right)\\
+                                              &= 2\pi i \res\left[ \frac{e^{bz}}{e^{z} + 1},i\pi \right],
+     \end{align*}
+     giving
+     \begin{align*}
+       I &= \frac{\pi}{\sin\left( \pi b \right)}.
+     \end{align*}
+   \end{example}
+   \begin{example}
+     We want to evaluate
+     \begin{align*}
+       \int_{0}^{\infty} \cos\left( x^2 \right)\:dx\\
+       \int_{0}^{\infty} \sin\left( x^2 \right)\:dx.
+     \end{align*}
+     To evaluate this, we draw a slice-shaped contour going along the real axis and returning to $0$ along $z = re^{i\pi/4}$. Therefore, we evaluate
+     \begin{align*}
+       \oint_{C}e^{iz^2}\:dz &= \int_{0}^{\infty} e^{ix^2}\:dx + 0 + \int_{\infty}^{0} e^{i\left( re^{i\pi/4} \right)^2}e^{i\pi/4}\:dr\\
+                             &= \int_{0}^{\infty} e^{ix^2}\:dx + 0 + \int_{\infty}^{0} e^{-r^2}e^{i\pi/4}\:dr.
+     \end{align*}
+     Thus, we get
+     \begin{align*}
+       \\int_{0}^{\infty} \cos\left( x^2 \right)\:dx &= \int_{0}^{\infty} \sin\left( x^2 \right)\:dx\\
+                                                     &= \frac{1}{2}\sqrt{\frac{\pi}{2}}.
+     \end{align*}
+     
+   \end{example}
+   
 \end{document}
