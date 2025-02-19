@@ -1169,7 +1169,161 @@ the eigenvalues are
   \end{align*}
   Therefore, we have
   \begin{align*}
-    e^{Jt} &= \begin{pmatrix}e^{\lambda t} & & \\ & e^{\lambda t} & \\ & & e^{\lambda t}\end{pmatrix} \begin{pmatrix}1 & t & \frac{t^2}{2} \\ 0 & 1 & t \\ 0 & 0 & 1\end{pmatrix}.
+    e^{Jt} &= \begin{pmatrix}e^{\lambda t} & & \\ & e^{\lambda t} & \\ & & e^{\lambda t}\end{pmatrix} \begin{pmatrix}1 & t & \frac{t^2}{2} \\ 0 & 1 & t \\ 0 & 0 & 1\end{pmatrix}
+  \end{align*}
+\end{example}
+\begin{example}[Constructing Differential Equations]
+  Consider
+  \begin{align*}
+    \diff{^2y}{x^2} + p(x) \diff{y}{x} + q(x)y &= 0,
+  \end{align*}
+  with solutions of $y_2(x) = \cos^2\left( x \right)$ and $y_2(x) = \sin^2\left( x \right)$.\newline
+
+  We start by computing some derivatives.
+  \begin{align*}
+    \diff{y_1}{x} &= -2\cos(x)\sin(x)\\
+            &= -\sin(2x)\\
+    \diff{^2y_1}{x^2} &= -2\cos\left( 2x \right)\\
+             &= -2\sin^2\left( x \right) + 2\cos^2\left( x \right)\\
+             \\
+    \diff{y_2}{x} &= 2\sin(x)\cos(x)\\
+                  &= \sin(2x)\\
+    \diff{^2y_2}{x^2} &= 2\cos(2x)\\
+                      &= 2\cos^2(x)-2\sin^2(x).
+  \end{align*}
+  Substituting, we get
+  \begin{align*}
+    -2\sin^2(x) + 2\cos^2(x) - 2p(x)\cos(x)\sin(x) + q(x)\cos^2(x) &= 0\\
+    2\sin^2(x) + 2\cos^2(x) + 2p(x)\cos(x)\sin(x) + q(x)\sin^2(x) &= 0.
+  \end{align*}
+  If we add these two equations together, we get $q(x) = 0$, meaning that a constant is a solution --- note that $\cos^2(x) + \sin^2(x) = 1$, so we know this is fair.\newline
+
+  If we subtract the second equation from the first equation, we get
+  \begin{align*}
+    -4\sin^2(x) + 4\cos^2(x) - 4p(x)\cos(x)\sin(x) &= 0\\
+    4\cos(2x) - 2p(x)\sin(2x) &= 0.
+  \end{align*}
+  Thus, we want
+  \begin{align*}
+    2p(x)\sin(2x) &= 4\cos(2x),
+  \end{align*}
+  giving
+  \begin{align*}
+    p(x) &= 2\cot(2x).
+  \end{align*}
+  Therefore, our equation is
+  \begin{align*}
+    \diff{^2y}{x^2} + 2\cot(2x)\diff{y}{x} &= 0.
+  \end{align*}
+\end{example}
+\begin{example}
+  Consider
+  \begin{align*}
+    \diff{\mathbf{x}}{t} &= \begin{pmatrix}1 & -2 \\ 5 & 3\end{pmatrix} \mathbf{x}.
+  \end{align*}
+  We see that
+  \begin{align*}
+    \lambda &= 2 \pm 3i\\
+    \mathbf{v} &= \begin{pmatrix}-1\\5\end{pmatrix} \pm i \begin{pmatrix}3\\0\end{pmatrix}.
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    e^{\lambda t} &= e^{2t}\left( \cos\left( 3t \right) + i\sin\left( 3t \right) \right)\\
+    e^{\lambda t} \mathbf{v} &= e^{2t}\left( \cos\left( 3t \right) + i\sin\left( 3t \right) \right) \left( \begin{pmatrix}-1\\5\end{pmatrix} + i \begin{pmatrix}3\\0\end{pmatrix} \right)\\
+    \mathbf{x}_1(t) &= e^{2t} \begin{pmatrix}-\cos(3t) - 3\sin(3t) \\ 5\cos(3t)\end{pmatrix}\\
+    \mathbf{x}_2(t) &= e^{2t} \begin{pmatrix}3\cos(3t) - \sin(3t) \\ 5\sin(3t)\end{pmatrix}.
+  \end{align*}
+  Now, we want to find the fundamental matrix, $\Psi_A(t)$, and the matrix exponential $e^{At}$.\newline
+
+  We start by finding $\Phi_A(t)$ to give
+  \begin{align*}
+    \Phi_A(t) &= \begin{pmatrix}-e^{2t}\cos(3t) - 3e^{2t}\sin(3t) & 3e^{2t}\cos(3t)-e^{2t}\sin(3t)\\ 5e^{2t}\cos(3t) & 5e^{2t}\sin(3t)\end{pmatrix}
+  \end{align*}
+  We have already found the solution
+  \begin{align*}
+    \mathbf{x}(t) &= \Phi(t) \mathbf{c}.
+  \end{align*}
+  However, if we want to apply initial conditions, we need $\Psi_A(t)$ to obtain $\mathbf{x}(t) = \Psi(t)\mathbf{x}_0$.
+  \begin{align*}
+    \Psi_A(t) &= \Phi(t)\Phi_A^{-1}(0)\\
+              &= \begin{pmatrix}-e^{2t}\cos(3t) - 3e^{2t}\sin(3t) & 3e^{2t}\cos(3t)-e^{2t}\sin(3t)\\ 5e^{2t}\cos(3t) & 5e^{2t}\sin(3t)\end{pmatrix} \begin{pmatrix}-1 & 3 \\ 5 & 0\end{pmatrix}^{-1}.
+              \intertext{Notice that $\Phi_A(0)$ has columns equal to the real and imaginary eigenvectors.}
+              &= -\frac{1}{15} \begin{pmatrix}-e^{2t}\cos(3t) - 3e^{2t}\sin(3t) & 3e^{2t}\cos(3t)-e^{2t}\sin(3t)\\ 5e^{2t}\cos(3t) & 5e^{2t}\sin(3t)\end{pmatrix} \begin{pmatrix}0 & -3 \\ -5 & -1\end{pmatrix}.
+  \end{align*}
+  After many error-prone computations, we obtain
+  \begin{align*}
+    \Psi_A(t) &= \begin{pmatrix} e^{2t}\cos(3t) - \frac{1}{3}e^{2t}\sin(3t) & -\frac{2}{3}e^{2t}\sin(3t) \\ \frac{5}{3}e^{2t}\sin(3t) & e^{2t}\cos(3t) + \frac{1}{3}e^{2t}\sin(3t) \end{pmatrix}.
+  \end{align*}
+  To ensure that this is a (plausible) $\Psi(t)$, we check $\Psi_A(0)$, and see that $\Psi_A(0) = I$. Also, it can be verified\footnote{I don't think this is a fun thing to do, but it can indeed be verified.} that
+  \begin{align*}
+    \diff{\Psi_A}{t} &= A \Psi_A(t).
+  \end{align*}
+  Now, finding $\Psi_A$ was quite difficult. What if there's a better way?\newline
+
+  Recall from the eigenvector with conjugate eigenvalues $\lambda = a \pm ib$ equation that
+  \begin{align*}
+    A \left( \mathbf{u} + i\mathbf{w} \right) &= \left( e^{at}\cos\left( bt \right) + ie^{at}\sin\left( bt \right)\right)\left( \mathbf{u} + i\mathbf{w} \right).
+  \end{align*}
+  Now, examining the real part, we have
+  \begin{align*}
+    A\mathbf{u} &= e^{at}\cos\left( bt \right)\mathbf{u} - e^{at}\sin\left( bt \right) \mathbf{w}\\
+    A \mathbf{w} &= e^{at}\cos\left( bt \right)\mathbf{w} + e^{at}\sin\left( bt \right) \mathbf{u}.
+  \end{align*}
+  We will construct a similarity transform
+  \begin{align*}
+    AP &= PD.
+  \end{align*}
+  Now, we may take
+  \begin{align*}
+    P &= \begin{pmatrix}\re\left( \mathbf{v} \right) & \im\left( \mathbf{v} \right)\end{pmatrix}\\
+      &= \begin{pmatrix}\mathbf{u} & \mathbf{w}\end{pmatrix}.
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    D &= \begin{pmatrix}a & b \\ -b & a\end{pmatrix}.
+  \end{align*}
+  We want to find $e^{At} = Pe^{Dt}P^{-1}$. Note that, after much tedious calculation (or noticing that our vector $D$ is a matrix expression for the complex number $a + bi$), we obtain
+  \begin{align*}
+    e^{Dt} &= \begin{pmatrix}e^{at}\cos\left( bt \right) & e^{at}\sin\left( bt \right)\\-e^{at}\sin\left( bt \right) & e^{at}\cos\left( bt \right)\end{pmatrix}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Now, we discuss inhomogeneous systems. Consider the system
+  \begin{align*}
+    \diff{\mathbf{x}}{t} &= A\mathbf{x} + \mathbf{F}(t).
+  \end{align*}
+  We look at the homogeneous system,
+  \begin{align*}
+    \diff{\mathbf{x}}{t} &= A\mathbf{x},
+  \end{align*}
+  which has the solutions of
+  \begin{align*}
+    \mathbf{x}(t) &= \Phi(t) \mathbf{c}\\
+                  &= e^{At}\mathbf{x}_0.
+  \end{align*}
+  When we deal with inhomogeneous solutions in the one-dimensional case, we use methods like variation of parameters or undetermined coefficients.\newline
+
+  Here, we will assume a perturbation --- i.e., our solution is close enough to our fundamental solution.
+  \begin{align*}
+    \mathbf{x}(t) &= \Phi(t)\mathbf{u}(t)\\
+    \diff{\mathbf{x}}{t} &= \diff{\Phi}{t}\mathbf{u}(t) + \Phi(t)\diff{\mathbf{u}}{t}.
+  \end{align*}
+  Plugging in, we have
+  \begin{align*}
+    \diff{\Phi}{t}\mathbf{u}(t) + \Phi(t)\diff{\mathbf{u}}{t} &= A\Phi(t)\mathbf{u}(t) + \mathbf{F}(t).
+  \end{align*}
+  We want to cancel some things out. Recall that $\diff{\Phi}{t} = A\Phi$. Therefore, we obtain
+  \begin{align*}
+    \Phi(t) \diff{\mathbf{u}}{t} &= \mathbf{F}(t).
+  \end{align*}
+  Multiplying on both sides by $\Phi^{-1}(t)$, we get
+  \begin{align*}
+    \diff{\mathbf{u}}{t} &= \Phi^{-1}(t)\mathbf{F}(t)\\
+    \mathbf{u}(t) &= \int_{}^{} \Phi^{-1}(t)\mathbf{F}(t)\:dt,
+  \end{align*}
+  where the integral is taken coordinatewise. Thus,
+  \begin{align*}
+    \mathbf{x}(t) &= \Phi(t) \int_{}^{} \Phi^{-1}(t)\mathbf{F}(t)\:dt.
   \end{align*}
   
 \end{example}
