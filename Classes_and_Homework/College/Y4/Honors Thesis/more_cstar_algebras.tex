@@ -1381,7 +1381,128 @@ Now, we may obtain some fairly deep results in operator theory via the propertie
   \begin{align*}
     \iprod{\left( \left( I-R_n \right)^{-1} + \left( I - R_n^{\ast} \right)^{-1} \right)x}{x} &= 2\norm{y}^2 - 2\re \left( \iprod{R_n y}{y} \right).
   \end{align*}
-  Thus, $w\left( R_n \right) \leq 1$.
-\end{proof}
+  Thus, (\textasteriskcentered) is positive if and only if $w\left( R_n \right) \leq 1$. Since $w(T)\leq 1$ implies $w\left( R_n \right)\leq 1$, we have (\textasteriskcentered) is positive, meaning $\phi$ is positive.\newline
 
+  Conversely, if $\phi$ is positive, since $\overline{S} = C(\T)$, $\phi$ is completely positive by the fact that if $\phi\colon C(X)\rightarrow B$ is positive, then $\phi$ is completely positive.\newline
+
+  Note that
+  \begin{align*}
+    \begin{pmatrix}1 & \overline{z} & \cdots & \overline{z}^n \\ z & 1 & \cdots & \ddots & \vdots \\ \vdots & \ddots & \ddots & \overline{z} \\ z^n & \cdots & z & 1\end{pmatrix} &= \begin{pmatrix}1 & 0 & \cdots & 0 \\ 0 & z & \ddots & \vdots \\ \vdots & \ddots & \ddots & 0 \\ 0 & \cdots & 0 & z^n\end{pmatrix} \begin{pmatrix}1 & \cdots & 1 \\ \vdots & \ddots & \vdots \\ 1 & \cdots & 1\end{pmatrix} \begin{pmatrix}1 & 0 & \cdots & 0 \\ 0 & \overline{z} & \ddots & \vdots \\ \vdots & \ddots & \ddots & 0 \\ 0 & \cdots & 0 & \overline{z}^n \end{pmatrix}
+  \end{align*}
+  is positive in $\Mat_n\left( C\left( \T \right) \right)$, so its image under $\phi_n$ is also positive. However, since this image is equal to (\textasteriskcentered), we have that (\textasteriskcentered) is positive for all $n$, meaning $w\left( R_n \right)\leq 1$.\newline
+
+  Let $x\in \mathcal{H}$, $\norm{x} = 1$, and $y = \frac{1}{\sqrt{n}}\left( x\oplus\cdots\oplus x \right)$ be a unit vector $\mathcal{H}\oplus\cdots\oplus \mathcal{H}$.  Then, we have
+  \begin{align*}
+    1 &\leq \left\vert \iprod{R_ny}{y} \right\vert\\
+      &= \frac{n-1}{n}\left\vert \iprod{Tx}{x} \right\vert,
+  \end{align*}
+  meaning $w(t)\leq \frac{n}{n-1}$ for all $n$, meaning $w(T)\leq 1$.
+\end{proof}
+If $w(T)\leq 1$, we may extend the functional calculus from the circle to the disk algebra, $A(\mathbb{D})$.
+\begin{corollary}
+  Let $T\in \B\left( \mathcal{H} \right)$ with $w(T)\leq 1$. Let $f\in A\left( \mathbb{D} \right)$ with $f(0) = 0$. Then, $w\left( f(T) \right)\leq \norm{f}$.
+\end{corollary}
+\begin{proof}
+  It is sufficient to assume that $f$ is a polynomial, and $\norm{f}\leq 1$. 
+\end{proof}
+\section{Dilations}%
+We saw our first example of a dilation theorem earlier in our first proof of von Neumann's inequality when we showed that if $T$ is contractive, there is some projection $P$ from $\mathcal{K}\supseteq \mathcal{H}$ and some unitary $U\in \B\left( \mathcal{K} \right)$ such that $T^n = PU^n|_{\mathcal{H}}$.\newline
+
+Now, we will show an incredibly powerful result that characterizes all the completely positive maps, known as Stinespring's dilation theorem.
+\begin{theorem}[Stinespring's Dilation]
+  Let $A$ be a unital $C^{\ast}$-algebra, and let $\phi\colon A\rightarrow \B\left( \mathcal{H} \right)$ be a completely positive map. Then, there exists a Hilbert space $\mathcal{K}$, a unital $\ast$-homomorphism $\pi\colon \B\left( \mathcal{K} \right)$, and a bounded operator $V\colon \mathcal{H}\rightarrow \mathcal{K}$ with $\norm{\phi(1)} = \norm{V}^2_{\op}$, such that
+  \begin{align*}
+    \phi(a) &= V^{\ast}\pi(a)V
+  \end{align*}
+  for all $a\in A$.
+\end{theorem}
+\begin{proof}
+  Consider the algebraic tensor product $A\otimes \mathcal{H}$, and define the symmetric bilinear map $ \iprod{\cdot}{\cdot} $ on the space by setting
+  \begin{align*}
+    \iprod{a\otimes x}{b\otimes y} &= \iprod{\phi\left( b^{\ast}a \right)x}{y}_{\mathcal{H}},
+  \end{align*}
+  and extending linearly.\newline
+
+  Since we have
+  \begin{align*}
+    \iprod{\sum_{j=1}^{n}a_j\otimes x_j}{\sum_{i=1}^{n}a_i\otimes x_i} &= \iprod{\phi_n\left( \left( a_i^{\ast}a_j \right)_{ij} \right) \begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix}}{ \begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix} }_{\mathcal{H}^{(n)}}\\
+                                                                       &\geq 0,
+  \end{align*}
+  and $\phi$ is completely positive, we have that $ \iprod{a\otimes x}{b\otimes y} $ is a positive semidefinite bilinear form.\newline
+
+  Since positive semidefinite bilinear forms satisfy the Cauchy--Schwarz inequality, $\left\vert \iprod{u}{v} \right\vert\leq \iprod{u}{u} \iprod{v}{v}$, we may define the ``null set''
+  \begin{align*}
+    N &\coloneq \set{u\in A\otimes \mathcal{H} | \iprod{u}{u} = 0}
+  \end{align*}
+  as a subspace of $A\otimes \mathcal{H}$. The induced inner product  on $\left( A\otimes \mathcal{H} \right)/N$ is
+  \begin{align*}
+    \iprod{u + N}{v + N} &= \iprod{u}{v}.
+  \end{align*}
+  \begin{remark}
+    The construction here is very similar to the GNS construction.
+  \end{remark}
+  We will let $\mathcal{K}$ be the completion of $\left( A\otimes \mathcal{H} \right)/N$.\newline
+
+  Now, if $a\in A$, define $\pi(a)\colon A\otimes \mathcal{H}\rightarrow A\otimes \mathcal{H}$ by
+  \begin{align*}
+    \pi(a)\left( \sum_{i=1}^{n}a_i\otimes x_i \right) &= \sum_{i=1}^{n}\left( aa_i \right)\otimes x_i.
+  \end{align*}
+  We begin by showing that
+  \begin{align*}
+    \left( a_i^{\ast}a^{\ast}a a_j \right)_{ij} &\leq \norm{a^{\ast}a}\left( a_i^{\ast}a_j \right)_{ij},
+  \end{align*}
+  where the inequality is in $\Mat_n\left( A \right)_{+}$. This follows from the fact that
+  \begin{align*}
+    \left( a_i^{\ast}a^{\ast}a a_j \right)_{ij} &= \left( aI_n\left( a_{ij} \right)_{ij} \right)^{\ast}\left( aI_n\left( a_{ij} \right)_{ij} \right)\\
+                                                &\leq \norm{\left( aI_n \right)^{\ast}aI_n} \left( a_i^{\ast}a_j \right)_{ij}\\
+                                                &= \norm{a^{\ast}a} \left( a_{i}^{\ast}a_j \right)_{ij},
+  \end{align*}
+  where the last line follows from the fact that for any elements of a $C^{\ast}$-algebra, $a,b$, we have $0\leq b^{\ast}a^{\ast}ab\leq \norm{a^{\ast}a}b^{\ast}b$.\newline
+
+  Now, this gives
+  \begin{align*}
+    \iprod{\pi(a)\left( \sum_{j=1}^{n}a_j\otimes x_j \right)}{\pi(a)\left( \sum_{i=1}^{n}a_i\otimes x_i \right)} &= \sum_{i,j=1}^{n} \iprod{\pi\left( a_i^{\ast}a^{\ast}aa_j \right)x_j}{x_i}_{\mathcal{H}}\\
+                                                                                                                 &\leq \norm{a^{\ast}a}\sum_{i,j=1}^{n} \iprod{\phi\left( a_i^{\ast}a_j \right)x_j}{x_i}\\
+                                                                                                                 &= \norm{a}^2 \iprod{\sum_{j=1}^{n}a_j\otimes x_j}{\sum_{i=1}^{n}a_i\otimes x_i}.
+  \end{align*}
+  Thus, $\pi(a)$ vanishes on $N$, meaning it induces a quotient map that we will write as $\overline{\pi}(a)$. The above inequality shows that $\overline{\pi}(a)$ is bounded, with $\norm{\overline{\pi}\left( a \right)}\leq \norm{a}$. Thus, $\overline{\pi}\left( a \right)$ extends to a bounded linear operator on $\mathcal{K}$, denoted $\widetilde{\pi}\left( a \right)$.\newline
+
+  Now, the map $\widetilde{\pi}\colon A\rightarrow \B\left( \mathcal{K} \right)$ is a unital $\ast$-homomorphism.\newline
+
+  Define $V\colon \mathcal{H}\rightarrow \mathcal{K}$ by $V(x) = 1\otimes x + N$. Then, since
+  \begin{align*}
+    \norm{Vx}^2 &= \iprod{1\otimes x}{1\otimes x}\\
+                &= \iprod{\phi(1)x}{x}_{\mathcal{H}}\\
+                &\leq \norm{\phi(1)} \norm{x}^2,
+  \end{align*}
+  $V$ is bounded. Furthermore,
+  \begin{align*}
+    \norm{V}_{\op}^2 &= \sup_{x\in B_{\mathcal{H}}} \iprod{\phi(1)x}{x}\\
+                     &= \norm{\phi(1)}.
+  \end{align*}
+  Finally, we see that
+  \begin{align*}
+    \iprod{V^{\ast}\widetilde{\pi}(a)V x}{y} &= \iprod{\left( \pi(a)1 \right)\otimes x}{1\otimes y}_{\mathcal{H}}\\
+                                             &= \iprod{\phi(a)x}{y}_{\mathcal{H}},
+  \end{align*}
+  so that $V^{\ast}\widetilde{\pi}(a)V = \phi(a)$.
+\end{proof}
+There are some remarks to be made. First, any map of the form $\phi(a) = V^{\ast}\pi(a)V$ is already completely positive, so Stinespring's dilation is a complete characterization of completely positive maps from any $C^{\ast}$-algebra into any $\B\left( \mathcal{H} \right)$. Furthermore, if $\phi$ is unital, then $V$ is an isometry, and we may identify $\mathcal{H}$ with $V\mathcal{H}\subseteq \mathcal{K}$. This identification gives $V^{\ast}$ as the projection of $\mathcal{K}$ onto $\mathcal{H}$, or $P_{\mathcal{H}}$. Thus,
+\begin{align*}
+  \phi(a) = P_{\mathcal{H}}\pi(a)|_{\mathcal{H}}.
+\end{align*}
+If $T\in \B\left( \mathcal{K} \right)$, then $P_{\mathcal{H}}T|_{\mathcal{H}}$ is called the compression of $T$ to $\mathcal{H}$. We may decompose $\mathcal{K} = \mathcal{H}\oplus \mathcal{H}^{\perp}$, and consider $T$ as the $2\times 2$ operator matrix whose compression is equal to the $(1,1)$ entry of the operator matrix. Thus, Stinespring's dilation shows that every completely positive map into $\B\left( \mathcal{H} \right)$ is the compression to $\mathcal{H}$ of a $\ast$-homomorphism into a Hilbert space that contains $\mathcal{H}$.\newline
+
+Additionally, Stinespring's dilation is a generalization of the GNS construction, which was used to convert from states to representations of $C^{\ast}$-algebras as subalgebras of $\B\left( \mathcal{H} \right)$. In particular, if $\mathcal{H} = \C$, then the isometry $V\colon \C\rightarrow \mathcal{K}$ is determined by $V(1) = x$< and>
+\begin{align*}
+  \phi(a) &= \phi(a)(1)\cdot 1\\
+          &= V^{\ast}\pi(a)V(1)\cdot 1\\
+          &= \iprod{\pi(a)V(1)}{V(1)}_{\mathcal{K}}\\
+          &= \iprod{\pi(a)x}{x}.
+\end{align*}
+Furthermore, if we reread the proof with $\mathcal{H}= \C$  and $A\otimes \C = A$, we recover the proof of the GNS representation of states.\newline
+
+Finally, if $\mathcal{H}$ and $A$ are separable, then so too is $\mathcal{K}$, and if $\mathcal{H}$ and $A$ are finite-dimensional, then so too is $\mathcal{K}$.\newline
+
+Now, we turn our attention to the uniqueness of the Stinespring representations, $\left( \pi,V,\mathcal{K} \right)$.
 \end{document}
