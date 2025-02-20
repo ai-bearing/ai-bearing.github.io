@@ -1,10 +1,10 @@
 Amenability, as stated earlier, is defined by a particular finitely additive, translation-invariant probability measure on the group. Of the three conditions for a mean, the ``finitely additive'' and ``probability measure'' conditions are straightforward --- we may define a measure $\delta_x$ on $P(G)$ by saying that $\delta_x(E) = 1$ if $x\in E$ and $\delta_x(E) = 0$ if $x\notin E$. This is a finitely additive probability measure --- but it is not translation-invariant.\newline
 
-The translation-invariance condition is, generally speaking, the condition that throws a wrench into our desire to establish means on various types of groups. For instance, we desired a translation-invariant, finitely additive probability measure on $F(a,b)$, but since, for instance $bW\left( b^{-1} \right)$ is effectively equal to $F(a,b)\setminus W(b)$, we see that the translation $bW\left( b^{-1} \right)$ creates a ``bigger'' subset than we desire, closing off our ability to construct a mean.\newline
+The translation-invariance condition is, generally speaking, the condition that throws a wrench into our desire to establish means on various types of groups. For instance, we desired a translation-invariant, finitely additive probability measure on $F(a,b)$, but since $bW\left( b^{-1} \right)$ is equal to $F(a,b)\setminus W(b)$, we see that the translation $bW\left( b^{-1} \right)$ creates a ``bigger'' subset than we desire, closing off our ability to construct a mean.\newline
 
-As the reader may remark by now, this is an extremely nonspecific idea. What does it mean for a set to become ``bigger'' under translation, and how much ``bigger'' does it need to become in order to close off the possibility of establishing a mean on the group?\newline
+As the reader may remark by now, this is a comically unrigorous idea. What does it mean for a set to become ``bigger'' under translation, and how much ``bigger'' does it need to become in order to close off the possibility of establishing a mean on the group?\newline
 
-The Følner condition will allow us to make the idea of ``bigness'' precise by considering the symmetric difference between a set and its translate. In this chapter, we will show exactly how the Følner condition then allows to establish amenability in groups, through the use of an approximate mean.
+The Følner condition will allow us to make the idea of ``bigness'' precise. In this chapter, we will show exactly how the Følner condition then allows to establish amenability in groups, specifically by constructing an approximate mean, then showing that ``approximate amenability'' and amenability are equivalent.
 \section{Følner's Condition}%
 \begin{definition}\label{def:folner_condition}
   A group is said to satisfy the \textit{Følner condition} if, for every $\ve > 0$ and $E\subseteq G$, there is a nonempty finite subset $F\subseteq G$ such that for all $t\in E$,
@@ -157,6 +157,85 @@ To begin the forward direction regarding the equivalence between the Følner con
                                                &\rightarrow 0.
   \end{align*}
 \end{proof}
+% reverse direction here
+To show that the existence of an approximate mean implies the Følner condition, we require the following lemma.
+\begin{lemma}\label{lemma:layer_cake_representation}
+  Let $f\colon S\rightarrow \R$ be finitely supported with $\sum_{s\in S}f(s) = 1$. Then, there exist subsets $\set{F_i}_{i=1}^{n}$, where $F_1\supseteq F_2\supseteq \cdots \supseteq F_n$, and constants $\set{c_i}_{i=1}^{n}$, such that
+  \begin{align*}
+    f &= \sum_{i=1}^{n}c_i\1_{F_i},
+  \end{align*}
+  where
+  \begin{align*}
+    \sum_{i=1}^{n}c_i\left\vert F_i \right\vert &= 1.
+  \end{align*}
+  This is known as the layer cake representation for $f$.
+\end{lemma}
+\begin{proof}
+  We define $F_1 = \supp\left(f\right)$, and take $c_1 = \min\left(\Ran\left(f\right)\right)$. Taking $E_1 = f^{-1}\left(c_1\right)$ (as a set-theoretic inverse), we define $F_2 = F_1\setminus E_1$.\newline
+
+  Take $d_1 = \min\left(f\left(F_2\right)\right)$, and define $c_2 = d_1 - c_1$. Then, defining $E_2 = f^{-1}\left(d_1\right)$, $F_3 = F_2 \setminus E_2$, and $d_2 = \min\left(f\left(F_3\right)\right)$, we define $c_3 = d_2 - c_2 - c_1$.\newline
+
+  Continuing in this pattern, we find $d_{i-1} = \min\left(f\left(F_i\right)\right)$, $E_i = f^{-1}\left(d_{i-1}\right)$, and $c_i = d_{i-1} - \sum_{j=1}^{i-1}c_i$.\newline
+
+  This yields a decomposition $F_1\supseteq F_2\supseteq \cdots \supseteq F_n$, where $\sum_{i=1}^{n}c_i\1_{F_i} = f$ by construction.\newline
+
+  We now verify that $\sum_{i=1}^n c_i\left\vert F_i \right\vert = 1$.
+  \begin{align*}
+    1 &= \sum_{s\in S}f(s)\\
+      &= \sum_{s\in S}\sum_{i=1}^{n}c_i\1_{F_i}\left(s\right).
+      \intertext{By definition, if $s\in F_j$ for some $j$, we see that $c_j$ is summed for $\left\vert F_j \right\vert$ many times. Thus, we obtain}
+      &= \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
+  \end{align*}
+\end{proof}
+\begin{remark}
+  Instead of using this construction where we take set-theoretic inverses and remove ``residual'' sets, there is an alternative method of construction that involves ordering the range as $r_1 < r_2< \cdots < r_n$, and constructing the set $F_k = \set{s | f(s) \geq r_k}$.
+\end{remark}
+We will use the layer cake decomposition to prove that if $G$ admits an approximate mean, then $G$ satisfies the Følner condition.
+\begin{proposition}\label{prop:approx_mean_implies_folner}
+  Let $G$ admit an approximate mean. Then, $G$ satisfies the Følner condition.
+\end{proposition}
+\begin{proof}
+  Let $\left(f_k\right)_k$ be an approximate mean, as in Definition \ref{def:approximate_mean}. Fix a finite nonempty set $S \subseteq G$. Then, by the definition of an approximate mean, there must exist some $N\in\N$ such that for all $k\geq N$ and all $s\in G$,
+  \begin{align*}
+    \norm{f_k - \lambda_s\left(f_k\right)}_{\ell_1} &\leq \frac{\ve}{|S|}.
+  \end{align*}
+  In particular, this holds for $f_N$ and for all $s\in S$.\newline
+
+  Since $f_N\in \Prob(G)$ is finitely supported and $\sum_{s\in G}f_N(s) = 1$, we may use Lemma \ref{lemma:layer_cake_representation} to rewrite $f_N$ as
+  \begin{align*}
+    f_N &= \sum_{i=1}^{n}c_i\1_{F_i},
+  \end{align*}
+  where $F_1 \supseteq F_2\supseteq \cdots \supseteq F_n$, and $\sum_{i=1}^{n}c_i\left\vert F_i \right\vert = 1$.\newline
+
+  For a given $1 \leq i \leq n$, for each $s\in S$ and $t\in sF_i\triangle F_i$, we have
+  \begin{align*}
+    f_N\left(t\right) - f_N\left(s^{-1}t\right) &= \begin{cases}
+      c_i & t\in F_i\setminus sF_i\\
+      -c_i & t\in sF_i \setminus F_i
+    \end{cases}.
+  \end{align*}
+  Thus, we see that $\left\vert f_N\left(t\right)-\lambda_s\left(f_N\right)\left(t\right) \right\vert\geq c_i$ on $sF_i\triangle F_i$. Thus, for each $s\in S$,
+  \begin{align*}
+    \sum_{i=1}^{n}c_i\left\vert sF_i \triangle F_i \right\vert &\leq \sum_{t\in S}\left\vert f_N\left(t\right) -  \lambda_s\left(f\right)\left(t\right)\right\vert\\
+                                                               &< \frac{\ve}{\left\vert S \right\vert}\\
+                                                               &= \frac{\ve}{\left\vert S \right\vert} \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    \sum_{s\in S}\sum_{i=1}^{n}c_i\left\vert sF_i\triangle F_i \right\vert &< \frac{\ve}{\left\vert S \right\vert}\sum_{s\in S}\sum_{i=1}^{n}c_i\left\vert F_i \right\vert\\
+                                                                           &= \ve \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
+  \end{align*}
+  Thus, by the pigeonhole principle, there must exist some $1\leq i \leq n$ for which
+  \begin{align*}
+    \sum_{s\in S}c_i\left\vert sF_i\triangle F_i \right\vert < \ve c_i\left\vert F_i \right\vert.
+  \end{align*}
+  Setting $F = F_i$, we find that, for all $s\in S$,
+  \begin{align*}
+    \frac{\left\vert sF\triangle F \right\vert}{\left\vert F \right\vert} &\leq \sum_{s\in S}\frac{\left\vert sF\triangle F \right\vert}{\left\vert F \right\vert}\\
+                                                                          &< \ve.
+  \end{align*}
+\end{proof}
+Now, we show that approximate amenability and amenability are equivalent. This will require some more heavy lifting from functional analysis.
 \begin{proposition}\label{prop:approx_mean_implies_amenable}
   If $G$ admits an approximate mean, then $G$ is amenable.
 \end{proposition}
@@ -193,8 +272,7 @@ To begin the forward direction regarding the equivalence between the Følner con
   \end{align*}
   for all $\ve > 0$, so $\mu\left(g\right) = \mu\left(\lambda_{s}\left(g\right)\right)$.
 \end{proof}
-
-We will now commence with the reverse direction, starting by showing that amenability implies the existence of an approximate mean, and then showing that the existence of an approximate mean implies that the Følner condition is satisfied.
+%We will now commence with the reverse direction, starting by showing that amenability implies the existence of an approximate mean, and then showing that the existence of an approximate mean implies that the Følner condition is satisfied.
 \begin{proposition}\label{prop:amenable_implies_approx_mean}
   If $G$ is amenable, then $G$ admits an approximate mean.
 \end{proposition}
@@ -255,96 +333,8 @@ We will now commence with the reverse direction, starting by showing that amenab
   \end{align*}
   which is a contradiction. Therefore, $G$ admits an approximate mean.
 \end{proof}
-To show that the existence of an approximate mean implies the Følner condition, we require the following lemma.
-\begin{lemma}\label{lemma:layer_cake_representation}
-  Let $f\colon S\rightarrow \R$ be finitely supported with $\sum_{s\in S}f(s) = 1$. Then, there exist subsets $\set{F_i}_{i=1}^{n}$, where $F_1\supseteq F_2\supseteq \cdots \supseteq F_n$, and constants $\set{c_i}_{i=1}^{n}$, such that
-  \begin{align*}
-    f &= \sum_{i=1}^{n}c_i\1_{F_i},
-  \end{align*}
-  where
-  \begin{align*}
-    \sum_{i=1}^{n}c_i\left\vert F_i \right\vert &= 1.
-  \end{align*}
-  This is known as the layer cake representation for $f$.
-\end{lemma}
-\begin{proof}
-  We define $F_1 = \supp\left(f\right)$, and take $c_1 = \min\left(\Ran\left(f\right)\right)$. Taking $E_1 = f^{-1}\left(c_1\right)$ (as a set-theoretic inverse), we define $F_2 = F_1\setminus E_1$.\newline
-
-  Take $d_1 = \min\left(f\left(F_2\right)\right)$, and define $c_2 = d_1 - c_1$. Then, defining $E_2 = f^{-1}\left(d_1\right)$, $F_3 = F_2 \setminus E_2$, and $d_2 = \min\left(f\left(F_3\right)\right)$, we define $c_3 = d_2 - c_2 - c_1$.\newline
-
-  Continuing in this pattern, we find $d_{i-1} = \min\left(f\left(F_i\right)\right)$, $E_i = f^{-1}\left(d_{i-1}\right)$, and $c_i = d_{i-1} - \sum_{j=1}^{i-1}c_i$.\newline
-
-  This yields a decomposition $F_1\supseteq F_2\supseteq \cdots \supseteq F_n$, where $\sum_{i=1}^{n}c_i\1_{F_i} = f$ by construction.\newline
-
-  We now verify that $\sum_{i=1}^n c_i\left\vert F_i \right\vert = 1$.
-  \begin{align*}
-    1 &= \sum_{s\in S}f(s)\\
-      &= \sum_{s\in S}\sum_{i=1}^{n}c_i\1_{F_i}\left(s\right).
-      \intertext{By definition, if $s\in F_j$ for some $j$, we see that $c_j$ is summed for $\left\vert F_j \right\vert$ many times. Thus, we obtain}
-      &= \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
-  \end{align*}
-\end{proof}
-\begin{remark}
-  Instead of using this construction where we take set-theoretic inverses and remove ``residual'' sets, there is an alternative method of construction that involves ordering the range as $r_1 < r_2< \cdots < r_n$, and constructing the set $F_k = \set{s | f(s) \geq r_k}$.
-\end{remark}
-
-
-We will use the layer cake decomposition to prove that if $G$ admits an approximate mean, then $G$ satisfies the Følner condition.
-\begin{proposition}\label{prop:approx_mean_implies_folner}
-  Let $G$ admit an approximate mean. Then, $G$ satisfies the Følner condition.
-\end{proposition}
-\begin{proof}
-  Let $\left(f_k\right)_k$ be an approximate mean, as in Definition \ref{def:approximate_mean}. Fix a finite nonempty set $S \subseteq G$. Then, by the definition of an approximate mean, there must exist some $N\in\N$ such that for all $k\geq N$ and all $s\in G$,
-  \begin{align*}
-    \norm{f_k - \lambda_s\left(f_k\right)}_{\ell_1} &\leq \frac{\ve}{|S|}.
-  \end{align*}
-  In particular, this holds for $f_N$ and for all $s\in S$.\newline
-
-  Since $f_N\in \Prob(G)$ is finitely supported and $\sum_{s\in G}f_N(s) = 1$, we may use Lemma \ref{lemma:layer_cake_representation} to rewrite $f_N$ as
-  \begin{align*}
-    f_N &= \sum_{i=1}^{n}c_i\1_{F_i},
-  \end{align*}
-  where $F_1 \supseteq F_2\supseteq \cdots \supseteq F_n$, and $\sum_{i=1}^{n}c_i\left\vert F_i \right\vert = 1$.\newline
-
-  For a given $1 \leq i \leq n$, for each $s\in S$ and $t\in sF_i\triangle F_i$, we have
-  \begin{align*}
-    f_N\left(t\right) - f_N\left(s^{-1}t\right) &= \begin{cases}
-      c_i & t\in F_i\setminus sF_i\\
-      -c_i & t\in sF_i \setminus F_i
-    \end{cases}.
-  \end{align*}
-  Thus, we see that $\left\vert f_N\left(t\right)-\lambda_s\left(f_N\right)\left(t\right) \right\vert\geq c_i$ on $sF_i\triangle F_i$. Thus, for each $s\in S$,
-  \begin{align*}
-    \sum_{i=1}^{n}c_i\left\vert sF_i \triangle F_i \right\vert &\leq \sum_{t\in S}\left\vert f_N\left(t\right) -  \lambda_s\left(f\right)\left(t\right)\right\vert\\
-                                                               &< \frac{\ve}{\left\vert S \right\vert}\\
-                                                               &= \frac{\ve}{\left\vert S \right\vert} \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
-  \end{align*}
-  Therefore, we have
-  \begin{align*}
-    \sum_{s\in S}\sum_{i=1}^{n}c_i\left\vert sF_i\triangle F_i \right\vert &< \frac{\ve}{\left\vert S \right\vert}\sum_{s\in S}\sum_{i=1}^{n}c_i\left\vert F_i \right\vert\\
-                                                                           &= \ve \sum_{i=1}^{n}c_i\left\vert F_i \right\vert.
-  \end{align*}
-  Thus, by the pigeonhole principle, there must exist some $1\leq i \leq n$ for which
-  \begin{align*}
-    \sum_{s\in S}c_i\left\vert sF_i\triangle F_i \right\vert < \ve c_i\left\vert F_i \right\vert.
-  \end{align*}
-  Setting $F = F_i$, we find that, for all $s\in S$,
-  \begin{align*}
-    \frac{\left\vert sF\triangle F \right\vert}{\left\vert F \right\vert} &\leq \sum_{s\in S}\frac{\left\vert sF\triangle F \right\vert}{\left\vert F \right\vert}\\
-                                                                          &< \ve.
-  \end{align*}
-\end{proof}
-%Thus far, we have shown the following to be equivalent for a discrete group $G$:
-%\begin{enumerate}[(1)]
-%  \item $G$ is non-paradoxical;
-%  \item $G$ is amenable;
-%  \item $G$ admits an invariant state;
-%  \item $G$ admits an approximate mean;
-%  \item $G$ satisfies the Følner condition.
-%\end{enumerate}
-%The equivalence between (1) and (2) follows from Theorem \ref{thm:tarski}, the equivalence between (2) and (3) follows from Propositions \ref{prop:state_implies_mean} and \ref{prop:mean_implies_state}, and the equivalence between (3), (4), and (5) follows from Propositions \ref{prop:folner_implies_approx_mean}, \ref{prop:approx_mean_implies_amenable}, \ref{prop:amenable_implies_approx_mean}, and \ref{prop:approx_mean_implies_folner}.
 \section{Applying Følner's Condition: Groups of Subexponential Growth}\label{sec:subexponential_growth}%
-Before we move to Chapters 7 and 8 to discuss representations of groups inside the algebra of bounded operators on a Hilbert space, we will provide an application of Følner's condition by taking a tour into geometric group theory. In this section, we will establish the amenability of yet another wide class of groups (just as we established that all abelian groups are amenable in Chapter 5) --- the groups of subexponential growth.\newline
+Before we discuss representations of groups inside the algebra of bounded operators on a Hilbert space, we will provide an application of Følner's condition by taking a tour into geometric group theory. In this section, we will establish the amenability of yet another wide class of groups (just as we established that all abelian groups are amenable in Chapter 5) --- the groups of subexponential growth.\newline
 
 First, we construct a little bit of machinery to understand the growth rate of a group, then we prove that Følner's condition holds for these special classes of groups.
 \begin{definition}\label{def:word_metric}
