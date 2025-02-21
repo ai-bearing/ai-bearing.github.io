@@ -1061,7 +1061,163 @@ We can find the residue in a variety of ways.
        \\int_{0}^{\infty} \cos\left( x^2 \right)\:dx &= \int_{0}^{\infty} \sin\left( x^2 \right)\:dx\\
                                                      &= \frac{1}{2}\sqrt{\frac{\pi}{2}}.
      \end{align*}
-     
+   \end{example}
+   \subsubsection{Integrating with Branch Cuts}%
+   When we're integrating with residues, branch cuts are a feature rather than a bug.
+   \begin{example}
+     Consider the integral
+     \begin{align*}
+       I &= \int_{0}^{\infty} \frac{\sqrt{x}}{1 + x^3}\:dx.
+     \end{align*}
+     We need a branch cut to avoid the multivalued behavior. Our poles are at $e^{i\pi/3},-1,e^{-i\pi/3}$. Since our integral is along the real axis, we take our branch cut along the domain $[0,\infty]$.\newline
+
+     We draw our contour of radius $R$ by hugging the branch without crossing it, with a small circle of radius $\ve$ just outside $0$. This gives the integral
+     \begin{align*}
+       \oint \frac{\sqrt{z}}{1 + z^3}\:dz &= \int_{0}^{\infty} \frac{\sqrt{z}}{1 + z^3}\:dx + \int_{C_R}^{} \frac{\sqrt{z}}{1 + z^3}\:dz + \int_{\infty}^{0} \frac{\sqrt{z}}{1 + z^3}\:dz + \int_{C_{\ve}}^{} \frac{\sqrt{z}}{1 + z^3}\:dz.
+     \end{align*}
+     Note that since $\lim_{|z|\rightarrow\infty}\left\vert zf(z) \right\vert = 0$, and $\lim_{|z|\rightarrow 0}\left\vert zf(z) \right\vert = 0$, our integrals along $C_R$ and $C_{\ve}$ go to zero, giving the integral
+     \begin{align*}
+       I' &= \int_{\infty}^{0} \frac{\sqrt{z}}{1 + z^3}\:dz\\
+          &= \int_{\infty}^{0} \frac{\sqrt{e^{2i\pi }}x}{1 +\left( e^{2i\pi}x \right)^3}\:dx\\
+          &= \int_{0}^{\infty} \frac{\sqrt{x}}{1 + x^3}\:dx\\
+          &= I.
+     \end{align*}
+     Thus,
+     \begin{align*}
+       \oint \frac{\sqrt{z}}{1 + z^3}\:dz &= 2I.
+     \end{align*}
+     Evaluating the residues, we have
+     \begin{align*}
+       \res\left[ f(z),e^{i\pi/3} \right] &= \lim_{z\rightarrow e^{i\pi/3}}\frac{\sqrt{z}}{3z^2}\\
+                                          &= -\frac{i}{3}\\
+       \res\left[ f(z),-1 \right] &= \lim_{z\rightarrow-1} \frac{\sqrt{z}}{3z^2}\\
+                                  &= \frac{i}{3}\\
+       \res\left[ f(z),e^{5\pi i/3} \right] &= -\frac{i}{3},
+     \end{align*}
+     giving the solution of
+     \begin{align*}
+       I &= \frac{1}{2}2\pi i\left( -\frac{i}{3} \right)\\
+         &= \frac{\pi}{3}.
+     \end{align*}
+   \end{example}
+   \begin{example}
+     To evaluate
+     \begin{align*}
+       I &= \int_{0}^{\infty} \frac{1}{1 + x^3}\:dx,
+     \end{align*}
+     we start by evaluating
+     \begin{align*}
+       \int_{0}^{\infty} \frac{\ln(x)}{1 + x^3}\:dx
+     \end{align*}
+     with the branch cut along the real axis. Using the keyhole contour in the previous example, we have that $C_R$ and $C_{\ve}$ contribute nothing, and $\ln$ picks up a phase of $2\pi i$, so that
+     \begin{align*}
+       \oint_{C} \frac{\ln(z)}{1 + z^3} &= \int_{0}^{\infty} \frac{\ln(x)}{1 + x^3}\:dx + \int_{\infty}^{0} \frac{\ln(x) + 2\pi i}{1 + x^3}\:dx\\
+                                        &= -2\pi i I.
+     \end{align*}
+     Therefore, 
+     \begin{align*}
+       I &= -\sum\res \left[ \frac{\ln(x)}{1 + x^3} \right].
+     \end{align*}
+     Thus, we get the solution of
+     \begin{align*}
+       \int_{0}^{\infty} \frac{1}{1 + x^3}\:dx &= \frac{2\pi}{3\sqrt{3}}.
+     \end{align*}
+   \end{example}
+   \begin{example}
+     Consider the integral
+     \begin{align*}
+       I &= \int_{0}^{1} \frac{\sqrt{1 - x^2}}{x^2 + a^2}\:dx.
+     \end{align*}
+     The poles are around $\pm ia$.\newline
+
+     Our problem is that we have multivalued behavior at $\pm 1$. We may take the cut from $-1$ to $1$ along the real axis, and our contour gives a sign flip across the cut.\newline
+
+     We draw a dog-bone style contour hugging the cut in negative orientation to give us $2I$. Thus, we get
+     \begin{align*}
+       \oint_{C} \frac{\sqrt{1-z^2}}{z^2 + a^2}\:dz &= \int_{-1}^{1} \frac{\sqrt{1-x^2}}{x^2 + a^2}\:dx - \int_{1}^{-1} \frac{\sqrt{1-x^2}}{x^2 + a^2}\:dx\\
+                                                    &= 4I,
+     \end{align*}
+     where the sign flip in the second integral comes from crossing the branch cut.\newline
+
+     Now, to evaluate the sum of the residues, we need to evaluate at three poles --- $ia$, $-ia$, and the pole at $\infty$. Thus, we get
+     \begin{align*}
+       \res\left[ f(z),\pm ia \right] &= \frac{\sqrt{a^2 + 1}}{2ia}\\
+       -\res\left[ f(z),\infty \right] &= \lim_{|z|\rightarrow \infty}zf(z)\\
+                                      &= i.
+     \end{align*}
+     Therefore,
+     \begin{align*}
+       4I &= 2\pi i \left( \frac{\sqrt{a^2 + 1}}{ia} - i \right)\\
+          &= \frac{\pi}{2a}\left( \sqrt{a^2 + 1} - a \right).
+     \end{align*}
+   \end{example}
+   \subsubsection{Poles on the axis}%
+   If we want to evaluate integrals with the pole on the contour, we need to use principal values.
+   \begin{align*}
+     \text{PV}\int_{a}^{b} f(x)\:dx &= \lim_{\ve \rightarrow 0}\left( \int_{a}^{x_0 - \ve} f(x)\:dx + \int_{x_0 + \ve}^{b} f(x)\:dx \right).
+   \end{align*}
+   Similarly, we want to apply this for the calculus of residues. To do this, we take
+   \begin{align*}
+     \oint_{C}f(z)\:dz &= \text{PV}\int_{-\infty}^{\infty} f(x)\:dx + \lim_{\ve\rightarrow 0}f(z)\:dz,
+   \end{align*}
+   where $c_{\pm}$ are small semicircular contour additions of radius $\ve$ to $C$ that hug our pole on the real axis, with $c_{-}$ excluding the pole and $c_{+}$ including the pole. Thus, we have
+   \begin{align*}
+     \oint_{C}f(z)\:dz &= \text{PV}\int_{-\infty}^{\infty} f(x)\:dx + \lim_{\ve\rightarrow 0} \int_{c_{\pm}}^{} \frac{\left( z-x_0 \right)f(z)}{z-x_0}\:dz.
+   \end{align*}
+   Introducing $z-x_0 = \ve e^{i\varphi}$, we have $dz = i\ve e^{i\varphi}\:d\varphi$, giving
+   \begin{align*}
+     \oint_{C} f(z)\:dz &= \text{PV}\int_{-\infty}^{\infty} f(x)\:dx + \res\left[ f(z),x_0 \right]\int_{c_{\pm}}^{} i\:d\varphi.
+   \end{align*}
+   Thus, we have
+   \begin{align*}
+     \oint_{C}f(z)\:dz &= \text{PV}\int_{-\infty}^{\infty} f(x)\:dx \pm i\pi \res\left[ f(z),x_0 \right].\\
+                       &= 2\pi i \sum_{z_i}\res\left[ f(z)-z_i \right].
+   \end{align*}
+   Thus, we have
+   \begin{align*}
+     \text{PV} \int_{-\infty}^{\infty} f(x)\:dx &= \sum_{z_i\text{ in }C} \res\left[ f(z),z_i \right] \mp i\pi \res\left[ f(z),x_0 \right].
+   \end{align*}
+   Note that we only have \textit{half} the residue when the pole is on the contour. Therefore, we have the result of
+   \begin{align*}
+     \text{PV}\int_{-\infty}^{\infty} f(x)\:dx &= 2\pi i \left( \sum_{z_i\text{ in }C} \res\left[ f(z),z_i \right] + \frac{1}{2}\sum_{z_i\text{ on }C}\res\left[ f(z),z_i \right] \right).
+   \end{align*}
+   \begin{example}
+     Consider
+     \begin{align*}
+       \text{PV}\int_{-\infty}^{\infty} \frac{e^{ikx}}{x-a}\:dx.
+     \end{align*}
+     We have a simple pole at $x = a$.\newline
+
+     We close our contour with a semicircle on the upper half-plane. Since we have no poles inside the contour, we have
+     \begin{align*}
+       \text{PV}\int_{-\infty}^{\infty} \frac{e^{ikx}}{x-a}\:dx &= \pi i \res\left[ \frac{e^{ikx}}{x-a},a \right]\\
+                                                                &= \pi i e^{ika}.
+     \end{align*}
+     Notice that if $k < 0$, we must close the contour in the lower half-plane, giving
+     \begin{align*}
+       \text{PV}\int_{-\infty}^{\infty} \frac{e^{ikx}}{x-a}\:dx &= \sgn(k)\pi i e^{ika}.
+     \end{align*}
+     Taking real and imaginary components, we get
+     \begin{align*}
+       \text{PV}\int_{-\infty}^{\infty} \frac{\cos\left( kx \right)}{x-a}\:dx &= -\pi\sin\left( ka \right)\\
+       \text{PV}\int_{-\infty}^{\infty} \frac{\sin\left( kx \right)}{x}\:dx &= \pi\cos\left( ka \right).
+     \end{align*}
+   \end{example}
+   \begin{example}
+     We will evaluate
+     \begin{align*}
+       I &= \text{PV}\int_{0}^{\infty} \frac{\ln(x)}{x^2 + a^2}\:dx.
+     \end{align*}
+     We have a troublesome portion at $x = 0$, so we draw our contour to exclude $0$.\newline
+
+     We may close the contour with a large semicircle $C_R$. Since $\lim_{|z|\rightarrow \infty}\left\vert zf(z) \right\vert = 0$ and $\lim_{|z|\rightarrow 0}\left\vert zf(z) \right\vert = 0$, we may take these limits to give
+     \begin{align*}
+       \oint_{C}\frac{\ln(z)}{z^2 + a^2} &= \int_{-\infty}^{0} \frac{\ln\left( e^{i\pi}x \right)}{x^2 + a^2}\:dx + \int_{0}^{\infty} \frac{\ln\left(e^{i0}x\right)}{x^2 + a^2}\:dx\\
+                                         &= \text{PV}\int_{-\infty}^{\infty} \frac{\ln(x)}{x^2 + a^2}\:dx + i\pi \int_{0}^{\infty} \frac{1}{x^2 + a^2}\:dx\\
+                                         &= 2\text{PV}\int_{0}^{\infty} \frac{\ln(x)}{x^2 + a^2}\:dx + \frac{i\pi^2}{2a}\\
+                                         &= 2\pi i \res\left[ f(z),ia \right].
+     \end{align*}
+     Thus, we get $I = \frac{\pi}{2a}\ln(a)$.
    \end{example}
    
 \end{document}
