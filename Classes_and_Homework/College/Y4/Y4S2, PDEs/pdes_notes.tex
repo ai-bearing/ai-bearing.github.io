@@ -568,6 +568,8 @@ In the general form, with linearly independent homogeneous solutions $y_1,\dots,
   \begin{pmatrix}v_1' \\ \vdots \\ v_n'\end{pmatrix} &= \begin{pmatrix}y_1 & \cdots & y_n \\ \vdots & \ddots & \vdots \\ y_1^{(n-1)} & \cdots & y_n^{(n-1)}\end{pmatrix}^{-1} \begin{pmatrix}0 \\ \vdots \\ g(x)\end{pmatrix}\\
   y(x) &= \sum_{i=1}^{n}c_iy_i(x) + \sum_{i=1}^{n}v_i(x)y_i(x).
 \end{align*}
+\subsection{Systems of Homogeneous Equations}%
+We will consider solving systems of equations.
 \begin{example}[Solving a Coupled System]
   Before we can start using variation of parameters for systems, we need to recall how to solve constant-coefficient systems.
   \begin{align*}
@@ -974,6 +976,7 @@ the eigenvalues are
             &= \frac{1}{2} \begin{pmatrix}e^{4t} + e^{2t} & e^{4t} - e^{2t} \\ e^{4t} - e^{2t} & e^{4t} + e^{2t}\end{pmatrix}.
   \end{align*}
 \end{example}
+\subsection{The Matrix Exponential}%
 \begin{example}[The Matrix Exponential]
   When we have a single first-order equation, such as
   \begin{align*}
@@ -1287,45 +1290,174 @@ the eigenvalues are
     e^{Dt} &= \begin{pmatrix}e^{at}\cos\left( bt \right) & e^{at}\sin\left( bt \right)\\-e^{at}\sin\left( bt \right) & e^{at}\cos\left( bt \right)\end{pmatrix}.
   \end{align*}
 \end{example}
-\begin{example}
-  Now, we discuss inhomogeneous systems. Consider the system
-  \begin{align*}
-    \diff{\mathbf{x}}{t} &= A\mathbf{x} + \mathbf{F}(t).
-  \end{align*}
-  We look at the homogeneous system,
-  \begin{align*}
-    \diff{\mathbf{x}}{t} &= A\mathbf{x},
-  \end{align*}
-  which has the solutions of
-  \begin{align*}
-    \mathbf{x}(t) &= \Phi(t) \mathbf{c}\\
-                  &= e^{At}\mathbf{x}_0.
-  \end{align*}
-  When we deal with inhomogeneous solutions in the one-dimensional case, we use methods like variation of parameters or undetermined coefficients.\newline
+\subsection{Inhomogeneous Systems of Equations}%
+Now, we discuss inhomogeneous systems. Consider the system
+\begin{align*}
+  \diff{\mathbf{x}}{t} &= A\mathbf{x} + \mathbf{F}(t).
+\end{align*}
+We look at the homogeneous system,
+\begin{align*}
+  \diff{\mathbf{x}}{t} &= A\mathbf{x},
+\end{align*}
+which has the solutions of
+\begin{align*}
+  \mathbf{x}(t) &= \Phi(t) \mathbf{c}\\
+                &= e^{At}\mathbf{x}_0.
+\end{align*}
+When we deal with inhomogeneous solutions in the one-dimensional case, we use methods like variation of parameters or undetermined coefficients.\newline
 
-  Here, we will assume a perturbation --- i.e., our solution is close enough to our fundamental solution.
+Here, we will assume a perturbation --- i.e., our solution is close enough to our fundamental solution.
+\begin{align*}
+  \mathbf{x}(t) &= \Phi(t)\mathbf{u}(t)\\
+  \diff{\mathbf{x}}{t} &= \diff{\Phi}{t}\mathbf{u}(t) + \Phi(t)\diff{\mathbf{u}}{t}.
+\end{align*}
+Plugging in, we have
+\begin{align*}
+  \diff{\Phi}{t}\mathbf{u}(t) + \Phi(t)\diff{\mathbf{u}}{t} &= A\Phi(t)\mathbf{u}(t) + \mathbf{F}(t).
+\end{align*}
+We want to cancel some things out. Recall that $\diff{\Phi}{t} = A\Phi$. Therefore, we obtain
+\begin{align*}
+  \Phi(t) \diff{\mathbf{u}}{t} &= \mathbf{F}(t).
+\end{align*}
+Multiplying on both sides by $\Phi^{-1}(t)$, we get
+\begin{align*}
+  \diff{\mathbf{u}}{t} &= \Phi^{-1}(t)\mathbf{F}(t)\\
+  \mathbf{u}(t) &= \int_{}^{} \Phi^{-1}(t)\mathbf{F}(t)\:dt,
+\end{align*}
+where the integral is taken coordinatewise. Thus,
+\begin{align*}
+  \mathbf{x}_p(t) &= \Phi(t) \int_{}^{} \Phi^{-1}(t)\mathbf{F}(t)\:dt.
+\end{align*}
+Therefore, presumably, we have the general solution
+\begin{align*}
+  \mathbf{x}(t) &= \Phi(t) \mathbf{c} + \Phi(t) \int_{}^{} \Phi^{-1}(t)\mathbf{F}(t)\:dt.
+\end{align*}
+Instead, we may consider $\Psi_A(t)$ rather than $\Phi(t)$, as $\Psi_A^{-1}(t) = \Psi\left( -t \right)$. This gives
+\begin{align*}
+  \mathbf{x}(t) &= \Psi_A(t)\mathbf{c} + \Psi_A\left( t \right)\int_{}^{} \Psi_A\left( -t \right)F(t)\:dt.
+\end{align*}
+Now, if we want to implement the condition $\mathbf{x}_0 = \mathbf{x}(0)$, we want to modify the integral slightly.
+\begin{align*}
+  \mathbf{x}(t) &= \Psi_A(t)\mathbf{c} + \Psi_A(t) \int_{0}^{t} \Psi_A(-s)\mathbf{F}(s)\:ds\\
+  \mathbf{x}(0) &= \mathbf{c}
+  \intertext{meaning}
+  \mathbf{x}(t) &= \Psi_A(t)\mathbf{x}_0 + \Psi_a(t) \int_{0}^{t} \Psi_A(-s)\mathbf{F}(s)\:dt.
+\end{align*}
+\begin{example}[Solving an Inhomogeneous System]
+  Consider the system
   \begin{align*}
-    \mathbf{x}(t) &= \Phi(t)\mathbf{u}(t)\\
-    \diff{\mathbf{x}}{t} &= \diff{\Phi}{t}\mathbf{u}(t) + \Phi(t)\diff{\mathbf{u}}{t}.
+    \diff{x}{t} &= 3x + y + 2\\
+    \diff{y}{t} &= x + 3y + e^{7t}.
   \end{align*}
-  Plugging in, we have
+  Writing in matrix form, we have
   \begin{align*}
-    \diff{\Phi}{t}\mathbf{u}(t) + \Phi(t)\diff{\mathbf{u}}{t} &= A\Phi(t)\mathbf{u}(t) + \mathbf{F}(t).
+    \diff{\mathbf{x}}{t} &= \begin{pmatrix}3 &1 \\ 1 & 3\end{pmatrix}\mathbf{x} + \begin{pmatrix}2\\e^{7t}\end{pmatrix}.
   \end{align*}
-  We want to cancel some things out. Recall that $\diff{\Phi}{t} = A\Phi$. Therefore, we obtain
+  Note that we don't have to use an initial condition, so we only need the formula
   \begin{align*}
-    \Phi(t) \diff{\mathbf{u}}{t} &= \mathbf{F}(t).
+    \mathbf{x}(t) &= \Psi(t)\mathbf{c} + \Psi(t) \int_{}^{} \Psi(-t)\mathbf{F}(t)\:dt
   \end{align*}
-  Multiplying on both sides by $\Phi^{-1}(t)$, we get
+  Now, note that
   \begin{align*}
-    \diff{\mathbf{u}}{t} &= \Phi^{-1}(t)\mathbf{F}(t)\\
-    \mathbf{u}(t) &= \int_{}^{} \Phi^{-1}(t)\mathbf{F}(t)\:dt,
+    \Psi(t) &= \begin{pmatrix}\frac{1}{2}\left( e^{4t} + e^{2t} \right) & \frac{1}{2}\left( e^{4t} - e^{2t} \right) \\ \frac{1}{2}\left( e^{4t} - e^{2t} \right) & \frac{1}{2}\left( e^{4t} + e^{2t} \right)\end{pmatrix}.
   \end{align*}
-  where the integral is taken coordinatewise. Thus,
+  Calculating the inverse, we have
   \begin{align*}
-    \mathbf{x}(t) &= \Phi(t) \int_{}^{} \Phi^{-1}(t)\mathbf{F}(t)\:dt.
+    \Psi^{-1}(t) &= \Psi\left( -t \right)\\
+                 &= \begin{pmatrix}\frac{1}{2}\left( e^{-4t} + e^{-2t} \right) & \frac{1}{2}\left( e^{-4t} - e^{-2t} \right) \\ \frac{1}{2}\left( e^{-4t} - e^{-2t} \right) & \frac{1}{2}\left( e^{-4t} + e^{-2t} \right)\end{pmatrix}.
   \end{align*}
-  
+  Computing, we have
+  \begin{align*}
+    \Psi^{-1}\mathbf{F}(t) &= \begin{pmatrix}e^{-4t} + e^{-2t} + \frac{1}{2}\left( e^{3t} - e^{5t} \right) \\ e^{-4t} - e^{-2t} + \frac{1}{2}\left( e^{3t} + e^{5t} \right)\end{pmatrix}.
+  \end{align*}
+  Integrating coordinatewise, we get
+  \begin{align*}
+    \int_{}^{} \Psi^{-1}\mathbf{F}(t)\:dt &= \begin{pmatrix}- \frac{1}{4}e^{-4t} - \frac{1}{2}e^{-2t} + \frac{1}{6}e^{3t} - \frac{1}{10}e^{5t} \\ -\frac{1}{4}e^{-4t} + \frac{1}{2}e^{-2t} + \frac{1}{6}e^{3t} + \frac{1}{10}e^{5t}\end{pmatrix}
+  \end{align*}
+  We find the general solution by multiplying by $\Psi(t)$ and adding the homogeneous solution.
+\end{example}
+\begin{example}[Nonconstant Coefficients]
+  Consider
+  \begin{align*}
+    \diff{x}{t} &= \left( 2t + 1 \right)x + y\\
+    \diff{y}{t} &= x + \left( 2t + 1 \right).
+  \end{align*}
+  Writing in matrix form, we have
+  \begin{align*}
+    \diff{\mathbf{x}}{t} &= \begin{pmatrix}2t + 1 & 1 \\ 1 & 2t + 1\end{pmatrix},
+  \end{align*}
+  with eigenvalues
+  \begin{align*}
+    \lambda_1 &= 2t+2\\
+    \lambda_2 &= 2t\\
+    \mathbf{v}_1 &= \begin{pmatrix}1\\1\end{pmatrix}\\
+    \mathbf{v}_2 &= \begin{pmatrix}1\\-1\end{pmatrix}.
+  \end{align*}
+  Solving, we can take
+  \begin{align*}
+    e^{At} &= Pe^{Dt}P^{-1}\\
+           &= \begin{pmatrix}1 & 1 \\ 1 & -1\end{pmatrix} e^{Dt} \left( \frac{1}{2} \begin{pmatrix}1 & 1 \\ 1 & -1\end{pmatrix} \right).
+  \end{align*}
+  Now, calculating $e^{Dt}$, we need to take integrals of our expressions $\lambda_1(t)$ and $\lambda_2(t)$ for our exponent expressions, giving
+  \begin{align*}
+    e^{At} &= \frac{1}{2} \begin{pmatrix}1 & 1 \\ 1 & -1\end{pmatrix} \begin{pmatrix}e^{\int_{}^{} \lambda_1(t)\:dt} & 0 \\ 0 & e^{\int_{}^{} \lambda_2(t)\:dt}\end{pmatrix} \begin{pmatrix}1 & 1 \\ 1 & -1\end{pmatrix}\\
+           &= \frac{1}{2} \begin{pmatrix}1 & 1 \\ 1 & -1\end{pmatrix} \begin{pmatrix}e^{t^2 + 2t} & 0 \\ 0 & e^{t^2}\end{pmatrix} \begin{pmatrix}1 & 1 \\ 1 & -1\end{pmatrix}.
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    \mathbf{x}(t) &= Pe^{Dt}P^{-1} \mathbf{x}_0\\
+                  &= \frac{1}{2} \begin{pmatrix}e^{t^2 + 2t} + e^{t^2} & e^{t^2 + 2t} - e^{t^2} \\ e^{t^2 + 2t} - e^{t^2} & e^{t^2 + 2t} + e^{t^2}\end{pmatrix} \mathbf{x}_0.
+  \end{align*}
+\end{example}
+\section{Introducing Partial Differential Equations}%
+Consider the equation
+\begin{align*}
+  \pd{u}{t} + \pd{u}{x} &= 0.\label{eq:pde_1}\tag{\textasteriskcentered}
+\end{align*}
+There are a lot of solutions to this equation.
+\begin{itemize}
+  \item $u(x,t) = 5$;
+  \item $u(x,t) = x-t$;
+  \item $u(x,t) = e^{x}e^{-t}$.
+\end{itemize}
+We want to try to understand solutions to this equation given an initial value. Note that this means that the ``initial values'' are actually functions of $x$. Upon defining our domains in $x$ and $t$, we have an initial condition of the form
+\begin{align*}
+  u\left( x,0 \right) &= f(x).
+\end{align*}
+Now, considering \eqref{eq:pde_1}, we may consider the initial condition
+\begin{align*}
+  u\left( x,0 \right) &= \sin(x).
+\end{align*}
+Then, all our proposed solutions from earlier no longer apply. Using the power of inspection, we may consider the solution
+\begin{align*}
+  u\left( x,t \right) &= \sin(x-t)\\
+  \pd{u}{t} &= -\cos\left( x-t \right)\\
+  \pd{u}{x} &= \cos\left( x-t \right),
+\end{align*}
+meaning that our solution for $u\left( x,t \right)$ works.\newline
+
+This gives an initial value problem of
+\begin{align*}
+  \pd{u}{t} + a\pd{u}{x} &= 0\\
+  u\left( x,0 \right) &= f(x).
+\end{align*}
+We now need to know if there is an existence/uniqueness condition for partial differential equations. Consider the proposed solution
+\begin{align*}
+  u\left( x,t \right) &= f\left( x-at \right)\\
+  \pd{u}{x} &= f\left(x-at\right)\\
+  \pd{u}{t} &= -af\left( x-at \right),
+\end{align*}
+which solves our equation. The main condition on $f$ here is that $f$ has to be differentiable.\newline
+
+We call \eqref{eq:pde_1} the \textit{transport equation}.
+\begin{example}
+  Consider
+  \begin{align*}
+    A \pd{^2u}{x^2} + B \pd{^2u}{x\partial y} + C \pd{^2u}{y^2} + D \pd{u}{x} + E \pd{u}{y} + F u &= G,
+  \end{align*}
+  where $A,B,C,D,E,F,G$ are functions of $x$ and $y$.\newline
+
+  This is the most general second-order two-variable inhomogeneous linear partial differential equation.
 \end{example}
 
 \end{document}
