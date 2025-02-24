@@ -1459,5 +1459,94 @@ We call \eqref{eq:pde_1} the \textit{transport equation}.
 
   This is the most general second-order two-variable inhomogeneous linear partial differential equation.
 \end{example}
+\begin{example}
+  In the case of \eqref{eq:pde_1}, we see that $A = B = C = F + G = 0$. For the transport equation, we defined the initial condition $u\left( x,0 \right) \coloneq u_0\left( x \right)$, and a domain $-\infty < x < \infty$, $t \geq 0$.\newline
+
+  The transport equation is a homogeneous first-order linear constant-coefficient partial differential equation, which is much easier to solve.\newline
+
+  Equations of the type seen in the transport equation, which admit only initial conditions (and no boundary conditions) are known as Cauchy problems.
+\end{example}
+\begin{example}
+  The equation
+  \begin{align*}
+    \pd{u}{t} + u \pd{u}{x} &= 0
+  \end{align*}
+  is a \textit{nonlinear} homogeneous first-order partial differential equation, known as Burgers' equation.
+\end{example}
+\begin{definition}
+  Consider the general partial differential equation(s) of the form
+  \begin{align*}
+    A(x,y) \pd{^2u}{x^2} + B(x,y) \pd{^2u}{x\partial y} + C(x,y)\pd{^2 u}{y^2} &= 0.
+  \end{align*}
+  \begin{itemize}
+    \item If $\left( B(x,y) \right)^2 - 4\left( A\left( x,y \right)C\left( x,y \right) \right) > 0$, then we call this equation a hyperbolic partial differential equation.
+    \item If $\left( B(x,y) \right)^2 - 4\left( A\left( x,y \right)C\left( x,y \right) \right) = 0$, then we call this equation a parabolic partial differential equation.
+    \item If $\left( B(x,y) \right)^2 - 4\left( A\left( x,y \right)C\left( x,y \right) \right) < 0$, then we call this equation an elliptic partial differential equation.
+  \end{itemize}
+\end{definition}
+\begin{example}[The Heat Equation]
+  Consider the equation
+    \begin{align*}
+      \pd{u}{t} &= k \pd{^2u}{x^2}.
+    \end{align*}
+    This is known as the heat equation (in one dimension). In multiple dimensions, the heat equation would have the form
+    \begin{align*}
+      \pd{u}{t} &= \sum_{i} k_i\pd{^2u}{x_i^2}.
+    \end{align*}
+    We will focus on solving the equation in one dimension.\newline
+
+    For example, the following equations are solutions to the heat equation:
+    \begin{align*}
+      u\left( x,t \right) &= 0\\
+      u\left( x,t \right) &= 3x + 5\\
+      u\left( x,t \right) &= kt - k\frac{x^2}{2}.
+    \end{align*}
+    Unfortunately, there are an infinite number of solutions to the heat equation, which is not helpful.\newline
+
+    We implement some conditions in order to solve this equation. We start by implementing the domain $a\leq x \leq b$ and $t\geq 0$.\newline
+
+    Now, we may implement the boundary conditions of $u\left( a,t \right) = c_1$ and $u\left( b,t \right) = c_2$, which allow us to express the fact that we don't want the very ends of our heated rod to change.
+\end{example}
+\begin{example}[Solving a Heat Equation]
+  Consider the heat equation of the form
+  \begin{align*}
+    \pd{u}{t} &= 3\pd{^2u}{x^2},
+  \end{align*}
+  with domain $0\leq x \leq \pi$, $t\geq 0$, and initial condition $u\left( x,0 \right) = \sin\left(2x\right)$. The initial conditions yield the boundary condition of $u\left( 0,t \right) = 0$ and $u\left( \pi,t \right) = 0$.\newline
+
+  To solve this equation, we assume\footnote{Also known as guessing.} a solution of the form
+  \begin{align*}
+    u\left( x,t \right) &= X(x)T(t).
+  \end{align*}
+  Solving this solution, we have
+  \begin{align*}
+    \pd{u}{t} &= X(x)\pd{T}{t}\\
+    \pd{^2u}{x^2} &= \pd{^2X}{x^2}T(t).
+  \end{align*}
+  Thus, we get the equation of the form
+  \begin{align*}
+    X(x) \pd{T}{t} &= 3 \pd{^2X}{x^2}T(t).
+  \end{align*}
+  Dividing by $X(x)T(t)$, we have
+  \begin{align*}
+    \left( \pd{T}{t} \right)\left( \frac{1}{T(t)}  \right) &= 3 \left( \pd{^2X}{x^2} \right)\left( \frac{1}{X(x)} \right)\\
+    \frac{1}{3}\left( \pd{T}{t} \right)\left( \frac{1}{T(t)} \right) &= \left( \pd{^2X}{x^2} \right)\left( \frac{1}{X(x)} \right)\\
+                                                                     &= C.
+  \end{align*}
+  Now, examining the equation
+  \begin{align*}
+    \left( \pd{^2 X}{x^2} \right)\left( \frac{1}{X(x)} \right) &= C,
+  \end{align*}
+  we see that $X$ has solutions of the form
+  \begin{align*}
+    X(x) &= \sin\left( \sqrt{C}x \right)\\
+         &= \cos\left( \sqrt{C}x \right)\\
+         &= \cosh\left( \sqrt{C}x \right)\\
+         &= \sinh\left( \sqrt{C}x \right)\\
+         &= Ax + B\\
+         &= B
+  \end{align*}
+  Now, we have three classes of solutions. If $C < 0$, we have the trigonometric functions, if $C > 0$, then we have the hyperbolic trigonometric functions, and if $C = 0$, then we have the linear functions. Alternatively, we write $C = \lambda^2$.
+\end{example}
 
 \end{document}
