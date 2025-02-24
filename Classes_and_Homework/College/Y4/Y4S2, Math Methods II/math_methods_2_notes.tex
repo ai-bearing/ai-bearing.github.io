@@ -1219,5 +1219,124 @@ We can find the residue in a variety of ways.
      \end{align*}
      Thus, we get $I = \frac{\pi}{2a}\ln(a)$.
    \end{example}
+   \begin{example}
+     Instead of moving our contour up or down by $\ve$ to include (or exclude) a pole, we may move the pole up or down by $\ve$. We consider
+     \begin{align*}
+       \int_{-\infty}^{\infty} \frac{g(x)}{x-x_0}\:dx &= \lim_{\ve\rightarrow 0} \int_{-\infty}^{\infty} \frac{g(x)}{x -\left( x_0\pm i\ve \right)}\:dx.
+     \end{align*}
+     Breaking into real or imaginary parts, we have
+     \begin{align*}
+       \int_{-\infty}^{\infty} \frac{g(x)}{x-\left( x_0 \pm i\ve \right)^2}\:dx &= \int_{-\infty}^{\infty} g(x)\frac{x-x_0}{\left( x-x_0 \right)^2 + \ve^2}\:dx \pm i\ve \int_{-\infty}^{\infty} \frac{g(x)}{\left( x-x_0 \right)^2 + \ve^2}\:dx.
+     \end{align*}
+     Now, notice that
+     \begin{align*}
+       \lim_{\ve \rightarrow 0}\frac{\ve}{\left( x-x_0 \right)^2 + \ve^2} &= \begin{cases}
+         0 & x\neq x_0\\
+         \infty & x = x_0
+       \end{cases}.
+     \end{align*}
+     Now, we may take
+     \begin{align*}
+       \int_{-\infty}^{\infty} \frac{\ve}{\left( x-x_0 \right)^2 + \ve^2}\:dx &= \ve \oint_{C}\frac{dz}{z + \ve^2},
+     \end{align*}
+     where $z = \left( x-x_0 \right)^2$. This gives
+     \begin{align*}
+       \ve\oint_{C}\frac{dz}{z + \ve^2} &= \ve \left( 2\pi i \right)\left( \frac{1}{2i \ve} \right)\\
+                                        &= \pi.
+     \end{align*}
+     Therefore, 
+     \begin{align*}
+       \lim_{\ve\rightarrow 0} \int_{-\infty}^{\infty} \frac{\ve}{\left( x-x_0 \right)^2 + \ve^2}\:dx &= \pi\delta\left( x-x_0 \right).
+     \end{align*}
+     Therefore, we recover
+     \begin{align*}
+       \lim_{\ve\rightarrow 0}\ve\int_{-\infty}^{\infty} \frac{g(x)}{\left( x-x_0 \right)^2+ \ve^2}\:dx &= \pi g\left(x_0\right).
+     \end{align*}
+     This gives the identity under the integral of
+     \begin{align*}
+       \frac{1}{z\mp i\ve} &= \text{PV}\frac{1}{x} \pm i\pi\delta(x).
+     \end{align*}
+   \end{example}
+   \begin{example}
+     Consider the integral
+     \begin{align*}
+               \oint_{C_r}^{} \frac{\cos(z)}{z}\:dz &= \lim_{\ve\rightarrow 0} \int_{-\infty}^{\infty} \frac{\cos(x)}{x\pm i\ve}\:dxj\\
+                                                    &= \underbrace{\text{PV}\int_{-\infty}^{\infty} \frac{\cos(x)}{x}\:dx}_{=0} \mp i\pi \int_{-\infty}^{\infty} \cos(x)\delta(x)\:dx\\
+                                                    &= \mp i\pi
+     \end{align*}
+   \end{example}
+   \subsubsection{Sommerfeld--Watson Transform and Series Summation}%
+   Thus far, we've been replacing integrals with sums. Now, we're interested in going the other way around.\newline
+
+   Consider the sum
+   \begin{align*}
+     S &= \sum_{-\infty}^{\infty}f(n),
+   \end{align*}
+   given the condition that $f(z)$ is analytic for $z\in\R$ and $\lim_{|z|\rightarrow\infty}\left\vert z^2f(z) \right\vert = 0$.\newline
+
+   We will introduce the auxiliary function
+   \begin{align*}
+     g(z) &= \pi \cot\left( \pi z \right)\\
+          &= \pi \frac{\cos\left( \pi z \right)}{\sin\left( \pi z \right)}.
+   \end{align*}
+   Note that $g(z)$ has an infinite number of poles at $z = n$ for each $n\in\Z$.\newline
+
+   Now, what we will do here is integrate the product $f(z)g(z)$ around a long enough symmetric contour hugging the real axis. This gives
+   \begin{align*}
+     \frac{1}{2\pi i}\oint_{C} f(z)g(z)\:dz &= \sum_{n=-\infty}^{\infty}\res\left[ \pi \cot\left( \pi z \right)f(z),n \right]\\
+                                            &= \sum_{n=-\infty}^{\infty} f(z)\frac{\pi\cos\left( \pi z \right)}{\diff{}{z}\left( \sin(\pi z) \right)}\biggr\vert_{z=n}.\\
+                                            &= \sum_{n=-\infty}^{\infty}f(n).
+   \end{align*}
+   Now, this doesn't \textit{seem} that helpful, until we remember that our contour $C$ surrounds all the other poles of $f$ in negative orientation.
+   \begin{align*}
+     \frac{1}{2\pi}\oint_{C}f(z)g(z)\:dz &= -\sum_{i}\res\left[ \pi\cot\left( \pi z \right)f(z),z_i \right].
+   \end{align*}
+   Thus, we have converted our infinite sum into a finite sum.\newline
+
+   Similarly, if we have an alternating sign series
+   \begin{align*}
+     S' &= \sum_{n=-\infty}^{\infty}\left( -1 \right)^{n}f(n)\\
+        &= -\sum_{i}\res\left[ \pi\csc\left( \pi z \right)f(z),z_i \right]
+   \end{align*}
+   \begin{example}
+     Consider
+     \begin{align*}
+       S &= \sum_{n=0}^{\infty}\frac{1}{n^2 + a^2}.
+     \end{align*}
+     Our analogous function is
+     \begin{align*}
+       f(z) &= \frac{1}{z^2 + a^2}.
+     \end{align*}
+     Then,
+     \begin{align*}
+       S' &= -\res\left[ \frac{\pi\csc\left( \pi z \right)}{z^2 + a^2} ,\pm ia\right]\\
+         &= -\frac{\pi}{2a}\coth\left( \pi a \right).
+     \end{align*}
+     Therefore, we have
+     \begin{align*}
+       \sum_{n=-\infty}^{\infty} \frac{1}{n^2 + a^2} = \frac{\pi}{a}\coth\left( \pi a \right).
+     \end{align*}
+     Now, we write
+     \begin{align*}
+       S &= \frac{1}{2a^2} + \frac{1}{2}\sum_{n=-\infty}^{\infty}\frac{1}{n^2 + a^2}.
+     \end{align*}
+     Thus, we get the sum
+     \begin{align*}
+       \sum_{n=0}^{\infty}\frac{1}{n^2 + a^2} &= \frac{1}{2a^2}\left( 1 + \pi a \coth\left( \pi a \right) \right).
+     \end{align*}
+   \end{example}
+   \begin{example}
+     Now, we may consider
+     \begin{align*}
+       S' &= \sum_{n=-\infty}^{\infty}\frac{\left( -1 \right)^n}{n^2 + a^2}\\
+         &= -\res\left[ \frac{\pi\csc\left( \pi z \right)}{z^2 + a^2},\pm ia \right]\\
+         &= -\frac{\pi}{2a}\frac{1}{\sinh\left( \pi a \right)},
+     \end{align*}
+     giving
+     \begin{align*}
+       S &= \frac{1}{2a^2}\left( 1 + \frac{\pi a}{\sinh\left( \pi a \right)} \right).
+     \end{align*}
+     
+   \end{example}
    
 \end{document}
