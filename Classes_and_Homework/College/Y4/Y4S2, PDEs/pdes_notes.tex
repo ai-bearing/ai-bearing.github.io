@@ -1518,7 +1518,9 @@ We call \eqref{eq:pde_1} the \textit{transport equation}.
   \begin{align*}
     u\left( x,t \right) &= X(x)T(t).
   \end{align*}
-  Solving this solution, we have
+  This approach is known as separation of variables.\newline
+
+  Solving using this assumption, we have
   \begin{align*}
     \pd{u}{t} &= X(x)\pd{T}{t}\\
     \pd{^2u}{x^2} &= \pd{^2X}{x^2}T(t).
@@ -1546,7 +1548,117 @@ We call \eqref{eq:pde_1} the \textit{transport equation}.
          &= Ax + B\\
          &= B
   \end{align*}
-  Now, we have three classes of solutions. If $C < 0$, we have the trigonometric functions, if $C > 0$, then we have the hyperbolic trigonometric functions, and if $C = 0$, then we have the linear functions. Alternatively, we write $C = \lambda^2$.
+  Now, we have three classes of solutions. If $C < 0$, we have the trigonometric functions, if $C > 0$, then we have the hyperbolic trigonometric functions, and if $C = 0$, then we have the linear functions. Alternatively, we write $C = \lambda^2$, giving
+  \begin{align*}
+    \frac{1}{X(x)} \left( \pd{^2X}{x^2} \right) &= \begin{cases}
+      \lambda^2\\ -\lambda^2 \\ 0
+    \end{cases}.
+  \end{align*}
+  Examining our cases, we want
+  \begin{align*}
+    0 &= X(0)T(t)\\
+    0 &= X(\pi)T(t).
+  \end{align*}
+  We cannot have $T(t) = 0$. Thus, we have $X(0) = X(\pi) = 0$.\newline
+
+  We start with the case that $ \pd{^2X}{x^2} = \lambda^2 X $. Thus, our boundary values for 
+  \begin{align*}
+    \diff{^2X}{x^2} - \lambda^2 X &= 0
+  \end{align*}
+  are at $X(0) = X(\pi) = 0$. We will use $X = \cosh\left( \lambda x \right)$ and $X = \sinh\left( \lambda x \right)$, rather than the traditional solutions of $e^{\pm \lambda x}$. The general solution is
+  \begin{align*}
+    X &= A\cosh\left( \lambda x \right) + B\sinh\left( \lambda x \right).
+  \end{align*}
+  Thus, we have $A = 0$. Furthermore, we have
+  \begin{align*}
+    0 &= B\sinh\left( \lambda \pi \right).
+  \end{align*}
+  Unfortunately this gives $B = 0$ too.\newline
+
+  This case has no nontrivial solution.\newline
+
+  Let's try a different case; let $ \pd{^2 X}{x^2} = -\lambda^2 $. Using the power of inspection, we get
+  \begin{align*}
+    X(x) &= A\cos\left( \lambda x \right) + B\sin\left( \lambda x \right).
+  \end{align*}
+  Plugging in our boundary conditions of $X(0) = X(\pi) = 0$, we get
+  \begin{align*}
+    0 &= A\cos\left( 0 \right),
+  \end{align*}
+  so that $A = 0$. Thus, we have the solution of
+  \begin{align*}
+    X(x) &= B\sin\left( \lambda x \right).
+  \end{align*}
+  To satisfy the boundary condition of $X(\pi) = 0$, we need
+  \begin{align*}
+    A \sin\left( \lambda \pi \right) &= 0,
+  \end{align*}
+  which only occurs when $\lambda\in \Z$. We write
+  \begin{align*}
+    X_n(x) &= A_{n}\sin\left( n x \right),
+  \end{align*}
+  where $\lambda = n$.\newline
+
+  Now, we need to solve $\diff{T}{t} = -3\lambda^2 T(t)$. This gives
+  \begin{align*}
+    T(t) &= T(0)e^{-3n^2 t}.
+  \end{align*}
+  In the general solution, we have
+  \begin{align*}
+    u\left( x,t \right) &= \sum_{n=0}^{\infty}u_n\left( x,t \right)\\
+                        &= \sum_{n=0}^{\infty}T(0)A_n\sin\left( n x \right)e^{-3n^2t}\\
+                        &= \sum_{n=1}^{\infty}B_n\sin\left( n x \right) e^{-3n^2 t}
+  \end{align*}
+  Now, to solve for our initial condition, we have
+  \begin{align*}
+    u\left( x,t \right) &= A_n\sin\left( n x \right)e^{-3n^2 t}\\
+    u\left( x,0 \right) &= A_n\sin\left( n x \right)\\
+                        &= \sin\left( 2x \right).
+  \end{align*}
+  Thus, $n = 2$, so
+  \begin{align*}
+    u\left( x,t \right) &= \sin\left( 2x \right)e^{-12 t}.
+  \end{align*}
+  The heat effectively escapes through the end.\newline
+
+  However, if we used a different boundary condition,
+  \begin{align*}
+    \pd{u}{x}\bigr\vert_{(0,t)}  &= 0\\
+    \pd{u}{x}\bigr\vert_{(\pi,t)} &= 0,
+  \end{align*}
+  then this would express the case of insulation, and would yield a cosine instead of a sine.
+\end{example}
+\begin{example}
+  Consider
+  \begin{align*}
+    \pd{^2u}{x^2} + 2 \pd{u}{x} &= 3 \pd{u}{t}.
+  \end{align*}
+  This is not the heat equation --- now, there is a first spatial derivative in our differential equation.\newline
+
+  Analogously, if we have a simple harmonic oscillator,
+  \begin{align*}
+    m\diff{^2x}{t^2} + kx &= 0,
+  \end{align*}
+  then by adding a first derivative term,
+  \begin{align*}
+    m \diff{^2x}{t^2} + a \diff{x}{t} + kx &= 0,
+  \end{align*}
+  then we have a damped solution.\newline
+
+  Analogously, the term $\pd{u}{x}$ represents the damping term. When we solve this, we get
+  \begin{align*}
+    \pd{^2X}{x^2}T + 2 \pd{X}{x}T &= 3X \pd{T}{t}.
+  \end{align*}
+  Dividing out by the solution function, we get
+  \begin{align*}
+    \frac{1}{X} \pd{^2X}{x^2} + \frac{2}{X} \pd{X}{x} &= \frac{3}{T} \pd{T}{t},
+  \end{align*}
+  which means we have separated this into two ODEs, of the form
+  \begin{align*}
+    \diff{^2X}{x^2} + 2\diff{X}{x} - CX &= 0\\
+    3 \diff{T}{t} - CT &= 0,
+  \end{align*}
+  giving a damping term in $X$.
 \end{example}
 
 \end{document}

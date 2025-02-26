@@ -1336,7 +1336,155 @@ We can find the residue in a variety of ways.
      \begin{align*}
        S &= \frac{1}{2a^2}\left( 1 + \frac{\pi a}{\sinh\left( \pi a \right)} \right).
      \end{align*}
-     
    \end{example}
-   
+  \subsection{Oscillators and Forcing}%
+  Consider a damped harmonic oscillator with position $u(t)$. Then, $u$ obeys Newton's second law,
+  \begin{align*}
+    \ddot{u} + 2\beta\dot{u} + \omega_0^2u &= 0.
+  \end{align*}
+  Here, $\beta$ is the damping factor, and $\omega_{0}$ denotes the natural frequency.\newline
+
+  The solutions of this equation are
+  \begin{align*}
+    u(t) &= e^{-\beta t}\left( ae^{i\Omega t} + be^{-i\Omega t} \right)\\
+         &= e^{-\beta t}\left( a\cos\left( \Omega t \right) + b\sin\left( \Omega t \right) \right),
+  \end{align*}
+  where $\Omega^2 = \omega_0^2 - \beta^2$. This is known as a transient solution.\newline
+
+  There are three types of motion.
+  \begin{itemize}
+    \item An underdamped system occurs when $\omega_0 > \beta$, so $\Omega$ is real, meaning we get oscillation that is damped out.
+    \item An overdamped system occurs when $\beta > \omega_0$, so $\Omega$ is imaginary, and the damping slows down the return of the wave.
+    \item When $\omega = \beta$, then $\Omega = 0$, and the solution is of the form $u\left( t \right) = e^{-\beta t}\left( at + b \right)$, and the system returns to equilibrium as quickly as possible. This is known as critical damping.
+  \end{itemize}
+  A forced system occurs when we have the differential equation
+  \begin{align*}
+    \ddot{u} + \beta \dot{u} + \omega_0^2u &= f(t).\label{eq:forced_and_damped_oscillator}\tag{\textdagger}
+  \end{align*}
+  We may consider a forcing function of the form $f(t) = f_0\cos\left( \omega t \right)$. We may also write
+  \begin{align*}
+    f(t) &= f_0\re\left( e^{i\omega t} \right).
+  \end{align*}
+  We expect to have a complex steady-state solution of the form
+  \begin{align*}
+    U_{\omega} &= C(\omega)e^{i\omega t}.
+  \end{align*}
+  We solve for $U$ by sticking it into the differential equation of \ref{eq:forced_and_damped_oscillator}. This will give the equation
+  \begin{align*}
+    U_{\omega} &= \frac{f_0e^{i\omega t}}{\left( \omega_0^2 - \omega^2 \right) + 2i\beta\omega}.
+  \end{align*}
+  Note that the real solution is $u = \re\left( U_{\omega} \right)$, or
+  \begin{align*}
+    u(t) &= \frac{1}{2}\left( U_{\omega} + U_{-\omega} \right)\\
+         &= \frac{1}{2}\left( U_{\omega} + \overline{U_{\omega}} \right).
+  \end{align*}
+  Now, when we consider a generalized forcing function $f(t)$, where $f$ is a continuum sum of forcing frequencies where the amplitudes are functions of $\omega$, $\hat{f}\left( \omega \right)$, we get an integral:
+  \begin{align*}
+    u(t) &= \int_{}^{} \frac{F(\omega)e^{i\omega t}}{\left( \omega_0^2-\omega^2 \right) + 2i\beta\omega}\:d\omega.
+  \end{align*}
+  Plugging this solution into the differential equation, we get
+  \begin{align*}
+  f(t) &= \int_{-\infty}^{\infty} \hat{f}\left( \omega \right)e^{i\omega t}\:d\omega,
+  \end{align*}
+  which is a Fourier transform (see \href{https://ai.avinash-iyer.com/Classes_and_Homework/College/Y4/Y4S1,\%20Math\%20Methods/math_methods_notes.pdf}{Math Methods 1}).
+  \subsubsection{Impulse Forcing}%
+  Consider a hammer blow forcing function, known as an impulse forcing function.\newline
+
+  The impulse forcing is of the form
+  \begin{align*}
+    f(t) &= f_0\delta\left( \omega\left( t-t_0 \right) \right)\\
+         &= \frac{\hat{f}_0}{2\pi} \int_{-\infty}^{\infty} e^{i\omega\left( t-t_0 \right)}\:d\omega,
+  \end{align*}
+  where
+  \begin{align*}
+    \hat{f}_0 &= \frac{f_0}{\omega_0}.
+  \end{align*}
+  We want to find the impulse solution,
+  \begin{align*}
+    G(t)&\coloneq u_{\delta}(t)\\
+        &= \frac{\hat{f}_0}{2\pi} \int_{-\infty}^{\infty} \frac{e^{i\omega\left( t-t_0 \right)}}{\left( \omega_0 - \omega^2 \right) + 2i\beta\omega}\:d\omega.
+  \end{align*}
+  To do this integral, we will make use of residues. Writing our denominator as
+  \begin{align*}
+    \left( \omega_0^2 - \omega^2 \right) + 2i\beta\omega &= \left( \omega - \omega_{+} \right)\left( \omega - \omega_{-} \right),
+  \end{align*}
+  where
+  \begin{align*}
+    \omega_{\pm}  &= i\beta \pm \sqrt{\omega_0^2 - \beta^2}\\
+                  &= i\beta\pm \Omega.
+  \end{align*}
+  We close our contour in the upper half-plane so that get a decaying exponential. Evaluating the residues, we get
+  \begin{align*}
+    G(t) &= \hat{f}_0 \frac{e^{-\beta\left( t-t_0 \right)}}{2i\Omega} \left( e^{i\Omega\left( t-t_0 \right)} - e^{-i\Omega\left( t-t_0 \right)}\right)\\
+         &= \frac{f_0}{\Omega}\sin\left( \Omega\left( t-t_0 \right) \right)e^{-\beta\left( t-t_0 \right)},
+  \end{align*}
+  where $t > t_0$.\newline
+
+  Now, if $t < t_0$, then we must close our contour in the lower half-plane, and since there are no poles in the lower half-plane, we get $G(t) = 0$ for $t < t_0$. Thus, we must have
+  \begin{align*}
+    G(t) &= \frac{f_0}{\Omega} \sin\left( \Omega\left( t-t_0 \right) \right)e^{-\beta\left( t-t_0 \right)}\Theta\left( t-t_0 \right),
+  \end{align*}
+  where $\Theta$ is the Heaviside step function.
+  \begin{itemize}
+    \item The imaginary and real parts of $\omega_{\pm}$ give the damping, $\beta$, and parameter, $\Omega$, respectively. Now, we may interpret the different types of damping in this respect.
+      \begin{itemize}
+        \item If $\Omega$ is real (i.e., underdamped motion), then $\omega_{\pm}$ have constant magnitude of $\omega_0$, meaning that varying the damping only moves the poles around in a circle.
+        \item If $\beta = \omega_0$ (i.e., critically damped motion), then the poles converge at $i\beta$ along the imaginary axis.
+        \item If $\beta > \omega_0$ (i.e., overdamped mption), then the poles separate along the imaginary axis, giving non-oscillatory motion.
+      \end{itemize}
+    \item The poles also encode resonance characteristics, where we have $\omega_{\text{res}}^2 = \omega_0^2 - 2\beta^2$.
+    \item If $\beta \ll \omega_0$, then the damping is mathematically equivalent to the $i\ve$ prescription moving the resonance pole at $\omega_0$ off the real axis and into the upper half-plane.
+  \end{itemize}
+  \subsubsection{Waves on a String}%
+  Whereas an undamped oscillator is harmonic only in time, a wave is harmonic in both space and time.\newline
+
+  A wave satisfies the equation
+  \begin{align*}
+    \pd{^2u}{t^2} &= c^2\nabla^2 u,
+  \end{align*}
+  where $c$ is the wave speed.\newline
+
+  The general solution is of the form
+  \begin{align*}
+    U\left( x,t \right) &= ce^{i\left( kx = \omega t \right)}.
+  \end{align*}
+  A forced wave occurs via
+  \begin{align*}
+    \pd{^2u}{t^2} - \frac{1}{c^2} \pd{^2u}{t^2} &= f(x,t).
+  \end{align*}
+  Now, we start with the impulse solution,
+  \begin{align*}
+    f(x,t) &= f_0\delta\left( x-x_0 \right)\delta\left( t-t_0 \right)\\
+           &= f_0 \int_{-\infty}^{\infty} \frac{e^{ik\left( x-x_0 \right)}}{2\pi}\:dk \int_{-\infty}^{\infty} \frac{e^{-i\omega\left( t-t_0 \right)}}{2\pi}\:d\omega.
+  \end{align*}
+  Now, we have
+  \begin{align*}
+    G(x,t) &= \frac{1}{\left( 2\pi \right)^2}\int_{-\infty}^{\infty} e^{ikx}\:dk\int_{-\infty}^{\infty} \frac{e^{-i\omega t}}{\omega^2/c^2 - k^2}\:d\omega.
+  \end{align*}
+  To evaluate this integral, we start with the integral in $\omega$, given by
+  \begin{align*}
+    I &= \frac{c^2}{2\pi}\int_{-\infty}^{\infty} \frac{e^{-i\omega t}}{\omega^2 - c^2k^2}\:d\omega.
+  \end{align*}
+  Unfortunately here, our simple poles lie on the real axis at $\pm ck$.\newline
+
+  To find the solution, we need boundary and initial conditions to know where we want to make our $i\ve$ adjustment.\newline
+
+  If there is no wave before our impulse hits, we need our integral to vanish whenever $t < 0$ which occurs when we close our contour in the lower half plane, so we subtract $i\ve$ from $\pm ck$. Factoring, we have
+  \begin{align*}
+    I &= \frac{c^2}{2\pi}\int_{-\infty}^{\infty} \frac{e^{i\omega t}}{\left( \omega-\left( ck-i\ve \right) \right)\left( \omega+\left( ck + i\ve\right) \right)}\:d\omega.
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    I(t > 0) &= -\frac{c}{k}\sin\left( ckt \right)e^{-\ve t},
+  \end{align*}
+  and in the limit as $\ve\rightarrow 0$, we have
+  \begin{align*}
+    I(t) &= -\frac{c}{k}\sin\left( ckt \right).
+  \end{align*}
+  Now, sticking our value of $I$ into the integral in $k$, we have
+  \begin{align*}
+    G\left( x, t> 0 \right) &= -\frac{c}{2\pi} \int_{-\infty}^{\infty} \frac{e^{ictk} - e^{-ictk}}{2ik}e^{ikx}\:dk\\
+                            &= -\frac{c}{2}\Theta\left( ct-\left\vert x \right\vert \right).
+  \end{align*}
+  The expression $-\frac{c}{2}\Theta\left( ct-\left\vert x \right\vert \right)$ gives causality, and the expression $\left\vert x \right\vert$ comes from symmetry.
 \end{document}

@@ -9,6 +9,7 @@
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \renewcommand*{\hbar}{\hslash}
 \DeclareMathOperator{\cb}{cb}
+\DeclareMathOperator{\hs}{HS}
 
 %kp fonts:
 %\usepackage{kpfonts}
@@ -1710,6 +1711,469 @@ We can now show the case for $\B\left( \mathcal{H} \right)$, not just the case o
 \begin{corollary}
   Let $A$ be a $C^{\ast}$-algebra, $M\subseteq A$ a unital subspace, and $\phi\colon M\rightarrow \B\left( \mathcal{H} \right)$ a unital, completely contractive map. Then, there exists a completely positive map $\psi\colon A\rightarrow \B\left( \mathcal{H} \right)$ that extends $\phi$.
 \end{corollary}
+\section{Ideals of Operators}%
+We need a bit more theory about $\B\left( \mathcal{H} \right)$, specifically related to the trace class/Hilbert--Schmidt operators and the noncommutative dual spaces, as well as their induced topologies. 
+\subsection{Polar and Singular Value Decomposition}%
+Just as a nonzero complex number $z\in \C$ can be written as $z = \omega \left\vert z \right\vert$, where $\omega\in \T$ is equal to $\sgn(z)$, or $\frac{z}{\left\vert z \right\vert}$, we can decompose an operator into a product of a partial isometry and a positive operator.
+\begin{lemma}
+  Let $\mathcal{H}$ be a Hilbert space, $T\in \B\left( \mathcal{H} \right)$.
+  \begin{enumerate}[(1)]
+    \item For all $\xi\in \mathcal{H}$, $\norm{T\xi} = \norm{\left\vert T \right\vert\xi}$, so that $\ker\left( \left\vert T \right\vert \right)= \ker\left( T \right)$.
+    \item We have $\overline{\Ran}\left( \left\vert T \right\vert \right) = \ker\left( \left\vert T \right\vert \right)^{\perp} = \ker\left( T \right)^{\perp}$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item If $\xi\in \mathcal{H}$, then
+      \begin{align*}
+        \norm{\left\vert T \right\vert\xi} ^2 &= \iprod{\left\vert T \right\vert\xi}{\left\vert T \right\vert\xi}\\
+                                              &= \iprod{\left\vert T \right\vert^{\ast}\left\vert T \right\vert\xi}{\xi}\\
+                                              &= \iprod{\left\vert T \right\vert^2\xi}{\xi}\\
+                                              &= \iprod{T^{\ast}T\xi}{\xi}\\
+                                              &= \norm{T\xi}^2,
+      \end{align*}
+      as $T$ is self-adjoint, and $T^{\ast}T = \left\vert T \right\vert^2$. Thus, $\ker\left( \left\vert T \right\vert \right) = \ker\left( T \right)$.
+    \item We have
+      \begin{align*}
+        \overline{\Ran}\left( T \right) &= \ker\left( \left\vert T \right\vert^{\ast} \right)^{\perp}\\
+                                        &= \ker\left( \left\vert T \right\vert \right)^{\perp}.
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+\begin{proposition}[Polar Decomposition]
+  Let $\mathcal{H}$ be a Hilbert space, and let $T\in \B\left( \mathcal{H} \right)$. Then, there exists a unique partial isometry $V\in \B\left( \mathcal{H} \right)$ such that $T = V\left\vert T \right\vert$ and $\ker\left( T \right) = \ker\left( V \right)$. Moreover, $V^{\ast}T = \left\vert T \right\vert$, and if $T$ is invertible, then $V = T\left\vert T \right\vert^{-1}$ is unitary, and belongs to $C^{\ast}\left( T \right)$.
+\end{proposition}
+\begin{proof}
+  We see that the map $\left\vert T \right\vert\xi \mapsto T\xi$ from $\Ran\left( \left\vert T \right\vert \right)$ to $\Ran\left( T \right)$, is well-defined, linear, and isometric, so it extends by continuity to an isometric linear map $V_0\colon \overline{\Ran}\left( \left\vert T \right\vert \right)\rightarrow \overline{\Ran}\left( T \right)$. Define
+  \begin{align*}
+    V\colon \ker\left( T \right)^{\perp}\oplus \ker\left( T \right)\rightarrow \mathcal{H}\\
+    \xi\oplus \eta \mapsto V_0\xi.
+  \end{align*}
+  By construction, $V\left\vert T \right\vert = T$ and $\ker\left( V \right) = \ker\left( T \right)$. Since $V|_{\ker\left( V \right)^{\perp}} = V_0$ is isometric, $V$ is a partial isometry with initial space $\ker\left( T \right)^{\perp}$ and final space $\overline{\Ran}\left( T \right)$.\newline
+
+  Now, since $V^{\ast}V$ is the orthogonal projection onto the initial space $\overline{\Ran}\left( \left\vert T \right\vert \right)$, we have
+  \begin{align*}
+    V^{\ast}T &= V^{\ast}V\left\vert T \right\vert\\
+              &= \left\vert T \right\vert.
+  \end{align*}
+  For uniqueness, suppose $W$ is a partial isometry satisfying $T = W\left\vert T \right\vert$ with $\ker\left( W \right) = \ker\left( T \right)$. Then, for all $\xi\in \mathcal{H}$, we have
+  \begin{align*}
+    W\left( \left\vert T \right\vert\xi \right) &= T\xi\\
+                                                &= V\left( \left\vert T \right\vert\xi \right),
+  \end{align*}
+  so $W$ and $V$ agree on $\Ran\left( \left\vert T \right\vert \right)$, and by continuity, $\overline{\Ran}\left( \left\vert T \right\vert \right)$. Since both $W$ and $V$ send $\ker\left( T \right)$ to $0$, $W$ and $V$ agree on the orthogonal complement $\overline{\Ran}\left( \left\vert T \right\vert \right)^{\perp}$ as well. Thus, $W = V$.\newline
+
+  Now, if $T$ is invertible, then so is $\left\vert T \right\vert$, so $T\left\vert T \right\vert^{-1} = V$. Since $\Ran\left( T \right) = \Ran\left( \left\vert T \right\vert \right) = \mathcal{H}$, the operator $V$ is a surjective isometry, hence unitary.\newline
+
+  Furthermore, $\left\vert T \right\vert\in C^{\ast}\left( T \right)$, and $\left\vert T \right\vert^{-1}\in C^{\ast}\left( \left\vert T \right\vert \right)\subseteq C^{\ast}\left( T \right)$, so that $V = T\left\vert T \right\vert^{-1}\in C^{\ast}\left( T \right)$.
+\end{proof}
+\begin{fact}
+  Let $T = V\left\vert T \right\vert$ be the polar decomposition of $T\in \B\left( \mathcal{H} \right)$. Then, $\left\vert T^{\ast} \right\vert = V\left\vert T \right\vert V^{\ast}$.
+\end{fact}
+\begin{proof}
+  We see that
+  \begin{align*}
+    \left( V\left\vert T \right\vert V^{\ast} \right)\left( V \left\vert T \right\vert V^{\ast} \right) &= TV^{\ast}TV^{\ast}\\
+                                                                                                        &= T\left\vert T \right\vert V^{\ast}\\
+                                                                                                        &= T\left( V\left\vert T \right\vert \right)^{\ast}\\
+                                                                                                        &= TT^{\ast}.
+  \end{align*}
+  Since $\left\vert T \right\vert$ is positive, and positivity is preserved by conjugation, $V\left\vert T \right\vert V^{\ast}$ is also positive, and since $\left( V\left\vert T \right\vert V^{\ast} \right)^2 = TT^{\ast}$, uniqueness of square roots implies that $V \left\vert T \right\vert V^{\ast} = \left( TT^{\ast} \right)^{1/2} = \left\vert T^{\ast} \right\vert$.
+\end{proof}
+One of the primary uses of the polar decomposition is in establishing the singular value decomposition.
+\begin{proposition}[Singular Value Decomposition]
+  Let $T \in\K\left( \mathcal{H} \right)$ be compact. There is a possibly finite sequence $\left( \mu_k \right)_k\in c_0$ with $\mu_k > 0$, and two possibly finite orthonormal sequences $\left( e_k \right)_k$ and $\left( f_k \right)_k$ in $\mathcal{H}$ such that
+  \begin{align*}
+    T &= \sum_{k}\mu_k\theta_{f_k,e_k},
+  \end{align*}
+  with convergence in operator norm. Moreover, $\norm{T}_{\op} = \max_{k}\left\vert \mu_k \right\vert$.\newline
+
+  If $T$ is finite-rank, then the sum is finite.\newline
+
+  The scalars $\left( \mu_k \right)_k$ are called the singular values of $T$.
+\end{proposition}
+\begin{proof}
+  Let $T = V\left\vert T \right\vert$ be the polar decomposition. Then, $\left\vert T \right\vert = V^{\ast}T$ is compact, as $\K\left( \mathcal{H} \right)$ is an ideal. Similarly, if $T$ is finite-rank, then so is $\left\vert T \right\vert$.\newline
+
+  From the spectral theorem, we know that
+  \begin{align*}
+    \left\vert T \right\vert &= \sum_{k}\mu_k\theta_{e_k,e_k},
+  \end{align*}
+  where $\left( e_k \right)_k$ is an orthonormal sequence and $\left( \mu_k \right)_k$ is a sequence of necessarily positive scalars (as $\left\vert T \right\vert$ is a positive operator). The sum is finite if $T$ is finite rank.\newline
+
+  Now, we set $f_k = Ve_k$ for each $k$. Thus, we have
+  \begin{align*}
+    T &= V\left\vert T \right\vert\\
+      &= V\left( \sum_{k}\mu_k\theta_{e_k,e_k} \right)\\
+      &= \sum_{k}\mu_kV\theta_{e_k,e_k}\\
+      &= \sum_{k}\mu_{k}\theta_{Ve_k,e_k}\\
+      &= \sum_{k}\mu_k\theta_{f_k,e_k}.
+  \end{align*}
+  Now, we must show that $\left( f_k \right)_k$ is orthonormal. Since $e_k$ is an eigenvector for $\left\vert T \right\vert$, and each $\mu_k$ is nonzero, each $e_k$ belongs to $\Ran\left( \left\vert T \right\vert \right)$. Since $V^{\ast}V$ is the projection onto the initial space $\overline{\Ran}\left( \left\vert T \right\vert \right)$, we have $V^{\ast}Ve_k = e_k$, so
+  \begin{align*}
+    \iprod{f_k}{f_{\ell}} &= \iprod{Ve_k}{Ve_{\ell}}\\
+                          &= \iprod{V^{\ast}Ve_k}{e_{\ell}}\\
+                          &= \iprod{e_k}{e_{\ell}}\\
+                          &= \delta_{k\ell}.
+  \end{align*}
+  Now, since $\left\vert T \right\vert$ is diagonalizable, its operator norm is the supremum of its eigenvalues, $\norm{\left\vert T \right\vert}_{\op} = \sup_{k}\left\vert \mu_k \right\vert$, and since $\norm{T}_{\op} = \norm{\left\vert T \right\vert}_{\op}$, and $\left( \mu_k \right)_{k}\in c_0$, the supremum is attained.
+\end{proof}
+\subsection{Hilbert--Schmidt Operators}%
+We start with the noncommutative analogue of $\ell_2$.
+\begin{lemma}
+  Let $\mathcal{H}$ be a Hilbert space, $T,S\in \B\left( \mathcal{H} \right)$, and let $\left( e_{\alpha} \right)_{\alpha}$ and $\left( f_{\gamma} \right)_{\gamma}$ be orthonormal bases for $\mathcal{H}$. Then,
+  \begin{enumerate}[(1)]
+    \item $\sum_{\alpha}\norm{Te_{\alpha}}^2 = \sum_{\alpha}\norm{T^{\ast}e_{\alpha}}^2$ (invariant under adjoints);
+    \item $\sum_{\alpha}\norm{Te_{\alpha}}^2 = \sum_{\gamma}\norm{Tf_{\gamma}}^2$ (independent of basis choice).
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  Note that by Parseval's identity, we have
+  \begin{align*}
+    \norm{Te_{\alpha}}^2 &= \sum_{\beta}\left\vert \iprod{Te_{\alpha}}{e_{\beta}} \right\vert^2\label{eq:parseval1}\tag{\textasteriskcentered}\\
+                         &= \sum_{\gamma}\left\vert \iprod{Te_{\alpha}}{f_{\gamma}} \right\vert^2.\label{eq:parseval2}\tag{\textasteriskcentered\textasteriskcentered}
+  \end{align*}
+  \begin{enumerate}[(1)]
+    \item By Fubini's theorem and \eqref{eq:parseval1}, we have
+      \begin{align*}
+        \sum_{\alpha}\norm{Te_{\alpha}}^2 &= \sum_{\alpha}\sum_{\beta}\left\vert \iprod{Te_{\alpha}}{e_{\beta}} \right\vert^2\\
+                                          &= \sum_{\alpha}\sum_{\beta}\left\vert \iprod{e_{\alpha}}{T^{\ast}e_{\beta}} \right\vert^2\\
+                                          &= \sum_{\beta}\sum_{\alpha}\left\vert \iprod{T^{\ast}e_{\beta}}{e_{\alpha}} \right\vert^2\\
+                                          &= \sum_{\beta}\norm{T^{\ast}e_{\beta}}^2\\
+                                          &= \sum_{\alpha}\norm{T^{\ast}e_{\alpha}}^2.
+      \end{align*}
+    \item The proof commences similarly, substituting \eqref{eq:parseval2} instead of \eqref{eq:parseval1}, and using the result in (1).
+  \end{enumerate}
+\end{proof}
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space. We define
+  \begin{align*}
+    \norm{T}_{\operatorname{HS}} &= \left( \sum_{\alpha\in A}\norm{Te_{\alpha}}^2 \right)^{1/2},
+  \end{align*}
+  where $\left( e_{\alpha} \right)_{\alpha}$ is an orthonormal basis for $\mathcal{H}$. The class of Hilbert--Schmidt operators is
+  \begin{align*}
+    L_2\left( \B\left( \mathcal{H} \right) \right) &\coloneq \set{T\in \B\left( \mathcal{H} \right) | \norm{T}_{\operatorname{HS}} < \infty}.
+  \end{align*}
+\end{definition}
+\begin{lemma}
+  Let $\mathcal{H}$ be a Hilbert space with orthonormal bases $\left( e_{\alpha} \right)_{\alpha}$ and $\left( f_{\gamma} \right)_{\gamma}$. Let $S,T\in L_2\left( \B\left( \mathcal{H} \right) \right)$. Then,
+  \begin{enumerate}[(1)]
+    \item The series $\sum_{\alpha} \iprod{Te_{\alpha}}{Se_{\alpha}}$ is summable;
+    \item $\sum_{\alpha} \iprod{Te_{\alpha}}{Se_{\alpha}} = \sum_{\alpha} \iprod{S^{\ast}e_{\alpha}}{Te_{\alpha}}$;
+    \item $\sum_{\alpha} \iprod{Te_{\alpha}}{Se_{\alpha}} = \sum_{\gamma} \iprod{Tf_{\gamma}}{Sf_{\gamma}}$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \begin{enumerate}[(1)]
+    \item For a finite collection $F$ of basis elements, we use the Cauchy--Schwarz inequality in $\mathcal{H}$ and $\ell_2^{\left\vert F \right\vert}$ to get
+      \begin{align*}
+        \sum_{\alpha\in F}\left\vert \iprod{Te_{\alpha}}{Se_{\alpha}} \right\vert &\leq \sum_{\alpha\in F}\norm{Te_{\alpha}}\norm{Se_{\alpha}}\\
+                                                                                  &\leq \left( \sum_{\alpha\in F}\norm{Te_{\alpha}}^2 \right)^{1/2}\left( \sum_{\alpha\in F}\norm{Se_{\alpha}}^2 \right)^{1/2}\\
+                                                                                  &\leq \norm{T}_{\hs}\norm{S}_{\hs}.
+      \end{align*}
+      Taking the supremum over all finite subsets, we have $\sum_{\alpha}\left\vert \iprod{Te_{\alpha}}{Se_{\alpha}} \right\vert$ is summable, so $\sum_{\alpha} \iprod{Te_{\alpha}}{Se_{\alpha}}$ is summable.
+    \item Recalling the identity that
+      \begin{align*}
+        \iprod{x}{y} &= \sum_{\alpha} \iprod{x}{e_{\alpha}} \iprod{e_{\alpha}}{y},
+      \end{align*}
+      we have
+      \begin{align*}
+        \sum_{\alpha} \iprod{Te_{\alpha}}{Se_{\alpha}} &= \sum_{\alpha}\sum_{\beta} \iprod{Te_{\alpha}}{e_{\beta}} \iprod{e_{\beta}}{Se_{\alpha}}\\
+                                                       &= \sum_{\alpha}\sum_{\beta} \iprod{e_{\alpha}}{T^{\ast}e_{\beta}} \iprod{S^{\ast}e_{\beta}}{e_{\alpha}}\\
+                                                       &= \sum_{\alpha}\sum_{\beta} \iprod{S^{\ast}e_{\beta}}{e_{\alpha}} \iprod{e_{\alpha}}{T^{\ast}e_{\beta}}\\
+                                                       &= \sum_{\beta}\sum_{\alpha} \iprod{S^{\ast}e_{\beta}}{e_{\alpha}} \iprod{e_{\alpha}}{T^{\ast}e_{\beta}}\\
+                                                       &= \sum_{\beta} \iprod{S^{\ast}e_{\beta}}{T^{\ast}e_{\alpha}}\\
+                                                       &= \sum_{\alpha} \iprod{S^{\ast}e_{\alpha}}{T^{\ast}e_{\beta}}.
+      \end{align*}
+    \item Similarly,
+      \begin{align*}
+        \sum_{\alpha} \iprod{Te_{\alpha}}{Se_{\alpha}} &= \sum_{\alpha}\sum_{\gamma} \iprod{Te_{\alpha}}{f_{\gamma}} \iprod{f_{\gamma}}{Se_{\alpha}}\\
+                                                       &= \sum_{\gamma}\sum_{\alpha} \iprod{S^{\ast}f_{\gamma}}{e_{\alpha}} \iprod{e_{\alpha}}{T^{\ast}f_{\gamma}}\\
+                                                       &= \sum_{\gamma} \iprod{S^{\ast}f_{\gamma}}{T^{\ast}f_{\gamma}}\\
+                                                       &= \sum_{\gamma} \iprod{Tf_{\gamma}}{Sf_{\gamma}}.
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+\begin{theorem}[Properties of Hilbert--Schmidt Operators]
+  Let $\mathcal{H}$ be a Hilbert space.
+  \begin{enumerate}[(1)]
+    \item The vector space $L_2\left( \B\left( \mathcal{H} \right) \right)$ admits $\norm{\cdot}_{\hs}$ as a norm.
+    \item For $T\in \B\left( \mathcal{H} \right)$, we have $\norm{T}_{\op}\norm{T}_{\hs}$, and $\norm{T}_{\hs} = \norm{T^{\ast}}_{\hs}$.
+    \item If $T\in \B\left( \mathcal{H} \right)$ and $S\in L_2\left( \B\left( \mathcal{H} \right) \right)$,
+      \begin{align*}
+        \norm{TS}_{\hs}&\leq \norm{T}_{\op}\norm{S}_{\hs}\\
+        \norm{ST}_{\hs} &\leq \norm{S}_{\hs}\norm{T}_{\op}.
+      \end{align*}
+      Thus, $L_2\left( \B\left( \mathcal{H} \right) \right)\subseteq \B\left( \mathcal{H} \right)$ is an algebraic ideal.
+    \item The form
+      \begin{align*}
+        \iprod{T}{S}_{\hs} &= \sum_{\alpha} \iprod{Te_{\alpha}}{Se_{\alpha}},
+      \end{align*}
+      where $\left( e_{\alpha} \right)_{\alpha}$ is an orthonormal basis for $\mathcal{H}$, defines an inner product satisfying $ \iprod{T}{T}_{\hs} = \norm{T}_{\hs}^2 $ and $ \iprod{T}{S} = \iprod{S^{\ast}}{T^{\ast}} $.
+    \item The pair $\left( L_2\left( \B\left( \mathcal{H} \right) \right), \iprod{\cdot}{\cdot}_{\hs} \right)$ is a Hilbert space.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item If $\lambda\in \C$, then $\norm{\lambda T}_{\hs} = \left\vert \lambda \right\vert\norm{T}_{\hs}$, so that $\lambda T$ is in $L_2\left( \B\left( \mathcal{H} \right) \right)$ if $T\in L_2\left( \B\left( \mathcal{H} \right) \right)$.\newline
+
+      Now, let $\left( e_{\alpha} \right)_{\alpha}$ be an orthonormal basis for $\mathcal{H}$, and let $T,S\in L_2\left( \B\left( \mathcal{H} \right) \right)$. Then,
+      \begin{align*}
+        \norm{T + S}_{\hs} &= \left( \sum_{\alpha} \norm{\left( T + S \right)e_{\alpha}}^2 \right)^{1/2}\\
+                           &\leq \left( \sum_{\alpha}\left( \norm{Te_{\alpha}} + \norm{Se_{\alpha}} \right)^2 \right)^{1/2}\\
+                           &\leq \left( \sum_{\alpha}\norm{Te_{\alpha}}^2 \right)^{1/2} + \left( \sum_{\alpha}\norm{Se_{\alpha}} \right)^{1/2}\tag{\textasteriskcentered}\\
+                           &= \norm{T}_{\hs} + \norm{S}_{\hs},
+      \end{align*}
+      where in (\textasteriskcentered), we used the triangle inequality in $\ell_2\left( A \right)$.\newline
+
+      Finally, if $\norm{T}_{\hs} = 0$, then $Te_{\alpha} = 0$ for all $\alpha \in A$, whence $T = 0$.
+    \item Let $x\in S_{\mathcal{H}}$. We may extend $\set{x}$ to an orthonormal basis $\left( e_{\alpha} \right)_{\alpha}$ such that $e_{\alpha_0} = x$ for some $\alpha_0$. This gives
+      \begin{align*}
+        \norm{Tx} &\leq \left( \sum_{\alpha}\norm{Te_{\alpha}}^2 \right)^{1/2}\\
+                  &= \norm{T}_{\hs}.
+      \end{align*}
+      Taking suprema, we get $\norm{T}_{\op}\leq \norm{T}_{\hs}$.\newline
+
+      We showed $\norm{T}_{\hs} = \norm{T^{\ast}}_{\hs}$ implicitly in the earlier lemma.
+    \item If $T\in \B\left( \mathcal{H} \right)$ and $S\in L_2\left( \B\left( \mathcal{H} \right) \right)$, we have
+      \begin{align*}
+        \norm{TS}_{\hs}^2 &= \sum_{\alpha}\norm{TSe_{\alpha}}^2\\
+                          &\leq \sum_{\alpha}\norm{T}_{\op}^2\norm{Se_{\alpha}}^2\\
+                          &= \norm{T}_{\op}^2 \norm{S}_{\hs}^2.
+      \end{align*}
+      Taking square roots yields our desired results.\newline
+
+      In the opposite direction, we have
+      \begin{align*}
+        \norm{ST}_{\hs} &= \norm{\left( ST \right)^{\ast}}_{\hs}\\
+                        &\leq \norm{T^{\ast}}_{\op}\norm{S}_{\hs}\\
+                        &= \norm{T}_{\hs}\norm{S}_{\hs}.
+      \end{align*}
+      Thus, $L_2\left( \B\left( \mathcal{H} \right) \right)$ is a two-sided $\ast$-ideal in $\B\left( \mathcal{H} \right)$. Furthermore, if $T,S\in L_2\left( \B\left( \mathcal{H} \right) \right)$, then
+      \begin{align*}
+        \norm{TS}_{\hs} &\leq \norm{T}_{\op}\norm{S}_{\hs}\\
+                        &\leq \norm{T}_{\hs}\norm{S}_{\hs},
+      \end{align*}
+      so $L_2\left( \B\left( \mathcal{H} \right) \right)$ is a normed $\ast$-algebra as well.
+    \item We know that $ \iprod{T}{S}_{\hs} = \sum_{\alpha} \iprod{Te_{\alpha}}{Se_{\alpha}} $ is summable and basis-independent. Linearity in the first coordinate follows from the definition of the inner product.\newline
+
+      To see conjugate symmetry, we have
+      \begin{align*}
+        \iprod{S}{T}_{\hs} &= \sum_{\alpha} \iprod{Se_{\alpha}}{Te_{\alpha}}\\
+                           &= \sum_{\alpha} \overline{\iprod{Te_{\alpha}}{Se_{\alpha}}}\\
+                           &= \overline{\sum_{\alpha} \iprod{Te_{\alpha}}{Se_{\alpha}}}\\
+                           &= \overline{ \iprod{T}{S}_{\hs} }.
+      \end{align*}
+      Finally,
+      \begin{align*}
+        \iprod{T}{T}_{\hs} &= \sum_{\alpha} \iprod{Te_{\alpha}}{Te_{\alpha}}\\
+                           &= \sum_{\alpha} \norm{Te_{\alpha}}^2\\
+                           &= \norm{T}_{\hs}^2.
+      \end{align*}
+    \item Let $\left( T_n \right)_n$ be a $\norm{\cdot}_{\hs}$-Cauchy sequence in $L_2\left( \B\left( \mathcal{H} \right) \right)$. Thus, $\left( T_n \right)_n$ is $\norm{\cdot}_{\op}$-Cauchy, so there is $T\in \B\left( \mathcal{H} \right)$ such that $\left( T_n \right)_n\xrightarrow{\norm{\cdot}_{\op}} T$.\newline
+
+      We claim that $T\in L_2\left( \B\left( \mathcal{H} \right) \right)$. Let $\left( e_{\alpha} \right)_{\alpha}$ be an orthonormal basis in $\mathcal{H}$, and let $F\subseteq A$ be a finite subset. Since $\left( T_n \right)_n$ is $\norm{\cdot}_{\hs}$-Cauchy, it is $\norm{\cdot}_{\hs}$-bounded. Set $C \coloneq \sup_{n}\norm{T_n}_{\hs} < \infty$.\newline
+
+      Using the triangle inequality in $\mathcal{H}$ and $\ell_2^{\left\vert F \right\vert}$, we get
+      \begin{align*}
+        \left( \sum_{\alpha \in F}\norm{Te_{\alpha}}^2 \right)^{1/2} &\leq \left( \sum_{\alpha\in F}\left( \norm{Te_{\alpha} - T_ne_{\alpha}} + \norm{T_ne_{\alpha}} \right) \right)^{1/2}\\
+                                                                     &\leq \left( \sum_{\alpha\in F}\norm{Te_{\alpha} - T_ne_{\alpha}}^2 \right)^{1/2} + \left( \sum_{\alpha \in F}\norm{T_ne_{\alpha}}^2 \right)^{1/2}\\
+                                                                     &\leq \left( \sum_{\alpha \in F}\norm{Te_{\alpha} - T_ne_{\alpha}}^2 \right)^{1/2} + C.
+      \end{align*}
+      Letting $n\rightarrow\infty$, we have
+      \begin{align*}
+        \left( \sum_{\alpha\in F}\norm{Te_{\alpha}}^2 \right)^{1/2} &\leq C.
+      \end{align*}
+      Now, taking the supremum over all finite $F\subseteq A$, we have $\norm{T}_{\hs}\leq C$.\newline
+
+      Now, we claim that $\norm{T_n - T}_{\hs}\rightarrow 0$ as $n\rightarrow\infty$. Since $\left( T_n \right)_n$ is $\norm{\cdot}_{\hs}$-Cauchy, we may choose $N\in \N$ such that for all $m,n\geq N$, we have $\norm{T_m - T_n}_{\hs} < \ve$.\newline
+
+      If $F\subseteq A$ is finite, with $m,n\geq N$, then
+      \begin{align*}
+        \sum_{\alpha \in F}\norm{T_me_{\alpha} - T_ne_{\alpha}}^2 &< \ve^2.
+      \end{align*}
+      Taking $m\rightarrow\infty$, we have
+      \begin{align*}
+        \sum_{\alpha\in F}\norm{Te_{\alpha} - T_ne_{\alpha}}^2 &\leq \ve^2,
+      \end{align*}
+      and taking the supremum over all finite $F\subseteq A$, we get $\norm{T - T_n}_{\hs}^2 \leq \ve$ for all $n\geq N$.
+  \end{enumerate}
+\end{proof}
+\begin{proposition}
+  Let $\mathcal{H}$ be a Hilbert space. The following inclusions hold:
+  \begin{align*}
+    \F\left( \mathcal{H} \right) \subseteq L_2\left( \B\left( \mathcal{H} \right) \right) \subseteq \mathbb{K}\left( \mathcal{H} \right).
+  \end{align*}
+  Moreover, $\overline{\F\left( \mathcal{H} \right)}^{\norm{\cdot}_{\hs}} = L_2\left( \B\left( \mathcal{H} \right) \right)$.
+\end{proposition}
+\begin{proof}
+  Let $\xi,\eta\in \mathcal{H}$. Let $\theta_{\xi,\eta}$ be the rank-one bounded operator given by $\theta_{\xi,\eta}\left( x \right) = \iprod{x}{\eta}\xi$. We will show that $\theta_{\xi,\eta}\in L_2\left( \B\left( \mathcal{H} \right) \right)$.\newline
+
+  Let $\left( e_{\alpha} \right)_{\alpha}$ be an orthonormal basis for $\mathcal{H}$. Using Parseval's identity, we have
+  \begin{align*}
+    \norm{\theta_{\xi,\eta}}_{\hs} &= \left( \sum_{\alpha}\norm{\left( \theta_{\xi,\eta} \right)\left( e_{\alpha} \right)}^2 \right)^{1/2}\\
+                                   &= \left( \sum_{\alpha}\norm{ \iprod{e_{\alpha}}{\eta}\xi }^2 \right)^{1/2}\\
+                                   &= \left( \norm{\xi}^2\sum_{\alpha}\left\vert \iprod{e_{\alpha}}{\eta} \right\vert^2 \right)^{1/2}\\
+                                   &= \left( \norm{\xi}^2\norm{\eta}^2 \right)^{1/2}\\
+                                   &= \norm{\xi}\norm{\eta}.
+  \end{align*}
+  Now, since $L_2\left( \B\left( \mathcal{H} \right) \right)$ is a vector space, we have $\F\left( \mathcal{H} \right) = \Span\left( \set{\theta_{\xi,\eta} | \xi,\eta\in \mathcal{H}} \right)\subseteq L_2\left( \B\left( \mathcal{H} \right) \right)$.\newline
+
+  Finally, let $T\in L_2\left( \B\left( \mathcal{H} \right) \right)$. There is a finite $F\subseteq A$ with $\sum_{\alpha\notin F}\norm{Te_{\alpha}}^2 < \ve^2$. We define $S\in \F\left( \mathcal{H} \right)$ by
+  \begin{align*}
+    S &\coloneq \sum_{\beta\in F}T\theta_{e_{\beta},e_{\beta}}.
+  \end{align*}
+  Note that
+  \begin{align*}
+    Se_{\alpha} &= \begin{cases}
+      0 & \alpha\notin F\\
+      Te_{\alpha} & \alpha \in F
+    \end{cases}.
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    \norm{T - S}_{\hs}^2 &= \sum_{\alpha\in A} \norm{Te_{\alpha}-Se_{\alpha}}^2\\
+                         &= \sum_{\alpha \in F}\norm {Te_{\alpha}-Se_{\alpha}}^2 + \sum_{\alpha\notin F}\norm{Te_{\alpha}-Se_{\alpha}}^2\\
+                         &= \sum_{\alpha\notin F} \norm{Te_{\alpha}}^2\\
+                         &< \ve^2.
+  \end{align*}
+  Since $L_2\left( \B\left( \mathcal{H} \right) \right)$ is $\norm{\cdot}_{\hs}$-complete, we have $\overline{\F\left( \mathcal{H} \right)}^{\norm{\cdot}_{\hs}} = L_2\left( \B\left( \mathcal{H} \right) \right) $.\newline
+
+  Furthermore, since $\norm{T - S}_{\op} < \ve$, as the operator norm is dominated by the HS norm, we have $T\in \F\left( \mathcal{H} \right)^{\norm{\cdot}_{\op}} = \mathbb{K}\left( \mathcal{H} \right)$.
+\end{proof}
+\begin{proposition}
+  Let $\mathcal{H}$ be a Hilbert space. There is a unitary map $U\colon \mathcal{H}\otimes \overline{\mathcal{H}} \rightarrow L_2\left( \B\left( \mathcal{H} \right) \right)$, where $\mathcal{H}\otimes \overline{\mathcal{H}}$ is endowed with the $2$-norm, $ \norm{x\otimes y}^2 = \iprod{x\otimes y}{x\otimes y} = \iprod{x}{x} \iprod{y}{y} $.\newline
+
+  The map $U$ is defined by $U\left( \xi\otimes \overline{\eta} \right) = \theta_{\xi,\eta}$.
+\end{proposition}
+\begin{proof}
+  Consider the bilinear map $\mathcal{H}\times \overline{\mathcal{H}} \rightarrow \F\left( \mathcal{H} \right)$ given by $\left( \xi,\overline{\eta} \right) \mapsto \theta_{\xi,\eta}$. This induces a linear map $U_0\colon \mathcal{H}\otimes \overline{\mathcal{H}} \rightarrow \F\left( \mathcal{H} \right)$, given by $\xi\otimes \overline{\eta} \mapsto \theta_{\xi,\eta}$. This map is surjective since $\F\left( \mathcal{H} \right)$ is the linear span of the rank-one operators.\newline
+
+  Now, let $\xi,\xi',\eta,\eta'\in \mathcal{H}$, and suppose $\left( e_{\alpha} \right)_{\alpha}$ is an orthonormal basis for $\mathcal{H}$. We compute
+  \begin{align*}
+    \iprod{\theta_{\xi,\eta}}{\theta_{\xi',\eta'}} &= \sum_{\alpha \in A} \iprod{\theta_{\xi,\eta}\left( e_{\alpha} \right)}{\theta_{\xi',\eta'}\left( e_{\alpha} \right)}\\
+                                                   &= \sum_{\alpha\in A} \iprod{ \iprod{e_{\alpha}}{\eta}\xi }{ \iprod{e_{\alpha}}{\eta'}\xi' }\\
+                                                   &= \sum_{\alpha \in A} \iprod{e_{\alpha}}{\eta} \iprod{\eta'}{e_{\alpha}} \iprod{\xi}{\xi'}\\
+                                                   &= \iprod{\eta'}{\eta} \iprod{\xi}{\xi'}\\
+                                                   &= \iprod{\xi}{\xi'} \overline{ \iprod{\eta}{\eta'} }\\
+                                                   &= \iprod{ \xi\otimes\eta }{\xi'\otimes\eta'}.
+  \end{align*}
+  By linearity, the map $U_0\colon \mathcal{H}\otimes \overline{\mathcal{H}} \rightarrow \F\left( \mathcal{H} \right)$ is an isomorphism of inner product spaces. By continuity, it extends to the map $U\colon \mathcal{H}\otimes \overline{\mathcal{H}} \rightarrow \overline{\F\left( \mathcal{H} \right)}^{\norm{\cdot}_2} = L_2\left( \B\left( \mathcal{H} \right) \right)$.
+\end{proof}
+\subsection{Trace-Class Operators}%
+Now, we will examine the noncommutative analogue of $\ell_1$. Recall that for any positive operator $T\in \B\left( \mathcal{H} \right)_{+}$, there is a unique $S\in \B\left( \mathcal{H} \right)_{+}$ such that $S^2 = T$, called $T^{1/2}\coloneq S$. We define the absolute value of an operator to be $\left\vert T \right\vert\coloneq \left( T^{\ast}T \right)^{1/2}$.
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space. We define
+  \begin{align*}
+    \norm{T}_{\tr} &= \norm{\left\vert T \right\vert^{1/2}}_{\hs}^2.
+  \end{align*}
+  The collection of trace-class operators is the set
+  \begin{align*}
+    L_1\left( \B\left( \mathcal{H} \right) \right) &\coloneq \set{T\in \B\left( \mathcal{H} \right) | \norm{T}_{\tr} < \infty}.
+  \end{align*}
+\end{definition}
+Using the Hilbert--Schmidt inner product formula, we may find
+\begin{align*}
+  \norm{T}_{\tr} &= \norm{\left\vert T \right\vert^{1/2}}_{\hs}^2\\
+                 &= \iprod{\left\vert T \right\vert^{1/2}}{\left\vert T \right\vert^{1/2}}_{\hs}\\
+                 &= \sum_{\alpha \in A} \iprod{\left\vert T \right\vert^{1/2}e_{\alpha}}{\left\vert T \right\vert^{1/2}e_{\alpha}}\\
+                 &= \sum_{\alpha \in A} \iprod{\left\vert T \right\vert e_{\alpha}}{e_{\alpha}}.
+\end{align*}
+\begin{lemma}
+  Let $\mathcal{H}$ be a Hilbert space, and suppose $T\in \B\left( \mathcal{H} \right)$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $T\in L_1\left( \B\left( \mathcal{H} \right) \right)$;
+    \item $\left\vert T \right\vert\in L_1\left( \B\left( \mathcal{H} \right) \right)$;
+    \item $\left\vert T \right\vert^{1/2}\in L_2\left( \B\left( \mathcal{H} \right) \right)$;
+    \item there exists $S,R\in L_2\left( \B\left( \mathcal{H} \right) \right)$ such that $T = SR$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  The statement (i) if and only if (iii) follows from definitions. The statement (i) if and only if (ii) follows from the fact that $\left\vert \left\vert T \right\vert \right\vert = \left\vert T \right\vert$.\newline
+
+  Now, to show (iii) implies (iv), we use the polar decomposition, $T = V\left\vert T \right\vert$. Notice that
+  \begin{align*}
+    T &= V\left\vert T \right\vert\\
+      &= \left( V\left\vert T \right\vert^{1/2} \right) \left\vert T \right\vert^{1/2},
+  \end{align*}
+  where both factors are in $L_2\left( \B\left( \mathcal{H} \right) \right)$. That the first factor is in $L_2\left( \B\left( \mathcal{H} \right) \right)$ follows from the fact that $L_2\left( \B\left( \mathcal{H} \right) \right)$ is a $\ast$-ideal in $\B\left( \mathcal{H} \right)$.\newline
+
+  Now, if $T = SR$ with $S,R\in L_2\left( \B\left( \mathcal{H} \right) \right)$, we let $T = V\left\vert T \right\vert$ be the polar decomposition of $T$, meaning $\left\vert T \right\vert = V^{\ast}T$. Then,
+  \begin{align*}
+    \norm{T}_{\tr} &= \sum_{\alpha} \iprod{\left\vert T \right\vert e_{\alpha}}{e_{\alpha}}\\
+                   &= \sum_{\alpha} \iprod{ V^{\ast}T e_{\alpha} }{e_{\alpha}}\\
+                   &= \sum_{\alpha} \iprod{ SR e_{\alpha} }{V e_{\alpha}}\\
+                   &= \sum_{\alpha} \iprod{Re_{\alpha}}{S^{\ast}Ve_{\alpha}}\\
+                   &= \iprod{R}{S^{\ast}V}_{\hs}\\
+                   &< \infty,
+  \end{align*}
+  where we once again use the fact that $L_2\left( \B\left( \mathcal{H} \right) \right)$ is a $\ast$-ideal in $\B\left( \mathcal{H} \right)$.
+\end{proof}
+\begin{lemma}
+  Let $\mathcal{H}$ be a Hilbert space. If $T\in L_1\left( \B\left( \mathcal{H} \right) \right)$, and $\left( e_{\alpha} \right)_{\alpha}$ is an orthonormal basis for $\mathcal{H}$, then
+  \begin{align*}
+    \sum_{\alpha \in A} \iprod{Te_{\alpha}}{e_{\alpha}}
+  \end{align*}
+  is summable, and any choice of orthonormal basis yields the same result.
+\end{lemma}
+\begin{proof}
+  We know there are $S,R\in L_2\left( \B\left( \mathcal{H} \right) \right)$ such that $T = SR$. Thus,
+  \begin{align*}
+    \sum_{\alpha\in A} \iprod{Te_{\alpha}}{e_{\alpha}} &= \sum_{\alpha \in A} \iprod{Re_{\alpha}}{S^{\ast}e_{\alpha}}\\
+                                                       &= \iprod{R}{S^{\ast}}_{\hs}.
+  \end{align*}
+\end{proof}
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space. We define the trace as the map
+  \begin{align*}
+    \tr\left( T \right) &= \sum_{\alpha \in A} \iprod{Te_{\alpha}}{e_{\alpha}},
+  \end{align*}
+  where $\left( e_{\alpha} \right)_{\alpha}$ is any orthonormal basis for $\mathcal{H}$.
+\end{definition}
+\begin{example}
+  If $\theta_{x,y}$ is a rank-one operator, and $\left( e_{\alpha} \right)_{\alpha}$ is an orthonormal basis, then
+  \begin{align*}
+    \tr\left( \theta_{x,y} \right) &= \sum_{\alpha \in A} \iprod{\theta_{x,y}\left( e_{\alpha} \right)}{e_{\alpha}}\\
+                                   &= \sum_{\alpha \in A} \iprod{ \iprod{e_{\alpha}}{y}x }{e_{\alpha}}\\
+                                   &= \sum_{\alpha \in A} \iprod{x}{e_{\alpha}} \iprod{e_{\alpha}}{y}\\
+                                   &= \iprod{x}{y}.
+  \end{align*}
+\end{example}
+\begin{proposition}
+  The map $\tr\colon L_1\left( \B\left( \mathcal{H} \right) \right)\rightarrow \C$ is tracial, in that if
+  \begin{enumerate}[(i)]
+    \item $R,S\in L_2\left( \B\left( \mathcal{H} \right) \right)$, or
+    \item $S\in L_1\left( \B\left( \mathcal{H} \right) \right)$ and $R\in \B\left( \mathcal{H} \right)$,
+  \end{enumerate}
+  then 
+  \begin{align*}
+    \tr\left( RS \right) &= \tr\left( SR \right).
+  \end{align*}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item Using the correspondence between trace and Hilbert--Schmidt inner product, we have
+      \begin{align*}
+        \tr\left( SR \right) &= \iprod{R}{S^{\ast}}_{\hs}\\
+                             &= \iprod{S}{R^{\ast}}_{\hs}\\
+                             &= \tr\left( RS \right).
+      \end{align*}
+    \item Letting $S = L_1\left( \B\left( \mathcal{H} \right) \right)$, we may write $S = T_1T_2$ as a product of Hilbert--Schmidt operators. Note that $T_2R,RT_1\in L_2\left( \B\left( \mathcal{H} \right) \right)$ since Hilbert--Schmidt operators form a $\ast$-ideal. Thus,
+      \begin{align*}
+        \tr\left( SR \right) &= \tr\left( T_1T_2R \right)\\
+                             &= \tr\left( T_2RT_1 \right)\\
+                             &= \tr\left( RT_1T_2 \right)\\
+                             &= \tr\left( RS \right).
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+Note that
+\begin{align*}
+  \norm{T}_{\tr} &= \tr\left( \left\vert T \right\vert \right)\\
+  \norm{T}_{\hs} &= \tr\left( \left\vert T \right\vert^2 \right)^{1/2}\\
+  \iprod{S}{R}_{\hs} &= \tr\left( R^{\ast}S \right) \\
+                     &= \tr\left( SR^{\ast} \right).
+\end{align*}
 \section{Nuclear Maps}%
 Now, we will use results related to completely positive maps to understand nuclearity in $C^{\ast}$-algebras.
 \begin{definition}
@@ -1725,6 +2189,7 @@ There is a similar definition for von Neumann algebras.
   \begin{align*}
     \eta\left( \psi_n\circ \varphi_{n}\left( a \right) \right) \rightarrow \eta\left( \theta\left( a \right) \right).
   \end{align*}
+  We call convergence in the weak* topology induced by the predual of $N$ \textit{point-ultraweak} convergence.
 \end{definition}
 Recall that when we are checking convergence of bounded nets, we have $\psi_n\circ\varphi_n\xrightarrow{\text{BW}} \theta$, if and only if
 \begin{align*}
@@ -1743,8 +2208,62 @@ What makes nuclearity interesting is that it is dependent on the range. For inst
 
   Let $\psi_i\colon \Mat_{k(i)}\left( \C \right) = \B\left( \mathcal{H} \right)$ be the natural inclusion map --- i.e., $\varphi_i(T) = P_iTP_i$ as the matrix representation $\left( T_{ij} \right)_{ij}$, and $\psi_i\left( \left( T_{ij} \right)_{ij} \right) = P_iTP_i$, where $T$ is the operator for the matrix $\left( T_{ij} \right)_{ij}$.\newline
 
-  Now, since the predual of $\B\left( \mathcal{H} \right)$ is the trace class operators,
+  Now, since the predual of $\B\left( \mathcal{H} \right)$ is the trace class operators, and the $\left( P_i \right)_{i}$ converge in the to the identity, the net $\left( \psi_i\circ \varphi_i \right)_i$ converges pointwise (i.e., ultraweakly) to the identity.
 \end{proof}
+\begin{exercise}[Exercise 2.1.1]
+  Show that $\theta\colon A\rightarrow B$ is nuclear if and only if for each finite subset $F\subseteq A$ and $\ve > 0$, there exist $n\in \N$ and completely positive contractions $\varphi\colon A\rightarrow \Mat_n\left( \C \right)$, $\psi\colon \Mat_n\left( \C \right)\rightarrow B$ such that $\norm{\theta(a) - \psi\circ\varphi\left( a \right)} < \ve$ for all $a\in F$.
+\end{exercise}
+\begin{exercise}[Exercise 2.1.2]
+  Prove that $\theta\colon A\rightarrow B$ is nuclear if and only if there exist completely positive contractions $\varphi_n\colon A\rightarrow C_n$ and $\psi_n\colon C_n\rightarrow B$, where the $C_n$ are finite-dimensional $C^{\ast}$-algebras.
+\end{exercise}
+\begin{exercise}[Exercise 2.1.3]
+  If $\theta\colon A\rightarrow B$ is nuclear and $C\subseteq A$ is a $C^{\ast}$-algebra, then $\theta|_{C}\colon C\rightarrow B$ is also nuclear.
+\end{exercise}
+\begin{exercise}[Exercise 2.1.4]
+  If $\theta\colon A\rightarrow B$ and $\sigma\colon B\rightarrow C$ are completely positive contractions such that either $\theta$ or $\sigma$ is nuclear, then so is $\sigma\circ\theta$.
+\end{exercise}
+\begin{exercise}[Exercise 2.1.5]
+  If $A$ is a $C^{\ast}$-algebra such that the identity map on $A$ is nuclear, than any other completely positive contraction $\theta\colon A\rightarrow B$ is also nuclear.
+\end{exercise}
+\begin{exercise}[Exercise 2.1.6]
+  Assume $A\subseteq \B\left( \mathcal{H} \right)$ is a concretely represented $C^{\ast}$-algebra such that the inclusion map $A\hookrightarrow \B\left( \mathcal{H} \right)$ is nuclear. Show that if $\theta\colon A\rightarrow \B\left( \mathcal{K} \right)$ is any completely positive contraction, then $\theta$ is nuclear.
+\end{exercise}
+\begin{exercise}[Exercise 2.1.7]
+  If $\theta\colon A\rightarrow B$ is nuclear, and $C\subseteq B$ is a $C^{\ast}$-subalgebra with the properties that
+  \begin{enumerate}[(a)]
+    \item $\theta(A)\subseteq C$; and
+    \item there exists a conditional expectation $\Phi\colon B\rightarrow C$,
+  \end{enumerate}
+  then $\theta\colon A\rightarrow C$ is nuclear.
+\end{exercise}
+\begin{exercise}[Exercise 2.1.8]
+  If $\theta\colon A\rightarrow B$ and $C\subseteq B$ is a $C^{\ast}$-subalgebra with properties that 
+  \begin{enumerate}[(a)]
+    \item $\theta(A)\subseteq C$; and
+    \item there exist a sequence of completely positive contractions $\Phi_n\colon B\rightarrow C$ such that $\Phi_n|_{C}\rightarrow \id_{C}$ in the point-norm topology,
+  \end{enumerate}
+  then $\theta\colon A\rightarrow C$ is nuclear.
+\end{exercise}
+\begin{definition}
+  If $A$ is a unital $C^{\ast}$-algebra, an extension is called locally split if, for each finite-dimensional operator system $E\subseteq A/J$, there exists a unital completely positive map $\sigma\colon E\rightarrow A$ such that $\pi\circ \sigma = \id_{E}$.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRGJAF9T1Nd9CKAIzkqtRizYApLjxAZseAkQBMo6vWatEIAIKzeigUQDM68Vra6A9DO6H+ylABZzmyTo6cxMKAHN4IlAAMwAnCABbJDIQHAgkIXsQMMiE6jikFSSUqMQ1WPjEMwsPEAAdMrQsA2Tw3OKMxGdvTiA
+\begin{tikzcd}
+0 \arrow[r] & J \arrow[r] & A \arrow[r, "\pi"] & A/J \arrow[r] & 0
+\end{tikzcd}
+  \end{center}
+\end{definition}
+\begin{exercise}[Exercise 2.1.9]
+  Let $\theta\colon A\rightarrow B$ be a unital nuclear map, such that $\theta|_{J} = 0$ for some ideal $J\subseteq A$. Show that $\theta$ descends to a unital completely positive map $\dot{\theta}\colon A/J\rightarrow B$.\newline
+
+  Next, show that if the extension is locally split, then $\dot{\theta}$ is nuclear.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRGJAF9T1Nd9CKAIzkqtRizYApLjxAZseAkQBMo6vWatEIAIKzeigUQDM68Vra6A9DO6H+ylABZzmyTo6cxMKAHN4IlAAMwAnCABbJDIQHAgkIXsQMMiE6jikFSSUqMQ1WPjEMwsPEAAdMrQsA2Tw3OKMxGdvTiA
+\begin{tikzcd}
+0 \arrow[r] & J \arrow[r] & A \arrow[r, "\pi"] & A/J \arrow[r] & 0
+\end{tikzcd}
+  \end{center}
+\end{exercise}
 
 \section{Amenability with \texorpdfstring{$C^{\ast}$-Algebras}{C*-Algebras}}%
 
