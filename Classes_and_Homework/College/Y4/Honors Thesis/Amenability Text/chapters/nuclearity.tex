@@ -311,10 +311,154 @@ We may now show that $A_{+}$ is a cone in $A_{\sa}$, which allows us to define a
 \begin{definition}\label{def:ordering_of_cstar_algebras}
   Let $A$ be a $C^{\ast}$-algebra. We define an ordering on $A_{\sa}$ by $x\leq y$ if and only if $y-x\in A_{+}$.
 \end{definition}
+\begin{proposition}[{\cite[Proposition 7.3.67]{rainone_analysis}}]
+  The ordering on $A_{\sa}$ satisfies the following.
+  \begin{enumerate}[(1)]
+    \item If $x\leq y$ in $A_{\sa}$, then for any $z\in A$, $z^{\ast}xz \leq z^{\ast}yz$.
+    \item If $A$ is unital, $x\in A_{\sa}$, and $s,t\in \R$, then $s1_A \leq x \leq t1_A$ if and only if $\sigma\left( x \right)\subseteq [s,t]$.
+    \item If $A$ is unital, and $x\in A_{\sa}$, then $-\norm{x}1_A \leq x \leq \norm{x}1_A$.
+    \item For all $a\geq 0$, $a\leq 1_A$ if and only if $\norm{a}\leq 1$.
+    \item If $0\leq a \leq b$, then $\norm{a}\leq \norm{b}$.
+    \item If $a,b\in A$, then $0\leq b^{\ast}a^{\ast}ab \leq \norm{a}^2b^{\ast}b$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(1)]
+    \item If $x\leq y$, then $y-x = a^{\ast}a$ for some $a\in A$. Thus,
+      \begin{align*}
+        z^{\ast}yz - z^{\ast}xz &= z^{\ast}\left( y-x \right)z\\
+                                &= z^{\ast}a^{\ast}az\\
+                                &= \left( az \right)^{\ast}az\\
+                                &\in A_{+},
+      \end{align*}
+      so $z^{\ast}xz \leq z^{\ast}yz$.
+    \item We have $s1_A - x$ is self-adjoint, so it has a real spectrum. Using Theorem \ref{thm:continuous_functional_calculus}, part (3), we have
+      \begin{align*}
+        s1_A \leq x &\leftrightarrow x-s1_A \in A_{+}\\
+                    &\Leftrightarrow \sigma\left( x-s1_A \right)\subseteq [0,\infty)\\
+                    &\Leftrightarrow \sigma\left( x \right)-s &\subseteq [0,\infty)\\
+                    &\Leftrightarrow \sigma\left( x \right)\subseteq [s,\infty).
+      \end{align*}
+      Similarly, if $x\leq t1_A$, then $\sigma\left( x \right)\subseteq (-\infty,t]$. Thus, $s1_A \leq x \leq t1_A$ if and only if $\sigma\left( x \right)\subseteq [s,t]$.
+    \item Since $\sigma\left( x \right)\subseteq \left[-\norm{x},\norm{x}\right]$, this follows from (2).
+    \item Taking $s = 0$ and $t = 1$ in (2), we have
+      \begin{align*}
+        0\leq a \leq 1 &\Leftrightarrow \sigma\left( a \right)\subseteq [0,1]\\
+                       &\Leftrightarrow r(a)\leq 1\\
+                       &\Leftrightarrow \norm{a}\leq 1,
+      \end{align*}
+      where we use Proposition \ref{prop:normal_spectral_radius}.
+    \item From (3), we have that $0\leq a \leq b \leq \norm{b}1_A$, so $\sigma\left( a \right)\subseteq [0,\norm{b}]$. Since $a$ is normal, $\norm{a}\in \sigma\left( a \right)$, so $\norm{a}\leq \norm{b}$.
+    \item If $A$ is unital, then by the $C^{\ast}$-identity, we have $a^{\ast}a\leq \norm{a}^21_A$. We then apply (1) with $z = b$ to get $b^{\ast}a^{\ast}ab \leq \norm{a}^2b^{\ast}b$. If $A$ is nonunital, then we operate in the unitization of $A$, $\widetilde{A}$.
+  \end{enumerate}
+\end{proof}
+\begin{corollary}\label{cor:positive_map_order_preserving}
+  Let $\phi\colon A\rightarrow B$ be a linear map between $C^{\ast}$-algebras. If $\phi\left( A_{+} \right)\subseteq B_{+}$, then $\phi$ is order-preserving.
+\end{corollary}
+\begin{proof}
+  If $x\leq y$ in $A$, then $y-x\in A_{+}$. Thus, $\phi\left( y-x \right)\in B_{+}$, meaning $\phi\left( y \right)-\phi\left( x \right)\in B_{+}$, whence $\phi\left( x \right)\leq \phi\left( y \right)$.
+\end{proof}
+
 \section{Positive Maps in \texorpdfstring{$C^{\ast}$-Algebras}{C*-Algebras}}%
 Now that we have discussed positivity of elements in $C^{\ast}$-algebras, we may discuss linear maps that preserve positivity. Note that $\ast$-homomorphisms preserve positivity and order (Fact \ref{fact:positivity_homomorphisms}), so we are interested in linear maps with a more general domain than just $C^{\ast}$-algebras, and specifically a particular class of map that preserves positivity after amplification to matrix algebras.\newline
 
-In this section, we will prove a result on a class of maps known as \textit{completely positive} maps --- specifically, that all such maps are compressions of $\ast$-homomorphisms to special subspaces of $C^{\ast}$-algebras. This will lend itself to a discussion of nuclearity in $C^{\ast}$-algebras.
+Recall that a linear map $\phi\colon A\rightarrow B$ between algebras is called positive if $\phi\left( A_{+} \right)\subseteq \phi\left( B \right)_{+}$. In this section, we will prove a result on a class of maps known as \textit{completely positive} maps --- specifically, that all such maps are compressions of $\ast$-homomorphisms to special subspaces of $C^{\ast}$-algebras. This will lend itself to a discussion of nuclearity in $C^{\ast}$-algebras.\newline
+
+A lot of this section will follow the exposition in \cite{completely_bounded_maps_and_operator_algebras}.
+\begin{definition}\label{def:operator_systems_operator_spaces}
+  Let $A$ be a unital $C^{\ast}$-algebra.
+  \begin{itemize}
+    \item A linear subspace $M\subseteq A$ is known as an \textit{operator space} if $1_A \in A$.
+    \item A linear subspace $S\subseteq A$ is known as an \textit{operator system} if $S$ is an operator space such that, for all $a\in S$, $a^{\ast}\in S$.
+  \end{itemize}
+\end{definition}
+\begin{remark}\label{rem:positive_elements_operator_system}
+  If $S$ is an operator system, we are always able to write $h\in S$ as a difference of two positive elements via the following decomposition:
+  \begin{align*}
+    h &= \frac{1}{2}\left( \norm{h}1_A + h \right) - \frac{1}{2}\left( \norm{h}1_A - h \right).
+  \end{align*}
+\end{remark}
+The location of what we will study in this section is the amplification of a Hilbert space $\mathcal{H}$.
+\begin{definition}
+  Let $\mathcal{H}$ be a Hilbert space. The \textit{$n$-fold amplification} of $\mathcal{H}$, denoted $\mathcal{H}^{(n)}$, is the space of all vectors
+  \begin{align*}
+    \begin{pmatrix}\xi_1\\\vdots\\\xi_n\end{pmatrix}
+  \end{align*}
+  subject to the inner product
+  \begin{align*}
+    \iprod{ \begin{pmatrix}\xi_1\\\vdots\\\xi_n\end{pmatrix} }{ \begin{pmatrix}\eta_1\\\vdots\\\eta_n\end{pmatrix} } &= \sum_{j=1}^{n} \iprod{\xi_j}{\eta_j}.
+  \end{align*}
+\end{definition}
+\begin{theorem}
+  There is a $\ast$-isomorphism between $\Mat_n\left( \B\left( \mathcal{H} \right) \right)$ (as in Theorem \ref{thm:matrix_algebras_tensor_product}) and the space $\B\left( \mathcal{H}^{(n)} \right)$.
+\end{theorem}
+\begin{proof}
+  For any $\left( T_{ij} \right)_{ij}\in \Mat_n\left( \B\left( \mathcal{H} \right) \right)$, we define the linear map $T\in \B\left( \mathcal{H}^{(n)} \right)$ by
+  \begin{align*}
+    T\left( \begin{pmatrix}h_1\\\vdots\\h_n\end{pmatrix} \right) &= \begin{pmatrix}\sum_{j=1}^{n}T_{1j}\left( h_j \right) \\ \vdots \\ \sum_{j=1}^{n}T_{nj}\left( h_j \right)\end{pmatrix}.
+  \end{align*}
+  The map $\left( T_{ij} \right)_{ij} \mapsto T$ is the desired $\ast$-homomorphism.
+\end{proof}
+As it turns out, any $C^{\ast}$-algebra can be faithfully represented as some $C^{\ast}$-subalgebra of $\B\left( \mathcal{H} \right)$. This follows from the GNS construction, which we state without proof. An outline of a proof can be found in \cite[Section II.6.4]{blackadar_operator_algebras}.
+\begin{theorem}[GNS Construction]\label{thm:gns_construction}
+  Let $A$ be a $C^{\ast}$-algebra, and let $\phi\colon A\rightarrow \C$ be a positive linear functional.\newline
+
+  Then, there exists a Hilbert space $\mathcal{H}$, a vector $\xi_{\phi}\in \mathcal{H}$, and an isometric $\ast$-homomorphism $\pi\colon A\rightarrow \B\left( \mathcal{H} \right)$ such that the subspace
+  \begin{align*}
+    \left[ \pi\left( A \right)\xi_{\phi} \right] \coloneq \set{\pi(a)\left( \xi_{\phi} \right) | a\in A}
+  \end{align*}
+  is dense in $\mathcal{H}$, and $\norm{\phi}_{\op} = \norm{\xi_{\phi}}^2$.
+\end{theorem}
+Due to the GNS construction, we are able to turn $\Mat_n\left( A \right)$ into a $C^{\ast}$-algebra by identifying $A$ as a $\ast$-subalgebra of $\Mat_n\left( \B\left( \mathcal{H} \right) \right)$, where $\mathcal{H}$ is the Hilbert space in the GNS construction of $A$. Letting $\pi_{n}\colon \Mat_n\left( A \right)\rightarrow \Mat_n\left( \B\left( \mathcal{H} \right) \right)$ be the isometric(/injective, from Theorem \ref{thm:cstar_homomorphism_isometric_injective}), we are then able to define a $C^{\ast}$-norm on $\Mat_n\left( A \right)$ by defining it as
+\begin{align*}
+  \norm{\left( a_{ij} \right)_{ij}} &= \norm{\pi_n\left( \left( a_{ij} \right)_{ij} \right)}_{\op}.
+\end{align*}
+Furthermore, since all $C^{\ast}$-norms are equivalent on any $C^{\ast}$-algebra (Proposition \ref{prop:cstar_norm_equivalent}), this uniquely defines the $C^{\ast}$-norm on $\Mat_n\left( A \right)$. Thus, any $C^{\ast}$-algebra carries with it a family of canonically defined norms (and order properties) via the amplification to matrix algebras.
+\begin{definition}
+  Given two $C^{\ast}$-algebras, $A$ and $B$, and a (linear) map $\phi\colon A\rightarrow B$, we define the \textit{$n$-fold amplification} of $\phi$, $\phi_n\colon \Mat_n\left( A \right)\rightarrow \Mat_n\left( B \right)$, by
+  \begin{align*}
+    \phi_n\left( \left( a_{ij} \right)_{ij} \right) &= \left( \phi\left( a_{ij} \right) \right)_{ij}.
+  \end{align*}
+  If $\phi$ is a positive map, then we say $\phi$ is \textit{completely positive} if, for all $n$, $\phi_n$ is positive, in that $\phi_n$ maps positive elements of $\Mat_n\left( A \right)$ to the positive elements of $\Mat_n\left( B \right)$.
+\end{definition}
+
+One of the useful facts about positive maps is that they are always bounded linear.
+\begin{proposition}
+  Let $S\subseteq A$ be an operator system, and let $B$ be a $C^{\ast}$-algebra. If $\phi\colon S\rightarrow B$ is a positive map, then $\phi$ is bounded, with
+  \begin{align*}
+    \norm{\phi}_{\op} &\leq 2\norm{\phi\left( 1_A \right)}.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  If $p$ is positive, then $0\leq p \leq \norm{p}1_A$, so since $\phi$ is positive, Corollary \ref{cor:positive_map_order_preserving} gives $0\leq \phi\left( p \right)\leq \norm{p}\phi\left( 1_A \right)$. Therefore, we have
+  \begin{align*}
+    \norm{\phi\left( p \right)} &\leq \norm{p}\norm{\phi\left( 1_A \right)}.
+  \end{align*}
+  When $p_1,p_2$ are positive, we have $\norm{p_1 - p_2}\leq \max\set{\norm{p_1},\norm{p_2}}$. Now, if $h$ is self-adjoint, we use Remark \ref{rem:positive_elements_operator_system} and the fact that $\phi$ is order-preserving to obtain
+  \begin{align*}
+    \phi(h) &= \frac{1}{2}\phi\left( \norm{h}1_A + h \right) + \frac{1}{2}\phi\left( \norm{h}1_A - h \right),
+  \end{align*}
+  which is the difference of two positive elements in $B$, meaning
+  \begin{align*}
+    \norm{\phi(h)} &\leq \frac{1}{2}\max\set{\norm{\phi\left( \norm{h}1_A + h \right)},\norm{\phi\left( \norm{h}1_A - h \right)}}\\
+                   &\leq \norm{h}\norm{\phi\left( 1_A \right)}.
+  \end{align*}
+  Now, if $a\in S$ is arbitrary, we use the Cartesian decomposition to write $a = h + ik$, where
+  \begin{align*}
+    h &= \frac{1}{2}\left( a + a^{\ast} \right)\\
+    k &= \frac{i}{2}\left( a^{\ast}-a \right),
+  \end{align*}
+  and obtain
+  \begin{align*}
+    \norm{\phi(a)} &\leq \norm{\phi(h)} + \norm{\phi(k)}\\
+                   &\leq 2\norm{a}\norm{\phi\left( 1_A \right)}.
+  \end{align*}
+  Thus,
+  \begin{align*}
+    \norm{\phi}_{\op} &\leq 2\norm{\phi\left( 1_A \right)}.
+  \end{align*}
+\end{proof}
+
 \section{Characterizing Amenability using \texorpdfstring{$C^{\ast}$-Algebras}{C*-Algebras}}%
 The ultimate goal of this section is to prove the following theorem. In the process, we will conduct a tour of various concepts in the theory of $C^{\ast}$-algebras and von Neumann algebras.
 \begin{theorem}
