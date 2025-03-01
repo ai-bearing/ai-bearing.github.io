@@ -1484,7 +1484,78 @@ We can find the residue in a variety of ways.
   Now, sticking our value of $I$ into the integral in $k$, we have
   \begin{align*}
     G\left( x, t> 0 \right) &= -\frac{c}{2\pi} \int_{-\infty}^{\infty} \frac{e^{ictk} - e^{-ictk}}{2ik}e^{ikx}\:dk\\
-                            &= -\frac{c}{2}\Theta\left( ct-\left\vert x \right\vert \right).
+                            &= -\frac{c}{2}\Theta\left( ct-\left\vert x \right\vert \right)\Theta\left( t \right).
   \end{align*}
-  The expression $-\frac{c}{2}\Theta\left( ct-\left\vert x \right\vert \right)$ gives causality, and the expression $\left\vert x \right\vert$ comes from symmetry.
+  There are some comments in order.
+  \begin{itemize}
+    \item The factor of $\Theta\left(t\right)$ effectively states that nothing happens before $t = 0$.
+    \item The factor of $\Theta\left( ct - \left\vert x \right\vert \right)$ denotes causality. The term $\left\vert x \right\vert$ denotes the physical symmetry, while we need $ct - \left\vert x \right\vert > 0$ in order to feel an effect.
+  \end{itemize}
+  \subsubsection{Quantum Mechanics}%
+  The Schrödinger equation is
+  \begin{align*}
+    i \hbar \pd{\psi}{t} + \frac{\hbar^2}{2m} + \pd{^2\psi}{x^2} &= 0.
+  \end{align*}
+  Here, $\psi$ denotes the wavefunction. The probability of a particle being found within $dx$ of $x$ is $\left\vert \psi \right\vert^2dx$.\newline
+
+  In quantum mechanics, we define operators for energy and momentum as
+  \begin{align*}
+    E\coloneq +i\hbar \pd{}{t}\\
+    P \coloneq -i\hbar \pd{}{x}.
+  \end{align*}
+  The Schrödinger equation falls from the fact that $E = \frac{P^2}{2m}$. These operators are Hermitian, so their eigenvalues are real.\newline
+
+  We want to figure out the Green's function for the quantum hammer blow at $t = 0$, which we call the propagator.
+  \begin{align*}
+    i\hbar \pd{G}{t} + \frac{\hbar^2}{2m} \pd{^2G}{x^2} &= i\hbar \delta\left( x \right)\delta\left( t \right).
+  \end{align*}
+  When we try to evaluate it, we get
+  \begin{align*}
+    G\left( x,t > 0 \right) &=  \Theta\left( t \right)\sqrt{\frac{m}{2\pi i \hbar t}} e^{imx^2/2\hbar t}.
+  \end{align*}
+  This solution has a problem, though --- there is no sense of causality. This says that, as long as $t > 0$, there is going to be a measurable reaction at all $x$.\newline
+
+  The main reason is that the Schrödinger equation is not relativistic. Accounting for the relativistic relationship, we have
+  \begin{align*}
+    E^2 - P^2c^2 &= m^2c^4.
+  \end{align*}
+  This gives an equation known as the Klein--Gordon equation:
+  \begin{align*}
+    -\frac{1}{c^2}\pd{^2\phi}{t^2} + \pd{^2\phi}{x^2} &= \frac{m^2c^2}{\hbar^2}\phi.
+  \end{align*}
+  Solving the Klein--Gordon equation gives infinitely many solutions that have both positive and negative energy, the latter of which is a major issue. However, it can be shown that the Klein--Gordon equation applies to particles with integral spin, with wave function
+  \begin{align*}
+    \phi(x,t) &= Ce^{i\left( kx-\omega t \right)}
+  \end{align*}
+  so long as
+  \begin{align*}
+    \frac{\omega^2}{c^2} - k^2 &= \frac{m^2c^2}{\hbar^2}.
+  \end{align*}
+  To see how causality fares for the Klein--Gordon wavefunction, we solve it for the unit impulse acting on $x=0$ at $t = 0$.
+  \begin{align*}
+    \left( -\pd{^2}{t^2} + \pd{^2}{x^2} - m^2 \right) G\left( x,t \right) &= i\delta\left( x \right)\delta\left( t \right),
+  \end{align*}
+  where we set $\hbar = c = 1$. We get the Green's function
+  \begin{align*}
+    G\left( x,t \right) &= i \int_{-\infty}^{\infty} \frac{1}{2\pi}e^{ipx}\:dp\int_{-\infty}^{\infty} \frac{e^{-iEt}}{2\pi \left( E^2 - p^2 - m^2 \right)}\:dE.
+  \end{align*}
+  We have two poles at $\pm\sqrt{p^2 + m^2}$, and when we close the contour we obtain different physical results.\newline
+
+  When $t < 0$, we must close the contour in the upper-half plane, so we exclude the poles from the contour. Since there are no poles in the upper half-plane, we get a factor of $\Theta(t)$.\newline
+
+  Thus, when $t > 0$, we close in the lower half-plane, giving
+  \begin{align*}
+    I &= \int_{-\infty}^{\infty} \frac{1}{2\pi}\frac{e^{-iEt}}{\left( E + iE \right)^2 - p^2 - m^2}\:dE\\
+      &= -\frac{1}{2\pi}2\pi i \left( \frac{e^{-i\sqrt{p^2 + m^2}t}}{2\sqrt{p^2 + m^2}} - \frac{e^{i\sqrt{p^2 + m^2}t}}{2\sqrt{p^2 + m^2}}\right).
+  \end{align*}
+  Defining $E_p\coloneq \sqrt{p^2 + m^2}$, we have
+  \begin{align*}
+    I &= -\frac{i}{2E_p}\left( e^{-iE_p t} - e^{iE_p t} \right).
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    G\left( x,t> 0 \right) &= \Theta\left( t \right)\int_{-\infty}^{\infty} \frac{1}{2\pi} \frac{e^{ipx}}{2E_p}\left( e^{-iE_p t} - e^{iE_P t} \right)\:dp\\
+                           &= \frac{\Theta\left( t \right)}{4\pi} \int_{-\infty}^{\infty} \frac{1}{E_p}\left( e^{-i\left( E_p t - px \right)} - e^{i\left( E_p t - p_x \right)} \right)\:dp,
+  \end{align*}
+  where we were allowed to flip the sign of $p$ because the integral is taken over all space.
 \end{document}

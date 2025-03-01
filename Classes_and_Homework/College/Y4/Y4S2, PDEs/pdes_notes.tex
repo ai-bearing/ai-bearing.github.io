@@ -1660,5 +1660,100 @@ We call \eqref{eq:pde_1} the \textit{transport equation}.
   \end{align*}
   giving a damping term in $X$.
 \end{example}
+\begin{example}[Introducing the Wave Equation]
+  Consider the equation
+  \begin{align*}
+    \pd{^2u}{t^2} - a^2 \pd{^2u}{x^2} &= 0.
+  \end{align*}
+  This is known as the wave equation. Since it is a hyperbolic PDE, it has two directions of propagation.\footnote{We will discuss more about this in the future.}\newline
+
+  Considering a fake factorization,
+  \begin{align*}
+    \left( \pd{u}{t} - a\pd{u}{x} \right)\left( \pd{u}{t} + a\pd{u}{x} \right) &= 0,
+  \end{align*}
+  we see that there are two transport equations here.\newline
+
+  Making it more of a realistic factorization as an expression of composed linear partial differential operators, we have
+  \begin{align*}
+    \left( \pd{}{t} - a\pd{}{x} \right) \left( \pd{}{t} + a \pd{}{x} \right) u\left( x,t \right) &= 0.
+  \end{align*}
+\end{example}
+\begin{example}[Solving a Wave Equation]
+  Consider the wave equation
+  \begin{align*}
+    \pd{^2u}{t^2} - a^2 \pd{^2u}{x^2} &= 0,
+  \end{align*}
+  with domain $0 \leq x \leq 2$ and $t\geq 0$. Consider the boundary conditions of
+  \begin{align*}
+    \pd{u}{x}\biggr\vert_{(0,t)} &= 0\\
+    \pd{u}{x}\biggr\vert_{(2,t)} &= 0.
+  \end{align*}
+  This is known as the Neumann boundary condition, and essentially denotes ``insulation'' in the case of a heat equation.\newline
+
+  For our initial conditions, we set $u\left( x,0 \right) = 0$ and
+  \begin{align*}
+    \pd{u}{t}\biggr\vert_{(x,0)} &= 3-\cos\left( 2\pi x \right).
+  \end{align*}
+  We assume via separation of variables that $u\left( x,t \right) = X(x)T(t)$. This gives
+  \begin{align*}
+    X(x)\diff{^2T}{t^2} &= a^2 \diff{^2X}{x^2}T(t).
+  \end{align*}
+  Dividing out by $a^2X(x)T(t)$, we have
+  \begin{align*}
+    \frac{1}{a^2T(t)} \diff{^2T}{t^2} &= \diff{^2X}{x^2}\\
+                                      &= \begin{cases}
+                                        \lambda^2\\0\\-\lambda^2
+                                      \end{cases}.
+  \end{align*}
+  Now, considering our two boundary conditions, we have
+  \begin{align*}
+    \pd{u}{x}\biggr\vert_{(0,t)} &= \diff{X}{x}\biggr\vert_{0}T(t)\\
+    \pd{u}{x}\biggr\vert_{(2,t)} &= \diff{X}{x}\biggr\vert_{2}T(t)\\
+                                 &= 0.
+  \end{align*}
+  Note that if $T(t) = 0$, then our solution is trivial, and does not solve our initial condition. Thus, we must have $\diff{X}{x}\biggr\vert_{0} = \diff{X}{x}\biggr\vert_{2} = 0$. Therefore, we have the initial value problem(s) of
+  \begin{align*}
+    \diff{^2X}{x^2} &= \begin{cases}
+      \lambda^2 X\\ 0 \\ -\lambda^2 X
+    \end{cases},
+  \end{align*}
+  with the given initial condition. In the case of $\diff{^2X}{x^2} = \lambda^2 X$, we get the solution of
+  \begin{align*}
+    X(x) &= A\cosh\left( \lambda x \right) + B\sinh\left( \lambda x \right)\\
+    \diff{X}{x} &= \lambda A \sinh\left( \lambda x \right) + \lambda B\cosh\left( \lambda x \right)\\
+    \diff{X}{x}\biggr\vert_{0} &= 0\\
+                               &= \lambda B,
+  \end{align*}
+  so $B = 0$. Implementing our other boundary condition, we have
+  \begin{align*}
+    \diff{X}{x}\biggr\vert_{2} &= \lambda A \sinh\left( 2\lambda \right)\\
+                               &= 0.
+  \end{align*}
+  Since $\sinh(2\lambda)\neq 0$ and $\lambda\neq 0$, we get $A = 0$.\newline
+
+  In the case with $\diff{^2X}{x^2} = 0$, we have $x = ax + b$. However, since $\diff{X}{x} = A$, we have $a = 0$. Therefore, the function $X(x) = b$ satisfies the boundary condition.\newline
+
+  When $\diff{^2 X}{x^2} = -\lambda^2 X$, we have the solution of
+  \begin{align*}
+    X(x) &= a\sin\left( \lambda x \right) + b\cos\left( \lambda x \right)\\
+    \diff{X}{x} &= \lambda a\cos\left( \lambda x \right) - \lambda b \sin\left( \lambda x \right).
+  \end{align*}
+  Plugging our first initial condition, we have
+  \begin{align*}
+    0 &= \lambda a,
+  \end{align*}
+  so $a = 0$. Now, plugging in our second initial condition, we have
+  \begin{align*}
+    0 &= -\lambda b \sin\left( 2\lambda \right).
+  \end{align*}
+  Since $\lambda\neq 0$, we must have $\lambda = \frac{n}{2}\pi$, when $n\in \Z_{>0}$.\newline
+
+  In the case with $\lambda = 0$, we have $\diff{^2T}{t^2} = 0$, so $T = Ct + D$. Meanwhile, if $\lambda\neq 0$, we have
+  \begin{align*}
+    \diff{^2 T}{t^2} &= -\lambda^2 a^2 T(t)\\
+    T_n(t) &= C_n\cos\left( \frac{n\pi a}{2} t \right) + D_n \sin\left( \frac{n\pi a}{2}t \right).
+  \end{align*}
+  
+\end{example}
 
 \end{document}
