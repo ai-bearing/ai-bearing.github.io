@@ -609,7 +609,7 @@ Now, we may discuss the important interplay between positive maps and contractiv
   Furthermore, Stinespring's Dilation Theorem (Theorem \ref{thm:stinespring_dilation}) says that all completely positive maps are of the form $\phi\left( a \right) = V^{\ast}\pi(a)V$ for some $\ast$-homomorphism $\pi\colon A\rightarrow \B\left( \mathcal{H} \right)$ and bounded linear map $V\colon \mathcal{H}\rightarrow \mathcal{K}$. Additionally, all ``minimal'' such representations are unitarily equivalent.
 \end{remark}
 One of the most useful facts about completely positive maps is that they are always completely bounded.
-\begin{proposition}
+\begin{proposition}\label{prop:norm_of_completely_positive_map}
   Let $S\subseteq A$ be an operator system, $B$ a $C^{\ast}$-algebra, and $\phi\colon S\rightarrow B$ a completely positive map. Then, $\phi$ is completely bounded, and $\norm{\phi}_{\op} = \norm{\phi(1)} = \norm{\phi}_{\cb}$.
 \end{proposition}
 \begin{proof}
@@ -658,17 +658,78 @@ Next, we establish basic properties of maps between $C^{\ast}$-algebras that can
 \begin{remark}
 Every nuclear map is completely positive. Furthermore, we assume that all of $A,B,\theta,\varphi_n,\psi_n$ are unital maps, as we will focus on establishing nuclearity with the group $C^{\ast}$-algebra(s), which are unital $C^{\ast}$-algebras.
 \end{remark}
+One of the most important facts about nuclearity is the fact that it is preserved under composition.
+\begin{proposition}\label{prop:nuclearity_composition}
+  Let $\theta\colon A\rightarrow B$ and $\sigma\colon B\rightarrow C$ be completely positive maps between $C^{\ast}$-algebras. If one of $\sigma$ or $\theta$ is nuclear, then the composition $\sigma\circ\theta$ is nuclear.
+\end{proposition}
+\begin{proof}
+  Assume that $\theta$ is nuclear. Then, there exist $\varphi_n\colon A\rightarrow \Mat_{k(n)}\left( \C \right)$ and $\psi_n\colon \Mat_{k(n)\left( \C \right)\rightarrow B}$ such that $\norm{\theta(a) - \psi_n\circ\varphi_n(a)} \rightarrow 0$. This means that for any $\ve > 0$, there exists a finite set $F\subseteq A$ such that for all $a\in F$,
+  \begin{align*}
+    \norm{\theta(a) - \psi_n\circ\varphi_n(a)} < \ve.
+  \end{align*}
+  Now, note that
+  \begin{align*}
+    \sigma\circ\theta(a) - \sigma\circ\psi_n\circ\varphi_n(a) &= \sigma\left( \theta(a) - \psi_n\circ \varphi_n(a) \right).
+  \end{align*}
+  We define $\psi_n' \coloneq \sigma\circ \psi_n\colon \Mat_{k(n)}\left( \C \right)\rightarrow C$, and see that, for all $a\in F$,
+  \begin{align*}
+    \norm{\sigma\circ\theta\left( a \right) - \psi_n'\circ\varphi_n\left( a \right)} &= \norm{\sigma\left( \theta(a) - \psi_n\circ\varphi_n\left( a \right) \right)}\\
+                                                                                     &= \norm{\sigma\left( \left( 1_B \right)\left( \theta\left( a \right) - \psi_n\circ\varphi_n\left( a \right) \right) \right)}\\
+                                                                                     &\leq \norm{\sigma\left(1_B\right)}\norm{\theta(a) - \psi_n\circ\varphi_n\left( a \right)}\\
+                                                                                     &< \norm{\sigma\left(1_B\right)} \ve.
+  \end{align*}
+  Since $\norm{\sigma\left( 1_B \right)} = \norm{\sigma}_{\op} < \infty$ (Proposition \ref{prop:norm_of_completely_positive_map}), we see that $\sigma\circ\theta$ is nuclear for all $a$.\newline
 
+  Now, if $\sigma$ is nuclear, then there exist $\varphi_n\colon B\rightarrow \Mat_{k(n)}\left( \C \right)$ and $\psi_n\colon \Mat_{k(n)}\left( \C \right)\rightarrow C$ such that for all $b\in B$, $\norm{\sigma(b) - \psi_n\circ\varphi_n(b)} \rightarrow 0$. In particular, this applies to $\theta(A)\subseteq B$, so by defining $\varphi_n' \coloneq \varphi_n\circ\theta\colon A \rightarrow \Mat_{k(n)}\left( \C \right)$, we have that
+  \begin{align*}
+    \norm{\sigma\circ\theta\left( a \right) - \psi_n\circ\varphi_n'\left( a \right)}\rightarrow 0,
+  \end{align*}
+  so $\sigma\circ\theta$ is nuclear.
+\end{proof}
+\begin{corollary}
+  If $\id\colon A\rightarrow A$ is nuclear, then for any completely positive map $\theta\colon A\rightarrow B$, $\theta$ is nuclear.
+\end{corollary}
+\begin{proof}
+  Write $\theta = \theta\circ \id$, and apply Proposition \ref{prop:nuclearity_composition}.
+\end{proof}
+\begin{definition}
+  We say a $C^{\ast}$-algebra $A$ is \textit{nuclear} if the identity map $\id\colon A\rightarrow A$ is nuclear.
+\end{definition}
 \section{Characterizing Amenability using \texorpdfstring{$C^{\ast}$-Algebras}{C*-Algebras}}%
 The ultimate goal of this section is to prove the following theorem. In the process, we will conduct a tour of various concepts in the theory of $C^{\ast}$-algebras and von Neumann algebras.
-\begin{theorem}
+\begin{theorem}\label{thm:amenability_cstar_algebras_formulations}
   Let $\Gamma$ be a discrete group. The following are equivalent:
-  \begin{enumerate}[(1)]
+  \begin{enumerate}[(i)]
     \item $\Gamma$ is amenable;
     \item $C^{\ast}_{\lambda}\left( \Gamma \right)$ is nuclear;
     \item $C^{\ast}_{\lambda}\left( \Gamma \right) = C^{\ast}\left( \Gamma \right)$;
     \item $C^{\ast}_{\lambda}\left( \Gamma \right)$ admits a character (Definition \ref{def:algebra_homomorphisms_and_characters}).
   \end{enumerate}
 \end{theorem}
+We will prove Theorem \ref{thm:amenability_cstar_algebras_formulations} using a variety of subtheorems.
+\begin{theorem}
+  If $\Gamma$ is amenable, then $C^{\ast}_{\lambda}\left( \Gamma \right)$ is nuclear.
+\end{theorem}
+\begin{proof}
+  Let $\left( F_n \right)_n\subseteq \Gamma$ be a Følner sequence, and let $P_n\in \B\left( \ell_2\left( \Gamma \right) \right)$ be the orthogonal projection onto the subspace of $\ell_2\left( \Gamma \right)$ spanned by $\set{\delta_g | g\in F_n}$. Here, $\set{\delta_t}_{t\in\Gamma}$ refers to the canonical orthonormal basis for $\C\left[ \Gamma \right]$.\newline
+
+  Note that each $P_n$ is a finite-rank projection, so each $P_n$ can be written as
+  \begin{align*}
+    P_n\coloneq \sum_{g\in F_n}\theta_{\delta_{g},\delta_{g}},
+  \end{align*}
+  where $\theta_{\delta_g,\delta_g}$ denotes the rank-one bounded operator (Definition \ref{def:rank_one_bounded_operator}). Now, since each $F_n$ is finite-dimensional, we can rewrite the orthonormal basis as $\set{e_{1},\dots,e_{r}}$ for some $r$. Note that we have
+  \begin{align*}
+    T \theta_{e_j,e_j}\left( e_k \right) &= \iprod{e_k}{e_j}T\left( e_j \right)\\
+                                         &= \theta_{T\left( e_j \right),e_j}\left( e_k \right),
+                                         \intertext{so}
+    \theta_{e_i,e_i} T \theta_{e_j,e_j}\left( e_k \right) &= \iprod{T\left( e_j \right)}{e_i}\theta_{e_i,e_j}.
+  \end{align*}
+  Thus, by taking the summation over the representation of $P_n$, we find that there is an isomorphism
+  \begin{align*}
+    P_n\B\left( \ell_2\left( \Gamma \right) \right)P_n &\cong \Mat_{\left\vert F_n \right\vert}\left( \C \right).
+  \end{align*}
+  Let $\set{e_{p,q}}_{p,q\in F_n}$ be the matrix units of $P_n\B\left( \ell_2\left( \Gamma \right) \right)P_n$, and note that
+\end{proof}
+
 \section{Remarks and Notes}%
 

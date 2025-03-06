@@ -1,0 +1,171 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright,sfmath,bbold}
+%\renewcommand{\mathcal}{\mathtt}
+
+%Euler:
+\usepackage{newpxtext,eulerpx,eucal,eufrak}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\renewcommand*{\hbar}{\hslash}
+
+%\usepackage{homework}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Analysis Inequalities}
+\usepackage{microtype}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{abstract}
+  We introduce some of the most important inequalities that are used frequently in real and functional analysis. These inequalities include Jensen's inequality and Young's inequality (concerning convex functions), Hölder's inequality and Minkowski's inequality (concerning $p$-norms), finishing with the Cauchy--Schwarz inequality in $L_2\left( \Omega,\mu \right)$.
+\end{abstract}
+\tableofcontents
+\section{Introduction}%
+This is the first of a series of expository writings, primarily focused on analysis (though they will certainly branch out), designed to complement my own knowledge and understanding of the various facets of the field. Ideally these will be shorter in length than my traditional \href{https://ai.avinash-iyer.com/classnotes.html}{notes documents}, and they will focus on some short, coherent theme.\newline
+
+Here, we introduce and discuss some of the most important inequalities in analysis, primarily focusing on the context of function spaces such as $L_p\left( \Omega,\mu \right)$. Much of this document will be a fleshed out version of certain results and theorems discussed in Walter Rudin's \textit{Real and Complex Analysis}, primarily from Chapter 3.\newline
+
+We will assume that the reader has an understanding of measures, measurable functions, and basic integration theory (such as the Monotone Convergence Theorem, Fatou's Lemma, and the Dominated Convergence Theorem), though I will probably end up writing expositions on those as well. My \href{https://ai.avinash-iyer.com/Classes_and_Homework/College/Y3/Y3S2,\%20Real\%20II/real_2_notes.pdf}{Real Analysis II} notes should be sufficient as a background.
+\section{Convex Functions}%
+\begin{definition}
+  A function $\varphi\colon (a,b) \rightarrow \R$ is called \textit{convex} if, for all $x,y\in (a,b)$,
+  \begin{align*}
+    \varphi\left( \left( 1-t \right)x + ty\right) &\leq \left( 1-t \right)\varphi\left( x \right) + t\varphi\left( y \right).
+  \end{align*}
+\end{definition}
+\begin{remark}
+A \textit{differentiable} function $\varphi\colon \Omega \rightarrow \R$ is convex if and only if its second derivative is positive along its domain.\newline
+
+Note here that we define convexity along an open interval. This is because it is convenient to do so.
+\end{remark}
+Two major examples of convex functions are
+\begin{align*}
+  \varphi_1(x) &= e^{x}\\
+  \varphi_2(x) &= x^{p}.\tag*{$1\leq p < \infty$}
+\end{align*}
+Both of these functions are convex along their domain.\newline
+
+Convex functions defined over an interval are useful precisely because they are continuous --- and, thus, measurable.
+\begin{theorem}
+  Let $\varphi\colon (a,b)\rightarrow \R$ be convex. Then, $\varphi$ is continuous.
+\end{theorem}
+We follow the proof from \href{https://unapologetic.wordpress.com/2008/04/15/convex-functions-are-continuous/}{this website}.
+\begin{proof}
+  We begin by an observation. If $a < x_1 < x_2 < x_3 < b$, then convexity gives
+  \begin{align*}
+    \frac{f\left( x_2 \right)- f\left( x_1 \right)}{x_2 - x_1} &\leq \frac{f\left( x_3 \right)-f\left( x_2 \right)}{x_3 - x_2}. \label{eq:convexity_fraction_inequality}\tag{\textasteriskcentered}
+  \end{align*}
+  By the characterization of an interval, for $s , t\in \left( a,b \right)$ with $s < t$, we have $\left[ s,t \right]\subseteq \left( a,b \right)$. Now, note that since $\left( a,b \right)$ is an open interval, there are $s',t'\in \left( a,b \right)$ with $s' < s$ and $t < t'$. In particular, this means that for any $x_1,x_2\in \left[ s,t \right]$ with $x_1 < x_2$, we have
+  \begin{align*}
+    \frac{f\left( s \right) - f\left( s' \right)}{s-s'} &\leq \frac{f\left( x_1 \right) - f\left( s \right)}{x_1 - s}\\
+                                                        &\leq \frac{f\left( x_2 \right) - f\left( x_1 \right)}{x_2 - x_1}\\
+                                                        &\leq  \frac{f\left( t \right) - f\left( x_2 \right)}{t-x_2}\\
+                                                        &\leq \frac{f\left( t' \right)-f\left( t \right)}{t'-t}.
+  \end{align*}
+  Setting $C\coloneq \max\set{\frac{f\left( t' \right)-f\left( t \right)}{t'-t},\frac{f\left( s \right)-f\left( s' \right)}{s-s'}}$, we see that for any $x_1,x_2\in \left[ s,t \right]$,
+  \begin{align*}
+    \left\vert f\left( x_2 \right)-f\left( x_1 \right) \right\vert &\leq C \left\vert x_2 - x_1 \right\vert.
+  \end{align*}
+  Thus, $f$ is Lipschitz on $\left[ s,t \right]$, so $f$ is continuous on $\left[ s,t \right]$.\newline
+
+  Since, for any $x\in \left( a,b \right)$, there is some closed interval containing $x$, and $f$ is continuous on said closed interval, we have that $f$ is continuous on $\left( a,b \right)$.
+\end{proof}
+\begin{remark}
+  The fact that $\left( a,b \right)$ is an open interval is indeed load-bearing. Consider the function defined by
+  \begin{align*}
+    f\left( x \right) &= \begin{cases}
+      x & x > 0\\
+      1 & x = 0
+    \end{cases}.
+  \end{align*}
+  Then, $f$ is convex, but $f$ is not continuous.
+\end{remark}
+The most famous inequality regarding convex functions is Jensen's inequality, which effectively provides a generalization of the definition of a convex function.
+\begin{theorem}[Jensen's Inequality]
+  Let $\left( \Omega,\mathcal{M},\mu \right)$ be a probability space, and let $f\in L_1\left( \Omega,\mu \right)$ be such that $a < f(x) < b$ for all $x\in \Omega$. Then, if $\varphi\colon (a,b)\rightarrow \R$ is convex,
+  \begin{align*}
+    \varphi\left( \int_{\Omega}^{} f\:d\mu \right) &\leq \int_{\Omega}^{} \varphi\circ f\:d\mu
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Set
+  \begin{align*}
+    t\coloneq \int_{\Omega}^{} f\:d\mu,
+  \end{align*}
+  and note that $a < t < b$. Note that, by a restatement of \eqref{eq:convexity_fraction_inequality}, if $a < s < t < u < b$, then
+  \begin{align*}
+    \frac{\varphi\left( t \right) - \varphi\left( s \right)}{t-s} &\leq \frac{\varphi\left( u \right)- \varphi\left( t \right)}{u-t}.
+  \end{align*}
+  Setting
+  \begin{align*}
+    \beta\coloneq \sup_{s\in (a,t)} \frac{\varphi\left( t \right) - \varphi\left( s \right)}{t-s},
+  \end{align*}
+  it follows that
+  \begin{align*}
+    \beta \leq \frac{\varphi\left( u \right)-\varphi\left( t \right)}{u-t}
+  \end{align*}
+  for all $u\in (t,b)$. Thus, for all $a < s < b$, we have
+  \begin{align*}
+    \varphi\left( s \right) &\geq \varphi\left( t \right) + \beta\left( s-t \right).
+  \end{align*}
+  In particular, this holds for all $s = f(x)$, where $x\in \Omega$, so that
+  \begin{align*}
+    \varphi\left( f\left( x \right) \right) &\geq \varphi\left( t \right) + \beta f(x) - \beta t.
+  \end{align*}
+  Integrating, and using the fact that $t$ is a constant, we get
+  \begin{align*}
+    \int_{\Omega}^{} \varphi\circ f\:d\mu &\geq \varphi\left( \int_{\Omega}^{} f\:d\mu \right) + \underbrace{\beta \int_{\Omega}^{} f\:d\mu - \beta t\mu\left( \Omega \right)}_{=0}.
+  \end{align*}
+  Thus, we obtain
+  \begin{align*}
+    \varphi\left( \int_{\Omega}^{} f\:d\mu \right) &\leq \int_{\Omega}^{} \varphi\circ f\:d\mu.
+  \end{align*}
+\end{proof}
+Jensen's inequality is incredibly powerful, as it allows us to establish a variety of other classic inequalities. For instance, if we set $\varphi(x) = e^x$, then Jensen's inequality becomes
+\begin{align*}
+  e^{\int_{\Omega}^{} f\:d\mu} &\leq \int_{\Omega}^{} e^{f}\:d\mu.
+\end{align*}
+If $\Omega = \set{p_1,\dots,p_n}$, where $\mu\left( \set{p_i} \right) = \frac{1}{n}$ with $f\left(p_i\right) = x_i$, then this gives
+\begin{align*}
+  e^{\frac{1}{n}\left( x_1 + \cdots + x_n \right)} &\leq \frac{1}{n}\left( e^{x_1} + \cdots + e^{x_n} \right).
+\end{align*}
+Setting $y_i\coloneq e^{x_i}$, we recover the AM-GM inequality,
+\begin{align*}
+  \left( \prod_{i=1}^{n}y_i \right)^{1/n} &\leq \frac{1}{n}\sum_{i=1}^{n}y_i.
+\end{align*}
+More generally, if $\mu\left( \set{p_i} \right) = \alpha_i > 0$, and $\sum_{i=1}^{n}\alpha_i = 1$, we obtain
+\begin{align*}
+  \prod_{i=1}^{n}y_i^{\alpha_i} &\leq \sum_{i=1}^{n}\alpha_iy_i.
+\end{align*}
+\begin{definition}
+  If $p$ and $q$ are positive real numbers such that
+  \begin{align*}
+    \frac{1}{p} + \frac{1}{q} &= 1,
+  \end{align*}
+  then we call $p$ and $q$ \textit{conjugate exponents}.
+\end{definition}
+\begin{theorem}[Young's Inequality]
+  If $p$ and $q$ are conjugate exponents, then for any positive $a,b$, we have
+  \begin{align*}
+    ab &\leq \frac{1}{p}a^p + \frac{1}{q}b^q
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Note that $\frac{1}{p} = 1 - \frac{1}{q}$. Thus, since $\ln$ is a concave function,
+  \begin{align*}
+    \ln\left( \frac{1}{p}a^p + \frac{1}{q}b^{q} \right) &\geq \frac{1}{p}\ln\left( a^{p} \right) + \frac{1}{q}\ln\left( b^{q} \right)\\
+                                                        &= \ln\left( a \right) + \ln\left( b \right)\\
+                                                        &= \ln\left( ab \right).
+  \end{align*}
+  Now, since $e^{x}$ preserves order, we obtain Young's inequality by taking exponentials.
+\end{proof}
+
+\section{Hölder's Inequality}%
+\section{Minkowski's Inequality}%
+\section{Cauchy--Schwarz Inequality}%
+\end{document}
