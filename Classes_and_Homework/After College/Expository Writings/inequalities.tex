@@ -14,7 +14,7 @@
 \pagestyle{fancy} %better headers
 \fancyhf{}
 \rhead{Avinash Iyer}
-\lhead{Analysis Inequalities}
+\lhead{Inequalities and the $L_p$-Spaces}
 \usepackage{microtype}
 
 \setcounter{secnumdepth}{0}
@@ -22,13 +22,13 @@
 \begin{document}
 \RaggedRight
 \begin{abstract}
-  We introduce some of the most important inequalities that are used frequently in real and functional analysis. These inequalities include Jensen's inequality and Young's inequality (concerning convex functions), Hölder's inequality and Minkowski's inequality (concerning $p$-norms), finishing with the Cauchy--Schwarz inequality in $L_2\left( \Omega,\mu \right)$.
+  \noindent We introduce some of the most important inequalities that are used frequently in real and functional analysis. These inequalities include Jensen's inequality and Young's inequality (concerning convex functions), which are then used to prove Hölder's inequality and Minkowski's inequality (concerning $p$-norms). Afterwards, we define the $L_p$-spaces and show some basic properties such as completeness and the $L_p$/$L_q$ duality.
 \end{abstract}
 \tableofcontents
 \section{Introduction}%
 This is the first of a series of expository writings, primarily focused on analysis (though they will certainly branch out), designed to complement my own knowledge and understanding of the various facets of the field. Ideally these will be shorter in length than my traditional \href{https://ai.avinash-iyer.com/classnotes.html}{notes documents}, and they will focus on some short, coherent theme.\newline
 
-Here, we introduce and discuss some of the most important inequalities in analysis, primarily focusing on the context of function spaces such as $L_p\left( \Omega,\mu \right)$. Much of this document will be a fleshed out version of certain results and theorems discussed in Walter Rudin's \textit{Real and Complex Analysis}, primarily from Chapter 3.\newline
+Here, we introduce and discuss some of the most important inequalities in analysis, primarily focusing on the context of function spaces such as $L_p\left( \Omega,\mu \right)$. Afterwards, we will establish the completeness of the $L_p\left( \Omega,\mu \right)$ spaces, and show that $L_p\left( \Omega,\mu \right)^{\ast} = L_q\left( \Omega,\mu \right)$ whenever $1 \leq p < \infty$. for Much of this document will be a fleshed out version of certain results and theorems discussed in Walter Rudin's \textit{Real and Complex Analysis}, primarily from Chapter 3, as well as the discussion of duality from Royden and Fitzpatrick's \textit{Real Analysis}.\newline
 
 We will assume that the reader has an understanding of measures, measurable functions, and basic integration theory (such as the Monotone Convergence Theorem, Fatou's Lemma, and the Dominated Convergence Theorem), though I will probably end up writing expositions on those as well. My \href{https://ai.avinash-iyer.com/Classes_and_Homework/College/Y3/Y3S2,\%20Real\%20II/real_2_notes.pdf}{Real Analysis II} notes should be sufficient as a background.
 \section{Convex Functions}%
@@ -143,11 +143,11 @@ More generally, if $\mu\left( \set{p_i} \right) = \alpha_i > 0$, and $\sum_{i=1}
   \prod_{i=1}^{n}y_i^{\alpha_i} &\leq \sum_{i=1}^{n}\alpha_iy_i.
 \end{align*}
 \begin{definition}
-  If $p$ and $q$ are positive real numbers such that
+  If $1 \leq p,q \leq \infty$ are such that
   \begin{align*}
     \frac{1}{p} + \frac{1}{q} &= 1,
   \end{align*}
-  then we call $p$ and $q$ \textit{conjugate exponents}.
+  then we call $p$ and $q$ \textit{conjugate exponents}. We use the convention that $\frac{1}{\infty} = 0$, so that $p=1,q=\infty$ is a pair of conjugate exponents.
 \end{definition}
 \begin{theorem}[Young's Inequality]
   If $p$ and $q$ are conjugate exponents, then for any positive $a,b$, we have
@@ -164,8 +164,62 @@ More generally, if $\mu\left( \set{p_i} \right) = \alpha_i > 0$, and $\sum_{i=1}
   \end{align*}
   Now, since $e^{x}$ preserves order, we obtain Young's inequality by taking exponentials.
 \end{proof}
-
+In \href{https://ai.avinash-iyer.com/Classes_and_Homework/College/Y3/Y3S2,\%20Real\%20II/real_2_notes.pdf}{Real Analysis II}, we used Young's Inequality to prove Hölder's Inequality and Minkowski's Inequality for the case of $x,y\in \C^{n}$.
+\begin{theorem}[Hölder's Inequality for $\C^n$]
+  Let $x,y\in \C^{n}$. Then, if $p$ and $q$ are conjugate exponents,
+  \begin{align*}
+    \sum_{j=1}^{n}\left\vert x_jy_j \right\vert &\leq \left( \sum_{j=1}^{n}\left\vert x_j \right\vert^{p} \right)^{1/p}\left( \sum_{j=1}^{n}\left\vert y_j \right\vert^{q} \right)^{1/q}.
+  \end{align*}
+\end{theorem}
+\begin{theorem}[Minkowski's Inequality for $\C^n$]
+  Let $x,y\in \C^n$. Then, for any $p \geq 1$,
+  \begin{align*}
+    \left( \sum_{j=1}^{n}\left\vert x_j + y_j \right\vert^{p} \right)^{1/p} &\leq \left( \sum_{j=1}^{n}\left\vert x_j \right\vert^{p} \right)^{1/p} + \left( \sum_{j=1}^{n}\left\vert y_j \right\vert^{p} \right)^{1/p}.
+  \end{align*}
+\end{theorem}
+We will prove these inequalities in the most general case --- i.e., with integrals.
 \section{Hölder's Inequality}%
+\begin{theorem}[Hölder's Inequality]
+  Let $p$ and $q$ be conjugate exponents with $1 < p < \infty$, and let $\left( X,\mathcal{M},\mu \right)$ be a measure space. Let $f,g\colon X\rightarrow [0,\infty]$ be measurable functions. Then,
+  \begin{align*}
+    \int_{X}^{} fg\:d\mu &\leq \left( \int_{ X }^{} f^{p}\:d\mu \right)^{1/p}\left( \int_{X}^{} g^{q}\:d\mu \right)^{1/q}.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Set
+  \begin{align*}
+    A &\coloneq \left( \int_{X}^{} f^{p}\:d\mu \right)^{1/p}\\
+    B &\coloneq \left( \int_{X}^{} g^{q}\:d\mu \right)^{1/q}.
+  \end{align*}
+  We may safely assume that $0 < A,B < \infty$. Set
+  \begin{align*}
+    F &= \frac{f}{A}\\
+    G &= \frac{g}{B},
+  \end{align*}
+  giving
+  \begin{align*}
+    \int_{X}^{} F^{p}\:d\mu &= 1\\
+    \int_{X}^{} G^{q}\:d\mu &= 1.
+  \end{align*}
+  Now, if $x$ is such that $0 < F(x) < \infty$ and $0 < G(x) < \infty$, then there exist $s,t$ such that $F(x) = e^{s/p}$ and $G(x) = e^{t/q}$, as $e^{x}\colon \R\rightarrow (0,\infty)$ is surjective. Since $\frac{1}{p} + \frac{1}{q} = 1$, and the exponential function is convex, we get, from Jensen's Inequality,
+  \begin{align*}
+    e^{s/p}e^{t/q} &= e^{s/p + t/q}\\
+                   &\leq \frac{1}{p}e^{s} + \frac{1}{q}e^{t},
+  \end{align*}
+  and substituting, we have
+  \begin{align*}
+    F(x)G(x) &\leq \frac{1}{p}F(x)^{p} + \frac{1}{q}G(x)^{q}
+  \end{align*}
+  for all $x\in X$. Integrating, we have
+  \begin{align*}
+    \int_{X}^{} FG\:d\mu &\leq 1.
+  \end{align*}
+  Substituting our definition for $F$ and $G$, we get
+  \begin{align*}
+    \int_{X}^{} fg\:d\mu &\leq \left( \int_{X}^{} f^p\:d\mu \right)^{1/p} \left( \int_{X}^{} g^{q}\:d\mu \right)^{1/q}.
+  \end{align*}
+\end{proof}
+
 \section{Minkowski's Inequality}%
-\section{Cauchy--Schwarz Inequality}%
+\section{The $L_p$-Spaces}%
 \end{document}
