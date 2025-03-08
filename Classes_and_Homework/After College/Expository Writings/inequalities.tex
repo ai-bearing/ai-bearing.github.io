@@ -22,7 +22,7 @@
 \begin{document}
 \RaggedRight
 \begin{abstract}
-  \noindent We introduce some of the most important inequalities that are used frequently in real and functional analysis. These inequalities include Jensen's inequality and Young's inequality (concerning convex functions), which are then used to prove Hölder's inequality and Minkowski's inequality (concerning $p$-norms). Afterwards, we define the $L_p$-spaces and show some basic properties such as completeness and the $L_p$/$L_q$ duality.
+  \noindent We introduce some of the most important inequalities that are used frequently in real and functional analysis. These inequalities include Jensen's inequality and Young's inequality (concerning convex functions), which are then used to prove Hölder's inequality and Minkowski's inequality (concerning $p$-norms). Afterwards, we define the $L_p$-spaces and show that they are complete.
 \end{abstract}
 \tableofcontents
 %\section{Introduction}%
@@ -280,9 +280,7 @@ Inspired by Minkowski's inequality, we consider a special class of normed space 
   \end{align*}
 \end{definition}
 
-Note that by Minkowski's inequality, the norm on $L_p\left( \Omega,\mu \right)$ is a bona fide norm.\newline
-
-In this section, we will establish the two major properties of the $L_p$-spaces --- first, their completeness, and second, the duality between $L_p$ and $L_q$.
+Note that by Minkowski's inequality, the norm on $L_p\left( \Omega,\mu \right)$ is a bona fide norm, so we only need to verify that the $L_p$ spaces are complete.
 \begin{theorem}
   The space $L_p\left( \Omega,\mu \right)$ is complete.
 \end{theorem}
@@ -312,18 +310,26 @@ In this section, we will establish the two major properties of the $L_p$-spaces 
                                                             &\leq \liminf_{i\rightarrow\infty}\int_{\Omega}^{} \left\vert f_{n_i} - f_m \right\vert^{p}\:d\mu\\
                                                             &\leq \ve^{p}.
   \end{align*}
-  Thus, $f-f_m\in L_p\left( \Omega,\mu \right)$, so $f\in L_p\left( \Omega,\mu \right)$, and $\norm{f - f_m}_{L_p}\xrightarrow{m\rightarrow\infty} 0$.
+  Thus, $f-f_m\in L_p\left( \Omega,\mu \right)$, so $f\in L_p\left( \Omega,\mu \right)$, and $\norm{f - f_m}_{L_p}\xrightarrow{m\rightarrow\infty} 0$.\newline
+
+  Now, in the case where $p = \infty$, the proof is simpler. Let $\left( f_n \right)_n$ be a Cauchy sequence in $L_{\infty}\left( \Omega,\mu \right)$, and let $A_{k}$ be the set of all $x$ such that $\left\vert f_k(x) \right\vert\geq \norm{f_k}_{L_\infty}$, and let $B_{m,n}$ be the set of all $x$ such that $\left\vert f_n(x)-f_m(x) \right\vert \geq \norm{f_m - f_n}_{L_\infty}$.\newline
+
+  Let $E$ be the union of $A_k$ and $B_{m,n}$ for all $k,m,n \geq 1$. Then, $\mu\left( E \right) = 0$, and on $E^{c}$, $\left( f_n \right)_n$ converges uniformly to the bounded function $f$. Defining $f(x) = 0$ for all $x\in E$, we have $f\in L_{\infty}\left( \Omega,\mu \right)$, and $\norm{f_n - f}_{L_{\infty}}\rightarrow 0$.
 \end{proof}
-Finally, we establish the duality $L_p\left( \Omega,\mu \right)^{\ast} \cong L_q$ for $1\leq p < \infty$ and $1\leq q \leq \infty$.
-\begin{definition}
-  A linear functional on a vector space $X$ is a function $\varphi\colon X\rightarrow \C$ such that
+Finally, a useful fact about $L_p$ spaces is that certain classes of functions are dense inside them.
+\begin{theorem}
+  Let $S$ be the set of all simple, measurable functions that have finite measure support --- i.e., that
   \begin{align*}
-    \varphi\left( x + \beta y \right) = \varphi\left( x \right) + \beta \varphi\left( y \right).
+    \mu\left( \set{x | s(x)\neq 0} \right) < \infty.
   \end{align*}
-  If $X$ is normed, then the space $X^{\ast}$ is the set of linear functionals such that
-  \begin{align*}
-    \norm{\varphi}_{\op} &= \sup_{x\in B_{X}}\left\vert \varphi(x) \right\vert\\
-                         & < \infty.
-  \end{align*}
-\end{definition}
+  Then, for $1\leq p < \infty$, $S$ is dense in $L_p\left( \Omega,\mu \right)$.
+\end{theorem}
+\begin{proof}
+  By construction, $S\subseteq L_p\left( \Omega,\mu \right)$. Let $f\geq 0$, and $\left( s_n \right)_n$ be a sequence of positive simple functions converging pointwise increasing to $f$. Therefore, since $0\leq s_n \leq f$, we have $s_n\in L_p\left( \Omega,\mu \right)$, so $s_n\in S$.\newline
+
+  Now, since $\left\vert f - s_n \right\vert^{p}\leq f^p$, by Dominated Convergence, we have $\norm{f - s_n}_{p} \rightarrow 0$, so $f$ is in the $L_p$ closure of $S$.\newline
+
+  For the general case where $f$ is complex, we split $f$ into positive and negative components, as well as real and imaginary components, and repeat the same procedure.
+\end{proof}
+
 \end{document}
