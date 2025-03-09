@@ -10,7 +10,7 @@
 %\renewcommand*{\hbar}{\hslash}
 
 %\usepackage{homework}
-
+\usepackage{microtype}
 \pagestyle{fancy} %better headers
 \fancyhf{}
 \rhead{Avinash Iyer}
@@ -21,6 +21,43 @@
 \begin{document}
 \RaggedRight
 \begin{abstract}
-  \noindent We detail the intricate construction and some necessary background in order to prove Urysohn's Lemma, which completely characterizes normal topological spaces 
+  \noindent We detail the construction necessary to prove Urysohn's Lemma, which completely characterizes normal topological spaces via separation using continuous functions.
 \end{abstract}
+In this document, we will prove the following theorem.
+\begin{theorem}[Urysohn's Lemma]
+  Let $X$ be a topological space. Then, $X$ is normal if and only if, for all closed, disjoint $A,B\subseteq X$, there is a continuous function $f\colon X\rightarrow [0,1]$ such that $f(a) = 0$ for all $a\in A$ and $f(b) = 1$ for all $b\in B$.
+\end{theorem}
+\begin{definition}
+  A topological space $X$ is normal if, for any closed, disjoint subsets $A,B\subseteq X$, there are open sets $U,V\subseteq X$ such that $A\subseteq U$, $B\subseteq V$, and $U\cap V = \emptyset$.
+\end{definition}
+We may prove one direction of Urysohn's lemma already.
+\begin{proof}[Proof of Reverse Direction]
+  Suppose $X$ is a topological space such that for all disjoint closed subsets $A,B\subseteq X$, there is a continuous $f\colon X\rightarrow [0,1]$ such that $f(A) = \set{0}$ and $f(B) = \set{1}$. Then, by taking $U \coloneq f^{-1}\left( \left( -\infty,1/2 \right)\cap [0,1] \right)$ and $V \coloneq f^{-1}\left( (1/2,\infty)\cap [0,1] \right)$, we have $U\cap V = \emptyset$ and $A\subseteq U$, $B\subseteq V$.
+\end{proof}
+The reverse direction is, unfortunately, quite a bit more difficult. To do this, we will construct a family of open sets that will allow us to define our continuous function afterward. This construction will follow similar proofs in \textit{A Taste of Topology} by Runde and \textit{Real Analysis} by Folland, although it will (probably) be more detailed.
+\begin{lemma}
+  Let $A$ and $B$ be disjoint subsets of a normal topological space $X$, and let 
+  \begin{align*}
+    \Delta \coloneq \set{k2^{-n} | n\geq 1,0 < k < 2^{n}}
+  \end{align*}
+  be the set of dyadic rationals in $(0,1)$. Then, there is a family $\set{U_r | r\in\Delta}\subseteq \tau_{X}$  such that $A\subseteq U_{r}\subseteq B^{c}$ for all $r\in\Delta$, and $\overline{U_r}\subseteq U_s$ whenever $r < s$.
+\end{lemma}
+\begin{proof}
+  We start by showing that if $A\subseteq U$, then there is an open set $V$ such that $A\subseteq V \subseteq \overline{V} \subseteq U$. Note that if $A\subseteq U$, then $A$ and $U^{c}$ are disjoint closed sets, so since $X$ is normal, there are disjoint open sets $V$ and $W$ such that $A\subseteq V$ and $U^{c}\subseteq W$. Note that since $V\subseteq W^{c}$, and $W^{c}$ is closed, we have $A\subseteq V \subseteq \overline{V}\subseteq W^{c}\subseteq U$, which is our desired result.\newline
+
+  Now, since $B^{c}$ is open, and $A\subseteq B^{c}$, we have an open set $U_{1/2}$ such that $A\subseteq U_{1/2} \subseteq \overline{U}_{1/2}\subseteq B^{c}$. Similarly, since $\overline{U}_{1/2}\subseteq B^{c}$, we have $U_{3/4}\subseteq B_{c}$ such that $\overline{U}_{1/2}\subseteq U_{3/4}\subseteq \overline{U}_{3/4}\subseteq B^{c}$, and similarly for $A\subseteq U_{1/4}\subseteq \overline{U}_{1/4}\subseteq U_{1/2}$.\newline
+
+  Continuing in this process, we are able to construct a family $\set{U_{r}}_{r\in\Delta}\subseteq \tau_{X}$ such that $A\subseteq U_{r}\subseteq \overline{U}_{r}\subseteq U_{s}\subseteq \overline{U}_{s}\subseteq B^{c}$ whenever $r < s$.
+\end{proof}
+Now, we may prove Urysohn's Lemma by using this family $\set{U_r}_{r\in\Delta}$.
+\begin{proof}[Proof of Urysohn's Lemma]
+  Let $\set{U_r}_{r\in\Delta}$ be our family with $U_{1} \coloneq X$. \newline
+
+  For $x\in X$, we define $f(x) = \inf\set{r | x\in U_r}$. Since $A\subseteq U_r\subseteq B^{c}$ for $0 < r < 1$, we have $f(x) = 0$ for all $x\in A$, $f(x) = 1$ for all $x\in B$, and $0 \leq f(x) \leq 1$ for all $x\in X$. Now, all we need to show is that $f$ is continuous.\newline
+
+  Observe that $f(x) < \alpha$ if and only if $x\in U_r$ for some $r < \alpha$, which holds if and only if $x\in \bigcup_{r < \alpha}U_{r}$. Thus, $f^{-1}\left( \left( -\infty,\alpha \right) \right) = \bigcup_{r < \alpha}U_{r}$ is open. Similarly, $f(x) > \alpha$ if and only if $x\notin U_{r}$ for some $r > \alpha$, which holds if and only if $x\notin \overline{U}_{s}$ for some $s > \alpha$, as $\overline{U}_{s} \subseteq U_r$ when $s < r$. Thus, this holds if and only if $x\in \bigcup_{s > \alpha}\left( \overline{U}_s \right)^{c}$, so $f\left( \left( \alpha,\infty \right) \right) = \bigcup_{s > \alpha}\left( \overline{U}_s \right)^{c}$ is open.\newline
+
+  Since the open half-lines generate the topology on $\R$, $f$ is continuous.
+\end{proof}
+
 \end{document}
