@@ -12,6 +12,7 @@
 %\renewcommand{\mathbb}{\mathds}
 %\usepackage{homework}
 
+\usepackage{exposition}
 \pagestyle{fancy} %better headers
 \fancyhf{}
 \rhead{Avinash Iyer}
@@ -22,12 +23,77 @@
 \begin{document}
 \RaggedRight
 \begin{abstract}
-  \noindent The mathematician J.E. Littlewood introduced three principles of real analysis:
-  \begin{enumerate}[(1)]
-    \item every measurable set is nearly a finite union of intervals;
-    \item every measurable function is nearly continuous;
-    \item every pointwise convergent sequence is nearly uniformly convergent.
-  \end{enumerate}
-  Here, we prove (ii) and (iii), which are the substance of Lusin's Theorem and Egorov's Theorem respectively.
+  \noindent The mathematician J.E. Littlewood introduced three principles of real analysis: every measurable set is nearly a finite union of intervals, every measurable function is nearly continuous, and every pointwise convergent sequence is nearly uniformly convergent. Here, we prove (ii) and (iii), which are the substance of Lusin's Theorem and Egorov's Theorem respectively.
 \end{abstract}
+Egorov's theorem essentially says that pointwise convergence measurable functions on a set with finite measure is ``almost uniform.''
+\begin{theorem}[Egorov's Theorem]
+  Let $\left( f_k \right)_k$ be a sequence of measurable functions defined on a measurable set $E$ with $m(E) < \infty$, where $m$ denotes Lebesgue measure. Suppose $f_k\rightarrow f$ pointwise a.e. on $E$. For any $\ve > 0$, we can find a closed set $A_{\ve}\subseteq E$ such that $m\left( E\setminus A_{\ve} \right) \leq \ve$ and $f_k\rightarrow f$ uniformly on $A_{\ve}$.
+\end{theorem}
+\begin{proof}
+  Without loss of generality, we may assume $f_k\rightarrow f$ pointwise everywhere on $E$.\newline
+
+  Now, define
+  \begin{align*}
+    E_{n,k} &= \bigcup_{m=n}^{\infty}\set{x\in E | \left\vert f_m(x) - f(x) \right\vert \geq \frac{1}{k}}.
+  \end{align*}
+  Fixing $k$, we see that $E_{n,k}\supseteq E_{n+1,k}$, and that
+  \begin{align*}
+    \bigcap_{n=1}^{\infty}E_{n,k} &= \emptyset
+  \end{align*}
+  for any fixed $k$ (by pointwise convergence). Since $m(E) < \infty$, by continuity from above, we have $m\left( E_{n,k} \right)\rightarrow 0$ as $n\rightarrow\infty$.\newline
+
+  We may pick a subsequence $n_k$ such that $m\left( E_{n_k,k} \right) < \ve/2^{k+1}$ (yet again by continuity from above). Set $A_{\ve}$ as
+  \begin{align*}
+    A_{\ve} &= \bigcap_{k\geq 1}\left( E\setminus E_{n_k,k} \right).
+  \end{align*}
+  Then, $m\left(E\setminus A_{\ve}\right) < \ve/2$, and for any $x\in E\setminus A_{\ve}$, we have $x\notin E_{n_k,k}$ for all $k$, so that $\left\vert f_m(x) - f(x) \right\vert < 1/k$ for all $m\geq n_k$, meaning $f_n\rightarrow f$ uniformly on $E\setminus A_{\ve}$.\newline
+
+  To find the closed set, we use inner regularity to pick out $A'_{\ve}\subseteq A_{\ve}$ such that $m\left( A_{\ve}\setminus A'_{\ve} \right) < \ve/2$ by inner regularity of the Lebesgue measure. This gives $m\left( E\setminus A'_{\ve} \right) < \ve$, with $f_n\rightarrow f$ uniformly on $A'_{\ve}$.
+\end{proof}
+To prove Lusin's theorem, we start with the special case of simple functions.
+\begin{lemma}
+  Let $f$ be a simple function defined on $E\subseteq \R$. Then, for each $\ve > 0$, there is a continuous function $g$ defined on $\R$, and a closed set $F\subseteq E$, such that $f = g$ on $F$ and $m\left( E\setminus F \right) < \ve$.
+\end{lemma}
+\begin{proof}
+  Let $\Ran(f) = \set{a_1,\dots,a_n}$, with $E_i \coloneq f^{-1}\left( \set{a_i} \right)$. Then, the collection $\set{E_k}_{k=1}^{n}$ is disjoint, and by inner regularity, we may select $F_1,\dots,F_n$ closed, with $F_i\subseteq E_i$ and $m\left( E_i\setminus F_i  \right) < \ve/n$.\newline
+
+  Set $F = \bigcup_{i=1}^{n}F_i$, which is closed and disjoint. Furthermore, we have
+  \begin{align*}
+    m\left( E\setminus F \right) &= m\left( \bigcup_{i=1}^{n}\left( E_i\setminus F_i \right) \right)\\
+                                 &= \sum_{i=1}^{n}m\left( E_i\setminus F_i \right)\\
+                                 &< \ve.
+  \end{align*}
+  Defining $g$ to take $a_i$ on $F_i$, the collection $\set{F_i}_{i=1}^{n}$ is disjoint, so $g$ is properly defined. Moreover, $g$ is continuous, as for any $x\in F_i$, there is an open interval containing $x$ that is disjoint from $\bigcup_{k\neq i}F_k$.\newline
+
+  By the \href{https://ncatlab.org/nlab/show/Tietze+extension+theorem}{Tietze Extension Theorem}, we can extend $g$ to a continuous function defined on all of $\R$, which has the requisite approximation properties.
+\end{proof}
+\begin{theorem}[Lusin's Theorem]
+  Let $f$ be a real-valued measurable function. Then, for any $\ve > 0$, there is a closed set $F\subseteq \R$ such that $m\left( \R\setminus F \right) < \ve$, and $f|_{F}$ is continuous on $F$.
+\end{theorem}
+\begin{proof}
+  There is a sequence of simple functions $f_k\colon \R\rightarrow \R$ that converge pointwise to $f$. For each $k$, there is a closed set $C_k\subseteq \R$ such that $m\left( \R\setminus C_k \right) < \frac{\ve }{2^{k+1}}$ such that $f_k|_{C_k}$ is continuous.\newline
+
+  Note that
+  \begin{align*}
+    C &= \bigcap_{k=1}^{\infty}C_k
+  \end{align*}
+  is a closed set with $f_k|_{C}$ continuous, and $m\left( \R\setminus C \right) < \frac{\ve}{2}$.\newline
+
+  Now, for each $m\in \Z$, the sequence $\left( f_i|_{(m,m+1)} \right)_{i\in\N}$ converges pointwise to $f|_{(m,m+1)}$, so by Egorov's theorem, there is a measurable $E_m\subseteq (m,m+1)$ such that $f_i$ converges uniformly to $f$ on $\left( m,m+1 \right)\setminus E_m$ with $m\left( \left( m,m+1 \right)\setminus E_m \right) < \frac{\ve}{2^{\left\vert m \right\vert + 3}}$.\newline
+
+  Now, setting
+  \begin{align*}
+    D &= \bigcup_{m\in\Z}\left( C\cap E_m \right),
+  \end{align*}
+  we have that $g|_{D}$ is continuous. Furthermore, since
+  \begin{align*}
+    \R\setminus D &\subseteq \Z\cup \left( \bigcup_{m\in\Z}\left( \left( m,m+1 \right)\setminus E_m \right) \right)\cup \left( \R\setminus C \right),
+  \end{align*}
+  we have $m\left( \R\setminus D \right) < \ve$.\newline
+
+  By inner regularity, there is a closed $F\subseteq D$ such that $m\left( D\setminus F \right) < \ve\setminus m\left( \R\setminus D \right)$, so that $m\left( \R\setminus F \right) < \ve$.\newline
+
+  Since the restriction of a continuous function to a smaller domain is still continuous, we have $g|_{F}$ is continuous.
+\end{proof}
+
 \end{document}
