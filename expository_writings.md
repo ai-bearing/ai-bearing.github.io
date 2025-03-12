@@ -18,6 +18,9 @@ The following are standard texts.
 ### [Inequalities and the $L_p$-Spaces](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/inequalities.pdf)
 > We introduce some of the most important inequalities that are used frequently in real and functional analysis. These inequalities include Jensen's inequality and Young's inequality (concerning convex functions), which are then used to prove Hölder's inequality and Minkowski's inequality (concerning $p$-norms). Afterwards, we define the $L_p$-spaces and show that they are complete.
 
+### [Egorov's Theorem and Lusin's Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/egorovs_theorem_lusins_theorem.pdf)
+> The mathematician J.E. Littlewood introduced three principles of real analysis: every measurable set is nearly a finite union of intervals, every measurable function is nearly continuous, and every pointwise convergent sequence is nearly uniformly convergent. Here, we prove (ii) and (iii), which are the substance of Lusin's Theorem and Egorov's Theorem respectively.
+
 ## Topology
 The following are standard texts.
 - _A Taste of Topology_ (Runde)
