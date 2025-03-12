@@ -24,3 +24,5 @@ I'm interested in a lot of things, but I think the following form a reasonable s
 ## [Articles for *The Occidental*](https://theoccidentalnews.com/author/iyera)
 
 ## [Advent of Code](adventofcode.md)
+
+## [Quotes](quotes.md)

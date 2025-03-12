@@ -27,6 +27,8 @@
     \tableofcontents[currentsection]
   \end{frame}
 }
+\usepackage[backend=biber, style=alphabetic,sorting=nyt]{biblatex}
+\addbibresource{references.bib}
 % Title page
 \title{Amenability: A (Somewhat) Brief Introduction}
 \author{Avinash Iyer}
@@ -324,12 +326,11 @@
   we have
   \begin{align*}
     1 &= \nu\left( W\left( a \right) \right) + \nu\left( W\left( a^{-1} \right) \right) + \nu\left( W\left( b \right) \right) + \nu\left( W\left( b^{-1} \right) \right)\\
-      &= \nu\left( a^{-1}W\left( a \right) \right) + \nu\left( W\left( a^{-1} \right) \right) + \nu\left( b^{-1}W\left( b \right) \right) + \nu\left( W\left( b^{-1} \right) \right)\\
-      &= \nu\left( a^{-1}W\left( a \right)\sqcup W\left( a^{-1} \right) \right) + \nu\left( b^{-1}W\left( b \right) \sqcup W\left( b^{-1} \right) \right)\\
-      &= \nu\left( F(a,b) \right) + \nu\left( F(a,b) \right)\\
-      &= 2.
-  \end{align*}\pause
-  Huh.
+    \uncover<+(1)->{&= \nu\left( a^{-1}W\left( a \right) \right) + \nu\left( W\left( a^{-1} \right) \right) + \nu\left( b^{-1}W\left( b \right) \right) + \nu\left( W\left( b^{-1} \right) \right)}\\
+      \uncover<+(2)->{&= \nu\left( a^{-1}W\left( a \right)\sqcup W\left( a^{-1} \right) \right) + \nu\left( b^{-1}W\left( b \right) \sqcup W\left( b^{-1} \right) \right)}\\
+      \uncover<+(3)->{&= \nu\left( F(a,b) \right) + \nu\left( F(a,b) \right)}\\
+      \uncover<+(4)->{&= 2.}
+  \end{align*}
 \end{frame}
 \begin{frame}
   \frametitle{Amenability}
@@ -347,10 +348,10 @@
 \begin{frame}
   \frametitle{Inheritance Properties of Amenability}
   \begin{itemize}
-    \item If $G$ is amenable, then any subgroup of $G$ is amenable.
-    \item If $G$ is amenable, then quotient groups, $G/N$, are amenable.
-    \item If $H\leq G$ is an amenable subgroup such that $\left[ G:H \right] < \infty$, then $G$ is amenable.
-    \item If $N\trianglelefteq G$ and $G/N$ are amenable, then $G$ is amenable.
+    \item If $G$ is amenable, then any subgroup of $G$ is amenable.\pause
+    \item If $G$ is amenable, then quotient groups, $G/N$, are amenable.\pause
+    \item If $H\leq G$ is an amenable subgroup such that $\left[ G:H \right] < \infty$, then $G$ is amenable.\pause
+    \item If $N\trianglelefteq G$ and $G/N$ are amenable, then $G$ is amenable.\pause
     \item If $\left( G_i,\varphi_i \right)_{i\in I}$ is a directed system of amenable groups, then the union $G = \bigcup_{i\in I}G_i$ is amenable.
   \end{itemize}
 \end{frame}
@@ -402,38 +403,74 @@
 \end{frame}
 \subsection{A Taste of Functional Analysis}%
 \begin{frame}
-  \frametitle{Function Spaces}
-  Functions are much easier to work with than sets and measures (or at least, they're more interesting to work with).\pause\newline
+  \frametitle{Normed Vector Spaces}
+  Functional analysis is, of course, the study of normed vector spaces.\pause\newline
 
-  We work with three special function spaces over the group $\Gamma$.
-  \begin{align*}
-    \ell_{\infty}\left( \Gamma \right) &\coloneqq \set{f\colon \Gamma\rightarrow \C | \sup_{t\in\Gamma}\left\vert f(t) \right\vert < \infty};\\
-    \ell_{1}\left( \Gamma \right) &\coloneqq \set{f\colon \Gamma\rightarrow \C | \sum_{t\in\Gamma}\left\vert f(t) \right\vert < \infty};\\
-    \ell_{2}\left( \Gamma \right) &\coloneqq \set{f\colon \Gamma\rightarrow \C | \sum_{t\in\Gamma}\left\vert f(t) \right\vert^2 < \infty}.
-  \end{align*}
-\end{frame}
-\begin{frame}
-  \frametitle{Work in $\ell_{\infty}(\Gamma)$}
-  For a given $f\in\ell_{\infty}\left( \Gamma \right)$, we define
-  \begin{align*}
-    \lambda_s\colon \ell_{\infty}\left( \Gamma \right)\rightarrow \ell_{\infty}\left( \Gamma \right)
-  \end{align*}
-  by $\lambda_s\left( f \right)\left( t \right) = f\left( s^{-1}t \right)$.\pause\newline
-
-  If there is some $\rho\colon \ell_{\infty}\left( \Gamma \right)\rightarrow \C$ such that
+  If $V$ is a vector space, then a \textit{norm} on $V$ is a map $\norm{\cdot}\colon V\rightarrow [0,\infty)$ satisfying:
   \begin{itemize}
-    \item $\rho\left( \1_{\Gamma} \right) = 1 = \norm{\rho}_{\op}$;
-    \item $\rho\left( f \right) = \rho\left( \lambda_s(f) \right)$,
+    \item definiteness: $\norm{v} \geq 0$, with equality if and only if $v = 0$;
+    \item homogeneity: $\norm{\alpha v} = \left\vert \alpha \right\vert\norm{v}$ for all $\alpha\in \C$;
+    \item triangle inequality: $\norm{v + w}\leq \norm{v} + \norm{w}$.
   \end{itemize}
-  then we call $\rho$ an \textit{invariant state}.
 \end{frame}
 \begin{frame}
-  \frametitle{Work in $\ell_{\infty}\left( \Gamma \right)$, cont'd}
+  \frametitle{A Normed Vector Space}
+  The best example is that of $\R^n$ or $\C^n$ with the Euclidean norm,
+  \begin{align*}
+    \norm{x} &= \left( \sum_{i=1}^{n}\left\vert x_i \right\vert^2 \right)^{1/2}
+  \end{align*}
+  However, we need a few more dimensions in order to get to where we're going.
+\end{frame}
+\begin{frame}
+  \frametitle{Function Spaces}
+  There are three main function spaces that we're concerned with for our studies:
+  { \footnotesize \begin{align*}
+    \ell_{\infty}\left( \Gamma \right) & =\set{f\colon \Gamma\rightarrow \C | \sup_{t\in\Gamma}\left\vert f(t) \right\vert < \infty};\\
+    \ell_{1}\left( \Gamma \right) &= \set{f\colon \Gamma\rightarrow \C | \sum_{t\in\Gamma}\left\vert f(t) \right\vert < \infty};\\
+    \ell_2\left( \Gamma \right) &= \set{f\colon \Gamma\rightarrow \C | \sum_{t\in\Gamma}\left\vert f(t) \right\vert^2 < \infty}.
+  \end{align*}}\pause
+  They are equipped with the respective norms of
+  \begin{itemize}
+    \item $\norm{f}_{\ell_{\infty}} \coloneqq \sup_{t\in\Gamma}\left\vert f(t) \right\vert$;
+    \item $\norm{f}_{\ell_1}\coloneqq \sum_{t\in\Gamma}\left\vert f(t) \right\vert$;
+    \item $\norm{f}_{\ell_2}\coloneqq \left( \sum_{t\in\Gamma}\left\vert f(t) \right\vert^2 \right)^{1/2}$.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Linear Maps and Linear Functionals}
+  A linear transformation $T\colon V\rightarrow W$ is called \textit{bounded} if
+  \begin{align*}
+    \sup_{\norm{v}=1}\norm{T(v)} &< \infty.
+  \end{align*}\pause
+  We call the quantity on the left the \textit{operator norm}, denoted $\norm{T}_{\op}$.\newline
+
+  If $W = \C$, then we call $T$ a \textit{linear functional}.
+\end{frame}
+\begin{frame}
+  \frametitle{Positive Linear Functionals on $\ell_{\infty}\left( \Gamma \right)$}
+  If $\varphi\colon \ell_{\infty}\left( \Gamma \right)\rightarrow \C$ is a bounded linear functional, we say $\varphi $ is \textit{positive} if, for any $f\in \ell_{\infty}\left( \Gamma \right)$ with $f \geq 0$, $\varphi(f)\geq 0$.
+  \begin{itemize}
+    \item It can be shown that $\varphi$ is positive if and only if $\varphi\left( \1_{\Gamma} \right) = \norm{\varphi}_{\op}$.
+    \item If $\varphi\left( \1_{\Gamma} \right) = \norm{\varphi}_{\op} = 1$, then we say $\varphi$ is a \textit{state}.
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Translations of $\ell_{\infty}\left( \Gamma \right)$}
+  If $f\in \ell_{\infty}\left( \Gamma \right)$, we define the translation $\lambda_s\colon \ell_{\infty}\left( \Gamma \right)\rightarrow \ell_{\infty}\left( \Gamma \right)$ by
+  \begin{align*}
+    \lambda_s(f)(t) &= f\left( s^{-1}t \right)
+  \end{align*}
+  for all $t\in \Gamma$ and fixed $s\in\Gamma$.\newline
+
+  If $\varphi\colon \ell_{\infty}\left( \Gamma \right)\rightarrow \C$ is a state such that $\varphi\left( \lambda_s(f) \right) = \varphi(f)$ for all $f\in \ell_{\infty}\left( \Gamma \right)$, then we say $\varphi$ is an \textit{invariant state}.
+\end{frame}
+\begin{frame}
+  \frametitle{Invariant States and Means}
   Invariant states and means are interchangeable.\pause\newline
 
-  Define
+  If $\varphi$ is an invariant state on $\ell_{\infty}\left( \Gamma \right)$, define
   \begin{align*}
-    \mu\left( E \right) &= \rho\left( \1_{E} \right)
+    \mu\left( E \right) &= \varphi\left( \1_{E} \right)
   \end{align*}
   for all $E\subseteq \Gamma$.
 \end{frame}
@@ -446,84 +483,123 @@
   \begin{align*}
     F(a,b) &= W(a) \sqcup W\left( a^{-1} \right) \sqcup W\left( b \right) \sqcup W\left( b^{-1} \right).
   \end{align*}
-  Translating $W\left( a \right) \mapsto a^{-1}W\left( a \right)$ gave us a set that was ``significantly'' ``bigger'' than $W\left( a^{-1} \right)$; specifically, it gave us $F\left( a,b \right) \setminus W\left( a^{-1} \right)$.
+  Translating $W\left( a \right) \mapsto a^{-1}W\left( a \right)$ gave us a set that was ``significantly'' ``bigger'' than $W\left( a^{-1} \right)$; specifically, it gave us $F\left( a,b \right) \setminus W\left( a^{-1} \right)$.\pause\newline
+
+  But what does ``bigger'' actually mean?
 \end{frame}
 \begin{frame}
   \frametitle{Følner's Condition}
-  We can actually make this sense of ``bigness'' precise --- if the symmetric difference of the translated set and our original set becomes ``sufficiently small,'' then we can put a mean on the group.\pause
   \begin{theorem}[Følner's Theorem]
-    Let $\Gamma$ be a (countable, discrete) group. Then, $\Gamma$ is amenable if and only if there exists a sequence $\left( F_n \right)_n$ of finite sets such that for all $s\in \Gamma$,
+    Let $\Gamma$ be a countable, discrete group. Then, $\Gamma$ is amenable if and only if there exists a sequence of finite subsets $\left( F_n \right)_n$ such that
     \begin{align*}
-      \lim_{n\rightarrow\infty}\frac{\left\vert sF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert} &= 0.
+      \lim_{n\rightarrow\infty} \frac{\left\vert sF_n \cap F_n \right\vert}{\left\vert F_n \right\vert} &= 1
     \end{align*}
+    for all $s\in\Gamma$.
   \end{theorem}
 \end{frame}
 \begin{frame}
-  \frametitle{Approximating Means}
-  The Følner condition allows us to find an ``approximate'' version of a mean that works in $\ell_1\left( \Gamma \right)$ instead of $\ell_{\infty}\left( \Gamma \right)$.\pause\newline
+  \frametitle{Approximate Means}
+  The Følner condition allows us to find an ``approximate'' version of a mean.\pause\newline
 
-  Keeping $\lambda_s(f)(t) = f\left( s^{-1}t \right)$, we say $\left( f_k \right)_k\subseteq \ell_1\left( \Gamma \right)$ is an \textit{approximate mean} if
+  Keeping $\lambda_s(f)(t) = f\left( s^{-1}t \right)$, if $\left( f_k \right)_k\subseteq \ell_1\left( \Gamma \right)$ is such that
   \begin{align*}
-    \lim_{k\rightarrow\infty}\norm{f_k - \lambda_s\left( f_k \right)}_{\ell_1} &= 0.
+    \lim_{k\rightarrow\infty}\norm{f_k - \lambda_s\left( f_k \right)}_{\ell_1} &= 0,
   \end{align*}
+  then we say $\left( f_k \right)_k$ is an \textit{approximate mean}.
   \end{frame}
   \begin{frame}
-  \frametitle{Approximating Means, Cont'd}
-  This is equal to Følner's condition; in one direction by defining
+  \frametitle{Approximate Means, Cont'd}
+  This is equal to Følner's condition.\newline
+
+  In one direction, we take
   \begin{align*}
     f_k &= \frac{1}{\left\vert F_k \right\vert}\1_{F_k},
-  \end{align*}\pause
-  and in the other direction by using the ``layer cake'' decomposition
+  \end{align*}
+\end{frame}
+\begin{frame}
+  \frametitle{Approximate Means, Cont'd}
+  In the other direction, we arbitrarily approximate $f\in\ell_1\left( \Gamma \right)$ with a ``sufficient'' finitely supported function $g$,
   \begin{align*}
-    f &= \sum_{i=1}^{n} c_i \1_{F_i},
+    \norm{g - f}_{\ell_1} &< \ve/2,
+  \end{align*}
+  then use a ``layer cake'' decomposition to find our Følner sets:
+  \begin{align*}
+    g &= \sum_{i=1}^{n}c_i\1_{F_i},
   \end{align*}
   where $F_1\supseteq F_2\supseteq \cdots \supseteq F_n$.
 \end{frame}
-\begin{frame}
-  \frametitle{Using Følner's Condition}
-  If $S$ is a (finite) generating set for $G$, then letting
-  \begin{align*}
-    S^n &\coloneq \set{g_1\cdots g_n | g_i\in S},
-  \end{align*}
-  we call groups such that
-  \begin{align*}
-    \limsup_{n\rightarrow\infty} \left\vert S^n \right\vert^{1/n} &= 1
-  \end{align*}
-  \textit{groups of subexponential growth}. Følner's condition is used to show that they are amenable.
-\end{frame}
+%\begin{frame}
+%  \frametitle{Using Følner's Condition}
+%  If $S$ is a (finite) generating set for $G$, then letting
+%  \begin{align*}
+%    S^n &\coloneqq \set{g_1\cdots g_n | g_i\in S},
+%  \end{align*}
+%  we call groups such that
+%  \begin{align*}
+%    \limsup_{n\rightarrow\infty} \left\vert S^n \right\vert^{1/n} &= 1
+%  \end{align*}
+%  \textit{groups of subexponential growth}. Følner's condition is used to show that they are amenable.
+%\end{frame}
 \begin{frame}
   \frametitle{Graphs and Amenability}
-  Given a group with generating set $S$, we may define a graph --- known as the Cayley graph --- by ``walking'' along the direction that leads us to an element of the group.
+  Given a group $\Gamma$ with generating set $S$, we may define a graph --- known as the Cayley graph --- with vertices consisting of group elements and edges defined by ``walking'' along the generators.
   \begin{center}
     \includegraphics[scale=0.075]{images/cayley_graph.png}
   \end{center}
 \end{frame}
 \begin{frame}
   \frametitle{Graphs and Amenability, cont'd}
-  If the Cayley graph of $G$ has a ``sufficiently slow-growing'' neighbor vertex set, then $G$ is amenable --- this is once again proven using the Følner condition.
+  If $S\subseteq V(G)$ is a subset of vertices of a graph $G$, the \textit{neighbor vertex set}, $N(S)$, is the set of vertices in $G$ that are adjacent to $G$ (not including elements of $S$).\newline
+
+  If $G$ is the Cayley graph of $\Gamma$, then $\Gamma$ is amenable if and only if
+  \begin{align*}
+    \inf\set{\frac{\left\vert N(S) \right\vert}{\left\vert S \right\vert} | S\subseteq V(G),\left\vert S \right\vert\text{ finite}} &= 0.
+  \end{align*}
+  \begin{itemize}
+    \item Essentially, the Cayley graph doesn't ``get too big'' ``too fast.''
+    \item This is proven with the Følner condition.
+  \end{itemize}
 \end{frame}
 \subsection{Approximations with Representations and Operators}%
 \begin{frame}
-  \frametitle{Introducing the Left-Regular Representation}
-  Consider the map $s \mapsto \lambda_s$, where once again $\lambda_s(f)(t) = f\left( s^{-1}t \right)$, this time when $f\in \ell_2\left( \Gamma \right)$.\pause\newline
-
-  Then, if
-  \begin{align*}
-    \iprod{f}{g} &= \sum_{t\in\Gamma}f(t)\overline{g(t)},
-  \end{align*}
-  on $\ell_2\left( \Gamma \right)$, we have, for all $s\in\Gamma$
-  \begin{align*}
-    \iprod{\lambda_s(f)}{\lambda_s(g)} &= \iprod{f}{g},\\
-    \lambda_s\lambda_s^{\ast} &= I\\
-    \lambda_s^{\ast}\lambda_s &= I
-  \end{align*}\pause
-  This makes $\lambda_s$ a \textit{unitary operator} on $\ell_2\left( \Gamma \right)$ --- $\lambda_s\in \mathcal{U}\left( \ell_2\left( \Gamma \right) \right)$.
+  \frametitle{Hilbert Spaces}
+  If $\mathcal{H}$ is a vector space, an \textit{inner product} on $\mathcal{H}$ is a map $ \iprod{\cdot}{\cdot}\colon \mathcal{H}\times \mathcal{H}\rightarrow \C $ that satisfies
+  \begin{itemize}
+    \item $ \iprod{x}{x} \geq 0 $, with equality only when $x = 0$;
+    \item $ \iprod{x_1 + \alpha x_2}{y} = \iprod{x_1}{y} + \alpha \iprod{x_2}{y} $;
+    \item $ \iprod{x}{y_1 + \alpha y_2} = \iprod{x}{y_1} + \overline{\alpha} \iprod{x}{y_2} $.
+  \end{itemize}
+  The inner product induces a norm $\norm{x}^2 = \iprod{x}{x}$. If $\mathcal{H}$ is complete with respect to this norm, we call $\mathcal{H}$ a Hilbert space.
 \end{frame}
 \begin{frame}
-  \frametitle{Introducing the Left-Regular Representation, cont'd}
-  The map $s\mapsto \lambda_s$ is a group homomorphism that represents $\Gamma$ as a unitary operator on $\ell_2\left( \Gamma \right)$, known as the \textit{left-regular representation}.\pause\newline
+  \frametitle{Operators on Hilbert Spaces}
+  Bounded linear maps on Hilbert spaces, $T\colon \mathcal{H}\rightarrow \mathcal{H}$, include a special structure called an adjoint that ``plays nicely'' with the inner product:
+  \begin{align*}
+    \iprod{T(x)}{y} &= \iprod{x}{T^{\ast}\left( y \right)}.
+  \end{align*}\pause
+  If $U\colon \mathcal{H}\rightarrow \mathcal{H}$ is such that
+  \begin{align*}
+    U^{\ast}U &= I\\
+    UU^{\ast} &= I,
+  \end{align*}
+  then we call $U$ a \textit{unitary operator}. The space of unitary operators, $\mathcal{U}\left( \mathcal{H} \right)$, is a group under composition.
+\end{frame}
+\begin{frame}
+  \frametitle{Representations}
+  A map $\lambda\colon \Gamma\rightarrow \mathcal{U}\left( \mathcal{H} \right)$ that satisfies
+  \begin{align*}
+    \lambda\left( st \right) &= \lambda(s)\lambda(t)\\
+    \lambda\left( s^{-1} \right) &= \lambda\left( s \right)^{\ast}
+  \end{align*}
+  is called a \textit{unitary representation} of $\Gamma$.\newline
 
-  Unitary representations like the left-regular representation are incredibly useful.
+  All discrete groups are able to be unitarily represented\pause\:by the trivial representation $1_{\Gamma}\colon \Gamma\rightarrow \C$, given by $1_{\Gamma}(s) = 1$.
+\end{frame}
+\begin{frame}
+  \frametitle{The Left-Regular Representation}
+  One special representation is defined by $s\mapsto \lambda_s$, where $\lambda_s(f)(t) = f\left( s^{-1}t \right)$.\newline
+
+  This is known as the \textit{left-regular representation}, and is a very useful 
 \end{frame}
 \begin{frame}
   \frametitle{The Left-Regular Representation and Amenability}
@@ -531,10 +607,27 @@
   \begin{align*}
     \lim_{k\rightarrow\infty}\norm{f_k - \lambda_s\left( f_k \right)}_{\ell_2} &= 0.
   \end{align*}\pause
-  This looks very similar to the approximate mean --- and its equivalence with amenability is proven using approximate means.
+  If $\lambda\colon \Gamma\rightarrow \mathcal{U}\left( \ell_2\left( \Gamma \right) \right)$ admits an almost-invariant vector, then $\Gamma$ is amenable.
 \end{frame}
 \begin{frame}
-  \frametitle{Our First $C^{\ast}$-Algebra}
+  \frametitle{Introduction to $C^{\ast}$-Algebras}
+  \small
+  The space of \textit{all} bounded linear operators, $T\colon \mathcal{H}\rightarrow \mathcal{H}$, written $\B\left( \mathcal{H} \right)$, along with the norm $\norm{\cdot}_{\op}$, is a vector space with the following properties:
+  \begin{itemize}
+    \item $\norm{TS}_{\op}\leq \norm{T}_{\op}\norm{S}_{\op}$;
+    \item $\norm{T^{\ast}}_{\op}= \norm{T}_{\op}$;
+    \item $\norm{T^{\ast}T}_{\op} = \norm{T}^2_{\op}$.
+  \end{itemize}
+  Additionally, the adjoint map satisfies:
+  \begin{itemize}
+    \item $\left( T + \alpha S \right)^{\ast} = T^{\ast} + \overline{\alpha} S^{\ast}$;
+    \item $T^{\ast\ast} = T$;
+    \item $\left( TS \right)^{\ast} = S^{\ast}T^{\ast}$.
+  \end{itemize}
+  These make $\B\left( \mathcal{H} \right)$ a \textit{$C^{\ast}$-algebra}. However, there are other $C^{\ast}$-algebras.
+\end{frame}
+\begin{frame}
+  \frametitle{A Group $C^{\ast}$-Algebra}
   If $\Gamma$ is a group, we may define a vector space, $\C\left[ \Gamma \right]$, by finite sums
   \begin{align*}
     x &= \sum_{t\in\Gamma}x(t)\delta_t,
@@ -548,33 +641,60 @@
   \end{align*}
 \end{frame}
 \begin{frame}
-  \frametitle{Our First $C^{\ast}$-Algebra, cont'd}
-  If we represent $\C\left[ \Gamma \right]$ as an operator on $\ell_2\left( \Gamma \right)$ by mapping $\pi_{\lambda}\left(\delta_t\right) \mapsto \lambda_{t}\in \mathcal{U}\left( \ell_2\left( \Gamma \right) \right)$, extending linearly, and taking
+  \frametitle{A Group $C^{\ast}$-Algebra, cont'd}
+  If we represent $\pi_{\lambda}\colon \C\left[ \Gamma \right]\rightarrow \B\left( \ell_2\left( \Gamma \right) \right)$ by mapping $\delta_t \mapsto \lambda_{t}\in \mathcal{U}\left( \ell_2\left( \Gamma \right) \right)$, extending linearly, and taking
   \begin{align*}
     \norm{x}_{\lambda} &= \norm{\pi_{\lambda}(x)}_{\op},
   \end{align*}
-  we get the \textit{reduced group $C^{\ast}$-algebra} on $\Gamma$ by completing with respect to this norm.
+  we get the \textit{reduced group $C^{\ast}$-algebra} on $\Gamma$ (upon norm completion).
 \end{frame}
 \begin{frame}
-  \frametitle{Nuclear $C^{\ast}$-Algebras}
-  A $C^{\ast}$-algebra $A$ is called \textit{nuclear} if there exist certain maps $\varphi_n\colon A\rightarrow \Mat_{k(n)}\left( \C \right)$ and $\psi_n\colon \Mat_{k(n)}\left( \C \right)\rightarrow A$ such that, for all $a\in A$,
+  \frametitle{Finite-Dimensional Approximations}
+  The $n\times n$ matrices, $\Mat_n\left( \C \right)$, are also $C^{\ast}$-algebras.\newline
+
+  Using a common tactic of finite approximations, we can define a special kind of finite-dimensional approximation for $C^{\ast}$-algebras using matrices.
+\end{frame}
+\begin{frame}
+  \frametitle{Nuclearity}
+  A $C^{\ast}$-algebra, $A$, is called \textit{nuclear} if there exist two sequences of maps, $\varphi_n\colon A\rightarrow \Mat_{k(n)}\left( \C \right)$ and $\psi_n\colon \Mat_{k(n)}\left( \C \right)\rightarrow A$, such that
   \begin{align*}
-    \norm{a - \psi_n\circ\varphi_n(a)} \xrightarrow{n\rightarrow\infty} 0.
-  \end{align*}\pause
-  This is a lot of symbols to say that $a$ can be asymptotically approximated by these special maps.
+    \norm{a - \psi_n\circ\varphi_n\left( a \right)} \xrightarrow{n\rightarrow\infty} 0.
+  \end{align*}
+  \begin{itemize}
+    \item Essentially, any $a\in A$ is ``close enough'' to a certain family of finite-dimensional analogues.
+  \end{itemize}
 \end{frame}
 \begin{frame}
   \frametitle{Nuclearity and Amenability}
-  A group $\Gamma$ is amenable if and only if the reduced group $C^{\ast}$-algebra, $C^{\ast}_{\lambda}\left( \Gamma \right)$, is nuclear.
+  A group $\Gamma$ is amenable if and only if the reduced group $C^{\ast}$-algebra, $C^{\ast}_{\lambda}\left( \Gamma \right)$, is nuclear.\pause
+  \begin{itemize}
+    \item This is also proven using the Følner condition.
+  \end{itemize}
+\end{frame}
+\subsection{Review}%
+\begin{frame}
+  \frametitle{What We've Learned}
+  \small
+  If $\Gamma$ is a discrete group, then $\Gamma$ is amenable if and only if
+  \begin{itemize}
+    \item $\Gamma$ is non-paradoxical (Tarski's Theorem);
+    \item $\Gamma$ admits a finitely additive probability measure, $\mu\colon \Gamma\rightarrow [0,1]$ such that $\mu\left( E \right) = \mu\left( tE \right)$ (existence of means);
+    \item $\ell_{\infty}\left( \Gamma \right)$ admits a state, $\varphi\colon \ell_{\infty}\left( \Gamma \right)\rightarrow \C$, such that $\varphi\left( \lambda_s(f) \right) = \varphi\left( f \right)$ (invariant states);
+    \item there is a sequence of finite subsets, $\left( F_n \right)_n$, such that for all $s\in\Gamma$, $\frac{\left\vert sF_n\cap F_n \right\vert}{\left\vert F_n \right\vert} \rightarrow 1$ (Følner's Theorem);
+    \item there is a sequence $\left( f_k \right)_k\subseteq \ell_1\left( \Gamma \right)$ such that $\norm{f_k - \lambda_s\left(f_k\right)}_{\ell_1}\rightarrow 0$ (Approximate Means);
+    \item the Cayley graph of $\Gamma$ satisfies $\inf\set{\frac{\left\vert N(S) \right\vert}{\left\vert S \right\vert} | S\subseteq V(G),S\text{ finite}} = 0$ (graph amenability);
+    \item there is a sequence $\left( f_k \right)_k\subseteq \ell_2\left( \Gamma \right)$ such that $\norm{f_k - \lambda_s\left(f_k\right)}_{\ell_2} \rightarrow 0$ (almost-invariant vectors);
+    \item the reduced group $C^{\ast}$-algebra, $C^{\ast}_{\lambda}\left( \Gamma \right)$, is nuclear (nuclearity).
+  \end{itemize}
 \end{frame}
 \section{Remarks and Acknowledgments}%
 \begin{frame}
   \frametitle{Final Remarks}
-  Amenability --- and characterizations of amenability --- is still a very active field of study.\pause\newline
+  Amenability is still a very active field of study.\pause\newline
 
   Nuclear $C^{\ast}$-algebras are classified, so active research areas primarily concern whether or not certain classes of $C^{\ast}$-algebras are nuclear (hence classifiable).\pause\newline
 
-  There are a lot of other classifications of amenability that I would have loved to learn more about and discuss here, but unfortunately time, while discrete, is also finite and limited.
+  There are also a lot of other directions that amenability can take the eager student, but I think this was a pretty nice overview of some of the ways that amenability touches all sorts of other fields of math.
 \end{frame}
 \begin{frame}
   \frametitle{Acknowledgments}
@@ -585,7 +705,9 @@
     \item everyone in attendance.
   \end{itemize}
 \end{frame}
-\begin{frame}
-  \frametitle{Questions?}
+\begin{frame}[allowframebreaks]
+  \frametitle{References}
+  \nocite{*}
+  {\tiny \printbibliography}
 \end{frame}
 \end{document}
