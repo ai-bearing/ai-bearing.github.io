@@ -20,12 +20,23 @@
 %\usepackage{cmbright,bbold}
 %\renewcommand{\mathcal}{\mathtt}
 \usepackage{kpfonts}
-\AtBeginSection[]
-{
-  \begin{frame}
-    \frametitle{Contents}
-    \tableofcontents[currentsection]
-  \end{frame}
+
+\AtBeginSection[] {
+    \ifnum\insertsubsectionstartpage=\insertsectionstartpage
+        \relax%
+    \else%
+      \begin{frame}<beamer>
+      \frametitle{Contents} %
+      \tableofcontents[currentsection]  
+      \end{frame}
+  \fi%
+}
+
+\AtBeginSubsection[] {
+    \begin{frame}<beamer>
+    \frametitle{Contents} %
+    \tableofcontents[currentsubsection]  
+    \end{frame}
 }
 \usepackage[backend=biber, style=alphabetic,sorting=nyt]{biblatex}
 \addbibresource{references.bib}
@@ -315,7 +326,7 @@
 \begin{frame}
   \frametitle{Ill-Behaved Groups}
   \begin{itemize}
-    \item The way that our copy of $F(a,b)$ helped ``create'' the Banach--Tarski paradox suggests that $F(a,b)$ is a particularly ill-behaved group.
+    \item The way that our copy of $F(a,b)$ helped ``create'' the Banach--Tarski paradox suggests that $F(a,b)$ is a particularly ill-behaved group.\pause
     \item Let $\nu\colon F(a,b)\rightarrow [0,1]$ be a probability measure --- we will show that $\nu$ \textit{cannot} be translation-invariant (i.e., $\nu\left( tE \right) = \nu\left( E \right)$ for all $t\in F(a,b),E\subseteq F(a,b)$).
   \end{itemize}
 \end{frame}
@@ -340,7 +351,7 @@
   \begin{align*}
     \nu\left( tE \right) &= \nu\left( E \right)
   \end{align*}
-  for all $t\in G$ and $E\subseteq G$.\newline
+  for all $t\in G$ and $E\subseteq G$.\pause\newline
 
   If $G$ admits a mean, we say $G$ is \textit{amenable}.\pause
   \begin{itemize}
@@ -389,6 +400,7 @@
 \section{Equivalent Definitions and Other Criteria}%
 % Følner condition, Cayley graph, talk about intuition behind Følner condition
 % Growth, Functional Analysis, Representations, 
+\subsection{A Taste of Functional Analysis}%
 \begin{frame}
   \frametitle{Why Find Alternative Characterizations?}
   On first glance, it may seem like we're finished, but we're really not.\pause\newline
@@ -403,15 +415,14 @@
     \item operator algebras.
   \end{itemize}
 \end{frame}
-\subsection{A Taste of Functional Analysis}%
 \begin{frame}
   \frametitle{Normed Vector Spaces}
   Functional analysis is, of course, the study of normed vector spaces.\pause\newline
 
-  If $V$ is a vector space, then a \textit{norm} on $V$ is a map $\norm{\cdot}\colon V\rightarrow [0,\infty)$ satisfying:
+  If $V$ is a vector space, then a \textit{norm} on $V$ is a map $\norm{\cdot}\colon V\rightarrow [0,\infty)$ satisfying:\pause
   \begin{itemize}
-    \item definiteness: $\norm{v} \geq 0$, with equality if and only if $v = 0$;
-    \item homogeneity: $\norm{\alpha v} = \left\vert \alpha \right\vert\norm{v}$ for all $\alpha\in \C$;
+    \item definiteness: $\norm{v} \geq 0$, with equality if and only if $v = 0$;\pause
+    \item homogeneity: $\norm{\alpha v} = \left\vert \alpha \right\vert\norm{v}$ for all $\alpha\in \C$;\pause
     \item triangle inequality: $\norm{v + w}\leq \norm{v} + \norm{w}$.
   \end{itemize}
 \end{frame}
@@ -457,9 +468,9 @@
 \end{frame}
 \begin{frame}
   \frametitle{Positive Linear Functionals on $\ell_{\infty}\left( \Gamma \right)$}
-  If $\varphi\colon \ell_{\infty}\left( \Gamma \right)\rightarrow \C$ is a bounded linear functional, we say $\varphi $ is \textit{positive} if, for any $f\in \ell_{\infty}\left( \Gamma \right)$ with $f \geq 0$, $\varphi(f)\geq 0$.
+  If $\varphi\colon \ell_{\infty}\left( \Gamma \right)\rightarrow \C$ is a linear functional, we say $\varphi $ is \textit{positive} if, for any $f\in \ell_{\infty}\left( \Gamma \right)$ with $f \geq 0$, $\varphi(f)\geq 0$.
   \begin{itemize}
-    \item It can be shown that $\varphi$ is positive if and only if $\varphi\left( \1_{\Gamma} \right) = \norm{\varphi}_{\op}$.\pause
+    \item It can be shown that $\varphi$ is positive if and only if $\varphi\left( \1_{\Gamma} \right) = \norm{\varphi}_{\op}$.\pause\:All positive linear functionals are automatically continuous.
     \item If $\varphi\left( \1_{\Gamma} \right) = \norm{\varphi}_{\op} = 1$, then we say $\varphi$ is a \textit{state}.
   \end{itemize}
 \end{frame}
@@ -551,21 +562,21 @@
 %\end{frame}
 \begin{frame}
   \frametitle{Graphs and Amenability}
-  Given a group $\Gamma$ with generating set $S$, we may define a graph --- known as the Cayley graph --- with vertices consisting of group elements and edges defined by ``walking'' along the generators.
+  Given a group $\Gamma$ with generating set $S$, we may define a graph --- known as the Cayley graph --- with vertices consisting of group elements and edges defined by ``walking'' along the generators.\pause
   \begin{center}
-    \includegraphics[scale=0.075]{images/cayley_graph.png}
+    \includegraphics[scale=0.06]{images/cayley_graph.png}
   \end{center}
 \end{frame}
 \begin{frame}
   \frametitle{Graphs and Amenability, cont'd}
-  If $S\subseteq V(G)$ is a subset of vertices of a graph $G$, the \textit{neighbor vertex set}, $N(S)$, is the set of vertices in $G$ that are adjacent to $S$ (not including elements of $S$).\newline
+  If $S\subseteq V(G)$ is a subset of vertices of a graph $G$, the \textit{neighbor vertex set}, $N(S)$, is the set of vertices in $G$ that are adjacent to $S$ (not including elements of $S$).\pause\newline
 
   If $G$ is the Cayley graph of $\Gamma$, then $\Gamma$ is amenable if and only if
   \begin{align*}
     \inf\set{\frac{\left\vert N(S) \right\vert}{\left\vert S \right\vert} | S\subseteq V(G),\left\vert S \right\vert\text{ finite}} &= 0.
-  \end{align*}
+  \end{align*}\pause
   \begin{itemize}
-    \item Essentially, the Cayley graph doesn't ``get too big'' ``too fast.''
+    \item Essentially, the Cayley graph doesn't ``get too big'' ``too fast.''\pause
     \item This is proven with the Følner condition.
   \end{itemize}
 \end{frame}
@@ -608,7 +619,9 @@
 \end{frame}
 \begin{frame}
   \frametitle{The Left-Regular Representation}
-  As it turns out, the map $\lambda_s(f)(t) = f\left( s^{-1}t \right)$ is a unitary operator on $\ell_2\left( \Gamma \right)$, where $\lambda_s^{\ast} = \lambda_{s^{-1}}$.\pause\: It can also be shown that $\lambda_s\lambda_t = \lambda_{st}$, meaning that the map $s\mapsto \lambda_s$ is a unitary representation.\pause\newline
+  As it turns out, the map $\lambda_s(f)(t) = f\left( s^{-1}t \right)$ is a unitary operator on $\ell_2\left( \Gamma \right)$, where $\lambda_s^{\ast} = \lambda_{s^{-1}}$.\pause\newline
+
+  It can also be shown that $\lambda_s\lambda_t = \lambda_{st}$, meaning that the map $s\mapsto \lambda_s$ is a unitary representation.\pause\newline
 
   The map $\lambda\colon \Gamma\rightarrow \mathcal{U}\left( \ell_2\left( \Gamma \right) \right)$, given by $s\mapsto \lambda_s$ is a very special representation, known as the \textit{left-regular representation}.\pause\newline
 
@@ -663,9 +676,9 @@
 \end{frame}
 \begin{frame}
   \frametitle{Finite-Dimensional Approximations}
-  The $n\times n$ matrices, $\Mat_n\left( \C \right)$, are also $C^{\ast}$-algebras.\pause\:In fact, they're a very special kind of $C^{\ast}$-algebra, so we care about whether other $C^{\ast}$-algebras ``play well'' with matrices.\pause\newline
+  The $n\times n$ matrices, $\Mat_n\left( \C \right)$, are also $C^{\ast}$-algebras.\pause\:In fact, they're a very special kind of $C^{\ast}$-algebra --- we care a lot about whether other $C^{\ast}$-algebras can be ``sufficiently'' approximated by matrices.\pause\newline
 
-  There is a special kind of finite-dimensional approximation for $C^{\ast}$-algebras\pause\:--- which we can use yet again to establish amenability.
+  We can use these sufficient approximations to establish amenability.
 \end{frame}
 \begin{frame}
   \frametitle{Nuclearity}
