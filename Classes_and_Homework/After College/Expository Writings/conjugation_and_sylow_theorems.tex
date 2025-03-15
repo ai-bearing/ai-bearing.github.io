@@ -1,0 +1,106 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright,sfmath,bbold}
+%\renewcommand{\mathcal}{\mathtt}
+
+%Euler:
+%\usepackage{newpxtext,eulerpx,eucal,eufrak}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+%\renewcommand*{\hbar}{\hslash}
+
+%\renewcommand{\mathbb}{\mathds}
+\usepackage{homework}
+\usepackage{exposition}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Conjugation and the Sylow Theorems}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{abstract}
+  \noindent We discuss the nuances of the conjugation action in groups, and use it to prove the Sylow theorems. We then use the Sylow theorems to classify the nature of groups of a particular order.
+\end{abstract}
+\section{Introduction to Conjugation}%
+Every transitive left-action of a group on a set $S$ is, up to isomorphism, left-multiplication on the set of left-cosets of $G/\stab_G(a)$, where $\stab_G(a)$ denotes the stabilizer subgroup of $a\in S$. Furthermore, the number of elements of a finite orbit of $a\in O_a$ is the index of $\Stab_G(a)$ --- this is the much celebrated \textit{orbit-stabilizer theorem}.\newline
+
+Note that from the orbit-stabilizer theorem, we can partition $S$ into a formula involving the conjugacy classes. Since every element of $s$ is either in an orbit or is in the set
+\begin{align*}
+  Z\coloneq \set{a\in S | g\cdot a = a\text{ for all $g\in G$}},
+\end{align*}
+we calculate
+\begin{align*}
+  \left\vert S \right\vert &= \left\vert Z \right\vert + \sum_{a\in A} \left\vert O_a \right\vert\\
+                           &= \left\vert Z \right\vert + \sum_{a\in A} \left[ G:\Stab_G(a) \right],
+\end{align*}
+where $A$ is a system of representatives for the orbits. This is \textsl{a} class formula for the action of $G$ on $S$.\newline
+
+The power of this class formula is that when $G$ is finite, $\left[ G:\Stab_G(a) \right]$ always divides $G$, which is a very strong constraint when we know something about $\left\vert G \right\vert$.
+\begin{proposition}
+  Let $\left\vert G \right\vert = p^{n}$ be a group that acts on a finite set $S$, and let $Z$ be the set of fixed points for the action. Then, $\left\vert Z \right\vert\equiv \left\vert S \right\vert$ modulo $p$.
+\end{proposition}
+\begin{proof}
+  Since each summand of the form $\left[ G:\Stab_G(a) \right]$ is a number larger than $1$ and a power of $p$, each $\left[ G:\Stab_G(a) \right]$ is congruent to $0$ mod $p$.
+\end{proof}
+\begin{definition}[Conjugation Action]
+  Let $G$ be a group. The \textit{conjugation action} of $G$ on itself is defined by $\rho\colon G\times G \rightarrow G$, where
+  \begin{align*}
+    \rho\left( g,a \right) &= gag^{-1}.
+  \end{align*}
+  This map is equal to a particular group homomorphism $\sigma\colon G\rightarrow \sym(G)$.
+\end{definition}
+\begin{definition}[Center]
+  The \textit{center} of $G$, denoted $Z(G)$, is the subgroup $\ker\left( \sigma \right)\subseteq G$. Concretely, it is
+  \begin{align*}
+    Z(G)&= \set{g\in G | ga = ag\text{ for all $a\in G$}}.
+  \end{align*}
+\end{definition}
+Note that $Z(G)$ is always a normal subgroup, and all elements of $Z(G)$ commute with each other. Furthermore, a group $G$ is abelian if and only if $Z(G) = G$.
+\begin{lemma}
+  Let $G$ be a finite group, and suppose $G/Z(G)$ is cyclic. Then, $G$ is commutative.
+\end{lemma}
+\begin{proof}
+  Write $Z\coloneq Z(G)$, and suppose $G/Z$ is cyclic. Then, there is some $g\in G$ such that $\left\langle gZ \right\rangle = G/Z$. For all $a\in G$, there is some integer $r$ such that
+  \begin{align*}
+    aZ &= g^{r}Z,
+  \end{align*}
+  meaning there exists some $z\in Z$ such that $a = g^{r}z$. Similarly, we write $b = g^{s}w$ for some $w\in Z$ and integer $s$. However, this means
+  \begin{align*}
+    ab &= \left( g^{r}z \right)\left( g^{s}w \right)\\
+       &= g^{r+s}zw\\
+       &= \left( g^{s}w \right)\left( g^{r}z \right)\\
+       &= ba,
+  \end{align*}
+  where we use the fact that $z$ and $w$ commute with every element of $G$.
+\end{proof}
+\begin{definition}
+  Let $a\in G$. The \textit{centralizer} of $a$, denoted $Z_G(a)$, is the stabilizer of $a$ under conjugation. Concretely,
+  \begin{align*}
+    Z_G(a) &= \set{g\in G | ga = ag},
+  \end{align*}
+  or the set of elements of $G$ that commute with $a$.\newline
+
+  Note that $Z(G)\subseteq Z_G(a)$ for all $a\in G$, and that
+  \begin{align*}
+    Z(G) &= \bigcap_{a\in G} Z_G(a).
+  \end{align*}
+\end{definition}
+\begin{definition}
+  The \textit{conjugacy class} of $a\in G$ is the orbit $\left[ a \right]$ of $a$ under conjugation.
+\end{definition}
+\section{The Class Equation}%
+What we call \textsl{the} class equation is generally the class formula for conjugation.
+\begin{definition}
+  Let $G$ be a finite group. Then,
+  \begin{align*}
+    \left\vert G \right\vert &= \left\vert Z(G) \right\vert + \sum_{a\in A} \left[ G:Z_G(a) \right],
+  \end{align*}
+  where $A$ is a family of representatives of conjugacy classes in $G$.
+\end{definition}
+\section{The Sylow Theorems}%
+\section{Applications of the Sylow Theorems}%
+\end{document}
