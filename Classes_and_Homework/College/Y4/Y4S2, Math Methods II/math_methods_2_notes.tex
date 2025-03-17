@@ -1635,4 +1635,102 @@ We can find the residue in a variety of ways.
     \sigma_{ij} &= \sum_{k,l}Y_{ijkl}\ve_{kl},
   \end{align*}
   where $Y_{ijkl}$ is the elasticity tensor.
+  \subsubsection{Equivalence Classes of Rotations}%
+  A tensor is an indexed object, that transforms as
+  \begin{align*}
+    T_{i'j'} &= \sum_{i,j}R_{i',i}R_{j' j}T_{ij},
+  \end{align*}
+  where the number of rotations depends on the rank of the tensor.\footnote{For those more mathematically inclined, they're basically linear transformations on tensor products of vector spaces. Each index adds another vector to the tensor product.}
+  \begin{example}[Moment of Inertia Tensor]
+    The value of the moment of inertia depends on the choice of axes, but the moment of inertia is a physical quantity unto itself. We define
+    \begin{align*}
+      I_{k\ell} &= \int_{V}^{} \left( r^2\delta_{k\ell}r_kr_{\ell} \right)\rho\left( \mathbf{r} \right)\:d\tau.
+    \end{align*}
+    This is a symmetric tensor (symmetric matrix). Recalling that $r^2$ is a scalar, we have
+    \begin{align*}
+      I_{i'j'} &= \sum_{k,\ell}R_{i' k}R_{j' \ell}I_{k\ell}\\
+               &= \sum_{k,\ell}R_{i' k}R_{j' \ell} \left( \int_{V}^{} \left( r^2\delta_{k\ell}-r_kr_{\ell} \right)\rho\left( \mathbf{r} \right)\:d\tau \right)\\
+               &= \int_{V}^{} \left( \sum_{k,\ell}R_{i' k}R_{j' \ell}\delta_{k\ell}r^2 - \left( \sum_{k}R_{i' k}r_k \right)\left( \sum_{\ell}R_{j' \ell}r_{\ell} \right) \right)\rho\left( \mathbf{r} \right)\:d\tau\\
+               &= \int_{V}^{} \left( \delta_{i' j'}r^2 - r_{i'}r_{j'} \right)\rho\left( \mathbf{r} \right)\:d\tau.
+    \end{align*}
+    Thus, the moment of inertia is a covariant expression.
+  \end{example}
+  In a rank $r$ tensor over a vector space $V$, there are $N^{r}$ components.\footnote{This comes from the fact that that there are $N^{r}$ dimensions in a $r$-fold tensor product of vector spaces with dimension $N$.}\newline
+
+  Now we consider derivative operators. A Taylor expansion can be written as
+  \begin{align*}
+    f\left( \mathbf{r} + \mathbf{a} \right) &= \left( 1 + \sum_{i}a_i \pd{}{x_i} + \frac{1}{2!}\sum_{i,j}a_ia_j\pd{}{x_i}\pd{}{x_j} + \cdots \right) f\left( \mathbf{r} \right).
+  \end{align*}
+  This gives a tensor decomposition, where $\sum_{i}a_i \pd{}{x_i}$ is a rank $1$ tensor, and $\sum_{i,j}a_ia_j \pd{}{x_i}\pd{}{x_j}$ is a rank $2$ tensor.\newline
+
+  To illustrate covariance, we consider the case of one dimension:
+  \begin{align*}
+    f\left( x + a \right) &= \left( 1 + a \diff{}{x} + \frac{a^2}{2!}\diff{^2}{x^2} \right)f(x)\\
+                          &= \sum_{n=0}^{\infty}\frac{1}{n!}\left( a \diff{}{x} \right)^{n} f(x).
+  \end{align*}
+  To generalize this to higher dimensions, we can write the operator 
+  \begin{align*}
+    a \diff{}{x} &= \left( a\hat{i} \right)\cdot \left( \hat{i} \diff{}{x} \right)\\
+    &= \mathbf{a}\cdot \nabla.
+  \end{align*}
+  Thus, using covariance of the derivative, we have
+  \begin{align*}
+    f\left( \mathbf{r} + \mathbf{a} \right) &= \sum_{n=0}^{\infty}\frac{1}{n!}\left( \mathbf{a}\cdot \nabla \right)^n f\left( \mathbf{r} \right).
+  \end{align*}
+  \subsubsection{Tensors and Pseudotensors}%
+  We might have lied earlier\footnote{Common occurrence in physics} when we said that tensors transform through rotations:
+  \begin{align*}
+    T_{i'j'} &= \sum_{k,\ell} R_{i' k}R_{j' \ell}T_{k \ell}.
+  \end{align*}
+  We also need to care about parity. For an illustrative example, if we have a parity flip, we have $\mathbf{r}\xmapsto{p} -\mathbf{r}$ for position, $\mathbf{v}\xmapsto{p}-\mathbf{v}$ for velocity, but we have $\mathbf{\omega}\xmapsto{p} \mathbf{\omega}$ for angular velocity.\newline
+
+  We call vectors that have a sign flip under parity change \textit{polar vectors}, but vectors that do not have a sign flip under parity change are called \textit{pseudovectors} or \textit{axial vectors}.\newline
+
+  As it turns out, pseudovectors are generally brought about through a cross product between two axial vectors (in three dimensions anyway):
+  \begin{align*}
+    \mathbf{A}\times \mathbf{B} &\xmapsto{p} \left( -\mathbf{A} \right)\times \left( -\mathbf{B} \right)\\
+                                &= \mathbf{A}\times \mathbf{B}.
+  \end{align*}
+  Note that scalars generally don't change under parity transformation, but expressions of the form $\mathbf{C}\cdot \left( \mathbf{A}\times \mathbf{B} \right)$ are \textit{pseudoscalars} that do change under parity transformation.\newline
+
+  All of these are artifacts of the Levi-Civita symbol, $\epsilon_{ijk}$. Note that we have
+  \begin{align*}
+    \epsilon_{ijk} = \sum_{\ell,m,n} R_{i,\ell}R_{j,m}R_{k,n}\epsilon_{\ell mn},
+  \end{align*}
+  which yields the determinant of $R$ if $i,j,k$ are in cyclic order and the negative determinant of $R$ if $i,j,k$ are in anticyclic order. To deal with this sign issue, we need a factor of $\det(R)$,\footnote{Remember that $\det(R) = \pm 1$.} giving
+  \begin{align*}
+    \epsilon_{i' j' k'} &= \det(R) &= \sum_{\ell,m,n} R_{i' \ell}R_{j' m}R_{k' n}\epsilon_{\ell m n}.
+  \end{align*}
+  \subsubsection{Invariants}%
+  The components of a tensor are frame-dependent, but an \textit{invariant} is a scalar combination of components that remains the same under a rotation. For instance, if $\mathbf{v}$ is vector, then $\sum_{i} v_iv_i = \norm{\mathbf{v}}$ is invariant under rotations.\newline
+
+  If we have a rank $2$ tensor, we have
+  \begin{align*}
+    \sum_{i,j} T_{ij}\delta_{ij} &= \sum_{i}T_{ii}\\
+                                 &= \tr\left( T \right).
+  \end{align*}
+  We may also collapse with the Levi-Civita symbol, yielding another invariant of $\frac{1}{3!}\det\left( T \right)$.\newline
+
+  As it turns out, a rank $2$ tensor in $N$ dimensions has $N$ independent invariants.\newline
+
+  However, you may ask: are we actually measuring the invariance of $T$, or are we measuring the invariance of $\delta_{ij}$ of $\epsilon_{ijk}$. Taking rotations, we have
+  \begin{align*}
+    \sum_{i,j} R_{k' i}R_{\ell' j}\delta_{ij} &= \sum_{i}R_{k'i}R_{\ell' i}\\
+                                              &= \sum_{i}R_{k' i}R_{i \ell'}^{T}\\
+                                              &= \delta_{k' \ell'},
+  \end{align*}
+  meaning that the identity matrix is invariant regardless of coordinate system. This is known as an \textit{invariant tensor}, or an isotropic tensor.
+  \begin{example}
+    Any $\R^3$ vector can be rewritten as a second-rank antisymmetric tensor by taking
+    \begin{align*}
+      T_{ij} &= \sum_{k}\epsilon_{ijk}B_k\\
+             &= \begin{pmatrix}0 & B_3 & -B_2 \\ -B_3 & 0 & B_1\\B_2 & -B_1 & 0\end{pmatrix}.
+    \end{align*}
+    Inverting, we get
+    \begin{align*}
+      B_i &= \frac{1}{2}\sum_{j,k}\epsilon_{ijk}T_{jk}.
+    \end{align*}
+    Thus, $\doublevec{T}$ is an equivalent way to package the components of $B$ --- i.e., that they are duals of each other.
+  \end{example}
+  
 \end{document}
