@@ -12,6 +12,7 @@
 %\renewcommand{\mathbb}{\mathds}
 \usepackage{homework}
 \usepackage{exposition}
+\usepackage{microtype}
 
 \pagestyle{fancy} %better headers
 \fancyhf{}
@@ -99,8 +100,151 @@ What we call \textsl{the} class equation is generally the class formula for conj
   \begin{align*}
     \left\vert G \right\vert &= \left\vert Z(G) \right\vert + \sum_{a\in A} \left[ G:Z_G(a) \right],
   \end{align*}
-  where $A$ is a family of representatives of conjugacy classes in $G$.
+  where $A$ is a family of representatives of conjugacy classes in $G$. This is known as the \textit{class equation} for the group $G$.
 \end{definition}
+We are very easily able to apply the class equation to prove certain properties about $p$-groups.
+\begin{proposition}
+  Let $G$ be a nontrivial $p$-group. Then, $G$ has a nontrivial center.
+\end{proposition}
+\begin{proof}
+  Since $\left\vert Z(G) \right\vert \equiv \left\vert G \right\vert$ modulo $p$, and $\left\vert G \right\vert > 1$ is a power of $p$, we have $\left\vert Z(G) \right\vert$ is a multiple of $p$. Since $e_G\in Z(G)$, we know that $\left\vert Z(G) \right\vert \geq p$.
+\end{proof}
+\begin{exercise}
+  Let $p,q$ be prime numbers, and let $G$ be a group of order $pq$. Prove that either $G$ is commutative or the center of $G$ is trivial.\newline
+
+  Conclude that every group of order $p^2$ is commutative.
+\end{exercise}
+\begin{solution}
+  From the class equation, we know that
+  \begin{align*}
+    pq &= \left\vert Z(G) \right\vert + \sum_{a\in A} \left[ G:Z_G(a) \right].
+  \end{align*}
+  If $\left\vert Z(G) \right\vert  = pq$, then $G$ is abelian.\newline
+
+  Suppose toward contradiction that, without loss of generality, $\left\vert Z(G) \right\vert = p$. Then, $\left\vert G/Z(G) \right\vert = q$, meaning $G/Z(G)$ is cyclic, so $G$ is abelian, so $Z(G) = G$. $\bot$\newline
+
+  Since, in any $p$-group, $\left\vert Z(G) \right\vert \geq p$, we must have that $Z(G) = G$, so $G$ is abelian.
+\end{solution}
+\begin{example}
+  Let $G$ be a group of order $6$. What are the possibilities for its class formula?\newline
+
+  In general, if $G$ is commutative, the class formula doesn't say much --- in this case, it says $6 = 6$.\newline
+
+  If $G$ is not commutative then its center is trivial ($ 6 = 2\times 3 $), so we have $6 = 1 + \cdots$. Specifically, the $\cdots$ refers to the sizes of the conjugacy classes, which must be smaller than $6$, greater than $1$, and divide $6$. Thus, we have
+  \begin{align*}
+    6 &= 1 + 2 + 3
+  \end{align*}
+  as the only possible class equation for a noncommutative group with six elements.
+\end{example}
+Note that normal subgroups are unions of conjugacy classes.\footnote{This is used to show that $A_5$ is simple, for those of us studying for qualifiers.} If $H$ is a normal subgroup, and $a\in H$ with $b = gag^{-1}$ conjugate to $a$, we must have $b\in gHg^{-1} = H$.\newline
+
+Furthermore, every subgroup must have the identity and its size must divide the order of the group; therefore, a noncommutative group of order $6$ cannot have any subgroup of order $2$, since $2$ cannot be written as a sum of orders of conjugacy classes including the center.
+\begin{definition}
+  Let $A\subseteq G$ be a subset, $g\in G$ an element. The \textit{conjugate} of $A$ is the subset $gAg^{-1}$; the map $a\mapsto gag^{-1}$ is a bijection between $A$ and $gAg^{-1}$.
+\end{definition}
+\begin{definition}
+  Let $A\subseteq G$ be a subset. The \textit{normalizer} $N_G(A)$ is its stabilizer under conjugation. The \textit{centralizer} of $A$ is the subgroup $Z_G(A)\subseteq N_G(A)$ that fixes each element of $A$.
+\end{definition}
+Therefore, $g\in N_G(A)$ if and only if $gAg^{-1} = A$, and $g\in Z_G(A)$ if and only if $gag^{-1} = a$ for all $a\in A$. If $A = \set{a}$, then $N_G(A) = Z_G(A) = Z_G(a)$. However, in general, $Z_G(A)\subsetneq N_G(A)$.\newline
+
+If $H$ is a subgroup of $G$, then every conjugate $gHg^{-1}$ of $H$ is also a subgroup of $G$; all conjugate subgroups have the same order.
+\begin{lemma}
+  Let $H\subseteq G$ be a group. Then, the number of subgroups conjugate to $H$ equals the index $\left[ G:N_G(H) \right]$ of the normalizer of $H$ in $G$.
+\end{lemma}
+\begin{proof}
+  Considering the group's self-action of conjugation, this follows from the orbit-stabilizer theorem.
+\end{proof}
+\begin{corollary}
+  If $\left[ G:H \right]$ is finite, then the number of subgroups conjugate to $H$ is finite and divides $\left[ G:H \right]$.
+\end{corollary}
+\begin{proof}
+  \begin{align*}
+    \left[ G:H \right] &= \left[ G:N_G(H) \right]\left[ N_G(H):H \right].
+  \end{align*}
+\end{proof}
+A useful fact is that if $H$ and $K$ are subgroups of $G$ such that $H\subseteq N_G(K)$ --- i.e., that $gKg^{-1} = K$ for all $g\in H$ --- then conjugation by $g\in H$ gives an automorphism of $K$. Thus, there is a set function
+\begin{align*}
+  \gamma\colon H\rightarrow \aut\left( K \right).
+\end{align*}
+\begin{exercise}
+  Let $H$ and $K$ be subgroups of $G$ with $H\subseteq N_G(K)$. Verify that the function $\gamma\colon H\rightarrow \aut(K)$ defined by conjugation is a homomorphism of groups, and $\ker\left( \gamma \right) = H\cap Z_G(K)$, where $Z_G(K)$ is the centralizer of $K$.
+\end{exercise}
+\begin{solution}
+  Let $a,b\in H$. Then,
+  \begin{align*}
+    \gamma\left( ab^{-1} \right) &= \left( ab^{-1} \right) K \left( ab^{-1} \right)^{-1}\\
+                                 &= ab^{-1} K ba^{-1}\\
+                                 &= \left( aKa^{-1} \right) \left( b^{-1}Kb \right)\\
+                                 &= \left( aKa^{-1} \right)\left( bKb^{-1} \right)^{-1}\\
+                                 &= \gamma\left( a \right)\gamma\left( b \right)^{-1}.
+  \end{align*}
+  The kernel of $\gamma$ consists of all those elements of $H$ that map to $\id\colon K\rightarrow K$ --- i.e., those that map to the centralizer of $K$. Therefore, $\ker\left( \gamma \right)$ consists of $H\cap Z_G(K)$.
+\end{solution}
 \section{The Sylow Theorems}%
+The Sylow Theorems are a collection of theorems that concern $p$-subgroups of a certain finite group $G$. The first of the theorems says that $G$ contains $p$-groups of all sizes allowed by Lagrange's theorem.
+\begin{theorem}[Cauchy's Theorem]
+  Let $G$ be a finite group, and let $p$ be a prime divisor of $\left\vert G \right\vert$. Then, $G$ contains an element of order $p$.
+\end{theorem}
+We can show the abelian case as an exercise.
+\begin{exercise}
+  Suppose $G$ is a finite abelian group, and let $p$ be a prime divisor of $\left\vert G \right\vert$. Prove there exists an element of order $p$.
+\end{exercise}
+\begin{solution}
+  Let $g\in G$. Then, $\left\langle g \right\rangle\subseteq G$ is a cyclic subgroup, meaning that it is of order $k$, where $k$ divides $\left\vert G \right\vert$. Assuming $k\geq 2$, we may write $k = p_1^{e_1}\cdots p_n^{e_n}$, where $p_i$ are prime. Then, for some prime $q $ such that $q$ divides $ k$, we may take the prime subgroup $\left\langle h \right\rangle \coloneq \left\langle g^{k/q} \right\rangle$.\newline
+
+  Now, if $q = p$, we are done; else, we may take $G/\left\langle h \right\rangle$, which has order $\left\vert G \right\vert/q$, and since $p\neq q$, we may commence with the same process on $G/\left\langle h \right\rangle$.
+\end{solution}
+However, we can also show the general case.
+\begin{proof}
+  Let $S$ be the set of ordered $p$-tuples of elements of $G$, $\left( a_1,\dots,a_p \right)$, such that $a_1\cdots a_p = e$. Then, $\left\vert S \right\vert = \left\vert G \right\vert^{p-1}$, as we may choose $a_1,\dots,a_{p-1}$ arbitrarily, and select $a_p$ to be the inverse of $a_1\cdots a_{p-1}$.\newline
+
+  Since $p$ divides the order of $S$, it divides the order of $G$. Note that if $a_1,\dots,a_p = e$, then
+  \begin{align*}
+    a_2\cdots a_pa_1 = e,
+  \end{align*}
+  as $a_1$ is a left-inverse to $a_2\cdots a_p$, so it is a right inverse. Therefore, we may act $\Z/p\Z$ on $S$ by taking $\left[ m \right]$ to act on $\left( a_1,\dots,a_p \right)$ yielding $\left( a_{m+1},\dots, a_p,a_1,\dots,a_m \right)$; this yields an element of $S$.\newline
+
+  Thus, by the general class equation, we have $\left\vert Z \right\vert \equiv \left\vert S \right\vert \equiv 0$ modulo $p$, where $Z$ is the set of fixed points of the action.\newline
+
+  In particular, fixed points are $p$-tuples of the form $\left( a,\dots,a \right)$; note that $Z\neq \emptyset$, since $\left( e,\dots,e \right)\in Z$. Thus, there is some element in $Z$ of the form $\left( a,\dots,a \right)$ with $a\neq e$.\newline
+
+  In particular, this means there is $a\in G$ with $a\neq e$ and $a^p = e$.
+\end{proof}
+\begin{corollary}
+  If $p$ is a prime divisor of $\left\vert G \right\vert$, and $N$ is the number of cyclic subgroups of order $p$, then $N\equiv 1$ mod $p$.
+\end{corollary}
+\begin{proof}
+  Since $\left\vert Z \right\vert$ in the proof of Cauchy's theorem is congruent to $0$ modulo $p$, we must have $\left\vert Z \right\vert = mp$ for some $m \geq 1$. Now, since $e_G\in Z$ but $e_G$ is not of order $p$, we must have $mp - 1$ elements of order $p$ in $G$.\newline
+
+  Since it takes $p-1$ elements of order $p$ to yield a cyclic subgroup of order $p$, we thus have $N = \frac{mp-1}{p-1}\equiv \frac{-1}{-1} = 1$ mod $p$.
+\end{proof}
+\begin{exercise}
+  Let $G$ be a group. A subgroup $H$ of $G$ is called \textit{characteristic} if $\varphi\left( H \right) \subseteq H$ for all automorphisms $\varphi$ of $G$.
+  \begin{enumerate}[(a)]
+    \item Prove that characteristic subgroups are normal.
+    \item Let $H\subseteq K \subseteq G$, with $H$ characteristic in $K$ and $K$ normal in $G$. Prove that $H$ is normal in $G$.
+    \item Let $G,K$ be groups, and suppose $G$ contains a single subgroup $H$ isomorphic to $K$. Prove that $H$ is normal in $G$.
+    \item Let $K$ be a normal subgroup of a finite  group $G$, and assume $\left\vert K \right\vert$ and $\left\vert G/K \right\vert$ are relatively prime. Prove that $K$ is characteristic in $G$.
+  \end{enumerate}
+\end{exercise}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Since conjugation is an automorphism, we have $gHg^{-1}\subseteq H$ for each $g\in G$, meaning $H$ is normal.
+    \item Since $K$ is normal in $G$, $K$ is preserved under conjugation by elements of $G$, so conjugation by elements of $G$ is an automorphism of $K$. Thus $H$ is preserved by conjugation of elements in $G$, so $H$ is normal in $G$.
+    \item Let $\varphi\colon G\rightarrow K$ be a surjective homomorphism such that $\varphi(H)\cong K$. Then, 
+      \begin{align*}
+        \varphi\left( gHg^{-1} \right) &= \varphi\left( g \right)\varphi\left( H \right)\varphi\left( g \right)^{-1}\\
+                                       &= K,
+      \end{align*}
+      so $gHg^{-1} = H$, meaning $H$ is normal.
+    \item Let $\left\vert K \right\vert$ and $\left\vert G/K \right\vert$ be relatively prime.
+  \end{enumerate}
+\end{solution}
+
+Using part (c) of the exercise, we can see that if there is only one cyclic subgroup $H$ of order $p$, then that subgroup must be normal.
+\begin{definition}
+  A group $G$ is called \textit{simple} if the only normal subgroups of $G$ are $\set{e}$ and $G$.
+\end{definition}
+
 \section{Applications of the Sylow Theorems}%
 \end{document}

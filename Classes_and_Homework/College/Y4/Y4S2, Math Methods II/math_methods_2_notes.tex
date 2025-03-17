@@ -14,6 +14,7 @@
 \DeclareMathOperator{\Arctan}{Arctan}
 \DeclareMathOperator{\Res}{Res}
 \DeclareMathOperator{\res}{Res}
+\newcommand{\doublevec}[1]{\overset{\scriptsize \leftrightarrow}{#1}}
 
 %\usepackage{homework}
 
@@ -1558,4 +1559,80 @@ We can find the residue in a variety of ways.
                            &= \frac{\Theta\left( t \right)}{4\pi} \int_{-\infty}^{\infty} \frac{1}{E_p}\left( e^{-i\left( E_p t - px \right)} - e^{i\left( E_p t - p_x \right)} \right)\:dp,
   \end{align*}
   where we were allowed to flip the sign of $p$ because the integral is taken over all space.
+  \section{Tensors}%
+  \subsection{Cartesian Tensors}%
+  Recall from intro mechanics that when we have a block on a ramp, we may choose two different orientations of our axes. However, despite our choice of basis, we still get the same result after applying Newton's second law --- in that sense, the vectors represent something physical separate from their components. Using a rotation matrix, we are able to convert the equations
+  \begin{align*}
+    F_x &= ma_x\\
+    F_y &= ma_y,
+  \end{align*}
+  into
+  \begin{align*}
+    F_x' &= ma_x'\\
+    F_y' &= ma_y'.
+  \end{align*}
+  This means that an expression like $\mathbf{F} = m\mathbf{a}$ is a \textit{covariant} expression; it is the same equation regardless of reference frame.
+  \subsubsection{Stress and Strain}%
+  If we have a continuous body, the stress is defined as the internal force per unit area exerted at an imaginary surface within the body. In other words, stress times area equals force.
+  \begin{align*}
+    dF_i &= \sum_{j}\sigma_{ij}da_j,
+  \end{align*}
+  where $\sigma_{ij}$ denotes the stress \textit{tensor}. The reason why it is a two-indexed object rather than a one-indexed object is because there are two different types of stress: pressure and shear.\newline
+
+  Pressure is the normal component to the surface, while shear is the tangent component, so $\sigma_{ij}$ denotes the two components; then, the diagonal components denote the pressure and the off-diagonal components the shear.\newline
+
+  Whereas stress describes the internal forces of an object, strain describes deformations due to external forces.\newline
+
+  For instance, in a rod of length $L$ and cross section $A$, if we strain it to a length of $L + \Delta L$, the relationship between induced stress $\sigma = \frac{F}{A}$ normal to surface and strain $\ve = \Delta L + L$ is given by Hooke's law:
+  \begin{align*}
+    F &= k\Delta L\\
+    \sigma &= Y\ve,
+  \end{align*}
+  where $Y = \frac{kL}{A}$ is the elastic modulus of the material. Now, since $\Delta L$ can be negative, this equation describes both tensile stress and strain and compressive stress and strain.\newline
+
+  Now, if stress is a tensor, then so is strain; moving beyond one dimension, we define a vector field $\mathbf{u}\left( \mathbf{r} \right)$ which gives the magnitude and direction of a body's displacement at position $\mathbf{r}$. To understand internal stress, we need to focus not on the rigid body motion, but only on the relative displacement of points within the body. This means we need to consider
+  \begin{align*}
+    u_i\left( \mathbf{r} + d\mathbf{r} \right) &= u_i\left( \mathbf{r} \right) + \nabla u_i \cdot d\mathbf{r} + \cdots,
+  \end{align*}
+  where we allow $\left\vert \nabla u_i \right\vert \ll 1$, meaning we take the first order expansion. This gives
+  \begin{align*}
+    \mathbf{u}\left( \mathbf{r} + d\mathbf{r} \right) &= \mathbf{u}\left( \mathbf{r} \right) + \sum_{j} \delta_j \mathbf{u}dr_j,
+  \end{align*}
+  where
+  \begin{align*}
+    \nabla \mathbf{u} &= \begin{pmatrix} \pd{u_x}{x} & \pd{u_x}{y} & \pd{u_x}{z} \\ \pd{u_y}{x} & \pd{u_y}{y} & \pd{u_y}{z} \\ \pd{u_z}{x} & \pd{u_z}{y} & \pd{u_z}{z}\end{pmatrix}.
+  \end{align*}
+  This is where strain resides. Specifically, we may decompose $\nabla \mathbf{u}$ into symmetric and antisymmetric components,
+  \begin{align*}
+    \nabla \mathbf{u} &= \doublevec{\ve} + \doublevec{\phi},
+  \end{align*}
+  where
+  \begin{align*}
+    \ve_{ij} &= \frac{1}{2}\left( \partial_ju_i + \partial_iu_j \right)\\
+    \phi_{ij} &= \frac{1}{2}\left( \partial_iu_j - \partial_ju_i \right).
+  \end{align*}
+  The symmetric/antisymmetric decomposition is covariant, so we may express
+  \begin{align*}
+    \mathbf{u}\left( \mathbf{r} + d\mathbf{r} \right) &= \mathbf{u}\left( \mathbf{r} \right) + \doublevec{\ve}\cdot d\mathbf{r} + \doublevec{\phi}\cdot d\mathbf{r}.
+  \end{align*}
+  Turning our attention to $\doublevec{\phi}$, we may use the Levi-Civita symbol to write
+  \begin{align*}
+    \phi_{ij} &= -\sum_{k} \epsilon_{ijk}\varphi_k,
+  \end{align*}
+  and take
+  \begin{align*}
+    \sum_{j}\phi_{ij}dr_j &= -\sum_{j,k} \epsilon_{ijk}\varphi_kdr_j\\
+                          &= \sum_{j,k}\epsilon_{ikj}\varphi_kdr_j,
+  \end{align*}
+  meaning
+  \begin{align*}
+    d\mathbf{u} &= \vec{\varphi}\times d\mathbf{r},
+  \end{align*}
+  describing the rotation of $d\mathbf{r}$ by $\varphi$ around $\hat{\varphi}$. This is rigid body motion.\newline
+
+  Thus, deformations are described by the strain tensor, $\doublevec{\ve}$. Hooke's law then becomes
+  \begin{align*}
+    \sigma_{ij} &= \sum_{k,l}Y_{ijkl}\ve_{kl},
+  \end{align*}
+  where $Y_{ijkl}$ is the elasticity tensor.
 \end{document}
