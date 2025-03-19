@@ -1945,7 +1945,128 @@ A question we may be asking ourselves now is: where will we ever use this?
     b_n(x) &= \frac{2}{\pi}\int_{0}^{\pi} \sin(x)\sin\left( nx \right)\:dx\\
            &= \frac{2}{\pi}\int_{0}^{\pi/2} x\sin\left( nx \right)\:dx + \frac{2}{\pi} \int_{\pi/2}^{\pi} \left( \pi - x \right)\sin\left( nx \right)\:dx.
   \end{align*}
+\end{example}
+\begin{example}
+  Consider
+  \begin{align*}
+    \pd{^2u}{t^2} - 9 \pd{^2u}{x^2} &= 0,
+  \end{align*}
+  defined on $0\leq x \leq 5$, $t\geq 0$, and $u\left( 0,t \right) = u\left( 5,t \right) = 0$, and the initial condition is $u\left( x,0 \right) = \sin\left( 4\pi x/5 \right)$, $\pd{u}{t}\bigr\vert_{(x,0)} = 5x-x^2$.\newline
 
+  Separating, we have
+  \begin{align*}
+    u\left( x,t \right) &= X(x)T(t)\\
+    \diff{^2 T}{t^2} &= \begin{cases}
+      -9\lambda^2 T\\
+      0\\
+      9\lambda^2T
+    \end{cases}\\
+      \diff{^2X}{x^2} &= \begin{cases}
+        -\lambda^2 X\\
+        0\\
+        \lambda^2 X
+      \end{cases}.
+  \end{align*}
+  The way we solve initial/boundary value problems is by first solving the boundary value problem, then by solving the initial value problem.\newline
+
+  Taking the boundary problem, we have $X(0) = X(5) = 0$, we consider the three cases:
+  \begin{align*}
+    X(x) &= 0 \tag*{$\diff{^2X}{x^2} = 0$}\\
+    X(x) &= d_1\cosh\left( \lambda x \right) + d_2\sinh\left( \lambda x \right) \tag*{$\diff{^2X}{x^2} = \lambda^2 X$}\\
+    X(x) &= c_1\cos\left( \lambda x \right) + c_2\sin\left( \lambda x \right) \tag*{$\diff{^2X}{x^2} = -\lambda^2 X$}
+  \end{align*}
+  In the first and second cases, we get $X = 0$, which is not very useful for our initial condition. Thus, we take the third case, and solve for the boundary conditions.
+  \begin{align*}
+    0 &= c_1\\
+    0 &= c_2\sin\left( 5\lambda \right),
+  \end{align*}
+  so $\lambda = \frac{\pi n}{5}$, where $n\in\Z$. Thus, we have
+  \begin{align*}
+    X_n(x) &= c_n\sin\left( \frac{n\pi }{5}x \right).
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    u\left( x,t \right) &= \sum_{n=1}^{\infty}c_nX_n(x)T_n(t)\\
+                        &= \sum_{n=1}^{\infty}c_n\sin\left( \frac{n\pi }{5}x \right) T_n(t).
+  \end{align*}
+  Applying the condition on $T$, we have
+  \begin{align*}
+    \diff{^2T_n}{t^2} &= - \frac{9n^2\pi^2}{25}T_n(t)\\
+                    &= -\left( \frac{3n\pi}{5} \right)T_n,
+  \end{align*}
+  so
+  \begin{align*}
+    T_n(t) &= A_n\cos\left( \frac{3n\pi}{5}t \right) + B_n\sin\left( \frac{3n\pi}{5}t \right),
+  \end{align*}
+  and
+  \begin{align*}
+    u\left( x,t \right) &= \sum_{n=1}^{\infty}c_n\sin\left( \frac{n\pi }{5}x \right)\left( A_n\cos\left( \frac{3n\pi}{5}t \right) + B_n\sin\left( \frac{3n\pi}{5}t \right) \right)\\
+                        &= \sum_{n=1}^{\infty}a_n\sin\left( \frac{n\pi}{5}x \right)\cos\left( \frac{3n\pi}{5}t \right) + b_n\sin\left( \frac{n\pi}{5}x \right)\sin\left( \frac{3n\pi}{5}t \right).
+  \end{align*}
+  Now, we need to solve for our initial conditions. We have
+  \begin{align*}
+    u\left( x,0 \right) &= \sum_{n=1}^{\infty}a_n\sin\left( \frac{n\pi }{5}x \right)\\
+                        &= \sin\left( \frac{4\pi x}{5} \right),
+  \end{align*}
+  so we have $n =4$ and $a_4=1$. This gives
+  \begin{align*}
+    u\left( x,t \right) &= \sin\left( \frac{4\pi }{5} x\right)\cos\left( \frac{12\pi}{5}t \right) + \sum_{n=1}^{\infty}b_n\sin\left( \frac{n\pi}{5}x \right)\sin\left( \frac{3n\pi}{5}t \right).
+  \end{align*}
+  Taking the initial condition,\footnote{and assuming our series converges uniformly} we have
+  \begin{align*}
+    \pd{u}{t} &= -\frac{12 \pi}{5}\sin\left( \frac{4\pi}{5}x \right)\sin\left( \frac{12\pi}{5}t \right) + \sum_{n=1}^{\infty}\frac{3n\pi}{5}b_n\sin\left( \frac{n\pi}{5}x \right)\sin\left( \frac{3n\pi}{5}t \right).
+  \end{align*}
+  Now, we have
+  \begin{align*}
+    \pd{u}{t}\bigr\vert_{(x,0)} &= 5x-x^2\\
+                                &= \sum_{n=1}^{\infty}b_n\frac{3n\pi }{5}\sin\left( \frac{n\pi }{5}x \right).
+  \end{align*}
+  Thus, we are solving for the Fourier coefficients; after which, we take $\frac{3n\pi}{5}b_n = c_n$ to get us our solution. Specifically, we are solving for the Fourier sine series,
+  \begin{align*}
+    \frac{3n\pi}{5}b_n &= \frac{2}{5} \int_{0}^{5} \left( 5x-x^2 \right)\sin\left( \frac{n\pi}{5}x \right)\:dx\\
+    b_n &= \frac{2}{3n\pi}\int_{0}^{5} \left( 5x-x^2 \right)\sin\left( \frac{n\pi}{5}x \right)\:dx\\
+        &= \begin{cases}
+          \frac{400}{3n^4\pi^4} & \text{$n$ odd}\\
+          0 & \text{$n$ even}
+        \end{cases}.
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    u\left( x,t \right) &= \sin\left( \frac{4\pi }{5}x \right)\cos\left( \frac{12 \pi}{5}t \right) + \sum_{n=1}^{\infty}\frac{400}{3n^4\pi^4}\sin\left( \frac{n\pi}{5}x \right)\sin\left( \frac{3n\pi}{5}t \right).
+  \end{align*}
+\end{example}
+\begin{example}
+  Consider
+  \begin{align*}
+    \pd{^2u}{x^2} + 9 \pd{^2u}{y^2} &= 0,
+  \end{align*}
+  where $0 \leq x \leq a$, $0\leq y \leq b$. This is a spatially defined differential equation. Then, we only need boundary conditions (since there is no ``time'' to care about).\newline
+
+  Define the boundary conditions of
+  \begin{align*}
+    u\left( x,0 \right) &= 0\\
+    u\left( x,b \right) &= f(x)\\
+    u\left( 0,y \right) &= 0\\
+    u\left( a,y \right) &= 0.
+  \end{align*}
+  Now, we may consider this set of boundary values to be simplistic, but if we add the four solutions to four different boundary value problems, we are able to find a solution to the full system (courtesy of the equation's linearity).\newline
+
+  If we replace the $9$ with $1$, then we have
+  \begin{align*}
+    \pd{^2u}{x^2} + \pd{^2u}{y^2} &= 0,
+  \end{align*}
+  which yields \textit{Laplace's equation}.
+\end{example}
+\begin{example}
+  When we consider the equation
+  \begin{align*}
+    \pd{u}{t} &= k_1\pd{^2u}{x^2} + k_2\pd{^2u}{y^2},
+  \end{align*}
+  we have the multi-dimensional heat equation. Imposing the limit of $\lim_{t\rightarrow\infty} \pd{u}{t} = 0$, we get the steady state of the heat equation,
+  \begin{align*}
+    k_1\pd{^2u}{x^2} + k_2\pd{^2u}{y^2} &= 0,
+  \end{align*}
+  which is (effectively) Laplace's equation.
 \end{example}
 
 \end{document}

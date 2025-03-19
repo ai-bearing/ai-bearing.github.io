@@ -1731,5 +1731,171 @@ We can find the residue in a variety of ways.
     \end{align*}
     Thus, $\doublevec{T}$ is an equivalent way to package the components of $B$ --- i.e., that they are duals of each other.
   \end{example}
+  \subsection{Non-Cartesian Tensors}%
+  What makes a tensor a tensor is that it maintains its symmetry upon some transformation. However, we may have a shear transformation.\newline
+
+  Consider a coordinate system with
+  \begin{align*}
+    \hat{e}_u &= \begin{pmatrix}\cos\left( \alpha \right)\\\sin\left( \alpha \right)\end{pmatrix}\\
+    \hat{e}_v &= \begin{pmatrix}\sin\left( \beta \right)\\\cos\left( \beta \right)\end{pmatrix},
+  \end{align*}
+  where $\alpha$ is an angle between the $x$ axis and $\hat{e}_u$, $\beta$ is an angle between the $y$ axis and $\hat{e}_v$, with $\phi$ the angle between $\hat{e}_u$ and $\hat{e}_v$.\newline
+
+  Taking orthogonal projections of $\mathbf{A}$, we have
+  \begin{align*}
+    A_u &= \mathbf{A}\cdot \hat{e}_u\\
+    A_v &= \mathbf{A}\cdot \hat{e}_v.
+  \end{align*}
+  Unfortunately, $\mathbf{A}\neq A_u\hat{e}_u + A_v\hat{e}_v$.\newline
+
+  However, we can consider $A^{u}$ and $A^{v}$ as components \textit{along} $\hat{e}_u$ by projecting $\mathbf{A}$ parallel to $\hat{e}_v$ to obtain $A^{u}$ and projecting $\mathbf{A}$ parallel to $\hat{e}_u$ to obtain $A^{v}$, giving
+  \begin{align*}
+    \mathbf{A} &= A^{u}\hat{e}_u + A^{v}\hat{e}_v.
+  \end{align*}
+  Yet, since $A_u$ and $A_v$ are linearly independent components, we should still be able to construct $\mathbf{A}$ using their components. Specifically, we extend the orthogonal projections of $\mathbf{A}$ on $\hat{e}_u$ and $\hat{e}_v$ until we get a parallelogram. This gives
+  \begin{align*}
+    \mathbf{A} &= \frac{1}{\sin\left( \phi \right)}\left( A_u\hat{e}^{u} + A_{v}\hat{e}^{v} \right).
+               &=  A_u\vec{e}^{u} + A_v\vec{e}^{v}.
+  \end{align*}
+  The sets $\set{\hat{e}_u,\hat{e}_v}$ and $\set{\vec{e}^u,\vec{e}^v}$ are intimately tied to each other:
+  \begin{align*}
+    \hat{e}_i\cdot \vec{e}^j &= \delta_{ij}
+  \end{align*}
+  The vector $\mathbf{A}$ can thus be decomposed along the ``downstairs basis'' and the ``upstairs basis,'' with components defined by
+  \begin{align*}
+    A_{a} &= \hat{e}_a\cdot \mathbf{A}\\
+    A^{a} &=\vec{e}^{a}\cdot \mathbf{A};
+  \end{align*}
+  with $\vec{e}^{a}$ not necessarily normalized. In this case, we have
+  \begin{align*}
+    A_u &= \vec{e}_u\cdot \mathbf{A}\\
+        &= A^{u} + A^{v}\cos\left( \phi \right)\\
+    A_{v} &= \vec{e}_v\cdot \mathbf{A}\\
+          &= A^{u}\cos\left( \phi \right) + A^{v}.
+  \end{align*}
+  \subsubsection{Metric Tensors}%
+  We want covariant index notation to apply to all bases in a straightforward manner.\newline
+
+  We start with the Cartesian line element, $d\mathbf{s} = \sum_{i}\hat{e}_idx_i$. We want a general case of $d\mathbf{s} = \sum_{a}\vec{e}_a du^{a}$, where all the scale factors are hidden in the basis $\set{\vec{e}_a}$. We calculate
+  \begin{align*}
+    ds^2 &= d\mathbf{s}\cdot d\mathbf{s}\\
+         &= \left( \sum_{a}\vec{e}_adu^a \right)\cdot \left( \sum_{b}\vec{e}_bdu^b \right)\\
+         &= \sum_{a,b}\left( \vec{e}_a\cdot \vec{e}_b \right)du^adu^b\\
+         &= \sum_{a,b}g_{ab}du^adu^b,
+  \end{align*}
+  where $g_{ab} = \vec{e}_a\cdot \vec{e}_b$. We call the matrix $\left( g_{ab} \right)_{ab}$ the \textit{metric tensor}.
+  \begin{example}
+    In Cartesian coordinates, our metric is
+    \begin{align*}
+      g_{ab} &= \delta_{ij}\\
+             &= \begin{pmatrix}1 & & \\ & 1 & \\ & & 1\end{pmatrix}.
+    \end{align*}
+    In spherical coordinates, our metric is
+    \begin{align*}
+      g_{ab} &= \begin{pmatrix}1 & & \\ & r^2 & \\ & & r^2\sin^2\left( \theta \right)\end{pmatrix},
+    \end{align*}
+    after expanding on the spherical basis (see \href{https://ai.avinash-iyer.com/Classes_and_Homework/College/Y4/Y4S1,%20Math%20Methods/math_methods_notes.pdf}{Math Methods Notes}). This shows a couple things.
+      \begin{itemize}
+        \item The metric can be a function of position.
+        \item The same coordinate transformation that moves us from Cartesian to spherical is the same coordinate transformation that moves from the metric tensor on Cartesian coordinates to the metric tensor on spherical coordinates.
+      \end{itemize}
+  \end{example}
+  \begin{example}
+    In relativity, the difference between two points is
+    \begin{align*}
+      ds^2 &= c^2dt^2 - dr^2.
+    \end{align*}
+    The Minkowski metric is denoted $\eta_{\mu\nu}$,
+    \begin{align*}
+      ds^2 &= \sum_{\mu,\nu} \eta_{\mu\nu}dx^{\mu}dx^{\nu},
+    \end{align*}
+    where $\mu$ and $\nu$ range from $0$ to $3$, and $x^{0} = ct$. In Cartesian, we have
+    \begin{align*}
+      \eta_{\mu\nu} &= \begin{pmatrix}1 & & & \\ & -1 & & \\ & & -1 & \\ & & & -1\end{pmatrix}.
+    \end{align*}
+  \end{example}
+  \begin{example}
+    For the shear system, we have the metric of
+    \begin{align*}
+      g_{ab} &= \begin{pmatrix}\vec{e}_u\cdot \vec{e}_u & \vec{e}_u\cdot \vec{e}_v\\ \vec{e}_v\cdot \vec{e}_u & \vec{e}_v\cdot \vec{e}_v\end{pmatrix}\\
+             &= \begin{pmatrix}1 & \cos\left( \phi \right)\\\cos\left( \phi \right) & 1\end{pmatrix}.
+    \end{align*}
+    In terms of the line element, we have
+    \begin{align*}
+      ds^2 &= \sum_{a,b}g_{ab}du^{a}du^{b}\\
+           &= du^2 + 2\cos\left( \phi \right)dudv + dv^2.
+    \end{align*}
+    Note that there is a cross term, meaning our system is not orthogonal. Furthermore, this is actually the law of cosines.\newline
+
+    The norm of a vector $\mathbf{A}$ is
+    \begin{align*}
+      \norm{\mathbf{A}}^2 &= \left( \sum_{a}A^{a}\vec{e}_a \right)\cdot \left( \sum_{b}A^{b}\vec{e}_b \right)\\
+                          &= \sum_{a,b}g_{ab}A^{a}A^{b}\\
+                          &= \left( A^{u} \right)^2 + 2\cos\left( \phi \right)A^uA^v + \left( A^v \right)^2.
+    \end{align*}
+  \end{example}
+  \subsubsection{Streamlining Notation}%
+  In general, we can write
+  \begin{align*}
+    \mathbf{A}\cdot \mathbf{B} &= \sum_{a,b}g_{ab}A^{a}B^{b}.
+  \end{align*}
+  Setting
+  \begin{align*}
+    A_b &= \sum_{a}g_{ab}A^{a}\\
+    B_a &= \sum_{b}g_{ab}B^{b},
+  \end{align*}
+  we get
+  \begin{align*}
+    \mathbf{A}\cdot \mathbf{B} &= \sum_{a}A^aB_a\\
+                               &= \sum_{b}A_bB^{b}.
+  \end{align*}
+  We can consider the metric as ``lowering'' the indices of $A^{a}$ or $B^{b}$. The new rule is that any index must be summed over one with an ``upstairs'' index and one with a ``downstairs'' index.\newline
+
+  From now on, we will be using the Einstein summation notation, converting
+  \begin{align*}
+    A_a &= \sum_{a}M_{ab}B^{b}
+  \end{align*}
+  to be
+  \begin{align*}
+    A_a &= M_{ab}B^{b},
+  \end{align*}
+  where the sum is implied by the double index.\newline
+
+  We should be able to convert $g_{ab}$ to $g^{ab}$. We take
+  \begin{align*}
+    g^{da}\left( g^{cb}g_{ab} \right) &= g^{da}\left( g_{a}^{c} \right)\\
+                                      &= g^{dc}.
+  \end{align*}
+  Note that if we take
+  \begin{align*}
+    \mathbf{A}\cdot \mathbf{B} &= A^aB_a\\
+                               &= \left( g^{ab}A_{b} \right)\left( g_{ac}B^{c} \right)\\
+                               &= \left( g^{ab}g_{ac} \right)A_bB^{c}\\
+                               &= A_bB^{b},
+  \end{align*}
+  so that $g^{ab}g_{ac} = \delta^{b}_{c}$, or that $g^{ab}$ and $g_{ab}$ are inverses of each other.
+  \begin{example}
+    Converting $g_{ab}$ to $g^{ab}$ in spherical coordinates, we have
+    \begin{align*}
+      g_{ab} &= \begin{pmatrix}1 & & \\ & r^2 & \\ & & r^2\sin^2\left( \thetaq \right)\end{pmatrix},
+    \end{align*}
+    and
+    \begin{align*}
+      A_r &= g_{ra}A^{a}\\
+          &= g_{rr}A^{r} + g_{r\theta}A^{\theta} + g_{r\phi}A^{\phi}\\
+          &= A^{r}\\
+      A_{\theta} &= g_{\theta a}A^{a}\\
+                 &= g_{\theta r}A^{r} + g_{\theta \theta}A^{\theta} + g_{\theta \phi}A^{\phi}\\
+                 &= r^2A^{\theta}\\
+      A_{\phi} &= g_{\phi a}A^{a}\\
+               &= g_{\phi r}A^{r} + g_{\phi \theta}A^{\theta} + g_{\phi \phi}A^{\phi}.
+               &= r^2\sin^2\left( \theta \right)A^{\phi}.
+    \end{align*}
+    In particular, this gives
+    \begin{align*}
+      g^{ab} &= \begin{pmatrix}1 & & \\ & 1/r^2 & \\ & & 1/r^2\sin^2\left( \theta \right)\end{pmatrix}.
+    \end{align*}
+    
+  \end{example}
   
 \end{document}
