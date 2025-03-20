@@ -8,3 +8,6 @@ permalink: "/quotes.html"
 
 John von Neumann
 
+> Dr. von Neumann, ich möchte gerne wissen, was ist denn eigentlich ein Hilbertscher Raum?
+
+David Hilbert, upon hearing a lecture about Hilbert spaces by John von Neumann.
