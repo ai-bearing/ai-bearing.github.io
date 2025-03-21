@@ -6,6 +6,13 @@ permalink: /expository_writings.html
 ---
 I'm going to begin writing shorter, more coherent notes on certain topics (primarily focused on early graduate-level topics in the three main theoretical mathematics topics). These will be shorter than than the traditional notes that can be found in my [Class Notes](classnotes.md) section, in part because in graduate school, I plan on taking most of my notes with pencil and paper, and feel like it's better to focus on a shorter writing style.
 ## Algebra
+The following are standard texts.
+- _Algebra, Chapter 0_ (Aluffi)
+- _Abstract Algebra_ (Dummit and Foote)
+- _Algebra_ (Lang)
+
+### [Conjugation and the Sylow Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/conjugation_and_sylow_theorems.pdf)
+> We discuss the nuances of the conjugation action in groups, and use it to prove the Sylow theorems. We then use the Sylow theorems to classify the nature of groups of a particular order.
 
 ## Analysis
 The following are standard texts.
