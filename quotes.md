@@ -10,4 +10,8 @@ John von Neumann
 
 > Dr. von Neumann, ich möchte gerne wissen, was ist denn eigentlich ein Hilbertscher Raum?
 
-David Hilbert, upon hearing a lecture about Hilbert spaces by John von Neumann.
+David Hilbert, upon hearing a lecture about Hilbert spaces by John von Neumann
+
+> Ostensibly we live in three dimensions — don't tell the physicists I said that
+
+Me
