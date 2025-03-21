@@ -12,6 +12,6 @@ John von Neumann
 
 David Hilbert, upon hearing a lecture about Hilbert spaces by John von Neumann
 
-> Ostensibly we live in three dimensions — don't tell the physicists I said that
+> Ostensibly we live in three dimensions — don't tell the physics people I said that
 
 Me
