@@ -1660,6 +1660,7 @@ We call \eqref{eq:pde_1} the \textit{transport equation}.
   \end{align*}
   giving a damping term in $X$.
 \end{example}
+\section{Fourier Series and the Wave Equation}%
 \begin{example}[Introducing the Wave Equation]
   Consider the equation
   \begin{align*}
@@ -2134,10 +2135,99 @@ A question we may be asking ourselves now is: where will we ever use this?
   \end{align*}
   with
   \begin{align*}
-    A_n &= \frac{2}{a}\int_{0}^{a} f(x)\sin\left( \frac{n\pi}{a}x \right)\:dx\\
+    A_n &= \frac{2}{a}\int_{0}^{a} g(x)\sin\left( \frac{n\pi}{a}x \right)\:dx\\
     B_n &= -A_n\coth\left( \frac{n\pi b}{a} \right).
   \end{align*}
-  
+\end{example}
+\section{Solving and Using Sturm--Liouville Problems}%
+Consider the boundary value problem
+\begin{align*}
+  \diff{}{x}\left( r(x)\diff{y}{x} \right) + \left( q(x) + \lambda p(x) \right)y(x) &= 0,\label{eq:sturm_liouville}\tag{$\ast$}
+\end{align*}
+defined over $a\leq x \leq b$, where
+\begin{align*}
+  A_1y(a) + A_2\diff{y}{x}\biggr\vert_{a} &= 0\\
+  B_1y(b) + B_2\diff{y}{x}\biggr\vert_{b} &= 0.
+\end{align*}
+This is known as the \textit{Regular Sturm--Liouville Problem}. As it turns out, the regular Sturm--Liouville problem has a lot of nice properties --- specifically, it is (secretly) an eigenvector problem.
+\begin{theorem}\hfill
+  \begin{enumerate}[(1)]
+    \item There are an infinite number of distinct real eigenvalues $\lambda_n$ solving the Sturm--Liouville problem that can be ordered $\lambda_1 < \lambda_2 < \cdots$, and $\lim_{n\rightarrow\infty}\lambda_n = \infty$.
+    \item For each $\lambda_n$, there is a distinct eigenvector $v_n(x)$.
+    \item For any distinct $\lambda_i,\lambda_j$, the corresponding eigenvectors $v_i(x),v_j(x)$ are linearly independent.
+    \item For any distinct eigenvectors $v_i(x),v_j(x)$, we have
+      \begin{align*}
+        \int_{a}^{b} v_i(x)v_j(x)p(x)\:dx &= 0,
+      \end{align*}
+      where $p(x)$ is the same $p(x)$ in \eqref{eq:sturm_liouville}.
+  \end{enumerate}
+\end{theorem}
+Note that in order for $y$ to be a solution to \eqref{eq:sturm_liouville}, we need
+\begin{itemize}
+  \item $y$ to be twice-differentiable;
+  \item $r$ to be differentiable.
+\end{itemize}
+For instance, our favorite type of equation,
+\begin{align*}
+  \diff{^2y}{x^2} &= \lambda y
+\end{align*}
+is a Sturm--Liouville problem by setting $r = 1$, $p = -1$, and $q = 0$.
+\begin{example}
+Returning to our steady-state heat equation problem defined on $[0,a]\times [0,b]$ with boundary conditions defined in, we have solutions $u_1,\dots,u_4$ such that $\pd{^2u_i}{x^2} + \pd{^2u_i}{y^2} = 0$ that satisfies the boundary conditions
+\begin{align*}
+  u_1\left( x,b \right) &= f(x)\\
+  u_2\left( x,0 \right) &= g(x)\\
+  u_3\left( 0,y \right) &= h(y)\\
+  u\left( a,y \right) &= k(y).
+\end{align*}
+We claim that the general case solution has solution
+\begin{align*}
+  u\left( x,y \right) &= u_1\left( x,y \right) + u_2\left( x,y \right) + u_3\left( x,y \right) + u_4\left( x,y \right)
+\end{align*}
+via the superposition principle. This can be verified by taking
+\begin{align*}
+  \pd{^2u}{x^2} + \pd{^2u}{y^2} &= \sum_{i=1}^{4}\pd{^2u_i}{x^2} + \sum_{i=1}^{4}\pd{^2u}{y^2}\\
+                                &= 0,
+\end{align*}
+and plugging in the boundary conditions.
+\end{example}
+\begin{example}
+  We will solve
+  \begin{align*}
+    \pd{u}{t} &= \pd{^2u}{x^2}
+  \end{align*}
+  on $0 \leq x \leq a$, $t\geq 0$, and initial condition $u\left( x,0 \right) = f(x)$. Furthermore, we give the boundary conditions of
+  \begin{align*}
+    u\left( 0,t \right) &= b\\
+    u\left( a,t \right) &= c.
+  \end{align*}
+  We will decompose this into two distinct heat equations, and add solutions.
+  \begin{itemize}
+    \item We take
+      \begin{align*}
+        \pd{u}{t} &= \pd{^2u}{x^2},
+      \end{align*}
+      with $0 \leq x \leq a$, $t\geq 0$, and $u\left( x,0 \right) = f(x)$. Consider the initial condition of
+      \begin{align*}
+        u\left( 0,t \right) &= 0\\
+        u\left( a,t \right) &= 0.
+      \end{align*}
+      We can solve this relatively easily and obtain $u_1(x,t)$.
+    \item We take
+      \begin{align*}
+        \pd{u}{t} &= \pd{^2u}{x^2},
+      \end{align*}
+      with $0 \leq x \leq a$ and $t\geq 0$. Then, we may take
+      \begin{align*}
+        u\left( 0,t \right) &= b\\
+        u\left( a,t \right) &= c\\
+        u\left( x,0 \right) &= b + \frac{c-b}{a}x.
+      \end{align*}
+      This gives $u_2\left( x,t \right) = b + \frac{c-b}{a}x$. Fixing the case in the first part, we may take
+      \begin{align*}
+        u\left( x,0 \right) &= f(x) - b - \frac{c-b}{a}x.
+      \end{align*}
+  \end{itemize}
 \end{example}
 
 \end{document}

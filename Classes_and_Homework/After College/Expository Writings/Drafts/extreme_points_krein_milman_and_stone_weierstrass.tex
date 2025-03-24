@@ -1,0 +1,81 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright,sfmath,bbold}
+%\renewcommand{\mathcal}{\mathtt}
+
+%Euler:
+%\usepackage{newpxtext,eulerpx,eucal,eufrak}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+%\renewcommand*{\hbar}{\hslash}
+
+%\renewcommand{\mathbb}{\mathds}
+\usepackage{homework}
+\usepackage{exposition}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Extremal Structure and the Krein--Milman Theorem}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{abstract}
+  \noindent We discuss extremal structure in locally convex topological vector spaces, as well as a fundamental result in the theory of topological vector spaces: the Krein--Milman theorem. We also use extremal structure to prove the Stone--Weierstrass Theorem and the Banach--Stone theorem.
+\end{abstract}
+\section{Extremal Structure}%
+We need to recall some basic ideas related to convexity and compactness in topological vector spaces.
+\begin{theorem}
+  If $A_1,\dots,A_n$ are compact convex sets in a topological vector space $X$, then $\operatorname{conv}\left( A_1\cup\cdots\cup A_n \right)$ is compact.
+\end{theorem}
+\begin{proof}
+  Let $\Delta_{n} = \operatorname{conv}\left( e_1,\dots,e_n \right)$ be the basic simplex in $\R^n$, where elements look like
+  \begin{align*}
+    \Delta_n &= \set{\left( s_1,\dots,s_n \right) | s_i\geq 0,\sum_{i=1}^{n}s_i = 1}.
+  \end{align*}
+  Define $A = A_1\times\cdots\times A_n$, and set $f\colon \Delta_n\times A \rightarrow X$ to be defined by $f\left( s,a \right) = \sum_{i}s_ia_i$. We set $K = f\left( S\times A \right)$.\newline
+
+  Note that since $f$ is continuous (as addition and scalar multiplication are continuous), $\Delta_n$ is compact, and $A$ is compact, we have that $K$ is compact. Furthermore, $K\subseteq \operatorname{conv}\left( A_1\cup\cdots\cup A_n \right)$. We will now show that the inclusion goes in the opposite direction.\newline
+
+  We will do this by showing that $K$ is convex. Let $\left( s,a \right),\left( t,b \right)\in S\times A$, and let $0\leq q \leq 1$. Then, defining
+  \begin{align*}
+    u &= qs + \left( 1-q \right)t\\
+    c_i &= \frac{qs_ia_i + \left( 1-q \right)t_ib_i}{qs_i + \left( 1-q \right)t_i},
+  \end{align*}
+  we have
+  \begin{align*}
+    qf\left( s,a \right) + \left( 1-q \right)f\left( t,b \right) &= f\left( u,c \right)\\
+                                                                 &\in K,
+  \end{align*}
+  meaning $K$ is convex, so $\operatorname{conv}\left( A_1\cup\cdots\cup A_n \right)\subseteq K$.
+\end{proof}
+\begin{definition}
+  Let $K$ be a subset of a vector space $X$. A nonempty $S\subseteq K$ is called a \textit{face} for $K$ if the interior of any line in $K$ that is contained in $S$ contains its endpoints. Analytically, this means that if $x,y\in K$ are such that, for all $t\in (0,1)$, $tx + \left( 1-t \right)y\in S$, then $x,y\in S$.\newline
+
+  An \textit{extreme point} of $K$ is an extreme set of $K$ that consists of one point. We write $\operatorname{ext}\left( K \right)$ for the extreme points of $K$.
+\end{definition}
+\begin{example}
+  Let $\Omega$ be a LCH space. The extreme points of the regular Borel probability measures on $\Omega$ are the Dirac measures. That is,
+  \begin{align*}
+    \operatorname{ext}\left( \mathcal{P}_{r}\left( \Omega \right) \right) &= \set{\delta_x | x\in\Omega}.
+  \end{align*}
+  In one direction, we see that if $x\in \Omega$, and $\delta_x = \frac{1}{2}\left( \mu + \nu \right)$, then for a Borel set $E\subseteq \Omega$ with $x\in E$, we have $1 = \frac{1}{2}\left( \mu\left( E \right) + \nu\left( E \right) \right)$. Therefore, $\mu(E)=\nu(E) = 1$. If $x\notin E$, then $0 = \frac{1}{2}\left( \mu\left( E \right) + \nu\left( E \right) \right)$, so $\mu(E) = \nu(E) = 0$. Thus, $\mu=\nu=\delta_x$, so every $\delta_x$ is extreme.\newline
+
+  In the opposite direction, if $\mu\in \operatorname{ext}\left( \mathcal{P}_r\left( \Omega \right) \right)$, we claim that there is $x_0\in \Omega$ with $\supp\left( \mu \right) = \set{x_0}$. Now, since $\mu\left( \Omega \right) = 1$, we know that $\supp\left( \mu \right) \neq\emptyset$.\newline
+
+  Suppose there exist $x,y\in \supp\left( \mu \right)$ with $x\neq y$. Since $\Omega$ is Hausdorff, we can separate $x,y\in \supp\left( \mu \right)$ with disjoint open sets $U$ and $V$, where $0 < \mu\left( U \right) < 1$ and $0 < \mu\left( V \right) < 1$. Set $t = \mu\left( U \right)$, and define
+  \begin{align*}
+    \mu_1\left( E \right) &= \frac{\mu\left( E\cap U \right)}{\mu\left( U \right)}\\
+    \mu_2\left( E \right) &= \frac{\mu\left( E^{c} \right)}{\mu\left( U^{c} \right)}.
+  \end{align*}
+  Then, $\mu_1,\mu_2$ are regular Borel probability measures with $\mu_1\neq \mu_2$ and $t\mu_1 + \left( 1-t \right)\mu_2 = \mu$, which contradicts $\mu$ being extreme. Therefore, $\supp\left( \mu \right) = \set{x_0}$, so $\mu = \delta_{x_0}$.
+\end{example}
+
+\section{The Krein--Milman Theorem}%
+\section{Other Uses of Extremal Structure}%
+\subsection{The Stone--Weierstrass Theorem}%
+\subsection{The Banach--Stone Theorem}%
+
+\end{document}
