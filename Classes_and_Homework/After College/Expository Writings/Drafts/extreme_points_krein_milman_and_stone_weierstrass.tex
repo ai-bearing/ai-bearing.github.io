@@ -72,8 +72,72 @@ We need to recall some basic ideas related to convexity and compactness in topol
   \end{align*}
   Then, $\mu_1,\mu_2$ are regular Borel probability measures with $\mu_1\neq \mu_2$ and $t\mu_1 + \left( 1-t \right)\mu_2 = \mu$, which contradicts $\mu$ being extreme. Therefore, $\supp\left( \mu \right) = \set{x_0}$, so $\mu = \delta_{x_0}$.
 \end{example}
+\begin{example}
+  The picture of a face in a convex compact set is relatively simple. If $u\colon X\rightarrow \R$ is an $\R$-linear continuous functional, and $P\subseteq X$ is compact and convex, the infimum $\inf_{x\in P}u(x) \eqcolon s$ is attained. The subset
+  \begin{align*}
+    P_u &= \set{x\in P | u(x) = s}
+  \end{align*}
+  is a closed face in $P$.\newline
 
+  To start, $P_u$ is nonempty because the infimum is attained. Since $u$ is continuous, $P_u$ is closed. Furthermore, if $t\in [0,1]$ and $x,y\in P_u$, then $\left( 1-t \right)x + ty\in P_u$, as
+  \begin{align*}
+    u\left( \left( 1-t \right)x + ty \right) &= \left( 1-t \right)u(x) + tu(y)\\
+                                             &= \left( 1-t \right)s = ts\\
+                                             &= s.
+  \end{align*}
+  Now, if $t\in (0,1)$ and $x,y\in P$ with $\left( 1-t \right)x + ty\in P_u$, then
+  \begin{align*}
+    s &= \left( 1-t \right)u(x) + tu(y).
+  \end{align*}
+  Since $u(x) \geq s$ and $u(y) \geq s$, we must have $u(x) = u(y) = s$, meaning $x,y\in P_u$.
+\end{example}
 \section{The Krein--Milman Theorem}%
+One of the most important results in extremal structure is the fact that every compact convex set of a topological vector space (with some relatively weak conditions) has an extreme point --- moreover, there are a lot of extreme points.
+\begin{theorem}[Krein--Milman]
+  Let $X$ be a topological vector space where $X^{\ast}$ separates points. If $K$ is a nonempty compact convex set in $X$, then
+  \begin{align*}
+    K &= \overline{\operatorname{conv}}\left( \operatorname{ext}\left( K \right) \right).
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  We start with a lemma.
+  \begin{lemma}
+    If $F$ is a face of $K$ and $G$ is a face of $F$, then $G$ is a face of $K$.
+  \end{lemma}
+  \begin{proof}
+    Let $x,y\in K$ be such that for all $t\in (0,1)$, $\left( 1-t \right)x + ty\in G$. Then, since $G$ is a face of $F$, we have $\left( 1-t \right)x + ty \in F$, so since $F$ is a face, $x,y\in F$. However, since $G$ is a face, $x,y\in G$, so $G$ is a face of $K$.
+  \end{proof}
+  We start by showing that $\operatorname{ext}\left( K \right)\neq\emptyset$. Let $F\subseteq K$ be a closed face. The family
+  \begin{align*}
+    \mathcal{G} &= \set{G\subseteq F | G\text{ is a closed face in }F}
+  \end{align*}
+  is nonempty, as $F\in \mathcal{G}$. Ordering $\mathcal{G}$ by containment, we will show that $\mathcal{G}$ satisfies the conditions of Zorn's lemma. If $\mathcal{C}\subseteq \mathcal{G}$ is a chain, then we claim that
+  \begin{align*}
+    I &= \bigcap_{G\in \mathcal{C}} G
+  \end{align*}
+  is an element of $\mathcal{G}$ that is an upper bound for $\mathcal{C}$. First, since $I$ is an arbitrary intersection of convex sets, $I$ is convex.\newline
+
+  Furthermore, for any $G_1,\dots,G_n\in \mathcal{C}$, then since $\mathcal{C}$ is a chain, there is $j$ such that $G_i\preceq G_j$ For all $i=1,\dots,n$, meaning $\bigcap_{i=1}^{n}G_i = G_j\neq \emptyset$. Since $K$ is compact, the finite intersection property gives $I\neq\emptyset$. Finally, let $t\in (0,1)$ with $x,y\in F$ and $\left( 1-t \right)x + ty\in I$. Then, $\left( 1-t \right)x + ty\in G$ for all $G\in \mathcal{C}$, so $x,y\in G$ for all $G\in \mathcal{C}$, so $x,y\in I$, meaning $I$ is a face. Notice that for all $G\in \mathcal{C}$, we have $G\preceq I$, so the conditions of Zorn's lemma are satisfied.\newline
+
+  By Zorn's lemma, there is a maximal $P\in \mathcal{G}$. We claim that $P$ is a singleton.\newline
+
+  Note that $P$ is compact since it is closed. Let $\varphi\in X^{\ast}$ and set $u = \re\left( \varphi \right)$. Since $P$ is compact, the set
+  \begin{align*}
+    P_u &= \set{p\in P | u(p) = \inf_{x\in P}u(x)},
+  \end{align*}
+  and by maximality, we must have $P_u = P$. Since $\varphi(x)= u(x) -iu\left( ix \right)$ , we must have that $\varphi$ is constant on $P$, so $P = \set{z}$ as $X^{\ast}$ separates points. \newline
+
+  Since $F$ is a face, and $P\subseteq F$ is a face, $P$ is a face, so $z\in \operatorname{ext}\left( K \right)$.\newline
+
+  Now, note that $C = \overline{\operatorname{conv}}\left( \operatorname{ext}\left( K \right) \right)\subseteq K$ as $K$ is closed and convex. Suppose that this inclusion is strict. Let $x_0\in K\setminus C$.\newline
+
+  Then, by the Hahn--Banach separation, there is $\varphi\in X^{\ast}$ such that for all $y\in C$,
+  \begin{align*}
+    u\left( x_0 \right) < t \leq u(y),
+  \end{align*}
+  where $u = \re\left( \varphi \right)$. Let $s = \inf_{k\in K}u(k)$, so that $K_u = \set{x\in K | u(x) = s}$. This is a closed face in $K$, so it has an extreme point $z\in K$, with $z\in C$. Then, $u(z) \geq t > s$, but $z\in K_u$, so $u(z) = s$. Therefore, the inclusion is not strict.
+\end{proof}
+
 \section{Other Uses of Extremal Structure}%
 \subsection{The Stone--Weierstrass Theorem}%
 \subsection{The Banach--Stone Theorem}%
