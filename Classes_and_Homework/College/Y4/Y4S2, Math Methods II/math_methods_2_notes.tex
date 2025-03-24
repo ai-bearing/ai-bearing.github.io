@@ -2023,7 +2023,166 @@ We can find the residue in a variety of ways.
       g_{r\phi} &= \pd{x}{r}\pd{x}{\phi} + \pd{y}{r}\pd{y}{\phi}\\
                 &= 0.
     \end{align*}
-    
   \end{example}
+  \subsubsection{Tensor Derivatives}%
+  Now that we have introduced a tensor regime based on derivatives, we are now interested in understanding what happens when we take derivatives \textit{of} tensors.\newline
+
+  If we take $\pd{}{u^{b'}}A^{a'}$, we want this to yield a transformation as a mixed second-rank tensor. The tensor transformation is of the form
+  \begin{align*}
+    T^{a'}_{b'} &= \pd{u^{a'}}{u^{c}}\pd{u^{d}}{u^{b'}}T^{c}_{d}.
+  \end{align*}
+  However, taking
+  \begin{align*}
+    \pd{}{u^{b'}}A^{a'} &= \pd{}{u^{b'}} \left( \pd{u^{a'}}{u^{c}}A^{c} \right)
+    \intertext{and using the chain rule to convert back to the non-prime frame}
+                        &= \pd{u^{d}}{u^{b'}}\pd{}{u^{d}} \left( \pd{u^{a'}}{u^{c}}A^{c} \right).
+                        \intertext{Using the product rule and rearranging, we take}
+                        &= \underbrace{\pd{u^{d}}{u^{b'}}\pd{u^{a'}}{u^{c}}\left( \pd{}{u^{d}}A^{c} \right)}_{\text{expected}} + \underbrace{A^{c} \pd{^2u^{a'}}{u^{c}\partial u^{d}}\pd{u^{d}}{u^{b'}}}_{\text{why?}}.
+  \end{align*}
+  Because we allowed general coordinate transformations, we created the seemingly extraneous term consisting of second derivatives (beyond what we wanted for a second-rank tensor transformation). This is because we forgot to include the change \textit{in the basis itself}, beyond the change in component.\newline
+
+  Then, we have
+  \begin{align*}
+    \pd{}{u^{b}}\left( A^{a}\vec{e}_{a} \right) &= \pd{A^{a}}{u^{b}}\vec{e}_a + A^{a}\pd{\vec{e}_{a}}{u^{b}}.
+  \end{align*}
+  The expression $\pd{\vec{e}_a}{u^{b}}$ is our offending character. Since this is a vector-valued integral, we may expand it on the basis
+  \begin{align*}
+    \pd{\vec{e}_a}{u^{b}} &= \Gamma_{ab}^{c}\vec{e}_c,\label{eq:christoffel_symbol}\tag{$\ast$}
+  \end{align*}
+  with an implied sum over $c$. The term $\Gamma_{ab}^{c}$ is known as the \textit{Christoffel symbol} for $\pd{\vec{e}_a}{u^{b}}$.
+  \begin{example}[Christoffel Symbols in Polar Coordinates]
+    Recall that
+    \begin{align*}
+      \vec{e}_a &= \pd{\mathbf{r}}{u^{a}},
+    \end{align*}
+    and expanding on the Cartesian basis (yet again with implied sums), we have
+    \begin{align*}
+      \vec{e}_a &= \pd{x^j}{u^{a}}\pd{\mathbf{r}}{x^j}\\
+                &= \pd{x^{j}}{u^{a}}\hat{x}_j.
+    \end{align*}
+    Now, 
+    \begin{align*}
+      \pd{\vec{e}_a}{u^{b}} &= \pd{\vec{e}^{a}}{u^{b}}
+      \intertext{and recalling that $\vec{e}_{a} = \pd{\mathbf{r}}{u^a}$, we have}
+                            &= \pd{^2}{u^{a}\partial u^{b}}\mathbf{r}.
+    \end{align*}
+    In polar coordinates, we have the $\left( r,\phi \right)$ basis, giving
+    \begin{align*}
+      \vec{e}_r &= \cos\left( \phi \right)\hat{i} + \sin\left( \phi \right)\hat{j}\\
+                &= \hat{r}\\
+      \vec{e}_{\phi} &= -r\sin\left( \phi \right)\hat{i} + r\cos\left( \phi \right)\hat{j}\\
+                     &= r\hat{\phi}.
+    \end{align*}
+    Now, using the fact that we pull out a component by taking a dot product, we may fin
+    \begin{align*}
+      \Gamma_{\phi\phi}^{r} &= \vec{e}_r\cdot \pd{\vec{e}_{\phi}}{\phi}\\
+                            &= \hat{r}\cdot \left( -r\hat{r} \right)\\
+                            &= -r.
+    \end{align*}
+    Similarly, we may find the rest of the Christoffel symbols, giving
+    \begin{align*}
+      \Gamma^{\phi}_{r\phi} &= \frac{1}{r}\\
+      \Gamma^{\phi}_{\phi r} &= \frac{1}{r},
+    \end{align*}
+    and giving $0$ for everything else.\newline
+
+    Therefore, for polar coordinates, we have
+    \begin{align*}
+      \diff{\mathbf{r}}{t} &= \diff{}{t}\left( r\vec{e}_r \right)\\
+                           &= \dot{r}\vec{e}_r + r\diff{u^{j}}{t}\diff{}{u^{j}}\Gamma_{r j}^{k}\vec{e}_k,
+    \end{align*}
+    with implicit sums over $j$ and $k$. Plugging in our nonzero terms, we have
+    \begin{align*}
+      \diff{\mathbf{r}}{t} &= \dot{r}\hat{r} + r\dot{\phi}\hat{\phi}.
+    \end{align*}
+  \end{example}
+  Now, we want to obtain a tensor out of this derivative. We will take the expression of \eqref{eq:christoffel_symbol} and relabel the dummy indices
+  \begin{align*}
+    \pd{}{u^{b}}\left( A^{a}\vec{e}_a \right) &= \pd{A^{a}}{u^{b}}\vec{e}_a + A^{a}\pd{\vec{e}_a}{u^{b}}\\
+                                              &= \left( \pd{A^{a}}{u^{b}}+ A^{c}\Gamma^{a}_{bc} \right)\vec{e}_a
+  \end{align*}
+  The quantity in the parentheses is the component of the derivative on the basis $\vec{e}_a$. We write
+  \begin{align*}
+    D_{b} A^{a} &= \pd{A^{a}}{u^{b}} + A^{c}\Gamma_{bc}^{a},
+  \end{align*}
+  with an implied sum over $c$. The expression $D_b A^{a}$ gives the \textit{covariant derivative}.\newline
+
+  Therefore, we may obtain the general rule
+  \begin{align*}
+    D_cT^{ab} &= \pd{T^{ab}}{u^{c}} + T^{db}\Gamma_{cd}^{a} + T^{ad}\Gamma_{cd}^{b}.
+  \end{align*}
+  We need one Christoffel symbol summation for each tensor index. Furthermore, if we have a dual tensor, we have
+  \begin{align*}
+    D_{c}T_{ab} &= \pd{T_{ab}}{u^{c}} - T_{db}\Gamma^{d}_{ac} - T_{ad}\Gamma^{d}_{bc}.
+  \end{align*}
+  Now, if we take the covariant derivative of a scalar, we get the regular derivative:
+  \begin{align*}
+    D_a\Phi &= \pd{\Phi}{u^{a}}.
+  \end{align*}
+  \begin{example}
+    Consider the acceleration,
+    \begin{align*}
+      \mathbf{a} &= \diff{\mathbf{v}}{t},
+    \end{align*}
+    Then, by the chain rule,
+    \begin{align*}
+      \diff{\mathbf{v}}{t} &= \left( \frac{d\mathbf{r}}{t}\cdot \nabla \right)\mathbf{v}\\
+                           &= \left( \mathbf{v}\cdot \nabla \right)\mathbf{v}.
+    \end{align*}
+    In components, we have
+    \begin{align*}
+      a^i &= \diff{v^i}{t}\\
+          &= v^{k} \pd{v^{i}}{x^k}.
+    \end{align*}
+    Note that since we are doing this in Cartesian, we do not need any Christoffel symbols.\newline
+
+    When we are working in general coordinates, we may replace all the $\partial$ symbols with $D_a$, by the principle of covariance. Therefore, in any coordinate system, we have
+    \begin{align*}
+      a^{b} &= \frac{Dv^{b}}{dt}\\
+            &= v^{c}D_cv^{b}\\
+            &= v^{c}\left( \pd{v^{b}}{x^{c}} + v^{d}\Gamma^{b}_{cd} \right)\\
+            &= \diff{v^{b}}{t} + \Gamma^{b}_{cd}v^cv^d.
+    \end{align*}
+    Now, if we plug in the values of $\Gamma$ and take the sum over $b,c$ on the right for polar coordinates, we have
+    \begin{align*}
+      a^{r} &= \ddot{r} - r\dot{\phi}^2\\
+      a^{\phi} &= \ddot{\phi} + \frac{2}{r}\dot{r}\dot{\phi}.
+    \end{align*}
+  \end{example}
+  \subsubsection{Free Particle Motion}%
+  When we deal with free particle motion (i.e., not subject to any forces), we assume zero acceleration. In other words,
+  \begin{align*}
+    \frac{Dv^{b}}{t} &= \diff{v^{b}}{t} + \Gamma^{b}_{cd}v^cv^d\\
+                     &= 0.
+  \end{align*}
+  This equation is also written
+  \begin{align*}
+    \diff{^2u^b}{t} + \Gamma^{b}_{cd} \diff{u^c}{t} \diff{u^d}{t}&= 0,
+  \end{align*}
+  and is known as the \textit{geodesic equation}.\newline
+
+  Now, if we work through the case of the geodesic with polar coordinates, we have
+  \begin{align*}
+    \ddot{r}-r\dot{\phi}^2 &= 0\\
+    \ddot{\phi} + \frac{2}{r} \dot{r}\dot{\phi} &= 0.
+  \end{align*}
+  We want to solve for the trajectory. There is only one solution to this set of equations:
+  \begin{align*}
+    r &= a + bt\\
+    \phi &= \phi_0.
+  \end{align*}
+  This denotes straight line motion. Specifically, the geodesic is the ``straight'' line on any (smooth) manifold, or a straight line on a tangent space.\newline
+
+  Now, in a $2$-manifold that is not $\R^2$, the ``curvature'' appears as the term in the Christoffel symbol.\newline
+
+  Specifically, the metric is what distinguishes one space from another space. We may find the metric by taking
+  \begin{align*}
+    D_cg_{ab} &= \pd{g_{ab}}{u^{c}} - g_{db}\Gamma_{ac}^{d} - g_{ad}\Gamma_{bc}^{d}\\
+              &= 0,
+  \end{align*}
+  since the metric in Cartesian coordinates is constant. Specifically, this allows us to express $\Gamma$ as
+  \begin{align*}
+    \Gamma_{ab}^{c} &= \frac{1}{2}g^{cd}\left( \pd{}{u^a}g_{bd} + \pd{}{u^d}g_{da} - \pd{}{u^{d}}g_{ab}\right).
+  \end{align*}
   
 \end{document}
