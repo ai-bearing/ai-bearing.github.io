@@ -73,6 +73,13 @@ We need to recall some basic ideas related to convexity and compactness in topol
   Then, $\mu_1,\mu_2$ are regular Borel probability measures with $\mu_1\neq \mu_2$ and $t\mu_1 + \left( 1-t \right)\mu_2 = \mu$, which contradicts $\mu$ being extreme. Therefore, $\supp\left( \mu \right) = \set{x_0}$, so $\mu = \delta_{x_0}$.
 \end{example}
 \begin{example}
+  Let $\Omega$ be a LCH space. Then,
+  \begin{align*}
+    \operatorname{ext}\left( B_{M_r\left( \Omega \right)} \right) &= \set{\alpha\delta_x | x\in\Omega,\alpha\in \mathbb{T}}.
+  \end{align*}
+\end{example}
+
+\begin{example}
   The picture of a face in a convex compact set is relatively simple. If $u\colon X\rightarrow \R$ is an $\R$-linear continuous functional, and $P\subseteq X$ is compact and convex, the infimum $\inf_{x\in P}u(x) \eqcolon s$ is attained. The subset
   \begin{align*}
     P_u &= \set{x\in P | u(x) = s}
@@ -131,15 +138,196 @@ One of the most important results in extremal structure is the fact that every c
 
   Now, note that $C = \overline{\operatorname{conv}}\left( \operatorname{ext}\left( K \right) \right)\subseteq K$ as $K$ is closed and convex. Suppose that this inclusion is strict. Let $x_0\in K\setminus C$.\newline
 
-  Then, by the Hahn--Banach separation, there is $\varphi\in X^{\ast}$ such that for all $y\in C$,
+  Then, by the Hahn--Banach separation, there is $\varphi\in X^{\ast}$ and $t\in\R$ such that for all $y\in C$,
   \begin{align*}
     u\left( x_0 \right) < t \leq u(y),
   \end{align*}
   where $u = \re\left( \varphi \right)$. Let $s = \inf_{k\in K}u(k)$, so that $K_u = \set{x\in K | u(x) = s}$. This is a closed face in $K$, so it has an extreme point $z\in K$, with $z\in C$. Then, $u(z) \geq t > s$, but $z\in K_u$, so $u(z) = s$. Therefore, the inclusion is not strict.
 \end{proof}
-
 \section{Other Uses of Extremal Structure}%
+Extremal structure can often give us a lot of information about the structure of particularly important spaces. We start by proving a particular linear-algebraic lemma.
+\begin{lemma}
+  Let $X$ and $Y$ be vector spaces, $T\colon X\rightarrow Y$ a linear isomorphism. Let $C\subseteq X$ be nonempty and convex. Then,
+  \begin{align*}
+    T\left( \operatorname{ext}\left( C \right) \right) &= \operatorname{ext}\left( T(C) \right).
+  \end{align*}
+  In particular, if $T$ is an isometric isomorphism of normed spaces, then $T\left( \operatorname{ext}\left( B_X \right) \right) = \operatorname{ext}\left( B_Y \right)$.
+\end{lemma}
+\begin{proof}
+  Let $x\in \operatorname{ext}\left( C \right)$. Suppose $T(x) = \frac{1}{2}\left( y_1 + y_2 \right)$ for some $y_1,y_2\in T(C)$. We find $x_i$ such that $T\left( x_i \right) = y_i$ for each $i$. Then,
+  \begin{align*}
+    T\left( x \right) &= \frac{1}{2}\left( T\left( x_1 \right) + T\left( x_2 \right) \right)\\
+                      &= T\left( \frac{1}{2}\left( x_1 + x_2 \right) \right).
+  \end{align*}
+  Since $T$ is injective, $x = \frac{1}{2}\left( x_1 + x_2 \right)$, and since $x$ is extreme, $x= x_1 = x_2$, and $T(x) = y_1=  y_2$. Thus, $T\left( \operatorname{ext}\left( C \right) \right)\subseteq \operatorname{ext}\left( T\left( C \right) \right)$.\newline
+
+  Applying the same process on $T^{-1}$, we have $T^{-1}\left( \operatorname{ext}\left( T(C) \right) \right)\subseteq \operatorname{ext}\left( C \right)$. Therefore, $\operatorname{ext}\left( T(C) \right)\subseteq T\left( \operatorname{ext}\left( C \right) \right)$, so the sets are equal.
+\end{proof}
+One of the basic consequences of the Krein--Milman theorem is that it allows us to characterize dual spaces.
+\begin{theorem}
+  Let $X$ be a normed vector space. If $\operatorname{ext}\left( B_X \right) = \emptyset$, then $X$ is not a dual space.
+\end{theorem}
+\begin{proof}
+  If $Z$ is a normed space, then $B_{Z^{\ast}}$ in the $w^{\ast}$-topology is a compact and convex set, meaning that $\operatorname{ext}\left( B_{Z^{\ast}} \right)\neq \emptyset$. The result follows from the contrapositive.
+\end{proof}
 \subsection{The Stone--Weierstrass Theorem}%
+\begin{theorem}[Stone--Weierstrass]
+  Let $\Omega$ be a compact Hausdorff space, and let $A\subseteq C\left( \Omega \right)$ be a unital separating $\ast$-subalgebra. Then,
+  \begin{align*}
+    \overline{A}^{\norm{\cdot}_{u}} &= C\left( \Omega \right).
+  \end{align*}
+\end{theorem}
+The traditional proof involves showing that if $g\in A$, then $\left\vert g \right\vert\in A$, which allows for a lattice of functions in $A$ defined over the open cover of $\Omega$ to admit a limit point. There is a much more slick proof involving extremal structure. First, we recall some definitions relating to the dual space.
+\begin{definition}
+  Let $X$ be a normed space, and let $S\subseteq X$, $T\subseteq X^{\ast}$. We define
+  \begin{align*}
+    S^{\perp} &= \set{\varphi\in X^{\ast} | \varphi\left( x \right) = 0\text{ for all }x\in S}
+  \end{align*}
+  to be the \textit{annihilator} of $S$, and the \textit{pre-annihilator} of $T$ to be
+  \begin{align*}
+    T_{\perp} &= \set{x\in X | \varphi\left( x \right) = 0\text{ for all }\varphi\in T}.
+  \end{align*}
+\end{definition}
+Note that $S^{\perp}\subseteq X^{\ast}$ and $T_{\perp}\subseteq X$ are norm-closed subspaces.
+\begin{corollary}
+  Let $X$ be a normed space, and let $S\subseteq X$ be a subset. Then,
+  \begin{align*}
+    \left( S^{\perp} \right)_{\perp} &= \overline{\Span}\left( S \right).
+  \end{align*}
+\end{corollary}
+\begin{proof}
+  Since $S\subseteq \left( S^{\perp} \right)_{\perp}$, we must have $Z\coloneq \overline{\Span}\left( S \right)\subseteq \left( S^{\perp} \right)_{\perp}$.\newline
+
+  Suppose the inclusion is strict. Then, there exists $x_0\in \left( S^{\perp} \right)_{\perp}\setminus Z$. By the Hahn--Banach separation for normed spaces, there is $\varphi\in X^{\ast}$ such that $\varphi|_{Z} = 0$ and $\varphi\left( x_0 \right) = \dist_{Z}\left( x_0 \right)\neq 0$, meaning $\varphi\in S^{\perp}$, so $\varphi\left( x_0 \right)= 0$, a contradiction.
+\end{proof}
+\begin{proof}[Proof of the Stone--Weierstrass Theorem]
+  To show the Stone--Weierstrass theorem, we will show that $A^{\perp} = \set{0}$. Note that annihilators are always $w^{\ast}$-closed, so it is enough to show that $B_{A^{\perp}} = A^{\perp}\cap B_{C\left( \Omega \right)^{\ast}} = \set{0}$. Furthermore, note that $B_{A^{\perp}}$ is $w^{\ast}$-compact, so we will show that $\operatorname{ext}\left( B_{A^{\perp}} \right) = \set{0}$.\newline
+
+  Suppose $\varphi\in \operatorname{ext}\left( B_{A^{\perp}} \right)$ with $\norm{\varphi}\neq 0$. Then, $\norm{\varphi} = 1$, else we would be able to write
+  \begin{align*}
+    \varphi &= \left( 1-\norm{\varphi} \right)\left( 0 \right) + \norm{\varphi} \frac{\varphi}{\norm{\varphi}},
+  \end{align*}
+  and since $0\neq \varphi$, this would contradict the fact that $\varphi$ is extreme. Thus, $\norm{\varphi} = 1$. By the Riesz--Markov theorem, we know that $\varphi$ is of the form
+  \begin{align*}
+    \varphi(f) &= \int_{\Omega}^{} f\:d\mu
+  \end{align*}
+  for some regular Borel complex measure $\mu$ with norm $1$. We will show now that $\supp\left( \left\vert \mu \right\vert \right) = \set{x}$ for some $x\in B_{A^{\perp}}$.\newline
+
+  Suppose $x\neq y\in \supp\left( \mu \right)$. Since $A$ separates points, we may find $g\in A$ such that $g(x)\neq g(y)$. Using the Cartesian decomposition, we write $g = h + ik$, and since $A$ is a $\ast$-closed subspace, we know that $h,k\in A$. Without loss of generality, we may take $h(x) \neq h(y)$ (else multiply $g$ by $-i$ and replace $h$ with $k$).\newline
+
+  Set $\widetilde{h} = 2\norm{h}\1_{\Omega} + h$, which yet again belongs to $A$ since $A$ is unital, and note that $\widetilde{h}\left( x \right) \neq \widetilde{h}\left( y \right)$. Finally, set $f = \frac{1}{2\norm{\widetilde{h}}}h$. We have that $f\colon \Omega\rightarrow (0,1)$ is continuous with $f\in A$ and $f(x)\neq f(y)$. Furthermore, $f\in B_{C\left( \Omega \right)}$.\newline
+
+  Define the complex measures $\nu = f\:d\mu$ and $\lambda = \left( 1-f \right)\:d\mu$, where we define
+  \begin{align*}
+    \nu\left( E \right) &= \int_{E}^{} f\:d\mu\\
+    \lambda(E) &= \int_{E}^{} \left( 1-f \right)\:d\mu.
+  \end{align*}
+  By definition, $\nu,\lambda\in B_{M_r\left( \Omega \right)}$, and for all $a\in A$,
+  \begin{align*}
+    \int_{\Omega}^{} a\:d\nu &= \int_{\Omega}^{} a f\:d\mu\\
+                             &= \varphi\left( af \right)\\
+                             &= 0,
+  \end{align*}
+  as we defined $\varphi\in A^{\perp}$, and $A$ is a subalgebra. Similarly,
+  \begin{align*}
+    \int_{\Omega}^{} a\:d\lambda &= \int_{\Omega}^{} a\left( 1-f \right)\:d\mu\\
+                                 &= \varphi\left( a\left( 1-f \right) \right)\\
+                                 &= 0.
+  \end{align*}
+  Thus, $\nu,\lambda\in A^{\perp}\cap B_{M_r\left( \Omega \right)}=B_{A^{\perp}}$. Additionally,
+  \begin{align*}
+    \norm{\nu} + \norm{\lambda} &= \left\vert \nu \right\vert\left( \Omega \right) + \left\vert \lambda \right\vert\left( \Omega \right)\\
+                                &= \int_{\Omega}^{} f\:d\left\vert \mu \right\vert + \int_{\Omega}^{} \left( 1-f \right)\:d\left\vert \mu \right\vert\\
+                                &= \int_{\Omega}^{} \1_{\Omega}\:d\left\vert \mu \right\vert\\
+                                &= \left\vert \mu \right\vert\left( \Omega \right)\\
+                                &= \norm{\mu}\\
+                                &= 1,
+  \end{align*}
+  where we use the definition of the total variation norm, $\norm{\mu} = \left\vert \mu \right\vert\left( \Omega \right)$.\newline
+
+  Thus, we have the convex combination
+  \begin{align*}
+    \mu &= \nu + \lambda\\
+        &= \norm{\nu}\left( \frac{\nu}{\norm{\nu}} \right) + \norm{\lambda}\left( \frac{\lambda}{\norm{\lambda}} \right),
+  \end{align*}
+  and since $\mu$ is extreme, $\mu = \frac{\nu}{\norm{\nu}}$, meaning $\nu = \norm{\nu}\mu$. Therefore,
+  \begin{align*}
+    \int_{\Omega}^{} f\:d\left\vert \mu \right\vert &= \left\vert \nu \right\vert\left( \Omega \right)\\
+                                                    &= \norm{\nu}\left\vert \mu \right\vert\left( \Omega \right)\\
+                                                    &= \int_{\Omega}^{} \norm{\nu}\:d\left\vert \mu \right\vert,
+  \end{align*}
+  meaning $f = \norm{\nu}$ $\left\vert \mu \right\vert$-a.e. Furthermore,
+  \begin{align*}
+    \supp\left( \left\vert \mu \right\vert \right) &\subseteq \set{x | f(x) = \norm{\nu}},
+  \end{align*}
+  as, taking $E \coloneq \set{x | f(x) = \norm{\nu}}$, we must have $E^{c} \subseteq \ker\left( \left\vert \mu \right\vert \right)$. Since $x,y\in \supp\left( \mu \right)$, we have $x,y\in \supp\left( \left\vert \mu \right\vert \right)$, so $f(x) = f(y) = \norm{\nu}$, which is a contradiction.\newline
+
+  Therefore, we must have $\mu = \alpha \delta_x$ for some $\left\vert \alpha \right\vert = 1$. Then, for all $a\in A$, since $\varphi\in A^{\perp}$,
+  \begin{align*}
+    0 &= \varphi\left( a \right)\\
+      &= \int_{\Omega}^{} a\:d\mu\\
+      &= \alpha a(x).
+  \end{align*}
+  In particular, this holds for $\alpha = \alpha \1_{\Omega}\left( x \right)$, so $\mu = 0$, which contradicts our assumption that $\norm{\varphi}\neq 0$. Thus, we must have $\operatorname{ext}\left( B_{A^{\perp}} \right) = \set{0}$.\newline
+
+  Applying the Krein--Milman theorem, we have
+  \begin{align*}
+    B_{A^{\perp}} &= \overline{\operatorname{conv}}\left( \operatorname{ext}\left( B_{A^{\perp}} \right) \right)\\
+                  &= \set{0},
+  \end{align*}
+  or that $\left( A^{\perp} \right)_{\perp} = \overline{A}^{\norm{\cdot}_{u}} = C\left( \Omega \right)$.
+\end{proof}
 \subsection{The Banach--Stone Theorem}%
+Given two locally compact Hausdorff spaces, $X$ and $Y$, and a proper\footnote{Preimages of compact sets are compact.} map $\tau\colon X\rightarrow Y$, there is a natural dual linear map,
+\begin{align*}
+  T_{\tau}\colon C_0\left( Y \right)\rightarrow  C_0\left( X \right),
+\end{align*}
+given by $T_{\tau}\left( f \right) = f\circ\tau$.
+\begin{theorem}
+  If $\tau\colon X\rightarrow Y$ is a proper map, and $T_{\tau}\colon C_0\left( Y \right)\rightarrow C_0\left( X \right)$ is a proper map, then:
+  \begin{enumerate}[(a)]
+    \item if $\tau$ is surjective, then $T_{\tau}$ is injective;
+    \item if $T_{\tau}$ is injective, and $\tau\left( X \right)\subseteq Y$ is closed, then $\tau$ is surjective;
+    \item if $T_{\tau}$ is surjective, then $\tau$ is injective;
+    \item if $X,Y$ are compact, then if $\tau$ is injective, $T_{\tau}$ is surjective.
+  \end{enumerate}
+  Furthermore, $T_{\tau}$ is a contractive map; if $\tau$ is a homeomorphism, then $T_{\tau}$ is an isometric isomorphism.
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(a)]
+    \item Let $\tau$ be surjective. Then, if $T_{\tau}\left( f \right) = 0$, we must have $f|_{\Ran\left( \tau \right)} = 0$; however, since $\Ran\left( \tau \right) = Y$, we must have $f = 0$.
+
+    \item If $T_{\tau}$ is injective, and there is $y\in Y$ such that $y\notin \tau\left( X \right)$, Urysohn's lemma gives a compactly supported $f\colon Y\rightarrow [0,1]$ such that $f|_{\tau\left( X \right)} = 0$ and $f(y) = 1$. However, we would have $T_{\tau}\left( f \right) = 0$, but $f\neq 0$, which is a contradiction. Thus, we must have $\tau\left( X \right) = Y$.
+    \item Let $T_{\tau}$ be surjective, and let $x_1\neq x_2$ in $X$. By Urysohn's lemma, there is $g\in C_0\left( X \right)$ such that $g\left( x_1 \right)\neq g\left( x_2 \right)$. We may find $f\in C\left( Y \right)$ such that $f\circ\tau = g$, meaning $f\left( \tau\left( x_1 \right) \right) \neq f\left( \tau\left( x_2 \right) \right)$, so $\tau\left( x_1 \right)\neq \tau\left( x_2 \right)$, and $\tau$ is injective.
+    \item Let $\tau$ be injective. If $X$ is compact, then $\tau\left( X \right)$ is compact, hence closed, and $\widetilde{\tau}\colon X \rightarrow \tau\left( X \right)$ is a homeomorphism. Given $g\in C\left( X \right)$, the continuous function $f_0\coloneq g\circ \widetilde{\tau}^{-1}$ extends to a continuous $f\in C\left( Y \right)$ by Tietze's Extension Theorem. Now,
+      \begin{align*}
+        T_{\tau}\left( f \right) &= f\circ\tau\\
+                                 &= f_0\circ\widetilde{\tau}\\
+                                 &= g\circ \widetilde{\tau}^{-1}\circ\widetilde{\tau}\\
+                                 &= g,
+      \end{align*}
+      so $T_{\tau}$ is surjective.
+  \end{enumerate}
+  Computing
+  \begin{align*}
+    \norm{T_{\tau}\left( f \right)}_{u} &= \sup_{x\in X}\left\vert T_{\tau}\left( f \right)\left( x \right) \right\vert\\
+                                        &= \sup_{x\in X} \left\vert f\left( \tau\left( x \right) \right) \right\vert\\
+                                        &\leq \sup_{y\in Y}\left\vert f\left( y \right) \right\vert\\
+                                        &\leq \norm{f}_{u},
+  \end{align*}
+  so $\norm{T_{\tau}}_{\op}\leq 1$.\newline
+
+  Now, if $\tau$ is a homeomorphism, then both $T_{\tau}$ and $T_{\tau^{-1}} = T_{\tau}^{-1}$ are contractions, meaning they must be isometries. Since $\tau$ is a bijection, $T_{\tau}$ is also a linear isomorphism, meaning $T_{\tau}$ is an isometric isomorphism.
+\end{proof}
+Surprisingly, the above statement reverses --- i.e., for compact Hausdorff spaces $X,Y$, if there is an isometric isomorphism $T\colon C\left( Y \right)\rightarrow C\left( X \right)$, there is a corresponding homeomorphism $\tau\colon X\rightarrow Y$.
+\begin{theorem}[Banach--Stone]
+  Suppose $T\colon C\left( Y \right)\rightarrow C\left( X \right)$ is an isometric isomorphism of Banach spaces. Then, there exists a homeomorphism $\tau\colon X\rightarrow Y$ and a continuous $\alpha\colon \Omega\rightarrow \mathbb{T}$ such that for every $x\in\Omega$ and $g\in C\left( Y \right)$,
+  \begin{align*}
+    T\left( g \right)\left( x \right) &= \alpha(x)g\left( \tau\left( x \right) \right).
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Let $T\colon C\left( Y \right)\rightarrow C\left( X \right)$ be an isometric isomorphism. Then, by the properties of the transpose map, $T^{\ast}\colon C\left( X \right)^{\ast}\rightarrow C\left( Y \right)^{\ast}$ is an isometric isomorphism and a $w^{\ast}$-$w^{\ast}$-homeomorphism. Since $T^{\ast}$ is an isometric isomorphism. $T^{\ast}\left( \operatorname{ext}\left( B_{M_{r}\left( X \right)} \right) = \operatorname{ext}\left( B_{M_{r}\left( Y \right)} \right) \right)$.
+\end{proof}
 
 \end{document}
