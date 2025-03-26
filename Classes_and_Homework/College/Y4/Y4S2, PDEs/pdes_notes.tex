@@ -1507,6 +1507,7 @@ We call \eqref{eq:pde_1} the \textit{transport equation}.
 
     Now, we may implement the boundary conditions of $u\left( a,t \right) = c_1$ and $u\left( b,t \right) = c_2$, which allow us to express the fact that we don't want the very ends of our heated rod to change.
 \end{example}
+\section{Solving via Fourier Series}%
 \begin{example}[Solving a Heat Equation]
   Consider the heat equation of the form
   \begin{align*}
@@ -1660,7 +1661,6 @@ We call \eqref{eq:pde_1} the \textit{transport equation}.
   \end{align*}
   giving a damping term in $X$.
 \end{example}
-\section{Fourier Series and the Wave Equation}%
 \begin{example}[Introducing the Wave Equation]
   Consider the equation
   \begin{align*}
@@ -2228,6 +2228,138 @@ and plugging in the boundary conditions.
         u\left( x,0 \right) &= f(x) - b - \frac{c-b}{a}x.
       \end{align*}
   \end{itemize}
+\end{example}
+\section{Method of Characteristics}%
+\begin{example}
+  Recall the transport equation:
+  \begin{align*}
+    \pd{u}{t} + a \pd{u}{x} &= 0,
+  \end{align*}
+  with $x\in\R$, $t\geq 0$, and $u\left( x,0 \right) = f(x)$. Then, the solution of the transport equation is $u\left( x,t \right) = f\left( x-at \right)$.\newline
+
+  We may interpret $a$ to be a type of velocity (a propagation velocity, perhaps).\newline
+
+  If $a$ is not a constant, but instead $t$, then we may need a different method to solve the equation
+  \begin{align*}
+    \pd{u}{t} + t \pd{u}{x} &= 0.
+  \end{align*}
+  Recall the chain rule from multivariable calculus:
+  \begin{align*}
+    \diff{}{t}\left( u\left( x,t \right) \right) &= \pd{u}{t} + \pd{u}{x}\diff{x}{t}.
+  \end{align*}
+  This formula looks distinctly like our harder version of the transport equation. Writing in a more familiar fashion, we have
+  \begin{align*}
+    0 &= \diff{u}{t}\\
+      &= \pd{u}{t} + \diff{x}{t}\pd{u}{x}\\
+      &= \pd{u}{t} + t\pd{u}{x}.
+  \end{align*}
+  Therefore, solutions will have the property that $\diff{x}{t} = t$, or that $x = \frac{1}{2}t^2 + c$. Furthermore, since $\diff{u}{t} = 0$, we have $u$ is constant along curves in the $\left( x,t \right)$ plane where $x = \frac{1}{2}t^2 + c$.\newline
+
+  We pick a point at $t = 0$ (i.e., on our initial condition). Then, $x_0 = c$, and $x(t) = \frac{1}{2}t^2 + c$.\newline
+
+  This gives a \textit{characteristic curve}.
+  \begin{center}
+    \includegraphics[width=10cm]{images/characteristic_curve.pdf}
+  \end{center}
+  Since $u\left( x,t \right)$ is constant along this characteristic curve, we must have $x_0 = x - \frac{1}{2}t^2$, and a solution of
+  \begin{align*}
+    u\left( x,t \right) &= u_0\left( x_0 \right)\\
+                        &= u_0\left( x-\frac{1}{2}t^2 \right).
+  \end{align*}
+\end{example}
+\begin{example}
+  Consider now the equation
+  \begin{align*}
+    \pd{u}{t} + x\pd{u}{x} &= 0,
+  \end{align*}
+  with $u\left( x,0 \right) = x^2$. Solving $\diff{x}{t} = x$, we have
+  \begin{align*}
+    x(t) &= ce^{t}.
+  \end{align*}
+  We have $x(0) = c$, or that $x(t) = x_0e^{t}$. Using the fact that $u$ is constant along a characteristic, we have $x_0 = xe^{-t}$, and $u\left( x,t \right) = u_0\left( x_0 \right)$, giving
+  \begin{align*}
+    u\left( x,t \right) &= u_0\left( x_0 \right)\\
+                        &= u_0\left( xe^{-t} \right)\\
+                        &= x^2e^{-2t}.
+  \end{align*}
+\end{example}
+Now, we ask ourselves when we may use the method of characteristics. Recall that there are three main types of linear partial differential equations:
+\begin{itemize}
+  \item Hyperbolic PDEs include the wave equation, and have two characteristic curves.
+  \item Parabolic PDEs include the heat equation, and have one characteristic curve.
+  \item Elliptic PDEs include Laplace's equation, and have no characteristic curves.
+\end{itemize}
+\begin{example}
+  Consider
+  \begin{align*}
+    \pd{u}{t} + \frac{1}{t} \pd{u}{x} &= 0,
+  \end{align*}
+  with $u\left( x,0 \right) = \sin(x)$. Unfortunately, we can't use the method of characteristics to solve this equation. Instead, we may try
+  \begin{align*}
+    \pd{u}{t} + \frac{1}{t + 1}\pd{u}{x} &= 0,
+  \end{align*}
+  with the same initial condition. Then, 
+  \begin{align*}
+    \diff{x}{t} &= \frac{1}{t+1},
+  \end{align*}
+  so
+  \begin{align*}
+    x(t) &= \ln\left\vert t+1 \right\vert + c.
+  \end{align*}
+  Then, $x(0) = c$, so that
+  \begin{align*}
+    x(0) &= x - \ln\left\vert t+1 \right\vert.
+  \end{align*}
+  Yet again using the method of characteristics, we have
+  \begin{align*}
+    u\left( x,t \right) &= u_0\left( x_0 \right)\\
+                        &= \sin\left( x-\ln\left\vert t+1 \right\vert \right)\\
+                        &= \sin\left( x-\ln\left( t+1 \right) \right),
+  \end{align*}
+  as $t \geq 0$.
+\end{example}
+\begin{example}
+  Consider
+  \begin{align*}
+    \pd{u}{t} + \left( x + t \right)\pd{u}{x} &= 0,
+  \end{align*}
+  with $u\left( x,0 \right) = \sin(x)$. We take
+  \begin{align*}
+    \diff{x}{t} &= x + t.
+  \end{align*}
+  We need an integrating factor to solve this problem.
+\end{example}
+\begin{example}
+  Consider
+  \begin{align*}
+    \pd{u}{t} + t^2\pd{u}{x} &= 1,
+  \end{align*}
+  with $u\left( x,0 \right) = \sin(x)$. We're tempted to go ahead and try using the linearity principle, but before we try this, we recall how we created the characteristic curves in the first place, and write
+  \begin{align*}
+    1 &= \diff{u}{t}\\
+      &= \pd{u}{t} + \diff{x}{t} \pd{u}{x}\\
+      &= \pd{u}{t} + t^2\pd{u}{x}.
+  \end{align*}
+  This tells us that solutions propagate along characteristic curves, but along the curves, $u\left( x,t \right)$ increases at a constant rate of $1$.\newline
+
+  We start by finding the characteristic curves:
+  \begin{align*}
+    \diff{x}{t}  &= t^2,
+  \end{align*}
+  so
+  \begin{align*}
+    x(t) &= \frac{1}{3}t^3 + x_0,
+  \end{align*}
+  or $x_0 = x - \frac{1}{3}t^3$. Therefore, we have
+  \begin{align*}
+    u\left( x,t \right) &= u_0\left( x_0 \right) + t\\
+    &= u_0\left( x-\frac{1}{3}t^3 \right) + t,
+  \end{align*}
+  where $t$ is the addition that allows for $\diff{u}{t} = 1$. Plugging in our initial condition,
+  \begin{align*}
+    u\left( x,t \right) &= \sin\left( x - \frac{1}{3}t^3 \right) + t.
+  \end{align*}
+  
 \end{example}
 
 \end{document}
