@@ -33,7 +33,7 @@ The following are standard texts.
 ### [Egorov's Theorem and Lusin's Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/egorovs_theorem_lusins_theorem.pdf)
 > The mathematician J.E. Littlewood introduced three principles of real analysis: every measurable set is nearly a finite union of intervals, every measurable function is nearly continuous, and every pointwise convergent sequence is nearly uniformly convergent. Here, we prove (ii) and (iii), which are the substance of Lusin's Theorem and Egorov's Theorem respectively.
 
-### [Extreme Points, the Krein--Milman Theorem, and Applications](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/extreme_points_krein_milman_stone_weierstrass.pdf)
+### [Extreme Points, the Krein--Milman Theorem, and Applications](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/extreme_points_krein_milman_and_stone_weierstrass.pdf)
 > We discuss extremal structure in locally convex topological vector spaces, as well as a fundamental result in the theory of topological vector spaces: the Krein--Milman theorem. We also use extremal structure to prove the Stone--Weierstrass Theorem and the Banach--Stone theorem.
 
 ## Topology
