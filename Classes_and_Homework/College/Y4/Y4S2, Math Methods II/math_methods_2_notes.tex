@@ -2230,4 +2230,138 @@ We can find the residue in a variety of ways.
     \diff{^2u^c}{s^2} + \Gamma_{ab}^{c} \diff{u^a}{s}\diff{u^b}{s} &= 0.
   \end{align*}
   Thus, we get the geodesic equation back.
+  \section{Orthogonal Functions}%
+  Recall the fundamental orthogonality relation
+  \begin{align*}
+    \braket{\phi_n}{\phi_m} &= k_n\delta_{nm},
+  \end{align*}
+  where we refer to abstract vectors\footnote{Also known as vectors.} by $\ket{\phi}$ and abstract linear functionals\footnote{Also known as linear functionals.} as $\bra{\phi}$. In the case of $\set{\phi_n}_{n \geq 0}$ as a family of complex-valued functions defined over the interval $[a,b]\subseteq \R$, we have
+  \begin{align*}
+    \braket{\phi_n}{\phi_m} &= \int_{a}^{b} \overline{\phi_n(x)}\phi_m(x)w(x)\:dx,
+  \end{align*}
+  where $w$ is a weight function. Recall from \href{https://ai.avinash-iyer.com/Classes_and_Homework/College/Y4/Y4S1,%20Math%20Methods/math_methods_notes.pdf}{Math Methods I} that, if we have a family of polynomials $\set{x^n}_{n\geq 0}$, there are three (primary) ways to make a set of orthogonal (or orthonormal) polynomials upon using Gram--Schmidt.
+    \begin{itemize}
+      \item The Legendre polynomials have the weight $w(x) =1$ and are defined along $[-1,1]$.
+      \item The Laguerre polynomials have the weight $w(x) = e^{-x}$ and are defined along $[0,\infty)$.
+      \item The Hermite polynomials have the weight $w(x) = e^{-x^2}$ and are defined along $\R$.
+    \end{itemize}
+  We can theoretically use the Gram--Schmidt process to generate these families of polynomials, but that sucks.\footnote{Citation needed.} Instead, we are interested in a more concrete, straightforward way to calculate these polynomials.\newline
+
+  Recall from E\&M\footnote{I don't, but others might.} that if $q$ is a charge at point $\mathbf{r}'$ and we have a measurement device at point $\mathbf{r}$, both along the $z$ axis, then the voltage is proportional to $\frac{1}{\norm{\mathbf{r}-\mathbf{r}'}}$. Orienting our axes, we may take $\frac{1}{\left\vert r-r' \right\vert}$.\newline
+
+  If $r' < r$, we take
+  \begin{align*}
+    \frac{1}{r\left( 1-\frac{r'}{r} \right)} &= \frac{1}{r}\sum_{\ell = 0}^{\infty}\left( \frac{r'}{r} \right)^{\ell},
+  \end{align*}
+  and if $r' > r$, we tkae
+  \begin{align*}
+    \frac{1}{r'\left( 1-\frac{r}{r'} \right)} &= \frac{1}{r'}\sum_{\ell = 0}^{\infty}\left( \frac{r}{r'} \right)^{\ell}.
+  \end{align*}
+  We may write this as
+  \begin{align*}
+    \frac{1}{\left\vert r-r' \right\vert} &= \frac{1}{r_{>}}\sum_{\ell=0}^{\infty} \left( \frac{r_{<}}{r_{>}} \right)^{\ell}\\
+                                          &= \frac{1}{r_{>}} \sum_{\ell = 0}^{\infty}t^{\ell},
+  \end{align*}
+  where $t = \frac{r_{ < }}{r_{ > }}$. If we reorient our $z$, then the magnitude of the difference $\left\vert r-r' \right\vert$ doesn't change, but we need some function of $\theta$, or that
+  \begin{align*}
+    \frac{1}{\norm{\mathbf{r}-\mathbf{r}'}} &= \sum_{\ell = 0}^{\infty}\frac{r_{ < }^{\ell}}{r_{>}^{\ell + 1}} f\left( \theta \right).
+    \intertext{Note that $f(\theta)\xrightarrow{\theta\rightarrow 0} 1$, and that our $z$ axis is a function purely of $\cos\theta$, so we have}
+                                            &= \sum_{\ell = 0}^{\infty}\frac{r_{ < }^{\ell}}{r_{ > }^{\ell + 1}}P_{\ell}\left( \cos\left( \theta \right) \right)\\
+                                            &= \frac{1}{r_{ > }}\sum_{\ell = 0}^{\infty} t^{\ell}P_{\ell}\cos\left( \theta \right).
+  \end{align*}
+  Using the law of cosines, we have
+  \begin{align*}
+    \frac{1}{\norm{\mathbf{r}-\mathbf{r}'}} &= \frac{1}{\sqrt{r^2 + {r'}^2 - 2rr'\cos\left( \theta \right)}}\\
+                                            &= \frac{1}{r_{ > }\sqrt{1 + t^2 - 2xt}}.
+  \end{align*}
+  Taking $x = \cos\left( \theta \right)$, and defining
+  \begin{align*}
+    G\left( x,t \right) &= \frac{1}{\sqrt{1 + t^2 - 2xt}}\\
+                        &= \sum_{\ell=0}^{\infty}t^{\ell}P_{\ell}\left( x \right)
+  \end{align*}
+  Then, 
+  \begin{align*}
+    P_{\ell}\left( x \right) &= \frac{1}{\ell!}\pd{^{\ell}}{t^{\ell}}G\left( x,t \right)\biggr\vert_{t=0}.
+  \end{align*}
+  This is how we obtain the Legendre polynomials. Specifically, we obtain
+  \begin{align*}
+    P_0 &= 1\\
+    P_1 &= x\\
+    P_2 &= \frac{1}{2}\left( 3x^2 - 1 \right).
+  \end{align*}
+  The function $G(x,t)$ is the \textit{generating function} of the Legendre polynomials.\newline
+
+  Note that there is also a formula for the Legendre polynomials, known as the Rodrigues formula:
+  \begin{align*}
+    P_{\ell}(x) &= \frac{\left( -1 \right)^{\ell}}{2^{\ell}\ell!} \left( \frac{d}{dx} \right)^{\ell}\left( 1-x^2 \right)^{\ell}.
+  \end{align*}
+  We will focus on the generating function though. If we take an integral,
+  \begin{align*}
+    \int_{-1}^{-1} \left( G\left( x,t \right) \right)^2\:dx &= \sum_{n,m\geq 0}^{\infty}t^nt^m \int_{-1}^{1} P_n(x)P_m(x)\:dx\\
+    \int_{-1}^{1} \frac{1}{1-2xt + t^2}\:dx &= \frac{1}{t}\left( \ln\left( 1+t \right)-\ln\left( 1-t \right) \right).
+  \end{align*}
+  Now, taking an expansion in terms of Taylor series on the right side, we have
+  \begin{align*}
+    \int_{-1}^{1} \frac{1}{1 - 2xt + t^2}\:dx &= \sum_{n=0}^{\infty}\frac{1}{2n+1}t^{2n}.
+  \end{align*}
+  Since the double sum equals a single sum, we must have a Kronecker delta, yielding
+  \begin{align*}
+    \int_{-1}^{1} \left( G\left( x,t \right) \right)^2\:dx &= \frac{2}{2n+1}\delta_{mn}.
+  \end{align*}
+  Furthermore, since
+  \begin{align*}
+    G\left( x,t \right) &= G\left( -x,-t \right),
+  \end{align*}
+  we must have
+  \begin{align*}
+    \sum_{\ell=0}^{\infty}t^{\ell}P_{\ell}\left( x \right) &= \sum_{t=0}^{\infty}\left( -t \right)^{\ell}P_{\ell}\left( -x \right)\\
+                                                           &= \sum_{t=0}^{\infty}t^{\ell}\left( -1 \right)^{\ell}P_{\ell}\left( -x \right)
+  \end{align*}
+  meaning that $P_{\ell}\left( -x \right) = \left( -1 \right)^{\ell}P_{\ell}\left( x \right)$.\newline
+
+  For Hermite polynomials, the generating function is
+  \begin{align*}
+    G\left( x,t \right) &= e^{2xt - t^2}\\
+                        &= \sum_{n=0}^{\infty}\frac{1}{n!}H_{n}\left( x \right)t^{n}.
+  \end{align*}
+  Consider
+  \begin{align*}
+    \pd{G}{x} &= 2tG.
+  \end{align*}
+  Then, in particular, we have 
+  \begin{align*}
+    \sum_{n=0}^{\infty}\frac{1}{n!}\diff{H_m}{x}t^{n} &= 2t \sum_{m=0}^{\infty}\frac{1}{m!}H_m(x)t^{m}\\
+                                                      &= \sum_{m=0}^{\infty}\frac{1}{m!}H_m(x)t^{m+1}.
+  \end{align*}
+  Letting $m = n-1$, we have
+  \begin{align*}
+    \sum_{n=0}^{\infty} \frac{1}{n!}\left(\diff{H_n}{x}-2nH_{n-1}(x) \right)t^{n} &= 0
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    \diff{H_n}{x} &= 2nH_{n-1},\label{eq:two_term_recurrence_hermite}\tag{\textasteriskcentered}
+  \end{align*}
+  a two-term recurrence relation. We can also take
+  \begin{align*}
+    \pd{G}{t} &= 2\left( x-t \right)G,
+  \end{align*}
+  from which we are able to obtain a three-term recurrence relation
+  \begin{align*}
+    H_{n+1}(x) - 2xH_{n}(x) + 2nH_{n-1} &= 0.
+  \end{align*}
+  Taking a derivative of \eqref{eq:two_term_recurrence_hermite} and inserting our three-term recurrence relation, we get the equation
+  \begin{align*}
+    \diff{^2H_n}{x^2} - 2x \diff{H_n}{x} + 2nH_n &= 0.
+  \end{align*}
+  There is a similar second-order differential equation for the Legendre polynomials,
+  \begin{align*}
+    \left( 1-x^2 \right)\diff{^2P_{n}}{x^2} - 2x\diff{P_n}{x} + n\left( n+1 \right)P_n &= 0.
+  \end{align*}
+  These equations are known as Hermite's equation and Legendre's equation (respectively). However, it is not apparent from this construction that we get orthogonality.\newline
+
+  As it turns out, this comes from eigenvectors and eigenvalues. The equation
+  \begin{align*}
+    \diff{^2f}{x^2} &= -k^2 f
+  \end{align*}
+  has the operator $\diff{^2}{x^2}$ and eigenvalue $-k^2$. Since these eigenvalues are real, we must have $\diff{^2}{x^2}$ be a self-adjoint (or Hermitian\footnote{There is a difference that I don't want to try to learn yet.}) operator, admitting an orthonormal eigenbasis.
 \end{document}
