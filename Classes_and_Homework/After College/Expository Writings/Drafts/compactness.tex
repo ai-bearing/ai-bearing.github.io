@@ -40,8 +40,194 @@ Traditionally, one is introduced to compactness in their first class on topology
   \end{align*}
   In other words, $X$ is compact if every open cover admits a finite subcover.
 \end{definition}
-\subsection{Nets, Filters, and Ultrafilters}%
+One of the early equivalent characterizations we encounter with compactness relates to what happens when we take complements of the definition.
+\begin{theorem}
+  Let $X$ be a topological space. The following are equivalent:
+  \begin{itemize}
+    \item $X$ is compact;
+    \item for every family of closed sets $\set{C_i}_{i\in I}$ in $X$ with the finite intersection property --- that is, the intersection of finitely many such $C_i$ is nonempty --- then 
+      \begin{align*}
+        \bigcap_{i\in I}C_i\neq \emptyset.
+      \end{align*}
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  Let $X$ be a compact topological space, and let $\set{C_i}_{i\in I}$ be a family with the finite intersection property. Defining $U_i = C_i^{c}$, it is then the case that any finite union of $U_i$ does not fully cover $X$. Since any open cover of $X$ must admit a finite subcover, and the union of no finite subcollection of $\set{U_i}_{i\in I}$ covers $X$, it is then the case that
+  \begin{align*}
+    \emptyset &\neq \left( \bigcup_{i\in I}U_i \right)^{c}\\
+              &= \bigcap_{i\in I}C_i.
+  \end{align*}
+  Now, if $X$ is not compact, there is an open cover $\set{U_i}_{i\in I}$ of $X$ with no finite subcover, or that for any finite subcollection $\set{U_i}_{i\in F}$, their union ``misses'' at least one element of $X$. Defining $C_i = U_i^{c}$, this means that the family $\set{C_i}_{i\in I}$ has the finite intersection property, but since $\bigcup_{i\in I}U_i = X$, the intersection $\bigcap_{i\in I}C_i = \emptyset$.
+\end{proof}
+The finite intersection property characterization is immensely useful in an analytical context --- for instance, it allows us to establish the existence of choice functions.
+\subsection{Compactness through Nets}%
+Here, we give a crash course in nets before discussing the first 
+\begin{definition}
+  Let $X$ be a topological space. An \textit{open neighborhood} of $x$ is a subset $U\in \tau$ such that $x\in U$. The family of open neighborhoods of $x$ is denoted $\mathcal{O}_{x}$.\newline
+
+  A \textit{neighborhood} of $x\in X$ is a subset $N\subseteq X$ such such that there exists $U\in \mathcal{O}_{x}$ such that $U\subseteq N$. The family of open neighborhoods of $x$ is denoted $\mathcal{N}_{x}$, and is known as the \textit{neighborhood system} at $x$.
+\end{definition}
+\begin{definition}
+  Let $A$ be a set, and let $\preceq$ be a relation on $A$. We say $\left( A,\preceq \right)$ is \textit{directed} if, for any $a,b\in A$, there exists $c\in A$ such that $a\preceq c$ and $b\preceq c$.
+\end{definition}
+\begin{definition}
+  A \textit{net} is a function from a directed set to a topological space. We write $\left( x_{\alpha} \right)_{\alpha}\subseteq X$ to denote a net.
+\end{definition}
+\begin{definition}
+  A net $\left( x_{\alpha} \right)_{\alpha}$ \textit{converges to} $x\in X$ if, for every $U\in \mathcal{N}_{x}$, there exists $\beta\in A$ such that for all $\alpha \geq \beta$, $x_{\alpha}\in U$. We write $\left( x_{\alpha} \right)_{\alpha}\rightarrow x$.\newline
+
+  An element $x\in X$ is known as a \textit{cluster point} (or \textit{accumulation point}) of $\left( x_{\alpha} \right)_{\alpha}$ if, for all $U\in \mathcal{O}_{x}$ and all $\beta\in A$, there exists $\alpha \in A$ such that $x_{\alpha}\in U$.
+\end{definition}
+\begin{definition}
+  If $A$ and $B$ are directed sets, a map $\phi\colon B\rightarrow A$ is called \textit{cofinal} if, for every $\alpha \in A$, there is $\beta_{\alpha}\in B$ such that $\alpha\preceq \phi\left( \beta \right)$ for all $\beta\in B$ where $\beta_{\alpha}\preceq \beta$.\newline
+
+  If $\left( x_{\alpha} \right)_{\alpha}$ and $\left( y_{\beta} \right)_{\beta}$ are nets in $X$, then we say $\left( y_{\beta} \right)_{\beta}$ is a subnet of $\left( x_{\alpha} \right)_{\alpha}$ if $y_{\beta} = x_{\phi\left( \beta \right)}$ for some cofinal map $\phi\colon B\rightarrow A$. We write $\left( x_{\alpha_{\beta}} \right)_{\beta}$.
+\end{definition}
+There are a variety of characterizations of topological qualities that can be rephrased in terms of nets. We state them here and leave their proofs as exercises.
+\begin{theorem}
+  Let $X$ and $Y$ be topological spaces, let $f\colon X\rightarrow Y$ be a map, and let $A\subseteq X$ be some subset.
+  \begin{itemize}
+    \item We have $x\in \overline{A}$ if and only if there is a net $\left( x_{\alpha} \right)_{\alpha}\subseteq A$ such that $\left( x_{\alpha} \right)_{\alpha}\rightarrow x$.
+    \item A point $x\in X$ is a cluster point for $\left( x_{\alpha} \right)_{\alpha}$ if and only if $\left( x_{\alpha} \right)_{\alpha}$ admits a subnet, $\left( x_{\alpha_{\beta}} \right)_{\beta}\rightarrow x$.
+    \item The map $f\colon X\rightarrow Y$ is continuous if and only if, for all nets $\left( x_{\alpha} \right)_{\alpha}\rightarrow x$ in $X$, we have $\left( f\left( x_{\alpha} \right) \right)_{\alpha}\rightarrow f\left( x \right)$.
+    \item A topological space $X$ is Hausdorff if and only if any net converges to at most one point.
+  \end{itemize}
+\end{theorem}
+The one we will focus on today is, of course, compactness.
+\begin{theorem}
+  Let $X$ be a topological space. Then, $X$ is compact if and only if every net $\left( x_{\alpha} \right)_{\alpha}$ admits a cluster point.
+\end{theorem}
+\begin{proof}
+  Let $X$ be compact, and set $V_{\alpha} = \set{x_{\beta} | \beta\geq \alpha}$. Then, the family $ \set{\overline{V_{\alpha}}}_{\alpha \in A} $ satisfies the finite intersection property --- for any $\alpha_1,\dots,\alpha_n\in A$, there is some $\alpha\in A$ such that $\alpha_i\preceq \alpha$ for all $i$, meaning that $x_{\alpha}\in \bigcap_{i=1}^{n} \overline{V_{\alpha_i}}$. Therefore, there is some $x\in X$ such that $x\in \bigcap_{\alpha\in A} \overline{V_{\alpha}}$. Let $U\in \mathcal{O}_{x}$, and let $\alpha \in A$. Then, since $x\in \overline{V_{\alpha}}$, there is some $\beta \geq \alpha$ such that $x_{\beta}\in U$. Therefore, $x$ is a cluster point of $\left( x_{\alpha} \right)_{\alpha}$.\newline
+
+  Now, let $X$ be noncompact, and let $\set{U_{i}}_{i\in I}$ be an open cover of $X$ that does not admit any finite subcover. Let $\mathcal{F}$ be a family of finite subsets of $I$ directed by inclusion. For each $F\in \mathcal{F}$, there is some $x_{F}\in X\setminus \bigcup_{i\in F}U_i$ by assumption. The net $\left( x_F \right)_{F\in \mathcal{F}}$ does not admit any accumulation point, since for any $i_0\in I$, and for all $S$ such that $\set{i_0}\subseteq S$, we have defined $x_{S}$ such that $x_S\notin U_{i_0}$.
+\end{proof}
+\subsection{Compactness through Filters and Ultrafilters}%
+Nets are nice and all, but there is another way to discuss convergence (that is actually in one-to-one correspondence with nets): filters.
+\begin{definition}
+  Let $X$ be a set, and let $\mathcal{F}$ be a family of subsets. We say $\mathcal{F}$ is a \textit{filter} if
+  \begin{enumerate}[(a)]
+    \item $\emptyset\notin \mathcal{F}$ and $X\in \mathcal{F}$;
+    \item if $A,B\in \mathcal{F}$, $A\cap B\in \mathcal{F}$;
+    \item if $A\subseteq B$ and $A\in \mathcal{F}$, then $B\in \mathcal{F}$.
+  \end{enumerate}
+  We say the filter $\mathcal{F}$ is \textit{free} if $\bigcap_{A\in \mathcal{F}}A = \emptyset$. If $\mathcal{F}$ is not free, we say $\mathcal{F}$ is \textit{principal}.\newline
+
+  If $\mathcal{F}$ and $\mathcal{G}$ are two filters, we say $\mathcal{G}$ is a \textit{subfilter} of $\mathcal{F}$ if $\mathcal{G}\supseteq \mathcal{F}$ --- i.e., that $\mathcal{G}$ is a ``finer'' filter than $\mathcal{F}$.
+\end{definition}
+\begin{example}\hfill
+  \begin{itemize}
+    \item If $x$ is a set, then the neighborhood system at $x$, $\mathcal{N}_x$, is a filter.
+    \item If $S\subseteq X$ is some nonempty set, the family $\mathcal{F} = \set{A\subseteq X | S\subseteq A}$ is a filter.
+    \item If $X$ is an infinite set, the family of cofinite sets --- i.e., $A\in \mathcal{F}$ if $A^{c}$ is finite --- is a free filter.
+  \end{itemize}
+\end{example}
+\begin{definition}
+  An \textit{ultrafilter} is a maximal proper filter. Equivalently, a filter $\mathcal{U}$ is an ultrafilter if $\mathcal{U}$ is a filter and, for all $A\subseteq X$, either $A\in \mathcal{U}$ or $A^{c}\in \mathcal{U}$.
+\end{definition}
+  If there is a finite union $A_1\cup\cdots\cup A_n\in \mathcal{U}$ for an ultrafilter $\mathcal{U}$, then at least one of the $A_i$ is an element of $\mathcal{U}$. This can be proven by induction and using the maximality of the ultrafilter.
+\begin{theorem}[Ultrafilter Lemma]
+  If $\mathcal{F}$ is a filter, then there is an ultrafilter $\mathcal{U}$ that contains $\mathcal{F}$.
+\end{theorem}
+\begin{proof}
+  Consider the partially ordered set of all (proper) filters on $X$ that contain $\mathcal{F}$. This family is partially ordered by inclusion, and for any chain $\mathcal{C}$ of this family, the family $\set{A | A\in \mathcal{G}\text{ for some }\mathcal{G}\in \mathcal{C}}$ is a filter that serves as an upper bound for $\mathcal{C}$. By Zorn's Lemma, this family admits a maximal element.
+\end{proof}
+\begin{definition}
+  If $\mathcal{B}$ is a nonempty collection of subsets of $X$, we say $\mathcal{B}$ is a \textit{filter base} if
+  \begin{enumerate}[(a)]
+    \item $\emptyset\notin \mathcal{B}$;
+    \item if $A,B\in \mathcal{B}$, there is some $C\in \mathcal{B}$ such that $C\subseteq A\cap B$ --- i.e., $\mathcal{B}$ is directed by containment.
+  \end{enumerate}
+  The collection of sets
+  \begin{align*}
+    \mathcal{F}_{\mathcal{B}} &= \set{A\subseteq X | B\subseteq A\text{ for some }B\in \mathcal{B}}
+  \end{align*}
+  is a filter known as the filter \textit{generated by} $\mathcal{B}$.
+\end{definition}
+\begin{example}
+  If $X$ is a topological space, and $x\in X$, the family $\mathcal{O}_{x}$ is a filter base that generates the neighborhood system, $\mathcal{N}_{x}$.
+\end{example}
+\begin{proposition}
+  Any collection $\set{S_i}_{i\in I}$ with the finite intersection property is a filter base.
+\end{proposition}
+Similar to the case of nets, there are definitions of convergence and cluster points.
+\begin{definition}
+  Let $\mathcal{F}$ be a filter on a topological space $X$, and let $x\in X$.
+  \begin{itemize}
+    \item We say $\mathcal{F}$ \textit{converges to} $x$ if $\mathcal{N}_{x}\subseteq \mathcal{F}$. In other words, if $\mathcal{F}$ is a subfilter of the neighborhood system at $x$, then we say the filter converges to $x$.
+    \item We say $x$ is a \textit{cluster point} of $\mathcal{F}$ if, for all $F\in \mathcal{F}$, $x\in \overline{F}$. Equivalently, $x$ is a cluster point for $\mathcal{F}$ if, for all $U\in \mathcal{O}_{x}$ and for all $F\in \mathcal{F}$, $U\cap F \neq \emptyset$.
+  \end{itemize}
+\end{definition}
+\begin{theorem}
+  If $\mathcal{F}$ is a filter in a topological space $X$, an element $x\in X$ is a cluster point of $\mathcal{F}$ if and only if $\mathcal{F}$ admits a subfilter, $\mathcal{G}$, such that $\mathcal{G}$ converges to $x$.
+\end{theorem}
+One of the most important facts about filters is that every filter has a corresponding net, and vice versa.
+\begin{definition}
+  Let $\left( x_{\alpha} \right)_{\alpha}$ be a net in the topological space $X$.
+  \begin{itemize}
+    \item For each $\alpha$, the \textit{tail} of $\left( x_{\alpha} \right)_{\alpha}$ is $F_{\alpha}\coloneq \set{x_{\beta} | \alpha\preceq \beta}$.
+    \item The family $\mathcal{B} = \set{F_{\alpha} | \alpha\in A}$ serves as a filter base for the \textit{section filter} of $\left( x_{\alpha} \right)_{\alpha}$
+  \end{itemize}
+\end{definition}
+\begin{theorem}
+  The net $\left( x_{\alpha} \right)_{\alpha}$ and its corresponding section filter $\mathcal{F}$ have the same cluster points.
+\end{theorem}
+\begin{proof}
+  If $x$ is a cluster point of $\left( x_{\alpha} \right)_{\alpha}$, then there is a subnet $\left( x_{\alpha_{\beta}} \right)_{\beta}\rightarrow x$. By cofinality, the section filter $\mathcal{G}$ generated by $\left( x_{\alpha_{\beta}} \right)_{\beta}$ is a subfilter of $\mathcal{F}$ with $\mathcal{G}$ converging to $x$.\newline
+
+  Conversely, if $x$ is a cluster point of $\mathcal{F}$, then for each $\alpha$ and for each $V\in \mathcal{N}_x$, we have $V\cap F_{\alpha}\neq \emptyset$. We may choose $y_{\alpha,V}\in V\cap F_{\alpha}$; the net $\left( y_{\alpha,V} \right)_{\alpha\in A,V\in \mathcal{N}_x}$ is a subnet of $\left( x_{\alpha} \right)_{\alpha}$ that converges to $x$, meaning $x$ is a cluster point of $\left( x_{\alpha} \right)_{\alpha}$
+\end{proof}
+\begin{definition}
+  If $\mathcal{F}$ is a filter in a topological space $X$, then we define the set $A = \set{\left( \alpha_S ,S \right) | S\in \mathcal{F},\alpha_S\in S}$, with direction $\left( \alpha_S,S \right)\succeq \left( \alpha_T,T \right)$ if $S\subseteq T$. The family $\left( x_{\left( \alpha_S,S \right)} \right)_{\left( \alpha_S,S \right)\in A}$, where $x_{\left( \alpha_S,S \right)} = \alpha_S$, is a net in $X$ known as the \textit{net generated by the filter} $\mathcal{F}$.
+\end{definition}
+  Note that the net generated by the section filter of a net $\left( x_{\alpha} \right)_{\alpha}$ is $\left( x_{\alpha} \right)_{\alpha}$.\newline
+
+  Now, we turn towards characterizations of compactness using filters and ultrafilters.
+  \begin{theorem}
+    Let $X$ be a topological space. Then, $X$ is compact if and only if every filter in $X$ has a cluster point.
+  \end{theorem}
+  \begin{proof}
+    Let $X$ be compact, and let $\mathcal{F}$ be a filter on $X$. Define $\mathcal{S} = \set{ \overline{A} | A\in \mathcal{F} }$. Since all filters are filter bases, the family $ \mathcal{S} $ has the finite intersection property. Since $X$ is compact, $\bigcap_{ \overline{A}\in \mathcal{S} } \overline{A} = \bigcap_{A\in \mathcal{F}} \overline{A} \neq \emptyset$, meaning $\mathcal{F}$ admits a cluster point.\newline
+
+    Suppose every filter on $X$ admits a cluster point. If $\mathcal{C}$ is a family of closed subsets of $X$ with the finite intersection property, then $\mathcal{C}$ is a filter base for some filter $\mathcal{F}$, which has a cluster point. Thus, $\bigcap_{C\in \mathcal{C}} C = \bigcap_{A\in \mathcal{F}} \overline{A} \neq \emptyset$, so $X$ is compact.
+  \end{proof}
+  \begin{theorem}
+    Let $X$ be a topological space. Then, $X$ is compact if and only if every ultrafilter in $X$ converges to at least one point.
+  \end{theorem}
+  \begin{proof}
+    We know from the previous theorem that $X$ is compact if and only if every filter on $X$ admits a cluster point, meaning that every filter $\mathcal{F}$ on $X$ has a convergent subfilter $\mathcal{G}\rightarrow x$. Using the Ultrafilter Lemma, we may expand $\mathcal{G}$ to an ultrafilter $\mathcal{U}\rightarrow x$.\newline
+
+    Now, suppose toward contradiction that $X$ is compact and there is an ultrafilter $\mathcal{U}$ on $X$ that does not converge to any point. Then, by definition, for each $x$, there is some $U_x\in \mathcal{O}_x$ such that $U_x\notin \mathcal{U}$. The family $\set{U_x}_{x\in X}$ is an open cover of $X$, which admits the finite subcover $X = \bigcup_{i=1}^{n}U_{x_i}$. However, since $\mathcal{U}$ is an ultrafilter, and $X\in \mathcal{U}$, it must be the case that one of the $U_{x_i}$ is an element of $\mathcal{U}$, which is a contradiction.
+  \end{proof}
 \subsection{Tychonoff's Theorem}%
+In the realm of compactness, there is probably no more powerful a theorem than Tychonoff's theorem. There are many proofs of Tychonoff's theorem (including one using the Stone--\v{C}ech compactification, apparently), but we will provide the proof using filters.\newline
+
+First, we need to review some notions from general topology.
+\begin{definition}
+  If $\set{Y_i}_{i\in I}$, $X$ is a topological space, and $f_i\colon X \rightarrow Y_i$ is a family of maps, the \textit{initial topology} on $X$ is the coarsest topology on $X$ such that all the $f_i$ are continuous.
+\end{definition}
+\begin{definition}
+  If $\set{X_i}_{i\in I}$ is a family of topological spaces, the \textit{product topology} is the initial topology on $\prod_{i\in I}X_i$ such that the family of projection maps, $\pi_j\colon \prod_{i\in I}X_i\rightarrow X_j$, defined by $\left( x_i \right)_{i\in I} \mapsto x_j$, is continuous.\newline
+
+  A net $\left( \left( x_{i} \right)_{i\in I} \right)_{\alpha}$ converges to $ \left( x_i \right)_{i}$ if and only if it does so pointwise --- i.e., the product topology is the topology of pointwise convergence. 
+\end{definition}
+This definition of the product topology, along with the idea of the pushforward of a filter/ultrafilter, will allow us to prove Tychonoff's Theorem.
+\begin{definition}
+  Let $X,Y$ be sets, and let $f\colon X\rightarrow Y$ be a map. Let $\mathcal{F}$ be a filter on $X$. Then, the collection
+  \begin{align*}
+    \mathcal{G} &\coloneq \set{V\subseteq Y | f^{-1}\left( V \right) \in \mathcal{F}}
+  \end{align*}
+  defines a filter on $Y$ known as the \textit{pushforward} of $\mathcal{F}$ with respect to $f$. We write $f_{\ast}\mathcal{F}$.
+\end{definition}
+\begin{proposition}
+  If $\mathcal{F}$ is an ultrafilter on $X$, $f\colon X\rightarrow Y$ is a map, and $f_{\ast}\mathcal{F}$ is the pushforward of $\mathcal{F}$, then $f_{\ast}\mathcal{F}$ is an ultrafilter on $Y$.
+\end{proposition}
+\begin{proof}
+  Let $B\subseteq Y$. Since $\mathcal{F}$ is an ultrafilter, we have either $f^{-1}\left( B \right)\in \mathcal{F}$ or $f^{-1}\left( B \right)^{c}\in \mathcal{F}$, so that either $f^{-1}\left( B \right)\in \mathcal{F}$ or $f^{-1}\left( B^{c} \right)\in \mathcal{F}$. By definition, this means either $B\in f_{\ast}\mathcal{F}$ or $B^{c}\in f_{\ast}\mathcal{F}$, so $f_{\ast}\mathcal{F}$ is an ultrafilter on $Y$.
+\end{proof}
+\begin{theorem}[Tychonoff's Theorem]
+  Let $\set{X_i}_{i\in I}$ be a family of compact topological spaces. Then, $\prod_{i\in I}X_i$, endowed with the product topology, is compact.
+\end{theorem}
 \section{Compactness in Normed Spaces and Metric Spaces}%
 \subsection{Compactness and Dimension}%
 \subsection{Compactness and Sequential Compactness}%
