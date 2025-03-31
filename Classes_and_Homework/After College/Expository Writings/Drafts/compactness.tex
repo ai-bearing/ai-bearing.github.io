@@ -204,12 +204,40 @@ In the realm of compactness, there is probably no more powerful a theorem than T
 
 First, we need to review some notions from general topology.
 \begin{definition}
-  If $\set{Y_i}_{i\in I}$, $X$ is a topological space, and $f_i\colon X \rightarrow Y_i$ is a family of maps, the \textit{initial topology} on $X$ is the coarsest topology on $X$ such that all the $f_i$ are continuous.
+  If $\set{Y_i}_{i\in I}$, $X$ is a topological space, and $f_i\colon X \rightarrow Y_i$ is a family of maps, the \textit{initial topology} on $X$ is the coarsest topology on $X$ such that all the $f_i$ are continuous.\newline
+
+  A topological base for the initial topology on $X$ induced by $\set{f_i}_{i\in I}$ is given by
+  \begin{align*}
+    \mathcal{B} &= \set{f_{i_1}^{-1}\left( U_1 \right)\cap\cdots\cap f_{i_n}^{-1}\left( U_n \right) | U_j\subseteq Y_j\text{ is open}}.
+  \end{align*}
 \end{definition}
+\begin{proposition}
+  If $\tau$ is the initial topology on $X_i$ induced by $\set{f_i}_{i\in I}$, then a net $\left( x_{\alpha} \right)_{\alpha}$ converges to $x$ if and only if $\left( f_i\left( x_{\alpha} \right) \right)_{\alpha}\rightarrow f_i\left( x \right)$ for all $i$.
+\end{proposition}
+\begin{proof}
+  Let $\left( x_{\alpha} \right)_{\alpha}\rightarrow x$. Since each $f_i\colon X\rightarrow Y$ is continuous, $\left( f_i\left( x_{\alpha} \right) \right)_{\alpha}\rightarrow f(x)$ for each $i$.\newline
+
+  Let $\left( f_i\left( x_{\alpha} \right) \right)_{\alpha}\rightarrow x$ for all $i$. Then, if $U\in \mathcal{O}_{x}$, the base of the initial topology gives open $U_j\subseteq Y_j$ such that
+  \begin{align*}
+    x &\in f_{i_1}^{-1}\left( U_1 \right)\cap\cdots\cap f_{i_n}^{-1}\left( U_n \right)\\
+      &\subseteq U.
+  \end{align*}
+  Since $\left( f_{i_j}\left( x_{\alpha} \right) \right)_{\alpha}\rightarrow f_{i_j}\left( x \right)$ for each $j=1,\dots,n$, there are $\alpha_1,\dots,\alpha_n$ such that, for each $j$ and for all $\alpha\succeq \alpha_j$, $f_{i_j}\left( x_{\alpha} \right)\in U_j$.
+
+  Since $A$ is directed, there is some $\alpha_N\succeq \alpha_j$ for each $j$, so for all $\alpha\succeq \alpha_N$,
+  \begin{align*}
+    x_{\alpha} &\in f_{i_1}^{-1}\left( U_1 \right)\cap\cdots\cap f_{i_n}^{-1}\left( U_n \right)\\
+               &\subseteq U,
+  \end{align*}
+  so $\left( x_{\alpha} \right)_{\alpha}\rightarrow x$.
+\end{proof}
 \begin{definition}
   If $\set{X_i}_{i\in I}$ is a family of topological spaces, the \textit{product topology} is the initial topology on $\prod_{i\in I}X_i$ such that the family of projection maps, $\pi_j\colon \prod_{i\in I}X_i\rightarrow X_j$, defined by $\left( x_i \right)_{i\in I} \mapsto x_j$, is continuous.\newline
 
-  A net $\left( \left( x_{i} \right)_{i\in I} \right)_{\alpha}$ converges to $ \left( x_i \right)_{i}$ if and only if it does so pointwise --- i.e., the product topology is the topology of pointwise convergence. 
+  A base for this topology consists of all sets of the form
+  \begin{align*}
+    \mathcal{B} &= \set{\prod_{i\in I}U_{i} | U_i\subseteq X_i\text{ is open, }U_i = X_i\text{ for all but finitely many }U_i}
+  \end{align*}
 \end{definition}
 This definition of the product topology, along with the idea of the pushforward of a filter/ultrafilter, will allow us to prove Tychonoff's Theorem.
 \begin{definition}
@@ -226,8 +254,14 @@ This definition of the product topology, along with the idea of the pushforward 
   Let $B\subseteq Y$. Since $\mathcal{F}$ is an ultrafilter, we have either $f^{-1}\left( B \right)\in \mathcal{F}$ or $f^{-1}\left( B \right)^{c}\in \mathcal{F}$, so that either $f^{-1}\left( B \right)\in \mathcal{F}$ or $f^{-1}\left( B^{c} \right)\in \mathcal{F}$. By definition, this means either $B\in f_{\ast}\mathcal{F}$ or $B^{c}\in f_{\ast}\mathcal{F}$, so $f_{\ast}\mathcal{F}$ is an ultrafilter on $Y$.
 \end{proof}
 \begin{theorem}[Tychonoff's Theorem]
-  Let $\set{X_i}_{i\in I}$ be a family of compact topological spaces. Then, $\prod_{i\in I}X_i$, endowed with the product topology, is compact.
+  Let $\set{X_i}_{i\in I}$ be a family of nonempty compact topological spaces. Then, $\prod_{i\in I}X_i$, endowed with the product topology, is compact.
 \end{theorem}
+\begin{proof}
+  Let $\mathcal{U}$ be an ultrafilter on $\prod_{i\in I}X_i$. Pushing forward this ultrafilter to each $X_i$, we have that $\left( \pi_i \right)_{\ast}\mathcal{U}$ converges to $ x_i$ for some $x_i\in X$.\newline
+
+  By the definition of the product topology, $\mathcal{U}\rightarrow \left( x_i \right)_{i}$, so $\mathcal{U}$ converges, meaning $\prod_{i\in I}X_i$ is compact.
+\end{proof}
+
 \section{Compactness in Normed Spaces and Metric Spaces}%
 \subsection{Compactness and Dimension}%
 \subsection{Compactness and Sequential Compactness}%

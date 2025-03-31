@@ -2369,4 +2369,134 @@ this has the solution $u\left( x,t \right) = u_0\left( x-at \right)$. However, b
   \pd{u}{t} + u \pd{u}{x} &= 0,
 \end{align*}
 with solution $u\left( x,t \right) = u_0\left( x-ut \right)$.\footnote{Yes, this is an implicitly defined function.}
+\section{Inhomogeneous Equations}%
+We will tweak the standard heat equation:
+\begin{align*}
+  \pd{u}{t} &= k\pd{^2u}{x^2}
+\end{align*}
+by adding an inhomogeneous term,
+\begin{align*}
+  \pd{u}{t} &= k\pd{^2u}{x^2} + {\color{red} g(x)},
+\end{align*}
+defined on $0 \leq x \leq L$, $t\geq 0$, with boundary conditions of $u\left( 0,t \right) = a$, $u\left( L,t \right) = b$, and $u\left( x,0 \right) = f(x)$. We focus on functions of $x$ as our inhomogeneous term because otherwise it is too difficult.\footnote{According to Professor Miller, not even Mathematica could tackle this.} In order to solve this equation, we start by guessing\footnote{We have to do that again.} the equation is of the form
+\begin{align*}
+  u\left( x,t \right) &= v\left( x,t \right) + h\left( x \right),
+\end{align*}
+
+where $v$ is the homogeneous solution, and $h$ is some inhomogeneous term. 
+\begin{enumerate}[(1)]
+  \item The equation gives
+  \begin{align*}
+    \pd{u}{t} &= \pd{v}{t}\\
+    \pd{^2u}{x^2} &= \pd{^2v}{x^2} + \diff{^2h}{x^2}.
+  \end{align*}
+  \item Plugging in the boundary conditions, we have
+  \begin{align*}
+    u\left( 0,t \right) &= v\left( 0,t \right) + h(0)\\
+                        &= a\\
+    u\left( L,t \right) &= v\left( L,t \right) + h(L)\\
+                        &= b.
+  \end{align*}
+  \item Finally, with the initial condition, we have
+  \begin{align*}
+    u\left( x,0 \right) &= v\left( x,0 \right) + h\left( x \right).
+  \end{align*}
+\end{enumerate}
+With the boundary conditions, we assume\footnote{This is different from guessing.} that $v\left( 0,t \right) = v\left( L,t \right) = 0$, so that $h\left( 0 \right) = a$ and $h\left( L \right) = b$. Plugging in our equation again, we must solve
+\begin{align*}
+  \pd{v}{t} &= k \pd{^2v}{x^2} + k\diff{^2h}{x^2} + g(x).
+\end{align*}
+This gives us two sub-problems:
+\begin{enumerate}[(1)]
+  \item We want to solve the Sturm--Liouville problem, 
+    \begin{align*}
+      \pd{v}{t} + k\pd{^2v}{x^2}
+      \intertext{with}
+      v\left( 0,t \right) &= 0\\
+      v\left( L,t \right) &= 0\\
+      v\left( x,0 \right) &= f(x) - h(x).
+    \end{align*}
+  \item We need to solve the one-dimensional boundary problem
+    \begin{align*}
+      k \diff{^2h}{x^2} + g(x) &= 0
+      \intertext{with}
+      h\left( 0 \right) &= a\\
+      h\left( L \right) &= b.
+    \end{align*}
+\end{enumerate}
+Solving the one-dimensional boundary problem, we may take
+\begin{align*}
+  \diff{^2h}{x^2} &= -\frac{1}{k}g(x)\\
+  \diff{h}{x} &= -\frac{1}{k} \int_{}^{} g(x)\:dx + C\\
+  h(x) &= -\frac{1}{k} \int_{}^{} \left( \int_{}^{} g(x)\:dx \right)\:dx + Cx + D.
+\end{align*}
+Here, the values of $C,D$ come from $a,b$. This allows us to know $h(x)$.\newline
+
+Now, solving the Sturm--Liouville problem, we can go through the same arduous process to evaluate
+\begin{align*}
+  v\left( x,t \right) &= \sum_{n=1}^{\infty}A_ne^{-\frac{kn^2\pi^2}{L^2}t}\sin\left( \frac{n\pi }{L}x \right),
+  \intertext{where}
+  A_n &= \frac{2}{L} \int_{0}^{L} \left( f(x)-h(x) \right)\sin\left( \frac{n\pi }{L}x \right)\:dx.
+\end{align*}
+Therefore, we know $u\left( x,t \right) = v\left( x,t \right) + h(x)$.
+\begin{example}
+  We wish to solve
+  \begin{align*}
+    \pd{u}{t} + 2t \pd{u}{x} + 3t^2 \pd{u}{y} &= 0,
+  \end{align*}
+  where $u\left( x,y,0 \right) = x^2 + y^2$.\newline
+
+  To solve this equation, we start by taking
+  \begin{align*}
+    \diff{}{t}\left( u\left( x(t),y(t),t \right) \right) &= \pd{u}{x}\diff{x}{t} + \pd{u}{y}\diff{y}{t} + \pd{u}{t}\\
+                                                         &= 0.
+  \end{align*}
+  Matching coefficients, we get
+  \begin{align*}
+    \diff{x}{t} &= 2t\\
+    \diff{y}{t} &= 3t^2.
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    x-x_0 &= t^2\\
+    y-y_0 &= t^3.
+  \end{align*}
+  Using the method of characteristics, we know that
+  \begin{align*}
+    u\left( x,y,t \right) &= u_0\left( x_0,y_0 \right)
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    u_0\left( x_0,y_0 \right) &= x_0^2 + y_0^2.
+  \end{align*}
+  Manipulating our equations for $x_0$ and $y_0$, we have
+  \begin{align*}
+    x_0 &= x-t^2\\
+    y_0 &= y-t^3,
+  \end{align*}
+  so that
+  \begin{align*}
+    u\left( x,y,t \right) &= \left( x-t^2 \right)^2 + \left( y-t^3 \right)^2.
+  \end{align*}
+  This is kind of boring. However, we are now able to solve an inhomogeneous equation:
+  \begin{align*}
+    \pd{u}{t} + 2t\pd{u}{x} + 3t^2 \pd{u}{y} &= y + t.
+  \end{align*}
+  Fixing our assumption with the inhomogeneous case, we have
+  \begin{align*}
+    \diff{}{t}\left( u\left( x(t),y(t),t \right) \right) &= \pd{u}{t} + 2t \pd{u}{x} + 3t^2 \pd{u}{y}\\
+                                                         &= y + t.
+  \end{align*}
+  Integrating, we have
+  \begin{align*}
+    \int_{t_0}^{t} \diff{}{s}\left( u\left( x(s),y(s),s \right) \right)\:ds &= u\left( x(t),y(t),t \right) - u_0\left( x_0,y_0 \right)\\
+                                                                            &= \int_{t_0}^{t} y(s) + s \:ds\\
+                                                                            &= \int_{t_0}^{t} \left( y_0 + s^3 \right) + s\:ds\\
+                                                                            &= y_0s + \frac{1}{4}s^4 + \frac{1}{2}s^2\biggr\vert_{t_0}^{t}.
+                                                                            \intertext{Assuming $t_0 = 0$ and plugging in our definition of $y_0 = y-t^3$}\\
+                                                                            &= \left( y-t^3 \right)t + \frac{1}{4}t^3 + \frac{1}{2}t^2.
+  \end{align*}
+  
+\end{example}
+
 \end{document}
