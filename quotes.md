@@ -9,3 +9,4 @@ permalink: "/quotes.html"
 - "Ostensibly we live in three dimensions — don't tell the physicists I said that." – Me, as recorded by Yanori Ferguson.
 - "I need that 22 to turn into a 21." - Professor Don Lawrence.
 - "It's a little a lot." - Noah Smith, as recorded by Melia Valentine.
+- "Phenomenologizing" - Kawena Jacobs.
