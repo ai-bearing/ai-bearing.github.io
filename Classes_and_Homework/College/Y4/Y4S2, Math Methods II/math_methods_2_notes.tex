@@ -2364,4 +2364,104 @@ We can find the residue in a variety of ways.
     \diff{^2f}{x^2} &= -k^2 f
   \end{align*}
   has the operator $\diff{^2}{x^2}$ and eigenvalue $-k^2$. Since these eigenvalues are real, we must have $\diff{^2}{x^2}$ be a self-adjoint (or Hermitian\footnote{There is a difference that I don't want to try to learn yet.}) operator, admitting an orthonormal eigenbasis.
+  \subsection{Beyond the Straight and Narrow}%
+  Recall the definition of a Fourier series:
+  \begin{align*}
+    f(x) &= \frac{a_0}{2} + \sum_{n=1}^{\infty}a_n\cos\left( nx \right) + b_n\sin\left( nx \right)\\
+         &= \sum_{n=-\infty}^{\infty}c_ne^{-inx}\\
+    a_n &= \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\cos\left( nx \right)\:dx\\
+    b_n &= \frac{1}{\pi} \int_{-\pi}^{\pi} f(x)\sin\left( nx \right)\:dx\\
+    c_n &= \frac{1}{2\pi}\int_{-\pi}^{\pi} f(x)e^{-inx}\:dx
+  \end{align*}
+  This is the most simple scenario, where $f$ is defined on the interval $\left[ -\pi,\pi \right]$.\newline
+
+  Consider what happens when we want to do this in more than one dimension. Setting $e^{i\mathbf{k}\cdot \mathbf{r}} = e^{ik_x x}e^{ik_y y}$, where we have a rectangular region $L_1\times L_2$, and setting $k_x = \frac{n\pi}{L_1}$, $k_y = \frac{m\pi}{L_2}$.\newline
+
+  This gives
+  \begin{align*}
+    f(x,y) &= \sum_{n,m=-\infty}^{\infty} \hat{f}_{n,m} e^{i\pi \left( \frac{n}{L_1}x + \frac{m}{L_2}y \right)}.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \hat{f}_{n,m} &= \int_{-L_1}^{L_1}\int_{-L_2}^{L_2} f(x,y)e^{-i\frac{n\pi}{L_1}x}e^{-i\frac{m\pi}{L_2}y}\:dy\:dx.
+  \end{align*}
+  Obviously, this becomes very difficult in more dimensions, but it can be done.\newline
+
+  Rectangles are not very aesthetically pleasing, though. Instead, we are interested in applying it to a circular plate.\newline
+
+  Our values of $k_x,k_y$ in the case of a rectangle arrived from imposing a periodic boundary condition. However, circles are already periodic, so we may consider a different value. We take
+  \begin{align*}
+    e^{i\mathbf{k}\cdot \mathbf{r}} &= e^{ikr \cos\left( \gamma \right)}, 
+  \end{align*}
+  where $\gamma = \phi'-\phi$ is the angle between the $\mathbf{k}$ vector and the $\mathbf{r}$ vector. Since $\cos\left( \gamma \right)$ is periodic, we may expand in terms of $e^{in\gamma}$, giving
+  \begin{align*}
+    e^{ikr\cos\left( \gamma \right)} &= \sum_{n=-\infty}^{\infty} i^{n} J_n\left( kr \right) e^{-in\phi'}e^{in\phi},
+  \end{align*}
+  We need the coefficient of $i^{n}$ to ensure that $J_n\left( kr \right)$ is real. We may calculate
+  \begin{align*}
+    J_n\left( x \right) &= \frac{1}{2\pi i^{n}}\int_{-\pi}^{\pi} e^{ix\cos\left( \gamma \right)}e^{-in\gamma}\:d\gamma
+  \end{align*}
+  The family $\set{J_n}_{n\in \Z}$ are called (cylindrical) \textit{Bessel functions}. We are also able to write the Bessel functions as
+  \begin{align*}
+    J_n\left( x \right) &= \frac{1}{2\pi} \int_{-\pi}^{\pi} e^{ix\sin\left( \gamma \right)-in\gamma}\:d\gamma\\
+                        &= \frac{1}{\pi} \int_{0}^{\pi} \cos\left( x\sin\left( \gamma \right)-n\gamma \right)\:d\gamma.
+  \end{align*}
+  Note that in the asymptotic limit, we have
+  \begin{align*}
+    J_n\left( x \right) &= \sqrt{\frac{2}{\pi x}} \cos\left( x-\frac{n\pi}{2}-\frac{\pi}{4} \right),
+  \end{align*}
+  and for every small $x$,
+  \begin{align*}
+    J_n\left( x \right) &= \frac{x^n}{2^n n!}.
+  \end{align*}
+  Now that we have expanded upon a line, rectangle, and disk, we will now expand upon a sphere. On the unit sphere, we may have a function $f\left( \theta,\phi \right)$, where $0 \leq \theta \leq \phi$ and $0 \leq \phi \leq 2\pi$. We may consider if we're allowed to expand $f$ as follows:
+  \begin{align*}
+    f\left( \theta,\varphi \right) \stackrel{?}{=} \underbrace{\left( \sum_{\ell = 0}^{\infty}c_{\ell}P_{\ell}\cos\left( \theta \right) \right)}_{\text{Legendre}}\underbrace{\left( \sum_{m=-\infty}^{\infty}d_me^{im\phi} \right)}_{\text{Fourier}}.\label{eq:fake_spherical_harmonics}\tag{\textasteriskcentered}
+  \end{align*}
+  Unfortunately, this is not the right answer. It might work on the equator, but as we reduce the value of $\theta$ going towards the north pole, we pick up a factor of $\sin\left( \theta \right)$; in the limit as $\theta\rightarrow 0$, $\phi$ is not defined. Therefore, we need some factor of $\sin\left( \theta \right)$.\newline
+
+  We introduce some factors of $\sin^{m}\left( \theta \right) = \left( 1-\cos^2\left( \theta \right) \right)^{m/2}$. This gives an extra order of $m$ in $\cos\left( \theta \right)$, so we need to reduce the order by $m$. We take $\left( \diff{}{x} \right)^{m} P_{\ell}\left( x \right)$.\newline
+
+  We don't have Legendre polynomials anymore; instead, we have 
+  \begin{align*}
+    P_{\ell,m}\left( x \right) &= \left( 1-x^2 \right)^{m/2} \left( \diff{}{x} \right)^{m}P_{\ell}\left( x \right).
+  \end{align*}
+  Substituting the Rodrigues formula, we have
+  \begin{align*}
+    P_{\ell,m}\left( x \right) &= \frac{\left( -1 \right)^{\ell}}{2^{\ell}\ell!}\left( 1-x^2 \right)^{m/2}\left( \diff{}{x} \right)^{\ell + m}\left( 1-x^2 \right)^{\ell}.
+  \end{align*}
+  These are known as the \textit{associated Legendre functions}, where $m \geq 0$. Note that if $m = 0$, we get the Legendre polynomials, and if $m  > \ell$, this evaluates to $0$. However, we are able to expand to include negative values of $m$ by taking
+  \begin{align*}
+    P_{\ell,-m}\left( x \right) &= \left( -1 \right)^{m} \frac{\left( \ell - m \right)!}{\left( \ell + m \right)!}P_{\ell,m}\left( x \right).
+  \end{align*}
+  As it turns out, the family $P_{\ell,m}$ are orthogonal (holding $m$ constant), with orthogonality relation
+  \begin{align*}
+    \int_{-1}^{1} P_{\ell,m}\left( x \right)P_{\ell',m}\left( x \right)\:dx &= \frac{2}{2\ell + 1}\frac{\left( \ell + m \right)!}{\left( \ell -m \right)!}\delta_{\ell \ell'}.
+  \end{align*}
+  Fixing \eqref{eq:fake_spherical_harmonics}, we define
+  \begin{align*}
+    Y_{\ell,m}\left( \theta,\phi \right) &= \left( -1 \right)^{m}\sqrt{\frac{2\ell + 1}{4\pi}}\sqrt{\frac{\left( \ell - m \right)!}{\left( \ell + m \right)!}}P_{\ell,m}\left( \cos\left( \theta \right) \right)e^{im\phi}.
+  \end{align*}
+  The family of $Y_{\ell,m}$ are indeed orthogonal functions. Furthermore, they are orthonormal in both $\ell$ and $m$:
+  \begin{align*}
+    \int_{}^{} Y_{\ell,m}\left( \theta,\phi \right) \overline{Y_{\ell',m'}\left( \theta,\phi \right)}\:d\Omega &= \delta_{\ell \ell'}\delta_{m m'},
+  \end{align*}
+  so that
+  \begin{align*}
+    a_{\ell,m} &= \int_{}^{} f\left( \theta,\phi \right) \overline{Y_{\ell,m}\left( \theta,\phi \right)}\:d\Omega.
+  \end{align*}
+  We are allowed to take any function and expand it on a basis of spherical harmonics, giving
+  \begin{align*}
+    f\left( \theta,\phi \right) &= f\left( \hat{n} \right)\\
+                                &= \sum_{\ell=0}^{\infty}\sum_{m=-\infty}^{\infty}a_{\ell,m}Y_{\ell,m}\left( \theta,\phi \right).
+  \end{align*}
+  There are some important symmetry properties. First,
+  \begin{align*}
+    Y_{\ell,-m} &= \left( -1 \right)^{m} \overline{Y_{\ell,m}},
+  \end{align*}
+  and under parity transformation, sending $\mathbf{r}\mapsto -\mathbf{r}$, we get
+  \begin{align*}
+    Y_{\ell,m}\left( \theta,\phi \right) &\mapsto \left( -1 \right)^{\ell}Y_{\ell,m}\left( \theta,\phi \right).
+  \end{align*}
+  
 \end{document}
