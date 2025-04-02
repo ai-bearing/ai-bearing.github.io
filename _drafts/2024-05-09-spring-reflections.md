@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Reflections on Spring 204"
+title: "Reflections on Spring 2024"
 permalink: "/posts/spring_reflections.html"
 ---
 
