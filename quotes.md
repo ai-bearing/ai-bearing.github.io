@@ -10,3 +10,5 @@ permalink: "/quotes.html"
 - "I need that 22 to turn into a 21." - Professor Don Lawrence.
 - "It's a little a lot." - Noah Smith, as recorded by Melia Valentine.
 - "Phenomenologizing" - Kawena Jacobs.
+- "The one we need is the one that is correct" - Professor Ramin Naimi. 
+- "That almost never happens" - Professor Don Lawrence.
