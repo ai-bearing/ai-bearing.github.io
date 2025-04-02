@@ -2369,7 +2369,7 @@ this has the solution $u\left( x,t \right) = u_0\left( x-at \right)$. However, b
   \pd{u}{t} + u \pd{u}{x} &= 0,
 \end{align*}
 with solution $u\left( x,t \right) = u_0\left( x-ut \right)$.\footnote{Yes, this is an implicitly defined function.}
-\section{Inhomogeneous Equations}%
+\subsection{Inhomogeneous Equations}%
 We will tweak the standard heat equation:
 \begin{align*}
   \pd{u}{t} &= k\pd{^2u}{x^2}
@@ -2498,5 +2498,120 @@ Therefore, we know $u\left( x,t \right) = v\left( x,t \right) + h(x)$.
   \end{align*}
   
 \end{example}
+\subsection{Degrees of Linearity}%
+Considering all first-order partial differential equations, only a small subset of these equations are linear. We want to try to understand the general case of first-order equations.
+\begin{definition}
+  A \textit{general} first-order PDE in $2$ variables is of the form
+  \begin{align*}
+    F\left( x,y, u, \pd{u}{x}, \pd{u}{y}\right) &= 0.
+  \end{align*}
+\end{definition}
+\begin{definition}
+  A \textit{quasilinear} first-order PDE in $2$ variables is of the form
+  \begin{align*}
+    a\left( x,y,u \right) \pd{u}{x} + b\left( x,y,u \right) \pd{u}{y} &= c\left( x,y,u \right).
+  \end{align*}
+  A quasilinear second-order PDE in $2$ variables is of the form
+  \begin{align*}
+    a\left( x,y,u,\pd{u}{x},\pd{u}{y} \right) \pd{^2u}{x^2} + b\left( x,y,u,\pd{u}{x},\pd{u}{y} \right) \pd{^2u}{x\partial y} + c\left( x,y,u,\pd{u}{x},\pd{u}{y} \right) \pd{^2u}{y^2} &= d\left( x,y,u,\pd{u}{x}, \pd{u}{y} \right).
+  \end{align*}
+\end{definition}
+It is pretty clear that these get out of hand really quickly.
+\begin{definition}
+  A \textit{semilinear} first-order PDE in $2$ variables is of the form
+  \begin{align*}
+    a\left( x,y \right) \pd{u}{x} + b\left( x,y \right) \pd{u}{y} &= c\left( x,y,u \right).
+  \end{align*}
+\end{definition}
+\begin{example}
+  Consider the equation
+  \begin{align*}
+    \left( x+y \right)\pd{u}{x} + \left( x-y \right)\pd{u}{y} &= 3u.\label{eq:hard_pde}\tag{\textasteriskcentered}
+  \end{align*}
+  This is a first-order linear equation. Rewriting
+  \begin{align*}
+    \pd{u}{x} + \frac{x-y}{x+y}\pd{u}{y} &= \frac{3}{x+y} u.
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    \diff{y}{x} &= \frac{x-y}{x+y}.
+  \end{align*}
+  This is not a linear ODE.\newline
+
+  Considering the linear equation
+  \begin{align*}
+    3\pd{u}{x} + 5\pd{u}{y} &= 2u,
+  \end{align*}
+  which we may put into ``standard form''
+  \begin{align*}
+    \pd{u}{x} + \frac{5}{3}\pd{u}{y} &= \frac{2}{3}u
+  \end{align*}
+  Then, we are able to use the method of characteristics, taking
+  \begin{align*}
+    \diff{}{x}\left( u\left( x,y \right) \right) &+ \pd{u}{x} + \pd{u}{y}\diff{y}{x}\\
+                                                 &= \frac{2}{3}u,
+  \end{align*}
+  which means $\diff{y}{x} = \frac{5}{3}$, and $\diff{u}{x} = \frac{2}{3}u$. \newline
+
+  Solving
+  \begin{align*}
+    \diff{u}{x} &= \frac{2}{3}u,
+  \end{align*}
+  we get
+  \begin{align*}
+    \ln\left\vert \frac{u}{u_0} \right\vert &= \frac{2}{3}\left( x-x_0 \right).
+  \end{align*}
+  and solving
+  \begin{align*}
+    \diff{y}{x} &= \frac{5}{3},
+  \end{align*}
+  we get
+  \begin{align*}
+    y-y_0 &= \frac{5}{3}\left( x-x_0 \right).
+  \end{align*}
+  Via the method of characteristics, and noting that our equation $\diff{u}{x} = \frac{2}{3}u$ is not homogeneous, we have
+  \begin{align*}
+    u\left( x,y \right) &= u_0\left( x_0.y_0 \right) + \frac{2}{3}\left( x-x_0 \right),
+  \end{align*}
+  Inputting an initial condition, $u_0\left( x,y \right) = x + y^2$, we need to find $x_0$ and $y_0$. This is still not fun.\newline
+
+  As it turns out, we need to use a special version of the method of characteristics that does not favor either variable.
+\end{example}
+\begin{example}
+  Considering again the transport equation,
+  \begin{align*}
+    \pd{u}{t} + 3 \pd{u}{x} &= 0,
+  \end{align*}
+  and
+  \begin{align*}
+    \diff{u}{t} &= \pd{u}{t} + \diff{x}{t} \pd{u}{t},
+  \end{align*}
+  we try to see if we can write this in more linear-algebraic terms. Writing
+  \begin{align*}
+    \pd{u}{t} + \pd{u}{x}\diff{x}{t} - \diff{u}{t} &= 0\\
+    \left( 1 \right) \left( \pd{u}{t} \right) + \pd{u}{x}\diff{x}{t} - \left( 1 \right) \diff{u}{t} &= 0.
+  \end{align*}
+  We may write this equation as
+  \begin{align*}
+    \begin{pmatrix}\pd{u}{t}\\ \pd{u}{x} \\ -1 \end{pmatrix} \cdot \begin{pmatrix}1\\ \diff{x}{t} \\ \diff{u}{t}\end{pmatrix} &= 0.
+  \end{align*}
+  We need some concepts from multivariable calculus. Recall that if we have a vector-valued function
+  \begin{align*}
+    \mathbf{f}\left( t \right) &= \begin{pmatrix}3\cos\left( t \right)\\ 2\sin\left( t \right)\\t\end{pmatrix},
+  \end{align*}
+  the tangent vector is defined as the derivative
+  \begin{align*}
+    \diff{\mathbf{f}}{t} &= \begin{pmatrix}-3\sin\left( t \right)\\2\cos\left( t \right)\\1\end{pmatrix}.
+  \end{align*}
+  Similarly, in higher dimensions, we may consider characteristic \textit{surfaces}.
+\end{example}
+In general, the method of characteristics requires us to integrate an initial function, which becomes the solution function. For instance, using the method of characteristics, we may solve the wave equation
+\begin{align*}
+  \pd{^2u}{t^2} - c^2 \pd{^2u}{x^2}&= 0
+\end{align*}
+with initial conditions of $u\left( x,0 \right) = f(x)$ and $\pd{u}{t}\bigr\vert_{(x,0)} = g(x)$ by taking
+\begin{align*}
+  u\left( x,t \right) &= \frac{1}{2}\left( f\left( x-ct \right) + f\left( x+ct \right) \right) + \frac{1}{2c} \int_{x-ct}^{x+ct} g(s)\:ds.
+\end{align*}
 
 \end{document}
