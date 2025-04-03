@@ -45,4 +45,7 @@ The following are standard texts.
 ### [Urysohn's Lemma](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/urysohns_lemma.pdf)
 > We detail the construction necessary to prove Urysohn's Lemma, which completely characterizes normal topological spaces via separation using continuous functions.
 
+### [Compactness in Topological Spaces](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/compactness.pdf)
+> We discuss compactness in topological spaces, including some characterizations and some important structures in topology such as nets and filters.
+
 ## Miscellaneous
