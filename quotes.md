@@ -26,3 +26,6 @@ permalink: "/quotes.html"
   Professor Ramin Naimi\
   "That almost never happens"\
   Professor Don Lawrence
+
+- "The venerable order of the geek"\
+  Alec Schramm
