@@ -2611,7 +2611,111 @@ In general, the method of characteristics requires us to integrate an initial fu
 \end{align*}
 with initial conditions of $u\left( x,0 \right) = f(x)$ and $\pd{u}{t}\bigr\vert_{(x,0)} = g(x)$ by taking
 \begin{align*}
-  u\left( x,t \right) &= \frac{1}{2}\left( f\left( x-ct \right) + f\left( x+ct \right) \right) + \frac{1}{2c} \int_{x-ct}^{x+ct} g(s)\:ds.
+  u\left( x,t \right) &= \frac{1}{2}\left( f\left( x-ct \right) + f\left( x+ct \right) \right) + \frac{1}{2c} \int_{x-ct}^{x+ct} g(s)\:ds.\label{eq:dalembert_solution}\tag{\textdagger}
 \end{align*}
+\begin{example}
+  Recall that
+  \begin{align*}
+    \pd{^2u}{x^2} - a^2\pd{^2u}{x^2} &= 0
+  \end{align*}
+  can be rewritten as
+  \begin{align*}
+    \left( \pd{}{t} - a\pd{}{x} \right) \left( \pd{}{t}+ a\pd{}{x} \right) u &= 0
+  \end{align*}
+  Similarly, we are able to split up
+  \begin{align*}
+    \pd{^2u}{x^2} + \pd{^2u}{y^2} &= 0,
+  \end{align*}
+  to obtain
+  \begin{align*}
+    \left( \pd{}{x} + i \pd{}{y} \right)\left( \pd{}{x} - i \pd{}{y} \right) u &= 0.
+  \end{align*}
+\end{example}
+The equation \eqref{eq:dalembert_solution} is known as D'Alembert's solution to the wave equation. Generally, deriving the solution requires a change of coordinates by using the Jacobian to change $\eta = x - at$ and $\xi = x + at$, and then taking
+\begin{align*}
+  \pd{^2}{\xi\partial\eta }u\left( \xi,\eta \right) &= 0.
+\end{align*}
+This sucks, though.\newline
+
+To obtain D'Alembert's solution, we start by noting that
+\begin{align*}
+  u\left( x,t \right) &= c_1\left( x-at \right) + c_2\left( x + at \right)
+\end{align*}
+does solve the wave equation. We insert functions $h$ and $k$ to take the equation
+\begin{align*}
+  u\left( x,t \right) &= h\left( x-at \right) + k\left( x + at \right).
+\end{align*}
+Inserting the initial conditions, we have
+\begin{align*}
+  u\left( x,0 \right) &= h(x) + k(x)\\
+                      &= f(x)\\
+                      \\
+  \pd{u}{t}\biggr\vert_{(x,0)} &= -a \pd{h}{t}\biggr\vert(x,0) + a \pd{k}{t}\biggr\vert_{(x,0)}\\
+                               &= -a\diff{h}{x} + a\diff{k}{x}\\
+                               &= g(x).
+\end{align*}
+Now, we integrate the second equation and multiply the expression $h(x) + k(x) = f(x)$, giving
+\begin{align*}
+  -a h(x) + ak(x) &= \int_{x_0}^{x} g(s)\:ds\\
+  ah(x) + ak(x) &= af(x).
+\end{align*}
+Adding and subtracting, we get the expressions
+\begin{align*}
+  2ak(x) &= af(x) + \int_{x_0}^{x} g(s)\:ds\\
+  2ah(x) &= af(x) - \int_{x_0}^{x} g(s)\:ds.
+\end{align*}
+Therefore, we get
+\begin{align*}
+  k(x) &= \frac{1}{2}f(x) + \frac{1}{2a}\int_{x_0}^{x} g(s)\:ds\\
+  h(x) &= \frac{1}{2}f(x) - \frac{1}{2a} \int_{x_0}^{x} g(s)\:ds.
+\end{align*}
+Substituting, we have
+\begin{align*}
+  u\left( x,t \right) &= \frac{1}{2} \left( f(x-at) + f(x + at) \right) + \int_{x_0}^{x+at} g(s)\:ds - \int_{x_0}^{x-at} g(s)\:ds\\
+                      &= \frac{1}{2}\left( f(x-at) + f(x+at) \right) + \int_{x-at}^{x + at} g(s)\:ds.
+\end{align*}
+\begin{example}
+  Suppose we have the wave equation
+  \begin{align*}
+    \pd{^2u}{t^2} &= 4\pd{^2u}{x^2},
+  \end{align*}
+  with $u\left( x,0 \right) = x^2$ and $\pd{u}{t}\bigr\vert_{(x,0)} = g(x)$. Then, we have the solution
+  \begin{align*}
+    u\left( x,t \right) &= \frac{1}{2}\left( \left( x-2t \right)^2 + \left( x + 2t \right)^2 \right) + \frac{1}{4}\int_{x-2t}^{x+2t} \cos\left( s \right)\:ds\\
+                        &= 2x^2 + 8t^2 + \frac{1}{4}\left( \sin\left( x+2t \right) - \sin\left( x - 2t \right) \right).
+  \end{align*}
+\end{example}
+\begin{example}
+  Consider
+  \begin{align*}
+    \pd{^2u}{t^2} - 5 \pd{^2u}{x\partial t} - 14 \pd{^2u}{x^2} &= 0,
+  \end{align*}
+  with $u\left( x,0 \right) = f(x)$ and $\pd{u}{t}\bigr\vert_{(x,0)} = g(x)$ .Then, we may write this as
+  \begin{align*}
+    \left( \pd{}{t} - 7 \pd{}{x} \right) \left( \pd{}{t} + 2 \pd{}{x} \right) u &= 0.
+  \end{align*}
+  We have the characteristic curves of $x-7t$ and $x + 2t$.\newline
+
+  Reworking our derivation of D'Alembert's solution, we have
+  \begin{align*}
+    u\left( x,t \right) &= h\left( x + 7t \right) + k\left( x-2t \right).
+  \end{align*}
+  We have
+  \begin{align*}
+    u\left( x,0 \right) &= h(x) + k(x)\\
+    \pd{u}{t}\biggr\vert_{(x,0)} &= 7\diff{h}{x} - 2 \diff{k}{x}.
+  \end{align*}
+  This gives
+  \begin{align*}
+    h(x) + k(x) &= f(x)\\
+    7 \diff{h}{x} - 2 \diff{k}{x} &= g(x)\\
+    7h(x) -2k(x) &= \int_{x_0}^{x} g(s)\:ds.
+  \end{align*}
+  After much suffering, we have
+  \begin{align*}
+    u\left( x,t \right) &= \frac{2}{9}f\left( x + 7t \right) + \frac{7}{9}f\left( x-2t \right) + \frac{1}{9} \int_{x-2t}^{x+7t} g(s)\:ds.
+  \end{align*}
+  
+\end{example}
 
 \end{document}
