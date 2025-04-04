@@ -23,9 +23,9 @@ permalink: "/quotes.html"
   Kawena Jacobs
 
 - "The one we need is the one that is correct"\
-  Professor Ramin Naimi\
+  Ramin Naimi\
   "That almost never happens"\
-  Professor Don Lawrence
+  Don Lawrence
 
 - "The venerable order of the geek"\
   Alec Schramm
