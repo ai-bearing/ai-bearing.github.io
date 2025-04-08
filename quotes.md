@@ -32,3 +32,6 @@ permalink: "/quotes.html"
 
 - "I've never had a dream before"\
   Jimmy Miller
+
+- "Do I look like a person who enjoys celebrating?"\
+  Me
