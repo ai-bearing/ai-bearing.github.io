@@ -2570,7 +2570,7 @@ We can find the residue in a variety of ways.
   \end{align*}
   \begin{table}[h!]
     \centering
-    \renewcommand{\arraystretch}{2}
+    \renewcommand{\arraystretch}{2.5}
     \begin{tabular}{c|c}
       Space & Expression\\
       \hline
@@ -2582,4 +2582,215 @@ We can find the residue in a variety of ways.
     \end{tabular}
     \caption{Expansions of $e^{i\mathbf{k}\cdot \mathbf{r}}$}
   \end{table}
+  \section{Differential Equations}%
+  To start our investigation of differential equations, we start by discussing linearity.\newline
+
+  Abstractly, we consider some linear operator
+  \begin{align*}
+    \mathcal{L}_q &= \sum_{j=0}^{n}a_j(q)\diff{^j}{q^j}.
+  \end{align*}
+  The reason we care about linearity is that if
+  \begin{align*}
+    \mathcal{L}_q(u) &= 0
+  \end{align*}
+  has solutions $u_1,\dots,u_n$, then
+  \begin{align*}
+    \mathcal{L}\left( \sum_{j=1}^{n}a_ju_j \right) &=\sum_{j=1}^{n}a_j\mathcal{L}\left( u_j \right).
+  \end{align*}
+  Equations of the form
+  \begin{align*}
+    \mathcal{L}_q\left( u \right) &= 0
+  \end{align*}
+  for some differential operator $\mathcal{L}$ are known as \textit{homogeneous} equations. Inhomogeneous equations are of the form
+  \begin{align*}
+    \mathcal{L}_q\left( u \right) &= r\left( q \right).
+  \end{align*}
+  \subsection{First-Order Equations}%
+  Consider the general free-falling mass equation,
+  \begin{align*}
+    m\diff{v}{t} &= mg,
+  \end{align*}
+  with $v(0) = v_0$. Then, $v(t) = v_0 + gt$.\newline
+
+  If we add linear drag, $f_d = -bv$, we have
+  \begin{align*}
+    \diff{v}{t} &= -\frac{b}{m}v + g.\label{eq:linear_drag}\tag{\textdagger}
+  \end{align*}
+  Separating variables,
+  \begin{align*}
+    \frac{dv}{bv/m - g} &= -dt,
+  \end{align*}
+  and integrating, we have
+  \begin{align*}
+    \ln\left( bv/m - g \right) &= - \frac{bt}{m} + C.
+  \end{align*}
+  Exponentiating,
+  \begin{align*}
+    v(t) &= ke^{-bt/m} + mg/b,
+  \end{align*}
+  where $k = v_0 - mg/b$. We can see that terminal velocity is $mg/b$.\newline
+
+  What makes these examples relatively easy is that these equations are separable. We are able to write it of the form
+  \begin{align*}
+    \alpha(x) dx + \beta(y) dy &= 0,
+  \end{align*}
+  meaning the solution is
+  \begin{align*}
+    \int_{}^{} \alpha(x)\:dx &= - \int_{}^{} \beta(y)\:dy + C.
+  \end{align*}
+  Now, in the general case, we have
+  \begin{align*}
+    \diff{y}{x} + q(x)y &= r(x).
+  \end{align*}
+  To solve this equation, we can introduce an integrating factor to make this equation separable. We want to find $w(x)$ for this purpose. Take
+  \begin{align*}
+    \diff{}{x}\left( wy \right) &= w\diff{y}{x} + \diff{w}{x} y
+  \end{align*}
+  We want $\diff{w}{x} = qw$, so that $w(x) = \exp\left( \int_{}^{} q(x)\:dx \right)$. Multiplying on both sides, we have
+  \begin{align*}
+    \diff{}{x}\left( wy \right) &= wr,
+  \end{align*}
+  and
+  \begin{align*}
+    y &= \frac{1}{w(x)} \int_{}^{} w(x)r(x)\:dx.
+  \end{align*}
+  For instance, considering \eqref{eq:linear_drag} again, we have $w(t) = e^{bt/m}$, and
+  \begin{align*}
+    v(t) &= e^{-bt/m} \int_{}^{} ge^{bt/m}\:dt\\
+         &= e^{-bt/m} \left( \frac{mg}{b}e^{bt/m} + k \right)\\
+         &=ke^{-bt} + \frac{mg}{b}.
+  \end{align*}
+  \begin{example}
+    Consider the falling raindrop. Let $m(0) = m_0$.\newline
+
+    Now, as the raindrop falls, it increases in weight. Rewriting
+    \begin{align*}
+      F &= ma\\
+        &= \diff{p}{t},
+    \end{align*}
+    we instead write
+    \begin{align*}
+      F &= m \dot{v} + \dot{m} v.\label{eq:falling_raindrop_eq1}\tag{$\ast$}
+    \end{align*}
+    We neglect drag, so
+    \begin{align*}
+      m\dot{v} + \dot{m}v &= mg.
+    \end{align*}
+    We assume that the rate of mass increase is proportional to $4\pi r^2$. We also assume constant density $\rho$ proportional to $m/r^3$. Putting these two together, we may assume
+    \begin{align*}
+      \diff{m}{t} &= k m^{2/3}.
+    \end{align*}
+    We are able to write our differential equation in terms of $m$, by using the chain rule to get
+    \begin{align*}
+      \diff{v}{t} &= \diff{m}{t} \diff{v}{m}\\
+                  &= km^{2/3} \diff{v}{m}.
+    \end{align*}
+    Our differential equation \eqref{eq:falling_raindrop_eq1} now becomes
+    \begin{align*}
+      \diff{v}{m} + \frac{v}{m} &= \frac{g}{km^{2/3}},
+    \end{align*}
+    with assumption that $v\left( m_0 \right) = 0$. We use the integrating factor of $w(m) = \exp\left( \int_{}^{} \frac{1}{m}\:dm \right)$, giving
+    \begin{align*}
+      m \diff{v}{m} + v &= \frac{gm^{1/3}}{k}.\label{eq:falling_raindrop_eq2}\tag{$\ast\ast$}
+    \end{align*}
+    This gives
+    \begin{align*}
+      \diff{}{m}\left( mv \right) &= \frac{gm^{1/3}}{k}\\
+      mv &= \frac{3}{4}\frac{gm^{4/3}}{k} + C\\
+      v &= \frac{3}{4}\frac{gm^{1/3}}{k} + \frac{C}{m}.
+    \end{align*}
+    Inputting our initial condition, we have
+    \begin{align*}
+      v(m) &= \frac{3g}{4k}m^{1/3}\left( 1-\left( \frac{m_0}{m} \right)^{4/3} \right).
+    \end{align*}
+    In particular,
+    \begin{align*}
+      \dot{v} &= g-  \frac{\dot{m}}{m}v\\
+              &= \frac{g}{4}\left( 1 + 3\left( \frac{m_0}{m} \right)^{3/4} \right).
+    \end{align*}
+    In this case, there is no terminal velocity.
+  \end{example}
+  \begin{example}
+    Consider 
+    \begin{align*}
+      \alpha\left( x,y \right)dx + \beta\left( x,y \right)dy &= 0.
+    \end{align*}
+    This appears to be of the form
+    \begin{align*}
+      d\left( \Phi\left( x,y \right) \right) &= \pd{\Phi}{x}dx + \pd{\Phi}{y}dy\\
+                                             &= 0.
+    \end{align*}
+    In particular, if we can find $\Phi$ that matches the partials, then $\Phi$ is a constant.\newline
+
+    Assuming that $\Phi$ is $C^2$, then the equality of mixed partials gives
+    \begin{align*}
+      \pd{\alpha}{y} &= \pd{\beta}{x}.\label{eq:exact_inexact}\tag{$\dag$}
+    \end{align*}
+    If solutions exist, then we say the equation is \textit{exact}.\newline
+
+    Returning to the falling raindrop, and rewriting \eqref{eq:falling_raindrop_eq2}, we have
+    \begin{align*}
+      mdv + \left( v-\frac{g}{k}m^{1/3} \right)dm &= 0.\label{eq:falling_raindrop_eq3}\tag{$\ddagger$}
+    \end{align*}
+    Therefore, $\alpha(v,m) = m$ and $\beta(v,m) = v- \frac{g}{k}m^{1/3}$. We want to find if
+    \begin{align*}
+      \pd{\alpha}{m} &= \pd{\beta}{v}.
+    \end{align*}
+    The answer is yes, so it can be rendered in exact form. We will write
+    \begin{align*}
+      \pd{\Phi}{v} &= m\\
+      \pd{\Phi}{m} &= v - \frac{g}{k}m^{1/3}.
+    \end{align*}
+    Integrating the first equation, we have $\Phi(m,v) = mv + c_1(m)$, and integrating the second, $\Phi(m,v) = mv-\frac{3g}{4k}m^{4/3} + c_2(v)$. We can set $c_2(v) = 0$ and $c_1(m) = \frac{3g}{4k}m^{4/3}$.
+  \end{example}
+  \begin{example}
+    If our equation \eqref{eq:exact_inexact} does not hold, then we need to find an integrating factor $w\left( x,y \right)$ such that
+    \begin{align*}
+      \pd{}{y}\left( w\alpha \right) = \pd{}{x}\left( w\beta \right).
+    \end{align*}
+    Now, if we take $w = w(x)$, we get the equation
+    \begin{align*}
+      \diff{w}{x} &= \frac{w}{\beta}\left( \pd{\alpha}{y} - \pd{\beta}{x} \right)\\
+                  &= p(x)w(x).
+    \end{align*}
+    This gives $w(x) = \exp\left( \int_{}^{} p(x)\:dx \right)$. In particular, we need
+    \begin{align*}
+      p(x) &= \frac{1}{\beta}\left( \pd{\alpha}{y} - \pd{\beta}{x} \right).
+    \end{align*}
+    If we had $w(y)$, then
+    \begin{align*}
+      p(y) &= \frac{1}{\alpha}\left( \pd{\beta}{x} - \pd{\alpha}{y} \right).
+    \end{align*}
+  \end{example}
+  \begin{example}
+    Consider a refinement of the falling raindrop model.\newline
+
+    Rather than the surface area, we say that the growth rate depends on the volume swept out per unit time. In particular, this volume swept out per unit time is $Av$, so
+    \begin{align*}
+      \diff{m}{t} &= km^{2/3} v.
+    \end{align*}
+    This changes \eqref{eq:falling_raindrop_eq3} to
+    \begin{align*}
+      v dv + \left( \frac{v^2}{m} - \frac{g}{km^{2/3}} \right) dm &= 0.
+    \end{align*}
+    This is not an exact equation. We find the integrating factor
+    \begin{align*}
+      p(m) &= \frac{1}{\alpha}\left( \pd{\beta}{v} - \pd{\alpha}{m} \right)\\
+           &= \frac{1}{v}\left( \frac{2v}{m} \right)\\
+           &= \frac{2}{m}.
+    \end{align*}
+    Our integrating factor is $w(m) = \exp\left( \int_{}^{} p(m)\:dm \right)$, or $w(m) = m^2$.\newline
+
+    With much tedious symbol-pushing, we find
+    \begin{align*}
+      \Phi(v,m) &= \frac{1}{2}m^2v^2 - \frac{3g}{7k}m^{7/3}\\
+                &= C.
+    \end{align*}
+    Plugging in initial conditions, with $v\left( m_0 \right)= 0$, we get
+    \begin{align*}
+      \dot{v} &= \frac{g}{7}\left( 1 + 6\left( \frac{m_0}{m} \right)^{7/3} \right).
+    \end{align*}
+    
+  \end{example}
+  
 \end{document}

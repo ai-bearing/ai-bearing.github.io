@@ -29,3 +29,6 @@ permalink: "/quotes.html"
 
 - "The venerable order of the geek"\
   Alec Schramm
+
+- "I've never had a dream before"\
+  Jimmy Miller
