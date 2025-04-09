@@ -2644,7 +2644,7 @@ We can find the residue in a variety of ways.
   \end{align*}
   To solve this equation, we can introduce an integrating factor to make this equation separable. We want to find $w(x)$ for this purpose. Take
   \begin{align*}
-    \diff{}{x}\left( wy \right) &= w\diff{y}{x} + \diff{w}{x} y
+    \diff{}{x}\left( wy \right) &= w\diff{y}{x} + \diff{w}{x} y\label{eq:integrating_factor}\tag{$1^{\ast}$}
   \end{align*}
   We want $\diff{w}{x} = qw$, so that $w(x) = \exp\left( \int_{}^{} q(x)\:dx \right)$. Multiplying on both sides, we have
   \begin{align*}
@@ -2789,6 +2789,190 @@ We can find the residue in a variety of ways.
     Plugging in initial conditions, with $v\left( m_0 \right)= 0$, we get
     \begin{align*}
       \dot{v} &= \frac{g}{7}\left( 1 + 6\left( \frac{m_0}{m} \right)^{7/3} \right).
+    \end{align*}
+  \end{example}
+  \subsection{Second-Order Equations}%
+  When we consider second-order equations, we have the form
+  \begin{align*}
+    \mathcal{L}\left[ u(x) \right] &= r(x)\\
+    \left( \diff{^2}{x^2} + p(x) \diff{}{x} + q(x) \right)\left( u(x) \right) &= r(x).
+  \end{align*}
+  We expect two linearly independent solutions, $u_1(x)$ and $u_2(x)$.\newline
+
+  Now, we still need boundary conditions. If we have boundary conditions
+  \begin{align*}
+    u_1(0) &= 1\\
+    \diff{u_1}{x}\biggr\vert_{0} &= 0\\
+    u_2(0) &= 0\\
+    \diff{u_2}{x}\biggr\vert_{0} &= 1.
+  \end{align*}
+  Then, the solutions are of the form
+  \begin{align*}
+    u\left( x \right) &= Au_1(x) + Bu_2(x),
+  \end{align*}
+  where $u(0) = A$ and $u'(0) = B$.
+  \begin{example}[A Constant-Coefficient Equation]
+    Consider the constant-coefficient second-order equation
+    \begin{align*}
+      \diff{^2u}{t^2} + 2\beta \diff{u}{t} + \omega_0^2u &= 0.
+    \end{align*}
+    This is the equation for damped simple harmonic motion.\newline
+
+    We let $D = \diff{}{t}$. We have the equation
+    \begin{align*}
+      \left( D^2 + 2\beta D + \omega_0^2 \right)u(t) &= \left( D-\alpha_1 \right)\left( D-\alpha_2 \right)u\\
+                                                     &= 0,
+    \end{align*}
+    where
+    \begin{align*}
+      \alpha_{1,2} &= -\beta \pm \sqrt{\beta^2 - \omega_0^2}.
+    \end{align*}
+    We have ``factored'' our second-order equation into two first-order equations, yielding
+    \begin{align*}
+      \left( D-\alpha_2 \right) u(t) &= v(t)\\
+      \left( D-\alpha_1 \right)v(t) &= 0.
+    \end{align*}
+    The second equation yields
+    \begin{align*}
+      v(t) &= Ae^{\alpha_1 t}.
+    \end{align*}
+    Now, we must solve
+    \begin{align*}
+      \left( D-\alpha_2 \right)u(t) &= Ae^{\alpha_1 t}.
+    \end{align*}
+    With an integrating factor of $w = e^{-\alpha_2 t}$, as in \eqref{eq:integrating_factor}, we get
+    \begin{align*}
+      u(t) &= e^{\alpha_2 t} \int_{}^{} e^{-\alpha_2 t}v(t)\:dt\\
+           &= e^{\alpha_2 t} \int_{}^{} Ae^{\left( \alpha_1 - \alpha_2 \right)t}\:dt\\
+           &= \frac{1}{\alpha_1 - \alpha_2} \left( Ae^{\alpha_1 t} + Be^{\alpha_2 t} \right).
+    \end{align*}
+    We're fine and dandy as long as $\alpha_1\neq \alpha_2$.
+  \end{example}
+  \begin{example}
+    To solve the equation for damped simple harmonic motion, we use the guess
+    \begin{align*}
+      u &= e^{\alpha t}.
+    \end{align*}
+    This gives the equation
+    \begin{align*}
+      e^{\alpha t}\left( \alpha^2 + 2\beta\alpha + \omega_0^2 \right) &= 0.
+    \end{align*}
+  \end{example}
+  \begin{example}
+    Consider the equation
+    \begin{align*}
+      c_2x^2 \diff{^2u}{x^2} + c_2x\diff{u}{x} + c_0 u &= 0,
+    \end{align*}
+    where $c_i$ are constant.\newline
+
+    To solve this equation, we use the guess $u = x^{\alpha}$.
+  \end{example}
+  \subsubsection{The Wronskian}%
+  We want to establish that our solutions $u_1,u_2$ of a differential equation are indeed linearly independent.\newline
+
+  Now, if $u_1,u_2$ are indeed linearly independent, then our solutions are of the form
+  \begin{align*}
+    u &= c_1u_1 + c_2u_2\\
+    \diff{u}{x} &= c_1 \diff{u_1}{x} + c_2 \diff{u_2}{x}.
+  \end{align*}
+  In other words, we have
+  \begin{align*}
+    \begin{pmatrix}u\\\diff{u}{x}\end{pmatrix} &= \begin{pmatrix}u_1 & u_2 \\ \diff{u_1}{x} & \diff{u_2}{x}\end{pmatrix} \begin{pmatrix}c_1\\c_2\end{pmatrix}.
+  \end{align*}
+  This has a unique solution if and only if the matrix has a nonzero determinant. The \textit{Wronskian} is
+  \begin{align*}
+    W(x) &= \det \begin{pmatrix}u_1 & u_2\\ \diff{u_1}{x} & \diff{u_2}{x}\end{pmatrix}\\
+         &= u_1 \diff{u_2}{x} - u_2 \diff{u_1}{x}.
+  \end{align*}
+  As it turns out, the Wronskian only needs to be nonzero at one point. This can be seen by taking
+  \begin{align*}
+    \diff{W(x)}{x} &= -p(x)W(x),
+  \end{align*}
+  meaning
+  \begin{align*}
+    W(x) &= W(a)\exp\left[ \int_{a}^{x} p(s)\:ds \right].
+  \end{align*}
+  This also means that we can find the Wronskian \textit{without} knowing the solutions to the equation.
+  \begin{example}
+    With simple harmonic motion,
+    \begin{align*}
+      \diff{^2u}{x^2} + k^2u &= 0,
+    \end{align*}
+    we have the solutions $\cos\left( kx \right),\sin\left( kx \right)$, meaning
+    \begin{align*}
+      W(x) &= \det \begin{pmatrix}\cos\left( kx \right) & \sin\left( kx \right)\\ -k\sin\left( kx \right) & k\cos\left( kx \right)\end{pmatrix}\\
+           &= k\\
+           &\neq 0.
+    \end{align*}
+    Now, to obviate the issue of $k\rightarrow 0$ yielding a zero Wronskian (instead of linear motion), we take $u_2 = \frac{1}{k}\sin\left( kx \right)$, which gives the Wronskian of $1$, and obviates this issue.\newline
+
+    Now, for the damped oscillation, we get
+    \begin{align*}
+      W(x) &= 2\sqrt{\beta^2 - \omega_0^2} e^{-2\beta t}.
+    \end{align*}
+  \end{example}
+  Since $W$ determines linear independence, if we're given one solution, we are able to find another solution. Taking
+  \begin{align*}
+    \diff{}{x}\left( \frac{u_2}{u_1} \right) &= \frac{u_1(x) \diff{u_2}{x} - \diff{u_1}{x}u_2(x)}{u_1(x)^2}\\
+                                             &=\frac{W}{u_1^2}.
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    u_2(x) &= u_1(x) \int_{}^{} \frac{W(x)}{u_1(x)^2}\:dx\\
+           &= u_1(x) \int_{}^{} \frac{\exp\left[ - \int_{}^{x} p(s)\:ds \right]}{u_1(x)^2}\:d
+  \end{align*}
+  \begin{example}
+    Consider Legendre's equation,
+    \begin{align*}
+      \left( 1-x^2 \right)\diff{^2 \phi}{x^2} - 2x\diff{\phi}{x} + \ell\left( \ell + 1 \right)\phi &= 0.
+    \end{align*}
+    Here,
+    \begin{align*}
+      p(x) &= -\frac{2x}{1-x^2},
+    \end{align*}
+    so that
+    \begin{align*}
+      W(x) &= W(a)\exp\left[ - \int_{}^{} -\frac{2x}{1-x^2}\:dx \right]\\
+           &= \frac{1}{1-x^2}\tag*{$W(a)\coloneq -1$}
+    \end{align*}
+    We know that a solution of this equation will be $P_{\ell}\left( x \right)$. After we use the Wronskian, we obtain the ``second solution'' to the equation,
+    \begin{align*}
+      Q_{\ell}\left( x \right) &= P_{\ell}\left( x \right) \int_{}^{} \frac{1}{\left( 1-x^2 \right)P_{\ell}(x)^2}\:dx,
+    \end{align*}
+    which are known as the \textit{Legendre functions of the second kind}.\newline
+
+    These functions are not particularly well-behaved. For instance,
+    \begin{align*}
+      Q_0(x) &= \frac{1}{2}\ln\left( \frac{1+x}{1-x} \right)\\
+      Q_1(x) &= \frac{1}{2}x\ln\left( \frac{1 + x}{1-x} \right) - 1.
+    \end{align*}
+    These functions blow up at the boundary.
+  \end{example}
+  \begin{example}
+    When we have an inhomogeneous equation, we will write $u_p(x)$ for the inhomogeneous solution. If we want to know the value of $u_p\left(x_0\right)$, then since $u_1,u_2$ are linearly independent, we should be able to write
+    \begin{align*}
+      u_p\left( x_0 \right) &= c_1u_1\left( x_0 \right) + c_2u_2\left( x_0 \right).
+    \end{align*}
+    Now, furthermore, we also have
+    \begin{align*}
+      \diff{u_p}{x}\biggr\vert_{x_0} &= c_1 \diff{u_1}{x}\biggr\vert_{x_0} + c_2 \diff{u_2}{x}\biggr\vert_{x_0}.
+    \end{align*}
+    This cannot hold for all values of $x_0$. We can modify this by taking $c_1,c_2$ to be functions of $x$, giving an expression of the form
+    \begin{align*}
+      u_p(x) &= a_1(x)u_1(x) + a_2(x)u_2(x).
+    \end{align*}
+    This procedure is known as \textit{variation of parameters}. Now, if this is supposed to work, we must also have
+    \begin{align*}
+      \diff{u_p}{x} &= a_1(x) \diff{u_1}{x} + a_2(x)\diff{u_2}{x}.
+    \end{align*}
+    This can only be consistent if
+    \begin{align*}
+      u_1(x) \diff{a_1}{x} + u_2(x)\diff{a_2}{x} &= 0.
+    \end{align*}
+    We need one more condition. We're tempted to take another derivative of $u_p$, but this doesn't give us any more information. As it turns out, by playing around with the differential equation, we are able to obtain
+    \begin{align*}
+      a_1(x) &= - \int_{}^{} \frac{u_2(x)r(x)}{W(x)}\:dx\\
+      a_2(x) &= \int_{}^{} \frac{u_1(x)r(x)}{W(x)}\:dx.
     \end{align*}
     
   \end{example}
