@@ -2776,7 +2776,7 @@ Substituting, we have
   \begin{align*}
     \pd{u}{t} + \left( x + t \right)\pd{u}{x} &= 4,
   \end{align*}
-  with initial condition $\ln\left( x^2 + 1 \right)$.\newline
+  with initial condition $u\left( x,0 \right) = \ln\left( x^2 + 1 \right)$.\newline
 
   Thus,
   \begin{align*}
@@ -2789,6 +2789,44 @@ Substituting, we have
   Knowing that $t_0 = 0$, we have
   \begin{align*}
     x(t) &= \left( x_0 - C \right)e^{t} + Bt + C.
+  \end{align*}
+  Furthermore, we know that
+  \begin{align*}
+    \diff{x}{t} &= Ae^{t} + B,
+  \end{align*}
+  so
+  \begin{align*}
+    \diff{x}{t} - x &= \left( B-C \right) - Bt,
+  \end{align*}
+  meaning $B = -1$, and $C = -1$. Thus,
+  \begin{align*}
+    x(t) &= Ae^{t} - t - 1.
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    x_0 &= A-1.
+  \end{align*}
+  This gives
+  \begin{align*}
+    x(t) &= \left( x_0 + 1 \right)e^{t} - t - 1.
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    \left( x+ t+ 1 \right)e^{-t} &= x_0 + 1,
+  \end{align*}
+  and
+  \begin{align*}
+    x_0 &= \left( x + t + 1 \right)e^{-t} - 1.
+  \end{align*}
+  We are tempted to say that $u\left( x,t \right) = u_0\left( x_0 \right)$; unfortunately, we need one more thing. Recall that the method of characteristics says
+  \begin{align*}
+    \diff{u}{t} &= \pd{u}{t} + \pd{u}{x}\diff{x}{t}\\
+                &= 4,
+  \end{align*}
+  so integrating,
+  \begin{align*}
+    u\left( x,t \right) - u_0\left( x_0 \right) &= 4t\\
+    u\left( x,t \right) &= \ln\left( \left( \left( x + t + 1 \right)e^{-t} - 1 \right)^2 + 1 \right) + 4t.
   \end{align*}
 \end{example}
 \begin{example}
@@ -2826,12 +2864,126 @@ Substituting, we have
 \begin{example}
   Recall Burgers's equation,
   \begin{align*}
-    \pd{u}{t} + u \pd{u}{x} &= 0,
+    \pd{u}{t} + u \pd{u}{x} &= 0,\label{eq:burgers_equation}\tag{$\ddag$}
   \end{align*}
-  with $u\left( x,0 \right) = \sin\left( x \right)$. When we solved this equation before, we have
+  with $u\left( x,0 \right) = \sin\left( x \right)$. This is actually known as Burgers's \textit{inviscid} equation --- in the general Burgers equation, there is a viscosity term.\newline
+
+  When we solved this equation before, we obtained
   \begin{align*}
     u\left( x,t \right) &= \sin\left( x-u t \right).
   \end{align*}
+  We may also generalize \eqref{eq:burgers_equation} by taking
+  \begin{align*}
+    \pd{u}{t} + \pd{}{x}\left( f(u) \right) &= 0.
+  \end{align*}
+  Now, these equations are equal to each other if and only if
+  \begin{align*}
+    f(u) &= \frac{u^2}{2}.
+  \end{align*}
+\end{example}
+\section{Hyperbolic Systems}%
+Let
+\begin{align*}
+  \mathbf{u} &= \begin{pmatrix}u_1\left( x,t \right)\\u_2\left( x,t \right)\end{pmatrix},
+\end{align*}
+and
+\begin{align*}
+  \mathbf{f}\left( \mathbf{u} \right) &= \begin{pmatrix}f_1\left( \mathbf{u} \right)\\ f_2\left( \mathbf{u} \right)\end{pmatrix}\\
+                                      &= \begin{pmatrix} f_1\left( u_1,u_2 \right)\\ f_2\left( u_1,u_2 \right)\end{pmatrix}.
+\end{align*}
+Then, the ``derivative'' of $\mathbf{f}$ is the Jacobian of $\mathbf{f}$.\newline
+
+Now, if the eigenvalues of $\diff{\mathbf{f}}{\mathbf{u}}$ are real and $\diff{\mathbf{f}}{\mathbf{u}}$ is diagonalizable, then
+\begin{align*}
+  \pd{\mathbf{u}}{t} + \diff{\mathbf{f}}{\mathbf{u}}\pd{\mathbf{u}}{x} &= 0
+\end{align*}
+is known as a \textit{hyperbolic system}.
+\begin{example}
+  Consider
+  \begin{align*}
+    \mathbf{u} &= \begin{pmatrix}v\left( x,t \right)\\ w\left( x,t \right)\end{pmatrix}\\
+    \mathbf{f}\left( \mathbf{u} \right) &= \begin{pmatrix}vw^2 \\ w + 2v\end{pmatrix}.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \diff{\mathbf{f}}{\mathbf{u}} &= \begin{pmatrix}w^2 & 2vw \\ 2 & 1\end{pmatrix}
+  \end{align*}
+  Finding the eigenvalues, we have
+  \begin{align*}
+    \det\left( A - \lambda I \right) &= \left( w^2 -\lambda \right)\left( 1-\lambda \right) - 4vw\\
+                                     &= 0,
+  \end{align*}
+  so that
+  \begin{align*}
+    \lambda^2 + \left( w^2 - 1 \right)\lambda + w^2 - 4vw &= 0,
+  \end{align*}
+  meaning
+  \begin{align*}
+    \lambda &= \frac{\left( 1-w^2 \right)\pm \sqrt{\left( w^2 - 1 \right)^2 - 4\left( 4w^2-4vw \right)}}{2}.
+  \end{align*}
+  Now, if
+  \begin{align*}
+    \left( w^2 - 1 \right)^2 - 4\left( w^2 - 4vw \right) &> 0,
+  \end{align*}
+  then this is a hyperbolic system.
+\end{example}
+\begin{example}
+  Consider the general system
+  \begin{align*}
+    \mathbf{w} &= \begin{pmatrix}u\left( x,t \right)\\ v\left( x,t \right)\end{pmatrix}\\
+    \mathbf{w}_0 &= \begin{pmatrix}u\left( x,0 \right)\\ v\left( x,0 \right)\end{pmatrix}\\
+    \pd{\mathbf{w}}{t} &= A \pd{\mathbf{w}}{x},
+  \end{align*}
+  where $A$ is a constant coefficient matrix. Now, if $A$ is diagonalizable, we want the matrix $P$ such that $PDP^{-1} = A$ so that we may decouple this system.\newline
+
+  Afterwards, we will define a change of coordinates
+  \begin{align*}
+    \mathbf{z} &= \begin{pmatrix}z_1\left( x,t \right) \\ z_2\left( x,t \right)\end{pmatrix}.
+  \end{align*}
+  We will let
+  \begin{align*}
+    \mathbf{z} &= P^{-1}\mathbf{w}.
+  \end{align*}
+  Taking
+  \begin{align*}
+    \pd{\mathbf{z}}{t} &= P^{-1} \pd{\mathbf{w}}{t}\\
+                       &= P^{-1}A \pd{\mathbf{w}}{x}\\
+                       &= P^{-1}\left( PDP^{-1} \right) \pd{\mathbf{w}}{x}\\
+                       &-= DP^{-1} \pd{\mathbf{w}}{x}\\
+                       &= D \pd{\mathbf{z}}{x}.
+  \end{align*}
+  This is our decoupled system.\newline
+
+  Finally,
+  \begin{align*}
+    \mathbf{z}_0 &= P^{-1} \mathbf{w}_0.
+  \end{align*}
+  This will give the solution
+  \begin{align*}
+    \mathbf{w}\left( x,t \right) &= S \mathbf{z}\left( x,t \right).
+  \end{align*}
+  
+\end{example}
+\begin{example}
+  In the case with
+  \begin{align*}
+    A &= \begin{pmatrix}4 & -3 \\ 7 & -6\end{pmatrix}\\
+    \mathbf{w}_0 &= \begin{pmatrix}e^x\\x^2\end{pmatrix},
+  \end{align*}
+  we want to find the eigenvalues and eigenvectors. Using some black magic, we can obtain
+  \begin{align*}
+    \lambda_1 &= 1\\
+    \mathbf{v}_1 &= \begin{pmatrix}1\\1\end{pmatrix}\\
+    \lambda_2 &= -3\\
+    \mathbf{v}_2 &= \begin{pmatrix}3\\7\end{pmatrix}.
+  \end{align*}
+  Therefore,
+  \begin{align*}
+    P &= \begin{pmatrix}1 & 3 \\ 1 & 7\end{pmatrix}\\
+    P^{-1} &= \frac{1}{4} \begin{pmatrix}7 & -3 \\ -1 & 1\end{pmatrix}\\
+    D &= \begin{pmatrix}1 & 0 \\ 0 & -3\end{pmatrix}.
+  \end{align*}
+  
 \end{example}
 
 \end{document}
