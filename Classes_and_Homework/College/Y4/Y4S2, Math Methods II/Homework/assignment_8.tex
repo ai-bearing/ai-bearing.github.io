@@ -25,32 +25,26 @@
 \begin{solution}[32.20]
   We start by taking the recurrence relation
   \begin{align*}
-    \left( 1-x^2 \right)P_n' &= -nxP_n + nP_{n-1}.
+    \left( 1-x^2 \right)P_n' &= -nxP_n + nP_{n-1}.\label{eq:derivative_recursion}\tag{$\ast$}
   \end{align*}
-  Using the relation
+  Differentiating, this gives
   \begin{align*}
-    \left( 2n+1 \right)xP_n &= \left( n+1 \right)P_{n+1} + nP_{n-1},
+    \left( 1-x^2 \right)P_n'' - 2xP_n' &= n\left( -P_n - xP_n' + P_{n-1}' \right). 
   \end{align*}
-  we get
+  We seek to show that
   \begin{align*}
-    \left( 1-x^2 \right)P_n' &= \left( n+1 \right)xP_n - \left( n+1 \right)P_{n+1}.
+    -xP_n' + P_{n-1}' &= -nP_n.
   \end{align*}
-  Differentiating, we then get
-  \begin{align*}
-    \left( 1-x^2 \right)P_n'' - 2xP_n' &= \left( n+1 \right)P_n + \left( n+1 \right)xP_n' - \left( n+1 \right)P_{n+1}'
-  \end{align*}
-  We want to evaluate
-  \begin{align*}
-    \left( n+1 \right)P_n + \left( n+1 \right)xP_n' - \left( n+1 \right)P_{n+1}' &= -n\left( n+1 \right)P_n.
-  \end{align*}
-  by using the generating function
-  \begin{align*}
-    P_n &= \frac{1}{n!}\pd{^n}{t^n}\left( \left( 1-2xt + t^2 \right)^{-1/2} \right)\biggr\vert_{t=0}
-  \end{align*}
-  
+  At this point, I ran out of board space to deal with the generating functions and their ensuing mess of partial derivatives.
 \end{solution}
 \begin{solution}[32.21]
-
+  Using $dv=P_m'(x)$, we integrate by parts to get
+  \begin{align*}
+    \int_{-1}^{1} \left( 1-x^2 \right)P_n'(x)P_m'(x)\:dx &= P_m(x)P_n'(x)\left( 1-x^2 \right)\biggr\vert_{-1}^{1} - \int_{-1}^{1} \diff{}{x}\left( \left( 1-x^2 \right)P_n'(x) \right)P_m(x)\:dx\\
+                                                         &= - \int_{-1}^{1} \left( \left( 1-x^2 \right)P_n''(x) - 2xP_n'(x) \right)P_{m}(x)\:dx\\
+                                                         &= n\left( n+1 \right) \int_{-1}^{1} P_n(x)P_m(x)\:dx\\
+                                                         &= \frac{2n\left( n+1 \right)}{2n+1} \delta_{mn}.
+  \end{align*}
 \end{solution}
 \begin{solution}[32.23]
 
@@ -77,15 +71,52 @@
   we take
   \begin{align*}
     \diff{}{x}\left( xJ_1 \right) &= \frac{1}{\pi}\int_{0}^{\pi} \cos\left( x\sin\left( \gamma \right) - \gamma \right) - x\sin\left( \gamma \right)\sin\left( x\sin\left( \gamma \right) - \gamma \right)\:d\gamma\\
-                                  &= \frac{1}{\pi} \int_{}^{} \cos\left( x\sin\left( \gamma \right) \right)\cos\left( \gamma \right) + \sin\left( x\sin\left( \gamma \right) \right)\sin\left( \gamma \right) - x\sin\left( \gamma \right)\sin\left( x\sin\left( \gamma \right)-\gamma \right)\:d\gamma
+                                  &= \frac{1}{\pi} \int_{0}^{\pi} \cos\left( x\sin\left( \gamma \right) \right)\cos\left( \gamma \right) + \sin\left( x\sin\left( \gamma \right) \right)\sin\left( \gamma \right) - x\sin\left( \gamma \right)\sin\left( x\sin\left( \gamma \right)-\gamma \right)\:d\gamma\\
+                                  &= \frac{1}{\pi} \int_{0}^{\pi} \cos\left( \gamma \right)\cos\left( x\sin\left( \gamma \right) \right) + \sin\left( \gamma \right)\sin\left( x\sin\left( \gamma \right) \right) - x\sin\left( \gamma \right)\left( \sin\left( x\sin\left( \gamma \right) \right)\cos\left( \gamma \right) - \sin\left( \gamma \right)\cos\left( x\sin\left( \gamma \right) \right) \right)\:d\gamma\\
+                                  &= \frac{1}{\pi} \int_{0}^{\pi} x\cos\left( x\sin\left( \gamma \right) \right)\:d\gamma\\
+                                  &= xJ_0.
   \end{align*}
-  
 \end{solution}
 \begin{solution}[35.7]
-
+  Solving
+  \begin{align*}
+    x^2\diff{^2u}{x^2} + x\diff{u}{x} + \left( x^2 - n^2 \right)u(x) &= 0,
+  \end{align*}
+  we plug in the expression for $J_n(x)$ to get
+  \begin{align*}
+    x^2\diff{^2u}{x^2} + x\diff{u}{x} + \left( x^2 - n^2 \right)u(x) &=x^2\left( \sum_{m=0}^{\infty} \frac{1}{2^{2m + n}}\left( 2m+n-1 \right)\left( 2m+n \right)\frac{\left( -1 \right)^{m}}{m!\left( m+n! \right)} x^{2m + n - 2}  \right)\\
+                                                                     &+ x \left( \sum_{m=0}^{\infty}\frac{1}{2^{2m + n}}\left( 2m + n \right) \frac{\left( -1 \right)^{m}}{m!\left( m+n \right)!}x^{2m + n - 1} \right)\\
+                                                                     &+ \sum_{m=0}^{\infty} \frac{1}{2^{2m + n}} \frac{\left( -1 \right)^{m}}{m!\left( m+n \right)!}x^{2m + n + 2}\\
+                                                                     & - \sum_{m=0}^{\infty}\frac{n^2}{2^{2m + n}}\frac{\left( -1 \right)^{m}}{m!\left( m+n \right)!}x^{2m + n}\\
+                                                                     &= \sum_{m=0}^{\infty}\frac{1}{2^{2m + n}}\frac{\left( -1 \right)^{m}}{m!\left( m+n! \right)}\left( x^{2m + n} \right)\left( \left( 2m + n - 1 \right)\left( 2m + n \right) + 2m + n + x^2 - n^2 \right)\\
+                                                                     &= \sum_{m=0}^{\infty}\frac{\left( -1 \right)^{m}}{2^{2m + n}m!\left( m+n! \right)}x^{2m + n}\left( x^2 + 4m^2 + 4mn \right)
+  \end{align*}
+  From here, I'm not sure how to manipulate this series to get $0$ as the final answer.
 \end{solution}
-\begin{solution}[35.8]
-
+\begin{solution}[35.8]\hfill
+  \begin{enumerate}[(a)]
+    \item We have
+      \begin{align*}
+        e^{ix\sin\left( \phi \right)} &= \sum_{n=-\infty}^{\infty}c_ne^{in\phi},
+      \end{align*}
+      where
+      \begin{align*}
+        c_n &= \frac{1}{2\pi}\int_{-\pi}^{\pi} e^{ix\sin\left( \phi \right)}e^{-in\phi}\:d\phi\\
+            &= J_n\left( x \right).
+      \end{align*}
+    \item Splitting into real and imaginary parts, we have
+      \begin{align*}
+        e^{ix\sin\left( \phi \right)} &= \cos\left( x\sin\left( \phi \right) \right) + i\sin\left( x\sin\left( \phi \right) \right),
+      \end{align*}
+      so that
+      \begin{align*}
+        e^{ix\sin\left( \phi \right)} &= \sum_{n=-\infty}^{\infty}c_ne^{in\phi}\\
+                                      &= \sum_{n=-\infty}^{\infty} J_n\left( x \right)\left( \cos\left( n\phi \right) + i\sin\left( n\phi \right) \right)\\
+                                      &= \sum_{n=-\infty}^{\infty}J_n\left( x \right)\cos\left( n\phi \right) + i\sum_{n=-\infty}^{\infty}J_n\left( x \right)\sin\left( n\phi \right).
+      \end{align*}
+      Equating real and imaginary parts gives the desired result.
+    \item 
+  \end{enumerate}
 \end{solution}
 \begin{solution}[35.10]
 
