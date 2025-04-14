@@ -3046,5 +3046,79 @@ is known as a \textit{hyperbolic system}.
   \end{align*}
   Thus, this is actually a solution.
 \end{example}
+\section{Integral Transforms}%
+Integral transforms are a way to convert differential equations to other classes of equations.\newline
 
+For instance, the Laplace transform, defined by
+  \begin{align*}
+    \mathcal{L}\left[ f(t) \right] &= \int_{0}^{\infty} e^{-st}f(t)\:dt,
+  \end{align*}
+  is an integral transform.
+\begin{example}
+  Consider 
+  \begin{align*}
+    f(t) &= e^{3t}.
+  \end{align*}
+  Then, so long as $s > 3$, we have
+  \begin{align*}
+    \mathcal{L}\left[ f(t) \right] &= \int_{0}^{\infty} e^{\left( 3-s \right)t}\:dt\\
+                                   &= \frac{1}{3-s}e^{\left( 3-s \right)t}\biggr\vert_{t=0}^{\infty}\\
+                                   &= \frac{1}{s-3}
+  \end{align*}
+  Generally, as long as $s > a$,
+  \begin{align*}
+    \mathcal{L}\left[ e^{at} \right] &= \frac{1}{s-a}.
+  \end{align*}
+\end{example}
+\begin{example}
+  If $F(s) = \mathcal{L}\left[ f(t) \right]$, then, assuming $\diff{f}{t}$ is integrable over $[0,\infty)$ and $s > 0$,
+  \begin{align*}
+    \mathcal{L}\left[ \diff{f}{t} \right] &= \int_{0}^{\infty} e^{-st}\diff{f}{t}\:dt\\
+                                          &= f(t)e^{-st}\biggr\vert_{0}^{\infty} - \left( -s \right) \int_{0}^{\infty} e^{-st}f(t)\:dt\\
+                                          &= -f(0) + s\int_{0}^{\infty} e^{-st}f(t)\:dt\\
+                                          &= -f(0) + sF(s).
+  \end{align*}
+\end{example}
+\begin{definition}
+  If $f(t)$ is a function, then an \textit{integral transform} of $f$ is a function
+  \begin{align*}
+    F(s) &= \int_{a}^{b} K\left( s,t \right)f(t)\:dt.
+  \end{align*}
+  This expression yields
+  \begin{align*}
+    f(t) &= \int_{c}^{d} K^{\ast}\left( t,s \right)F(s)\:ds,
+  \end{align*}
+  where $K^{\ast}\left( t,s \right)$ is the dual of $K\left( s,t \right)$.
+\end{definition}
+In an integral transform, $K\left( s,t \right)$, $a$, and $b$ uniquely identify the transform.\newline
+
+Now, when we learned the Laplace transform back in ODEs, we did not discuss the inverse of the Laplace transform. Unfortunately, the inverse Laplace transform requires integration in the complex plane.\footnote{We discussed the residue theorem (but not the inverse Laplace transform itself) in depth in \href{https://ai.avinash-iyer.com/Classes_and_Homework/College/Y4/Y4S2,\%20Math\%20Methods\%20II/math_methods_2_notes.pdf}{Math Methods 2}.} The inverse Laplace transform itself is
+\begin{align*}
+  f(t) &= \int_{\gamma - i\infty}^{\gamma + i\infty} e^{st}F(s)\:ds.
+\end{align*}
+Here, we choose the value of $\gamma$ such that the integral converges. Usually, we choose to use a table in order to use the inverse Laplace transform.\newline
+
+Let's introduce a new integral transform.
+\begin{definition}
+  Given $f(t)$ absolutely integrable over $\R$, we define
+  \begin{align*}
+    \hat{f}\left( \omega \right) &= \mathcal{F}\left[ f(t) \right]\\
+                                 &= \int_{-\infty}^{\infty} e^{i\omega t}f(t)\:dt.\label{eq:fourier_transform}\tag{$\dag$}
+  \end{align*}
+  Here, $a = \infty$, $b = -\infty$, and $K\left( \omega,t \right) = e^{i\omega t}$.
+\end{definition}
+\begin{definition}
+  The \textit{inverse Fourier transform} of $\hat{f}\left( \omega \right)$ is
+  \begin{align*}
+    f(t) &= \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-i\omega t}\hat{f}\left( \omega \right)\:d\omega.
+  \end{align*}
+\end{definition}
+\begin{remark}
+  There are other versions of the Fourier transform (mostly dependent on the sign of $i\omega t$ or where the $2\pi$ goes). For instance, in \href{https://ai.avinash-iyer.com/Classes_and_Homework/College/Y4/Y4S1,\%20Math\%20Methods/math_methods_notes.pdf}{Math Methods}, we used
+  \begin{align*}
+    \hat{f}\left( \omega \right) &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{-i\omega t}f(t)\:dt.
+  \end{align*}
+  For this class, we will use the definition in \eqref{eq:fourier_transform}.
+\end{remark}
+The Fourier transform essentially takes a signal in time, and decomposes the signal into its frequencies.
 \end{document}
