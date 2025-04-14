@@ -21,4 +21,3 @@ This semester is focused on finalizing the last chapter.
 I also have a lot of appendices, largely written for my own recollection and edification on the general subjects that I discuss throughout the thesis — specifically, algebra/linear algebra, point-set topology, measure theory, functional analysis, and operator algebras.
 
 This is an incredibly ambitious honors thesis, and I'm honestly shocked it's gotten this far. I'm glad it has worked out thus far, and I hope it continues to work out, because it is a really fun topic that I would absolutely enjoy studying in graduate school and beyond. Feel free to check out [the notes page](https://ai.avinash-iyer.com/honors_thesis.html).
-
