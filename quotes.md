@@ -35,3 +35,6 @@ permalink: "/quotes.html"
 
 - "Do I look like a person who enjoys celebrating?"\
   Me
+
+- "With great loss of generality"\
+  Don Lawrence
