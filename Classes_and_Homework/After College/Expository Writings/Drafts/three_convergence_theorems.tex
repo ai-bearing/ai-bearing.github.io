@@ -1,4 +1,4 @@
-\documentclass[10pt]{mypackage}
+\documentclass[12pt]{mypackage}
 
 % sans serif font:
 %\usepackage{cmbright,sfmath,bbold}
@@ -40,7 +40,7 @@ Recall that a function $f\colon X\rightarrow \R$, where $\left( X,\mathcal{M},\m
 \begin{definition}
   If $\phi\colon X\rightarrow [0,\infty]$ is a simple, measurable function defined on a measure space $\left( X,\mathcal{M},\mu \right)$, then the \textit{integral} of $\phi$ is defined to be
   \begin{align*}
-    \int_{X}^{} \phi\:d\mu &= \sum_{k=1}^{n}c_k\mu\left( E_k \right).
+    \int_{X}^{} \phi\:d\mu &= \sum_{k=1}^{n}c_k\mu\left( E_k \right).\label{eq:integral_simple_function}\tag{$\dag$}
   \end{align*}
 \end{definition}
 \begin{proposition}
@@ -56,5 +56,128 @@ Recall that a function $f\colon X\rightarrow \R$, where $\left( X,\mathcal{M},\m
     \item if $\phi\leq \psi$ pointwise, then $\displaystyle \int_{X}^{} \phi\:d\mu \leq \int_{X}^{} \psi\:d\mu$.
   \end{enumerate}
 \end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(a)]
+    \item We see that
+      \begin{align*}
+        \int_{X}^{} c\phi\:d\mu &= \sum_{j=1}^{n}(c)\left( a_j \right)\mu\left( E_k \right)\\
+                                &= c\sum_{k=1}^{n}a_j\mu\left( E_k \right)\\
+                                &= c \int_{X}^{} \phi\:d\mu.
+      \end{align*}
+    \item Note that since
+      \begin{align*}
+        X &= \bigsqcup_{j=1}^{n}E_j\\
+          &= \bigsqcup_{k=1}^{m}F_k,
+      \end{align*}
+      we must have
+      \begin{align*}
+        E_j &= \bigsqcup_{k=1}^{m}E_j\cap F_k\\
+        F_k &= \bigsqcup_{j=1}^{m}F_k\cap E_j
+      \end{align*}
+      as a disjoint union. Therefore,
+      \begin{align*}
+        \int_{X}^{} \phi\:d\mu + \int_{X}^{} \psi\:d\mu &= \sum_{j=1}^{n}\sum_{k=1}^{m}\left( a_j + b_k \right)\mu\left( E_j\cap F_k \right)\\
+                                                        &= \int_{X}^{} \phi + \psi\:d\mu.
+      \end{align*}
+    \item If $\phi\leq \psi$, $a_j\leq b_k$ whenever $E_j\cap F_k\neq \emptyset$. Therefore,
+      \begin{align*}
+        \int_{X}^{} \phi\:d\mu &= \sum_{k=1}^{m}\sum_{j=1}^{n}a_j\mu\left( E_j\cap F_k \right)\\
+                               &\leq \sum_{k=1}^{m}\sum_{j=1}^{n}b_k\mu\left( E_j\cap F_k \right)\\
+                               &= \int_{X}^{} \psi\:d\mu.
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+Having established integrals for simple functions, we need to establish a convergence property for simple functions for all measurable functions.
+\begin{theorem}
+  Let $\left( X,\mathcal{M},\mu \right)$ be a measure space, and let $f\colon X\rightarrow [0,\infty]$ be a measurable function. Then, there is an increasing sequence $\left( \phi_n \right)_n$ of simple functions that converges pointwise to $f$. This sequence converges uniformly to $f$ on any bounded sets.
+\end{theorem}
+\begin{proof}
+  For each $n$, partition the interval $\left[ 0,2^n \right]$ into subintervals of length $2^{-n}$. There are $2^{2n}$ subintervals, with
+  \begin{align*}
+    I_{n,0} &= \left[ 0,\frac{1}{2^{n}} \right]\\
+    I_{n,k} &= \left(\frac{k}{2^{n}},\frac{k + 1}{2^{n}}\right],
+  \end{align*}
+  where $0 \leq k \leq 2^{2n}-1$. We define $J_n = \left( 2^{n},\infty \right]$. Define
+  \begin{align*}
+    E_{n,k} &= f^{-1}\left( I_{n,k} \right)\\
+    F_n &= f^{-1}\left( J_n \right).
+  \end{align*}
+  Then, we may take
+  \begin{align*}
+    \phi_n &= \sum_{k=0}^{2^{2n}-1}\frac{k}{2^{n}}\1_{E_{n,k}} + 2^{n}\1_{F_n}.
+  \end{align*}
+  The family $\phi_n$ are simple, measurable, positive, and increasing.\newline
+
+  Fix $x\in X$ such that $f(x) < \infty$, and find $N$ such that $f(x) \leq 2^{N}$. Then, for a fixed $n\geq N$, there is $0 \leq k \leq 2^{2n}-1$ such that $x\in E_{n,k}$. Thus,
+  \begin{align*}
+    \left\vert \phi_n(x) - f(x) \right\vert &= \left\vert f(x) - \frac{k}{2^{n}} \right\vert\label{eq:convergence_of_simple_functions}\tag{$\ast$}\\
+                                            &\leq \frac{1}{2^{n}}.
+  \end{align*}
+  Thus, this family is pointwise convergent.\newline
+
+  If $f(x) = +\infty$, then $\phi_n(x) = 2^{n}$ for all $n$, meaning $\phi_n(x)$ also converges to $f(x)$.\newline
+
+  If $f(x)$ is bounded, then for a sufficiently large $n$, $F_n = \emptyset$, and the construction in \eqref{eq:convergence_of_simple_functions} is valid for all $x\in X$, meaning $\norm{\phi_n - f}_{u} \leq \frac{1}{2^{n}}$, and $\sup_{n}\norm{\phi_n}_{u} \leq \norm{f}_{u}$.
+\end{proof}
+\begin{remark}
+  By decomposing any complex-valued function $f$ using the Cartesian decomposition to yield $f = \left( f_{+} - f_{-} \right) + i\left( g_{+} - g_{-} \right)$, the above theorem can be extended to all complex-valued functions. There, the modulus of the simple functions, $\left( \left\vert \phi_n \right\vert \right)_n$ can be taken to be pointwise increasing and bounded above by $\left\vert f \right\vert$, with uniform convergence on sets where $f$ is bounded in modulus.
+\end{remark}
+\section{The Monotone Convergence Theorem}%
+Since any measurable function $f\colon X\rightarrow [0,\infty]$ is a pointwise limit of simple functions, we may define the integral of a function as follows.
+\begin{definition}
+  Let $\left( X,\mathcal{M},\mu \right)$ be a measure space, and let $f\colon X\rightarrow [0,\infty]$ be a measurable function. The \textit{integral} of $f$ is defined to be
+  \begin{align*}
+    \int_{X}^{} f\:d\mu &= \sup\set{ \int_{X}^{} \phi_n\:d\mu | \phi\text{ simple},0\leq \phi \leq f}.
+  \end{align*}
+\end{definition}
+This definition of the integral agrees with the definition in \eqref{eq:integral_simple_function} whenever $f$ is simple. Furthermore, it follows that, for all $c\in [0,\infty)$,
+\begin{align*}
+  \int_{X}^{} cf\:d\mu &= c \int_{X}^{} f\:d\mu,
+\end{align*}
+and whenever $f\leq g$,
+\begin{align*}
+  \int_{X}^{} f\:d\mu &\leq \int_{X}^{} g\:d\mu.
+\end{align*}
+Yet, the issue is that our family of simple functions is uncountable. In order to (more easily) establish this integral, we need to be able to extract a sequence.
+\begin{theorem}[Monotone Convergence Theorem]
+  Let $\left( f_n \right)_n$ be a family of $[0,\infty]$-valued measurable functions on $X$ such that $f_j\leq f_{j+1}$ for all $j$. Define 
+  \begin{align*}
+    f &= \lim_{n\rightarrow\infty}f_n\\
+      &= \sup_{n\in \N} f_n.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \int_{X}^{} f\:d\mu &= \lim_{n\rightarrow\infty} \int_{X}^{} f_n\:d\mu.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  The sequence $\left( \int_{X}f_n\:d\mu \right)$ is an increasing sequence of real numbers, so it has a limit (which may be equal to $\infty$). Furthermore, $\int_{X}f_n\:d\mu \leq \int_{X}f\:d\mu$ for all $n$, meaning $\sup \left( \int_{X}^{} f_n\:d\mu \right) \leq \int_{X}^{} f\:d\mu$.\newline
+
+  To establish the reverse inequality, let $\alpha\in (0,1)$, $0\leq \phi \leq f$ a simple function, and let
+  \begin{align*}
+    E_n &= \set{x | f_n(x) \geq \alpha \phi(x)}.
+  \end{align*}
+  The family $\set{E_n}_{n\in\N}$ is an increasing sequence of measurable sets whose union is $X$.\footnote{To see that their union is equal to $X$, recall that $f$ is the pointwise limit of $f_n$.} We have
+  \begin{align*}
+    \int_{X}^{} f_n\:d\mu &\geq \int_{E_n}^{} f_n\:d\mu\\
+                          &\geq \alpha \int_{E_n}^{} \phi\:d\mu.
+  \end{align*}
+  Since
+  \begin{align*}
+    \lim_{n\rightarrow\infty} \int_{E_n}^{} \phi\:d\mu &= \int_{X}^{} \phi\:d\mu,
+  \end{align*}
+  we have
+  \begin{align*}
+    \lim_{n\rightarrow\infty} \int_{X}^{} f_n\:d\mu &\geq \alpha \int_{X}^{} \phi\:d\mu.
+  \end{align*}
+  We may take the supremum over all $\alpha\in (0,1)$, meaning
+  \begin{align*}
+    \lim_{n\rightarrow\infty} \int_{X}^{} f_n\:d\mu &\geq \int_{X}^{} \phi\:d\mu.
+  \end{align*}
+  Taking the supremum over all simple $0\leq \phi \leq f$, we obtain
+  \begin{align*}
+    \lim_{n\rightarrow\infty} \int_{X}^{} f_n\:d\mu &\geq \int_{X}^{} f\:d\mu.
+  \end{align*}
+\end{proof}
 
 \end{document}
