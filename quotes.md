@@ -38,3 +38,6 @@ permalink: "/quotes.html"
 
 - "With great loss of generality"\
   Don Lawrence
+
+- "My intuitive thought is, never mind I changed my idea"\
+  Ethan Coulthard
