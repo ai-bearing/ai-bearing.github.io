@@ -13,6 +13,7 @@
 %\usepackage{kpfonts}
 %\renewcommand{\mathbb}{\mathds}
 
+\usepackage{microtype}
 \pagestyle{fancy} %better headers
 \fancyhf{}
 \rhead{Avinash Iyer}
@@ -3121,4 +3122,105 @@ Let's introduce a new integral transform.
   For this class, we will use the definition in \eqref{eq:fourier_transform}.
 \end{remark}
 The Fourier transform essentially takes a signal in time, and decomposes the signal into its frequencies.
+\begin{example}
+  Consider the standard normal distribution,
+  \begin{align*}
+    p(t) &= \frac{1}{\sqrt{2\pi}\sigma} e^{\frac{-\left( t-\mu \right)^2}{2\sigma^2}}.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \int_{-\infty}^{\infty} p(t)\:dt &= 1,
+  \end{align*}
+  and $p(t) \geq 0$ for all $t$, so $p(t)$ is a probability distribution.\newline
+
+  The standard deviation of the probability distribution $p(t)$ is equal to the distance between the two inflection points of the distribution.\newline
+
+  Now, suppose we start taking $\sigma\rightarrow 0$. We must always maintain the condition that
+  \begin{align*}
+    \int_{}^{} \frac{1}{\sqrt{2\pi}\sigma}e^{\frac{-\left( t-\mu \right)^2}{2\sigma^2}}\:dt &= 1,
+  \end{align*}
+  which holds for all $\sigma > 0$ and for all $\mu\in\R$. We may define
+  \begin{align*}
+    \delta\left( t-\mu \right) &= \lim_{\sigma\rightarrow 0} p(t).
+  \end{align*}
+  This is known as the \textit{Dirac delta distribution}.\newline
+
+  We use the delta distribution to model ``impulse forces'' that basically only exist at one point.
+\end{example}
+\begin{definition}
+  The following are the three principles of the delta distribution.
+  \begin{enumerate}[(a)]
+    \item 
+      \begin{align*}
+        \int_{-\infty}^{\infty} \delta\left( t-\mu \right)\:dt &=1.
+      \end{align*}
+    \item If $\Theta(t)$ is the \href{https://en.wikipedia.org/wiki/Heaviside_step_function}{Heaviside step function}
+      \begin{align*}
+        \diff{}{t}\left( \theta(t) \right) &= \delta(t).
+      \end{align*}
+    \item 
+      \begin{align*}
+        \int_{-\infty}^{\infty} f(s)\delta(s)\:ds &= 0.
+      \end{align*}
+  \end{enumerate}
+\end{definition}
+\begin{example}
+  Consider
+  \begin{align*}
+    f(t) &= \sin\left( 5t \right).
+  \end{align*}
+  Then,
+  \begin{align*}
+    \hat{f}\left( \omega \right) &= ic\left( \delta\left(\omega - 5\right) - \delta\left( \omega + 5 \right) \right).
+  \end{align*}
+  Here, $c$ is a constant that depends on how we define the Fourier transform.
+\end{example}
+\begin{example}
+  How might we solve a differential equation using the Fourier transform?\newline
+
+  If $f(t)$ is a sufficiently well-behaved function,\footnote{Depending on the field, we're discussing either \href{https://en.wikipedia.org/wiki/Schwartz_space}{Schwartz functions}, square-integrable functions, or absolutely integrable functions.} then
+  \begin{align*}
+    \hat{f}\left( \omega \right) &= \int_{-\infty}^{\infty} e^{i\omega t}f(t)\:dt\\
+    f(t) &= \frac{1}{2\pi}\int_{-\infty}^{\infty} e^{-i\omega t}\hat{f}(\omega)\:d\omega.
+  \end{align*}
+  If $f$ is well-behaved (by our desired criterion) and its derivative is sufficiently well-behaved (by the same criterion),\footnote{Note that by our definition of ``sufficiently well-behaved,'' $\lim_{t\rightarrow\pm\infty}f(t) = 0$.} then by integrating by parts,
+  \begin{align*}
+    \mathcal{F}\left( \diff{f}{t} \right) &= \int_{-\infty}^{\infty} e^{i\omega t}\diff{f}{t}\:dt\\
+                                          &= \left( f(t)e^{i\omega t} \right)\biggr\vert_{-\infty}^{\infty} -i\omega \int_{-\infty}^{\infty} e^{i\omega t}f(t)\:dt\\
+                                          &= -i\omega \mathcal{F}\left( f \right).
+  \end{align*}
+  In general,
+  \begin{align*}
+    \mathcal{F}\left( \diff{^nf}{t^n} \right) &= \left( -i\omega \right)^{n} \mathcal{F}\left( f \right).
+  \end{align*}
+\end{example}
+\begin{example}
+  Consider the heat equation Cauchy problem
+  \begin{align*}
+    \pd{u}{t} &= \alpha \pd{^2u}{x^2},
+  \end{align*}
+  where $x\in\R,t\geq 0$, and $u\left(x,0\right) = f(x)$.\newline
+
+  We rewrite this function to get
+  \begin{align*}
+    \pd{u}{t}\left( x,t \right) &= \alpha \pd{^2u}{x^2}\left( x,t \right).
+  \end{align*}
+  Now, the question we face is whether to take a Fourier transform in $x$ or $t$. If we take the Fourier transform in $x$, then we may take
+  \begin{align*}
+    \diff{\hat{u}}{t} &= -\alpha k^2 \hat{u}.
+  \end{align*}
+  
+\end{example}
+\begin{example}
+  Consider the wave equation Cauchy problem
+  \begin{align*}
+    \pd{^2u}{t^2} - a^2\pd{^2u}{x^2} &= 0,
+  \end{align*}
+  with $x\in\R,t\geq 0$, and
+  \begin{align*}
+    u\left( x,0 \right) &= f(x)\\
+    \pd{u}{t}\biggr\vert_{(x,0)} &= g(x).
+  \end{align*}
+\end{example}
+
 \end{document}
