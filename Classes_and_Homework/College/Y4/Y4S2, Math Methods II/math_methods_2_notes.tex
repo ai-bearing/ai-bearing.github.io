@@ -2976,5 +2976,183 @@ We can find the residue in a variety of ways.
     \end{align*}
     
   \end{example}
-  
+  \subsubsection{Series Solutions}%
+  If our solution $u(x)$ is sufficiently smooth, we should be able to write
+  \begin{align*}
+    u(x) &= \sum_{m=0}^{\infty}c_mx^m,
+  \end{align*}
+  where
+  \begin{align*}
+    c_m &= \frac{1}{m!} \diff{^m u}{x^{m}}\biggr\vert_{x=0}.
+  \end{align*}
+  We'll do this backwards.\newline
+
+  To solve for the $c_m$, we'll throw this expression for $u$ into the differential equation. We'll tweak our guess just a little bit, where we take
+  \begin{align*}
+    u(x) &= x^{\alpha} \sum_{m=0}^{\infty}c_mx^{m},\label{eq:series_solution_guess}\tag{$\ddag$}
+  \end{align*}
+  where $c_0 \neq 0$.
+  \begin{example}
+    Consider the equation
+    \begin{align*}
+      4xu'' + 2u' - u &= 0.
+    \end{align*}
+    Upon sticking in our guess, we have
+    \begin{align*}
+      \sum_{m=0}^{\infty}c_m2\left( m + \alpha \right)\left( 2m + 2\alpha - 1 \right)x^{m + \alpha - 1} - \sum_{m=0}^{\infty}c_mx^{m + \alpha} &= 0.
+    \end{align*}
+    We match powers to obtain our guess. The lowest order is $\alpha - 1$, meaning
+    \begin{align*}
+      c_0\alpha\left( 2\alpha - 1 \right) &= 0.\label{eq:indicial_equation}\tag{$\ast$}
+    \end{align*}
+    For all higher powers, we have
+    \begin{align*}
+      c_m &= \frac{1}{2\left( m+\alpha \right)\left( 2m + 2\alpha - 1 \right)}c_{m-1}. \label{eq:two_term_recurrence_series_solution}\tag{$\dag$}
+    \end{align*}
+    We call \eqref{eq:indicial_equation} the \textit{indicial equation} so that we may find $\alpha$. We get the solutions of $\alpha = 0$ and $\alpha = \frac{1}{2}$.\newline
+    
+    Taking $\alpha = \frac{1}{2}$, we insert it into \eqref{eq:two_term_recurrence_series_solution} to take
+    \begin{align*}
+      c_m &= \frac{1}{\left( 2m + 1 \right)\left( 2m \right)} c_{m-1}\\
+          &= \frac{1}{\left( 2m+1 \right)\left( 2m \right)} \frac{1}{\left( 2m-1 \right)\left( 2m-2 \right)}c_{m-2}\\
+          &\vdots\\
+          &= \frac{c_0}{\left( 2m + 1 \right)!}.
+    \end{align*}
+    We get our first solution,
+    \begin{align*}
+      u_1(x) &= \sqrt{x}\left( 1 + \frac{1}{3!}x + \frac{1}{5!}x^2 + \cdots \right).
+    \end{align*}
+    Next, we take $\alpha = 0$, inserting into \eqref{eq:two_term_recurrence_series_solution} to get
+    \begin{align*}
+      c_m &= \frac{1}{2m\left( 2m-1 \right)}c_{m-1}\\
+          &= \frac{1}{2m\left( 2m-1 \right)\left( 2m-2 \right)\left( 2m-3 \right)}c_{m-2}\\
+          &\vdots\\
+          &= \frac{c_0}{\left( 2m \right)!}.
+    \end{align*}
+    Thus, we get the second solution of
+    \begin{align*}
+      u_2(x) &= x^{0}\left( 1 + \frac{x}{2!} + \frac{x^2}{4!} + \cdots \right).
+    \end{align*}
+    As it turns out, our expressions for $u_1$ and $u_2$ have closed-form solutions,
+    \begin{align*}
+      u_1(x) &= \sinh\left( \sqrt{x} \right)\\
+      u_2\left( x \right) &= \cosh\left( \sqrt{x} \right).
+    \end{align*}
+  \end{example}
+  \begin{example}
+    Consider the equation
+    \begin{align*}
+      x^2\diff{^2u}{x^2} + 2x\diff{u}{x} + x^2 u &= 0.\label{eq:series_solution_2}\tag{$\ast\ast$}
+    \end{align*}
+    Sticking in \eqref{eq:series_solution_guess}, we have
+    \begin{align*}
+      \sum_{m=0}^{\infty}c_m\left( m + \alpha \right)\left( m + \alpha + 1 \right)x^{m + \alpha} + \sum_{m=0}^{\infty}c_mx^{m + \alpha + 2} &= 0.
+    \end{align*}
+    Taking the two lowest orders out,we write explicitly
+    \begin{align*}
+      c_0\left( \alpha \right)\left( \alpha + 1 \right)x^{\alpha} + c_1\left( \alpha + 1 \right)\left( \alpha + 2 \right) x^{\alpha + 1} + \sum_{m=2}^{\infty}\left( c_m\left( m + \alpha \right)\left( m + \alpha + 1 \right) + c_{m-2} \right)x^{m + \alpha} &= 0.
+    \end{align*}
+    Since $c_0$ cannot equal zero, the first indicial equation yields $\alpha = 0,-1$.\newline
+
+    If $\alpha = 0$, then $c_1 = 0$, and our recursion relation is
+    \begin{align*}
+      c_m &= \frac{\left( -1 \right)^{m/2}}{\left( m+1 \right)!} c_0
+    \end{align*}
+    for $m$ even. Plugging this in, we get
+    \begin{align*}
+      u_1(x) &= x^{0}\left( 1  - \frac{1}{3!}x^2 + \frac{1}{5!}x^{4} - \frac{1}{7!}x^{6} + \cdots \right)\\
+             &= \frac{\sin(x)}{x}.
+    \end{align*}
+    Now, if $\alpha = -1$, then we may choose $c_1$ to be any value we desire. We will choose $c_1 = 0$. We get the even power recursion relation
+    \begin{align*}
+      u_2(x) &= \frac{1}{x}\left( 1 - \frac{1}{2!}x^2 + \frac{1}{4!}x^{4} -\frac{1}{6!}x^{6} + \cdots \right)\\
+             &= \frac{\cos(x)}{x}.
+    \end{align*}
+    Now, if we had chosen any other value for $c_1$, the result would have been a linear combination of $u_1$ and $u_2$, which would have been more unwieldy.
+  \end{example}
+  In \eqref{eq:series_solution_2}, we note that the differential operator
+  \begin{align*}
+    \mathcal{L}_x &= x^2\diff{^2}{x^2} + 2x\diff{}{x} + x^2
+  \end{align*}
+  has definite parity. Therefore, we get even and odd solutions.\newline
+
+  Practically, we want to know whether or not we even have a convergent power series. In the general form,
+  \begin{align*}
+    \diff{^2u}{x^2} + p(x)\diff{u}{x} + q(x)u &= 0,
+  \end{align*}
+  there is \textit{at least one} series solution centered at $x_0$ if and only if
+  \begin{align*}
+    \lim_{x\rightarrow x_0}\left( x-x_0 \right)p(x) &= 0\\
+    \lim_{x\rightarrow x_0}\left( x-x_0 \right)^2q(x) &= 0.
+  \end{align*}
+  Now, if we want a second solution, there is a bit more work to be done, but we can show that if we have two roots of the indicial equation, $\alpha_1,\alpha_2$, then if $\alpha_1-\alpha_2\notin \Z$, there exists a series solution. Meanwhile, if $\alpha_1-\alpha_2 \in \Z$, we use the guess of
+  \begin{align*}
+    u_2 &= Au_1\ln\left\vert x \right\vert + x^{\alpha_2}\sum_{m=0}^{\infty}c_mx^{m}.
+  \end{align*}
+  \begin{example}[Bessel's Equation]
+    Bessel's equation is is a one-parameter family of equations of the form
+    \begin{align*}
+      x^2\diff{^2u}{x^2} + x\diff{u}{x} + \left( x^2-\lambda^2 \right)u &= 0.
+    \end{align*}
+    We modify our guess from \eqref{eq:series_solution_guess} by taking
+    \begin{align*}
+      u(x) &= x^{\alpha}\sum_{m=0}^{\infty}\frac{1}{m!}c_mx^{m}.
+    \end{align*}
+    Plugging this into the equation, we get
+    \begin{align*}
+      \sum_{m=0}^{\infty}\frac{1}{m!}c_m\left( \left( m + \alpha \right)^2-\lambda^2 \right)x^{m + \alpha} + \sum_{m=0}^{\infty}\frac{1}{m!}c_mx^{m + \alpha + 2} &= 0.
+    \end{align*}
+    Shifting indices, we get
+    \begin{align*}
+      c_0\left( \alpha^2 -\lambda^2 \right)x^{\alpha} + c_1\left( \left( \alpha + 1 \right)^2-\lambda^2 \right)x^{\alpha + 1} &= \sum_{m=2}^{\infty}\left( \frac{c_m}{m!}\left( \left( m + \alpha \right)^2-\lambda^2 \right) - \frac{c_{m-2}}{\left( m-2 \right)!} \right)x^{m + \alpha}\\
+                                                                                                                              &= 0.
+    \end{align*}
+    Since $c_0\neq 0$, we have $\alpha = \pm\lambda$, and $c_1  \left( 1 \pm 2\lambda \right)=  0$. Our recurrence relation is
+    \begin{align*}
+      c_m &= \frac{-\left( m-1 \right)}{\left( m\pm 2\lambda \right)}c_{m-2}.
+    \end{align*}
+    Expanding, we get Equation (39.75) in the book. If we divide out by $2^{\lambda}\lambda!$, we get the equation
+    \begin{align*}
+      J_{\lambda}\left( x \right) &= \sum_{m=0}^{\infty}\frac{\left( -1 \right)^{m}}{m!\Gamma\left( m + \lambda + 1 \right)} \left( \frac{x}{2} \right)^{m + \lambda}.
+    \end{align*}
+  \end{example}
+  \begin{example}
+    Legendre's equation is
+    \begin{align*}
+      \left( 1-x^2 \right)\diff{^2u}{x^2} - 2x\diff{u}{x} + \lambda u &= 0.
+    \end{align*}
+    This equation has definite parity, and we expect an ``every-other'' recurrence relation. The indicial equations are
+    \begin{align*}
+      c_0\alpha\left( \alpha - 1 \right) &= 0\\
+      c_1\alpha\left( \alpha + 1 \right) &= 0.
+    \end{align*}
+    We get $\alpha = 1,0$, and the recurrence relation for $\alpha = 1$ of
+    \begin{align*}
+      c_m &= \frac{m\left( m-1 \right)-\lambda}{\left( m+1 \right)m}c_{m-2}.
+    \end{align*}
+    Evaluating this expansion, we get
+    \begin{align*}
+      u_1(x) &= x + \frac{\left( 2-\lambda \right)}{3!}x^3 + \frac{\left( 2-\lambda \right)\left( 12-\lambda \right)}{5!}x^5 + \frac{\left( 2-\lambda \right)\left( 12-\lambda \right)\left( 30-\lambda \right)}{7!}x^7 + \cdots
+    \end{align*}
+    Meanwhile, if $\alpha = 0$, we select $c_1 = 0$, and get the recurrence relation of
+    \begin{align*}
+      c_m &= \frac{\left( m-1 \right)\left( m-2 \right)-\lambda}{m\left( m-1 \right)}c_{m-2},
+    \end{align*}
+    and series of
+    \begin{align*}
+      u_2 &= 1 - \frac{\lambda}{2!}x^2 - \frac{\lambda\left( 6-\lambda \right)}{4!}x^4 - \frac{\lambda\left( 6-\lambda \right)\left( 20-\lambda \right)}{6!}x^6 + \cdots
+    \end{align*}
+    Evaluating the radius of convergence,
+    \begin{align*}
+      x^2 &< \lim_{m\rightarrow\infty} \left\vert \frac{c_{m-2}}{c_m} \right\vert\\
+          &= 1.
+    \end{align*}
+    Note that for large $m$, though, evaluated at $\pm 1$, we have
+    \begin{align*}
+      \left\vert \frac{c_{m-2}}{c_m} \right\vert &\approx 1- \frac{2}{m}.
+    \end{align*}
+    This is effectively a harmonic series, which diverges. In order to cause our series to converge at $\pm 1$, we need specific values of $\lambda$ to cause the series to truncate.\newline
+
+    If we set $\lambda = \ell\left( \ell + 1 \right)$, then selecting $\ell = 0,1,2,\dots$, either the even or odd series necessarily truncates.
+  \end{example}
 \end{document}
