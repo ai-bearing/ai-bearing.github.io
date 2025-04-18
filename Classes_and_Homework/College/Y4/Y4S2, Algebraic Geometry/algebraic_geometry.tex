@@ -1368,6 +1368,18 @@ Two ideals $I,J$ are called comaximal if $I + J = R$.
 \begin{solution}
   The ideal $I$ consists of all polynomials in $k\left[ x_1,\dots,x_n \right]$ that do not contain a constant term; thus, $I\mathcal{O}$ consists of all rational functions defined at $\left( 0,\dots,0 \right)$ without a constant term. All these functions evaluate to $0$ at $\left( 0,\dots,0 \right)$, so $I\mathcal{O}\subseteq \mathfrak{m}$. Moreover, since any element of $\mathfrak{m}$ necessarily does not have a constant term, $\mathfrak{m}\subseteq I\mathcal{O}$, meaning that $\mathfrak{m} = I\mathcal{O}$.
 \end{solution}
+\begin{exercise}[Exercise 2.45]
+Show that ideals $I,J\subseteq k\left[ x_1,\dots,x_n \right]$ with $k$ algebraically closed are comaximal if and only if $V(I)\cap V(J) = \emptyset$.
+\end{exercise}
+\begin{solution}
+  If $I$ and $J$ are comaximal, then $ I + J = k\left[ x_1,\dots,x_n \right] $, so since $I + J$ is an ideal that contains both $I$ and $J$,
+  \begin{align*}
+    \emptyset &= V\left( I + J \right)\\
+              &\supseteq V\left( I \right)\cap V\left( J \right).
+  \end{align*}
+  Now, if $V(I)\cap V(J) = \emptyset$, then $V(I+J) = \emptyset$, so $ I + J = k\left[ x_1,\dots,x_n \right] $.
+\end{solution}
+
 \subsection{Ideals with a Finite Number of Zeros}%
 We will relate local questions (related to the local rings of some finite algebraic variety) to global questions (related to the coordinate rings).
 \begin{proposition}
@@ -1378,7 +1390,23 @@ We will relate local questions (related to the local rings of some finite algebr
 \begin{proof}
   Let $I_i = I\left( \set{P_i} \right)$. Let $R = k\left[ x_1,\dots,x_n \right]/I$, and let $R_i = \mathcal{O}_i/I\mathcal{O}_i$. The natural homomorphisms $\varphi_i$ from $R$ to $R_i$ induce a homomorphism $\varphi$ from $R$ to $\prod_{i=1}^{n}R_i$.\newline
 
-  By the Nullstellensatz, $\operatorname{rad}\left( I \right) = \bigcap_{i=1}^{n}I_i$, so $\left( \bigcap I_i \right)^d\subseteq I$ for some $d$.
+  By the Nullstellensatz, $\operatorname{rad}\left( I \right) = \bigcap_{i=1}^{n}I_i$, so $\left( \bigcap I_i \right)^d\subseteq I$ for some $d$. Since $\bigcap_{j\neq i}I_j$ and $I_i$ are comaximal we have $\bigcap I_j^d = \left( I_1\cdots I_N \right)^d \subseteq I$.\newline
+
+  Let $F_i\in k\left[ x_1,\dots,x_n \right]$ be such that $f_i\left( P_j \right) = \delta_{ij}$. Let $E_i = 1-\left( 1-F_i^{d} \right)^{d}$. Note that $E_i = F_i^{d}D_i$ for some $D_i$, so $E_i\in I_j^{d}$ for $i\neq j$. Furthermore,
+  \begin{align*}
+    1- \sum_{i} E_i &= \left( 1-E_j \right) - \sum_{i\neq j}E_j\\
+                    &\in \bigcap I_j^{d}\\
+                    &\subseteq I.
+  \end{align*}
+  Furthermore, $E_i-E_i^2 = E_i\left( 1-F_i^{d} \right)^{d}$ is in $\left( \bigcap_{j\neq i} I_j^{d} \right) I_i^{d} \subseteq I$. If we define $e_i$ to be the residue of $E_i$ in $R$, we have $e_i^2 = e_i$, $e_ie_j = 0$ for $i\neq j$, and $\sum e_i = 1$.\newline
+
+  We claim that if $g\in k\left[ x_1,\dots,x_n \right]$, and $g\left( P_i \right)\neq 0$, there is $t\in R$ such that $tg^{\ast} = e_i$, where $g^{\ast}$ is the residue of $g$ in $R/I$.\newline
+
+  We may assume that $g\left(P_i\right) = 1$. Let $h = 1-g$. It follows that $\left( 1-h \right)\left( E_i + h E_i + \cdots + h^{d-1}E_i \right) = E_i - h^{d}E_i$, meaning $h\in I_i$, and $h^{d}E_i\in I$, so $g^{\ast}\left( e_i + h^{\ast}e_i + \cdots + \left( h^{\ast} \right)^{d-1}e_i \right) = e_i$.\newline
+
+  Now, we may show that $\varphi$ is an isomorphism. If $\varphi\left( f \right) = 0$, then for each $i$ there is $g_i$ with $g_i\left( P_i \right) \neq 0$, and $g_i f\in I$, where $f$ is the residue of $F$ in $I$. Let $t_ig_i = e_i$ (where $g_i$ is the residue of $G_i$ in $I$). Then, $f = \sum e_i f = \sum t_ig_i f = 0$.\newline
+
+  Now, since $E_i\left( P_i \right)=1$, $\varphi_i\left( e_i \right)$ is a unit in $R_i$, and since $\varphi_i\left( e_i \right)\varphi_i\left( e_j \right) = \varphi_i\left( e_ie_j \right) = 0$ if $i\neq j$, then $\varphi_i\left( e_j \right) = 0$ for all $i\neq j$. Thus, $\varphi\left( e_i \right) = \varphi_i\left( \sum e_j \right) = 1$. Now, if $z = \left( a_1/s_1,\dots,a_N/s_N \right)\in \prod R_i$, we may find $t_i$ such that $t_is_i = e_i$ by our earlier claim. Therefore, $a_i/s_i = a_it_i$, so $\varphi_i\left( \sum t_ja_je_j \right) = \varphi_i\left( t_ia_i \right) = a_i/s_i$, and $\varphi\left( \sum t_ja_je_j \right) = z$.
 \end{proof}
 
 \end{document}
