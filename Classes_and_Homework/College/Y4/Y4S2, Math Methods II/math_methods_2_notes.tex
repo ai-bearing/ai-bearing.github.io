@@ -3155,4 +3155,213 @@ We can find the residue in a variety of ways.
 
     If we set $\lambda = \ell\left( \ell + 1 \right)$, then selecting $\ell = 0,1,2,\dots$, either the even or odd series necessarily truncates.
   \end{example}
+  \subsection{Sturm--Liouville Problems}%
+  How does a differential equation yield orthogonal solutions?\newline
+
+  We have dealt with orthogonal polynomials via Gram--Schmidt and generating functions, but originally they were defined by differential equations.\newline
+
+  Consider the differential equation
+  \begin{align*}
+    \diff{^2\phi}{x^2} &= -k^2\phi.\label{eq:simplest_second_order_equation}\tag{$\dag$}
+  \end{align*}
+  The solutions here are sines and cosines. Now, if we define $D = \diff{}{x}$, then
+  \begin{align*}
+    D^2\phi &= -k^2\phi
+  \end{align*}
+  looks suspiciously like an eigenvalue problem.\newline
+
+  Now, this eigenvalue equation does not necessarily guarantee orthogonality. We need one more thing here in order to be able to find orthogonality.\newline
+
+  Recall from linear algebra that if an operator is self-adjoint, then the operator has real eigenvalues and orthogonal eigenvectors. Since $L_2$ is an inner product space, we want to be able to find out the definition of $D^{\ast}$ --- ideally, it is equal to $D$.\newline
+
+  Recall that if $\mathcal{L}$ is a linear operator, the definition of $\mathcal{L}^{\ast}$ is the unique operator such that
+  \begin{align*}
+    \braket{\psi}{\mathcal{L}\phi} &= \braket{\mathcal{L}^{\ast}\psi}{\phi}.
+  \end{align*}
+  A self-adjoint (or Hermitian) operator is such that $\mathcal{L}^{\ast} = \mathcal{L}$. We want to be able to find this in the context of our $L_2$ space.\newline
+
+  We note that
+  \begin{align*}
+    \braket{\psi}{\mathcal{L}\phi} &= \int_{a}^{b} \overline{\psi}\left( x \right) \left[ \mathcal{L}\left( \phi \right)\left( x \right) \right]\:dx\\
+                                   &= \int_{a}^{b} \overline{\mathcal{L}^{\ast}\left( \psi \right)\left( x \right)}\phi\left( x \right)\:dx.
+  \end{align*}
+  Now, if we take $D = \diff{}{x}$, then
+  \begin{align*}
+    \braket{\psi}{D\phi} &= \int_{a}^{b} \overline{\psi\left( x \right)} \diff{\phi}{x}\:dx\\
+                         &= \overline{\psi(x)}\phi(x)\biggr\vert_{a}^{b} - \int_{a}^{b} \overline{ \diff{\psi}{x} }\phi(x)\:dx\\
+                         &= \overline{\psi(x)}\phi(x)\biggr\vert-{a}^{b} + \int_{a}^{b} \overline{-\diff{\psi}{x}} \phi(x)\:dx.
+  \end{align*}
+  If we restrict our view to functions that vanish at the boundary, we have $D^{\ast} = -\diff{}{x}$. The derivative is thus an anti-Hermitian operator.\newline
+
+  Note that if we apply a factor of $i$, then $i\diff{}{x}$ is a Hermitian operator.\newline
+
+  Furthermore, note that $D^2$ is Hermitian, so it has real eigenvalues and orthogonal eigenvectors.
+  \subsubsection{Sturm--Liouville Operators}%
+  The equation \eqref{eq:simplest_second_order_equation} is very simple. We will generalize by defining
+  \begin{align*}
+    \mathcal{L}\phi &= \left[ \alpha(x)\diff{^2}{x^2} + \beta(x)\diff{}{x} + \gamma(x) \right]\phi(x)\\
+                    &= \lambda\phi(x).
+  \end{align*}
+  In order to have $\mathcal{L}$ as Hermitian, we set up our inner product and integrate by parts to yield
+  \begin{align*}
+    \braket{\psi}{\mathcal{L}\phi} &= \int_{a}^{b} \overline{\psi}(x)\left( \alpha\diff{^2}{x^2} + \beta \diff{}{x} + \gamma \right)\phi(x)\:dx\\
+                                   &= \int_{}^{} \overline{\left( \alpha \diff{}{x} + \left( 2\diff{\alpha}{x} - \beta \right)\diff{}{x} + \left( \diff{^2\alpha}{x^2} - \diff{\beta}{x} + \gamma \right) \right)\psi(x)}\phi(x)\:dx + \text{boundary terms}.
+  \end{align*}
+  Note that the operator $\mathcal{L}^{\ast}$ does reduce to $\mathcal{L}$ if $\diff{\alpha}{x} = \beta(x)$. If we introduce the weight factor
+  \begin{align*}
+    w(x) &= \frac{1}{\alpha(x)} \exp\left( \int_{}^{} \frac{\beta(x)}{\alpha(x)}\:dx \right),
+  \end{align*}
+  then we will define
+  \begin{align*}
+    \widetilde{\alpha}(x) &= \alpha(x)w(x)\\
+                          &= \exp\left( \int_{}^{} \frac{\beta(x)}{\alpha(x)}\:dx \right),
+  \end{align*}
+  and similarly, $\widetilde{\beta} = \beta w$, $\widetilde{\gamma} = \gamma w$. Note that
+  \begin{align*}
+    \diff{\widetilde{\alpha}}{x} &= \frac{\beta(x)}{\alpha(x)} \exp\left( \int_{}^{} \frac{\beta(x)}{\alpha(x)}\:dx \right)\\
+                                 &= \beta(x)w(x)\\
+                                 &= \widetilde{\beta}(x).
+  \end{align*}
+  We will replace $\widetilde{\alpha} = -p$ and $\widetilde{\gamma} = q$. This yields an operator in \textit{Sturm--Liouville} form:
+  \begin{align*}
+    \mathcal{L} &= -\diff{}{x}\left( p(x)\diff{}{x} \right) + q(x)\\
+                &= -p(x)\diff{^2}{x^2} - \diff{p}{x}\diff{}{x} + q(x),
+  \end{align*}
+  where we assume $p,\diff{p}{x},q,w$ are real and well-behaved between $a$ and $b$. The \textit{Sturm--Liouville equation} is of the form
+  \begin{align*}
+    \mathcal{L}\phi &= \lambda w(x)\phi(x).
+  \end{align*}
+  Note that our boundary term is
+  \begin{align*}
+    p(x) \left( \overline{\diff{\psi}{x}}\phi(x) - \overline{\psi(x)}\diff{\phi}{x}\biggr\vert_{a}^{b} \right) &= 0.
+  \end{align*}
+  The easiest way to deal with this is by making sure $p(x) = 0$ at $a$ and $b$.
+  \begin{example}
+    Consider Legendre's equation,
+    \begin{align*}
+      \left( 1-x^2 \right)\diff{^2\phi}{x^2} - 2x\diff{\phi}{x} + \ell\left( \ell + 1 \right)\phi &= 0.
+    \end{align*}
+    We have $p(x) = 1-x^2 > 0$ between $\pm 1$, and $w(x) = 1$, meaning this equation yields orthogonal solutions between $[-1,1]$.\newline
+
+    Laguerre's equation
+    \begin{align*}
+      x\diff{^2\phi}{x^2} + \left( 1-x \right)\diff{\phi}{x} + n\phi &= 0
+    \end{align*}
+    is not in Sturm--Liouville form. Multiplying by
+    \begin{align*}
+      w(x) &= \frac{1}{x}\exp\left( \int_{}^{} \frac{1-x}{x}\:dx \right)\\
+           &= \frac{1}{x}e^{\ln(x) - x}\\
+           &= e^{-x}.
+    \end{align*}
+    We thus get the Sturm--Liouville problem of
+    \begin{align*}
+      xe^{-x}\diff{^2\phi}{x^2} + \left( 1-x \right)e^{-x}\diff{\phi}{x} + ne^{-x}\phi &= 0\\
+      -\diff{}{x}\left( xe^{-x}\diff{\phi}{x} \right) &= ne^{-x}\phi.
+    \end{align*}
+    Note that $p = xe^{-x}$ vanishes at $0$ and $\infty$.
+  \end{example}
+  Note that we need to apply conditions on $\phi$ and $\psi$ such that all the solutions $\chi$ form a vector space. The \textit{homogeneous} restrictions
+  \begin{align*}
+    c_1\chi(a) + d_1\chi'(a) &= 0\\
+    c_2\chi(b) + d_2\chi'(b) &= 0,
+  \end{align*}
+  where at least one of $c_1,d_1$ and $c_2,d_2$ are nonzero. 
+  \begin{itemize}
+    \item The Dirichlet boundary conditions are of the form $\chi(a) = \chi(b) = 0$.
+    \item The Neumann boundary conditions are of the form $\chi'(a) = \chi'(b) = 0$.
+    \item Periodic boundary conditions are of the form $\chi(a) = \chi(b)$ and $\chi'(a) = \chi'(b)$.
+  \end{itemize}
+  \begin{example}
+    Consider the equation
+    \begin{align*}
+      \diff{^2\phi}{x^2} &= -k^2,
+    \end{align*}
+    which is the Schrödinger equation for a free particle with momentum $\hbar k$. We will implement special periodic boundary conditions
+    \begin{align*}
+      \phi(0) &= \phi(L)\\
+      \phi'(0) &= \phi'(L),
+    \end{align*}
+    which denotes a circle of circle $L$.\newline
+
+    We will end up finding that
+    \begin{align*}
+      \phi(x) &= \sum_{n=-\infty}^{\infty}c_ne^{2\pi i x/L}.
+    \end{align*}
+  \end{example}
+  \subsubsection{The Properties of Sturm--Liouville Problems}%
+  Any Sturm--Liouville equation has the following features.
+  \begin{itemize}
+    \item The eigenvectors form an \textit{orthogonal} basis:
+      \begin{align*}
+        \int_{a}^{b} \overline{\phi_m(x)}\phi_n(x)w(x)\:dx &= k_n\delta_{mn},
+      \end{align*}
+      complete in $L_2$.\newline
+
+      Any well-behaved function defined in $[a,b]$ can be expanded on the eigenbasis
+      \begin{align*}
+        \psi(x) &= \sum_{n}c_n\phi_n(x),
+      \end{align*}
+      where
+      \begin{align*}
+        c_m &= \braket{\phi_m}{f}\\
+            &= \frac{1}{k_n} \int_{a}^{b} \overline{\phi_m(x)}f(x)w(x)\:dx.
+      \end{align*}
+    \item The eigenvalues $\lambda$ are real.
+    \item If $[b-a]$ is finite, then the spectrum forms a discrete, countably infinite ordered set, such that
+      \begin{align*}
+        \lambda_1 \leq \lambda_2 \leq \lambda_3 \leq \cdots,
+      \end{align*}
+      which is used to label $\phi_n$. Since $\lim_{n\rightarrow\infty}\lambda_n = \infty$, there is no largest eigenvalue. The lower bound is
+      \begin{align*}
+        \lambda_n &\geq \frac{1}{k_n} \left[ -p(x) \overline{\phi_n(x)} \diff{\phi_n}{x}\biggr\vert_{a}^{b} + \int_{a}^{b} q(x) \left\vert \phi_n(x) \right\vert^2\:dx \right].
+      \end{align*}
+      If both $q$ and $-p \overline{\phi_n}\diff{\phi_n}{x}\biggr\vert_{a}^{b}$ are positive, then all eigenvalues are positive.
+    \item The real eigenvectors are oscillatory: between $a$ and $b$, there are $n-1$ nodes $\alpha_i$ such that $\phi_n\left( \alpha_0 \right) = 0$. Note that oscillatory does not imply periodic, nor do the $\phi_n$ have fixed amplitude.
+    \item For separated boundary conditions, the spectrum is non-degenerate. With periodic conditions, at most a double degeneracy can occur.
+  \end{itemize}
+  Sturm--Liouville equations occur all the time, especially in quantum mechanics. For instance, the time-independent Schrödinger equation,
+  \begin{align*}
+    \left( -\frac{\hbar^2}{2m}\diff{^2}{x^2} + V(x) \right)\phi(x) &= E\psi(x)
+  \end{align*}
+    is a Sturm--Liouville equation.
+    \begin{example}
+      We will contain a particle in a box of radius $a$, with potential
+      \begin{align*}
+        V(r) &= \begin{cases}
+          0 & 0 \leq r < a\\
+          \infty & r\geq a
+        \end{cases}.
+      \end{align*}
+      We will have to replace the $\diff{^2}{x^2}$ in the Schrödinger equation with the Laplacian, $\nabla^2$, giving
+      \begin{align*}
+        \frac{1}{r} \pd{}{r}\left( r\pd{u}{r} \right) + \frac{1}{r^2}\pd{^2u}{\phi^2} &= -k^2 u,
+      \end{align*}
+      where $k^2 = \frac{2mE}{\hbar^2}$. We will let $u\left( \mathbf{r} \right)$ reduce to a purely radial function $R(r)$, which allows us to take
+      \begin{align*}
+        \diff{}{r}\left( r\diff{R}{r} \right) &= -k^2rR(r).
+      \end{align*}
+      This is Bessel's equation. There are two solutions: the Bessel function, $J_0(r)$, and the Neumann function, $N_0(r)$.\footnote{Also denoted $Y_0$.} Note that Neumann functions diverge at $0$, so our solutions are the Bessel functions.\newline
+
+      Even though these solutions are not periodic, they are oscillatory. These solutions must be continuous at $r = a$, and confining a particle at $R(a) = 0$, Thus, we have $k_n = \frac{\alpha_n}{a}$, where $\alpha_n$ are zeros of the Bessel function.\newline
+
+      The circular well has energies of
+      \begin{align*}
+        E_n &= \frac{\hbar^2\alpha_n^2}{2ma^2}.
+      \end{align*}
+      We get the orthogonality condition
+      \begin{align*}
+        \int_{0}^{a} J_0\left( \frac{\alpha_n r}{a} \right) J_0\left( \frac{\alpha_m r}{a} \right)r\:dr &= \frac{a^2}{2}J_0'\left( \alpha_n \right)^2\delta_{mn}.
+      \end{align*}
+      We have the eigenfunctions
+      \begin{align*}
+        \phi\left( r \right) &= \sum_{n}c_nR_n(r)\\
+                             &= \sum_{n}c_nJ_0\left( \frac{\alpha_n r}{a} \right),
+      \end{align*}
+      where
+      \begin{align*}
+        c_n &= \frac{2}{a^2J_1\left( \alpha_n \right)^2} \int_{0}^{a} J_0\left( \frac{\alpha_n r}{a} \right)\psi\left( r \right)\:dr.
+      \end{align*}
+      This is known as the \textit{Fourier--Bessel} series.
+    \end{example}
+    
 \end{document}
