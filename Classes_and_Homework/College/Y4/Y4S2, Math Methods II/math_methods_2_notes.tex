@@ -3363,5 +3363,165 @@ We can find the residue in a variety of ways.
       \end{align*}
       This is known as the \textit{Fourier--Bessel} series.
     \end{example}
-    
+  \subsection{Partial Differential Equations}%
+  We will now start talking about PDEs, which allow us to describe phenomena that vary in both space and time. 
+  \subsubsection{Separation of Variables}%
+  We will deal with the Helmholtz equation:
+  \begin{align*}
+    \left( \nabla^2 + k^2 \right)\psi\left( \mathbf{r} \right) &= 0.
+  \end{align*}
+  We will always be working with the ansatz of separated variables:
+  \begin{align*}
+    \psi\left( \mathbf{r} \right) &= X(x)Y(y)Z(z)\\
+                                  &= R(r)\Phi(\phi)Z(z)\\
+                                  &= R(r)\Phi(\phi)\Theta(\theta).
+  \end{align*}
+  As it turns out, there are 11 different coordinate systems where the Laplacian separates.\newline
+
+  We start with Cartesian. Upon plugging in the ansatz, the equation becomes
+  \begin{align*}
+    YZ\pd{^2X}{x^2} + XZ \pd{^2Y}{y^2} + XY \pd{^2Z}{z^2} &= -k^2XYZ\\
+    \frac{1}{X}\pd{^2X}{x^2} + \frac{1}{Y}\pd{^2Y}{y^2} + \frac{1}{Z}\pd{^2Z}{z^2} + k^2 &= 0.
+  \end{align*}
+  Rewriting, we get
+  \begin{align*}
+    \frac{1}{X}\pd{^2X}{x^2} &= -\left( \frac{1}{Y}\pd{^2Y}{y^2} + \frac{1}{Z}\pd{^2Z}{z^2} + k^2 \right).
+  \end{align*}
+  Note that the left hand side is entirely a function of $x$, while the right hand side is entirely a function of not $x$. Therefore, both sides must equal some constant. We will write this constant as $-\alpha^2$, giving the equation
+  \begin{align*}
+    \frac{1}{X}\pd{^2X}{x^2} &= -\alpha^2
+  \end{align*}
+  We set
+  \begin{align*}
+    -\left( \frac{1}{Y}\pd{^2Y}{y^2} + \frac{1}{Z}\pd{^2Z}{z^2} + k^2 \right) &= -\alpha^2,
+  \end{align*}
+  and get
+  \begin{align*}
+    \frac{1}{Y} \pd{^2Y}{y^2} &= -\frac{1}{Z}\pd{^2Z}{z^2} - k^2 + \alpha^2.
+  \end{align*}
+  Yet again, the left hand side is entirely a function of $y$,and the right hand side is entirely a function of $z$, so we set both equal to $-\beta^2$. Therefore, we get the separated system
+  \begin{align*}
+    \frac{1}{X}\pd{^2X}{x^2} &= -\alpha^2\\
+    \frac{1}{Y}\pd{^2Y}{y^2} &= -\beta^2\\
+    \frac{1}{X}\pd{^2Z}{z^2} &= -\gamma^2,
+  \end{align*}
+  under the condition that $\alpha^2 + \beta^2 + \gamma^2 = k^2$. We may solve this system to yield
+  \begin{align*}
+    X(x) &= a_1e^{i\alpha x} + a_2e^{-i\alpha x}\\
+    Y(y) &= b_1e^{i\beta y} + b_2e^{-i\beta y}\\
+    Z(z) &= c_1e^{i\gamma z} + c_2e^{-i\gamma z}.
+  \end{align*}
+  Cartesian is, unsurprisingly, the simplest. In cylindrical, we have
+  \begin{align*}
+    \nabla^2 &= \frac{1}{r} \pd{}{r}\left( r \pd{}{r} \right) + \frac{1}{r^2} \pd{^2}{\phi^2} + \pd{^2}{z^2}.
+  \end{align*}
+  Separating, we get
+  \begin{align*}
+    \frac{1}{R}\frac{1}{r}\diff{}{r}\left( r \diff{R}{r} \right) + \frac{1}{\Phi}\frac{1}{r^2}\diff{^2\Phi}{\phi^2} + \frac{1}{Z}\diff{^2Z}{z^2} &= -k^2.
+  \end{align*}
+  We start by setting the $z$ term to $-\gamma^2$, giving
+  \begin{align*}
+    \frac{1}{rR}\diff{}{r}\left( r\diff{R}{r} \right) + \frac{1}{r^2\Phi}\diff{^2\Phi}{\phi^2} &= -k^2 + \gamma^2\\
+                                                                                               &= -\beta^2.
+  \end{align*}
+  Multiplying out and rearranging, we get
+  \begin{align*}
+    \frac{r}{R}\diff{}{r}\left( r\diff{R}{r} \right) + \beta^2r^2 &= -\frac{1}{\Phi}\diff{^2\Phi}{\phi^2}\\
+                                                                  &= m^2.
+  \end{align*}
+  Therefore, we get the system
+  \begin{align*}
+    \diff{^2Z}{z^2} &= -\gamma^2 Z\label{eq:linear_SHO}\tag{1}\\
+    r\diff{}{r}\left( r \diff{R}{r} \right) + \left( \beta^2r^2 - m^2 \right)R &= 0\label{eq:cylindrical_bessel_again}\tag{2}\\
+    \diff{^2\Phi}{\phi^2} &= -m^2\Phi.\label{eq:integral_SHO}\tag{3}
+  \end{align*}
+  Notice that \eqref{eq:cylindrical_bessel_again} is actually Bessel's equation. Furthermore, in \eqref{eq:integral_SHO}, we must have $m\in\Z$, else we would not return as we rotated around the cylinder by $2\pi$. We get the solutions
+  \begin{align*}
+    R(r) &= a_1J_m\left( \beta r \right) + a_2N_m\left( \beta r \right)\\
+    \Phi(\phi) &= b_1\cos\left( m\phi \right) + b_2\sin\left( m\phi \right)\\
+    Z(z) &= c_1e^{i\gamma z} + c_2e^{-i\gamma z},
+  \end{align*}
+  where $J_m$ denotes the Bessel function with parameter $m$, and $N_m$ is the linearly independent second solution to Bessel's equation (known as Neumann's equation).\newline
+
+  In the special case where $k = 0$, we get the solution of
+  \begin{align*}
+    R\left( r \right) &= a_1r^{m} + a_2r^{-m}\\
+    \Phi(\phi) &=  b_1\cos\left( m\phi \right) + b_2\sin\left( m\phi \right)\\
+    Z(z) &= 1.
+  \end{align*}
+  Now, in spherical coordinates, separation of variables yields
+  \begin{align*}
+    \diff{^2\Phi}{\phi^2} &= -m^2\Phi\label{eq:SHO_again}\tag{1}\\
+    \frac{1}{\sin\left( \theta \right)}\diff{}{\theta}\left( \sin\left( \theta \right)\diff{\Theta}{\theta} \right) + \left( \lambda - \frac{m^2}{\sin^2\left( \theta \right)} \right) &= 0\label{eq:associated_legendre_equation}\tag{2}\\
+    \diff{}{r}\left( r^2\diff{R}{r} \right) + \left( k^2r^2 - \lambda \right)R &= 0.\label{eq:spherical_bessel}\tag{3}
+  \end{align*}
+  We get three Sturm--Liouville problems. Specifically, \eqref{eq:spherical_bessel} is the spherical Bessel equation whenever $\lambda = \ell\left( \ell + 1 \right)$, labeled $j_{\ell}$, with linearly independent solutions of the spherical Neumann equations, labeled $n_{\ell}$.
+  \begin{remark}
+  The spherical and cylindrical Bessel functions are related via
+  \begin{align*}
+    j_{\ell}\left( \xi \right) &= \sqrt{\frac{\pi}{2\xi}}J_{\ell + \frac{1}{2}}\left( \xi \right)\\
+    n_{\ell}\left( \xi \right) \sqrt{\frac{\pi}{2\xi}}N_{\ell + \frac{1}{2}}\left( \xi \right).
+  \end{align*}
+  \end{remark}
+  Transforming \eqref{eq:associated_legendre_equation} with $\xi = \cos\left( \theta \right)$ gives the equation in $\chi\left( \xi \right)$ of
+  \begin{align*}
+    \diff{}{\xi}\left( \left( 1-\xi^2 \right)\diff{}{\xi} \right) + \left( \lambda - \frac{m^2}{1-\xi^2} \right)\chi &= 0,
+  \end{align*}
+  which is the associated Legendre equation with solutions $P_{\ell,m}\left( \xi \right)$ and $Q_{\ell,m}\left( \xi \right)$ when $\lambda = \ell\left( \ell + 1 \right)$. Thus, we get the solutions of
+  \begin{align*}
+    R(r) &= a_1j_{\ell}\left( kr \right) + a_2n_{\ell}\left( kr \right)\\
+    \Theta(\theta) &= b_1P_{\ell,m}\left( \cos\left( \theta \right) \right) + b_2Q_{\ell,m}\left( \cos\left( \theta \right) \right)\\
+    \Phi(\phi) &= c_1e^{im\phi} + c_2e^{-im\phi}.
+  \end{align*}
+  Laplace's equation replaces the expression in $j_{\ell}$ and $n_{\ell}$ with linear combinations in terms of $r^{\ell}$ and $r^{-\ell}$. This yields the expansion in the spherical harmonics once we drop the $Q_{\ell,m}$:
+  \begin{align*}
+    \psi_{\ell,m}\left( r,\theta,\phi \right) &= \sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell}\left( A_{\ell,m}r^{\ell} + \frac{B_{\ell,m}}{r^{\ell + 1}} \right) Y_{\ell,m}\left( \theta,\phi \right).
+  \end{align*}
+  Now, if we have azimuthal symmetry, the spherical harmonics reduce to an expansion in Legendre functions:
+  \begin{align*}
+    \psi_{\ell}\left( r,\theta \right) &= \sum_{\ell=0}^{\infty}\left( A_{\ell}r^{\ell} + \frac{B_{\ell}}{r^{\ell + 1}} \right)P_{\ell}\left( \cos\left( \theta \right) \right).
+  \end{align*}
+  \subsection{Boundary Value Problems}%
+  There are two parts of solving a PDE: the calculus and the boundary conditions. There are three primary boundary conditions:
+  \begin{itemize}
+    \item Dirichlet: the value of $\Psi$ is specified on the boundary;
+    \item Neumann: the normal derivative $\pd{\Psi}{n} = \nabla\Psi\cdot \hat{n}$ is specified on the boundary;
+    \item Cauchy: both $\Psi$ and $\nabla\Psi\cdot \hat{n}$ are specified everywhere on the boundary.
+  \end{itemize}
+  \begin{example}
+    We'll consider a Laplace equation in the Cartesian plane: $\nabla^2 V = 0.$\newline
+
+    Specifically, we will consider it for a gutter with width $a$ where we examine a cross-section at the center. Let
+    \begin{align*}
+      V\left( 0,y \right) &= 0\\
+      V\left( a,y \right) &= 0.
+    \end{align*}
+    We will include an initial condition $V\left( x,0 \right) = V_0$, and $V\left( x,\infty \right) = 0$.\newline
+
+    Separating variables, we get
+    \begin{align*}
+      X(x) &= a_1e^{i\alpha x} + a_2e^{-i\alpha x}\\
+      Y(y) &= b_1e^{i\beta x} + b_2e^{-i\beta x}.
+    \end{align*}
+    We must have $\alpha^2 = -\beta^2$, so from the boundary conditions, we get $\alpha = \frac{n\pi}{a}$, yielding
+    \begin{align*}
+      X(x) &= a_n\sin\left( \frac{n\pi }{a}x \right)\\
+      Y(y) &= b_ne^{-\frac{n\pi}{a}y}.
+    \end{align*}
+    We note that, since this is a homogeneous linear differential equation, we must take linear combinations, giving
+    \begin{align*}
+      V\left( x,y \right) &= \sum_{n=1}^{\infty}c_n\sin\left( \frac{n\pi}{a}x \right)e^{-\frac{n\pi}{a}y}.
+    \end{align*}
+    We note that
+    \begin{align*}
+      V\left( x,0 \right) &= \sum_{n=1}^{\infty}c_n\sin\left( \frac{n\pi}{a}x \right)\\
+                          &= V_0.
+    \end{align*}
+    Upon using the inner product expansions, we get
+    \begin{align*}
+      c_n &= \frac{2V_0}{a} \int_{0}^{a} \sin\left( \frac{n\pi}{a}x \right)\:dx\\
+          &= \frac{4v_0}{\pi n}.\tag*{for odd $n$}
+    \end{align*}
+  \end{example}
+  Note that we are always able to add boundary conditions together; this makes solving the more hairy boundary value problems easier.
 \end{document}
