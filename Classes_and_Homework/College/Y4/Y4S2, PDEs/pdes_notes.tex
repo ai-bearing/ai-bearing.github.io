@@ -3187,11 +3187,11 @@ The Fourier transform essentially takes a signal in time, and decomposes the sig
   \begin{align*}
     \mathcal{F}\left[ \diff{f}{t} \right] &= \int_{-\infty}^{\infty} e^{i\omega t}\diff{f}{t}\:dt\\
                                           &= \left( f(t)e^{i\omega t} \right)\biggr\vert_{-\infty}^{\infty} -i\omega \int_{-\infty}^{\infty} e^{i\omega t}f(t)\:dt\\
-                                          &= -i\omega \mathcal{F}\left( f \right).
+                                          &= -i\omega \mathcal{F}\left[ f \right].
   \end{align*}
   In general,
   \begin{align*}
-    \mathcal{F}\left( \diff{^nf}{t^n} \right) &= \left( -i\omega \right)^{n} \mathcal{F}\left( f \right).
+    \mathcal{F}\left[ \diff{^nf}{t^n} \right] &= \left( -i\omega \right)^{n} \mathcal{F}\left[ f \right].
   \end{align*}
 \end{example}
 \begin{table}[t]
@@ -3199,13 +3199,15 @@ The Fourier transform essentially takes a signal in time, and decomposes the sig
   \renewcommand{\arraystretch}{2}
   \begin{tabular}{c|c}
     $ f(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-i\omega t}\hat{f}(\omega)\:d\omega$ & $ \hat{f}(k) = \int_{-\infty}^{\infty} e^{i\omega t}f(t)\:dt$\\
-    \hline
+    \hline\hline
     $\displaystyle \diff{f}{t}$ & $\displaystyle -i\omega \hat{f}\left( \omega \right)$\\
     $\displaystyle \diff{^{n}f}{t^{n}}$ & $\displaystyle \left( -i\omega \right)^{n} \hat{f}\left( \omega \right)$\\
     $\displaystyle e^{i\omega_0 t}f(t)$ & $\displaystyle \hat{f}\left( \omega-\omega_0 \right)$\\
-    $\displaystyle e^{i\omega_0 t}$ & $\displaystyle 2\pi\delta\left( \omega-\omega_0 \right)$\\
     $\displaystyle f\left( x \pm at \right)$ & $\displaystyle e^{\pm i\omega a}\hat{f}\left( \omega \right)$\\
-    $\left( f\ast g \right)(t)$ & $\hat{f}\left( \omega \right)\hat{g}\left( \omega \right)$
+    $\displaystyle e^{i\omega_0 t}$ & $\displaystyle 2\pi\delta\left( \omega-\omega_0 \right)$\\
+    \hline
+    $\left( f\ast g \right)(t)$ & $\hat{f}\left( \omega \right)\hat{g}\left( \omega \right)$\\
+    $f(t)g(t)$ & $\hat{f}\left(\omega\right)\ast \hat{g}\left(\omega\right)$
   \end{tabular}
   \caption{Fourier Transform Pairs}
 \end{table}
@@ -3220,7 +3222,11 @@ The way this is done is via (discrete) convolution. In general, the \textit{conv
   \left( f\ast g \right)(x) &= \int_{-\infty}^{\infty} f\left( x-y \right)g(y)\:dy\\
                             &= \int_{-\infty}^{\infty} f(y)g\left( x-y \right)\:dy.
 \end{align*}
-As it turns out, we can show (with some quite terrible)
+As it turns out, we can show (with some quite devious symbol pushing), that
+\begin{align*}
+  \mathcal{F}\left[ \left( f\ast g \right) \right] &= \hat{f}\hat{g}\\
+  \mathcal{F}\left[ fg \right] &= \hat{f}\ast \hat{g}.
+\end{align*}
 \begin{example}
   Consider the heat equation Cauchy problem
   \begin{align*}
@@ -3248,6 +3254,15 @@ As it turns out, we can show (with some quite terrible)
                         &= \mathcal{F}^{-1}\left[ e^{-\alpha k^2 t} \right]\ast u\left( x,0 \right)\\
                         &= \int_{-\infty}^{\infty} \mathcal{F}\left[ e^{-\alpha k^2 t} \right]\left( x-y,t \right)u\left( y,0 \right)\:dy.
   \end{align*}
+  Using a table or some not-particularly-fun symbol pushing, we are able to find
+  \begin{align*}
+    \mathcal{F}\left[ e^{-\alpha k^2 t} \right] &= \frac{e^{-x^2/4\alpha t}}{\sqrt{2\alpha t}},
+  \end{align*}
+  so
+  \begin{align*}
+    u\left( x,t \right) &= \left( \frac{e^{-x^2/4\alpha t}}{2\pi t} \right)\ast u\left( x,0 \right)\\
+                        &= \int_{}^{} \frac{e^{-\frac{\left( x-y \right)^2}{4\alpha t}}}{\sqrt{2\alpha t}}u\left( y,0 \right)\:dy
+  \end{align*}
   We call the expression
   \begin{align*}
     K\left( x,t \right) &= \mathcal{F}\left[ e^{-\alpha k^2 t} \right]\left( x,t \right)
@@ -3259,7 +3274,13 @@ As it turns out, we can show (with some quite terrible)
     u\left( x,t \right) &= K\left( x,t \right)\ast u_0\left( x \right)\\
                         &= \int_{-\infty}^{\infty} K\left( x-y,t \right)u_0\left( y \right)\:dy.
   \end{align*}
-  
+\end{example}
+\begin{example}
+  Note that
+  \begin{align*}
+    \left( f\ast \delta \right)\left( x \right) &= \int_{-\infty}^{\infty} f(y)\delta\left( x-y \right)\:dy\\
+                                                &= f(x).
+  \end{align*}
 \end{example}
 \begin{example}
   Consider the wave equation Cauchy problem
@@ -3271,5 +3292,6 @@ As it turns out, we can show (with some quite terrible)
     u\left( x,0 \right) &= f(x)\\
     \pd{u}{t}\biggr\vert_{(x,0)} &= g(x).
   \end{align*}
+
 \end{example}
 \end{document}
