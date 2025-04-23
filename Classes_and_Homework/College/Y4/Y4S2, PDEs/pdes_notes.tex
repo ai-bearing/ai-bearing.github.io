@@ -3203,7 +3203,7 @@ The Fourier transform essentially takes a signal in time, and decomposes the sig
     $\displaystyle \diff{f}{t}$ & $\displaystyle -i\omega \hat{f}\left( \omega \right)$\\
     $\displaystyle \diff{^{n}f}{t^{n}}$ & $\displaystyle \left( -i\omega \right)^{n} \hat{f}\left( \omega \right)$\\
     $\displaystyle e^{i\omega_0 t}f(t)$ & $\displaystyle \hat{f}\left( \omega-\omega_0 \right)$\\
-    $\displaystyle f\left( x \pm at \right)$ & $\displaystyle e^{\pm i\omega a}\hat{f}\left( \omega \right)$\\
+    $\displaystyle f\left( x \pm at \right)$ & $\displaystyle e^{\mp i\omega a}\hat{f}\left( \omega \right)$\\
     $\displaystyle e^{i\omega_0 t}$ & $\displaystyle 2\pi\delta\left( \omega-\omega_0 \right)$\\
     \hline
     $\left( f\ast g \right)(t)$ & $\hat{f}\left( \omega \right)\hat{g}\left( \omega \right)$\\
@@ -3285,13 +3285,80 @@ As it turns out, we can show (with some quite devious symbol pushing), that
 \begin{example}
   Consider the wave equation Cauchy problem
   \begin{align*}
-    \pd{^2u}{t^2} - a^2\pd{^2u}{x^2} &= 0,
+    \pd{^2u}{t^2} - \alpha^2\pd{^2u}{x^2} &= 0,
   \end{align*}
   with $x\in\R,t\geq 0$, and
   \begin{align*}
     u\left( x,0 \right) &= f(x)\\
     \pd{u}{t}\biggr\vert_{(x,0)} &= g(x).
   \end{align*}
-
+  We will start by taking the Fourier transform with respect to $x$. Differentiating under the integral sign and simplifying, we get the equation
+  \begin{align*}
+    \diff{^2\hat{u}}{t^2} &= -\left( \alpha k \right)^2\hat{u}\left( k,t \right).
+  \end{align*}
+  This has the solution
+  \begin{align*}
+    \hat{u}\left( k,t \right) &= a_1(k) e^{i\alpha k t} + a_2(k)e^{-i\alpha k t}.
+  \end{align*}
+  We take the inverse Fourier transform to obtain
+  \begin{align*}
+    u\left( x,t \right) &= \mathcal{F}^{-1}\left[ a_1(k)e^{i\alpha k t} + a_2(k)e^{-i\alpha k t} \right]\\
+                        &= \mathcal{F}^{-1}\left[ a_1(k)e^{i\alpha k t} \right] + \mathcal{F}^{-1}\left[ a_2(k)e^{-i\alpha k t} \right]\\
+                        &= f_1\left( x-\alpha t \right) + f_2\left( x+\alpha t \right).
+  \end{align*}
+  We implement the initial conditions, giving
+  \begin{align*}
+    u\left( x,0 \right) &= f(x)\\
+    \pd{u}{t}\biggr\vert_{(x,0)} &= g(x).
+  \end{align*}
+  From here on out, we need to use D'Alembert's process to solve the wave equation.
 \end{example}
+\begin{remark}
+  Note that the Fourier transform does not include initial conditions, which is why we have to use D'Alembert's solution to actually solve the IVP.
+\end{remark}
+\section{Green's Functions}%
+Suppose we have an inhomogeneous \textit{ordinary} differential equation of the form
+\begin{align*}
+  \diff{^2y}{x^2} + p(x)\diff{y}{x} + q(x)y &= f(x).
+\end{align*}
+The traditional outline of the solution is as expected.
+\begin{itemize}
+  \item Find homogeneous solutions, $y_1,y_2$.
+  \item Find the particular solution, $y_p$, using guessing, undetermined coefficients, variation of parameters, or other methods.
+\end{itemize}
+The \textit{Green's function} of the solution will be a method to find $y_p$. Specifically, we will find a function $G\left( x,t \right)$ such that
+\begin{align*}
+  y_p(x) &= \int_{x_0}^{x} G(x,t)f(t)\:dt.
+\end{align*}
+A general theme of some of our methods of solving PDEs (such as the method of characteristics) is to take an initial condition and integrate it forward to find the solution at a future time. Ultimately, this requires finding the special function that allows us to integrate the initial condition forward in time.\newline
+
+We note that the Green's function is also the kernel of an integral transform that transforms $f(x)$ into the particular solution, $y_p(x)$.\newline
+
+The formula for the Green's function is as follows
+\begin{align*}
+  G(x,t) &= \frac{y_1(t)y_2(x) - y_1(x)y_2(t)}{y_1(t)\diff{y_2}{t} - y_2(t)\diff{y_1}{t}}
+\end{align*}
+This looks eerily similar to variation of parameters. As it turns out, the Green's function $G(x,t)$ is the solution to the case with the impulse forcing term:
+\begin{align*}
+  \diff{^2y}{x^2} + p(x)\diff{y}{x} + q(x)y &= \delta\left( t-x \right),
+\end{align*}
+which can be established using variation of parameters.
+\begin{example}
+  Consider the equation
+  \begin{align*}
+    \diff{^2y}{x^2} + y &= x^2.
+  \end{align*}
+  We have homogeneous solutions $y_1(x)= \sin(x)$, $y_2(x) = \cos(x)$, and $f(x) = x^2$. After that, we may find
+  \begin{align*}
+    G(x,t) &= -\left( \sin(t)\cos(x) - \sin(x)\cos(t) \right)\\
+           &= \sin(x)\cos(t) - \sin(t)\cos(x)\\
+           &= \sin\left( x-t \right).
+  \end{align*}
+  Therefore, we may find
+  \begin{align*}
+    y_p(x) &= \int_{x_0}^{x} t^2\sin\left( x-t \right)\:dt\\
+           &= x^2 - 2
+  \end{align*}
+\end{example}
+
 \end{document}
