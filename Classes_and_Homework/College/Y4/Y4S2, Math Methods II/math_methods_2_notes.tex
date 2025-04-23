@@ -3481,7 +3481,7 @@ We can find the residue in a variety of ways.
   \begin{align*}
     \psi_{\ell}\left( r,\theta \right) &= \sum_{\ell=0}^{\infty}\left( A_{\ell}r^{\ell} + \frac{B_{\ell}}{r^{\ell + 1}} \right)P_{\ell}\left( \cos\left( \theta \right) \right).
   \end{align*}
-  \subsection{Boundary Value Problems}%
+  \subsubsection{Boundary Value Problems}%
   There are two parts of solving a PDE: the calculus and the boundary conditions. There are three primary boundary conditions:
   \begin{itemize}
     \item Dirichlet: the value of $\Psi$ is specified on the boundary;
@@ -3524,4 +3524,88 @@ We can find the residue in a variety of ways.
     \end{align*}
   \end{example}
   Note that we are always able to add boundary conditions together; this makes solving the more hairy boundary value problems easier.
+  \begin{example}
+    Consider a cylinder with height $L$ and radius $R$. We apply ground to the top and bottom, and place the rest of the surface at a voltage of $V_0$. This gives the boundary conditions of
+    \begin{align*}
+      V\left( r,\phi,0 \right) = 0\\
+      V\left( r,\phi,L \right) = 0\\
+      V\left( R,\phi,z \right) = V_0.
+    \end{align*}
+    We want to find the solution of Laplace's equation.\newline
+
+    The general solution of Laplace's equation in cylindrical coordinates is
+    \begin{align*}
+      R(r) &= a_1J_m\left( \beta r \right) + a_2N_m\left( \beta r \right)\\
+      \Phi(\phi) &= b_1\cos\left( m\phi \right) + b_2\sin\left( m\phi \right)\\
+      Z(z) &= c_1e^{\beta z} + c_2e^{-\beta z}.
+    \end{align*}
+    Note that, since solutions to Laplace's equation follow the \href{https://en.wikipedia.org/wiki/Maximum_principle}{maximum principle}, we must have $\beta = ik$ such that $e^{\pm\beta z}$ are oscillatory in $z$. Therefore, $\beta = ik$, and we write
+    \begin{align*}
+      J\left( ix \right) &= I(x)\\
+      N\left( ix \right) &= K(x),
+    \end{align*}
+    where $I$ is the \textit{modified Bessel function}, and $K$ is the \textit{modified Neumann function}.\newline
+
+    This gives solutions of the form
+    \begin{align*}
+      R(r) &= a_1I_m\left( kr \right) + a_2K_m\left( kr \right)\\
+      \Phi(\phi) &= b_1\cos\left( m\phi \right) + b_2\sin\left( m\phi \right)\\
+      Z(z) &= c_1\cos\left( kz \right) + c_2\sin\left( kz \right).
+    \end{align*}
+    Now, we apply our boundary conditions. To start, since the $K_m$ blow up at the origin, we must have $a_2 = 0$. Furthermore, since at both $z = 0$ and $z = L$, we have zero potential, we have $c_1 = 0$ and $k_n = \frac{n\pi}{L}$. Thus, we have the potential of the form
+    \begin{align*}
+      V\left( r,\phi, z\right) &= \sum_{m=0}^{\infty}\sum_{n=1}^{\infty}I_m\left( k_n r \right)\left( a_{mn}\cos\left( m\phi \right) + b_{mn}\sin\left( m\phi \right) \right) \sin\left( k_n z \right).
+    \end{align*}
+    The family $\set{I_m}_{m\geq 0}$ are \textit{not} orthogonal. However, the family $\set{\sin\left( m\phi \right),\cos\left( m\phi \right)}_{m\geq 0}$ \textit{are} orthogonal, so we may calculate
+    \begin{align*}
+      \frac{2}{L} \int_{0}^{L} V_0\sin\left( k_{\ell} z \right)\:dz &= \sum_{m=0}^{\infty}\sum_{n=1}^{\infty}I_m\left( k_n R \right)\left( a_{mn}\cos\left( m\phi \right) + b_{mn}\sin\left( m\phi \right) \right)\left( \frac{2}{L} \int_{0}^{R} \sin\left( k_{\ell}z \right)\sin\left( k_{n}z \right)\:dz \right).
+    \end{align*}
+    Note that since we have azimuthal symmetry, we must have no $\phi$ dependence. Therefore, we only concern ourselves with $a_{0n}$, giving the solution
+    \begin{align*}
+      V\left( r,\phi,z \right) = \frac{4V_0}{\pi}\sum_{n\text{ odd}} \frac{\sin\left( k_n z \right)I_{0}\left( k_n r \right)}{n I_0\left( k_n R \right)}.
+    \end{align*}
+  \end{example}
+  \subsubsection{The Drums}%
+  The eigenvectors of a Sturm--Liouville problem are normal modes. Specifically, we will investigate this in the form of drums.\newline
+
+  Imagine a rectangular membrane of the form $L_1\times L_2$. We will use the Dirichlet boundary conditions,
+  \begin{align*}
+    \Psi\left( 0,y \right) &= 0\\
+    \Psi\left( x,0 \right) &= 0\\
+    \Psi\left( L_1,y \right) &= 0\\
+    \Psi\left( x,L_2 \right) &= 0.
+  \end{align*}
+  We have the normal modes
+  \begin{align*}
+    \Psi_{mn} \left( x,y \right) &= \sin\left( \frac{n\pi x}{L_1} \right)\sin\left( \frac{n\pi y}{L_2} \right).
+  \end{align*}
+  The frequency $\omega$ is related to the wave number $k$ by $\omega = kv$. Thus, we have the general case of $\omega_{mn} = k_{mn} v$. By the Pythagorean theorem,
+  \begin{align*}
+    k_{mn}^2 &= \pi^2\left( \frac{n^2}{L_1^2} + \frac{m^2}{L_2^2} \right).
+  \end{align*}
+  This gives a problem: the frequencies are not evenly spaced in $m$ and $n$. In other words, a square drum would not sound particularly nice.\newline
+
+  If we have a circular drum, we have the solutions of the Helmholtz equation in cylindrical coordinates. However, since we have no $z$ dependence, we have solutions of the form
+  \begin{align*}
+    \Psi_m\left( r,\phi \right) &= J_m\left( kr \right) \left( a_1\cos\left( m\phi \right) + a_2\sin\left( m\phi \right) \right).
+  \end{align*}
+  The boundary conditions mean that $\psi\left( R,\phi \right) = 0$, meaning $J_m\left( kR \right) = 0$. This means we need the zeros of the cylindrical Bessel functions. In particular, we get
+  \begin{align*}
+    k_{jm} &= \frac{\alpha_{mj}}{R},
+  \end{align*}
+  where $\alpha_{jm}$ is the $j$th zero of $J_m$. Our normal modes are of the form
+  \begin{align*}
+    \Psi_m\left( r,\phi \right) &= J_m\left(\frac{ \alpha_{jm}}{R}r \right)\left( a_1\cos\left( m\phi \right) + a_2\sin\left( m\phi \right) \right).
+  \end{align*}
+  Note that, asymptotically, the Bessel functions appear to be like cosines.\newline
+
+  Furthermore, at very high harmonics the normal modes cluster close to the edge of the drum head --- this is displayed in the \href{https://en.wikipedia.org/wiki/Whispering_gallery}{whispering gallery} of, for instance, St. Paul's cathedral.\newline
+
+  Now, we consider a fascinating question: \href{https://en.wikipedia.org/wiki/Hearing_the_shape_of_a_drum}{can you hear the shape of a drum}? We know that drums in one dimension\footnote{also known as strings} can be heard, but as it turns out, the only other dimension for which this can be solved is the dimension $n = 16$.\newline
+
+  This is because the eigenvalues of the $N$-dimensional Laplacian scale like
+  \begin{align*}
+    \lambda &\approx 4\pi^2 \left( \frac{n}{B_N V} \right)^{2/N},
+  \end{align*}
+  where $B_n$ is the volume of an $n$-dimensional ball.
 \end{document}
