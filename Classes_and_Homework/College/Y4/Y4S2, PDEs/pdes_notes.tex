@@ -2370,7 +2370,7 @@ this has the solution $u\left( x,t \right) = u_0\left( x-at \right)$. However, b
   \pd{u}{t} + u \pd{u}{x} &= 0,
 \end{align*}
 with solution $u\left( x,t \right) = u_0\left( x-ut \right)$.\footnote{Yes, this is an implicitly defined function.}
-\subsection{Inhomogeneous Equations}%
+\subsection{Inhomogeneous Partial Differential Equations}%
 We will tweak the standard heat equation:
 \begin{align*}
   \pd{u}{t} &= k\pd{^2u}{x^2}
@@ -2411,7 +2411,7 @@ This gives us two sub-problems:
 \begin{enumerate}[(1)]
   \item We want to solve the Sturm--Liouville problem, 
     \begin{align*}
-      \pd{v}{t} + k\pd{^2v}{x^2}
+      \pd{v}{t} + k\pd{^2v}{x^2} &= 0
       \intertext{with}
       v\left( 0,t \right) &= 0\\
       v\left( L,t \right) &= 0\\
@@ -3357,8 +3357,64 @@ which can be established using variation of parameters.
   Therefore, we may find
   \begin{align*}
     y_p(x) &= \int_{x_0}^{x} t^2\sin\left( x-t \right)\:dt\\
-           &= x^2 - 2
+           &= x^2 - 2 + 2\cos(x).
   \end{align*}
+  The $2\cos(x)$ is absorbed into the homogeneous solution, so we have the particular solution $y_p(x) = x^2 - 2$.
 \end{example}
+\section{Conservation Laws}%
+Recall the equation defined by
+\begin{align*}
+  \pd{u}{t} + \diff{f}{u}\pd{u}{x} &= 0.\label{eq:conservation_law_template}\tag{$\ddag$}
+\end{align*}
+This is the template for a family of equations known as \textit{conservation laws}.
 
+\begin{example}
+Consider a one-dimensional rod with mass density $\rho\left( x,t \right)$. If we want the total mass at any time $t_0$, it is equal to
+\begin{align*}
+  m\left( t_0 \right) &= \int_{x_1}^{x_2} \rho\left( x,t_0 \right)\:dx,
+\end{align*}
+where $x_1,x_2$ are the endpoints of the rod.\newline
+
+When we consider the domain $\left[ t_1,t_2 \right]\times \left[ x_1,x_2 \right]$, we then have
+\begin{align*}
+  m\left(t_1 \right) &= \int_{x_1}^{x_2} \rho\left( x,t_1 \right)\:dx\\
+  m\left( t_2 \right) &= \int_{x_1}^{x_2} \rho\left( x,t_2 \right)\:dx.
+\end{align*}
+The only way that $m\left( t_1 \right)\neq m\left( t_2 \right)$ is if there is some flow of mass into our rod. We call this change in mass the mass density flux of the region. This is usually denoted $\rho\left( x,t \right)v\left( x,t \right)$.\newline
+
+Therefore,
+\begin{align*}
+  m_{\text{in}} &= \int_{t_1}^{t_2} \rho\left( x_1,t \right)v\left( x_1,t \right)\:dt\\
+  m_{\text{out}} &= \int_{t_1}^{t_2} \rho\left( x_2,t \right)v\left( x_2,t \right)\:dt
+\end{align*}
+We now assume that mass is a conserved quantity. Then, the change in total mass from $t_1$ to $t_2$ is caused by and equal to the net mass density flux between $x_1$ and $x_2$. This is expressed via the equation
+\begin{align*}
+  \underbrace{\int_{x_1}^{x_2} \rho\left( x,t_2 \right)-\rho\left( x,t_1 \right)\:dx}_{\text{change in total mass}} &= \underbrace{\int_{t_1}^{t_2} \rho\left( x_1,t \right)v\left( x_1,t \right)-\rho\left( x_2,t \right)v\left( x_2,t \right)\:dt}_{\text{net mass density flux}}.
+\end{align*}
+Using the fundamental theorem of calculus,
+\begin{align*}
+  \int_{x_1}^{x_2} \int_{t_1}^{t_2} \pd{\rho}{t}\:dt\:dx &= \int_{t_1}^{t_2} \int_{x_2}^{x_1} \pd{(\rho v)}{x}\:dx\:dt
+\end{align*}
+Using Fubini's Theorem and switching sides, we may take
+\begin{align*}
+  \int_{t_1}^{t_2} \int_{x_1}^{x_2} \pd{\rho}{t}\:dx\:dt + \int_{t_1}^{t_2} \int_{x_1}^{x_2} \pd{(\rho v)}{x}\:dx\:dt &= 0\\
+  \int_{t_1}^{t_2} \int_{x_1}^{x_2} \pd{\rho}{t} + \pd{(\rho v)}{x}\:dx\:dt &= 0.
+\end{align*}
+Since this equation is always true in the domain $\left[ t_1,t_2 \right]\times \left[ x_1,x_2 \right]$, and $t_1,t_2,x_1,x_2$ are arbitrary, we conclude that the integrand must be $0$, so
+\begin{align*}
+  \pd{\rho}{t} + \pd{(\rho v)}{x} &= 0.\label{eq:conservation_of_mass}\tag{$\ast$}
+\end{align*}
+\end{example}
+We call \eqref{eq:conservation_of_mass} the equation for \textit{conservation of mass} (in the case of fluids). There are two other fundamental equations that we may derive:
+\begin{align*}
+  \pd{}{t}\left( \rho v \right) + \pd{}{x}\left( \rho v^2 + P \right) &= 0\label{eq:conservation_of_momentum}\tag{$\ast\ast$}\\
+  \pd{}{t}\left( E \right) + \pd{}{x}\left( v\left( E + P \right) \right) &= 0.\label{eq:conservation_of_energy}\tag{$\ast\ast\ast$}
+\end{align*}
+We say \eqref{eq:conservation_of_momentum} is the equation for \textit{conservation of momentum}, and \eqref{eq:conservation_of_energy} is the equation for \textit{conservation of energy}.\newline
+
+However, we have a problem. There are four variables --- $\rho,v,E,P$ --- but only three equations, meaning our system of equations is currently underdetermined. The fourth equation is known as the \textit{equation of state} of the system:
+\begin{align*}
+  E &= \frac{P}{\gamma - 1} + \frac{\rho v^2}{2},
+\end{align*}
+where $\gamma$ is a constant that depends on the fluid we are interested in. The expression $\frac{\rho v^2}{2}$ expresses kinetic energy, while the expression $\frac{P}{\gamma - 1}$ expresses internal energy.
 \end{document}
