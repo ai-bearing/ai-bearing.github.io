@@ -3607,5 +3607,157 @@ We can find the residue in a variety of ways.
   \begin{align*}
     \lambda &\approx 4\pi^2 \left( \frac{n}{B_N V} \right)^{2/N},
   \end{align*}
-  where $B_n$ is the volume of an $n$-dimensional ball.
+  where $B_N$ is the volume of an $N$-dimensional ball.
+  \subsection{Green's Functions}%
+  Consider a linear differential operator $\mathcal{L}$ such that
+  \begin{align*}
+    \mathcal{L}\psi\left( \mathbf{r} \right) &= \rho\left( \mathbf{r} \right),\label{eq:inhomogeneous_equation}\tag{$\ast$}
+  \end{align*}
+  where $\rho\left( \mathbf{r} \right) \neq 0$. We know that if we have a homogeneous equation, the solutions are only reflective of $\mathcal{L}$. We will find the next best thing --- a point source. The function $G\left( \mathbf{r},\mathbf{s} \right)$, known as the \textit{Green's function} for the equation \eqref{eq:inhomogeneous_equation} is such that
+  \begin{align*}
+    \mathcal{L}G\left( \mathbf{r},\mathbf{s} \right) &= \delta\left( \mathbf{r}-\mathbf{s} \right).
+  \end{align*}
+  The function $G\left( \mathbf{r},\mathbf{s} \right)$ is the field due to the point source at $\mathbf{r} = \mathbf{s}$.\newline
+
+  An infinitesimal source $\rho\left( \mathbf{s} \right)\:d^3s$ produces a field $G\left( \mathbf{r},\mathbf{s} \right)\:d^3s$. Therefore,
+  \begin{align*}
+    \psi\left( \mathbf{r} \right) &= \int_{V}^{} G\left( \mathbf{r},\mathbf{s} \right)\rho\left( \mathbf{s} \right)\:d^3s.
+  \end{align*}
+  Applying $\mathcal{L}$, we note that $\mathcal{L}$ acts only at the ``field point'' $\mathbf{r}$, rather than the source point $\mathbf{s}$. Assuming everything is well-behaved, this gives
+  \begin{align*}
+    \mathcal{L}\psi\left( \mathbf{r} \right) &= \mathcal{L} \int_{V}^{} G\left( \mathbf{r},\mathbf{s} \right)\rho\left( \mathbf{s} \right)\:d^3s\\
+                                             &= \int_{V}^{} \left( \mathcal{L}G\left( \mathbf{r},\mathbf{s} \right) \right)\rho\left( \mathbf{s} \right)\:d^3 s\\
+                                             &= \int_{V}^{} \delta\left( \mathbf{r}-\mathbf{s} \right)\rho\left( \mathbf{s} \right)\:d^3s\\
+                                             &= \rho\left( \mathbf{r} \right)
+  \end{align*}
+  \begin{example}[The Physicists' Green's Function]
+    For a point charge $V\left( \mathbf{r} \right)$, we have
+    \begin{align*}
+      V\left( \mathbf{r} \right) &= \frac{1}{4\pi \epsilon_0} \int_{}^{} \frac{\rho\left( \mathbf{s} \right)}{\norm{\mathbf{r}-\mathbf{s}}}\:d\mathbf{s},
+    \end{align*}
+    which is a solution to
+    \begin{align*}
+      \nabla^2 V = -\frac{\rho}{\epsilon_0}.
+    \end{align*}
+    We see that $G\left( \mathbf{r},\mathbf{s} \right)$ is
+    \begin{align*}
+      G\left( \mathbf{r},\mathbf{s} \right) &= \frac{1}{4\pi} \frac{1}{\norm{\mathbf{r}-\mathbf{s}}}.
+    \end{align*}
+    Note that we have shown that
+    \begin{align*}
+      \nabla^2 \left( \frac{1}{\norm{\mathbf{r}-\mathbf{s}}} \right) &= 4\pi\delta\left( \mathbf{r}-\mathbf{s} \right).
+    \end{align*}
+  \end{example}
+  \begin{example}[Poisson, One-Dimensional]
+    Poisson's equation in one dimension is
+    \begin{align*}
+      \diff{^2\psi}{x^2} &= \rho\left( x \right).
+    \end{align*}
+    Before we go further, note that the Green's Function must obey the boundary (or initial) conditions that we apply to the equation.\newline
+
+    We will evaluate the equation over $0 \leq x \leq L$, with Dirichlet conditions, $\psi(0) = \psi(L) = 0$.\newline
+
+    We need to find
+    \begin{align*}
+      \diff{^2}{x^2}G\left( x,t \right) &= \delta\left( x-t \right).
+    \end{align*}
+    We know that the solution is of the form $Ax + B$; however, we also need a discontinuity in the derivative such that we obtain a Delta function. In other words, we have $A_1 x + B_1$ when $x <t$ and $A_2 x + B_2$ when $x > t$.\newline
+
+    For the Dirichlet boundary conditions, we note that since $\psi(0) = 0$, we must have $B_1 = 0$, and since $\psi(L) = 0$, we have the Green's function
+    \begin{align*}
+      G\left( x,s \right) &= \begin{cases}
+        ax & 0 < x < t\\
+        b\left( x-L \right) & t < x < L
+      \end{cases}.
+    \end{align*}
+    We understand the discontinuity at $t$ by mandating
+    \begin{align*}
+      \int_{t-\ve}^{t+\ve} \diff{^2}{x^2}G\left( x,t \right)\:dx &= \diff{}{x}G\left( x,s \right)\biggr\vert_{t-\ve}^{t+\ve}\\
+                                                                 &= 1.
+    \end{align*}
+    Thus, we have the conditions
+    \begin{align*}
+      at &= b\left( t-L \right)\\
+      b-a &= 1.
+    \end{align*}
+    We are able to then calculate
+    \begin{align*}
+      G\left( x,t \right) &=  \frac{1}{L} \begin{cases}
+        x\left( t-L \right) & x < t\\
+        t\left( x-L \right) & x > t
+      \end{cases}.
+    \end{align*}
+    Taking $\rho(x) = x$, we have
+    \begin{align*}
+      \psi(x) &= \int_{0}^{L} G\left( x,t \right)\rho(t)\:dt\\
+              &= \frac{1}{L} \int_{0}^{x} \left( t\left( x-L \right) \right)t\:dt + \frac{1}{L} \int_{x}^{L} x\left( t-L \right)t\:dt\\
+              &= \frac{1}{6}x\left( x^2 - L^2 \right).
+    \end{align*}
+  \end{example}
+  \begin{example}
+    Consider an initial value problem on the damped forced oscillator
+    \begin{align*}
+      \left( \diff{^2}{t^2} + 2\beta \diff{}{t} + \omega_0^2 \right)u(t) &= f(t),
+    \end{align*}
+    with $u(0) = u_0$ and $\dot{u}(0)= v_0$.\newline
+
+    To start solving this problem, we may write
+    \begin{align*}
+      f(t) &= \int_{}^{} f(s)\delta\left( t-s \right)\:ds.
+    \end{align*}
+    This approach is known as Duhamel's principle. Then, we may find
+    \begin{align*}
+      u_p(t) &= \int_{0}^{t} f\left( s \right)G\left( t,s \right)\:ds.
+    \end{align*}
+    Generally speaking, $G\left( t,s \right) = g^{\ast}\left( t-s \right)$. We note that the integral must be from $0$ to $t$, implying a particular kind of causality.\newline
+
+    Note that we had solved this back in the complex analysis unit. The underdamped had the Green's function of
+    \begin{align*}
+      G\left( t,s \right) &= \frac{1}{\Omega}\Theta\left( t-s \right)\sin\left( \Omega\left( t-s \right) \right)e^{-\beta\left( t-s \right)},
+    \end{align*}
+    where $\Omega = \sqrt{\omega_0^2 - \beta^2}$.
+  \end{example}
+  \begin{example}[Poisson's Equation in Multiple Dimensions]
+    Consider the equation
+    \begin{align*}
+      \nabla^2G\left( \mathbf{r},\mathbf{s} \right) &= -\delta\left( \mathbf{r}-\mathbf{s} \right)
+    \end{align*}
+    in unbounded $\R^3$. We will evaluate this in spherical coordinates, mandating the Green's function be finite at $0$ and $\infty$.\newline
+
+    The Green's function is then a sum over spherical harmonics:
+    \begin{align*}
+      G\left( \mathbf{r},\mathbf{s} \right) &= \sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell} \begin{cases}
+        a_{\ell,m}r^{\ell}Y_{\ell,m}\left( \theta,\phi \right) & 0 < r < s\\
+        \frac{b_{\ell,m}}{r^{\ell + 1}}Y_{\ell,m}\left( \theta,\phi \right) & s < r < \infty
+      \end{cases}
+    \end{align*}
+    We need $G$ to be continuous at $r = s$, so that $b_{\ell,m} = s^{2\ell + 1}a_{\ell,m}$.\newline
+
+    Now, at the kink discontinuity with $r = s$, we examine a solid angle $\Omega$ and a piece on the surface with width $2\ve$. Using the divergence theorem, we get
+    \begin{align*}
+      -1 &= \int_{V}^{} \nabla^2G\left( \mathbf{r},\mathbf{s} \right)\:d^3s\\
+         &= \oint_{S} \nabla G\left( \mathbf{r},\mathbf{s} \right)\cdot d\mathbf{a}\\
+         &= \int_{}^{} \left( \pd{G}{r}\biggr\vert_{s+\ve} - \pd{G}{r}\biggr\vert_{s-\ve} \right)r^2\:d\Omega.
+    \end{align*}
+    Therefore,\footnote{Recall that $d\Omega = d(\cos(\theta))d\phi$}
+    \begin{align*}
+      \pd{G}{r}\biggr\vert_{s+\ve} - \pd{G}{r}\biggr\vert_{s-\ve} &= -\frac{1}{r^2}\delta\left( \cos\left( \theta_r \right)-\cos\left( \theta_s \right) \right)\delta\left( \phi_r-\phi_s \right)\\
+                                                                  &= -\frac{1}{r^2}\sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell} \overline{Y_{\ell,m}\left( \theta_s,\phi_s \right)}Y_{\ell,m}\left( \theta_r,\phi_r \right).
+    \end{align*}
+    After much more suffering, we obtain
+    \begin{align*}
+      G\left( \mathbf{r},\mathbf{s} \right) &= \sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell} \frac{1}{2\ell + 1} \overline{Y_{\ell,m}\left( \theta_s,\phi_s \right)} Y_{\ell,m}\left( \theta_r,\phi_r \right) \begin{cases}
+        \frac{r^{\ell}}{s^{\ell + 1}} & 0 < r < s\\
+        \frac{s^{\ell}}{r^{\ell + 1}} & s < r < \infty
+      \end{cases}\\
+                                            &= \sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell}\frac{1}{2\ell + 1} \frac{r^{\ell}_{<}}{r^{\ell + 1}_{>}} \overline{Y_{\ell,m}\left( \theta_s,\phi_s \right)}Y_{\ell,m}\left( \theta_r,\phi_r \right)\\
+                                            &= \frac{1}{4\pi}\sum_{\ell=0}^{\infty}\frac{r^{\ell}_{<}}{r^{\ell + 1}_{>}}P_{\ell}\left( \hat{r}\cdot \hat{s} \right)
+    \end{align*}
+    After even more suffering, we may find
+    \begin{align*}
+      G\left( \mathbf{r},\mathbf{s} \right) &= \frac{1}{4\pi}\frac{1}{\norm{\mathbf{r}-\mathbf{s}}}.
+    \end{align*}
+    
+  \end{example}
+  
 \end{document}
