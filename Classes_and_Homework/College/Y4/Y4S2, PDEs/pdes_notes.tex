@@ -3316,51 +3316,6 @@ As it turns out, we can show (with some quite devious symbol pushing), that
 \begin{remark}
   Note that the Fourier transform does not include initial conditions, which is why we have to use D'Alembert's solution to actually solve the IVP.
 \end{remark}
-\section{Green's Functions}%
-Suppose we have an inhomogeneous \textit{ordinary} differential equation of the form
-\begin{align*}
-  \diff{^2y}{x^2} + p(x)\diff{y}{x} + q(x)y &= f(x).
-\end{align*}
-The traditional outline of the solution is as expected.
-\begin{itemize}
-  \item Find homogeneous solutions, $y_1,y_2$.
-  \item Find the particular solution, $y_p$, using guessing, undetermined coefficients, variation of parameters, or other methods.
-\end{itemize}
-The \textit{Green's function} of the solution will be a method to find $y_p$. Specifically, we will find a function $G\left( x,t \right)$ such that
-\begin{align*}
-  y_p(x) &= \int_{x_0}^{x} G(x,t)f(t)\:dt.
-\end{align*}
-A general theme of some of our methods of solving PDEs (such as the method of characteristics) is to take an initial condition and integrate it forward to find the solution at a future time. Ultimately, this requires finding the special function that allows us to integrate the initial condition forward in time.\newline
-
-We note that the Green's function is also the kernel of an integral transform that transforms $f(x)$ into the particular solution, $y_p(x)$.\newline
-
-The formula for the Green's function is as follows
-\begin{align*}
-  G(x,t) &= \frac{y_1(t)y_2(x) - y_1(x)y_2(t)}{y_1(t)\diff{y_2}{t} - y_2(t)\diff{y_1}{t}}
-\end{align*}
-This looks eerily similar to variation of parameters. As it turns out, the Green's function $G(x,t)$ is the solution to the case with the impulse forcing term:
-\begin{align*}
-  \diff{^2y}{x^2} + p(x)\diff{y}{x} + q(x)y &= \delta\left( t-x \right),
-\end{align*}
-which can be established using variation of parameters.
-\begin{example}
-  Consider the equation
-  \begin{align*}
-    \diff{^2y}{x^2} + y &= x^2.
-  \end{align*}
-  We have homogeneous solutions $y_1(x)= \sin(x)$, $y_2(x) = \cos(x)$, and $f(x) = x^2$. After that, we may find
-  \begin{align*}
-    G(x,t) &= -\left( \sin(t)\cos(x) - \sin(x)\cos(t) \right)\\
-           &= \sin(x)\cos(t) - \sin(t)\cos(x)\\
-           &= \sin\left( x-t \right).
-  \end{align*}
-  Therefore, we may find
-  \begin{align*}
-    y_p(x) &= \int_{x_0}^{x} t^2\sin\left( x-t \right)\:dt\\
-           &= x^2 - 2 + 2\cos(x).
-  \end{align*}
-  The $2\cos(x)$ is absorbed into the homogeneous solution, so we have the particular solution $y_p(x) = x^2 - 2$.
-\end{example}
 \section{Conservation Laws}%
 Recall the equation defined by
 \begin{align*}
@@ -3407,8 +3362,8 @@ Since this equation is always true in the domain $\left[ t_1,t_2 \right]\times \
 \end{example}
 We call \eqref{eq:conservation_of_mass} the equation for \textit{conservation of mass} (in the case of fluids). There are two other fundamental equations that we may derive:
 \begin{align*}
-  \pd{}{t}\left( \rho v \right) + \pd{}{x}\left( \rho v^2 + P \right) &= 0\label{eq:conservation_of_momentum}\tag{$\ast\ast$}\\
-  \pd{}{t}\left( E \right) + \pd{}{x}\left( v\left( E + P \right) \right) &= 0.\label{eq:conservation_of_energy}\tag{$\ast\ast\ast$}
+  \pd{}{t}\left( \rho v \right) + \pd{}{x}\left( \rho v^2 + P \right) &= 0\label{eq:conservation_of_momentum}\tag{$\dag$}\\
+  \pd{}{t}\left( E \right) + \pd{}{x}\left( v\left( E + P \right) \right) &= 0.\label{eq:conservation_of_energy}\tag{$\ddag$}
 \end{align*}
 We say \eqref{eq:conservation_of_momentum} is the equation for \textit{conservation of momentum}, and \eqref{eq:conservation_of_energy} is the equation for \textit{conservation of energy}.\newline
 
@@ -3416,5 +3371,130 @@ However, we have a problem. There are four variables --- $\rho,v,E,P$ --- but on
 \begin{align*}
   E &= \frac{P}{\gamma - 1} + \frac{\rho v^2}{2},
 \end{align*}
-where $\gamma$ is a constant that depends on the fluid we are interested in. The expression $\frac{\rho v^2}{2}$ expresses kinetic energy, while the expression $\frac{P}{\gamma - 1}$ expresses internal energy.
+where $\gamma$ is a constant that depends on the fluid we are interested in. The expression $\frac{\rho v^2}{2}$ expresses kinetic energy, while the expression $\frac{P}{\gamma - 1}$ expresses internal energy.\newline
+
+We may consider the equations \eqref{eq:conservation_of_mass}, \eqref{eq:conservation_of_energy}, \eqref{eq:conservation_of_momentum}, and the state as a vector,\footnote{but not a vector state.} giving
+\begin{align*}
+  \mathbf{u} &= \begin{pmatrix}\rho\\\rho v\\ E\end{pmatrix}\\
+  \mathbf{f}\left( \mathbf{u} \right) &= \begin{pmatrix}\rho v \\ \rho v^2 + p \\ v\left( e + P \right)\end{pmatrix}.\label{eq:euler_equations_of_fluid_dynamics}\tag{EH}
+\end{align*}
+We call the equation
+\begin{align*}
+  \pd{\mathbf{u}}{t} + \pd{}{x}\left( \mathbf{f}\left( \mathbf{u} \right) \right) &= 0
+\end{align*}
+a \textit{hyperbolic system} and a (set of) conservation laws.\newline
+
+What we mean by hyperbolic is that the Jacobian, $\diff{\mathbf{f}}{\mathbf{u}}$, has real eigenvalues and is diagonalizable. Recall that the Jacobian is defined by
+\begin{align*}
+  \left( \diff{\mathbf{f}}{\mathbf{u}} \right)_{i,j} &= \pd{f_i}{u_j}.
+\end{align*}
+To actually evaluate the Jacobian is a bit too hard, and we have computational tools for that purpose.\newline
+
+Now, note that the eignvalues are of the form $\lambda = v-c,v,v+c$, where
+\begin{align*}
+  c &= \sqrt{f\left( \rho,p \right)}.
+\end{align*}
+We call the system \eqref{eq:euler_equations_of_fluid_dynamics} the \textit{Euler equations of fluid dynamics}.\newline
+
+A parabolic relative to the Euler equations is the \href{https://en.wikipedia.org/wiki/Navier–Stokes_equations}{Navier--Stokes equations}. As it turns out, as the viscosity terms in the Navier--Stokes equations tend to zero, they end up becoming the Euler equations.
+\section{Green's Functions}%
+Suppose we have an inhomogeneous \textit{ordinary} differential equation of the form
+\begin{align*}
+  \diff{^2y}{x^2} + p(x)\diff{y}{x} + q(x)y &= f(x).
+\end{align*}
+The traditional outline of the solution is as expected.
+\begin{itemize}
+  \item Find homogeneous solutions, $y_1,y_2$.
+  \item Find the particular solution, $y_p$, using guessing, undetermined coefficients, variation of parameters, or other methods.
+\end{itemize}
+The \textit{Green's function} of the solution will be a method to find $y_p$. Specifically, we will find a function $G\left( x,t \right)$ such that
+\begin{align*}
+  y_p(x) &= \int_{x_0}^{x} G(x,t)f(t)\:dt.
+\end{align*}
+A general theme of some of our methods of solving PDEs (such as the method of characteristics) is to take an initial condition and integrate it forward to find the solution at a future time. Ultimately, this requires finding the special function that allows us to integrate the initial condition forward in time.\newline
+
+We note that the Green's function is also the kernel of an integral transform that transforms $f(x)$ into the particular solution, $y_p(x)$.\newline
+
+The formula for the Green's function is as follows
+\begin{align*}
+  G(x,t) &= \frac{y_1(t)y_2(x) - y_1(x)y_2(t)}{y_1(t)\diff{y_2}{t} - y_2(t)\diff{y_1}{t}}
+\end{align*}
+%This looks eerily similar to variation of parameters. As it turns out, the Green's function $G(x,t)$ is the solution to the case with the impulse forcing term:
+%\begin{align*}
+%  \diff{^2y}{x^2} + p(x)\diff{y}{x} + q(x)y &= \delta\left( t-x \right),
+%\end{align*}
+%which can be established using variation of parameters.
+\begin{example}
+  Consider the equation
+  \begin{align*}
+    \diff{^2y}{x^2} + y &= x^2.
+  \end{align*}
+  We have homogeneous solutions $y_1(x)= \sin(x)$, $y_2(x) = \cos(x)$, and $f(x) = x^2$. After that, we may find
+  \begin{align*}
+    G(x,t) &= -\left( \sin(t)\cos(x) - \sin(x)\cos(t) \right)\\
+           &= \sin(x)\cos(t) - \sin(t)\cos(x)\\
+           &= \sin\left( x-t \right).
+  \end{align*}
+  Therefore, we may find
+  \begin{align*}
+    y_p(x) &= \int_{x_0}^{x} t^2\sin\left( x-t \right)\:dt\\
+           &= x^2 - 2 + 2\cos(x).
+  \end{align*}
+  The $2\cos(x)$ is absorbed into the homogeneous solution, so we have the particular solution $y_p(x) = x^2 - 2$.
+\end{example}
+In the general case, the equation
+\begin{align*}
+  \diff{^2y}{x^2} + p(x)\diff{y}{x} + q(x)y &= f(x)
+\end{align*}
+may be written in operator form as
+\begin{align*}
+  L\left[ y(x) \right] &= f(x),
+\end{align*}
+where
+\begin{align*}
+  L &= \diff{^2}{x^2} + p(x)\diff{}{x} + q(x).
+\end{align*}
+Every linear operator has a (family of) Green's function(s) associated with it. Note that the Green's function is not unique, and depends on initial/boundary conditions. The Green's function is such that
+\begin{align*}
+  L\left[ G\left( x,s \right) \right] &= \delta\left( x-s \right).
+\end{align*}
+This allows us to pull out the inhomogeneous solution by taking
+\begin{align*}
+  \int_{I}^{} G\left( x,s \right)f(s)\:ds &= y_{p}\left( x \right).
+\end{align*}
+We may show this by taking
+\begin{align*}
+  L\left[ y_p(x) \right] &= L \left[ \int_{I}^{} G\left( x,s \right)f(s)\:ds \right]\\
+                         &= \int_{I}^{} L\left[ G\left( x,s \right) \right]f(s)\:ds\\
+                         &= \int_{I}^{} \delta\left( x-s \right)f(s)\:ds\\
+                         &= f(x)
+\end{align*}
+Note that $y_p$ is \textit{any} particular solution of $L\left[ y \right] = f$, as for any homogeneous solution $y_h$, $y_p + y_h$ is also a particular solution.\newline
+
+The question we face now is the uniqueness of the Green's function.\newline
+
+Consider the constant-coefficient inhomogeneous equation
+\begin{align*}
+  \diff{^2y}{x^2} + 4\diff{y}{x} + 3y &= 4x.
+\end{align*}
+To find the Green's function, we guess
+\begin{align*}
+  G\left( x,s \right) &= c_1y_1(x) + c_2y_2(x),
+\end{align*}
+but where $x = s$ includes a jump discontinuity of magnitude $1$ for $\pd{G}{x}$. Furthermore, we need $G\left( x,s \right)$ to be continuous. This gives a piecewise definition
+\begin{align*}
+  G\left( x,s \right) &= \begin{cases}
+    ay_1(x) + by_2(x) & x < s\\
+    cy_1(x) + dy_2(x) & x > s
+  \end{cases},
+  \intertext{subject to the conditions that}
+    \left( c-a \right)y_1(s) + \left( d-b \right)y_2(s) &= 0\\
+    \left( c-a \right)\diff{y_1}{x}\biggr\vert_{x=s} + \left( d-b \right)\diff{y_2}{x}\biggr\vert_{x=s} &= 1.
+\end{align*}
+This gives the system.
+\begin{align*}
+  \begin{pmatrix}0\\1\end{pmatrix} &= \begin{pmatrix}c-a\\d-b\end{pmatrix} \begin{pmatrix}y_1(s) & y_2(s)\\\diff{y_1}{x}\bigr\vert_{x=s} & \diff{y_2}{x}\bigr\vert_{x=s}\end{pmatrix}\\
+  \begin{pmatrix}c-a\\d-b\end{pmatrix} &= \frac{1}{W(s)} \begin{pmatrix}\diff{y_2}{x}\bigr\vert_{x=s} & -y_2(s)\\ -\diff{y_1}{x}\bigr\vert_{x=s} & y_1(s)\end{pmatrix} \begin{pmatrix}0\\1\end{pmatrix}.
+\end{align*}
+
 \end{document}
