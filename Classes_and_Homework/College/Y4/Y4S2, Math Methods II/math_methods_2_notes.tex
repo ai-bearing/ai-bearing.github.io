@@ -3661,7 +3661,7 @@ We can find the residue in a variety of ways.
     \begin{align*}
       \diff{^2}{x^2}G\left( x,t \right) &= \delta\left( x-t \right).
     \end{align*}
-    We know that the solution is of the form $Ax + B$; however, we also need a discontinuity in the derivative such that we obtain a Delta function. In other words, we have $A_1 x + B_1$ when $x <t$ and $A_2 x + B_2$ when $x > t$.\newline
+    We know that the solution is of the form $Ax + B$; however, we also need a discontinuity \textit{in the derivative} such that we obtain a Delta function. In other words, we have $A_1 x + B_1$ when $x <t$ and $A_2 x + B_2$ when $x > t$.\newline
 
     For the Dirichlet boundary conditions, we note that since $\psi(0) = 0$, we must have $B_1 = 0$, and since $\psi(L) = 0$, we have the Green's function
     \begin{align*}
@@ -3757,7 +3757,128 @@ We can find the residue in a variety of ways.
     \begin{align*}
       G\left( \mathbf{r},\mathbf{s} \right) &= \frac{1}{4\pi}\frac{1}{\norm{\mathbf{r}-\mathbf{s}}}.
     \end{align*}
-    
   \end{example}
-  
+  \subsubsection{Eigenfunctions and Green's Functions}%
+  Consider a Hermitian operator and the standard eigenvalue equation,
+  \begin{align*}
+    \left( \mathcal{L}-\lambda \right)\ket{\phi} &= 0.
+  \end{align*}
+  If $\ket{\phi}$ is to be nonzero, then we need $\mathcal{L}-\lambda I$ to be non-invertible. Meanwhile, the inhomogeneous equation
+  \begin{align*}
+    \left( \mathcal{L}-\lambda \right)\ket{\psi} &= \ket{\rho}
+  \end{align*}
+  has a solution only if $\mathcal{L}-\lambda I$ has an inverse. We will see that the inverse of a \textit{differential} operator $\mathcal{L}-\lambda$ is the Green's function.\newline
+
+  We may expand any homogeneous solution $\ket{\Phi}$ on the (orthonormal) basis of eigenfunctions
+  \begin{align*}
+    \ket{\Phi} &= \sum_{n=1}^{\infty} c_n\ket{\hat{\phi}_n}.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \left( L-\lambda \right) \ket{\Phi} &= \left( L - \lambda \right)\left( \sum_{n=1}^{\infty}c_n\ket{\hat{\phi}_n} \right)\\
+                                        &= \sum_{n=1}^{\infty} c_n\left( \lambda_n - \lambda \right)\ket{\hat{\phi}_n}\\
+                                        &= 0
+  \end{align*}
+  only if $\lambda = \lambda_n$.\newline
+
+  Now, if our equation is inhomogeneous, then we expand
+  \begin{align*}
+    \ket{\psi} &= \sum_{n=1}^{\infty}a_n\ket{\hat{\phi}_n}\\
+    \ket{\rho} &= \sum_{n=1}^{\infty}b_n\ket{\hat{\phi}_n}.
+  \end{align*}
+  We insert these expansions into the equation $\left( \mathcal{L}-\lambda \right)\ket{\psi} = \ket{\rho}$, so that
+  \begin{align*}
+    \sum_{n=1}^{\infty}\left( a_n\left( \lambda_n-\lambda \right)-b_n \right)\ket{\hat{\phi}_n} &= 0,
+  \end{align*}
+  and
+  \begin{align*}
+    a_n &= \frac{b_n}{\lambda_n-\lambda}\\
+        &= \frac{\braket{\hat{\phi}_n}{\rho}}{\lambda_n-\lambda},
+  \end{align*}
+  where we use the definition of $b_n$. Therefore,
+  \begin{align*}
+    \ket{\psi} &= \sum_{n=1}^{\infty}\frac{\braket{\hat{\phi}_n}{\rho}}{\lambda_n-\lambda}\ket{\hat{\phi}_n}\\
+               &= \left( \sum_{n=1}^{\infty}\frac{\ket{\hat{\phi}_n}\bra{\hat{\phi}_n}}{\lambda_n-\lambda} \right)\ket{\rho}\\
+               &= G\ket{\rho},
+  \end{align*}
+  where we define
+  \begin{align*}
+    G &\coloneq \sum_{n=1}^{\infty}\frac{\ket{\hat{\phi}_n}\bra{\hat{\phi}_n}}{\lambda_n-\lambda}.
+  \end{align*}
+  Note that we may use the completeness relation to find
+  \begin{align*}
+    \left( \mathcal{L}-\lambda \right)G &= \sum_{n=1}^{\infty}\left( \lambda_n\lambda \right) \frac{\ket{\hat{\phi}_n}\bra{\hat{\phi}_n}}{\lambda_n-\lambda}\\
+                                        &= \sum_{n=1}^{\infty}\ket{\hat{\phi}_n}\bra{\hat{\phi}_n}\\
+                                        &= I.
+  \end{align*}
+  If we put this in terms of functions, we use the completeness relation
+  \begin{align*}
+    \sum_{n=1}^{\infty} \overline{\hat{\phi}_n\left( \mathbf{s} \right)} \hat{\phi}_n(\mathbf{t}) &= \delta\left( \mathbf{t}-\mathbf{s} \right),
+  \end{align*}
+  and get
+  \begin{align*}
+    G\left( s,t \right) &= \sum_{n=1}^{\infty}\frac{\hat{\phi}_n\left( \mathbf{s} \right) \overline{\hat{\phi}_n\left( \mathbf{t} \right)}}{\lambda_n-\lambda}.
+  \end{align*}
+  Thus, we get
+  \begin{align*}
+    \left( \mathcal{L}-\lambda \right)G\left( \mathbf{s},\mathbf{t} \right) &= \delta\left( \mathbf{s}-\mathbf{t} \right).
+  \end{align*}
+  For instance, if we have a one-dimensional string of length $L$, the eigenfunctions are
+  \begin{align*}
+    \hat{\phi}_n\left( x \right) &= \sqrt{\frac{2}{L}}\sin\left( \frac{n\pi}{L}x \right),
+  \end{align*}
+  with $\lambda_n = -n^2\pi^2/L^2$. Thus, the Green's function is
+  \begin{align*}
+    G\left( x,t \right) &= -\frac{2}{L}\sum_{n=1}^{\infty}\frac{1}{n} \sin\left( \frac{n\pi}{L}x \right)\sin\left( \frac{n\pi}{L}t \right).
+  \end{align*}
+  \begin{example}
+    When we want to solve a wave equation for a fixed string with driving force $\cos\left( \omega t \right)$, we separate by taking
+    \begin{align*}
+      \Psi\left( x,t \right) &= \psi(x)\cos\left( \omega t \right),
+    \end{align*}
+    and obtain the Helmholtz equation in $x$. We solve for the Green's function by taking
+    \begin{align*}
+      \left( \diff{^2}{x^2} + k^2 \right)\psi\left( x \right) &= \delta\left( x-s \right),
+    \end{align*}
+    with Dirichlet conditions $\psi(0) = \psi(L) = 0$. Therefore, we get
+    \begin{align*}
+      G\left( x,s \right) &= -\frac{2}{L} \sum_{n=1}^{\infty}\frac{\sin\left( \frac{n\pi}{L}x \right)\sin\left( \frac{n\pi}{L}s \right)}{n^2\pi^2/L^2 - k^2}.
+    \end{align*}
+  \end{example}
+  Note that if $\lambda = \lambda_n$, then the Green's function \textit{does not exist}. Thus, we would need a modification.\newline
+
+  We may take
+  \begin{align*}
+    \widetilde{G}\left( \mathbf{x},\mathbf{s} \right) &= \sum_{n\notin \Omega} \frac{\hat{\phi}_n\left( \mathbf{x} \right) \overline{\hat{\phi}_n\left( \mathbf{s} \right)}}{\lambda_n-\lambda},\label{eq:modified_greens_function}\tag{MGF}
+  \end{align*}
+  where $\Omega$ is the subspace of eigenfunctions with eigenvalue $\lambda_n$.\newline
+
+  This gives
+  \begin{align*}
+    \left( \mathcal{L}-\lambda \right)\widetilde{G} &= \delta\left( \mathbf{x}-\mathbf{s} \right) - \sum_{n\in\Omega} \hat{\phi}_n\left( \mathbf{x} \right) \overline{\hat{\phi}_n\left( \mathbf{s} \right)}.
+  \end{align*}
+  Now, if we take
+  \begin{align*}
+    \braket{\hat{\phi}_m}{\rho} &= \bra{\hat{\phi}_m}\left( \sum_{n=1}^{\infty}\left( \mathcal{L}-\lambda \right)\ket{\hat{\phi}_n} \right)\\
+                                &= \sum_{n=1}{\infty} \bra{\hat{\phi}_m} \left( \mathcal{L}-\lambda \right)\ket{\hat{\phi}_n}\\
+                                &= \sum_{n=1}^{\infty}\left( \lambda_n-\lambda \right)\braket{\hat{\phi}_m}{\hat{\phi}_n}\\
+                                &= a_m\left( \lambda_m-\lambda \right).
+  \end{align*}
+  Now, if $a_m = 0$, then $\hat{\phi}_m$ does not appear in the orthogonal expansion of $\ket{\rho}$, therefore, if
+  \begin{align*}
+    \braket{\hat{\phi}_m}{\rho} &= 0
+  \end{align*}
+  for all $n\notin \Omega$, then \eqref{eq:modified_greens_function} is a valid expression.
+  \subsubsection{Green's Functions and the Fourier Transform}%
+  Recall that
+  \begin{align*}
+    \mathcal{F}\left[ \diff{}{x} \right] &= ik,
+  \end{align*}
+  so that Poisson's equation transforms into
+  \begin{align*}
+    \mathcal{F}\left[ \nabla^2 V \right] &= \mathcal{F}\left[ \rho \right]\\
+    -k^2\hat{V} &= \hat{\rho}\\
+    \hat{V} &= -\frac{1}{k^2}\hat{\rho}.
+  \end{align*}
+  We may take the inverse Fourier transform to solve for our Green's function for the differential operator.
 \end{document}
