@@ -41,3 +41,8 @@ permalink: "/quotes.html"
 
 - "My intuitive thought is, never mind I changed my idea"\
   Ethan Coulthard
+
+- "It's some topology term"\
+  Noah Smith
+  "Movie?"\
+  Jonah Hasegawa

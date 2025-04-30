@@ -18,3 +18,5 @@ We generalize from the bounded operators on a Hilbert space to discuss Banach al
 Notes for the final part of the thesis, on the left-regular representation, Kesten's criterion, Hulanicki's criterion, and properties of the group C*-Algebras.
 
 ## [Thesis Presentation](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/Honors Thesis Presentation/amenability_presentation.pdf)
+
+## [Final Thesis](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors%20Thesis/Amenability%20Text/amenability.pdf)
