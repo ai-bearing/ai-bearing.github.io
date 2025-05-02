@@ -1,4 +1,4 @@
-\documentclass[12pt]{mypackage}
+\documentclass[10pt]{mypackage}
 
 % sans serif font:
 %\usepackage{cmbright,sfmath,bbold}
@@ -245,5 +245,59 @@ Fatou's Lemma is primarily used to prove the Dominated Convergence Theorem, the 
     \int_{X}^{} \left\vert f \right\vert\:d\mu &< \infty.
   \end{align*}
 \end{definition}
+\begin{proposition}
+  If $f\in L_1\left( X,\mu \right)$, then
+  \begin{align*}
+    \left\vert \int_{X}^{} f\:d\mu \right\vert &\leq \int_{X}^{} \left\vert f \right\vert\:d\mu.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  If $f$ is real-valued, then
+  \begin{align*}
+    \left\vert \int_{X}^{} f\:d\mu \right\vert &= \left\vert \int_{X}^{} f^{+}\:d\mu - \int_{X}^{} f^{-}\:d\mu \right\vert\\
+                                               &\leq \int_{X}^{} f^{+}\:d\mu + \int_{X}^{} f^{-}\:d\mu\\
+                                               &= \int_{X}^{} \left\vert f \right\vert\:d\mu.
+  \end{align*}
+  Now, if $f$ is complex-valued with $ \int_{X}^{} f\:d\mu \neq 0 $, we define $\alpha = \sgn\left( \int_{X}^{} f\:d\mu \right)$. Then,
+  \begin{align*}
+    \left\vert \int_{X}^{} f\:d\mu \right\vert &= \alpha \int_{X}^{} f\:d\mu\\
+                                               &= \int_{X}^{} \alpha f\:d\mu.
+  \end{align*}
+  Note that $ \int_{X}^{} \alpha f\:d\mu $ is real-valued, so
+  \begin{align*}
+    \left\vert \int_{X}^{} f\:d\mu \right\vert &= \re \left( \int_{X}^{} \alpha f\:d\mu \right)\\
+                                               &= \int_{X}^{} \re\left( \alpha f \right)\:d\mu\\
+                                               &\leq \int_{X}^{} \left\vert \re\left( \alpha f \right) \right\vert\:d\mu\\
+                                               &\leq \int_{X}^{} \left\vert \alpha f \right\vert\:d\mu\\
+                                               &= \int_{X}^{} \left\vert f \right\vert\:d\mu.
+  \end{align*}
+\end{proof}
+Now that we have established some of the important properties of $L_1$, we may prove the Dominated Convergence Theorem.
+\begin{theorem}[Dominated Convergence]
+  Let $\left( f_n \right)_n$ be a sequence in $L_1$ such that $f_n\rightarrow f$ almost everywhere. If there exists a nonnegative $g\in L_1$ such that $\left\vert f_n \right\vert \leq g$ almost everywhere for every $n$, then $f\in L_1$ and
+  \begin{align*}
+    \int_{X}^{} f\:d\mu &= \lim_{n\rightarrow\infty} \int_{X}^{} f_n\:d\mu.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Since $f$ is the pointwise limit of a sequence of measurable functions, $f$ is measurable, and since $\left\vert f \right\vert \leq g$ almost everywhere, we have $f\in L_1$. It is sufficient to assume that $f_n$ and $f$ are real-valued, meaning $g + f_n \geq 0$ and $g - f_n\geq 0$ almost everywhere.\newline
+
+  Applying Fatou's Lemma, we have
+  \begin{align*}
+    \int_{X}^{} g\:d\mu + \int_{X}^{}f\:d\mu &\leq \liminf_{n\rightarrow\infty} \int_{X}^{} \left(g + f_n\right)\:d\mu\\
+                                             &= \int_{X}^{} g\:d\mu + \int_{X}^{} f_n\:d\mu,
+  \end{align*}
+  and
+  \begin{align*}
+    \int_{X}^{} g\:d\mu - \int_{X}^{} f\:d\mu &\leq \liminf \int_{X}^{} \left( g-f_n \right)\:d\mu\\
+                                              &= \int_{X}^{} g\:d\mu - \limsup_{n\rightarrow\infty} \int_{X}^{} f_n\:d\mu,
+  \end{align*}
+  meaning
+  \begin{align*}
+    \liminf_{n\rightarrow\infty} \int_{X}^{} f_n\:d\mu &\geq \int_{X}^{} f\:d\mu\\
+                                                       &\geq \limsup_{n\rightarrow\infty}\int_{X}^{} f_n\:d\mu.
+  \end{align*}
+  
+\end{proof}
 
 \end{document}

@@ -36,6 +36,9 @@ The following are standard texts.
 ### [Extreme Points, the Krein--Milman Theorem, and Applications](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/extreme_points_krein_milman_and_stone_weierstrass.pdf)
 > We discuss extremal structure in locally convex topological vector spaces, as well as a fundamental result in the theory of topological vector spaces: the Krein--Milman theorem. We also use extremal structure to prove the Stone--Weierstrass Theorem and the Banach--Stone theorem.
 
+### [Three Convergence Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/three_convergence_theorems.pdf)
+> We discuss and prove the three big theorems of real analysis — the Monotone Convergence Theorem, Fatou's Lemma, and the Dominated Convergence Theorem.
+
 ## Topology
 The following are standard texts.
 - _A Taste of Topology_ (Runde)
