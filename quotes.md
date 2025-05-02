@@ -43,6 +43,6 @@ permalink: "/quotes.html"
   Ethan Coulthard
 
 - "It's some topology term"\
-  Noah Smith
+  Noah Smith\
   "Movie?"\
   Jonah Hasegawa
