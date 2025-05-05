@@ -25,6 +25,7 @@
 \begin{abstract}
   \noindent We detail the construction and some of the properties of the Lebesgue measure.
 \end{abstract}
+\section{Premeasures, Outer Measures, and Measures}%
 Consider a set-function $\lambda\colon P\left( \R \right)\rightarrow [0,\infty]$ that satisfies
 \begin{itemize}
   \item $\lambda\left( \emptyset \right) = 0$;
@@ -47,4 +48,72 @@ In order to construct a set function on a restricted domain $\lambda\colon \math
   \end{itemize}
 \end{definition}
 We will obtain an outer measure on the entirety of $P(X)$ by defining a notion of measure on some ``satisfactory'' subfamily $\mathcal{E}\subseteq P(X)$, then by approximating other subsets using this family.
+\begin{proposition}
+  Let $\mathcal{E}\subseteq P(X)$ be a family of subsets such that $\emptyset\in \mathcal{E}$ and $X\in \mathcal{E}$, and let $\rho\colon \mathcal{E}\rightarrow [0,\infty]$ be a set function such that $\rho\left( \emptyset \right) = 0$. For any $A\subseteq X$, define
+  \begin{align*}
+    \mu^{\ast}\left( E \right) &= \inf\set{\sum_{j\geq 1}\rho\left( E_j \right) | E_j\in \mathcal{E}, A\subseteq \bigcup_{j\geq 1}E_j}.
+  \end{align*}
+  Then, $\mu^{\ast}$ is an outer measure.
+\end{proposition}
+\begin{proof}
+  We start by showing well-definedness, which stems from the fact that we may select $E_j = X$ for all $j$.\newline
+
+  Since we may take $E_j = \emptyset$ for all $j$, we must have $\mu^{\ast}\left( \emptyset \right) = 0$. Furthermore, if $A\subseteq B$, since the set over which the infimum is taken for the definition of $\mu^{\ast}\left( A \right)$ includes the corresponding set for $B$, we must have $\mu^{\ast}\left( A \right)\leq \mu^{\ast}\left( B \right)$.\newline
+
+  Finally, let $\set{A_j}_{j\geq 1}\subseteq P(X)$, and let $\ve > 0$. For each $j$, there exists $\set{E_{j,k}}_{k\geq 1}\subseteq \mathcal{E}$ such that $A_j\subseteq \bigcup_{k\geq 1}E_{j,k}$ and $\sum_{k\geq 1}\rho\left( E_{j,k} \right) \leq \mu^{\ast}\left( A_j \right) + \ve 2^{-j}$.\newline
+
+  Then, if $A = \bigcup_{j\geq 1}A_j$, we have $A\subseteq \bigcup_{j,k\geq 1}E_{j,k}$, and $\sum_{j,k\geq 1}\rho\left( E_{j,k} \right) \leq \sum_{j\geq 1}\mu^{\ast}\left( A_j \right) + \ve$, so that $\mu^{\ast}\left( A \right)\leq \sum_{j\geq 1}\mu^{\ast}\left( A_j \right) + \ve$. Since $\ve$ is arbitrary, we are done.
+\end{proof}
+\begin{definition}
+  A subset $A\subseteq X$ is said to be $\mu^{\ast}$-\textit{measurable} if for any $E\subseteq X$, $A$ serves as a good ``cookie cutter'' for $E$, in that
+  \begin{align*}
+    \mu^{\ast}\left( E \right) &= \mu^{\ast}\left( E\cap A \right) + \mu^{\ast}\left( E\cap A^{c} \right).
+  \end{align*}
+  Equivalently, due to subadditivity, we have $A$ is measurable if and only if for all $E\subseteq X$,
+  \begin{align*}
+    \mu^{\ast}\left( E \right)\geq \mu^{\ast}\left( E\cap A \right) + \mu^{\ast}\left( E\cap A^{c} \right).
+  \end{align*}
+\end{definition}
+\begin{definition}
+  Let $\mathcal{A}$ be an algebra of subsets of $X$. We call a set function $\mu_0\colon \mathcal{A}\rightarrow [0,\infty]$ a \textit{premeasure} if
+  \begin{itemize}
+    \item $\mu_0\left( \emptyset \right) = 0$;
+    \item for a collection of disjoint elements of $\mathcal{A}$, $\set{A_j}_{j=1}^{\infty}$ where $\bigcup_{j\geq 1}A_j\in \mathcal{A}$, we have
+      \begin{align*}
+        \mu_0\left( \bigsqcup_{j\geq 1}A_j \right) &= \sum_{j\geq 1}\mu_0\left( A_j \right).
+      \end{align*}
+  \end{itemize}
+\end{definition}
+Every premeasure gives rise to an outer measure by taking
+\begin{align*}
+  \mu^{\ast}\left( E \right) &= \inf\set{\sum_{j\geq 1}\mu_0\left( A_j \right) | A_j\in \mathcal{A},E\subseteq \bigcup_{j\geq 1}A_j}.\label{eq:premeasure_to_outer_measure}\tag{$\ast$}
+\end{align*}
+A remarkable result by Caratheodory allows us to extend premeasures from algebras to measures on $\sigma$-algebras. To start, there is a little bit of build-up.
+\begin{proposition}
+  Let $\mu_0$ be a premeasure on $\mathcal{A}$, with $\mu^{\ast}$ defined by \eqref{eq:premeasure_to_outer_measure}. Then,
+  \begin{enumerate}[(a)]
+    \item $\mu^{\ast}|_{\mathcal{A}} = \mu_0$;
+    \item every set in $\mathcal{A}$ is $\mu^{\ast}$-measurable.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Suppose $E\in \mathcal{A}$. If $E\subseteq \bigcup_{j\geq 1}A_j$ with $A_j\in \mathcal{A}$, we let $B_n = E\cap \left( A_n\setminus \bigcup_{j=1}^{n-1}A_j \right)$. The $B_n$ are disjoint members of $\mathcal{A}$ whose union is $E$, so
+  \begin{align*}
+    \mu_0\left( E \right) &= \sum_{j=1}^{\infty}\mu_0\left( B_j \right)\\
+                          &\leq \sum_{j=1}^{\infty}\mu_0\left( A_j \right).
+  \end{align*}
+  It follows that $\mu_0\left( E \right)\leq \mu^{\ast}\left( E \right)$. The reverse inequality is clear from the fact that we may specify $A_1 = E$ and $A_{j >1} = \emptyset$.\newline
+
+  Meanwhile, if $A\in \mathcal{A}$, $E\subseteq X$, and $\ve > 0$, then there is a collection $\set{B_j}_{j\geq 1}\subseteq \mathcal{A}$ with $E\subseteq \bigcup_{j\geq 1}B_j$ and $\sum_{j\geq 1}\mu_0\left( B_j \right)\leq \mu^{\ast}\left( E \right) + \ve$. By additivity on $\mathcal{A}$, we get
+  \begin{align*}
+    \mu^{\ast}\left( E \right) + \ve &\geq \sum_{j=1}^{\infty}\mu_0\left( B_j\cap A \right) + \mu_0\left( B_j\cap A^{c} \right)\\
+                                     &\geq \mu^{\ast}\left( E\cap A \right) + \mu^{\ast}\left( E\cap A^{c} \right),
+  \end{align*}
+  so $A$ is measurable.
+\end{proof}
+\begin{theorem}[Caratheodory's Theorem]
+  Let $\mathcal{A}\subseteq P(X)$ be an algebra, let $\mu_0$ be a premeasure on $\mathcal{A}$, and let $\mathcal{M}$ be the $\sigma$-algebra generated by $\mathcal{A}$. There exists a measure $\mu$ on $\mathcal{M}$ whose restriction to $\mathcal{A}$ is $\mu_0$ --- namely, $\mu - \mu^{\ast}|_{\mathcal{M}}$, where $\mu^{\ast}$ is given by \eqref{eq:premeasure_to_outer_measure}.\newline
+
+  If $\nu$ is another measure on $\mathcal{M}$ that extends $\mu_0$, then $\nu\left( E \right)\leq \mu\left( E \right)$, with equality for all $\mu\left( E \right) < \infty$. Furthermore, if $\mu_0$ is $\sigma$-finite, then $\mu$ is unique.
+\end{theorem}
 \end{document}
