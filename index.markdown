@@ -5,16 +5,14 @@ title: Welcome to my website!
 use_math: true
 layout: home
 ---
-Hi. I'm Avinash. You have stumbled upon my website. Welcome! 
+Hi. I'm Avinash.
 
-## Who I am
+## Who am I?
 I am an incoming mathematics PhD student to the University of Virginia.
 
 ## [My CV](https://ai-bearing.github.io/CV/cv_2.pdf)
 
 ## Interests
-I like theoretical mathematics, and some other things too.
+I primarily like theoretical mathematics, mostly oriented around functional analysis and operator algebras. I did my honors thesis on amenability.
 
 ## [Honors Thesis Directory](honorsthesis.md)
-
-## [Posts](postdir.md)
