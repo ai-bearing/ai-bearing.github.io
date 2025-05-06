@@ -13,6 +13,6 @@ I am an incoming mathematics PhD student to the University of Virginia.
 ## [My CV](https://ai-bearing.github.io/CV/cv_2.pdf)
 
 ## Interests
-I primarily like theoretical mathematics, mostly oriented around functional analysis and operator algebras. I did my honors thesis on amenability.
+I primarily like theoretical mathematics, mostly oriented around functional analysis and operator algebras. I did my honors thesis on amenability and my REU was in complex analysis.
 
 ## [Honors Thesis Directory](honorsthesis.md)
