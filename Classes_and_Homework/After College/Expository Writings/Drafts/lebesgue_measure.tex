@@ -23,7 +23,7 @@
 \begin{document}
 \RaggedRight
 \begin{abstract}
-  \noindent We detail the construction and some of the properties of the Lebesgue measure.
+  \noindent We detail the construction and some of the properties of the Lebesgue measure via the Lebesgue--Stieltjes Measure.
 \end{abstract}
 \section{Premeasures, Outer Measures, and Measures}%
 Consider a set-function $\lambda\colon P\left( \R \right)\rightarrow [0,\infty]$ that satisfies
@@ -218,8 +218,83 @@ As it turns out, we are able to reverse this process. Given an increasing, right
   and set $\mu_0\left( \emptyset \right) = 0$. Then, $\mu_0$ is a premeasure on $\mathcal{A}$.
 \end{proposition}
 \begin{proof}
-  We start by verifying that $\mu_0$ is well-defined.
+  We start by verifying that $\mu_0$ is well-defined, seeing as elements of $\mathcal{A}$ can be written in more than one way as disjoint unions of h-intervals. If $\set{\left( a_j,b_j \right]}_{j=1}^{n}$ are disjoint, and $\bigcup_{j=1}^{n}\left( a_j,b_j \right] = \left( a,b \right]$, then after relabeling indices, we must have $a = a_1 < b_1 = a_2 < \cdots < b_n = b$, so $\sum_{j=1}^{n}\left( F\left( b_j \right)-F\left( a_j \right) \right) = F\left( b \right)-F\left( a \right)$.\newline
+
+  Generally speaking, if $\set{I_i}_{i=1}^{n}$ and $\set{J_j}_{j=1}^{m}$ are disjoint finite sets of intervals such that $\bigcup_{i=1}^{n}I_i = \bigcup_{j=1}^{m}J_j$, then
+  \begin{align*}
+    \sum_{i=1}^{n}\mu_0\left( I_i \right) &= \sum_{i=1}^{n}\sum_{j=1}^{m} \mu_0\left( I_i\cap J_j \right)\\
+                                          &= \sum_{j=1}^{m} \mu_0\left( J_j \right).
+  \end{align*}
+  Now, we must show that if $\set{I_j}_{j=1}^{\infty}$ is a sequence of disjoint h-intervals with $\bigcup_{j\geq 1}I_j \in \mathcal{A}$, then $\mu_0\left( \bigcup_{j\geq 1}I_j \right) = \sum_{j\geq 1}\mu_0\left( I_j \right)$ .\newline
+
+  Since $\bigcup_{j\geq 1}I_j$ is a finite union of h-intervals, we may partition $\set{I_j}_{j\geq 1}$ into finitely many subfamilies such that the union in each subfamily is a single h-interval. Using the finite additivity of $\mu_0$, we may assume that $\bigcup_{j=1}^{\infty} I_j $ is an interval $I = \left( a,b \right]$. We thus have
+  \begin{align*}
+    \mu_0\left( I \right) &= \mu_0\left( \bigcup_{j=1}^{n}I_j \right) + \mu_0\left( I\setminus \bigcup_{j=1}^{n}I_j \right)\\
+                          &\geq \mu_0\left( \bigcup_{j=1}^{n}I_j \right)\\
+                          &= \sum_{j=1}^{n}\mu_0\left( I_j \right).
+  \end{align*}
+  Taking limits, we get $\mu_0\left( I \right) \geq \sum_{j\geq1} \mu_0\left( I_j \right)$.\newline
+
+  To prove the reverse inequality, we suppose $a$ and $b$ are finite, and fix $\ve > 0$. Since $F$ is right-continuous, there exists $\delta > 0$ such that $F\left( a+\delta \right)-F\left( a \right) < \ve$, and if $I_j = \left( a_j,b_j \right]$, then for each $j$ there is $\delta_j > 0$ such that $F\left( b_j + \delta_j \right) - F\left( b_j \right) < \ve 2^{-j}$.\newline
+
+  The open intervals $\left( a_j,b_j + \delta_j \right)$ cover the compact set $\left[ a+\delta,b \right]$, so there is a finite subcover. By discarding $\left( a_j,b_j + \delta_j \right)$ contained in larger ones, and relabeling indices, we may assume that
+  \begin{itemize}
+    \item the intervals $\left( a_1,b_1+\delta_1 \right),\dots,\left( a_N,b_N + \delta_N \right)$ cover $\left[ a+\delta,b \right]$;
+    \item $b_j + \delta_j\in \left( a_{j+1},b_{j+1} + \delta_{j+1} \right)$ for each $j$.
+  \end{itemize}
+  Then,
+  \begin{align*}
+    \mu_0\left( I \right) &< F\left( b \right) - F\left( a + \delta \right) + \ve\\
+                          &\leq F\left( b_N + \delta_N \right) - F\left( a_1 \right) + \ve\\
+                          &= F\left( b_N + \delta_N \right) - F\left( a_N \right) + \sum_{j=1}^{N-1}\left( F\left( a_{j+1} \right)-F\left( a_j \right) \right) + \ve\\
+                          &\leq F\left( b_N + \delta_N \right) - F\left( a_N \right) + \sum_{j=1}^{N-1}\left( F\left( b_j + \delta_j \right) - F\left( a_j \right) \right) + \ve\\
+                          &< \sum_{j=1}^{N} \left( F\left( b_j \right) + \ve 2^{-j} - F\left( a_j \right) \right) + \ve\\
+                          &< \sum_{j=1}^{\infty}\mu_0\left( I_j \right) + 2\ve.
+  \end{align*}
+  Since $\ve$ is arbitrary, we are done for the case that $a$ and $b$ are finite.\newline
+
+  If $a = -\infty$, then for any $M < \infty$, the intervals $\left( a_j,b_j + \delta_j \right)$ cover $\left[ -M,b \right]$, so the same reasoning gives $F\left( b \right) - F\left( -M \right) \leq \sum_{j=1}^{\infty}\mu_0\left( I_j \right) + 2\ve$, whereas if $b = \infty$, we obtain $F\left( M \right) - F\left( a \right) \leq \sum_{j=1}^{\infty}\mu_0\left( I_j \right) + 2\ve$. Our desired result follows from taking $\ve\rightarrow 0$ and $M\rightarrow \infty$.
 \end{proof}
+This allows us to establish the correspondence between increasing and right-continuous functions and Borel measures.
+\begin{theorem}
+If $F\colon \R\rightarrow \R$ is an increasing, right-continuous function, then there is a unique Borel measure $\mu_F$ on $\R$ such that $\mu_F\left( \left( a,b \right] \right) = F(b) - F(a)$ for all $a,b$. If $G$ is another such function, then $\mu_F = \mu_G$ if and only if $F-G$ is constant.\newline
+
+Conversely, if $\mu$ is a Borel measure on $\R$ that is finite on bounded sets, and we define
+\begin{align*}
+  F(x) &= \begin{cases}
+    \mu\left( \left( 0,x \right] \right) & x > 0\\
+    0 & x = 0\\
+    -\mu\left( \left( x,0 \right] \right) & x < 0
+  \end{cases},
+\end{align*}
+then $F$ is increasing and right-continuous, with $\mu = \mu_F$.
+\end{theorem}
+\begin{proof}
+  We know that each $F$ induces a premeasure on $\mathcal{A}$ by the previous proposition, and by definition, $G$ induces the same premeasure if and only if $F-G$ is constant. These premeasures are $\sigma$-finite, since
+  \begin{align*}
+    \R &= \bigcup_{j=-\infty}^{\infty}\left( j,j+1 \right].
+  \end{align*}
+  Therefore, the induced measure $\mu_F$ on $\mathcal{B}_{\R}$ is unique by the Caratheodory extension theorem.\newline
+
+  The last assertion follows from the fact $\mu$ is monotonic, and continuous from both above and below, so that $F$ is continuous for both $x \geq 0$ and $x < 0$. Since $\mu = \mu_F$ on $\mathcal{A}$, we have $\mu = \mu_F$ on $\mathcal{B}_{\R}$ by the uniqueness condition in the Caratheodory extension theorem.
+\end{proof}
+\begin{definition}
+  If $F$ is an increasing and right-continuous function, then the completion of the measure $\mu_F$, which we write $\lambda_F$, is known as the \textit{Lebesgue--Stieltjes measure} associated to $F$.\newline
+
+  We denote the $\sigma$-algebra associated to $\lambda_F$ as $\mathcal{M}_{\lambda}$. For any $E\in \mathcal{M}_{\lambda}$, we have
+  \begin{align*}
+    \lambda_F(E) &= \inf\set{\sum_{j=1}^{\infty}\left( F\left( b_j \right)-F\left( a_j \right) \right) | E\subseteq \bigcup_{j=1}^{\infty}\left( a_j,b_j \right]}\\
+                 &= \inf\set{\sum_{j=1}^{\infty}\lambda_F\left( \left( a_j,b_j \right] \right) | E\subseteq \bigcup_{j=1}^{\infty}\left( a_j,b_j \right]}.
+  \end{align*}
+\end{definition}
+As it turns out, we are allowed to replace the h-intervals in the formula for for $\lambda_F(E)$ with open intervals. Note that in \href{https://ai.avinash-iyer.com/Classes_and_Homework/College/Y3/Y3S2,\%20Real\%20II/real_2_notes.pdf}{Real Analysis II}, we defined the Lebesgue measure through this method.
+\begin{lemma}
+  For any $E\in \mathcal{M}_{\lambda}$, we have
+  \begin{align*}
+    \lambda_F\left( E \right) &= \inf\set{\sum_{j=1}^{\infty}\lambda_F\left( \left( a_j,b_j \right) \right) | E\subseteq \bigcup_{j=1}^{\infty}\left( a_j,b_j \right)}.
+  \end{align*}
+  
+\end{lemma}
 
 \section{Cantor--Lebesgue Function}%
 
