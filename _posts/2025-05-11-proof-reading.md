@@ -54,7 +54,7 @@ Quickly scanning the proof, we see that it is quite short, and that it uses the 
 
 Examining the proof of the theorem, we see that in the forward direction, it uses a previous result. Namely, since the identity map is a surjection, and $f\circ g = \operatorname{id}_{T}$, we use the fact that the composition of two functions is a surjection implies that the outermost function is a surjection.
 
-In the reverse direction, we are required to consider a particular family of subsets, $\{f^{-1}(y)\}_{y\in T}$, where $f^{-1}(y)$ is the [preimage](https://proofwiki.org/wiki/Definition:Preimage/Mapping/Element) of the element $y$. Note that the preimage (or inverse image) of an element is *not* the same as "the" inverse of the element. However, since $f$ is a surjection, we know that $f^{-1}(y)$ is not empty for all $y\in T$. We must use the [axiom of choice](https://en.wikipedia.org/wiki/Axiom_of_choice) to allow us a map $g\colon T\rightarrow S$ such that $g(y)\in \{f^{-1}(y)\}_{y\in Y}$ for all $y\in T$.[^6]
+In the reverse direction, we are required to consider a particular family of subsets, $\{f^{-1}(y)\}_{y\in T}$, where $f^{-1}(y)$ is the [preimage](https://proofwiki.org/wiki/Definition:Preimage/Mapping/Element) of the element $y$. Note that the preimage (or inverse image) of an element is *not* the same as "the" inverse of the element. However, since $f$ is a surjection, we know that $f^{-1}(y)$ is not empty for all $y\in T$. We must use the [axiom of choice](https://en.wikipedia.org/wiki/Axiom_of_choice) to allow us a map $g\colon T\rightarrow S$ such that $g(y)\in \\{f^{-1}(y)\\}_{y\in Y}$ for all $y\in T$.[^6]
 
 ### Final Thoughts
 
