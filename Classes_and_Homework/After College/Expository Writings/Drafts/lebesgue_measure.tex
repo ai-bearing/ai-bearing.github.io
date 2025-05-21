@@ -297,14 +297,97 @@ As it turns out, we are allowed to replace the h-intervals in the formula for fo
 \begin{proof}
   We call the quantity on the right $\nu\left( E \right)$. Let $E\subseteq \bigcup_{j=1}^{\infty}\left( a_j,b_j \right)$. Each $\left( a_j,b_j \right)$ is a countable disjoint union of h-intervals of the form $I_{j,k} = \left( c_{j,k},c_{j,k+1} \right]$, where $\left( c_{j,k} \right)_k$ is a sequence with $c_{j,1} = a_j$ and $c_{j,k}\rightarrow b_j$. Thus, $E\subseteq \bigcup_{j,k=1}^{\infty}I_{j,k}$, so
   \begin{align*}
-    \sum_{j=1}^{\infty}\mu\left( \left( a_j,b_j \right) \right) &= \sum_{j,k=1}^{\infty}\mu\left( I_{j,k} \right)\\
-                                                                &\geq \mu\left( E \right),
+    \sum_{j=1}^{\infty}\lambda_F\left( \left( a_j,b_j \right) \right) &= \sum_{j,k=1}^{\infty}\lambda_F\left( I_{j,k} \right)\\
+                                                                &\geq \lambda_F\left( E \right),
   \end{align*}
-  so $\nu\left( E \right)\geq \mu\left( E \right)$.\newline
+  so $\nu\left( E \right)\geq \lambda_F\left( E \right)$.\newline
 
-  On the other hand, given $\ve > 0$, there exists $\set{\left( a_j,b_j \right]}_{j\geq 1}$ such that $E\subseteq \bigcup_{j\geq 1}\left( a_j,b_j \right]$ and $\sum_{j\geq 1}\mu\left( \left( a_j,b_j \right] \right) \leq \mu\left( E \right) + \ve$. For each $j$, right-continuity gives $\delta_j > 0$ such that $F\left( b_j + \delta_j \right) - F\left( b_j \right) < \ve 2^{-j}$.
+  On the other hand, given $\ve > 0$, there exists $\set{\left( a_j,b_j \right]}_{j\geq 1}$ such that $E\subseteq \bigcup_{j\geq 1}\left( a_j,b_j \right]$ and $\sum_{j\geq 1}\lambda_F\left( \left( a_j,b_j \right] \right) \leq \lambda_F\left( E \right) + \ve$. For each $j$, right-continuity gives $\delta_j > 0$ such that $F\left( b_j + \delta_j \right) - F\left( b_j \right) < \ve 2^{-j}$.\newline
+
+  Then, $E\subseteq \bigcup_{j\geq 1}\left( a_j,b_j + \delta_j \right)$, and
+  \begin{align*}
+    \sum_{j\geq 1} \lambda_F\left( \left( a_j,b_j + \delta_j \right) \right) &\leq \sum_{j\geq 1}\lambda_F\left( \left( a_j,b_j \right] \right) + \ve\\
+                                                                       &\leq \lambda_F\left( E \right) + 2\ve,
+  \end{align*}
+  so $\nu\left( E \right) \leq \mu\left( E \right)$
 \end{proof}
+Now we may understand the regularity of the Lebesgue--Stieltjes measure.
+\begin{theorem}
+  Let $\lambda_F$ be a Lebesgue--Stieltjes measure on $\R$, and let $E\in \mathcal{M}_{\lambda}$. Then, the following hold:
+  \begin{enumerate}[(a)]
+    \item For all $\ve > 0$, there exists $U\subseteq \R$ open with $E\subseteq U$ and $\lambda_F\left( U\setminus E \right) < \ve$.
+    \item There exists $V\subseteq \R$ $G_{\delta}$ with $E\subseteq V$ and $\lambda_F\left( V\setminus E \right) < \ve$.
+    \item For all $\ve > 0$, there exists $C\subseteq \R$ closed with $C\subseteq E$ and $\lambda_F\left( E\setminus C \right) < \ve$.
+    \item There exists $F\subseteq \R$ $F_{\sigma}$ with $E\subseteq F$ and $\lambda_F\left( F\setminus E \right) < \ve$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(a)]
+    \item Let $\ve > 0$. By the previous theorem, and the definition of the outer measure, we have a set $\set{\left( a_j,b_j \right)}_{j=1}^{\infty}$ such that $E\subseteq \bigcup_{j\geq 1}\left( a_j,b_j \right)$, and
+      \begin{align*}
+        \lambda_F\left( E \right) + \ve &> \sum_{j=1}^{\infty}\lambda_F\left( \left( a_j,b_j \right) \right)\\
+                                        &\geq \lambda_F\left( \bigcup_{j=1}^{\infty}\left( a_j,b_j \right) \right),
+      \end{align*}
+      so we set $U = \bigcup_{j\geq 1}\left( a_j,b_j \right)$.\newline
 
+      Now, if $\lambda_F\left( E \right) < \infty$, then $\lambda_F\left( U\setminus E \right) = \lambda_F\left( U \right) - \lambda_F\left( E \right) < \ve$. Meanwhile, if $\lambda_F\left( E \right) =\infty$, we partition to get $E = \bigsqcup_{k\geq 1}E_k$ with $\lambda_F\left( E_k \right) < \infty$, and find $U_k$ such that $\lambda_F\left( U_k \setminus E_k \right) < \ve 2^{-k}$. Setting $U = \bigcup_{k\geq 1}U_k$, we get
+      \begin{align*}
+        \lambda_F\left( U\setminus E \right) &= \lambda_F\left( \bigcup_{k\geq 1}\left( U_k\setminus E_k \right) \right)\\
+                                             &\leq \sum_{k\geq 1}\lambda_F\left( U_k\setminus E_k \right)\\
+                                             &< \sum_{k\geq 1}\ve 2^{-k}\\
+                                             &= \ve.
+      \end{align*}
+    \item For each $n$, we find $U_n\subseteq \R$ such that $E\subseteq U_n$ and $\lambda_F\left( U_n\setminus E \right) < 1/n$. Setting $V = \bigcap_{n\geq 1}U_n$, we find
+      \begin{align*}
+        \lambda_F\left( V\setminus E \right) &= \lambda_F\left( \bigcap_{n\geq 1}\left( U_n\setminus E \right) \right)\\
+                                             &\leq \lambda_F\left( U_k\setminus E \right) \tag*{for all $k$}\\
+                                             &< 1/k,
+      \end{align*}
+      so $\lambda_F\left( V\setminus E \right) = 0$.
+    \item We may use the same methodology on $E^{c}$, and take complements.
+    \item We may use the same methodology on $E^{c}$, and take complements, using the fact that the complement of a $G_{\delta}$ set is a $F_{\sigma}$ set.
+  \end{enumerate}
+\end{proof}
+\begin{theorem}
+  Let $E\in \mathcal{M}_{\lambda}$. Then,
+  \begin{align*}
+    \lambda_F\left( E \right) &= \inf\set{\lambda_F\left( U \right) | E\subseteq U,U\text{ open}}\\
+                              &= \sup\set{\lambda_F\left( K \right) | K\subseteq E,K\text{ compact}}.
+  \end{align*}
+  The former equality is known as \textit{outer regularity}, and the latter equality is known as \textit{inner regularity}.
+\end{theorem}
+\begin{proof}
+  We know that for all $\ve > 0$, there is $E\subseteq \bigcup_{j\geq 1}\left( a_j,b_j \right)$, and $\sum_{j\geq 1}\lambda_F\left( \left( a_j,b_j \right) \right) \leq \lambda_F\left( E \right) + \ve$. Setting $U = \bigcup_{j\geq 1}\left( a_j,b_j \right)$, we have $\lambda_F\left( U \right) \leq \lambda_F\left( E \right) + \ve$. Since $E\subseteq U$, we also have $\lambda_F\left( E \right) \leq \lambda_F\left( U \right)$, so the definition of outer regularity is satisfied.\newline
+
+  We now show inner regularity. If $E$ is bounded, given $\ve > 0$, there is $C\subseteq E$ closed with $\lambda_F\left( E\setminus C \right) < \ve$. Since $C$ is bounded, $C$ is compact, so $\lambda_F\left( E \right) - \ve < \lambda_F\left( C \right)$, and so we have inner regularity whenever $E$ is bounded.\newline
+
+  If $E$ is not bounded, we set $E_n = E\cap \left[ -n,n \right]$. We have $E_1\subseteq E_2\subseteq \cdots$, and $E = \bigcup_{n\geq 1}E_n$. Therefore, $\lambda_F\left( E \right) = \sup\left( \lambda_F\left( E_n \right) \right)$. There are two cases.\newline
+
+  If $\lambda_F\left( E \right) = \infty$, then we may find compact $K_n\subseteq E_n$ such that $\lambda_F\left( E_n \right) - 1 < \lambda_F\left( K-n \right)$, so that $\lambda_F\left( K_n \right)\rightarrow \infty$.\newline
+
+  If $\lambda_F\left( E \right) < \infty$, then given $\ve > 0$, we find $N$ such that $\lambda_F\left( E \right) - \ve / 2 < \lambda_F\left( E_n \right)$. We find compact $K$ with $K\subseteq E_n$ and $\lambda_F\left( E_n \right) - \ve/2 < \lambda_F\left( K \right)$. Thus, $K\subseteq E$ is compact, with $\lambda_F\left( E \right) - \ve < \lambda_F\left( K \right)$.
+\end{proof}
+\begin{proposition}
+  If $E\in \mathcal{M}_{\lambda}$, and $\lambda_F\left( E  \right) < \infty$, then for every $\ve > 0$, there is a set $A$ that is a finite union of open intervals such that $\lambda_F\left( E\triangle A \right) < \ve$.
+\end{proposition}
+\begin{proof}
+  By outer regularity, there is $U\subseteq \R$ open such that $E\subseteq U$, and $\lambda_F\left( U\setminus E \right) < \ve/2$. Every open subset of $\R$ is a countable disjoint union of open intervals, so that $\lambda_F \left( \bigsqcup_{j\geq 1}\left( \left( a_j,b_j \right)\setminus E \right) \right) < \ve$.\newline
+
+  We find $N$ such that $\sum_{j=N+1}^{\infty}\lambda_F\left( \left( a_j,b_j \right) \right) < \ve/2$, and set $A = \bigsqcup_{j=1}^{N}\left( a_j,b_j \right)$.
+\end{proof}
+\begin{definition}
+  \textit{The} Lebesgue measure is defined to be the Lebesgue--Stieltjes measure associated to the function $F(x) = x$. We denote it by $m$.\newline
+
+  The domain of $m$ is known as the class of \textit{Lebesgue-measurable} sets, denoted $\mathcal{L}$.
+\end{definition}
+\begin{theorem}
+  If $E\in \mathcal{L}$, then $E + s\in \mathcal{L}$ and $rE\in \mathcal{L}$ for all $r,s\in \R$. Moreover, $m\left( E + s \right)= m\left( E \right)$, and $m\left( rE \right) = \left\vert r \right\vert m(E)$.
+\end{theorem}
+\begin{proof}
+  Since open intervals are invariant under translations and dilations, so is $\mathcal{B}_{\R}$. For $E\in \mathcal{B}_{\R}$, we let $m_s\left( E \right) = m\left( E + s \right)$, and $m^{r}\left( E \right) = m\left( rE \right)$.\newline
+
+  Since $m_{s}$ and $m^{r}$ agree with $m$ and $\left\vert r \right\vert m$ on finite unions of intervals, they agree on $\mathcal{B}_{\R}$ by the Caratheodory extension theorem. In particular, whenever $E\in \mathcal{B}_{\R}$, and $m\left( E \right) = 0$, then $m\left( E + s \right) = m\left( rE \right) = 0$, so it follows that the class of Lebesgue-null sets is preserved under translations and dilations. Since all members of $\mathcal{L}$ are unions of a null set and a Borel set, it follows that $\mathcal{L}$ is preserved under translations and dilations. Therefore, $m\left( E + s \right) = m\left( E \right)$ and $m\left( rE \right) = \left\vert r \right\vert m\left( E \right)$ for all $E\in \mathcal{L}$.
+\end{proof}
 \section{Cantor--Lebesgue Function}%
 
 \end{document}
