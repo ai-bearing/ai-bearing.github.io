@@ -389,5 +389,40 @@ Now we may understand the regularity of the Lebesgue--Stieltjes measure.
   Since $m_{s}$ and $m^{r}$ agree with $m$ and $\left\vert r \right\vert m$ on finite unions of intervals, they agree on $\mathcal{B}_{\R}$ by the Caratheodory extension theorem. In particular, whenever $E\in \mathcal{B}_{\R}$, and $m\left( E \right) = 0$, then $m\left( E + s \right) = m\left( rE \right) = 0$, so it follows that the class of Lebesgue-null sets is preserved under translations and dilations. Since all members of $\mathcal{L}$ are unions of a null set and a Borel set, it follows that $\mathcal{L}$ is preserved under translations and dilations. Therefore, $m\left( E + s \right) = m\left( E \right)$ and $m\left( rE \right) = \left\vert r \right\vert m\left( E \right)$ for all $E\in \mathcal{L}$.
 \end{proof}
 \section{Cantor--Lebesgue Function}%
+Next, we turn our attention to the question of non-measurable subsets. Specifically, what is the criterion for the existence of a non-measurable subset of the real numbers.\newline
+
+We will establish Vitali's Theorem, which gives a sufficient condition for non-measurable subsets of any subset of $\R$, and then use this to construct\footnote{Well, ``construct'' is a strong word.} a set that is Lebesgue-measurable but not Borel-measurable.\newline
+
+First, recall that the Cantor set, $\mathfrak{C}$ consists of all $x\in [0,1]$ such that the base 3 expansion $x = \sum_{j\geq 1}a_j3^{-j}$ is such that $a_j \in \set{0,2}$.\newline
+
+Since we may map $\mathfrak{C}$ onto $[0,1]$ by taking $a_j \mapsto a_j/2$ for each $j\geq 0$, we see that $\mathfrak{C}$ is uncountable, and that $m(\mathfrak{C}) = 0$. Therefore, every subset of $\mathfrak{C}$ is of measure zero (since Lebesgue measure is complete), meaning that the cardinality of $\mathcal{L}$ is $2^{2^{\aleph_0}}$. Meanwhile, a result from descriptive set theory shows that $\mathcal{B}_{\R}$ has cardinality $2^{\aleph_0}$, so there exists some Lebesgue-measurable set that isn't Borel-measurable.\newline
+
+However, this is kind of an unsatisfactory solution to the question of a subset of $\R$ that is Lebesgue-measurable but not Borel-measurable. We will construct this non-measurable subset using Vitali's theorem.
+\begin{theorem}[Vitali]
+  Given $E\subseteq \R$ with $m^{\ast}(E) > 0$, there exists $N\subseteq E$ with $N\notin \mathcal{L}$.
+\end{theorem}
+\begin{proof}
+  First, we assume $E\subseteq [-a,a]$, and we create an equivalence relation on $E$ by defining $x\sim y$ if $x-y\in \Q$. We have
+  \begin{align*}
+    E &= \bigsqcup_{i\in I} \left[ x_i \right]_{\sim}.
+  \end{align*}
+  Set $N = \set{x_i}_{i\in I}$ --- i.e., select a family of representatives of equivalence classes for $\sim$. We claim that $N$ is not measurable.\newline
+
+  Let $\set{r_k}_{k=1}^{\infty}$ be an enumeration of the rationals inside $\Q\cap [-2a,2a]$. The $\set{r_k + N}_{k=1}^{\infty}$ are pairwise disjoint, and
+  \begin{align*}
+    E &\subseteq \bigsqcup_{k=1}^{\infty}r_k + N,
+  \end{align*}
+  since for any $x\in E$, there is some $x_i\in N$ such that $x\sim x_i$, meaning $x-x_i\in \Q\cap [-2a,2a]$, and $x-x_i= r_k$ for some $k$, meaning $x\in r_k + N$.\newline
+
+  If $N$ were measurable, then
+  \begin{align*}
+    0 &< m^{\ast}\left( E \right)\\
+      &\leq m^{\ast}\left( \bigsqcup_{k=1}^{\infty}r_k + N \right)\\
+      &= \sum_{k=1}^{\infty}m^{\ast}\left( r_k + N \right)\\
+      &= \sum_{k=1}^{\infty}m^{\ast}\left( N \right)\\
+      &= \sum_{k=1}^{\infty}m\left( N \right).
+  \end{align*}
+  Furthermore, we must have $m\left( N \right) \leq m^{\ast}\left( E \right) \leq 2a$. This yields a contradiction, as either $m\left( N \right) = 0$, giving $m^{\ast}\left( E \right) = 0$, which is a contradiction, or $m(N) \neq 0$, giving $m^{\ast}\left( E \right) = \infty$.
+\end{proof}
 
 \end{document}
