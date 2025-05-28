@@ -3,7 +3,6 @@ layout: page
 title: "Honors Thesis Notes"
 permalink: /honors_thesis.html
 ---
-Welcome to my Honors Thesis landing page.
 ## [Paradoxical Decompositions and Tarski's Theorem](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/amenability_notes.pdf)
 The focus here is on the Banach--Tarski paradox and Tarski's theorem.
 ## [Functional Analysis: Topological Vector Spaces](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/topological_vector_spaces.pdf)
