@@ -39,6 +39,9 @@ The following are standard texts.
 ### [Three Convergence Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/three_convergence_theorems.pdf)
 > We discuss and prove the three big theorems of real analysis — the Monotone Convergence Theorem, Fatou's Lemma, and the Dominated Convergence Theorem.
 
+### [The Lebesgue Measure](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/lebesgue_measure.pdf)
+> We detail the construction and some of the properties of the Lebesgue measure via the Lebesgue--Stieltjes Measure.
+
 ## Topology
 The following are standard texts.
 - _A Taste of Topology_ (Runde)
