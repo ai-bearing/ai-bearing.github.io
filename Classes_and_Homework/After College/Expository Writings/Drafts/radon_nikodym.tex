@@ -1,0 +1,91 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright,sfmath,bbold}
+%\renewcommand{\mathcal}{\mathtt}
+
+%Euler:
+%\usepackage{newpxtext,eulerpx,eucal,eufrak}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+%\renewcommand*{\hbar}{\hslash}
+
+%\renewcommand{\mathbb}{\mathds}
+%\usepackage{homework}
+\usepackage{exposition}
+
+\pagestyle{fancy} %better headers
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Signed Measures and the Lebesgue--Radon--Nikodym Theorem}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{abstract}
+  \noindent Measures are just set functions that follow some particular basic properties, but we can expand them beyond the positive real numbers towards complex numbers; to conceptualize these signed and complex measures, we need to make use of results like the Lebesgue--Radon--Nikodym Theorem and the Hahn Decomposition Theorem that allow us to understand their structural properties.
+\end{abstract}
+\section{Signed Measures and the Hahn Decomposition}%
+We know that a measure is a set function $\mu\colon \mathcal{M}\rightarrow [0,\infty]$ on a $\sigma$-algebra such that
+\begin{itemize}
+  \item $\mu\left( \emptyset \right) = 0$;
+  \item for a family of disjoint sets $\set{E_j}_{j=1}^{\infty}\subseteq \mathcal{M}$,
+    \begin{align*}
+      \mu\left( \bigsqcup_{j=1}^{\infty}E_j \right) &= \sum_{j=1}^{\infty}\mu\left( E_j \right).
+    \end{align*}
+\end{itemize}
+We may ask what happens if we change the codomain from $[0,\infty]$ to $\R$ or $\C$. This is where \textit{signed measures} come in.
+\begin{definition}
+  A \textit{signed measure} $\mu$ is a real-valued countably additive set function such that $\mu\left( \emptyset \right) = 0$ and $\mu$ takes on at most one of $-\infty$ or $\infty$.
+\end{definition}
+We begin by establishing some basic properties of signed measures (akin to the basic properties of measures).
+\begin{theorem}
+  Let $\mu$ be a signed measure.
+  \begin{enumerate}[(a)]
+    \item If $E$ and $F$ are measurable sets with $E\subseteq F$ and $\left\vert \mu\left( F \right) \right\vert < \infty$, then $\left\vert \mu\left( E \right) \right\vert < \infty$.
+    \item If $\set{E_j}_{j=1}^{\infty}\subseteq \mathcal{M}$ is a disjoint sequence of measurable subsets such that $\left\vert \mu\left( \bigsqcup_{j=1}^{\infty}E_j \right) \right\vert < \infty$, then the series $\sum_{j=1}^{\infty}\mu\left( E_j \right)$ is absolutely convergent.
+    \item If $\set{E_j}_{j=1}^{\infty}$ is a monotone sequence of measurable sets --- and if decreasing, $\left\vert \mu\left( E_n \right) \right\vert < \infty$ for at least one such $n$ --- then 
+      \begin{align*}
+        \mu\left( \lim_{j\rightarrow\infty} E_j \right) &= \lim_{j\rightarrow\infty}\mu\left( E_j \right).
+      \end{align*}
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(a)]
+    \item We see that $\mu\left( F \right) = \mu\left( F\setminus E \right) + \mu\left( E \right)$. If exactly one of the summands is infinite, then so is $\mu\left( F \right)$. If both are infinite, then since $\mu$ takes on at most one of $-\infty$ or $\infty$, they are equal and then $\mu\left( F \right)$ is infinite. Therefore, both summands must be finite.
+    \item We set
+      \begin{align*}
+        E_j^{+} &= \begin{cases}
+          E_j & \mu\left( E_j \right) \geq 0\\
+          \emptyset & \mu\left( E_j \right) < 0
+        \end{cases}\\
+          E_j^{-} &= \begin{cases}
+            E_j & \mu\left( E_j \right) \leq 0\\
+            \emptyset & \mu\left( E_j \right) > 0
+          \end{cases}.
+      \end{align*}
+      Then,
+      \begin{align*}
+        \mu\left( \bigsqcup_{j=1}^{\infty}E_j^{+} \right) &= \sum_{j=1}^{\infty}\mu\left( E_j^{+} \right)\\
+        \mu\left( \bigsqcup_{j=1}^{\infty}E_j^{-} \right) &= \sum_{j=1}^{\infty}\mu\left( E_j^{-} \right).
+      \end{align*}
+      Since the terms of both series have constant sign, and $\mu$ takes on at most one of $\pm\infty$, it follows that at least one of these series is convergent, and since $\sum_{j=1}^{\infty}\mu\left( E_j \right)$ is convergent, both series converge; therefore, the series is absolutely convergent.
+    \item If $\set{E_n}_{n=1}^{\infty}$ is increasing, then we take
+      \begin{align*}
+        \mu\left( \bigsqcup_{j=1}^{\infty}E_j \right) &= \mu\left( \bigsqcup_{j=2}^{\infty}\left( E_{j}\setminus E_{j-1} \right) \right)\\
+                                                      &= \sum_{j=2}^{\infty}\mu\left( E_{j}\setminus E_{j-1} \right)\\
+                                                      &= \lim_{n\rightarrow\infty}\sum_{j=2}^{n}\mu\left( E_j\setminus E_{j-1} \right)\\
+                                                      &= \lim_{n\rightarrow\infty}\mu\left( \bigsqcup_{j=2}^{n}\left( E_j\setminus E_{j-1} \right) \right)\\
+                                                      &= \lim_{j\rightarrow\infty}\mu\left( E_j \right),
+      \end{align*}
+      and similarly for a decreasing sequence, using part (a) to ensure finiteness.
+  \end{enumerate}
+\end{proof}
+Now, we discuss the structure of positive-valued and negative-valued measurable sets.
+\begin{definition}
+  Let $\mu$ be a signed measure on $\left( X,\mathcal{M} \right)$. We call a set $E\in \mathcal{M}$ \textit{positive} if, for every measurable $F\subseteq E$, $\mu\left( F \right) \geq 0$; similarly, we call $E\in \mathcal{M}$ \textit{negative} if, for every measurable $F\subseteq E$, $\mu\left( F \right) \leq 0$.
+\end{definition}
+\begin{theorem}[Hahn Decomposition Theorem]
+  If $\mu$ is a signed measure, then there exist two disjoint sets $A$ and $B$ such that $A\sqcup B = X$, $A$ is positive with respect to $\mu$, and $B$ is negative with respect to $\mu$. This decomposition unique up to $\mu$-null symmetric difference.
+\end{theorem}
+\end{document}
