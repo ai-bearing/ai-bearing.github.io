@@ -10,8 +10,9 @@
 %\renewcommand*{\hbar}{\hslash}
 
 %\renewcommand{\mathbb}{\mathds}
-%\usepackage{homework}
+\usepackage{homework}
 \usepackage{exposition}
+\usepackage{microtype}
 
 \pagestyle{fancy} %better headers
 \fancyhf{}
@@ -88,4 +89,60 @@ Now, we discuss the structure of positive-valued and negative-valued measurable 
 \begin{theorem}[Hahn Decomposition Theorem]
   If $\mu$ is a signed measure, then there exist two disjoint sets $A$ and $B$ such that $A\sqcup B = X$, $A$ is positive with respect to $\mu$, and $B$ is negative with respect to $\mu$. This decomposition unique up to $\mu$-null symmetric difference.
 \end{theorem}
+\begin{proof}
+  Without loss of generality, we may assume that for all $E\in \mathcal{M}$, $-\infty < \mu\left( E \right) \leq \infty$.\newline
+
+  We note that the difference of two negative sets is negative, and the disjoint, countable union of negative sets is negative, so every countable union of negative sets is negative. We let $\beta = \inf\left( \mu\left( B \right) \right)$ for all negative $B\in \mathcal{M}$. We let $\left( B_j \right)_j\subseteq \mathcal{M}$ be a sequence of measurable negative sets such that $\lim_{j\rightarrow\infty}\mu\left( B_j \right) = \beta$, and set $B = \bigcup_{j=1}^{\infty}B_j$. We see then that $B$ is a negative set for which $\mu\left( B \right)$ is minimal.\newline
+
+  We now prove that $A = X\setminus B$ is a positive set. Suppose toward contradiction that there is $E_0\subseteq A$ such that $\mu\left( E_0 \right) < 0$. The set $E_0$ cannot be a negative set, or else $B \cup E_0$ would be a negative set with a smaller measure than $\mu\left( B \right)$, which is not possible.\newline
+
+  Let $k_1$ be the smallest natural number such that there is $E_1\subseteq E_0$ with $\mu\left( E_1 \right) \geq \frac{1}{k_1}$. Since
+  \begin{align*}
+    \mu\left( E_0\setminus E_1 \right) &= \mu\left( E_0 \right) - \mu\left( E_1 \right)\\
+                                       &\leq \mu\left( E_0 \right) - \frac{1}{k_1}\\
+                                       &< 0.
+  \end{align*}
+  The argument applied to $E_0$ is now applicable to $E_0\setminus E_1$. Letting $k_2$ be the smallest natural number such that $E_0\setminus E_1$ contains $E_2\subseteq E_0\setminus E_1$ with $\mu\left( E_2 \right) \geq \frac{1}{k_2}$, and proceeding ad infinitum, we see that since $\mu$ is finitely valued for measurable subsets of $E_0$, we have $\lim_{n\rightarrow\infty}\frac{1}{k_n} = 0$.\newline
+
+  It follows that for every measurable subset $F$ of
+  \begin{align*}
+    F_0 &= E_0\setminus \left( \bigcup_{j=1}^{\infty}E_j \right),
+  \end{align*}
+  we have $\mu\left( F \right) \leq 0$ --- i.e., $F_0$ is a measurable negative set. Since $F_0$ is disjoint from $B$, and
+  \begin{align*}
+    \mu\left( F_0 \right) &= \mu\left( E_0 \right) - \sum_{j=1}^{\infty}\mu\left( E_j \right)\\
+                          &\leq \mu\left( E_0 \right)\\
+                          &< 0,
+  \end{align*}
+  this contradicts the minimality of $B$. Therefore, the hypothesis $\mu\left( E_0 \right) < 0$ is untenable.\newline
+
+  If $A_1\sqcup B_1$ and $A_2\sqcup B_2$ are two Hahn decompositions for $X$, then $A_1\setminus A_2 \subseteq B_2$ and $A_1\setminus A_2 \subseteq A_1$, meaning that $A_1\setminus A_2$ is both positive and negative, hence null; similarly for $A_2\setminus A_1$, so that $A_1\triangle A_2$ is $\mu$-null, and similarly for $B_1\triangle B_2$.
+\end{proof}
+\begin{definition}
+  We say two measures, $\mu$ and $\nu$, are \textit{mutually singular} if there exist $A,B\in \mathcal{M}$ with $A\cap B = \emptyset$, $A\sqcup B = X$, $A$ is $\mu$-null, and $B$ is $\nu$-null. In other words, $\mu$ and $\nu$ ``live on disjoint sets.'' We write $\mu\perp \nu$.
+\end{definition}
+\begin{definition}
+  Let $X = A\sqcup B$ be a Hahn decomposition for the signed measure $\mu$. We define
+  \begin{align*}
+    \mu^{+}\left( E \right) &= \mu\left( E\cap A \right)\\
+    \mu^{-}\left( E \right) &= -\mu\left( E\cap B \right)
+  \end{align*}
+  to be the \textit{positive and negative variation} of $\mu$. The \textit{total variation} of $\mu$ is defined to be
+  \begin{align*}
+    \left\vert \mu \right\vert &= \mu^{+} + \mu^{-}.
+  \end{align*}
+\end{definition}
+\begin{theorem}[Jordan Decomposition]
+  Every signed measure is the difference of two mutually singular measures, at least one of which is finite.
+\end{theorem}
+\begin{proof}
+  Set $\mu = \mu^{+}-\mu^{-}$. Then, by definition, $\mu\left( E \right) = \mu\left( A\cap E \right) + \mu\left( B\cap E \right)$ where $X = A\sqcup B$ is a Hahn decomposition.
+\end{proof}
+\begin{exercise}
+  If $\mu$ and $\nu$ are signed measures, then $\nu\perp \mu$ if and only if $\left\vert \nu \right\vert\perp \mu$ if and only if $\nu^{+}\perp \mu$ and $\nu^{-}\perp \mu$.
+\end{exercise}
+\begin{solution}
+  We use the decomposition $X = E\sqcup F$, where $\nu$ is concentrated on $E$ and $\mu$ is concentrated on $F$. Then, we apply the Hahn decomposition to each of $E$ and $F$.
+\end{solution}
+
 \end{document}
