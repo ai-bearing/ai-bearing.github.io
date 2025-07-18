@@ -23,16 +23,71 @@
 \begin{document}
 \RaggedRight
 This is a notes document regarding essential problem-solving methods for the Analysis qualifier.
-\section{Complex Analysis}%
-There are some essential types of problems:
-\begin{itemize}
-  \item evaluating contour integrals;
-  \item Cauchy estimates (i.e., if $\left\vert f(z) \right\vert \leq M\left\vert z \right\vert^{\alpha}$, show that $f$ is a polynomial);
-  \item applying the Maximum Modulus principle;
-  \item conformal maps and fractional linear transformations --- i.e., functions of the form $f(z) = \frac{az + b}{cz + d}$, where $ad-bc \neq 0$;
-  \item normal families;
-  \item Rouché's theorem.
-\end{itemize}
-\subsection{Cauchy Estimates}%
-
+\section{Real Analysis}%
+\subsection{August 2019 Qualifier}%
+\subsubsection{Problem 1}%
+\begin{enumerate}[(a)]
+  \item Recall that the Cantor set $\mathcal{C}$ is defined to consist of all $x\in [0,1]$ such that $x$ only contains $0$ and $2$ in the ternary expansion of $x$. Writing $a\in [0,2]$ as
+    \begin{align*}
+      a &= \sum_{k=0}^{\infty}\frac{a_k}{3^{k}},
+    \end{align*}
+    where $a_k\in\set{0,1,2}$, we may then find $a_k$ at each ternary expansion slot for $k$ as follows:
+    \begin{itemize}
+      \item if $a_k = 0$, we may find $b_k,c_k\in \mathcal{C}$ such that $b_k = c_k = 0$
+      \item if $a_k = 2$, we may find $b_k,c_k\in \mathcal{C}$ such that $b_k = 2$ and $c_k = 0$ or vice versa.
+      \item if $a_k = 1$, we may find $b_k,c_k\in \mathcal{C}$ such that $b_{k+1} = c_{k+1} = 2$.
+    \end{itemize}
+    Therefore, since every digit of every ternary expansion in $[0,2]$ can be obtained from $\mathcal{C}$, we see that $\mathcal{C} + \mathcal{C} = [0,2]$.
+  \item We may set $B$ to be the union of all integer translates of $\mathcal{C}$, and set $A = \mathcal{C}$. This yields closed subsets of $\R$ with Lebesgue measure zero that sum to $\R$.
+\end{enumerate}
+\subsubsection{Problem 2}%
+Consider the sequence of functions
+\begin{align*}
+  f_n(x) &= n\1_{\left[ \frac{1}{n+1},\frac{1}{n} \right]},
+\end{align*}
+defined on $\left[ 0,1 \right]$. This sequence is pointwise convergent everywhere to zero, as $f_n(0) = 0$ and the Archimedean property give that for any $x\in (0,1]$, there is some $n$ large enough that gives $\frac{1}{n} < x$. Furthermore, we see that
+\begin{align*}
+  \int_{}^{} f_n\:d\mu &= n\left( \frac{1}{n}- \frac{1}{n+1} \right)\\
+                       &= \frac{1}{n+1}\\
+                       &\rightarrow 0.
+\end{align*}
+Finally, we see that by taking suprema, we have the integral
+\begin{align*}
+  \int_{}^{} \Phi\:d\mu &= \sum_{n=1}^{\infty}\frac{1}{n+1}\\
+                        &\rightarrow \infty.
+\end{align*}
+\subsubsection{Problem 4}%
+Suppose toward contradiction that both $f$ and $1/f$ are in $L_1\left( \R \right)$. Then, from Hölder's Inequality, we have
+\begin{align*}
+  \infty &- \int_{}^{} 1\:d\mu\\
+         &\leq \left( \int_{}^{} f\:d\mu \right)^{1/2} \left( \int_{}^{} \frac{1}{f}\:d\mu \right)^{1/2}\\
+         &< \infty,
+\end{align*}
+which is a contradiction.
+\subsubsection{Problem 5}%
+\begin{enumerate}[(a)]
+  \item Let $f\in L_2\left( [-1,1] \right)$. We may find $g\in C\left( [-1,1] \right)$ such that $\norm{f-g}_{L_2} < \ve/2$. Similarly, we may find a polynomial $p$ such that $\norm{g-p}_{u} < \ve/4$, meaning that $\left\vert p(x)-g(x) \right\vert < \ve/4$ for all $x\in [-1,1]$. This yields
+    \begin{align*}
+      \norm{p-g}_{L_2} &= \left( \int_{-1}^{1} \left\vert p(x)-g(x) \right\vert^2\:dx \right)^{1/2}\\
+                       &< \left( \int_{-1}^{1} \left( \frac{\ve}{4} \right)^2\:dx \right)^{1/2}\\
+                       &= \left( \frac{\ve^2}{8} \right)^{1/2}\\
+                       &< \frac{\ve}{2},
+    \end{align*}
+    so $\norm{f-p}_{L_2} < \ve$, meaning that the closed linear span of the monomials is dense in $L_2$, and the Legendre polynomials form an orthonormal system.
+  \item We see that at every step in evaluating the expression
+    \begin{align*}
+      L_n(x) &= c_n \diff{^{n}}{x^{n}}\left( x^2-1 \right)^{n},\label{eq:legendre_expression}\tag{$\ast$}
+    \end{align*}
+    the degree of the polynomial increases by $1$, so each $L_n(x)$ has degree $n$. To verify that the polynomials generated from \eqref{eq:legendre_expression} are orthogonal to each other, we let $n > m$ without loss of generality, and use integration by parts to obtain
+    \begin{align*}
+      \iprod{L_n}{L_m} &= \int_{-1}^{1} \left( \diff{^{n}}{x^{n}}\left( x^2-1 \right)^{n} \right) \left( \diff{^{m}}{x^{m}}\left( x^2-1 \right)^{m} \right)\:dx\\
+                       &= \diff{^{n-1}}{x^{n-1}}\left( x^2-1 \right)^{n}\diff{^{m}}{x^{m}}\left( x^2-1 \right)^{m}\biggr\vert_{-1}^{1} - \int_{-1}^{1} \diff{^{n-1}}{x^{n-1}}\left( x^2-1 \right)^{n}\diff{^{m+1}}{x^{m+1}}\left( x^2-1 \right)^{m} \:dx\\
+                       &\vdots\\
+                       &= \left( -1 \right)^{n} \int_{-1}^{1} \diff{^{m+n}}{x^{m+n}}\left( x^2-1 \right)^{m}\:dx\\
+                       &= \left( -1 \right)^{n} \int_{-1}^{1} \diff{^{n}}{x^{n}}\left( \diff{^{m}}{x^{m}}\left( x^2-1 \right)^{m} \right)\:dx\\
+                       &= \left( -1 \right)^{n} \int_{}^{} \diff{^{n}}{x^{n}}L_m(x)\:dx\\
+                       &= 0,
+    \end{align*}
+    seeing as we are taking $n$ derivatives of a degree $m < n$ polynomial.
+\end{enumerate}
 \end{document}
