@@ -93,7 +93,9 @@ which is a contradiction.
 \subsection{\href{https://math.virginia.edu/graduate/exams/analysis/2020Jan_real.pdf}{January 2020}}%
 \subsubsection{Problem 1}%
 \begin{enumerate}[(a)]
-  \item This is false. If $A\subseteq [0,1]$ is the ``fat Cantor set'' constructed similar to the traditional Cantor, but obtained by deleting the middle fourth of each subinterval rather than the middle third, then $\mu(A) = \frac{1}{2}$, but $A$ is nowhere dense, meaning that if $U\subseteq A$ is open, then $U = \emptyset$.
+  \item This is false. If $A\subseteq [0,1]$ is the ``fat Cantor set'' constructed similar to the traditional Cantor, but obtained by deleting the middle fourth of each subinterval rather than the middle third, then $\mu(A) = \frac{1}{2}$, but $A$ is nowhere dense, meaning that if $U\subseteq A$ is open, then $U = \emptyset$.\newline
+
+    To see that $A$ is nowhere dense, we see that $A$ is closed, so if $x\in A\subseteq [0,1]$, and $\ve > 0$, we may show that the interval $\left( x-\ve,x+\ve \right)$ is not contained in $A$. In the recursive construction of $A$, we may see that there is some step $n_1$ such that $\frac{1}{4^{n_1}} < 2\ve$, implying that $\left( x-\ve,x+\ve \right)$ is not contained in the recursive construction at $n_1$. Therefore $A^{\circ} = \emptyset$.
   \item This is true. By the definition of the Lebesgue outer measure, for any $\ve > 0$, there are $\set{\left( a_k,b_k \right)}_{k=1}^{\infty}$ such that
     \begin{align*}
       \mu(A) + \ve &< \mu\left( \bigcup_{k=1}^{\infty}\left( a_k,b_k \right) \right),
@@ -107,6 +109,10 @@ which is a contradiction.
       \mu(A) &= \inf\set{U | A\subseteq U,U\text{ open}}.
     \end{align*}
 \end{enumerate}
+\begin{remark}
+  Part (a) can be solved by selecting $A = \R\setminus \Q\cap [0,1]$.
+\end{remark}
+
 \subsubsection{Problem 3}%
 \begin{enumerate}[(a)]
   \item Consider the algebra of polynomials on $[0,1]$ without a constant term. Then, since linear combinations and multiplications still yield polynomials without constant term, and $f(x) = x$ separates points in $[0,1]$, this algebra satisfies the requirements of the question. Yet, since all elements of this algebra are equal to zero at $x= 0$, the uniform closure of the algebra yields all the continuous functions on $[0,1]$ with $f(0) = 0$.
@@ -117,12 +123,39 @@ We consider the signed measure on $ \mathcal{F} $ defined by
 \begin{align*}
   \nu(E) &= \int_{E}^{} f\:d\mu,
 \end{align*}
-meaning that $\nu\ll \mu$, so the function $g \coloneq \diff{\nu}{\mu}$, where $\diff{\nu}{\mu}$ denotes the Radon--Nikodym derivative of $\nu$ with respect to $\mu$, is $\mathcal{F}$-measurable and in $L_1\left( \R,\mathcal{F},\mu \right)$. This gives, for all $E\in \mathcal{F}$,
+meaning that $\nu\ll \mu$, so the function $g \coloneq \diff{\nu}{\mu}$, where $\diff{\nu}{\mu}$ denotes the Radon--Nikodym derivative of $\nu$ with respect to $\mu$ (where we restrict $\mu$ to $\mathcal{F}$), is $\mathcal{F}$-measurable (by Radon--Nikodym) and in $L_1\left( \R,\mathcal{F},\mu \right)$. This gives, for all $E\in \mathcal{F}$,
 \begin{align*}
-  \int_{E}^{} g\:d\mu &= \int_{E}^{} \:d\nu\\
+  \int_{E}^{} g\:d\mu &= \int_{E}^{} \diff{\nu}{\mu}\:d\mu\\
+                      &= \int_{E}^{} \:d\nu\\
                       &= \nu\left( E \right)\\
                       &= \int_{E}^{} f\:d\mu.
 \end{align*}
+\subsubsection{Problem 5}%
+Let $M = \mu(X)$.\newline
+
+Let $\left( f_n \right)_n\rightarrow f$ in measure, and let $\ve > 0$. If we let
+\begin{align*}
+  A &= \set{x | \left\vert f_n(x)-f(x) \right\vert > \ve/2M}\\
+  B &= \set{x | \left\vert f_n(x)-f(x) \right\vert \leq \ve/2M},
+\end{align*}
+we have
+\begin{align*}
+  \int_{X}^{} \min\left( 1,\left\vert f_n-f \right\vert \right)\:d\mu &= \int_{A}^{} \min\left( 1,\left\vert f_n-f \right\vert \right) \:d\mu + \int_{B}^{} \min\left( 1,\left\vert f_n-f \right\vert \right) \:d\mu\\
+                                                                      &\leq \mu\left( A \right) + \ve/2\\
+                                                                      &< \ve/2 + \ve/2\\
+                                                                      &= \ve.
+\end{align*}
+Meanwhile, if
+\begin{align*}
+  \int_{X}^{} \min\left( 1,\left\vert f_n-f \right\vert \right)\:d\mu &\rightarrow 0,
+\end{align*}
+then by Chebyshev's Inequality, we have, for a fixed $0 < \ve \leq 1$,
+\begin{align*}
+  \mu\left( \set{x | \left\vert f_n-f \right\vert \geq \ve} \right) &= \mu \left( \set{x | \min\left( 1,\left\vert f_n-f \right\vert \right) \geq \ve} \right)\\
+                                                                    &\leq \frac{1}{\ve} \int_{X}^{} \min\left( 1,\left\vert f_n-f \right\vert \right)\:d\mu\\
+                                                                    &\rightarrow 0,
+\end{align*}
+so $\left( f_n \right)_n\rightarrow f$ in measure.
 \subsection{\href{https://math.virginia.edu/graduate/exams/analysis/2020Aug_real.pdf}{August 2020}}%
 \subsubsection{Problem 1}%
 This is false. To see this, let $ \mathfrak{C}(x) $ denote the Cantor--Lebesgue function, and let
@@ -144,4 +177,166 @@ Therefore, we get
   A &= \bigcap \set{U_x | x\in \Q^2\setminus A},
 \end{align*}
 meaning that $A$ is $G_{\delta}$. Taking complements, we thus get that every open set is $F_{\sigma}$.
+\subsubsection{Problem 3}%
+\begin{enumerate}[(a)]
+  \item We see that
+    \begin{align*}
+      \iprod{Pf_i}{f_j} &= \delta_{i+1,j}\\
+                        &= \delta_{i,j-1}\\
+                        &= \iprod{f_i}{f_{j-1}}\\
+                        &= \iprod{f_i}{P^{\ast}f_j},
+    \end{align*}
+    so that $Pf_n = f_{n-1}$ if $n > 1$. Else, if $n = 1$, then $P^{\ast}f_n = 0$.
+  \item We see that, acting on the orthonormal basis $\left( f_n \right)_n$, $P^{\ast}P\left( f_n \right) = f_n$, and
+    \begin{align*}
+      PP^{\ast}\left( f_n \right) &= \begin{cases}
+        0 & n = 1\\
+        1 & \text{else},
+      \end{cases}
+    \end{align*}
+    so that $P^{\ast}P = I$ and $PP^{\ast}$ is as above.
+\end{enumerate}
+\subsubsection{Problem 4}%
+We see that
+\begin{align*}
+  \mu\left( \set{x | f_n(x) > t} \right) &= \mu\left( X \right) - \mu\left( \set{x | f_n(x) \leq t} \right),
+\end{align*}
+so by taking limits, we find that
+\begin{align*}
+  \lim_{n\rightarrow\infty} \mu\left( \set{x | f_n(x) > t} \right) &= \begin{cases}
+    1 & t < 0\\
+    0 & t\geq 0
+  \end{cases}.
+\end{align*}
+So, if $\ve > 0$, then
+\begin{align*}
+  \mu\left( \set{x | \left\vert f_n(x) \right\vert > \ve} \right) &= \mu\left( \set{x | f_n(x) < -\ve} \right) + \mu\left( \set{x | f_n(x) > \ve} \right)\\
+                                                                  &\leq \mu\left( \set{x | f_n(x)\leq -\ve} \right) + \mu\left( \set{x | f_n(x) > \ve} \right)\\
+                                                                  &\rightarrow 0.
+\end{align*}
+\subsection{\href{https://math.virginia.edu/graduate/exams/analysis/2023Jan_real.pdf}{January 2023}}%
+\subsubsection{Problem 1}%
+By using Fatou's Lemma, and assuming WLOG that $\left( f_n \right)_n\rightarrow f$ pointwise everywhere, we get
+\begin{align*}
+  \int_{X}^{} \left\vert f \right\vert^{p}\:d\mu &= \int_{X}^{} \liminf_{n\rightarrow\infty} \left\vert f_n \right\vert^{p}\:d\mu\\
+                                                 &\leq \liminf_{n\rightarrow\infty} \int_{X}^{} \left\vert f_n \right\vert^{p}\:d\mu\\
+                                                 &\leq 1,
+\end{align*}
+so $\norm{f}_{L_p}\leq 1$.
+\subsubsection{Problem 2}%
+Let
+\begin{align*}
+  f(t) &= \mu\left( E\cap \left( -\infty,t \right) \right),
+\end{align*}
+and for any sequence $\left( t_n \right)_n$, define
+\begin{align*}
+  E_n &= E\cap \left( -\infty,t_n \right).
+\end{align*}
+We will show that $f$ is left- and right-continuous, hence continuous. To start, if $\left( t_n \right)_n\searrow t$, then
+\begin{align*}
+  \bigcap_{n\in \N} E_n &= E\cap \left( -\infty,t \right],
+\end{align*}
+so
+\begin{align*}
+  f(t) &= \mu\left( \bigcap_{n\in \N} E_n\setminus \set{t} \right)\\
+       &= \mu\left( \bigcap_{n\in \N} E_n \right) -\mu\left( \set{t} \right).
+\end{align*}
+Since $\mu$ is atomless, we see that $\mu\left( \set{t} \right) = 0$, so since $\mu\left( E \right) < \infty$,
+\begin{align*}
+  f(t) &= \mu\left( \bigcap_{n\in\N} E_n \right)\\
+       &= \lim_{n\rightarrow\infty} \mu\left( E_n \right)\\
+       &= \lim_{n\rightarrow\infty} f\left( t_n \right).
+\end{align*}
+Thus, $f$ is right-continuous. Similarly, if $f$ is left-continuous, and $\left( t_n \right)_n \nearrow t$, then
+\begin{align*}
+  \bigcup_{n\in \N} E_n &= E\cap \left( -\infty,t \right),
+\end{align*}
+so by continuity from below,
+\begin{align*}
+  f(t) &= \mu\left( \bigcup_{n\in\N} E_n \right)\\
+       &= \lim_{n\rightarrow\infty} \mu\left( E_n \right)\\
+       &= \lim_{n\rightarrow\infty} f\left( t_n \right).
+\end{align*}
+Therefore, $f$ is continuous. Since
+\begin{align*}
+  \lim_{t\rightarrow -\infty} f(t) &= 0\\
+  \lim_{t\rightarrow\infty} f(t) &= \mu\left( E \right)\\
+                                 &> 0,
+\end{align*}
+the intermediate value theorem gives some $t_0\in \R$ such that
+\begin{align*}
+  f\left(t_0\right) &= \mu\left( E\cap \left( -\infty,t_0 \right) \right)\\
+                    &= \frac{1}{2}\mu\left( E \right).
+\end{align*}
+
+\subsection{\href{https://math.virginia.edu/graduate/exams/analysis/2022Aug_real.pdf}{August 2022}}%
+\subsubsection{Problem 1}%
+We note that
+\begin{align*}
+  \left\vert \frac{n\sin\left( x/n \right)}{x\left( 1+x^2 \right)}  \right\vert &\leq \left\vert \frac{n\left( x/n \right)}{x\left( 1+x^2 \right)} \right\vert\\
+                                                                                &= \frac{1}{1+x^2},
+\end{align*}
+and since $\frac{1}{1+x^2}$ is integrable, we may use Dominated Convergence to switch limit and integral, giving
+\begin{align*}
+  \lim_{n\rightarrow\infty} \int_{0}^{\infty} \frac{n\sin\left( x/n \right)}{x\left( 1+x^2 \right)}\:dx &= \int_{0}^{\infty} \lim_{n\rightarrow\infty}\frac{n\sin\left( x/n \right)}{x\left( 1+x^2 \right)}\:dx\\
+                                                                                                        &= \int_{0}^{\infty} \lim_{h\rightarrow 0} \frac{\frac{1}{h}\sin\left( hx \right)}{x\left( 1+x^2 \right)}\:dx\\
+                                                                                                        &= \int_{0}^{\infty} \frac{x}{x\left( 1+x^2 \right)}\:dx\\
+                                                                                                        &= \frac{\pi}{2}.
+\end{align*}
+\subsubsection{Problem 2}%
+\begin{enumerate}[(a)]
+  \item Let $f$ be Lipschitz, and let $M$ denote the Lipschitz constant --- i.e., $\left\vert f(x)-f(y) \right\vert\leq \left\vert x-y \right\vert$ for all $x,y\in [a,b]$. Set $\delta = \frac{\ve}{M}$. Then, if $\set{\left( a_j,b_j \right)}_{j=1}^{k}$ is a partition such that $\sum_{j=1}^{k}\left\vert b_j-a_j \right\vert < \delta$, we have
+    \begin{align*}
+      \sum_{j=1}^{k} \left\vert f\left(b_j\right)-f\left( a_j \right) \right\vert &\leq M\sum_{j=1}^{k} \left\vert b_j-a_j \right\vert\\
+                                                                                  &< \ve.
+    \end{align*}
+    Thus, $f$ is absolutely continuous. Now, if $x,x+h\in [a,b]$, we have that
+    \begin{align*}
+      \left\vert \frac{f\left( x+h \right)-f\left( x \right)}{h} \right\vert &\leq M,
+    \end{align*}
+    meaning that
+    \begin{align*}
+      \left\vert f'(x) \right\vert &= \lim_{h\rightarrow 0} \left\vert \frac{f\left( x+h \right)-f(x)}{h} \right\vert\\
+                                   &\leq M,
+    \end{align*}
+    and since $f'(x)$ exists for a.e. $x\in [a,b]$, we have that $\esssup_{x\in [a,b]} \left\vert f'(x) \right\vert \leq M$, so $f'\in L_{\infty}\left( [a,b] \right)$.\newline
+
+    Let $f$ be absolutely continuous with bounded derivative. Then, if $M$ is the essential supremum of the $f'$, the fundamental theorem of calculus gives
+    \begin{align*}
+      \left\vert f(y)-f(x) \right\vert &= \left\vert \int_{x}^{y} f'(t)\:dt \right\vert\\
+                                       &\leq \int_{x}^{y} \left\vert f'(t) \right\vert\:dt\\
+                                       &\leq \int_{x}^{y} M\:dx\\
+                                       &= M\left\vert y-x \right\vert,
+    \end{align*}
+    so $f$ is Lipschitz.
+  \item If $f$ is such that $f'(x)$ exists, then for $x,x+h\in [a,b]$, we have
+    \begin{align*}
+      \left\vert \frac{f\left( x+h \right)-f(x)}{h} \right\vert &\leq \norm{f}_{\text{Lip}},
+    \end{align*}
+    so by taking limits, we have
+    \begin{align*}
+      \left\vert f'(x) \right\vert &\leq \norm{f}_{\text{Lip}}.
+    \end{align*}
+    Thus, this ordering must respect essential suprema, meaning
+    \begin{align*}
+      \norm{f'}_{L_{\infty}} &\leq \norm{f}_{\text{Lip}}.
+    \end{align*}
+    Furthermore, if $\ve > 0$, there are $x,y\in [a,b]$ with $x < y$  such that
+    \begin{align*}
+      \norm{f}_{\text{Lip}} - \ve &< \left\vert \frac{f(y)-f(x)}{y-x} \right\vert\\
+                                  &= \frac{1}{\left\vert y-x \right\vert} \left\vert \int_{x}^{y} f'(t)\:dt \right\vert\\
+                                  &\leq \frac{1}{\left\vert y-x \right\vert} \int_{x}^{y} \left\vert f'(t) \right\vert\:dt\\
+                                  &\leq \frac{1}{\left\vert y-x \right\vert} \int_{x}^{y} \norm{f'}_{L_{\infty}}\:dt\\
+                                  &= \norm{f'}_{L_{\infty}},
+    \end{align*}
+    and since $\ve$ is arbitrary, we have $\norm{f}_{\text{Lip}}\leq \norm{f'}_{L_{\infty}}$.
+\end{enumerate}
+\subsubsection{Problem 4}%
+\begin{enumerate}[(a)]
+  \item We let $U,V\subseteq X$ be such that $\left\vert \mu \right\vert$ is concentrated on $U$, $\left\vert \nu \right\vert$ is concentrated on $V$, and $U\cap V = \emptyset$.\newline
+
+    Let $P_{\mu},N_{\mu}$ partition $X$ such that $U_P$ is positive for $\mu$ and $U_N$ is positive for $\mu$ (as follows from the Hahn Decomposition). Note that since $\left\vert \mu \right\vert$ is concentrated on $U$, so too is $\mu$, meaning that $U_P = P_{\mu}\cap U$ and $U_N = N_{\mu}\cap U$ are the positive and negative sets for $\mu$, and similarly for $V_P$ and $V_N$ for $\nu$.\newline
+
+    Thus, since $U_P\cap V_{P,N} = \emptyset$, $\mu_1\perp \nu_{1,2}$, and similarly for $U_N\cap V_{P,N}$ implying $\mu_2\perp \nu_{1,2}$.
+\end{enumerate}
 \end{document}
