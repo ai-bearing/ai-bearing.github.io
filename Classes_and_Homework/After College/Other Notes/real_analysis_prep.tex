@@ -316,7 +316,7 @@ This is not true. To see this, consider the family of functions defined by
   f_3 &= \1_{[1/2,1]}\\
       &\vdots
 \end{align*}
-where $f_n$ is of width $\frac{1}{2^{k}}$ when $2^{k} \leq n < 2^{k+1}$, moving along $[0,1]$. Then, since $\mu\left( \set{x | \left\vert f_n(x) \right\vert > 0} \right) = \frac{1}{2^{k}}$, we have that $\left( f_n \right)_n\rightarrow 0$ in measure. Yet, since for any $x\in [0,1]$ there are infinitely many such $n$ such that $f_n(x) = 1$, the family $\left( f_n \right)_n$ does not converge to $0$ pointwise anywhere on $[0,1]$.
+where $f_n$ is of width $\frac{1}{2^{k}}$ when $2^{k} \leq n < 2^{k+1}$, moving along $[0,1]$. Then, since $\mu\left( \set{x | \left\vert f_n(x) \right\vert > 0} \right) = \frac{1}{2^{k}}$, we have that for any $\ve > 0$, $\left( \mu\left( \set{x | \left\vert f_n(x) \right\vert > \ve} \right) \right)_n \leq \left( \mu\left( A_n \right) \right)_n$, where we have defined $A_n$ to be the particular set with width $\frac{1}{2^{k}}$ when $2^{k}\leq n\leq 2^{k+1}$. Yet, since for any $x\in [0,1]$ there are infinitely many such $n$ such that $f_n(x) = 1$, the family $\left( f_n \right)_n$ does not converge to $0$ pointwise anywhere on $[0,1]$.
 \subsection{Problem 2}%
 \begin{problem}
   Let $B$ be a measurable subset of the two-dimensional plane such that the intersection of $B$ with every vertical line is either finite or countable. Find $\mu\left( B \right)$, where $\mu$ is the two-dimensional Lebesgue measure.
@@ -343,11 +343,11 @@ so $\left( m\times m \right)\left( C^{x} \right) = 0$, meaning
   \end{align*}
 \end{problem}
 
-Since $\mu\ll\nu$, and $\rho\ll\rho$, we have $\mu + \rho \ll \nu + \rho$, so by Radon--Nikodym, there is some measurable $f$ such that
+Since $\mu\ll\nu$, and $\rho\ll\rho$, we have $\mu + \rho \ll \nu + \rho$, as $\left( \nu + \rho \right)(E) = 0$ if and only if $\nu(E) = 0$ and $\rho(E) = 0$, meaning that $\mu(E) = 0$ and $\rho(E) = 0$, so by Radon--Nikodym, there is some measurable $f$ such that
 \begin{align*}
   \mu\left( E \right) + \rho\left( E \right) &= \int_{E}^{} f\:d\left( \nu + \rho \right),
 \end{align*}
-so
+so by rearranging, we get
 \begin{align*}
   \mu\left( E \right) &= \int_{E}^{} f\:d\nu + \int_{E}^{} \left( f-1 \right)\:d\rho.
 \end{align*}
@@ -384,25 +384,98 @@ We note that for each $n$,
 \begin{align*}
   \left( \diff{}{x} \right)^{n}\left( e^{-x^2} \right) &= P_n(x)e^{-x^2}
 \end{align*}
-where $P_n(x)$ is a degree $n$ polynomial. To see this,
+where $P_n(x)$ is a degree $n$ polynomial. To see this, using induction on $n$, we get
 \begin{align*}
-  \diff{}{x}\left( e^{-x^2} \right) &= -2xe^{-x^2}\\
+  \left( \diff{}{x} \right)^{0}\left( e^{-x^2} \right) &= \left( 1 \right)e^{-x^2}\\
+                                                       &\eqcolon P_0(x)e^{-x^2}\\
   \diff{}{x}\left( P_n(x)e^{-x^2} \right) &= P_n'(x)e^{-x^2} - 2xP_n(x)e^{-x^2}\\
-                                          &\coloneq P_{n+1}(x)e^{-x^2}.
+                                          &\eqcolon P_{n+1}(x)e^{-x^2}.
 \end{align*}
 Therefore,
 \begin{align*}
   e^{x^2}\left( \diff{}{x} \right)^{n}\left( e^{-x^2} \right) &= P_n(x).
 \end{align*}
-Since each $P_n(x)$ is linearly independent (as they have different degrees of polynomials), the linear combinations of $P_n$ form polynomials. By Stone--Weierstrass, there is some linear combination $\sum_{k=0}^{n}a_kP_{k}(x)$ such that $\left\vert f(x)-\sum_{k=0}^{n}a_kP_k(x) \right\vert < \ve$ for all $x\in [0,1]$. Thus, 
+Since each $P_n(x)$ is linearly independent (as they have different degrees of polynomials), and consist of polynomials of each degree for all $n\geq 0$, they span $\C\left[ x \right]$. Then, for any $\ve > 0$, by Stone--Weierstrass, there is some polynomial $p(x)$ such that
 \begin{align*}
-  \left\vert f(x)-e^{x^2}\left( De^{-x^2} \right) \right\vert < \ve
+  \sup_{x\in [0,1]}\left\vert f(x) - p(x) \right\vert < \ve.
 \end{align*}
-for the particular expression
+Since $\set{P_n(x)}_{n\geq 0}$ forms a basis for $\C\left[ x \right]$, there are $a_0,\dots,a_n$ such that $p(x) = \sum_{k=0}^{n}a_kP_k\left( x \right)$. Setting
 \begin{align*}
-  D &= \sum_{k=0}^{n}a_k\left( \diff{}{x} \right)^{k}.
+  D &= \sum_{k=0}^{n}a_k \left( \diff{}{x} \right)^{k},
 \end{align*}
-
+we obtain that
+\begin{align*}
+  \left\vert f(x)-e^{x^2}\left( De^{-x^2} \right) \right\vert < \ve.
+\end{align*}
+\section{\href{https://math.virginia.edu/graduate/exams/analysis/2022Jan_real.pdf}{January 2022}}%
+\subsection{Problem 1}%
+\begin{problem}
+  Let $\left( f_n \right)_n,f\subseteq L_1\left( X,\mu \right)$ be nonnegative functions, and let $\left( f_n \right)_n\rightarrow f$ pointwise, as well as
+  \begin{align*}
+    \left( \int_{X}^{} f_n\:d\mu \right)_n \rightarrow \int_{X}^{} f\:d\mu.
+  \end{align*}
+  Show that $\left( f_n \right)_n\rightarrow f$ in $L_1$.
+\end{problem}
+Consider the function $g_n(x) = \min\left( f_n,f \right)$, also written as
+\begin{align*}
+  g_n &= \frac{1}{2}\left( f_n + f - \left\vert f_n-f \right\vert \right).
+\end{align*}
+Note that $\left\vert g_n \right\vert\leq f$, and $\left( g_n \right)_n\rightarrow f$ pointwise, so by dominated convergence, we have 
+\begin{align*}
+  \int_{X}^{} f\:d\mu &= \lim_{n\rightarrow\infty} \int_{X}^{} g_n\:d\mu\\
+                      &= \frac{1}{2}\lim_{n\rightarrow\infty} \left( \int_{X}^{} f_n\:d\mu + \int_{X}^{} f\:d\mu - \int_{X}^{} \left\vert f_n-f \right\vert\:d\mu \right)\\
+                      &= \int_{X}^{} f\:d\mu - \frac{1}{2}\lim_{n\rightarrow\infty} \int_{X}^{} \left\vert f_n-f \right\vert\:d\mu,
+\end{align*}
+so
+\begin{align*}
+  \lim_{n\rightarrow\infty} \int_{X}^{} \left\vert f_n-f \right\vert\:d\mu &= 0,
+\end{align*}
+and $\left( f_n \right)_n\rightarrow f$ in $L_1$.
+\subsection{Problem 2}%
+\begin{problem}
+  Let $p\in [1,\infty)$.
+  \begin{enumerate}[(a)]
+    \item Show that if $\left( f_n \right)_n\rightarrow f$ in $L_p$, then there is $\left( f_{n_k} \right)_k$ such that for $\mu$-a.e. $x\in X$, $\left( f_{n_k} \right)_k\rightarrow f$ pointwise.
+    \item Let $h$ be a measurable function, and let $D$ be defined such that
+      \begin{align*}
+        D &= \set{f\in L_p\left( X,\mu \right) | hf\in L_p\left( X,\mu \right)}.
+      \end{align*}
+      Suppose $\left( f_n \right)_n\rightarrow f$ in $L_p$, and $\left( hf_n \right)_n\rightarrow g$ in $L_p$. Show that $f\in D$ and $g = hf$.
+  \end{enumerate}
+\end{problem}
+\begin{enumerate}[(a)]
+  \item Since $\left( f_n \right)_n\rightarrow f$ in $L_p$, the sequence $\left( f_n \right)_n$ is $L_p$-Cauchy, so we may find a subsequence $\left( f_{n_k} \right)_k$ such that
+    \begin{align*}
+      \norm{f_{n_{k+1}} - f_{n_k}} &< \frac{1}{2^{k}}.
+    \end{align*}
+    Defining
+    \begin{align*}
+      s_n &= \sum_{k=1}^{n} \left\vert f_{n_{k+1}} - f_{n_k} \right\vert\\
+      s = \sum_{k=1}^{n} \left\vert f_{n_{k+1}} -f_{n_{k}} \right\vert,
+    \end{align*}
+    we see that by Minkowski's Inequality,
+    \begin{align*}
+      \norm{s_n} &\leq \sum_{k=1}^{n} \norm{f_{n_{k+1}} - f_{n_k}}\\
+                 &\leq 1.
+    \end{align*}
+    So, by applying Fatou's Lemma to $s_{n}^p$, we see that
+    \begin{align*}
+      \norm{s} &\leq 1,
+    \end{align*}
+    meaning that in particular, $s(x) < \infty$ almost everywhere, and $\left( s_n \right)_n$ converges absolutely almost everywhere. Defining
+    \begin{align*}
+      g(x) &= f_{n_1}(x) + \sum_{k=1}^{\infty} \left( f_{n_{k+1}} - f_{n_{k}} \right)(x)
+    \end{align*}
+    for all $x$ where $s(x)$ is defined, and $0$ otherwise, we see that by telescoping, $g(x) = \lim_{k\rightarrow\infty}f_{n_{k}}(x)$. Now, we show that $\norm{g-f} = 0$, meaning that $g = f$ under the $\mu$-a.e. equivalence relation. Computing, we have
+    \begin{align*}
+      \int_{X}^{} \left\vert g-f \right\vert^{p}\:d\mu &= \int_{X}^{} \liminf_{k\rightarrow\infty}\left\vert f_{n_{k}} - f \right\vert^{p}\:d\mu\\
+                                                       &\leq \liminf_{k\rightarrow\infty} \int_{X}^{} \left\vert f_{n_{k}} - f \right\vert^{p}\:d\mu\\
+                                                       &= \liminf_{k\rightarrow\infty}\norm{f_{n_{k}} - f}^{p}\\
+                                                       &= 0,
+    \end{align*}
+    as for any subsequence $\left( f_{n_{k}} \right)_{k}$, $\left( f_{n_{k}} \right)_k\rightarrow f$ in $L_p$. Thus, $\left( f_{n_{k}} \right)_{k}\rightarrow f$ for $\mu$-almost every $x$.
+  \item 
+\end{enumerate}
 \section{\href{https://math.virginia.edu/graduate/exams/analysis/2022Aug_real.pdf}{August 2022}}%
 \subsection{Problem 1}%
 \begin{problem}
