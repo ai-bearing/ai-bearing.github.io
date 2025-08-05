@@ -654,6 +654,70 @@ the intermediate value theorem gives some $t_0\in \R$ such that
   f\left(t_0\right) &= \mu\left( E\cap \left( -\infty,t_0 \right) \right)\\
                     &= \frac{1}{2}\mu\left( E \right).
 \end{align*}
+\subsection{Problem 3}%
+\begin{problem}
+  Let $X$ be a set equipped with a $\sigma$-algebra $\Sigma$. Suppose $\mu,\nu\colon \Sigma\rightarrow [0,\infty)$ are finite measures with $\lambda = \mu + \nu$. Define $f$ such that
+  \begin{align*}
+    \nu\left( E \right) &= \int_{E}^{} f\:d\lambda.
+  \end{align*}
+  \begin{enumerate}[(i)]
+    \item Show that $0 \leq f \leq 1$ $\lambda$-a.e.
+    \item If $F = \set{x | f(x) = 1}$, show that $\mu(F) = 0$.
+    \item If $A\subseteq \set{x | 0 \leq f(x) < 1}$ is such that $\mu(A) = 0$, show that $\nu(A) = 0$.
+  \end{enumerate}
+\end{problem}
+\begin{enumerate}[(i)]
+  \item Consider the sets $E_n$, for each $n\in \N$, defined by
+    \begin{align*}
+      E_n &= \set{x | f(x) < -\frac{1}{n}},
+    \end{align*}
+    so that $E_n \subseteq E_{n+1}$, and
+    \begin{align*}
+      E &= \bigcup_{n=1}^{\infty} E_n\\
+        &= \set{x | f(x) < 0}.
+    \end{align*}
+    Then, we see that 
+    \begin{align*}
+      0 &\geq -\frac{1}{n}\lambda\left( E_n \right)\\
+        &= -\frac{1}{n} \int_{E_n}^{} \:d\lambda\\
+                                          &> \int_{E_n}^{} f\:d\lambda\\
+                                          &= \nu\left( E_n \right)\\
+                                          &\geq 0,
+    \end{align*}
+    meaning that $\lambda\left( E_n \right) = 0$ for each $n$, so by continuity from below, $\lambda\left( E \right) = \lim_{n\rightarrow\infty} \lambda\left( E_n \right) = 0$.\newline
+
+    Now, the set
+    \begin{align*}
+      F &= \set{x | f(x) > 1}
+    \end{align*}
+    has
+    \begin{align*}
+      \lambda(F) &= \int_{F}^{} \:d\lambda\\
+                 &< \int_{F}^{} f\:d\lambda\\
+                 &= \nu\left( F \right)\\
+                 &\leq \nu\left( F \right) + \mu\left( F \right)\\
+                 &= \lambda\left( F \right), 
+    \end{align*}
+    meaning that $\lambda(F) = 0$, and $0 \leq f \leq 1$ $\lambda$-a.e.
+  \item If $F = \set{x | f(x) = 1}$, then
+    \begin{align*}
+      \lambda\left( F \right) &= \int_{F}^{} \:d\lambda\\
+                              &= \int_{F}^{} f\:d\lambda\\
+                              &= \nu\left( F \right),
+    \end{align*}
+    so $\mu\left( F \right) = 0$.
+  \item Let $A\subseteq \set{x | 0\leq f(x) < 1}$ be such that $\mu(A) =0$. Then, we have
+    \begin{align*}
+      \nu\left( A \right) &= \int_{A}^{} f\:d\lambda\\
+                          &= \int_{A}^{} f\:d\nu + \int_{A}^{} f\:d\mu\\
+                          &< \int_{A}^{} f\:d\nu + \int_{A}^{} \:d\mu\\
+                          &= \int_{A}^{} f\:d\nu + \mu\left( A \right)\\
+                          &= \int_{A}^{} f\:d\nu\\
+                          &\leq \int_{A}^{} f\:d\lambda\\
+                          &= \nu\left( A \right),
+    \end{align*}
+    so $\nu\left( A \right) = 0$, else we reach a contradiction.
+\end{enumerate}
 \subsection{Problem 4}%
 \begin{problem}
   Fix $p\in [1,\infty)$. Let $W_{p}\left( [0,1] \right)$ be the space of absolutely continuous functions on $[0,1]$ such that $f'\in L_p\left( [0,1] \right)$. For all $f\in W_p\left( [0,1] \right)$, define
@@ -758,7 +822,13 @@ so $\left( f_n \right)_n\rightarrow f$ in $W_p$, meaning $W_p$ is complete.
                                                                                            &< \ve,
     \end{align*}
     so $0 < \mu\left( F\cap [a,b] \right) < b-a$. Thus, $U_{a,b}$ is also open.
-  \item If $\set{\left[ a_k,b_k \right]}$ is an enumeration of rational-endpoint intervals in $\R$, then for any interval $I$, there is some rational-endpoint interval $\left[a_k,b_k\right]\subseteq I$ by density and the characterization of an interval, meaning that $U_{a_k,b_k}$ is such that for the given interval $I$, $0 < \mu\left( E\cap I \right) < \mu\left( I \right)$ for all $E\in U_{a_k,b_k}$. Thus, taking the intersection of all such $U_{a_k,b_k}$, we have
+  \item If $\set{\left[ a_k,b_k \right]}$ is an enumeration of rational-endpoint intervals in $\R$, then for any interval $I$, there is some rational-endpoint interval $\left[a_k,b_k\right]\subseteq I$ by density and the characterization of an interval. For any $\1_{E}\in U_{a_k,b_k}$, we have that for an interval $[a,b]\subseteq I$ with $a_k\geq a$ and $b_k \leq b$,
+    \begin{align*}
+      m\left( E\cap [a,b] \right) &= m\left( E\cap \left[ a,a_k \right] \right) + m\left( E\cap \left[ a_k,b_k \right] \right) + m\left(E\cap  \left[ b_k,b \right] \right)\\
+                                  &< a_k-a + b_k-a_k + b-b_k\\
+                                  &= b-a,
+    \end{align*}
+    so $U_{a_k,b_k}\subseteq D$. Thus, since this holds for all intervals of positive measure for each $a_k,b_k$, we get
     \begin{align*}
       \bigcap_{k=1}^{\infty}U_{a_k,b_k} &\subseteq D.
     \end{align*}
@@ -815,15 +885,19 @@ We must now show that
   \item $\left( f_n \right)_n\rightarrow f$ in the supremum norm;
   \item $f\in C_0\left( X \right)$.
 \end{itemize}
-For the first point, if $x\in X$, we see that for $\ve > 0$, there is $N$ such that for all $n \geq N$,
+For the first point, we see that for $\ve > 0$, there is $N$ such that for all $n,m \geq N$ and all $x\in X$,
 \begin{align*}
-  \left\vert f_n(x)-f(x) \right\vert < \ve.
+  \left\vert f_n(x)-f_m(x) \right\vert < \ve.
 \end{align*}
-Taking suprema, this gives
+Taking the limit as $m\rightarrow\infty$, we have 
+\begin{align*}
+  \left\vert f_n(x)-f(x) \right\vert \leq \ve.
+\end{align*}
+Thus, by taking suprema, we get that
 \begin{align*}
   \sup_{x\in X} \left\vert f_n(x)-f(x) \right\vert \leq \ve,
 \end{align*}
-so $\norm{f_n - f} \leq \ve$, meaning that $\left( f_n \right)_n\rightarrow f$ in the sup norm.\newline
+so $\norm{f_n - f} \leq \ve$, meaning that $\left( f_n \right)_n\rightarrow f$ in the sup norm, implying that $f$ is continuous as it is the uniform limit of continuous functions.\newline
 
 Finally, we let $N_1$ be such that for all $n\geq N_1$, $\norm{f_n - f} < \ve/2$. Note that since $f_{N_1}\in C_0\left( X \right)$, we have a $K_{\ve/2}$ such that for all $x\in X\setminus K_{\ve/2}$, $\left\vert f_N(x) \right\vert < \ve/2$. Therefore, for all $x\in X\setminus K_{\ve/2}$, we have
 \begin{align*}
@@ -844,20 +918,43 @@ We start off by noting that the symmetric difference $A\triangle B$ can be writt
 \begin{align*}
   A\triangle B &= A\cup B \setminus \left( A\cap B \right).
 \end{align*}
-This is evident from unwinding the definition $A\triangle B = \left( A\setminus B \right) \cup \left( B\setminus A \right)$. Now, writing the left-hand side of our desired inequality, and using the fact that $\mu\left( \left( A\cup B \right)\setminus A \right) = \mu\left( B \right)$, this gives
+This is evident from unwinding the definition $A\triangle B = \left( A\setminus B \right) \cup \left( B\setminus A \right)$. Now, writing the left-hand side of our desired inequality, we get
 \begin{align*}
   \mu\left( \left( A_1\cup\cdots\cup A_n \right)\triangle \left( B_1\cup\cdots\cup B_n \right) \right) &= \mu\left( A_1\cup\cdots\cup A_n\cup B_1\cup\cdots\cup B_n \right) - \mu\left( \left( A_1\cup\cdots\cup A_n \right)\cap \left( B_1\cup\cdots\cup B_n \right) \right).
   \intertext{Distributing the second term on the right-hand side and rearranging the first term, we get}
-                                                                                                       &= \mu\left( \cup_{j=1}^{n} \left( A_j\cup B_j \right) \right) - \mu\left( \bigcap_{j=1}^{n} \left( A_1\cup\cdots\cup A_n \right)\cap B_j \right).
+                                                                                                       &= \mu\left( \bigcup_{j=1}^{n} \left( A_j\cup B_j \right) \right) - \mu\left( \bigcup_{j=1}^{n} \left( A_1\cup\cdots\cup A_n \right)\cap B_j \right).
                                                                                                        \intertext{Using subadditivity on the first term, we get}
-                                                                                                       &\leq \sum_{j=1}^{n}\mu\left( A_j\cup B_j \right) - \mu\left( \bigcap_{j=1}^{n} \left( A_1\cup\cdots\cup A_n \right)\cap B_j \right).
+                                                                                                       &\leq \sum_{j=1}^{n}\mu\left( A_j\cup B_j \right) - \mu\left( \bigcup_{j=1}^{n} \left( A_1\cup\cdots\cup A_n \right)\cap B_j \right).
                                                                                                        \intertext{Finally, using monotonicity and subadditivity on the second term, and exercising the fact that}
   A_j\cap B_j&\subseteq \bigcap_{j=1}^{n}\left( A_1\cup\cdots\cup A_n \right)\cap B_j,
 \intertext{we get}
                                                                                                        &\leq \sum_{j=1}^{n} \mu\left( A_j\cup B_j \right) - \sum_{j=1}^{n}\mu\left( A_j\cap B_j \right)\\
                                                                                                        &= \sum_{j=1}^{n}\mu\left( A_j\triangle B_j \right).
 \end{align*}
-
+\subsection{Problem 5}%
+\begin{problem}
+  Let $\left( X,\mu \right)$ be a nonnegative measure space and $f$ a measurable function on $\left( X,\mu \right)$ such that
+  \begin{align*}
+    \sup_{\lambda > 0} \mu\left( \set{x | \left\vert f(x) \right\vert > \lambda} \right) &< \infty.
+  \end{align*}
+  Prove that there is a finite constant $C$ such that for every finite measure subset, we have
+  \begin{align*}
+    \int_{E}^{} \left\vert f(x) \right\vert\:d\mu(x) &\leq C\mu\left( E \right)^{1/2}.
+  \end{align*}
+\end{problem}
+\begin{lemma}[Cavalieri's Principle]
+  \begin{align*}
+    \int_{X}^{} \left\vert f \right\vert\:d\mu &= \int_{0}^{\infty} \mu\left( \set{x\in X | \left\vert f \right\vert > \lambda} \right)\:d\lambda.
+  \end{align*}
+\end{lemma}
+Using Cavalieri's Principle, we get
+\begin{align*}
+  \int_{E}^{} \left\vert f \right\vert\:d\mu &\leq \int_{0}^{\alpha} \mu\left( \set{x\in E | \left\vert f \right\vert > \lambda} \right)\:d\lambda + \int_{\alpha}^{\infty} \mu\left( \set{x\in E | \left\vert f \right\vert > \lambda} \right)\:d\lambda\\
+                                             &\leq \alpha\mu\left( E \right) + \int_{\alpha}^{\infty} \frac{M}{\lambda^2}\:d\lambda\\
+                                             &= \alpha\mu\left( E \right) + \frac{M}{\alpha}\\
+                                             &\leq \left( M+1 \right)\mu\left( E \right)^{1/2},
+\end{align*}
+where we selected $\alpha = \frac{1}{\mu\left( E \right)^{1/2}}$, and $M$ denotes the given supremum.
 \section{January 2024}%
 \subsection{Problem 1}%
 \begin{problem}
@@ -896,15 +993,7 @@ Applying Fatou's Lemma, we find that
     \begin{align*}
       \norm{s_{n}}_{L_p} &\leq \sum_{k=1}^{n}\norm{f_{n_{k+1}} - f_{n_{k}}}_{L_p}.
     \end{align*}
-    In particular, since $s\coloneq \sum_{k=1}^{\infty}\left\vert f_{n_{k+1}} - f_{n_{k}} \right\vert$ is the limit of $\left( s_n \right)_n$, we may apply Fatou's Lemma to find that
-    \begin{align*}
-      \norm{s}_{L_p} &= \norm{\liminf_{n\rightarrow\infty}s_n}_{L_p}\\
-                     &\leq \liminf_{n\rightarrow\infty} \norm{s_n}_{L_p}\\
-                     &\leq \liminf_{n\rightarrow\infty} \sum_{k=1}^{n} \norm{f_{n_{k+1}} -f_{n_{k}}}_{L_p}\\
-                     &\leq \liminf_{n\rightarrow\infty} \sum_{k=1}^{n} 2^{-k}\\
-                     &= 1,
-    \end{align*}
-    meaning in particular that $s(x)$ is finite almost everywhere, so $\sum_{k=1}^{\infty} \left\vert f_{n_{k+1}} -f_{n_{k}} \right\vert$ converges almost everywhere. Therefore, the sum
+    In particular, $\norm{s_n}_{L_p} \leq 1$ for all $n$, meaning that by dominated convergence, $s = \lim_{n\rightarrow\infty} s_n$ is in $L_p$, and in particular, $s(x) < \infty$ for almost every $x$. Notice that this means that
     \begin{align*}
       h(x) &= f_{n_{1}}(x) + \sum_{k=1}^{\infty} \left( f_{n_{k+1}}(x) - f_{n_{k}}(x) \right)
     \end{align*}
@@ -921,8 +1010,8 @@ Applying Fatou's Lemma, we find that
     meaning $h\in L_{p}\left( X,\mu \right)$. All we need to do now is show that $\norm{f-h}_{L_p} = 0$, meaning that $\left[ f \right] = \left[ h \right]$ under the pointwise almost everywhere equivalence relation. To see this, 
     \begin{align*}
       \int_{X}^{} \left\vert h-f \right\vert^{p}\:d\mu &= \int_{X}^{} \liminf_{k\rightarrow\infty} \left\vert f_{n_{k}} - f \right\vert^{p}\:d\mu\\
-                                                       &\leq \liminf_{n\rightarrow\infty} \int_{X}^{} \left\vert f_{n_{k}} - f \right\vert^{p}\:d\mu\\
-                                                       &= \liminf_{n\rightarrow\infty} \norm{f_{n_{k}} - f}_{L_p}^{p}\\
+                                                       &\leq \liminf_{k\rightarrow\infty} \int_{X}^{} \left\vert f_{n_{k}} - f \right\vert^{p}\:d\mu\\
+                                                       &= \liminf_{k\rightarrow\infty} \norm{f_{n_{k}} - f}_{L_p}^{p}\\
                                                        &= 0,
     \end{align*}
     where the last equality is derived from the fact that $\left( f_{n} \right)_n\rightarrow f$ in $L_p$, so every subsequence of $\left( f_{n} \right)_n$ converges to $f$ in $L_p$.
@@ -942,7 +1031,7 @@ Let $M = \sup_{x\in \R} \left\vert g(x) \right\vert$. Now, since $f\in L_1$, the
 where $m(K)$ is the Lebesgue measure of $K$ in $\R$. Therefore, if $\left\vert x-y \right\vert < \delta$, we have
 \begin{align*}
   \left\vert \left( f\ast g \right)\left( x \right) - \left( f\ast g \right)\left( y \right) \right\vert &= \left\vert \int_{\R}^{} \left( f\left( x-t \right)-f\left( y-t \right) \right)g\left( t \right)\:dt \right\vert\\
-                                                                                                         &\leq \int_{\R}^{} \left\vert f\left( x-t \right)-f\left( y-t \right) \right\vert g\left( t \right)\:dt\\
+                                                                                                         &\leq \int_{\R}^{} \left\vert f\left( x-t \right)-f\left( y-t \right) \right\vert \left\vert g\left( t \right) \right\vert\:dt\\
                                                                                                          &\leq \int_{\R}^{} \left\vert f\left( x-t \right)-h\left( x-t \right) \right\vert\left\vert g\left( t \right) \right\vert\:dt\\
                                                                                                          &+ \int_{\R}^{} \left\vert h\left( x-t \right)-h\left( y-t \right) \right\vert\left\vert g(t) \right\vert\:dt\\
                                                                                                          &+ \int_{\R}^{} \left\vert h\left( y-t \right)- f\left( y-t \right)\right\vert\left\vert g\left( t \right) \right\vert\:dt.
@@ -952,7 +1041,19 @@ where $m(K)$ is the Lebesgue measure of $K$ in $\R$. Therefore, if $\left\vert x
                                                                                                          &\leq \frac{2\ve}{3} + M\left( m(K) \right)\frac{\ve}{3M\left( m(K) \right)}\\
                                                                                                          &= \ve.
 \end{align*}
+\subsubsection{Alternative Solution}%
+We know that $f$ is integrable on $\R$, and $g$ is bounded and continuous. We will show that if $\left( x_n \right)_n\rightarrow x_0$, then $\left( \left( f\ast g \right)\left( x_n \right) \right)_n\rightarrow \left( f\ast g \right)\left( x_0 \right)$.\newline
 
+Now, if $\left( x_n \right)_n\rightarrow x_0$, then $g\left( x_n \right)\rightarrow g\left( x_0 \right)$, since $g$ is continuous. Since $f$ is integrable, $f$ is finite almost everywhere, meaning that $f(y)g\left( x_n-y \right) \rightarrow f(y)g\left( x_0-y \right)$ almost everywhere.\newline
+
+Furthermore, since $g$ is bounded, we have $\left\vert g \right\vert \leq M$ for some $M > 0$. Writing our convolution integrand, we have
+\begin{align*}
+  \left\vert f(y)g\left( x_n-y \right) \right\vert \leq M\left\vert f(y) \right\vert.
+\end{align*}
+Since $f$ is integrable, we may use the dominated convergence theorem to find that
+\begin{align*}
+  \lim_{n\rightarrow\infty} \int_{}^{} f(y)g\left( x_n-y \right)\:dy &= \int_{}^{} f(y)g\left( x_0-y \right)\:dy.
+\end{align*}
 \subsection{Problem 4}%
 \begin{problem}
   Let $\left( a_n \right)_n$ be a sequence of complex numbers such that $\left\vert a_n \right\vert < 1$ for all $n$ and $\lim_{n\rightarrow\infty} a_n = 0$.
@@ -961,5 +1062,4 @@ where $m(K)$ is the Lebesgue measure of $K$ in $\R$. Therefore, if $\left\vert x
     \item Does the converse hold? In other words, is it true that if $\left( p_n \right)_n$ is convergent, we must have $\sum_{n\geq 1}\left\vert a_n \right\vert < \infty$? Recall the conditions that $\left\vert a_n \right\vert < 1$ for all $n$ and $\lim_{n\rightarrow \infty}a_n = 0$.
   \end{enumerate}
 \end{problem}
-
 \end{document}
