@@ -63,6 +63,38 @@ This is a collection of old real analysis qualifier exam solutions, as well as s
   \end{align*}
   as the series converges.
 \end{proof}
+\subsection{Functions Defined as Integrals}%
+\begin{theorem}
+  Let $f\colon X\times [a,b]\rightarrow \C$, where $-\infty < a < b < \infty$, suppose and $f\left( \cdot,t \right)\colon X\rightarrow \C$ is integrable for each $t\in [a,b]$. Let $F(t) = \int_{X}^{} f(x,t)\:d\mu(x)$.
+  \begin{enumerate}[(a)]
+    \item If there exists $g\in L_1\left( \mu \right)$ such that $\left\vert f(x,t) \right\vert < g(x)$ for all $x,t$, and $\lim_{t\rightarrow t_0} f\left( x,t \right) = f\left( x,t_0 \right)$ for every $x$, then $\lim_{t\rightarrow t_0}F\left( t \right) = F\left( t_0 \right)$. In particular, if $f\left( x,\cdot \right)$ is continuous for every $x$, then $F$ is continuous.
+    \item If $\pd{f}{t}$ exists, and there is $g\in L_1\left( \mu \right)$ such that $\left\vert \pd{f}{t} \left( x,t \right)\right\vert\leq g(x)$ for all $x,t$. Then, $F$ is differentiable, and $F'(t) = \int_{X}^{} \pd{f}{t}\left( x,t \right)\:d\mu(x)$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(a)]
+    \item If $\left( t_n \right)_n\rightarrow t_0$, we may define
+      \begin{align*}
+        f_n\left( x \right) &= f\left( x,t_n \right),
+      \end{align*}
+      and use the Dominated Convergence Theorem.
+    \item Observe that
+      \begin{align*}
+        \pd{f}{t} \left( x,t_0 \right) &= \lim_{n\rightarrow\infty} \frac{f\left( x,t_n \right)-f\left( x,t_0 \right)}{t_n-t_0},
+      \end{align*}
+      where $\left( t_n \right)_n\rightarrow t_0$. It follows that $\pd{f}{t}$ is measurable, and by mean value theorem,
+      \begin{align*}
+        \left\vert \frac{f\left( x,t_n \right)-f\left( x,t_0 \right)}{t_n-t_0} \right\vert &\leq \sup_{t\in [a,b]} \left\vert \pd{f}{t}\left( x,t \right) \right\vert \leq g(x),
+      \end{align*}
+      so by Dominated Convergence,
+      \begin{align*}
+        F'\left( t_0 \right) &= \lim_{n\rightarrow\infty} \frac{F\left( t_n \right) - F\left( t_0 \right)}{t_n-t_0}\\
+                             &= \lim_{n\rightarrow\infty} \int_{X}^{} \frac{f\left( x,t_n \right)-f\left( x,t_0 \right)}{t_n-t_0}\:d\mu(x)\\
+                             &= \int_{X}^{} \pd{f}{t}\left( x,t \right)\:d\mu(x).
+      \end{align*}
+      
+  \end{enumerate}
+\end{proof}
 
 \subsection{Completeness of $L_p$}%
 \begin{theorem}
@@ -1585,6 +1617,63 @@ Since $f$ is integrable, we may use the dominated convergence theorem to find th
       \end{align*}
   \end{enumerate}
 \end{problem}
+\begin{enumerate}[(a)]
+  \item We note that
+    \begin{align*}
+      \lim_{\xi\rightarrow 0} \left( \hat{\mu}\left( \xi \right) - \hat{\mu}\left( 0 \right) \right) &= 0,
+    \end{align*}
+    and
+    \begin{align*}
+      \lim_{\xi\rightarrow 0} \left( \xi^2 \right) &= 0,
+    \end{align*}
+    so by L'Hôpital's rule and the Dominated Convergence Theorem, we see that
+    \begin{align*}
+      0 &= \lim_{\xi\rightarrow 0} \frac{\hat{\mu}\left( \xi \right) - \hat{\mu}\left( 0 \right)}{\xi^2}\\
+        &= \lim_{\xi\rightarrow 0} \frac{ \int_{\R}^{} \pd{}{\xi}\left( e^{-2\pi i x \xi} \right)\:d\mu(x) }{2\xi}\\
+        &= \lim_{\xi\rightarrow 0} \frac{ \int_{\R}^{} -2\pi i x e^{-2\pi i x \xi}\:d\mu(x) }{2\xi}\\
+        &= \int_{\R}^{} \lim_{\xi\rightarrow 0} \frac{-2\pi i x e^{-2\pi i x \xi}}{2\xi}\:d\mu(x)\\
+        &= \int_{\R}^{} \left( -2\pi i x \right)\diff{}{\xi}\left( e^{-2\pi i x \xi} \right)\biggr\vert_{\xi = 0}\:d\mu(x)\\
+        &= -4\pi^2 \int_{\R}^{} x^2 \:d\mu(x).
+    \end{align*}
+    Thus, we obtain
+    \begin{align*}
+      0 &= \int_{\R}^{} x^2\:d\mu(x).
+    \end{align*}
+  \item We want to evaluate
+    \begin{align*}
+      \mu\left( (a,b) \right) &= \int_{\R}^{} \1_{(a,b)}\:d\mu(x).
+    \end{align*}
+    We fix $(a,b)\subseteq \R$, where $0\notin (a,b)$. There are four cases.
+    \begin{itemize}
+      \item If $0 < a < b$, then we see that
+        \begin{align*}
+          a^2 \int_{\R}^{} \1_{(a,b)}\:d\mu &\leq \int_{\R}^{} x^2\:d\mu(x),
+        \end{align*}
+        meaning that $\mu\left( (a,b) \right) = 0$.
+      \item If $a < b < 0$, then we see that
+        \begin{align*}
+          \left\vert b \right\vert^2 \int_{\R}^{} \1_{(a,b)}\:d\mu &\leq \int_{\R}^{} x^2\:d\mu(x),
+        \end{align*}
+        so $\mu\left( \left( a,b \right) \right) = 0$.
+      \item If $0 = a < b$, then by continuity from below, we see that
+        \begin{align*}
+          \mu\left( \left( a,b \right) \right) &= \lim_{n\rightarrow\infty} \mu\left( (1/n,b) \right)\\
+                                               &= 0.
+        \end{align*}
+      \item Similarly, if $a < b = 0$, then by continuity from below, we see that
+        \begin{align*}
+          \mu\left( \left( a,b \right) \right) &= \lim_{n\rightarrow\infty} \mu\left( \left( a,-1/n \right) \right)\\
+                                               &= 0.
+        \end{align*}
+    \end{itemize}
+    Meanwhile, if $0\in (a,b)$, then we may split
+    \begin{align*}
+      \int_{\R}^{} \:d\mu(x) &= \int_{\R}^{} \1_{(a,b)}(x)\:d\mu(x) + \int_{\R}^{} \1_{(-\infty,a]}(x)\:d\mu(x) + \int_{}^{} \1_{[b,\infty)}(x)\:d\mu(x)
+      \intertext{and, by continuity from above/below,}
+                             &= \int_{\R}^{} \1_{(a,b)}(x)\:d\mu(x) + \lim_{n\rightarrow\infty} \mu\left( \left( -\infty,a+1/n \right) \right) + \lim_{n\rightarrow\infty} \mu\left( \left( b-1/n,\infty \right) \right)\\
+                             &= \int_{\R}^{} \1_{(a,b)}(x)\:d\mu(x).
+    \end{align*}
+\end{enumerate}
 \subsection{Problem 3}%
 \begin{problem}
   Fix $\alpha\in (0,1]$. The space $C^{0,\alpha}$ of Hölder-continuous functions consists of functions $f\colon [0,1]\rightarrow \C$ such that
@@ -1619,11 +1708,7 @@ Since $f$ is integrable, we may use the dominated convergence theorem to find th
                  &= \norm{f} + \norm{g}.
     \end{align*}
     Thus, $\norm{\cdot}$ is a bona fide norm on $C^{0,\alpha}\left( \left[ 0,1 \right] \right)$.
-  \item Suppose $\left( f_m \right)_m$ is a Cauchy sequence in $C^{0,\alpha}\left( [0,1] \right)$. Then, we see that, for any $\ve > 0$, there is $N$ such that for all $m,n\geq N$,
-    \begin{align*}
-      \norm{f_m-f_n} &= \left\vert f_m(0)-f_n(0) \right\vert + \sup_{x\neq y\in [0,1]} \frac{\left\vert f_m(x) - f_n(x) - \left( f_m(y) - f_n(y) \right) \right\vert}{\left\vert x-y \right\vert^{\alpha}}\\
-                     &< \ve.
-    \end{align*}
+  \item 
 \end{enumerate}
 \subsection{Problem 4}%
 \begin{problem}
@@ -1651,8 +1736,47 @@ Since $f$ is integrable, we may use the dominated convergence theorem to find th
     \begin{align*}
       \int_{X}^{} \left\vert f(x) \right\vert^{p}\:d\mu(x) &= p \int_{0}^{\infty} \alpha^{p-1}\mu\left( \set{x | \left\vert f(x) \right\vert > \alpha} \right)\:d\alpha.
     \end{align*}
-    
+  \item Set $E_{\alpha} = \set{x | \left\vert f(x) \right\vert > \alpha}$. Then,
+    \begin{align*}
+      \int_{X}^{} \left\vert f \right\vert^{p}\:d\mu &\geq \int_{E_{\alpha}}^{} \left\vert f \right\vert^{p}\:d\mu\\
+                                                     &\geq \alpha^{p} \int_{X}^{} \1_{E_{\alpha}}\:d\mu\\
+                                                     &= \alpha^{p} \mu\left( E_{\alpha} \right)\\
+                                                     &= \alpha^{p} \mu\left( \set{x | \left\vert f(x) \right\vert > \alpha} \right).
+    \end{align*}
+    By rearranging, we get that
+    \begin{align*}
+      \mu\left( \set{x | \left\vert f(x) \right\vert > \alpha} \right) &\leq \frac{\norm{f}_{L_p}^{p}}{\alpha^{p}}.
+    \end{align*}
 \end{enumerate}
+\subsection{Problem 5}%
+\begin{problem}
+  Let $\phi\in \mathcal{S}\left( \R^n \right)$ be a fixed Schwartz function. The Fourier multiplier $M$ acts on functions $f\in L_2\left( \R^n \right)$ by
+  \begin{align*}
+    \widehat{Mf}\left( \xi \right) &= \phi\left( \xi \right)\hat{f}\left( \xi \right).
+  \end{align*}
+  That is, $M$ is equal to the operation of taking the Fourier transform of $f$, multiplying by $\phi\left( \xi \right)$, then taking the inverse Fourier transform. Show that $M$ is a bounded linear map from $L_2\left( \R^n \right)$ to $L_2\left( \R^n \right)$.
+\end{problem}
+Rewriting $M$, we see that
+\begin{align*}
+  Mf(x) &= \mathcal{F}^{-1}\left( M_{\phi}\mathcal{F}\left( f(x) \right) \right),
+\end{align*}
+where $M_{\phi}$ is the multiplication operator that multiplies by $\phi$. We see thus that
+\begin{align*}
+  \norm{M}_{\op} &= \norm{\mathcal{F}^{-1}M_{\phi}\mathcal{F}}_{\op}.
+\end{align*}
+The norm of a multiplication operator is bounded above by the essential supremum of its symbol, as
+\begin{align*}
+  \norm{M_{\phi}\left( f \right)}_{L_2} &= \left( \int_{\R^n}^{} \left\vert \phi f \right\vert^2\:dm \right)^{1/2}\\
+                                        &\leq \left( \norm{\phi}_{L_{\infty}}^2 \int_{\R^n}^{} \left\vert f \right\vert^2\:dm \right)^{1/2}\\
+                                        &= \norm{\phi}_{L_{\infty}}\norm{f}_{L_2}.
+\end{align*}
+Since $\phi$ is a Schwartz function, all of its derivatives are bounded, and thus so is its zeroth derivative, so $\phi\in L_{\infty}$. Furthermore, by the Plancherel Theorem, the Fourier transform on $L_2$ is unitary, so by applying the properties of the operator norm, we see that
+\begin{align*}
+  \norm{M}_{\op} &\leq \norm{\mathcal{F}^{-1}}_{\op}\norm{M_{\phi}}_{\op}\norm{\mathcal{F}}_{\op}\\
+                 &\leq \norm{\phi}_{L_{\infty}}\\
+                 &< \infty,
+\end{align*}
+so $M$ is a bounded linear operator.
 \section{January 2025}%
 \subsection{Problem 1}%
 \begin{problem}
