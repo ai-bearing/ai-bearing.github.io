@@ -23,7 +23,284 @@
 
 \begin{document}
 \RaggedRight
-This is a collection of old real analysis qualifier exam solutions.
+This is a collection of old real analysis qualifier exam solutions, as well as some notes on useful results and proofs.
+\section{Useful Results and Proofs}%
+\subsection{Borel--Cantelli Lemma}%
+\begin{theorem}
+  If $\set{E_j}_j\subseteq \mathcal{M}$ is a family of measurable sets, with
+  \begin{align*}
+    \sum_{j=1}^{\infty}\mu\left( E_j \right) &< \infty,
+  \end{align*}
+  then
+  \begin{align*}
+    \mu\left( \limsup_{j\rightarrow\infty}E_j \right) &= 0.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Recall the definition of the limit superior of a collection of sets $\set{E_j}_j$ is defined by
+  \begin{align*}
+    \limsup\left( E_j \right) &= \bigcap_{k=1}^{\infty}\bigcup_{j=k}^{\infty} E_j.
+  \end{align*}
+  Defining
+  \begin{align*}
+    F_k &= \bigcup_{j=k}^{\infty} E_j,
+  \end{align*}
+  we see that $F_k \supseteq F_{k+1}\supseteq \cdots$. Furthermore, note that
+  \begin{align*}
+    \mu\left( F_k \right) &\leq \sum_{j=k}^{\infty} \mu\left( E_j \right),
+  \end{align*}
+  and
+  \begin{align*}
+    \mu\left( F_1 \right) &\leq \sum_{j=k}^{\infty}\mu\left( E_j \right)\\
+                          &< \infty.
+  \end{align*}
+  Thus, by continuity from above, we see that
+  \begin{align*}
+    \mu\left( \limsup_{j\rightarrow\infty} E_j \right) &= \mu\left( \bigcap_{k=1}^{\infty}F_k \right)\\
+                                                       &= \lim_{k\rightarrow\infty}\mu\left( F_k \right)\\
+                                                       &\leq \lim_{k\rightarrow\infty}\sum_{j=k}^{\infty} \mu\left( E_j \right)\\
+                                                       &= 0,
+  \end{align*}
+  as the series converges.
+\end{proof}
+
+\subsection{Completeness of $L_p$}%
+\begin{theorem}
+  If $\left( X,\mathcal{M},\mu \right)$ is a measure space, then $L_p\left( \mu \right)$ is complete.
+\end{theorem}
+\begin{proof}
+  Let $\left( f_n \right)_n\subseteq L_p\left( X,\mathcal{M},\mu \right)$ be $L_p$-Cauchy. Then, we may extract a subsequence $\left( f_{n_{k}} \right)_k$ such that
+  \begin{align*}
+    \norm{f_{n_{k+1}}-f_{n_{k}}} &< 2^{-k},
+  \end{align*}
+  by recursively selecting $n_{k+1} > n_{k}$ and using the fact that $\left( f_n \right)_n$ is Cauchy.\newline
+
+  Consider now the functions
+  \begin{align*}
+    s_n &= \sum_{k=1}^{n} \left\vert f_{n_{k+1}} -f_{n_{k}} \right\vert\\
+    s &= \sum_{k=1}^{\infty} \left\vert f_{n_{k+1}}-f_{n_{k}} \right\vert.
+  \end{align*}
+  We see from Minkowski's Inequality that
+  \begin{align*}
+    \norm{s_{n}} &\leq \sum_{k=1}^{n} \norm{f_{n_{k+1}}-f_{n_{k}}},
+  \end{align*}
+  and so by using Fatou's Lemma, that
+  \begin{align*}
+    \norm{s} &\leq \liminf_{n\rightarrow\infty} \norm{s_{n}}\\
+             &\leq \liminf_{n\rightarrow\infty}\sum_{k=1}^{n} \norm{f_{n_{k+1}}-f_{n_{k}}}\\
+             &\leq \sum_{k=1}^{\infty} 2^{-k}\\
+             &= 1,
+  \end{align*}
+  meaning that in particular, $s(x)< \infty$ for a.e. $x\in X$. Thus, the series
+  \begin{align*}
+    s &= \sum_{k=1}^{\infty} \left\vert f_{n_{k+1}}-f_{n_{k}} \right\vert
+  \end{align*}
+  converges absolutely for almost every $x$. Define now the function
+  \begin{align*}
+    f(x) &= f_{n_{1}}(x) + \sum_{k=1}^{\infty} \left( f_{n_{k+1}}-f_{n_{k}} \right)(x)
+  \end{align*}
+  where $s$ converges, and $0$ otherwise. Notice that
+  \begin{align*}
+    f_{n_{k}}(x) &= f_{n_{1}}(x) + \sum_{k=1}^{n-1}f_{n_{k+1}}(x) - f_{n_{k}}(x),
+  \end{align*}
+  so by telescoping, we see that
+  \begin{align*}
+    f(x) &= \lim_{k\rightarrow\infty}f_{n_{k}}(x)
+  \end{align*}
+  for almost every $x$.
+  \begin{remark}
+    This is part of how we show that if a sequence $\left( f_{n} \right)_n\rightarrow f$ in $L_p$, then $\left( f_{n} \right)_{n}$ admits a sequence converging pointwise a.e. to $f$.
+  \end{remark}
+  Now, we show that $f$ is the $L_p$ limit of $\left( f_n \right)_n$. To see this, let $\ve > 0$, and let $N$ be such that for all $m,n \geq N$, $\norm{f_m - f_n} < \ve$. Then, we see that for all $m\geq N$,
+  \begin{align*}
+    \int_{X}^{} \left\vert f-f_m \right\vert^{p}\:d\mu &= \int_{X}^{} \liminf_{k\rightarrow\infty} \left\vert f_{n_{k}} - f_m \right\vert\:d\mu\\
+                                                       &\leq \liminf_{k\rightarrow\infty} \int_{X}^{} \left\vert f_{n_{k}}-f_m \right\vert\:d\mu\\
+                                                       &\leq \ve^{p},
+  \end{align*}
+  so that $\norm{f-f_m} \leq \ve$. Since Cauchy sequences are bounded, and for all $m\geq N$,
+  \begin{align*}
+    \norm{f} &= \norm{f-f_m + f_m}\\
+             &\leq \norm{f-f_m} + \norm{f_m}\\
+             &\leq \ve + \norm{f_m}\\
+             &< \infty,
+  \end{align*}
+  we see that $f\in L_p$, and we are done.
+\end{proof}
+\subsection{Modes of Convergence}%
+\begin{definition}\hfill
+  Let $\left( f_n \right)_n$ be a sequence of measurable, complex-valued functions on $\left( X,\mathcal{M},\mu \right)$. 
+  \begin{enumerate}[(i)]
+    \item We say that $\left( f_n \right)_n$ is Cauchy in measure if, for all $\ve > 0$, we have
+      \begin{align*}
+        \mu\left( \set{x | \left\vert f_m(x)-f_n(x) \right\vert\geq \ve} \right) &\rightarrow 0
+      \end{align*}
+      as $m,n\rightarrow\infty$.
+    \item We say that $\left( f_n \right)_n\rightarrow f$ in measure if, for all $\ve > 0$, the sequence
+      \begin{align*}
+        \mu\left( \set{x | \left\vert f_n(x)-f(x) \right\vert \geq \ve} \right) \rightarrow 0.
+      \end{align*}
+    \item We say $\left( f_n \right)_n\rightarrow f$ in $L_1$ if the sequence
+      \begin{align*}
+        \int_{X}^{} \left\vert f_n-f \right\vert\:d\mu &\rightarrow 0.
+      \end{align*}
+  \end{enumerate}
+\end{definition}
+\begin{proposition}
+  If $\left( f_n \right)_n\rightarrow f$ in $L_1$, then $\left( f_n \right)_n\rightarrow f$ in measure.
+\end{proposition}
+\begin{proof}
+  Let
+  \begin{align*}
+    E_{n,\ve} &= \set{x | \left\vert f_n(x) - f(x) \right\vert \geq \ve}.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \int_{X}^{} \left\vert f_n-f \right\vert\:d\mu &\geq \int_{E_{n,\ve}}^{} \left\vert f_n-f \right\vert\:d\mu\\
+                                                   &\geq \ve \mu\left( E_{n,\ve} \right),
+  \end{align*}
+  so
+  \begin{align*}
+    \mu\left( E_{n,\ve} \right) &\leq \frac{1}{\ve} \int_{X}^{} \left\vert f_n-f \right\vert\:d\mu.
+  \end{align*}
+\end{proof}
+\begin{remark}
+  We may have proven this by using Chebyshev's inequality, which is proved in effectively the same way. We will prove Chebyshev's inequality below.
+\end{remark}
+\begin{theorem}
+  If $\left( f_n \right)_n$ is Cauchy in measure, then there is a measurable function $f$ such that $\left( f_n \right)_n\rightarrow f$ in measure, and $\left( f_{n_{j}} \right)_j\rightarrow f$ almost everywhere. Furthermore, these limits are essentially unique (i.e., any two such limits are equal almost everywhere).
+\end{theorem}
+\begin{proof}
+  We may choose a subsequence $\left( f_{n_{j}} \right)_j$ such that if we define
+  \begin{align*}
+    E_j &= \set{x | \left\vert f_{n_{j+1}}(x) -f_{n_{j}}(x) \right\vert\geq 2^{-j}},
+  \end{align*}
+  then
+  \begin{align*}
+    \mu\left( E_j \right) &\leq 2^{-j}.
+  \end{align*}
+  Note that this means
+  \begin{align*}
+    \sum_{j=1}^{\infty}\mu\left( E_j \right) &\leq 1\\
+                                             &< \infty,
+  \end{align*}
+  so $\mu\left( \limsup_{j\rightarrow\infty}E_j \right) = 0$ by the Borel--Cantelli Lemma. In particular, for all $x\notin \limsup_{j\rightarrow\infty} E_j$, $\left( f_{n_{j}} \right)_{j}$ is pointwise Cauchy, so we may set $f(x) = \lim_{j\rightarrow\infty}f_{n_{j}}(x)$, and we set $f(x) = 0$ for all $x\in \limsup_{j\rightarrow\infty}E_j$.\newline
+
+  This means that $\left( f_{n_{j}} \right)_j\rightarrow f$ almost everywhere, and $\left\vert f_{n_{j}}(x) - f(x) \right\vert\leq 2^{1-j}$ for all $x\notin \bigcup_{j=k}^{\infty}E_j$ and $j\geq k$. It follows that $\left( f_{n_{j}} \right)_j\rightarrow f$ in measure.\newline
+
+  Furthermore, since
+  \begin{align*}
+    \set{x | \left\vert f_n(x)-f(x) \right\vert\geq \ve} &\subseteq \set{x | \left\vert f_{n}(x) -f_{n_{j}}(x) \right\vert \geq \frac{1}{2}\ve} \cup \set{x | \left\vert f_{n_{j}}(x)-f(x) \right\vert \geq \frac{1}{2}\ve},
+  \end{align*}
+  and the latter two sets have small measure with sufficiently large $n$ and $j$, it follows that $\left( f_{n} \right)_n\rightarrow f$ in measure.
+\end{proof}
+\begin{theorem}[Egorov's Theorem]
+  If $\mu\left( X \right) < \infty$, and $\left( f_{n} \right)_n\rightarrow f$ pointwise a.e., then for any $\ve > 0$, there is $E\subseteq X$ such that $\mu\left( E \right) < \ve$ and $f_n\rightarrow f$ uniformly on $E^{c}$.
+\end{theorem}
+\begin{proof}
+  We may assume that $\left( f_n \right)_n\rightarrow f$ everywhere on $X$. For $k,n\in\N$, define
+  \begin{align*}
+    E_{n,k} &= \bigcup_{m=n}^{\infty} \set{x | \left\vert f_m(x) - f(x) \right\vert \geq \frac{1}{k}}.
+  \end{align*}
+  For fixed $k$, $E_{n,k}$ reduces as $n\rightarrow\infty$, and $\bigcap_{n=1}^{\infty} E_{n,k} = \emptyset$. Since $\mu\left( X \right) < \infty$, we may assume that $\mu\left( E_{n,k} \right)\rightarrow 0$ for fixed $k$ as $n\rightarrow\infty$. Thus, we may choose $n_k$ such that $\mu\left( E_{n_k,k} \right) < \ve 2^{-k}$, and define $E = \bigcup_{k=1}^{\infty}E_{n_k,k}$. Then, $\mu\left( E \right) < \ve$, and $\left\vert f_n(x)-f(x) \right\vert < \frac{1}{k}$ for all $n\geq n_k$ and $x\notin E$. Thus, $\left( f_n \right)_n\rightarrow f$ uniformly on $E^{c}$.
+\end{proof}
+\subsection{Signed Measures and Radon--Nikodym}%
+\begin{definition}
+  A \textit{signed measure} on a measurable space $\left( X,\mathcal{M} \right)$ is a function $\nu\colon \mathcal{M}\rightarrow [-\infty,\infty]$ such that
+  \begin{itemize}
+    \item $\nu\left( \emptyset \right) = 0$;
+    \item $\nu$ does \textit{not} attain at least one of $+\infty$ or $-\infty$;
+    \item if $\set{E_j}_{j=1}^{\infty}$ is a sequence of disjoint sets in $\mathcal{M}$, then
+      \begin{align*}
+        \nu\left( \bigsqcup_{j=1}^{\infty}E_j \right) &= \sum_{j=1}^{\infty}\nu\left( E_j \right),
+      \end{align*}
+      where the latter sum converges absolutely when the former value is finite.
+  \end{itemize}
+\end{definition}
+\begin{definition}
+  If $\nu$ is a signed measure, then we say $E\in \mathcal{M}$ is
+  \begin{itemize}
+    \item \textit{positive} for $\nu$ if for all $F\in \mathcal{M}$ with $F\subseteq E$, $\nu\left( F \right) \geq 0$;
+    \item \textit{negative} for $\nu$ if for all $F\in \mathcal{M}$ with $F\subseteq E$, $\nu\left( F \right) \leq 0$;
+    \item \textit{null} for $\nu$ if for all $F\in \mathcal{M}$ with $F\subseteq E$, $\nu\left( F \right) = 0$.
+  \end{itemize}
+\end{definition}
+\begin{theorem}[Hahn and Jordan Decomposition]
+  If $\nu$ is a signed measure on $\left( X,\mathcal{M} \right)$, there exist measurable subsets $P$ and $N$ such that $P\cap N = \emptyset$, $P\cup N = X$, $P$ is positive for $\nu$, and $N$ is negative for $\nu$.
+\end{theorem}
+\begin{proof}
+  Without loss of generality, we may assume that for all $E\in \mathcal{M}$, $-\infty < \mu\left( E \right) \leq \infty$.\newline
+
+  We note that the difference of two negative sets is negative, and the disjoint, countable union of negative sets is negative, so every countable union of negative sets is negative. We let $\beta = \inf\left( \mu\left( B \right) \right)$ for all negative $B\in \mathcal{M}$. We let $\left( B_j \right)_j\subseteq \mathcal{M}$ be a sequence of measurable negative sets such that $\lim_{j\rightarrow\infty}\mu\left( B_j \right) = \beta$, and set $B = \bigcup_{j=1}^{\infty}B_j$. We see then that $B$ is a negative set for which $\mu\left( B \right)$ is minimal.\newline
+
+  We now prove that $A = X\setminus B$ is a positive set. Suppose toward contradiction that there is $E_0\subseteq A$ such that $\mu\left( E_0 \right) < 0$. The set $E_0$ cannot be a negative set, or else $B \cup E_0$ would be a negative set with a smaller measure than $\mu\left( B \right)$, which is not possible.\newline
+
+  Let $k_1$ be the smallest natural number such that there is $E_1\subseteq E_0$ with $\mu\left( E_1 \right) \geq \frac{1}{k_1}$. Since
+  \begin{align*}
+    \mu\left( E_0\setminus E_1 \right) &= \mu\left( E_0 \right) - \mu\left( E_1 \right)\\
+                                       &\leq \mu\left( E_0 \right) - \frac{1}{k_1}\\
+                                       &< 0.
+  \end{align*}
+  The argument applied to $E_0$ is now applicable to $E_0\setminus E_1$. Letting $k_2$ be the smallest natural number such that $E_0\setminus E_1$ contains $E_2\subseteq E_0\setminus E_1$ with $\mu\left( E_2 \right) \geq \frac{1}{k_2}$, and proceeding ad infinitum, we see that since $\mu$ is finitely valued for measurable subsets of $E_0$, we have $\lim_{n\rightarrow\infty}\frac{1}{k_n} = 0$.\newline
+
+  It follows that for every measurable subset $F$ of
+  \begin{align*}
+    F_0 &= E_0\setminus \left( \bigcup_{j=1}^{\infty}E_j \right),
+  \end{align*}
+  we have $\mu\left( F \right) \leq 0$ --- i.e., $F_0$ is a measurable negative set. Since $F_0$ is disjoint from $B$, and
+  \begin{align*}
+    \mu\left( F_0 \right) &= \mu\left( E_0 \right) - \sum_{j=1}^{\infty}\mu\left( E_j \right)\\
+                          &\leq \mu\left( E_0 \right)\\
+                          &< 0,
+  \end{align*}
+  this contradicts the minimality of $B$. Therefore, the hypothesis $\mu\left( E_0 \right) < 0$ is untenable.\newline
+
+  If $A_1\sqcup B_1$ and $A_2\sqcup B_2$ are two Hahn decompositions for $X$, then $A_1\setminus A_2 \subseteq B_2$ and $A_1\setminus A_2 \subseteq A_1$, meaning that $A_1\setminus A_2$ is both positive and negative, hence null; similarly for $A_2\setminus A_1$, so that $A_1\triangle A_2$ is $\mu$-null, and similarly for $B_1\triangle B_2$.
+\end{proof}
+\begin{definition}
+  We say two signed measures $\mu$ and $\nu$ are \textit{mutually singular} on $X$ if there exist $E,F\in \mathcal{M}$ such that $E\cap F = \emptyset$, $E\cup F = X$, $E$ is null for $\mu$, and $F$ is null for $\nu$. We write $\nu\perp\mu$
+\end{definition}
+\begin{theorem}[Jordan Decomposition]
+  If $\nu$ is a signed measure, there are positive measures $\nu^{+}$ and $\nu^{-}$ such that $\nu = \nu^{+} - \nu^{-}$.
+\end{theorem}
+\begin{proof}
+  If $P\cup N$ is a Hahn Decomposition for $\nu$, we may define
+  \begin{align*}
+    \nu^{+}(E) &= \nu\left( E\cap P \right)\\
+    \nu^{-}(E) &= -\nu\left( E\cap N \right).
+  \end{align*}
+  This yields the Jordan decomposition.
+\end{proof}
+\begin{definition}
+  If $\nu = \nu^{+} - \nu^{-}$ is a Jordan decomposition for a signed measure, then the \textit{total variation} of $\nu$ is defined to be
+  \begin{align*}
+    \left\vert \nu \right\vert &= \nu^{+} + \nu^{-}.
+  \end{align*}
+\end{definition}
+\begin{definition}
+  If $\nu$ is a signed measure on $\left( X,\mathcal{M} \right)$, and $\mu$ is a positive measure, then we say that $\nu$ is \textit{absolutely continuous} with respect to $\mu$, written $\nu\ll\mu$, if $\mu(E) = 0$ implies that $\nu(E) = 0$.
+\end{definition}
+\begin{proposition}
+  If $\nu$ is a signed measure on $\left( X,\mathcal{M} \right)$, $\mu$ is a positive measure, then $\nu\ll\mu$ if and only if for all $\ve > 0$, there is $\delta > 0$ such that whenever $\mu\left( E \right) < \delta$, $\left\vert \nu(E) \right\vert < \ve$.
+\end{proposition}
+\begin{proof}
+  Absolute continuity clearly implies the $\ve$-$\delta$ condition. To see the reverse direction, suppose there were some $\ve_0 > 0$ such that for all $n\in \N$, we may find $E_n\in \mathcal{M}$ with $\mu\left( E_n \right) < 2^{-n}$ and $\nu\left( E_n \right) \geq \ve_0$. Then, since
+  \begin{align*}
+    \sum_{n=1}^{\infty}\mu\left( E_n \right) &< \infty,
+  \end{align*}
+  the Borel--Cantelli Lemma provides that $\mu\left( \limsup_{n\rightarrow\infty}E_n \right) = 0$. Yet, we must also have that
+  \begin{align*}
+    \nu\left( \limsup_{n\rightarrow\infty}E_n \right) &= \lim_{k\rightarrow\infty}\nu\left( \bigcup_{j=k}^{\infty}E_j \right)\\
+                                                      &\geq \ve_0,
+  \end{align*}
+  so $\nu\nll\mu$.
+\end{proof}
+\begin{theorem}[Lebesgue--Radon--Nikodym Theorem]
+  If $\nu$ is a signed measure, and $\mu$ is a positive measure, then there exists a measure $\lambda$ and a measurable function $f\colon X\rightarrow \R$ such that $\lambda\perp\rho$, and
+  \begin{align*}
+    \nu\left( E \right) &= \lambda\left( E \right) + \int_{E}^{} f\:d\mu.
+  \end{align*}
+  If $\nu\ll\mu$, we say the particular function $f$ is the \textit{Radon--Nikodym derivative} of $\nu$ with respect to $\mu$, and write $\diff{\nu}{\mu} = f$.
+\end{theorem}
 \section{\href{https://math.virginia.edu/graduate/exams/analysis/2019Aug_real.pdf}{August 2019}}%
 \subsection{Problem 1}%
 \begin{problem}
@@ -1308,6 +1585,74 @@ Since $f$ is integrable, we may use the dominated convergence theorem to find th
       \end{align*}
   \end{enumerate}
 \end{problem}
+\subsection{Problem 3}%
+\begin{problem}
+  Fix $\alpha\in (0,1]$. The space $C^{0,\alpha}$ of Hölder-continuous functions consists of functions $f\colon [0,1]\rightarrow \C$ such that
+  \begin{align*}
+    \norm{f} &\coloneq \left\vert f(0) \right\vert + \sup_{x\neq y\in [0,1]} \frac{\left\vert f(x)-f(y) \right\vert}{\left\vert x-y \right\vert^{\alpha}}
+  \end{align*}
+  is finite.
+  \begin{enumerate}[(a)]
+    \item Show that $\norm{\cdot}$ is a norm on $C^{0,\alpha}\left( [0,1] \right)$.
+    \item Show that $\left( C^{0,\alpha}\left( [0,1] \right),\norm{\cdot} \right)$ is a Banach space.
+  \end{enumerate}
+\end{problem}
+\begin{enumerate}[(a)]
+  \item Clearly, the value $\norm{f} \geq 0$ for all $f\in C^{0,\alpha}\left( [0,1] \right)$, as $\left\vert f(0) \right\vert \geq 0$ and, for all $x,y\in [0,1]$, $\frac{\left\vert f(x)-f(y) \right\vert}{\left\vert x-y \right\vert^{\alpha}}\geq 0$. The value $\norm{f} = 0$ if and only if $\left\vert f(0) \right\vert = 1$, and for all $x,y\in [0,1]$, we have
+    \begin{align*}
+      \sup_{x\neq y\in [0,1]} \frac{\left\vert f(x)-f(y) \right\vert}{\left\vert x-y \right\vert^{\alpha}} &= 0,
+    \end{align*}
+    or that $\left\vert f(x)-f(y) \right\vert = 0$ for all $x\neq y$, implying that $f$ is a constant function. Combined, this means that $f = 0$.\newline
+
+    To see homogeneity, we let $\alpha\in \C$, and see that
+    \begin{align*}
+      \norm{\alpha f} &= \left\vert (\alpha f)(0) \right\vert + \sup_{x\neq y\in [0,1]} \frac{\left( \alpha f \right)(x) - \left( \alpha f \right)(y)}{\left\vert x-y \right\vert^{\alpha}}\\
+                      &= \left\vert \alpha \right\vert\left\vert f(0) \right\vert + \sup_{x\neq y\in [0,1]} \frac{\left\vert \alpha \left( f(x)-f(y) \right) \right\vert}{\left\vert x-y \right\vert^{\alpha}}\\
+                      &= \left\vert \alpha \right\vert \left( \left\vert f(0) \right\vert + \sup_{x\neq y\in [0,1]} \frac{\left\vert f(x)-f(y) \right\vert}{\left\vert x-y \right\vert^{\alpha}} \right)\\
+                      &= \left\vert \alpha \right\vert\norm{f}.
+    \end{align*}
+    Finally, if $f$ and $g$ are elements of $C^{0,\alpha}\left( [0,1] \right)$, then
+    \begin{align*}
+      \norm{f+g} &= \left\vert \left( f+g \right)(0) \right\vert + \sup_{x\neq y\in [0,1]} \frac{\left\vert \left( f+g \right)(x) - \left( f+g \right)(y) \right\vert}{\left\vert x-y \right\vert^{\alpha}}\\
+                 &\leq \left\vert f(0) \right\vert + \left\vert g(0) \right\vert + \sup_{x\neq y\in [0,1]} \frac{\left\vert f(x)-f(y) \right\vert + \left\vert g(x)-g(y) \right\vert}{\left\vert x-y \right\vert^{\alpha}}\\
+                 &\leq \left\vert f(0) \right\vert + \sup_{x\neq y\in [0,1]} \frac{\left\vert f(x)-f(y) \right\vert}{\left\vert x-y \right\vert^{\alpha}} + \left\vert g(0) \right\vert + \sup_{x\neq y\in [0,1]} \frac{\left\vert g(x)-g(y) \right\vert}{\left\vert x-y \right\vert^{\alpha}}\\
+                 &= \norm{f} + \norm{g}.
+    \end{align*}
+    Thus, $\norm{\cdot}$ is a bona fide norm on $C^{0,\alpha}\left( \left[ 0,1 \right] \right)$.
+  \item Suppose $\left( f_m \right)_m$ is a Cauchy sequence in $C^{0,\alpha}\left( [0,1] \right)$. Then, we see that, for any $\ve > 0$, there is $N$ such that for all $m,n\geq N$,
+    \begin{align*}
+      \norm{f_m-f_n} &= \left\vert f_m(0)-f_n(0) \right\vert + \sup_{x\neq y\in [0,1]} \frac{\left\vert f_m(x) - f_n(x) - \left( f_m(y) - f_n(y) \right) \right\vert}{\left\vert x-y \right\vert^{\alpha}}\\
+                     &< \ve.
+    \end{align*}
+\end{enumerate}
+\subsection{Problem 4}%
+\begin{problem}
+  Let $\left( X,\mathcal{M},\mu \right)$ be a $\sigma$-finite measure space, $p\in [1,\infty)$, and $f\in L_p\left( X,\mathcal{M},\mu \right)$.
+  \begin{enumerate}[(a)]
+    \item Show that
+      \begin{align*}
+        \int_{X}^{} \left\vert f(x) \right\vert^{p}\:d\mu(x) &= \int_{0}^{\infty} \alpha^{p-1} \mu\left( \set{x | \left\vert f(x) \right\vert > \alpha} \right)\:d\alpha.
+      \end{align*}
+    \item Show that, for all $\alpha > 0$,
+      \begin{align*}
+        \mu\left( \set{x | \left\vert f(x) \right\vert > \alpha} \right) &\leq \frac{\norm{f}_{L_p}^{p}}{\alpha^{p}}.
+      \end{align*}
+  \end{enumerate}
+\end{problem}
+\begin{enumerate}[(a)]
+  \item We see that
+    \begin{align*}
+      \int_{X}^{} \left\vert f(x) \right\vert^{p}\:d\mu(x) &= \int_{X}^{} \int_{0}^{\infty} \1_{\left( \left\vert f \right\vert^{p} \right)^{-1}\left( \left( t,\infty \right) \right)}(x)\:dt\:d\mu(x)\\
+                                                           &= \int_{0}^{\infty} \int_{X}^{} \1_{\left( \left\vert f \right\vert^{p} \right)^{-1}\left( \left( t,\infty \right) \right)}(x)\:d\mu(x)\:dt\\
+                                                           &= \int_{0}^{\infty} \mu\left( \set{x | \left\vert f(x) \right\vert^{p} > t} \right)\:dt\\
+                                                           &= \int_{0}^{\infty} \mu\left( \set{x | \left\vert f(x) \right\vert > t^{1/p}} \right)\:dt
+    \end{align*}
+    which follows by the layer-cake decomposition for a measurable function. By a change of variables, taking $\alpha = t^{1/p}$, we obtain
+    \begin{align*}
+      \int_{X}^{} \left\vert f(x) \right\vert^{p}\:d\mu(x) &= p \int_{0}^{\infty} \alpha^{p-1}\mu\left( \set{x | \left\vert f(x) \right\vert > \alpha} \right)\:d\alpha.
+    \end{align*}
+    
+\end{enumerate}
 \section{January 2025}%
 \subsection{Problem 1}%
 \begin{problem}
