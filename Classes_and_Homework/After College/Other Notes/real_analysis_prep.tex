@@ -165,7 +165,7 @@ This is a collection of old real analysis qualifier exam solutions, as well as s
   we see that $f\in L_p$, and we are done.
 \end{proof}
 \subsection{Modes of Convergence}%
-\begin{definition}\hfill
+\begin{definition}
   Let $\left( f_n \right)_n$ be a sequence of measurable, complex-valued functions on $\left( X,\mathcal{M},\mu \right)$. 
   \begin{enumerate}[(i)]
     \item We say that $\left( f_n \right)_n$ is Cauchy in measure if, for all $\ve > 0$, we have
@@ -389,7 +389,51 @@ where the supremum is taken over all balls $B$ that contain $x\in \R^n$.
   \end{align*}
   for every family $\set{E_r}_{r > 0}$ that shrinks nicely to $x$.
 \end{corollary}
+\subsection{Cavalieri's Principle}%
+\begin{theorem}
+  Let $ \left(X, \mathcal{M}, \mu\right) $ be a measure space, $f\colon X\rightarrow [0,\infty]$ a nonnegative measurable function. Then, the function $g\colon [0,\infty)\rightarrow [0,\infty]$ given by $\alpha \mapsto \mu\left(\set{x\in X | f(x) > \alpha}\right)$ is a measurable function, and
+  \begin{align*}
+    \int_{X}^{} f(x)\:d\mu(x) &= \int_{0}^{\infty} \mu\left(\set{x | f(x) > \alpha}\right)\:d\alpha.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Since $g$ is a decreasing function, we may set $b = \sup g^{-1}\left([0,a)\right)$, so $g^{-1}\left([0,a)\right)$ is either $[0,b]$ or $[0,b)$, both of which are Borel sets.\newline
 
+  To show the integral identity, let $f = \sum_{k=1}^{K}a_k\1_{A_k}$, where the $a_k$ are distinct and $A_k$ are disjoint, so $f(x) = 0$ if $x\in X \setminus \bigcup_{k=1}^{K}A_k$. From linearity, we have
+  \begin{align*}
+    \int_{X}^{} \sum_{k=1}^{K}a_k\1_{A_k}\:d\mu(x) &= \sum_{k=1}^{K} a_k\mu\left(A_k\right).
+  \end{align*}
+  Meanwhile,
+  \begin{align*}
+    \mu\left(\set{x | \sum_{k=1}^{K}a_k\1_{A_k} > \alpha}\right) &= \sum_{k=1}^{K} \mu\left(A_k\right)\1_{[0,a_k)}(x),
+  \end{align*}
+  so
+  \begin{align*}
+    \int_{0}^{\infty} \mu\left(\set{x | \sum_{k=1}^{K}a_k\1_{A_k}(x)}\right)\:d\alpha &= \sum_{k=1}^{K}a_k\mu\left(A_k\right)\\
+                                                                                      &= \int_{X}^{} f(x)\:d\mu(x).
+  \end{align*}
+  Finally, if $f$ is a nonnegative $\mathcal{M}$-measurable function, there exists a pointwise increasing sequence of simple functions $\left(\varphi_m\right)_m$ that converge pointwise to $f$, meaning that by monotone convergence,
+  \begin{align*}
+    \int_{X}^{} f(x)\:d\mu(x) &= \lim_{m\rightarrow\infty} \int_{X}^{} \varphi_m(x)\:d\mu(x)\\
+                              &= \lim_{m\rightarrow\infty} \int_{0}^{\infty} \mu\left(\set{x | \varphi_m(x) > \alpha}\right)\:d\alpha\\
+                              &= \int_{0}^{\infty} \mu\left(\set{x | f(x) > \alpha}\right)\:d\alpha.
+  \end{align*}
+\end{proof}
+\subsection{Chebyshev's Inequality}%
+\begin{theorem}
+  If $f\in L_p\left(X,\mathcal{M},\mu\right)$, then for any $\alpha > 0$, we have
+  \begin{align*}
+    \mu\left(\set{x | \left\vert f(x)\right\vert \geq \alpha}\right) &\leq \frac{1}{\alpha^{p}} \int_{X}^{} \left\vert f \right\vert^{p}\:d\mu.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Let $E_{\alpha} = \set{x | \left\vert f(x) \right\vert \geq \alpha}$. Then,
+  \begin{align*}
+    \int_{X}^{} \left\vert f \right\vert^{p}\:d\mu &\geq \int_{E_{\alpha}}^{} \left\vert f \right\vert^{p}\:d\mu\\
+                                                   &\geq \alpha^{p} \int_{X}^{} \1_{E_{\alpha}}\:d\mu\\
+                                                   &= \alpha^{p} \mu\left( \set{x | \left\vert f(x) \right\vert > \alpha} \right).
+  \end{align*}
+\end{proof}
 \section{\href{https://math.virginia.edu/graduate/exams/analysis/2019Aug_real.pdf}{August 2019}}%
 \subsection{Problem 1}%
 \begin{problem}
