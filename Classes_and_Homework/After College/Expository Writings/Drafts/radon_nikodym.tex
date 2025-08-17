@@ -173,5 +173,104 @@ The terminology ``continuity'' makes sense for absolute continuity of measures v
   \end{align*}
   so $\mu\left( F \right) = 0$.\footnote{\scriptsize We may also show this using the Borel--Cantelli Lemma. To see this, note that $\mu\left( \limsup_{n\rightarrow\infty} E_n \right) = \lim_{k\rightarrow\infty}\mu\left( \bigcup_{n=k}^{\infty} E_n \right)$, by continuity from above, meaning that $\mu\left( \limsup_{n\rightarrow\infty} E_n \right) \leq \lim_{k\rightarrow\infty}\sum_{n=k}^{\infty} \mu\left( E_n \right)\rightarrow 0$.} Yet, since $\nu\left( F_k \right) \geq \ve$ for all $k$, and $\nu$ is finite, $\nu\left( F \right) \geq \ve$, meaning $\nu\not\ll\mu$.
 \end{proof}
+We may use the Hahn decomposition to prove a particular kind of dichotomy for finite measures.
+\begin{lemma}
+  Suppose $\nu$ and $\mu$ are finite measures on $\left( X,\mathcal{M} \right)$. Either $\nu\perp\mu$ or there is $\ve > 0$ and $E\in \mathcal{M}$ with $\mu\left( E \right) > 0$ with $E$ a positive set for $\nu - \ve \mu$.
+\end{lemma}
+\begin{proof}
+  Let $X = P_n\cup N_n$ be a Hahn decomposition for $\nu - \frac{1}{n}\mu$, and let
+  \begin{align*}
+    P &= \bigcup_{n=1}^{\infty}P_n\\
+    N &= P^{c}.
+  \end{align*}
+  Then, $N$ is a negative set for $\nu - \frac{1}{n}\mu$ for all $n$, meaning that $0 \leq \nu\left( N \right) \leq \frac{1}{n}\mu\left( N \right)$, for all $n$, or that $\nu\left( N \right) = 0$. If $\mu\left( P \right) = 0$, then $\nu\perp\mu$. Else, if $\mu\left( P \right) > 0$, then $\mu\left( P_n \right) > 0$ for some $n$, and $P_n$ is positive for $\nu - \frac{1}{n}\mu$.
+\end{proof}
+\begin{remark}
+  If we define a signed measure by taking
+  \begin{align*}
+    \nu\left( E \right) &= \int_{E}^{} f\:d\mu,
+  \end{align*}
+  where $f$ is an $L_1$ function, then we will often write $d\nu = f\:d\mu$
+\end{remark}
+\begin{theorem}[Radon--Nikodym Theorem]
+  Let $\left( X,\mathcal{M},\mu \right)$ be a $\sigma$-finite measure space, and let $\nu$ be a $\sigma$-finite signed measure on $\left( X,\mathcal{M} \right)$ with $\nu\ll\mu$. Then, there is an extended $\mu$-integrable function $f\colon X\rightarrow \R$ such that $d\nu = f\:d\mu$.
+\end{theorem}
+\begin{proof}
+  Since $X$ is a countable disjoint union of finite-measure sets, we may prove for the case of finite sets and take sums over the decomposition $\set{E_j}_{j=1}^{\infty}\subseteq X$. Similarly, since $\nu\ll\mu$ if and only if $\nu^{+}\ll\mu$ and $\nu^{-}\ll\mu$, we only need to show this for the case where both $\nu$ and $\mu$ are finite, positive measures.\newline
 
+  Let $\mathcal{F}$ be the family of nonnegative $\mu$-integrable functions $f$ such that
+  \begin{align*}
+    \int_{E}^{} f\:d\mu &\leq \nu\left( E \right).
+  \end{align*}
+  Let
+  \begin{align*}
+    \alpha &= \sup\set{ \int_{X}^{} f\:d\mu | f\in \mathcal{F} }.
+  \end{align*}
+  Let $\left( f_n \right)_n$ be a sequence of functions in $\mathcal{F}$ such that
+  \begin{align*}
+    \lim_{n\rightarrow\infty} \int_{X}^{} f_n\:d\mu &= \alpha.
+  \end{align*}
+  Set
+  \begin{align*}
+    g_n &= \max\left( f_1,\dots,f_n \right).
+  \end{align*}
+  If $E$ is any measurable set, then there is a union of disjoint measurable subsets $E = E_1\sqcup\dots\sqcup E_n$ such that
+  \begin{align*}
+    g_n(x) &= f_{j}(x)
+  \end{align*}
+  for each $x\in E_j$. Consequently,
+  \begin{align*}
+    \int_{E}^{} g_n\:d\mu &= \sum_{j=1}^{n} \int_{E_j}^{} f_j\:d\mu\\
+                          &\leq \sum_{j=1}^{n} \nu\left( E_j \right)\\
+                          &= \nu\left( E \right).
+  \end{align*}
+  Set $f_0(x) = \sup_{n} f_n(x)$ for each $x$, so that $f_0(x) = \lim_{n\rightarrow\infty}g_n(x)$. It follows that $f_0\in \mathcal{F}$ and $ \int_{X}^{} f_0\:d\mu = \alpha $. Since $f_0$ is integrable, there is an everywhere-finite function $f$ such that $f_0 = f$ $\mu$-a.e. We will prove that if $\nu_0(E) = \nu(E) - \int_{E}^{} f\:d\mu$, then $\nu_0(E)$ is identically zero.\newline
+
+  If $\nu_0$ is not identically zero, then there is $\ve > 0$ and measurable $A$ such that $\mu\left( A \right) > 0$ and
+  \begin{align*}
+    \ve \mu\left( E\cap A \right) &\leq \nu_0\left( E\cap A \right)\\
+                                  &= \nu\left( E\cap A \right) - \int_{E\cap A}^{} f\:d\mu
+  \end{align*}
+  for every measurable set $E$. If $g = f + \ve \1_{A}$, then
+  \begin{align*}
+    \int_{E}^{} g\:d\mu &= \int_{E}^{} f\:d\mu + \ve\mu\left( E\cap A \right)\\
+                        &\leq \int_{E\setminus A}^{} f\:d\mu + \nu\left( E\cap A \right)\\
+                        &\leq \nu\left( E \right),
+  \end{align*}
+  yet
+  \begin{align*}
+    \int_{}^{} g\:d\mu &= \int_{}^{} f\:d\mu + \ve \mu\left( A \right)\\
+                       &> \alpha,
+  \end{align*}
+  which contradicts the maximality of $f$.
+\end{proof}
+\begin{theorem}[Lebesgue Decomposition]
+  If $\nu$ is a general $\sigma$-finite signed measure with $\mu$ a positive $\sigma$-finite measure on $\left( X,\mathcal{M} \right)$, then there are measures $\nu_0$ and $\nu_1$ such that $\nu_0\perp\mu$, $\nu_1\ll\mu$, and $\nu = \nu_0 + \nu_1$. This decomposition is essentially unique.
+\end{theorem}
+\begin{proof}
+  Similar to the Radon--Nikodym theorem, we may prove for the case of $\nu$ being a finite positive measure.\newline
+
+  Note that $\nu\ll\mu+ \nu$, meaning there is a measurable function $f$ such that
+  \begin{align*}
+    \nu\left( E \right) &= \int_{E}^{} f\:d\mu + \int_{E}^{} f\:d\nu,
+  \end{align*}
+  where since $0\leq \nu\left( E \right) \leq \mu\left( E \right) + \nu\left( E \right)$, we have $0\leq f \leq 1$ almost everywhere with respect to $\mu + \nu$, or that $0\leq f \leq 1$ $\nu$-a.e. Letting $A = \set{x | f(x) = 1}$ and $B = \set{x | 0\leq f(x) < 1}$, then
+  \begin{align*}
+    \nu\left( A \right) &= \int_{A}^{} \:d\mu + \int_{A}^{} \:d\nu\\
+                        &= \mu\left( A \right) + \nu\left( A \right),
+  \end{align*}
+  so that $\mu\left( A \right) = 0$. Therefore, if we set $\nu_0\left( E \right) = \nu\left( E\cap A \right)$ and $\nu_1\left( E \right) = \nu\left( E\cap B \right)$ for every measurable subset $E$, then we see that $\nu_0\perp \mu$.\newline
+
+  Now, we must prove that $\nu_1\ll\mu$. If $\mu\left( E \right) = 0$, then
+  \begin{align*}
+    \int_{E\cap B}^{} \:d\nu &= \int_{E\cap B}^{} f\:d\nu,
+  \end{align*}
+  or that
+  \begin{align*}
+    \int_{E\cap B}^{} \left( 1-f \right)\:d\nu &= 0.
+  \end{align*}
+  Since $1-f \geq 0$ $\nu$-a.e., it follows that $\nu_1\left( E \right) = \nu\left( E\cap B \right) = 0$.\newline
+
+  Now, if $\nu = \nu_0 + \nu_1$ and $\nu = \widetilde{\nu_0} + \widetilde{\nu_1}$, then we see that $\nu_0- \widetilde{\nu_0} = \widetilde{\nu_1} - \nu_1$. Since $\nu_0 - \widetilde{\nu_0}$ is singular with respect to $\mu$ and $ \widetilde{\nu_1} - \nu_1 $ is absolutely continuous with respect to $\mu$, it follows what $\nu_0 = \widetilde{\nu_0}$ and $\nu_1 = \widetilde{\nu_1}$.
+\end{proof}
 \end{document}
