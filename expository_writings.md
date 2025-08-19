@@ -6,7 +6,7 @@ permalink: /expository_writings.html
 ---
 I'm going to begin writing shorter, more coherent notes on certain topics (primarily focused on early graduate-level topics in the three main theoretical mathematics topics). These will be shorter than than the traditional notes that can be found in my [Class Notes](classnotes.md) section, in part because in graduate school, I plan on taking most of my notes with pencil and paper, and feel like it's better to focus on a shorter writing style.
 
-All the results, proofs, etc. in all documents that follow are not my own; I do not include citations within the specific texts because keeping track of them all would be too difficult.
+All the results, proofs, etc. in all documents that follow are not my own; I did not include citations within the specific texts because keeping track of them all would be pretty difficult.
 ## Algebra
 The following are standard texts.
 - _Algebra, Chapter 0_ (Aluffi)
