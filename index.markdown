@@ -8,7 +8,9 @@ layout: home
 Hi. I'm Avinash.
 
 ## Who am I?
-I am an incoming mathematics PhD student to the University of Virginia.
+I am a mathematics PhD student to the University of Virginia.
+
+For Fall 2025, I am a discussion leader for a section of Calculus II (Math 1320), as well as the grader for Advanced Linear Algebra (Math 4651).
 
 ## [My CV](https://ai-bearing.github.io/CV/cv_2.pdf)
 

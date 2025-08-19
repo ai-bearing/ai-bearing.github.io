@@ -42,6 +42,9 @@ The following are standard texts.
 ### [The Lebesgue Measure](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/lebesgue_measure.pdf)
 > We detail the construction and some of the properties of the Lebesgue measure via the Lebesgue--Stieltjes Measure.
 
+### [Signed Measures and the Lebesgue–Radon–Nikodym Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/radon_nikodym.pdf)
+> Measures are just set functions that follow some particular basic properties, but we can expand them beyond the positive real numbers towards complex numbers; to conceptualize these signed and complex measures, we need to make use of results like the Lebesgue--Radon--Nikodym Theorem and the Hahn Decomposition Theorem that allow us to understand their structural properties.
+
 ## Topology
 The following are standard texts.
 - _A Taste of Topology_ (Runde)
