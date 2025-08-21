@@ -101,6 +101,189 @@ We start with a fundamental lemma in measure theory for Euclidean spaces.
   \end{align*}
   Thus, letting $c \rightarrow m\left( E_{\alpha} \right)$, we obtain our desired result.
 \end{proof}
+\begin{definition}
+  If $f\colon \R\rightarrow \C$ is a function, then the limit superior as $r$ approaches $R$ is defined to be
+  \begin{align*}
+    \limsup_{r\rightarrow R} \phi\left( r \right) &\coloneq \lim_{\ve\rightarrow 0} \left( \sup_{0 < \left\vert r-R \right\vert < \ve} \phi(r) \right).
+  \end{align*}
+\end{definition}
+\begin{remark}
+  Note that
+  \begin{align*}
+    \lim_{r\rightarrow R} \phi(r) &= C
+  \end{align*}
+  if and only if
+  \begin{align*}
+    \limsup_{r\rightarrow R} \left\vert \phi(r) - c \right\vert = 0.
+  \end{align*}
+\end{remark}
+We will prove progressively stronger versions of the Lebesgue Differentiation Theorem.
+\begin{theorem}
+  If $f\in L_{1,\text{loc}}$, then $\lim_{r\rightarrow 0}A_rf(x) = f(x)$ for a.e. $x\in \R^n$.
+\end{theorem}
+\begin{proof}
+  It suffices to show that for any $N\in \N$, $A_rf(x) \rightarrow f(x)$ for almost every $x$ with $\left\vert x \right\vert \leq N$. Furthermore, we may replace $f$ by $f\1_{B\left( 0,N+1 \right)}$ in this scenario, as $A_rf(x)$ only depends on the value $f(y)$ for $\left\vert y \right\vert \leq N+1$. Thus, we may assume $f\in L_1$.\newline
+
+  Given $\ve > 0$, there is a compactly supported continuous function $g$ such that $\norm{g-f}_{L_1} < \ve$. Since $g$ is continuous, for any $x\in \R^n$ and $\delta > 0$, there is $r > 0$ such that $\left\vert g(y)-g(x) \right\vert < \delta$ whenever $\left\vert y-x \right\vert < r$. Thus,
+  \begin{align*}
+    \left\vert A_rg(x) - g(x) \right\vert &= \frac{1}{m\left( B\left( x,r \right) \right)} \left\vert \int_{B\left( x,r \right)}^{} g(y)-g(x)\:dy \right\vert\\
+                                          &< \delta,
+  \end{align*}
+  meaning $A_rg(x) \rightarrow g(x)$ as $r\rightarrow 0$ for every $x$. Thus,
+  \begin{align*}
+    \limsup_{r\rightarrow 0} \left\vert A_rf(x) - f(x) \right\vert &= \limsup_{r\rightarrow 0} \left\vert A_r\left( f-g \right)(x) + \left( A_rg-g \right)(x) + \left( g-f \right)(x) \right\vert\\
+                                                                   &\leq H\left( f-g \right)(x) + \left\vert f-g \right\vert(x).
+  \end{align*}
+  Now, if we set
+  \begin{align*}
+    E_{\alpha} &= \set{x | \limsup_{r\rightarrow 0}\left\vert A_rf(x) - f(x) \right\vert > \alpha}\\
+    F_{\alpha} &= \set{x | \left\vert f-g \right\vert(x) > \alpha},
+  \end{align*}
+  then
+  \begin{align*}
+    E_{\alpha} &\subseteq F_{\alpha/2} \cup \set{x | H\left( f-g \right)(x) > \alpha/2}
+  \end{align*}
+  Now, we see that
+  \begin{align*}
+    m\left( F_{\alpha/2} \right) &\leq \frac{2}{\alpha} \int_{F_{\alpha/2}}^{} \left\vert f(x)-g(x) \right\vert\:dx\\
+                                 &< \ve,
+  \end{align*}
+  so by the Maximal Theorem,
+  \begin{align*}
+    m\left( E_{\alpha} \right) &\leq \frac{2}{\alpha} \ve + \frac{2C}{\alpha} \ve,
+  \end{align*}
+  and since $\ve$ is arbitrary, $m\left( E_{\alpha} \right) = 0$. Thus, $\lim_{r\rightarrow 0}A_rf(x) = f(x)$ for all $x\notin \bigcup_{n=1}^{\infty}E_{1/n}$.\newline
+
+  Thus, we find that if $f\in L_{1,\text{loc}}$, then
+  \begin{align*}
+    \lim_{r\rightarrow 0} \frac{1}{m\left( B\left( x,r \right) \right)} \int_{B\left( x,r \right)}^{} \left( f(y)-f(x) \right)\:dy &= 0
+  \end{align*}
+  for almost every $x$.
+\end{proof}
+ In fact, we can prove something stronger.
+ \begin{definition}
+   Let $f\in L_{1,\text{loc}}$, then we define
+   \begin{align*}
+     L_{f} &= \set{x | \lim_{r\rightarrow 0}\frac{1}{m\left( B\left( x,r \right) \right)} \int_{B\left( x,r \right)}^{} \left\vert f(y)-f(x) \right\vert\:dy = 0}
+   \end{align*}
+   to be the \textit{Lebesgue set} of $f$.
+ \end{definition}
+ \begin{theorem}
+   If $f\in L_{1,\text{loc}}$, then $m\left( \left( L_f \right)^{c} \right) = 0$.
+ \end{theorem}
+ \begin{proof}
+   For each $c\in \C$, we may apply the previous theorem to the function $g_c(x) = \left\vert f(x)-c \right\vert$ to get that, except for a certain null set $E_c$,
+   \begin{align*}
+     \lim_{r\rightarrow 0} \frac{1}{m\left( B\left( x,r \right) \right)} \int_{B\left( x,r \right)}^{} \left\vert f(y)-c \right\vert\:dy &= \left\vert f(x)-c \right\vert.
+   \end{align*}
+   Now, if $D$ is a countable dense subset of $\C$, and $E = \bigcup_{c\in D}E_c$, then $m(E) = 0$, and if $x\notin E$, there is $c\in D$ with $\left\vert f(x)-c \right\vert < \ve$, so that $\left\vert f(y)-f(x) \right\vert < \left\vert f(y)-c \right\vert + \ve$, and
+   \begin{align*}
+     \limsup_{r\rightarrow 0} \frac{1}{m\left( B\left( x,r \right) \right)} \int_{B\left( x,r \right)}^{} \left\vert f(y)-f(x) \right\vert\:dy &\leq \left\vert f(x)-c \right\vert + \ve\\
+                                                                                                                                                       &< 2\ve.
+   \end{align*}
+   Since $\ve$ is arbitrary, our desired result follows.
+ \end{proof}
+ \begin{definition}
+   We say a family of subsets $\set{E_r}_{r > 0}$ of Borel subsets of $\R^n$ \textit{shrinks nicely} to $x\in \R^n$ if
+   \begin{itemize}
+     \item $E_r\subseteq B\left( x,r \right)$ for each $r$;
+      \item there is $\alpha > 0$ independent of $r$ such that $m\left( E_r \right) > \alpha m\left( B\left( x,r \right) \right)$.
+   \end{itemize}
+ \end{definition}
+ \begin{remark}
+   The sets $E_r$ need not contain $x$.
+ \end{remark}
+ \begin{theorem}[Lebesgue Differentiation Theorem]
+   If $f\in L_{1,\text{loc}}$, then for every $x\in L_f$,
+   \begin{align*}
+     \lim_{r\rightarrow 0} \frac{1}{m\left( E_r \right)} \int_{E_r}^{} \left\vert f(y)-f(x) \right\vert\:dy &= 0\\
+     \lim_{r\rightarrow 0} \frac{1}{m\left( E_r \right)} \int_{E_r}^{} f(y)\:dy &= f(x)
+   \end{align*}
+   for every family $\set{E_r}_{r > 0}$ that shrinks nicely to zero.
+ \end{theorem}
+ \begin{proof}
+   For some $\alpha > 0$, the definition of $\set{E_r}_{r > 0}$ allows us to take
+   \begin{align*}
+     \frac{1}{m\left( E_r \right)} \int_{E_r}^{} \left\vert f(y)-f(x) \right\vert\:dy &\leq \frac{1}{m\left( E_r \right)} \int_{B\left( x,r \right)}^{} \left\vert f(y)-f(x) \right\vert\:dy\\
+                                                                                      &\leq \frac{1}{\alpha m\left( B\left( x,r \right) \right)} \int_{B\left( x,r \right)}^{} \left\vert f(y)-f(x) \right\vert\:dy.
+   \end{align*}
+ \end{proof}
+ \begin{definition}
+   A Borel measure $\nu$ on $\R^n$ is called \textit{regular} if
+   \begin{enumerate}[(i)]
+     \item $\nu\left( K \right) < \infty$ for all compact sets $K$;
+     \item for all $E\in \mathcal{B}_{\R^n}$,
+       \begin{align*}
+         \nu\left( E \right) &= \inf\set{\nu\left( U \right) | U\text{ open, }E\subseteq U}.
+       \end{align*}
+   \end{enumerate}
+   If $\nu$ is a signed measure, then we say $\nu$ is regular if $\left\vert \nu \right\vert$ is regular.
+ \end{definition}
+ \begin{proposition}
+   If $\lambda$ and $\mu$ are positive, mutually singular, and $\lambda + \mu$ is regular, then $\lambda$ and $\mu$ are regular.
+ \end{proposition}
+ \begin{proof}
+   Let $A\subseteq \R^n$ be such that $A$ is $\mu$-null and $A^{c}$ is $\lambda$-null.\newline
+   
+   We see that condition (i) in the definition of regularity holds necessarily, so we show condition (ii). Now, let $\ve > 0$ and let $E \subseteq A$ be Borel. Since $\lambda + \mu$ is regular, and $\lambda$ is concentrated on $A$, there is an open $U\in \mathcal{B}_{\R^n}$ such that
+   \begin{align*}
+     \left( \lambda + \mu \right)\left( U \right) &< \left( \lambda + \mu \right)\left( E \right) + \ve\\
+                                                  &= \lambda\left( E \right) + \ve,
+   \end{align*}
+   meaning that
+   \begin{align*}
+     \lambda\left( U \right) &< \lambda\left( E \right) + \ve,
+   \end{align*}
+   so condition (ii) for $\lambda$, and similarly for $\mu$ (by taking $E\subseteq A^{c}$).
+ \end{proof}
+ \begin{proposition}
+   The measure $f\:dm$ is regular if and only if $f\in L_{1,\text{loc}}$.
+ \end{proposition}
+ \begin{proof}
+   The condition $f\in L_{1,\text{loc}}$ is equivalent to $f\:dm$ being finite on compact sets, so condition (i) holds.\newline
+
+   Now, if $E$ is a bounded Borel set, then given $\delta > 0$, there is a bounded open $U\supseteq E$ such that $m\left( U \right) < m\left( E \right) + \delta$, meaning $m\left( U\setminus E \right) < \delta$. At the same time, given $\ve > 0$, there is an open $U\supseteq E$ such that $ \int_{U\setminus E}^{} f\:dm < \ve $, meaning $ \int_{U}^{} f\:dm < \int_{E}^{} f\:dm + \ve $ with $m\left( U\setminus E \right) < \delta$.\newline
+
+   If $E$ is unbounded, then we write $E = \bigcup_{j=1}^{\infty}E_j$ as a union of bounded Borel sets, and finding $U_j\supseteq E_j$ with $\int_{U_j\setminus E_j}^{} f\:dm < \ve 2^{-j}$.
+ \end{proof}
+ \begin{theorem}
+   Let $\nu$ be a regular signed or complex Borel measure on $\R^n$, and let $d\nu = d\lambda + f\:dm$ be the Lebesgue--Radon--Nikodym representation. Then, $m$-a.e. $x\in \R^n$,
+   \begin{align*}
+     \lim_{r\rightarrow 0} \frac{\nu\left( E_r \right)}{m\left( E_r \right)} &= f(x)
+   \end{align*}
+   for every family $\set{E_r}_{r > 0}$ that shrinks nicely to $x$.
+ \end{theorem}
+ \begin{proof}
+   Note that $d\left\vert \nu \right\vert = d\left\vert \lambda \right\vert + \left\vert f \right\vert\:dm$, so regularity of $\nu$ means that both $\lambda$ and $f\:dm$ are regular.\newline
+
+   Since $f\in L_{1,\text{loc}}$, it suffices to show that if $\lambda$ is regular and $\lambda \perp m$, then for $m$-a.e. $x$,
+   \begin{align*}
+     \lim_{r\rightarrow 0} \frac{\lambda\left( E_r \right)}{m\left( E_r \right)} &= 0
+   \end{align*}
+   whenever $E_r$ shrinks nicely to $x$.\newline
+
+   It also suffices to take $E_r = B\left( x,r \right)$, and assume $\lambda$ is positive, since for some $\alpha > 0$,
+   \begin{align*}
+     \left\vert \frac{\lambda\left( E_r \right)}{m\left( E_r \right)}  \right\vert &\leq \frac{\left\vert \lambda \right\vert\left( E_r \right)}{m\left( E_r \right)}\\
+                                                                                   &\leq \frac{\left\vert \lambda \right\vert\left( B\left( x,r \right) \right)}{m\left( E_r \right)}\\
+                                                                                   &\leq \frac{\left\vert \lambda \right\vert\left( B\left( x,r \right) \right)}{\alpha m\left( B\left( x,r \right) \right)}.
+   \end{align*}
+   Thus, let $A$ be a Borel set such that $\lambda\left( A \right) = m\left( A^{c} \right) = 0$. Let
+   \begin{align*}
+     F_k &= \set{x\in A | \limsup_{r\rightarrow 0} \frac{\lambda\left( B\left( x,r \right) \right)}{m\left( B\left( x,r \right) \right)} > \frac{1}{k}}.
+   \end{align*}
+   We will show that $m\left( F_k \right) = 0$ for all $k$.\newline
+
+   Now, by regularity of $\lambda$, given $\ve > 0$, there is $U_{\ve} \supseteq A$ such that $\lambda\left( U_{\ve} \right) < \ve$. Each $x\in F_k$ is the center of an open ball $U_{x}\subseteq U_{\ve}$ such that $\lambda\left( U_x \right) > \frac{1}{k}m\left( U_{x} \right)$ (by the properties of the limit superior). Now, if $V_{\ve} = \bigcup_{x\in F_k} U_x$, and $c < m\left( V_{\ve} \right)$, then by the Vitali Covering Lemma, there are $U_{x_1},\dots,U_{x_J}$ that are disjoint such that
+   \begin{align*}
+     c &< 3^{n}\sum_{j=1}^{J} m\left( U_{x_j} \right)\\
+       &< 3^{n}k\sum_{j=1}^{J} \lambda\left( U_{x_j} \right)\\
+       &< 3^{n}k\lambda\left( V_{\ve} \right)\\
+       &\leq 3^{n}k\lambda\left( U_{\ve} \right)\\
+       &\leq 3^{n}k\ve,
+   \end{align*}
+   meaning that $m\left( V_{\ve} \right) \leq 3^{n}k\ve$, and since $F_k\subseteq V_{\ve}$ and $\ve$ is arbitrary, $m\left( F_k \right) = 0$.
+ \end{proof}
 \section{The Fundamental Theorem of Calculus for Lebesgue Integration}%
 
 \end{document}
