@@ -101,6 +101,28 @@ We start with a fundamental lemma in measure theory for Euclidean spaces.
   \end{align*}
   Thus, letting $c \rightarrow m\left( E_{\alpha} \right)$, we obtain our desired result.
 \end{proof}
+\begin{exercise}
+  A variant of the Hardy--Littlewood Maximal Function is defined by
+  \begin{align*}
+    H^{\ast}f(x) &= \sup\set{ \frac{1}{m\left( B \right)}\int_{B}^{} \left\vert f(y) \right\vert\:dy | B\text{ is a ball, }x\in B}.
+  \end{align*}
+  Show that $Hf \leq H^{\ast}f \leq 2^{n}Hf$.
+\end{exercise}
+\begin{solution}
+  We see that, necessarily,
+  \begin{align*}
+    \frac{1}{m\left( B\left( x,r \right) \right)} \int_{B\left( x,r \right)}^{} \left\vert f(y) \right\vert\:dy &\leq H^{\ast}f(x),
+  \end{align*}
+  so that $Hf(x) \leq H^{\ast}f(x)$.\newline
+
+  Now, if $r > 0$ is such that $x\in B\left( z,r \right)$, then clearly $B\left( z,r \right)\subseteq B\left( y,2r \right)$, so
+  \begin{align*}
+    \frac{1}{m\left( B\left( z,r \right) \right)} \int_{B\left( z,r \right)}^{} \left\vert f(y) \right\vert\:dy &\leq \frac{1}{m\left( B\left( z,r \right) \right)} \int_{B\left( x, 2r\right)}^{} \left\vert f(y) \right\vert\:dy\\
+                                                                                                                &\leq \frac{2^{n}}{m\left( B\left( x,2r \right) \right)} \int_{B\left( x,2r \right)}^{} \left\vert f(y) \right\vert\:dy\\
+                                                                                                                &\leq 2^{n}Hf(x).
+  \end{align*}
+  Thus, by taking suprema, we see that $H^{\ast}f(x) \leq 2^{n}Hf(x)$.
+\end{solution}
 \begin{definition}
   If $f\colon \R\rightarrow \C$ is a function, then the limit superior as $r$ approaches $R$ is defined to be
   \begin{align*}
@@ -285,5 +307,41 @@ We will prove progressively stronger versions of the Lebesgue Differentiation Th
    meaning that $m\left( V_{\ve} \right) \leq 3^{n}k\ve$, and since $F_k\subseteq V_{\ve}$ and $\ve$ is arbitrary, $m\left( F_k \right) = 0$.
  \end{proof}
 \section{The Fundamental Theorem of Calculus for Lebesgue Integration}%
+Recall from the construction of the \href{https://ai.avinash-iyer.com/Classes_and_Homework/After%20College/Expository%20Writings/lebesgue_measure.pdf}{Lebesgue measure} that there is a one-to-one correspondence between increasing, right-continuous function on $\R$ and Borel measures $\mu_F$ determined by $\mu_F\left( (a,b] \right) = F(b)-F(a)$. We will use this to help prove the almost-everywhere differentiability of increasing functions.
+  \begin{theorem}
+    Let $F\colon \R\rightarrow \R$ be increasing, and let $G(x) = F(x+)$.
+    \begin{enumerate}[(a)]
+      \item The set of points at which $F$ is discontinuous is countable.
+      \item The functions $F$ and $G$ are differentiable almost everywhere, and $F' = G'$ almost everywhere.
+    \end{enumerate}
+  \end{theorem}
+  \begin{proof}\hfill
+    \begin{enumerate}[(a)]
+      \item Since $F$ is increasing, the intervals $\left( F\left( x- \right),F\left( x+ \right) \right)$ for each $x$ are disjoint, and for $\left\vert x \right\vert < N$, they lie in the interval $\left( F\left( -N, \right),F\left( N \right) \right)$. Thus,
+        \begin{align*}
+          \sum_{\left\vert x \right\vert < N} \left( F\left( x+ \right)-F\left( x- \right) \right) &\leq F\left( N \right) - F\left( -N \right)\\
+                                                                                                   &< \infty,
+        \end{align*}
+        meaning that the set of all $x$ in $(-N,N)$ such that $F(x+) \neq F(x-)$ is countable.
+      \item Observe that $G$ is increasing and right-continuous, and $G = F$ almost everywhere. Moreover, we see that
+        \begin{align*}
+          G\left( x+h \right) - G\left( x \right) &= \begin{cases}
+            \mu_G\left( \left( x,x+h \right] \right) & h > 0\\
+            -\mu_G\left( \left( x+h,x \right] \right) & h < 0,
+          \end{cases}
+        \end{align*}
+        and the families $\set{\left( x-\left\vert h \right\vert,x \right]}$ and $\set{\left( x,x+\left\vert h \right\vert \right]}$ shrink nicely to $x$ as $\left\vert h \right\vert \rightarrow 0$. Applying the previous theorem, since $\mu_G$ is regular, we see that $G'(x)$ exists almost everywhere.\newline
 
+        Finally, we show that if $H = G-F$, then $H'$ is zero almost everywhere. Letting $\set{x_j}_{j=1}^{\infty}$ be an enumeration of points where $H\neq 0$, we see that $H\left( x_j \right) > 0$, and $\sum_{\left\vert x_j \right\vert < N}H\left( x_j \right) < \infty$ for any $N$.\newline
+
+        Let $\delta_j$ be the point mass at $x_j$, and set $\mu = \sum_{j=1}^{\infty}H\left( x_j \right)\delta_j$. Note that $\mu$ is finite on compact sets, and $\mu$ is regular, and $\mu\perp m$ since $m\left( \set{x_j}_{j=1}^{\infty} \right) = \mu\left( \left( \set{x_j}_{j=1}^{\infty} \right)^{c} \right) = 0$.\newline
+
+        Then,
+        \begin{align*}
+          \left\vert \frac{H\left( x+h \right) - H\left( x \right)}{h} \right\vert &\leq \frac{H\left( x+h \right) + H\left( x \right)}{h}\\
+                                                                                   &\leq \frac{4\mu\left( \left( x-2\left\vert h \right\vert , x + 2\left\vert h \right\vert\right) \right)}{4\left\vert h \right\vert},
+        \end{align*}
+        which tends to zero as $h\rightarrow 0$ for almost every $x$, meaning $H' = 0$ almost everywhere.
+    \end{enumerate}
+  \end{proof}
 \end{document}
