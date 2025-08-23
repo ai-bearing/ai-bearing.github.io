@@ -5,7 +5,7 @@ permalink: /classnotes.html
 ---
 Here are a bunch of the notes I have written up thus far.
 ## Qualifier Prep
-### [Real Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/real_analysis_notes.pdf)
+### [Real Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/real_analysis_prep.pdf)
 
 ## Spring 2025
 ### [Partial Differential Equations](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, PDEs/pdes_notes.pdf)
