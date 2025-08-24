@@ -19,4 +19,78 @@
 \begin{document}
 \RaggedRight
 These are some notes I have taken from Gerald B. Folland's \textit{A Course in Abstract Harmonic Analysis}, with some other textbooks for various sources.
+\section{Topological Groups}%
+\begin{definition}
+  A \textit{topological group} is a group $G$ with a topology such that the operation
+  \begin{align*}
+    m\colon G\times G &\rightarrow G\\
+    \left( x,y \right)&\mapsto xy
+  \end{align*}
+  is continuous with respect to the product topology on $G\times G$ and the operation
+  \begin{align*}
+    i\colon G&\rightarrow G\\
+    x &\mapsto x^{-1}
+  \end{align*}
+  is continuous with respect to the topology on $G$.\newline
+
+  For a topological group $G$, we denote the unit element as $1_G$, and we set
+  \begin{align*}
+    Ax &= \set{yx | y\in A}\\
+    xA &= \set{xy | y\in A}\\
+    A^{-1} &= \set{y^{-1} | y\in A}\\
+    AB &= \set{xy | x\in A,y\in B}
+  \end{align*}
+  for all subsets $A,B\subseteq G$ and elements $x\in G$.
+\end{definition}
+\begin{definition}
+  A subset $A\subseteq G$ is called \textit{symmetric} if $A = A^{-1}$.
+\end{definition}
+\begin{proposition}
+  Let $G$ be a topological group.
+  \begin{enumerate}[(i)]
+    \item The topology of $G$ is invariant under translations and inversion; that is, if $U$ is open, then $xU,Ux,U^{-1},AU,UA$ are open for any $x\in G$ and subset $A\subseteq G$.
+    \item For every neighborhood $U$ of $1_G$, there is a symmetric neighborhood $V$ of $1_G$ such that $VV \subseteq U$.
+    \item If $H$ is a subgroup of $G$, so is $ \overline{H} $.
+    \item Every open subgroup of $G$ is closed.
+    \item If $A$ and $B$ are compact sets in $G$, so is $AB$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item This is equivalent to the separate continuity of $\left( x,y \right)\mapsto xy$ and $x\mapsto x^{-1}$; furthermore, 
+      \begin{align*}
+        AU &= \bigcup_{x\in A} xU\\
+        UA &= \bigcup_{x\in A}Ux.
+      \end{align*}
+    \item Since $\left( x,y \right)\mapsto xy$ is continuous at $1_G$, then for every neighborhood $U$ of $1_G$, there are neighborhoods $W_1,W_2\subseteq U$. We may take $V = W_1\cap W_2\cap W_1^{-1}\cap W_2^{-1}$.
+    \item For $x,y\in \overline{H}$, there are nets $\left( x_{\alpha} \right)_{\alpha}\rightarrow x$ and $\left( y_{\alpha} \right)_{\alpha}\rightarrow y$; since $\left( x_{\alpha}y_{\alpha} \right)\rightarrow xy$ and $\left( x_{\alpha}^{-1} \right)_{\alpha}\rightarrow x^{-1}$ by continuity of the operations, we have $xy,x^{-1}\in \overline{H}$.
+    \item If $H$ is open, then so are all the cosets $xH$; since $G\setminus H$ is the union of all the cosets of $H$ except for $H$ itself, $G\setminus H$ is open, so $H$ is closed.
+    \item Since $A\times B$ is compact, and $AB$ is the continuous image of $A\times B$ under $\left( x,y \right)\mapsto xy$, we have $AB$ is compact.
+  \end{enumerate}
+\end{proof}
+Now, if $H$ is a subgroup of $G$, we let $G/H$ be the space of left cosets of $H$, and $q\colon G\rightarrow G/H$ is the canonical quotient map, we may impose the quotient topology on $G/H$, meaning that $U\subseteq G/H$ is open if and only if $q^{-1}(U)$ is open. Thus, $q$ maps open sets in $G$ to open sets in $G/H$, as if $V\subseteq G$ is open, $q^{-1}\left(q(V)\right) = VH$ is also open, so $q(V)$ is open.
+\begin{proposition}
+  Let $H$ be a subgroup of a topological group $G$.
+  \begin{enumerate}[(i)]
+    \item If $H$ is closed, then $G/H$ is Hausdorff.
+    \item If $G$ is locally compact, so is $G/H$.
+    \item If $H$ is normal, then $G/H$ is a topological group.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item If $ \overline{x} = q(x) $ and $ \overline{y} = q(y) $ are distinct points in $G/H$, and since $H$ is closed, $xHy^{-1}$ is a closed set that does not contain $1_G$. There is a symmetric neighborhood $U$ of $1_G$ such that $UU \cap xHy^{-1} = \emptyset$; since $U = U^{-1}$ and $H = HH$ ($H$ is a subgroup), we have $1_G\notin UxH\left( Uy \right)^{-1} = \left( UxH \right)\left( UyH \right)^{-1}$, so $UxH\cap UyH = \emptyset$. Therefore, $q\left( Ux \right)$ and $q\left( Uy \right)$ are disjoint neighborhoods of $ \overline{x} $ and $ \overline{y} $.
+    \item If $U$ is a compact neighborhood of $1_G$, $q\left( Ux \right)$ is a compact neighborhood of $q(x)$ in $G/H$.
+    \item If $x,y\in G$, and $U$ is a neighborhood of $G/H$, continuity of multiplication in $G$ implies that there are neighborhoods $V$ of $x$ and $W$ of $y$ such that $VW\subseteq q^{-1}(U)$. We see that $q(V)$ and $q(W)$ are neighborhoods of $q(x)$ and $q(y)$ such that $q(V)q(W)\subseteq U$, meaning multiplication is continuous in $G/H$. Similarly, inversion is continuous.
+  \end{enumerate}
+\end{proof}
+\begin{corollary}
+  If $G$ is T1, then $G$ is Hausdorff, and if $G$ is not T1, then $ \overline{\set{1_G}} $ is a closed normal subgroup, and $G/ \overline{\set{1_G}}$ is a Hausdorff topological group.
+\end{corollary}
+\begin{proof}
+  Since singletons are closed in any T1 space, the first assertion follows from part (i) in the previous proposition by taking $H = \set{1_G}$.\newline
+
+  To see the second assertion, we note that $ \overline{\set{1_G}} $ is a subgroup, and it is the smallest closed subgroup of $G$; it is normal, as otherwise we would obtain a smaller closed subgroup by intersection with one of the conjugates, meaning the result follows from parts (i) and (iii) in the previous proposition by taking $H = \overline{\set{1_G}}$.
+\end{proof}
+Thus, without loss of generality, we may assume that a topological group is Hausdorff (else take $G/ \overline{\set{1_G}}$), and when we talk about locally compact groups, we are talking about topological groups that are locally compact and Hausdorff.
 \end{document}
