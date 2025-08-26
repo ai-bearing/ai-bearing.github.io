@@ -6,7 +6,7 @@ permalink: /classnotes.html
 Here are a bunch of the notes I have written up thus far.
 
 ## Fall 2025
-### [Differential Topology](https://ai-bearing.github.io/Classes_and_homework/After College/Classes/Differential Topology/differential_topology_notes.pdf)
+### [Differential Topology](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Differential Topology/differential_topology_notes.pdf)
 ## Qualifier Prep
 ### [Real Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/real_analysis_prep.pdf)
 
