@@ -46,7 +46,7 @@ In particular, we develop the smooth structure by making sure all such pairs $\v
   \end{align*}
   as $h\rightarrow 0$.\newline
 
-  The \textit{derivative} of $f$ is the association $f\mapsto L$ for each $p\in \R^n$.\newline
+  The \textit{derivative} of $f$ is the association $f\mapsto L$ for each $p\in \R^n$. We write $D_pf$ to denote this map. Note that we consider elements of $\Mat_{n}\left( \R \right)$ as points in $\R^{n^2}$ with the standard topology on $\R^{n^2}$.\newline
 
   A function $f$ is called a \textit{diffeomorphism} if it is continuously differentiable and has a continuously differentiable inverse.
 \end{definition}
@@ -63,4 +63,90 @@ In particular, we develop the smooth structure by making sure all such pairs $\v
 
   The function $f$ is a \textit{diffeomorphism} if $f$ is a smooth bijection with smooth inverse, and we say the manifolds $M$ and $N$ are diffeomorphic if they admit a diffeomorphism.
 \end{definition}
+In order to replace manifolds with linear maps, we need to understand smooth maps on $\R^n$. The most important theorems in this regard are the inverse function theorem and the implicit function theorem.
+\begin{theorem}[Inverse Function Theorem]
+  Let $f\colon U\subseteq \R^n \rightarrow \R^n$ be a continuously differentiable function. If $D_{p}f$ is invertible as a linear map, then $f$ has a local, continuously differentiable inverse $f^{-1}\colon V\rightarrow W$, where $p\in W\subseteq U$ and $f(p)\in V\subseteq \R^n$.
+\end{theorem}
+The proof uses the contraction mapping theorem. Recall that if $X$ is a complete metric space, and $f\colon X\rightarrow X$ is a strict uniform contraction --- that is, there exists $0\leq \lambda < 1$ such that $d\left( f(x),f(y) \right) \leq \lambda d\left( x,y \right)$ for all $x,y\in X$ --- then $f$ has a unique fixed point.\newline
+
+We begin with a technical lemma.
+\begin{lemma}
+  If $U\left( 0,r \right)\subseteq V$ for some $r > 0$ where $V$ is a normed vector space, $g\colon V\rightarrow V$ is a uniform contraction, and $f = \id + g$, then the following hold:
+  \begin{itemize}
+    \item $\left( 1-\lambda \right) \norm{x-y}\leq \norm{f(x)-f(y)}$ (in particular, $f$ is injective);
+    \item if $g(0) = 0$, then
+      \begin{align*}
+        U\left( 0,\left( 1-\lambda \right)r \right) \subseteq f\left( U\left( 0,r \right) \right) \subseteq U\left( 0,\left( 1+\lambda \right)r \right).
+      \end{align*}
+  \end{itemize}
+\end{lemma}
+\begin{proof}[Proof of Lemma]
+  To see the first item, we notice that by the triangle inequality,
+  \begin{align*}
+    \norm{x-y} - \norm{f(x)-f(y)} &\leq \norm{x-y} - \norm{x-y} + \norm{g(x)-g(y)}\\
+                                  &\leq \lambda\norm{x-y},
+  \end{align*}
+  so $\left( 1-\lambda \right)\norm{x-y}\leq \norm{f(x)-f(y)}$, and $f$ is injective. Furthermore, we see that if $g(0) = 0$, then
+  \begin{align*}
+    f\left( U\left( 0,r \right) \right) &= U\left( 0,r \right) + g\left( U\left( 0,r \right) \right)\\
+                                        &\subseteq U\left( 0,r \right) + \lambda U\left( 0,r \right)\\
+                                        &= U\left( 0,\left( 1+\lambda \right)r \right).
+  \end{align*}
+  Finally, if $y\in U\left( 0,\left( 1-\lambda \right)r \right)$, then we want to find $x$ such that $y = f(x) = x + g(x)$; equivalently, we see that we want $x$ such that $x = y-g(x)$. Since the function $F(x) = y-g(x)$ is a translation of a uniform contraction, $F(x)$ is a contraction, so there is a fixed point, meaning $y\in f\left( U\left( 0,r \right) \right)$.
+\end{proof}
+\begin{note}
+  We will use $\left\vert \cdot \right\vert$ to denote the norm on $\R^n$.
+\end{note}
+\begin{proof}[Proof of the Inverse Function Theorem]
+  By using a series of affine maps --- first by translating $p$ to $0$, then translating $f(p)$ to $0$, then inverting $D_0f$ as per our assumption, we may safely assume that $p = f(p) =0$ and $D_0f = \operatorname{Id}$.\newline
+
+  Set $g = f - \operatorname{Id}$. We will show that $g$ is a contraction in a sufficiently small ball. Fixing $x,y\in \R^n$, consider the map $\R\rightarrow \R^n$ given by $t \mapsto g\left( x + t\left( y-x \right) \right)$. Notice that by the Fundamental Theorem of Calculus,
+  \begin{align*}
+    \left\vert g(y)-g(x) \right\vert &\leq \left\vert y-x \right\vert \sup_{0\leq t \leq 1} \left\vert g'\left( x + t\left( y-x \right) \right) \right\vert.
+  \end{align*}
+  Furthermore, since $g'(0) = \mathbf{0}$ by the fact that $D_0f = \operatorname{Id}$ and $\left( \operatorname{Id} \right)' = \operatorname{Id}$, and since $f$ is continuously differentiable, there is $r > 0$ such that
+  \begin{align*}
+    \left\vert g(y)-g(x) \right\vert &\leq \frac{1}{2}\left\vert y-x \right\vert
+  \end{align*}
+  for all $x,y\in U\left( 0,r \right)$. Thus, $g$ is a strict contraction on $U\left( 0,r \right)$. By the previous lemma, we see that
+  \begin{align*}
+    U\left( 0,r/2 \right) &\subseteq f\left( U\left( 0,r \right) \right);
+  \end{align*}
+  by setting $U = U\left( 0,r \right) \cap f^{-1}\left( U\left( 0,r \right) \right)$, we see that the map $f|_{U}\colon U\rightarrow V \coloneq U\left( 0,r/2 \right)$ is a bijection. The inverse function $f^{-1}\colon V\rightarrow U$ thus exists.\newline
+
+  Now, we let $h = f^{-1}$, $x\in U$, $y\in V$ such that $h(x) = y$, and $A = D_xf$. We will show that $A^{-1} = D_yh$, which is enough to show that $h$ is continuously differentiable, as we assume the map $x \mapsto D_xf$ is continuous, and inversion is continuous in $\GL_n\left(\R\right)$.\newline
+
+  For sufficiently small vectors $s$ and $k$, since $f$ and $h$ are bijections, we have
+  \begin{align*}
+    h\left( y+k \right) = x+s,
+  \end{align*}
+  so
+  \begin{align*}
+    f\left( x+s \right)  &= y+k.
+  \end{align*}
+  Furthermore, by unraveling the definitions of $f = g + \operatorname{Id}$, $s$, and $k$, and the fact that $g$ is a uniform contraction on $U$, we get
+  \begin{align*}
+    \left\vert s-k \right\vert &= \left\vert \left( f(x+s) - f(x) \right) - s \right\vert\\
+                               &= \left\vert \left( x+s + g(x+s) \right) - \left( x + g(x) \right) -s\right\vert\\
+                               &= \left\vert g(x+s) - g(x) \right\vert\\
+                               &\leq \frac{\left\vert s \right\vert}{2}.
+  \end{align*}
+  In particular, since
+  \begin{align*}
+    \left\vert s \right\vert &\leq \left\vert s-k \right\vert + \left\vert k \right\vert\\
+                             &\leq \left\vert k \right\vert + \frac{\left\vert s \right\vert}{2},
+  \end{align*}
+  we see that $\left\vert s \right\vert/2 \leq \left\vert k \right\vert$. We calculate
+  \begin{align*}
+    \left\vert h\left( y+k \right)-h\left( y \right) - A^{-1}k \right\vert &= \left\vert x+s-x-A^{-1}\left( f\left( x+s \right)-f(x) \right) \right\vert\\
+                                                                           &= \left\vert s - A^{-1}\left( f\left( x+s \right)-f\left( x \right) \right) \right\vert\\
+                                                                           &\leq \norm{A^{-1}}_{\op} \left\vert As - f\left( x+s \right) - f\left( x \right) \right\vert.
+  \end{align*}
+  Thus, since $\left\vert s \right\vert/2 \leq \left\vert k \right\vert$,
+  \begin{align*}
+    \frac{\left\vert h\left( y+k \right)-h\left( y \right) - A^{-1}k \right\vert}{\left\vert k \right\vert} &\leq \frac{2\norm{A^{-1}}_{\op}\left\vert As-f\left( x+s \right)-f\left( x \right) \right\vert}{\left\vert s \right\vert}\\
+                                                                                                            &\rightarrow 0,
+  \end{align*}
+  so $D_yh = A^{-1}$.
+\end{proof}
 \end{document}
