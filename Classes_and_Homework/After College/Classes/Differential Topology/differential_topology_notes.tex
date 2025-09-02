@@ -219,9 +219,9 @@ We begin with a technical lemma.
 \begin{definition}
   A function $f\colon U\rightarrow \R$, where $U\subseteq \R^{n}$ is open, is called $C^{\infty}$ if the partial derivatives of all orders,
   \begin{align*}
-    \pd{^{\left\vert \alpha \right\vert}f}{\partial x_1^{\alpha_1}\cdots \partial x_n^{\alpha n}}
+    \pd{^{\left\vert \alpha \right\vert}f}{x_1^{\alpha_1}\cdots \partial x_n^{\alpha n}}
   \end{align*}
-  are continuous. Here, $\alpha = \left( \alpha_1,\dots,\alpha_n \right)$ is a \textit{multi-index}, where $\alpha_{i}\geq 0$ for each $i$, and $\left\vert \alpha \right\vert = \sum_{i=1}^{n}\alpha_i$.
+  are continuous. Here, $\alpha = \left( \alpha_1,\dots,\alpha_n \right)$ is a \textit{multi-index}, where the $\alpha_i$ are positive integers for each $i$, and $\left\vert \alpha \right\vert $ is defined by $ \left\vert \alpha \right\vert = \sum_{i=1}^{n}\alpha_i$.
 \end{definition}
 We are concerned now with constructing $C^{\infty}$ functions on $C^{\infty}$-manifolds.\footnote{A $C^{\infty}$ manifold is one where all the transition functions $\varphi_{j}\circ\varphi_{i}^{-1}\colon \varphi_{i}\left( U_i\cap U_j \right)\rightarrow \varphi_{j}\left( U_i\cap U_j \right)$ are $C^{\infty}$ functions.} In order to do this, we introduce the bump functions.
 \begin{definition}
@@ -257,6 +257,67 @@ We are concerned now with constructing $C^{\infty}$ functions on $C^{\infty}$-ma
   \end{align*}
   we see that $ \widetilde{f} $ satisfies the required property.
 \end{proof}
+Given an atlas $\set{\left( U_i,\varphi_i \right)}$, we want to be able to ``glue'' functions together by using these charts. A fundamental construction for this purpose is known as a partition of unity.
+\begin{definition}
+  Let $X$ be a topological space.
+  \begin{itemize}
+    \item An open cover $\set{U_{i}}_{i\in I}$ is called \textit{locally finite} if, for every $x\in X$, there is some $V\in \mathcal{O}_x$ such that $V\cap U_{i} = \emptyset$ for all but finitely many $i$.
+    \item Another open cover $\set{V_{j}}_{j\in J}$ is called a refinement of another open cover $\set{U_i}_{i\in I}$ if for all $j\in J$, there exists some $i\in I$ such that $V_j\subseteq U_i$.
+    \item We say $X$ is \textit{paracompact} if, for any open cover of $X$, there is a locally finite refinement.
+  \end{itemize}
+\end{definition}
+\begin{proposition}
+  Let $M$ be a topological manifold. Then, for any open cover $\set{U_{i}}_{i\in I}$ of $M$, there is a countable, locally finite refinement $\set{V_k}_{k=1}^{\infty}$ with the $ \overline{V_k} $ compact. In particular, $M$ is paracompact.\newline
+
+  Additionally, we may select the coordinate maps $\psi_k\colon V_k\rightarrow \R^{n}$ such that $\psi_k\left( V_k \right) = U\left( 0,3 \right)$, and $\set{\psi_k^{-1}\left( U\left( 0,1 \right) \right)}_{k=1}^{\infty}$ is an open cover of $M$.
+\end{proposition}
+\begin{solution}
+  Since $M$ is a locally Euclidean and second countable, there is a countable basis of pre-compact open sets $\set{O_\ell}_{\ell=1}^{\infty}$. In particular, we may select an exhaustion of $M$ by pre-compact sets by defining
+  \begin{align*}
+    E_1 &= O_1\\
+    E_{k} &= O_1\cup O_2\cup \cdots \cup O_{\ell_k},
+  \end{align*}
+  where $\ell_{k}$ is some sufficiently large index as follows. Since $ \overline{E_k} $ is compact, there is a sufficiently large $\ell$ such that $ \overline{E_k}\subseteq O_1\cup\cdots\cup O_{\ell}$. Defining $\ell_{k+1}$ to be the smallest index greater than $\ell_{k}$ that satisfy this property, we define
+  \begin{align*}
+    E_{k+1} &= O_1 \cup \cdots \cup O_{\ell_{k+1}}.
+  \end{align*}
+  For arbitrary $k$, each $ \overline{E_k} $ is compact, and $ \overline{E_k}\subsetneq E_{k+1} $, and $\bigcup_{k=1}^{\infty}E_k = M$. Note that if $M$ is compact, this process terminates in a finite number of steps.\newline
+
+  Now, let $\set{U_{i}}_{i\in I}$ be an arbitrary open cover of $M$, and fix $k \geq 1$. For each $p\in \overline{E_k}\setminus E_{k-1}$, select $i_{p}$ such that $p\in U_{i_p}$, and select a chart $\left( V_p,\psi_p \right)$ about $p$ that satisfies $\psi_p(p) = 0$, $\psi_p\left( V_p \right) = U\left( 0,3 \right)$, and $V_{p} \subseteq U_{i_p}\cap \left( E_{k+1}\setminus \overline{E_{k-2}} \right)$, where we set $E_{-1} = E_{0} = \emptyset$. Finally, set $W_{p} = \psi_{p}^{-1}\left( U\left( 0,1 \right) \right)$.\newline
+
+  Since $ \overline{E_k} \setminus E_{k-1} $ is compact, we may select a finite number of such $p$ such that the open sets $W_{p}$ cover $ \overline{E_k}\setminus E_{k-1} $. Applying this process to all $k$, and lining up the charts $\left( V_p,\psi_p \right)$ corresponding to the finite number of points $p$ chosen at each stage, we have the locally finite refinement of $\set{U_{i}}_{i\in I}$ with each $ \overline{V_k} $ compact, $ \psi_k\left( V_k \right) = U\left( 0,3 \right) $, and $\set{\psi_k^{-1}\left( U\left( 0,1 \right) \right)}$ an open cover of $M$.
+\end{solution}
+\begin{definition}
+  Let $M$ be a $C^{\infty}$ manifold. A family $\set{f_k}_{k=1}^{\infty}$ of at most countably many $C^{\infty}$ functions on $M$ is called a \textit{partition of unity} on $M$ if it satisfies:
+  \begin{itemize}
+    \item for each $k$, $f_{k}\left( p \right) \geq 0$ for all $p\in M$, and the family $\set{\supp\left( f_k \right)}_{k=1}^{\infty}$ is locally finite;
+    \item at all points $p$ on $M$, $\sum_{k=1}^{\infty}f_k(p) = 1$.
+  \end{itemize}
+  If $\set{\supp\left( f_k \right)}_{k=1}^{\infty}$ is a refinement of an open cover $\set{U_i}_{i\in I}$, then we say the partition of unity is \textit{subordinate} to the open cover.
+\end{definition}
+\begin{theorem}
+  Let $M$ be a $C^{\infty}$ manifold, and let $\set{U_{i}}_{i\in I}$ be an open cover of $M$. Then, there exists a partition of unity $\set{f_k}_{k=1}^{\infty}$ that is subordinate to $\set{U_{i}}_{i\in I}$.
+\end{theorem}
+\begin{proof}
+  Let $\set{V_k}_{k=1}^{\infty}$ be a locally finite refinement of $\set{U_i}_{i\in I}$ such that the charts $\left( V_k,\psi_k \right)$ have $\psi_k\left( V_k \right) = U\left( 0,3 \right)$.\newline
+
+  For each $k$, using the bump function \eqref{eq:bump_function}, define
+  \begin{align*}
+    \widetilde{b_k}\left( q \right) &= \begin{cases}
+      b\circ \psi_k\left( q \right) & q\in V_k\\
+      0 & q\notin V_k.
+    \end{cases}
+  \end{align*}
+  Then, $ \widetilde{b_k} $ is a $C^{\infty}$ function defined on $M$, and since $ \supp\left( \widetilde{b_k} \right)\subseteq V_k $, we may set
+  \begin{align*}
+    f &= \sum_{k=1}^{\infty} \widetilde{b_k}.
+  \end{align*}
+  The function $f$ is a $C^{\infty}$ function defined on the whole of $M$. If we let $W_k = \psi_k^{-1}\left( U\left( 0,1 \right) \right)$, then since $\set{W_k}_{k\geq 1}$ is an open cover of $M$, for any $q\in M$, there exists $j$ such that $ \widetilde{b_j}\left( q \right) = 1 $. Thus, $f$ never equals $0$, so we if we set
+  \begin{align*}
+    f_k &= \frac{\widetilde{b_k}}{f},
+  \end{align*}
+  the family $\set{f_k}_{k\geq 1}$ is a partition of unity subordinate to $\set{U_i}_{i\in I}$.
+\end{proof}
 \section{The Tangent Space}%
 
 \section{Notations}%
@@ -267,5 +328,6 @@ We are concerned now with constructing $C^{\infty}$ functions on $C^{\infty}$-ma
   \item $ B\left( x,r \right) = \set{y\in V | \norm{x-y} \leq r}$.
   \item $ \mathcal{N}_p $: neighborhood system centered at $p\in X$.
   \item $ \mathcal{O}_p $: system of \textit{open} neighborhoods centered at $p\in X$.
+  \item When we say a number $n$ is positive, we mean that $n\geq 0$. Similarly, a sequence $\left( a_n \right)_n$ is decreasing (increasing) if $a_n\geq a_{n+1}$ ($a_n\leq a_{n+1}$).
 \end{itemize}
 \end{document}
