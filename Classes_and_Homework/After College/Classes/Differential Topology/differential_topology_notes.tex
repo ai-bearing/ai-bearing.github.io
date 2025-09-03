@@ -65,6 +65,34 @@ In particular, we develop the smooth structure by making sure all such pairs $\v
 
   The function $f$ is a \textit{diffeomorphism} if $f$ is a smooth bijection with smooth inverse, and we say the manifolds $M$ and $N$ are diffeomorphic if they admit a diffeomorphism.
 \end{definition}
+\subsection{More on Smooth Maps}%
+Generally speaking, we will refer to charts on a dimension $n$ smooth manifold by $\left( U,\varphi \right) = \left( U;x_1,\dots,x_n \right)$, where $x_i\colon U\rightarrow \R$ are the coordinates of $U$. Additionally, if $\left( \R^{n};e_1,\dots,e_n \right)$ are the identity chart on $\R^{n}$, and the $e_i$ are standard coordinates on $\R^{n}$, then the coordinate maps satisfy
+\begin{align*}
+  x_i &= e_i\circ \varphi.
+\end{align*}
+\begin{definition}
+  Let $\left( U;x_1,\dots,x_n \right)$ be a chart on a manifold $M$ of dimension $n$. If $f\colon M\rightarrow \R$ is a $C^{\infty}$ function, we define the \textit{partial derivative} of $f$ with respect to $x_i$ at $p$ to be
+  \begin{align*}
+    \pd{f}{x_i}\left( p \right) &= \pd{\left( f\circ \varphi^{-1} \right)}{\partial e_i} \left( \varphi(p) \right).
+  \end{align*}
+\end{definition}
+  In particular,
+  \begin{align*}
+    \pd{f}{x_i}\circ \varphi^{-1} &= \pd{\left( f\circ \varphi^{-1} \right)}{e_i}
+  \end{align*}
+  as functions on $\phi(U)$.
+\begin{proposition}
+  The coordinate functions $x_1,\dots,x_n$ satisfy $\pd{x_i}{x_j} = \delta_{ij}$, where $\delta_{ij}$ is the Kronecker delta.
+\end{proposition}
+\begin{proof}
+  For any $p\in U$, we calculate
+  \begin{align*}
+    \pd{x_i}{x_j}(p) &= \pd{\left( x_i\circ \varphi^{-1} \right)}{e_j}\left( \varphi\left( p \right) \right)\\
+                     &= \pd{\left( \left( e_i\circ \varphi \right) \right)}{e_j}\left( \varphi\left( p \right) \right)\\
+                     &= \pd{e_i}{e_j} \left( \varphi\left( p \right) \right)\\
+                     &= \delta_{ij}.
+  \end{align*}
+\end{proof}
 \subsection{Examples}%
 There are a couple special examples of (smooth) manifolds.
 \begin{enumerate}[(i)]
@@ -131,7 +159,9 @@ There are a couple special examples of (smooth) manifolds.
 \subsection{Inverse and Implicit Function Theorems}%
 In order to replace manifolds with linear maps, we need to understand smooth maps on $\R^n$. The most important theorems in this regard are the inverse function theorem and the implicit function theorem.
 \begin{theorem}[Inverse Function Theorem]
-  Let $f\colon U\subseteq \R^n \rightarrow \R^n$ be a continuously differentiable function. If $D_{p}f$ is invertible as a linear map, then $f$ has a local, continuously differentiable inverse $f^{-1}\colon V\rightarrow W$, where $p\in W\subseteq U$ and $f(p)\in V\subseteq \R^n$.
+  Let $f\colon U\subseteq \R^n \rightarrow \R^n$ be a continuously differentiable function. If $D_{p}f$ is invertible as a linear map, then $f$ has a local, continuously differentiable inverse $f^{-1}\colon V\rightarrow W$, where $p\in W\subseteq U$ and $f(p)\in V\subseteq \R^n$.\newline
+
+  Additionally, $D_p\left( f^{-1} \right) $ is given by the inverse of the derivative's corresponding linear map evaluated at $p$, $ D_p\left( f^{-1} \right) = \left( D_pf\left( f^{-1}(p) \right) \right)^{-1}$.
 \end{theorem}
 The proof uses the contraction mapping theorem. Recall that if $X$ is a complete metric space, and $f\colon X\rightarrow X$ is a strict uniform contraction --- that is, there exists $0\leq \lambda < 1$ such that $d\left( f(x),f(y) \right) \leq \lambda d\left( x,y \right)$ for all $x,y\in X$ --- then $f$ has a unique fixed point.\newline
 
@@ -224,7 +254,7 @@ One of the primary uses of the inverse function theorem is to prove the implicit
   \end{itemize}
   Then, there exists a continuously differentiable function $g\colon U\rightarrow V$, where $U\in \mathcal{O}_{a}$ and $V\in \mathcal{O}_b$ such that $f\left( x,g(x) \right) = 0$ on $U$.
 \end{theorem}
-Essentially, the theorem says that we can solve $f\left( x,y \right) = 0$ on a neighborhood of $\left( a,b \right)$ by a function only depending on $x$. This means that the projection $P_{\R^{n}}\left( \Gamma\left( f \right) \right)$ onto $\R^{n}$ of the graph of $f$ on $\R^{n}\times \R^{m}$ gives a local chart about $\left( a,b \right)$.
+Essentially, the theorem says that we can solve $f\left( x,y \right) = 0$ on a neighborhood of $\left( a,b \right)$ by a function only depending on $x$. This means that about $\left( a,b \right)$ in the graph $\Gamma\left( f \right)$, there is a coordinate representation as an $m$-manifold given by $g$.
 \begin{proof}[Proof of the Implicit Function Theorem]
   Define a function $F\colon \R^{n+m}\rightarrow \R^{n+m}$ by
   \begin{align*}
@@ -296,7 +326,7 @@ Given an atlas $\set{\left( U_i,\varphi_i \right)}$, we want to be able to ``glu
 
   Additionally, we may select the coordinate maps $\psi_k\colon V_k\rightarrow \R^{n}$ such that $\psi_k\left( V_k \right) = U\left( 0,3 \right)$, and $\set{\psi_k^{-1}\left( U\left( 0,1 \right) \right)}_{k=1}^{\infty}$ is an open cover of $M$.
 \end{proposition}
-\begin{solution}
+\begin{proof}
   Since $M$ is a locally Euclidean and second countable, there is a countable basis of pre-compact open sets $\set{O_\ell}_{\ell=1}^{\infty}$. In particular, we may select an exhaustion of $M$ by pre-compact sets by defining
   \begin{align*}
     E_1 &= O_1\\
@@ -311,7 +341,7 @@ Given an atlas $\set{\left( U_i,\varphi_i \right)}$, we want to be able to ``glu
   Now, let $\set{U_{i}}_{i\in I}$ be an arbitrary open cover of $M$, and fix $k \geq 1$. For each $p\in \overline{E_k}\setminus E_{k-1}$, select $i_{p}$ such that $p\in U_{i_p}$, and select a chart $\left( V_p,\psi_p \right)$ about $p$ that satisfies $\psi_p(p) = 0$, $\psi_p\left( V_p \right) = U\left( 0,3 \right)$, and $V_{p} \subseteq U_{i_p}\cap \left( E_{k+1}\setminus \overline{E_{k-2}} \right)$, where we set $E_{-1} = E_{0} = \emptyset$. Finally, set $W_{p} = \psi_{p}^{-1}\left( U\left( 0,1 \right) \right)$.\newline
 
   Since $ \overline{E_k} \setminus E_{k-1} $ is compact, we may select a finite number of such $p$ such that the open sets $W_{p}$ cover $ \overline{E_k}\setminus E_{k-1} $. Applying this process to all $k$, and lining up the charts $\left( V_p,\psi_p \right)$ corresponding to the finite number of points $p$ chosen at each stage, we have the locally finite refinement of $\set{U_{i}}_{i\in I}$ with each $ \overline{V_k} $ compact, $ \psi_k\left( V_k \right) = U\left( 0,3 \right) $, and $\set{\psi_k^{-1}\left( U\left( 0,1 \right) \right)}$ an open cover of $M$.
-\end{solution}
+\end{proof}
 \begin{definition}
   Let $M$ be a $C^{\infty}$ manifold. A family $\set{f_k}_{k=1}^{\infty}$ of at most countably many $C^{\infty}$ functions on $M$ is called a \textit{partition of unity} on $M$ if it satisfies:
   \begin{itemize}
@@ -344,14 +374,40 @@ Given an atlas $\set{\left( U_i,\varphi_i \right)}$, we want to be able to ``glu
   the family $\set{f_k}_{k\geq 1}$ is a partition of unity subordinate to $\set{U_i}_{i\in I}$.
 \end{proof}
 \section{The Tangent Space}%
-Smooth manifolds are able to be embedded into $\R^{n}$,\footnote{This is actually a very deep theorem.} so we start by considering them as such.
+Smooth manifolds are able to be embedded into some Euclidean space,\footnote{This is actually a very deep theorem.} so we start by considering them as such.
 \begin{definition}
-  If $f\colon M\rightarrow N$ is a smooth map between an $n$-dimensional manifold $M$ and a $k$-dimensional manifold $N$, the \textit{derivative} of $f$ at $p$, defined for charts $\left( U,\varphi \right)$ and $\left( V,\psi \right)$, where $f(U)\subseteq V$, is defined by
+  If $f\colon M\rightarrow N$ is a smooth map between an $n$-dimensional manifold $M$ and a $k$-dimensional manifold $N$, the \textit{derivative} of $f$ at $p$, defined for charts $\left( U,\varphi \right)$ and $\left( V,\psi \right)$, where $f(U)\subseteq V$, is defined by $D_pf = D_{\varphi(p)}F$ for $F\colon \R^{n}\rightarrow \R^{k}$, where $F$ is defined by
   \begin{align*}
-    Df &= D\left( \psi^{-1}\circ F\circ \varphi \right),
+    F &= \psi\circ f \circ \varphi^{-1}.
   \end{align*}
-  where $F\colon \R^{n}\rightarrow \R^{m}$ is a continuously differentiable map that maps $\varphi(U)$ into $\psi(V)$. We then say that $D_pf\colon T_{p}\left( M \right)\rightarrow T_{f(p)}\left( M \right)$ is the derivative map between \textit{tangent spaces} of $M$ and $N$.
 \end{definition}
+\begin{remark}
+  This definition is independent of the coordinate representation for a neighborhood of $p$ in $M$.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAFUQBfU9TXfIRQAmclVqMWbAGrdeIDNjwEiZYePrNWiEAB1dAWzo4AFgCMzwAEpcAesDBc5fJYKKj11TVJ36jpi2s7YABrJy5xGCgAc3giUAAzACcIAyRREBwIJABmajMYMChcsgktNgAxAH1hZxBk1KRSrKQARi9JbXq6hrTEZuzEDIKipABaHNLvLv16JLQTLCrWkGoGOgKGAAV+ZSEQJKxokxwelL72zMG8kBHixEmO8t9dNGxls8bES5aH-ML7hNSutNjtXCodIdjqcnj49K93rUeIlzulqL8bndxo8QCCYNtdm5IUcTqsynDqitkfVUf10YNhgCSrCZro5gslkiKFwgA
+\begin{tikzcd}
+U \arrow[rr, "f"] \arrow[dd, "\varphi_1"', bend right] \arrow[dd, "\varphi_2", bend left] &  & V \arrow[dd, "\psi_1", bend left] \arrow[dd, "\psi_2"', bend right] \\
+                                                                                          &  &                                                                     \\
+\mathbb{R}^{n} \arrow[rr, "F_2", bend left] \arrow[rr, "F_1"', bend right]                &  & \mathbb{R}^{k}                                                     
+\end{tikzcd}
+  \end{center}
+  To see this, notice that by applying differentials, we obtain the following diagram.
+
+  \begin{center}
+  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAFUQBfU9TXfIRQBmclVqMWbAGrdeIDNjwEiZYePrNWiEAB1dAWzo4AFgCMzwAEpcAesDBc5fJYKKj11TVJ36jpi2s7YABrJy5xGCgAc3giUAAzACcIAyQyEBwIJABGL0ltEATnIpS0xAAmaiykURAzGDAoWozvQoARAH1gfXoktBMsToqACjQASi4AMWGQagY6BoYABX5lIRAGGAScEuTUpCrM7MQ6hqakAFphDIWl1dcVHSSsaJNd-K02Lp7dPoGhjkxpMZjk9mV0tUTkdzs1ENdbosYCs1m5nq93nMJF9fH86P1Bp0wTxEhDEBkapVqLCWp8fHo8QShhVwQdEHljrVqY04Td5kiUY8Nlsdli2mx9GhsETWeUOZSzjyrnzsfTJdKWfz7qiniAXm9dhEuEA
+  \begin{tikzcd}
+  U \arrow[rrr, "f"] \arrow[ddd, "\varphi_1"', bend right] \arrow[ddd, "\varphi_2", bend left]                 &  &  & V \arrow[ddd, "\psi_1", bend left] \arrow[ddd, "\psi_2"', bend right] \\
+                                                                                                               &  &  &                                                                       \\
+                                                                                                               &  &  &                                                                       \\
+  \mathbb{R}^{n} \arrow[rrr, "D_{\varphi_2(p)}F_2", bend left] \arrow[rrr, "D_{\varphi_1(p)}F_1"', bend right] &  &  & \mathbb{R}^{k}                                                       
+  \end{tikzcd}
+  \end{center}
+  Since $F_{1}\left( \varphi_1(p) \right) = \left( \psi_{1}\circ \psi_{2}^{-1} \right)\circ F_2 \circ \left( \varphi_2\circ \varphi_1^{-1} \right)\left( \varphi_1(p) \right)$, the chain rule gives that
+  \begin{align*}
+    D_{\varphi_1(p)}F_1 &= D_{F_2\left( \varphi_2(p) \right)}\left( \psi_1\circ \psi_2^{-1} \right) \circ D_{\varphi_2(p)}F_2 \circ D_{\varphi_1(p)}\left( \varphi_2\circ \varphi_1^{-1} \right).
+  \end{align*}
+  Since the requisite transformations $\psi_1\circ \psi_2^{-1}$ and $\varphi_2\circ \varphi_1^{-1}$ are diffeomorphisms, we thus obtain that any two such linear transformations are able to be obtained by a series of coordinate changes, meaning that they're independent of the choice of coordinates.
+\end{remark}
 One of the issues with this strategy, though, is that embeddings may carry different properties (though at high enough dimensions, any two embeddings are diffeomorphic to each other). For instance, embeddings $S^{1}\hookrightarrow \R^{3}$ form the field of knot theory, which is a very intricate field.\newline
 
 As a result, we want to be able to define tangent spaces, derivatives, and the like without having to refer to coordinates. In order to do this, we need to discuss germs of functions.
@@ -373,12 +429,39 @@ As a result, we want to be able to define tangent spaces, derivatives, and the l
   forms an algebra over $\R$.
 \end{proposition}
 \begin{definition}
-  Let $W_p$ be the space of germs of smooth maps $\gamma\colon \R\rightarrow M$ that send $0 \mapsto p$. The \textit{tangent space} $T_pM$ is defined by $W_p/\sim$, where we define the equivalence relation $\left[ g_1 \right]\sim \left[ g \right]_2$ by
+  Let $W_p$ be the space of germs of smooth maps $\gamma\colon \R\rightarrow M$ that send $0 \mapsto p$. The \textit{tangent space} $T_pM$ is defined by $W_p/\sim$, where we define the equivalence relation $\left[ g_1 \right]\sim \left[ g_2 \right]$ for two germs at $p$  $g_1\colon M\rightarrow \R$ and $g_2\colon M\rightarrow \R$ by
   \begin{align*}
     \left( \varphi\circ g_1 \right)'(0) &= \left( \varphi\circ g_2 \right)(0)
   \end{align*}
   for all $\varphi\in \mathcal{C}_p$.
 \end{definition}
+\begin{definition}
+  The tangent space of a germ $[f]\colon M\rightarrow N$ acts as
+  \begin{align*}
+    D_pf\left( [\gamma] \right) &= \left[ f\circ\gamma \right]
+  \end{align*}
+  for any germ $[\gamma]\colon \R\rightarrow M$ with $\gamma(0) = p$.
+\end{definition}
+\begin{theorem}[Chain Rule]
+  Let $ [f]\colon M\rightarrow N $ and $ [g]\colon N\rightarrow L $ be germs of $p$ and $f(p)$ respectively. Then,
+  \begin{align*}
+    D_{f(p)}g\circ D_pf &= D_{p}\left( g\circ f \right).
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  If $[\gamma]\colon \R\rightarrow M$ is a germ with $\gamma(0) = p$, then
+  \begin{align*}
+    D_{f(p)}g\left( D_{p}f\left( \left[ \gamma \right] \right) \right) &= D_{f(p)}g\left( \left[ f\circ \gamma \right] \right)\\
+                                                                       &= \left[ g\circ f \circ \gamma \right]\\
+                                                                       &= D_{p}\left( g\circ f \right)\left( \left[ \gamma \right] \right).
+  \end{align*}
+\end{proof}
+\begin{definition}
+  Let $f\colon M\rightarrow N$ be a smooth map between $n$-dimensional manifolds. We say $x\in M$ is a \textit{regular point} of $f$ if $D_{x}f$ is nonsingular.\newline
+
+  The point $y\in N$ is called a \textit{regular value} if $f^{-1}\left( y \right)$ (set-theoretic inverse) only contains regular points.
+\end{definition}
+
 \section{Notations}%
 \begin{itemize}
   \item A general normed space $V$ will have its norm denoted by $\norm{\cdot}$. If $V = \R^{n}$, then we denote the norm by $ \left\vert \cdot \right\vert $.
