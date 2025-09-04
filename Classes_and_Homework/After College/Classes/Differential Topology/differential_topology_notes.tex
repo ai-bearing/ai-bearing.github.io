@@ -380,7 +380,7 @@ Given an atlas $\set{\left( U_i,\varphi_i \right)}$, we want to be able to ``glu
   \end{align*}
   the family $\set{f_k}_{k\geq 1}$ is a partition of unity subordinate to $\set{U_i}_{i\in I}$.
 \end{proof}
-\section{The Tangent and Cotangent Spaces}%
+\section{Tangent Space, Vector Fields, and Cotangent Space}%
 Smooth manifolds are able to be embedded into some Euclidean space,\footnote{This is actually a very deep theorem.} so we start by considering them as such.
 \begin{definition}
   If $f\colon M\rightarrow N$ is a smooth map between an $n$-dimensional manifold $M$ and a $k$-dimensional manifold $N$ that are embedded into some Euclidean space $\R^{\ell}$, the \textit{derivative} of $f$ at $p$, defined for charts $\left( U,\varphi \right)$ and $\left( V,\psi \right)$, where $f(U)\subseteq V$, is defined by
@@ -443,26 +443,70 @@ As a result, we want to be able to define tangent spaces, derivatives, and the l
   for all $\varphi\in \mathcal{C}_p$.
 \end{definition}
 \begin{definition}
-  The tangent space of a germ $[f]\colon M\rightarrow N$ acts as
+  If $f\colon M\rightarrow N$ is a smooth map, we define the map $T_pf\colon T_pM\rightarrow T_{f(p)}N$ to act via
   \begin{align*}
-    D_pf\left( [\gamma] \right) &= \left[ f\circ\gamma \right]
+    T_pf\left( \left[ \gamma \right] \right) &= \left[ \gamma\circ f \right]
   \end{align*}
-  for any germ $[\gamma]\colon \R\rightarrow M$ with $\gamma(0) = p$.
+  for all $\gamma\in W_{p}$.
 \end{definition}
-\begin{theorem}[Chain Rule]
-  Let $ [f]\colon M\rightarrow N $ and $ [g]\colon N\rightarrow L $ be germs of $p$ and $f(p)$ respectively. Then,
+\begin{proposition}[Chain Rule]
+  If $f\colon M\rightarrow N$ and $g\colon N\rightarrow L$ are smooth maps, then
   \begin{align*}
-    D_{f(p)}g\circ D_pf &= D_{p}\left( g\circ f \right).
+    T_{f(p)}g\circ T_pf &= T_{p}\left( g\circ f \right).
   \end{align*}
-\end{theorem}
+\end{proposition}
 \begin{proof}
-  If $[\gamma]\colon \R\rightarrow M$ is a germ with $\gamma(0) = p$, then
+  If $\gamma\in W_{p}$, then
   \begin{align*}
-    D_{f(p)}g\left( D_{p}f\left( \left[ \gamma \right] \right) \right) &= D_{f(p)}g\left( \left[ f\circ \gamma \right] \right)\\
-                                                                       &= \left[ g\circ f \circ \gamma \right]\\
-                                                                       &= D_{p}\left( g\circ f \right)\left( \left[ \gamma \right] \right).
+    T_{f(p)}g\circ T_{p}f\left( \left[ \gamma \right] \right) &= T_{f(p)}g\left( \left[ f\circ \gamma \right] \right)\\
+                                                              &= \left[ g\circ f \circ \gamma \right]\\
+                                                              &= T_{p}\left( g\circ f \right)\left( \left[ \gamma \right] \right).
   \end{align*}
 \end{proof}
+A terribly kept secret is that this function $T_pf$ is actually the differential $D_pf$. This requires us to prove that this definition comports with the definition for the case of $M$ as an embedded manifold. We require a few basic propositions for this purpose whose proofs follow from the inverse function theorem and various definitions.
+\begin{proposition}
+  If $f\colon M\rightarrow N$ is a locally invertible smooth map about $p\in M$, then $T_{p}f\colon T_pM\rightarrow T_{f(p)}N$ is an isomorphism of vector spaces.
+\end{proposition}
+\begin{proposition}
+  If $0\in \R^{k}$, then $T_0\R^{k}$ is represented by linear maps $t\mapsto \lambda t$ for some vector $\lambda\in \R^{k}$. Therefore, if $M$ is $k$-dimensional, $T_pM\cong \R^{k}\cong \Hom\left( \R,\R^{k} \right)$.
+\end{proposition}
+\begin{proposition}
+  If $\varphi\colon U\rightarrow \R^{k}$ is a local diffeomorphism about $p$ such that $\varphi(p) = 0$, then if $f\in C^{\infty}\left( \R^{k} \right)$, $f\circ\varphi\in C^{\infty}\left( U \right)$, which induces an algebra homomorphism 
+  \begin{align*}
+    \varphi^{\ast}\colon \mathcal{C}_{0,\R^{k}}&\rightarrow \mathcal{C}_{p,M}\\
+    f &\mapsto f\circ\varphi.
+  \end{align*}
+\end{proposition}
+\begin{proposition}
+  If $M$ and $N$ are embedded submanifolds of $\R^{n}$ with dimensions $m$ and $k$ respectively, and $f\colon M\rightarrow N$ is a smooth map, then
+  \begin{align*}
+    D_pf \equiv T_pf.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Let $\left( U,\varphi \right)$ and $\left( V,\psi \right)$ be charts for $M$ and $N$ respectively with $p\in U$ and $f(p)\in V$. Then, we may consider the coordinate maps $\varphi\colon U\rightarrow \R^{m}$ and $\psi\colon V\rightarrow \R^{k}$ to be such that $p\mapsto 0$ and $f(p)\mapsto 0$ respectively.\newline
+
+  Now, we see that $T_pf$ and $D_pf$ can be written as
+  \begin{align*}
+    T_pf &= T_{f(p)}\psi^{-1}\circ T_0F\circ T_{f(p)}\varphi\\
+    D_pf &= D_{p}\left( \psi^{-1} \circ F \circ \varphi \right).
+  \end{align*}
+  Yet, since $T_0F = D_0F$, $T_{f(p)}\psi^{-1} = D_{f(p)}\psi^{-1}$, and $T_p\varphi = D_p\varphi$, the chain rule gives
+  \begin{align*}
+    T_pf &= T_p\left( \psi^{-1}\circ F\circ \varphi \right)\\
+    &= D_{p}\left( \psi^{-1}\circ F \circ \varphi \right)\\
+    &= D_pf,
+  \end{align*}
+  implying that $T_pf = D_pf$.
+\end{proof}
+Now that we have established that we can consider manifolds as either standalone entities or as submanifolds of $\R^{n}$, we now shift our focus to understanding what information the derivative map $D_pf\colon T_pM\rightarrow T_{f(p)}M$ gives us about the underlying topology of $M$ and $N$.
+\begin{definition}
+  Let $f\colon M\rightarrow N$ be a smooth map, and let $p\in M$. We say $p$ is a \textit{critical point} for $f$ if $D_pf$ does not have maximal rank.\newline
+
+  If $D_pf$ has maximal rank, then we say $p$ is a \textit{regular point} of $f$.\newline
+
+  We say $q\in N$ is a \textit{critical value} if $f^{-1}\left( \set{q} \right)$ contains a critical point for $f$. Else, we say $q$ is a \textit{regular value}.
+\end{definition}
 \section{Notations}%
 \begin{itemize}
   \item A general normed space $V$ will have its norm denoted by $\norm{\cdot}$. If $V = \R^{n}$, then we denote the norm by $ \left\vert \cdot \right\vert $.
