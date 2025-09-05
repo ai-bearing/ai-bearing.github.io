@@ -63,7 +63,7 @@
   \end{align*}
   so $R^{\times}$ is closed under multiplication. Similarly, since $\left( b^{-1} \right)^{-1} = b$ for any $b\in R^{\times}$, every element of $R^{\times}$ has a multiplicative inverse, so $R^{\times}$ is a group.\newline
 
-  To understand the picture of $\Z\left[ i \right]^{\times}$, we try to understand when, given $a+bi\in \Z\left[ i \right]$, $\frac{1}{a+bi}\in \Z\left[ i \right]$. Doing the hand calculations, we see that
+  To understand the picture of $\Z\left[ i \right]^{\times}$, we try to understand when, given $a+bi\in \Z\left[ i \right]\subseteq \C$, $\frac{1}{a+bi}\in \Z\left[ i \right]$. Doing the hand calculations, we see that
   \begin{align*}
     \frac{1}{a+bi} &= \frac{1}{a^2+b^2} \left( a-bi \right).
   \end{align*}
@@ -100,7 +100,7 @@
   Let $ R = \Mat_{n}\left( \R \right) $ be the ring of real $n\times n$ matrices. Show that if $A$ satisfies $\det\left( A \right) = 0$, then there exist nonzero $B,C\in R$ such that $AB = \mathbf{0}_{n}$ and $CA = \mathbf{0}_{n}$.
 \end{problem}
 \begin{solution}
-  If $A$ is the zero matrix, then the problem is trivial, so we assume the matrix is not the zero matrix. We notice that, since $0$ is an eigenvalue of $A$, as can be seen by plugging in $0$ for the characteristic polynomial of $A$, the minimal polynomial $m_A(t)$ factors as $m_A(t) =t p(t)$ for some monic polynomial $p\in \R\left[ t \right]$ with strictly lesser degree than $m_A(t)$. Since $m_A(t)$ is the minimal polynomial of $A$, it must mean that $p(A) \neq 0$, so by setting $B = p(A)$, since $A$ commutes with all powers of itself, we see that $AB = BA = 0$.
+  If $A$ is the zero matrix, then the problem is trivial, so we assume $A$ is not the zero matrix. By the Cayley--Hamilton theorem, since $0$ is an eigenvalue of $A$, we must have that $c_A(t)$ includes a factor of $t$, which is irreducible, so that the minimal polynomial $m_A(t)$ has a factor of $t$. Thus, we may write $m_A(t) = tp(t)$, where $p(t)$ is some other monic polynomial. Since $\deg p(t) < \deg m_A(t)$, this means that $p(A)\neq \mathbf{0}_n$ (else, it would contradict the minimality of $p$). By setting $B = p(A)$, we find our desired nonzero matrix $B$ such that $AB = BA = \mathbf{0}_n$.
 \end{solution}
 \begin{problem}[Problem 6]
   An element $x\in R$ is called \textit{nilpotent} if there exists $n > 0$ such that $x^{n} = 0$.\newline
@@ -136,9 +136,9 @@
 
   Since $I$ is nonzero, there is some matrix $\left( a_{ij} \right)_{i,j}\in I$ such that at particular indices $i_0$ and $j_0$, $a_{i_0j_0}\neq 0$. Since $a_{ij}\in \F$ for all $i,j$, we have that $a_{i_0j_0}^{-1}$ exists.\newline
 
-  Let $e_{ij}$ be the matrix unit with a position $1$ at index $\left( i,j \right)$ and zero elsewhere. Then, via some matrix algebra, we see that
+  Let $e_{k\ell}$ be the matrix unit with a position $1$ at index $\left( k,\ell \right)$ and zero elsewhere. Then, via some matrix algebra, we see that
   \begin{align*}
-    a_{i_0j_0} e_{kk} &= e_{ki_0}a e_{j_0 k}
+    a_{i_0j_0} \left( e_{kk} \right)_{i,j} &= \left( e_{ki_0} \right)_{i,j}\left( a_{ij} \right)_{i,j} \left( e_{j_0 k} \right)_{i,j}
   \end{align*}
   which is necessarily in $I$, as $I$ is a two-sided ideal. Therefore, since $\F$ is a field, we see that $\left( e_{kk} \right)_{i,j}\in I$ for each $k$, so $\sum_{k=1}^{n}\left( e_{kk} \right)_{i,j}\in I$, so $I_{n}\in I$, meaning $I = R$.
 \end{solution}
@@ -184,22 +184,17 @@
       \end{align*}
       meaning in particular that $a_k = 0$ or $a_k = 1$, seeing as the $a_k$ are elements of $\Z$.\newline
 
-      If $\varphi\left( e_k \right) = e_{k_1} + \cdots + e_{k_i}$ and $\varphi\left( e_{\ell} \right) = e_{\ell_1} + \cdots + e_{\ell_j}$, then
+      Now, given a standard basis vector $e_i$, we notice that
       \begin{align*}
-        \varphi\left( e_ke_\ell \right) &= \left( e_{k_1} + \cdots + e_{k_i} \right)\left( e_{\ell_1} + \cdots + e_{\ell_j} \right)\\
-                                        &= \sum_{m=1}^{i}\sum_{n=1}^{j}e_{k_m}e_{\ell_n}\\
-                                        &= \sum_{m=1}^{n}\sum_{n=1}^{j}\delta_{k_m\ell_n} e_{k_m}\label{eq:eq1}\tag{$\ast$}
+        \varphi\left( e_i \right) &= \sum_{m=1}^{k}e_{i_m}.
       \end{align*}
-      Yet, since $\varphi\left( 0 \right) = 0$, we have $e_ke_{\ell} = \delta_{k\ell} e_k = \delta_{k\ell}e_{\ell}$, meaning
+      Yet, since $\varphi$ is a ring automorphism, so too is $\varphi^{-1}$, so that
       \begin{align*}
-        \varphi\left( e_ke_{\ell} \right) &= \delta_{k\ell} \varphi\left( e_k \right)\\
-                                          &= \delta_{k\ell} \left( e_{k_1} + \cdots + e_{k_i} \right)\label{eq:eq2}\tag{$\dag$}\\
-                                          &= \delta_{k\ell} \varphi\left( e_{\ell} \right)\\
-                                          &= \delta_{k\ell} \left( e_{\ell_1} + \cdots + e_{\ell_j} \right).\label{eq:eq3}\tag{$\ddag$}
+        e_i &= \sum_{m=1}^{k} \varphi^{-1}\left( e_{i_m} \right).
       \end{align*}
-      Now, notice that the expression in \eqref{eq:eq1} can pick out at most one basis vector, and that this basis vector depends on the equivalence of $i$ and $j$, following from \eqref{eq:eq2} and \eqref{eq:eq3}.\newline
+      Now, this means that the sum $\sum_{m=1}^{k}\varphi^{-1}\left( e_{i_m} \right)$ yields a $1$ in position $i$ and zero everywhere else; yet, since $\varphi^{-1}\left( e_{i_m} \right)$ yields another sum of basis vectors, we see that this can only hold if $\varphi^{-1}\left( e_{i_\ell} \right) = e_i$ for exactly one specific $\ell$ (else, we get that $e_i$ either has nonzero entries other than at $i$, or that the entry at $i$ is greater than or equal to $2$).\newline
 
-      Thus, for any standard basis vector $e_i$, $\varphi\left( e_i \right) = e_j$ for some $j$. Furthermore, $\varphi$ is injective on $\set{e_1,\dots,e_n}$ as $\varphi$ is injective on $\Z^{n}$ and must map any standard basis vector to another standard basis vector. Thus, $\varphi$ is an injective self-map of $\set{e_1,\dots,e_n}$, meaning $\varphi$ is a permutation, so $\aut_{\text{ring}}\left( \Z^{n} \right) \cong S_n$.
+      Thus, $\varphi\left( e_i \right) = e_k$ for some $e_k$; since $\varphi$ is injective on $\Z^{n}$, $\varphi$ is necessarily injective on $\set{e_1,\dots,e_n}$ as we just established. Therefore, $\varphi$ is some permutation of $\set{e_1,\dots,e_n}$, so $\aut_{\text{ring}}\cong \sym(n)$.
   \end{enumerate}
 \end{solution}
 \end{document}
