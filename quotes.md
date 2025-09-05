@@ -46,3 +46,6 @@ permalink: "/quotes.html"
   Noah Smith\
   "Movie?"\
   Jonah Hasegawa
+
+- "It's okay because it's partial"\
+  Brandon Le
