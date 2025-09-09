@@ -515,7 +515,37 @@ The study of critical points is actually very vital in understanding the underly
   \end{align*}
   has nonzero determinant, where $\left( x_1,\dots,x_n \right)$ is a coordinate system about the critical point $p$.
 \end{definition}
-Morse functions allow us to calculate a quantity known as the index of the manifold at any given value of $\R$, thereby allowing us to reconstruct the manifold from the information that the functions give us.
+Morse functions allow us to calculate a quantity known as the index of the manifold at any given value of $\R$, thereby allowing us to reconstruct the manifold from the information that the functions give us.\newline
+
+There are two important theorems related to critical points/values and regular points/values. 
+\begin{theorem}[Sard's Theorem]
+  Let $f\colon M\rightarrow N$ be a smooth map of manifolds. The set of critical values in $N$ is of measure zero (where measure is defined by the measure of the image under a coordinate map).
+\end{theorem}
+We will not prove Sard's Theorem now, but we will prove a very useful result that is often used in conjunction with Sard's Theorem.
+\begin{theorem}[Regular Value Theorem]
+  Let $f\colon M\rightarrow N$ be a smooth map of manifolds with dimensions $m\geq n$ respectively. If $q\subseteq N$ is a regular value, then $f^{-1}\left( \set{q} \right)\subseteq M$ is a submanifold of dimension $m-n$.
+\end{theorem}
+\begin{proof}
+  Let $p\in f^{-1}\left( \set{q} \right)$, and let $\left( U,\varphi \right)$ be a chart of $p$ where $\varphi\colon U\rightarrow \R^{m}\cong T_pM$ are identified as such. Since $D_pf$ is of full rank, we know that $K = \ker\left( D_pf \right)$ is of dimension $m-n$, so that $K\cong \R^{m-n}$.\newline
+
+  Let $L\colon \R^{m}\rightarrow \R^{m-n}\cong K$ be a projection, and define
+  \begin{align*}
+    F\colon \R^{m}\supseteq U &\rightarrow N\times \R^{m-n}\\
+    x &\mapsto \left( f(x),L(x) \right).
+  \end{align*}
+  Notice then that $D_pF = \left( D_pf,L \right)$, where the latter comes about from the fact that $L$ is a linear map. Then, we have that $D_pf$ is of rank $n$, and $L$ is of rank $m-n$, meaning that $D_pF\colon \R^{m}\rightarrow \R^{m}$ is of full rank, hence is invertible on a neighborhood $V\times W\subseteq N\times \R^{m-n}$, where $W$ is a neighborhood of $0\in \R^{m-n}$, so we may identify $U\cong V\times W$.\newline
+
+  By composing with the projection $\pi\colon N\times \R^{m-n}\rightarrow N$ given by $\left( q,W \right)\rightarrow q$, we have that $f = \pi\circ F$, so that $f^{-1}\left( \set{q} \right) = F^{-1}\circ \pi^{-1}\left( \set{q} \right)$, meaning that $f^{-1}\left( \set{q} \right)\cong \R^{m-n}$.
+\end{proof}
+One of the central uses of the regular value theorem is the fact that it allows us to prove a smooth version of Brouwer's Fixed Point Theorem for the general case of manifolds, known as the No Retraction Theorem.
+\begin{theorem}[No Retraction Theorem]
+  Let $M$ be a compact smooth $n$-dimensional manifold with boundary, and let $N = \partial M$ be the boundary. There does not exist any smooth surjective function $r\colon M\rightarrow N$ such that $r(x) = x$ for every $x\in N$.
+\end{theorem}
+\begin{proof}
+  Suppose toward contradiction that there were such a retraction, which we call $r$. Let $X$ be the set of critical points for $r$ in $M$; then, by Sard's Theorem, $r(X)\subseteq N$ has measure zero, so there exists a regular value $y\in N$.\newline
+
+  By the Regular Value Theorem, $r^{-1}\left( \set{y} \right)$ is a smooth $1$-dimensional manifold, as $N$ is a $n-1$ dimensional manifold, meaning that $r^{-1}\left( \set{y} \right)$ is either $S^{1}$ or an open interval. If $r^{-1}\left( \set{y} \right)$ is a circle, then $r^{-1}\left( \set{y} \right)$ necessarily must be contained in the interior of $M$, which would contradict the fact that $y\in \partial M$. Therefore, $r^{-1}\left( \set{y} \right)$ is an interval, and specifically is one that has both of its endpoints on $N$, as on the interior of $M$, such an interval must be identified to a $1$-dimensional subspace of $M$, so there is some $z\neq y\in N$ such that $z\in r^{-1}\left( \set{y} \right)$. Yet, that means that $r(z) = y \neq z$, which is a contradiction.
+\end{proof}
 \subsection{The Tangent Bundle}%
 Recall that we defined the differential $D_pf$ via the action on the manifold about the point $p$. Unfortunately, the issue with this formulation is that it is purely local --- the main reason we study manifolds is that we want to be able to use local information about the function to obtain insights about the global topology of the manifold. We need a construction that allows us to collect information about all the differentials at points of $M$ together. This is the tangent bundle.
 \begin{definition}
