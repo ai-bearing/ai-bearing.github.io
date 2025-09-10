@@ -42,7 +42,7 @@ In particular, we develop the smooth structure by making sure all such pairs $\v
 \begin{definition}
   Let $f\colon \R^n\rightarrow \R^m$ be a function. We say $f$ is \textit{differentiable} at $p\in \R^n$ if there is a linear map $L\in \Hom\left( \R^n,\R^m \right)$ such that
   \begin{align*}
-    \frac{\norm{f\left( p+h \right)-f\left( p \right)-Lh}}{\norm{h}} &\rightarrow 0
+    \frac{\left\vert f\left( p+h \right)-f\left( p \right)-Lh \right\vert}{\left\vert h \right\vert} &\rightarrow 0
   \end{align*}
   as $h\rightarrow 0$.\newline
 
@@ -511,7 +511,7 @@ The study of critical points is actually very vital in understanding the underly
 \begin{definition}
   Let $f\colon M\rightarrow \R$ be a smooth function, with $M$ a manifold. We say $f$ is \textit{Morse} if all the critical points of $f$ are isolated, and the critical points are nondegenerate, in the sense that the Hessian matrix, given by
   \begin{align*}
-    H_pf &= \left( \pd{^2f}{x_i\partial x_j}\biggr\vert_{p} \right)_{i,j=1}^{n}
+    H_pf &= \left( \pd{^2f}{x_i\partial x_j}(p) \right)_{i,j=1}^{n}
   \end{align*}
   has nonzero determinant, where $\left( x_1,\dots,x_n \right)$ is a coordinate system about the critical point $p$.
 \end{definition}
@@ -592,6 +592,106 @@ When we consider vector fields on manifolds, some basic questions crop up. The m
   \item For $S^{2}$, the answer is no. This is the much-celebrated ``hairy ball theorem.''
   \item For $S^{3}$, the answer is yes. In fact, for $S^{(2n-1)}$ where $n$ is a natural number, the answer is yes, while for $S^{2n}$, the answer is no.
 \end{itemize}
+Now, if $M$ is a manifold, with $\left( U,\varphi \right)$ a chart on $M$ with $p\in U$, identification $\varphi\colon U\rightarrow \R^{n}$, and coordinate representation $\left( x_1,\dots,x_n \right)$. Since $T\R^{n} = \R^{n}\times \R^{n}$, we may write the local coordinates for $T_pM$ formally as $ \left( \pd{}{x_1},\dots, \pd{}{x_n} \right) $. In other words, we consider the $\pd{}{x_i}$ as a basis for the vector space $T_pM$.\newline
+
+If $X$ is a vector field on $M$, we may express $X$ locally about $p$ formally as
+\begin{align*}
+  X &= \sum_{i=1}^{n} a_i(p) \pd{}{x_i},
+\end{align*}
+where each $a_i\colon U\rightarrow \R$ is a $C^{\infty}$ function.\newline
+
+The first question we have is whether this is well-defined. To do this, we consider another chart, $\left( V,\psi \right)$ with $p\in V$, identification $\psi\colon V\rightarrow \R^{n}$, and coordinate representation $\left( y_1,\dots,y_n \right)$. Given the coordinate change $\psi\circ \varphi^{-1}$, we want to consider a corresponding coordinate change $ \left( \pd{}{x_1},\dots, \pd{}{x_n} \right) \mapsto \left( \pd{}{y_1},\dots, \pd{}{y_n} \right) $. Via the chain rule on $\R^{n}$, we find that this corresponding coordinate change is
+\begin{align*}
+  \pd{}{x_i} &= \sum_{j=1}^{n} \pd{y_j}{x_i}\pd{}{y_j},
+\end{align*}
+which emerges from applying the differential to $\psi\circ \varphi^{-1}$.\newline
+
+The space of vector fields on $M$ has algebraic structure.
+\begin{itemize}
+  \item If $X$ and $Y$ are vector fields, then so is $\alpha X + \beta Y$ for all $\alpha,\beta\in \R$.
+  \item If $f\in C^{\infty}\left( M \right)$, then $f\cdot X$ is also a vector field on $X$, which is locally represented by
+    \begin{align*}
+      f\cdot X &= \sum_{i=1}^{n} \left( fa_i \right) \pd{}{x_i}.
+    \end{align*}
+\end{itemize}
+Furthermore, $X$ acts on the space $C^{\infty}\left( M \right)$ via differentiation. If $p\in U$ with local coordinates $\left( x_1,\dots,x_n \right)$, we have $X(f)$ locally defined by
+\begin{align*}
+  X(f)(p) \coloneq \sum_{i=1}^{n} a_i(p) \pd{f}{x_i}(p).
+\end{align*}
+This action has two properties:
+\begin{itemize}
+  \item Linearity: $X\left( \alpha f + \beta g \right) = \alpha X(f) + \beta X(g)$;
+  \item Leibniz Rule: $X\left( fg \right) = f\cdot X(g) + g\cdot X(f)$.
+\end{itemize}
+More generally, we say that an $\R$-linear map with these two properties is a \textit{derivation}. It turns out that the span of the set of derivations on $M$ is actually equal to the space of vector fields of $M$.\newline
+
+Finally, vector fields on $M$ admit an intrinsic multiplication.
+\begin{definition}
+  If $X$ and $Y$ are vector fields on $M$, the \textit{Lie Bracket} of $X$ and $Y$ is defined for any $f\in C^{\infty}\left( M \right)$ by
+  \begin{align*}
+    \left[ X,Y \right]\left( f \right) &= X\left(Y\left(f\right)\right) - Y\left( X\left( f \right) \right).
+  \end{align*}
+\end{definition}
+\begin{proposition}
+  Let $p\in M$ have local chart $\left( U,\varphi \right)$, where $\varphi = \left( x_1,\dots,x_n \right)$ is the coordinate map, and let $X$ and $Y$ be vector fields on $M$ with local representation on $\left( U,\varphi \right)$ given by
+  \begin{align*}
+    X &= \sum_{i=1}^{n} a_i \pd{}{x_i}\\
+    Y &= \sum_{i=1}^{n} b_i \pd{}{x_i}.
+  \end{align*}
+  Then, $\left[ X,Y \right]$ has local representation given by
+  \begin{align*}
+    \left[ X,Y \right] &= \sum_{i=1}^{n}\sum_{j=1}^{n} \left( a_i \pd{b_i}{x_j} - b_i \pd{a_i}{x_j} \right) \pd{}{x_i}.
+  \end{align*}
+\end{proposition}
+\begin{proposition}
+  The Lie Bracket $\left[ X,Y \right]$ of vector fields on $M$ satisfies three properties:
+  \begin{itemize}
+    \item bilinearity: $\left[ \alpha X_1 + \beta X_2 ,Y \right] = \alpha\left[ X_1,Y \right] + \beta \left[ X_2,Y \right]$ and $\left[ X,\alpha Y_1 + \beta Y_2 \right] = \alpha \left[ X,Y_1 \right] + \beta \left[ X,Y_2 \right]$ for all $\alpha,\beta\in \R$;
+    \item alternating: $\left[ X,Y \right] = -\left[ Y,X \right]$;
+    \item Jacobi identity: $\left[ \left[ X,Y \right],Z \right] + \left[ \left[ Z,X \right],Y \right] + \left[ \left[ Y,Z \right],X \right] = 0$;
+    \item extended bilinearity for $C^{\infty}\left( M \right)$: $\left[ fX,gY \right] = fg\left[ X,Y \right] + fX\left( g \right)Y - gY\left( f \right)X$.
+  \end{itemize}
+\end{proposition}
+\subsection{Submanifolds of Dimension 1}%
+\begin{definition}
+  Let $X$ be a vector field on $M$, with $p\in M$. An \textit{integral curve} for $X$ through $p$ is a $C^{\infty}$ map $c\colon \R\rightarrow M$ such that $0\mapsto p$ and $Dc\colon T\R \rightarrow TM$ maps $ \pd{}{t} \mapsto X $, where $\left( t,\pd{}{t} \right)$ are the global coordinates for the tangent bundle $T\R$.\newline
+
+  In local coordinates, we may express $c$ and $Dc$ via
+  \begin{align*}
+    c(t) &= \left( x_1(t),\dots,x_n(t) \right)\\
+    Dc\left( \pd{}{t} \right) &= \sum_{i=1}^{n} \diff{x_i}{t} \pd{}{x_i}\\
+                              &= \left( \diff{x_1}{t},\dots, \diff{x_n}{t} \right)
+  \end{align*}
+  when $p\in U\subseteq M$ is a chart with local coordinates $\left( x_1,\dots,x_n \right)$. We then say that $c$ is an integral curve if, for a local representation
+  \begin{align*}
+    X &= \sum_{i=1}^{n} a_i \pd{}{x_i},
+  \end{align*}
+  we have
+  \begin{align*}
+    Dc\left( \pd{}{t} \right) &= \sum_{i=1}^{n} \diff{x_i}{t} \pd{}{x_i},
+    \intertext{ or that }
+    \diff{x_i}{t} &= a_i\left( x_1(t),\dots,x_n(t) \right)
+  \end{align*}
+  for all $i$, and $\left( x_1(0),\dots,x_n(0) \right) = p$.
+\end{definition}
+One can imagine an integral curve as a ``flow'' following a vector field traced out by a particle.\footnote{This is where the connection between differential topology and partial differential equations begins to appear.}
+\begin{theorem}
+  Given a vector field $X$ on $M$, there is a unique integral curve passing through every $p\in M$.
+\end{theorem}
+In order to prove this theorem, we need to recall the Picard--Lindelöf theorem from ordinary differential equations that gives us a sufficient condition for existence and uniqueness of solutions to initial value problems.
+\begin{theorem}[Picard--Lindelöf]
+  Let $x\colon \R\rightarrow \R^{n}$ and $f\colon \R\times \R^{n}\rightarrow \R^{n}$ be defined by
+  \begin{align*}
+    \left( \diff{x_1}{t},\dots, \diff{x_n}{t} \right) &= \dot{x}\\
+                                                      &= f\left( t, x\right),
+  \end{align*}
+  with $x(0) = x_0$. If $f$ is Lipschitz, then the initial value problem has a unique solution defined on $\left( -\ve,\ve \right)$ for a sufficiently small $\ve$.
+\end{theorem}
+Recall that $f\colon \R^{n}\rightarrow \R^{m}$ is Lipschitz if there is $L < \infty$ such that
+\begin{align*}
+  \sup_{x\neq y} \frac{\left\vert f\left( x \right) - f\left( y \right) \right\vert}{\left\vert x-y \right\vert } &\leq L.
+\end{align*}
+Notice that if $f$ is continuously differentiable and defined on a compact domain, this follows immediately from the extreme value theorem.
 \section{Notations}%
 \begin{itemize}
   \item A general normed space $V$ will have its norm denoted by $\norm{\cdot}$. If $V = \R^{n}$, then we denote the norm by $ \left\vert \cdot \right\vert $.
