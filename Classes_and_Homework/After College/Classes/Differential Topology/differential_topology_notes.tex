@@ -18,6 +18,15 @@
 
 \begin{document}
 \RaggedRight
+This is a set of notes I am taking for my Differential Topology class. The references occasionally used include
+\begin{itemize}
+  \item \textit{Geometry of Differential Forms} by Morita;
+  \item \textit{Topology from the Differentiable Viewpoint} by Milnor;
+  \item \textit{Differential Topology} by Hirsch
+  \item \textit{Introduction to Smooth Manifolds} by Lee;
+  \item \textit{A Short Course in Differential Topology} by Dundas.
+\end{itemize}
+\tableofcontents
 \section{Basic Properties}%
 \begin{definition}
   A topological space $M$ is called a \textit{manifold} if it satisfies the following:
@@ -691,7 +700,116 @@ Recall that $f\colon \R^{n}\rightarrow \R^{m}$ is Lipschitz if there is $L < \in
 \begin{align*}
   \sup_{x\neq y} \frac{\left\vert f\left( x \right) - f\left( y \right) \right\vert}{\left\vert x-y \right\vert } &\leq L.
 \end{align*}
-Notice that if $f$ is continuously differentiable and defined on a compact domain, this follows immediately from the extreme value theorem.
+Notice that if $f$ is continuously differentiable and defined on a compact domain, this follows immediately from the extreme value theorem.\newline
+
+The proof of the Picard--Lindelöf theorem follows from a technique known as Picard iteration. Essentially, we rewrite the differential equation in integral form
+\begin{align*}
+  x(t) &= x_0 + \int_{0}^{t} f\left( s,x(s) \right)\:ds,
+\end{align*}
+and start by setting
+\begin{align*}
+  x_0(t) &= x_0.
+\end{align*}
+Then, we inductively define
+\begin{align*}
+  x_n(t) &= x_0 + \int_{0}^{t} f\left( s,x_{n-1}(s) \right)\:ds.
+\end{align*}
+Defining the integral operator
+\begin{align*}
+  K\left(y(t)\right) &= x_0 + \int_{0}^{t} f\left( s,y(s) \right)\:ds,
+\end{align*}
+we essentially desire to show that $K$ has a fixed point for all continuous $y$ on a sufficiently small neighborhood of $0$. This will follow from showing that $K$ is a contraction in the supremum metric on this sufficiently small neighborhood of $0$ whenever $f$ is Lipschitz, which will allow us to use the contraction mapping theorem, as continuous functions on a compact set are complete under the supremum metric.
+\begin{corollary}
+  If $M$ is a manifold, and $X$ a vector field on $M$ with $p\in M$, then there exists an integral curve $c\colon \left( -\ve,\ve \right)\rightarrow M$ such that $c(0) = p$.
+\end{corollary}
+\begin{definition}
+  We call the vector field $X$ \textit{complete} if every integral curve along every point of $p$ can be extended to all of $\R$.
+\end{definition}
+There are many vector fields on manifolds that aren't complete. For instance, if $M = \R^{2}\setminus \set{0}$, and $X = \pd{}{x_1}$, then an integral curve through $\left( 1,0 \right)$ cannot be extended to all of $\R$, as it would hit the missing point at the origin.
+\subsection{Flows and Diffeomorphism Groups}%
+Complete vector fields on manifolds enable us to create diffeomorphisms. Furthermore, it can be shown that if $M$ has dimension greater than or equal to $2$, then $\operatorname{diff}\left( M \right)$ is $k$-transitive, in that any $k$-tuple of distinct elements can be mapped to any other $k$-tuple of distinct elements.
+\begin{definition}
+  A \textit{flow} on $M$ is a one-parameter group of diffeomorphisms of $M$, defined by
+  \begin{align*}
+    \varphi\colon R &\rightarrow \operatorname{diff}\left( M \right)\\
+    t &\mapsto \varphi_t,
+  \end{align*}
+  where $\varphi_t(p) \coloneq c_p(t)$ when $c_p$ is the integral curve through $p$.\newline
+
+  In particular, $\img(\varphi)$ is the flow.
+\end{definition}
+\begin{proposition}
+  If $M$ is a connected manifold with $\Dim\left( M \right) \geq 2$, then $\operatorname{diff}\left( M \right)$ is $k$-transitive.
+\end{proposition}
+\begin{remark}
+  The reason this does not work if $M$ is a $1$-dimensional manifold is that $\R$ is linearly ordered and $S^{1}$ is cyclically ordered.
+\end{remark}
+\begin{proof}
+  We start with the case of $k = 1$.\newline
+
+  Let $p$ and $q$ be in the same chart, $\left( U,\varphi \right)$, where $\varphi = \left( x_1,\dots,x_n \right)$ is the coordinate map. By composing with a series of affine transformations of $\R^{n}$, we may assume that $\varphi(p)$ is the origin and $q$ is on the coordinate axis $x_1$. Furthermore, let $N$ be a compact subset of $\R^{n}$ such that $p,q\in N$.\newline
+
+  Define $f$ to be a smooth bump function on $M$ such that $f$ is $1$ on $N$ and $0$ outside a neighborhood of $N$. Then, if $X = f \pd{}{x_1}$ on $U$ and zero outside, we observe that the integral curve through $p$ passes through $q$, and is a flow with $\varphi(t) = \psi_t(p) = q$ for some $t\in \R$.\newline
+
+  Thus $\operatorname{diff}\left( M \right)$ acts transitively on points in the same chart. Meanwhile, if $p$ and $q$ are not in some chart, we find a finite length ``chain'' of intersecting charts that move from the chart at $p$ to the chart at $q$, then by composing a finite collection of diffeomorphisms, we find our desired diffeomorphism.
+\end{proof}
+\subsection{Differential Forms}%
+Now that we have a (reasonable) understanding of the tangent spaces of a manifold, we now concern ourselves with the dual to the tangent space, which are known as the \textit{cotangent spaces}. Similar to how vector fields emerge from the tangent bundle and its projection onto $M$, the ``dual'' to vector fields, known as differential forms, emerge from the cotangent bundle..\newline
+
+Note that if $T_pM$ is a tangent space that is isomorphic to $\R^{n}$, then the corresponding cotangent space, denoted $T^{\ast}_pM$ is isomorphic to $\left( \R^{n} \right)^{\ast} \coloneq \Hom\left( \R^{n},\R \right)$.\newline
+
+Recall that the basis for $T_pM$ is given by $\left( \pd{}{x_1},\dots,\pd{}{x_n} \right)$ for local coordinates $\left( x_1,\dots,x_n \right)$. The corresponding dual basis for $T_p^{\ast}M$ is established from the dual basis for a vector space $V$. Recall that if $\left( v_1,\dots,v_n \right)$ is a basis for $V$, then $\left( v_1^{\ast},\dots,v_n^{\ast} \right)$ is a basis for $V^{\ast}$, where
+\begin{align*}
+  v_i^{\ast}\left( v_j \right) &= \delta_{i}^{j}\\
+                               &\coloneq \begin{cases}
+                                 1 & i = j\\
+                                 0 & \text{else}.
+                               \end{cases}
+\end{align*}
+The corresponding (formal) basis for $T_p^{\ast}M$ is given by $\left( dx_1,\dots,dx_n \right)$.\newline
+
+Now, the tangent bundle for $M$ is given by
+\begin{align*}
+  TM &= \bigcup_{p\in M} T_pM,
+\end{align*}
+and similarly, the cotangent bundle for $M$ is given by
+\begin{align*}
+  T^{\ast}M &= \bigcup_{p\in M}T_p^{\ast}M.
+\end{align*}
+Next, we concern ourselves with the manifold structure of $T^{\ast}M$. To start, if $U\subseteq M$ is a chart, then $T^{\ast}U \coloneq U\times \left( \R^{n} \right)^{\ast}$. Now we concern ourselves with the transition maps.\newline
+
+Recall from linear algebra that if $A\colon V\rightarrow W$ is a linear map, then $A^{\ast}\colon W^{\ast}\rightarrow V^{\ast}$ is the dual map (or transpose) given by $A^{\ast}\varphi = \varphi\circ A$. Similarly, recall that for two charts $\left( U,\varphi \right)$ and $\left( V,\psi \right)$, the tangent bundle admits the map
+\begin{align*}
+  T\left( \varphi\left( U\cap V \right) \right)&\rightarrow T\left( \psi\left( U\cap V \right) \right),
+  \left( x,v \right) &\mapsto \left( \psi\circ \varphi^{-1}\left( x \right),D_x\left( \psi\circ \varphi^{-1} \right) \right).
+\end{align*}
+Thus, we may consider the transition map for the cotangent bundle $T^{\ast}\left( \psi\left( U\cap V \right) \right)\rightarrow T^{\ast}\left( \varphi\left( U\cap V \right) \right)$ to be the dualization of the transition map for the tangent bundle.
+\begin{definition}
+  A differential (1-)form on $M$ is a smooth section of the projection map $\pi^{\ast}\colon T^{\ast}M\rightarrow M$.\newline
+
+  Locally, if $U\subseteq M$ has coordinates $\left( x_1,\dots,x_n \right)$, then $\left( dx_1,\dots,dx_n \right)$ are coordinates for the cotangent space over $U$, with forms denoted
+  \begin{align*}
+    \omega &= \sum_{i=1}^{n}f_i\:dx_i,
+  \end{align*}
+  where $f_i\in C^{\infty}\left( M \right)$ for all $i$.
+\end{definition}
+\subsubsection{Some Exterior Algebra}%
+One of the most important use cases for differential forms is that they enable us to perform integration on manifolds. This requires a bit of review of exterior algebra.\newline
+
+If $\R^{n}$ admits a basis $\left( v_1,\dots,v_n \right)$, we define the exterior algebra
+\begin{align*}
+  \Lambda\R^{n} &= \bigoplus_{i=1}^{n} \Lambda^{i}\R^{n},
+\end{align*}
+where
+\begin{align*}
+  \Lambda^{0}\left( \R^{n} \right) &\cong \R\\
+  \Lambda^{1}\left( \R^{n} \right) &\cong \R^{n}\\
+  \Lambda^{i}\left( \R^{n} \right) &= \Span\set{v_{i_1}\wedge\cdots\wedge v_{i_k} | i_1 < i_2 < \cdots < i_k,v_i\wedge v_i = 0}.
+\end{align*}
+Thus, we see that for $\sigma\in S_{k}$,
+\begin{align*}
+  v_{i_{\sigma(1)}}\wedge\cdots\wedge v_{i_{\sigma(k)}} &= \sgn\left( \sigma \right) v_{i_1}\wedge\cdots\wedge v_{i_k}.
+\end{align*}
 \section{Notations}%
 \begin{itemize}
   \item A general normed space $V$ will have its norm denoted by $\norm{\cdot}$. If $V = \R^{n}$, then we denote the norm by $ \left\vert \cdot \right\vert $.
