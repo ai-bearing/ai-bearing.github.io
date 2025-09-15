@@ -389,7 +389,7 @@ Given an atlas $\set{\left( U_i,\varphi_i \right)}$, we want to be able to ``glu
   \end{align*}
   the family $\set{f_k}_{k\geq 1}$ is a partition of unity subordinate to $\set{U_i}_{i\in I}$.
 \end{proof}
-\section{Tangent Space, Vector Fields, and Cotangent Space}%
+\section{Tangent Spaces and Vector Fields}%
 Smooth manifolds are able to be embedded into some Euclidean space,\footnote{This is actually a very deep theorem.} so we start by considering them as such.
 \begin{definition}
   If $f\colon M\rightarrow N$ is a smooth map between an $n$-dimensional manifold $M$ and a $k$-dimensional manifold $N$ that are embedded into some Euclidean space $\R^{\ell}$, the \textit{derivative} of $f$ at $p$, defined for charts $\left( U,\varphi \right)$ and $\left( V,\psi \right)$, where $f(U)\subseteq V$, is defined by
@@ -753,7 +753,7 @@ Complete vector fields on manifolds enable us to create diffeomorphisms. Further
 
   Thus $\operatorname{diff}\left( M \right)$ acts transitively on points in the same chart. Meanwhile, if $p$ and $q$ are not in some chart, we find a finite length ``chain'' of intersecting charts that move from the chart at $p$ to the chart at $q$, then by composing a finite collection of diffeomorphisms, we find our desired diffeomorphism.
 \end{proof}
-\subsection{Differential Forms}%
+\section{Differential Forms}%
 Now that we have a (reasonable) understanding of the tangent spaces of a manifold, we now concern ourselves with the dual to the tangent space, which are known as the \textit{cotangent spaces}. Similar to how vector fields emerge from the tangent bundle and its projection onto $M$, the ``dual'' to vector fields, known as differential forms, emerge from the cotangent bundle..\newline
 
 Note that if $T_pM$ is a tangent space that is isomorphic to $\R^{n}$, then the corresponding cotangent space, denoted $T^{\ast}_pM$ is isomorphic to $\left( \R^{n} \right)^{\ast} \coloneq \Hom\left( \R^{n},\R \right)$.\newline
@@ -785,20 +785,23 @@ Recall from linear algebra that if $A\colon V\rightarrow W$ is a linear map, the
 \end{align*}
 Thus, we may consider the transition map for the cotangent bundle $T^{\ast}\left( \psi\left( U\cap V \right) \right)\rightarrow T^{\ast}\left( \varphi\left( U\cap V \right) \right)$ to be the dualization of the transition map for the tangent bundle.
 \begin{definition}
-  A differential (1-)form on $M$ is a smooth section of the projection map $\pi^{\ast}\colon T^{\ast}M\rightarrow M$.\newline
+  A differential ($1$-)form on $M$ is a smooth section of the projection map $\pi^{\ast}\colon T^{\ast}M\rightarrow M$.\newline
 
   Locally, if $U\subseteq M$ has coordinates $\left( x_1,\dots,x_n \right)$, then $\left( dx_1,\dots,dx_n \right)$ are coordinates for the cotangent space over $U$, with forms denoted
   \begin{align*}
     \omega &= \sum_{i=1}^{n}f_i\:dx_i,
   \end{align*}
-  where $f_i\in C^{\infty}\left( M \right)$ for all $i$.
+  where $f_i\in C^{\infty}\left( M \right)$ for all $i$. The differentials $d_{x_i}$ satisfy
+  \begin{align*}
+    d_{x_i}\left( \pd{}{x_j} \right) &= \delta_{i}^{j}.
+  \end{align*}
 \end{definition}
-\subsubsection{Some Exterior Algebra}%
-One of the most important use cases for differential forms is that they enable us to perform integration on manifolds. This requires a bit of review of exterior algebra.\newline
+\subsection{Some Exterior Algebra}%
+One of the most important use cases for differential forms is that they enable us to perform integration on manifolds. This requires a construction known as the exterior algebra.\newline
 
 If $\R^{n}$ admits a basis $\left( v_1,\dots,v_n \right)$, we define the exterior algebra
 \begin{align*}
-  \Lambda\R^{n} &= \bigoplus_{i=1}^{n} \Lambda^{i}\R^{n},
+  \Lambda\left( \R^{n} \right) &= \bigoplus_{i=1}^{n} \Lambda^{i}\left( \R^{n} \right),
 \end{align*}
 where
 \begin{align*}
@@ -806,10 +809,23 @@ where
   \Lambda^{1}\left( \R^{n} \right) &\cong \R^{n}\\
   \Lambda^{i}\left( \R^{n} \right) &= \Span\set{v_{i_1}\wedge\cdots\wedge v_{i_k} | i_1 < i_2 < \cdots < i_k,v_i\wedge v_i = 0}.
 \end{align*}
-Thus, we see that for $\sigma\in S_{k}$,
+In other words, the family of $\Lambda^{k}\left( \R^{n} \right)$ are alternating and multilinear. In fact, the exterior algebra is the ``universal'' algebra for alternating multilinear maps. The multiplication in $\Lambda\left( \R^{n} \right)$ is given by the exterior product,
+\begin{align*}
+  \left( v_1\wedge\cdots\wedge v_k,w_1\wedge\cdots\wedge w_{\ell} \right) &\mapsto v_1\wedge \cdots\wedge v_k\wedge w_1\wedge\cdots\wedge w_{\ell}.
+\end{align*}
+Additionally, we see that for $\sigma\in S_{k}$,
 \begin{align*}
   v_{i_{\sigma(1)}}\wedge\cdots\wedge v_{i_{\sigma(k)}} &= \sgn\left( \sigma \right) v_{i_1}\wedge\cdots\wedge v_{i_k}.
 \end{align*}
+We then consider differential $k$-forms as $C^{\infty}$ maps from $\R^{n}$ to $\Lambda^{k}\left( \R^{n} \right)$. We call this space $\mathcal{A}^{k}$,
+\begin{align*}
+  \mathcal{A}^{k}\coloneq \set{\omega\colon \R^{n}\rightarrow \Lambda^{k}\left( \R^{n} \right) | \omega\text{ is }C^{\infty}}.
+\end{align*}
+Note that we can express $\mathcal{A}^{k} = C^{\infty}\left( \R^{n} \right) \otimes \Lambda^{k}\left( \R^{n} \right)$. Elements of $\mathcal{A}^{k}$ are of the form
+\begin{align*}
+  \omega &= \sum_{I} f_{I} dx_{i_1}\wedge\cdots\wedge dx_{i_k},
+\end{align*}
+where $I$ is an indexing set. Notice that $\mathcal{A}^{0}\left( \R^{n} \right) = C^{\infty}\left( \R^{n} \right)$. 
 \section{Notations}%
 \begin{itemize}
   \item A general normed space $V$ will have its norm denoted by $\norm{\cdot}$. If $V = \R^{n}$, then we denote the norm by $ \left\vert \cdot \right\vert $.
