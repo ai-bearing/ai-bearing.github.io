@@ -70,6 +70,9 @@ In particular, we develop the smooth structure by making sure all such pairs $\v
   From now on, we use ``manifold'' to refer to smooth manifolds, and will say \textit{topological} manifolds if the manifold does not necessarily admit a smooth structure.
 \end{note}
 \begin{definition}
+  A \textit{submanifold} of a manifold $M$ with dimension $ n + m $ is a subset $N\subseteq M$ such that for each $p\in N$, there is a chart $\varphi\colon U\supseteq M\rightarrow \R^{n+m}$ with $p\in U$ and $\varphi\left( U\cap N \right) = \R^{n}\times \set{0}\subseteq \R^{n + m}$.
+\end{definition}
+\begin{definition}
   A map $f\colon M\rightarrow N$ between manifolds is called \textit{smooth} if for any chart $\left( U,\varphi_U \right)$ in $M$ and corresponding chart $\left( V,\varphi_V \right)$ in $N$, the map $\varphi_V\circ f \circ \varphi_U^{-1}\colon \R^n\rightarrow \R^k$ is (sufficiently) continuously differentiable.\newline
 
   The function $f$ is a \textit{diffeomorphism} if $f$ is a smooth bijection with smooth inverse, and we say the manifolds $M$ and $N$ are diffeomorphic if they admit a diffeomorphism.
@@ -516,6 +519,9 @@ Now that we have established that we can consider manifolds as either standalone
 
   We say $q\in N$ is a \textit{critical value} if $f^{-1}\left( \set{q} \right)$ contains a critical point for $f$. Else, we say $q$ is a \textit{regular value}.
 \end{definition}
+\begin{remark}
+  To show that $D_pf\colon T_pM\rightarrow T_{f(p)}N$ is surjective, we take an element of $T_{f(p)}N$ (i.e., a smooth map $\gamma\colon \R\rightarrow N$) and show that there is a smooth map $\delta\colon \R\rightarrow M$ such that $ f\circ \delta = \gamma $ on a neighborhood of $f(p)$.
+\end{remark}
 The study of critical points is actually very vital in understanding the underlying manifold's global topology. This is the field known as Morse theory, and we will discuss it later in the course.
 \begin{definition}
   Let $f\colon M\rightarrow \R$ be a smooth function, with $M$ a manifold. We say $f$ is \textit{Morse} if all the critical points of $f$ are isolated, and the critical points are nondegenerate, in the sense that the Hessian matrix, given by
@@ -809,7 +815,24 @@ where
   \Lambda^{1}\left( \R^{n} \right) &\cong \R^{n}\\
   \Lambda^{i}\left( \R^{n} \right) &= \Span\set{v_{i_1}\wedge\cdots\wedge v_{i_k} | i_1 < i_2 < \cdots < i_k,v_i\wedge v_i = 0}.
 \end{align*}
-In other words, the family of $\Lambda^{k}\left( \R^{n} \right)$ are alternating and multilinear. In fact, the exterior algebra is the ``universal'' algebra for alternating multilinear maps. The multiplication in $\Lambda\left( \R^{n} \right)$ is given by the exterior product,
+In other words, the family of $\Lambda^{k}\left( \R^{n} \right)$ are alternating and multilinear. In fact, the exterior algebra is the ``universal'' algebra for alternating multilinear maps. 
+\begin{theorem}
+  If $t\colon V\times\cdots\times V \rightarrow W$ is an alternating $k$-multilinear map, then if we define
+  \begin{align*}
+    \iota\colon V\times\cdots\times V &\hookrightarrow \Lambda^{k}\left( V \right)\\
+    \left( v_1,\dots,v_k \right) &\mapsto v_1\wedge\cdots\wedge v_k,
+  \end{align*}
+  then there is a unique linear map $T\colon \Lambda^{k}\left( V \right)\rightarrow W$ such that $T\circ\iota = t$. 
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADUAdTvAW3m4BjKBBxxufeAAJ2IAL6l0mXPkIoATOSq1GLNtwAydXgCModAHrAA1nIAU7AJTzFIDNjwEim9dvrNWRBAAdXltGCgAc3giUAAzACcIXiQyEBwIJABGan89IO58HDoXeKSUxDSMpE0QBjoTGAYABWVPNRAErEiACxwQXN1A9NKQROTs6mrEWrzhgBUwuSA
+\begin{tikzcd}
+V\times\cdots\times V \arrow[rr, "\iota"] \arrow[rrdd, "t"'] &  & \Lambda^{k}(V) \arrow[dd, "T"] \\
+                                                             &  &                                \\
+                                                             &  & W                             
+\end{tikzcd}
+  \end{center}
+\end{theorem}
+The multiplication in $\Lambda\left( \R^{n} \right)$ is given by the exterior product,
 \begin{align*}
   \left( v_1\wedge\cdots\wedge v_k,w_1\wedge\cdots\wedge w_{\ell} \right) &\mapsto v_1\wedge \cdots\wedge v_k\wedge w_1\wedge\cdots\wedge w_{\ell}.
 \end{align*}
@@ -817,15 +840,110 @@ Additionally, we see that for $\sigma\in S_{k}$,
 \begin{align*}
   v_{i_{\sigma(1)}}\wedge\cdots\wedge v_{i_{\sigma(k)}} &= \sgn\left( \sigma \right) v_{i_1}\wedge\cdots\wedge v_{i_k}.
 \end{align*}
-We then consider differential $k$-forms as $C^{\infty}$ maps from $\R^{n}$ to $\Lambda^{k}\left( \R^{n} \right)$. We call this space $\mathcal{A}^{k}$,
+\begin{definition}
+  A $k$-form on a finite-dimensional real vector space $V$ is an alternating $k$-multilinear map
+  \begin{align*}
+    \omega\colon V^{k}\rightarrow \R.
+  \end{align*}
+  We denote the set of all $k$-forms on $V$ by $\mathcal{A}^{k}\left( V \right)$.
+\end{definition}
+\begin{proposition}
 \begin{align*}
-  \mathcal{A}^{k}\coloneq \set{\omega\colon \R^{n}\rightarrow \Lambda^{k}\left( \R^{n} \right) | \omega\text{ is }C^{\infty}}.
+  \mathcal{A}^{k}\left( V \right)\cong \Lambda^{k}\left( V^{\ast} \right).
 \end{align*}
-Note that we can express $\mathcal{A}^{k} = C^{\infty}\left( \R^{n} \right) \otimes \Lambda^{k}\left( \R^{n} \right)$. Elements of $\mathcal{A}^{k}$ are of the form
+\end{proposition}
+\begin{proof}
+  Apply the universal property.
+\end{proof}
+\subsection{A Coordinate-Free Definition of the Cotangent Space}%
+Technically, the ``cotangent space'' that we defined above with the formal coordinates $\left( dx_1,\dots,dx_n \right)$ is not the real, coordinate-free definition of the cotangent space. In order to define the cotangent space in a coordinate-free fashion, we need to go back to the definition of the tangent space using germs of functions $\mathcal{C}_{p}$.\newline
+
+Recall that the tangent space of $M$ is defined by an equivalence relation on $W_p$, which is the space of germs of smooth maps $\gamma\colon \R\rightarrow M$ where $\gamma(0) = p$. Specifically, the equivalence relation $\left[ g_1 \right] \sim \left[ g_2 \right]$ for two germs $g_1,g_2\colon \R\rightarrow M$ with $0\mapsto p$ is given by $\left( \varphi\circ g_1 \right)'(0) = \left( \varphi\circ g_2 \right)'(0)$ for all $ \overline{\varphi}\in \mathcal{C}_p$.\newline
+
+Inside $\mathcal{C}_p$, we can look at the ideal $J_p$ defined by
 \begin{align*}
-  \omega &= \sum_{I} f_{I} dx_{i_1}\wedge\cdots\wedge dx_{i_k},
+  J_p &= \set{ \overline{\varphi}\in \mathcal{C}_p | \varphi(p) = 0}.
 \end{align*}
-where $I$ is an indexing set. Notice that $\mathcal{A}^{0}\left( \R^{n} \right) = C^{\infty}\left( \R^{n} \right)$. 
+Notice that $J_p$ is a maximal ideal in $\mathcal{C}_p$, as every germ in $\mathcal{C}_p$ differs from an element of $J_p$ by a real number. We then define $J_p^2$ to be functions of the form $\varphi\psi$, where $\varphi,\psi\in J_p$. In essence, elements of $J_p^2$ vanish to (at least) order $2$ at $p$.
+\begin{definition}
+  The \textit{cotangent space} of $p$ at $M$ is given by
+  \begin{align*}
+    T_p^{\ast}M &= J_p/J_p^2.
+  \end{align*}
+\end{definition}
+\begin{definition}
+  If $\varphi\in \mathcal{C}_p$, then the \textit{exterior derivative} of $\varphi$ is defined by
+  \begin{align*}
+    d\varphi &= \left( \varphi - \varphi(p) \right) + J_p^2.
+  \end{align*}
+\end{definition}
+In order to see that this is actually the derivative (i.e., the best linear approximation), we note that by Taylor's Theorem, if $f\colon \R\rightarrow \R$ is a smooth function, we have
+\begin{align*}
+  f(t) &\approx f(0) + c_1 t + c_2t^2 + O\left(t^3\right)
+  \intertext{so}
+  f(t)-f(0) &\approx c_1 t + \underbrace{c_2t^2 + O\left( t^3 \right)}_{\in J_p^2}\\
+  f(t) - f(0) + J_p^2 &= c_1t + J_p^2.
+\end{align*}
+\begin{proposition}
+  The exterior derivative satisfies $d\left( \varphi\psi \right) = d\left( \varphi \right)\psi + \varphi d\left( \psi \right)$.
+\end{proposition}
+\begin{proof}
+  We must show that
+  \begin{align*}
+    d\left( \varphi \right)\psi + \varphi d\left( \psi \right) - d\left( \varphi\psi \right) &\in J_p^2.
+  \end{align*}
+  Expanding definitions, we have
+  \begin{align*}
+    d\left( \varphi \right)\psi + \varphi d\left( \psi \right) - d\left( \varphi\psi \right) &= \psi\left( \varphi - \varphi(p) \right) + \varphi\left( \psi-\psi(p) \right) - \left( \varphi\psi - \varphi(p)\psi(p) \right)\\
+                                                                                             &= \left( \varphi-\varphi(p) \right) \left( \psi-\psi(p) \right)\\
+                                                                                             &\in J_p^2.
+  \end{align*}
+\end{proof}
+We now encounter a very important question: does this definition of the cotangent space comport with the definition above as the dual of the tangent space? The answer is yes.
+\begin{proposition}
+  Let $d\varphi\in T_p^{\ast}\left( M \right)$. Define the map
+  \begin{align*}
+    \alpha\colon T_p^{\ast}\left( M \right) &\rightarrow \left( T_pM \right)^{\ast}\\
+    d\varphi &\mapsto \set{ \left[ \gamma \right]\mapsto \left( \varphi\circ \gamma \right)'\left( 0 \right) }.
+  \end{align*}
+  Furthermore, the map $\alpha$ satisfies the following.
+  \begin{enumerate}[(a)]
+    \item $\alpha$ is linear and well-defined.
+    \item $\alpha$ is natural, in  the sense that if $f\colon \left( M,p \right)\rightarrow \left( N,q \right)$ is a smooth map, then the following diagram commutes:
+      \begin{center}
+        % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRABUB9YARwF8AesAA6wunBx8AciD6l0mXPkIoATOSq1GLNl2BpBIsRL4BZWfJAZseAkTKrN9Zq0QhRDGADMcACi48UqIATlgA5gAWOACUQqLikhYKNspE6o7UzjpuHt5+XGimIeFRsUYJfLKaMFBh8ESgXsEQALZIZCA4EEgAjJnarhzcXobxJkkgTa1I6p3diADM1Ax0AEYwDAAKirYqIKGROCD9Lmy5Pv6cXsWHZWOJco3NbYgdXTPLaxvbKXZuB1FjlpTjkxAw0BE6BMpi8+nMkEtgdl3GCIVC+BQ+EA
+\begin{tikzcd}
+  T_{q}^{\ast}N \arrow[rr, "T_{f}^{\ast}"] \arrow[dd, "\alpha_{N,q}"']  &  & T_{p}^{\ast}M \arrow[dd, "\alpha_{M,p}"] \\
+                                                                &  &                                    \\
+\left(T_qN\right)^{\ast} \arrow[rr, "\left(T_f\right)^{\ast}"'] &  & \left(T_pM\right)^{\ast}          
+\end{tikzcd}
+      \end{center}
+      Here, $T_f^{\ast}\left( d\varphi \right) = d\left( \varphi \circ f \right)$.
+    \item $\alpha$ is an isomorphism.
+    \item In local coordinates $\left( x_1,\dots,x_n \right)$ about $p$, we have
+      \begin{align*}
+        d\varphi &= \sum_{i=1}^{n} \pd{\varphi}{x_i}dx_i.
+      \end{align*}
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(a)]
+    \item This follows from the definition of the tangent space (and specifically, the equivalence relation between germs $\gamma\colon \R\rightarrow M$ that defined the tangent space). 
+    \item Set $\omega_{\varphi} = \set{\left[ \gamma \right]\mapsto \left( \varphi\circ \gamma \right)'\left( 0 \right)}$. Then, we observe that, if $d\varphi\in T_q^{\ast}N$ and $\left[ \gamma \right]\in T_{p}M$, that
+      \begin{align*}
+        \left( Tf \right)^{\ast}\circ \alpha_{N,q}\left( d\varphi \right)\left[ \gamma \right] &= \left( Tf \right)^{\ast} \omega_{\varphi}\left( \left[ \gamma \right] \right)\\
+                                                                                               &= \omega_{\varphi}\left( Tf\left( \left[ \gamma \right] \right) \right)\\
+                                                                                               &= \omega_{\varphi}\left( \left[ f\circ\gamma \right] \right)\\
+                                                                                               &= \left( \varphi\circ f \circ \gamma \right)'(0).
+      \end{align*}
+      Similarly, we have
+      \begin{align*}
+        \alpha_{M,p}\circ T^{\ast}f\left( d\varphi \right)\left( \left[ \gamma \right] \right) &= \alpha_{M,p}\left( d\left( \varphi\circ f \right) \right) \left( \left[ \gamma \right] \right)\\
+                                                                                               &= \omega_{\varphi\circ f}\left( \left[ \gamma \right] \right)\\
+                                                                                               &= \left( \varphi\circ f \circ \gamma \right)'(0).
+      \end{align*}
+  \end{enumerate}
+\end{proof}
 \section{Notations}%
 \begin{itemize}
   \item A general normed space $V$ will have its norm denoted by $\norm{\cdot}$. If $V = \R^{n}$, then we denote the norm by $ \left\vert \cdot \right\vert $.

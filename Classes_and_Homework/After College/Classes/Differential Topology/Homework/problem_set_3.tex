@@ -24,7 +24,7 @@
 \begin{solution}
   Let $\left( U,\varphi \right)$ be a chart on $M$ with $\varphi\left( U \right)\cong \R^{m}$, and $\left( V,\psi \right)$ a chart on $N$ with $\psi\left( V \right)\cong \R^{n}$ and $f\left( U \right)\subseteq V$.\newline
 
-  Define a chart on $M\times N$ corresponding to $U\times V$, and notice that the graph of $f|_{U}$ is a subset of $U\times V$.
+  Let $U\times V$ be the corresponding open set in $M\times N$, and let $\left( p,q \right)\in U\times V$. We will define a coordinate map on $\rho\colon U\times V\rightarrow \R^{m}\times \R^{n}$ given by $\rho\left( p,q \right) = \left( \varphi(p),\psi(q) - \psi\left( f(p) \right) \right)$. We observe in particular that if $\left( p,q \right) = \left( p,f(p) \right)\in \Gamma(f)\cap \left( U\times V \right)$, then $\rho\left( p,f(p) \right) = \left( \varphi(p),0 \right)$, meaning that $\rho$ is a smooth chart for $\Gamma(f)$.
 \end{solution}
 \begin{problem}[Problem 2]
   Let $\operatorname{U}(n)$ be the set of unitary complex $n\times N$ matrices. Write $\operatorname{SU}\left( n \right)\leq \operatorname{U}(n)$ for the kernel of the determinant map.
@@ -38,16 +38,19 @@
 \begin{solution}\hfill
   \begin{enumerate}[(a)]
     \item Since complex $1\times 1$ matrices are diffeomorphic to $\C$, we see that $x\in \operatorname{U}(1)$ if and only if $\left\vert x \right\vert^2 = 1$, meaning $\left\vert x \right\vert = 1$, so $x = e^{i\theta}$ for some $\theta$. In particular, this means that the assignment $x\mapsto e^{i\theta}$ gives a diffeomorphism between $S^{1}$ and $\operatorname{U}(1)$.
-    \item Consider the self-map $f\colon \Mat_{n}\left( \C \right)\rightarrow \Mat_{n}\left( \C \right)\cong \C^{n^2}$ given by $f(A) = A^{\ast}A$. Note that this maps $\Mat_{n}\left( \C \right)$ to positive semi-definite matrices $\Mat_{n}\left( \C \right)^{+}$.\newline
+    \item Consider the self-map $f\colon \Mat_{n}\left( \C \right)\rightarrow \Mat_{n}\left( \C \right)\cong \C^{n^2}$ given by $f(A) = A^{\ast}A$. Note that this maps $\Mat_{n}\left( \C \right)$ to positive semi-definite (Hermitian) matrices $\Mat_{n}\left( \C \right)^{+}\subseteq \Mat_{n}\left( \C \right)_{\operatorname{s.a.}}$.\newline
 
-      We want to calculate the derivative of $f$ by taking
+      Observe that an element of the tangent space to $A\in \Mat_{n}\left( \C \right)$ is given by $ s_B = A + tB $, where $t\in \R$ and $B\in \Mat_{n}\left( \C \right)$. Applying $f$, we get
       \begin{align*}
-        f\left( A + H \right) - f\left( A \right) &= \left( A+H \right)^{\ast}\left( A+H \right) - A^{\ast}A\\
-                                                  &= \left( A^{\ast} + H^{\ast} \right)\left( A + H \right) - A^{\ast}A\\
-                                                  &= A^{\ast}A + H^{\ast}A + A^{\ast}H + H^{\ast}H - A^{\ast}A\\
-                                                  &= H^{\ast}A + A^{\ast}H + H^{\ast}H.
+        f\left( A + tB \right) &= A^{\ast}A + t\left( A^{\ast}B + B^{\ast}A \right) + t^2 B^{\ast}B;
       \end{align*}
-      Dividing out by $\norm{H}_{\op}$, we find that $D_{A}(f) = A + A^{\ast}$. Now, since $I$ is of full rank, so too is $\frac{1}{2}I$, meaning that $D_{\frac{1}{2}I}(f) = I$, and thus $f$ has a locally defined inverse about $I$. In particular, this means that $f^{-1}\left( \set{I} \right)$ consists entirely of regular points, or that $I$ is a regular value for $f$. Thus, $\operatorname{U}(n)$ is a smooth manifold.
+      meaning that $D_Af$ applied to $s_B$ yields $A^{\ast}A + t\left( A^{\ast}B + B^{\ast}A \right)$.\newline
+
+      Note that if $A$ is unitary and $B$ is Hermitian, then $\left( AB \right)^{\ast}\left( AB \right) = B^{\ast}B$, and
+      \begin{align*}
+        A^{\ast}A + t\left( A^{\ast}\left( AB \right) + \left( AB \right)^{\ast}A \right) &= I + 2tB,
+      \end{align*}
+      meaning that $D_Af$ is surjective onto the tangent space at the identity when $A$ is unitary (after a scaling), so $I$ is a regular value for $f$.
     \item We view $S^{3}$ as a subset of $\C^{2}$, so that $S^{3}$ consists of all $\left( z_1,z_2 \right)$ such that
       \begin{align*}
         \left\vert z_1 \right\vert^2 + \left\vert z_2 \right\vert^2 &= 1.
@@ -103,11 +106,11 @@
   The Frobenius Theorem says that a distribution $D$ on $M$ is completely integrable if and only if it is involutive.
   \begin{enumerate}[(a)]
     \item Show that if $D$ is a completely integrable distribution, then $D$ is involutive.
-    \item We say vector fields $X$ and $Y$ commute if $ \left[ X,Y \right] = 0 $. For fixed vector fields $X$ and $Y$, write $\phi_t$ and $\psi_t$ for the corresponding flows. Show that the following are equivalent:
+    \item We say vector fields $X$ and $Y$ commute if $ \left[ X,Y \right] = 0 $. For fixed vector fields $X$ and $Y$, write $\varphi_t$ and $\psi_t$ for the corresponding flows. Show that the following are equivalent:
       \begin{enumerate}[(i)]
         \item $X$ and $Y$ commute;
-        \item $Y$ is invariant under $\phi_t$;
-        \item the flows $\phi_t$ and $\psi_t$ commute, so that $\psi_s\circ \phi_t = \phi_t\circ \psi_s$ for all $t$ and $s$ where defined.
+        \item $Y$ is invariant under $\varphi_t$;
+        \item the flows $\varphi_t$ and $\psi_t$ commute, so that $\psi_s\circ \varphi_t = \varphi_t\circ \psi_s$ for all $t$ and $s$ where defined.
       \end{enumerate}
     \item Assume $D$ is $r$-dimensional. Choose local coordinates $\set{x_1,\dots,x_n}$ near a point $p$ and $r$-linearly independent vector fields $Y_1,\dots,Y_r$ near $p$. Write $Y_i$ as
       \begin{align*}
@@ -126,11 +129,61 @@
 \end{problem}
 \begin{solution}\hfill
   \begin{enumerate}[(a)]
-    \item Let $p\in N\subseteq M$, and let $\left( U;x_1,\dots,x_r \right)$ be a chart in $N$ such that $ \pd{}{x_1},\dots, \pd{}{x_r} $ forms a basis for $T_qN$ for any $q\in U$. Letting $X_1,\dots,X_r$ be linearly independent vector fields for $D$, we observe that, for any $f\in C^{\infty}\left( N \right)$,
+    \item Let $\left( U;x_1,\dots,x_r \right)$ be a chart about $p\in N$ that extends to coordinates $x_1,\dots,x_n$. Let $\pi\colon M\rightarrow N$ is the projection onto $N$ that takes coordinates $x_1,\dots,x_n$ and maps the first $r$ to $x_1,\dots,x_r$, and the rest to $0$. Then if $p\in U$, we have that $\pi(p) = p$, meaning that $D_p\left( \pi \right) = D_p\left( \id \right) = \id$.\newline
+
+      Notice then that if $X$ is a vector field on $M$ and $f\colon N\rightarrow \R$ is a $C^{\infty}$ function, then for any $p\in N$,
       \begin{align*}
-        \left[ X_k,X_{\ell} \right](f) &= \sum_{i=1}^{r} \left( \sum_{j=1}^{r} a_{ki}(q) \pd{a_{\ell i}}{x_j}(q) - a_{\ell i}(q) \pd{a_{ki}}{x_j}(q)  \right) \pd{f}{x_i}(q)
+        X\left( f\circ\pi \right)(p) &= \left( D_{p}\pi X \right)(f)(p)\\
+                                     &= X(f)(p).
       \end{align*}
-      Observe that if we extend $ \pd{}{x_1},\dots, \pd{}{x_r} $ to a basis for $T_qM$, then via this computation, $ \pd{}{x_1},\dots, \pd{}{x_r} $ remains invariant under the calculation of the Lie bracket, so $D_p$ is involutive.
+      Therefore, if $X_1,\dots,X_r$ are vector fields on $M$ about $p$ that define our distribution, and $f\colon N\rightarrow \R$ is a $C^{\infty}$ function, then
+      \begin{align*}
+        \left[ X_k,X_{\ell} \right]\left( f\circ\pi \right)(p) &= X_{k}\left( X_{\ell}(f\circ\pi) \right)(p) - X_{\ell}\left( X_k\left( f\circ\pi \right) \right)(p)\\
+                                                               &= X_k\left( \left( D_{p}\pi X_{\ell} \right)(f) \right)(p) - X_{\ell}\left( \left( D_p\pi X_k \right)(f) \right)(p)\\
+                                                               &= X_k\left( X_{\ell}\left( f \right) \right)(p) - X_{\ell}\left( X_k\left( f \right) \right)(p)\\
+                                                               &= \left[ X_{k},X_{\ell} \right]\left( f \right)(p),
+      \end{align*}
+      meaning that $\left[ X_k,X_{\ell} \right]$ is contained in our distribution.
+  \end{enumerate}
+\end{solution}
+\begin{problem}
+  Let $i,j,k$ be formal symbols that satisfy the relations $i^2 = j^2 = k^2 = ijk = -1$. The $\R$-vector space over $\set{1,i,j,k}$ together with these multiplication rules is called the quarternion algebra $ \mathbb{H} $, which is diffeomorphic to $\R^{4}$. A typical element is $a + bi + cj + dk$, where $a,b,c,d\in \R$. Multiplication is defined by the distributive law, and real scalars commute with everything.
+  \begin{enumerate}[(a)]
+    \item Show that the multiplicative structure on $ \mathbb{H} $ is completely determined by the rules above.
+    \item The conjugate of $q = a + bi + cj + dk$ is $ \overline{q} = a - bi - cj - dk $. A unit quaternion is one where $ \overline{q} q = 1 $. Show that the unit quaternions are diffeomorphic to $S^{3}$.
+    \item Find the $ 2\times 2 $ unitary complex matrices representing $i,j,k$ with correct multiplicative structure so that the unit quaternions are explicitly diffeomorphic to $\operatorname{SU}(2)$.
+    \item Show that the unit quaternions act on $\R^{3}$, which consists of the vector space spanned by $i,j,k$.
+    \item Writing a vector $ v\in \R^{3} $ as $ xi + yj + zk $, show that conjugation by a unit quaternion preserves $x^2 + y^2 + z^2$.
+    \item Show that every orthogonal transformation of determinant one, known as $ \operatorname{SO}(3) $, is realized by quaternionic conjugation. Show that the kernel of the map $ \operatorname{SU}(2)\rightarrow \operatorname{SO}(3) $ has order two.
+    \item Show that $ \operatorname{SO}(3) $ is diffeomorphic to $ \R \mathbb{P}^{3} $.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item We must verify that the multiplication table for $ 1,i,j,k $ is completely determined by the rules shown above. To this end, observe that, if we desire to know the value of $ x = ij $, then $ xk = ijk = -1 $, so that $ xk = -1 $. Then, multiplying on the right by $k$, we then get that $ xk^2 = -k = x\left( -1 \right) $, so $x = k$. Similarly, we then find that $ jk = i $ and $ ki = j $.\newline
+
+      With the cyclic multiplication in mind, we may then compute $ ji = j\left( jk \right) =j^2 k = -k$, and similarly we find that the anti-cyclic multiplication table yields $ ik = -j $ and $ kj = -i $.
+    \item Notice that $S^{3}\subseteq \R^{4}$ is given by
+      \begin{align*}
+        S^{3} &= \set{\left( x_1,x_2,x_3,x_4 \right) | x_1^2 + x_2^2 + x_3^2 + x_4^2 = 1}.
+      \end{align*}
+      If $q = a + bi + cj + dk$ is a unit quaternion, then by assigning $x_1 = a$, $x_2 = b$, $x_3 = c$, and $x_4 = d$, then we see that
+      \begin{align*}
+        1 &= \overline{q} q\\
+          &= \left( a -bi-cj-dk \right)\left( a + bi + cj + dk \right)\\
+          &= a^2 + b^2 + c^2 + d^2,
+      \end{align*}
+      so that $q$ is uniquely assigned to an element of $S^{3}$. Thus, $S^{3}$ is diffeomorphic to the unit quaternions.
+    \item We start by associating $1$ to the identity,
+      \begin{align*}
+        \1 &= \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix}
+      \end{align*}
+      We then need to find three matrices $I,J,K$ (note here that $I$ does not denote the identity) subject to the constraints of:
+      \begin{itemize}
+        \item $I^2 = J^2 = K^2 = IJK = -\1$;
+        \item $I^{\ast}I = J^{\ast}J = K^{\ast}K = \1$;
+        \item $\det\left( I \right) = \det\left( J \right) = \det\left( K \right) = 1$;
+      \end{itemize}
   \end{enumerate}
 \end{solution}
 \end{document}
