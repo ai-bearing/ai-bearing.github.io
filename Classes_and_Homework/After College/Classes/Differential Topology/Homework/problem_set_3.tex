@@ -112,9 +112,9 @@
         \item $Y$ is invariant under $\varphi_t$;
         \item the flows $\varphi_t$ and $\psi_t$ commute, so that $\psi_s\circ \varphi_t = \varphi_t\circ \psi_s$ for all $t$ and $s$ where defined.
       \end{enumerate}
-    \item Assume $D$ is $r$-dimensional. Choose local coordinates $\set{x_1,\dots,x_n}$ near a point $p$ and $r$-linearly independent vector fields $Y_1,\dots,Y_r$ near $p$. Write $Y_i$ as
+    \item Assume $D$ is $r$-dimensional. Choose local coordinates $\set{x_1,\dots,x_n}$ near a point $p$ and $r$ linearly independent vector fields $Y_1,\dots,Y_r$ near $p$. Write $Y_i$ as
       \begin{align*}
-        \sum_{j=1}^{n} a_{ij} \pd{}{x_j},
+        Y_{i} &= \sum_{j=1}^{n} a_{ij} \pd{}{x_j},
       \end{align*}
       and show that there is some permutation of the coordinates such that the $r\times r$ matrix $\left( a_{ij} \right)_{1\leq i,j\leq r}$ is invertible near $p$.
     \item Let $\left( b_{ij} \right)_{1\leq i,j\leq r}$ be the inverse of the smoothly varying family of matrices $\left( a_{ij} \right)_{1\leq i,j\leq r}$ from the previous part, and let $X_i = \sum_{j}b_{ij}Y_j$. Show that
@@ -129,21 +129,99 @@
 \end{problem}
 \begin{solution}\hfill
   \begin{enumerate}[(a)]
-    \item Let $\left( U;x_1,\dots,x_r \right)$ be a chart about $p\in N$ that extends to coordinates $x_1,\dots,x_n$. Let $\pi\colon M\rightarrow N$ is the projection onto $N$ that takes coordinates $x_1,\dots,x_n$ and maps the first $r$ to $x_1,\dots,x_r$, and the rest to $0$. Then if $p\in U$, we have that $\pi(p) = p$, meaning that $D_p\left( \pi \right) = D_p\left( \id \right) = \id$.\newline
+    \item Let $\left( U;x_1,\dots,x_r \right)$ be a chart in $N$ for $p$ such that $D_p = \Span\set{ \pd{}{x_1},\dots, \pd{}{x_r} }$. Then,
+      \begin{align*}
+        \left[ \pd{}{x_i},\pd{}{x_j} \right] &= \delta_{i}^{j} \pd{}{x_i},
+      \end{align*}
+      meaning that $D_p$ is closed under involution.
+    \item Let $X$ and $Y$ be commuting vector fields. Our aim is to show that
+      \begin{align*}
+        \lim_{t\rightarrow 0} \frac{\left( \varphi_t \right)_{\ast}Y - Y}{t}(f) &= \left[ X,Y \right](f),
+      \end{align*}
+      where $\left( \varphi_t \right)_{\ast}$ is the pushforward of $\varphi_t$. To this end, observe that at $p$, the pushforward $\left( \left( \varphi_t \right)_{\ast}Y_p \right)(f)$ will map $Y_p$ from $T_pM$ to $T_{\varphi_t(p)}$, meaning that $\left( \left( \varphi_t \right)_{\ast} Y_p \right)(f) = Y_{\varphi_t(p)} \left( f\circ \varphi_{-t} \right)$. In particular, this means that to ``return to'' $p$, we must pre-compose with $\varphi_t$, implying that $\left( \left( \varphi_t \right)_{\ast}Y \right)(f) = \varphi_t^{\ast}Y\left( \varphi_{-t}^{\ast}f \right)$.\newline
 
-      Notice then that if $X$ is a vector field on $M$ and $f\colon N\rightarrow \R$ is a $C^{\infty}$ function, then for any $p\in N$,
+      Evaluating the limit, we see that
       \begin{align*}
-        X\left( f\circ\pi \right)(p) &= \left( D_{p}\pi X \right)(f)(p)\\
-                                     &= X(f)(p).
+        \lim_{t\rightarrow 0} \frac{\left( \left( \varphi_t \right)_{\ast}Y \right)(f) - Y(f)}{t} &= \lim_{t\rightarrow 0} \frac{\varphi_t^{\ast}\left( Y\left( \varphi_{-t}^{\ast}f \right) \right) - Y\left( \varphi_{-t}^{\ast}f \right)}{t} + \frac{Y\left( f\circ \varphi_{-t} \right) - Y(f)}{t}\\
+                                                                                                  &= X\left( Y(f) \right) + Y\left( \lim_{t\rightarrow 0} \frac{\varphi_{-t}^{\ast}f - f}{t} \right)\\
+                                                                                                  &= X\left( Y(f) \right) - Y\left( \lim_{t\rightarrow 0} \frac{\varphi_t^{\ast}f - f}{t} \right)\\
+                                                                                                  &= \left[ X,Y \right](f).
       \end{align*}
-      Therefore, if $X_1,\dots,X_r$ are vector fields on $M$ about $p$ that define our distribution, and $f\colon N\rightarrow \R$ is a $C^{\infty}$ function, then
+      In particular, if $ \left[ X,Y \right](f) = 0 $, then we must have that $Y$ is invariant under the pushforward $\left( \varphi_t \right)^{\ast}$.\newline
+
+      Let $Y$ be invariant under the flow $\varphi_t$ (so since $X$ and $Y$ commute, $X$ is invariant under the flow $\psi_s$). For a fixed $s$, define $\gamma_s(t) = \left( \psi_s\circ \varphi_t \right)(p)$, so that $\gamma_s(0) = \psi_s(p)$. Using the chain rule, we compute
       \begin{align*}
-        \left[ X_k,X_{\ell} \right]\left( f\circ\pi \right)(p) &= X_{k}\left( X_{\ell}(f\circ\pi) \right)(p) - X_{\ell}\left( X_k\left( f\circ\pi \right) \right)(p)\\
-                                                               &= X_k\left( \left( D_{p}\pi X_{\ell} \right)(f) \right)(p) - X_{\ell}\left( \left( D_p\pi X_k \right)(f) \right)(p)\\
-                                                               &= X_k\left( X_{\ell}\left( f \right) \right)(p) - X_{\ell}\left( X_k\left( f \right) \right)(p)\\
-                                                               &= \left[ X_{k},X_{\ell} \right]\left( f \right)(p),
+        D\gamma_s\left( \pd{}{t} \right) &= D\psi_s\circ D_p\varphi_t\left( \pd{}{t} \right)\\
+                                         &= D\psi_s X_{\varphi_t(p)}\\
+                                         &= X_{\left( \psi_s\circ \varphi_t \right)(p)}.
       \end{align*}
-      meaning that $\left[ X_k,X_{\ell} \right]$ is contained in our distribution.
+      Therefore, $\gamma$ is an integral curve for $X$ about $\psi_s(p)$, meaning that $\varphi_t\left( \psi_s(p) \right) = \gamma(t)$. Thus, the flows commute.\newline
+
+      Finally, if the integral curves $\varphi_t$ and $\psi_s$ commute, we write
+      \begin{align*}
+        Y_{\varphi_t(p)} &= \left( D\psi_s \right)_{\varphi_t(p)}\left( \pd{}{t} \right)\\
+                         &= D\left( \varphi_t \right)_{\psi_s(p)}\left( \pd{}{t} \right)\\
+                         &= D_{p}\left( \varphi_t\circ \psi_s \right)\left( \pd{}{t} \right)\\
+                         &= D_{p}\left( \varphi_t \right)\left( D_{p}\psi_s\left( \pd{}{t} \right) \right)\\
+                         &= D_p\left( \varphi_t \right)\left( Y_{p} \right),
+      \end{align*}
+      so by pushing forward, we find that
+      \begin{align*}
+        \left( \left( \varphi_t \right)_{\ast}Y \right)_{p} &= Y_p,
+      \end{align*}
+      meaning that the derivative
+      \begin{align*}
+        \lim_{t\rightarrow 0} \frac{\left( \left( \varphi_t \right)_{\ast}Y \right) - Y}{t} &= 0\\
+                                                                                            &= \left[ X,Y \right],
+      \end{align*}
+      so that $X$ and $Y$ commute.
+    \item At $p$, we write
+      \begin{align*}
+        \left( Y_i \right)_p &= \sum_{j=1}^{n} a_{ij}\left( p \right) \pd{}{x_j}.
+      \end{align*}
+      We consider the matrix of all the values $\left( a_{ij}(p) \right)$ such that $ 1\leq i \leq r $ and $1\leq j \leq n$. Notice that this $r\times n$ matrix consists of linearly independent columns, meaning that it is of full rank. In particular, we can put this matrix in row-echelon form, and in particular, this yields a block matrix
+      \begin{align*}
+        \left( u_{i,j} \right)_{i,j} &= \begin{pmatrix}I & K\end{pmatrix},
+      \end{align*}
+      where $K$ is some $r\times \left( n-r \right)$ matrix. Since the first $r$ blocks correlate to $Y_1,\dots,Y_r$, this means that the $\left( a_{ij}\left( p \right) \right)_{1\leq i,j\leq r}$ is invertible at $p$, meaning that, since the $a_{ij}$ are smooth, the matrix $\left( a_{ij}\left( \cdot \right) \right)_{1\leq i,j\leq r}$ is invertible in a neighborhood of $p$.
+    \item Writing
+      \begin{align*}
+        Y_{j} &= \sum_{k=1}^{n}a_{jk} \pd{}{x_k},
+      \end{align*}
+      we find that, by pointwise evaluation, we have
+      \begin{align*}
+        \left( X_i \right)_p &= \sum_{j=1}^{r} b_{ij}(p) \sum_{k=1}^{n} a_{jk}(p) \pd{}{x_k}\\
+            &= \sum_{j=1}^{r} \sum_{k=1}^{n} b_{ij}(p)a_{jk}(p) \pd{}{x_k}\\
+            &= \pd{}{x_i} + \sum_{j=1}^{r} \sum_{k=r+1}^{n} b_{ij}(p)a_{jk}(p) \pd{}{x_k}\\
+            &= \pd{}{x_i} + \sum_{k=r+1}^{n} \left( \sum_{j=1}^{r} b_{ij}(p)a_{jk}(p) \right) \pd{}{x_k}\\
+            &\eqcolon \pd{}{x_i} + \sum_{k=r+1}^{n} c_{ik}(p) \pd{}{x_k}.
+      \end{align*}
+      We see that, if $X_i\neq X_j$, then
+      \begin{align*}
+        X_i &= \pd{}{x_i} + \sum_{k > r} c_{ik} \pd{}{x_k}\\
+        X_j &= \pd{}{x_j} + \sum_{k > r} c_{ik} \pd{}{x_k},
+      \end{align*}
+      and since $i \neq j$, we must have that $X_i$ and $X_j$ are independent of each other.
+    \item We let
+      \begin{align*}
+        Q &= \sum_{k > r} c_{ik}\pd{}{x_k}.
+      \end{align*}
+      We then have
+      \begin{align*}
+        \left[ X_i,X_j \right] &= \left[ \pd{}{x_i} + Q, \pd{}{x_j} + Q \right]\\
+                               &= \left[ \pd{}{x_i},\pd{}{x_j} \right] + \left[ \pd{}{x_i},Q \right] + \left[ \pd{}{x_j},Q \right] + \left[ Q,Q \right]\\
+                               &= 0,
+      \end{align*}
+      as the Lie bracket between any two distinct local basis vectors for $T_pM$ is zero.
+    \item Let $\phi_1(t),\dots,\phi_r(t)$ be the flows generated by $X_1,\dots,X_r$. We then define
+      \begin{align*}
+        \phi\colon \R^{r}\rightarrow M
+      \end{align*}
+      given by
+      \begin{align*}
+        \phi\left( t_1,\dots,t_r \right) &= \left( \phi_1\left( t_1 \right),\dots,\phi_r\left( t_r \right) \right),
+      \end{align*}
+      which is a smooth coordinate map between a neighborhood of $0\in \R^{r}$ and a neighborhood $U\subseteq M$.
   \end{enumerate}
 \end{solution}
 \begin{problem}
@@ -184,6 +262,57 @@
         \item $I^{\ast}I = J^{\ast}J = K^{\ast}K = \1$;
         \item $\det\left( I \right) = \det\left( J \right) = \det\left( K \right) = 1$;
       \end{itemize}
+      We start by using the structure of $ \operatorname{SU}(2) $ we determined in Problem 2, and use the coordinates of
+      \begin{align*}
+        \left( z_1,z_2 \right) &= \left( 1,0 \right)\\
+        \left( z_1,z_2 \right) &= \left( i,0 \right)\\
+        \left( z_1,z_2 \right) &= \left( 0,1 \right)\\
+        \left( z_1,z_2 \right) &= \left( 0,i \right)
+      \end{align*}
+      in the specification of $ S^{3} $. This yields the matrices of
+      \begin{align*}
+        \1 &= \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix}\\
+        I &= \begin{pmatrix}i & 0 \\ 0 & -i\end{pmatrix}\\
+        J &= \begin{pmatrix}0 & 1 \\ -1 & 0\end{pmatrix}\\
+        K &= \begin{pmatrix}0 & i \\ i & 0\end{pmatrix}.
+      \end{align*}
+      Examining these, we find that
+      \begin{align*}
+        I^2 &= \begin{pmatrix}i & 0 \\ 0 & i\end{pmatrix} \begin{pmatrix}i & 0 \\ 0 & i\end{pmatrix}\\
+            &= -\1\\
+        J^2 &= \begin{pmatrix}0 & 1 \\ -1 & 0\end{pmatrix} \begin{pmatrix}0 & 1 \\ -1 & 0\end{pmatrix}\\
+            &= -\1\\
+        K^2 &= \begin{pmatrix}0 & i \\ i & 0\end{pmatrix} \begin{pmatrix}0 & i \\ i & 0\end{pmatrix}\\
+            &= -\1\\
+        IJK &= \begin{pmatrix}i & 0 \\ 0 & i\end{pmatrix} \begin{pmatrix}0 & 1 \\ -1 & 0\end{pmatrix} \begin{pmatrix}0 & i \\ i & 0\end{pmatrix}\\
+            &= -\1.
+      \end{align*}
+      Furthermore, these matrices are in $ \operatorname{SU}(2) $ by definition, so we have thus written our desired explicit diffeomorphism.
+    \item We let $ q $ be a unit quaternion, expressed as an element of $ \operatorname{SU}(2) $ by
+      \begin{align*}
+        q &= \begin{pmatrix}z_1 & z_2 \\ - \overline{z_2} & \overline{z_1}\end{pmatrix}.
+      \end{align*}
+      By linearity, we only have to verify that $q$ acts on the basis $ \set{i,j,k} $. This follows from conjugation:
+      \begin{align*}
+        \begin{pmatrix}z_1 & z_2 \\ - \overline{z_2} & \overline{z_1}\end{pmatrix} \begin{pmatrix} i & 0 \\ 0 & -i \end{pmatrix} \begin{pmatrix} \overline{z_1} & - z_2 \\ \overline{z_2} & z_1\end{pmatrix} &= \begin{pmatrix}z_1 & z_2 \\ - \overline{z_2} & \overline{z_1}\end{pmatrix} \begin{pmatrix} i \overline{z_1} & -iz_2\\ -i \overline{z_2} & -iz_1\end{pmatrix}\\
+                           &= \begin{pmatrix} i\left( \left\vert z_1 \right\vert^2 - \left\vert z_2 \right\vert^2 \right) & i\left( -2z_1z_2 \right) \\ i\left( -2z_1z_2 \right) & -i\left( \left\vert z_1 \right\vert^2 - \left\vert z_2 \right\vert^2 \right) \end{pmatrix}\\
+                           &= \left( \left\vert z_1 \right\vert^2 - \left\vert z_2 \right\vert^2 \right) \begin{pmatrix}i & 0 \\ 0 & -i\end{pmatrix} + \left( -2z_1z_2 \right) \begin{pmatrix}0 & i \\ i & 0\end{pmatrix},
+                           \intertext{and similarly,}
+        \begin{pmatrix}z_1 & z_2 \\ - \overline{z_2} & \overline{z_1}\end{pmatrix} \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix} \begin{pmatrix} \overline{z_1} & - z_2 \\ \overline{z_2} & z_1\end{pmatrix} &= -i\left( z_1 \overline{z_2} - \overline{z_1}z_2 \right) \begin{pmatrix}i & 0 \\ 0 & -i\end{pmatrix} + \left( z_1^2 + z_2^2 \right) \begin{pmatrix}0 & 1 \\ -1 & 0\end{pmatrix}\\
+        \begin{pmatrix}z_1 & z_2 \\ - \overline{z_2} & \overline{z_1}\end{pmatrix} \begin{pmatrix} 0 & i \\ i & 0 \end{pmatrix} \begin{pmatrix} \overline{z_1} & - z_2 \\ \overline{z_2} & z_1\end{pmatrix} &= \left( z_1 \overline{z_2} + \overline{z_1}z_2 \right) \begin{pmatrix}i & 0 \\ 0 & -i\end{pmatrix} + \left( z_1^2 - z_2^2 \right) \begin{pmatrix} 0 & i \\ i & 0\end{pmatrix}.
+      \end{align*}
+      Thus, we see that conjugation by $q$ yields another basis for $\R^{3}$, so the unit quaternions act on $\R^{3}$.
+    \item Writing
+      \begin{align*}
+        xi + yj + zk &\cong \begin{pmatrix}xi & y + zi \\ -y + zi & -xi\end{pmatrix}\\
+                     &\eqcolon V
+      \end{align*}
+    we notice that the form $x^2 + y^2 + z^2$ is exactly the determinant of this matrix. Therefore, upon acting by $q\in \operatorname{SU}(2)$ , we get
+      \begin{align*}
+        \det\left( qVq^{\ast} \right) &= \det\left( q \right)\det\left( V \right)\det\left( q^{\ast} \right)\\
+                                      &= \det\left( V \right),
+      \end{align*}
+      so the form is preserved.
   \end{enumerate}
 \end{solution}
 \end{document}

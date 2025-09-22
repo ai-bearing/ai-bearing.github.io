@@ -1,0 +1,81 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+\usepackage{homework}
+%\usepackage{notes}
+\usepackage{newpxtext,eulerpx,eucal}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Differential Topology: Problem Set 4}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{problem}[Problem 1]
+  Prove that if $f\colon M\rightarrow N$ is smooth, and $L$ is a $k$-dimensional submanifold of $N$ that is transverse to $f$, then $f^{-1}\left( L \right)$ is either empty or a submanifold of $M$ with codimension $k$.
+\end{problem}
+\begin{solution}
+  If $L$ is not contained in $f(M)$, then $f^{-1}\left( L \right)$ is clearly empty. Therefore, we focus on the case where $f^{-1}\left( L \right)$ is not empty.\newline
+
+  Let $L$ be transverse to $f$, $q\in L$, and $p\in M$ such that $f(p) = q$. We observe that $T_qL + D_pF\left( T_pM \right) = T_qN$, so any vector in $T_qN$ can be written (not necessarily uniquely) as an element of $D_pF\left( T_pM \right)$ and $T_qL$. Next, we observe that, if we take a coordinate chart for $q$ in $U$ such that $\varphi(U)\cong \R^{n-k}$, then by the Regular Value Theorem, we may select $\varphi$ such that $L\cap U = \varphi^{-1}\left( 0 \right)$.\newline
+
+  Now, if we can show that $0$ is a regular value for $\varphi\circ f$, then $\left( \varphi\circ f \right)^{-1}\left( 0 \right) = f^{-1}\left( L \right)\cap f^{-1}\left( U \right)$. First, since $0$ is a regular value for $\varphi$, it follows that if $v\in T_0\R^{n-k}$, then there is some $w\in T_{q}N$ such that $D_{q}\varphi\left( w \right) = v$. Since $f$ is transverse to $L$, there is $w_1\in T_qL$ and $w_2\in T_pM$ such that $w = w_1 + D_{p}F\left( w_2 \right)$. We observe that, since $\varphi$ is constant on $L$, we have $D_q\varphi\left( w_1 \right) = 0$, so that
+  \begin{align*}
+    D_p\left( \varphi\circ f \right)\left( w_2 \right) &= D_q\varphi\circ D_pF\left( w_2 \right)\\
+                                                       &= D_q\varphi\left( w_1 + D_pF\left( w_2 \right) \right)\\
+                                                       &= D_q\varphi\left( w \right)\\
+                                                       &= v,
+  \end{align*}
+  so $0$ is a regular value for $\varphi\circ F$.
+\end{solution}
+\begin{problem}[Problem 2]
+  Let $ \operatorname{GL}_n\left( \R \right) $ denote the space of invertible $n\times n$ matrices over $\R$, let $\operatorname{SL}_n\left( \R \right)$ denote the matrices of determinant one, and let $ \operatorname{O}\left( n \right) $ be the orthogonal group.
+  \begin{enumerate}[(a)]
+    \item Prove that we may identify the tangent space of $ \operatorname{GL}_n\left( \R \right) $ at the identity with $n\times n$ matrices over $\R$.
+    \item Prove that the tangent space of $ \operatorname{SL}_n\left( \R \right) $ at the identity consists of matrices of trace zero.
+    \item Prove that the tangent space of $ \operatorname{O}(n) $ at the identity consists of skew-symmetric matrices. What is the dimension of $ \operatorname{O}(n) $?
+    \item Show that $ \operatorname{SL}_n\left( \R \right) $ and $ \operatorname{O}(n) $ do not intersect transversely at the identity.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Let $A\in \Mat_{n}\left( \R \right)$, and consider a path through the identity given by $\gamma(t) = I + tA$. Since the determinant is a smooth function, and $\det\left( I \right) = 1$, we have that for a small $\ve > 0$ there is $\delta$, such that $ \left\vert \det\left( I + tA \right) - 1 \right\vert < \ve$ whenever $\left\vert t \right\vert < \delta$. In particular, this means that the tangent space at the identity of $ \operatorname{GL}_n\left( \R \right) $ consists of all matrices.
+    \item We let $\gamma(t) = I + tA$ be a curve in $ \operatorname{SL}_n\left( \R \right) $, so that $ \gamma'(0) = A $ is an element of the tangent space of $ \operatorname{SL}_n\left( \R \right) $ at the identity. We observe that $\det\left( \gamma(t) \right) = 1$ for all (sufficiently small) $t$, so we see that
+      \begin{align*}
+        0 &= \diff{}{t}\biggr\vert_{t = 0} \det\left( \gamma(t) \right)\\
+          &= \det'\left( \gamma(0) \right)\left( \gamma'(0) \right)\\
+          &= \det'\left( I \right)\left( A \right).
+      \end{align*}
+      Therefore, we must evaluate what $\det'\left( I \right)\left( A \right)$ yields. Toward this end, we compute the derivative directly from the definition, yielding
+      \begin{align*}
+        \det'\left( I \right)\left( A \right) &= \lim_{t\rightarrow 0} \frac{\det\left( I + tA \right) - 1}{t}.
+      \end{align*}
+      The expression $\det\left( I + tA \right)$ is a polynomial in $t$ where the constant term is $1$ and the term in $t$ is $\operatorname{tr}\left( A \right)$. Thus, we find that $ 0 = \operatorname{tr}\left( A \right) $, so $A$ is traceless.
+    \item If $ \gamma\left( t \right) = I + tA $ is a curve in $ \operatorname{O}(n) $, then then we have that
+      \begin{align*}
+        \left( I + tA \right)^{T}\left( I + tA \right) &= I\\
+        I + t\left( A^{T} + A \right) + t^2\left( A^{T}A \right) &= I,
+      \end{align*}
+      meaning that by taking an equivalence class of this tangent curve, we have
+      \begin{align*}
+        i + t\left( A^{T} + A \right) &= I,
+      \end{align*}
+      so that $A^{T} = -A$.\newline
+
+      We observe that the function $f\colon \Mat_{n}\left( \R \right)\rightarrow \Mat_{n}\left( \R \right)_{\operatorname{s.a.}}$, given by
+      \begin{align*}
+        f\left( A \right) &= A^{T}A,
+      \end{align*}
+      has $I_{n}$ as a regular value. To see this, observe that curves in $T_I\Mat_{n}\left( \R \right)_{\operatorname{s.a.}}$ are of the form $\gamma(t) = I + tK$, where $K$ is a self-adjoint(/symmetric) matrix. Similarly, $T_A\Mat_{n}\left( \R \right)$ is of the form $ \ve(t) = A + tB $, where $B\in \Mat_{n}\left( \R \right)$ and $t\in \R$. Both of these follow from the fact that $\Mat_{n}\left( \R \right)$ and $\Mat_{n}\left( \R \right)_{\operatorname{s.a.}}$ are isomorphic to Euclidean spaces. Therefore, we see that the image of $\delta(t)$ is of the form $ A^{T}A + t\left( A^{T}B + B^{T}A \right) $; if $A$ satisfies $A^{T}A = I$, we can put this in the form of $ I + tK $ by taking $\delta(t) = A + \frac{1}{2}tAK$. Therefore, by the Regular Value Theorem, the dimension of $ \operatorname{O}(n) $ is $n^2 - \frac{n\left( n-1 \right)}{2} = \frac{n\left( n+1 \right)}{2}$
+    \item Since both skew-symmetric and traceless matrices have trace zero, it follows that the tangent spaces of $\operatorname{SL}_n\left( \R \right)$ and $ \operatorname{O}\left( n \right) $ cannot span the tangent space of $ \operatorname{GL}_n\left( \R \right) $, as there are matrices with nonzero trace.
+  \end{enumerate}
+\end{solution}
+\end{document}
