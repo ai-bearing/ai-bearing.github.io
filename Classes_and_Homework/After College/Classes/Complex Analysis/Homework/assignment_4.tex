@@ -80,6 +80,42 @@
   \end{align*}
   Show that $f$ is holomorphic and determine the derivative of $f$ in terms of $\varphi$.
 \end{problem}
+\begin{solution}
+  Let $ z,z+h\in \C\setminus \left[ 0,1 \right] $, so we may calculate
+  \begin{align*}
+    \lim_{h\rightarrow 0} \frac{f\left( z+h \right) - f\left( z \right)}{h} &= \lim_{h\rightarrow 0} \frac{1}{h} \int_{0}^{1} \frac{\varphi(t)}{t-\left( z+h \right)} - \frac{\varphi(t)}{t-z}\:dt\\
+                                                                            &= \lim_{h\rightarrow 0} \frac{1}{h} \int_{0}^{1} \frac{\left( t-z \right)\varphi(t) - \left( t-\left( z+h \right) \right)\varphi(t)}{\left( t-\left( z+h \right) \right)\left( t-z \right)} \:dt\\
+                                                                            &= \lim_{h\rightarrow 0} \frac{1}{h} \int_{0}^{1} \frac{h\varphi(t)}{\left( t-\left( z+h \right) \right)\left( t-z \right)}\:dt\\
+                                                                            &= \lim_{h\rightarrow 0} \int_{0}^{1} \frac{\varphi\left( t \right)}{\left( t-\left( z+h \right) \right)\left( t-z \right)}\:dt\\
+                                                                            &= \int_{0}^{1} \frac{\varphi(t)}{\left( t-z \right)^2}\:dt.
+  \end{align*}
+  Let $\left( z_n \right)_n\subseteq \C\setminus \left[ 0,1 \right]$ converge to $z\in \C\setminus \left[ 0,1 \right]$. Define the sequence of functions given by
+  \begin{align*}
+    \left( h_n \right)_n\colon [0,1]&\rightarrow \C\\
+    t &\mapsto \frac{\varphi(t)}{\left( t-z_n \right)^2}.
+  \end{align*}
+  We claim that the $\left( h_n \right)_n$ converge uniformly to 
+  \begin{align*}
+    h(t) = \frac{\varphi(t)}{\left( t-z \right)^2}. 
+  \end{align*}
+  Observe that the pointwise convergence is clear, and $h(t)$ is well-defined for all $t$ by definition. Now, we observe as well that the value $K = \operatorname{dist}_{[0,1]} \left( \set{z_n | n\in\N} \right)$ is nonzero, as the closure of $ \left[ 0,1 \right] $ in $\C$ is $\left[ 0,1 \right]$, and $\set{z_n | n\in \N}$ are explicitly contained in $\C\setminus\left[ 0,1 \right]$. Similarly, since $z$ is not contained in the closure of $ \left[ 0,1 \right] $, we find that $ L = \operatorname{dist}_{[0,1]}\left( \set{z} \right) $ is also nonzero. \newline
+
+  Thus, we find that
+  \begin{align*}
+    \left\vert \frac{\varphi(t)}{\left( t-z_n \right)^2} - \frac{\varphi(t)}{\left( t-z \right)^2} \right\vert &= \frac{\left\vert \varphi(t) \right\vert \left\vert 2t\left( z_n-z \right) + \left( z^2-z_n^2 \right) \right\vert}{\left\vert t-z_n \right\vert^2 \left\vert t-z \right\vert^2}\\
+                                                                                                               &\leq \frac{\norm{\varphi}_{u} \left\vert 2t\left( z_n-z \right) + \left( z^2-z_n^2 \right) \right\vert}{\left\vert t-z_n \right\vert^2\left\vert t-z \right\vert^2}\\
+                                                                                                               &\leq \norm{\varphi}_{u}\frac{2\left\vert z_n-z \right\vert + \left\vert z^2-z_n^2 \right\vert}{K^2L^2}\\
+                                                                                                               &= \frac{2\norm{\varphi}_{u}}{K^2L^2} \left( \left\vert z_n- z\right\vert + \left\vert z^2 - z_n^2 \right\vert \right),
+  \end{align*}
+  meaning that the supremum of the left-hand side is less than or equal to a constant multiplied by $ \left\vert z_n-z \right\vert + \left\vert z^2 - z_n^2 \right\vert $. Since $z\mapsto z^2$ is continuous, it follows that $\left( h_n \right)_n\rightarrow h$ uniformly. Thus, we may exchange limit and integral, so that
+  \begin{align*}
+    \lim_{z_n\rightarrow z} f'\left(z_n\right) &= \lim_{z_n\rightarrow z}\int_{0}^{1} \frac{\varphi\left( t \right)}{\left( t-z_n \right)^2}\:dt\\
+                                               &= \int_{0}^{1} \lim_{z_n\rightarrow z} \frac{\varphi(t)}{\left( t-z_n \right)^2}\:dt\\
+                                               &= \int_{0}^{1} \frac{\varphi(t)}{\left( t-z \right)^2}\:dt\\
+                                               &= f'(z),
+  \end{align*}
+  meaning $f'(z)$ is continuous, so $f$ is holomorphic.
+\end{solution}
 \begin{problem}[Problem 3]
   Let $f\colon \C\rightarrow \C$ be entire.
   \begin{enumerate}[(a)]
@@ -96,7 +132,7 @@
                                                        &\leq \frac{\left( n+1 \right)!}{r^{n+1}} \sup_{|z| = r} \left( C \left\vert z \right\vert^{n} \right)\\
                                                        &= \frac{C\left( n+1 \right)!}{r},
       \end{align*}
-      so since $r$ is arbitrary and $f$ is entire, we find that $ f^{(n+1)}(0) = 0 $, so that the power series expansion of $f$ about $0$ terminates beyond $n + 1$, meaning that $f$ is a polynomial of degree at most $n$.
+      so since $r$ is arbitrary and $f$ is entire, we find that $ f^{(n+1)}(0) = 0 $, so that the power series expansion of $f$ about $0$ terminates beyond $n + 1$. Since $f$ is entire, its power series expansion about any $z_0\in \C$ is equal to $f(z)$ everywhere in $\C$, so in particular, this holds for $f$ at $0$, meaning $f$ is a polynomial of degree at most $n$.
     \item If $g$ is $0$, or $f$ is $0$, we are done. Else, assume that $g$ and $f$ are not identically zero. Observe that if $g$ is everywhere non-vanishing, then the function $ \frac{f(z)}{g(z)} $ is entire, and satisfies
       \begin{align*}
         \left\vert \frac{f(z)}{g(z)} \right\vert \leq 1,
@@ -127,11 +163,11 @@
       \begin{align*}
         \mathbb{H}_{\theta} &= \set{z | \theta/2 < \arg(z) < \theta/2 + \pi} \cup \set{0}.
       \end{align*}
-      Observe that the map $z\mapsto e^{-i\theta/2}z$ is entire, and the Cayley transform, $\varphi(w) = \frac{w-i}{w+i}$ is holomorphic on $\C\setminus \set{i}$, maps $0\mapsto -1$, and maps the open upper half-plane to the unit disk. Therefore, if we fix some $\ve > 0$, we find that the composition
+      Observe that the map $z\mapsto e^{-i\theta/2}z$ is entire and maps $ \mathbb{H}_{\theta} $ to the upper half plane plus $\set{0}$, and the Cayley transform, $\varphi(w) = \frac{w-i}{w+i}$, is holomorphic on $\C\setminus \set{i}$, maps $0\mapsto -1$, and maps the open upper half-plane to the unit disk. Therefore, if we fix some $\ve > 0$, we find that the composition
       \begin{align*}
         \varphi\circ \left( z\mapsto e^{-i\theta/2}z \right) \circ \sqrt{\cdot}\circ f\colon \C\rightarrow U\left( 0, 1 + \ve \right)
       \end{align*}
-      is an entire function that is bounded in modulus by $ 1 + \ve $. In particular, since all of $\sqrt{\cdot}$, $z\mapsto e^{-i\theta/2}z$, and $\varphi$ are nonconstant, this implies that $f$ is constant.
+      is an entire function that is bounded in modulus by $ 1 + \ve $. In particular, since all of $\sqrt{\cdot}$, $z\mapsto e^{-i\theta/2}z$, and $\varphi$ are nonconstant and holomorphic on the specified domains, this implies that $f$ is constant.
   \end{enumerate}
 \end{solution}
 \begin{problem}[Problem 4]
