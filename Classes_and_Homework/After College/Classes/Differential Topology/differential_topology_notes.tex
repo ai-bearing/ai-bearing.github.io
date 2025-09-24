@@ -737,7 +737,7 @@ Complete vector fields on manifolds enable us to create diffeomorphisms. Further
 \begin{definition}
   A \textit{flow} on $M$ is a one-parameter group of diffeomorphisms of $M$, defined by
   \begin{align*}
-    \varphi\colon R &\rightarrow \operatorname{diff}\left( M \right)\\
+    \varphi\colon \R &\rightarrow \operatorname{diff}\left( M \right)\\
     t &\mapsto \varphi_t,
   \end{align*}
   where $\varphi_t(p) \coloneq c_p(t)$ when $c_p$ is the integral curve through $p$.\newline
@@ -1003,7 +1003,7 @@ so that
   \begin{align*}
     \left( f_{\ast}X \right)_{q}\left( \varphi \right) &= X_p\left( \varphi\circ f \right).
   \end{align*}
-  This is known as the \textit{pushforward} of the derivation.
+  This is known as the \textit{pushforward} of the derivation. 
 \end{definition}
 We know from linear algebra that if we have a vector space $V$, there is a canonical map from $V$ to $V^{\ast\ast}$ given by $x\mapsto \hat{x}$, where $\hat{x}\left( \varphi \right) = \varphi\left( x \right)$. If $V$ is finite-dimensional, then this is an isomorphism. This isomorphism is known as \textit{canonical evaluation}, and is often denoted $ \operatorname{ev} $.
 \begin{center}
@@ -1029,7 +1029,7 @@ Towards this end, we observe that the exterior derivative, $d\colon \mathcal{C}_
 \end{tikzcd}
   \end{center}
 \end{proposition}
-Here, recall that $T^{\ast}f\left( \varphi \right) \equiv D^{\ast}f\left( d\varphi \right) = d\left( \varphi\circ f \right)$, as we defined for the map $\alpha_{p,M}$, while $ \left( D^{\ast}f \right)^{\ast} $ is the dualization of $ D^{\ast}f $.\newline
+Here, recall that $T^{\ast}f\left( d\varphi \right) \equiv D^{\ast}f\left( d\varphi \right) = d\left( \varphi\circ f \right)$, as we defined for the map $\alpha_{p,M}$, while $ \left( D^{\ast}f \right)^{\ast} $ is the dualization of $ D^{\ast}f $.\newline
 
 The proposition then gives us the family of canonical isomorphisms given by the following.
 \begin{center}
@@ -1100,9 +1100,61 @@ We observe that the exterior product has the property that, for arbitrary vector
     d\omega &= \sum_{j=1}^{n}\sum_{I} \pd{f_I}{x_j}dx_j\wedge dx_I.
   \end{align*}
 \end{definition}
-\begin{remark}
-  Note that $d$ may not be injective nor surjective. The nature of the map $d$ is a part of de Rham cohomology.
-\end{remark}
+\begin{proposition}
+  For any $k$ and for any $\omega\in \mathcal{A}^{k}\left( M \right)$, we have
+  \begin{align*}
+    d\left( d\omega \right) &= 0.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Observe that for the case of $\mathcal{A}^{0}\left( M \right) = C^{\infty}\left( M \right)$, Clairaut's theorem and the alternating property of the exterior product provides
+  \begin{align*}
+    d^2 f &= \sum_{j=1}^{n}\sum_{i=1}^{n} \pd{^2f}{x_i\partial x_j} dx_i\wedge dx_j\\
+          &= 0.
+  \end{align*}
+  The argument in higher orders follows similarly.
+\end{proof}
+Thus, we get a family of vector vector spaces with corresponding linear maps as below, which is known as a \textit{chain complex}.
+\begin{center}
+  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRGJAF9T1Nd9CKAIzkqtRizYAdKQFs6OABYBjRsACCnAHrBinABQBZAJRceIDNjwEiAJlHV6zVohAz5S1Qw3bgQgyZmvFYCRADMDuLO0lLKUBA4CNzB-DYoACyRTpKu7goqapo6ANYBpskWfNaCyACsWRIubrHxiVxiMFAA5vBEoABmAE4QskhkIDgQSP7mQyPT1JNI9lE5IFBBIHOjiCtLiBGrTRsV20iH+5lHbCezwztX+-XXricUnEA
+\begin{tikzcd}
+0 \arrow[r] & \mathcal{A}^{0}(M) \arrow[r, "d"] & \mathcal{A}^{1}(M) \arrow[r, "d"] & \cdots \arrow[r, "d"] & \mathcal{A}^{k}(M) \arrow[r, "d"] & \cdots
+\end{tikzcd}
+\end{center}
+Since the maps $d$ are linear, we may consider their kernels and images, which yields a construction known as the $k$-th \textit{de Rham cohomology group}, given by
+\begin{align*}
+  H^{k}_{\operatorname{DR}} &= \frac{\ker\left( d|_{\mathcal{A}^{k}\left( M \right)} \right)}{\img\left( d|_{\mathcal{A}^{k-1}\left( M \right)} \right)}.
+\end{align*}
+The de Rham cohomology groups essentially quantify the failure of this chain complex to be exact (in the sense that the image of one map is the kernel of the next map). This has significant implications for understanding the geometry of the underlying manifold, and we will work with it soon in this course.
+\begin{definition}
+  Let $f\colon M\rightarrow N$ be a $C^{\infty}$ map of smooth manifolds. The \textit{pullback} of $\omega\in \mathcal{A}\left( N \right)$ by $f$ is the map
+  \begin{align*}
+    f^{\ast}\colon \mathcal{A}\left( N \right)\rightarrow \mathcal{A}\left( M \right)
+  \end{align*}
+  given by
+  \begin{align*}
+    f^{\ast}\omega\left( X_1,\dots,X_k \right) &= \omega\left( f_{\ast}X_1,\dots,f_{\ast}X_k \right).
+  \end{align*}
+\end{definition}
+Note that the existence of $f$ follows from
+\begin{itemize}
+  \item $f$ induces the bundle map $Df\colon TM\rightarrow TN$;
+  \item which induces a dual map $D^{\ast}f\colon T^{\ast}N\rightarrow T^{\ast}M$;
+  \item which extends to exterior powers $\Lambda D^{\ast}f\colon \Lambda T^{\ast}N\rightarrow \Lambda T^{\ast}M $;
+  \item from which we take sections to obtain $f^{\ast}\colon \mathcal{A}\left( N \right)\rightarrow \mathcal{A}\left( M \right)$.
+\end{itemize}
+To understand the importance of the pullback, we consider the case of $\varphi\colon \R^{n}\supseteq U\rightarrow U'\subseteq \R^{n}$, which maps coordinates $\left( y_1,\dots,y_n \right)\mapsto \left( x_1,\dots,x_n \right)$. Recall that a smooth atlas essentially allows us to say that coordinate maps in one local chart ``work nicely with'' coordinate maps in another local chart given by diffeomorphisms on their overlaps. We want to extend these beyond coordinate charts themselves to differential forms more generally; to do this, we start by trying to understand the pullback map on $\R^{n}$.
+\begin{definition}
+  Let $M$ be a smooth manifold, and $X\in \mathcal{X}\left( M \right)$. We define the \textit{interior product}
+  \begin{align*}
+    \iota_X\colon \mathcal{A}^{k}\left( M \right)\rightarrow \mathcal{A}^{k}\left( M \right)
+  \end{align*}
+  by
+  \begin{align*}
+    \left( \iota_X\omega \right)\left( X_1,\dots,X_{k-1} \right) &= k\omega\left( X,X_1,\dots,X_{k-1} \right).
+  \end{align*}
+  If $k = 0$, then $\iota_X = 0$.
+\end{definition}
 \section{Notations}%
 \begin{itemize}
   \item A general normed space $V$ will have its norm denoted by $\norm{\cdot}$. If $V = \R^{n}$, then we denote the norm by $ \left\vert \cdot \right\vert $.
@@ -1112,5 +1164,7 @@ We observe that the exterior product has the property that, for arbitrary vector
   \item $ \mathcal{N}_p $: neighborhood system centered at $p\in X$.
   \item $ \mathcal{O}_p $: system of \textit{open} neighborhoods centered at $p\in X$.
   \item When we say a number $n$ is positive, we mean that $n\geq 0$. Similarly, a sequence $\left( a_n \right)_n$ is decreasing (increasing) if $a_n\geq a_{n+1}$ ($a_n\leq a_{n+1}$).
+  \item We define $\mathcal{C}_{p,M}$ to be the space of $C^{\infty}$ functions $\varphi\colon \left( -\ve,\ve \right)\rightarrow M$ such that $\varphi(0) = p$.
+  \item We write $\mathcal{X}\left( M \right)$ to be the space of vector fields on $M$.
 \end{itemize}
 \end{document}
