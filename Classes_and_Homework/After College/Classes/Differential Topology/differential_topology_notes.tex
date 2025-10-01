@@ -1278,7 +1278,15 @@ There is a different way to consider a directional derivative --- that being via
 \end{align*}
 since $\varphi_t(p) = c_p(t)$, and $ \dot{c}_p(0) = X_p $.\newline
 
-Note that the Lie derivative of a vector field is given by $ \left[ X,Y \right] $, so that we may find
+Note that the Lie derivative of a vector field is given by $ \left[ X,Y \right] $. Since $\left( \left( \varphi_{-t} \right)_{\ast} Y\right)(f) = \varphi_t^{\ast}Y\left( f\circ\varphi_{-t} \right)$, we get
+\begin{align*}
+  \lim_{t\rightarrow 0} \frac{\left( \varphi_{-t} \right)_{\ast}Y - Y}{t}(f) &= \lim_{t\rightarrow 0} \frac{\varphi_t^{\ast}\left( Y\left( f\circ\varphi_{-t} \right) \right) - \varphi_t^{\ast}Y(f) + \varphi_t^{\ast}Y(f) - Y(f)}{t}\\
+                                                                             &= \lim_{t\rightarrow 0} \varphi_t^{\ast}\left( Y\left( \frac{f\circ\varphi_{-t}-f}{t} \right) \right) + \lim_{t\rightarrow 0} \frac{\varphi_t^{\ast}Y(f) - Y(f)}{t}\\
+                                                                             &= \lim_{t\rightarrow 0} \varphi_t^{\ast}Y\left( \frac{\varphi_{-t}^{\ast}f - f}{t} \right) + \lim_{t\rightarrow 0} \frac{\varphi_t^{\ast}Y(f) - Y(f)}{t}\\
+                                                                             &= Y\left( -X(f) \right) + X\left( Y(f) \right)\\
+                                                                             &= \left[ X,Y \right](f).
+\end{align*}
+Therefore, as a rule, we write
 \begin{align*}
   \left[ X,Y \right] &= \lim_{t\rightarrow 0} \frac{\left( \varphi_{-t} \right)_{\ast}Y - Y}{t}.
 \end{align*}
@@ -1324,6 +1332,179 @@ Now, the question arises: what if we look at two vector fields? Three? When can 
 \begin{definition}
   Given a distribution $\mathcal{D}$ on $M$, we say a submanifold $N$ is an \textit{integral submanifold} for $\mathcal{D}$ if $T_pN = \mathcal{D}_p$ for all $p\in N$. If an integral manifold exists through each point of $M$ (equivalently, if $M$ can be partitioned into a family of integral submanifolds), then we say $ \mathcal{D} $ is \textit{completely integrable}.
 \end{definition}
+\begin{proposition}
+  Let $\mathcal{D}$ be a distribution on a manifold $M$. If $ \mathcal{D} $ is completely integrable, then for any $X,Y\in \mathcal{D}$, we have $ \left[ X,Y \right]\in \mathcal{D} $.
+\end{proposition}
+\begin{proof}
+  Select a local coordinate system about $p$, $ \left( U;x_1,\dots,x_n \right) $ such that $p$ is the origin, and the submanifold $N$ is given by the set of all $\left( x_1,\dots,x_n \right)$ such that $x_{r+1} = \cdots = x_n = 0$.\newline
+
+  Then, for any $q\in N$, $\mathcal{D}_q$ is the span of $ \pd{}{x_1},\dots, \pd{}{x_r} $. Letting
+  \begin{align*}
+    X &= \sum_{i=1}^{n} a_i \pd{}{x_i}\\
+    Y &= \sum_{i=1}^{n} b_i\pd{}{x_i},
+  \end{align*}
+  we have that
+  \begin{align*}
+    a_i \left( x_1,\dots,x_r,0,\dots,0 \right) &= 0\\
+    b_i \left( x_1,\dots,x_r,0,\dots,0 \right) &= 0
+  \end{align*}
+  for any $i > r$, by the definition of $ \mathcal{D} $. It follows that for any $i \leq r$ and $ j> r $, we have
+  \begin{align*}
+    \pd{a_j}{x_i}(0) &= 0\\
+    \pd{b_j}{x_i}(0) &= 0.
+  \end{align*}
+  Thus,
+  \begin{align*}
+    \left[ X,Y \right] &= \sum_{j=1}^{n}\underbrace{\left( \sum_{i=1}^{n} \left( a_i \pd{b_j}{x_i} - b_i \pd{a_j}{x_i} \right) \right)}_{\eqcolon c_j} \pd{}{x_j},
+  \end{align*}
+  whence the coefficient $c_j$ evaluates to $0$ for any $j > r$. Thus, $\left[ X,Y \right]_{p}\in \mathcal{D}_p$.
+\end{proof}
+\begin{definition}
+  A distribution $\mathcal{D}$ on a manifold is said to be \textit{involutive} if the Lie bracket of any two vector fields $X,Y\in \mathcal{D}$ also belongs to $\mathcal{D}$.
+\end{definition}
+\begin{theorem}[Frobenius Theorem]
+  A distribution $\mathcal{D}$ is completely integrable if and only if $ \mathcal{D} $ is involutive.
+\end{theorem}
+In order to understand and prove the Frobenius theorem, we need to discuss commutative vector fields.
+\begin{definition}
+  We say two vector fields $X$ and $Y$ are commutative if $ \left[ X,Y \right] = 0$.
+\end{definition}
+Commutative vector fields have very nice geometric properties; specifically, there's a way to characterize commutative vector fields via their corresponding flows.
+\begin{proposition}
+  Let $X$ and $Y$ be vector fields with corresponding flows $\varphi_t$ and $\psi_t$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $X$ and $Y$ commute;
+    \item $Y$ is invariant under $\varphi_t$ --- that is, $\left( \varphi_t \right)_{\ast}Y = Y$ whenever defined;
+    \item $\varphi_t$ and $\psi_t$ commute, in that for any $t,s\in \R$, $\varphi_t\circ \psi_s = \psi_s\circ\varphi_t$ where defined.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We observe that
+  \begin{align*}
+    \diff{}{t}\left( \left( \varphi_t \right)_{\ast}Y \right)\biggr\vert_{t=t_0} &= \lim_{t\rightarrow 0} \frac{\left( \varphi_{t_0 + t} \right)_{\ast}Y - \left( \varphi_{t_0} \right)_{\ast}Y}{t}\\
+                                                                                 &= \lim_{t\rightarrow 0} \left( \varphi_{t_0} \right)_{\ast} \frac{\left( \varphi_t \right)_{\ast}Y - Y}{t}\\
+                                                                                 &= \left( \varphi_{t_0} \right)_{\ast} \left[ -X,Y \right]\\
+                                                                                 &= 0.
+  \end{align*}
+  Thus, $\left( \varphi_t \right)_{\ast}Y$ does not depend on $t$, so $\left( \varphi_t \right)_{\ast}Y = \left( \varphi_0 \right)_{\ast}Y = Y$.\newline
+
+  Given a diffeomorphism $\varphi$ of $M$, the vector field $\varphi_{\ast}Y$ is defined, and the integral curve of $\varphi_{\ast}Y$ through $p\in M$ is given by $\varphi\circ c$, where $c$ is the integral curve of $y$ through $\varphi^{-1}(p)$. Thus, the one-parameter diffeomorphism group generated by $\varphi_{\ast}Y$ is given by $\varphi\circ\psi_t\circ\varphi^{-1}$.\newline
+
+  Now, if we apply this to $\left( \varphi_t \right)_{\ast}Y$ for each $t$, we get the one-parameter diffeomorphism group for $\left( \varphi_t \right)_{\ast}Y$ is given by $\varphi_t\circ\psi_s\circ\varphi_t^{-1}$ with $s$ as the parameter, so since $Y$ is invariant under $\varphi_t$, we have $\varphi_t\circ\psi_s\circ\varphi_t^{-1} = \psi_s$, so that $\varphi_t\circ\psi_s = \psi_s\circ\varphi_t$.\newline
+
+  Finally, we observe that for any $p\in M$, since $\psi_s(p)$ is the integral curve of $Y$ through $p$, we have
+  \begin{align*}
+    \diff{}{s} \psi_s(p)\biggr\vert_{s=0} &= Y_{p}.
+  \end{align*}
+  Now, since $\varphi_t\circ\psi_s\circ\varphi_t^{-1}(p)$ is the integral curve of $\left( \varphi_t \right)_{\ast}Y$ through $p$, we have
+  \begin{align*}
+    \diff{}{s} \varphi_t\circ\psi_s\circ\varphi_t^{-1}(p)\biggr\vert_{s = 0} &= \left( \left( \varphi_t \right)_{\ast}Y \right)_{p},
+  \end{align*}
+  so that $\left( \varphi_{t} \right)_{\ast}Y = Y$, meaning
+  \begin{align*}
+    \left[ X,Y \right] &= \lim_{t\rightarrow 0} -\frac{\left( \varphi_{-t} \right)_{\ast}Y - Y}{t}\\
+                       &= 0.
+  \end{align*}
+\end{proof}
+\section{Integration and de Rham Cohomology}%
+So far, we have only been treating differential forms as these abstract things completely disconnected from the fundamental structure of the manifold. Yet, they are very useful, precisely because we can integrate over differential forms.\newline
+
+Of course, this integration is absolutely not the same as the traditional Riemann or Lebesgue integral, because the measure of a set (that has nonzero measure) depends on the choice of charts.\newline
+
+Consider a differential form $\omega = h\left( x_1,x_2 \right)dx_1\wedge dx_2$ on $\R^{2}$, where
+\begin{align*}
+  x_1 &= f\left( y_1,y_2 \right)\\
+  x_2 &= g\left( y_1,y_2 \right).
+\end{align*}
+Then, we showed earlier that, via a change of coordinates, we may write
+\begin{align*}
+  dx_1\wedge dx_2 &= \pd{\left( f,g \right)}{\left( y_1,y_2 \right)} dy_1\wedge dy_2,
+\end{align*}
+where the expression in partials denotes the Jacobian determinant as a part of change of coordinates. In particular, this suggests that
+\begin{align*}
+  \omega &= h\left( f\left( y_1,y_2 \right),g\left( y_1,y_2 \right) \right) \pd{\left( f,g \right)}{\left( y_1,y_2 \right)} dy_1\wedge dy_2,
+\end{align*}
+meaning that the integral over $\R^{2}$ does not depend on the choice of coordinates.\newline
+
+Now, if $M$ is a connected manifold, we venture to ask exactly what
+\begin{align*}
+  \int_{M}^{} \omega
+\end{align*}
+means.\newline
+
+First, if $\omega$ vanishes outside a compact subset of a Euclidean chart, then we may write
+\begin{align*}
+  \omega &= f\left( x_1,\dots,x_n \right)\:dx_1\wedge\cdots\wedge dx_n,
+\end{align*}
+for some $f\in C_{c}^{\infty}\left( \R^{n} \right)$. Then, we may define
+\begin{align*}
+  \int_{M}^{}\omega &= \int_{\R^{n}}^{} f\left( x_1,\dots,x_n \right)\:dx_1 dx_2\cdots dx_n,
+\end{align*}
+where we use the traditional Riemann integral. This is well-defined as we discussed earlier due to the change of variables formula.\newline
+
+Next, we concern ourselves with compactly supported differential $n$-forms on $M$. For now, we assume that all the differential forms we concern ourselves with are $n$-forms, where $n$ is the dimension of $M$. We will discuss the case of general $k$-forms later, as we go deeper into de Rham cohomology.
+\begin{definition}
+  We say a differential form $\omega$ is \textit{compactly supported} on $M$ if $\omega$ vanishes outside a compact subset of $M$.
+\end{definition}
+In particular, this means that if we have an open cover $\set{U_i}_{i\in\N}$ of $M$, then we may find $U_1,\dots,U_n$ such that
+\begin{align*}
+  \operatorname{supp}\left( \omega \right) &\subseteq \bigcup_{i=1}^{n}U_i,
+\end{align*}
+by compactness. If $\set{f_i}_{i\in\N}$ is a partition of unity subordinate to $ \set{U_i}_{i\in \N} $, then we may define the integral of $\omega$ as follows.
+\begin{definition}
+  Let $\omega$ be a compactly supported differential form on $M$, and let $\set{f_i}_{i\in \N}$ be a partition of unity subordinate to the open cover $\set{U_i}_{i\in \N}$. Define
+  \begin{align*}
+    \omega_i &= f_i\omega,
+  \end{align*}
+  so that
+  \begin{align*}
+    \omega &= \sum_{i=1}^{n}f_i\omega.
+  \end{align*}
+  Then, we define the integral of $\omega$ over $M$ to be
+  \begin{align*}
+    \int_{M}^{}\omega &= \sum_{i=1}^{n} \int_{M}^{}\omega_i.
+  \end{align*}
+\end{definition}
+Observe that this definition works since each of the $\omega_i$ vanishes outside a compact subset of a Euclidean chart.\newline
+
+The question then arises: we know that we can determine the sign of this integral upon the choice of a chart, but what happens if we select a different chart? How do we know that the sign is well-defined? This has to do with the orientation of the underlying manifold.
+\subsection{Orientation}%
+\begin{definition}
+  Let $M$ be a smooth manifold. An \textit{orientation} on $M$ is a coherent choice of ordered basis on $T_pM$ for all $p\in M$. In particular, it is an everywhere non-vanishing section of $\Lambda^{n}T M$.
+\end{definition}
+\begin{remark}
+  We may consider $\Lambda^{n}TM$ to be the ``determinant bundle'' of the manifold. This follows from the fact that linear maps on $V$ extended to $\Lambda^{n}V$ using the universal property of the exterior product are simply scaling by the determinant of the linear map.\newline
+
+  Since smooth sections of $\Lambda^{n}TM$ are continuous, it follows that if we are able to move along any path in a manner that preserves this ``determinant bundle,'' then we never encounter linear dependence with our tangent vectors.
+\end{remark}
+Not every manifold is oriented; a famous example is that of the Möbius strip.\newline
+
+Another way to conceive of the orientation of a manifold is via a selection of orientation on charts such that they agree on overlaps. In other words, if we have the ordered basis $\left( x_1,\dots,x_n \right)$ for a chart $\left( U,\varphi \right)$, and the ordered basis $\left( y_1,\dots,y_n \right)$ for a different chart $\left( V,\psi \right)$, then the linear map $D\left( \psi\circ\varphi^{-1} \right)$ is a local diffeomorphism (hence has nonzero determinant). If this determinant is positive, then these two charts have the same orientation.\newline
+
+For now, we may only define the integral $ \int_{M}^{}\omega $ whenever $M$ is oriented.
+\begin{remark}
+  If $M$ is not oriented, then there is an oriented ``double cover'' created by essentially gluing both orientations of $M$ together.
+\end{remark}
+In the next section, we will concern ourselves with manifolds that have boundary, so we discuss a little bit about orientation on the boundary.\newline
+
+Recall that the boundary of $M$ consists of those points whose charts can be identified with the half-space
+\begin{align*}
+  \mathbb{H}^{n} &= \set{\left( x_1,\dots,x_n \right) | x_n\geq 0}.
+\end{align*}
+Letting $\left( U,\varphi \right)$ be a chart about $p\in \partial M$, we note that for any $q\in U^{\circ}$, the local basis for $T_qM$ is given by $ \left( \pd{}{x_1},\dots, \pd{}{x_n} \right) $, while for $T_p \partial M$, it is given by $ \left( \pd{}{x_1},\dots,\pd{}{x_{n-1}} \right) $. The induced orientation on $T_p\partial M$ is given by an ``outward pointing'' tangent vector.
+\begin{definition}
+  We say the ordered basis
+  \begin{align*}
+    \mathcal{B} &= \left( \pd{}{x_1},\dots, \pd{}{x_{n-1}} \right)
+  \end{align*}
+  is positively oriented for $T_p\partial M$ if
+  \begin{align*}
+    \mathcal{B}' &= \left( -\pd{}{x_n},\pd{}{x_1},\dots,\pd{}{x_{n-1}} \right)
+  \end{align*}
+  is positively oriented for $T_pM$.
+\end{definition}
+\subsection{Stokes's Theorem}%
+The most powerful theorem when it comes to integration on manifold is known as Stokes's Theorem.\footnote{In my view, it is the most beautiful theorem.}
 \section{Notations}%
 \begin{itemize}
   \item A general normed space $V$ will have its norm denoted by $\norm{\cdot}$. If $V = \R^{n}$, then we denote the norm by $ \left\vert \cdot \right\vert $.

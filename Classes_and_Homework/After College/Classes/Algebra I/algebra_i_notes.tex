@@ -8,6 +8,8 @@
 %\usepackage{homework}
 \usepackage{notes}
 \usepackage{newpxtext,eulerpx,eucal}
+%\usepackage{mlmodern}
+%\renewcommand{\mathbb}[1]{\mathds{#1}}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 
 \fancyhf{}
@@ -27,7 +29,7 @@ We always assume here that $R$ is commutative and unital.
   \begin{align*}
     \left( a_1,\dots,a_n \right) \coloneq \bigcap\set{I | a_1,\dots,a_n\in I,I\text{ is an ideal in }R}.
   \end{align*}
-  An ideal is called \textit{principal} if $I = \left( a \right)$ for some $a\in I$. We may write $I = a\cdot R$ in this case.
+  An ideal is called \textit{principal} if $I = \left( a \right)$ for some $a\in I$. We may write $I = a\cdot R$ in this case. A ring where every ideal is principal is called a \textit{principal ideal domain}.
 \end{definition}
 \begin{definition}
   If $I$ and $J$ are ideals in $R$, then $IJ$ is given by
@@ -220,4 +222,56 @@ We can see some basic properties of the localization.
     \item The map $\iota_S\colon R\rightarrow S^{-1}R$ given by $ r\mapsto \frac{r}{1} $ is an injective ring homomorphism such that $\iota_S\left( S \right)\subseteq \left( S^{-1}R \right)^{\times}$, where $\left( S^{-1}R \right)^{\times}$ denotes the group of invertible elements in $S^{-1}R$.
   \end{itemize}
 \end{proposition}
+\subsection{Unique Factorization Domains, Principal Ideal Domains, and Euclidean Domains}%
+\begin{definition}
+  A ring $R$ is called \textit{Noetherian} if, for any ascending chain of ideals $I_1\subseteq I_2\subseteq\cdots$, there is some index $N$ such that for all $m\geq N$, $I_m = I_N$.
+\end{definition}
+\begin{proposition}
+  The following are equivalent:
+  \begin{itemize}
+    \item $R$ is Noetherian;
+    \item every ideal in $R$ is finitely generated.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  Let $R$ be Noetherian. Suppose toward contradiction that there exists $I$ that is not finitely generated. Then, $I$ is nonzero, so there is $\alpha_1\in I$ such that $I_1 = \left( \alpha_1 \right)$ is nonzero. Since $I$ is not finitely generated, $I\neq I_1$, so there is $\alpha_2\in I\setminus I_1$, so that $I_2 = \left( \alpha_1,\alpha_2 \right)$ is such that $I_1\subseteq I_2$. Inductively, we generate $I_n = \left( \alpha_1,\dots,\alpha_n \right)$ such that $I_{n-1}\subsetneq I_n$, implying that we have a strictly ascending chain of ideals, which is a contradiction.\newline
+
+  Suppose every ideal in $R$ is finitely generated. Let $I_1\subseteq I_2\subseteq\cdots$ be an ascending chain of ideals, and set $I = \bigcup I_n$ be their union. By assumption, $I$ is finitely generated, so we have $I = \left( \alpha_1,\dots,\alpha_N \right)$ for some $\alpha_1,\dots,\alpha_N\in R$. Yet, since $I$ is the union of all these ideals, there is some $M$ such that $\alpha_1,\dots,\alpha_N\in I_M$, meaning the chain stabilizes.
+\end{proof}
+\begin{corollary}
+  If $R$ is a principal ideal domain, then $R$ is Noetherian.
+\end{corollary}
+\begin{definition}
+  Let $R$ be an integral domain.
+  \begin{enumerate}[(i)]
+    \item Two elements $a,b\in R$ are called \textit{associated} if $a = bu$ for some unit (invertible) element $u\in R$. Equivalently, $a$ and $b$ are associated if $\left( a \right) = \left( b \right)$
+    \item An element $a\in R$ is called \textit{irreducible} if
+      \begin{itemize}
+        \item $a$ is not a unit element;
+        \item whenever $a = bc$ for some $b,c\in R$, then one of $b$ or $c$ is a unit.
+      \end{itemize}
+    \item An element $a$ is called \textit{prime} if $a\neq 0$, $a\notin R^{\times}$, and $\left( a \right)$ is prime. Equivalently, $a$ is prime if, whenever $a | bc$, it follows that $a | b$ or $a | c$, where divisibility in $R$ is defined traditionally (i.e., there exists $z\in R$ such that $az = b$).
+  \end{enumerate}
+\end{definition}
+\begin{note}
+  Prime elements are irreducible, but not necessarily vice versa.
+\end{note}
+The question then arises: when are irreducibles prime?
+\begin{definition}
+  We say $a\in R$ with $a\neq 0$, $a\notin R^{\times}$ has a \textit{unique factorization} into irreducibles if
+  \begin{enumerate}[(i)]
+    \item we may write $a = u p_1\cdots p_r$, where $u$ is a unit and $p_1,\dots,p_r$ are irreducible;
+    \item for any other such factorization
+      \begin{align*}
+        a &= u\prod_{i=1}^{r}p_i\\
+          &= v\prod_{j=1}^{s} q_j,
+      \end{align*}
+      where $p_i,q_j$ are irreducible and $u,v$ are units, we have
+      \begin{itemize}
+        \item $r = s$;
+        \item upon permutation of factors, $p_i$ and $q_i$ are associated.
+      \end{itemize}
+  \end{enumerate}
+  We call $R$ a \textit{unique factorization domain} if, for any $a\in R$ with $a\neq 0$, $a\notin R^{\times}$, $a$ has unique factorization into irreducibles.
+\end{definition}
 \end{document}

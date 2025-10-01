@@ -18,6 +18,14 @@
 
 \begin{document}
 \RaggedRight
+\begin{remark}
+  As a general rule, I use the following conventions:
+  \begin{align*}
+    U\left( z_0,r \right) &= \set{z\in \C | \left\vert z-z_0 \right\vert < r}\\
+    B\left( z_0,r \right) &= \set{z\in \C | \left\vert z-z_0 \right\vert \leq r}\\
+    S\left( z_0,r \right) &= \set{z\in \C | \left\vert z-z_0 \right\vert = r}
+  \end{align*}
+\end{remark}
 \begin{problem}[Problem 1]
   Let $U\subseteq \C$ be a bounded region, $f\colon \overline{U}\rightarrow \C$ continuous such that $ f|_{U} $ is holomorphic. Suppose $f$ is nonvanishing in $U$, and that there exists $c > 0$ such that $ \left\vert f(z) \right\vert = c $ for all $z\in \partial U$. Prove that there exists some $\theta\in \R$ such that $f(z) = ce^{i\theta}$ for all $z\in \overline{U}$.
 \end{problem}
@@ -53,6 +61,33 @@
   \begin{align*}
     \re\left( f(z) \right) &= C_r + \frac{C_R - C_r}{\ln\left( R^2 \right) - \ln\left( r^2 \right)} \left( \ln\left( \left\vert z \right\vert^2 \right) - \ln\left( r^2 \right) \right).
   \end{align*}
+  \begin{aside}
+    In the solution, we use the Wirtinger derivative $ \pd{}{ \overline{z} } $. To capture exactly what this means, we recall that the Cauchy--Riemann equations say that if $f\left( x + iyi \right) = u\left( x,y \right) + iv\left( x,y \right)$, then
+    \begin{align*}
+      \pd{u}{x} - \pd{v}{y} &= 0\\
+      \pd{u}{y} + \pd{v}{x}. &= 0.
+    \end{align*}
+    Now, if $z = x + iy$, then $ \overline{z} = x-iy $, meaning that
+    \begin{align*}
+      \pd{}{x} &= \pd{}{z} \pd{z}{x} + \pd{}{ \overline{z} } \pd{ \overline{z} }{x}\\
+               &= \pd{}{z} + \pd{}{ \overline{z} }\\
+      \pd{}{y} &= \pd{}{z} \pd{z}{y} + \pd{}{ \overline{z} } \pd{ \overline{z} }{y}\\
+               &= i \pd{}{z} - i \pd{}{ \overline{z} }
+               \intertext{meaning}
+      i \pd{}{y} &= -\pd{}{z} + \pd{}{ \overline{z} }.
+    \end{align*}
+    By solving for $ \pd{}{z} $ and $ \pd{}{ \overline{z} } $, we get
+    \begin{align*}
+      \pd{}{ z } &= \frac{1}{2}\left(  \pd{}{x} - i \pd{}{y} \right)\\
+      \pd{}{ \overline{z} } &= \frac{1}{2} \left( \pd{}{x} + i \pd{}{y} \right).
+    \end{align*}
+    Then, by applying $ \pd{}{ \overline{z} } $ to $f\left( x + iy \right) = u\left( x,y \right) + iv\left( x,y \right)$, we get
+    \begin{align*}
+      \pd{f}{ \overline{z} } &= \frac{1}{2}\left(  \pd{}{x} + i \pd{}{y} \right) \left( u\left( x,y \right) + iv\left( x,y \right) \right)\\
+                             &= \frac{1}{2}\left( \pd{u}{x} - \pd{v}{y} + i\left( \pd{u}{y} + \pd{v}{x} \right) \right).
+    \end{align*}
+    Therefore, this expression equals zero precisely when $f$ satisfies the Cauchy--Riemann equations, hence when $f$ is holomorphic.
+  \end{aside}
   Since $f$ is holomorphic, we must have
   \begin{align*}
     0 &= \pd{f}{ \overline{z} }\\
@@ -100,9 +135,32 @@
   Let $U\subseteq \C$ be a region, and let $f\colon U\rightarrow \C$ be a holomorphic function. Show that if $ u\left( x,y \right) = \left\vert f\left( x + iy \right) \right\vert $ is a harmonic function, then $f$ is constant.
 \end{problem}
 \begin{solution}
-  We know that $u\left( x,y \right)$ is a subharmonic function as it is the modulus of a holomorphic function, so that if $z_0 = x_0 + iy_0\in U$ and $B\left( z_0,r \right)\subseteq U$, then
+  Let $z_0\in U$ and $r > 0$ be such that $B\left( z_0,r \right)\subseteq U$. Since $\left\vert f \right\vert$ is harmonic, the mean value property holds that
   \begin{align*}
-    u\left( x_0,y_0 \right) &\leq \frac{1}{2\pi}\int_{0}^{2\pi} u\left( x_0 + r\cos t, y_0 + r\sin t \right)\:dt.
+    \left\vert f\left( z_0 \right) \right\vert &= \frac{1}{2\pi}\int_{0}^{2\pi} \left\vert f\left( z_0 + re^{i\theta} \right) \right\vert\:d\theta.
   \end{align*}
+  Observe that since $u\left( x,y \right)$ is bounded below, then if $u\left( x,y \right) = 0$ at $z_0$, then $u\left( x,y \right)$ on $S\left( z_0,r \right)$, so that $u = 0$ on $U$.\newline
+
+  On $B\left( z_0,r \right)$, by introducing a factor of $r$, we find that
+  \begin{align*}
+    \left\vert f\left( z_0 \right) \right\vert &= \frac{1}{2\pi r} \int_{0}^{r} \int_{0}^{2\pi} \left\vert f\left( z_0 + te^{i\theta} \right) \right\vert\:d\theta\:dt,
+    \intertext{so by Fubini's theorem, this gives}
+                                               &= \frac{1}{2\pi} \int_{0}^{2\pi} \left( \frac{1}{r} \int_{0}^{r} \left\vert f\left( z_0 + te^{i\theta} \right) \right\vert\:dt \right)\:d\theta.
+  \end{align*}
+  Therefore, $ \left\vert f \right\vert $ maintains this mean value property on the whole ball $B\left( z_0,r \right)$, and in particular, $ \left\vert f \right\vert $ maintains it along any ray originating from $z_0$ and terminating on $S\left( z_0,r \right)$. Now, since $ \left\vert f \right\vert $ is harmonic on $U\left( z_0,r \right)$, it follows that $\left\vert f \right\vert$ attains its infimum over $B\left( z_0,r \right)$ on the boundary at some $z_1\in S\left( z_0,r \right)$, and that $\left\vert f \right\vert - \left\vert f\left( z_0 \right) \right\vert \geq 0$ on $B\left( z_0,r \right)$ as a result.\newline
+
+  In particular, along the ray connecting $ z_0 $ to $z_1$, $v\left( x,y \right) = u\left( x,y \right) - \left\vert f\left( z_0 \right) \right\vert$ still maintains the mean value of $\left\vert f\left( z_0 \right) \right\vert - \left\vert f\left( z_1 \right) \right\vert$. At the same time, $v\left( x_1,y_1 \right) = 0$, and $v\left( x,y \right) \geq 0$ on $B\left( z_0,r \right)$, meaning that if $v$ is to maintain the mean value that is found at its center, it follows that $v \equiv 0$ on $B\left( z_0,r \right)$, so $\left\vert f \right\vert = \left\vert f\left( z_0 \right) \right\vert$ on $B\left( z_0,r \right)$.\newline
+
+  Since $ \left\vert f\left( z_0 \right) \right\vert $ is a local maximum on $B\left( z_0,r \right)$, it follows by the maximum modulus principle that $f$ is constant on $B\left( z_0,r \right)$, so by the identity theorem, $f$ is constant on $U$.
+\end{solution}
+\begin{problem}[Problem 5]
+  Let $U\subseteq \C$ be a region, and let $f\colon U\rightarrow \C$ be a holomorphic function. Suppose there exist positive integers $m,n\in \N$ such that $f(z)^{m} = \overline{f\left( z \right)}^{n}$ for all $z\in U$. Show that $f$ is constant.
+\end{problem}
+\begin{solution}
+  Multiplying both sides by $f(z)^{n}$, we get
+  \begin{align*}
+    f(z)^{m + n} &= \left\vert f(z) \right\vert^{2n}.
+  \end{align*}
+  Therefore, $f(z)^{m+n}$ is a holomorphic function mapping $U$ to a subset of $\R$. By the open mapping theorem, $f(z)^{m+n}$ is necessarily constant, implying that $f$ is constant.
 \end{solution}
 \end{document}
