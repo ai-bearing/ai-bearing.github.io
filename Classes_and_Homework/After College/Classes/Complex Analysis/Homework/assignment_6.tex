@@ -1,0 +1,99 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+\usepackage{homework}
+%\usepackage{notes}
+\usepackage{newpxtext,eulerpx,eucal}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Complex Analysis: Assignment 6}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{problem}[Problem 1]
+  Let $U\subseteq \C$ be a nonempty open set. Given a sequence $\left( z_n \right)_n\subseteq U$, we write $z_n\rightarrow \partial U$ if, for every compact subset $K\subseteq U$, there exists some $N = N(K)\in \N$ such that $z_n\notin K$ whenever $n\geq N$.\newline
+
+  Given a function $u\colon U\rightarrow \R$, define
+  \begin{align*}
+    \limsup_{z\rightarrow \partial U} u(z) &= \inf_{\substack{K\subseteq U\\K\text{ compact}}} \sup_{z\in U\setminus K} u(z).
+  \end{align*}
+  \begin{enumerate}[(a)]
+    \item For each positive integer $n\in\N$, define
+      \begin{align*}
+        K_n &\coloneq \set{z\in U | \left\vert z \right\vert \leq n, \dist_{\C\setminus U}\left( z \right) \geq \frac{1}{n}}.
+      \end{align*}
+      Show that:
+      \begin{enumerate}[(i)]
+        \item each $K_n$ is compact;
+        \item $K_n\subseteq K_{n+1}^{\circ}$;
+        \item $U = \bigcup_{n=1}^{\infty}K_n$.
+      \end{enumerate}
+    \item Let $L \coloneq \limsup_{z\rightarrow \partial U} u(z)$.
+      \begin{enumerate}[(i)]
+        \item Show that for each $S > L$, there is a compact subset $K\subseteq U$ such that $u(z)\leq S$ for all $z\in U\setminus K$.
+        \item Show that there exists a sequence $\left( z_n \right)_n$ in $U$ with $z_n\rightarrow \partial U$ and $\limsup_{n\rightarrow\infty}u\left( z_n \right)\geq L$.
+      \end{enumerate}
+    \item Prove that
+      \begin{align*}
+        \limsup_{z\rightarrow \partial U} u(z) &= \inf_{\substack{\left( z_n \right)_n\subseteq U\\z_n\rightarrow \partial U}}\limsup_{n\rightarrow\infty} u\left( z_n \right).
+      \end{align*}
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item We claim that the set
+      \begin{align*}
+        C_n &= \set{z\in U | \operatorname{dist}_{\C\setminus U}\left( z \right) \geq \frac{1}{n}}
+      \end{align*}
+      is closed. Then, we observe that $K_n = B\left( 0,n \right) \cap C_n$ would then be an intersection of a closed set with a closed and bounded set, hence a closed and bounded set, hence compact. Towards this end, suppose $\left( w_k \right)_k\subseteq C_n$ converges to $w\in \C$. Then, for each $k$, we have
+      \begin{align*}
+        \inf_{z\in \C\setminus U}\left\vert w_k - z \right\vert &\geq \frac{1}{n}.
+      \end{align*}
+      Observe then that for any $z\in \C\setminus U$, we have
+      \begin{align*}
+        \left\vert w_k-z \right\vert &\geq \frac{1}{n}
+      \end{align*}
+      for each $k$, meaning that
+      \begin{align*}
+        \lim_{k\rightarrow\infty} \left\vert w_k - z \right\vert &\geq \frac{1}{n},
+      \end{align*}
+      or that
+      \begin{align*}
+        \left\vert w-z \right\vert\geq \frac{1}{n}.
+      \end{align*}
+      In particular, it must be the case that $w\in U$, and that
+      \begin{align*}
+        \inf_{z\in \C\setminus U} \left\vert w-z \right\vert &\geq \frac{1}{n},
+      \end{align*}
+      so that $w\in C_n$, and thus $C_n$ is closed, and $K_n$ is compact.\newline
+
+      To see that $K_n\subseteq K_{n+1}^{\circ}$, we show that $C_n\subseteq C_{n+1}^{\circ}$ by understanding the picture of $C_{n}^{\circ}$. Towards this end, we see that $z\in C_n^{\circ}$ if and only if $z\in U$ and there is some $r > 0$ such that $\operatorname{dist}_{\C\setminus U}\left( w \right) \geq \frac{1}{n}$ for all $w\in U\left( z,r \right)$.\newline
+
+      Observe that if $\ve > 0$, then if $z$ satisfies $\dist_{\C\setminus U}\left( z \right) \geq \frac{1}{n} + \ve$, then if $w\in \C\setminus U$ and $\zeta\in U\left( z, \ve/2 \right)$, we have
+      \begin{align*}
+        \frac{1}{n} + \ve &\leq \left\vert z-w \right\vert\\
+                          &\leq \left\vert z-\zeta \right\vert + \left\vert \zeta - w \right\vert\\
+                          &< \ve/2 + \left\vert \zeta-w \right\vert,
+      \end{align*}
+      meaning that $\left\vert \zeta - w \right\vert \geq \frac{1}{n} + \ve/2$ for all $w\in \C\setminus U$, so that $\dist_{\C\setminus U}\left( \zeta \right) \geq \frac{1}{n}$. In particular, this means that $C_n^{\circ}$ consists of all $z$ for which there exists $\ve$ such that $\dist_{\C\setminus U}\left( z \right) \geq \frac{1}{n} + \ve$, or more succinctly,
+      \begin{align*}
+        C_n^{\circ} &= \set{z\in U | \dist_{\C\setminus U}\left( z \right) > \frac{1}{n}}.
+      \end{align*}
+      In particular, since $ \frac{1}{n} > \frac{1}{n + 1} $, it follows that $C_n\subseteq C_{n+1}^{\circ}$. Paired with the fact that $B\left( 0,n \right)\subseteq U\left( 0,n+1 \right)$, we obtain that
+      \begin{align*}
+        K_n &= B\left( 0,n \right) \cap C_n\\
+            &\subseteq U\left( 0,n+1 \right)\cap C_{n+1}^{\circ}\\
+            &= \left( B\left( 0,n+1 \right)\cap C_n \right)^{\circ}\\
+            &= K_{n+1}^{\circ}.
+      \end{align*}
+  \end{enumerate}
+\end{solution}
+\end{document}

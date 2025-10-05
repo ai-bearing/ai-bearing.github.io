@@ -222,7 +222,7 @@ We can see some basic properties of the localization.
     \item The map $\iota_S\colon R\rightarrow S^{-1}R$ given by $ r\mapsto \frac{r}{1} $ is an injective ring homomorphism such that $\iota_S\left( S \right)\subseteq \left( S^{-1}R \right)^{\times}$, where $\left( S^{-1}R \right)^{\times}$ denotes the group of invertible elements in $S^{-1}R$.
   \end{itemize}
 \end{proposition}
-\subsection{Unique Factorization Domains, Principal Ideal Domains, and Euclidean Domains}%
+\subsection{Unique Factorization Domains}%
 \begin{definition}
   A ring $R$ is called \textit{Noetherian} if, for any ascending chain of ideals $I_1\subseteq I_2\subseteq\cdots$, there is some index $N$ such that for all $m\geq N$, $I_m = I_N$.
 \end{definition}
@@ -274,4 +274,257 @@ The question then arises: when are irreducibles prime?
   \end{enumerate}
   We call $R$ a \textit{unique factorization domain} if, for any $a\in R$ with $a\neq 0$, $a\notin R^{\times}$, $a$ has unique factorization into irreducibles.
 \end{definition}
+\begin{proposition}
+  If $R$ a Noetherian ring, then every $a\in R$ with $a\neq 0$ and $a\notin R^{\times}$ admits a factorization into irreducibles.
+\end{proposition}
+\begin{proof}
+  First, we show that every such $a$ has an irreducible factor or divisor. If $a$ is itself irreducible, then we are done. Else, there are $b,c\in R$ with $a = bc$ and neither $a$ nor $b$ a unit. In particular, this means that $\left( a \right)\subsetneq \left( b \right)$. Inductively, if $b$ is not irreducible, then we may find $b_2,c_2$ such that $b = b_2 c_2$, meaning that $\left( b \right)\subsetneq \left( b_2 \right)$, and so on and so forth.\newline
+
+  This gives a chain of ideals
+  \begin{align*}
+    \left( a \right)\subsetneq \left( b \right)\subsetneq \left( b_2 \right)\subsetneq \cdots
+  \end{align*}
+  that eventually stabilizes, meaning that there is some $b_N$ such that $b_N$ is irreducible.\newline
+
+  Now, we may show that $a$ admits a factorization. If $a = bc$ with $b$ irreducible (as we showed previously), then if $c$ is not irreducible, we may take $c = b_1c_1$ and create this same chain of ideals
+  \begin{align*}
+    \left( c \right)\subsetneq \left( c_1 \right)\subsetneq \left( c_2 \right)\subsetneq\cdots
+  \end{align*}
+  using the Noetherian condition to end up at an irreducible or a unit.
+\end{proof}
+The main issue facing general Noetherian rings is that the uniqueness of the factorization may go awry.
+\begin{example}
+For instance, in the ring $R = \Z\left[ \sqrt{-5} \right]$, there is not unique factorization. For instance, we may write
+\begin{align*}
+  6 &= \left( 2 \right)\left( 3 \right)\\
+    &= \left( 1 + \sqrt{-5} \right)\left( 1 + \sqrt{-5} \right),
+\end{align*}
+where we may see that all of these are irreducible as follows. Define a norm on $\Z\left[ \sqrt{-5} \right]\subseteq \C$ by $N\left( a + b\sqrt{-5} \right) = a^2 + 5b^2$, where this norm is multiplicative as it is inherited from $\C$.
+\begin{lemma}
+  If $N$ is a norm on the ring $R = \Z\left[ \sqrt{-D} \right]$, where $D$ is a square-free positive integer, then $u\in R$ is an invertible (or unit) element if and only if $N(u) = 1$.
+\end{lemma}
+\begin{proof}[Proof of Lemma]
+  If $v\in R$ is such that $uv = 1$, then $N(uv) = N(u)N(v) = 1$, meaning that both $N(u)$ and $N(v)$ are $1$.\newline
+
+  Meanwhile, if $N(u) = 1$, then $1 = u \overline{u}$, meaning that $ \overline{u} = u^{-1} $.
+\end{proof}
+We may show that $2$ is irreducible relatively quickly. Observe that if there were a factorization of $2 = ab$ into irreducibles, then $4 = N(a)N(b)$ would hold, with neither $N(a)$ nor $N(b)$ being equal to $1$. This would mean that $N(a) = 2$ for some $a = x + y\sqrt{-5}$, or that $x^2 + 5y^2 = 2$. Yet, reducing modulo $5$, this implies that $x^2 \equiv 2$ modulo $5$, yet the only squares in $\Z/5\Z$ are $1$ and $4$.
+\end{example}
+%\begin{proposition}
+%  In a unique factorization domain, every irreducible element is prime.
+%\end{proposition}
+%\begin{proof}
+%  Let $p$ be an irreducible element such that $p | ab$, where $a,b\in R$. Writing the factorizations into irreducibles
+%  \begin{align*}
+%    a &= p_1\cdots p_r\\
+%    b &= q_1\cdots q_s,
+%  \end{align*}
+%  unique up to associates, we then get
+%  \begin{align*}
+%    pk &= ab\\
+%       &= p_1\cdots p_r q_1\cdots q_s.
+%  \end{align*}
+%  Since the factorization of $ab$ is unique up to associates, it follows that $p$ must be associated to one of $p_1,\dots,p_r$ or $q_1,\dots,q_s$. If it's the former, then $p | a$, and if it's the latter, then $p | b$. Thus, $p$ is prime.
+%\end{proof}
+Given a factorization, there is a simple way to classify the uniqueness of the factorization.
+\begin{proposition}
+  Let $a\in R$ be such that $a\neq 0$ and $a\notin R^{\times}$. If $a$ admits a factorization
+  \begin{align*}
+    a &= u p_1\cdots p_r,
+  \end{align*}
+  with $p_1,\dots,p_n$ \textit{prime}, then this factorization is unique (up to associates).
+\end{proposition}
+\begin{proof}
+  Suppose $a$ admits another factorization,
+  \begin{align*}
+    a &= vq_1\cdots q_s,
+  \end{align*}
+  where $q_1,\dots,q_s$ are irreducible and $v$ is a unit. Then, we have
+  \begin{align*}
+    up_1\cdots p_r &= vq_1\cdots q_s,
+  \end{align*}
+  meaning that $p_1$ divides $vq_1\cdots q_s$. Since $p_1$ is prime, $p_1 | q_j$ for some $j$, meaning that $q_j = v_1p_1$ for some $v_1\in R$. Yet, since $q_j$ is irreducible, it follows that $v_1$ is a unit. By permuting elements, we may say that $p_1$ and $q_1$ are associated, so we have
+  \begin{align*}
+    up_1\cdots p_r &= vv_1p_1q_2\cdots q_s.
+  \end{align*}
+  Now, since $R$ is a domain, it admits the cancellation property, so we may then write
+  \begin{align*}
+    up_2\cdots p_r &= vv_1q_2\cdots q_s.
+  \end{align*}
+  Proceeding in this fashion, we observe first that $r \leq s$, as else, we would have $p_i$ dividing a unit for $R$, which is not allowed. Thus, we find
+  \begin{align*}
+    u &= vv_1\cdots v_r q_{r+1}\cdots q_s.
+  \end{align*}
+  Similarly, this means there cannot be any more $q_j$, or else the $q_j$ would be a unit. Thus, these are the same factorizations (up to associates).
+\end{proof}
+\begin{theorem}
+  If a domain $R$ is a principal ideal domain, then $R$ is a unique factorization domain.
+\end{theorem}
+\begin{proof}
+  First, we show that if $a\in R$ is irreducible, then $a$ is prime.\newline
+
+  Observe that $\left( a \right)$ is then contained in a maximal ideal $M$, where $M = \left( p \right)$ for some $p\in R$ with $p$ not a unit. Since $M$ is maximal, $M$ is prime, so that $p$ is prime, and $\left( a \right)\subseteq \left( p \right)$. Observe then that $a = pu$ for some $u\in R$; since $a$ is irreducible and $p$ is not a unit, it must be the case that $u$ is a unit. Thus, $\left( a \right) = \left( p \right)$, so that $a$ is prime.\newline
+
+  Now, since $R$ is a principal ideal domain, every element in $R$ admits a factorization into irreducibles, and all irreducibles are prime. Therefore, the factorization is unique by the above lemma.
+\end{proof}
+\subsection{Euclidean Domains}%
+\begin{definition}
+  An integral domain $R$ is called a \textit{Euclidean Domain} if there exists $N\colon R\setminus \set{0}\rightarrow \Z_{\geq 0}$ such that for all $a,b\in R$, with $b\neq 0$, there exist $q,r\in R$ such that
+  \begin{itemize}
+    \item $a = qb + r$;
+    \item either $r = 0$ or $N(r) < N(b)$.
+  \end{itemize}
+\end{definition}
+\begin{example}\hfill
+  \begin{itemize}
+    \item Any field admits the vacuous norm, $N(k) = 0$ for all $k\in F\setminus \set{0}$.
+    \item The ring $R = \Z$ is Euclidean with the norm $N(n) = \left\vert n \right\vert$. 
+    \item The ring $R = \F[x]$, where $\F$ is a field, is Euclidean with norm $N\colon \F\left[ x \right]\setminus \set{0}\rightarrow \N$ given by $N(f) = \deg(f)$.
+  \end{itemize}
+\end{example}
+\begin{theorem}
+  If $R$ is Euclidean, then $R$ is a principal ideal domain.
+\end{theorem}
+\begin{proof}
+  Let $I\subseteq R$ be an ideal. If $I = \set{0}$, then $I$ is principal and we are done.\newline
+
+  Else, suppose $I\neq 0$. There exists $\alpha\in I$ with $\alpha\neq 0$, so that $N(\alpha)$ is well-defined. Let $b\in I$ be such that $N(b)$ is minimal for all possible elements of $I$.\newline
+
+  We claim that $I = \left( b \right)$. Let $a\in I$ be arbitrary, and perform Euclidean division on $a$ by $b$, yielding
+  \begin{align*}
+    a &= qb + r,
+  \end{align*}
+  where $r = 0$ or $N(r) < N(b)$.\newline
+
+  If $r\neq 0$, then $N(r) < N(b)$, but $r = a - bq\in I$, which would contradict minimality of $N(b)$, so that $r = 0$, and thus $a = bq\in \left( b \right)$.
+\end{proof}
+\begin{theorem}
+  The Gaussian integers, $\Z\left[ i \right]$, are Euclidean with norm
+  \begin{align*}
+    N\left(a + bi\right) &= a^2 + b^2.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Observe that $N$ is multiplicative. If we let $\alpha = a + bi$ and $\beta = c + di$ with $\alpha,\beta\neq 0$, we want to show that there exist $\gamma$ and $\delta$ such that $\alpha = \beta \gamma + \delta$ and $\delta = 0$ or $N(\delta) < N(\beta)$.\newline
+
+  Consider $\frac{\alpha}{\beta}\in \C$, so that
+  \begin{align*}
+    \frac{\alpha}{\beta} &= \frac{\left( a + bi \right)\left( c - di \right)}{c^2 + d^2}\\
+                         &= \frac{\left( a + bi \right)\left( c -di \right)}{N(\beta)}\\
+                         &\eqcolon x + yi,
+  \end{align*}
+  so that $ \frac{\alpha}{\beta}\in \Q\left[ i \right] $.\newline
+
+  Now, we can find $x_0,y_0\in \Z$ such that $\left\vert x-x_0 \right\vert\leq \frac{1}{2}$ and $\left\vert y-y_0 \right\vert\leq \frac{1}{2}$. Setting $\delta = x_0 + y_0 i$, we have that $\delta = \alpha - \beta\gamma\in \Z\left[ i \right]$. We claim that if $\delta \neq 0$, then $N(\delta) < N(\beta)$.\newline
+
+  Observe that since $N$ is multiplicative, this condition is equivalent to $N\left( \frac{\delta}{\beta} \right) < 1$. We observe that
+  \begin{align*}
+    N\left( \frac{\delta}{\beta} \right) &= N\left( \frac{\alpha - \beta \gamma}{\beta} \right)\\
+                                         &= N\left( \frac{\alpha}{\beta} - \gamma \right)\\
+                                         &= \left( x-x_0 \right)^2 + \left( y-y_0 \right)^2\\
+                                         &\leq \frac{1}{2}\\
+                                         &< 1.
+  \end{align*}
+\end{proof}
+\begin{remark}
+  While the remainder in Euclidean division for $\Z$ and $\F\left[ x \right]$ \textit{is} unique, this is not the case for general Euclidean domains. For instance, if we want to divide $a = 1 + i$ by $b = 2$ in $\Z\left[ i \right]$ with our previously specified norm, we find that 
+  \begin{align*}
+    1 + i &= 2\cdot 0 + \left( 1 + i \right) \\
+          &= 2\cdot 1 + \left( -1 + i \right),
+  \end{align*}
+  both of which satisfy the conditions for Euclidean division.
+\end{remark}
+Now, in any PID (really, any UFD), we can talk about a greatest common divisor. In a principal ideal domain, the GCD for $a,b\in R$ is given by the unique (up to associates) element $d$ such that
+\begin{align*}
+  \left( a,b \right) &= \left( d \right).
+\end{align*}
+Meanwhile, greatest common divisors in a UFD are slightly more complicated. If we have two elements $a,b\in R$ with prime factorizations
+\begin{align*}
+  a &= up_1^{v_1}p_2^{v_2}\cdots p_n^{v_n}\\
+  b &= vp_1^{w_1}p_2^{w_2}\cdots p_n^{w_n},
+\end{align*}
+then the greatest common divisor is given by
+\begin{align*}
+  \gcd\left( a,b \right) &= \prod_{i=1}^{n} p_i^{\operatorname{min}\left( v_i,w_i \right)}.
+\end{align*}
+This is defined up to associates, similar to how the factorization of any element is defined up to associates.
+\subsection{Unique Factorization in Polynomial Rings}%
+Our goal is to prove that if $R$ is a UFD, then $R[x]$ is a UFD.\newline
+
+We do this by first discussing irreducibility in $R[x]$, including a full characterization of irreducible elements.
+\begin{definition}
+  Assume $R$ is a unique factorization domain, and let $0\neq f(x)\in R[x]$. Writing
+  \begin{align*}
+    f(x) &= a_nx^n + a_{n-1}x^{n-1} + \cdots + a_1 x + a_0,
+  \end{align*}
+  we define the \textit{content} of $f$, written $\operatorname{c}(f)$, to be
+  \begin{align*}
+    \operatorname{c}(f) &= \operatorname{gcd}\left( a_0,a_1,\dots,a_n \right).
+  \end{align*}
+\end{definition}
+\begin{proposition}[Gauss's Lemma]
+  Let $R$ be a UFD, and let $f(x),g(x)\in R[x]$ be nonzero polynomials. Then,
+  \begin{align*}
+    \operatorname{c}\left( f g \right) &= \operatorname{c}\left( f \right)\operatorname{c}\left( g \right).
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  For any nonzero polynomial $h\in R[x]$, we may write
+  \begin{align*}
+    h(x) &= \operatorname{c}\left( h \right) z(x),
+  \end{align*}
+  where $\operatorname{c}\left( z \right) = 1$, simply by factoring. Thus, writing
+  \begin{align*}
+    f(x) &= \operatorname{c}\left( f \right) u(x)\\
+    g(x) &= \operatorname{c}\left( g \right) v(x),
+  \end{align*}
+  where $\operatorname{c}\left( u \right) = \operatorname{c}\left( v \right) = 1$, hence
+  \begin{align*}
+    \operatorname{c}\left( fg \right) &= \operatorname{c}\left( \operatorname{c}\left( f \right)\operatorname{c}\left( g \right)u v \right)\\
+                                      &= \operatorname{c}\left( f \right)\operatorname{c}\left( g \right)\operatorname{c}\left( uv \right).
+  \end{align*}
+  We want to show that $\operatorname{c}\left( u(x)v(x) \right) = 1$ (up to associates).\newline
+
+  Suppose not. Since $ \operatorname{c}\left( uv \right) $ is nonzero and (assumed to be) not a unit, we may find a prime $p$ such that $ p | \operatorname{c}\left( u v \right) $. That is, we may find $p$ such that $p$ divides all coefficients of $u(x)v(x)$.\newline
+
+  Consider now the reduction homomorphism
+  \begin{align*}
+    \pi\colon R[x]\rightarrow \left( R/\left( p \right) \right)[x],
+  \end{align*}
+  where we reduce all coefficients modulo $\left( p \right)$. Since $p$ is prime, $ \left( p \right) $ is prime, so that $R/\left( p \right)$ is an integral domain, meaning that $\left( R/\left( p \right) \right)[x]$ is an integral domain.\newline
+
+  Since $ \operatorname{c}\left( u \right) = \operatorname{c}\left( v \right) = 1 $, it follows that $\pi\left( u(x) \right) \neq 0$ and $\pi\left( v(x) \right) \neq 0$, as at least one coefficient in $u(x)$ or $v(x)$ is not divisible by $p$. Thus, in $\left( R/\left( p \right) \right)[x]$ is a domain, it follows that $\pi\left( u(x) \right)\pi\left( v(x) \right)\neq 0$. Yet, since $\pi$ is a homomorphism, it follows that $0 = \pi\left( u(x)v(x) \right) = \pi\left( u(x) \right)\pi\left( v(x) \right)$, since we assumed that $p$ divides all the coefficients of $u(x)v(x)$.
+\end{proof}
+\begin{corollary}[Also known as Gauss's Lemma]
+  Let $R$ be a UFD, and let $F = \operatorname{frac}\left( R \right)$. Let $f(x)\in R[x]$, and assume $f(x)$ is reducible in $F[x]$. Then, $f(x)$ is reducible in $R[x]$.
+\end{corollary}
+\begin{proof}
+  Let $f(x)$ be reducible in $F[x]$, so that $f(x) = g(x)h(x)$, where $g(x)$ and $h(x)$ are nonconstant polynomials in $F[x]$.\newline
+
+  By factoring, we have
+  \begin{align*}
+    g(x) &= \frac{a}{b}u(x)\\
+    h(x) &= \frac{c}{d}v(x),
+  \end{align*}
+  where $a,b,c,d\in R\setminus \set{0}$, $u(x),v(x)\in R[x]$, and $ \operatorname{c}\left( u \right) = \operatorname{c}\left( v \right) = 1 $.\newline
+
+  Substituting this information into the expression for $f(x)$, we have
+  \begin{align*}
+    f(x) &= \frac{ac}{bd}u(x)v(x)\\
+    bd f(x) &= ac u(x)v(x),
+  \end{align*}
+  so that
+  \begin{align*}
+    bd \operatorname{c}\left( f \right)&= ac \operatorname{c}\left( u \right)\operatorname{c}\left( v \right).
+  \end{align*}
+  meaning
+  \begin{align*}
+    bd \operatorname{c}\left( f \right) &= ac.
+  \end{align*}
+  In particular, this means that $\frac{ac}{bd}$ is a valid representative for $\operatorname{c}\left( f \right)$, so that $ \frac{ac}{bd}\in R $. Therefore,
+  \begin{align*}
+    f(x) &= \left( \frac{ac}{bd}u(x) \right)v(x),
+  \end{align*}
+  both nonconstant and in $R[x]$, meaning $f(x)$ has a nontrivial factorization in $R[x]$, and thus $f$ is reducible.
+\end{proof}
 \end{document}
