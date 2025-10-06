@@ -19,7 +19,9 @@
 \begin{document}
 \RaggedRight
 \begin{problem}[Problem 1]
-  Let $U\subseteq \C$ be a nonempty open set. Given a sequence $\left( z_n \right)_n\subseteq U$, we write $z_n\rightarrow \partial U$ if, for every compact subset $K\subseteq U$, there exists some $N = N(K)\in \N$ such that $z_n\notin K$ whenever $n\geq N$.\newline
+  Let $U\subseteq \C$ be a nonempty open set.\newline
+
+  Given a sequence $\left( z_n \right)_n\subseteq U$, we write $z_n\rightarrow \partial U$ if, for every compact subset $K\subseteq U$, there exists some $N = N(K)\in \N$ such that $z_n\notin K$ whenever $n\geq N$.\newline
 
   Given a function $u\colon U\rightarrow \R$, define
   \begin{align*}
@@ -39,12 +41,13 @@
     \item Let $L \coloneq \limsup_{z\rightarrow \partial U} u(z)$.
       \begin{enumerate}[(i)]
         \item Show that for each $S > L$, there is a compact subset $K\subseteq U$ such that $u(z)\leq S$ for all $z\in U\setminus K$.
-        \item Show that there exists a sequence $\left( z_n \right)_n$ in $U$ with $z_n\rightarrow \partial U$ and $\limsup_{n\rightarrow\infty}u\left( z_n \right)\geq L$.
+        \item Show that there exists a sequence $\left( z_n \right)_n$ in $U$ with $z_n\rightarrow \partial U$ and $\limsup_{n\rightarrow\infty}u\left( z_n \right)\leq L$.
       \end{enumerate}
     \item Prove that
       \begin{align*}
-        \limsup_{z\rightarrow \partial U} u(z) &= \inf_{\substack{\left( z_n \right)_n\subseteq U\\z_n\rightarrow \partial U}}\limsup_{n\rightarrow\infty} u\left( z_n \right).
+        \limsup_{z\rightarrow \partial U} u(z) &= \sup_{\substack{\left( z_n \right)_n\subseteq U\\z_n\rightarrow \partial U}}\limsup_{n\rightarrow\infty} u\left( z_n \right),
       \end{align*}
+      where the supremum is over all sequences $\left( z_n \right)_n$ with $\left( z_n \right)_n\rightarrow \partial U$.
   \end{enumerate}
 \end{problem}
 \begin{solution}\hfill
@@ -94,6 +97,155 @@
             &= \left( B\left( 0,n+1 \right)\cap C_n \right)^{\circ}\\
             &= K_{n+1}^{\circ}.
       \end{align*}
+      Finally, to show that $U = \bigcup_{n = 1}^{\infty}K_n$, we write
+      \begin{align*}
+        \bigcup_{n= 1}^{\infty}K_n &= \bigcup_{n = 1} ^{\infty} \left( B\left( 0,n \right) \cap C_n \right)\\
+                                   &= \left( \bigcup_{n=1}^{\infty}B\left( 0,n \right) \right)\cap \left( \bigcup_{n=1}^{\infty} C_n \right),
+      \end{align*}
+      and since $\bigcup_{n=1}^{\infty}B\left( 0,n \right) = \C$, it follows that we must show that
+      \begin{align*}
+        \bigcup_{n=1}^{\infty}C_n &= U.
+      \end{align*}
+      Towards this end, we prove that if $A\subseteq \C$ is any subset, then $ \dist_{A}(z) = 0 $ if and only if $z\in \overline{A}$. Towards this end, if $\dist_{A}(z) = 0$, then for any $k$, there is $w\in A$ such that $\left\vert w-z \right\vert < \frac{1}{n}$, so that we may construct a sequence $\left( w_n \right)_n$ in $A$ such that $\left( w_n \right)_n\rightarrow z$, or that $z\in \overline{A}$. Similarly, if $z\in \overline{A}$, then if $\left( w_n \right)_n$ is a sequence in $A$ converging to $z$, and $\ve > 0$, it follows that $\left\vert w_n - z \right\vert < \ve$ for sufficiently large $n$, so that $\inf_{w\in Z}\left\vert w-z \right\vert = 0$.\newline
+
+      Since $U$ is open, it follows that for any $z\in \C\setminus U$, since $\C\setminus U = \overline{\C\setminus U}$, $\dist_{\C\setminus U} (z) = 0$. Equivalently, if $z\in U$, we must have $\dist_{\C\setminus U}(z) > 0$, so that there exists $n$ sufficiently large such that $\dist_{\C\setminus U}(z) \geq 1/n$; this means $z\in C_n$, so that
+      \begin{align*}
+        U &\subseteq \bigcup_{n=1}^{\infty}C_n.
+      \end{align*}
+      Meanwhile, if $z\in \bigcup_{n=1}^{\infty}C_n$, then there is some $N$ such that $\dist_{\C\setminus U}(z) \geq 1/N$, meaning that $\dist_{\C\setminus U}(z) > 0$, meaning $z\notin \C\setminus U$, so that $z\in U$.
+    \item\hfill
+      \begin{enumerate}[(i)]
+        \item If $S = L + \ve$ for $\ve > 0$, it follows by the definition of the infimum that there exists a compact subset $K\subseteq U$ such that $\sup_{z\in U\setminus K} u(z) \leq S$. Therefore, for all $z\in U\setminus K$, $u(z)\leq S$.
+        \item Let $L_n = L + \frac{1}{n}$. We find $K_{j_n}\subseteq U$ that satisfies
+          \begin{itemize}
+            \item $u(z)\leq L_n$ for all $z\in U\setminus K_{j_n}$;
+            \item $\left\vert z \right\vert \leq j_n$ for all $z\in K_{j_n}$;
+            \item $\dist_{\C\setminus U}(z) \geq \frac{1}{j_n}$.
+          \end{itemize}
+          The existence of such a $K_{j_n}$ follows from the proof in (i) and the definitions in part (a). We may find $z_n\in U\setminus K_{j_n}$, so that $u\left(z_n\right)\leq L_n$.\newline
+
+          The sequence $\left( z_n \right)_n$ thus escapes all the $K_{j_n}$, and since any $K\subseteq U$ is contained in some sufficiently large $K_{j_n}$, it follows that $\left( z_n \right)_n\rightarrow \partial U$. Furthermore, since $u\left( z_n \right)\leq L_n$ for each $n$, we have
+          \begin{align*}
+            \limsup_{n\rightarrow\infty} u\left( z_n \right) &\leq \limsup_{n\rightarrow\infty}L_n\\
+                                                             &= L.
+          \end{align*}
+      \end{enumerate}
   \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 2]
+  Let
+  \begin{align*}
+    U &= \set{z\in \C | \left\vert z \right\vert < 1,\im(z) > 0}.
+  \end{align*}
+  \begin{enumerate}[(a)]
+    \item Construct a conformal map from $U$ to $ \mathbb{H} = \set{z\in\C | \im(z) > 0} $.
+    \item Construct an unbounded harmonic function $u\colon U\rightarrow (0,\infty)$ such that for all $\left( x_0,y_0 \right)\in \partial U \setminus \set{(1,0)}$, we have that $\lim_{\left( x,y \right)\rightarrow \left( x_0,y_0 \right)} u\left( x,y \right) = 0$.
+    \item Suppose that $v\colon U\rightarrow (0,\infty)$ is an unbounded harmonic function such that for all $\left( x_0,y_0 \right)\in \partial U\setminus \set{\left( 1,0 \right)}$, we have that $\lim_{\left( x,y \right)\rightarrow \left( x_0,y_0 \right)} v\left( x,y \right) = 0$. Show that there exists a sequence $\left( \left( x_n,y_n \right) \right)_n$ in $U$ converging to $\left( 1,0 \right)$ and $\lim_{n\rightarrow\infty}v\left( x_n,y_n \right) = \infty$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item We start by taking the Cayley transform, mapping $ \mathbb{H} $ to $ \mathbb{D} $, given by $\frac{z-i}{z+i}$. The inverse Cayley transform, which maps $ \mathbb{D} $ to $ \mathbb{H} $, is then given by the inverse transform, which takes
+      \begin{align*}
+        Q(z) &= i\frac{1+z}{1-z}.
+      \end{align*}
+      By taking $a + bi\in U$ with $b > 0$ and $a^2 + b^2 \leq 1$, we find that
+      \begin{align*}
+        i\frac{1 + \left( a + bi \right)}{1-a-bi} &= \frac{1}{\left( 1-a \right)^2 + b^2} \left( -2b + i\left( 1-a^2-b^2 \right) \right).
+      \end{align*}
+      Therefore, we observe that the inverse transform maps $U$ to the second quadrant, admitting arguments between $\frac{\pi}{2}$ and $\pi$. By squaring, we have
+      \begin{align*}
+        \left( Q(z) \right)^2 &= -\left( \frac{z+1}{1-z} \right)^2,
+      \end{align*}
+      which maps to complex numbers with arguments between $\pi$ and $2\pi$. Multiplying by $-1$, we get
+      \begin{align*}
+        H(z) &= \left( \frac{z+1}{1-z} \right)^2
+      \end{align*}
+      mapping from $U$ to the upper half-plane. Since we composed a series of bijective holomorphic maps (and, within a correct domain for the case of square root, ones that have holomorphic inverse), it follows that $H$ is a bijective holomorphic map with holomorphic inverse, hence conformal.
+    \item Consider the function
+      \begin{align*}
+        u\left( x,y \right) &= \im\left( H\left( x + yi \right) \right).
+      \end{align*}
+      We observe that $u$ is the imaginary part of a holomorphic function, so it is harmonic. Since $H$ maps $U$ conformally to the upper half-plane, it follows that $u$ maps $U$ to $\left( 0,\infty \right)$, and that $u$ is unbounded, as $H$ is unbounded. It remains to show that $u$ maps $\partial U$ to $0$ in limit save for $\left( 1,0 \right)$. Towards this end, we split the case into two parts.\newline
+
+      If $x_0 + iy_0 = e^{i\theta}$ for some $0 < \theta_0 < \pi$, then
+      \begin{align*}
+        \frac{e^{i\theta} + 1}{1-e^{i\theta}} &= \frac{\left( 1 + \cos\left( \theta \right) + i\sin\left( \theta \right) \right)\left( 1 - \cos\left( \theta \right) + i\sin\left( \theta \right) \right)}{2-2\cos\left( \theta \right)}\\
+                                              &= \frac{1}{2-2\cos\left( \theta \right)} \left( 1-\cos^2\left( \theta \right)-\sin^2\left( \theta \right) + 2i\sin\left( \theta \right) \right)\\
+                                              &= \frac{2i\sin\left( \theta \right)}{2-2\cos\left( \theta \right)}.
+      \end{align*}
+      Squaring, we then get
+      \begin{align*}
+        \left( \frac{e^{i\theta} + 1}{1-e^{i\theta}} \right)^2 &= -\frac{1}{2}\cot^2\left( \theta/2 \right)\\
+                                                               &\in \R,
+      \end{align*}
+      so that $u\left( x_0,y_0 \right) = 0$ whenever $x_0 + iy_0 = e^{i\theta}$ for some $0 < \theta_0 < \pi$.\newline
+
+      Meanwhile, if $x_0 + iy_0 = x_0$, then
+      \begin{align*}
+        H\left( x_0 + iy_0 \right) &= \left( \frac{x_0 + 1}{1-x_0} \right)^2\\
+                                   &\in \R,
+      \end{align*}
+      so that $u\left( x_0,y_0 \right) = 0$ yet again.
+    \item We let $v \equiv u$, where $u$ is defined as above. Since $u$ is unbounded, it follows that for each $N\geq 1$, there is $\left( x_N,y_N \right)\in U$ such that $u\left( x_N,y_n \right) \geq N$. Inductively, this allows us to construct a sequence $\left( x_n,y_n \right)\subseteq U$ such that $u\left( x_n,y_n \right) \geq n$, meaning that $\lim_{n\rightarrow\infty}u\left( x_n,y_n \right) =\infty$.\newline
+
+      Since $u$ is harmonic, it is subharmonic, so by a previously established theorem, it follows that $\left( \left( x_n,y_n \right) \right)_n\rightarrow \partial U$. Yet, this sequence cannot converge to any element of $\partial U\setminus \set{\left( 1,0 \right)}$, as otherwise, we would have $u\left( x_n,y_n \right)\rightarrow 0$, which would contradict the fact that $u$ is continuous as it is harmonic. Therefore, we have $\left( \left( x_n,y_n \right) \right)_{n}\rightarrow \left( 1,0 \right)$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 3]
+  Let 
+  \begin{align*}
+    U &= \set{z\in \C | 0 < \re(z) < 1}.
+  \end{align*}
+  Let $f\colon \overline{U}\rightarrow \C$ be a continuous bounded function for which $ f|_{U} $ is holomorphic. Suppose there exist constants $M_0\geq 0$ and $M_1\geq 0$ such that
+  \begin{align*}
+    \sup_{\re(z) = 0} \left\vert f(z) \right\vert &\leq M_0\\
+    \sup_{\re(z) = 1} \left\vert f(z) \right\vert &\leq M_1.
+  \end{align*}
+  Show that for all $r\in [0,1]$,
+  \begin{align*}
+    \sup_{\re(z) = r} \left\vert f(z) \right\vert \leq M_0^{1-r}M_1^{r}.
+  \end{align*}
+\end{problem}
+\begin{solution}
+  Let $\ve > 0$ be fixed. Define
+  \begin{align*}
+    f_{\ve}(z) &= f(z) M_0^{z-1}M_1^{-z}e^{\ve\left( z^2 - 1 \right)}.
+  \end{align*}
+  We will show that $\sup_{z\in \overline{U}}\left\vert f_{\ve}(z) \right\vert \leq 1$. Towards this end, if $\re(z) = 0$, we have $z = bi$ for some $b \in \R$; since $M_0,M_1\in \R_{\geq 0}$, we then get
+  \begin{align*}
+    \left\vert f(z)M_0^{z-1}M_1^{-z}e^{\ve \left( z^2 - 1 \right)} \right\vert &= \left\vert f(z)M_0^{bi-1}M_1^{-bi}e^{-\ve\left( b^2 + 1 \right)} \right\vert\\
+                                                                               &= \left\vert f(z)M_0^{-1}e^{-\ve\left( b^2 + 1 \right)} \right\vert\\
+                                                                               &\leq \left\vert f(z)M_0^{-1} \right\vert\\
+                                                                               &\leq 1.
+  \end{align*}
+  Similarly, if $\re(z) = 1$, then we have $z = 1 + bi$ for some $b\in \R$, and since $M_0,M_1\in \R_{\geq 0}$, we have
+  \begin{align*}
+    \left\vert f(z) M_0^{z-1}M_1^{-z}e^{\ve\left( z^2 - 1 \right)} \right\vert &= \left\vert f(z) M_0^{bi}M_1^{-bi-1}e^{\ve\left( -2bi-b^2 \right)} \right\vert\\
+                                                                               &= \left\vert f(z)M_1^{-1}e^{-b^2\ve} \right\vert\\
+                                                                               &\leq \left\vert f(z)M_1^{-1} \right\vert\\
+                                                                               &\leq 1.
+  \end{align*}
+  Since $\left\vert f_{\ve}(z) \right\vert \leq 1$ holds on both $\re(z) = 0$ and $\re(z) = 1$, it follows by the maximum modulus principle that we must have $\left\vert f_{\ve}(z) \right\vert \leq 1$ on the interior. In particular, this means that
+  \begin{align*}
+    \sup_{z\in \overline{U}} \left\vert f_{\ve}(z) \right\vert \leq 1.
+  \end{align*}
+  Since $\ve > 0$ is arbitrary, it follows that
+  \begin{align*}
+    \left\vert f(z)M_0^{z-1}M_1^{-z} \right\vert &\leq 1
+  \end{align*}
+  for all $z\in \overline{U}$, so that
+  \begin{align*}
+    \left\vert f(z) \right\vert&\leq \left\vert M_0^{1-z} \right\vert \left\vert M_1^{z} \right\vert\\
+                               &= M_0^{1-\re(z)} M_1^{\re(z)}.
+  \end{align*}
+  In particular, this means that for $\re(z) = r$, we have
+  \begin{align*}
+    \left\vert f(z) \right\vert &\leq M_0^{1-r}M_1^{r},
+  \end{align*}
+  meaning this holds for the supremum over all $z$ with $\re(z) = r$, yielding
+  \begin{align*}
+    \sup_{\re(z) = r} \left\vert f(z) \right\vert &\leq M_0^{1-r}M_1^{r}.
+  \end{align*}
 \end{solution}
 \end{document}
