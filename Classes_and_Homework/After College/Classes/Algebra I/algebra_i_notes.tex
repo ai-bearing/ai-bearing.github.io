@@ -661,6 +661,7 @@ Unique factorization in polynomial rings having the rigidity laid out in the cla
 \end{proof}
 \section{Modules}%
 For this section, a ring $R$ may not be commutative nor unital.
+\subsection{Basic Definitions}%
 \begin{definition}
   Let $R$ be a ring. A \textit{left $R$-module} is a set $M$ with operations
   \begin{align*}
@@ -677,5 +678,87 @@ For this section, a ring $R$ may not be commutative nor unital.
     \item[(M3)] $r\cdot \left( m+n \right) = r\cdot m + r\cdot n$ for all $r\in R$ and $m,n\in M$;
     \item[(M4)] if $R$ is unital, then $1\cdot m = m$ for all $m\in M$.
   \end{description}
+  A \textit{submodule} $N\leq M$ of an $R$-module $M$ is an abelian subgroup such that $r\cdot n\in N$ for all $r\in R$ and $n\in N$.
 \end{definition}
+\begin{definition}
+  If $N\leq M$ is a submodule, then the \textit{quotient module} $M/N$ is formed by taking equivalence classes of the form $m + N$, where $m+N = k + N$ if $m-k\in N$.
+\end{definition}
+\begin{definition}
+  An $R$-module homomorphism between $M$ and $N$ is a map $\varphi\colon M\rightarrow N$ such that $\varphi$ is $R$-linear, in the sense that
+  \begin{align*}
+    \varphi\left( r\cdot m + s\cdot k \right) &= r\cdot\varphi(m) + s\cdot \varphi(k).
+  \end{align*}
+  The set of all homomorphisms between $R$-modules $M$ and $N$ is denoted $\hom_R(M,N)$, and forms an $R$-module itself under pointwise operations.\newline
+
+  The set of all $R$-module \textit{endomorphisms} is denoted
+  \begin{align*}
+    \operatorname{end}_R(M) &\coloneq \hom_R\left( M,M \right),
+  \end{align*}
+  and forms a ring under pointwise operations and composition.\newline
+
+  The space of $R$-module \textit{automorphisms} is denoted
+  \begin{align*}
+    \aut_R\left( M \right) &\coloneq \left( \operatorname{end}_R\left( M \right) \right)^{\times}.
+  \end{align*}
+\end{definition}
+Modules admit the most ``natural'' form of the isomorphism theorems, as we only need to concern ourselves with submodules, rather than encountering issues like normal subgroups or ideals.
+\begin{theorem}[Isomorphism Theorems]\hfill
+  \begin{description}
+    \item[First Isomorphism Theorem:] If $\varphi\colon M\rightarrow N$ is a homomorphism of $R$-modules, there is an induced isomorphism
+      \begin{align*}
+        \overline{\varphi}\colon M/\ker\left( \varphi \right)\rightarrow \img\left( \varphi \right),
+      \end{align*}
+      given by $ \overline{\varphi}\left( m + \ker\left( \varphi \right) \right) = \varphi(m) $.
+    \item[Second Isomorphism Theorem:] If $A$ and $B$ are submodules of $M$, then there is an isomorphism
+      \begin{align*}
+        \frac{A + B}{A} &\cong \frac{A}{A\cap B},
+      \end{align*}
+      where 
+      \begin{align*}
+        A + B &= \set{m + n | m\in A,n\in B}.
+      \end{align*}
+    \item[Third Isomorphism Theorem:] If $A,B\leq M$ are submodules with $A\subseteq B$, then there is an isomorphism
+      \begin{align*}
+        M/B &\cong \frac{M/A}{B/A}.
+      \end{align*}
+    \item[Fourth Isomorphism Theorem:] If $B\leq M$ is a submodule, then there is a one to one correspondence between the set of submodules of $M/B$ and the set of submodules of $M$ containing $B$.
+  \end{description}
+\end{theorem}
+\subsection{Special Classes of $R$-Modules}%
+There are three special cases of $R$-modules that we will discuss here. The first one is pretty straightforward, while the other two are a bit more complex and will enable us to understand some particularly deep results later down the line.
+\begin{example}
+  If $F$ is a field, then the $F$-modules are precisely the vector spaces over $F$. This is because $F$-vector spaces and $F$-modules have the exact same axioms.
+\end{example}
+\begin{example}
+  We claim that there is a one to one correspondence between $\Z$-modules and abelian groups.\newline
+
+  One direction follows from applying a ``forgetful functor'' on $M$, taking $M\mapsto \left( M,+ \right)$, simply discarding the $\Z$-module structure of $M$. In fact, this can apply to all $R$-modules.\newline
+
+  In the reverse direction, if $\left( M,+ \right)$ is an abelian group, then we can specify a compatible action by $\Z$ onto $M$ by taking
+  \begin{align*}
+    n\cdot a &= \begin{cases}
+      \underbrace{a + \cdots + a}_{n\text{ times}} & n > 0\\
+      0 & n = 0\\
+      \underbrace{-a-\cdots-a}_{-n\text{ times}} & n < 0
+    \end{cases}.
+  \end{align*}
+\end{example}
+The last example is the most intriguing. In fact, as we will see towards the end, it ties directly to the Jordan Canonical Form, as we will see once we discuss the structure of finitely generated ideals over a principal ideal domain.
+\begin{example}
+  We want to understand the $F[x]$ modules, where $F$ is a field.\newline
+
+  Now, first, observe that since constants are elements of $F[x]$, it immediately follows that if $V$ is a $F[x]$ module, then $V$ admits a compatible structure with respect to $F$, meaning that $V$ is in fact a vector space.\newline
+
+  Now, observe that the action of $p(x)\in F[x]$ on $v\in V$ is fully determined by $x$, as
+  \begin{align*}
+    x^{n}\cdot v &= x\cdot \left( x\cdot \left( \cdots x\cdot v \right) \right).
+  \end{align*}
+  If we consider a single linear transformation $T\colon V\rightarrow V$, then by defining $T^{n} = T\circ\cdots\circ T$, we observe that for any $v\in V$, the map
+  \begin{align*}
+    p(T)(v) &= \left( a_nT^{n} + a_{n-1}T^{n-1} + \cdots a_n T + a_0 \right)v
+  \end{align*}
+  is an action on $v\in V$; we may then consider the pair $\left( V,T \right)$ to be the corresponding $F[x]$-module. The reverse direction follows from defining $T\colon V\rightarrow V$ by $Tv = x\cdot v$.\newline
+
+  Observe then that the $F[x]$-submodules of a $F[x]$-module $V$ are precisely the $T$-invariant subspaces of $V$.
+\end{example}
 \end{document}
