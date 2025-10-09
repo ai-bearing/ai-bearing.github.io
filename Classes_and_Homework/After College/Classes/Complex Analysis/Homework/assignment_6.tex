@@ -41,11 +41,11 @@
     \item Let $L \coloneq \limsup_{z\rightarrow \partial U} u(z)$.
       \begin{enumerate}[(i)]
         \item Show that for each $S > L$, there is a compact subset $K\subseteq U$ such that $u(z)\leq S$ for all $z\in U\setminus K$.
-        \item Show that there exists a sequence $\left( z_n \right)_n$ in $U$ with $z_n\rightarrow \partial U$ and $\limsup_{n\rightarrow\infty}u\left( z_n \right)\leq L$.
+        \item Show that there exists a sequence $\left( z_n \right)_n$ in $U$ with $z_n\rightarrow \partial U$ and $\limsup_{n\rightarrow\infty}u\left( z_n \right)\geq L$.
       \end{enumerate}
     \item Prove that
       \begin{align*}
-        \limsup_{z\rightarrow \partial U} u(z) &= \sup_{\substack{\left( z_n \right)_n\subseteq U\\z_n\rightarrow \partial U}}\limsup_{n\rightarrow\infty} u\left( z_n \right),
+        \limsup_{z\rightarrow \partial U} u(z) &= \sup_{\substack{\left( z_n \right)_n\subseteq U\\\left( z_n \right)\rightarrow \partial U}}\limsup_{n\rightarrow\infty} u\left( z_n \right),
       \end{align*}
       where the supremum is over all sequences $\left( z_n \right)_n$ with $\left( z_n \right)_n\rightarrow \partial U$.
   \end{enumerate}
@@ -116,21 +116,36 @@
     \item\hfill
       \begin{enumerate}[(i)]
         \item If $S = L + \ve$ for $\ve > 0$, it follows by the definition of the infimum that there exists a compact subset $K\subseteq U$ such that $\sup_{z\in U\setminus K} u(z) \leq S$. Therefore, for all $z\in U\setminus K$, $u(z)\leq S$.
-        \item Let $L_n = L + \frac{1}{n}$. We find $K_{j_n}\subseteq U$ that satisfies
-          \begin{itemize}
-            \item $u(z)\leq L_n$ for all $z\in U\setminus K_{j_n}$;
-            \item $\left\vert z \right\vert \leq j_n$ for all $z\in K_{j_n}$;
-            \item $\dist_{\C\setminus U}(z) \geq \frac{1}{j_n}$.
-          \end{itemize}
-          The existence of such a $K_{j_n}$ follows from the proof in (i) and the definitions in part (a). We may find $z_n\in U\setminus K_{j_n}$, so that $u\left(z_n\right)\leq L_n$.\newline
-
-          The sequence $\left( z_n \right)_n$ thus escapes all the $K_{j_n}$, and since any $K\subseteq U$ is contained in some sufficiently large $K_{j_n}$, it follows that $\left( z_n \right)_n\rightarrow \partial U$. Furthermore, since $u\left( z_n \right)\leq L_n$ for each $n$, we have
+        \item Let $z_n\in U\setminus K_n$, where the $K_n$ are defined as above. Then, since the limit superior is an infimum over all compact subsets of $U$, we necessarily have
           \begin{align*}
-            \limsup_{n\rightarrow\infty} u\left( z_n \right) &\leq \limsup_{n\rightarrow\infty}L_n\\
-                                                             &= L.
+            \limsup_{z\rightarrow \partial U} u(z) &\leq u\left( z_n \right).
+          \end{align*}
+          We claim that $\left( z_n \right)_n \rightarrow \partial U$. This follows from the fact that for any $K\subseteq U$ compact, there is some sufficiently large $K_n$ such that $K\subseteq K_n$, as we have shown that $U = \bigcup_{n=1}^{\infty}K_n$, with the $K_n$ nested. Thus, it follows that
+          \begin{align*}
+            \limsup_{z\rightarrow \partial U} u(z) &\leq \limsup_{n\rightarrow \infty} u\left( z_n \right).
           \end{align*}
       \end{enumerate}
-    \item 
+    \item From part (b) subpart (ii), we have established
+      \begin{align*}
+      \limsup_{z\rightarrow \partial U} u(z) &\leq \sup_{\substack{\left( z_n \right)_n\subseteq U\\\left( z_n \right)_n\rightarrow \partial U}} \limsup_{n\rightarrow\infty} u\left( z_n \right).
+      \end{align*}
+      It remains to show the other direction. Toward this end, fix a sequence $\left( z_n \right)_n\rightarrow \partial U$. If $K$ is an arbitrary compact subset of $U$, then there is some $N$ sufficiently large such that for all $n\geq N$, we have $z_n\in U\setminus K$, so that
+      \begin{align*}
+        u\left( z_n \right) \leq \sup_{z\in U\setminus K} u(z).
+      \end{align*}
+      Therefore, we have
+      \begin{align*}
+        \limsup_{n\rightarrow\infty} u\left( z_n \right) &\leq \sup_{n\in\N} u\left( z_n \right)\\
+                                                         &\leq \sup_{z\in U\setminus K}u(z),
+      \end{align*}
+      meaning that
+      \begin{align*}
+        \limsup_{n\rightarrow\infty} u\left( z_n \right) &\leq \limsup_{z\rightarrow\partial U} u\left( z \right).
+      \end{align*}
+      Therefore, by taking the supremum over all such compact subsets, we establish
+      \begin{align*}
+      \sup_{\substack{\left( z_n \right)_n\subseteq U\\\left( z_n \right)_n\rightarrow \partial U}} u\left( z_n \right) &\leq \limsup_{z\rightarrow\partial U} u\left( z \right).
+      \end{align*}
   \end{enumerate}
 \end{solution}
 \begin{problem}[Problem 2]
@@ -250,7 +265,7 @@
     \sup_{\re(z) = r} \left\vert f(z) \right\vert &\leq M_0^{1-r}M_1^{r}.
   \end{align*}
 \end{solution}
-\begin{problem}
+\begin{problem}[Problem 4]
   Let $U\subseteq \C$ be a region, $f\colon U\rightarrow \C\setminus \set{0}$ a holomorphic function. We say that $f$ has a logarithm in $U$ if there exists a holomorphic function $g\colon U\rightarrow \C$ satisfying $f(z) = e^{g(z)}$ for all $z\in U$.
   \begin{enumerate}[(a)]
     \item Show that $f$ has a logarithm in $U$ if and only if for every piecewise $C^{1}$ cycle $\Gamma$ in $U$, we have
@@ -276,13 +291,13 @@
       \begin{align*}
         \oint_{\gamma}^{} \frac{f'(z)}{f(z)}\:dz &= \oint_{\gamma}^{} g'(z)\:dz,
       \end{align*}
-      meaning that this integral is equal to zero over $\gamma$.\newline
+      meaning that, since we are taking the closed contour integral of the derivative of a holomorphic function, it is equal to zero.\newline
 
       Now, if
       \begin{align*}
         \int_{\Gamma}^{} \frac{f'(z)}{f(z)}\:dz &= 0
       \end{align*}
-      for all piecewise $C^{1}$ cycles $\Gamma$ in $U$, then it certainly follows for a cycles consisting of a single $C^{1}$ loop, $\gamma$, where $\img(\gamma)\subseteq U$. Therefore, by an established proposition, there is some holomorphic function $g\colon U\rightarrow \C$ such that
+      for all piecewise $C^{1}$ cycles $\Gamma$ in $U$, then it certainly follows for a cycles consisting of a single $C^{1}$ loop, $\gamma$, where $\img(\gamma)\subseteq U$. Therefore, by an established proposition, there is some holomorphic function $g\colon U\rightarrow \C$ such that $g$ is an antiderivative for $\frac{f'}{f}$; that is,
       \begin{align*}
         g'(z) &= \frac{f'(z)}{f(z)}.
       \end{align*}
@@ -308,7 +323,7 @@
         f(z) &= e^{k^{\ast}g(z)}.
       \end{align*}
       Since $k^{\ast}g(z)$ is also holomorphic, we thus find that $f$ has a logarithm.
-    \item Let $\gamma\colon [a,b]\rightarrow U$ be a piecewise $C^{1}$ loop. We observe then that
+    \item Let $\gamma\colon [a,b]\rightarrow U$ be a piecewise $C^{1}$ loop. We observe then that $f\circ \gamma$ is also a piecewise $C^{1}$ loop (as $f$ is holomorphic on $U$), so that
       \begin{align*}
         \oint_{\gamma}^{} \frac{f'(z)}{f(z)}\:dz &= \int_{a}^{b} \frac{\gamma'(t)f'\left( \gamma(t) \right)}{f\left(\gamma(t)\right)}\:dt\\
                                                  &= \int_{a}^{b} \frac{1}{\left( f\circ\gamma \right)(t)}\left( f\circ\gamma \right)'(t)\:dt\\
@@ -321,11 +336,11 @@
       \end{align*}
       satisfies $h(z)^{k} = \left( e^{\frac{1}{k}g(z)} \right)^{k} = e^{g(z)}$, so that $f(z) = h(z)^{k}$.\newline
 
-      Suppose that for all $k\in J$, there is $h_k(z)$ such that $h_k(z)^{k} = f(z)$. Now, since $J$ is a countably infinite subset of $N$, $J$ is necessarily unbounded. Letting $\gamma\colon [a,b]\rightarrow U$ be a satisfactory piecewise $C^{1}$ loop, we then observe that for arbitrary $k\in J$, we must have
+      Suppose that for all $k\in J$, there is $h_k(z)$ such that $h_k(z)^{k} = f(z)$. Now, since $J$ is a countably infinite subset of $\N$, $J$ is necessarily unbounded. Letting $\gamma\colon [a,b]\rightarrow U$ be a satisfactory piecewise $C^{1}$ loop, we then observe that for arbitrary $k\in J$, we must have
       \begin{align*}
         \oint_{\gamma}^{} \frac{f'(z)}{f(z)}\:dz &= k \oint_{\gamma}^{} \frac{h_k'(z)}{h_k(z)}\:dz.
       \end{align*}
-      Since the integral on the left is single-valued, and $k$ is arbitrary and unbounded, it follows that both sides are necessarily equal to zero, so that
+      Since the integral on the left hand side is single-valued, and $k$ is arbitrary and unbounded, it follows that both sides are necessarily equal to zero, so
       \begin{align*}
         \oint_{\gamma}^{} \frac{f'(z)}{f(z)}\:dz &= 0
       \end{align*}
@@ -388,7 +403,7 @@
           &= \oint_{\gamma}^{} \frac{f'(z)}{f(z)}\:dz - \sum_{j=1}^{k} n\left( \gamma;a_j \right)n\left( f\circ\gamma_j;0 \right)\\
           &= \oint_{\gamma}^{} \frac{f'(z)}{f(z)}\:dz.
       \end{align*}
-      Since $\gamma$ is an arbitrary piecewise $C^{1}$ loop in $U$, this holds for all such formal linear combinations of piecewise $C^{1}$ loops, hence for all piecewise $C^{1}$ cycles in $U$. Thus, $f$ admits a logarithm in $U$.
+      Since $\gamma$ is an arbitrary piecewise $C^{1}$ loop in $U$, this holds for all such formal linear combinations of piecewise $C^{1}$ loops, hence for all piecewise $C^{1}$ cycles in $U$. Thus, $f$ admits a logarithm in $U$ by Problem 4 part (a).
   \end{enumerate}
 \end{solution}
 \end{document}
