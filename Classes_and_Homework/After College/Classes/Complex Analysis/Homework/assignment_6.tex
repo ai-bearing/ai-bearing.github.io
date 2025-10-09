@@ -183,7 +183,7 @@
       \end{align*}
       so that $u\left( x_0,y_0 \right) = 0$ whenever $x_0 + iy_0 = e^{i\theta}$ for some $0 < \theta_0 < \pi$.\newline
 
-      Meanwhile, if $x_0 + iy_0 = x_0$, then
+      Meanwhile, if $x_0 + iy_0 = x_0$ with $x_0\neq 1$, then
       \begin{align*}
         H\left( x_0 + iy_0 \right) &= \left( \frac{x_0 + 1}{1-x_0} \right)^2\\
                                    &\in \R,
@@ -191,7 +191,7 @@
       so that $u\left( x_0,y_0 \right) = 0$ yet again.
     \item We let $v \equiv u$, where $u$ is defined as above. Since $u$ is unbounded, it follows that for each $N\geq 1$, there is $\left( x_N,y_N \right)\in U$ such that $u\left( x_N,y_n \right) \geq N$. Inductively, this allows us to construct a sequence $\left( x_n,y_n \right)\subseteq U$ such that $u\left( x_n,y_n \right) \geq n$, meaning that $\lim_{n\rightarrow\infty}u\left( x_n,y_n \right) =\infty$.\newline
 
-      Since $u$ is harmonic, it is subharmonic, so by a previously established theorem, it follows that $\left( \left( x_n,y_n \right) \right)_n\rightarrow \partial U$. Yet, this sequence cannot converge to any element of $\partial U\setminus \set{\left( 1,0 \right)}$, as otherwise, we would have $u\left( x_n,y_n \right)\rightarrow 0$, which would contradict the fact that $u$ is continuous as it is harmonic. Therefore, we have $\left( \left( x_n,y_n \right) \right)_{n}\rightarrow \left( 1,0 \right)$.
+      Since $u$ is harmonic, it is subharmonic, so by a previously established theorem, since $\sup\left( u \right) = \infty$, it follows that $\left( \left( x_n,y_n \right) \right)_n\rightarrow \partial U$. Yet, this sequence cannot converge to any element of $\partial U\setminus \set{\left( 1,0 \right)}$, as otherwise, we would have $u\left( x_n,y_n \right)\rightarrow 0$, which would contradict the fact that $u$ is continuous as it is harmonic. Therefore, we have $\left( \left( x_n,y_n \right) \right)_{n}\rightarrow \left( 1,0 \right)$.
   \end{enumerate}
 \end{solution}
 \begin{problem}[Problem 3]
@@ -345,11 +345,50 @@
     \item Let $\gamma\colon [a,b]\rightarrow U$ be a piecewise $C^{1}$ curve with $\gamma(a) = z$  and $\gamma(b) = w$. Writing $f(z) = e^{g(z)}$, we observe that, by the fundamental theorem of calculus,
       \begin{align*}
         \int_{\gamma}^{} \frac{f'(z)}{f(z)}\:dz &= \int_{\gamma}^{} g'(z)\:dz\\
+                                                &= \int_{a}^{b} g'\left( \gamma(t) \right)\gamma'(t)\:dt\\
                                                 &= \int_{a}^{b} \left( g\circ\gamma \right)'(t)\:dt\\
                                                 &= \left( g\circ\gamma \right)(b) - \left( g\circ\gamma \right)(a)\\
                                                 &= g(w)-g(z).
       \end{align*}
-    \item 
+      Meanwhile, by direct substitution, and using the fact that $f(z) = f(w)$, we obtain
+      \begin{align*}
+        \int_{\gamma}^{} \frac{f'(z)}{f(z)}\:dz &= \int_{a}^{b} \frac{f'\left( \gamma(t) \right)}{f\left( \gamma(t) \right)} \gamma'(t)\:dt\\
+                                                &= \int_{a}^{b} \frac{1}{f\left( \gamma(t) \right)}\left( f\circ\gamma \right)'(t)\:dt\\
+                                                &= \oint_{f\circ\gamma}^{} \frac{1}{\zeta}\:d\zeta\\
+                                                &= 2\pi i n\left( f\circ\gamma;0 \right).
+      \end{align*}
+    \item We use the condition in Problem 4 that $f$ has a logarithm if and only if for every piecewise $C^{1}$ cycle in $U$, we have
+      \begin{align*}
+        \oint_{\gamma}^{} \frac{f'(z)}{f(z)}\:dz &= 0.
+      \end{align*}
+      Since each of the $\gamma_j$ are piecewise $C^{1}$, it follows that if $f$ has a logarithm in $U$, then
+      \begin{align*}
+        \oint_{\gamma_j}^{} \frac{f'(z)}{f(z)}\:dz &= 2\pi i n\left( f\circ\gamma_j;0 \right)\\
+                                                   &= 0.
+      \end{align*}
+      meaning that $n\left( f\circ\gamma_j;0 \right) = 0$ for each $\gamma_j$.\newline
+
+      Now, suppose $f$ satisfies $n\left( f\circ\gamma_j;0 \right) = 0$ for each $j$. Let $\gamma$ be any piecewise $C^{1}$ loop in $U$, and define a piecewise $C^{1}$ cycle
+      \begin{align*}
+        \Gamma &= \gamma - \sum_{j=1}^{k}n\left( \gamma;a_j \right) \gamma_j.
+      \end{align*}
+      We claim that $\Gamma$ is homologous to zero in $U$. Toward this end, we observe that $\C\setminus U$ consists of two disjoint sets: $\C\setminus V$ and $\set{a_1,\dots,a_k}$. We observe that $\Gamma$ is a cycle in $V$ as $\Gamma$ is a cycle in $U$, so $n\left( \Gamma;z \right) = 0$ for any $z\in\C\setminus V$ as $V$ is simply connected. Meanwhile, we have
+      \begin{align*}
+        n\left( \Gamma;a_i \right) &= \oint_{\Gamma}^{} \frac{1}{z-a_i}\:dz\\
+                                   &= \oint_{\gamma}^{} \frac{1}{z-a_i}\:dz - \sum_{j=1}^{k} n\left( \gamma;a_j \right)\oint_{\gamma_j}^{} \frac{1}{z-a_i}\:dz\\
+                                   &= n\left( \gamma;a_i \right) - n\left( \gamma;a_i \right)\\
+                                   &= 0,
+      \end{align*}
+      where we use the fact that $n\left( \gamma_j;a_j \right) = 1$ by a previously established result.\newline
+
+      Thus, we see that $\Gamma$ is homologous to zero in $U$. By the generalization of Cauchy's Integral Theorem, it follows that, since $f(z)\neq 0$ for all $z\in U$, we have
+      \begin{align*}
+        0 &= \oint_{\Gamma}^{} \frac{f'(z)}{f(z)}\:dz\\
+          &= \oint_{\gamma}^{} \frac{f'(z)}{f(z)}\:dz - \sum_{j=1}^{k} n\left( \gamma;a_j \right) \oint_{\gamma_j}^{} \frac{f'(z)}{f(z)}\:dz\\
+          &= \oint_{\gamma}^{} \frac{f'(z)}{f(z)}\:dz - \sum_{j=1}^{k} n\left( \gamma;a_j \right)n\left( f\circ\gamma_j;0 \right)\\
+          &= \oint_{\gamma}^{} \frac{f'(z)}{f(z)}\:dz.
+      \end{align*}
+      Since $\gamma$ is an arbitrary piecewise $C^{1}$ loop in $U$, this holds for all such formal linear combinations of piecewise $C^{1}$ loops, hence for all piecewise $C^{1}$ cycles in $U$. Thus, $f$ admits a logarithm in $U$.
   \end{enumerate}
 \end{solution}
 \end{document}
