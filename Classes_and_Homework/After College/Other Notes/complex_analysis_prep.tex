@@ -156,7 +156,7 @@ We call $u$ and $v$ \textit{harmonic conjugates} for each other. That is, if $u\
 
   Now, if $u$ is $C^{3}$, then we defined $v$ via the derivative of $u$, so that $v$ is $C^{2}$, and thus $v$ is harmonic.
 \end{proof}
-\subsection{Cauchy's Integral Formula and Homology of Cycles}%
+\subsection{Cauchy's Integral Formula}%
 \begin{proposition}
   Fix $z_0\in \C$, $R > 0$, and $f\colon U\left( z_0,R \right)\rightarrow \C$ holomorphic. For all $z\in U\left( z_0,R \right)$, we have
   \begin{align*}
@@ -212,6 +212,112 @@ We call $u$ and $v$ \textit{harmonic conjugates} for each other. That is, if $u\
       holds for all $z\in U\left( z_0,R \right)$.
   \end{enumerate}
 \end{proof}
+\begin{corollary}
+  Let $U\subseteq \C$ be open, let $z_0\in U$, and $r > 0$ with $B\left( z_0,r \right)\subseteq U$. The following hold:
+  \begin{enumerate}[(i)]
+    \item for all $z\in U\left( z_0,r \right)$,
+      \begin{align*}
+        \frac{f^{(n)}\left(z\right)}{n!} &= \frac{1}{2\pi i} \int_{S\left( z_0,r \right)}^{} \frac{f\left( \xi \right)}{\left( \xi-z \right)^{n+1}}\:d\xi;
+      \end{align*}
+    \item for all $n  > 0$,
+      \begin{align*}
+        \left\vert f^{(n)}\left( z_0 \right) \right\vert &\leq \frac{n!}{r^{n}} \sup_{\zeta\in S\left( z_0,r \right)} \left\vert f\left(\zeta\right) \right\vert.
+      \end{align*}
+      This particular result is known as \textit{Cauchy's Estimate}.
+  \end{enumerate}
+\end{corollary}
+\begin{theorem}[Liouville's Theorem]
+  If $f\colon \C\rightarrow \C$ is holomorphic and bounded in modulus, then $f$ is constant.
+\end{theorem}
+Liouville's Theorem follows from applying Cauchy's estimate to $f$ and using the fact that $f$ is bounded to find that all higher derivatives of $f$ vanish.
+\begin{theorem}[Fundamental Theorem of Algebra]
+  If $p(z) = a_nz^{n} + \cdots + a_1 z + a_0$ has $n\geq 1$ and $a_n\neq 0$, then there is at least one $z_0$ such that $p\left( z_0 \right) = 0$.
+\end{theorem}
+\begin{proof}
+  Suppose $p(z)$ were never zero. It would follow then that $\frac{1}{p(z)}$ is also an entire function.\newline
+  
+  Since $\lim_{|z|\rightarrow\infty}\left\vert p(z) \right\vert = \infty$, it follows that $\lim_{|z|\rightarrow\infty} \frac{1}{\left\vert p(z) \right\vert} = 0$, whence $ \left\vert \frac{1}{p(z)} \right\vert $ is an entire function that is bounded (as all functions that vanish at infinity are bounded). This means that $ \frac{1}{p(z)} $ is constant, so $p(z)$ is constant.
+\end{proof}
+\begin{corollary}
+  Let $f\colon \C\rightarrow \C$ be a nonconstant entire function. Then, $f\left(\C\right)$ is dense in $\C$.
+\end{corollary}
+\begin{proof}
+  Suppose there were $w\in\C$ and $r > 0$ such that $U\left( w,r \right)\cap f\left( \C \right) = \emptyset$. Then, $\left\vert f(z)-w \right\vert \geq r$ for all $z\in \C$, meaning that
+  \begin{align*}
+    g(z) &= \frac{1}{f(z)-w}
+  \end{align*}
+  is bounded and entire (the entirety following from the fact that $f(z)-w$ is nonvanishing).
+\end{proof}
+\subsection{Cycles, Winding Numbers, and Homology}%
+Now, we may generalize some of these results related to Cauchy's Integral Formula.
+\begin{proposition}
+  Let $\gamma\colon [a,b]\rightarrow \C$ be a piecewise $C^{1}$ loop. For all $z\in \C\setminus \img\left( \gamma \right)$, we have
+  \begin{align*}
+    \frac{1}{2\pi i} \oint_{\gamma}^{} \frac{1}{\xi-z}\:d\xi &\in \Z.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Let $\phi\colon [a,b]\rightarrow \C$ be defined by
+  \begin{align*}
+    \phi(t) &= \int_{a}^{t} \frac{\gamma'(s)}{\gamma(s)-z}\:ds.
+  \end{align*}
+  Then, we observe
+  \begin{align*}
+    \phi(b) &= \oint_{\gamma}^{} \frac{1}{\xi - z}\:d\xi.
+  \end{align*}
+  Then, define $\psi\colon [a,b]\rightarrow \C$ by
+  \begin{align*}
+    \psi(t) &= \frac{e^{\phi(t)}}{\gamma(t)-z}.
+  \end{align*}
+  By the fundamental theorem of calculus, we have
+  \begin{align*}
+    \phi'(t) &= \frac{\gamma'(t)}{\gamma(t)-z}\\
+  \psi'(t) &= \frac{\phi'(t)e^{\phi(t)}}{\gamma(t)-z} - \frac{e^{\phi'(t)}\gamma'(t)}{\left( \gamma(t)-z \right)^2}\\
+           &= 0,
+  \end{align*}
+  whence $\psi(t)$ is constant, and $\psi(t) = \psi(a)$, so
+  \begin{align*}
+    \psi(a) &= \frac{1}{\gamma(a) - z}.
+  \end{align*}
+  In particular, $\psi(b) = \psi(a)$, so
+  \begin{align*}
+    e^{\phi(b)} &= \psi(b)\left( \gamma(b)-z \right)\\
+                &= \psi(a)\left( \gamma(a)-z \right)\\
+                &= 1,
+  \end{align*}
+  so $\phi(b) = 2\pi i k$ for some $k\in \Z$.
+\end{proof}
+\begin{definition}
+  Let $\gamma\colon [a,b]\rightarrow \C$ be a piecewise $C^{1}$ loop. For all $z\in \C\setminus\img\left( \gamma \right)$, define
+  \begin{align*}
+    n\left( \gamma;z \right) &= \frac{1}{2\pi i} \oint_{\gamma}^{} \frac{1}{\xi - z}\:d\xi
+  \end{align*}
+   to be the \textit{winding number} of $\gamma$ about $z$.
+\end{definition}
+\begin{definition}
+  A piecewise $C^{1}$ \textit{cycle} is a formal sum
+  \begin{align*}
+    \Gamma &= \gamma_1 + \cdots + \gamma_n,
+  \end{align*}
+  where the $\gamma_j\colon \left[ a_j,b_j \right]\rightarrow \C$ are piecewise $C^{1}$ loops. The \textit{length} of $\Gamma$ is the sum of the lengths of the respective $\gamma_j$.\newline
+
+  Given a piecewise $C^{1}$ cycle $\Gamma$, define
+  \begin{align*}
+    \oint_{\Gamma}^{} f(z)\:dz &= \sum_{j=1}^{n} \oint_{\gamma_j}^{} f(z)\:dz,
+  \end{align*}
+  and
+  \begin{align*}
+    n\left( \Gamma;z \right) &= \sum_{j=1}^{n}n\left( \gamma_j;z \right).
+  \end{align*}
+\end{definition}
+\begin{proposition}
+  The following hold for the winding number $n\left( \gamma;z \right)$:
+  \begin{enumerate}[(i)]
+    \item the function $n\left( \Gamma;\cdot \right)\colon \C\setminus \img\left( \gamma \right)\rightarrow \Z$ is continuous;
+    \item $n\left( \Gamma;z \right)$ is constant on each connected component of $\C\setminus \img\left( \Gamma \right)$;
+    \item there exists a unique unbounded connected component with $n\left( \Gamma;z \right) = 0$ for all $z$ in this unbounded connected component.
+  \end{enumerate}
+\end{proposition}
 \subsection{Maximum Modulus Principle}%
 \begin{theorem}[Mean Value Property]
   Let $U\subseteq \C$ be open, $f\colon U\rightarrow \C$ holomorphic, with $z_0\in U$ and $r > 0$ such that $B\left( z_0,r \right)\subseteq U$. Then,
@@ -238,6 +344,48 @@ We call $u$ and $v$ \textit{harmonic conjugates} for each other. That is, if $u\
 \end{corollary}
 \begin{proof}
   Take real parts of the mean value property for holomorphic $f = u + iv$.
+\end{proof}
+Observe then that the triangle inequality implies that
+\begin{align*}
+  \left\vert u\left( x_0,y_0 \right) \right\vert &\leq \frac{1}{2\pi} \int_{0}^{2\pi} \left\vert u\left( x_0 + r\cos\left( \theta \right),y_0 + r\sin\left( \theta \right) \right) \right\vert\:d\theta.
+\end{align*}
+Functions that satisfy this weaker criterion are known as \textit{subharmonic}. It is subharmonic functions for which the most general case of the \textit{maximum modulus principle} hold.
+\begin{theorem}[Maximum Modulus Principle]
+  Let $U\subseteq \R^{2}$ be open and connected, and let $u\colon U\rightarrow \R$ be subharmonic. Suppose there exists $\left( x_0,y_0 \right)\in U$ such that $u\left( x_0,y_0 \right)\geq u\left( x,y \right)$ for all $x,y\in U$. Then, $u$ is constant.
+\end{theorem}
+\begin{proof}
+  Let $\lambda = u\left( x_0,y_0 \right)$, and let $E = \set{\left( x,y \right) | u\left( x,y \right) = \lambda} = u^{-1}\left( \set{\lambda} \right)$. We see immediately that $E$ is closed; we claim that $E$ is also open.\newline
+
+  Fix $\left( x_1,y_1 \right)\in E$. Then, $u\left( x_1,y_1 \right) = \lambda$. Take $r > 0$ such that $U\left( \left( x_1,y_1 \right),r \right)\subseteq U$. Then, for all $0 < s < r$, we have $S\left( \left( x_1,y_1 \right),s \right)\subseteq U$, meaning that
+  \begin{align*}
+    \lambda &= u\left( x_1,y_1 \right) \\
+            &\leq \frac{1}{2\pi} \int_{0}^{2\pi} u\left( x_1 + s\cos\left( \theta \right),y_1+s\sin\left( \theta \right) \right)\:d\theta\\
+            &\leq \lambda,
+  \end{align*}
+  with the latter inequality following from the fact that $\lambda$ is a local maximum. Therefore, $u\left( x_1 + s\cos\left( \theta \right),y_1 + s\sin\left( \theta \right) \right) = \lambda$ for all $0 < s < r$, whence $U\left( \left( x_1,y_1 \right),r \right)\subseteq E$. Thus, $E$ is open, so since $U$ is connected, it follows that $E$ is all of $U$, meaning $u$ is constant.
+\end{proof}
+\begin{corollary}
+  If $U\subseteq \R^2$ is bounded and $u\colon \overline{U}\rightarrow \R$ is continuous with $u|_{U}$ subharmonic, then there exists $\left( x_0,y_0 \right)\in \partial U$ such that $u\left( x_0,y_0 \right) = \sup_{\left( x,y \right)\in U} u\left( x,y \right)$.
+\end{corollary}
+\begin{corollary}
+  If $U\subseteq \C$ is open and connected, with $f\colon U\rightarrow \C$ holomorphic, then if $\left\vert f \right\vert\colon U\rightarrow \R$ has a local maximum at $z_0\in U$, then $f$ is constant.
+\end{corollary}
+\begin{proof}
+  Let $r > 0$ be such that $U\left( z_0,r \right)\subseteq U$. Then, restricting $\left\vert f \right\vert$ to $U\left( z_0,r \right)$, we see that $\left\vert f \right\vert$ restricted to $U\left( z_0,r \right)$ is subharmonic viewed as a function on $U\left( z_0,r \right)$, hence $\left\vert f \right\vert$ is constant on $U\left( z_0,r \right)$.\newline
+
+  Now, by the mean value property and triangle inequality, it follows that for all $0 < s < r$, we have
+  \begin{align*}
+    \left\vert f\left( z_0 \right) \right\vert &\leq \frac{1}{2\pi} \int_{0}^{2\pi} \left\vert f\left( z_0 + se^{i\theta} \right) \right\vert\:d\theta\\
+                                               &= \left\vert f\left( z_0 \right) \right\vert,
+  \end{align*}
+  meaning that these are equalities. In particular, there exists some $\theta_s$ such that $e^{i\theta_s} f\left( z_0 + se^{i\theta} \right) \geq 0$, meaning that for this value of $s$, we have
+  \begin{align*}
+    \left\vert f\left( z_0 \right) \right\vert &= e^{i\theta_s} \int_{0}^{2\pi} f\left( z_0 + se^{i\theta} \right)\:d\theta\\
+                                               &= e^{i\theta_s} f\left( z_0 \right),
+  \end{align*}
+  with the latter equality following from the mean value property. Since this holds for any $s$, it follows that $\theta_s$ is independent of $s$, meaning that $f(z)e^{i\theta_s} \geq 0$ for all $z\in U\left( z_0,r \right)$, meaning that $\im\left( e^{i\theta_s}f\left( z \right) \right) = 0$ on $U\left( z_0,r \right)$, whence $f(z)e^{i\theta_s}$ is constant, meaning $f$ is constant on $U\left( z_0,r \right)$.\newline
+
+  Finally, by the identity theorem, it follows that $f$ is constant on $U$.
 \end{proof}
 \section{Old Exams}%
 \section{Notation}%

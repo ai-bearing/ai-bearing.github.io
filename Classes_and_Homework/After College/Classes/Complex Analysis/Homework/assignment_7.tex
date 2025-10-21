@@ -1,0 +1,96 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+\usepackage{homework}
+%\usepackage{notes}
+\usepackage{newpxtext,eulerpx,eucal}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\fancyhf{}
+\rhead{Avinash Iyer}
+\lhead{Complex Analysis: Assignment 7}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+
+\begin{problem}[Problem 2]\hfill
+  \begin{enumerate}[(a)]
+    \item Determine the Laurent series expansion of the function
+      \begin{align*}
+        f(z) &= \frac{z}{\left( z-3 \right)^2\left( z-4 \right)}
+      \end{align*}
+      that converges on $A\left( 0,3,4 \right)$. 
+    \item Show that there does not exist a holomorphic function $f\colon \C\setminus \set{0}\rightarrow \C$ satisfying $ \left\vert f(z) \right\vert\geq \left\vert z \right\vert^{-2/3} $.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item We start by taking a partial fraction decomposition of $f$ to yield
+      \begin{align*}
+        f(z) &= \frac{4}{z-4} - \frac{4}{z-3} -\frac{3}{\left( z-3 \right)^2}\\
+             &= \frac{4}{z-4} - \frac{4}{z-3} + 3 \diff{}{z}\left( \frac{1}{z-3} \right) 
+      \end{align*}
+      We seek to expand about $z = 0$ within the ball $U\left( 0,4 \right)$ and outside the closed ball $B\left( 0,3 \right)$. This means that the first term in our partial fraction expansion becomes
+      \begin{align*}
+        a_1(z) &= \sum_{n=0}^{\infty} \frac{z^{n}}{4^{n}}.
+      \end{align*}
+      The expansion in the second and third terms will require a little bit more work. Dividing out by $z$, we find that the second term becomes
+      \begin{align*}
+        a_2(z) &= -\frac{4}{z\left( 1-\frac{3}{z} \right)}\\
+               &= -\frac{4}{z} \sum_{n=0}^{\infty} \frac{3^{n}}{z^{n}}\\
+               &= -\sum_{n=1}^{\infty}\frac{4\cdot 3^{n-1}}{z^{n}}\\
+               &= -\sum_{n=-\infty}^{-1}12\left( 3^{-n} \right) z^{n}.
+      \end{align*}
+      Finally, for the third term, we observe that, using term-by-term differentiation (allowable as the series is uniformly convergent), we have
+      \begin{align*}
+        3\diff{}{z}\left( \frac{1}{z-3} \right) &= 3\diff{}{z}\left( \sum_{n=1}^{\infty} 3^{n-1}z^{-n} \right)\\
+                                                &= \sum_{n=1}^{\infty} -n3^{n}z^{-\left( n+1 \right)}\\
+                                                &= \sum_{n=-\infty}^{-1} n3^{-n}z^{n-1}.
+      \end{align*}
+      This yields a Laurent series expansion of
+      \begin{align*}
+        f(z) &= \sum_{n=0}^{\infty} \frac{z^{n}}{4^{n}} + \sum_{n=-\infty}^{-1} \left( 12\left( 3^{-n} \right)z^{n} + n3^{-n}z^{n-1} \right).
+      \end{align*}
+    \item Suppose toward contradiction that there were such an $f(z)$. Since $\left\vert z \right\vert^{-2/3}$ is strictly greater than zero along its domain, it would follow that $\left\vert f(z) \right\vert$ would not have any zero along its domain. This means that $ g(z) = \frac{1}{f(z)}\colon\C\setminus \set{0}\rightarrow\C $ would be defined on its entire domain. Furthermore, we would have
+      \begin{align*}
+        \left\vert g(z) \right\vert &\leq \left\vert z \right\vert^{2/3},
+      \end{align*}
+      and on $U\left( 0,\ve \right)$, we know that $\left\vert z \right\vert^{2/3}$ is bounded above by $\ve^{2/3}$ as $\left\vert z \right\vert^{2/3}\colon \C\rightarrow \R_{\geq 0}$ is an increasing function. Thus, since $g$ would be locally bounded around $0$, it would follow that $g$ has a removable singularity at $0$. This means that there is a holomorphic extension $h\colon \C\rightarrow \C$ that agrees with $g$ on $\C\setminus \set{0}$. In particular, we would have $\left\vert h(z) \right\vert \leq \left\vert z \right\vert^{2/3}$ for all $z\in \C\setminus\set{0}$.\newline
+
+      Now, let $R > 0$. Using the Cauchy estimate on $S\left( 0,R \right)$, we have, for any fixed $n > 0$,
+      \begin{align*}
+        \left\vert h^{(n)}(z) \right\vert &\leq \frac{n!}{R^{n}} \sup_{\left\vert z \right\vert = R} \left\vert h(z) \right\vert\\
+                                          &\leq \frac{n!}{R^{n}} \sup_{\left\vert z \right\vert = R} \left\vert z \right\vert^{2/3}\\
+                                          &= \frac{n!}{R^{n-2/3}}.
+      \end{align*}
+      Yet, since $R$ is arbitrary, it follows that $\left\vert h^{(n)}(z) \right\vert = 0$ for all $n > 0$, whence $h$ is constant. Yet, since $\left\vert h(z) \right\vert \leq \left\vert z \right\vert^{2/3}$ for all $z \in \C\setminus \set{0}$, it follows that $\left\vert h(z) \right\vert \leq \ve^{2/3}$ for any $\ve > 0$, whence $\left\vert h(z) \right\vert = 0$ for all $z\in \C$. At the same time, we explicitly defined $g(z)$ in a manner such that it could never equal zero, meaning that such an $f$ cannot exist.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 4]
+  Show that if $f$ is entire and satisfies $\lim_{z\rightarrow\infty} f\left( z \right) = \infty$, then $f$ is a polynomial.
+\end{problem}
+\begin{solution}
+  Consider the function $g\colon \C\setminus \set{0} \rightarrow \C$ given by $g(z) = f\left( \frac{1}{z} \right)$. Since $f$ is entire and $\frac{1}{z}$ is holomorphic on $\C\setminus \set{0}$, it follows that, given the power series expansion
+  \begin{align*}
+    f(z) &= \sum_{n=0}^{\infty}a_nz^{n},
+  \end{align*}
+  we have the Laurent series expansion
+  \begin{align*}
+    g(z) &= \sum_{n=0}^{\infty}a_nz^{-n}.
+  \end{align*}
+  Observe that the limit $\lim_{z\rightarrow\infty} f(z)$ is equivalent to $\lim_{z\rightarrow 0}f\left( \frac{1}{z} \right)$, whence $\lim_{z\rightarrow 0} g(z) = \infty$. Therefore, $g$ has a pole of order $k$ at $0$, whence
+  \begin{align*}
+    g(z) &= \sum_{n=0}^{k}a_nz^{-n}.
+  \end{align*}
+  Since $g\left( \frac{1}{z} \right) = f(z)$, it then follows that
+  \begin{align*}
+    f(z) &= \sum_{n=0}^{k} a_nz^{n}.
+  \end{align*}
+\end{solution}
+\end{document}
