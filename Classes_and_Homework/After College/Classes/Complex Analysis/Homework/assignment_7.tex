@@ -11,14 +11,53 @@
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 
 \fancyhf{}
-\rhead{Avinash Iyer}
-\lhead{Complex Analysis: Assignment 7}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Complex Analysis: Assignment 7}
+\fancyfoot[C]{\thepage}
 
 \setcounter{secnumdepth}{0}
 
 \begin{document}
 \RaggedRight
 
+\begin{problem}[Problem 1]
+  Let $0\leq r < R \leq \infty$. Suppose $\left( a_n \right)_n,\left( b_n \right)_n\subseteq \C$ are such that the series $\sum_{n=-\infty}^{\infty}a_n\left( z-z_0 \right)^{n}$ and $\sum_{n=-\infty}^{\infty}b_n\left( z-z_0 \right)^{n}$ converge in $A\left( z_0,r,R \right)$, and are such that
+  \begin{align*}
+    \sum_{n=-\infty}^{\infty} a_n\left( z-z_0 \right)^{n} &= \sum_{n=-\infty}^{\infty}b_n\left( z-z_0 \right)^{n}
+  \end{align*}
+  for all $z\in A\left( z_0,r,R \right)$. Show that $a_n = b_n$ for all $n$.
+\end{problem}
+\begin{solution}
+  Suppose we have the functions
+  \begin{align*}
+    f(z) &= \sum_{n=-\infty}^{\infty} a_n\left( z-z_0 \right)^{n}\\
+         &= f_1(z) + f_2(z)\\
+    g(z) &= \sum_{n=-\infty}^{\infty}b_n\left( z-z_0 \right)^{n}\\
+         &= g_1(z) + g_2(z)
+  \end{align*}
+  are written so that $f_1,g_1$ are holomorphic defined on $U\left( z_0,R \right)$ while $f_2,g_2$ are holomorphic defined on $\C\setminus B\left( z_0,r \right)$. The assumption that $f(z) = g(z)$ on $A\left( z_0,r,R \right)$ gives $f_1(z) - g_1(z) = g_2(z) - f_2(z)$, or
+  \begin{align*}
+    \sum_{n=0}^{\infty} \left( a_n-b_n \right)\left( z-z_0 \right)^{n} &= \sum_{n=-\infty}^{-1} \left( b_n-a_n \right)\left( z-z_0 \right)^{n}
+  \end{align*}
+  on $A\left( z_0,r,R \right)$. This means that we may define a function $h(z)$ by letting $r < \rho < R$ and taking
+  \begin{align*}
+    h(z) &= \begin{cases}
+      \sum_{n=0}^{\infty}\left( a_n-b_n \right)\left( z-z_0 \right)^{n} & \left\vert z-z_0 \right\vert\leq \rho\\
+      \sum_{n=-\infty}^{-1}\left( b_n-a_n \right)\left( z-z_0 \right)^{n} & \left\vert z-z_0 \right\vert > \rho
+    \end{cases},
+  \end{align*}
+  which we observe is holomorphic on the entirety of $\C$ as a result of the fact that the separate power series expansions $\sum_{n=0}^{\infty}\left( a_n-b_n \right)\left( z-z_0 \right)^{n}$ and $\sum_{n=-\infty}^{-1}\left( b_n-a_n \right)\left( z-z_0 \right)^{n}$ are holomorphic on their respective domains of definition, while they are equal on $A\left( z_0,r,R \right)$.\newline
+
+  Furthermore, we see that $\lim_{z\rightarrow\infty} \left\vert h(z) \right\vert = 0$, whence $h$ is a bounded entire function, so $h\equiv K$ for some constant $K$. This means that, for $\left\vert z-z_0 \right\vert < \rho$,
+  \begin{align*}
+    \sum_{n=0}^{\infty}a_n-b_n\left( z-z_0 \right)^{n} &= K,
+  \end{align*}
+  meaning that $a_0-b_0 = K$ and $a_{n\geq 1} - b_{n\geq 1} = 0$. Yet, for $\left\vert z-z_0 \right\vert > \rho$, we must have
+  \begin{align*}
+    \sum_{n=1}^{\infty}\left( a_{-n}-b_{-n} \right) \left( z-z_0 \right)^{-n} &= K,
+  \end{align*}
+  but there are no constant terms in this series expansion, meaning that $a_{n \leq -1} - b_{n \leq -1} = 0$, and that $K = 0$. Thus, we have $a_0 - b_0 = 0$, and we are done.
+\end{solution}
 \begin{problem}[Problem 2]\hfill
   \begin{enumerate}[(a)]
     \item Determine the Laurent series expansion of the function
@@ -38,16 +77,17 @@
       \end{align*}
       We seek to expand about $z = 0$ within the ball $U\left( 0,4 \right)$ and outside the closed ball $B\left( 0,3 \right)$. This means that the first term in our partial fraction expansion becomes
       \begin{align*}
-        a_1(z) &= \sum_{n=0}^{\infty} \frac{z^{n}}{4^{n}}.
+        a_1(z) &= -\frac{1}{1-\frac{z}{4}}\\
+               &= -\sum_{n=0}^{\infty} \frac{z^{n}}{4^{n}}.
       \end{align*}
       The expansion in the second and third terms will require a little bit more work. Dividing out by $z$, we find that the second term becomes
       \begin{align*}
         a_2(z) &= -\frac{4}{z\left( 1-\frac{3}{z} \right)}\\
                &= -\frac{4}{z} \sum_{n=0}^{\infty} \frac{3^{n}}{z^{n}}\\
                &= -\sum_{n=1}^{\infty}\frac{4\cdot 3^{n-1}}{z^{n}}\\
-               &= -\sum_{n=-\infty}^{-1}12\left( 3^{-n} \right) z^{n}.
+               &= -\sum_{n=-\infty}^{-1}12\left( 3^{-n} \right) z^{n},
       \end{align*}
-      Finally, for the third term, we observe that, using term-by-term differentiation (allowable as the series is uniformly convergent), we have
+      which converges outside the closed ball $B\left( 0,3 \right)$. Finally, for the third term, we observe that, using term-by-term differentiation (allowable as the series is uniformly convergent), we have
       \begin{align*}
         3\diff{}{z}\left( \frac{1}{z-3} \right) &= 3\diff{}{z}\left( \sum_{n=1}^{\infty} 3^{n-1}z^{-n} \right)\\
                                                 &= \sum_{n=1}^{\infty} -n3^{n}z^{-\left( n+1 \right)}\\
@@ -55,7 +95,7 @@
       \end{align*}
       This yields a Laurent series expansion of
       \begin{align*}
-        f(z) &= \sum_{n=0}^{\infty} \frac{z^{n}}{4^{n}} + \sum_{n=-\infty}^{-1} \left( 12\left( 3^{-n} \right)z^{n} + n3^{-n}z^{n-1} \right).
+        f(z) &= -\sum_{n=0}^{\infty} \frac{z^{n}}{4^{n}} + \sum_{n=-\infty}^{-1} \left( -12\left( 3^{-n} \right)z^{n} + n3^{-n}z^{n-1} \right).
       \end{align*}
     \item Suppose toward contradiction that there were such an $f(z)$. Since $\left\vert z \right\vert^{-2/3}$ is strictly greater than zero along its domain, it would follow that $\left\vert f(z) \right\vert$ would not have any zero along its domain. This means that $ g(z) = \frac{1}{f(z)}\colon\C\setminus \set{0}\rightarrow\C $ would be defined on its entire domain. Furthermore, we would have
       \begin{align*}
@@ -76,7 +116,15 @@
   Let $0 < r < R$. Show that there does not exist a holomorphic bijection $f\colon \mathbb{D}\setminus \set{0}\rightarrow A\left( 0,r,R \right)$.
 \end{problem}
 \begin{solution}
-  Suppose there were such a holomorphic bijection. Notice that for all $z\in \mathbb{D}\setminus \set{0}$, we would then have $\left\vert f(z) \right\vert < R$, meaning that $f$ is necessarily locally bounded close to $0$. Thus, the singularity at $0$ is removable, so there is a unique holomorphic function $g\colon \mathbb{D}\rightarrow \C$ with $g|_{ \mathbb{D}\setminus \set{0} } = f$.\newline
+  Suppose there were a holomorphic bijection $f\colon \D\setminus \set{0}\rightarrow A\left( 0,r,R \right)$. Since $\left\vert f(z) \right\vert \leq R$ for all $z\in \D\setminus \set{0}$, it follows that the singularity at $0$ is removable, so there is a holomorphic function $g\colon \D\rightarrow A\left( 0,r,R \right)$.\newline
+
+  Considering $g(0)$, we observe that $g(0) = \lim_{z\rightarrow 0}f(z)$, meaning that $g(0)\in \overline{A}\left( 0,r,R \right)$ as $g(0)$ is a limit point of the image $f\left( \D\setminus \set{0} \right)$, where $f$ is continuous. However, it cannot be the case that $g(0)\in \partial A\left( 0,r,R \right)$, as $g$ is holomorphic so this would contradict the open mapping principle. Thus, we must have $g(0)\in A\left( 0,r,R \right)$, meaning that there is some $z_0\in \D\setminus \set{0}$ such that $f\left(z_0\right) = g(0)$.\newline
+
+  Let $\left( z_n \right)_n\subseteq \D\setminus \set{0}$ be a sequence with $z_n\rightarrow 0$. Observe then that $\lim_{n\rightarrow\infty}f\left( z_n \right) = g\left(0\right)$ as $g$ is the unique holomorphic extension of $f$. However, since $f$ is a holomorphic bijection, the open mapping principle means that $f$ has a continuous inverse, meaning that $f^{-1}\left( f\left( z_n \right) \right) = z_n$ is continuous, with $\lim_{n\rightarrow\infty}f^{-1}\left( f\left( z_n \right) \right) = f^{-1}\left( g(0) \right) = z_0$, but $\left( z_n \right)_n\rightarrow 0$, meaning that by uniqueness of limits, $z_0 = 0$. Therefore, it cannot be the case that such a holomorphic $f$ exists.
+\end{solution}
+\begin{solution}[Special Case]
+  \color{gray}
+  Suppose there were a holomorphic bijection $f\colon \D\setminus \set{0}\rightarrow A\left( 0,r,R \right)$ with holomorphic inverse. Notice that for all $z\in \mathbb{D}\setminus \set{0}$, we would then have $\left\vert f(z) \right\vert < R$, meaning that $f$ is necessarily locally bounded close to $0$. Thus, the singularity at $0$ is removable, so there is a unique holomorphic function $g\colon \mathbb{D}\rightarrow \C$ with $g|_{ \mathbb{D}\setminus \set{0} } = f$.\newline
 
   We notice that $ g $ is an injection, as $g|_{ \mathbb{D}\setminus \set{0} }$ is a bijection and $g(0)$ is uniquely defined. As a result, it follows that the restriction $g\colon \mathbb{D}\rightarrow \img\left( g \right)$ is a holomorphic bijection. Furthermore, we also notice that
   \begin{align*}
@@ -96,7 +144,7 @@
   \begin{align*}
     \operatorname{id}(z) &= e^{h\left( f^{-1}(z) \right)},
   \end{align*}
-  meaning that $ \operatorname{id} $ admits a holomorphic logarithm. Yet, $A\left( 0,r,R \right)$ is not simply connected, while $ \operatorname{id} $ is non-constant, which is a contradiction. Thus, no such $f$ exists.
+  meaning that $ \operatorname{id} $ admits a logarithm. Yet, $A\left( 0,r,R \right)$ is not simply connected, while $ \operatorname{id} $ is nonvanishing, which is a contradiction. Thus, no such $f$ exists.
 \end{solution}
 \begin{problem}[Problem 4]
   Show that if $f$ is entire and satisfies $\lim_{z\rightarrow\infty} f\left( z \right) = \infty$, then $f$ is a polynomial.
@@ -118,5 +166,26 @@
   \begin{align*}
     f(z) &= \sum_{n=0}^{k} a_nz^{n}.
   \end{align*}
+\end{solution}
+\begin{problem}[Problem 5]
+  Let $r > 0$, $f,g\colon \dot{U}\left( 0,r \right)\rightarrow \C$ be holomorphic functions such that $g(z)\neq 0$ for all $z\in \dot{U}\left( 0,r \right)$. Show that the singularity at $0$ is essential for $f$ if and only if the singularity for $h \coloneq \frac{f}{g}$ at $0$ is essential.
+\end{problem}
+\begin{solution}
+  Since $g\neq 0$ on $\dot{U}\left( 0,r \right)$ and $g$ does not have an essential singularity at $0$, it follows that that the singularity for $g(z)$ at $0$ is either a pole or removable. This allows us to write $g(z) = z^{-m} \widetilde{g}(z)$, where $m \geq 0$ is a positive integer and $\widetilde{g}(z)$ is holomorphic (and necessarily nonzero) on $U\left( 0,r \right)$. Note that if $m = 0$, then the singularity at $0$ is removable, and if $m > 0$, then the singularity at $0$ is a pole of order $m$.\newline
+
+  Now, we may write
+  \begin{align*}
+    h(z) &= z^{m}\frac{f(z)}{\widetilde{g}(z)},
+  \end{align*}
+  where $ \widetilde{g}(z) $ is never zero, hence $h(z)\colon \dot{U}\left( 0,r \right)\rightarrow \C$ is holomorphic. In particular, since $f$ is also holomorphic, it follows that $f$ has a Laurent series expansion
+  \begin{align*}
+    f(z) &= \sum_{n=-\infty}^{\infty} a_n z^{n},
+  \end{align*}
+  so we may write
+  \begin{align*}
+    h(z) &= \frac{1}{\widetilde{g}(z)} \sum_{n=-\infty}^{\infty} a_nz^{m+n}\\
+         &= \frac{1}{\widetilde{g}(z)} \sum_{n=-\infty}^{\infty} a_{n-m}z^{n}
+  \end{align*}
+  Observe then that the singularity at $0$ for $f$ is essential if and only if the set of all $n < 0$ for which $a_{n}\neq 0$ is unbounded below. Since $m$ is constant, it follows that the set of $n$ for which $a_{n-m}\neq 0$ is unbounded below, meaning that the singularity at $0$ for $h$ is essential, and vice versa.
 \end{solution}
 \end{document}
