@@ -429,7 +429,7 @@ Yet, if we restrict $f(z)$ to a simply connected subset of $\C$, there \textit{i
   \end{align*}
   Define
   \begin{align*}
-    g(z) &= \log(K) \widetilde{g}(z).
+    g(z) &= \log(K) + \widetilde{g}(z).
   \end{align*}
 \end{proof}
 \begin{theorem}[Morera's Theorem]
@@ -569,6 +569,52 @@ Functions that satisfy this weaker criterion are known as \textit{subharmonic}. 
 
   Finally, by the identity theorem, it follows that $f$ is constant on $U$.
 \end{proof}
+\begin{definition}
+  Let $U\subseteq \R^{2}$ be an open set. We say a sequence $U\supseteq \left( \left( x_n,y_n \right) \right)_n\rightarrow \partial U$ if, for every compact $K\subseteq U$, the set $\set{n\in \N | \left( x_n,y_n \right)\in K}$ is finite.
+\end{definition}
+\begin{definition}
+  Let $U\subseteq \R^{2}$ be an open set. Given a function $u\colon U\rightarrow \R$, define
+  \begin{align*}
+    \limsup_{\left( x,y \right)\rightarrow \partial U} u\left( x,y \right) &\coloneq \inf_{\substack{K\subseteq U\\K\text{ compact}}} \sup_{\left( x,y \right)\in U\setminus K} u\left( x,y \right).
+  \end{align*}
+\end{definition}
+These definitions allow us to extend the maximum modulus principle for subharmonic functions even further.
+\begin{theorem}
+  Let $U\subseteq \C$ be a region, $u\colon U\rightarrow \R$ a nonconstant subharmonic function. If $\left( \left( x_n,y_n \right) \right)_n\subseteq U$ is such that $u\left( x_n,y_n \right)\rightarrow \sup_{x,y\in U}u\left( x,y \right)$, then $\left( \left( x_n,y_n \right) \right)_n\rightarrow \partial U$. Moreover, $\limsup_{\left( x,y \right)\rightarrow \partial U}u\left( x,y \right) = \sup_{\left( x,y \right)\in U} u\left( x,y \right)$.
+\end{theorem}
+\begin{proof}
+  Suppose toward contradiction that $\left( \left( x_n,y_n \right) \right)_n\nrightarrow \partial U$, so there exists a compact subset $K\subseteq U$ and a subset $\left( \left( x_{n_k},y_{n_k} \right) \right)_k$ wholly contained in $K$. Since $K$ is compact, there is a subsequence of $\left( \left( x_{n_k},y_{n_k} \right) \right)_k$ converging to $\left( x_0,y_0 \right)\in U$. Therefore, $u\left( x_0,y_0 \right) = \sup_{\left( x,y \right)\in U}u\left( x,y \right)$, so $u$ is constant by the maximum modulus principle, which is a contradiction.\newline
+
+  Finally, $\limsup_{\left( x,y \right)\rightarrow \partial U}u\left( x,y \right)\leq \sup_{\left( x,y \right)\in U}u\left( x,y \right)$, while if $\left( \left( x_n,y_n \right) \right)_n\rightarrow \partial U$ is such that $u\left( x_n,y_n \right)$ converges to $\sup_{\left( x,y \right)\in U}u\left( x,y \right)$, then $\sup_{\left( x,y \right)\in U}u\left( x,y \right) = \lim_{n\rightarrow\infty}u\left( x_n,y_n \right) \leq \limsup_{\left( x,y \right)\rightarrow \partial U}u\left( x,y \right)$.
+\end{proof}
+\begin{theorem}[Open Mapping Principle]
+  Let $U\subseteq \C$ be a region, and let $f\colon U\rightarrow \C$ be a nonconstant holomorphic function. Then, $f\left( V \right)\subseteq \C$ is open.
+\end{theorem}
+\begin{proof}
+  Let $z_0\in U$ and $r > 0$ be such that $ B\left( z_0,r \right)\subseteq U $. We will show that there exists $R$ such that $U\left( f\left( z_0 \right),R \right)\subseteq f\left( U\left( z_0,r \right) \right)\subseteq U$, whence $f(U)$ is open.\newline
+
+  Since $U$ is a region and $f$ is nonconstant, the zeros of $g(z)\coloneq f(z) - f\left( z_0 \right)$ are isolated, so there exists some $0 < s < r$ such that
+  \begin{align*}
+    \delta &= \inf_{\left\vert z-z_0 \right\vert = s} \left\vert f(z)-f\left( z_0 \right) \right\vert
+  \end{align*}
+  is strictly greater than zero. We claim that $U\left( f\left( z_0 \right),\delta/2 \right) \subseteq f\left( U\left( z_0,r \right) \right)$. Suppose this were not the case, meaning there would be some $\xi\in U\left( f\left( z_0 \right),\delta/2 \right)\setminus f\left( U\left( z_0,r \right) \right)$, and define $ h\colon B\left( z_0,s \right)\rightarrow \C $ by
+  \begin{align*}
+    h(z) &= \frac{1}{f\left( z \right) - \xi}.
+  \end{align*}
+  Since $\xi\notin f\left( U\left( z_0,r \right) \right)$, this is holomorphic, while $\xi\in U\left( f\left( z_0 \right),\delta/2 \right)$ implies
+  \begin{align*}
+    \sup_{\left\vert z-z_0 \right\vert = s} \left\vert h(z) \right\vert &= \sup_{\left\vert z-z_0 \right\vert = s} \frac{1}{\left\vert f\left( z \right) - \xi \right\vert}\\
+                                                                        &\leq \sup_{\left\vert z-z_0 \right\vert = s} \frac{1}{\left\vert f\left( z \right)-f\left( z_0 \right) \right\vert - \left\vert f\left( z_0 \right) - \xi \right\vert}\\
+                                                                        &\leq \frac{1}{\delta - \delta/2}\\
+                                                                        &= \frac{2}{\delta}.
+  \end{align*}
+  Yet,
+  \begin{align*}
+    \left\vert h\left( z_0 \right) \right\vert &= \frac{1}{\left\vert f\left( z_0 \right) - \xi \right\vert}\\
+                                               &> \frac{2}{\delta},
+  \end{align*}
+  contradicting the maximum modulus principle. Thus, $U\left( f\left( z_0 \right),\delta/2 \right)\subseteq f\left( U\left( z_0,r \right) \right)$.
+\end{proof}
 \subsection{Classification of Singularities}%
 The classification of singularities seeks to answer two fundamental questions: if $U\subseteq \C$ is open, $z_0\in U$, and $f\colon U\setminus \set{z_0}\rightarrow \C$ is holomorphic, 
 \begin{itemize}
@@ -645,7 +691,6 @@ The classification of singularities seeks to answer two fundamental questions: i
     f\left( z \right) &= \frac{1}{2\pi i} \left( \oint_{S\left( z_0,s \right)}^{} \frac{f\left( \xi \right)}{\xi-z}\:d\xi - \int_{S\left( z_0,\rho \right)}^{} \frac{f\left( \xi \right)}{\xi - z}\:d\xi \right)\\
                       &= g_1\left( z \right) + g_2\left( z \right).
   \end{align*}
-
 \end{proof}
 \section{Old Exams}%
 \section{Notation}%
