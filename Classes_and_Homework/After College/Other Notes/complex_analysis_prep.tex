@@ -9,6 +9,7 @@
 \usepackage{notes}
 \usepackage{newpxtext,eulerpx,eucal}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\DeclareMathOperator{\ord}{ord}
 
 \fancyhf{}
 \rhead{Avinash Iyer}
@@ -462,6 +463,21 @@ Yet, if we restrict $f(z)$ to a simply connected subset of $\C$, there \textit{i
   \end{align*}
   Since $f$ is continuous, it follows that for sufficiently small $\left\vert h \right\vert$, the right-hand-side goes to zero, whence $F'(z) = f(z)$, meaning $F$ is holomorphic, so $F$ is analytic, meaning $f$ is analytic, so $f$ is holomorphic.
 \end{proof}
+\begin{corollary}
+  Let $U\subseteq \C$ be open, $\gamma\colon \left[ a,b \right]\rightarrow U$ a piecewise $C^{1}$ curve, and $g\colon U\times \img\left( \gamma \right)\rightarrow \C$ continuous. Suppose that for each $w\in \img\left( \gamma \right)$, the function $g\left( \cdot,w \right)$ is holomorphic. Then,
+  \begin{align*}
+    f(z)\coloneq \int_{\gamma}^{} g\left( z,w \right)\:dw
+  \end{align*}
+  is holomorphic.
+\end{corollary}
+\begin{proof}
+  Let $T$ be a triangle in $U$ homologous to zero. Then, by Fubini's Theorem,
+  \begin{align*}
+    \oint_{T}^{} f(z)\:dz &= \oint_{T}^{} \int_{\gamma}^{} g\left( z,w \right)\:dw\:dz\\
+                          &= \int_{\gamma}^{} \oint_{T}^{} g\left( z,w \right)\:dz\:dw.
+  \end{align*}
+  The interior integral vanishes for every $w$ as $g\left( \cdot,w \right)$ is holomorphic. Thus, $f$ is holomorphic.
+\end{proof}
 \begin{definition}
   Let $U\subseteq \C$ be open, $\gamma_1,\gamma_2$ piecewise $C^{1}$ loops in $U$. We say $\gamma_1$ and $\gamma_2$ are homotopic in $U$ if there is a continuous function
   \begin{align*}
@@ -489,17 +505,6 @@ Yet, if we restrict $f(z)$ to a simply connected subset of $\C$, there \textit{i
     \item for all cycles $\Gamma$ with $\img\left( \Gamma \right)\subseteq U$, $\Gamma$ is homologous to zero in $U$.
   \end{enumerate}
 \end{corollary}
-\begin{proof}
-  We have already shown the direction (i) $\Rightarrow$ (ii). To see (ii) $\Rightarrow$ (iii), we start by fixing $w\in \C\setminus U$. Let $g\colon U\rightarrow \C$ be a holomorphic function with $e^{g(z)} = z-w$. Taking derivatives, we have $g'(z) = \frac{1}{z-w}$, so for any cycle with $\img\left( \Gamma \right)\subseteq U$, we have
-  \begin{align*}
-    n\left( \Gamma;w \right) &= \frac{1}{2\pi i} \int_{\Gamma}^{} \frac{1}{z-w}\:dz\\
-                             &= \frac{1}{2\pi i} \int_{\Gamma}^{} g'(z)\:dz\\
-                             &= 0.
-  \end{align*}
-  To see (iii) $\Rightarrow$ (i), we show the contrapositive. Toward this end, suppose $U$ is not simply connected. Then, $\hat{\C}\setminus U$ is connected, so there are closed nonempty disjoint sets $V_1$ and $V_2$ such that $\hat{\C}\setminus U = V_1\cup V_2$. One of these $V_i$ contains $\infty$, so without loss of generality, suppose $V_1$ contains $\infty$, meaning $V_2$ is bounded (hence compact).\newline
-
-  Let $\widetilde{U} = U\cup V_2$. $U\cup V_2$ is open in $\C$ as its complement in $\C$ is $V_1\setminus \set{\infty}$, which is closed in $\C$. 
-\end{proof}
 \subsection{Maximum Modulus Principle}%
 \begin{theorem}[Mean Value Property]
   Let $U\subseteq \C$ be open, $f\colon U\rightarrow \C$ holomorphic, with $z_0\in U$ and $r > 0$ such that $B\left( z_0,r \right)\subseteq U$. Then,
@@ -759,6 +764,166 @@ The classification of singularities seeks to answer two fundamental questions: i
     f\left( z \right) &= \frac{1}{2\pi i} \left( \oint_{S\left( z_0,s \right)}^{} \frac{f\left( \xi \right)}{\xi-z}\:d\xi - \int_{S\left( z_0,\rho \right)}^{} \frac{f\left( \xi \right)}{\xi - z}\:d\xi \right)\\
                       &= g_1\left( z \right) + g_2\left( z \right).
   \end{align*}
+\end{proof}
+\begin{theorem}
+  Let $U\subseteq \C$, $f\colon U\setminus \set{z_0}\rightarrow \C$ be holomorphic with Laurent series
+  \begin{align*}
+    f(z) &= \sum_{n=-\infty}^{\infty}a_n\left( z-z_0 \right)^{n}
+  \end{align*}
+  on $\dot{U}\left( z_0,R \right)$ for some $R$ with $U\left( z_0,R \right)\subseteq U$. Then,
+  \begin{enumerate}[(i)]
+    \item $f$ has a removable singularity at $z_0$ if and only if $a_n = 0$ for all $n < 0$;
+    \item $f$ has a pole at $z_0$ if and only if 
+      \begin{align*}
+        1 \leq \left\vert \set{n < 0 | a_n\neq 0} \right\vert <\infty.
+      \end{align*}
+    \item $f$ has an essential singularity at $z_0$ if and only if
+      \begin{align*}
+        \left\vert \set{n < 0 | a_n\neq 0} \right\vert &= \infty.
+      \end{align*}
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item If $a_n = 0$ for all $n < 0$, then $\lim_{z\rightarrow z_0} \left( z-z_0 \right)f(z) = 0$, so $f$ has a removable singularity at $z_0$.\newline
+
+      Conversely, if $f$ has a removable singularity at $z_0$, then for $n < 0$, we have
+      \begin{align*}
+        a_n &= \frac{1}{2\pi i} \oint_{S\left( z_0,\rho \right)}^{} \frac{f\left( \xi \right)}{\left( \xi - z_0 \right)^{n+1}}\:d\xi
+      \end{align*}
+      for any $0 < \rho < R$. Since $\lim_{z\rightarrow z_0}\left( z-z_0 \right)f(z) = 0$, then for any $\ve > 0$, there is sufficiently small $\rho$ such that
+      \begin{align*}
+        \left\vert a_n \right\vert &= \left\vert \frac{1}{2\pi i} \oint_{S\left( z_0,\rho \right)}^{} \frac{f\left( \xi \right)}{\left( \xi-z_0 \right)^{n+1}}\:d\xi \right\vert\\
+                                   &\leq \rho^{-1-n} \sup_{\left\vert \xi-z_0 \right\vert = \rho}\left\vert \left( \xi-z_0 \right)f(z) \right\vert\\
+                                   &\leq \ve.
+      \end{align*}
+      Thus, $\left\vert a_n \right\vert = 0$ for all $n < 0$.
+    \item If $a_n\neq 0$ for a nonempty finite collection of $n < 0$, we let $m$ be the largest number such that $a_{-m} < 0$, so that $f(z) = \sum_{n=-m}^{\infty}a_n\left( z-z_0 \right)^{n}$. It follows that $\lim_{z\rightarrow z_0}\left( z-z_0 \right)^{m}f(z) = a_{-m}\neq 0$. In particular, there is some small $\delta$ such that
+      \begin{align*}
+        \left\vert \left( z-z_0 \right)^{m}f(z) - a_{-m} \right\vert &< \frac{\left\vert a_{-m} \right\vert}{2},
+      \end{align*}
+      whence for a sufficiently small $\ve$,
+      \begin{align*}
+        \left\vert f(z) \right\vert &> \frac{\left\vert a_{-m} \right\vert-\left\vert \left( z-z_0 \right)^{m}f(z)-a_{-m} \right\vert}{\left\vert z-z_0 \right\vert^{m}}\\
+                                    &> \frac{\left\vert a_{-m} \right\vert}{2\left\vert z-z_0 \right\vert^{m}}\\
+                                    &> \frac{1}{\ve},
+      \end{align*}
+      so $f$ has a pole at $z_0$.\newline
+
+      Conversely, if $f$ has a pole at $z_0$, there is some $r > 0$ such that $\left\vert f(z) \right\vert \geq 1$ whenever $z\in \dot{U}\left( z_0,r \right)$. Define $g\colon \dot{U}\left( z_0,r \right)\rightarrow \C$ by
+      \begin{align*}
+        g(z) &= \frac{1}{f(z)},
+      \end{align*}
+      whence $g$ is holomorphic and bounded on $\dot{U}\left( z_0,r \right)$. By the classification of singularities, $z_0$ is a removable singularity of $g$, so there exists a holomorphic function $h\colon U\left( z_0,r \right)\rightarrow \C$ that is equal to $ \frac{1}{f(z)} $ for $z\neq z_0$ and $\lim_{z\rightarrow z_0}\frac{1}{f(z)}$ if $z= z_0$. We write
+      \begin{align*}
+        h(z) &= \sum_{n=0}^{\infty} b_n\left( z-z_0 \right)^{n},
+      \end{align*}
+      where we must have $b_0 = 0$. Let $m$ be the smallest positive integer such that $h(z) = \left( z-z_0 \right)^{m}\widetilde{h}(z)$, where $\widetilde{h}(z) = \sum_{n=0}^{\infty}b_{n+m}\left( z-z_0 \right)^{n}$ and $b_m\neq 0$. The function $\widetilde{h}$ is holomorphic on $U\left( z_0,r \right)$ and nonzero on some $U\left( z_0,\rho \right)$ with $0 < \rho \leq r$, so that $ \widetilde{f}(z) = \frac{1}{\widetilde{h}(z)} $ is holomorphic on $U\left( z_0,\rho \right)$, so
+      \begin{align*}
+        f(z) &= \left( z-z_0 \right)^{-m}\widetilde{f}(z)
+      \end{align*}
+      on $\dot{U}\left( z_0,\rho \right)$. Writing
+      \begin{align*}
+        \widetilde{f}(z) &= \sum_{n=0}^{\infty}c_n\left( z-z_0 \right)^{n},
+      \end{align*}
+      we deduce that
+      \begin{align*}
+        f(z) &= \sum_{n=-m}^{\infty}c_{n+m}\left( z-z_0 \right)^{n}.
+      \end{align*}
+    \item Follows from (i) and (ii).
+  \end{enumerate}
+\end{proof}
+\begin{definition}
+  Let $U\subseteq \C$ be open.
+  \begin{itemize}
+    \item If $f\colon U\setminus \set{z_0}\rightarrow \C$ has a pole or a removable singularity at $z_0$, then the order of the pole or singularity is the smallest $m \geq 0$ such that
+      \begin{align*}
+        f(z) &= \left( z-z_0 \right)^{-m} g(z)
+      \end{align*}
+      with $g\colon U\rightarrow \C$ is holomorphic and has $g\left( z_0 \right) \neq 0$.
+    \item If $f\colon U\rightarrow \C$ has a zero at $z_0\in U$, then the order of the zero at $z_0$ is the smallest $m \geq 0$ such that
+      \begin{align*}
+        f(z) &= \left( z-z_0 \right)^{m}g(z)
+      \end{align*}
+      where $g\colon U\rightarrow \C$ is holomorphic and has $g\left( z_0 \right) \neq 0$.
+  \end{itemize}
+  If $z_0\in U$ is either a pole or a zero (or a removable singularity that is a zero when $f$ is extended), then the \textit{order} of $f$ is the unique $m\in\Z$ such that
+  \begin{align*}
+    f(z)  &= \left( z-z_0 \right)^{m}g(z)
+  \end{align*}
+  with $g\left(z_0\right)\neq 0$.
+\end{definition}
+\begin{theorem}[Casorati--Weierstrass]
+  Let $U\subseteq \C$ be an open set, and let $f\colon U\setminus \set{z_0}\rightarrow \C$ be a holomorphic function. If $z_0$ is an essential singularity of $f$, then for any $r > 0$ with $U\left( z_0,r \right)\subseteq U$, $f\left( \dot{U}\left( z_0,r \right) \right)\subseteq \C$ is dense.
+\end{theorem}
+\begin{proof}
+  Suppose $f\left( \dot{U}\left( z_0,r \right) \right)$ is not dense in $\C$. Then, there exists $\ve > 0$ and $w\in \C$ such that $\left\vert f(z) - w \right\vert \geq \ve$ for all $z\in \dot{U}\left( z_0,r \right)$. We will show that $z_0$ is either removable or a pole.\newline
+
+  Define
+  \begin{align*}
+    g\colon \dot{U}\left( z_0,r \right)\rightarrow \C
+  \end{align*}
+  by
+  \begin{align*}
+    g(z) &= \frac{1}{f(z) - w}.
+  \end{align*}
+  Observe that $g$ is definitionally bounded, so $z_0$ is a removable singularity of $g$. Thus, there is a holomorphic function $h\colon U\left( z_0,r \right)\rightarrow \C$ such that $h(z) = g(z)$ for $z\neq z_0$ and $h(z) = \lim_{z\rightarrow z_0}g(z)$. We write
+  \begin{align*}
+    h(z) &= \sum_{n=0}^{\infty}b_n\left( z-z_0 \right)^{n},
+  \end{align*}
+  and take
+  \begin{align*}
+    h(z) &= \left( z-z_0 \right)^{m} \widetilde{h}(z),
+  \end{align*}
+  which exists as $g$ is not uniformly zero, and where $ \widetilde{h}\left( z_0 \right) \neq 0 $. Consequently, there is $0 < \rho \leq r$ such that $ \widetilde{f}\colon U\left( z_0,\rho \right)\rightarrow \C $ given by
+  \begin{align*}
+    \widetilde{f}(z) &= \frac{1}{ \widetilde{h}(z) },
+  \end{align*}
+  which is holomorphic. Thus,
+  \begin{align*}
+    f(z) &= w + \left( z-z_0 \right)^{-m} \widetilde{f}(z).
+  \end{align*}
+  Thus, we get
+  \begin{align*}
+    f(z) &= \sum_{n=-m}^{\infty} a_n\left( z-z_0 \right)^{n},
+  \end{align*}
+  whence $z_0$ is either removable or a pole.
+\end{proof}
+\subsection{The Argument Principle and Rouché's Theorem}%
+\begin{definition}
+  If $U\subseteq \C$ is open, and $V\subseteq U$ is an open subset such that $U\setminus V$ consists solely of isolated points, then a function $f\colon V\rightarrow \C$ is \textit{meromorphic} if it is holomorphic on $V$ and every $z_0\in U\setminus V$ is either a pole or a removable singularity. We say $f$ is meromorphic on $U$.
+\end{definition}
+\begin{theorem}
+  Let $U\subseteq \C$ be an open set, $\Gamma$ a piecewise $C^{1}$ cycle homologous to zero in $U$. Let $f$ be meromorphic on $U$ with no poles or zeros on $\img\left( \Gamma \right)$.
+  \begin{enumerate}[(i)]
+    \item The set $\set{z_0 \in U | \operatorname{ord}_{z_0}(f)\neq 0,n\left( \Gamma;z_0 \right) \neq 0}$ is finite.
+    \item We have
+      \begin{align*}
+        \frac{1}{2\pi i} \oint_{\Gamma}^{} \frac{f'(z)}{f(z)}\:dz &= \sum_{\substack{z_0\in U \\ \operatorname{ord}{z_0}(f)\neq 0\\n\left( \Gamma;z_0 \right)}} n\left( \Gamma;z_0 \right)\ord_{z_0}(f).
+      \end{align*}
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item Let $K = \set{z\in U | n\left( \Gamma;z \right) \neq 0}\cup \img\left( \Gamma \right)$. We know that for $R > \sup_{w\in\img\left( \Gamma \right)}\left\vert w \right\vert$, we have $n\left( \Gamma;z \right) = 0$ for all $z\in \C\setminus B\left( 0,R \right)$, meaning that $K$ is bounded. Furthermore, if $\left( z_n \right)_n\rightarrow z\in \C$, then either $z\in \img\left( \Gamma \right)\subseteq K$ or $z\in \C\setminus \img\left( \Gamma \right)$, so that $n\left( \Gamma;z \right) \neq 0$ by the continuity of the map $w\mapsto n\left( \Gamma;w \right)$. Thus, $z\in K$ as $\Gamma$ is homologous to zero in $U$. It follows thus that $K$ is compact.\newline
+
+      Let $E = \set{z_0\in K | \operatorname{ord}_{z_0}\left( f \right)\neq 0}$, meaning that $E$ consists of poles and zeros of $f$. These points are isolated, meaning $E$ is a closed subset of $K$, hence compact. Since $E$ is compact and contains isolated points only, it follows that $E$ is finite.
+    \item For each $z\in K$, select $\delta_z > 0$ such that $U\left( z,\delta_z \right)\subseteq U$, and $U\left( z,\delta_z \right)\cap E \subseteq \set{z}$. Such a $\delta_z$ exists since $z$ is isolated in $E$ and $U$ is open. The collection $\set{U\left( z,\delta_z \right) | z\in K}$ is an open cover of $K$, so there is a finite subcover $\set{U\left( z_1,\delta_1 \right),\dots,U\left( z_m,\delta_m \right)}$. Define
+      \begin{align*}
+        V &= \bigcup_{j=1}^{m}U\left( z_j,\delta_j \right),
+      \end{align*}
+      so that $V$ is open with $K\subseteq V \subseteq U$. Since $\set{z\in U | n\left( \Gamma;z \right)\neq 0}\subseteq K\subseteq V$, it follows that $\Gamma$ is homologous to zero in $V$.\newline
+
+      Define
+      \begin{align*}
+        g(z) &= f(z)\prod_{z\in E}\left( z-z_0 \right)^{-\operatorname{ord}_{z_0}(f)}.
+      \end{align*}
+      Since $\operatorname{ord}_z(g) = 0$ for all $z\in V$, all the singularities of $g$ are removable, and $\frac{g'}{g}$ is holomorphic on $V$ and satisfies
+      \begin{align*}
+        \frac{g'}{g} &= \frac{f'}{f} - \sum_{z_0\in E}\frac{1}{z-z_0}\operatorname{ord}_{z_0}(f).
+      \end{align*}
+      Cauchy's Integral theorem provides the desired result.
+  \end{enumerate}
 \end{proof}
 \section{Old Exams}%
 \section{Notation}%

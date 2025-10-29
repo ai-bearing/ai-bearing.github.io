@@ -1,0 +1,133 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+\usepackage{homework}
+%\usepackage{notes}
+\usepackage{newpxtext,eulerpx,eucal}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Differential Topology: Problem Set 8}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{problem}[Problem 1]
+  Use de Rham cohomology to prove that if $B^{n}$ is a closed ball in $\R^{n}$, and $f\colon B^n\rightarrow B^n$ is smooth, then $f$ has a fixed point.
+\end{problem}
+\begin{solution}
+  Suppose $f\colon B^n\rightarrow B^n$ is a fixed-point free self-map of the ball. It follows then that by drawing a line between $v$ and $f(v)$, we may define a smooth retraction of the ball to the sphere $S^{n-1}$. Call this retraction $r$.\newline
+
+  We observe then that $r$ induces a map in cohomology $r^{\ast}\colon H^{\ast}_{\operatorname{DR}}\left( S^{n-1} \right)\rightarrow H^{\ast}_{\operatorname{DR}}\left( B^{n} \right)$. In particular, since $r$ is a retraction to $S^{n-1}$, it follows that $r$ is homotopic to the identity map when restricted to $S^{n-1}$, meaning $r^{\ast}$ is an isomorphism in de Rham cohomology of $H^{\ast}_{\operatorname{DR}}\left( S^{n-1} \right)$ and $H^{\ast}_{\operatorname{DR}}\left( B^n \right)$.\newline
+
+  Yet, we recognize that $H^{n-1}_{\operatorname{DR}}\left( S^{n-1} \right)\cong \R$, while $H^{n-1}_{\operatorname{DR}}\left( B^{n} \right)\cong 0$, the latter emerging from the fact that $B^n$ is contractible via the straight-line homotopy and the Poincaré lemma. Thus, no such $r$ exists, whence $f$ cannot have a fixed point.
+\end{solution}
+\begin{problem}[Problem 2]
+  Suppose $M$ is a compact smooth manifold with a smooth triangulation, and let $f\colon M\rightarrow M$ be a smooth map preserving the triangulation. Write $f_k^{\ast}$ for the induced map on $H^k_{\operatorname{DR}}\left( M \right)$. Prove that if
+  \begin{align*}
+    L(f) &= \sum_{k=0}^{n} \left( -1 \right)^{k}\tr\left( f_k^{\ast} \right)\\
+         &\neq 0,
+  \end{align*}
+  then $f$ has a fixed point.
+\end{problem}
+\begin{problem}[Problem 3]
+  Compute the de Rham cohomology of $\R\mathbb{P}^{n}$.
+\end{problem}
+\begin{solution}
+  To start, we observe that $\R\mathbb{P}^{1}\cong S^{1}$, meaning that the de Rham cohomology of $\R\mathbb{P}^{1}$ is
+  \begin{align*}
+    H^{\ast}_{\operatorname{DR}}\left( \R\mathbb{P}^{1} \right) &= \begin{cases}
+      \R & k = 0\\
+      \R & k = 1\\
+      0 & \text{else}
+    \end{cases}.
+  \end{align*}
+  In higher dimensions, we consider the family of charts defined by
+  \begin{align*}
+    U_k &= \set{\left[ x_0:\cdots : x_{k} : \cdots : x_{n} \right] | x_{i\neq k}\in\R, x_k\neq 0}.
+  \end{align*}
+  We seek to understand the picture of
+  \begin{align*}
+    U_{k\neq 0} &= \bigcup_{k=1}^{n} U_k\\
+                &= \bigcup_{k=1}^{n}\set{\left[ x_0 : \cdots : n \right] | x_k\neq 0}.
+  \end{align*}
+  In particular, the only elements of $U_0$ that are not in $U_{k\neq 0}$ are the ones of the form $\left[ 1:0:\cdots:0 \right]$, whence $U_{k\neq 0}\cong \R^{n}\setminus \set{0}$.\newline
+
+  Next, we observe that
+  \begin{align*}
+    U_0\cap U_{k\neq 0} &= \set{\left[ x_0:\cdots:x_n \right] | x_0\neq 0} \cap \bigcup_{k=1}^{n} \set{\left[ x_0:\cdots:x_n \right] | x_k\neq 0}\\
+                        &= \set{\left[ x_0 : \cdots : x_n \right] | x_0\neq 0, x_k\neq 0\text{ for at least one } 1\leq k \leq n}\\
+                        &= U_0\setminus \set{\left[ 1:0:\cdots:0 \right]}\\
+                        &\cong \R^{n}\setminus \set{0}.
+  \end{align*}
+  Thus, by Mayer--Vietoris, we obtain the following short exact sequence.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRGJAF9T1Nd9CKAIzkqtRizYAJAHrEAOvIYwAZjgAUigLZ0cACwBGB4ACUACpxnAwnRQCcsAcz04AlFx4gM2PASIAmUWp6ZlZEEFlgYlslVQ1tXUNjE0trGIdnN0UINGY4AAJI6MVlNU15HX0jU1SwAFohGLgYHC0sMCY4RWacKPSnF3duXh8BIgBmIPFQ6Sti2LKEquTa-syhz29+PxQAFimQyXDFAGMoCBwETjEYKEd4IlAVOwgtJDIQHAgkRs9n15+1C+SH8wxA-zeiECn2+iHGYIhSEmMKQu2unCAA
+\begin{tikzcd}
+  0 \arrow[r] & H^{\ast}\left(\mathbb{RP}^{n}\right) \arrow[r] & H^{\ast}\left(\mathbb{R}^{n}\right)\oplus H^{\ast}\left(\mathbb{R}^{n}\setminus\set{0}\right) \arrow[r] & H^{\ast}\left(\mathbb{R}^{n}\setminus \set{0}\right) \arrow[r] & 0
+\end{tikzcd}
+  \end{center}
+  Focusing on the case of $H^{0}$, this yields the following exact sequence, whence $H^{0}\left( \mathbb{RP}^n \right)\cong \R$.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRGJAF9T1Nd9CKAIzkqtRizYAJAHrEAOvIYwAZjgAUigLZ0cACwBGB4ACUACpxnAwnRQCcsAcz04AlFx4gM2PASIAmUWp6ZlZEEG1dQ2MTW3kINGY4SP0jU04PXh8BIgBmIPFQthTo9MyvPl9BZAAWApDJcMUAYygIHAROMRgoR3giUBU7CC0kMhAcCCQhbkHh0cQRCanEf1mQIZGkQOWkXPXNhfzdxBquziA
+\begin{tikzcd}
+0 \arrow[r] & H^0\left(\mathbb{RP}^{n}\right) \arrow[r] & \mathbb{R}\oplus\mathbb{R} \arrow[r] & \mathbb{R} \arrow[r] & \cdots
+\end{tikzcd}
+  \end{center}
+  Since the $H^{k}\left( \R^{n} \right)$ are zero for all $k\geq 1$, it follows that we have $H^{k}\left( \mathbb{RP}^{n} \right) \cong 0$ for $1\leq k < n$.\newline
+
+  Finally, concerning ourselves with $H^{n}\left( \mathbb{RP}^{n} \right)$, we concern ourselves with orientability; specifically, $H^{n}\left( \mathbb{RP}^{n} \right) \cong \R$ if $n$ is odd and $H^{n}\left( \mathbb{RP}^{n} \right) \cong 0$ if $n$ is even, as $ \mathbb{RP}^{n} $ is orientable if and only if $n$ is odd.
+\end{solution}
+\begin{problem}[Problem 4]
+  Prove the Five Lemma. Namely, consider the following commutative diagram of vector spaces, where the horizontal sequences are exact. Show that if $f_1,f_2,f_4,f_5$ are isomorphisms, that $f_3$ is also an isomorphism.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAEEB9ARhAF9S6TLnyEU3clVqMWbLgCZ+gkBmx4CReZOr1mrRB04BmJULWiiR7dL1zOAFlMrh6scnvXdsg1wCsT1RENFDJuKS99EAAhHgCXC3FSMJ0ZSJjFATMgty1km29o4zjzYOQrPIi2GMdM5xK3DwrUqs5-PikYKABzeCJQADMAJwgAWyQyEBwIJAl8yIAdecY0AAs6WNqh0ZnqKaQtEAY6ACMYBgAFeODDmH6cEBTbA0Xltc4M5S2xxAO9xCs5mwXgxVusTJtht8AX8PIDnksQW8ap9IUhfLtpogAGyPAqLU44da8ahHU4XK5iECDLBdFb3CHbbEYpAAdlxC3mBPWihJJzOl3qbGptPpKMZbMmmIAHOygZyYISiryyQLskKaXSnF8kDLJUgAJzK-kU9Uih5wkD4hXrZEDVGICZ-dEW-obMXfWZ-HEu95a+2-TESyoGV3g91IaHS2Uhhx+xmwv6Gn1tCh8IA
+\begin{tikzcd}
+A_1 \arrow[r, "\alpha_1"] \arrow[d, "f_1"] & A_2 \arrow[r, "\alpha_2"] \arrow[d, "f_2"] & A_3 \arrow[r, "\alpha_3"] \arrow[d, "f_3"] & A_4 \arrow[r, "\alpha_4"] \arrow[d, "f_4"] & A_5 \arrow[d, "f_5"] \\
+B_1 \arrow[r, "\beta_1"']                  & B_2 \arrow[r, "\beta_2"']                  & B_3 \arrow[r, "\beta_3"']                  & B_4 \arrow[r, "\beta_4"']                  & B_5                 
+\end{tikzcd}
+  \end{center}
+\end{problem}
+\begin{solution}
+  We start by showing that $f_3$ is injective. Let $x\in \ker\left( f_3 \right)$.
+  \begin{itemize}
+    \item By commutativity, we have 
+      \begin{align*}
+        0 &= \beta_3\circ f_3(x)\\
+                            &= f_4\circ \alpha_3(x),
+      \end{align*}
+    so it follows that $\alpha_3(x) = 0$ as $f_4$ is injective, so $x\in \ker\left( \alpha_3 \right)$. By exactness, we let $a_2\in A_2$ be such that $\alpha_2\left(a_2\right) = x$, and define $f_2\left( a_2 \right) = b_2$.
+    \item By commutativity, 
+      \begin{align*}
+        \beta_2\left( b_2 \right) &= \beta_2\left( f_2\left( a_2 \right) \right)\\
+                                  &= f_3\left( \alpha_2\left( a_2 \right) \right)\\
+                                  &= f_3\left( x \right)\\
+                                  &= 0,
+      \end{align*}
+      so $b_2\in\ker\left( \beta_2 \right)$, meaning that by exactness, there is $b_1 \in B_1$ such that $\beta_1\left( B_1 \right) = b_2$. Since $f_1$ is surjective, we let $a_1\in A_1$ be such that $f_1\left( a_1 \right) = b_1$.
+    \item Finally, by commutativity, we have
+      \begin{align*}
+        f_2\left( \alpha_1\left( a_1 \right) \right) &= \beta_2\left( f_1\left( a_1 \right) \right)\\
+                                                     &= \beta_1\left( b_1 \right)\\
+                                                     &= b_2\\
+                                                     &= f_2\left( a_2 \right),
+      \end{align*}
+      and since $f_2$ is injective, we have $a_2 = \alpha_1\left( a_1 \right)$.
+    \item Thus, since $x = \alpha_2\left( a_2 \right)$, we have 
+      \begin{align*}
+        x &= \alpha_2\left( \alpha_1\left( a_1 \right) \right)\\
+          &= \left( \alpha_2\circ \alpha_1 \right)\left( a_1 \right)\\
+          &= 0,
+      \end{align*}
+      so $f$ is injective.
+  \end{itemize}
+  Now, we show that $f$ is surjective.
+\end{solution}
+\end{document}
