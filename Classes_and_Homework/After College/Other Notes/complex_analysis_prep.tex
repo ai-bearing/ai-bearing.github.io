@@ -892,6 +892,139 @@ The classification of singularities seeks to answer two fundamental questions: i
 \begin{remark}
   Most use cases for Rouché's Theorem involve finding $g(z)$ such that $\left\vert f(z) - g(z)\right\vert < \left\vert g(z) \right\vert$ on $\img\left( \Gamma \right)$, where both $f(z)$ and $g(z)$ have no zeros or poles on $\img\left( \Gamma \right)$.
 \end{remark}
+It is possible to use Rouché's Theorem to prove the fundamental theorem of algebra.
+\begin{corollary}
+  Let $P\colon \C\rightarrow \C$ be a nonconstant polynomial. Then, there exists $z_0\in \C$ with $P\left( z_0 \right) = 0$.
+\end{corollary}
+\begin{proof}
+  Write $P(z) = a_nz^{n} + \cdots + a_1 z + a_0$, where $n\geq 1$, $a_n\neq 0$, and $a_1,\dots,a_n\in \C$.\newline
+
+  Let $Q(z) = a_nz^{n}$, $R$ sufficiently large, and $\Gamma = S\left( 0,R \right)$. Then,
+  \begin{align*}
+    \left\vert P(z) - Q(z) \right\vert &= \left\vert a_{n-1}z^{n-1} + \cdots + a_1 z + a_0 \right\vert\\
+                                       &\leq \left\vert a_n \right\vert R^{n} \left( \frac{\left\vert a_{n-1} \right\vert}{\left\vert a_n \right\vert R} + \cdots + \frac{\left\vert a_0 \right\vert}{\left\vert a_n \right\vert R^{n}} \right)\\
+                                       &< \left\vert a_n \right\vert R^{n}\\
+                                       &\leq \left\vert P(z) \right\vert + \left\vert Q(z) \right\vert.
+  \end{align*}
+  Thus, $P$ has the same number of zeros counted with multiplicity as $Q$.
+\end{proof}
+\begin{corollary}
+  Let $U\subseteq \C$ be an open set, $f\colon U\rightarrow \C$ be a holomorphic injective function. Then, $f'(z)\neq 0$ for all $z\in U$, whence $f$ admits a holomorphic inverse.
+\end{corollary}
+\begin{proof}
+  Suppose there is some $z_0\in U$ such that $f'\left(z_0\right)= 0$. By the identity theorem, there must be some $r > 0$ such that $B\left( z_0,r \right) \subseteq U$ and $f'(z)\neq 0$ for all $z\in \dot{U}\left( z_0,r \right)$, else $f$ would be equal to a constant on some nonempty open set, hence not injective.\newline
+
+  Let $g(z) = f(z) - f\left( z_0 \right)$. Define $m\coloneq \operatorname{ord}_{z_0}(g)$. We observe that $m\geq 2$, as $g\left( z_0 \right) = 0$ and $g'\left( z_0 \right) = 0$. We may write
+  \begin{align*}
+    g(z) &= \lambda \left( z-z_0 \right)^{m} + \left( z-z_0 \right)^{k+1}h(z)
+  \end{align*}
+  for some holomorphic function $h\colon U\rightarrow \C$ and a constant $\lambda\in \C\setminus \set{0}$, meaning
+  \begin{align*}
+    f(z) &= f\left( z_0 \right) + \lambda \left( z-z_0 \right)^{m} + \left( z-z_0 \right)^{k+1}h(z)
+  \end{align*}
+  for all $z\in U$.\newline
+
+  Let $C = \sup_{z\in B\left( z-0,r \right)}\left\vert h(z) \right\vert$, which is finite as $B\left( z_0,r \right)$ is compact. Letting $\rho = \min\left( r,\frac{\left\vert \lambda \right\vert}{2C} \right)$ and $\eta = \frac{\left\vert \lambda \right\vert \rho^{m}}{2}$, and fixing $w\in \dot{U}\left( f\left( z_0, \right),\eta \right)$, we observe that if $z\in S\left( z-0,\rho \right)$,
+  \begin{align*}
+    \left\vert f(z) - w - \lambda \left( z-z_0 \right)^{m} \right\vert &= \left\vert f\left( z_0 \right) - w + \left( z-z_0 \right)^{m+1}h(z) \right\vert\\
+                                                                       &\leq \left\vert f\left( z_0 \right) - w \right\vert + \left\vert z-z_0 \right\vert^{m+1} \left\vert h(z) \right\vert\\
+                                                                       &< \eta + \rho^{m+1}C\\
+                                                                       &< \rho^{m} \left\vert \lambda \right\vert\\
+                                                                       &= \left\vert \left( z-z_0 \right)^{m}\lambda \right\vert.
+  \end{align*}
+  Therefore, by Rouché's theorem, the number of zeros in $U\left( z_0,\rho \right)$ for $f(z) - w$ is equal to the number of zeros counted with multiplicity in $U\left( z_0,\rho \right)$ of $\left( z-z_0 \right)^{m}\lambda$. Since the latter $m\geq 2$, it follows that the former is also $m\geq 2$. Since $f'(z)\neq 0$ for all $z\in U\left( z_0,\rho \right)$, no zero of $f(z) - w$ can have order at least $2$, meaning that there are at least two distinct zeros of $f(z) - w$ in $U\left( z_0,\rho \right)$, whence $f$ is not injective.
+\end{proof}
+\subsection{Residues}%
+\begin{definition}
+  Let $U\subseteq \C$, $z_0\in U$, $r > 0$ such that $U\left( z_0,r \right)\subseteq U$, and
+  \begin{align*}
+    f(z) &= \sum_{n=-\infty}^{\infty} a_n\left( z-z_0 \right)^{n}
+  \end{align*}
+  on $\dot{U}\left( z_0,r \right)$. The \textit{residue} of $f$ at $z_0$ is the coefficient $a_{-1}$ of $\left( z-z_0 \right)^{-1}$. We write $\res\left( f;z_0 \right)$.
+\end{definition}
+\begin{proposition}
+  Let $U\subseteq \C$ be an open set, and let $f$ be meromorphic on $U$ with a pole of order $m\geq 1$ at $z_0\in U$. Then,
+  \begin{align*}
+    \res\left( f;z_0 \right) &= \frac{1}{\left( m-1 \right)!} \lim_{z\rightarrow z_0} \diff{^{m-1}}{z^{m-1}} \left( z-z_0 \right)^{m}f(z).
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Write
+  \begin{align*}
+    f(z) &= \sum_{n=-\infty}^{\infty} a_n\left( z-z_0 \right)^{n}.
+  \end{align*}
+  Differentiating term by term, we find that
+  \begin{align*}
+    \frac{1}{\left( m-1 \right)!} \lim_{z\rightarrow z_0} \diff{^{m-1}}{z^{m-1}} \left( z-z_0 \right)^{m}f(z) &= a_{-1}.
+  \end{align*}
+\end{proof}
+\begin{proposition}
+  Let $f,g\colon U\rightarrow \C$ be holomorphic with $z_0$ a simple zero for $g$ that is not a zero or pole for $f$. Then,
+  \begin{align*}
+    \res\left( \frac{f}{g};z_0 \right) &= \frac{f\left(z_0\right)}{g'\left( z_0 \right)}.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  We compute the residue directly, using the fact that $g\left( z_0 \right) = 0$ to find
+  \begin{align*}
+    \lim_{z\rightarrow z_0} \left( z-z_0 \right) \frac{f(z)}{g(z)} &= \frac{f\left( z_0 \right)}{\lim_{z\rightarrow z_0} \frac{g\left( z \right) - g\left( z_0 \right)}{z-z_0}}\\
+                                                                   &= \frac{f\left( z_0 \right)}{g'\left( z_0 \right)}.
+  \end{align*}
+\end{proof}
+\begin{example}\hfill
+  \begin{itemize}
+    \item If $f(z) = \frac{e^{iz}}{z}$, then
+      \begin{align*}
+        \res\left( f;0 \right) &= 1.
+      \end{align*}
+    \item If $f(z) = \pi \cot\left( \pi z \right)$, then
+      \begin{align*}
+        \res\left( f;n \right) &= \frac{\pi \cos\left( \pi n \right)}{ \diff{}{z}|_{z = n} \sin\left( \pi z \right) }\\
+                               &= \frac{\pi \cos\left( \pi n \right)}{\pi \cos\left( \pi n \right)}\\
+                               &= 1.
+      \end{align*}
+    \item Let $f(z) = \frac{e^{3z}}{\left( z-2 \right)^2}$. To compute the residue at $z = 2$, we may directly find
+      \begin{align*}
+        \res\left( f;2 \right) &= \lim_{z\rightarrow 2} \diff{}{z}\left( z-2 \right)^2 \frac{e^{3z}}{\left( z-2 \right)^2}\\
+                               &= 3e^{6}.
+      \end{align*}
+  \end{itemize}
+\end{example}
+\begin{theorem}
+  Let $f\colon \dot{U}\left( z_0,r \right)\rightarrow \C$ be holomorphic. Then, for all $0 < \rho < r$, we have
+  \begin{align*}
+    \oint_{S\left( z_0,\rho \right)}^{} f(z)\:dz &= 2\pi i \res\left( f;z_0 \right).
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Write
+  \begin{align*}
+    f(z) &= \sum_{n=-\infty}^{\infty} a_n\left( z-z_0 \right)^{n}.
+  \end{align*}
+  The series converges uniformly on compact sets, so we may exchange order of integration and summation to find
+  \begin{align*}
+    \oint_{S\left( z_0,\rho \right)}^{} f(z)\:dz &= \sum_{n=-\infty}^{\infty}a_n \oint_{S\left( z_0,\rho \right)}^{} \left( z-z_0 \right)^{n}\:dz\\
+                                                 &= 2\pi i a_{-1}.
+  \end{align*}
+\end{proof}
+\begin{theorem}
+  Let $U\subseteq \C$ be an open set, $\Gamma$ a piecewise $C^{1}$ cycle homologous to zero in $U$. Let $f$ be meromorphic on $U$ with no poles on $\img\left( \Gamma \right)$. Then,
+  \begin{align*}
+    \oint_{\Gamma}^{} f(z)\:dz &= 2\pi i \sum_{z_0\in E} n\left( \Gamma;z_0 \right)\res\left( f;z_0 \right),
+  \end{align*}
+  where
+  \begin{align*}
+    E &= \set{z_0\in U | \ord_{z_0}(f) < 0, n\left( \Gamma;z_0 \right) \neq 0}.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  As in the proof of the argument principle, we see that $E$ is finite, which we write $\set{z_1,\dots,z_m}$. Select $r > 0$ such that $ B\left( z_j,r \right) $ are pairwise disjoint and contained in $U$. Set $ \widetilde{\Gamma} = \Gamma - \sum_{j=1}^{n} S\left( z_j,r \right) $. Then, $ \widetilde{\Gamma} $ is homologous  to zero in $U\setminus \set{z_1,\dots,z_m}$, while $f$ is holomorphic on $U\setminus \set{z_1,\dots,z_m}$, whence
+  \begin{align*}
+    0 &= \oint_{ \widetilde{\Gamma} }^{} f(z)\:dz\\
+      &= \oint_{\Gamma}^{} f(z)\:dz - \sum_{j=1}^{m} \oint_{S\left( z_j,r \right)}^{} f(z)\:dz\\
+      &= \oint_{\Gamma}^{} f(z)\:dz - 2\pi i \sum_{z_0\in E}n\left( \Gamma;z_0 \right)\res\left( f;z_0 \right).
+  \end{align*}
+\end{proof}
 \section{Worked Examples and Problem-Solving Methods}%
 \begin{example}
   Suppose $U$ is a region in $\C$ that contains $0$, and suppose $f\colon U\rightarrow \C$ is a holomorphic function satisfying
@@ -945,7 +1078,29 @@ The classification of singularities seeks to answer two fundamental questions: i
   whence for all $n\geq 1$, since $R$ is arbitrary, we have $\left\vert f^{(n)}\left( z \right) \right\vert = 0$, so $f$ is constant.
 \end{example}
 \subsection{Maximum Modulus Principle Problems}%
+\begin{example}
+  We show that if $f\colon U\rightarrow \C$ is holomorphic on a connected open set, and
+  \begin{align*}
+    u\left( x,y \right) &= \left\vert f\left( x + iy \right) \right\vert
+  \end{align*}
+  is harmonic on $U$, then $f$ is constant.\newline
 
+  Toward this end, we let $z_0\in U$ and $r > 0$ such that $B\left( z_0,r \right)\subseteq U$. For any $0 < s < r$, the mean value property gives
+  \begin{align*}
+    \left\vert f\left( z_0 \right) \right\vert &\leq \frac{1}{2\pi} \int_{0}^{2\pi} \left\vert f\left( z_0 + se^{i\theta} \right) \right\vert\:d\theta\\
+                                               &= \left\vert f\left( z_0 \right) \right\vert.
+  \end{align*}
+  In particular, for any $0 < s < r$, we have the equality
+  \begin{align*}
+    \left\vert f\left( z_0 \right) \right\vert &= \frac{1}{2\pi} \int_{0}^{2\pi} \left\vert f\left( z_0 + se^{i\theta} \right) \right\vert\:d\theta.
+  \end{align*}
+  Since $f$ is continuous, there is some $\theta_s$ such that $\left\vert f\left( z_0 + se^{i\theta} \right) \right\vert = e^{i\theta_s}f\left( z_0 + se^{i\theta} \right)$, whence
+  \begin{align*}
+    \left\vert f\left( z_0 \right) \right\vert &= e^{i\theta_s} \frac{1}{2\pi} \int_{0}^{2\pi} f\left( z_0 + se^{i\theta} \right)\:d\theta\\
+                                               &= e^{i\theta_s} f\left( z_0 \right),
+  \end{align*}
+  meaning that $\theta_s \eqcolon \theta_0$ is independent of $s$. Yet, this means that $e^{i\theta_0}f\left( z \right)$ is holomorphic on $U\left( z_0,r \right)$ and has $\im\left( e^{i\theta}f(z) \right) = 0$, meaning that by the open mapping principle, $f(z)$ is constant on $U\left( z_0,r \right)$, and so $f$ is constant on $U$ by the identity theorem.
+\end{example}
 \subsubsection{The Phragmén--Lindelöf Method}%
 The maximum modulus principle is primarily useful in the case where $f$ is continuous on the closure of a bounded open set $U$ and holomorphic on the interior. Yet, this fails to be true if $U$ is unbounded.\newline
 

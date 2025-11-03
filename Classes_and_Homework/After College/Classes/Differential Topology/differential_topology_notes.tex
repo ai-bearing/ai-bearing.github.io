@@ -1545,7 +1545,7 @@ The most powerful theorem when it comes to integration on manifold is known as S
   where the equivalence between the first and second lines follows from the Fundamental Theorem of Calculus for $ \pd{a_n}{x_n} $. Note that the sign of the integral depends on the induced orientation of the boundary.
 \end{proof}
 Observe that Stokes's Theorem is basically a supercharged version of the fundamental theorem of calculus.
-\subsection{Real Homology}%
+\subsection{Real Simplicial/Singular Homology}%
 To be able to integrate general $k$-forms on manifolds, we need a structure known as $k$-chains. Eventually, we will use these differential forms to obtain a graded $\R$-algebra written
 \begin{align*}
   H^{\ast}_{\operatorname{DR}}\left( M \right) &= \bigoplus_{i=0}^{n} H^{i}_{\operatorname{DR}}\left( M \right),
@@ -1931,7 +1931,7 @@ In order to prove de Rham's Theorem, we need to venture into the realm of \v{C}e
 \begin{corollary}
   If $f\colon M\rightarrow N$ and $g\colon M\rightarrow N$ are smoothly homotopic smooth maps, then $f^{\ast}$ and $g^{\ast}$ induce the same map on $H^{\ast}_{\operatorname{DR}}$.
 \end{corollary}
-\subsection{\v{C}ech Cohomology}%
+\subsection{\v{C}ech Cohomology and the Proof of the de Rham Theorem}%
 Recall the statement of de Rham's theorem.
 \begin{theorem}[de Rham's Theorem]
   \begin{align*}
@@ -2035,7 +2035,11 @@ In this diagram, the left-most column is the de Rham complex, and the bottom row
 \begin{proof}
   We start by showing that the first sequence is exact. It is the case that $r\colon \mathcal{A}^{\ell}\left( M \right)\rightarrow \mathcal{A}^{0,\ell}\left( \mathcal{U} \right)$ is injective, as the latter space contains forms that are able to not be consistently defined outside an element of $\mathcal{U}$.\newline
 
-  Now, suppose that $\omega\in \mathcal{A}^{0,\ell}\left( \mathcal{U} \right)$ satisfies $\delta\omega = 0$. Then, for any $\alpha,\beta\in A$, we have $\omega\left( \alpha \right)|_{U_{\alpha}\cap U_{\beta}} = \omega\left( \beta \right)|_{U_{\alpha}\cap U_{\beta}}$, whence $\omega$ is a differential form defined on the whole of $M$, meaning $\omega\in \img\left( r \right)$.\newline
+  Now, suppose that $\omega\in \mathcal{A}^{0,\ell}\left( \mathcal{U} \right)$ satisfies $\delta\omega = 0$. Then, for any $\alpha,\beta\in A$, we have 
+  \begin{align*}
+    \omega\left( \alpha \right)|_{U_{\alpha}\cap U_{\beta}} = \omega\left( \beta \right)|_{U_{\alpha}\cap U_{\beta}},
+  \end{align*}
+  whence $\omega$ is a differential form defined on the whole of $M$, meaning $\omega\in \img\left( r \right)$.\newline
 
   For general $k > 0$, define
   \begin{align*}
@@ -2043,9 +2047,94 @@ In this diagram, the left-most column is the de Rham complex, and the bottom row
   \end{align*}
   by selecting a partition of unity $\set{f_{\alpha}}_{\alpha\in A}$ subordinate to $\mathcal{U}$, and for $\omega\in \mathcal{A}^{k,\ell}\left( \mathcal{U} \right)$, define
   \begin{align*}
-    \left( \Phi\left(\omega\right) \right)\left( \alpha_0 ,\dots,\alpha_{k-1}\right) &= \sum_{\alpha}f_{\alpha}\omega\left( \alpha,\alpha_0,\dots,\alpha_{k-1} \right).
+    \left( \phi\left(\omega\right) \right)\left( \alpha_0 ,\dots,\alpha_{k-1}\right) &= \sum_{\alpha}f_{\alpha}\omega\left( \alpha,\alpha_0,\dots,\alpha_{k-1} \right).
   \end{align*}
+  Upon tedious computations, we can show that $\delta\left( \phi\left( \omega \right) \right) + \phi\left( \delta\left( \omega \right) \right) = \omega$. Since $\delta\left( \omega \right) = 0$, this gives $\omega = \delta\left( \phi\left( \omega \right) \right)$, where $\phi\left( \omega \right)\in \mathcal{A}^{k-1,\ell}\left( \mathcal{U} \right)$. Thus, the first sequence is exact.\newline
+
+  Now, we consider the column sequence. Since $i$ is an inclusion of locally constant functions on $\mathcal{U}$ to $\mathcal{A}^{k,0}\left( \mathcal{U} \right)$, the sequence is exact at $i$. Suppose $\omega\in \mathcal{A}^{k,0}\left( \mathcal{U} \right)$ satisfies $d\omega = 0$. Observe that $\omega$ assigns a $C^{\infty}$ function to each nonempty $\left( k+1 \right)$-fold intersect
+    \begin{align*}
+      U_{\alpha_0}\cap\cdots\cap U_{\alpha_k} &\neq \emptyset.
+    \end{align*}
+    Since the intersection is contractible, it is path-connected, whence $\omega$ is constant on each nonempty intersection. Thus, we observe that $\omega$ can be defined via elements of $C^{k}\left( M;\mathcal{U} \right)$, so that $\omega$ is exact.\newline
+
+    Next, if $\ell > 0$ and $\omega\in \mathcal{A}^{k,\ell}\left( \mathcal{U} \right)$ satisfies $d\omega = 0$, we use the fact that the de Rham cohomology of contractible open subsets is trivial, whence there is some $\eta\in \mathcal{A}^{k,\ell - 1}$ such that $d\eta = \omega$.
 \end{proof}
+\begin{theorem}[Isomorphism between de Rham Cohomology and \v{C}ech Cohomology]
+  \begin{align*}
+    H^{\ast}_{\operatorname{DR}}\left( M \right) &\cong \check{H}^{\ast}\left( M;\mathcal{U} \right).
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  The method of proof we will use is a diagram chase. In particular, we will find a candidate isomorphism $\varphi\colon H^{\ell}_{\operatorname{DR}}\left( M \right)\rightarrow \check{H}^{\ell}\left( M;\mathcal{U} \right)$ that will take a de Rham cohomology class $x\in H^{\ell}_{\operatorname{DR}}\left( M \right)$ and output a cocycle in $\check{H}^{\ast}\left( M;\mathcal{U} \right)$.\newline
+
+  Choose a closed form $\omega\in \mathcal{A}^{\ell}\left( M \right)$ representing $x$. Put $r\left( \omega \right) = \omega_0\in \mathcal{A}^{0,\ell}\left( \mathcal{U} \right)$. Since $d\omega_0 = d\left( r\left( \omega \right) \right) = r\left( d\omega \right) = 0$, it follows from exactness that there is $\eta_0\in \mathcal{A}^{0,\ell-1}\left( \mathcal{U} \right)$ with $d\eta_0 = \omega_0$. Put $\omega_1 = \delta \eta_0$.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkQAdDgYyghwQBfUuky58hFOQrU6TVuy4BbejgAW3JsACCggHrAspLjEaMAtFkEAKZao1aAqoICUIYaOx4CRaQCZZBhY2RE4OFXVNRh19Q2MOUwssc3IbO0inV3cREAwvCSI-GRoghVD0h2jdAywAamkTM0s08Pso4Gc3D1yxb0lkIoCS+RCwiMqYmvr4xMsUlvH2zuzPcR8pUmJAkfYVnvz1gdIAZm3g3e68tf6yAFYzsrDefiEcq77fUnvh8-KOCCUMAA5vQAPpYPbvAooIrfOS-EDESG9aFHABsD1GXABwLBhnqgmRB360gxP0eJhwYIhlxRh2kABZMRc3nT+kUAOzM0LuWQwKBA+BEUAAMwATgCkEUQDgIEhpPDHlA9uLJYgFbKkLdyaNld1VUp5TRNYhjjrFBxYIwqSqJYbENKTQzzX8rTb9XakM6ZXLTS6QHqcgakGjjb7vaVdba1WQfUbFVjLaZ3UHPYgOWGkAAOf1cN30aP2nNxxAATlzSetBY9auLJvI0sj7EDorT5A1vuLTdCLZAwfVHflse7YXzhaHmbL-t7-fIZpL5GHOx7vMEQA
+\begin{tikzcd}
+                           & {}                                                                         &                                                          \\
+\cdots \arrow[r, "\delta"] & {\mathcal{A}^{i,\ell-i}(\mathcal{U})} \arrow[u, "d"] \arrow[r, "\delta"]   & {\mathcal{A}^{i+1,\ell-i}(\mathcal{U})}                  \\
+                           & {\mathcal{A}^{i,\ell-i-1}(\mathcal{U})} \arrow[u, "d"] \arrow[r, "\delta"] & {\mathcal{A}^{i+1,\ell-i-1}(\mathcal{U})} \arrow[u, "d"] \\
+                           &                                                                            & {} \arrow[u, "d"]                                        \\
+                           & {}                                                                         &                                                          \\
+\cdots \arrow[r, "\delta"] & \omega_i \arrow[r, "\delta"] \arrow[u, "d"]                                & 0                                                        \\
+                           & \eta_i \arrow[u, "d"] \arrow[r, "\delta"]                                  & \omega_{i+1} \arrow[u, "d"]                              \\
+                           &                                                                            & {} \arrow[u, "d"]                                       
+\end{tikzcd}
+  \end{center}
+  Putting $\omega_1 = \delta \eta_0$, it follows that
+  \begin{align*}
+    d\omega_1 &= d\left( \delta \eta_0 \right)\\
+              &= \delta\left( d\eta_0 \right)\\
+              &= \delta\omega_0\\
+              &= \delta\left( r\left( \omega \right) \right)\\
+              &= 0,
+  \end{align*}
+  whence there exists $\eta_1\in \mathcal{A}^{1,\ell-2}\left( \mathcal{U} \right)$ constructed similarly. Inductively, we find $\omega_i$ such that $d\omega_i = 0$, whence $\omega_i = d\eta_i$, and $\omega_{i+1} = \delta\eta_{i+1}$. This yields $\omega_{\ell}\in \mathcal{A}^{\ell,0}\left( \mathcal{U} \right)$. Therefore, there exists $c\in C^{\ell}\left( \mathcal{U} \right)$ such that $\omega_{\ell} = i\left( c \right)$. Since $\delta c = 0$, we see that $c$ is a cocycle.\newline
+
+  Define $\varphi\left( x \right) = \left[ c \right]\in \check{H}^{\ell}\left( M;\mathcal{U} \right)$.\newline
+
+  Now, we prove that $\varphi\left( x \right)$ is well-defined. Assuming that $\omega' = \omega + d\gamma_0$ for some $\gamma_0\in \mathcal{A}^{\ell - 1}\left( M \right)$, we have $\omega_0' = \omega_0 + r\left( d\gamma_0 \right) = \omega_0 + d\left( r\left( \gamma_0 \right) \right)$.\newline
+
+  Inductively, we show that for arbitrary $i = 0,\dots,\ell$, there is $\gamma_i\in \mathcal{A}^{i-1,\ell-i-1}\left( \mathcal{U} \right)$ such that
+  \begin{align*}
+    \omega_i' = \omega_i + d\left( \delta \gamma_i \right).
+  \end{align*}
+  We have shown it for the case of $i = 0$. Since $\omega_i = d\eta_i$, and $\omega_i' = d\eta_i'$ by definition, whence
+  \begin{align*}
+    d\left( \eta_i'-\eta_i-\delta\gamma_i \right) &= \omega_i'-\omega_i-d\left( \delta\gamma_i \right)\\
+                                                  &= 0,
+  \end{align*}
+  so by exactness, there is $\gamma_{i+1}\in \mathcal{A}^{i,\ell-i-2}\left( \mathcal{U} \right)$ such that $d\gamma_{i+1} = \eta_i'-\eta_i-\delta\gamma_i$, whence
+  \begin{align*}
+    \omega_i' &= \delta\eta_{i'}\\
+              &= \delta\eta_i + \delta\left( d\gamma_{i+1} \right)\\
+              &= \omega_{i+1} + d\left( \delta\gamma_{i+1} \right).
+  \end{align*}
+  Now, if we put $i = \ell$, we find that there is $\gamma_{\ell}\in C^{\ell - 1}\left( \mathcal{U} \right)$ such that $\omega_{\ell}' = \omega_{\ell} + i\left( \delta\gamma_{\ell} \right)$. Yet, since $\omega_{\ell}' = i\left( c' \right)$ and $\omega = i\left( c \right)$, we have $c' = c + \delta\gamma_{\ell}$, whence $c$ and $c'$ represent the same cohomology class. Thus, we have defined our homomorphism $\varphi\colon H^{\ast}_{\operatorname{DR}}\left( M \right)\rightarrow \check{H}^{\ast}\left( M;\mathcal{U} \right)$.\newline
+
+  In order to see that this is an isomorphism, we observe that there are inverses; in the diagram, we followed a ``zig-zag'' path down from $\mathcal{A}^{\ell}\left( M \right)$ to $C^{\ell}\left( \mathcal{U} \right)$, but we can start at $C^{\ell}\left( \mathcal{U} \right)$ and follow the same zig-zag path using exactness to obtain an element of $\mathcal{A}^{\ell}\left( M \right)$.
+\end{proof}
+Now, we have established two separate cohomology isomorphisms; the one between de Rham and \v{C}ech cohomology, $\varphi\colon H^{\ast}_{\operatorname{DR}}\left( M \right)\rightarrow \check{H}^{\ast}\left( M;\mathcal{U} \right)\cong H^{\ast}\left( M;\R \right)$, and integration over forms, $I\colon H^{\ast}_{\operatorname{DR}}\left( M \right)\rightarrow H^{\ast}\left( M;\R \right)$, giving two maps for a representative of a cohomology class $\omega$,
+\begin{align*}
+  \varphi\left( \omega \right) &= c\\
+  I\left( \omega \right) &= c',
+\end{align*}
+two cochains in $H^{\ast}\left( M;\R \right)$. As it turns out, these cochains are of the same class, up to a sign,
+\begin{align*}
+  I_{H^{\ell}} &= \left( -1 \right)^{\frac{\ell\left( \ell + 1 \right)}{2}} \varphi_{H^{\ell}}.
+\end{align*}
+\subsection{Product Structure in Simplicial/Singular Cohomology}%
+Thus, we have finally established the isomorphism
+\begin{align*}
+  H^{\ast}_{\operatorname{DR}}\left( M \right) &\cong H^{\ast}\left( M;\R \right).
+\end{align*}
+Yet, we know that there is a product structure in $H^{\ast}_{\operatorname{DR}}\left( M \right)$, as for any $\omega\in \mathcal{A}^{k}\left( M \right)$ and $\eta\in \mathcal{A}^{\ell}\left( M \right)$, we have the wedge product $\omega\wedge\eta \in \mathcal{A}^{k + \ell}\left( M \right)$. We will now develop the corresponding product structure on $H^{\ast}\left( M;\R \right)$.\newline
+
+Let $K$ be a simplicial complex for $M$. Then, there is a cell structure (not necessarily a simplicial complex) on $K\times K$. For any simplices $\sigma,\tau\in K$, we need to subdivide the corresponding simplex $\sigma\times \tau\in K\times K$. Assuming we can do this, given cochains $c,c'$ of degree $k,\ell$ respectively on $K$, we may build a cochain $c\times c'\in C^{k + \ell}\left( K\times K \right)$ by taking
+\begin{align*}
+  c'\times c'\left( \sigma\times \tau \right) &= c\left( \sigma \right)c'\left( \tau \right)
+\end{align*}
+for $\sigma\in C^{k}\left( K \right)$ and $\tau\in C^{\ell}\left( K \right)$.
 \section{Notations}%
 \begin{itemize}
   \item A general normed space $V$ will have its norm denoted by $\norm{\cdot}$. If $V = \R^{n}$, then we denote the norm by $ \left\vert \cdot \right\vert $.
