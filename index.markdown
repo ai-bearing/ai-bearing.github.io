@@ -8,7 +8,7 @@ layout: home
 Hi. I'm Avinash.
 
 ## Who am I?
-I am a mathematics PhD student to the University of Virginia.
+I am a first-year mathematics PhD student at the University of Virginia.
 
 For Fall 2025, I am a discussion leader for a section of Calculus II (Math 1320), as well as the grader for Advanced Linear Algebra (Math 4651).
 
