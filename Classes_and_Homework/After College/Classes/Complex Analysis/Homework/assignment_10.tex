@@ -1,0 +1,87 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+\usepackage{homework}
+%\usepackage{notes}
+\usepackage{newpxtext,eulerpx,eucal}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Complex Analysis: Assignment 10}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{problem}[Problem 1]
+  For all $n\in \N$, find the residue of $f(z) = \left( 1-e^{-z} \right)^{n}$ at $z = 0$ via Cauchy's residue theorem.
+\end{problem}
+\begin{solution}
+  Choose a square contour $\gamma$ defined by
+  \begin{align*}
+    \gamma &= \gamma_1 + \gamma_2 + \gamma_3 + \gamma_4\\
+    \gamma_1 &= 1 + iy\\
+    \gamma_2 &= i-x\\
+    \gamma_3 &= -1-iy\\
+    \gamma_4 &= -i + x
+  \end{align*}
+  with $-1\leq x \leq 1$ and $-1\leq y\leq 1$. Then,
+  \begin{align*}
+    2\pi i \res\left( f;0 \right) &= \oint_{\gamma}^{} f(z)\:dz\\
+                                  &= \int_{\gamma_1}^{} f(z)\:dz + \int_{\gamma_2}^{} f(z)\:dz + \int_{\gamma_3}^{} f(z)\:dz + \int_{\gamma_4}^{} f(z)\:dz.
+  \end{align*}
+  We compute
+  \begin{align*}
+    \int_{\gamma_1}^{} f(z)\:dz &= \int_{-1}^{1} \frac{i}{\left( 1-e^{-1-iy} \right)^n}\:dy.
+    \intertext{Taking $u = e^{-1-iy}$, we get}
+                                &= -\int_{u(-1)}^{u(1)} \frac{1}{u\left( 1-u \right)^{n}}\:du\\
+                                &= -\int_{e^{-1+i}}^{e^{-1-i}} \frac{1}{e^{-1-iy}} + \frac{p\left(e^{-1-iy}\right)}{\left( 1-e^{-1-iy} \right)^{n}}\:dy,
+                                \intertext{where $p(u) = \sum_{k=1}^{n} {n\choose k} \left( -1 \right)^{k-1}u^{k-1}$.}
+    \int_{\gamma_2}^{} f(z)\:dz &= \int_{-1}^{1} \frac{-1}{\left( 1-e^{-i + x} \right)^{n}}\:dx.
+    \intertext{Taking $v = e^{-i + x}$}
+                                &= - \int_{v\left( -1 \right)}^{v\left( 1 \right)} \frac{1}{v} + \frac{p(v)}{\left( 1-v \right)^{n}}\:dv\\
+                                &= - \int_{e^{-1-i}}^{e^{1-i}} \frac{1}{e^{-i+x}} + \frac{p\left( e^{-i+x} \right)}{\left( 1-e^{-i + x} \right)^{n}}\:dx
+  \end{align*}
+\end{solution}
+\begin{problem}[Problem 2]
+  Evaluate
+  \begin{align*}
+    \int_{-\infty}^{\infty} \frac{\sin^2\left( x \right)}{x^2 + 1}\:dx &= \lim_{R\rightarrow\infty} \int_{-R}^{R} \frac{\sin^2\left( x \right)}{x^2 + 1}\:dx.
+  \end{align*}
+\end{problem}
+\begin{solution}
+  We compute
+  \begin{align*}
+    \int_{-R}^{R} \frac{\sin^2\left( x \right)}{x^2 + 1}\:dx &= \frac{1}{2}\int_{-R}^{R} \frac{1}{x^2 + 1}\:dx - \frac{1}{2} \int_{-R}^{R} \frac{\cos\left( 2x \right)}{x^2 + 1} \:dx.
+  \end{align*}
+  Calling the latter integral $I$, we take
+  \begin{align*}
+    f(z) &= \frac{e^{2iz}}{z^2 + 1},
+  \end{align*}
+  close the contour $\gamma$ in the upper half-plane with the half-circle $C_R = \set{Re^{i\theta} | 0 \leq \theta \leq \pi}$. This gives
+  \begin{align*}
+    \oint_{\gamma}^{} f(z)\:dz &= I + \int_{C_R}^{} f(z)\:dz\\
+                               &= I + \int_{0}^{\pi} \frac{e^{2iRe^{i\theta}}}{R^2e^{2i\theta} + 1}iRe^{i\theta}\:d\theta.
+  \end{align*}
+  Estimating the integrand on the second integral, we see that for $R > 1$,
+  \begin{align*}
+    \left\vert \frac{iRe^{i\theta}e^{2iRe^{i\theta}}}{R^2e^{2i\theta} + 1} \right\vert &\leq \frac{R}{R^2 - 1},
+  \end{align*}
+  whence the integral over $C_R$ approaches $0$ as $R\rightarrow\infty$. Therefore, by Cauchy's residue theorem,
+  \begin{align*}
+    \lim_{R\rightarrow\infty} \int_{-R}^{R} \frac{\cos\left( 2x \right)}{x^2 + 1}\:dx &= 2\pi i \res\left( f;i \right)\\
+                                  &= 2\pi i \lim_{z\rightarrow i} \frac{e^{2iz}}{\left( z-i \right)\left( z+i \right)}\\
+                                  &= \frac{\pi}{e^2}.
+  \end{align*}
+  Thus, we find that
+  \begin{align*}
+    \int_{-\infty}^{\infty} \frac{\sin^2\left( x \right)}{x^2 + 1}\:dx &= \frac{\pi}{2} - \frac{\pi}{2 e^2}.
+  \end{align*}
+\end{solution}
+\end{document}
