@@ -23,31 +23,52 @@
   For all $n\in \N$, find the residue of $f(z) = \left( 1-e^{-z} \right)^{n}$ at $z = 0$ via Cauchy's residue theorem.
 \end{problem}
 \begin{solution}
-  Choose a square contour $\gamma$ defined by
+  Choose a square contour $\gamma_R$ given by the rectangle with side length $2R$ and height going from $-\pi i$ to $\pi i$. This yields
   \begin{align*}
-    \gamma &= \gamma_1 + \gamma_2 + \gamma_3 + \gamma_4\\
-    \gamma_1 &= 1 + iy\\
-    \gamma_2 &= i-x\\
-    \gamma_3 &= -1-iy\\
-    \gamma_4 &= -i + x
+    2\pi i \res\left( f;0 \right) &= \oint_{\gamma_R}^{} f(z)\:dz\\
+                                  &= \int_{-R}^{R} f\left( x-i\pi \right)\:d\left( x-i\pi \right) + \int_{R}^{-R} f\left( x + i\pi \right)\:d\left( x + i\pi \right)\\
+                                  & + \int_{-\pi}^{\pi} f\left( R + iy \right)\:d\left( R + iy \right) + \int_{\pi}^{-\pi} f\left( -R + iy \right)\:d\left( -R + iy \right).
   \end{align*}
-  with $-1\leq x \leq 1$ and $-1\leq y\leq 1$. Then,
+  Expanding each of these integrals, we get
   \begin{align*}
-    2\pi i \res\left( f;0 \right) &= \oint_{\gamma}^{} f(z)\:dz\\
-                                  &= \int_{\gamma_1}^{} f(z)\:dz + \int_{\gamma_2}^{} f(z)\:dz + \int_{\gamma_3}^{} f(z)\:dz + \int_{\gamma_4}^{} f(z)\:dz.
+    \int_{-R}^{R} f\left( x-i\pi \right)\:d\left( x - i\pi \right) &= \int_{-R}^{R} \frac{1}{\left( 1 + e^{x} \right)^{n}}\:dx\\
+    \int_{R}^{-R} f\left( x + i\pi \right)\:d\left( x + i\pi \right) &= \int_{R}^{-R} \frac{1}{\left( 1 + e^{x} \right)^{n}}\:dx\\
+    \int_{\pi}^{-\pi} f\left( -R + iy \right)\:d\left( -R + iy \right) &= i \int_{\pi}^{-\pi} \frac{1}{\left( 1-e^{R - iy} \right)^{n}}\:dy\\
+    \int_{-\pi}^{\pi} f\left( R + iy \right)\:d\left( R + iy \right) &= i \int_{-\pi}^{\pi} \frac{1}{\left( 1 - e^{-R - iy } \right)^{n}}\:dy.
   \end{align*}
-  We compute
+  The first two integrals sum to zero. As for the third integral, we may compute
   \begin{align*}
-    \int_{\gamma_1}^{} f(z)\:dz &= \int_{-1}^{1} \frac{i}{\left( 1-e^{-1-iy} \right)^n}\:dy.
-    \intertext{Taking $u = e^{-1-iy}$, we get}
-                                &= -\int_{u(-1)}^{u(1)} \frac{1}{u\left( 1-u \right)^{n}}\:du\\
-                                &= -\int_{e^{-1+i}}^{e^{-1-i}} \frac{1}{e^{-1-iy}} + \frac{p\left(e^{-1-iy}\right)}{\left( 1-e^{-1-iy} \right)^{n}}\:dy,
-                                \intertext{where $p(u) = \sum_{k=1}^{n} {n\choose k} \left( -1 \right)^{k-1}u^{k-1}$.}
-    \int_{\gamma_2}^{} f(z)\:dz &= \int_{-1}^{1} \frac{-1}{\left( 1-e^{-i + x} \right)^{n}}\:dx.
-    \intertext{Taking $v = e^{-i + x}$}
-                                &= - \int_{v\left( -1 \right)}^{v\left( 1 \right)} \frac{1}{v} + \frac{p(v)}{\left( 1-v \right)^{n}}\:dv\\
-                                &= - \int_{e^{-1-i}}^{e^{1-i}} \frac{1}{e^{-i+x}} + \frac{p\left( e^{-i+x} \right)}{\left( 1-e^{-i + x} \right)^{n}}\:dx
+    \left\vert i \int_{-\pi}^{\pi} \frac{1}{\left( 1-e^{R + iy} \right)}\:dy \right\vert &\leq \frac{2\pi}{\left\vert 1-e^{R + iy} \right\vert^{n}}\\
+                                                                                         &\leq \frac{2\pi}{\left( e^{R} - 1 \right)^{n}}\\
+                                                                                         &\rightarrow 0
   \end{align*}
+  as $R\rightarrow\infty$. Finally, for the fourth integral, we observe that
+  \begin{align*}
+    \lim_{R\rightarrow\infty} \frac{1}{\left( 1-e^{-R - iy} \right)^{n}} &= 1,
+  \end{align*}
+  so our goal is to show that we can exchange limit and integral by showing that this convergence is uniform, in the sense that the sequence
+  \begin{align*}
+    \left( \frac{1}{\left( 1-e^{-k-iy} \right)^{n}} \right)_{k=1}^{\infty} \rightarrow 1
+  \end{align*}
+  uniformly. Towards this end, we observe that
+  \begin{align*}
+    \left\vert 1-\frac{1}{\left( 1-e^{-k-iy} \right)^n} \right\vert &= \left\vert \frac{\left( 1-e^{-k-iy} \right)^{n} - 1}{\left( 1-e^{-k-iy} \right)^{n}} \right\vert\\
+                                                                    &\leq \frac{\left\vert \left( 1-e^{-k-iy} \right)^n-1 \right\vert}{\inf_{-\pi\leq y \leq \pi} \left\vert 1-e^{-k-iy} \right\vert^n}\\
+                                                                    &= \frac{\left\vert \left( 1-e^{-k-iy} \right)^{n}-1 \right\vert}{\left\vert 1-e^{-k} \right\vert^{n}}.
+  \end{align*}
+  Observe that the numerator converges to $0$ in $k$ as $\left( 1-e^{-k-iy} \right)^{n}\xrightarrow{k\rightarrow\infty} 1$, whence there is some $K$ such that the above quantity is less than $\ve$ for arbitrary $\ve > 0$. In particular, for $k\geq K$, we have
+  \begin{align*}
+    \sup_{-\pi\leq y \leq \pi} \left\vert 1-\frac{1}{\left( 1-e^{-k-iy} \right)^{n}} \right\vert & < \ve,
+  \end{align*}
+  so that the convergence is uniform. In particular, this gives
+  \begin{align*}
+    2\pi i \res\left( f;0 \right) &= \lim_{R\rightarrow\infty} \int_{\gamma_R}^{} f(z)\:dz\\
+                                  &= \lim_{R\rightarrow\infty} i \int_{-\pi}^{\pi} \frac{1}{\left( 1-e^{-R-iy} \right)^{n}}\:dy\\
+                                  &= i \int_{-\pi}^{\pi} \lim_{R\rightarrow\infty} \frac{1}{\left( 1-e^{-R-iy} \right)^{n}}\:dy\\
+                                  &= i \int_{-\pi}^{\pi} \:dy\\
+                                  &= 2\pi i,
+  \end{align*}
+  so $\res\left( f;0 \right) = 1$.
 \end{solution}
 \begin{problem}[Problem 2]
   Evaluate
@@ -282,15 +303,81 @@
   \end{align*}
   Write $f(z) = \frac{z^3}{\left( z^2 + 1 \right)^2}e^{-2\pi i z \xi}$.\newline
 
-  Suppose $\xi \geq 0$. Let $\gamma_{R}$ be the square contour in the lower half-plane with side length $R$ sitting on the real axis. Then,
+  Suppose $\xi = 0$. Then, we seek to compute
   \begin{align*}
-    -2\pi i \res\left( f; -i\right) &= \int_{\gamma_R}^{} f(z)\:dz\\
-                                   &= \int_{-R}^{R} f(x)\:dx + \int_{0}^{R} f\left(R-iy\right)\:d\left( R - iy \right) + \int_{R}^{-R} f\left( x-iR \right)\:d\left( x - iR \right) + \int_{0}^{R} f\left( -R + iR + iy \right)\:d\left( -R-iR + iy \right)
+    \int_{-\infty}^{\infty} \frac{x^3}{\left( x^2 + 1 \right)^2}\:dx &= \lim_{R\rightarrow\infty} \int_{-R}^{R} \frac{x^3}{\left( x^2 + 1 \right)^2}\:dx.
+  \end{align*}
+  Since the integral in $R$ is an odd integrand over a symmetric interval, it follows that the principal value is $0$.\newline
+
+  Suppose $\xi > 0$. Let $\gamma_{R}$ be the square contour in the lower half-plane with side length $R$ sitting on the real axis. Then,
+  \begin{align*}
+    -2\pi i \res\left( f; -i\right) &= \oint_{\gamma_R}^{} f(z)\:dz\\
+                                   &= \int_{-R}^{R} f(x)\:dx + \int_{0}^{R} f\left(R-iy\right)\:d\left( R - iy \right)\\
+                                   &+ \int_{R}^{-R} f\left( x-iR \right)\:d\left( x - iR \right) + \int_{R}^{0} f\left( -R-iy \right)\:d\left( -R -iy \right).
   \end{align*}
   Writing each of the integrals not equal to the original integral, we get
   \begin{align*}
-    \int_{0}^{R} f\left( R-iy \right)\:d\left( R-iy \right) &= -i \int_{0}^{R} \frac{\left( R-iy \right)^3}{\left( \left( R-iy \right)^2 + 1 \right)^2}e^{-2\pi i \xi \left( R - iy \right)}\:dy\\
-    \int_{R}^{-R} f\left( x - iR \right)\:d\left( x-iR \right) &= 
+    \int_{0}^{R} f\left( R-iy \right)\:d\left( R-iy \right) &= -i \int_{0}^{R} \frac{\left( R-iy \right)^3}{\left( \left( R-iy \right)^2 + 1 \right)^2}e^{-2\pi i \xi \left( R - iy \right)}\:dy\tag{1}\\
+    \int_{R}^{-R} f\left( x - iR \right)\:d\left( x-iR \right) &= e^{-2\pi \xi R}\int_{R}^{-R} \frac{\left( x-iR \right)^3}{\left( \left( x-iR \right)^2 + 1 \right)^2} e^{-2\pi i \xi x}\:dx\tag{2}\\
+    \int_{R}^{0} f\left( -R-iy \right)\:d\left( -R-iy \right) &= -i\int_{R}^{0} \frac{\left( -R-iy \right)^3}{\left( \left( -R-iy \right)^2 + 1 \right)^2}e^{-2\pi i \xi \left( -R-iy \right)}\:dy\tag{3}
+  \end{align*}
+  Our goal now is to show that the remaining terms vanish. We start with (1), and observe that
+  \begin{align*}
+    \left\vert \int_{0}^{R} -i \frac{\left( R-iy \right)^3}{\left( \left( R-iy \right)^2 + 1 \right)^2}e^{-2\pi i \xi R}e^{-2\pi \xi y }\:dy \right\vert 
+    &\leq \frac{ \int_{0}^{R} e^{-2\pi \xi y}\:dy }{\inf_{0\leq y\leq R} \left\vert \left( R-iy \right) + \frac{2}{\left( R-iy \right)} + \frac{1}{\left( R-iy \right)^3} \right\vert}\\
+    &\leq \frac{ \frac{1}{2\pi \xi}\left( 1 - e^{-2\pi \xi R} \right)}{R - \frac{2}{R} - \frac{1}{R^3}}\\
+         &\rightarrow 0.
+  \end{align*}
+  Next, regarding (2), we have
+  \begin{align*}
+    \left\vert e^{-2\pi \xi R} \int_{R}^{-R} \frac{\left( x-iR \right)^3}{\left( \left( x-iR \right)^2 + 1\right)^2 } e^{-2\pi i \xi x}\:dx \right\vert\\
+    &\leq e^{-2\pi \xi R}\frac{ 2R }{\inf_{-R\leq x\leq R} \left\vert \left( x-iR \right) + \frac{2}{\left( x-iR \right)} + \frac{1}{\left( x-iR \right)^3} \right\vert}\\
+    &\leq e^{-2\pi \xi R} \frac{1}{1 - \frac{2}{R^2} - \frac{1}{R^4}}\\
+    &\rightarrow 0.
+  \end{align*}
+  Finally, (3) follows from the same argument as (1). Thus, we find that
+  \begin{align*}
+    \int_{-\infty}^{\infty} f(x)\:dx &= \lim_{R\rightarrow\infty} \oint_{\gamma_R}^{} f(z)\:dz\\
+                                     &= -2\pi i \res\left( f;-i \right)\\
+                                     &= -2\pi i \left( \diff{}{z}\left( \frac{z^3}{\left( z-i \right)^2}e^{-2\pi i\xi z } \right)\biggr\vert_{z=i} \right)\\
+                                     &= -2\pi i \left( \frac{3z^2}{\left( z-i \right)^2}e^{-2\pi i \xi z} - 2\frac{z^3}{\left( z-i \right)^3}e^{-2\pi i\xi z} - 2\pi i \xi\frac{z^3}{\left( z-i \right)^2}e^{-2\pi i \xi z} \right)\biggr\vert_{z=i}\\
+                                     &= -2\pi i \left( \frac{3\left( -i \right)^2}{\left( -2i \right)^2}e^{2\pi \xi} - 2\frac{\left( -i \right)^3}{\left( -2i \right)^3} e^{2\pi \xi} - 2\pi i \xi \frac{\left( -i \right)^3}{\left( -2i \right)^2}e^{2\pi \xi} \right)\\
+                                     &= -2\pi i \left( \frac{-3}{-4}e^{2\pi \xi} - 2 \frac{i}{8i}e^{2\pi \xi} - 2\pi i \xi \frac{i}{-4}e^{2\pi \xi} \right)\\
+                                     &= -2\pi i \left( \frac{1}{2} - \frac{1}{2}\pi \xi \right)e^{2\pi \xi}\\
+                                     &= i\pi \left( \pi\xi - 1 \right)e^{2\pi\xi}.
+  \end{align*}
+  Now, let $\xi < 0$. Then, we let $\gamma_R$ be the same square with side length $2R$, but this time contained in the \textit{upper} half-plane. This gives
+  \begin{align*}
+    2\pi i \res\left( f;i \right) &= \oint_{\gamma_R}^{} f(z)\:dz\\
+                                  &= \int_{-R}^{R} f(x)\:dx + \int_{0}^{R} f\left( R + iy \right)\:d\left( R + iy \right)\\
+                                  &+ \int_{R}^{-R} f\left( x + iR \right)\:d\left( x + iR \right) + \int_{R}^{0} f\left( -R + iy \right)\:d\left( -R + iy \right).
+  \end{align*}
+  Similarly, we write out the three integrals not equal to our desired result, and find
+  \begin{align*}
+    \int_{0}^{R} f\left( R + iy \right)\:d\left( R + iy \right) &= i\int_{0}^{R} \frac{\left( R + iy \right)^3}{\left( \left( R + iy \right)^2 + 1 \right)^2}e^{-2\pi i \xi \left( R + iy \right)}\:dy\\
+    \int_{R}^{-R} f\left( x + iR \right)\:d\left( x + iR \right) &= e^{2\pi \xi R}\int_{R}^{-R} \frac{\left( x + iR \right)^3}{\left( \left( x + iR \right)^2 + 1\right)^2}e^{-2\pi i x}\:dx\\
+    \int_{R}^{0} f\left( -R + iy \right)\:d\left( -R + iy \right) &= i\int_{R}^{0} \frac{\left( -R + iy \right)^3}{\left( \left( R + iy \right)^2 + 1 \right)^2}e^{-2\pi i \xi \left( -R + iy \right)}\:dy
+  \end{align*}
+  We use the same estimate process as with the case of $\xi > 0$.
+  \begin{align*}
+    \left\vert \int_{0}^{R} i \frac{\left( R + iy \right)^3}{\left( \left( R + iy \right)^2  + 1\right)^2}e^{-2\pi i \xi \left( R + iy \right)}\:dy \right\vert
+    &\leq \frac{1}{\inf_{0\leq y\leq R}\left\vert \left( R + iy \right) + \frac{2}{\left( R + iy \right)} + \frac{1}{\left( R + iy \right)^3} \right\vert} \int_{0}^{R} e^{2\pi \xi y}\:dy\\
+    &\leq \frac{1}{R - \frac{2}{R} - \frac{1}{R^3}} \left( -\frac{1}{2\pi \xi} + \frac{1}{2\pi \xi} e^{2\pi \xi R}\right)\\
+    &\rightarrow 0\\
+    \left\vert e^{2\pi \xi R}\int_{R}^{-R} \frac{\left( x + iR \right)^3}{}\:dx \right\vert
+    &\leq e^{2\pi \xi R}\frac{ 2R }{\inf_{-R\leq x\leq R} \left\vert \left( x+iR \right) + \frac{2}{\left( x+iR \right)} + \frac{1}{\left( x+iR \right)^3} \right\vert}\\
+    &\leq e^{2\pi \xi R} \frac{1}{1 - \frac{2}{R^2} - \frac{1}{R^4}}\\
+    &\rightarrow 0,
+  \end{align*}
+  and the third integral vanishes analogously to the first integral. Thus, we find that
+  \begin{align*}
+    \int_{-\infty}^{\infty} f(x)\:dx &= \lim_{R\rightarrow\infty} \int_{\gamma_R}^{} f(z)\:dz\\
+                                     &= 2\pi i\res\left( f;i \right)\\
+                                     &= 2\pi i \left( \diff{}{z}\left( \frac{z^3}{\left( z+i \right)^2}e^{-2\pi i \xi z} \right)\biggr\vert_{z=i} \right)\\
+                                     &= 2\pi i \left( \frac{3z^2}{\left( z+i \right)^2}e^{-2\pi i\xi z} - 2\frac{z^3}{\left( z+i \right)^3}e^{-2\pi i \xi z} - 2\pi i \xi \frac{z^3}{\left( z+i \right)^2}e^{-2\pi i\xi z} \right)\biggr\vert_{z=i}\\
+                                     &= 2\pi i \left( \frac{3\left( i \right)^2}{\left( 2i \right)^2}e^{2\pi \xi} - 2\frac{\left( i \right)^3}{\left( 2i \right)^3}e^{2\pi\xi} - 2\pi i \xi \frac{\left( i \right)^3}{\left( 2i \right)^2}e^{2\pi \xi} \right)\\
+                                     &= 2\pi i \left( \frac{-3}{-4}e^{2\pi \xi} - 2\frac{-i}{-8 i}e^{2\pi \xi} - 2\pi i \xi \frac{-i}{-4}e^{2\pi\xi} \right)\\
+                                     &= i\pi \left( \pi \xi - 1 \right)e^{2\pi\xi}.
   \end{align*}
 \end{solution}
 \end{document}
