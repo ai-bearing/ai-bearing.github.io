@@ -1115,5 +1115,48 @@ Equivalently, this means that for all surjections $M\xrightarrow{\pi}N\rightarro
     M \arrow[r, "\pi"] & N \arrow[r]                                                       & 0
     \end{tikzcd}
 \end{center}
-
+Our goal now is to determine exactly when an $R$-module is projective. As it turns out, there is a very tidy characterization.
+\begin{lemma}
+  Every free module is projective.
+\end{lemma}
+\begin{proof}
+  Let $F$ be a free $R$-module with basis $X$, and let $M\xrightarrow{\pi}N\rightarrow 0$ be a surjection of $R$-modules. Suppose we have a homomorphism $\varphi$ satisfying the following diagram.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBoAGAXVJADcBDAGwFcYkQAxEAX1PU1z5CKMsWp0mrdgDkefEBmx4CRcqTE0GLNohABZOfyVCiAJnXitU3eR7iYUAObwioAGYAnCAFsk5kDgQSGQS2uwAOuFoWIYgnj7BNIFIAMy87l6+iGoBQYghVjogkQweaAAWMdyU3EA
+    \begin{tikzcd}
+                       & F \arrow[d, "\varphi"] &   \\
+    M \arrow[r, "\pi"] & N \arrow[r]            & 0
+    \end{tikzcd}
+  \end{center}
+  Restricting $\varphi$ to $X$, we see that since $\pi$ is surjective, we may find $m_x\in M$ such that $\pi\left( m_x \right) = \varphi\left( x \right)$ for each $x$. Defining a set map $\widetilde{\varphi}\colon X\rightarrow M$ mapping $x\mapsto m_x$, we observe that there is then an $R$-module homomorphism $ \overline{\varphi}\colon F\rightarrow M $ uniquely extending $\widetilde{\varphi}$, by the universal property of free modules.
+\end{proof}
+\begin{theorem}[Characterization of Projective Modules]
+  An $R$-module $P$ is projective if and only if $P$ is a direct summand of a free module. That is, if and only if there exists a free $R$-module $F$ and an $R$-module $Q$ such that
+  \begin{align*}
+    F\cong P\oplus Q
+  \end{align*}
+  as an external direct sum.
+\end{theorem}
+We can show one direction right now.
+\begin{proof}[Proof of the Reverse Direction]
+  Suppose $F = P\oplus Q$ as an internal direct sum for some $R$-module $Q$ and a free $R$-module $P$. Then, $F$ is equipped with a projection map $\pi_P\colon F\rightarrow P$ taking $p\oplus q$ to $p$, and an inclusion map $\iota_P\colon P\hookrightarrow F$ mapping $p\mapsto p\oplus 0$. We then take the following diagram of homomorphisms, where $\varphi\colon P\rightarrow N$ is the homomorphism we want to extend to $g$.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZARgBpiBdUkANwEMAbAVxiRAAUQBfU9TXfIRRkATFVqMWbAHLdeIDNjwEiABlJjq9Zq0QgAsnL5LBRERvHape1UYX9lQkqVWXJukADFu4mFADm8ESgAGYAThAAtkjmIDgQSGQSOmwAOqloWHbhUYnU8UgAzDyhEdGI6nEJiElWHun0YWgAFlklIDnlACz51ZV1aRlYAPqc7Z1IPVV5IABGMGBQkwCc1Ax08wzsDqZ6YVj+zTggWu6DaNjZZZO9MWsbMFs7KnsHRyfJ1iDpAO5YsHgGLBgOkLlguB8GFgwB4oHQ4M0-D4uEA
+    \begin{tikzcd}
+                       & F \arrow[d, "\pi_P"] \arrow[dd, "\psi"', bend left=49] \arrow[ldd, "\widetilde{\psi}"', dashed] &   \\
+                       & P \arrow[d, "\varphi"]                                                                          &   \\
+    M \arrow[r, "g"] & N \arrow[r]                                                                                     & 0
+    \end{tikzcd}
+  \end{center}
+  Now, we observe that by definition, we have $g\circ \widetilde{\psi} = \varphi\circ \pi_P$, so we may define $ \widetilde{\varphi}\colon P\rightarrow M $ by taking
+  \begin{align*}
+    \widetilde{\varphi} &= \widetilde{\psi}\circ \iota_P.
+  \end{align*}
+  This maps $p\mapsto p\oplus 0\mapsto \widetilde{\psi}\left( p\oplus 0 \right) = \varphi\left( p \right)$.
+\end{proof}
+For the reverse direction, we need to be able to characterize when exactly a module is a direct sum of submodules.
+\begin{definition}
+  Let $f\colon M\rightarrow N$ be an $R$-module homomorphism. Then, we say $s\colon N\rightarrow M$ is a \textit{splitting} (or \textit{section}) if $f\circ s = \id_{N}$. In other words, a splitting is a right-inverse.
+\end{definition}
+We observe automatically that if $f$ has a splitting, then $f$ is surjective and $s$ is injective, by the equivalent characterization of surjective maps as those being with (necessarily injective) right-inverses.
 \end{document}
