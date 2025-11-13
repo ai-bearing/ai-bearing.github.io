@@ -1167,17 +1167,64 @@ In the Phragmén--Lindelöf method, we seek to find a particular $\ve$-dependent
   \item $\lim_{\ve\rightarrow 0} h_{\ve}(z) = 1$;
   \item there exists a \textit{bounded} $V\subseteq U$ such that $\left\vert fh_{\ve} \right\vert\leq M$ on $\partial V$ and on $U\setminus \overline{V}$.
 \end{itemize}
+\subsection{Rouché's Theorem Problems}%
+\begin{example}
+  We show that if $f$ and $g$ are holomorphic on a neighborhood of $B\left( 0,1 \right)$, and $f(z)$ has a simple zero at $z = 0$ and no other zero in $B\left( 0,1 \right)$, then $f_{\ve}(z) = f(z) + \ve g(z)$ has exactly one zero in $\D$ for sufficiently small $\ve$.\newline
+
+  To show this, we start by showing that the conditions of Rouché's Theorem are satisfied for both $f_{\ve}(z)$ and $f(z)$. It is clear from the fact that $f$ has no other zeros in $B\left( 0,1 \right)$ that $f$ has no zeros on $S\left( 0,1 \right)$, while we may find $\ve$ small enough such that
+  \begin{align*}
+    \left\vert f_{\ve}(z) \right\vert &\geq \left\vert f(z) \right\vert - \ve \left\vert g(z) \right\vert\\
+                                      &> 0
+  \end{align*}
+  by selecting $\ve$ such that $\ve \inf_{z\in S\left( 0,1 \right)}\left\vert g(z) \right\vert < \inf_{z\in S\left( 0,1 \right)}\left\vert f(z) \right\vert$. Thus, if we set $m_1 = \inf_{z\in S\left( 0,1 \right)}\left\vert f(z) \right\vert$ and $m_2 = \sup_{z\in S\left( 0,1 \right)}\left\vert g(z) \right\vert$, we have for $\ve < \frac{m_1}{m_2}$ and all $z\in S\left( 0,1 \right)$,
+  \begin{align*}
+    \left\vert f_{\ve}(z) - f(z) \right\vert &\leq \left\vert \ve g(z) \right\vert\\
+                                             &\leq \ve m_2\\
+                                             &< m_1\\
+                                             &< \left\vert f(z) \right\vert,
+  \end{align*}
+  whence $f(z)$ and $f_{\ve}(z)$ have the same number of zeros in $ \D $ counted with multiplicity.
+\end{example}
 \subsection{Residue Integrals}%
 \begin{example}
-  We wish to evaluate
+  We will evaluate
   \begin{align*}
-    I &= \int_{0}^{2\pi} \frac{1}{\left( 3 + \sin\left( \theta \right) \right)^2}\:d\theta,
+    I &= \int_{0}^{\infty} \frac{1}{1 + x^{n}}\:dx
   \end{align*}
-  where $a > b > 0$ are real numbers. Towards this end, we let $z = e^{i\theta}$. Then, $dz = ie^{i\theta}d\theta$, or $d\theta = \frac{1}{iz}dz$. Therefore, we get
+  via contour integration. Toward this end, let $f(z) = \frac{1}{1 + z^{n}}$. We observe that $z^{n} + 1$ has roots for $e^{i\theta}$ at values $\theta = \frac{\pi + 2\pi k}{n}$ for $0\leq k < n$.\newline
+
+  We take the closed contour $\gamma_R$ given by
   \begin{align*}
-    I &= \oint_{S^{1}}^{} \frac{1}{\left( 3 + \frac{1}{2i}\left( z + \frac{1}{z} \right) \right)^2} \frac{1}{iz}\:dz\\
-      &= \oint_{S^{1}}^{} \frac{}{\left( 3 + \frac{1}{2i}\left( \frac{z^2 + 1}{z} \right) \right)^2}\frac{1}{iz}\:dz\\
-      &= 
+    \oint_{\gamma_R}^{} f(z)\:dz &= \int_{0}^{R} f(x)\:dx + \int_{0}^{\frac{2\pi}{n}} f\left( Re^{i\theta} \right)\:d\left( Re^{i\theta} \right) + \int_{R}^{0} f\left( xe^{i\left( 2\pi/n \right)} \right)\:d\left( xe^{i\left( 2\pi/n \right)} \right).
+  \end{align*}
+  The left-hand side encloses the residue of $f$ at $e^{i\pi/n}$, so by the Residue Theorem, since $f$ has a simple pole at $e^{i\pi/n}$,
+  \begin{align*}
+    \oint_{\gamma_R}^{} f(z)\:dz &= 2\pi i \res\left( f;e^{i\pi/n} \right)\\
+                                 &= 2\pi i \frac{1}{n\left( e^{i\pi/n} \right)^{n-1}}\\
+                                 &= 2\pi i \frac{1}{n\left( e^{i\frac{\left( n-1 \right)\pi}{n}} \right)}\\
+                                 &= \frac{2\pi}{n} \frac{e^{i\pi/2}}{e^{i\pi\frac{n-1}{n}}}\\
+                                 &= \frac{2\pi}{n} e^{i\frac{\pi}{n} - \frac{\pi}{2}}.
+  \end{align*}
+  We now observe that the original integral expression equals
+  \begin{align*}
+    \oint_{\gamma_R}^{} f(z)\:dz &= \int_{0}^{R} \frac{1}{1 + x^{n}}\:dx + \int_{0}^{\frac{2\pi}{n}} \frac{1}{1 + R^{n}e^{in\theta}}iRe^{i\theta}\:d\theta + e^{i\left( 2\pi/n \right)}\int_{R}^{0} \frac{1}{1 + x^{n}}\:dx\\
+                                 &= \left( 1-e^{i\left( 2\pi/n \right)} \right) I + \int_{0}^{2\pi/n} \frac{1}{1 + R^{n}e^{in\theta}}iRe^{i\theta}\:d\theta.
+  \end{align*}
+  Estimating the second integral, we get for $R > 1$,
+  \begin{align*}
+    \left\vert \int_{0}^{R} \frac{iRe^{i\theta}}{1 + R^{n}e^{in\theta}}\:d\theta \right\vert &\leq \frac{\frac{2\pi}{n}R}{R^{n}-1},
+  \end{align*}
+  so that the integral tends to $0$ as $R\rightarrow\infty$. Thus,
+  \begin{align*}
+    2\pi i \res\left( f;e^{i\pi/n} \right) &= \lim_{R\rightarrow\infty} \oint_{\gamma_R}^{} f(z)\:dz\\
+                                           &= \left( 1-e^{i\left( 2\pi/n \right)} \right) I,
+  \end{align*}
+  whence
+  \begin{align*}
+    I &= \frac{2\pi}{n} \frac{e^{i\left( \frac{\pi}{n}-\frac{\pi}{2} \right)}}{1-e^{i\left( 2\pi/n \right)}}\\
+      &= \frac{2\pi}{n} \frac{e^{-i\frac{\pi}{2}}}{e^{-i\pi/n} - e^{i\pi/n}}\\
+      &= \frac{2\pi}{n} \frac{-i}{-2i \sin\left( \frac{\pi}{n} \right)}\\
+      &= \frac{\pi}{n\sin\left( \frac{\pi}{n} \right)}.
   \end{align*}
 \end{example}
 \section{Old Exams}%
