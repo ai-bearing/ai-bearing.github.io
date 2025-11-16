@@ -1204,4 +1204,117 @@ Now, we can finally prove the forward direction of the characterization.
 \end{proof}
 \section{Groups}%
 We begin our discussion of group theory with group actions.
+\begin{definition}
+  Let $X$ be a set, and let $G$ be a group. A (left) \textit{$G$-action} on $X$ is a map
+  \begin{align*}
+    \mu\colon G\times X &\rightarrow X\\
+    \left( g,x \right) &\mapsto g\cdot x
+  \end{align*}
+  that satisfies
+  \begin{itemize}
+    \item $e\cdot x = x$ for all $x\in X$
+    \item $g\cdot \left( h\cdot x \right) = \left( gh \right)\cdot x$.
+  \end{itemize}
+  We call $X$ a $G$-set.
+\end{definition}
+\begin{definition}
+  A group action induces a homomorphism
+  \begin{align*}
+    \rho\colon G&\rightarrow \sym\left( X \right)\\
+    g &\mapsto \pi_g,
+  \end{align*}
+  where $\pi_g\left( x \right) = g\cdot x$. This is known as the \textit{permutation representation} of the action.
+\end{definition}
+\begin{definition}
+  We say the action of $G$ on $X$ is \textit{faithful} if the induced map $\rho$ is injective.
+\end{definition}
+\begin{remark}
+  Any action $\rho$ admits a faithful action by ``modding out'' by the kernel,
+  \begin{align*}
+    \ker\left( \rho \right) &\coloneq \set{g\in G | g\cdot x = x\text{ for all }x\in X}.
+  \end{align*}
+  Then, the action of $G/\ker\left( \rho \right)$ on $X$ is given by $\left( g\ker\left( \rho \right) \right)\cdot x = g\cdot x$.
+\end{remark}
+\begin{definition}
+  For an element $x\in X$, we define the \textit{stabilizer} of $x$ to be
+  \begin{align*}
+    \stab_G(x) &= \set{g\in G | g\cdot x = x}.
+  \end{align*}
+\end{definition}
+\begin{definition}
+  For $x\in X$, the \textit{orbit} of $x$ is given by
+  \begin{align*}
+    G\cdot x &= \set{g\cdot x | g\in G}.
+  \end{align*}
+\end{definition}
+\begin{definition}
+  An action is called \textit{transitive} if there is one orbit for the action.
+\end{definition}
+The orbits in fact partition $X$ under the equivalence relation $x\sim y$ whenever there is $g\in G$ such that $g\cdot x = y$. The set of all distinct orbits is then denoted
+\begin{align*}
+  X/G &= \set{G\cdot x_i | i\in I}\\
+      &= \bigsqcup_{i\in I} G\cdot x_i.
+\end{align*}
+\begin{lemma}[Orbits and Stabilizers]
+  Let $x\in X$ be fixed. There exists a bijection between the set of all left cosets $G/\stab_G(x)$ and the orbit $G\cdot x$. In particular, if $X$ and $G$ are finite, then $\left\vert G\cdot x \right\vert = \left[ G:\stab_G(x) \right]$.
+\end{lemma}
+\begin{proof}
+  Consider the map $f_x\colon G\rightarrow G\cdot x$ given by $g\mapsto g\cdot x$. By definition of the orbit, $f_x$ is necessarily surjective. For $g\in G$ and $h\in \stab_G(x)$, we observe that
+  \begin{align*}
+    f_x\left( gh \right) &= gh\cdot x\\
+                         &= g\cdot \left( h\cdot x \right)\\
+                         &= g\cdot x\\
+                         &= f_x\left( g \right).
+  \end{align*}
+  Therefore, by the first isomorphism theorem, $f_x$ induces a well-defined map $ \overline{f_x}\colon G/\stab_G(x)\rightarrow G\cdot x $ that is surjective. We claim that $ \overline{f_x} $ is in fact injective.\newline
+
+  Suppose $f_x\left( g_1 \right) = f_x\left( g_2 \right)$. Then, $g_1\cdot x = g_2\cdot x$, or that $g_2^{-1}g_1\cdot x = x$, meaning that $g_2^{-1}g_1\in \stab_G(x)$, or that the cosets $g_1\stab_G(x) = g_2\stab_G(x)$.
+\end{proof}
+\begin{corollary}\hfill
+  Let $G$ be a finite group acting on a finite set $X$, and let $\set{x_1,\dots,x_r}$ be distinct representatives for $X/G$.
+  \begin{enumerate}[(i)]
+    \item 
+      \begin{align*}
+        \left\vert X \right\vert &= \sum_{i=1}^{r} \left\vert G\cdot x_i \right\vert\\
+                                 &= \sum_{i=1}^{r} \left[ G:\stab_G\left(x_i\right) \right]\\
+                                 &= \sum_{i=1}^{r} \frac{\left\vert G \right\vert}{\left\vert \stab_G\left(x_i\right) \right\vert}.
+      \end{align*}
+    \item 
+      \begin{align*}
+        \left\vert G \right\vert &= \left\vert G\cdot x \right\vert \left\vert \stab_G(x) \right\vert
+      \end{align*}
+      for all $x\in X$.
+  \end{enumerate}
+\end{corollary}
+\subsection{Canonical Examples of Group Actions}%
+\begin{example}[Symmetric Polynomials]
+  Let $R = F\left[ x_1,\dots,x_n \right]$. We let $S_n$ act on $R$ by permuting the indices, given by
+  \begin{align*}
+    \sigma\cdot x_i &= x_{\sigma(i)}\\
+    \sigma\cdot k &= k
+  \end{align*}
+  for all $x_i$ and all $k\in F$. We claim that this is a faithful action.\newline
+
+  If $\sigma\in S_n$ is such that $\sigma\in \ker\left( \rho \right)$, then $\sigma\cdot f\left( x_1,\dots,x_n \right) = f\left( x_1,\dots,x_n \right)$ for all $f\in F\left[ x_1,\dots,x_n \right]$. In particular, this means that $\sigma\cdot x_i = x_i$ for all $i$, and $\sigma\cdot k = k$, whence $\sigma\left( i \right) = i$ for all $i$, so $\sigma = e$.\newline
+
+  Therefore, we get the injective group homomorphism $\rho\colon S_n\rightarrow \sym\left( R \right)$. In this case, every $\rho\left( \sigma \right)\colon R\rightarrow R$ is in fact a ring automorphism. We say that $S_n$ acts on $R$ by ring automorphisms.
+  \begin{definition}
+    The fixed points of the action $\rho\colon S_n\rightarrow \sym\left( R \right)$ are known as the \textit{symmetric polynomials}.
+  \end{definition}
+  \begin{definition}[Elementary Symmetric Polynomials]
+    The elementary symmetric polynomials are defined as follows.
+    \begin{align*}
+      s_1 &= x_1 + \cdots + x_n\\\
+      s_2 &= \sum_{i < j}x_ix_j\\
+      s_3 &= \sum_{i<j<k}x_ix_jx_k\\
+          &\vdots\\
+      s_n &= x_1\cdots x_n.
+    \end{align*}
+  \end{definition}
+  The fundamental theorem of symmetric polynomials holds that every symmetric polynomial $f\in F\left[ x_1,\dots,x_n \right]$ has a unique expression as $g\left( s_1,\dots,s_n \right)$. In other words,
+  \begin{align*}
+    F\left[ x_1,\dots,x_n \right]^{S_n} &= F\left[ s_1,\dots,s_n \right].
+  \end{align*}
+  A version of this can in fact be proven using Galois theory, but we will prove it using a more ``pedestrian'' approach. 
+\end{example}
 \end{document}
