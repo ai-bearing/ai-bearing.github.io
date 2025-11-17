@@ -35,6 +35,82 @@
   Let $\mathcal{F} = \set{f\in H\left( \D \right) | \img\left( f \right)\subseteq \D}$. Fix $z_0\in \D$. Show that there exists a holomorphic function $g\colon \D\rightarrow \C$ with $\img\left( g \right)\subseteq \D$, $\left\vert g'\left( z_0 \right) \right\vert = \max_{f\in \mathcal{F}}\left\vert f'\left( z_0 \right) \right\vert$, and $g\left( z_0 \right) = 0$.
 \end{problem}
 \begin{solution}
-  From Montel's Theorem, we know that the family $\mathcal{F}$ is normal. 
+  From Montel's Theorem, we know that the set $\mathcal{F}$ is normal, meaning that $ \overline{\mathcal{F}} $ is compact in $H\left( \D \right)$.\newline
+
+  Now, we start by showing that differentiation is a continuous operation. Towards this end, we define the exhaustion
+  \begin{align*}
+    K_m &= \set{B\left( 0,\frac{m}{m+1} \right) | m\in \N},
+  \end{align*}
+  and observe that, by the extended maximum modulus principle, for any functions $f_1,f_2\in \D$,
+  \begin{align*}
+    \sup_{z\in K_m}\left\vert f_1(z) - f_2(z) \right\vert &= \sup_{\left\vert z \right\vert = \frac{m}{m+1}} \left\vert f_1(z)-f_2(z) \right\vert.
+  \end{align*}
+  Furthermore, we then observe that by the Cauchy estimate,
+  \begin{align*}
+    \left\vert f_1'(z) - f_2'(z) \right\vert &= \left\vert \diff{}{z}\left( f_1(z)-f_2(z) \right) \right\vert\\
+                                             &\leq \frac{\left( m+1 \right)}{m}\sup_{\left\vert z \right\vert = \frac{m}{m+1}} \left\vert f_1(z)-f_2(z) \right\vert\\
+                                             &= \frac{m+1}{m} \norm{f_1-f_2}_{K_m},
+  \end{align*}
+  whence
+  \begin{align*}
+    \norm{f_1'(z) - f_2'(z)}_{K_m} &\leq \frac{m+1}{m} \norm{f_1 - f_2}_{K_m}.
+  \end{align*}
+  Therefore, we observe that
+  \begin{align*}
+    \norm{f_1'-f_2'}_{H\left( \D \right)} &= \sum_{m=1}^{\infty}2^{-m} \norm{f_1' - f_2'}_{K_m}\\
+                                          &\leq \sum_{m=1}^{\infty} 2^{-m} \norm{f_1 - f_2}_{K_m} + \sum_{m=1}^{\infty} \frac{1}{m}2^{-m}\norm{f_1-f_2}_{K_m}\\
+                                          &\leq 2\sum_{m=1}^{\infty} 2^{-m}\norm{f_1-f_2}_{K_m}\\
+                                          &= 2\norm{f_1-f_2}_{H\left( \D \right)},
+  \end{align*}
+  meaning that differentiation is $2$-Lipschitz, hence continuous. Additionally, since both evaluation and the modulus are continuous, we observe then that the map
+  \begin{align*}
+    s\colon \overline{\mathcal{F}} &\rightarrow \R\\
+    f &\mapsto \left\vert f'\left( z_0 \right) \right\vert
+  \end{align*}
+  is a continuous map whose domain is a compact space, so there is some $g\in \overline{\mathcal{F}}$ such that $\left\vert g'\left( z_0 \right) \right\vert = \sup_{f\in \mathcal{F}} \left\vert f'\left( z_0 \right) \right\vert$.\newline
+
+  Now, we observe that $g\left( \D \right)\subseteq \overline{\D}$, and that since the map
+  \begin{align*}
+    B_1(z) &= \frac{z-z_0}{1- \overline{z_0}z}
+  \end{align*}
+  is contained in $\mathcal{F}$ (as was established on a previous homework assignment) with $\left\vert B_1'\left( z_0 \right) \right\vert \geq 1$, it follows that $\left\vert g'\left( z_0 \right) \right\vert\geq 1$, meaning that $g$ is a nonconstant holomorphic function, hence $g\left( \D \right)\subseteq \D$ by the open mapping principle.\newline
+
+  We claim now that $g\left( z_0 \right) = 0$. Suppose this were not the case, meaning that there is some $0 < r < 1$ such that $\left\vert g\left( z_0 \right) \right\vert = r$. We have established already that $g\left( z_0 \right) \in \D$. The map
+  \begin{align*}
+    h\left( z \right) &= \frac{g\left( z \right)-g\left( z_0 \right)}{1- \overline{g\left( z_0 \right)}g\left( z \right)},
+  \end{align*}
+  is thus the composition of $g$ with the function
+  \begin{align*}
+    B_2\left( z \right) &= \frac{z-g\left( z_0 \right)}{1- \overline{g\left( z_0 \right)}z},
+  \end{align*}
+  and since both $g$ and $B_2$ map $\D$ to $\D$, we have $h = B_2\circ g$ is a holomorphic function that maps maps $\D$ to $\D$, whence $h\in \mathcal{F}$. Yet,
+  \begin{align*}
+    \left\vert h'\left( z_0 \right) \right\vert &= \left\vert g'\left( z_0 \right) \right\vert\frac{1}{1-\left\vert g\left( z_0 \right) \right\vert^2}\\
+                                                &= \left\vert g'\left( z_0 \right) \right\vert\frac{1}{1-r^2},
+  \end{align*}
+  implying that $\left\vert h'\left( z_0 \right) \right\vert > \left\vert g'\left( z_0 \right) \right\vert$, contradicting the maximality of $\left\vert g'\left( z_0 \right) \right\vert$. Thus, it must be the case that $g\left( z_0 \right) = 0$.
+\end{solution}
+\begin{problem}[Problem 3]
+  Let $\left( a_n \right)_n$ be a sequence of nonnegative real numbers such that the radius of convergence of
+  \begin{align*}
+    \sum_{n=0}^{\infty} a_nz^{n}
+  \end{align*}
+  is at least $1$. Let
+  \begin{align*}
+    \mathcal{F} &\coloneq \bigcap_{n=0}^{\infty} \set{f\in H\left( \D \right) | \left\vert \frac{f^{(n)}(0)}{n!} \right\vert \leq a_n}.
+  \end{align*}
+  Show that $\mathcal{F}$ is a normal family.
+\end{problem}
+\begin{problem}[Problem 5]
+  Let $\left( f_n \right)_n$ be a sequence of holomorphic functions from $\D$ to $\C$ that is locally bounded, and suppose there exists a holomorphic function $f\colon \D\rightarrow \C$ such that the set $\set{z\in \D | \lim_{n\rightarrow\infty}f_n(z) = f(z)}$ has a limit point in $\D$. Show that $\left( f_n \right)_n$ converges uniformly on compact sets to $f$.
+\end{problem}
+\begin{solution}
+  Since $\left( f_n \right)_n$ is locally bounded, it follows that the family $\set{f_n | n\in \N}$ is a normal family, by Montel's theorem. In particular, this means that for any subsequence $\left( f_{n_k} \right)_k$, there is a subsequence of $\left( n_k \right)_k$, which we call $\left( n_{k_j} \right)_j$ and a holomorphic function $g_k\colon \D\rightarrow \C$ such that
+  \begin{align*}
+    \left( f_{n_{k_j}} \right)_j \rightarrow g_k
+  \end{align*}
+  on compact subsets. Yet, since uniform convergence on compact subsets implies pointwise convergence, we have that $\set{z\in \D | g_k(z) = f(z)}$ has an accumulation point in $\D$, whence each of the $g_k$ are equal to $f$ by the identity theorem.\newline
+
+  Now, if it were not the case that $\left( f_n \right)_n\rightarrow f$ uniformly on compacts, then we would be able to find some subsequence $\left( f_{n_k} \right)_k$ with $\norm{f_{n_{k}} - f}\geq \ve_0$ for some $\ve_0 > 0$ and all $k$. Yet, since this is a subsequence of $\left( f_n \right)_n$, it admits a subsequence converging to $f$, contradicting the assertion that $\norm{f_{n_k} - f}\geq \ve_0$ for all $k$.
 \end{solution}
 \end{document}
