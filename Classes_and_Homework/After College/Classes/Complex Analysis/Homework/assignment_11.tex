@@ -23,13 +23,26 @@
   Let $U\subseteq \C$ be a region, and let $V\coloneq \set{re^{i\theta}\in \C | -\pi/4 < \theta < \pi/4,r > 0}$. Fix $z_0\in U$, and let $\mathcal{F} \coloneq \set{f\in H\left( U \right) | f\left( z_0 \right) = 1, \img\left( f \right) \subseteq V}$. Show that $\mathcal{F}$ is normal.
 \end{problem}
 \begin{solution}
-  We observe that a function $f\in H\left( U \right)$ if and only if $f\left( z_0 \right) = 1$ and $\img\left( f \right)\subseteq V$, or equivalently, that $e^{i\pi/4}f\left( z_0 \right) = e^{i\pi/4}$ and $\img\left( f \right)$ is a subset of the upper half-plane. Now, by composing with the Cayley Transform, $q(z) = \frac{z-i}{z+i}$, we find that the family
+  We observe that a function $f\in H\left( U \right)$ if and only if $f\left( z_0 \right) = 1$ and $\img\left( f \right)\subseteq V$, or equivalently, that $e^{i\pi/4}f\left( z_0 \right) = e^{i\pi/4}$ and $\img\left( e^{i\pi/4}f \right)$ is a subset of the upper half-plane. In particular, this means that we seek to establish the normality of the family
   \begin{align*}
-    \mathcal{G} &= \set{q\left( e^{i\pi/4}f \right) | f\in \mathcal{F}}
+    \mathcal{G} &= \set{f\in H\left( U \right) | \img(f)\subseteq \mathbb{H},f\left( z_0 \right) = e^{i\pi/4}}.
   \end{align*}
-  is now locally bounded family of holomorphic functions (in fact, it is globally bounded, with every function in $\mathcal{G}$ being bounded above by $1$).\newline
-
-  Let $\left( f_n \right)_n\subseteq \mathcal{F}$. We observe then that $\left( q\left( e^{i\pi/4}f_n \right) \right)_n$ is a sequence in $\mathcal{G}$, meaning that there is a subsequence $\left( q\left( e^{i\pi/4}f_{n_k} \right) \right)_k\rightarrow g\colon U\rightarrow \D$ for some holomorphic function $g\colon U\rightarrow \D$. Since the Cayley Transform has a holomorphic inverse, it follows that $\left( f_{n_k} \right)_k\rightarrow e^{-i\pi/4}q^{-1}\circ g\colon U\rightarrow \C$ is a subsequence of $\left( f_n \right)_n$ that converges on compact subsets to a holomorphic function, hence $\mathcal{F}$ is normal.
+  Toward this end, we use the Cayley transform, $q(z) = \frac{z-i}{z+i}$ to conformally map the upper half-plane to the unit disk, establishing that the family
+  \begin{align*}
+    \mathcal{D} &= \set{q\circ g | g\in \mathcal{G}}
+  \end{align*}
+  is locally bounded (indeed, globally bounded by $1$). Furthermore, every element of $\mathcal{D}$ has the property that
+  \begin{align*}
+    q\circ f \left( z_0 \right) &= \frac{e^{i\pi/4} - i}{e^{i\pi/4} + i}\\
+                                &\in \D.
+  \end{align*}
+  Now, let $\left( f_n \right)_n\subseteq \mathcal{F}$. Then, $g_n\coloneq e^{i\pi/4}f_n$ is a sequence in $\mathcal{G}$, and $h_n\coloneq q\circ g_n$ is a sequence in $\mathcal{D}$. Since $\mathcal{D}$ is normal, there is a subsequence $\left( h_{n_k} \right)_k\rightarrow h\colon U\rightarrow \overline{\D}$ satisfying $h\left( z_0 \right) = \frac{e^{i\pi/4}-i}{e^{i\pi/4} + i}$, meaning that $h$ is a holomorphic function mapping $U\rightarrow \D$. Since $q$ and multiplication by $e^{i\pi/4}$ are conformal maps on their respective domains, it then follows that
+  \begin{align*}
+    \left( f_{n_k} \right)_k &= \left( e^{-i\pi/4}q^{-1}\circ h_{n_k} \right)_k\\
+                             &\rightarrow e^{-i\pi/4}q^{-1}\circ h\\
+                             &\in H\left( U \right),
+  \end{align*}
+  meaning that $\mathcal{F}$ is a normal family.
 \end{solution}
 \begin{problem}[Problem 2]
   Let $\mathcal{F} = \set{f\in H\left( \D \right) | \img\left( f \right)\subseteq \D}$. Fix $z_0\in \D$. Show that there exists a holomorphic function $g\colon \D\rightarrow \C$ with $\img\left( g \right)\subseteq \D$, $\left\vert g'\left( z_0 \right) \right\vert = \max_{f\in \mathcal{F}}\left\vert f'\left( z_0 \right) \right\vert$, and $g\left( z_0 \right) = 0$.
@@ -37,58 +50,63 @@
 \begin{solution}
   From Montel's Theorem, we know that the set $\mathcal{F}$ is normal, meaning that $ \overline{\mathcal{F}} $ is compact in $H\left( \D \right)$.\newline
 
-  Now, we start by showing that differentiation is a continuous operation. Towards this end, we define the exhaustion
+  Now, we start by showing that the family 
   \begin{align*}
-    K_m &= \set{B\left( 0,\frac{m}{m+1} \right) | m\in \N},
+    \mathcal{F}' &= \set{f' | f\in \mathcal{F}}
   \end{align*}
-  and observe that, by the extended maximum modulus principle, for any functions $f_1,f_2\in \D$,
+  is normal, by showing that it is locally bounded. Let $z\in \D$, let $B\left( z,r \right)\subseteq \D$, and let $m = \sup_{f\in \mathcal{F}} \norm{f}_{B\left( z,r \right)}$. Note that by the extended maximum modulus principle,
   \begin{align*}
-    \sup_{z\in K_m}\left\vert f_1(z) - f_2(z) \right\vert &= \sup_{\left\vert z \right\vert = \frac{m}{m+1}} \left\vert f_1(z)-f_2(z) \right\vert.
+    \sup_{z\in B\left( z,r \right)} \left\vert f(z) \right\vert &= \sup_{z \in S\left( z,r \right)}\left\vert f(z) \right\vert.
   \end{align*}
-  Furthermore, we then observe that by the Cauchy estimate,
+  For a given $f\in \mathcal{F}$, Cauchy's estimate gives
   \begin{align*}
-    \left\vert f_1'(z) - f_2'(z) \right\vert &= \left\vert \diff{}{z}\left( f_1(z)-f_2(z) \right) \right\vert\\
-                                             &\leq \frac{\left( m+1 \right)}{m}\sup_{\left\vert z \right\vert = \frac{m}{m+1}} \left\vert f_1(z)-f_2(z) \right\vert\\
-                                             &= \frac{m+1}{m} \norm{f_1-f_2}_{K_m},
+    \left\vert f'(z) \right\vert &\leq \frac{1}{r}\sup_{\left\vert \xi - z \right\vert = r} \left\vert f(z) \right\vert\\
+                                 &= \frac{1}{r} \sup_{z\in S\left( z,r \right)} \left\vert f(z) \right\vert\\
+                                 &\leq \frac{m}{r},
   \end{align*}
-  whence
+  meaning in particular that
   \begin{align*}
-    \norm{f_1'(z) - f_2'(z)}_{K_m} &\leq \frac{m+1}{m} \norm{f_1 - f_2}_{K_m}.
+    \sup_{f'\in \mathcal{F}'} \left\vert f'(z) \right\vert &\leq \frac{m}{r},
   \end{align*}
-  Therefore, we observe that
+  whence $\mathcal{F}'$ is locally bounded. Thus, by Montel's Theorem, it follows that $\mathcal{F}'$ is normal. Since both evaluation and the modulus are continuous operations, we observe then that the map
   \begin{align*}
-    \norm{f_1'-f_2'}_{H\left( \D \right)} &= \sum_{m=1}^{\infty}2^{-m} \norm{f_1' - f_2'}_{K_m}\\
-                                          &\leq \sum_{m=1}^{\infty} 2^{-m} \norm{f_1 - f_2}_{K_m} + \sum_{m=1}^{\infty} \frac{1}{m}2^{-m}\norm{f_1-f_2}_{K_m}\\
-                                          &\leq 2\sum_{m=1}^{\infty} 2^{-m}\norm{f_1-f_2}_{K_m}\\
-                                          &= 2\norm{f_1-f_2}_{H\left( \D \right)},
+    s\colon \overline{\mathcal{F}'} &\rightarrow \R\\
+    f' &\mapsto \left\vert f'\left( z_0 \right) \right\vert
   \end{align*}
-  meaning that differentiation is $2$-Lipschitz, hence continuous. Additionally, since both evaluation and the modulus are continuous, we observe then that the map
+  is a continuous map whose domain is a compact space, so there is some $h\in \overline{\mathcal{F}'}$ such that 
   \begin{align*}
-    s\colon \overline{\mathcal{F}} &\rightarrow \R\\
-    f &\mapsto \left\vert f'\left( z_0 \right) \right\vert
+    \left\vert h\left( z_0 \right) \right\vert = \sup_{f\in \mathcal{F}} \left\vert f'\left( z_0 \right) \right\vert
   \end{align*}
-  is a continuous map whose domain is a compact space, so there is some $g\in \overline{\mathcal{F}}$ such that $\left\vert g'\left( z_0 \right) \right\vert = \sup_{f\in \mathcal{F}} \left\vert f'\left( z_0 \right) \right\vert$.\newline
+  Since $\D$ is simply connected, there is some holomorphic antiderivative for $h$, given by $g\in H\left( \D \right)$. We claim that it must be the case that $g\in \overline{\mathcal{F}}$. Since $h\in \overline{\mathcal{F}'}$, there is some sequence of function $\left( f_n' \right)_{n}\rightarrow h = g'$ uniformly on compacts. Fix an exhaustion $\left( K_m \right)_m$ given by
+  \begin{align*}
+    K_m &= B\left( 0,\frac{m}{m+1} \right).
+  \end{align*}
+  Then, we have $tz\in K_m$ for all $z\in K_m$ and all $0 \leq t \leq 1$. In particular, this means that
+  \begin{align*}
+    \left\vert f_n(z) - g(z) \right\vert &= \left\vert \int_{0}^{1} z \left( f_n'(tz)- g'(tz)\right)\:dt \right\vert\\
+                                         &\leq \sup_{w\in K_m} \left\vert w \right\vert \left\vert f_n'(w) - g'(w)  \right\vert\\
+                                         &\leq \sup_{w\in K_m} \left\vert f_n'(w) - g'(w) \right\vert\\
+                                         &= \norm{f_n' - g'}_{K_m},
+  \end{align*}
+  so it follows that $\norm{f_n - g}_{K_m} \leq \norm{f_n' - g'}_{K_m}$. In particular, since the latter tends to zero as $K_m$ is compact, it follows that the former tends to zero as well. In particular, this means that $\norm{f_n - g}_{H\left( \D \right)}\rightarrow 0$, whence $f_n \rightarrow g$ uniformly on compacts. Thus, it follows that $g\in \overline{\mathcal{F}}$, so that $\img\left( g \right)\subseteq \overline{\D}$.\newline
 
-  Now, we observe that $g\left( \D \right)\subseteq \overline{\D}$, and that since the map
-  \begin{align*}
-    B_1(z) &= \frac{z-z_0}{1- \overline{z_0}z}
-  \end{align*}
-  is contained in $\mathcal{F}$ (as was established on a previous homework assignment) with $\left\vert B_1'\left( z_0 \right) \right\vert \geq 1$, it follows that $\left\vert g'\left( z_0 \right) \right\vert\geq 1$, meaning that $g$ is a nonconstant holomorphic function, hence $g\left( \D \right)\subseteq \D$ by the open mapping principle.\newline
+  Furthermore, since $f(z) = z\in \mathcal{F}$, it follows that $\left\vert g'\left( z_0 \right) \right\vert \geq 1$, meaning that $g$ is a nonconstant holomorphic function, meaning in particular that since $g\left( \D \right)\subseteq \overline{\D}$ already, we must indeed have $g\left( \D \right)\subseteq \D$ by the open mapping principle.\newline
 
-  We claim now that $g\left( z_0 \right) = 0$. Suppose this were not the case, meaning that there is some $0 < r < 1$ such that $\left\vert g\left( z_0 \right) \right\vert = r$. We have established already that $g\left( z_0 \right) \in \D$. The map
+  Now, we claim that $g\left( z_0 \right) = 0$. Suppose this were not the case. Then, there would be some $0 < r < 1$ with $\left\vert g\left( z_0 \right) \right\vert = r$. We have established on a previous assignment that the map
   \begin{align*}
-    h\left( z \right) &= \frac{g\left( z \right)-g\left( z_0 \right)}{1- \overline{g\left( z_0 \right)}g\left( z \right)},
+    h_0(z) &= \frac{z-g\left( z_0 \right)}{1- \overline{g\left( z_0 \right)}z}
   \end{align*}
-  is thus the composition of $g$ with the function
+  is a bijective holomorphic mapping of $\D$ to itself, meaning that
   \begin{align*}
-    B_2\left( z \right) &= \frac{z-g\left( z_0 \right)}{1- \overline{g\left( z_0 \right)}z},
+    h(z) &= \frac{g(z) - g\left( z_0 \right)}{1- \overline{g\left( z_0 \right)}g(z)}
   \end{align*}
-  and since both $g$ and $B_2$ map $\D$ to $\D$, we have $h = B_2\circ g$ is a holomorphic function that maps maps $\D$ to $\D$, whence $h\in \mathcal{F}$. Yet,
+  maps $\D$ to $\D$, so that $h\in \mathcal{F}$, with
   \begin{align*}
-    \left\vert h'\left( z_0 \right) \right\vert &= \left\vert g'\left( z_0 \right) \right\vert\frac{1}{1-\left\vert g\left( z_0 \right) \right\vert^2}\\
-                                                &= \left\vert g'\left( z_0 \right) \right\vert\frac{1}{1-r^2},
+    \left\vert h'\left( z_0 \right) \right\vert &= \left\vert g'\left( z_0 \right) \right\vert \frac{1}{1-\left\vert g\left( z_0 \right) \right\vert^2}\\
+                                                &= \left\vert g'\left( z_0 \right) \right\vert \frac{1}{1-r^2}\\
+                                                &> \left\vert g'\left( z_0 \right) \right\vert,
   \end{align*}
-  implying that $\left\vert h'\left( z_0 \right) \right\vert > \left\vert g'\left( z_0 \right) \right\vert$, contradicting the maximality of $\left\vert g'\left( z_0 \right) \right\vert$. Thus, it must be the case that $g\left( z_0 \right) = 0$.
+  which contradicts the maximality of $\left\vert g'\left( z_0 \right) \right\vert$. Thus, it must be the case that $g\left( z_0 \right) = 0$.
 \end{solution}
 \begin{problem}[Problem 3]
   Let $\left( a_n \right)_n$ be a sequence of nonnegative real numbers such that the radius of convergence of
@@ -101,6 +119,73 @@
   \end{align*}
   Show that $\mathcal{F}$ is a normal family.
 \end{problem}
+\begin{solution}
+  Suppose $z\in \D$. We wish to establish some $\delta > 0$ and some $M > 0$ such that $U\left( z,\delta \right)\subseteq \D$, for all $f\in \mathcal{F}$,
+  \begin{align*}
+    \left\vert f(z) \right\vert &\leq M.
+  \end{align*}
+  Now, let $r > 0$ be such that $B\left( z,r \right)\subseteq \D$. We observe that for $f\in \mathcal{F}$, we have
+  \begin{align*}
+    f(z) &= \sum_{n=0}^{\infty}\frac{f^{(n)(0)}}{n!}z^{n},
+  \end{align*}
+  with $\left\vert \frac{f^{(n)}(0)}{n!} \right\vert\leq a_n$. By uniform convergence, we then see that for any $f\in \mathcal{F}$ and any $w\in B\left( z,r \right)$,
+  \begin{align*}
+    \left\vert f(w) \right\vert &\leq \sum_{n=0}^{\infty} \left\vert \frac{f^{(n)}(0)}{n!} \right\vert \left\vert w \right\vert^{n}\\
+                                &\leq \sum_{n=0}^{\infty} a_n\left\vert w \right\vert^{n}\\
+                                &\leq \sum_{n=0}^{\infty} a_n \left( \left\vert z \right\vert + r \right)^{n}\\
+                                &\eqcolon C,
+  \end{align*}
+  since $\left\vert z \right\vert + r$ is less than $1$, while $\sum_{n=1}^{\infty}a_nz^{n}$ has radius of convergence at least $1$. Since this holds for all $f\in \mathcal{F}$, it follows that the family $\mathcal{F}$ is locally bounded, hence normal by Montel's Theorem.
+\end{solution}
+\begin{problem}[Problem 4]\hfill
+  \begin{enumerate}[(a)]
+    \item Fix $z_0\in \C$ and $r > 0$. Suppose $f\colon B\left( z_0,r \right)\rightarrow \C$ is continuous, and $f|_{U\left( z_0,r \right)}$ is holomorphic. Fix $0 < \rho < r$. Show that for all $z\in U\left( z_0,\rho \right)$,
+      \begin{align*}
+        \left\vert f(z) \right\vert &\leq \frac{1}{\pi\left( r-\rho \right)^2} \iint_{U\left( z_0,r \right)}^{} \left\vert f\left( x + iy \right) \right\vert\:dxdy.
+      \end{align*}
+    \item Fix $M\geq 0$, let $U\subseteq \C$ be open, and let $\mathcal{F}\subseteq H\left( U \right)$ be the family of holomorphic functions for which
+      \begin{align*}
+        \iint_{U}^{} \left\vert f\left( x + iy \right) \right\vert\:dxdy&\leq M.
+      \end{align*}
+      Show that $\mathcal{F}$ is normal.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item For each $\rho \leq t \leq r$, we parametrize $S\left( z_0,t \right)$ as $\gamma(t) = z_0 + te^{i\theta}$. In particular, by Cauchy's Integral Formula, we get
+      \begin{align*}
+        f(z) &= \frac{1}{2\pi i} \int_{S\left( z_0,t \right)}^{} \frac{f\left( w \right)}{w - z}\:d\theta\\
+             &= \frac{1}{2\pi} \int_{0}^{2\pi} \frac{f\left( z_0 + te^{i\theta} \right) te^{i\theta}}{\left( z_0 - z \right) + te^{i\theta}}\:d\theta.
+      \end{align*}
+      Introducing a factor of $1$, then using Fubini's Theorem thus gives
+      \begin{align*}
+        f(z) &= \frac{1}{2\pi \left( r - \rho \right)} \int_{0}^{2\pi} \int_{\rho}^{r} \frac{f\left( z_0 + te^{i\theta} \right) te^{i\theta}}{\left( z_0-z \right) + te^{i\theta}}\:dt\:d\theta
+      \end{align*}
+      Estimating the integral, we find that for $\rho \leq t \leq r$,
+      \begin{align*}
+        \left\vert \frac{1}{\left( z_0-z \right) + te^{i\theta}} \right\vert &\leq \frac{1}{\left\vert t \right\vert - \left\vert \left\vert z_0 \right\vert-\left\vert z \right\vert \right\vert}\\
+                                                                             &\leq \frac{1}{\left\vert t \right\vert - \left\vert z_0 - z \right\vert}\\
+                                                                             &\leq \frac{1}{\left\vert t \right\vert - \rho}.
+      \end{align*}
+      Since this holds for any $\rho < t \leq r$, it holds for $t = r$, whence using this estimate and the triangle inequality gives
+      \begin{align*}
+        \left\vert f(z) \right\vert &\leq \frac{1}{2\pi \left( r - \rho \right)^2} \int_{0}^{2\pi} \int_{\rho}^{r} \left\vert f\left( z_0 + te^{i\theta} \right)te^{i\theta} \right\vert\:dt\:d\theta\\
+                                    &\leq \frac{1}{\pi \left( r- \rho \right)^2} \int_{0}^{2\pi} \int_{0}^{r} t \left\vert f\left( z_0 + te^{i\theta} \right) \right\vert\:dt\:d\theta\\
+                                    &= \frac{1}{\pi\left( r-\rho \right)^2} \iint_{U\left( z_0,r \right)}\left\vert f\left( x + iy \right) \right\vert\:dxdy.
+      \end{align*}
+    \item Let $z_0\in U$. Fix some $r > 0$ such that $B\left( z_0,r \right)\subseteq U$. In particular, we have
+      \begin{align*}
+        \iint_{U\left( z_0,r \right)} \left\vert f\left( x + iy \right) \right\vert\:dxdy &\leq \iint_{U} \left\vert f\left( x + iy \right) \right\vert\:dxdy\\
+                                                                                          &\leq M,
+      \end{align*}
+      so for a fixed $0 < \rho < r$, we have for all $z\in U\left( z_0,\rho \right)$ and all $f\in \mathcal{F}$,
+      \begin{align*}
+        \left\vert f(z) \right\vert &\leq \frac{1}{\pi\left( r-\rho \right)^2} \iint_{U\left( z_0,r \right)} \left\vert f\left( x + iy \right) \right\vert\:dxdy\\
+                                    &\leq \frac{1}{\pi \left( r-\rho \right)^2} M.
+      \end{align*}
+      In particular, this means that for all $f\in \mathcal{F}$, $f$ is bounded on $U\left( z_0,\rho \right)$, whence $\mathcal{F}$ is locally bounded, hence normal by Montel's Theorem.
+  \end{enumerate}
+\end{solution}
 \begin{problem}[Problem 5]
   Let $\left( f_n \right)_n$ be a sequence of holomorphic functions from $\D$ to $\C$ that is locally bounded, and suppose there exists a holomorphic function $f\colon \D\rightarrow \C$ such that the set $\set{z\in \D | \lim_{n\rightarrow\infty}f_n(z) = f(z)}$ has a limit point in $\D$. Show that $\left( f_n \right)_n$ converges uniformly on compact sets to $f$.
 \end{problem}
@@ -111,6 +196,6 @@
   \end{align*}
   on compact subsets. Yet, since uniform convergence on compact subsets implies pointwise convergence, we have that $\set{z\in \D | g_k(z) = f(z)}$ has an accumulation point in $\D$, whence each of the $g_k$ are equal to $f$ by the identity theorem.\newline
 
-  Now, if it were not the case that $\left( f_n \right)_n\rightarrow f$ uniformly on compacts, then we would be able to find some subsequence $\left( f_{n_k} \right)_k$ with $\norm{f_{n_{k}} - f}\geq \ve_0$ for some $\ve_0 > 0$ and all $k$. Yet, since this is a subsequence of $\left( f_n \right)_n$, it admits a subsequence converging to $f$, contradicting the assertion that $\norm{f_{n_k} - f}\geq \ve_0$ for all $k$.
+  Now, if it were not the case that $\left( f_n \right)_n\rightarrow f$ uniformly on compacts, then we would be able to find some subsequence $\left( f_{n_k} \right)_k$ with $\norm{f_{n_{k}} - f}\geq \ve_0$ for some $\ve_0 > 0$ and all $k$. Yet, since this is a subsequence of $\left( f_n \right)_n$, it admits a subsequence converging to $f$, contradicting the assertion that $\norm{f_{n_k} - f}\geq \ve_0$ for all $k$. Therefore, we have that $\left( f_n \right)_n\rightarrow f$ uniformly on compacts.
 \end{solution}
 \end{document}
