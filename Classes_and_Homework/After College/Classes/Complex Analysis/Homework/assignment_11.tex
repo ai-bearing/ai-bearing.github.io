@@ -60,8 +60,8 @@
   \end{align*}
   For a given $f\in \mathcal{F}$, Cauchy's estimate gives
   \begin{align*}
-    \left\vert f'(z) \right\vert &\leq \frac{1}{r}\sup_{\left\vert \xi - z \right\vert = r} \left\vert f(z) \right\vert\\
-                                 &= \frac{1}{r} \sup_{z\in S\left( z,r \right)} \left\vert f(z) \right\vert\\
+    \left\vert f'(z) \right\vert &\leq \frac{1}{r}\sup_{\left\vert \xi - z \right\vert = r} \left\vert f(\xi) \right\vert\\
+                                 &= \frac{1}{r} \sup_{\xi\in S\left( z,r \right)} \left\vert f(\xi) \right\vert\\
                                  &\leq \frac{m}{r},
   \end{align*}
   meaning in particular that
@@ -84,8 +84,11 @@
   Then, we have $tz\in K_m$ for all $z\in K_m$ and all $0 \leq t \leq 1$. In particular, this means that
   \begin{align*}
     \left\vert f_n(z) - g(z) \right\vert &= \left\vert \int_{0}^{1} z \left( f_n'(tz)- g'(tz)\right)\:dt \right\vert\\
-                                         &\leq \sup_{w\in K_m} \left\vert w \right\vert \left\vert f_n'(w) - g'(w)  \right\vert\\
-                                         &\leq \sup_{w\in K_m} \left\vert f_n'(w) - g'(w) \right\vert\\
+                                         &\leq \int_{0}^{1} \left\vert z \left( f_n'\left( tz \right)-g'\left( tz \right) \right) \right\vert\:dt\\
+                                         &\leq \int_{0}^{1} \left\vert f_n'\left( tz \right) - g'\left( tz \right) \right\vert\:dt\\
+                                         &\leq \int_{0}^{1} \sup_{t\in [0,1]}\left\vert f_n'\left( tz \right) - g'\left( tz \right) \right\vert\:dt\\
+                                         &\leq \int_{0}^{1} \sup_{w\in K_m}\left\vert f_n'\left( w \right) - g'\left( w \right) \right\vert\:dt\\
+                                         &= \sup_{w\in K_m} \left\vert f_n'\left( w \right) - g'\left( w \right) \right\vert\\
                                          &= \norm{f_n' - g'}_{K_m},
   \end{align*}
   so it follows that $\norm{f_n - g}_{K_m} \leq \norm{f_n' - g'}_{K_m}$. In particular, since the latter tends to zero as $K_m$ is compact, it follows that the former tends to zero as well. In particular, this means that $\norm{f_n - g}_{H\left( \D \right)}\rightarrow 0$, whence $f_n \rightarrow g$ uniformly on compacts. Thus, it follows that $g\in \overline{\mathcal{F}}$, so that $\img\left( g \right)\subseteq \overline{\D}$.\newline
@@ -102,6 +105,7 @@
   \end{align*}
   maps $\D$ to $\D$, so that $h\in \mathcal{F}$, with
   \begin{align*}
+    h'\left( z \right) &= \frac{g'\left( z \right)}{1- \overline{g\left( z_0 \right)}g\left( z \right)} + \overline{g\left( z_0 \right)}g'\left( z \right) \frac{g\left( z \right) - g\left( z_0 \right)}{\left( 1- \overline{g\left( z_0 \right)}g(z) \right)^2}\\
     \left\vert h'\left( z_0 \right) \right\vert &= \left\vert g'\left( z_0 \right) \right\vert \frac{1}{1-\left\vert g\left( z_0 \right) \right\vert^2}\\
                                                 &= \left\vert g'\left( z_0 \right) \right\vert \frac{1}{1-r^2}\\
                                                 &> \left\vert g'\left( z_0 \right) \right\vert,
@@ -154,20 +158,20 @@
   \begin{enumerate}[(a)]
     \item For each $\rho \leq t \leq r$, we parametrize $S\left( z_0,t \right)$ as $\gamma(t) = z_0 + te^{i\theta}$. In particular, by Cauchy's Integral Formula, we get
       \begin{align*}
-        f(z) &= \frac{1}{2\pi i} \int_{S\left( z_0,t \right)}^{} \frac{f\left( w \right)}{w - z}\:d\theta\\
+        f(z) &= \frac{1}{2\pi i} \int_{S\left( z_0,t \right)}^{} \frac{f\left( w \right)}{w - z}\:dw\\
              &= \frac{1}{2\pi} \int_{0}^{2\pi} \frac{f\left( z_0 + te^{i\theta} \right) te^{i\theta}}{\left( z_0 - z \right) + te^{i\theta}}\:d\theta.
       \end{align*}
       Introducing a factor of $1$, then using Fubini's Theorem thus gives
       \begin{align*}
-        f(z) &= \frac{1}{2\pi \left( r - \rho \right)} \int_{0}^{2\pi} \int_{\rho}^{r} \frac{f\left( z_0 + te^{i\theta} \right) te^{i\theta}}{\left( z_0-z \right) + te^{i\theta}}\:dt\:d\theta
+        f(z) &= \frac{1}{2\pi \left( r-\rho \right)} \int_{\rho}^{r} \int_{0}^{2\pi} \frac{f\left( z_0 + te^{i\theta} \right)te^{i\theta}}{\left( z_0 - z \right) + te^{i\theta}}\:d\theta\:dt\\
+             &= \frac{1}{2\pi \left( r - \rho \right)} \int_{0}^{2\pi} \int_{\rho}^{r} \frac{f\left( z_0 + te^{i\theta} \right) te^{i\theta}}{\left( z_0-z \right) + te^{i\theta}}\:dt\:d\theta
       \end{align*}
-      Estimating the integral, we find that for $\rho \leq t \leq r$,
+      Estimating the integral, we find that for $\rho < t \leq r$,
       \begin{align*}
-        \left\vert \frac{1}{\left( z_0-z \right) + te^{i\theta}} \right\vert &\leq \frac{1}{\left\vert t \right\vert - \left\vert \left\vert z_0 \right\vert-\left\vert z \right\vert \right\vert}\\
-                                                                             &\leq \frac{1}{\left\vert t \right\vert - \left\vert z_0 - z \right\vert}\\
+        \left\vert \frac{1}{\left( z_0-z \right) + te^{i\theta}} \right\vert &\leq \frac{1}{\left\vert t \right\vert - \left\vert z_0 - z \right\vert}\\
                                                                              &\leq \frac{1}{\left\vert t \right\vert - \rho}.
       \end{align*}
-      Since this holds for any $\rho < t \leq r$, it holds for $t = r$, whence using this estimate and the triangle inequality gives
+      Since this holds for any $\rho < t \leq r$, it certainly holds for $t = r$, whence using this estimate and the triangle inequality gives
       \begin{align*}
         \left\vert f(z) \right\vert &\leq \frac{1}{2\pi \left( r - \rho \right)^2} \int_{0}^{2\pi} \int_{\rho}^{r} \left\vert f\left( z_0 + te^{i\theta} \right)te^{i\theta} \right\vert\:dt\:d\theta\\
                                     &\leq \frac{1}{\pi \left( r- \rho \right)^2} \int_{0}^{2\pi} \int_{0}^{r} t \left\vert f\left( z_0 + te^{i\theta} \right) \right\vert\:dt\:d\theta\\
