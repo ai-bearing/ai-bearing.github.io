@@ -41,5 +41,134 @@
                                  &= \sum_{i=1}^{n}\sum_{j=1}^{n} \pd{\left( f_ia_{ij} \right)}{x_j} \:dx_1\wedge\cdots\wedge dx_n\\
     \ast \left( d\left( \ast\omega_X \right) \right) &= \sum_{i=1}^{n}\sum_{j=1}^{n} a_{ij}\pd{f_i}{x_j} + f_i \pd{a_{ij}}{x_j}.
   \end{align*}
+  To find the gradient for $f$, we start by taking
+  \begin{align*}
+    df &= \sum_{i=1}^{n} \pd{f}{x_i}\:dx_i.
+  \end{align*}
+  We wish to compute $\hat{g}^{-1}\left( df \right)$, so we need to understand what $\hat{g}^{-1}\left( dx_k \right)$ looks like. Toward this end, we observe from linear algebra that the nondegenerate symmetric bilinear map $v\mapsto v^{T}A\cdot$ has the inverse $y^{T}A^{-1}$, whence
+  \begin{align*}
+    \hat{g}^{-1}\left( df \right) &= \sum_{j=1}^{n} \left( \sum_{i=1}^{n} \pd{f}{x_i}\:dx_i \right) \left( \left( a_{ij} \right)_{ij} \right)^{-1} \pd{}{x_j}.
+  \end{align*}
+\end{solution}
+\begin{problem}[Problem 2]
+  With the setup of the previous exercise, assume that $M$ is orientable. Find an expression for the volume form of $M$ in local coordinates.
+\end{problem}
+\begin{solution}
+  Let $\theta_i$ be the corresponding dual orthonormal basis for $\set{e_i}_{i\in I}$, which is the orthonormal basis for $g$. We observe then that we may express
+  \begin{align*}
+    \theta_i &= \sum_{j=1}^{n} a_{ij}\:dx_j,
+  \end{align*}
+  whence
+  \begin{align*}
+    \theta_1\wedge\cdots\wedge \theta_n &= \left( \sum_{j=1}^{n}a_{1j}\:dx_j \right)\wedge\cdots\wedge \left( \sum_{j=1}^{n}a_{nj}\:dx_j \right)\\
+                                        &= \left( a_{ij} \right)_{i,j} \left( dx_1\wedge\cdots\wedge dx_n \right)\\
+                                        &= \left\vert \det\left( \left( a_{ij} \right)_{i,j} \right) \right\vert\:dx_1\wedge\cdots\wedge dx_n,
+  \end{align*}
+  where the absolute value emerges from the fact that $\left( a_{ij} \right)_{i,j}$ is positive definite.
+\end{solution}
+\begin{problem}[Problem 3]
+  Prove that the space of Riemannian metrics on a smooth manifold is a convex topological subspace of a real vector space, and in particular path-connected.
+\end{problem}
+\begin{solution}
+  Locally, we observe that any Riemannian metric $g$ is given by
+  \begin{align*}
+    g_p\left( x,y \right) &= x^{T} G_p y
+  \end{align*}
+  for some symmetric positive definite matrix $G_p$. Since $S^{2}T^{\ast}M$ is a real vector space, it follows that we want to show that the set of all Riemannian metrics, which we will denote $R$, is convex; in fact, we will show that it is a cone.\newline
+
+  Since a Riemannian metric is a section of $S^2T^{\ast}M$, it follows that we can work locally and extend by linearity. Therefore, we only need to show that the collection of positive definite matrices, $\Mat_n\left( \R \right)_{>0}$, is a cone in $\Mat_{n}\left( \R \right)_{\operatorname{s.a.}}$.
+
+  Let $\alpha > 0$ in $\R$, $A,A_1,A_2\in \Mat_{n}\left( \R \right)_{>0}$ be positive definite. Then, if $x\in \R^n$ is an arbitrary nonzero vector, we have
+  \begin{align*}
+    x^{T} \left( A_1 + A_2 \right) x &= x^TA_1 x + x^{T}A_2 x\\
+                                     &> 0\\
+    x^{T} \left( \alpha A_1 \right) x &= \alpha x^{T} A x\\
+                                      &> 0,
+  \end{align*}
+  with equality only when $x = 0$, so the positive definite matrices are a cone in $\Mat_{n}\left( \R \right)_{\operatorname{s.a.}}$.
+\end{solution}
+\begin{problem}[Problem 4]
+  Let $M$ be a compact orientable Riemannian manifold of dimension $n$, $v_M$ its volume form, and $v_{\partial M}$ the volume form on $\partial M$. For $p\in \partial M$, choose a chart about $p$ sending $p$ to the origin such that the image of this chart is the upper half-space defined by $x_n \geq 0$.\newline
+
+  The Riemannian metric allows one to define an outward-pointing normal vector $\nu_p$ at $p$. Prove that
+  \begin{align*}
+    \int_{M}^{} \nabla\cdot X\:v_M &= \int_{\partial M}^{} \iprod{X}{\nu}\:v_{\partial M}.
+  \end{align*}
+\end{problem}
+\begin{solution}
+  We start by observing that the left-hand side simplifies to
+  \begin{align*}
+    \int_{M}^{} \nabla\cdot X\:v_M &= \int_{M}^{} \left( \ast d \ast \omega_X \right)\left( \ast 1 \right)\\
+                                   &= \int_{M}^{} \ast \ast d\ast \omega_X\\
+                                   &= \int_{M}^{} d\ast \omega_X.
+  \end{align*}
+  Therefore, our task is to show that
+  \begin{align*}
+    \int_{\partial M}^{} \ast\omega_X &= \int_{\partial M}^{} \iprod{\omega_X}{\omega_{\nu}}\:\left( \ast 1 \right).
+  \end{align*}
+  Considering the chart around $p$ with orthonormal basis $\set{e_1,\dots,e_n}$ and corresponding dual forms $\set{\theta_1,\dots,\theta_n}$, we observe that $\omega_{\nu} = \theta_n$, and
+  \begin{align*}
+    \iprod{\omega_X}{\omega_{\nu}} &= \iprod{\sum_{i=1}^{n}f_i\:\theta_i}{\theta_n}\\
+                                   &= f_n\\
+    \ast\left( 1 \right) &= \theta_1\wedge\cdots\wedge \theta_{n-1},
+  \end{align*}
+  while
+  \begin{align*}
+    \omega_X &= \sum_{i=1}^{n} \iprod{X}{e_i}\:\theta_i,
+  \end{align*}
+  so that
+  \begin{align*}
+    \ast\omega_X &= f_n\:\theta_1\wedge\cdots\wedge \theta_{n-1}.
+  \end{align*}
+\end{solution}
+\begin{problem}[Problem 5]
+  Prove that for an orientable Riemannian manifold $M$ and a smooth function $f$ on $M$, the Laplacian $\Delta$ satisfies
+  \begin{align*}
+    \Delta f &= - \nabla \cdot \left( \nabla f \right).
+  \end{align*}
+\end{problem}
+\begin{solution}
+  We observe that if $f$ is a function, then $\nabla f = X_{df}$, and since $g$ is nondgenerate, it follows that $\omega_{X_{df}} = df$, whence
+  \begin{align*}
+    \ast d \ast \left( \omega_{X_{df}} \right) &= \left( \ast d \ast\right)\left( df \right),
+  \end{align*}
+  while
+  \begin{align*}
+    \ast d \ast \left( f \right) &= 0.
+  \end{align*}
+  In particular, this means that
+  \begin{align*}
+    \left( -1 \right)^{1}\left( \ast d \ast \right)\left( df \right) + \left( -1 \right)^{1} \left( d \right)\left( \ast d \ast \right)(f) &= -\nabla\cdot \left( \nabla f \right).
+  \end{align*}
+\end{solution}
+\begin{problem}[Problem 6]
+  Recall that the Euler characteristic $\chi(M)$ is the alternating sum of the dimensions of the de Rham cohomology spaces of $M$. Prove that for an odd-dimensional compact manifold $M$, the Euler characteristic satisfies $\frac{1}{2}\chi\left( \partial M \right) = \chi\left( M \right)$.
+\end{problem}
+\begin{solution}
+  We have shown earlier that the Euler characteristic is equal to the alternating sum 
+  \begin{align*}
+    \chi(M) &= \sum_{i=1}^{n} k_i,
+  \end{align*}
+  where $k_i$ is the number of $i$-dimensional simplices in a simplicial structure for $M$. From the original de Rham cohomology definition, we observe that any odd-dimensional closed manifold has Euler characteristic $0$.\newline
+
+  Now, if $M$ has boundary, then we may take two copies of the manifold $M$ to form the manifold $\hat{M}$, given by
+  \begin{align*}
+    \hat{M} &= \left( M\coprod M \right)/\sim,
+  \end{align*}
+  where $x\sim y$ if $x$ is the same point in $M$ as $y$ and both $x,y\in \partial M$. Observe that by a counting argument, we have
+  \begin{align*}
+    \chi\left( \hat{M} \right) &= 2\chi(M) - \chi\left( \partial M \right),
+  \end{align*}
+  while $\chi\left( \hat{M} \right) = 0$.
+\end{solution}
+\begin{problem}[Problem 7]
+  Prove that $\R\mathbb{P}^2$ is not the boundary of a compact $3$-manifold.
+\end{problem}
+\begin{solution}
+  We have already established that the top-dimensional de Rham cohomology group for $\R\mathbb{P}^2$ is $0$, meaning that $\chi\left( \mathbb{RP}^2 \right) = 1$. Yet, if there were some compact orientable $M$ such that $ \mathbb{RP}^2 $ was the boundary of $M$, then we would have
+  \begin{align*}
+    \frac{1}{2} &= \chi(M),
+  \end{align*}
+  but this is absurd as $\chi(M)$ is necessarily an integer.
 \end{solution}
 \end{document}

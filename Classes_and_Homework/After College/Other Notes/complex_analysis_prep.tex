@@ -5,7 +5,7 @@
 %\usepackage{sfmath}
 %\usepackage{bbold} %better blackboard bold
 
-%\usepackage{homework}
+\usepackage{homework}
 \usepackage{notes}
 \usepackage{newpxtext,eulerpx,eucal}
 \renewcommand*{\mathbb}[1]{\varmathbb{#1}}
@@ -1354,6 +1354,131 @@ In the Phragmén--Lindelöf method, we seek to find a particular $\ve$-dependent
   \end{align*}
 \end{example}
 \section{Old Exams}%
+\subsection{\href{https://math.virginia.edu/graduate/exams/analysis/2019Aug_complex.html}{August 2019}}%
+\begin{problem}[Problem 1]
+  Let $\xi$ be a nonnegative real number. Compute
+  \begin{align*}
+    \int_{-\infty}^{\infty} \frac{e^{ix\xi}}{x^2 + 1}\:dx.
+  \end{align*}
+\end{problem}
+\begin{solution}
+  We consider
+  \begin{align*}
+    f(z) &= \frac{e^{i\xi z}}{z^2 + 1}\\
+    \int_{-\infty}^{\infty} \frac{e^{i\xi x}}{x^2 + 1}\:dx &= \lim_{R\rightarrow\infty} \int_{-R}^{R} \frac{e^{i\xi x}}{x^2 + 1}\:dx.
+  \end{align*}
+  We consider the contour $\gamma_R$ given closing with the semicircle of radius $R$ in the upper half-plane, parametrized by $\set{Re^{i\theta} | 0\leq \theta \leq \pi}$. Then,
+  \begin{align*}
+    \oint_{\gamma_R}^{} f(z)\:dz &= 2\pi i \res\left( f;i \right)\\
+                                 &= \int_{-R}^{R} \frac{e^{i\xi x}}{x^2 + 1}\:dx + \int_{0}^{\pi} \frac{e^{i\xi Re^{i\theta}}}{R^2e^{2i\theta} + 1}iRe^{i\theta}\:d\theta.
+  \end{align*}
+  On the circular integral, we observe that for $R > 1$,
+  \begin{align*}
+    \left\vert \int_{0}^{\pi} \frac{iRe^{i\theta}e^{i\xi R\left( \cos\left( \theta \right) + i\sin\left( \theta \right) \right)}}{R^2 e^{2i\theta} + 1}\:dz \right\vert &\leq \pi \frac{Re^{-R\xi \sin\left( \theta \right)}}{R^2 - 1}\\
+                                                                                                                                                                              &\rightarrow 0
+  \end{align*}
+  as $R\rightarrow\infty$. Therefore, since the pole at $i$ is simple, we get
+  \begin{align*}
+    2\pi i \res\left( f;i \right) &= 2\pi i \left( \lim_{z\rightarrow i} \frac{\left( z-i \right)e^{i\xi x}}{\left( z-i \right)\left( z+i \right)} \right)\\
+                                  &= \pi e^{-\xi},
+  \end{align*}
+  whence
+  \begin{align*}
+    \pi e^{-\xi} &= \lim_{R\rightarrow\infty} \oint_{\gamma_R}^{} f(z)\:dz\\
+                 &= \lim_{R\rightarrow\infty} \int_{-R}^{R} \frac{e^{i\xi x}}{x^2 + 1}\:dx\\
+                 &= \int_{-\infty}^{\infty} \frac{e^{i\xi x}}{x^2 + 1}\:dx.
+  \end{align*}
+\end{solution}
+\begin{problem}[Problem 2]
+  Let $f$ be an entire function, and suppose there is some $\alpha\in \left( 0,\infty \right)$ such that
+  \begin{align*}
+    \left\vert f(z) \right\vert &\leq C\left\vert z \right\vert^{\alpha}
+  \end{align*}
+  for all $z\geq 1$. Show that $f$ is a polynomial.
+\end{problem}
+\begin{solution}
+  From the Archimedean property, we know that there is some natural number $N$ such that $N > \alpha$. We observe then that, from Cauchy's estimates,
+  \begin{align*}
+    \left\vert f^{(N)}\left( z \right) \right\vert &\leq \frac{N!}{r^{N}} \sup_{|z| = r} \left\vert f(z) \right\vert\\
+                                                   &\leq \frac{N!}{r^{N}} \sup_{|z| = r}C\left\vert z \right\vert^{\alpha}\\
+                                                   &= \frac{CN!}{r^{N-\alpha}}\\
+                                                   &\rightarrow 0
+  \end{align*}
+  as $r\rightarrow\infty$, whence the Taylor expansion for $f$ about $0$ terminates at some $N$. In particular, this means that $f$ is a polynomial.
+\end{solution}
+\begin{problem}[Problem 3]
+  Let $f$ be an entire function. Suppose that $\lim_{z\rightarrow\infty}f(z) = \infty$. Show that $f$ is a polynomial.
+\end{problem}
+\begin{solution}
+  Consider the transformation $z\mapsto 1/z$, giving
+  \begin{align*}
+    \lim_{z\rightarrow 0} f\left(1/z\right) &= \lim_{z\rightarrow\infty} f(z)\\
+                               &= \infty.
+  \end{align*}
+  In particular, from the classification of singularities, this means that $f\left( 1/z \right)$ has a pole at $0$. This gives some $n$ such that
+  \begin{align*}
+    f\left( 1/z \right) &= \sum_{k=0}^{n} a_k z^{-k},
+  \end{align*}
+  whence
+  \begin{align*}
+    f(z) &= \sum_{k=0}^{n} a_kz^{k},
+  \end{align*}
+  so $f$ is a polynomial.
+\end{solution}
+\begin{problem}[Problem 4]
+  Let $\Omega = \set{z\in \C | \re\left( z \right) > 0}$. Suppose $ f\colon \overline{\Omega}\rightarrow \C $ be continuous with $f|_{\Omega}$ holomorphic. Suppose $\left\vert f\left( iy \right) \right\vert\leq 1$ for all $y\in \R$ and $\left\vert f\left( z \right) \right\vert\leq 2$ for all $z\in \Omega$. Show that in fact $\left\vert f(z) \right\vert\leq 1$ for all $z\in \Omega$.
+\end{problem}
+\begin{solution}
+  Consider the function
+  \begin{align*}
+    f_{\ve}(z) &= \frac{f(z)}{1 + \ve z}.
+  \end{align*}
+  We observe that
+  \begin{align*}
+    \left\vert f_{\ve}(z) \right\vert &= \frac{\left\vert f(z) \right\vert}{\left\vert 1 + \ve z \right\vert}\\
+                                      &\leq \frac{2}{\left\vert 1 + \ve z \right\vert}\\
+                                      &\leq \frac{2}{\ve \left\vert \im(z) \right\vert}.
+  \end{align*}
+  Now, we observe that for $z$ in the rectangle with corners $i2/\ve$, $-i2/\ve$, $1 + i2/\ve$, and $1 - i2/\ve$, that
+  \begin{align*}
+    \left\vert f_{\ve}(z) \right\vert &\leq 1
+  \end{align*}
+  for all $z$ on this rectangle, so by the maximum modulus principle, the inequality holds on the interior of the rectangle, and
+  \begin{align*}
+    \left\vert f_{\ve}(z) \right\vert &\leq 1
+  \end{align*}
+  for all $z$ in $\Omega$ outside this this rectangle, so that
+  \begin{align*}
+    \left\vert f(z) \right\vert &= \lim_{\ve\rightarrow 0} \left\vert f(z) \right\vert\\
+                                &\leq 1
+  \end{align*}
+  for all $z\in \Omega$.
+\end{solution}
+\begin{problem}[Problem 5]
+  Let $\D = \set{z | \left\vert z \right\vert < 1}$. Let $\mathcal{F}$ be a family of holomorphic functions on $\D$, and that $\sup_{f\in \mathcal{F}}\left\vert f(0) \right\vert < \infty$. Show that $\mathcal{F}$ is normal if and only if $\set{f' | f\in \mathcal{F}}$ is normal.
+\end{problem}
+\begin{solution}
+  Call the family $\mathcal{G} = \set{f' | f\in \mathcal{F}}$. First, we observe that if $\left( f_n \right)_n\subseteq \mathcal{F}$ is a sequence with convergent subsequence $\left( f_{n_k} \right)_k\rightarrow f\colon \D\rightarrow \C$ uniformly on compact sets, then it has been well-established that $\left( f_{n_k}' \right)_k\rightarrow f'$ uniformly on compact sets, whence $\left( f_n' \right)_n\subseteq \mathcal{G}$ admits a convergent subsequence.\newline
+
+  Now, let $\left( f_n \right)_n\subseteq \mathcal{F}$, so that $\left( f_n' \right)_n\subseteq \mathcal{G}$. Then, $\left( f_n' \right)_n$ admits a subsequence $\left( f_{n_k}' \right)_k\rightarrow g\colon \D\rightarrow \C$.\newline
+
+  First, we observe that since $\D$ is simply connected, $g$ admits an antiderivative $f\colon \D\rightarrow\C$. We will show that $\left( f_{n_k} \right)_k\rightarrow f$ uniformly on compacts.\newline
+
+  Let $K\subseteq \D$ be compact, and let $z\in K$. Let $\left( K_m \right)_m$ be an exhaustion of $\D$ by closed balls of radius $\frac{m}{m+1}$. Then, there is some $M$ such that $K\subseteq K_M^{\circ}$. We observe that the path $\gamma\colon [0,1]\rightarrow \D$ given by $\gamma(t) = tz$ is then contained wholly in $K_M$. Furthermore, we have
+  \begin{align*}
+    \left\vert f_{n_k}(z) - f(z) \right\vert &\leq \left\vert \int_{0}^{1} z\left( f_{n_k}'(tz) - g(tz) \right)\:dt \right\vert\\
+                                             &\leq \left\vert z \right\vert \sup_{t\in [0,1]}\left\vert f_{n_k}'(tz) - g(tz) \right\vert\\
+                                             &\leq \sup_{z\in K_M} \left\vert f_{n_k}'(z) - g(z) \right\vert\\
+                                             &\rightarrow 0
+  \end{align*}
+  whence
+  \begin{align*}
+    \sup_{z\in K} \left\vert f_{n_k}(z) - f(z) \right\vert &\leq \sup_{z\in K_M} \left\vert f_{n_k}(z) - f(z) \right\vert\\
+                                                           &\leq \sup_{z\in K_M} \left\vert f_{n_k}'(z) - g(z) \right\vert\\
+                                                           &\rightarrow 0
+  \end{align*}
+  so that $\left( f_{n_k} \right)_k\rightarrow f$ uniformly on $K$. Thus, $\mathcal{F}$ is normal.
+\end{solution}
 \section{Notation}%
 \begin{itemize}
   \item $\ds U\left( z_0,r \right) = \set{z\in \C | \left\vert z-z_0 \right\vert < r}$
