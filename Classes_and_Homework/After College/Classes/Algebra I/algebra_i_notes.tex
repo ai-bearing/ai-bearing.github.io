@@ -1394,4 +1394,118 @@ There are three Sylow theorems. They are very useful.
       \end{align*}
   \end{enumerate}
 \end{theorem}
+\subsection{Semidirect Products}%
+\begin{definition}
+  Let $\set{G_i}_{i\in I}$ be a family of groups.\newline
+
+  The direct product $\prod_{i\in I}G_i$ is a group with coordinatewise operations and underlying set $\set{\left( g_i \right)_{i\in I} | g_i\in G_i}$.
+\end{definition}
+It turns out that there is no analogue to the external direct sum for groups. This follows from the fact that if we have homomorphisms $f_1\colon G_1\rightarrow H$ and $f_2\colon G_2\rightarrow H$, then we would need to glue the homomorphisms by
+\begin{align*}
+  f\left( g_1,g_2 \right) &= f_1\left( g_1 \right)f_2\left( g_2 \right).
+\end{align*}
+In particular, we get
+\begin{align*}
+  f\left( \left( g_1,g_2 \right)\left( h_1,h_2 \right) \right) &= f\left( g_1h_1,g_2h_2 \right)\\
+                                                               &= f_1\left( g_1 \right)f_1\left( h_1 \right)f_2\left( g_2 \right)f_2\left( h_2 \right)\\
+                                                               &= f_1\left( g_1 \right)f_2\left( g_2 \right)f_1\left( h_1 \right)f_2\left( h_2 \right)
+\end{align*}
+if and only if $f_1\left( h_1 \right)$ and $f_2\left( g_2 \right)$ commute for all $h_1\in G_1$ and $g_2\in G_2$.\newline
+
+We start by trying to find a scenario where we in fact can construct $G \cong H\times N$ for some subgroups $H$ and $N$.
+\begin{lemma}
+  Let $G$ be a group, $H,N\leq G$.
+  \begin{enumerate}[(a)]
+    \item If both $N$ and $H$ are normal, and $N\cap H = \set{e}$, then $nh = hn$ for all $n\in N$ and $h\in H$.
+    \item If $N$ is normal, then $NH$ is a subgroup of $G$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}\hfill
+  \begin{enumerate}[(a)]
+    \item We let $\left[ h,n \right] = hnh^{-1}n^{-1}$. Since $H\cap N = \set{e}$, and the commutator is contained in both $H$ and $N$, it follows that $hnh^{-1}n^{-1} = e$, whence $hn = nh$.
+    \item Let $N$ be normal, $h_1,h_2\in H$, $n_1,n_2\in N$. Then,
+      \begin{align*}
+        \left( n_1h_1 \right)\left( n_2h_2 \right) &= n_1\left( h_1n_2h_1^{-1} \right)\left( h_1h_2 \right)\\
+                                                   &\in NH,
+      \end{align*}
+      so $NH$ is closed under multiplication. Similarly,
+      \begin{align*}
+        \left( nh \right)^{-1} &= h^{-1}n^{-1}\\
+                               &= \left( h^{-1}n^{-1}h \right)h^{-1}\\
+                               &\in NH,
+      \end{align*}
+      so $NH$ is a subgroup.
+  \end{enumerate}
+\end{proof}
+\begin{theorem}
+  Let $G$ be a group, $H,N$ normal, and suppose that
+  \begin{enumerate}[(i)]
+    \item $H\cap N = \set{e}$;
+    \item $G = NH$.
+  \end{enumerate}
+  Then, $G\cong NH$.
+\end{theorem}
+\begin{proof}
+  The map $N\times H\rightarrow G$ given by $\left( n,h \right)\mapsto nh$ is a group homomorphism since $H$ and $N$ commute elementwise. By (ii), the map is surjective, and by (i), the map is injective.
+\end{proof}
+An interesting nonexample is the case of $S_3$. We observe that the groups $N = \left\langle \left( 1,2,3 \right) \right\rangle$ and $H = \left\langle \left( 1,2 \right) \right\rangle$ have $N\cap H = \set{e}$, $S_3 = NH$, but $N\cong \Z/3\Z$ and $H\cong \Z/2\Z$, meaning that $S_3\ncong N\times H$. Instead, we have a different construction.
+\begin{definition}
+  Let $N$ and $H$ be groups. Suppose we have a group homomorphism
+  \begin{align*}
+    f\colon H\rightarrow \aut\left( N \right).
+  \end{align*}
+  The \textit{semidirect product} with respect to $f$ is given by
+  \begin{align*}
+    G &= N\rtimes_{f} H,
+  \end{align*}
+  with underlying set $N\times H$ and operations given by
+  \begin{align*}
+    \left( n_1,h_1 \right)\cdot \left( n_2,h_2 \right) &= \left( n_1f\left( h_1 \right)\left( n_2 \right),h_1h_2 \right)\\
+    \left( n,h \right)^{-1} &= \left( f\left( h^{-1} \right)\left( n^{-1} \right),h^{-1} \right).
+  \end{align*}
+\end{definition}
+The semidirect product in fact allows us another tool for classifying groups. This often appears in Galois theory.\newline
+
+To start, we can use the Sylow theorems to see that groups of order $pq$ with $p,q$ primes are not simple groups. In fact, there is a unique $q$-Sylow subgroup of $G$, which we call $Q$, which is then normal in $G$. Since $Q$ is also prime, we have $Q\cong \Z/q\Z$.\newline
+
+We consider now the group homomorphism
+\begin{align*}
+  f\colon G &\rightarrow \aut\left( Q \right)\\
+  g\mapsto \iota_g,
+\end{align*}
+where $\iota_g$ is the inner automorphism given by $\iota_g(x) = gxg^{-1}$. Since $Q$ is normal, $f$ is well-defined. Furthermore, since $Q$ is abelian, $Q\leq \ker\left( f \right)$, whence $f$ induces a homomorphism $ \overline{f}\colon G/Q\rightarrow \aut\left( Q \right) $.\newline
+
+We have that $\aut\left( \Z/q\Z \right)\cong \left( \Z/q\Z \right)^{\times}$, which is cyclic of order $q-1$. Meanwhile $\left\vert G/Q \right\vert = p$, which is prime, so we may express $ \overline{f}\colon \Z/p\Z \rightarrow \left( \Z/q\Z \right)^{\times} $.\newline
+
+First, if $p\nmid q-1$, then Lagrange's Theorem implies that $ \overline{f} $ is trivial. In particular, $\left\vert \ker\left( \overline{f} \right) \right\vert = 1$, in which case we would have $\img\left( \overline{f} \right)\leq \left( \Z/q\Z \right)^{\times}$, which cannot happen as $p\nmid q-1$, meaning that we have $\left\vert \ker\left( \overline{f} \right) \right\vert = p$, meaning $ \overline{f} $ is trivial.\newline
+
+If $ \overline{f} $ is trivial, then $f$ is in fact trivial, so $gxg^{-1} = x$ for all $g\in G$, meaning $Q\leq Z(G)$. This yields a surjection $G/Q\rightarrow G/Z(G)$, and since $G/Q$ is cyclic, so too is $G/Z(G)$, whence $G/Z(G)$ is cyclic, hence $G$ is abelian. In particular, this gives
+\begin{align*}
+  G\cong \Z/p\Z \times \Z/q\Z.
+\end{align*}
+Meanwhile, if $p | q-1$, then there is a nontrivial homomorphism $ f\colon \Z/p\Z\rightarrow \left( \Z/q\Z \right)^{\times} $. There are then $p-1$ distinct nontrivial automorphisms, from which we may take $Q\rtimes_{f}P$.\newline
+
+We claim that the various choices for $f$ yield isomorphic groups.
+\begin{proposition}
+  Let $P = \Z/p\Z$ and $Q = \Z/q\Z$ with $p,q$ prime and $q\equiv 1$ modulo $p$. If
+  \begin{align*}
+    f,g\colon P\rightarrow \aut(Q)
+  \end{align*}
+  are nontrivial homomorphisms, then $Q\rtimes_{f}P$ and $Q\rtimes_{g}P$ are isomorphic.
+\end{proposition}
+\begin{proof}
+  Since $f$ and $g$ are both nontrivial, it follows that $f$ and $g$ are injective (again by Lagrange's Theorem), meaning that since $\aut(Q)$ is cyclic, there is a unique subgroup of order $p$, giving $\img\left( f \right)\cong \img\left( g \right)$.\newline
+
+  Fix a generator for $P$, called $ P = \left\langle s \right\rangle $. Since $f(s)$ and $g(s)$ are both generators for $\img\left( f \right)$ and $\img\left( g \right)$, there is some $\ell$ such that $g(s) = f(s)^{\ell}$. In particular, this means that $g(v) = f(v)^{\ell}$ for all $v\in P$.\newline
+
+  Define the homomorphism $\varphi\colon Q\rtimes_{g}P\rightarrow Q\rtimes_{f}P$ by $\left( x,y \right)\mapsto \left( x,y^{\ell} \right)$. As a map of sets, $\varphi$ is bijective since $\gcd\left( \ell,p \right) = 1$.\newline
+
+  Now, we show that $\varphi$ is a homomorphism.
+  \begin{align*}
+    \varphi\left( \left( x_1,y_1 \right)\left( x_2,y_2 \right) \right) &= \varphi\left( x_1g\left( y_1 \right)\left( x_2 \right),y_1y_2 \right)\\
+                                                                       &= \left( x_1g\left( y_1 \right)\left( x_2 \right),y_1^{\ell}y_2^{\ell} \right)\\
+                                                                       &= \left( x_1f\left( y_1^{\ell} \right)\left( x_2 \right),y_1^{\ell}y_2^{\ell} \right)\\
+                                                                       &= \left( x_1,y_1^{\ell} \right)\left( x_2,y_2^{\ell} \right).
+  \end{align*}
+\end{proof}
 \end{document}

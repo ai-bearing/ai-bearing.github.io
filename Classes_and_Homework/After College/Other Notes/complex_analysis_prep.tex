@@ -1439,7 +1439,7 @@ In the Phragmén--Lindelöf method, we seek to find a particular $\ve$-dependent
                                       &\leq \frac{2}{\left\vert 1 + \ve z \right\vert}\\
                                       &\leq \frac{2}{\ve \left\vert \im(z) \right\vert}.
   \end{align*}
-  Now, we observe that for $z$ in the rectangle with corners $i2/\ve$, $-i2/\ve$, $1 + i2/\ve$, and $1 - i2/\ve$, that
+  Now, we observe that for $z$ in the rectangle with corners $i2/\ve$, $-i2/\ve$, $1/\ve + i2/\ve$, and $1/\ve - i2/\ve$, that
   \begin{align*}
     \left\vert f_{\ve}(z) \right\vert &\leq 1
   \end{align*}
@@ -1478,6 +1478,223 @@ In the Phragmén--Lindelöf method, we seek to find a particular $\ve$-dependent
                                                            &\rightarrow 0
   \end{align*}
   so that $\left( f_{n_k} \right)_k\rightarrow f$ uniformly on $K$. Thus, $\mathcal{F}$ is normal.
+\end{solution}
+\subsection{\href{https://math.virginia.edu/graduate/exams/analysis/2020Jan_complex.html}{January 2020}}%
+\begin{problem}[Problem 1]
+  Compute
+  \begin{align*}
+    \lim_{R\rightarrow\infty} \int_{-R}^{R} \frac{\sin\left( x \right)}{x}\:dx
+  \end{align*}
+  using residue theory.
+\end{problem}
+\begin{solution}
+  We start by taking $f(z) = \frac{e^{iz}}{z}$, and let $\gamma_R$ be the contour defined by a semicircle below the real axis with radius $\delta $ centered at the origin and an outer semicircle with radius $R$, alongside rays from $-R$ to $-\delta$ and $\delta$ to $R$. We observe then that
+  \begin{align*}
+    \oint_{\gamma_R}^{} f(z)\:dz &= \int_{-R}^{-\delta} \frac{e^{ix}}{x}\:dx + \int_{\delta}^{R} \frac{e^{ix}}{x}\:dx\\
+                                 &+ i\int_{\pi}^{2\pi} \frac{e^{i\delta e^{i\theta}}}{\delta e^{i\theta}}\delta e^{i\theta}\:d\theta\\
+                                 &+ \int_{0}^{\pi} \frac{e^{iRe^{i\theta}}}{Re^{i\theta}}iRe^{i\theta}\:d\theta.
+  \end{align*}
+  The left-hand side evaluates to
+  \begin{align*}
+    2\pi i \res\left( f;0 \right) &= 2\pi i \lim_{z\rightarrow 0} \left( \frac{ze^{iz}}{z} \right)\\
+                                  &= 2\pi i.
+  \end{align*}
+  Now, estimating the integral in $R$, we have
+  \begin{align*}
+    \left\vert \frac{iRe^{i\theta}e^{iRe^{i\theta}}}{Re^{i\theta}} \right\vert &= \left\vert e^{iR\left( \cos\left( \theta \right) + i\sin\left( \theta \right) \right)} \right\vert\\
+                                                                               &\leq e^{-R},
+  \end{align*}
+  whence the integral over $R$ goes to zero. Finally, we observe that
+  \begin{align*}
+    \left\vert e^{i\delta e^{i\theta}}\right\vert &= \left\vert e^{i\delta\left( \cos\left( \theta \right) + i\sin\left( \theta \right) \right)} \right\vert\\
+                                                  &= e^{-\delta\sin\left( \theta \right)}
+  \end{align*}
+  For a fixed $\theta$, we observe that $e^{-\delta\sin\left( \theta \right)}\rightarrow 0$ uniformly as $\delta\rightarrow 0$, whence upon taking these various limits, we get
+  \begin{align*}
+    2\pi i &= i \lim_{R\rightarrow\infty}\int_{-R}^{R} \frac{\sin\left( x \right)}{x}\:dx + i\pi,
+  \end{align*}
+  so that
+  \begin{align*}
+    \lim_{R\rightarrow \infty} \int_{-R}^{R} \frac{\sin\left( x \right)}{x}\:dx &= \pi.
+  \end{align*}
+\end{solution}
+\begin{problem}[Problem 2]
+  Let $f$ be a nonconstant entire function. Show that $f\left( \C \right)$ is dense in $\C$.
+\end{problem}
+\begin{solution}
+  Suppose toward contradiction that there were some $w\in \C$ such that there exists $r > 0$ with $U\left( w,r \right)\notin f\left( \C \right)$. Then, we observe that the function
+  \begin{align*}
+    g(z) &= \frac{1}{f(z) - w}
+  \end{align*}
+  is entire since $w\notin f\left( \C \right)$ and has
+  \begin{align*}
+    \left\vert g(z) \right\vert &= \frac{1}{\left\vert f(z) - w \right\vert}\\
+                                &\leq \frac{1}{r},
+  \end{align*}
+  since $\left\vert f(z)- w \right\vert\geq r$. Thus, $g$ is constant by Liouville's Theorem, so $f$ is constant, which contradicts the assumption that $f$ is nonconstant.
+\end{solution}
+\begin{problem}[Problem 3]
+  Let $f$ be an entire function. Assume there is a sequence $\left( r_n \right)_n\subseteq \left( 0,\infty \right)$ with $r_n\rightarrow\infty$ and constants $C,\alpha\in \left( 0,\infty \right)$ such that
+  \begin{align*}
+    \sup_{|z| = r_n} \left\vert f(z) \right\vert &\leq Cr_n^{\alpha}.
+  \end{align*}
+  Show that $f$ is a polynomial.
+\end{problem}
+\begin{solution}
+  Let $N\in \N$ be such that $\alpha < N$. Then, by Cauchy's estimate, we have
+  \begin{align*}
+    \left\vert f^{(N)}\left( 0 \right) \right\vert &\leq \frac{N!}{r_n^{N}} \sup_{|z| = r_n} \left\vert f(z) \right\vert\\
+                                                   &\leq \frac{CN!}{r_n^{N-\alpha}},
+  \end{align*}
+  and since $r_n\rightarrow\infty$, so too does $r_n^{N-\alpha}$, whence $\left\vert f^{(N)}\left( 0 \right) \right\vert = 0$. In particular, this means that the power series expansion of $f$ about $0$, which is equal to $f$ on $\C$ as $f$ is entire, terminates past $N$, meaning that $f$ is a polynomial.
+\end{solution}
+\begin{problem}[Problem 4]
+  Let $\left( f_n \right)_n$ be a sequence of holomorphic functions, and suppose $\left( f_n \right)_n\rightarrow f$ uniformly on compact subsets of $\D$ to a function $f$. Suppose $f$ has no zeros on $\set{z\in \C | \left\vert z \right\vert = \frac{1}{2}}$. Show that there exists an $N\in \N$ such that if $n,m\geq N$, then $f_m$ and $f_n$ have the same number of zeros in $\set{z\in \C | \left\vert z \right\vert < \frac{1}{2}}$, counted with multiplicity.
+\end{problem}
+\begin{solution}
+  Since $S\left( 0,1/2 \right)$ is compact, it follows that $\left( f_n \right)_n\rightarrow f$ uniformly on $S\left( 0,1/2 \right)$. Let $\ve_0 > 0$ be such that $\inf_{z\in S\left( 0,1/2 \right)}\left\vert f(z) \right\vert \geq \ve_0 > 0$. There exists $N\in \N$ such that for all $n\geq N$, we have
+  \begin{align*}
+    \sup_{|z| = 1/2}\left\vert f_n(z) - f(z) \right\vert &< \frac{\ve_0}{2},
+  \end{align*}
+  whence
+  \begin{align*}
+    \left\vert f_n(z) \right\vert &= \left\vert f_n(z) - f(z) + f(z) \right\vert\\
+                                  &\geq \left\vert f(z) \right\vert - \left\vert f_n(z) - f(z) \right\vert\\
+                                  &\geq \frac{\ve_0}{2}\\
+                                  &> 0.
+  \end{align*}
+  In particular, for every $n\geq N$, we have
+  \begin{align*}
+    \left\vert f_n(z) - f(z) \right\vert &< \frac{\ve_0}{2}\\
+                                         &< \ve_0\\
+                                         &\leq \left\vert f(z) \right\vert\\
+                                         &\leq \left\vert f(z) \right\vert + \left\vert f_n(z) \right\vert,
+  \end{align*}
+  so by Rouché's Theorem, it follows that for every $n\geq N$, $f_n$ has the same number of zeros in $U\left( 0,1/2 \right)$ as $f$, whence for all $m,n\geq N$, $f_m$ and $f_n$ have the same number of zeros on $U\left( 0,1/2 \right)$.
+\end{solution}
+\begin{problem}[Problem 5]
+  Let $U\subseteq \C$ be open, and let $f_n\colon U\rightarrow \C$ be a sequence of analytic functions. Suppose that $f_n$ converge pointwise to a function $f\colon U\rightarrow \C$. If $\left\vert f_n \right\vert\leq 1$ for all $n$, show that $f$ is analytic.
+\end{problem}
+\begin{solution}
+  By Montel's Theorem, the collection $\mathcal{F} = \set{f_n | n\in\N}$ is normal as it is locally (globally, even) bounded by $1$.\newline
+
+  Our goal is to show that under this condition, $\left( f_n \right)_n\rightarrow f$ uniformly on compact subsets. The completeness of the space $H\left( U \right)$ under the topology of uniform convergence on compact subsets would then give us our desired result.\newline
+
+  Since $\mathcal{F}$ is normal, it follows that for any subsequence $\left( f_{n_k} \right)_k$, there is a sub-subsequence $\left( f_{n_{k_{j}}} \right)_j\rightarrow h_k$ uniformly on compact subsets, where $h_k$ is necessarily holomorphic. Yet, since every subsequence of $\left( f_n \right)_n$ converges pointwise to $f$, it follows that $h_k = f$ for all $k$. In particular, this means that every subsequence $\left( f_n \right)_k$ admits a sub-subsequence $\left( f_{n_{k_j}} \right)_j\rightarrow f$ uniformly on compact subsets. We show that this implies that $\left( f_n \right)_n\rightarrow f$ uniformly on compact subsets.\newline
+
+  Suppose this were not the case. Then, there would be some compact $K\subseteq U$, some $\ve_0 > 0$, and some subsequence $\left( f_{n_k} \right)_k$ such that $\norm{f_{n_k} - f}_{K}\geq \ve_0$ for all $k$. Yet, since $\left( f_{n_k} \right)_k$ admits a convergent subsequence $\left( f_{n_{k_j}} \right)_j$, it follows that for some $J$, we have $\norm{f_{n_{k_j}} - f}_{K} < \ve_0$ for all $j\geq J$, which is a contradiction. In particular, this means that $\left( f_n \right)_n\rightarrow f$ uniformly on compact subsets, so $f$ is holomorphic.
+\end{solution}
+\subsection{\href{https://math.virginia.edu/graduate/exams/analysis/2020Aug_complex.html}{August 2020}}%
+\begin{problem}[Problem 1]
+  Let $f$ be an entire function, and assume that
+  \begin{align*}
+    \sup_{|z| = r} \left\vert f(z) \right\vert &\leq 10 \ln\left( r \right)
+  \end{align*}
+  for all $r \geq 100$. Show that $f$ is constant.
+\end{problem}
+\begin{solution}
+  If $R > 100$, then by Cauchy's estimates, we have
+  \begin{align*}
+    \left\vert f'(0) \right\vert &\leq \frac{1}{R} \sup_{|z| = R} \left\vert f(z) \right\vert\\
+                                 &\leq \frac{1}{R} \left( 10\ln(R) \right)\\
+                                 &\rightarrow 0
+  \end{align*}
+  as $R\rightarrow\infty$. In particular, this means that the power series expansion for $f(z)$ centered at $0$ terminates after the constant term, whence $f$ is constant.
+\end{solution}
+\begin{problem}[Problem 2]
+  Let $\Omega = \set{z\in \C | 0 < |z| < 1}$. Suppose that
+  \begin{enumerate}[(i)]
+    \item $\left\vert f(z) \right\vert > 1$ for all $z\in \Omega$;
+    \item there exists $\left( z_k \right)_k\subseteq \Omega$ with $\left( z_k \right)_k\rightarrow 0$ and $\left\vert f\left( z_k \right) \right\vert \leq 10$ for all $k$.
+  \end{enumerate}
+  Is $0$ a removable singularity?
+\end{problem}
+\begin{solution}
+  First, since $\left\vert f(z) \right\vert > 1$, we observe that the function
+  \begin{align*}
+    g(z) &= \frac{1}{f(z)}
+  \end{align*}
+  is then holomorphic on $\Omega$, and is bounded above by $1$, meaning that by Riemann's Theorem on removable singularities, there is a holomorphic extension $ \widetilde{g} $ defined on $\D$.\newline
+
+  Observe that $ \widetilde{g} $ is continuous at $z = 0$, so that with the aforementioned sequence $\left( z_k \right)_k$, we have
+  \begin{align*}
+    \left\vert \widetilde{g}(0) \right\vert &= \lim_{k\rightarrow\infty} \left\vert \widetilde{g}\left( z_k \right) \right\vert\\
+                                            &= \lim_{k\rightarrow\infty} \left\vert g\left( z_k \right) \right\vert\\
+                                            &= \lim_{k\rightarrow\infty} \left\vert \frac{1}{f\left( z_k \right)} \right\vert\\
+                                            &\geq \frac{1}{10}.
+  \end{align*}
+   In particular, $\widetilde{g}(0)\neq 0$, so that the extension
+   \begin{align*}
+     \widetilde{f}(z) &= \frac{1}{\widetilde{g}(z)}
+   \end{align*}
+   is a holomorphic extension of $f$ to $\D$, whence $0$ is a removable singularity.
+\end{solution}
+\begin{problem}[Problem 3]
+  Compute
+  \begin{align*}
+    I &= \int_{0}^{\infty} \frac{\ln\left( x \right)}{x^2 + 1}\:dx.
+  \end{align*}
+  Show all estimates.
+\end{problem}
+\begin{solution}
+  Consider the branch of the complex logarithm that excludes the positive real axis, and let $f(z) = \frac{\ln(z)}{z^2 + 1}$. Then, using the contour hugging the positive real axis with imaginary part $\ve$, a semicircle of radius $R$, returning along the negative real axis to $-\ve$, we then get
+  \begin{align*}
+    \oint_{\gamma_R}^{} f(z)\:dz &= \int_{i\ve}^{R + i\ve} \frac{\ln\left( x \right)}{x^2 + 1}\:dx + \int_{-R}^{\ve} \frac{\ln\left( x \right)}{x^2 + 1}\:dx\\
+                                                   &+ \int_{\lambda}^{\pi} \frac{\ln\left( Re^{i\theta} \right)}{R^2e^{2i\theta} + 1}iRe^{i\theta}\:d\theta,
+  \end{align*}
+  so that upon taking $\ve\rightarrow 0$ and using a $u$-substitution on the negative real axis integral, we get
+  \begin{align*}
+    \oint_{\gamma_R}^{} f(z)\:dz &= 2 \int_{0}^{R} \frac{\ln(x)}{x^2 + 1}\:dx + i\pi \int_{0}^{R} \frac{1}{x^2 + 1}\:dx\\
+                                 &+ \int_{0}^{\pi} \frac{\ln\left( R \right) + i\theta}{R^2e^{2i\theta} + 1}iRe^{i\theta}\:d\theta.
+  \end{align*}
+  Estimating the second integral, for $R > 1$, we get
+  \begin{align*}
+    \left\vert \int_{0}^{\pi} \frac{\ln\left( R \right) + i\theta}{R^2e^{2i\theta} + 1}iRe^{i\theta}\:d\theta \right\vert &\leq \pi\left( \frac{R\ln\left( R \right)}{R^2 - 1} + \frac{R\theta}{R^2 - 1} \right)\\
+                                                                                                                                  &\rightarrow 0,
+  \end{align*}
+  so that
+  \begin{align*}
+    2\pi i \res\left( f;i \right) &= 2\pi i \left( \lim_{z\rightarrow i} \frac{\left( z-i \right)\ln\left( i \right)}{2i} \right)\\
+                                  &= \frac{\pi^2}{2}i\\
+                                  &= 2 \int_{0}^{\infty} \frac{\ln\left( x \right)}{x^2 + 1}\:dx + i\pi \left( \frac{\pi}{2} \right),
+  \end{align*}
+  meaning that
+  \begin{align*}
+    \int_{0}^{\pi} \frac{\ln\left( x \right)}{x^2 + 1}\:dx &= 0.
+  \end{align*}
+\end{solution}
+\begin{problem}[Problem 5]
+  Let $\mathcal{F}$ be a family of entire functions with the property that for all circles $C$ there is a constant $M_C$ such that
+  \begin{align*}
+    \sup_{f\in \mathcal{F}}\sup_{|z| \in C} \left\vert f(z) \right\vert &\leq M_C.
+  \end{align*}
+  \begin{enumerate}[(i)]
+    \item Show that there exists a sequence $\left( f_n \right)_n\subseteq \mathcal{F}$ converging to an entire function uniformly on compact subsets.
+    \item Suppose that $f_n(z) \neq 7$ for all $n\geq 77$ and all $z\in \D$. Can it be the case that $g\left( \frac{1+i}{2} \right) = 7$?
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(i)]
+    \item We start by showing that the family $\mathcal{F}$ is a normal family. Letting $z\in \C$, take $r > 0$ such that $z\in U\left( 0,r \right)$, and let $\delta > 0$ be such that $U\left( z,\delta \right)\subseteq U\left( 0,r \right)$. By the assumptions of the problem, we have $M_r$ such that
+      \begin{align*}
+        \sup_{|z| = r} \left\vert f(z) \right\vert &\leq M_r
+      \end{align*}
+      for all $f\in \mathcal{F}$. By the maximum modulus principle, since every element of $\mathcal{F}$ is entire, and thus has a continuous extension to $B\left( 0,r \right)$, we have
+      \begin{align*}
+        \sup_{|z| \leq r} \left\vert f(z) \right\vert &= \sup_{|z| = r} \left\vert f(z) \right\vert,
+      \end{align*}
+      whence
+      \begin{align*}
+        \sup_{w\in U\left( z,\delta \right)} \left\vert f(z) \right\vert &\leq \sup_{|z|\leq r} \left\vert f(z) \right\vert\\
+                                                                         &\leq M_r,
+      \end{align*}
+      for all $f\in \mathcal{F}$. Therefore, the family $\mathcal{F}$ is locally bounded, and is thus normal by Montel's Theorem.\newline
+
+      Therefore, if $\left( f_n \right)_n\subseteq \mathcal{F}$, there is a subsequence $\left( f_{n_k} \right)_k\rightarrow g$ for some $g\in H\left( \C \right)$ uniformly on compact subsets. We will relabel this subsequence to $\left( f_n \right)_n$ for the following question.
+    \item Let $\frac{1}{\sqrt{2}} < r < 1$. Consider the sequence of functions given by $h_n = f_n - 7$. Since $7$ is a constant function, it follows that $h_n\rightarrow g - 7$ uniformly on compact subsets.\newline
+
+      By the assumptions of the problem, $h_n(z) \neq 0$ on $S\left( 0,r \right)$ and the $h_n$ each have no zeros in $U\left( 0,r \right)$. Thus, from Hurwitz's Theorem, it follows that either $g-7$ has no zeros on $U\left( 0,r \right)$ or is uniformly zero on $U\left( 0,r \right)$. If it is the latter case, then since $\frac{1+i}{2}\in U\left( 0,r \right)$, we have that $g\left( \frac{1+i}{2} \right) = 7$.
+  \end{enumerate}
 \end{solution}
 \section{Notation}%
 \begin{itemize}
