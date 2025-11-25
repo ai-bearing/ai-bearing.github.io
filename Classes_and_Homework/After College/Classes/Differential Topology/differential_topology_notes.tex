@@ -2834,7 +2834,118 @@ given by
   \end{align*}
   as we have established that the pairing $\left( \cdot,\cdot \right)$ is nondegenerate.
 \end{proof}
+From linear algebra, we can use the fact that nondegenerate bilinear pairings induce corresponding isomorphisms. This follows from the fact that if $ \left\langle \cdot,\cdot \right\rangle\colon V\times W \rightarrow \R$ is a nondegenerate bilinear pairing of finite-dimensional vector spaces, then for any $v\in V$, there is a unique $\varphi_v\in W^{\ast}$ given by $\varphi_v\left( w \right) = \iprod{v}{w}$. This gives us an isomorphism between $H^k\left( M \right)$ and $H_{n-k}\left( M \right)$ (using the canonical isomorphism of the double dual with the underlying vector space).
+\subsection{Euler Characteristic}%
+Consider a seemingly simple question: given a manifold $M$, is there some manifold $W$ such that $M = \partial W$? As it turns out, this is a pretty difficult question.\newline
 
+To solve it, we will introduce a generalized construction.
+\begin{definition}
+  Let $Y$ be a finite simplicial complex. Then, the \textit{Euler characteristic} of $Y$ is given by
+  \begin{align*}
+    \chi(Y) &= \sum_{i=0}^{\infty} \left( -1 \right)^{i} D_i,
+  \end{align*}
+  where $D_i$ denotes the number of $i$-dimensional simplices in $Y$.
+\end{definition}
+\begin{remark}
+  This is a finite sum, but we included it as a sum to $\infty$ to denote the fact that the number of summands is arbitrary and based on the simplices in the simplicial complex.
+\end{remark}
+\begin{proposition}
+  \begin{align*}
+    \chi(Y) &= \sum_{i=0}^{\infty} \left( -1 \right)^{i}\Dim_{\R} \left( H_i\left( Y;\R \right) \right).
+  \end{align*}
+\end{proposition}
+Since we have shown already that $H_i\left( Y;\R \right)$ is independent of simplicial structure for a manifold, we may employ Poincaré duality to make computations a lot simpler.
+\begin{proof}[Sketch of Proof]
+  We start by noting that the number of $i$-dimensional simplices in $Y$ is precisely equal to $\Dim_{\R}\left( C_i(Y) \right)$. The Euler characteristic then becomes
+  \begin{align*}
+    \chi(Y) &= \sum_{i=0}^{\infty} \left( -1 \right)^{i} \Dim_{\R}\left( C_i\left( Y \right) \right).
+  \end{align*}
+  Now, at position $i$, we have the following commutative diagram.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAGEB9YLAagEYAviEGl0mXPkIp+5KrUYs2XLCLEgM2PASIAmOdXrNWiDtywBaISPkwoAc3hFQAMwBOEALZIyIHBCRZBWM2AB1QtDo3PEY1Vw9vRCD-JH1gpVNwyOisWMEKQSA
+    \begin{tikzcd}
+    C_{i+1} \arrow[r, "\partial"] & C_i \arrow[r, "\partial"] & C_{i-1}
+    \end{tikzcd}
+  \end{center}
+  In particular, we have
+  \begin{itemize}
+    \item $B_i \coloneq \img\left( \partial|_{C_{i+1}} \right)$;
+    \item $Z_i \coloneq \ker\left( \partial|_{C_i} \right)$;
+    \item $B_{i-1}\equiv \img\left( \partial|_{C_i} \right)\cong C_i/Z_i$;
+  \end{itemize}
+  Writing $z_i = \dim\left( Z_i \right)$, $b_i = \dim\left( B_i \right)$, and $c_i = \dim\left( C_i \right)$, we observe that
+  \begin{align*}
+    b_{i-1} = c_i-z_i,
+  \end{align*}
+  so that
+  \begin{align*}
+    \sum_{i=0}^{\infty}\left( -1 \right)^{i}c_i &= \sum_{i=0}^{\infty}\left( -1 \right)^{i}\left( z_i + b_{i-1} \right)\\
+                                                &= \sum_{i=0}^{\infty}\left( -1 \right)^{i} \left( z_i-b_i \right)\\
+                                                &= \sum_{i=0}^{\infty}\left( -1 \right)^{i}\dim\left( H_i \right).
+  \end{align*}
+\end{proof}
+\begin{proposition}
+  Let $M$ be closed of odd dimension. Then, $\chi\left( M \right) = 0$.
+\end{proposition}
+\begin{proof}
+  If $M$ is not orientable, then there is an orientable double cover $ \widetilde{M} $ with $\chi\left( \widetilde{M} \right) = 2\chi\left( M \right)$.\newline
+
+  Thus, it suffices to prove the theorem for the orientable case, which emerges from Poincaré duality, as $k$ is even if and only if $\left( n-k \right)$ is odd, whence the contributions from homology cancel each other out.
+\end{proof}
+The Euler characteristic allows us a powerful tool to prove whether manifolds are the boundary of other manifolds or not. For instance, $ \mathbb{RP}^2 $ is not the boundary of a $3$-manifold. Suppose there were some $W$ with $M = \partial W$. Then, we are able to form a closed manifold $ \widetilde{W} $ by taking the disjoint union of $W$ with itself and ``gluing'' along $M$ in a uniform fashion.\newline
+
+In particular, we observe that
+\begin{align*}
+  \chi\left( \widetilde{W} \right) &= 0\\
+                                   &= 2\chi\left( W \right) - \chi\left( \mathbb{RP}^2 \right)\\
+                                   &= 2\chi\left( W \right) - 1,
+\end{align*}
+meaning that $\chi\left( W \right) = \frac{1}{2}$, which can't happen as $\chi$ is always an integer.
+\section{Morse Theory}%
+Knowing that smooth manifolds are described locally via charts and transition maps, we may now consider the process of describing the topology of a smooth manifold from the local behavior of smooth functions from $M$ to $\R$.\newline
+
+We are going to work with \textit{Morse} functions --- that is, smooth functions $f\colon M\rightarrow \R$ whose critical points are nondegenerate, in the sense that for each $p\in M$, the Hessian matrix
+\begin{align*}
+  H_p\left( f \right) &= \left( \pd{^2f}{x_i\partial x_j} \right)_{i,j}
+\end{align*}
+is nonsingular. We will prove two important facts:
+\begin{itemize}
+  \item Morse functions exist (and in fact there are sufficiently many such functions);
+  \item Morse functions give a \href{https://ncatlab.org/nlab/show/CW+complex}{CW complex} structure for $M$ around the critical points.
+\end{itemize}
+Before we elaborate on these ideas, we need to consider an important issue: is the nondegeneracy of critical points even well-defined?\newline
+
+To do this, we remember that given a Riemannian metric $g$, any local evaluation of $g$ is given by
+\begin{align*}
+  g\left( v,w \right) &= v^{T}Gw
+\end{align*}
+for some (positive definite symmetric) matrix $G$. 
+\begin{proposition}
+  Nondegeneracy of critical points is well-defined.
+\end{proposition}
+\begin{proof}
+  Let $p$ be a critical point of $f$, and let $v,w\in T_pM$. Extend $v$ and $w$ to vector fields $X_v$ and $X_w$ on $M$.\newline
+
+  Define a bilinear form on $T_pM$ given by
+  \begin{align*}
+    f_{\ast\ast}\left( v,w \right) &= \left( X_v \right)_{p}\left( X_w\left( f \right) \right).
+  \end{align*}
+  We claim that $f_{\ast\ast}$ is well-defined and symmetric. Well-definedness emerges from the fact that the value of $f_{\ast\ast}\left( v,w \right)$ only depends on $\left( X_v \right)_p$ and $\left( X_w \right)_p$. As for symmetry, we compute
+  \begin{align*}
+    f_{\ast\ast}\left( v,w \right) - f_{\ast\ast}\left( w,v \right) &= \left[ X_v,X_w \right]_{p}\left( f \right)\\
+                                                                    &= \sum_{i,j}\left( a_i\left( p \right)\pd{b_j}{x_i}(p) - b_i\left( p \right)\pd{a_j}{x_i}\left( p \right) \right) \pd{f}{x_j}\left( p \right)
+                                                                    &= 0
+  \end{align*}
+  for all $j$ since $p$ is a critical point for $f$.\newline
+
+  Computing the bilinear form directly, we have
+  \begin{align*}
+    f_{\ast\ast}\left( v,w \right) &= X_v\left( \sum_{j=1}^{n}b_j\pd{f}{x_j} \right)\\
+                                   &= \sum_{i,j=1}^{n} a_ib_j \pd{^2f}{x_i\partial x_j}\left( p \right)\\
+                                   &= \begin{pmatrix}a_1 & \cdots & a_n\end{pmatrix} \left( \pd{^2f}{x_i\partial x_j} \right)_{i,j} \begin{pmatrix}b_1\\\vdots\\b_n\end{pmatrix}.
+  \end{align*}
+  In particular, we observe that the expression for the Hessian matrix is then invariant under any choice of local coordinates for $p$ (by using the change of coordinates matrix and taking $J^{T}HJ$ to find an equivalent bilinear form).
+\end{proof}
 \section{Notations}%
 \begin{itemize}
   \item A general normed space $V$ will have its norm denoted by $\norm{\cdot}$. If $V = \R^{n}$, then we denote the norm by $ \left\vert \cdot \right\vert $.
