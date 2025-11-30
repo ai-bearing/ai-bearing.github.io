@@ -2908,11 +2908,8 @@ We are going to work with \textit{Morse} functions --- that is, smooth functions
 \begin{align*}
   H_p\left( f \right) &= \left( \pd{^2f}{x_i\partial x_j} \right)_{i,j}
 \end{align*}
-is nonsingular. We will prove two important facts:
-\begin{itemize}
-  \item Morse functions exist (and in fact there are sufficiently many such functions);
-  \item Morse functions give a \href{https://ncatlab.org/nlab/show/CW+complex}{CW complex} structure for $M$ around the critical points.
-\end{itemize}
+is nonsingular. 
+\subsection{Morse Functions}%
 Before we elaborate on these ideas, we need to consider an important issue: is the nondegeneracy of critical points even well-defined?\newline
 
 To do this, we remember that given a Riemannian metric $g$, any local evaluation of $g$ is given by
@@ -2933,7 +2930,7 @@ for some (positive definite symmetric) matrix $G$.
   We claim that $f_{\ast\ast}$ is well-defined and symmetric. Well-definedness emerges from the fact that the value of $f_{\ast\ast}\left( v,w \right)$ only depends on $\left( X_v \right)_p$ and $\left( X_w \right)_p$. As for symmetry, we compute
   \begin{align*}
     f_{\ast\ast}\left( v,w \right) - f_{\ast\ast}\left( w,v \right) &= \left[ X_v,X_w \right]_{p}\left( f \right)\\
-                                                                    &= \sum_{i,j}\left( a_i\left( p \right)\pd{b_j}{x_i}(p) - b_i\left( p \right)\pd{a_j}{x_i}\left( p \right) \right) \pd{f}{x_j}\left( p \right)
+                                                                    &= \sum_{i,j}\left( a_i\left( p \right)\pd{b_j}{x_i}(p) - b_i\left( p \right)\pd{a_j}{x_i}\left( p \right) \right) \pd{f}{x_j}\left( p \right)\\
                                                                     &= 0
   \end{align*}
   for all $j$ since $p$ is a critical point for $f$.\newline
@@ -2945,6 +2942,56 @@ for some (positive definite symmetric) matrix $G$.
                                    &= \begin{pmatrix}a_1 & \cdots & a_n\end{pmatrix} \left( \pd{^2f}{x_i\partial x_j} \right)_{i,j} \begin{pmatrix}b_1\\\vdots\\b_n\end{pmatrix}.
   \end{align*}
   In particular, we observe that the expression for the Hessian matrix is then invariant under any choice of local coordinates for $p$ (by using the change of coordinates matrix and taking $J^{T}HJ$ to find an equivalent bilinear form).
+\end{proof}
+\begin{theorem}[Morse Lemma]
+  Let $p$ be a nondegenerate critical point for $f\colon M\rightarrow \R$. Then, there exist coordinates $\left( y_1,\dots,y_n \right)$ such that
+  \begin{align*}
+    f &= f\left( p \right) - y_1^2 - \cdots - y_{\lambda}^2 + y_{\lambda + 1}^2 + \cdots + y_n^2.
+  \end{align*}
+\end{theorem}
+We call the value $\lambda$ the \textit{index} of $f$ at $p$. In other words, the index is the max-dimensional subspace of $T_pM$ for which $H_p(f)$ is negative definite.
+\begin{proof}[Proof of the Morse Lemma]
+  Choose local coordinates $\left( x_1,\dots,x_n \right)$ about $p$, mapping $p\mapsto 0$; then, we may view $f\colon \R^{n}\rightarrow \R$, with $f(0) = 0$.\newline
+
+  Write
+  \begin{align*}
+    f &= \sum_{i=1}^{n}x_ig_i\left( x_1,\dots,x_n \right),
+  \end{align*}
+  where
+  \begin{align*}
+    g_i &= \int_{0}^{1} \pd{f}{x_i}\left( tx_1,\dots,tx_n \right)\:dt.
+  \end{align*}
+  We will modify these coordinates appropriately. Since $0$ is a critical point, it follows that
+  \begin{align*}
+    g_j\left( x_1,\dots,x_n \right) &= \sum_{i=1}^{n}x_ih_{ij}\left( x_1,\dots,x_n \right).
+  \end{align*}
+  In particular, this gives
+  \begin{align*}
+    f\left( x_1,\dots,x_n \right) &= \sum_{i,j=1}^{n} x_ix_jh_{ij}\left( x_1,\dots,x_n \right).
+  \end{align*}
+  By taking $ \overline{h_{ij}} = \frac{1}{2}\left( h_{ij} + h_{ji} \right) $, we may assume that $h_{ij} = h_{ji}$. Observe that
+  \begin{align*}
+    \left( h_{ij}(0) \right)_{i,j} &= \frac{1}{2}\left( \pd{^2f}{x_ix_j}(0) \right)_{i,j},
+  \end{align*}
+  which we assume is nonsingular by assumption.\newline
+
+  Now, assume by induction that we have found coordinates $u_1,\dots,u_n$ in a neighborhood of $0$ such that we may write
+  \begin{align*}
+    f &= u_1^2\pm u_2^2 \pm \cdots \pm u_{r-1}^2 = \sum_{i,j\geq r} u_iu_jH_{ij}\left( u_1,\dots,u_n \right),
+  \end{align*}
+  where $H_{ij}$ has rank $n-r+1$. After a change of coordinates, we may assume that $H_{rr}(0) = 0$. Define
+  \begin{align*}
+    g\left( u_1,\dots,u_n \right) &= \sqrt{H_{rr}\left( u_1,\dots,u_n \right)}
+  \end{align*}
+  in some neighborhood $U'\subseteq U$ of $0$. We introduce coordinates $v_1,\dots,v_n$ defined by
+  \begin{align*}
+    v_i &= u_i\tag*{$i\neq r$}
+    v_r &= g\left( u_1,\dots,u_n \right)\left( u_r + \sum_{i > r} \frac{u_iH_{ir}\left( u_1,\dots,u_n \right)}{H_{rr}\left( u_1,\dots,u_n \right)} \right).
+  \end{align*}
+  By applying the inverse function theorem on $U''\subseteq U'$, we observe that $\left( u_1,\dots,u_n \right)\mapsto \left( v_1,\dots,v_n \right)$ is a nonsingular change of coordinates, so
+  \begin{align*}
+    f &= \sum_{i=1}^{n} \pm v_i^2 + \sum_{i,j > r} v_iv_jH_{ij}'\left( v_1,\dots,v_n \right).
+  \end{align*}
 \end{proof}
 \section{Notations}%
 \begin{itemize}
