@@ -1,0 +1,135 @@
+\documentclass[12pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+\usepackage{homework}
+\usepackage{notes}
+\usepackage{newpxtext,eulerpx,eucal}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\fancyhf{}
+\fancyhead[C]{Calculus II Review and Exam Preparation: Solutions}
+\fancyhead[L]{}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{center}
+  \large
+  Avoid looking at these solutions until you have genuinely given the practice problems an honest attempt. Each part will have solutions on a separate section, given in the table of contents, so even if you do want to see a solution, please only look at the solution for the part you are stuck on.
+\end{center}
+\tableofcontents
+\pagebreak
+\section{Problem 1}%
+\begin{problem}\hfill
+\begin{enumerate}[(a)]
+  \item Consider the solid defined by rotating the region bounded by $x = 0$, $x = \pi/2$, $y = 0$, and $y = \cos(x)$. Set up integrals $I_1$ and $I_2$ for the volume and surface area of this solid respectively.
+  \item Find the volume of the solid by resolving the integral. 
+  \item Similarly, find an expression for the surface area of this solid. To find the antiderivative, you may find the following steps useful.
+    \begin{enumerate}[(i)]
+      \item Use a substitution to express the integral entirely in terms of square roots and polynomial expressions.
+      \item Take $u = \tan(\theta)$ and use trigonometric identities to express the integral solely in terms of $\sec\left( \theta \right)$.
+      \item Extract a factor of $\sec^2(\theta)$ and use integration by parts and a trigonometric identity to reduce this integral to that of $\sec(\theta)$.
+      \item To evaluate the integral of $\sec(\theta)$, multiply top and bottom by $\sec(\theta) + \tan(\theta)$, then use a substitution.
+    \end{enumerate}
+\end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item We start by considering the following graph.
+\begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[
+        axis lines=center,
+        xlabel={$x$},
+        ylabel={$y$},
+        domain=0:pi/2,
+        samples=200,
+        grid=major,
+        grid style={line width=0.1pt, draw=gray!40},
+        xmin=0, xmax=pi/1.9,
+        ymin=0, ymax=1.2,
+        xtick={0, pi/8, pi/4, 3*pi/8, pi/2},
+        xticklabels={$0$, $\pi/8$, $\pi/4$, $3\pi/8$, $\pi/2$},
+        ytick={0, 0.25, 0.5, 0.75, 1},
+        yticklabels={$0$, $1/4$, $1/2$, $3/4$, $1$},
+        width=8cm,
+        height=8cm,
+        thick
+    ]
+    % Plot sin²(x)
+    \addplot[red, very thick, smooth] {cos(deg(x))};
+
+    % Add function label
+    \node[red] at (axis cs:3*pi/8,1) {$f(x) = \cos(x)$};
+
+    \end{axis}
+  \end{tikzpicture}
+\end{center}
+In order to write the volume of the solid, we see that at any $x$, the solid looks similar to a cylinder of height $dx$ and radius $\cos(x)$. In the limit, this gives that the volume can be written as
+\begin{align*}
+  A &= \int_{0}^{\pi/2} \pi \cos^2(x)\:dx.
+\end{align*}
+Similarly, the arc length is given by $\sqrt{dx^2 + dy^2}$, or $\sqrt{1 + \left( \diff{y}{x} \right)^2}dx$, meaning that, by using the surface area expression, we get
+\begin{align*}
+  S &= \int_{0}^{\pi/2} 2\pi \cos(x)\sqrt{1 + \sin^2(x)}\:dx.
+\end{align*}
+\item To evaluate the volume, we use the identity that $\cos(2x) = 2\cos^2(x)-1$. By rearranging, this gives that $\cos^2(x) = \frac{1 + \cos(2x)}{2}$. Therefore, we get
+  \begin{align*}
+    \int_{0}^{\pi/2} \pi\cos^2(x)\:dx &= \frac{\pi}{2} \int_{0}^{\pi/2} 1\:dx + \frac{\pi}{2} \int_{0}^{\pi/2} \cos(2x)\:dx.
+    \intertext{By substituting with $u = 2x$ on the second integral and evaluating the first integral, we get}
+                                      &= \frac{\pi^2}{4} + \frac{\pi}{4} \int_{0}^{\pi} \cos(u) \:du.
+                                      &= \frac{\pi^2}{4} + \frac{\pi}{4} \left( \sin(u)|_{0}^{\pi} \right)\\
+                                      &= \frac{\pi^2}{4} + \frac{\pi}{4} \left( \sin(\pi) - \sin(0)\right)\\
+                                      &= \frac{\pi^2}{4}.
+  \end{align*}
+\item Evaluating the surface area integral will be a bit more involved. For now, we will disregard the bounds, and only evaluate them at the very end.\newline
+
+  First, define $t = \sin(x)$, meaning $dt = \cos(x) dx$, and the substitution gives
+  \begin{align*}
+    \int_{0}^{\pi/2} \cos(x)\sqrt{1 + \sin^2(x)}\:dx &= \int_{0}^{1} \sqrt{1 + t^2}\:dt.
+  \end{align*}
+  We then define $t = \tan(\theta)$, or that $\theta = \arctan(t)$, meaning that we get $dt = \sec^2(\theta)\:d\theta$. This gives
+  \begin{align*}
+    \int_{0}^{1} \sqrt{1 + t^2}\:dt &= \int_{0}^{\pi/4} \sqrt{1 + \tan^2(\theta)}\sec^2(\theta)\:d\theta\\
+                                  &= \int_{0}^{\pi/4} \sec^3(\theta)\:d\theta.
+  \end{align*}
+  To evaluate this particular integral, we take out a factor of $\sec^2\theta$, and use integration by parts. Since the derivative of $\tan(\theta)$ is $\sec^2\theta$, we let $dv = \sec^2\theta d\theta$, $u = \sec\theta$, and get
+  \begin{align*}
+    \int_{0}^{\pi/4} \sec^3(\theta)\:d\theta &= \sec\left( \theta \right)\tan\left( \theta \right)\vert_{0}^{\pi/4} - \int_{0}^{\pi/4} \sec(\theta)\tan^2\theta\:d\theta.
+    \intertext{Substituting $\tan^2\theta = \sec^2\theta - 1$, we have}
+                                             &= \sec(\theta)\tan(\theta)|_{0}^{\pi/4} - \int_{0}^{\pi/4} \sec^3\theta\:d\theta + \int_{0}^{\pi/4} \sec(\theta)\:d\theta.
+  \end{align*}
+  Therefore, we get that
+  \begin{align*}
+    \int_{0}^{\pi/4} \sec^3(\theta)\:d\theta &= \left(\frac{1}{2}\sec(\theta)\tan(\theta) \right)\biggr\vert_{0}^{\pi/4} + \frac{1}{2}\int_{0}^{\pi/4} \sec(\theta)\:d\theta.
+  \end{align*}
+  Finally, to evaluate the integral of $\sec(\theta)$, we multiply both numerator and denominator by $\sec(\theta) + \tan(\theta) $. All in all, this gives
+  \begin{align*}
+    \left( \frac{1}{2}\sec(\theta)\tan(\theta) \right)\biggr\vert_{0}^{\pi/4} + \frac{1}{2}\int_{0}^{\pi/4} \sec(\theta)\:d\theta &= \frac{1}{2}\sqrt{2} + \int_{0}^{\pi/4} \frac{\sec^2\theta + \sec(\theta)\tan(\theta)}{\sec(\theta) + \tan(\theta)}\:d\theta.
+    \intertext{Using one final substitution, this time taking the dummy variable $q = \sec(\theta) + \tan(\theta)$, we get}
+                                                                                                                                  &= \frac{1}{2}\sqrt{2} + \frac{1}{2}\int_{1}^{\sqrt{2} + 1} \frac{1}{q}\:dq\\
+                                                                                                                                  &= \frac{1}{2}\sqrt{2} + \left( \frac{1}{2}\ln\left\vert q \right\vert \right) \biggr\vert_{1}^{\sqrt{2} + 1}\\
+                                                                                                         &= \frac{1}{2}\sqrt{2} + \frac{1}{2}\ln\left( 1 + \sqrt{2} \right)
+  \end{align*}
+  This is our final surface area.
+  \end{enumerate}
+\end{solution}
+\begin{remark}
+  It is possible to use a different evaluation technique, where instead of substituting tangent, one instead substitutes a \href{https://en.wikipedia.org/wiki/Hyperbolic_functions}{hyperbolic trigonometric function}. The hyperbolic sine and cosine are given by
+  \begin{align*}
+    \sinh(x) &= \frac{e^{x} - e^{-x}}{2}\\
+    \cosh(x) &= \frac{e^{x} + e^{-x}}{2}.
+  \end{align*}
+  Similar to how $\sin$ and $\cos$ are defined on the circle $x^2 + y^2 = 1$, with $\sin$ being the $y$-value and $\cos$ being the $x$-value, $\sinh$ and $\cosh$ emerge from the hyperbola $x^2 - y^2 = 1$, with $\sinh$ being the $y$-value and $\cosh$ being the $x$-value. The corresponding ``Pythagorean'' identity for $\sinh$ and $\cosh$ is then
+  \begin{align*}
+    \cosh^2(x) - \sinh^2(x) &= 1.
+  \end{align*}
+  Do you think you can rework the solution by using this identity for your substitution?
+\end{remark}
+\end{document}
