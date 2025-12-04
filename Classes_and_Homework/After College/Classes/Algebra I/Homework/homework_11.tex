@@ -57,7 +57,7 @@
   Let $G = \left\langle x \right\rangle$ be a cyclic group, $H$ an arbitrary group. Let $\varphi_1,\varphi_2\colon G\rightarrow \aut(H)$ be homomorphisms such that $\img\left( \varphi_1 \right)$ and $\img\left( \varphi_2 \right)$ are conjugate. If $G$ is infinite, also assume that $\varphi_1$ and $\varphi_2$ are injective. Prove that the semidirect products $H\rtimes_{\varphi_1}G$ and $H\rtimes_{\varphi_2}G$ are isomorphic.
 \end{problem}
 \begin{solution}
-  Let $M_1 = \varphi_1(G)$ and $M_2 = \varphi_2(G)$. We start with the case that $G$ is an infinite cyclic group, operating under the assumption that $\varphi_1$ and $\varphi_2$ are injective. It then follows that $M_1 = \left\langle \varphi_1\left( x \right) \right\rangle$ and $M_2 = \left\langle \varphi_2\left( x \right) \right\rangle$ by injectivity. Since $M_1$ and $M_2$ are conjugate, it follows that there is some $g\in \aut(H)$ such that $gM_1g^{-1} = M_2$. Conjugation is an isomorphism, so this means that $g\varphi_1\left( x \right)g^{-1} = \varphi_2(x)$ as generators are mapped to generators under isomorphism.\newline
+  Let $M_1 = \varphi_1(G)$ and $M_2 = \varphi_2(G)$. We start with the assumption that $\varphi_1$ and $\varphi_2$ are injective and that $G$ is infinite. It then follows that $M_1 = \left\langle \varphi_1\left( x \right) \right\rangle$ and $M_2 = \left\langle \varphi_2\left( x \right) \right\rangle$ by injectivity. Since $M_1$ and $M_2$ are conjugate, it follows that there is some $g\in \aut(H)$ such that $gM_1g^{-1} = M_2$. Conjugation is an isomorphism, so this means that $g\varphi_1\left( x \right)g^{-1} = \varphi_2(x)^{\ell}$ for some integer $\ell$. Yet, since $G$ is infinite, it must be the case that $\ell = 1$.\newline
 
   Define the map $\psi\colon H\rtimes_{\varphi_1}G \rightarrow H\rtimes_{\varphi_2}G$ by taking
   \begin{align*}
@@ -68,9 +68,25 @@
     \psi\left( \left( x_1,y_1 \right)\left( x_2,y_2 \right) \right) &= \psi\left( x_1\varphi_1\left( y_1 \right)\left( x_2 \right),y_1y_2 \right)\\
                                                                     &= \left( g\left( x_1 \right)g\left( \varphi_1\left( y_1 \right)\left( x_2 \right) \right),y_1y_2 \right)\\
                                                                     &= \left( g\left( x_1 \right)\varphi_2\left( y_1 \right)\left( g\left( x_2 \right) \right),y_1y_2 \right)\\
-                                                                    &= \left( g\left( x_1 \right),y_1 \right)\left( g\left( x_2 \right),y_2 \right).
+                                                                    &= \left( g\left( x_1 \right),y_1 \right) \cdot \left( g\left( x_2 \right),y_2 \right).
   \end{align*}
-  Therefore, we only need to show the case for when $G$ is of finite order. 
+  Now, suppose $G$ is of finite order. Via a similar process, we observe that there is $g\in \aut\left( H \right)$ such that $g\varphi_1(x)g^{-1} = \varphi_2(x)^{a} = \varphi_2\left( x^{a} \right)$ for some $a\in \Z$. Observe that $\gcd\left( a,m \right) = 1$, where $m$ is the order of the image of $G$ under both $\varphi_1$ and $\varphi_2$. If $a$ is already coprime to $n$, then $\left\langle x^{a} \right\rangle = G$. Else, we use the fact established via the Chinese Remainder Theorem that the surjection $\left[ w \right]_n\rightarrow \left[ w \right]_m$ induces a surjection from $\left( \Z/n\Z \right)^{\times}\rightarrow \left( \Z/m\Z \right)^{\times}$ whenever $m | n$. In particular, this means there is some $a'\in \Z/n\Z$ such that $a'\equiv a$ modulo $m$ and $\gcd\left( a',n \right) = 1$.\newline
+
+  Define the map
+  \begin{align*}
+    \Psi\colon H\rtimes_{\varphi_1}G &\rightarrow H\rtimes_{\varphi_2}(G)\\
+    \left( x,y \right) &\mapsto \left( g(x),y^{a'} \right).
+  \end{align*}
+  Since $G = \left\langle x \right\rangle = \left\langle x^{a'} \right\rangle$ and $g$ is an automorphism, it follows that $\Psi$ is a bijective set map, so all we need to verify is that $\Psi$ is a group homomorphism. This can be seen by taking
+  \begin{align*}
+    \Psi\left( \left( x_1,y_1 \right)\cdot \left( x_2,y_2 \right) \right) &= \Psi\left( x_1\varphi_1\left( y_1 \right)\left( x_2 \right),y_1y_2 \right)\\
+                                                                          &= \left( g\left( x_1 \right)g\varphi_1\left( y_1 \right)\left( x_2 \right),y_1^{a'}y_2^{a'} \right)\\
+                                                                          &= \left( g\left( x_1 \right)\varphi_2\left( y_1 \right)^{a}g\left( x_2 \right),y_1^{a'}y_2^{a'} \right)\\
+                                                                          &= \left( g\left( x_1 \right) \varphi_2\left( y_1^{a} \right)g\left( x_2 \right),y_1^{a'}y_2^{a'} \right)\\
+                                                                          &= \left( g\left( x_1 \right)\varphi_2\left( y_1^{a'} \right)g\left( x_2 \right),y_1^{a'}y_2^{a'} \right)\\
+                                                                          &= \left( g\left( x_1 \right),y_1^{a'} \right)\cdot \left( g\left( x_2 \right),y_2^{a'} \right)\\
+                                                                          &= \Psi\left( x_1,y_1 \right)\cdot \Psi\left( x_2,y_2 \right).
+  \end{align*}
 \end{solution}
 \begin{problem}[Problem 3]\hfill
   \begin{enumerate}[(a)]
@@ -98,5 +114,51 @@
 
       Thus, there are exactly three groups of order $75$ up to isomorphism.
   \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 4]
+  Let $G$ be a group of order $n = 2k$, where $k$ is odd. Show that $G$ is not simple. You can use the following steps.
+  \begin{enumerate}[(a)]
+    \item Consider the injection $\rho\colon G\hookrightarrow S_n$ given by Cayley's Theorem. Let $H = \left\langle x \right\rangle$ be a subgroup of $G$ of order $2$. Show that $\rho(x)$ is an odd permutation. Deduce that $\img\left( \rho \right)\cap A_n$ is a normal subgroup of $\img\left( \rho \right)$ of index $2$.
+    \item Show that $G$ has a subgroup of index $2$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}
+  Let $\rho\colon G\hookrightarrow S_n$ be the permutation representation for the left-regular action given by Cayley's theorem. If $H = \left\langle x \right\rangle$ is a subgroup of order $2$, then $x$ has order $2$. Since injective homomorphisms preserve order, it follows that $\rho(x)$ has order $2$.
+
+  Decomposing $\rho(x)$ into disjoint cycles,
+  \begin{align*}
+    \rho(x) &= \tau_1\cdots \tau_r,
+  \end{align*}
+  we observe that each of the $\tau_i$ are transpositions since $\rho(x)$ has order $2$. Furthermore, since the action of $G$ on itself is free, it follows that we cannot have any identity permutations in the cycle decomposition of $\rho(x)$ (as $x$ is not identity), meaning that there are $k$ such transpositions. Since $k$ is odd, $\rho(x)$ is thus an odd permutation.\newline
+
+  In particular, since identity is an even permutation and $\rho(x)$ is an odd permutation, it follows that the composition $\sgn\circ \rho\colon G\rightarrow \set{-1,1}$ is a surjective group homomorphism, so the kernel of this map is a proper normal subgroup of $G$. Thus, $G$ is not simple.
+\end{solution}
+\begin{problem}[Problem 5]
+  Classify all groups up of order 28.
+\end{problem}
+\begin{solution}
+  We start by analyzing the nature of the Sylow subgroups. Writing $28 = 2^2\cdot 7$, we observe that there is at least one $7$-Sylow subgroup and at least one $2$-Sylow subgroup. Yet, if there were more than one $7$-Sylow subgroup, then there would have to be at least $8$, but $8\nmid 4$. Thus, there is a unique $7$-Sylow subgroup. Similarly, since the number of $2$-Sylow subgroups is odd and divides $7$, it follows that there must be a unique $2$-Sylow subgroup. This subgroup is also normal.\newline
+
+  Thus, right away, we are able to use the classification of finite abelian groups to find two such groups of order $28$, given by
+  \begin{align*}
+    G_1 &= \Z/4\Z\times \Z/7\Z\\
+    G_2 &= \Z/2\Z\times\Z/2\Z\times \Z/7\Z.
+  \end{align*}
+  These groups are not isomorphic to each other since $G_1$ contains an element of order $4$ and $G_2$ does not.\newline
+
+  Next, we consider all homomorphisms from $\Z/4\Z$ and $\Z/2\Z\times \Z/2\Z$ respectively into $\left( \Z/7\Z \right)^{\times}$. Observe that $\left( \Z/7\Z \right)^{\times}\cong \Z/6\Z$. There is thus an element of order $2$ in $\left( \Z/7\Z \right)^{\times}$, the equivalence class $[6]$, so we define homomorphisms $\varphi \colon\Z/4\Z\rightarrow \left( \Z/7\Z \right)^{\times}$ and $\psi\colon \Z/2\Z\times \Z/2\Z\rightarrow \left( \Z/7\Z \right)^{\times}$ by taking $1\mapsto [6]$ and $(0,1)\mapsto [6],\left( 1,0 \right)\mapsto [1]$ respectively. The corresponding semidirect products $\Z/7\Z\rtimes_{\varphi}\Z/4\Z$ and $\Z/7\Z\rtimes_{\psi}\Z/2\Z\times\Z/2\Z$ are not isomorphic to each other since the former contains the element $\left( 0,1 \right)$ that has order $4$, while the latter does not contain any element of order $4$.\newline
+
+  The only case we need to verify is for the semidirect product $\Z/7\Z\rtimes_{\psi}\Z/2\Z\times\Z/2\Z$, since we may also define $\left( 1,0 \right)\mapsto [6],\left( 0,1 \right)\mapsto [1]$ as another map from $\Z/2\Z\times\Z/2\Z\rightarrow \left( \Z/7\Z \right)^{\times}$. Yet, these are isomorphic under the map
+  \begin{align*}
+    \Psi\colon \Z/7\Z\rtimes_{\psi_1}\Z/2\Z\times\Z/2\Z &\rightarrow \Z/7\Z\rtimes_{\psi_2}\Z/2\Z\times\Z/2\Z\\
+    \left( x,\left( y,z \right) \right) &\mapsto \left( x,\left( z,y \right) \right).
+  \end{align*}
+  Thus, the four isomorphism classes for groups of order $28$ are given by the following:
+  \begin{itemize}
+    \item $\Z/7\Z\times\Z/2\Z\times\Z/2\Z$
+    \item $\Z/7\Z\times\Z/4\Z$
+    \item $\Z/7\Z\rtimes \Z/4\Z$
+    \item $\Z/7\Z\rtimes \Z/2\Z\times\Z/2\Z$.
+\end{itemize}
 \end{solution}
 \end{document}
