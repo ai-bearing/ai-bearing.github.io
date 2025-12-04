@@ -1516,7 +1516,7 @@ To understand conjugacy in $S_n$ and $A_n$, we recall some properties of the sym
     \begin{align*}
       \sigma &= \begin{pmatrix}1 & 2 & \cdots & n \\ \sigma(1) & \sigma(2) & \cdots & \sigma(n)\end{pmatrix}.
     \end{align*}
-  \item An element of the form $\left( i_1,i_2 \right)$ is called a transposition, and an element of teh form $\left( i_1,\dots,i_k \right)$ is called a $k$-cycle.
+  \item An element of the form $\left( i_1,i_2 \right)$ is called a transposition, and an element of the form $\left( i_1,\dots,i_k \right)$ is called a $k$-cycle.
   \item Every $\sigma\in S_n$ can be written as a product of disjoint cycles.
   \item Disjoint cycles commute with each other.
   \item The order of a $k$-cycle is $k$, and the order of
@@ -1546,5 +1546,160 @@ To understand conjugacy in $S_n$ and $A_n$, we recall some properties of the sym
     \sigma\left( f \right) &= \sgn\left( \sigma \right) f
   \end{align*}
   As a result, we find that transpositions are odd, and $\sgn$ is surjective, so $S_n/A_n\cong \Z/2\Z$.
+\end{proof}
+In order to understand conjugacy in $S_n$ and $A_n$, we need to understand what the conjugacy class of a cycle is.
+\begin{proposition}
+  Let $g\in S_n$ be arbitrary, and let $\sigma = \left( i_1,\dots,i_k \right)$ be a $k$-cycle. Then,
+  \begin{align*}
+    g\sigma g^{-1} &= \left( g\left( i_1 \right),\dots,g\left( i_k \right) \right).
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Computing directly, we have
+  \begin{align*}
+    g\sigma g^{-1}\left( g\left( i_{\ell} \right) \right) &= \begin{cases}
+      g\left( i_{\ell + 1} \right) & \ell < k\\
+      g\left( i_1 \right) & \ell = k
+    \end{cases}.
+  \end{align*}
+  Now, if $x\notin \set{g\left( i_1 \right),\dots,g\left( i_{\ell} \right)}$, then $g^{-1}\left( x \right)\notin \set{i_1,\dots,i_{\ell}}$, meaning that $\sigma$ fixes $g^{-1}(x)$, so that $g\sigma g^{-1}$ fixes $x$. 
+\end{proof}
+Thus, we have that the conjugacy class of any $k$-cycle is the set of all $k$-cycles:
+\begin{align*}
+  K_{S_n}\left( \sigma \right) &= K_{S_n} \left( \left( 1,\dots,k \right) \right).
+\end{align*}
+Computing the number of $k$-cycles is an exercise in combinatorics, meaning that we have
+\begin{align*}
+  \left\vert K_{S_n}\left( \sigma \right) \right\vert &= \frac{1}{k}\left( n\left( n-1 \right)\cdots \left( n-\left( k-1 \right) \right) \right).
+\end{align*}
+In general, we have that two permutations $\sigma,\tau\in S_n$ are conjugate if and only if they have the same \href{https://groupprops.subwiki.org/wiki/Cycle_type_of_a_permutation}{cycle type} (partitions of $n$ into cycle lengths).\newline
+
+Therefore, we have that the number of conjugacy classes in $S_n$ is equal to the number of partitions of $n$.\newline
+
+Next, we compute centralizers for a $k$-cycle. If $k = n$, then we see that $Z_{S_k}\left( \sigma \right) = \left\langle \sigma \right\rangle$, as if $\tau\in Z_{S_k}\left( \sigma \right)$, then
+\begin{align*}
+  \tau\left( i_1 \right) &= i_r
+\end{align*}
+for some $r=1,\dots,n$. Multiplying by $\sigma^{\ell}$ for a suitable $\ell$ yields $\sigma^{\ell}\tau\left( i_1 \right) = i_1$, or that
+\begin{align*}
+  \left( \sigma^{\ell}\tau \right)\sigma \left( \sigma^{\ell}\tau \right)^{-1} &= \sigma,
+\end{align*}
+whence $\sigma^{\ell}\tau\left( i_j \right) = i_j$, or that $\tau\in \left\langle \sigma \right\rangle$.\newline
+
+Now, if $k\leq n$, then we observe that for any $\tau\in Z_{S_n}\left( \sigma \right)$, we have that $\tau|_{\set{i_1,\dots,i_k}}$ is equal to $\sigma^{m}|_{\set{i_1,\dots,i_k}}$, while there is no restriction for any $\tau$ on $\set{1,\dots,n}\setminus \set{i_1,\dots,i_k}$. Thus, we have that
+\begin{align*}
+  Z_{S_n}\left( \sigma \right) &\cong \left\langle \sigma \right\rangle\times S_{n-k},
+\end{align*}
+since the subgroups commute, so that
+\begin{align*}
+  \left\vert Z_{S_n}\left( \sigma \right) \right\vert &= \left\vert \left\langle \sigma \right\rangle \right\vert\cdot \left\vert S_{n-k} \right\vert\\
+                                                      &= k\cdot \left( n-k \right)!.
+\end{align*}
+Orbit-stabilizer yields our original fact that
+\begin{align*}
+  \left\vert K_{S_n}\left( \sigma \right) \right\vert &= \frac{1}{k}\left( n\left( n-1 \right)\cdots \left( n-\left( k-1 \right) \right) \right).
+\end{align*}
+If $\pi = \sigma_1\cdots \sigma_r$ has a cycle decomposition with pairwise distinct lengths $k_1,\dots,k_r$, then for any $\rho \in Z_{S_n}\left( \pi \right)$, we have
+\begin{align*}
+  \rho \pi \rho^{-1} &= \left( \rho \sigma_1\rho^{-1} \right) \cdots \left( \rho\sigma_r\rho^{-1} \right)\\
+                     &= \sigma_1\cdots \sigma_r,
+\end{align*}
+whence
+\begin{align*}
+  \rho\sigma_1\rho^{-1} &= \sigma_1\\
+                        &\vdots\\
+  \rho\sigma_r\rho^{-1} &= \sigma_r.
+\end{align*}
+In particular, this means that $\rho\in Z_{S_n}\left( \sigma_i \right)$ for each $i=1,\dots,r$. This gives the isomorphism
+\begin{align*}
+  Z_{S_n}\left( \pi \right) &\cong \prod_{i=1}^{r} \left\langle \sigma_i \right\rangle\times S_{n-\left( k_1+\cdots+k_r \right)}.
+\end{align*}
+Finally, if $\pi = \sigma_1\cdots \sigma_\ell$ all with length $k$, we observe that an arbitrary permutation $\tau\in Z_{S_n}\left( \pi \right)$ may simply permute the cycles $\sigma_1,\dots,\ell$ in addition to what has been seen earlier. In particular, we have
+\begin{align*}
+  Z_{S_n}\left( \pi \right) &\cong \left( \prod_{i=1}^{\ell}\sigma_i\rtimes_{f} S_{\ell} \right)\times S_{n-k\ell},
+\end{align*}
+where the semidirect product emerges from the fact that the permutations that permute the cycles $\sigma_1,\dots,\sigma_{\ell}$ induce a nontrivial automorphism on 
+\begin{align*}
+  N &= \prod_{i=1}^{\ell}\sigma_i\times S_{n-k\ell}\\
+    &\leq Z_{S_n}\left( \pi \right).
+\end{align*}
+Thus, we get the most general case.
+\begin{theorem}
+  Let $\pi$ be a product of $\ell_1,\dots,\ell_t$ cycles with lengths $k_1,\dots,k_t$ respectively. Then,
+  \begin{align*}
+    Z_{S_n}\left( \pi \right) &\cong Z_{S_{k_1\ell_1}}\left( \pi_1 \right)\times\cdots\times Z_{S_{k_t\ell_t}}\left( \pi_t \right)\times S_{\set{\text{what's left}}},
+  \end{align*}
+  where each $\pi_j\in S_{k_j\ell_j}$ is a product of $\ell_j$ cycles with length $k_j$.
+\end{theorem}
+We now discuss the special case of conjugacy in the alternating group. Simply by definition, if $\sigma\in A_n$, then we know that $K_{S_n}\left( \sigma \right)\leq A_n$. The question is when $K_{A_n}\left(\sigma\right) = K_{S_n}\left(\sigma\right)$. There is in fact a very simple characterization.
+\begin{lemma}
+  Let $\sigma\in A_n$. Then,
+  \begin{align*}
+    K_{A_n}\left( \sigma \right) &= K_{S_n}\left( \sigma \right)
+  \end{align*}
+  if and only if $Z_{S_n}\left( \sigma \right)$ contains an odd permutation.
+\end{lemma}
+\begin{proof}
+  We have that $K_{S_n}\left( \sigma \right) = K_{A_n}\left( \sigma \right)$ if and only if for all $g\in S_n$, there is $h\in A_n$ such that $g\sigma g^{-1} = h\sigma h^{-1}$. Yet, this means that for all $g\in S_n$, there is $h\in A_n$ such that $h^{-1}g\in Z_{S_n}\left( \sigma \right)$. By the definition of cosets, this holds if and only if $gZ_{S_n}\left( \sigma \right) = hZ_{S_n}\left( \sigma \right)$, whence it holds if and only if $S_n = \left( A_n \right)\left( Z_{S_n}\left( \sigma \right) \right)$.\newline
+
+  Since $A_n$ consists exclusively of even permutations, and $S_n$ contains odd permutations, it follows that this holds if and only if $Z_{S_n}\left( \sigma \right)$ contains an odd permutation.
+\end{proof}
+\begin{theorem}
+  The group $A_5$ is simple.
+\end{theorem}
+\begin{proof}
+  We start by proving for $n = 5$. In order to do this, we count conjugacy classes in $S_5$ and $A_5$. The partitions of $5$ correspond to the following conjugacy classes.
+  \begin{itemize}
+    \item Cycles of type $5$:
+      \begin{align*}
+        \left\vert K_{S_5}\left( \left( 1,2,3,4,5 \right) \right) \right\vert &= \frac{5!}{5}\\
+                                                                              &= 24.
+      \end{align*}
+    \item Cycles of type $4+1$:
+      \begin{align*}
+        \left\vert K_{S_5}\left( 1,2,3,4 \right) \right\vert &= \frac{\left( 5 \right)\left( 4 \right)\left( 3 \right)\left( 2 \right)}{4}\\
+                                                             &= 30.
+      \end{align*}
+    \item Cycles of type $3+1+1$:
+      \begin{align*}
+        \left\vert K_{S_5}\left( \left( 1,2,3 \right) \right) \right\vert &= \frac{\left( 5 \right)\left( 4 \right)\left( 3 \right)}{3}\\
+                                                                          &= 20.
+      \end{align*}
+    \item Cycles of type $2+1+1+1$:
+      \begin{align*}
+        \left\vert K_{S_5}\left( \left( 1,2 \right) \right) \right\vert &= {5\choose 2}\\
+                                                                        &= 10.
+      \end{align*}
+    \item Cycles of type $3+2$:
+      \begin{align*}
+        \left\vert K_{S_5}\left( \left( 1,2,3 \right)\left( 4,5 \right) \right) \right\vert &= 20
+      \end{align*}
+    \item Cycles of type $2+2+1$:
+      \begin{align*}
+        \left\vert K_{S_5}\left( \left( 1,2 \right)\left( 3,4 \right) \right) \right\vert &= \frac{\left\vert S_5 \right\vert}{\left\vert Z_{S_5}\left( \left( 1,2 \right)\left( 3,4 \right) \right) \right\vert}\\
+                                                                                          &= \frac{5!}{2^3}\\
+                                                                                          &= 15,
+      \end{align*}
+      where we use the fact that the stabilizer is isomorphic to $\Z/2\Z\times \Z/2\Z\rtimes_{f} \Z/2\Z$.
+  \end{itemize}
+  In $A_5$, we only care about the even permutations --- that is, the $5$-cycles, $3$-cycles, and the cycles of type $2+2$. 
+  \begin{itemize}
+    \item The conjugacy class of the $1$-cycle consists exclusively of $e$. Therefore, the $1$-cycles endow $A_5$ with $1$ conjugacy class with $1$ element.
+    \item To find the conjugacy class(es) of the $3$-cycles, observe that the centralizer $Z_{S_n}\left( \left( 1,2,3 \right) \right)$ includes the transposition $\left( 4,5 \right)$. Therefore, by the lemma, $K_{A_5}\left( \left( 1,2,3 \right) \right) = K_{S_5}\left( \left( 1,2,3 \right) \right)$. Therefore, the $3$-cycles endow $A_5$ with $1$ conjugacy class with $20$ elements.
+    \item To find the conjugacy class(es) of the cycles with type $2+2$, observe that $\left( 1,2 \right)\in Z_{S_5}\left( \left( 1,2 \right)\left( 3,4 \right) \right)$. Therefore, by the lemma, $K_{A_5}\left( \left( 1,2 \right)\left( 3,4 \right) \right) = K_{S_5}\left( \left( 1,2 \right)\left( 3,4 \right) \right)$. Therefore, the cycles of type $2+2$ type endow $A_5$ with $1$ conjugacy class with $15$ elements.
+    \item To find the conjugacy class(es) for the $5$ cycles, observe that if $\sigma$ is a $5$-cycle, then $Z_{S_5}\left( \sigma \right) = \left\langle \sigma \right\rangle$, so $K_{A_5}\left( \sigma \right)\subsetneq K_{S_5}\left( \sigma \right)$. Yet, we have that $Z_{S_5}\left( \sigma \right) = Z_{A_5}\left( \sigma \right)$, so
+      \begin{align*}
+        \left\vert K_{A_5}\left( \sigma \right) \right\vert &= \left\vert \frac{A_5}{Z_{S_5}\left( \sigma \right)} \right\vert\\
+                                                            &= \left\vert \frac{A_5}{Z_{A_5}\left( \sigma \right)} \right\vert\\
+                                                            &= \frac{1}{2}\left\vert K_{S_5}\left( \sigma \right) \right\vert
+                                                            &= 12.
+      \end{align*}
+      Therefore, the $5$-cycles endow $A_5$ with $2$ disjoint conjugacy classes with $12$ elements each.
+  \end{itemize}
+  The class equation for $A_5$ thus yields
+  \begin{align*}
+    60 &= 1 + 20 + 15 +12 + 12.
+  \end{align*}
+  Since no combination of $1$ with any of $20,15,12,12$ divides $60$ unless it is equal to $1$ or $60$, it follows that $A_5$ has no proper normal subgroups, so $A_5$ is simple.
 \end{proof}
 \end{document}
