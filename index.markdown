@@ -17,4 +17,6 @@ For Fall 2025, I am a discussion leader for a section of Calculus II (Math 1320)
 ## Interests
 I primarily like theoretical mathematics, mostly oriented around functional analysis and operator algebras. I did my honors thesis on amenability and my REU was in complex analysis.
 
+## [Posts](postdir.md)
+
 ## [Quotes](quotes.md)

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Useful Resources"
+title: "Resources"
 permalink: "/useful_resources.html"
 ---
 
