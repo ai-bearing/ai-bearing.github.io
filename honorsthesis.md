@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Honors Thesis Notes"
+title: "Honors Thesis and Notes"
 permalink: /honors_thesis.html
 ---
 ## [Paradoxical Decompositions and Tarski's Theorem](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors Thesis/amenability_notes.pdf)

@@ -5,10 +5,10 @@ title: Welcome to my website!
 use_math: true
 layout: home
 ---
-Hi. I'm Avinash.
+Hi, I'm Avinash. 
 
 ## Who am I?
-I am a first-year mathematics PhD student at the University of Virginia.
+I am a first-year mathematics PhD student at the University of Virginia. I got my undergraduate degree from Occidental College, where I studied math and was an opinions editor for the school's newspaper. I also participated in an REU at East Texas A&M University where my group worked on Toeplitz operators acting on weighted Bergman spaces.
 
 For Fall 2025, I am a discussion leader for a section of Calculus II (Math 1320), as well as the grader for Advanced Linear Algebra (Math 4651).
 
@@ -17,4 +17,4 @@ For Fall 2025, I am a discussion leader for a section of Calculus II (Math 1320)
 ## Interests
 I primarily like theoretical mathematics, mostly oriented around functional analysis and operator algebras. I did my honors thesis on amenability and my REU was in complex analysis.
 
-## [Honors Thesis Directory](honorsthesis.md)
+##[Quotes](quotes.md)

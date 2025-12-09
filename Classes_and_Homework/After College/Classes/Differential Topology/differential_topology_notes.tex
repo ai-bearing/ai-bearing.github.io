@@ -759,6 +759,106 @@ Complete vector fields on manifolds enable us to create diffeomorphisms. Further
 
   Thus $\operatorname{diff}\left( M \right)$ acts transitively on points in the same chart. Meanwhile, if $p$ and $q$ are not in some chart, we find a finite length ``chain'' of intersecting charts that move from the chart at $p$ to the chart at $q$, then by composing a finite collection of diffeomorphisms, we find our desired diffeomorphism.
 \end{proof}
+\begin{remark}
+  For any $f\in C^{\infty}\left( M \right)$, we have
+  \begin{align*}
+    \lim_{t\rightarrow 0} \frac{f\circ \varphi_t(p)-f(p)}{t} &= X(f)(p).
+  \end{align*}
+\end{remark}
+\subsection{Homotopies, Isotopies, and Degree of a Map}%
+\begin{definition}
+  Let $f,g\colon X\rightarrow Y$ be smooth maps of subsets of $\R^{n}$. We say $f\simeq g$ are (smoothly) \textit{homotopic} if there is a smooth map $F\colon X\times [0,1]\rightarrow Y$ with $F\left( x,0 \right) = f(x)$ and $F\left( x,1 \right) = g(x)$.
+\end{definition}
+\begin{proposition}
+  Smooth homotopy is an equivalence relation.
+\end{proposition}
+\begin{proof}
+  Reflexivity and symmetry are clear, as the first follows from the identity map and the latter follows from the fact that linear maps are smooth.\newline
+
+  As for transitivity, we let $\varphi\colon [0,1]\rightarrow [0,1]$ be a smooth function with $\varphi(t) = 0$ for $0\leq t \leq 1/3$ and $\varphi(t) = 1$ for $2/3\leq t \leq 1$. Given a smooth homotopy $F$ between $f$ and $g$, then we observe that $G\left( x,t \right) = F\left( x,\varphi(t) \right)$ is a smooth homotopy such that $G(x,t) = f(x)$ for $0\leq t \leq 1/3$ and $G(x,t) = g(x)$ for $2/3\leq t \leq 1$. Thus, the piecewise defined homotopy
+  \begin{align*}
+    H\left( x,t \right) &= \begin{cases}
+      G\left( x,2t \right) & 0\leq t \leq 1/2\\
+      G\left( x,2t-1 \right) & 1/2\leq t \leq 1
+    \end{cases}.
+  \end{align*}
+\end{proof}
+\begin{definition}
+  We say two diffeomorphisms $f$ and $g$ are smoothly isotopic if there is a smooth homotopy $F\colon X\times [0,1]\rightarrow Y$ such that for all $t$, $F\left( \cdot,t \right)$ is a diffeomorphism.
+\end{definition}
+\begin{proposition}
+  Let $f,g\colon M\rightarrow N$ be smoothly homotopic maps between manifolds of the same dimension. If $y\in N$ is a regular value for both $f$ and $g$, then $\left\vert f^{-1}\left( \set{y} \right) \right\vert \equiv \left\vert g^{-1}\left( \set{y} \right) \right\vert$.
+\end{proposition}
+\begin{proof}
+  Let $F\colon M\times [0,1]\rightarrow N$ be a smooth homotopy between $f$ and $g$. We start by assuming that $y$ is a regular value for $F$. Then, $F^{-1}\left( \set{y} \right)$ is a compact $1$-manifold with boundary, where the boundary is equal to
+  \begin{align*}
+    \partial F^{-1}\left( \set{y} \right) &= F^{-1}\left( \set{y} \right)\cap \left( M\times \set{0}\cup M\times \set{1} \right)\\
+                                          &= f^{-1}\left( \set{y} \right)\times \set{0} \cup g^{-1}\left( \set{y} \right)\times \set{1}.
+  \end{align*}
+  Therefore, the total number of boundary points is equal to $\left\vert f^{-1}\left( \set{y} \right) \right\vert + \left\vert g^{-1}\left( \set{y} \right) \right\vert$. Yet, every compact $1$-manifold has an even number of boundary points, so that $\left\vert f^{-1}\left( \set{y} \right) \right\vert + \left\vert g^{-1}\left( \set{y} \right) \right\vert \equiv 0$ mod $2$.\newline
+
+  Now, suppose $y$ is not a regular value for $F$. We use the fact that $\left\vert f^{-1}\left( \set{y} \right) \right\vert$ and $\left\vert g^{-1}\left( y \right) \right\vert$ are locally constant functions away from critical values, so there is a neighborhood $V_1$ of $y$ consisting of regular values for $f$, whence $\left\vert f^{-1}\left( y' \right) \right\vert = \left\vert f^{-1}\left( y \right) \right\vert$ for all $y'\in V_1$, and similarly for $V_2$ with $g$. Thus, we let $z\in V_1\cap V_2$, giving $\left\vert f^{-1}\left( y \right) \right\vert = \left\vert f^{-1}\left( z \right) \right\vert \equiv \left\vert g^{-1}\left( z \right) \right\vert = \left\vert g^{-1}\left( y \right) \right\vert$ mod $2$, completing the proof.
+\end{proof}
+\begin{proposition}[Homogeneity Lemma]
+  Let $y$ and $z$ be arbitrary interior points of a smooth connected manifold $N$. Then, there exists a diffeomorphism $h\colon N\rightarrow N$ smoothly isotopic to the identity that maps $y$ to $z$.
+\end{proposition}
+\begin{proof}
+  We will construct a smooth isotopy from $\R^n$ to $\R^n$ that fixes all points outside the unit ball and maps the origin to any desired point within the ball.\newline
+
+  Let $\varphi\colon \R^{n}\rightarrow \R^{n}$ be a smooth function with closed support $B\left( 0,1 \right)$. Given any $v\in S^{n-1}$, we consider the system of equations defined by
+  \begin{align*}
+    \diff{x_i}{t} &= v_i\varphi\left( x_1,\dots,x_n \right).
+  \end{align*}
+  For any $x_0\in \R^{n}$, these equations have a unique solution defined for all of $\R$ that satisfies the initial condition $x(0) = x_0$. Let $x(t) = F_t\left( x_0 \right)$ be this solution.\newline
+
+  Each $F_t$ is a diffeomorphism from $\R^{n}$ into itself; observe that $F_t$ is smoothly isotopic to the identity that fixes every point outside $F_t$. With suitable choice of $v$ and $t$, it follows that $F_t$ will carry the origin to any point in the open unit ball.\newline
+
+  We consider the ``isotopy class'' of a point $y$ to be the set of all points $z$ where such an isotopy exists. We can cover $N$ by disjoint open subsets of isotopy classes, but since $N$ is connected, there is exactly one such isotopy class.
+\end{proof}
+\begin{proposition}
+  Suppose $y$ and $z$ are regular values of $f\colon M\rightarrow N$. Then, $\left\vert f^{-1}\left( \set{y} \right) \right\vert = \left\vert f^{-1}\left( \set{z} \right) \right\vert$.
+\end{proposition}
+\begin{proof}
+  Let $h\colon N\rightarrow N$ be a map taking $y\mapsto z$ that is smoothly isotopic to the identity. Then, $z$ is a regular value of $h\circ f$, and $f \simeq h\circ f $ are smoothly homotopic, whence $\left\vert \left( h\circ f \right)^{-1}\left( \set{z} \right) \right\vert \equiv \left\vert f^{-1}\left( \set{z} \right) \right\vert$ modulo $2$. Substituting $\left( h\circ f \right)^{-1} = f^{-1}\circ h^{-1}$, we thus get that $\left\vert f^{-1}\left( \set{y} \right) \right\vert \equiv \left\vert f^{-1}\left( \set{z} \right) \right\vert$ modulo $2$.
+\end{proof}
+We can extend the definition of degree modulo $2$ to the general case of a degree by using orientability (see below at the beginning of the Integration and de Rham Cohomology section).
+\begin{definition}
+  Let $M$ and $N$ be oriented $n$-dimensional manifolds without boundary, and let $f\colon M\rightarrow N$ be a smooth map, with $M$ compact and $N$ connected.\newline
+
+  Let $y\in N$ be a regular value for $f$. Define
+  \begin{align*}
+    \deg\left( f,y \right) &= \sum_{x\in f^{-1}\left( \set{y} \right)} \sgn\left( D_xf \right),
+  \end{align*}
+  where the sign of the linear map $D_xf$ is defined to be the sign of its determinant.
+\end{definition}
+\begin{lemma}
+  Let $M = \partial X$. If $f\colon M\rightarrow N$ is a smooth map that extends to $F\colon X\rightarrow N$, then $\deg\left( f,y \right) = 0$ for all regular values.
+\end{lemma}
+\begin{proof}
+  Let $y$ be a regular value for $F$ as well as for $f$. The compact $1$-manifold $F^{-1}\left( \set{y} \right)$ is a finite union of arcs and circles, with the only boundary points of the arcs lying on $M$. Let $x\in A\subseteq F^{-1}\left( \set{y} \right)$ have corresponding basis $\left( \partial_1,\dots,\partial_{n+1} \right)$, with $\partial_1$ tangent to $A$. Then, by definition, $\partial_1$ determines the orientation for $T_xA$ if and only if $D_xF$ takes $\left( \partial_2,\dots,\partial_{n+1} \right)$ to a positively oriented basis for $T_yN$.\newline
+
+  We observe that by following the positively oriented unit vector tangent to $A$ at each point $x$, we observe that the vector switches orientations from one boundary point $a$ to a boundary point $b$. In particular, we have $\sgn\left( D_af \right) = -1$ and $\sgn\left( D_bf \right) = 1$.\newline
+
+  Thus, adding over all arcs, we have that $\deg\left( f,y \right) = 0$.\newline
+
+  If $y_0$ is a regular value for $f$ but not for $F$, we observe that the function $\deg\left( f,y \right)$ is locally constant for some neighborhood $U$ of $y_0$. Thus, we may find some regular value $y$ for $F$ within $U$ giving $\deg\left( f,y_0 \right) = 0$.
+\end{proof}
+\begin{lemma}
+  If $f$ and $g$ are homotopic, then $\deg\left( g,y \right) = \deg\left( f,y \right)$ for any $y$ that is a regular value for both $f$ and $g$.
+\end{lemma}
+\begin{proof}
+  The manifold $M\times [0,1]$ can be oriented as a product, where $M\times \set{1}$ has positive orientation and $M\times \set{0}$ has negative orientation. The degree of $F|_{\partial M\times [0,1]}$ can be found by $\deg\left( g,y \right) - \deg\left( f,y \right) = 0$.
+\end{proof}
+\begin{theorem}
+  If $y,z$ are any two regular values for $f\colon M\rightarrow N$, then $\deg\left( f,y \right) = \deg\left( f,z \right)$.
+\end{theorem}
+\begin{proof}
+  We use the homogeneity lemma to pick $h\colon N\rightarrow N$ such that $y\mapsto z$ and $h$ is isotopic to the identity. Then, $h$ preserves orientation, and $\deg\left( f,y \right) = \deg\left( h\circ f,h(y) \right)$, whence $\deg\left( h\circ f,z \right) = \deg\left( f,z \right)$. Thus, $\deg\left( f,y \right) = \deg\left( f,z \right)$.
+\end{proof}
+Thus, we may drop the $y$ in $\deg\left( f,y \right)$, and write $\deg\left( f \right)$. Analogously, the following theorem holds.
+\begin{theorem}
+  If $f$ and $g$ are smoothly homotopic functions, then $\deg\left( f \right) = \deg\left( g \right)$.
+\end{theorem}
 \section{Differential Forms}%
 Now that we have a (reasonable) understanding of the tangent spaces of a manifold, we now concern ourselves with the dual to the tangent space, which are known as the \textit{cotangent spaces}. Similar to how vector fields emerge from the tangent bundle and its projection onto $M$, the ``dual'' to vector fields, known as differential forms, emerge from the cotangent bundle..\newline
 
@@ -1830,8 +1930,37 @@ Now, the question emerges: how do we know that this is the \textit{only} generat
 \end{align*}
 Observe that if these weights are not constant on $C\in C_n\left( M;\R \right)$, then $C\notin Z_n\left( M;\R \right)$.
 \begin{definition}
-  If $M$ and $N$ are closed, orientable, connected manifolds with $f\colon M\rightarrow N$ a smooth map, then $f$ induces a map $f_{\ast}\colon H_{n}\left( M;\R \right)\rightarrow H_n\left( N;\R \right)$, which is a linear map from $\R$ to $\R$. The multiplier is equal to the \textit{degree} of $f$.
+  If $M$ and $N$ are closed, orientable, connected manifolds with $f\colon M\rightarrow N$ a smooth map, then $f$ induces a map $f_{\ast}\colon H_{n}\left( M;\R \right)\rightarrow H_n\left( N;\R \right)$, which is a linear map from $\R$ to $\R$. The multiplier is also known as the degree of $f$.
 \end{definition}
+\begin{proposition}
+  The two definitions of the degree --- the one given by the sum of the signs of the derivative, and the one on cohomology --- agree.
+\end{proposition}
+\begin{proof}
+  Let $\omega\in H^n_{\operatorname{DR}}\left( N \right)$ be a nonvanishing top-dimensional form. By the naturality of the de Rham isomorphism, there is $\lambda$ such that
+  \begin{align*}
+    \int_{M}^{} f^{\ast}\omega &= \lambda \int_{N}^{} \omega.
+  \end{align*}
+  Let $q$ be a regular value for $f$. Use a smooth bump function to restrict $\omega$ to a small open neighborhood $V$ of $q$. It follows then that $f^{-1}\left( \set{q} \right) = \set{p_1,\dots,p_{\ell}}$ for some $\ell$, with corresponding disjoint open neighborhoods $U_1,\dots,U_{\ell}$, each locally diffeomorphic to $V$, and the support of $f^{\ast}\omega$ is contained in the union of $U_1,\dots,U_{\ell}$. If $f^{-1}\left( \set{q} \right) = \emptyset$, then
+  \begin{align*}
+    \int_{M}^{} f^{\ast}\omega &= \int_{\emptyset}^{} f^{\ast}\omega\\
+                               &= \lambda \int_{N}^{} \omega\\
+                               &= 0,
+  \end{align*}
+  whence $\lambda = 0$. Meanwhile, if $f^{-1}\left( \set{q} \right)\neq \emptyset$, then
+  \begin{align*}
+    \int_{M}^{} f^{\ast}\omega &= \sum_{k=1}^{\ell} \int_{U_k}^{} f^{\ast}\omega.
+  \end{align*}
+  Since $f$ is a local diffeomorphism on each of the $U_k$, it follows that
+  \begin{align*}
+    \int_{U_k}^{} f^{\ast}\omega &= \sgn\left( D_{p_k}f \right) \int_{V}^{} \omega\\
+                                 &= \sgn\left( D_{p_k}f \right) \int_{N}^{} \omega.
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    \lambda \int_{N}^{} \omega &= \int_{M}^{} f^{\ast}\omega\\
+                               &= \sum_{k=1}^{n} \sgn\left( D_{p_k}f \right) \int_{N}^{} \omega.
+  \end{align*}
+\end{proof}
 \subsection{Generalized Stokes's Theorem on $k$-Forms}%
 Let $\sigma\colon \Delta^{k}\rightarrow M$ be a smooth, singular $k$-simplex. We observe that the pullback of $\omega\in \mathcal{A}^{k}\left( M \right)$ with respect to $\sigma$, $\sigma^{\ast}\omega$, is a $k$-form on $\Delta^{k}$. Then, the boundary map $\partial$ can have its definition extended to a map from singular $k$-chains to singular $\left( k-1 \right)$-chains.
 \begin{theorem}[Stokes's Theorem]
