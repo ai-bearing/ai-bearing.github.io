@@ -1,0 +1,144 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%\usepackage{homework}
+\usepackage{notes}
+\usepackage{newpxtext,eulerpx,eucal}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{The Fourier Transform: Complex Analysis Edition}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+These are some notes I'm taking on the Fourier transform for functions with domain on a particular type of subset of $\C$.
+\begin{definition}
+  Let $0 < a < \infty$. The class $\mathcal{F}_a$ is the family of holomorphic functions 
+  \begin{align*}
+    f\colon \set{z\in \C | \left\vert \im(z) \right\vert < a} &\rightarrow \C
+  \end{align*}
+  for which
+  \begin{align*}
+    A_{f,\ve} &\coloneq \sup_{\left\vert \im(z) \right\vert < a} \left( 1 + \left\vert \re(z) \right\vert \right)^{1+\ve}\left\vert f(z) \right\vert
+  \end{align*}
+  is finite for some $\ve > 0$.\newline
+
+  We define
+  \begin{align*}
+    \mathcal{F} &= \bigcup_{0 < a < \infty} \mathcal{F}_a
+  \end{align*}
+\end{definition}
+\begin{definition}
+  If $f\in \mathcal{F}$, we define the \textit{Fourier transform} of $f$ by
+  \begin{align*}
+    \hat{f}\left( \xi \right) &= \int_{-\infty}^{\infty} f(x)e^{-2\pi i x \xi}\:dx.
+  \end{align*}
+\end{definition}
+\begin{lemma}
+  If $f\in \mathcal{F}_a$, then for any $0 \leq b < a$, we have
+  \begin{align*}
+    \hat{f}\left( \xi \right) &= \begin{cases}
+      \int_{-\infty}^{\infty} f\left( x-ib \right)e^{-2\pi i \left( x-ib \right)\xi}\:dx & \xi \geq 0\\
+      \int_{-\infty}^{\infty} f\left( x + ib \right)e^{-2\pi i \left( x + ib \right)\xi}\:dx & \xi \leq 0.
+    \end{cases}
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  For $0 < b < a$, define $g(z) = f(z)e^{-2\pi i z \xi}$. Let $\gamma_R$ be the rectangle with corners $-R,R,R-ib,-R-ib$ traversed \textit{clockwise}. As $R\rightarrow\infty$, the integral on the top horizontal line tends to $\hat{f}\left( \xi \right)$.\newline
+
+  The integral over the left vertical line is estimated by
+  \begin{align*}
+    \left\vert i\int_{-b}^{0} f\left( -R + iy \right)e^{-2\pi i \left( -R + iy \right)\xi}\:dy \right\vert &\leq \frac{A_{f,\ve}}{R^{1+\ve}} \int_{-B}^{0} e^{-2\pi y \xi}\:dy\\
+                                                                                                           &\leq \frac{A_{f,\ve}}{R^{1+\ve}},
+  \end{align*}
+  which tends to zero as $R\rightarrow\infty$. A similar bound holds for the integral over the right horizontal line. Since $f$ is holomorphic, Cauchy's Integral theorem implies that
+  \begin{align*}
+    0 &= \hat{f}\left( \xi \right) - \int_{-\infty}^{\infty} f\left( x-ib \right)e^{-2\pi i \left( x-ib \right)\xi}\:dx,
+    \intertext{whence}
+    \hat{f}\left( \xi \right) &= \int_{-\infty}^{\infty} f\left( x-ib \right)e^{-2\pi i \left( x-ib \right)\xi}\:dx.
+  \end{align*}
+  An analogous argument holds for $\xi \leq 0$ when the rectangle is taken over the upper half-plane.
+\end{proof}
+\begin{corollary}
+  If $f\in \mathcal{F}_a$, then $ \hat{f}\left( \xi \right) $ has exponential decay, in the sense that there is some $B \geq 0$ such that
+  \begin{align*}
+    \left\vert \hat{f}\left( \xi \right) \right\vert &\leq Be^{-2\pi b \left\vert \xi \right\vert}
+  \end{align*}
+  for all $0\leq b < a$.
+\end{corollary}
+\begin{proof}
+  For $0 < b < a$, and $\xi \geq 0$, we have
+  \begin{align*}
+    \hat{f}\left( \xi \right) &= \int_{-\infty}^{\infty} f\left( x-ib \right)e^{-2\pi i \left( x-ib \right)\xi}\:dx.
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    \left\vert \hat{f}\left( \xi \right) \right\vert &\leq A_{f,\ve} e^{-2\pi b \xi} \int_{-\infty}^{\infty} \frac{1}{\left( 1 + \left\vert x \right\vert \right)^{1+\ve}}\:dx.
+  \end{align*}
+  Therefore, we get the desired bound for $\xi \geq 0$. A similar argument yields the desired bound for $\xi \leq 0$.
+\end{proof}
+\begin{theorem}[Fourier Inversion Formula]
+  If $f\in \mathcal{F}$, we have
+  \begin{align*}
+    f(x) &= \int_{-\infty}^{\infty} \hat{f}\left( \xi \right)e^{2\pi i x \xi}\:d\xi.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Write
+  \begin{align*}
+    \int_{-\infty}^{\infty} \hat{f}\left( \xi \right)e^{2\pi i x \xi}\:d\xi &= \int_{-\infty}^{0} \hat{f}\left( \xi \right)e^{2\pi i x \xi}\:d\xi + \int_{0}^{\infty} \hat{f}\left( \xi \right)e^{2\pi i x \xi}\:d\xi.
+  \end{align*}
+  We consider the second integral. Since $f\in \mathcal{F}_a$ for some $a$, we let $0 < b < a$. We use the lemma to write
+  \begin{align*}
+    \hat{f}\left( \xi \right) &= \int_{-\infty}^{\infty} f\left( u-ib \right)e^{-2\pi i \left( u-ib \right)\xi}\:du.
+  \end{align*}
+  Using the convergence of integration over $\xi$ and Fubini's Theorem,
+  \begin{align*}
+    \int_{0}^{\infty} \hat{f}\left( \xi \right)e^{2\pi i x \xi}\:d\xi &= \int_{0}^{\infty} \int_{-\infty}^{\infty} f\left( u-ib \right)e^{-2\pi i \left( u-ib \right)\xi}e^{2\pi i x \xi}\:du\:d\xi\\
+                                                                      &= \int_{-\infty}^{\infty} \int_{0}^{\infty} e^{-2\pi i \left( u-ib-x \right)\xi}\:d\xi\:du\\
+                                                                      &= \int_{-\infty}^{\infty} f\left( u-ib \right)\frac{1}{2\pi b + 2\pi \left( u-x \right)}\:du\\
+                                                                      &= \frac{1}{2\pi i} \int_{-\infty}^{\infty} \frac{f\left( u-ib \right)}{u-ib-x}\:du\\
+                                                                      &= \frac{1}{2\pi i} \int_{L_1}^{} \frac{f\left( \zeta \right)}{\zeta - x}\:d\zeta,
+  \end{align*}
+  where $L_1$ is the line $u-ib$ traversed from left to right. Similarly, we may write
+  \begin{align*}
+    \int_{-\infty}^{0} \hat{f}\left( \xi \right)e^{2\pi i x \xi}\:d\xi &= -\frac{1}{2\pi i} \int_{L_2}^{} \frac{f\left( \zeta \right)}{\zeta - x}\:d\zeta,
+  \end{align*}
+  where $L_2$ is the line $u+ib$ traversed from right to left. If we close up this contour into a rectangle, then we find that we get
+  \begin{align*}
+    f(x) &= \lim_{R\rightarrow\infty}\frac{1}{2\pi i} \int_{\gamma_R}^{} \frac{f\left( \zeta \right)}{\zeta - x}\:d\zeta\\
+         &= \frac{1}{2\pi i}\int_{L_1}^{} \frac{f\left( \zeta \right)}{\zeta - x}\:d\zeta - \frac{1}{2\pi i} \int_{L_2}^{} \frac{f\left( \zeta \right)}{\zeta - x}\:d\zeta.
+  \end{align*}
+\end{proof}
+The Fourier inversion formula gives access to a converse that provides structural properties of functions.
+\begin{lemma}
+  Let $f\colon \R\rightarrow \C$ be a continuous integrable function. Suppose its Fourier transform is such that there exists some $B\geq 0$ and $a > 0$ such that $ \left\vert \hat{f}\left( \xi \right) \right\vert \leq Be^{-2\pi a \left\vert \xi \right\vert} $. Then, there exists a holomorphic function $g\in \mathcal{F}_a$ such that $g(x) = f(x)$.
+\end{lemma}
+\begin{proof}
+  Define the entire function
+  \begin{align*}
+    f_n(z) &= \int_{-n}^{n} \hat{f}\left( \xi \right)e^{2\pi i x \xi}\:d\xi.
+  \end{align*}
+  For $z\in \set{z\in \C | \left\vert \im(z) \right\vert < b}$, the function
+  \begin{align*}
+    g(z) &= \int_{-\infty}^{\infty} \hat{f}\left( \xi \right)e^{2\pi i z \xi}\:d\xi
+  \end{align*}
+  is well-defined, since the decay condition on $\hat{f}$ ensure the absolute convergence of the integral. By Fourier inversion, $g(x) = f(x)$ for all $x\in \R$. Finally, $g$ is holomorphic, as the sequence converges uniformly to $g$, as
+  \begin{align*}
+    \left\vert f_n(z) - g(z) \right\vert &\leq B\left( \int_{-\infty}^{-n} e^{-2\pi \left( a-b \right)\xi}\:d\xi + \int_{n}^{\infty} e^{-2\pi\left( a-b \right)\xi}\:d\xi \right)\\
+                                         &= \frac{2Be^{-2\pi \left( a-b \right) n}}{2\pi \left( a-b \right)},
+  \end{align*}
+  which converges to $0$ uniformly as $n$ tends to infinity.
+\end{proof}
+\begin{theorem}[Paley--Wiener Theorem]
+  Let $f\colon \R\rightarrow \R$ be continuous, integrable, and have integrable Fourier transform. Then, $\hat{f}$ is supported on an interval of the form $\left[ -M,M \right]$ for some $M > 0$ if and only if there exists an entire function $g\colon \C\rightarrow \C$ for which there exists some $A \geq 0$ such that $\left\vert g(z) \right\vert \leq Ae^{2\pi M \left\vert z \right\vert}$ and $g(x) = f(x)$ for all $x\in \R$.
+\end{theorem}
+\end{document}
