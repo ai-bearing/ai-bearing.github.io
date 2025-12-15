@@ -1835,5 +1835,176 @@ Solvability is useful because it has a similar inheritance property to Noetheria
     \item Let $\pi\colon G\rightarrow G/N$ be the canonical projection. Since $G/N$ is solvable, there is some index $n$ such that $D^{(n)}(G)/N = D^{(n)}\left( G/N \right) = \set{e}$. Therefore, $D^{(n)}(G)\leq N$. Since $N$ is solvable, there is an index $m$ such that $D^{(m)}(N) = \set{e}$. Thus, $D^{(m+n)}\left( G \right) \leq D^{(m)}(N) = \set{e}$.
   \end{enumerate}
 \end{proof}
+\begin{corollary}
+  Every finite $p$-group is solvable.
+\end{corollary}
+\begin{proof}
+  Since $\left\vert G \right\vert = p^{r}$ for some $r \geq 1$, we know a few cases. If $r = 1$, then $G = \Z/p\Z$, and $G$ is then abelian.\newline
 
+  If $r > 1$, then $Z(G)$ is nontrivial, and if $Z(G) = G$, $G$ is abelian and we are done yet again. Else, both $G/Z(G)$ and $Z(G)$ are nontrivial $p$-groups with order less than $p^{r}$, so the induction hypothesis and the previous proposition give us our desired outcome.
+\end{proof}
+\begin{corollary}
+  If $G$ is a group of order $pq$ or order $p^2q$ with $p$ and $q$ distinct primes, then $G$ is solvable.
+\end{corollary}
+\begin{proof}
+  We have that $G$ has some normal $p$-subgroup (or $q$-subgroup) from the Sylow theorem, so we may use the previous proposition.
+\end{proof}
+\begin{definition}
+  Let $G$ be a group. A \textit{subnormal} series for $G$ is a sequence of subgroups
+  \begin{align*}
+    G = G_0 \geq G_1\geq \cdots \geq G_n \geq \cdots
+  \end{align*}
+  with $G_{i+1}\trianglelefteq G_i$. We call the quotients $G_{i}/G_{i+1}$ the \textit{factors} of the series. If each $G_i\trianglelefteq G$ is normal, then we call the series a normal series.
+\end{definition}
+\begin{proposition}
+  A group $G$ is solvable if and only if $G$ admits a subnormal series terminating at the identity,
+  \begin{align*}
+    G = G_0\trianglerighteq G_1\trianglerighteq\cdots\trianglerighteq G_n = \set{e},
+  \end{align*}
+  with all factors abelian.
+\end{proposition}
+\begin{proof}
+  In the forward direction, the derived subgroup series satisfies the condition.\newline
+
+  Now, suppose $G$ admits such a series. Since $G_n = \set{e}$, and $G_{n-1}\cong G_{n-1}/G_n$ is abelian, $G_{n-1}$ is solvable. Since $G_{n-2}$ has a solvable normal subgroup and solvable quotient, it follows that $G_{n-2}$ is solvable. Continuing up the chain gives the desired result.
+\end{proof}
+\subsection{Nilpotent Groups}%
+\begin{proposition}
+  Let $K\trianglelefteq G$ be a subgroup, and let $K\leq H\leq G$ be a series of subgroups. Then, $\left[ H,G \right]\leq K$ if and only if $H/K\leq Z\left( G/K \right)$.
+\end{proposition}
+\begin{proof}
+  Let $h\in H$ and $g\in G$. Then, $\left[ h,g \right]\in K$ if and only if $\left[ h,g \right]K = K$, if and only if $hKgK = gKhK$, whence $H/K\leq Z\left( G/K \right)$.
+\end{proof}
+\begin{definition}
+  Let $G$ be a group. Inductively, define
+  \begin{align*}
+    G_0 &= G\\
+    G_{i+1} &= \left[ G_i,G \right].
+  \end{align*}
+  The series of normal subgroups
+  \begin{align*}
+    G &\trianglerighteq G_1 \trianglerighteq \cdots
+  \end{align*}
+  is known as the \textit{lower central series} of $G$.
+\end{definition}
+\begin{definition}
+  Let $G$ be a group. Inductively, define
+  \begin{align*}
+    Z_0(G) &= e\\
+    Z_{i+1}(G)/Z_i(G) &= Z\left( G/Z_i(G) \right).
+  \end{align*}
+  The series of normal subgroups
+  \begin{align*}
+    Z_0(G) \trianglelefteq Z_1(G) \trianglelefteq\cdots
+  \end{align*}
+  is known as the \textit{upper central series} of $G$.\newline
+
+  We call a group $G$ \textit{nilpotent} if $Z_n(G) = G$ for some $n$.
+\end{definition}
+\begin{proposition}
+  The lower central series terminates if and only if the upper central series terminates. In particular, if there is $n$ such that $Z_n(G) = G$, then $G_{n+1} = e$. Moreover, $G_{i+1}\leq Z_{n-i}(G)$ for all $i$.
+\end{proposition}
+\begin{proof}
+  Suppose $Z_n(G) = G$. If $i = 0$, then $G_1 = G = Z_n(G)$, so the base case is proven.\newline
+
+  If $G_{i+1}\leq Z_{n-i}(G)$, then
+  \begin{align*}
+    G_{i+2} &= \left[ G_{i+1},G \right]\\
+            &\leq \left[ Z_{n-i}(G),G \right]\\
+            &\leq Z_{n-i-1}(G).
+  \end{align*}
+  Therefore, in particular, we have that $G_{n+1}\leq Z_{0}(G) = e$.\newline
+
+  Now, suppose $G_{n+1} = e$. We will show that $G_{n+1-j}\leq Z_{j}(G)$. If $j = 0$, then $Z_0(G) = G_{n+1} = 1$. If $G_{n+1-j}\leq Z_j(G)$, then by the third isomorphism theorem, we have the surjective homomorphism $G/G_{n+1-j}\rightarrow G/Z_j(G)$. Since $\left[ G_{n-j},G \right] = G_{n+1-j}$, we have from the proposition that $G_{n-j}/G_{n+1-j}\leq Z\left( G/G_{n+1-j} \right)$. From the surjection, we have
+  \begin{align*}
+    G_{n-j}Z_j(G)/Z_j(G) &\leq Z\left( G/Z_j(G) \right)\\
+                         &= Z_{j+1}(G)/Z_j(G),
+  \end{align*}
+  whence $G_{n-j}\leq G_{n-j}Z_j(G)\leq Z_{j+1}(G)$. In particular, we have that $G_1 = G = Z_n(G)$.
+\end{proof}
+\begin{theorem}
+  Every finite $p$-group is nilpotent.
+\end{theorem}
+\begin{proof}
+  Every finite $p$-group has nontrivial center. If, for some $j$, we have $Z_j(G) < G$, then $Z\left( G/Z_j(G) \right) \neq e$, so $Z_j(G) < Z_{j+1}(G)$. Since $G$ is finite, there is some $m$ such that $Z_m(G) = G$, whence $G$ is nilpotent.
+\end{proof}
+\begin{theorem}
+  Every nilpotent group is solvable.
+\end{theorem}
+\begin{proof}
+  We see that $D^{(1)}(G)\leq G$, and inductively,
+  \begin{align*}
+    D^{(i+1)}(G) &= \left[ D^{(i)}(G),D^{(i)}(G) \right]\\
+                 &\leq \left[ D^{(i)}(G),G_i \right]\\
+                 &\leq \left[ G_i,G_i \right]\\
+                 &= G_{i+1}.
+  \end{align*}
+  Thus, since the lower central series terminates, so too does the derived series.
+\end{proof}
+\subsection{Free Groups}%
+Given a set $X$, we will construct a group $F(X)$ satisfying the following universal property: given any set map $\phi\colon X\rightarrow G$ where $G$ is a group, then there is a unique homomorphism $\varphi\colon F(X)\rightarrow G$ such that the following diagram commutes.
+\begin{center}
+  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAA0QBfU9TXfIRQBGclVqMWbAOLdeIDNjwEiZYePrNWiEADEAFOwCU3cTCgBzeEVAAzAE4QAtkjIgcEJKIla2AHT80AAssOTtHF0Q3DyQAJmpNKR0A-Bw6EGoGOgAjGAYABX5lIRB7LAsgnAz3OiwGNiCICABrMJAHZzjqGMRvLNyCosE2MoqqhMltEAD6e2DQrgouIA
+  \begin{tikzcd}
+  X \arrow[r, "\phi"] \arrow[d, "\iota"', hook] & G \\
+  F(X) \arrow[ru, "\varphi"']                   &  
+  \end{tikzcd}
+\end{center}
+Do do this, we start by constructing a set $X^{-1}$ that is a copy of $X$, which will be our ``inverses,'' and we introduce an extra element $e$ with $e^{-1} = e$. From now on, we will call the identity element $1$. Informally, we will treat $X\cup X^{-1}$  as our ``alphabet,'' where the elements of $X$ are letters. We will define $F(X)$ to be the set of words on $X$ subject to an equivalence relation.\newline
+
+A word on $X$ is an expression $w = x_1^{\pm 1}\cdots x_n^{\pm 1}$, where the $x_i\in X$ are not necessarily distinct. The set of words on the alphabet $X$ is denoted $W(X)$. We will define two equivalence relations on $W(X)$.
+\begin{enumerate}[(i)]
+  \item We allow for ``insertion'' of a pair $xx^{-1}$, so that
+    \begin{align*}
+      x_1x_2\cdots x_n &\sim x_1x_2\cdots x_i xx^{-1}x_{i+1}\cdots x_n
+    \end{align*}
+    for any $x\in X\cup X^{-1}$.
+  \item We allow for ``deletion'' of a pair $xx^{-1}$, so that
+    \begin{align*}
+      x_1x_2\cdots x_i xx^{-1}x_{i+1}\cdots x_n &\sim x_1x_2\cdots x_n\\
+                                                &\sim x_1x_2\cdots x_i 1 x_{i+1} \cdots x_n.
+    \end{align*}
+\end{enumerate}
+\begin{definition}
+  The free group $F(X)$ is defined by
+  \begin{align*}
+    F(X) &= W(X)/\sim,
+  \end{align*}
+  where the operation is concatenation:
+  \begin{align*}
+    \left( x_1\cdots x_n \right)\left( y_1\cdots y_m \right) &= x_1\cdots x_ny_1\cdots y_m.
+  \end{align*}
+\end{definition}
+We say a word $w\in F(X)$ is \textit{reduced} if there are no instances of $1$ in the expression for $w$, and for any $x_i\neq 1$, we have $x_{i+1}\neq x_i^{-1}$.\newline
+
+From the definition of our equivalence relation, every word is equivalent to a reduced word.
+\begin{proposition}
+  The free group $F(X)$ satisfies the universal property.
+\end{proposition}
+\begin{proof}
+  Let $\phi\colon X\rightarrow G$ be a set map. Extend $\phi$ to $\Phi\colon W(X)\rightarrow G$ by taking
+  \begin{align*}
+    \Phi\left(x^{-1}\right) &= \Phi(x)^{-1}\\
+    \Phi\left( w \right) &= \Phi\left( x_1 \right)^{\ve_1}\cdots \Phi\left( x_m \right)^{\ve_m}.
+  \end{align*}
+  Then, $\Phi$ factors through $\sigma$, giving $\varphi\colon F(X)\rightarrow G$.\newline
+
+  By definition, $\varphi$ is a homomorphism with $\varphi|_{X} = \phi$. As for uniqueness, if $\psi\colon F(X)\rightarrow G$ is another homomorphism such that $\psi|_{X} = \phi$, then
+  \begin{align*}
+    \psi(w) &= \psi\left( x_1 \right)\cdots \psi\left( x_m \right)\\
+            &= \phi\left( x_1 \right)\cdots \phi\left( x_m \right)\\
+            &= \varphi(w).
+  \end{align*}
+\end{proof}
+\begin{corollary}
+  Every group is a quotient of a free group.
+\end{corollary}
+\begin{definition}
+  If $\pi\colon F(X)\rightarrow G$ is such a surjective homomorphism, then the subgroup $R = \ker\left( \pi \right)$ is called a subgroup of \textit{relations} of $G$.
+\end{definition}
+Note that the relations subgroup is not unique, since we may select any generating set for $G$. We will write
+\begin{align*}
+  G &= \left\langle X|R \right\rangle,
+\end{align*}
+where $X$ is a generating set for $G$ and $R$ is the subgroup of relations. We call this a presentation for $G$ in terms of the generators $X$ and relations $R$.
 \end{document}
