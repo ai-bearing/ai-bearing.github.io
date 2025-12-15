@@ -1,0 +1,123 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%\usepackage{homework}
+\usepackage{notes}
+\usepackage{newpxtext,eulerpx,eucal}
+\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Generating Functions}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+These are some notes on generating functions I'm taking, primarily from \textit{The Art of Computer Programming}, Volume I, by Donald Knuth.
+\begin{definition}
+  If $\left( a_0,a_1,\dots \right)$ is a sequence of numbers, then the infinite series
+  \begin{align*}
+    G(z) &= a_0 + a_1 z + \cdots\\
+         &= \sum_{n=0}^{\infty}a_nz^{n}
+  \end{align*}
+  is known as the \textit{generating function} for the sequence.
+\end{definition}
+We can try to understand some basic operations for the generating function.\newline
+
+To start, if $G(z)$ is the generating function for $\left( a_n \right)_n$, then the generating function for $\left( a_{n-m} \right)_n$ for a fixed $m$ is given by $z^{m}G(z)$, as
+\begin{align*}
+  z^{m}G(z) &= z^{m}\sum_{n=0}^{\infty}a_nz^{n}\\
+            &= \sum_{n=m}^{\infty}a_{n-m}z^{n}.
+\end{align*}
+Similarly, the generating function for $\left( a_{n+m} \right)_n$ is given by $z^{-m}\left( G(z) - \sum_{k=0}^{m-1}a_kz^{k} \right)$, as
+\begin{align*}
+  z^{-m}\sum_{n=m}^{\infty}a_nz^{n} &= \sum_{n=0}^{\infty}a_{n+m}z^{n}.
+\end{align*}
+\begin{example}
+  Our first example is finding a generating function for the Fibonacci sequence. Letting $G(z)$ be the generating function for $\left( F_n \right)_n$, we have that $zG(z)$ is the generating function for $\left( F_{n-1} \right)_n$ and $z^2G(z)$ is the generating function for $\left( F_{n-2} \right)_n$. In particular, since $F_{n} = F_{n-1} + F_{n-2}$, we have that
+  \begin{align*}
+    \left( 1-z-z^2 \right)G(z) &= p(z),
+  \end{align*}
+  where $p(z)$ is some polynomial satisfying $p(0) = 0$ and $p(1) = 1$. In particular, we can show that this yields
+  \begin{align*}
+    G(z) &= \frac{z}{1-z-z^2}.
+  \end{align*}
+  In general, for a linear recurrence $a_n = c_1a_{n-1} + \cdots + c_ma_{n-m}$, the corresponding generating function will be of the form
+  \begin{align*}
+    G(z) &= \frac{p(z)}{1-c_1z-\cdots-c_mz^{m}}
+  \end{align*}
+  for some polynomial $p(z)$. In particular, for the simplest case, this yields
+  \begin{align*}
+    \frac{1}{1-z} &= 1 + z + z^2 + \cdots
+  \end{align*}
+  is the generating function for the sequence $\left( 1,1,1,\dots \right)$.
+\end{example}
+Next, we discuss multiplication. If we let
+\begin{align*}
+  G(z) &= \sum_{n=0}^{\infty}a_nz^{n}\\
+  H(z) &= \sum_{n=0}^{\infty}b_nz^{n},
+\end{align*}
+then we observe that
+\begin{align*}
+  G(z)H(z) &= \sum_{n=0}^{\infty}\left( \sum_{k=0}^{n}a_kb_{n-k} \right) z^{n}.
+\end{align*}
+In the particular case where $b$ is the sequence of all $1$s, then
+\begin{align*}
+  \frac{1}{z}G(z) &= \sum_{n=0}^{\infty}\left( \sum_{k=0}^{n}a_k \right)z^{n}.
+\end{align*}
+When we want binomial coefficients of the form
+\begin{align*}
+  c_n &= \sum_{k=0}^{n} {n\choose k} a_kb_{n-k},
+\end{align*}
+we usually use the generating functions for $\left( \frac{a_n}{n!} \right)_n$ and $\left( \frac{b_n}{n!} \right)_n$, which yields the generating function for $\left( \frac{c_n}{n!} \right)_n$.\newline
+
+Next, to extract particular terms of a generating function, we let $\omega = e^{2\pi i/m}$ be a primitive $m$th root of unity, and find
+\begin{align*}
+  \sum_{n\equiv r\text{ mod }m}a_nz^{n} &= \frac{1}{m} \sum_{k=0}^{m-1} \omega^{-kr}G\left( \omega^{k}z \right).
+\end{align*}
+For instance, if $m = 3$ and $r = 1$, then
+\begin{align*}
+  a_1 z + a_4 z^{4} + \cdots &= \frac{1}{3} \left( G(z) + \omega^{-1}G\left( \omega z \right) + \omega^{-2}G\left( \omega^2 z \right) \right).
+\end{align*}
+Differentiation and integration yield similar results:
+\begin{align*}
+  zG'(z) &= \sum_{n=0}^{\infty} na_nz^{n}\\
+  \int_{0}^{z} G(t)\:dt &= \sum_{k=1}^{\infty}\frac{1}{k}a_{k-1} z^{k}
+\end{align*}
+We next write down some generating functions.
+\begin{itemize}
+  \item Binomial theorem:
+    \begin{align*}
+      \left( 1+z \right)^{r} &= \sum_{k=0}^{\infty} {r\choose k} z^{k}.
+    \end{align*}
+  \item Exponents:
+    \begin{align*}
+      e^{z} &= \sum_{k=0}^{\infty} \frac{1}{k!} z^{k}\\
+      \left( e^{z}-1 \right)^{n} &= n!\sum_{k=0}^{\infty} S\left( n,k \right) \frac{z^{k}}{k!},
+    \end{align*}
+    where $S\left( n,k \right)$ denotes the Stirling numbers of the second kind. The Stirling numbers of the second kind denote the number of ways to partition a set of $n$ elements into $k$ disjoint (nonempty) subsets.
+  \item Logarithms:
+    \begin{align*}
+      \ln\left( 1+z \right) &= \sum_{k=1}^{\infty}\frac{\left( -1 \right)^{k+1}}{k}z^{k}\\
+      \frac{1}{\left( 1-z \right)^{m+1}}\ln\left( \frac{1}{1-z} \right) &= \sum_{k=1}^{\infty} \left( H_{m+k}-H_m \right) {m+k\choose k} z^{k},
+    \end{align*}
+    where $H_k$ denotes the $k$th harmonic number.
+\end{itemize}
+\begin{example}
+  Consider the elementary symmetric functions on $n$ variables, given by
+  \begin{align*}
+    e_m &= \sum_{1\leq j_1 < \cdots < j_m \leq n} x_{j_1}\cdots x_{j_m}.
+  \end{align*}
+  Observe that the $e_m$ appear as the coefficient of $z^{m}$ in the polynomial
+  \begin{align*}
+    G_n(z) &= \prod_{i=1}^{n} \left( 1 + x_i z \right).
+  \end{align*}
+
+\end{example}
+\end{document}

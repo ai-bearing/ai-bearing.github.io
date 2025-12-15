@@ -12,7 +12,7 @@
 
 \fancyhf{}
 \rhead{Avinash Iyer}
-\lhead{Differential Topology: Notes and Review}
+\lhead{Differential Topology: Class Notes}
 
 \setcounter{secnumdepth}{0}
 
@@ -3406,6 +3406,74 @@ is known as the \textit{second fundamental form}. Note that this is a $k\times k
 \begin{proposition}
   The focal points of $M$ at $q$ are precisely the points $q + \rho_i v$ for any unit vector $v\in N_qM$.
 \end{proposition}
+\begin{proof}
+  Fix pairwise orthogonal locally defined vector fields $w_1,\dots,w_{n-k}$ that span $N_qM$. Letting $x_i = x_i\left( u_1,\dots,u_k \right)$ be coordinates on $M$ defined such that $\left( \gamma_{ij} \right)_{i,j} = \id$. We have that
+  \begin{align*}
+    e\left( u_1,\dots,u_k,t_1,\dots,t_{n-k} \right) &= x + \sum_{\alpha=1}^{n-k}t_{\alpha}w_{\alpha}
+  \end{align*}
+  is our endpoint map. We have
+  \begin{align*}
+    \pd{e}{u_i} &= \pd{x}{u_i} + \sum_{\alpha = 1}^{n-k}t_{\alpha}\pd{w_{\alpha}}{u_i}\\
+    \pd{e}{t_{\beta}} &= w_{\beta}.
+  \end{align*}
+  Taking inner products between $e$ and the coordinate vectors
+  \begin{align*}
+    \left( x,w \right) &= \left( \pd{x}{u_1},\dots,\pd{x}{u_k},w_1,\dots,w_{n-k} \right),
+  \end{align*}
+  we have the block-diagonal matrix
+  \begin{align*}
+    A &= \begin{pmatrix}\left( \iprod{\pd{x}{u_i}}{\pd{x}{u_j}} + \sum_{\alpha=1}^{n-k}t_{\alpha}\pd{w_{\alpha}}{u_i}\pd{x}{u_j} \right)_{i,j} & \left( \sum_{\alpha=1}^{n-k}t_{\alpha} \iprod{\pd{w_{\alpha}}{u_i}}{w_{\beta}} \right)\\0 & I\end{pmatrix},
+  \end{align*}
+  and if we let $K$ be the first block, then we have that $\dim\left( \ker\left( A \right) \right) = \dim\left( \ker\left( K \right) \right)$. The first term in $K$ is
+  \begin{align*}
+    \left( \iprod{\pd{x}{u_i}}{\pd{x}{u_j}} \right)_{i,j} &= \left( \gamma_{ij} \right)_{i,j},
+  \end{align*}
+  which is the first fundamental form. In particular, we also have
+  \begin{align*}
+    0 &= \iprod{w_{\alpha}}{ \pd{x}{u_j} }\\
+      &= \pd{}{u_i} \left( \iprod{w_{\alpha}}{ \pd{x}{u_j} } \right)\\
+      &= \iprod{\pd{w_{\alpha}}{u_i}}{\pd{x}{u_j}} + \iprod{w_{\alpha}}{ \pd{^2x}{u_i\partial u_j} }\\
+      &= \iprod{\pd{w_{\alpha}}{u_i}}{\pd{x}{u_j}} + \iprod{w_{\alpha}}{\ell_{ij}}.
+  \end{align*}
+  Thus,
+  \begin{align*}
+    K &= \left( \gamma_{ij} - \sum_{\alpha=1}^{n-k}t_{\alpha} \iprod{w_{\alpha}}{\ell_{ij}} \right)_{i,j}.
+  \end{align*}
+  In particular, $J_{(q,v)}(E)$ has nullity $\mu$ if and only if
+  \begin{align*}
+    \left( \gamma_{ij} - \sum_{\alpha=1}^{n-k}t_{\alpha} \iprod{w_{\alpha}}{\ell_{ij}} \right)_{i,j} &= \left( I_k-\sum_{\alpha=1}^{n-k}t_{\alpha} \iprod{w_{\alpha}}{\ell_{ij}} \right)_{i,j}
+  \end{align*}
+  has nullity $\mu$. Considering the line $\ell = q + tv$ for $v\in N_qM$, we find that this is equal to $\left( I_k - tv\cdot \ell_{ij} \right)_{i,j}$, which is singular if and only if $\left( \frac{1}{t}I_k-v\cdot \ell_{ij} \right)_{i,j}$ is singular, whence $\frac{1}{t}$ is a principal curvature of $M$ at $q$ in the direction of $v$.
+\end{proof}
+We will use this as part of our proof of the main theorem.
+\begin{theorem}
+  For almost every $p\in \R^{n}$, the function
+  \begin{align*}
+    L_p(x) &\eqcolon f(x)\\
+           &= \norm{x-p}^2\\
+         &= \iprod{x}{x} - 2 \iprod{x}{p} + \iprod{p}{p}
+  \end{align*}
+  is Morse.
+\end{theorem}
+\begin{proof}
+  Computing directly, we find that
+  \begin{align*}
+    \pd{f}{u_i} &= 2 \iprod{\pd{x}{u_i}}{x} - 2 \iprod{\pd{x}{u_i}}{p}\\
+                &= 2 \iprod{\pd{x}{u_i}}{x-p}.
+  \end{align*}
+  Therefore, $f$ has a critical point at $q$ if and only if $df = 0$, meaning that $\pd{f}{u_i} = 0$ for all $u_i$ meaning that $q-p$ is a normal vector for $M$.\newline
+
+  Next, we compute
+  \begin{align*}
+    \pd{^2f}{u_i\partial u_j} &= 2 \left( \iprod{\pd{x}{u_i}}{\pd{x}{u_j}} + \iprod{\pd{^2x}{u_i\partial u_j}}{x-p} \right).
+  \end{align*}
+  Setting $p = x + tv$ for some $v$ normal to $M$ at $x$, we have
+  \begin{align*}
+    \pd{^2f}{u_i\partial u_j} &= 2 \left( \iprod{\pd{x}{u_i}}{\pd{x}{u_j}} - t \iprod{v}{\ell_{ij}} \right)\\
+                              &= 2 \left( \gamma_{ij} - t \iprod{v}{\ell_{ij}} \right).
+  \end{align*}
+  Therefore, if $q$ is a critical point for $f$, then $q$ is degenerate if and only if $p$ is a focal point for $M$ at $q$. By Sard's Theorem, this implies that for almost every $p\in \R^{n}$, $L_p$ is Morse.
+\end{proof}
 \section{Notations}%
 \begin{itemize}
   \item A general normed space $V$ will have its norm denoted by $\norm{\cdot}$. If $V = \R^{n}$, then we denote the norm by $ \left\vert \cdot \right\vert $.

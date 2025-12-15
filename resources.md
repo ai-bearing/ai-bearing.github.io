@@ -11,6 +11,8 @@ permalink: "/useful_resources.html"
     - [Introduction to Random Matrices](https://arxiv.org/pdf/1712.07903)
 - [AMS Open Math Notes](https://www.ams.org/open-math-notes)
 - Supplementary Personal Notes:
+    - Miscellaneous:
+        - [Generating Functions](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/generating_functions.pdf)
     - Algebra:
       - [Conjugation and the Sylow Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/conjugation_and_sylow_theorems.pdf)
       - [Algebraic Geometry](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, Algebraic Geometry/algebraic_geometry.pdf) (partial work-through)
