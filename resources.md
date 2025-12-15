@@ -17,14 +17,14 @@ permalink: "/useful_resources.html"
     - Algebra:
       - [Conjugation and the Sylow Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/conjugation_and_sylow_theorems.pdf)
       - [Algebraic Geometry](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, Algebraic Geometry/algebraic_geometry.pdf) (partial work-through)
-    - Real Analysis:
+    - Analysis:
       - [Inequalities and the $L_p$-Spaces](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/inequalities.pdf)
       - [Egorov's Theorem and Lusin's Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/egorovs_theorem_lusins_theorem.pdf)
       - [Extreme Points, the Krein--Milman Theorem, and Applications](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/extreme_points_krein_milman_and_stone_weierstrass.pdf)
       - [Three Convergence Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/three_convergence_theorems.pdf)
       - [The Lebesgue Measure](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/lebesgue_measure.pdf)
       - [Signed Measures and the Lebesgue–Radon–Nikodym Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Expository Writings/radon_nikodym.pdf)
-      - [Folland Exercise Workthrough](http://ai.avinash-iyer.com/Classes_and_Homework/College/Y4/Summer%20Reading/folland_solutions.pdf)
+      - [Folland Exercise Workthrough](http://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
       - [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)
       - [Banach Algebras and Operator Theory](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/banach_algebras_operator_theory.pdf)
   - Topology:
