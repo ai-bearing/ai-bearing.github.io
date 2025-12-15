@@ -1,5 +1,6 @@
 ---
 layout: page
+use_math: true
 title: "Resources"
 permalink: "/useful_resources.html"
 ---
