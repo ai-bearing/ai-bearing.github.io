@@ -1,0 +1,111 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%\usepackage{homework}
+\usepackage{notes}
+\usepackage{mlmodern}
+%\usepackage{newpxtext,eulerpx,eucal}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Regular Values}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+A smooth map between manifolds $f\colon M\rightarrow N$ includes a certain family of local information; for instance, the derivative $D_pf\colon T_pM\rightarrow T_{f(p)}N$, which is a linear map between tangent spaces at $p$ and $q$, is defined on a coordinate chart $U\subseteq M$ for $p$ and a corresponding coordinate chart $V\subseteq N$ for $f(p)$. Yet, the properties of this linear map can give us information about the underlying map $f$.
+
+To understand this, we need to dive into the world of regular and critical values.
+
+Much of this document is based on the book \textit{Topology from the Differentiable Viewpoint} and assorted notes from my Differential Topology class.
+\section{Sard's Theorem and the Regular Value Theorem}%
+\begin{definition}
+  Let $f\colon M\rightarrow N$ be a smooth map, and let $p\in M$. We say $p$ is a \textit{critical point} for $f$ if $D_pf$ does not have the same rank as the dimension of $T_{f(p)} N$. 
+
+  If $D_pf$ has the same rank as the dimension of $T_{f(p)}N$, then we say that $p$ is a \textit{regular point} of $f$.
+
+  We say $q\in N$ is a \textit{critical value} for $f$ if $f^{-1}\left( \set{q} \right)$ contains a critical point for $f$. Else,we say that $q$ is a \textit{regular value}.
+\end{definition}
+We start with the case of Sard's Theorem on $\R^{n}$. Then, we will expand this to the case of any arbitrary manifold by means of a technical lemma.
+\begin{theorem}[Sard's Theorem]
+  Let $f\colon \R^{n}\supseteq U\rightarrow \R^{m}$ be a smooth map. Then, if $C$ is the set of critical points for $f$, we have $f(C) \subseteq \R^{m}$ has measure zero.
+\end{theorem}
+%\begin{proof}
+%  We use induction on $n$. The statement only makes sense for $n\geq 0$ and $p\geq 1$. Clearly, the theorem is true for $n = 0$.
+%
+%  Let $C_1\subseteq C$ be the set of all $x\in U$ such that $D_x f$ is zero, and similarly, let $C_i$ be the set of all $x$ such that $\left( D_x \right)^{j} f$ is zero for all $j\leq i$. We obtain a descending sequence of closed sets $C\supseteq C_1\supseteq C_2\supseteq \cdots$.
+%
+%  We start by showing that $f\left( C\setminus C_1 \right)$ has measure zero. For each $x\in C\setminus C_1$, we find an open neighborhood $V\subseteq \R^{n}$ such that $f\left( V\cap C \right)$ has measure zero. Since $\R^{n}$ is second countable, $C\setminus C_1$ is covered by countably many such open neighborhoods, it follows that $f\left( C\setminus C_1 \right)$ has measure zero.
+%
+%  Since $x\notin C_1$, there is some partial derivative, which we use change of coordinates to write as $ \pd{f}{x_1} $, that is not zero at $x$. Let
+%  \begin{align*}
+%    h(x) &= \left( f_1(x),x_2,\dots,x_n \right).
+%  \end{align*}
+%  Then, since $D_xh$ is nonsingular, by the \href{https://en.wikipedia.org/wiki/Inverse_function_theorem}{inverse function theorem}, $h$ maps some neighborhood $V$ of $x$ diffeomorphically onto an open set $V'\subseteq \R^{n}$. The composition $f\circ h^{-1}$ then maps $V'$ to $\R^{m}$ then maps $V'$ to $\R^{m}$.
+%
+%  Observe that the set of critical points of $g$ is precisely $h\left( V\cap C \right)$, so the set $g\left( C' \right)$ is equal to $f\left( V\cap C \right)$.
+%
+%  For each hyperplane $\left( t,x_2,\dots,x_n \right)\in V'$, we observe that $g\left( t,x_2,\dots,x_n \right)$ is contained in $t\times \R^{m-1}\subseteq \R^{m}$, meaning that $g$ maps hyperplanes to hyperplanes. Let
+%  \begin{align*}
+%    g^{t}\colon \left( t\times \R^{n-1} \right)\cap V' \rightarrow t\times \R^{m-1}
+%  \end{align*}
+%  be the restriction of $g$. A point in $t\times \R^{n-1}$ is a critical value for $g^{t}$ if and only if it is critical for $g$, since the matrix of first derivatives for $g$ is of the form
+%  \begin{align*}
+%    \left( \pd{g_i}{x_j} \right) &= \begin{pmatrix}1 & 0 \\ \ast & \left( \pd{g_i^{t}}{x_j} \right)\end{pmatrix}.
+%  \end{align*}
+%  From the induction hypothesis, it follows that the critical values of $g^{t}$ has measure zero in $t\times \R^{m-1}$. In particular, the critical values of $g$ intersects each hyperplane in $t\times \R^{m-1}$ in a set of measure zero, meaning that by Fubini's theorem, $g\left( C' \right) = f\left( V\cap C \right)$ has measure zero.
+%
+%  Now, for each $x_0\in C_k\setminus C_{k+1}$, there is some $\left( k+1 \right)$-th derivative that is not zero, which we write
+%  \begin{align*}
+%    \pd{^{k+1}f_r}{x_{s_1}\cdots \partial x_{s_{k+1}}}.
+%  \end{align*}
+%  Then, writing
+%  \begin{align*}
+%    w(x) &= \pd{^{k}f_r}{x_{s_2}\cdots\partial x_{s_{k+1}}},
+%  \end{align*}
+%  we observe that $w(x)$ vanishes at $x_0$, but $ \pd{w}{x_{s_1}} $ does not. For definiteness, we let $s_1 = 1$. The map $h\colon U\rightarrow \R^{n}$, defined by
+%  \begin{align*}
+%    h(x) &= \left( w(x),x_2,\dots,x_n \right)
+%  \end{align*}
+%  then carries a neighborhood $V$ of $x_0$ diffeomorphically onto an open set $V'$. Then, $h$ carries $C_k\cap V$ into the hyperplane $\set{0}\times \R^{n-1}$. Again, we consider the map $g = f\circ h^{-1}$, and define
+%  \begin{align*}
+%    g_0\colon \left( \set{0}\times \R^{n-1} \right)\cap V' \rightarrow \R^{m}
+%  \end{align*}
+%  to be the restriction of $g$. Inductively, the critical values of $g_0$ has measure zero in $\R^{m}$. Yet, each point in $h\left( C_k\cap V \right)$ is a critical point of $g_0$ as all derivatives of order $\leq k$ vanish, meaning that
+%  \begin{align*}
+%    g_0\circ h\left( C_k\cap V \right) = f\left( C_k\cap V \right)
+%  \end{align*}
+%  has measure zero. 
+%\end{proof}
+The proof of Sard's Theorem is very technical, so we will not be showing the full proof. A proof can be found at \href{https://public.websites.umich.edu/~alexmw/Sard.pdf}{this link}.
+
+A useful result used in conjunction with Sard's Theorem is the Regular Value Theorem. We will show some important results using these two theorems.
+\begin{theorem}[Regular Value Theorem]
+  Let $f\colon M\rightarrow N$ be a smooth map of manifolds with dimensions $m\geq n$. If $q\subseteq N$ is a regular value, then $f^{-1}\left( \set{q} \right)\subseteq M$ is a submanifold of dimension $m-n$.
+\end{theorem}
+\begin{proof}
+  Let $p\in f^{-1}\left( \set{q} \right)$, and let $\left( U,\varphi \right)$ be a chart about $p$ where $\varphi(U)\cong \R^{m}\cong T_pM$ are identified  together. Since $D_pf$ is full rank, we have that $K = \ker\left( D_pf \right)$ is of codimension $n$, meaning that $K \cong \R^{m-n}$.
+
+  Let $L\colon \R^{m}\rightarrow \R^{m-n}$ be a projection, and define $F\colon U\rightarrow N\times \R^{m-n}$ by $x\mapsto \left( f(x),L(x) \right)$. Then, since $L$ is a linear map and the matrix representation for $D_pF$ is block-diagonal, we have that $D_pF = \left( D_pf,L \right)$. In particular, $D_pF\colon \R^{n}\rightarrow \R^{n}$ is full rank, so by the \href{https://en.wikipedia.org/wiki/Inverse_function_theorem#Statements}{inverse function theorem}, $F$ is invertible on a neighborhood $V\times W\subseteq N\times \R^{m-n}$, where $W$ is a neighborhood of $0$. We may thus identify $U\cong V\times W$.
+
+  By composing with the projection $\pi\colon N\times \R^{m-n}\rightarrow N$ given by $\left( q,W \right)\mapsto q$, we have that $f = \pi\circ F$, meaning $f^{-1}\left( \set{q} \right) = F^{-1}\left( \pi^{-1}\left( \set{q} \right) \right)$, so that $f^{-1}\left( \set{q} \right)\cong \R^{m-n}$.
+\end{proof}
+\begin{remark}
+  If $M$ is compact and $N$ has the same dimension as $M$, $f^{-1}\left( \set{q} \right)$ is discrete. Additionally, the cardinality $\left\vert f^{-1}\left( \set{q} \right) \right\vert$ is a locally constant function of $q$.
+
+  To see this, let $p_1,\dots,p_k$ be the elements of $f^{-1}\left( \set{q} \right)$ with corresponding disjoint open neighborhoods $U_1,\dots,U_k$. These neighborhoods are necessarily mapped diffeomorphically onto neighborhoods $V_1,\dots,V_k$ in $N$. If we let
+  \begin{align*}
+    V &= \left( V_1\cap\cdots\cap V_k \right) \setminus f\left( M\setminus \left( U_1\cup\cdots\cup U_k \right) \right),
+  \end{align*}
+  then for any $w\in V$, we have $\left\vert f^{-1}\left( \set{w} \right) \right\vert$ is equal to $\left\vert f^{-1}\left( \set{q} \right) \right\vert$.
+\end{remark}
+
+\end{document}
