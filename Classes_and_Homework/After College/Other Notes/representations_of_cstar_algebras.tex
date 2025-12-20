@@ -7,8 +7,10 @@
 
 %\usepackage{homework}
 \usepackage{notes}
-\usepackage{newpxtext,eulerpx,eucal}
-\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\usepackage{mlmodern}
+%\usepackage{newpxtext,eulerpx,eucal}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\usepackage{parskip}
 
 \fancyhf{}
 \fancyhead[R]{Avinash Iyer}
@@ -19,7 +21,121 @@
 
 \begin{document}
 \RaggedRight
-\begin{abstract}
-  \noindent These are some notes and exposition on representations of $C^{\ast}$-algebras.
-\end{abstract}
+
+\section{Basics}%
+\begin{definition}
+  Let $A$ be a $C^{\ast}$-algebra. A \textit{representation} of $A$ is a $\ast$-homomorphism $\pi\colon A\rightarrow B\left( \mathcal{H} \right)$ for some Hilbert space $\mathcal{H}$. 
+\end{definition}
+\begin{definition}
+  Two representations $\pi\colon A\rightarrow B\left( \mathcal{H}_{\pi} \right)$ and $\rho\colon A\rightarrow B\left( \mathcal{H}_{\rho} \right)$ are called unitarily equivalent if there is a unitary map $U\colon \mathcal{H}_{\rho}\rightarrow \mathcal{H}_{\pi}$ such that
+  \begin{align*}
+    \pi(a) &= U\rho(a)U^{\ast}
+  \end{align*}
+  for all $a\in A$.
+\end{definition}
+\begin{definition}
+  If $\pi\colon A\rightarrow B\left( \mathcal{H}_{\pi} \right)$ and $\rho\colon A\rightarrow B\left( \mathcal{H}_{\rho} \right)$ be representations. Then, the formula
+  \begin{align*}
+    \pi\oplus\rho(a) \left( h,k \right) &\coloneq \left( \pi(a)h,\rho(a)k \right)
+  \end{align*}
+  defines the \textit{direct sum} of $\pi$ and $\rho$. If $\pi$ is unitarily equivalent to a direct sum $\rho_1\oplus \rho_2$, then we consider $\rho_1\oplus \rho_2$ to be a decomposition of $\pi$ in terms of the ``smaller'' representations.
+\end{definition}
+\begin{definition}
+  A closed subspace $\mathcal{K}$ of $\mathcal{H}_{\pi}$ is \textit{invariant} under $\pi$ if $\pi(a)k\in \mathcal{K}$ for all $a\in A$ and $k\in \mathcal{K}$.
+\end{definition}
+Observe that if $\mathcal{K}$ is an invariant subspace, then the orthogonal complement $\mathcal{K}^{\perp}$ is also invariant. This follows from the fact that if $y\in \mathcal{K}^{\perp}$, then
+\begin{align*}
+  \iprod{k}{\pi(a)y} &= \iprod{\pi(a)^{\ast}k}{y}\\
+                     &= \iprod{\pi\left( a^{\ast} \right)k}{y}\\
+                     &= 0
+\end{align*}
+for all $k\in \mathcal{K}$.
+
+Conversely, if $\mathcal{K}$ is invariant, then we can recover $\pi = \pi|_{\mathcal{K}} \oplus \pi|_{\mathcal{K}^{\perp}}$, via the canonical unitary isomorphism $U\colon \mathcal{K}\oplus \mathcal{K}^{\perp}\rightarrow \mathcal{H}_{\pi}$ given by $\left( k,y \right)\mapsto k + y$.
+\begin{definition}
+  A representation $\pi$ is \textit{irreducible} if there are no closed invariant subspaces apart from $\set{0}$ and $\mathcal{H}_{\pi}$.
+\end{definition}
+\begin{lemma}
+  A representation $\pi$ of a $C^{\ast}$-algebra $A$ is irreducible if and only if $\pi(A)' = \C I_{\mathcal{H}}$, where $\pi(A)'$ denotes the commutant of $\pi(A)$.
+\end{lemma}
+\begin{proof}
+  Suppose $\mathcal{V}$ is a nontrivial invariant subspace for $\pi$. Then, the orthogonal projection $P_{\mathcal{V}}$ commutes with every $\pi(A)$ and is not a scalar multiple of $I_{\mathcal{H}}$.
+
+  Now, suppose there is a non-scalar operator $T$ commuting with $\pi(A)$. Then, either the real or imaginary part of $T$ is a self-adjoint operator $S$ that commutes with $\pi(A)$. From the continuous functional calculus, since $\sigma(S)$ is not one point, there are some nonzero continuous $f,g\in C\left( \sigma(S) \right)$ such that $fg = 0$. Then, since $f(S),g(S)\in C^{\ast}\left( S \right)$, and $f(S),g(S)$ commute with $\pi(A)$, it follows that $ \overline{f(S)\mathcal{H}} $ and $ \overline{g(S)\mathcal{H}} $ are nonzero mutually orthogonal invariant subspaces, so $\pi$ is reducible.
+\end{proof}
+\begin{definition}
+  If $\pi$ is a representation of the $C^{\ast}$-algebra $A$, then we call the subspace
+  \begin{align*}
+    \mathcal{K} &= \overline{\Span}\set{\pi(a)h | h\in \mathcal{H}_{\pi}, a\in A}
+  \end{align*}
+  the \textit{essential subspace} of $\mathcal{H}_{\pi}$. The representation $\pi$ is called \textit{nondegenerate} if the essential subspace $\mathcal{K}$ is equal to $\mathcal{H}_{\pi}$.
+\end{definition}
+Note that the representation $\pi$ being nondegenerate is equivalent to $\pi(1) = I_{\mathcal{H}_{\pi}}$ if $A$ has an identity, or $\pi\left( e_i \right) \rightarrow I_{\mathcal{H}_{\pi}}$ strongly for any approximate identity $\left( e_i \right)_{i\in I}$.
+
+The essential subspace is always invariant, and $\pi$ is equivalent to $\pi|_{\mathcal{K}}\oplus 0$. Generally, if $I$ is an ideal in $A$, then the subspace
+\begin{align*}
+  \mathcal{K} &= \overline{\Span} \set{\pi(a)h | h\in \mathcal{H}_{\pi},a\in I}
+\end{align*}
+is invariant, but $\pi$ is not zero on $\mathcal{K}^{\perp}$ unless $I$ is an essential ideal.\footnote{An essential ideal is one that has nonzero intersection with any other closed ideal of $A$.} Any nondegenerate representation of an ideal $I$ extends canonically to a nondegenerate representation $\pi$ of $A$ on the same space.
+\section{The Gelfand--Naimark--Segal Construction}%
+\begin{definition}
+  An element $a$ of a $C^{\ast}$-algebra $A$ is called \textit{positive} if there is $b\in A$ with $a = b^{\ast}b$. Equivalently, $a$ is positive if and only if $\sigma(a)\subseteq [0,\infty)$.
+\end{definition}
+There are a few useful identities for positive elements. Specifically, the following hold:
+\begin{align*}
+  \norm{a}^21_A &\geq a^{\ast}a\\
+  \norm{a}^2 b^{\ast}b - b^{\ast}a^{\ast}ab &\geq 0.
+\end{align*}
+\begin{definition}
+  A linear functional $\rho\colon A\rightarrow \C$ is called \textit{positive} if $\rho(a)\geq 0$ whenever $a\geq 0$. A positive linear functional of norm $1$ is called a \textit{state}.
+\end{definition}
+\begin{lemma}
+  Let $f$ be a positive linear functional on a $C^{\ast}$-algebra $A$. Then, for all $a,b\in A$, we have
+  \begin{align*}
+    f\left( b^{\ast}a \right) &= \overline{f\left( a^{\ast}b \right)}
+    \intertext{and}
+    \left\vert f\left( b^{\ast}a \right) \right\vert^2 &\leq f\left( b^{\ast}b \right)f\left( a^{\ast}a \right).
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  To see the first identity, we let $\lambda\in \C$, and observe that
+  \begin{align*}
+    0 &\leq f\left( \left( \lambda a + b \right)^{\ast}\left( \lambda a + b \right) \right)\\
+      &= \left\vert \lambda \right\vert^2 f\left( a^{\ast}a \right) + \overline{\lambda}f\left( a^{\ast}b \right) + \lambda f\left( b^{\ast}a \right) + f\left( b^{\ast}b \right).
+  \end{align*}
+  Now, since $\left\vert \lambda \right\vert^2 f\left( a^{\ast}a \right) + f\left( b^{\ast}b \right)$ is always real, we must have
+  \begin{align*}
+    \im\left( \overline{\lambda}f\left( a^{\ast}b \right) + \lambda f\left( b^{\ast}a \right) \right) &= 0
+  \end{align*}
+  for all $\lambda$. By taking $\lambda = 1$ and $\lambda = i$, we get equality of imaginary and real parts of $f\left( a^{\ast}b \right)$ and $ \overline{f\left( b^{\ast}a \right)} $.
+
+  As for the Cauchy--Schwarz inequality, we observe that if $\lambda = x \overline{f\left( b^{\ast}a \right)}$ for some $x\in \R$, we have
+  \begin{align*}
+    0 &\leq x^2 \left\vert f\left( b^{\ast}a \right) \right\vert^2 f\left( a^{\ast}a \right) + x\left\vert f\left( a^{\ast}b \right) \right\vert^2 + x\left\vert f\left( b^{\ast}a \right) \right\vert^2 + f\left( b^{\ast}b \right)\\
+      &= x^2 \left\vert f\left( b^{\ast}a \right) \right\vert^2f\left( a^{\ast}a \right) + 2x \left\vert f\left( b^{\ast}a \right) \right\vert^2 + f\left( b^{\ast}a \right).
+  \end{align*}
+  The right-hand side is a quadratic in $x$ that is always greater than or equal to $0$, so
+  \begin{align*}
+    4 \left\vert f\left( b^{\ast}a \right) \right\vert^4 - 4\left\vert f\left( b^{\ast}a \right) \right\vert^2f\left( a^{\ast}a \right)f\left( b^{\ast}b \right) &\leq 0.
+  \end{align*}
+\end{proof}
+To understand the GNS construction, we start by taking a state $\tau$ on a $C^{\ast}$-algebra $A$. Then, defining
+\begin{align*}
+  N_{\tau} &= \set{a\in A | \tau\left( a^{\ast}a \right) = 0},
+\end{align*}
+we observe that $\tau\left( b^{\ast}a \right) = 0$ if either $a$ or $b$ are in $N_{\tau}$. In particular, we get the inner product on $A/N_{\tau}$ given by
+\begin{align*}
+  \iprod{a + N_{\tau}}{b + N_{\tau}} &= \tau\left( b^{\ast}a \right).
+\end{align*}
+Define $\mathcal{H}_{\tau}$ to be the Hilbert space completion of $A/N_{\tau}$. Since $\norm{a}^2 b^{\ast}b - b^{\ast}a^{\ast}ab$ is of the form $c^{\ast}c$, we have
+\begin{align*}
+  \norm{a\left( b + N_{\tau} \right)}^2 &= \tau\left( b^{\ast}a^{\ast}ab \right)\\
+                                        &= \norm{a}^2 \tau\left( b^{\ast}b \right) - \tau\left( c^{\ast}c \right)\\
+                                        &\leq \norm{a}^2 \tau\left( b^{\ast}b \right)\\
+                                        &= \norm{a}^2 \norm{b + N_{\tau}}^2.
+\end{align*}
+In particular, this means that the elements of $A$ act as bounded operators on $A/N_{\tau}$, which we extend to operators $\pi_{\tau}(a)$ in the completion. This gives a nondegenerate representation $\pi_{\tau}$ of $A$ on the Hilbert space $\mathcal{H}_{\tau}$.
+\begin{lemma}
+  Suppose $A$ is a non-unital $C^{\ast}$-algebra, and $\rho\in S(A)$. Then, if $\left( e_i \right)_{i\in I}$ is an approximate identity for $A$, $\rho\left( e_i \right) \rightarrow 1$. Furthermore, the formula $\tau\left( a + \lambda 1 \right) = \rho(a) + \lambda$ defines a state $\tau$ on the unitization $ \widetilde{A} $.
+\end{lemma}
 \end{document}
