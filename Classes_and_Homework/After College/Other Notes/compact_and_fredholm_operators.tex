@@ -11,6 +11,10 @@
 %\usepackage{newpxtext,eulerpx,eucal}
 %\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \usepackage{parskip}
+\usepackage[ backend=biber,
+style=alphabetic,
+sorting=ynt ]{biblatex}
+\addbibresource{all_references.bib}
 
 \fancyhf{}
 \fancyhead[R]{Avinash Iyer}
@@ -21,5 +25,52 @@
 
 \begin{document}
 \RaggedRight
+\section{Compact Operators}%
+\begin{definition}
+  A linear map $T\colon X\rightarrow Y$ between Banach spaces is called \textit{compact} if $ T\left( B_X \right)\subseteq Y $ has compact closure, where $B_X$ denotes the closed unit ball of $X$. We denote the space of compact operators $K(X,Y)$.
+\end{definition}
+The theory of compact operators (and the soon to arise Fredholm operators) arose from the analysis of integral equations. To start, let $I = [0,1]$, and consider the Banach space $C(I)$ with the supremum norm. Letting $k\in C\left( I\times I \right)$, we define $u\in B(X)$ by taking
+\begin{align*}
+  Tf(x) &= \int_{0}^{1} k(x,y)f(y)\:dy.
+\end{align*}
+The fact that $Tf\in X$ follows from an application of the Dominated Convergence Theorem and the fact that, since $k(x,y)$ is jointly continuous, it is also separately continuous (see \cite[Theorem 2.27]{folland_real_analysis}). In fact, we can show something even stronger: we claim that the family $T\left( B_X \right)$ is in fact equicontinuous. This follows from the fact that, $I^2$ is compact, so if $\ve > 0$, there is $\delta$ such that whenever $\max\set{\left\vert x-x' \right\vert,\left\vert y-y' \right\vert} < \delta$, we have $\left\vert k\left( x,y \right) - k\left( x',y' \right) \right\vert < \ve$. Therefore,
+\begin{align*}
+  \left\vert Tf(x) - Tf\left(x'\right) \right\vert &= \left\vert \int_{0}^{1} \left( k\left( x,y \right) - k\left( x',y \right) \right)f(y)\:dy \right\vert\\
+                                                   &\leq \int_{0}^{1} \left\vert k\left( x,y \right) - k\left( x',y \right) \right\vert\left\vert f(y) \right\vert\:dy\\
+                                                   &\leq \sup_{y\in I} \left\vert k\left( x,y \right) - k\left( x',y \right) \right\vert \norm{f}_{u}\\
+                                                   &\leq \ve \norm{f}_{u}.
+\end{align*}
+Furthermore, since
+\begin{align*}
+  \left\vert Tf(x) \right\vert &\leq \norm{k}_{u}\norm{f}_{u},
+\end{align*}
+we have that $T\left(B_X\right)$ is pointwise bounded. Thus, by the Arzelà--Ascoli theorem, it follows that $T\left( B_X \right)$ is totally bounded, so $T$ is a compact operator. We call the function $k$ the \textit{kernel} of the operator $T$.
 
+Similarly, the operator $V\in B(X)$ given by
+\begin{align*}
+  Vf(x) &= \int_{0}^{x} f(y)\:dy
+\end{align*}
+is such that $V\left(B_X\right)$ is totally bounded by Arzelà--Ascoli, so $V$ is also compact. In fact, $V$ has no eigenvalues as well. This follows from the fact that, if there were $\lambda\in \C\setminus \set{0}$ with $V(f) = \lambda f$, then $f(0) = 0$ and $f'(t) = 1/\lambda f(t)$, so that $f(t) = f(0) e^{t/\lambda} = 0$, meaning $f = 0$.
+
+We call the operator $V$ the \textit{Volterra integral operator} on $X$.
+
+We can see that $K(X)$ is in fact an algebraic ideal in $B(X)$ (by continuity). In fact, there is a topological dimension to $K(X)\subseteq B(X)$.
+\begin{proposition}
+  If $X,Y$ are Banach spaces, then $K(X,Y)$ is a closed subspace of $B(X,Y)$.
+\end{proposition}
+\begin{proof}
+  Let $\left( T_n \right)_n$ converge to $T\in B(X,Y)$. Let $\ve > 0$, and select $N$ such that $\norm{T_N - T} < \ve/3$. Since $T_N\left(B_X\right)$ is totally bounded, there are $x_1,\dots,x_n\in B_X$ such that for each $x\in S$, we have
+  \begin{align*}
+    \norm{T_Nx - T_Nx_j} < \ve/3
+  \end{align*}
+  for some $j$. Therefore, we have
+  \begin{align*}
+    \norm{Tx-Tx_j } &\leq \norm{Tx-T_Nx} + \norm{T_Nx-T_Nx_j} + \norm{T_Nx_j - Tx_j}\\
+                    &< \ve.
+  \end{align*}
+  Therefore, $T\left( B_X \right)$ is totally bounded, so $T\in K(X,Y)$.
+\end{proof}
+Therefore, we see that $ \overline{F(X,Y)}\subseteq K(X,Y) $ is, where $F(X,Y)$ denotes the finite-rank operators, but this inclusion may be strict. In the cases where $ \overline{F(X)} = K(X) $, we say the Banach space $X$ has the approximation property. There are Banach spaces that do not have the approximation property.
+\nocite{murphy_cstar_algebras_and_operator_theory}
+\printbibliography
 \end{document}
