@@ -1,0 +1,105 @@
+\documentclass[10pt]{mypackage}
+
+% sans serif font:
+%\usepackage{cmbright}
+%\usepackage{sfmath}
+%\usepackage{bbold} %better blackboard bold
+
+%\usepackage{homework}
+\usepackage{notes}
+\usepackage{mlmodern}
+%\usepackage{newpxtext,eulerpx,eucal}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Generalized Limits}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Banach Limits}%
+\begin{theorem}[Hahn--Banach--Minkowski]
+  Let $X$ be a real vector space, and let $p\colon X\rightarrow \R$ be such that $p\left( x+y \right) \leq p(x) + p(y)$ for all $x,y\in X$ and $p\left( tx \right) = tp(x)$ for all $t \geq 0$. If $f\colon Y\rightarrow \R$ is a linear functional defined on a subspace $Y$ such that $f(x)\leq p(x)$ for all $x\in Y$, then there is an extension $F\colon X\rightarrow \R$ such that $F(x)\leq p(x)$ for all $x\in X$ and $F|_{Y} = f$.
+
+  Furthermore, if $v\in X\setminus Y$, the value of $F(v)$ can be designated to be in the closed interval defined by
+  \begin{align*}
+    m &= \sup_{w\in Y} \left( -p\left( -w-v \right) - f(w)\right)
+    \intertext{at the left endpoint, and}
+    M &= \inf_{w\in Y} \left( p\left( w+v \right) - f(w) \right)
+  \end{align*}
+  at the right endpoint.
+\end{theorem}
+\begin{corollary}
+  If $X$ is a complex normed vector space with subspace $E\subseteq X$ and $\varphi\in E^{\ast}$, then there is $\Phi\colon X\rightarrow \C$ such that $\Phi|_{E} = \varphi$ and $\norm{\Phi} = \norm{\varphi}$.
+
+  Additionally, if there is $x_0\in X\setminus E$, then there is $f\in X^{\ast}$ such that $f\left( x_0 \right) = \dist_{E}\left(x_0\right)$ and $f|_{E} = 0$.
+\end{corollary}
+One of the most important vector spaces is the space $\ell_{\infty}$ of bounded sequences $x\colon \N\rightarrow \C$, which admits a subspace of convergent subspaces, often denoted $c$. 
+\begin{proposition}
+  There exists a linear functional $L\colon \ell_{\infty}\rightarrow \C$ with
+  \begin{enumerate}[(i)]
+    \item $\norm{L} = 1$;
+    \item for any $x\in c$, $L(x) = \lim_{n\rightarrow\infty}x_n$;
+    \item for any $x\in \ell_{\infty}$ with $x_n\geq 0$  for each $n$, we have $L(x) \geq 0$;
+    \item for any $x\in \ell_{\infty}$, with $\left( S(x) \right)_{n}\coloneq x_{n+1}$, we have $L\left(S(x)\right) = L(x)$.
+  \end{enumerate}
+\end{proposition}
+We will construct this linear functional using the Hahn--Banach theorem(s) by following the construction in Conway's book. We consider the real vector space $\Re\left(\ell_{\infty}\right)$, which we will write as $\ell_{\infty}$ for now.
+
+To start we consider the subspace $M$ of $\ell_{\infty}$ given by
+\begin{align*}
+  M &= \set{x-S(x) | x\in \ell_{\infty}}.
+\end{align*}
+If $\1$ denotes the sequence of $1$s in $\ell_{\infty}$, then we see that $\dist_{M}\left(\1\right) = 1$. First, $0\in M$, so that $\dist_{M}\left(\1\right) \leq 1$. If there is $n$ such that $\left( x-S(x) \right)_n\leq 0$, then we see that
+\begin{align*}
+  \norm{\1 - \left( x-S(x) \right)} &\geq \left\vert \1-\left( x_n - \left( S(x) \right)_n \right) \right\vert\\
+                                    &\geq 1.
+\end{align*}
+Else, if for all $n$, $0 \leq \left( x - S(x) \right)_n = x_n-x_{n+1}$, then $x_{n+1}\leq x_n$ for all $n$. Since $x\in \ell_{\infty}$, there is $\alpha = \lim_{n\rightarrow\infty}x_n$. Therefore, $\lim_{n\rightarrow\infty}\left( x_n-x_{n+1} \right) = 0$, so $\norm{\1 - \left( x-S(x) \right)} \geq 1$.
+
+Thus, there is some linear functional $L\colon \ell_{\infty}\rightarrow \R$ such that $\norm{L} = 1$ and $L\left(x\right) = L\left(S(x)\right)$. This satisfies (i) and (iv) in the proposition.
+
+Next, we show that $c_0\subseteq \ker\left( L \right)$. Since (in our current focus) $c = c_0 + \R\1$, we would then obtain (b). To see this, let $x\in c_0$. Observe that $S^{n}(x) - x$ is contained in $M$, meaning that $L(x)= L\left( S^{n}(x) \right)$ for each $n$. If $\ve > 0$, there is some $N$ such that $\left\vert x_m \right\vert < \ve$ for all $m > N$. Therefore,
+\begin{align*}
+  \left\vert L(x) \right\vert &= \left\vert L\left( S^{n}(x) \right) \right\vert\\
+                              &\leq \norm{S^n(x)}\\
+                              &< \ve.
+\end{align*}
+Since $\ve$ is arbitrary, we thus have $x\in \ker\left( L \right)$.
+
+Finally, to show (c), we let $x\in \ell_{\infty}$ be such that $x_n \geq 0$ for all $n$, and assume toward contradiction that $L(x) < 0$. Dividing out by $\norm{x}$, we have that $L(x) < 0$ and $0 \leq x_n \leq 1$ for all $n$. Yet, this would imply that $\norm{\1-x}\leq 1$ and $L\left(\1-x\right) = 1 - L(x) > 1$, contradicting (a).
+
+To extend to $\C$, and rewriting the functional on $\R$ as $L_1$, we may write any element $x\in \ell_{\infty}$ as $x = x_1 + i x_2$. Observe then that
+\begin{align*}
+  L(x) &= L_1\left(x_1\right) + i L_1\left( x_2 \right)
+\end{align*}
+is a linear functional on $\ell_{\infty}$. Now, observe that $\norm{L} \geq 1$ almost by design. Since $L$ is a nonzero linear functional, we let $x$ be such that $L(x)\neq 0$, and set
+\begin{align*}
+  \alpha = \frac{\left\vert L(x) \right\vert}{L(x)}.
+\end{align*}
+We have that $\left\vert \alpha \right\vert = 1$ and $\alpha L(x) = \left\vert L(x) \right\vert$. We may then compute
+\begin{align*}
+  \left\vert L(x) \right\vert &= L\left( \alpha x \right)\\
+                              &= \re\left( L\left( \alpha x \right) \right)\\
+                              &= L_1\left( \alpha x \right)\\
+                              &\leq \norm{L_1}\norm{\alpha x}\\
+                              &= \norm{x}.
+\end{align*}
+In particular, this means $\norm{L}\leq 1$, so $\norm{L} = 1$.
+\section{Generalized Limits beyond Banach Limits}%
+We have obtained one limit. However, there are lots of other extensions of the limit, each of which has norm $1$. In fact, from our statement of the Hahn--Banach--Minkowski theorem, we claim that the following expression
+\begin{align*}
+  M\left( x \right) &\coloneq \lim_{n\rightarrow\infty} \sup_{j\in \N} \frac{1}{n}\sum_{k=1}^{n}x_{k + j}
+\end{align*}
+is a sublinear functional.
+
+First, we show that this is in fact a limit. Toward this end, we observe that, if we set
+\begin{align*}
+  c_n &= \sup_{j\in \N} \frac{1}{n}\sum_{k=1}^{n} x_{k + j},
+\end{align*}
+then $c_{am}\leq c_m$ for each $a \geq 1$.
+\end{document}
