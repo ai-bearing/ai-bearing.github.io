@@ -8,6 +8,10 @@
 %\usepackage{homework}
 \usepackage{notes}
 \usepackage{mlmodern}
+\usepackage[ backend=biber,
+style=alphabetic,
+sorting=ynt ]{biblatex}
+\addbibresource{all_references.bib}
 %\usepackage{newpxtext,eulerpx,eucal}
 %\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \usepackage{parskip}
@@ -212,6 +216,172 @@ In particular, this means that the elements of $A$ act as bounded operators on $
     N_{\tau} &= \set{a\in A | \iprod{\pi\left( a^{\ast}a \right)h}{h} = 0}\\
              &= \set{a\in A | \pi(a)h = 0},
   \end{align*}
-  meaning there is a well-defined linear map $U_0\colon A/N_{\tau}\rightarrow \mathcal{H}_{\pi}$ given by $U_0\left( a + N_{\tau} \right) = \pi(a)h$.
+  meaning there is a well-defined linear map $U_0\colon A/N_{\tau}\rightarrow \mathcal{H}_{\pi}$ given by $U_0\left( a + N_{\tau} \right) = \pi(a)h$. The map $U_0$ is isometric, since
+  \begin{align*}
+    \iprod{U_0\left( a + N_{\tau} \right)}{ U_0\left( b + N_{\tau} \right) } &= \iprod{\pi\left( b^{\ast}a \right)h}{h}\\
+                                                                             &= \tau\left( b^{\ast}a \right)\\
+                                                                             &= \iprod{a + N_{\tau}}{b + N_{\tau}}.
+  \end{align*}
+  Thus, $U_0$ extends to an isometry $U$ on the completion $\mathcal{H}_{\tau}$ of $A/N_{\tau}$, and maps onto $ \overline{\Span}\set{\pi(a)h | a\in A} $, which is equal to $\mathcal{H}_{\pi}$ since $h$ is cyclic. Thus, $U$ is unitary.
+
+  We find that
+  \begin{align*}
+    U\pi_{\tau}\left( a \right)\left( b + N_{\tau} \right) &= U\left( ab + N_{\tau} \right)\\
+                                                           &= \pi\left( ab \right)h\\
+                                                           &= \pi(a)\left( \pi(b)h \right)\\
+                                                           &= \pi(a)U\left( b + N_{\tau} \right).
+  \end{align*}
+  Thus, $\pi_{\tau}(a)$ is unitarily equivalent to $\pi(a)$ for each $a$.
 \end{proof}
+\begin{remark}
+  The completion of $A/N_{\phi}$, which we denoted $\mathcal{H}_{\phi}$, is often denoted as $L_2\left( A,\phi \right)$.
+\end{remark}
+\begin{proposition}
+  Let $\phi$ and $\psi$ be positive linear functionals with $\psi\leq \phi$ inducing representations $\pi_{\phi}$ and $\pi_{\psi}$. Then, there is a unique operator $T\in \pi_{\phi}(A)'\subseteq B\left( H_{\phi} \right)$, with $0\leq T \leq I$, such that 
+  \begin{align*}
+    \psi(x) &= \phi\left( T\pi_{\phi}(x) \right)\\
+            &= \iprod{T\pi_{\phi}(x)\xi_{\phi}}{\xi_{\phi}}_{\phi},
+  \end{align*}
+  where $\xi_{\phi}$ denotes the cyclic vector for $\phi$.
+\end{proposition}
+\begin{proof}
+  We define a sesquilinear form $F$ on $\mathcal{H}_{\phi}$ such that
+  \begin{align*}
+    \psi\left( y^{\ast}x \right) &= F\left( \pi_{\phi}(x)\xi_{\phi},\pi_{\phi}(y)\xi_{\phi} \right).
+  \end{align*}
+  This is a bounded sesquilinear form that is necessarily positive. Thus, there is some $T\in B\left( \mathcal{H}_{\phi} \right)$ with $0\leq T \leq I$ such that $F\left( \eta,\zeta \right) = \iprod{T\eta}{\zeta}_{\phi}$ for all $\eta,\zeta\in \mathcal{H}_{\phi}$.
+
+  Now, for $x,y,z\in A$, we have
+  \begin{align*}
+    \iprod{T\pi_{\phi}(x)\pi_{\phi}(z)\xi_{\phi}}{\pi_{\phi}(y)\xi_{\phi}}_{\phi} &= \psi\left( y^{\ast}\left( xz \right) \right)\\
+                                                                                          &= \psi\left( \left( x^{\ast}y \right)^{\ast}z \right)\\
+                                                                                          &= \iprod{T\pi_{\phi}(z)\xi_{\phi}}{\pi_{\phi}\left( x^{\ast} \right) \pi_{\phi}(y)\xi_{\phi} }_{\phi}\\
+                                                                                          &= \iprod{\pi_{\phi}\left( x \right)T  \pi_{\phi}(z)\xi_{\phi} }{\pi_{\phi}(y)\xi_{\phi}}_{\phi}.
+  \end{align*}
+  Therefore, we have $T\pi_{\phi}(x) = \pi_{\phi}(x)T$.
+\end{proof}
+Notice that if $\psi\leq \phi$, then $\omega = \phi-\psi$ is positive linear functional such that $\phi = \psi + \omega$, meaning that $\pi_{\phi}$ is unitarily equivalent to
+\begin{align*}
+  \mathcal{H}_{\phi} = \left[ \left( \pi_{\psi}\oplus \pi_{\omega} \right)\left(A\right)\left( \xi_{\psi}\oplus \xi_{\omega} \right) \right],
+\end{align*}
+and $T$ is the compression of the projection onto the first coordinate.
+
+Recall that the state space $S(A)$ is a $w^{\ast}$-compact convex subset of $A^{\ast}$, so it is equal to the closed convex hull of its extreme points by Krein--Milman. These extreme points are known as pure states.
+\begin{proposition}
+  If $\phi$ is a state on $A$, then $\pi_{\phi}$ is irreducible if and only if $\phi$ is a pure state.
+\end{proposition}
+\begin{proof}
+  If $\pi_{\phi}$ is irreducible, then for any positive linear functional $\psi\leq \phi$, it must be the case that $\psi$ is a multiple of $\phi$ since there are no sub-representations for $\pi_{\phi}$. In particular, this means that $\psi = \phi$, so $\phi$ is pure.
+
+  Now, let $\phi$ be pure. Suppose there is a projection $P$ in $\pi_{\phi}(A)'$ with $P\neq 0,I$.  Then, $P\xi_{\phi} \neq 0$, as else we would have
+  \begin{align*}
+    0 &= \pi_{\phi}(x)P\xi_{\phi}\\
+      &= P\left[ \pi_{\phi}(x)\xi_{\phi} \right]
+  \end{align*}
+  for all $x\in A$, whence $P$ would be equal to zero. Similarly, we must have $\left( I-P \right)\xi_{\phi} \neq 0$. For each $x\in A$, let
+  \begin{align*}
+    \phi_1(x) &= \iprod{\pi_{\phi}P\xi_{\phi}}{P\xi_{\phi}}_{\phi}\\
+              &= \phi\left( P\pi_{\phi}(x) \right)\\
+    \phi_2(x) &= \iprod{\pi_{\phi}\left( I-P \right)\xi_{\phi}}{\left( I-P \right)\xi_{\phi}}\\
+              &= \phi\left( \left( I-P \right)\pi_{\phi}(x) \right).
+  \end{align*}
+  Then, $\phi_1,\phi_2$ are positive linear functionals on $A$, with $\phi = \phi_1 + \phi_2$, $\phi_1 = \lambda\phi$, and $\phi_2 = \left( 1-\lambda \right)\phi$ for some $0 < \lambda < 1$, following from the fact that $\phi$ is pure. For any $\ve > 0$, there is $x\in A$ with $\norm{\pi_{\phi}\xi_{\phi} - P\xi_{\phi}} < \ve$, and we have
+  \begin{align*}
+    \phi\left( x^{\ast}x \right) &= \norm{\pi_{\phi}(x)\xi_{\phi}}^2\\
+                                 &= \norm{P\xi_{\phi}}^2,
+  \end{align*}
+  whence
+  \begin{align*}
+    \norm{\left( I-P \right)\pi_{\phi}\xi_{\phi} - P\xi_{\phi}} < \ve,
+  \end{align*}
+  and
+  \begin{align*}
+    \left( 1-\lambda \right)\norm{P\xi_{\phi}}^2 &= \phi_2\left( x^{\ast}x \right)\\
+                                                 &= \norm{\left( I-P \right)\pi_{\phi}\xi_{\phi}}^2\\
+                                                 &< \ve^2,
+  \end{align*}
+  and since $\ve$ is arbitrary, we have $\lambda = 1$, which means no such $P$ exists. Thus, $\pi_{\phi}(A)' = \C I$, and so $\pi_{\phi}$ is irreducible.
+\end{proof}
+\begin{corollary}
+  If $A$ is a $C^{\ast}$-algebra and $x\in A$, then there is an irreducible representation $\pi$ of $A$ with $\norm{\pi(x)} = \norm{x}$.
+\end{corollary}
+\begin{proof}
+  Let $\pi$ be represented via the pure state $\phi$. There is a pure state on $A$ with $\phi\left( \left( xx^{\ast} \right)^2 \right) = \norm{\left( xx^{\ast} \right)^2}$, emerging from extending the isomorphism $C^{\ast}\left( \left( xx^{\ast} \right)^2 \right)\cong C_0\left( \sigma\left( \left( xx^{\ast} \right)^2 \right) \right)$. Thus,
+  \begin{align*}
+    \norm{x}^2 &= \iprod{xx^{\ast}}{xx^{\ast}}^{1/2}\\
+               &= \norm{xx^{\ast}}\\
+               &= \norm{\pi(x)x^{\ast}}\\
+               &\leq \norm{\pi(x)}\norm{x}\\
+               &\leq \norm{x}^2,
+  \end{align*}
+  so the inequalities are equalities, and $\norm{\pi(x)} = \norm{x}$.
+\end{proof}
+\section{Spectrum of a $C^{\ast}$-Algebra}%
+\begin{definition}
+  If $A$ is a $C^{\ast}$-algebra, the \textit{spectrum} of $A$, denoted $ \hat{A} $, is the set of unitary equivalence classes of irreducible representations of $A$.
+\end{definition}
+We start by understanding the irreducible representations of $K(\mathcal{H})$. Recall the characterization of $K\left( \mathcal{H} \right)$ as
+\begin{align*}
+  K\left( \mathcal{H} \right) &= \overline{\Span}\set{h\otimes \overline{k} | h,k\in \mathcal{H}},
+\end{align*}
+where
+\begin{align*}
+  h\otimes \overline{k}\left( \ell \right) &= \iprod{\ell}{k}h.
+\end{align*}
+Let $\pi\colon K\left( \mathcal{H} \right)\rightarrow B\left( \mathcal{H}_{\pi} \right)$ be an irreducible representation, and let $e\in \mathcal{H}$ be a unit vector. Then, $e\otimes \overline{e}$ is the projection of $\mathcal{H}$ onto the span of $e$, meaning $P = \pi\left( e\otimes \overline{e} \right)$ is the projection onto the closed subspace $P\mathcal{H}_{\pi}$. Let $\xi\in B\left( \mathcal{H}_{\pi} \right)$ be fixed, and consider
+\begin{align*}
+  \left[ \pi\left( K\left(\mathcal{H}\right) \right)\xi \right] &= \overline{\Span}\set{\pi(T)\xi | T\in K\left( \mathcal{H} \right)}.
+\end{align*}
+This is a nonzero invariant subspace, so by irreducibility, $\left[ \pi\left( K\left( \mathcal{H} \right) \right)\xi \right]$ is all of $\mathcal{H}_{\pi}$. Define $U\colon \mathcal{H}\rightarrow \mathcal{H}_{\pi}$ by
+\begin{align*}
+  Uh = \pi\left( h\otimes \overline{e} \right)\xi.
+\end{align*}
+Then, we have
+\begin{align*}
+  \iprod{Ug}{Uh} &= \iprod{\pi\left( g\otimes \overline{e} \right)\xi}{\pi\left( h\otimes \overline{e} \right)\xi}\\
+                 &= \iprod{\xi}{\pi\left( \left( g\otimes \overline{e} \right)^{\ast}\left( h\otimes \overline{e} \right) \right)\xi}\\
+                 &= \iprod{\xi}{\pi\left( \left( e\otimes \overline{g} \right)\left( h\otimes \overline{e} \right) \right)\xi}\\
+                 &= \iprod{\xi}{\pi\left( \iprod{h}{g}\left( e\otimes \overline{e} \right) \right)\xi}\\
+                 &= \iprod{g}{h} \iprod{\xi}{\pi\left( e\otimes \overline{e} \right)\xi}\\
+                 &= \iprod{g}{h} \norm{\xi}^2\\
+                 &= \iprod{g}{h}.
+\end{align*}
+Furthermore, since
+\begin{align*}
+  \pi\left( h\otimes \overline{k} \right)\xi &= \pi\left( h\otimes \overline{k} \right)\pi\left( e\otimes \overline{e} \right)\xi\\
+                                             &= \iprod{e}{k}\pi\left( h\otimes \overline{e} \right)\xi\\
+                                             &= \iprod{e}{k}Uh,
+\end{align*}
+we have that every element of the spanning set is in the range of $U$. Thus, $U$ is a unitary, and
+\begin{align*}
+  \pi\left( h\otimes \overline{k} \right)\left( Ug \right) &= \pi\left( \left( h\otimes \overline{k} \right)\left( g\otimes \overline{e} \right) \right)\xi\\
+                                                           &= \iprod{g}{k}\pi\left( h\otimes \overline{e} \right)\xi\\
+                                                           &= \iprod{g}{k} Uh\\
+                                                           &= U\left( \iprod{g}{k}h \right)\\
+                                                           &= U\left( \left( h\otimes \overline{k} \right)g \right).
+\end{align*}
+In particular, this means we have $\pi(T)U = U T$ for all $T\in K\left( \mathcal{H} \right)$. Thus, $\pi$ is unitarily equivalent to the identity, meaning that the spectrum of $K\left( \mathcal{H} \right)$ is simply the identity.
+
+Similar to how the analysis of commutative $C^{\ast}$-algebras depends on the identification between characters and maximal ideals on the $C^{\ast}$-algebra, given by $\phi\mapsto \ker\left( \phi \right)$. Similarly, we are interested in the ideals that are the kernels of irreducible representations, known as primitive ideals.
+\begin{proposition}
+  Let $A$ be a $C^{\ast}$-algebra. Then,
+  \begin{enumerate}[(a)]
+    \item every closed ideal in $A$ is the intersection of the primitive ideals that contain it;
+    \item if $I$ is a primitive ideal, and $J,K$ are ideals such that $J\cap K\subseteq I$, then either $J\subseteq I$ or $K\subseteq I$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(a)]
+    \item Let $a\in A$ with $a\notin I$. Then, consider $a + I\in A/I$. There is an irreducible representation of $A/I$ such that $\norm{\pi(a+I)} = \norm{a+I}\neq 0$. Yet, composing with the quotient map, this yields an irreducible representation $\pi\circ q$ with $a\notin \ker\left( \pi\circ q \right)$. 
+    \item Let $\pi$ be an irreducible representation with $\ker\left(\pi\right) = I$. If $J\nsubseteq I$, then $\pi(J)\neq 0$, so $\left[ \pi(J)\mathcal{H} \right] \eqcolon \mathcal{V}$ is nonzero. Since $J$ is an ideal, $\mathcal{V}$ is invariant, but this means $\left[ \pi(J)\mathcal{H} \right] = \mathcal{H}$. Yet, this yields
+      \begin{align*}
+        \pi(K)\left( \pi(J)\mathcal{H} \right) &\subseteq \pi\left( K\cap J \right)\mathcal{H}\\
+                                               &\subseteq \pi(I)\\
+                                               &= 0,
+      \end{align*}
+      whence $K\subseteq \ker\left( \pi \right)$.
+  \end{enumerate}
+\end{proof}
+\nocite{blackadar_operator_algebras,morita_equivalence_cstar_algebras}
+\printbibliography 
 \end{document}

@@ -8,6 +8,10 @@
 %\usepackage{homework}
 \usepackage{notes}
 \usepackage{mlmodern}
+\usepackage[ backend=biber,
+style=alphabetic,
+sorting=ynt ]{biblatex}
+\addbibresource{all_references.bib}
 %\usepackage{newpxtext,eulerpx,eucal}
 %\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \usepackage{parskip}
@@ -266,4 +270,135 @@ The next fixed-point theorem we will prove is the Markov--Kakutani Fixed-Point T
   \end{align*}
   Since $K$ is compact, so too is $K-K$. If $U$ is an open neighborhood of $0$ in $X$, there is $n\geq 1$ such that $\frac{1}{n}\left( K-K \right) \subseteq U$. In particular, this means that $T\left(x_0\right) - x_0\in U$ for every open neighborhood $U$ of $0$, so that $T\left( x_0 \right) - x_0 = 0$.
 \end{proof}
+Finally, the most general fixed-point theorem applies to families that are ``sufficiently separating'' in the following sense. 
+\begin{definition}
+  Let $X$ be a locally convex topological vector space, and let $K\subseteq X$. A semigroup $\mathcal{S}$ of maps from $K$ to itself is called \textit{distal} if, for any two points $v\neq w $ in $ K$, we have
+  \begin{align*}
+    0\notin \overline{\set{Av - Aw | A\in \mathcal{S}}}.
+  \end{align*}
+\end{definition}
+Equivalently, there is a basic open neighborhood
+\begin{align*}
+  U_{F,r} &= \set{v\in X | p_i(v)< r\text{ for all }p_i\in F}
+\end{align*}
+for some finite $F\subseteq \mathcal{P}$, where $ \mathcal{P} $ is the family of seminorms that determines the topology on $X$. In particular, the semigroup being distal is equivalent to the existence of a seminorm $p$ and $r > 0$ such that $\inf_{A\in \mathcal{S}}p\left( Av - Aw \right) \geq r$.
+\begin{theorem}[Hahn Fixed-Point Theorem]
+  Let $X$ be a locally convex topological vector space, and let $K$ be a nonempty compact convex subset of $X$. Let $\mathcal{S}$ be a semigroup of continuous affine maps of $K$ into itself that is distal. Then, there is a common fixed-point for $\mathcal{S}$.
+\end{theorem}
+\begin{proof}
+  Consider the family of compact convex subsets $C\subseteq K$ that are $\mathcal{S}$-invariant. A decreasing chain of such sets has nonempty intersection, and the intersection is compact, convex, and $\mathcal{S}$-invariant. Thus, we may assume that $K$ is minimal. If $K$ is one point, we are done.
+
+  Else, let $\xi,\eta$ be distinct points in $K$, and set $\zeta = \frac{1}{2}\left( \xi + \eta \right)$. Let $L = \overline{ \mathcal{S} \zeta }$, which is an $\mathcal{S}$-invariant compact subset of $K$. Then, $ \overline{\conv}(L) $ is closed, convex, and $\mathcal{S}$-invariant. Since we assume that $K$ is minimal, it is then the case that $ \overline{\conv}(L) = K $. From the Krein--Milman theorem, it follows that $K$ has an extreme point $\gamma$, with $\gamma\in L$.
+
+  Therefore, we have a net $\left( A_{\lambda} \right)_{\lambda\in \Lambda}$ in $ \mathcal{S} $ such that
+  \begin{align*}
+    A_{\lambda}\zeta &= \frac{1}{2} \left( A_{\lambda}\xi + A_{\lambda}\eta \right)\\
+                     &\rightarrow \gamma.
+  \end{align*}
+  From compactness, we thus have $\xi'$ and $\eta'$ such that $A_{\lambda}\xi\rightarrow \xi'$ and $A_{\lambda}\eta\rightarrow \eta'$. Since $\gamma$ is extreme, it then follows that $\gamma = \xi'=\eta'$. In particular, this means that
+  \begin{align*}
+    A_{\lambda}\xi - A_{\lambda}\eta &= \gamma - \gamma\\
+                                     &= 0,
+  \end{align*}
+  which implies that $ \mathcal{S} $ is not distal. Therefore, this means that $K$ is a singleton.
+\end{proof}
+\begin{definition}
+  If $K$ is a subset of a locally convex topological vector space $X$, a set $ \mathcal{S} $ of maps from $K$ to itself is called \textit{equicontinuous} if, for every $V\in \mathcal{O}_{0}$, there is an open $ W\in \mathcal{O}_{0} $ such that such that, whenever $\xi,\eta\in K$ with $\xi-\eta\in W$, we have $A\xi - A\eta \in V$ for all $A\in \mathcal{S}$.
+\end{definition}
+\begin{theorem}[Kakutani Fixed-Point Theorem]
+  Let $K$ be a compact convex subset of a locally convex topological vector space $X$. Let $ \mathcal{G} $ be a \textit{group} of affine maps of $K$ into itself that is equicontinuous. Then, $\mathcal{G}$ has a fixed-point.
+\end{theorem}
+\begin{proof}
+  It suffices to show that $ \mathcal{G} $ is distal on $K$. Let $\xi,\eta\in K$ be distinct points. Choose $V\in \mathcal{O}_{0}$ with $\eta\notin \xi + V$. By equicontinuity, we may find $W\in \mathcal{O}_{0}$ with $\xi',\eta'\in W$ and $\xi'-\eta'\in W$ implying $A\xi' - A\eta'\in V$ for all $A\in \mathcal{G}$.
+
+  Suppose there were $A\in \mathcal{G}$ such that $A\xi - A\eta\in W$. Then,
+  \begin{align*}
+    \xi - \eta &= A^{-1}\left( A\xi \right) - A^{-1}\left( A\eta \right)\\
+               &\in V,
+  \end{align*}
+  which is a contradiction. Thus, $ \mathcal{G} $ is distal, so $\mathcal{G}$ admits a fixed-point by the Hahn Fixed-Point Theorem.
+\end{proof}
+Thus far, we have required norm compactness of the subset $K$. Our final fixed-point theorem gives us the most general case.
+\begin{theorem}[Ryll--Nardzewski Fixed-Point Theorem]
+  Let $X$ be a locally convex topological vector space with topology $\tau$, and let $\tau_{w}$ be the weak topology on $X$. Suppose $K$ is a nonempty weakly compact convex subset of $X$. Let $ \mathcal{S} $ be a semigroup of weakly continuous affine maps of $K$ into itself that is distal with respect to $\tau$. Then, there is a common fixed point for $\mathcal{S}$.
+\end{theorem}
+\begin{proof}
+  We start by reducing to the case of a finitely generated semigroup as follows. For each finite $F\subseteq \mathcal{S}$, we let $K_F$ be the set of common fixed-points for $F$.
+
+  This is a compact subset, and the family $\set{K_F | F\subseteq \mathcal{S}\text{ finite}}$ has the finite intersection property. Therefore, there is a point in the intersection of all these subsets, which is non-empty by compactness. Thus, we may assume $\mathcal{S}$ is finitely generated, and in particular, countable.
+
+  We may suppose that $K$ is a minimal weakly compact, convex, $\mathcal{S}$-invariant set, as in the proof of Hahn's theorem. For any $\xi\in K$, the set $ \overline{\conv}^{\tau}\left( \set{A\xi | A\in \mathcal{S}} \right) $ is an $\mathcal{S}$-invariant convex subset of $K$. By geometric Hahn--Banach, a convex norm-closed subset is weakly closed, so it is equal to $ K $, by minimality. Thus, $K$ is separable under $\tau$. Let $B$ be a countable $\tau$-dense subset of $K$.
+
+  By a similar argument, there is a minimal, weakly compact (not necessarily convex) $\mathcal{S}$-invariant subset $L\subseteq K$. If $L$ is a singleton, then we are done, so suppose $L$ contains distinct points $\xi$ and $\eta$. Since $\mathcal{S}$ is distal, there is a convex $\tau$-open neighborhood $U\in \mathcal{O}_{0}$ such that $A\xi - A\eta\notin U$ for all $A\in \mathcal{S}$. Select a convex $\tau$-closed neighborhood $V$ of $0$ such that $V-V\subseteq U$. Then, $V$ is weakly closed (again by geometric Hahn--Banach). Since $B$ is $\tau$-dense, for any $\zeta\in K$, we have $\left( \zeta - V \right)\cap B \neq \emptyset$. Therefore, we have
+  \begin{align*}
+    L &= \bigcup_{\beta\in B} \left( \beta + V \right)\cap L.
+  \end{align*}
+  Since the sets $\left( \beta + V \right)\cap L$ are weakly closed, it follows that $L$ is not a countable union of weakly closed nowhere-dense sets, so there is a $\tau_{w}$-open set $W$ and $\beta_0\in B$ such that 
+  \begin{align*}
+    \emptyset &\neq L\cap W\\
+              &\subseteq \left( \beta_0 + V \right)\cap L\\
+              &\subseteq \beta_0 + V.
+  \end{align*}
+  Since $ \overline{\conv}^{\tau}(L) $ is a $\tau$-closed, convex, $\mathcal{S}$-invariant subset of $K$, it is equal to $K$ by minimality. Let $\gamma$ be an extreme point of $K$, so that $\gamma\in L$ by the Krein--Milman theorem. By the minimality of $L$, we have $ \overline{\mathcal{S}\gamma}^{\tau} = L $, so we have $A_0\in \mathcal{S}$ such that $A_0\gamma\in L\cap W$.
+
+  Set $\zeta = \frac{1}{2}\left( \xi + \eta \right)$. By minimality of $K$, we have
+  \begin{align*}
+    K &= \overline{\conv}^{\tau} \left( \mathcal{S}\zeta \right)\\
+      &= \overline{\conv}^{\tau}\left( \overline{\mathcal{S}\zeta}^{\tau_{w}} \right).
+  \end{align*}
+  Thus, by Krein--Milman, we have $\gamma\in \overline{\mathcal{S}\zeta}^{\tau_w}$, so there is a net $ \left( A_{\lambda} \right)_{\lambda\in\Lambda} $ in $ \mathcal{S} $ such that
+  \begin{align*}
+    \frac{1}{2}\left( A_{\lambda}\xi + A_{\lambda}\eta \right) &\xrightarrow{\tau_w} \gamma.
+  \end{align*}
+  By compactness, we may in fact take $A_{\lambda}\eta\xrightarrow{\tau_w} \eta'$ and $A_{\lambda}\xi\xrightarrow{\tau_w}\xi'$, whence $\gamma = \frac{1}{2} \left( \xi' + \eta' \right)$. Since $\gamma$ is extreme, it follows that $\gamma = \xi' = \eta'$. Thus, there is some $\lambda_0$ such that
+  \begin{align*}
+    A_0A_{\lambda_0}\xi &\in L\cap W\\
+    A_0A_{\lambda_0}\eta &\in L\cap W,
+  \end{align*}
+  so that $A_0A_{\lambda_0}\xi - A_0A_{\lambda_0}\eta\in V-V\subseteq U$, contradicting the assumption that $ \mathcal{S} $ is distal. Thus, $L$ is a singleton, so $\mathcal{S}$ has a fixed-point.
+\end{proof}
+\section{Applications}%
+\subsection{Haar Measure on Compact Groups}%
+\begin{definition}
+  A group $G$ is known as a topological group if it is equipped with a Hausdorff topology such that multiplication is jointly continuous and inversion is a homeomorphism of $G$ onto itself.
+\end{definition}
+If $G$ is a locally compact Hausdorff group, then we let $C_c(G)$ be the space of compactly supported continuous functions on $G$ with the supremum norm. Recall that a Radon measure on $G$ is a Borel measure on $G$ that is outer regular, inner regular on open sets, and finite on compact sets. By the Riesz Representation Theorem there is a one-to-one correspondence between positive linear functionals on $C_c(G)$ and Radon measures on $G$. In fact, there is a (essentially) unique positive Radon measure $\mu$ on $G$ such that $\mu\left( L_sf \right) = \mu(f)$ for every $s\in G$ and every $f\in C_c(G)$, which is known as Haar measure.
+
+We will show the case for when $G$ is compact by using these fixed-point theorems.
+\begin{theorem}
+  Let $G$ be a compact group. Then, $G$ has a unique left-invariant probability measure $\mu$. 
+\end{theorem}
+\begin{proof}
+  Since $G$ is compact, we have $C(G)^{\ast} = M(G)$ is the space of all complex regular Borel measures on $G$, via the Riesz Representation Theorem. Let $K$ be the $w^{\ast}$-compact convex set of probability measures on $G$. The family of operators $L_s^{\ast}$ are $w^{\ast}$-continuous isometries that map $K$ onto itself.
+
+  Letting $\mathcal{G} = \set{L_s^{\ast} | s\in G}$ be this family, we see that $\mathcal{G}$ is isomorphic to $G$, as for any $\mu\in K$ and any $f\in C(G)$,
+  \begin{align*}
+    L_t^{\ast}L_s^{\ast}\mu(f) &= \mu\left( L_tL_sf \right)\\
+                               &= \mu\left( L_{st}f \right)\\
+                               &= L_{st}^{\ast}\mu(f).
+  \end{align*}
+  Now, we will show that $\mathcal{G}$ is equicontinuous on $K$. We have
+  \begin{align*}
+    U_F &= \set{\mu\in M(G) | \left\vert \mu(f) \right\vert < 1\text{ for all }f\in F}
+  \end{align*}
+  for finite $F\subseteq C(G)$ is a basic open neighborhood of $0$. The map $\Phi\colon G\rightarrow C(G)^{F}$ given by
+  \begin{align*}
+    \Phi(s) = \left( L_sf_1,\dots,L_sf_n \right)
+  \end{align*}
+  is continuous, so it has a norm-compact image. There is a finite subset $S\subseteq G$ such that $\Phi(S)$ is a $1/3$-net in $\Phi(G)$, so we may define a $w^{\ast}$-open neighborhood of $0$ in $M(G)$, given by
+  \begin{align*}
+    W &= \set{\mu\in M(G) | \left\vert \mu\left( L_sf_i \right) \right\vert < 1/3, s\in S, f_i\in F}.
+  \end{align*}
+  Let $\mu,\nu\in K$ with $\mu-\nu\in W$. Then, for any $t\in G$, there is some $s\in S$ such that $\norm{L_tf_i-L_sf_i} < 1/3$ for each $f_i\in F$. Therefore, for each $f_i\in F$, we have
+  \begin{align*}
+    \left\vert L_t^{\ast}\left( \mu-\nu \right)\left(f_i\right) \right\vert &= \left\vert \left( \mu-\nu \right)\left( L_tf_i \right) \right\vert\\
+                                                                            &\leq \left\vert \left( \mu-\nu \right)\left( L_sf_i \right) \right\vert + \left\vert \left( \mu-\nu \right)\left( L_tf_i - L_sf_i \right) \right\vert\\
+                                                                            &< \frac{1}{3} + \norm{\mu-\nu}\norm{L_tf_i - L_sf_i}\\
+                                                                            &< \frac{1}{3} + \frac{2}{3}\\
+                                                                            &= 1.
+  \end{align*}
+  In particular, this means $L_t^{\ast}\mu - L_t^{\ast}\nu \in U_F$, so $\mathcal{G}$ is equicontinuous. Thus, by Kakutani's Fixed-Point Theorem, there is some $\mu\in K$ such that $L_s^{\ast}\mu = \mu$ for all $s\in G$, which is our desired left-invariant measure.
+\end{proof}
+\nocite{davidson_functional_analysis,conway_functional_analysis}
+\printbibliography
 \end{document}

@@ -90,16 +90,84 @@ We have that $\left\vert \alpha \right\vert = 1$ and $\alpha L(x) = \left\vert L
                               &= \norm{x}.
 \end{align*}
 In particular, this means $\norm{L}\leq 1$, so $\norm{L} = 1$.
-\section{Generalized Limits beyond Banach Limits}%
-We have obtained one limit. However, there are lots of other extensions of the limit, each of which has norm $1$. In fact, from our statement of the Hahn--Banach--Minkowski theorem, we claim that the following expression
-\begin{align*}
-  M\left( x \right) &\coloneq \lim_{n\rightarrow\infty} \sup_{j\in \N} \frac{1}{n}\sum_{k=1}^{n}x_{k + j}
-\end{align*}
-is a sublinear functional.
 
-First, we show that this is in fact a limit. Toward this end, we observe that, if we set
+We call such a shift-invariant extension of the limit to all of $\ell_{\infty}$ a \textit{Banach limit}. A quick observation gives that this limit functional cannot in fact be an algebra homomorphism. Considering the case of $a_n = \left( -1 \right)^{n}$, we have that $a_{n+1} = -a_n$, so that 
 \begin{align*}
-  c_n &= \sup_{j\in \N} \frac{1}{n}\sum_{k=1}^{n} x_{k + j},
+  L\left( S(a) \right) &= L\left( a \right)\\
+                       &= L\left( -a \right)\\
+                       &= - L(a),
 \end{align*}
-then $c_{am}\leq c_m$ for each $a \geq 1$.
+or that the Banach limit must be equal to $0$. However, if $L$ were instead an algebra homomorphism (where the multiplication operation on $\ell_{\infty}$ is given pointwise), we would have
+\begin{align*}
+  L\left( a^2 \right) &= L\left( \1 \right)\\
+                      &= 1\\
+                      &= \left( L\left( a \right) \right)^2,
+\end{align*}
+meaning that we would have $L\left( a \right) = \pm 1$, This means that such a limit that is an algebra homomorphism cannot be shift-invariant in the general case.
+\section{Generalized Limits beyond Banach Limits}%
+We have obtained one limit. However, there are lots of other extensions of the limit, each of which has norm $1$. In fact, if we consider the restriction of $\ell_{\infty}$ to the reals, we know from undergrad real analysis that
+\begin{align*}
+  p(x) &= \limsup_{n\rightarrow\infty} \left( \left( x_n \right)_n \right)
+\end{align*}
+is in fact a sublinear functional. Furthermore, since
+\begin{align*}
+  \liminf\left( \left( x_n \right)_n \right) &= -\limsup\left( \left( -x_n \right)_n \right),
+\end{align*}
+we can specify an extension to the limit functional to $L\colon \ell_{\infty}\rightarrow \R$ with $\norm{L} = 1$ such that for any $\left( x_n \right)_n\in \ell_{\infty}$, we have 
+\begin{align*}
+  \liminf_{n\rightarrow\infty}\left( \left( x_n \right)_n \right) \leq L(x)\leq \limsup_{n\rightarrow\infty}\left( \left( x_n \right)_n \right)
+\end{align*}
+However, these generalized limits may not align to the same requirement of shift-invariance as the aforementioned Banach limit. We can in fact construct a Banach limit from any generalized limit by using Césaro-type means: letting $x = \left( x_n \right)_n\in \ell_{\infty}$, we may define
+\begin{align*}
+  c_n &= \frac{1}{n} \sum_{k=1}^{n} a_k,
+\end{align*}
+and then, for a generalized limit $L$, defining $L'$ by
+\begin{align*}
+  L'\left( a \right) &= L\left(c\right).
+\end{align*}
+From undergrad real analysis, we know that if $\left( a_n \right)_n\rightarrow a$ is convergent, then we have
+\begin{align*}
+  \left( \frac{1}{n}\sum_{k=1}^{n}a_k \right)_{n} &\rightarrow a
+\end{align*}
+as well. Thus, we see that
+\begin{align*}
+  L'\left( S(a) \right) - L'(a) &= L'\left( \left( a_{n+1} \right)_n \right) - L\left( \left( a_n \right)_n \right)\\
+                                &= L\left( \left( \frac{1}{n}\sum_{k=1}^{n}a_{k+1} - \frac{1}{n}\sum_{k=1}^{n}a_k \right)_n \right)\\
+                                &= L\left( \left( \frac{1}{n}\left( a_{n+1}-a_1 \right) \right)_n \right)\\
+                                &= \lim_{n\rightarrow\infty} \left( \frac{1}{n}\left( a_{n+1}-a_1 \right) \right)\\
+                                &= 0,
+\end{align*}
+with the second-to-last equality emerging from the fact that $a\in \ell_{\infty}$, so the sequence $\frac{1}{n}\left( a_{n+1}-a_1 \right)$ is necessarily bounded.
+
+In particular, this means that there are plenty of Banach limits, since we can take \textit{any} generalized extension of the limit to $\ell_{\infty}$, then use this Césaro-type summation to yield a Banach limit.
+
+Now, the question becomes: what are all the generalized limits? To understand this, we need to take a tour of topology. First, we recall an important structural theorem.
+\begin{theorem}[Riesz Representation Theorem]
+  Let $X$ be a compact Hausdorff space. Then,
+  \begin{align*}
+    C(X)^{\ast}\cong M_r(X),
+  \end{align*}
+  where $M_r(X)$ denotes the space of complex regular Borel measures on $X$.
+\end{theorem}
+Now, we consider the fact that $\ell_{\infty} $ can be identified with $ C_b\left(\N\right)$ when $N$ is equipped with the discrete topology. In particular, there is some $R > 0$ such that, for any $x\in \ell_{\infty}$, we have $\img(x) \subseteq B\left( 0,R \right)$. The universal property of the \href{https://en.wikipedia.org/wiki/Stone–Čech_compactification}{Stone--\v{C}ech compactification} thus gives a unique extension $\beta x\colon \beta\N\rightarrow \C$ such that $\beta x |_{\N} = x$, where $\beta\N$ is the Stone--\v{C}ech compactification of the naturals. In particular, we may thus identify $\ell_{\infty}\cong C_b\left( \N \right)$ with $C\left( \beta\N \right)$, so $\ell_{\infty}^{\ast}\cong M_r\left( \beta \N \right)$.
+
+The next question emerges: what exactly \textit{is} $\beta\N$?
+\begin{proposition}
+  The space $\beta\N$ is the space of all ultrafilters on $\N$.
+\end{proposition}
+Recall that a filter $\mathcal{F}$ on a set $X$ is a family of subsets $\mathcal{F}$ that is ``closed upwards,'' in the sense that if $A\in \mathcal{F}$ and $A\subseteq B$, then $B\in \mathcal{F}$, and is such that $X\in \mathcal{F}$ and, if $A,B\in \mathcal{F}$, then so is $A\cap B$.
+
+An ultrafilter $\mathcal{U}$ on $X$ is a maximal \textit{proper} filter, and has the property that if $A\in P(X)$, then either $A\in \mathcal{U}$ or $A^{c}\in \mathcal{U}$. An ultrafilter on $\N$ is called principal if it contains a finite subset, else it is called a non-principal ultrafilter (or free ultrafilter). The principal ultrafilters in $\beta\N$ can be identified with $\N$, since they are all of the form
+\begin{align*}
+  F_q &= \set{A\subseteq N | q\in A}.
+\end{align*}
+If $\mathcal{U}$ is an ultrafilter, then we can define a limit of a sequence $\left( x_n \right)_n$ along $\mathcal{U}$ by saying that $\lim_{\mathcal{U}}\left( x_n \right)_n = L$ if and only if, for every $\ve > 0$, we have
+\begin{align*}
+  \set{n | \left\vert x_n - L \right\vert \leq \ve} &\in \mathcal{U}.
+\end{align*}
+Limits along principal ultrafilters are very boring --- if $F_p$ is the principal ultrafilter corresponding to $p$, then $\lim_{F_p}\left( x_n \right)_n = x_p$. However, limits along non-principal ultrafilters are where things start to get interesting.
+
+Limits along ultrafilters are linear functionals on $\ell_{\infty}$, so they can be identified with $M_r\left( \beta\N \right)$. Since limits along ultrafilters are generalized limits that correspond one-to-one with non-principal ultrafilters, and they each have norm $1$, it follows that the limits along ultrafilters correspond to Dirac measures, $\delta_{\mathcal{U}}$, on the space $\beta\N\setminus\N$, where we identify $\N$ with the principal ultrafilters.
+
+In fact, we can consider all the generalized limits as some some probability measure on $\beta\N\setminus \N$, and the Banach limits as the probability measures that are invariant under the action of $\Z$-translation (i.e., elementwise addition). In particular, since the probability measures form a compact convex subset of $M_r\left( \beta\N \right)$, it follows that every generalized limit is in the $w^{\ast}$-closure of the extreme points of the probability measures, which are the limits along \textit{all} ultrafilters, including the principal ultrafilters.
 \end{document}
