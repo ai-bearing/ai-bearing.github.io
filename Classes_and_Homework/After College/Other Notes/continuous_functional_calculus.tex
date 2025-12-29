@@ -18,78 +18,533 @@
 
 \fancyhf{}
 \fancyhead[R]{Avinash Iyer}
-\fancyhead[L]{The Continuous Functional Calculus}
+\fancyhead[L]{Continuous Functional Calculus and Applications}
 \fancyfoot[C]{\thepage}
 
 \setcounter{secnumdepth}{0}
 
 \begin{document}
 \RaggedRight
-\section{The Spectrum and Gelfand Transform}%
-We first recall some definitions and results from the theory of Banach algebras.
+\section{Spectrum, Resolvent, and Functional Calculus for Banach Algebras}%
+\subsection{Some Basic Background}%
 \begin{definition}
-  Let $A$ be a Banach algebra, $x\in A$. The spectrum of $x$ in $A$ is given by
+  Let $A$ be a unital Banach algebra. For $a\in A$, the \textit{spectrum} of $a$ is given by
   \begin{align*}
-    \sigma_A(x) &= \set{\lambda\in \C | x-\lambda 1 \text{ is not invertible in }\widetilde{A}},
+    \sigma(a) &= \set{\lambda\in \C | \lambda e - a \text{ is not invertible in }A}.
   \end{align*}
-  where $ \widetilde{A} $ denotes the unitization of $A$. If $A$ does not have a unit, then $0\in \sigma_A(x)$ for all $x\in A$. The complement of the spectrum is known as the resolvent, and is denoted $\rho_A(x)$.
+  The resolvent of $a$, denoted by $\rho(a)$, is $\C\setminus \sigma(a)$. The resolvent function on $\lambda\in \rho(a)$ is given by $R\left( a,\lambda \right)\coloneq \left( \lambda - a \right)^{-1}$.
 \end{definition}
 \begin{proposition}
-  If $A$ is a Banach algebra, then for all $a\in A$, we have that $\sigma(a)\subseteq \C$ is compact. Furthermore, we have $\sigma(A)\subseteq B\left( 0,\norm{a} \right)$.
+  Let $A$ be a unital Banach algebra. The group (under multiplication)
+  \begin{align*}
+    \GL(A) &\coloneq \set{a\in A | a\text{ is invertible}}
+  \end{align*}
+  is open.
 \end{proposition}
-\begin{definition}
-  The \textit{spectral radius} of $a\in A$ is denoted $r(a)$, and is given by
+\begin{proof}
+  The Carl Neumann series gives that if $\norm{a} < 1$, then
   \begin{align*}
-    r(a) &= \sup_{\lambda\in \sigma(a)} \left\vert \lambda \right\vert.
+    \left( e-a \right)^{-1} &= \sum_{n=0}^{\infty}a^n,
   \end{align*}
-\end{definition}
-\begin{theorem}[Gelfand--Mazur]
-  The only complex Banach division algebra is $\C$.
-\end{theorem}
-\begin{theorem}
-  Let $A$ be a Banach algebra, and let $a\in A$. Then,
-  \begin{align*}
-    r(a) &= \lim_{n\rightarrow\infty}\norm{a^n}^{1/n}.
-  \end{align*}
-\end{theorem}
+  where $a^0 = 1$. If $b\in \GL(A)$, and $\norm{a} < \frac{1}{\norm{b^{-1}}}$, then $b-a = b\left( e-b^{-1}a \right)$, and since $\norm{b^{-1}a} \leq \norm{b^{-1}}\norm{a} < 1$, we have that $e-b^{-1}a$ is invertible, so $b-a$ is invertible.
+
+  In particular, this means that $U\left( b,1/\norm{b^{-1}} \right)\subseteq \GL(A)$, so $\GL(A)$ is open.
+\end{proof}
 \begin{corollary}
-  If $A$ is a $C^{\ast}$-algebra and $a\in A$ is a normal element, then $r(a) = \norm{a}$.
+  If $A$ is a unital Banach algebra, $\sigma(a)$ is a compact subset of $B\left( 0,\norm{a} \right)$.
 \end{corollary}
-\begin{definition}
-  A \textit{character} on a commutative Banach algebra $A$ is a nonzero unital algebra homomorphism. We denote the set of all characters on $A$ by $\hat{A}$.
-\end{definition}
-\begin{theorem}
-  Every character in on $\hat{A}$ corresponds to a maximal ideal $I\subseteq A$.
-\end{theorem}
+\begin{proof}
+  Since $\GL(A)$ is open, so is $\rho(a)$, meaning that if $\left\vert \lambda \right\vert > \norm{a}$, we have $\lambda - a = \lambda\left( e-\lambda^{-1}a \right)$, and since $\norm{\lambda^{-1}a} < 1$, this is invertible, so $\sigma(a)$ is a closed subset of $B\left( 0,\norm{a} \right)$, and thus is compact.
+\end{proof}
+One thing to note about the spectrum is that it most certainly depends on the ambient algebra. To see this, consider the algebra $A(\D)$, which is the set of all holomorphic functions on the unit disk that extend continuously to the unit circle $S^{1}$. For an element $f\in A(\D)$ to have an inverse, it needs to be nonzero on $ \overline{\D} $.
+
+In particular, this means that $\sigma_{A(\D)}(f) = \sigma_{C(\overline{\D})}(f) = \img(f)$. Meanwhile, we may consider the restriction map $f\mapsto f|_{S^{1}}$, which maps from $A(\D)$ to $C\left(S^{1}\right)$. From the maximum modulus principle, this map is in fact isometric, but the spectra of elements in $C\left( S^{1} \right)\cap A(\D)$ are not necessarily equivalent. For instance, the spectrum of $f(z) = z$ has $\sigma_{A(\D)}(f) = \overline{\D}$, while $\sigma_{C\left(S^{1}\right)}(f) = S^{1}$.
+
+Yet, since all holomorphic functions can be determined from their boundary values, in order to determine the spectrum from the boundary values, we may use the argument principle for this purpose. If $f$ does not vanish on $S^{1}$, then the number of zeros of $f$ is given by
+\begin{align*}
+  n &= \frac{1}{2\pi i} \oint_{S^{1}}^{} \frac{f'(z)}{f(z)}\:dz,
+\end{align*}
+meaning that we have
+\begin{align*}
+  \sigma_{A(\D)}(f) &= f\left( S^{1} \right) \cup \set{\lambda\in \C | n\left( \lambda;f\left(S^{1}\right) \right)\neq 0}.
+\end{align*}
 \begin{proposition}
-  If $\phi\in \hat{A}$, then $\phi(x)\in \sigma(x)$, and conversely, if $\lambda\in \sigma(x)$, there is $\phi\in \hat{A}$ with $\phi(x) = \lambda$. In particular, for every $\phi\in \hat{A}$, we have $\left\vert \phi(x) \right\vert\leq \norm{x}$, and thus $\norm{\phi} = 1$.
+  If $A$ is a unital Banach algebra, and $z\in \rho(a)$, then
+  \begin{align*}
+    \dist_{\sigma(a)}(z) &\geq \frac{1}{\norm{\left( ze -a \right)^{-1}}}.
+  \end{align*}
 \end{proposition}
 \begin{proof}
-  We have $\phi\left( x-\phi(x)1 \right) = 0$, so $x-\phi(x)1$ is not invertible. Conversely, if $I$ is a maximal ideal in $A$ containing the ideal generated by $x-\lambda 1$, we have $A/I\cong \C$.
+  Suppose $\lambda\in \sigma(a)$. Then, since $U\left( ze-a,1/\norm{\left( ze-a \right)^{-1}} \right)\subseteq \GL(A)$, this set does not include $\lambda e - a$. Thus,
+  \begin{align*}
+    \left\vert z-\lambda \right\vert &= \norm{\left( ze-a \right)-\left( \lambda e - a \right)}\\
+                                     &\geq \frac{1}{\norm{\left( z-a \right)^{-1}}}.
+  \end{align*}
 \end{proof}
-We observe that if $A$ is a commutative unital Banach algebra, then we can identify $\hat{A}$ with a closed subset of the unit ball of $A^{\ast}$, and so we can endow $\hat{A}$ with the $w^{\ast}$-topology, which yields that $\hat{A}$ is a compact Hausdorff space. If $A$ is not unital, then $\hat{A}$ is a locally compact Hausdorff space, and the one-point compactification of $\hat{A}$ is the character space of $\widetilde{A}$.
+\begin{proposition}
+  Let $A$ be a unital Banach subalgebra of a unital Banach algebra $B$. Then, for any $a\in A$,
+  \begin{align*}
+    \partial \sigma_{A}(a) \subseteq \sigma_B(a)\subseteq \sigma_A(a).
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  If $a$ is invertible in $A$, then $a$ is invertible in $B$ with the same inverse element, so $\sigma_B(a)\subseteq \sigma_A(a)$.
 
-Then, in particular, $C( \hat{A} )$ is a commutative $C^{\ast}$-algebra, which is equipped with a natural homomorphism $\Gamma\colon x\mapsto \hat{x}$ given by $\hat{x}(\phi) = \phi(x)$. The Gelfand transform is in fact a $\ast$-homomorphism.
+  Now, let $\lambda\in \partial \sigma_A(a)$. Let $\left( z_n \right)_n\subseteq \rho(a)\rightarrow \lambda$. By the above proposition,
+  \begin{align*}
+    \norm{\left( z_n e-a \right)^{-1}} &\geq \frac{1}{\dist_{z_n,\sigma(a)}}\\
+                                       &\geq \frac{1}{\left\vert z_n-\lambda \right\vert}\\
+                                       &\rightarrow\infty,
+  \end{align*}
+  so if there is an element $b\in B$ with $b\left( \lambda e-a \right) = e = \left( \lambda e-a \right)b$, then we have $b = \lim_{n\rightarrow\infty}\left( z_n e - a \right)^{-1}$, which contradicts the fact that the norms of $\left( z_n-a \right)^{-1}$ are bounded.
+\end{proof}
 \begin{theorem}
-  If $A$ is a commutative $C^{\ast}$-algebra, then the Gelfand transform is an isometric $\ast$-isomorphism from $A$ onto $C_0( \hat{A} )$.
+  Let $A$ be a unital Banach algebra, and let $a\in A$. Then, the map $\lambda\mapsto R\left( a,\lambda \right)$ is strongly analytic, in the sense that there is $r > 0$ and $a_n\in A$ such that
+  \begin{align*}
+    f(z) &= \sum_{n=0}^{\infty}a_n\left( z-z_0 \right)^{n}
+  \end{align*}
+  for all $\left\vert z-z_0 \right\vert < r$. Furthermore, $\lim_{\left\vert \lambda \right\vert\rightarrow\infty}R\left( a,\lambda \right) = 0$.
 \end{theorem}
 \begin{proof}
-  By passing to the unitization, we may assume that $A$ is unital. We only need to show that $\Gamma$ is isometric, since then the range will be closed, and hence equal to $C_0( \hat{A} )$ by the Stone--Weierstrass theorem.
-
-  We know that there is $\lambda\in \sigma(x)$ such that $\left\vert \lambda \right\vert = \norm{x}$, meaning that we can find $\phi$ with $\left\vert \hat{x}(\phi) \right\vert = \norm{x}$, so that $\norm{\hat{x}}\geq \norm{x}$.
+  Let $z_0\in \rho(a)$, and let $\left\vert w \right\vert < \left\vert R\left( a,z_0 \right) \right\vert^{-1}$. Then,
+  \begin{align*}
+    \left( \left( z_0 - w \right)e - a \right)^{-1} &= \left( \left( z_0e-a \right) - we \right)^{-1}\\
+                                                    &= \left( \left( z_0e - a \right)\left( e - wR\left( a,z_0 \right) \right) \right)^{-1}\\
+                                                    &= R\left( a,z_0 \right)\left( e-wR\left( a,z_0 \right) \right)^{-1}\\
+                                                    &= R\left( a,z_0 \right)\sum_{n=0}^{\infty}R\left( a,z_0 \right)^{n}w^{n}\\
+                                                    &= \sum_{n=0}^{\infty}R\left( a,z_0 \right)^{n+1}w^{n}.
+  \end{align*}
+  Furthermore, whenever $\left\vert \lambda \right\vert > \norm{a}$, we have
+  \begin{align*}
+    \norm{R\left( a,\lambda \right)} &= \norm{\sum_{n=0}^{\infty}\lambda^{-n-1}a^{n}}\\
+                                     &\leq \frac{1}{\left\vert \lambda \right\vert-\norm{a}},
+  \end{align*}
+  which converges to $0$ as $\left\vert \lambda \right\vert\rightarrow\infty$.
 \end{proof}
+\begin{theorem}
+  If $A$ is a unital Banach algebra, and $a\in A$, then $\sigma(a)$ is nonempty.
+\end{theorem}
+\begin{proof}
+  Suppose $\sigma(a)$ were empty. Then, $\rho(a) = \C$, whence we would have $\lambda\mapsto R\left( a,\lambda \right)$ is an entire function that converges to $0$ as $\left\vert \lambda \right\vert\rightarrow\infty$. Since every $C_0$ function is bounded, it follows that we have a bounded entire strongly analytic function. Therefore, for any $\varphi\in A^{\ast}$, we have $\varphi\circ R\left( a,\lambda \right)$ is a bounded entire function, hence constant. Thus, $\varphi\circ R\left( a,\lambda \right) = 0$, meaning that $R\left( a,\lambda \right) = 0$ for all $\lambda\in \C$, which cannot happen. Thus, $\sigma(a)$ is nonempty.
+\end{proof}
+\begin{definition}
+  Let $A$ be a Banach algebra, $a\in A$. The spectral radius of $a$, is given by
+  \begin{align*}
+    r(a) &= \sup\set{\left\vert \lambda \right\vert | \lambda\in \sigma(a)}.
+  \end{align*}
+\end{definition}
+\begin{theorem}[Spectral Radius Formula]
+  If $A$ is a unital Banach algebra, and $a\in A$, then
+  \begin{align*}
+    r(a) &= \lim_{n\rightarrow\infty}\norm{a^{n}}^{1/n}.
+  \end{align*}
+\end{theorem}
+\subsection{Integration in Banach Spaces}%
+It is relatively simple to extend Riemann integration from real (or complex) space to any Banach space.
 
-It has been well established that if $X$ and $Y$ are compact Hausdorff spaces, and $\phi\colon X\rightarrow Y$ is a continuous map, then we can define a $\ast$-homomorphism $\hat{\phi}\colon C(Y)\rightarrow C(X)$ by taking $\hat{\phi}(f) = f\circ\phi$. This is a contravariant map, in that if $\phi$ is injective, then $\hat{\phi}$ is surjective, and vice versa.
+Let $X$ be a Banach space, and let $\gamma\colon [0,L]\rightarrow \C$ be a rectifiable oriented curve, and call $\Gamma = \img(\gamma)$, with $f\colon \Gamma\rightarrow X$ some continuous function. We may parametrize $\Gamma$ by arc-length, giving $\frac{d\left\vert \gamma \right\vert}{dt} = 1$. Recall that if 
+\begin{align*}
+  \mathcal{P} &= \set{0 = t_0 < t_1 < \cdots < t_n = L}
+\end{align*}
+is a partition, the \textit{norm} of the partition is given by $\norm{\mathcal{P}}$, which is the maximum size of the distance between $s_i$ and $s_{i-1}$. Letting $\xi_i\in \gamma\left( \left[ s_{i-1}-s_i \right] \right)$ be a collection of tags, with $\Sigma = \set{\xi_i | i=1,\dots,n}$, we define the Riemann sum with respect to $\mathcal{P}$ and $\Sigma$ by
+\begin{align*}
+  R\left( \mathcal{P},\Sigma \right) &= \sum_{i=1}^{n}f\left( \xi_i \right) \left( \gamma\left( s_i \right) - \gamma\left( s_{i-1} \right) \right).
+\end{align*}
+We say the Riemann integral 
+\begin{align*}
+  \int_{\Gamma}^{} f(z)\:dz &= w
+\end{align*}
+exists if, for any $\ve > 0$, there is $\delta > 0$ such that for any partition $\mathcal{P}$ with $\norm{\mathcal{P}} < \delta$, and any collection of tags $\Sigma$, we have
+\begin{align*}
+  \norm{R\left( \mathcal{P},\Sigma \right) - w} &< \ve.
+\end{align*}
+\begin{theorem}
+  Let $X$ be a Banach space, $\Gamma$ an oriented rectifiable curve in $\C$, and $f\colon \Gamma\rightarrow X$ a continuous function. Then,
+  \begin{align*}
+    \int_{C}^{} f(z)\:dz
+  \end{align*}
+  exists as a Riemann integral.
+\end{theorem}
+\begin{proof}
+  Let $\delta > 0$ be such that $\left\vert s-t \right\vert < \delta$ implies $\norm{f(\gamma(s)) - f(\gamma(t))} < \ve/2L$. Let $\left( \mathcal{P}_1,\Sigma_1 \right),\left( \mathcal{P}_2,\Sigma_2 \right)$ be tagged partitions with $\norm{\mathcal{P}_i} < \delta$. Take their common refinement, $\mathcal{P} = \mathcal{P}_1\vee \mathcal{P}_2$, and choose a tag set $\set{\omega_i}_{i=1}^{n}$ for $\mathcal{P}$.
 
-Conversely, if $\psi\colon C(Y)\rightarrow C(X)$ is a $\ast$-homomorphism, and $x\in X\cong \widehat{C(X)}$, then $\delta_x\circ\psi\in \widehat{C(Y)}\cong Y$, where $\delta_x(f) = f(x)$, and $\check{\psi}(x) = \delta_x\circ\psi$ defines an inverse to $\hat{\phi}$.
+  Write
+  \begin{align*}
+    \mathcal{P} &= \set{0 = s_0 < s_1 < \cdots < s_n = L}\\
+    \mathcal{P}_1 &= \set{0 = s_0 < s_{i_1} < \cdots < s_{i_m} = s_n = L}.
+  \end{align*}
+  For each $i_{k-1} < i \leq i_k$, the sample points $\omega_i$ and $\xi_k$ lie in $\omega\left( \left[ s_{i-{k-1}},s_{i_k} \right] \right)$, so that $\norm{f\left( \omega_i \right) - f\left( \xi_k \right)} < \ve/2L$. We thus have
+  \begin{align*}
+    \norm{R\left( \mathcal{P},\Omega \right) - R\left( \mathcal{P}_1,\Sigma_1 \right)} &= \norm{\sum_{i=1}^{n}f\left( \omega_i \right)\left( \gamma\left( s_i \right) - \gamma\left( s_{i-1} \right) \right) - \sum_{k=1}^{m} f\left( \xi_k \right)\left( \gamma\left( s_{i_k} \right) - \gamma\left( s_{i_{k-1}} \right) \right)}\\
+                                                                                       &= \norm{\sum_{i=1}^{n}f\left( \omega_i \right)\left( \gamma\left( s_i \right) - \gamma\left( s_{i-1} \right) \right) - \sum_{k=1}^{m}f\left( \xi_k \right)\sum_{i=i_{k-1}+1}^{i_k}\left( \gamma\left( s_i \right) - \gamma\left( s_{i-1} \right) \right)}\\
+                                                                                       &\leq \sum_{i=1}^{n} \norm{f\left( \omega_i \right) - f\left( \xi_k \right)} \left\vert \gamma\left( s_i \right) - \gamma\left( s_{i-1} \right) \right\vert\\
+                                                                                       &< \frac{\ve}{2L}\sum_{i=1}^{n} \left\vert \gamma\left( s_i \right) - \gamma\left( s_{i-1} \right) \right\vert\\
+                                                                                       &\leq \frac{\ve}{2}.
+  \end{align*}
+  Similarly, we have $\norm{R\left( \mathcal{P},\Omega \right)-R\left( \mathcal{P}_2,\Sigma_2 \right)} < \ve/2$, meaning that
+  \begin{align*}
+    \norm{R\left( \mathcal{P}_2,\Sigma_2 \right)- R\left( \mathcal{P}_1,\Sigma_1 \right)} < \ve.
+  \end{align*}
+  Thus, the net $R\left( \mathcal{P},\Sigma \right)$ directed by partition norm is Cauchy in $X$, whence it is convergent.
+
+  Thus, $f$ is Riemann-integrable.
+\end{proof}
+\subsection{Holomorphic Functional Calculus}%
+We start our discussion of functional calculus by evaluating $f(a)$ for a holomorphic function $f(z)\in \mathcal{O}(U)$ defined on a neighborhood $\sigma(a)$. We can actually use Cauchy's Integral Formula for this purpose.
+
+Recall that if $\Gamma$ is a piecewise $C^1$ closed curve, and $n\left( \Gamma;w \right)\neq 0$, with $w\in \C\setminus \Gamma$, then
+\begin{align*}
+  f(w)n\left( \Gamma;w \right) &= \frac{1}{2\pi i} \oint_{\Gamma}^{} \frac{f(z)}{z-w}\:dz.
+\end{align*}
+Now, given a neighborhood $U$ of $\sigma(a)$, and $\Gamma$ such a curve, we may define
+\begin{align*}
+  f(a) &= \frac{1}{2\pi i} \oint_{\Gamma}^{} f(z)R\left( a,z \right)\:dz.
+\end{align*}
+\section{Characters and Continuous Functional Calculus for $C^{\ast}$-Algebras}%
+\begin{definition}
+  If $A$ is a Banach algebra, then a character is a nonzero (unital if necessary) algebra homomorphism $\varphi\colon A\rightarrow \C$.
+\end{definition}
+\begin{proposition}
+  If $A$ is a Banach algebra, and $\varphi$ is a character, then $\varphi$ is continuous with $\norm{\varphi} \leq 1$. Furthermore, if $A$ is unital, then $\norm{\varphi} = 1$.
+\end{proposition}
+\begin{proof}
+  Suppose toward contradiction that $\norm{\varphi} > 1$. Then, there is $x\in A$ with $\norm{x} < \left\vert \varphi(x) \right\vert$. Set $y = x/\varphi(x)$, and $z = \sum_{n=1}^{\infty}y^n$, which converges as $\norm{y} < 1$. Note that $z = y + yz$, so by applying $\varphi$, we get
+  \begin{align*}
+    \varphi(z) &= \varphi(y) + \varphi(y)\varphi(z)\\
+               &= 1 + \varphi(z).
+  \end{align*}
+  This yields a contradiction, so $\norm{\varphi}\leq 1$.
+\end{proof}
+\begin{theorem}
+  Let $A$ be a unital commutative Banach algebra. There is a bijective correspondence between the set of characters on $A$ and the set of maximal ideals in $A$, given by $\varphi\leftrightarrow \ker\left( \varphi \right)$.
+\end{theorem}
+\begin{proof}
+  We know that if $\varphi$ is a character, then $M = \ker\left( \varphi \right)$ is a closed ideal with codimension $1$, so it is maximal.
+
+  Meanwhile, suppose $M$ is a maximal ideal of $A$. Since $M$ is maximal, $M = \overline{M}$, and $ \overline{M}\cap U\left( e,1 \right) = \emptyset $ as $U\left( e,1 \right)\subseteq \GL(A)$. In particular, $A/M$ is a unital commutative Banach algebra that is necessarily a field, hence equal to $\C$. Thus, $\varphi\colon A\rightarrow A/M\cong \C$ is a character with $\ker\left( \varphi \right) = M$, and since $\varphi(e) = 1$, it follows that $A/M = \C \overline{e}$.
+\end{proof}
+\begin{definition}
+  If $A$ is a unital commutative Banach algebra, the character space (or maximal ideal space) of $A$, denoted $\hat{A}$, is the subspace of the unit ball $B_{A^{\ast}}$ endowed with the weak* topology.
+
+  The \textit{Gelfand transform} is the map $\Gamma\colon A\rightarrow C(\hat{A})$, $a\mapsto \hat{a}$, where
+  \begin{align*}
+    \hat{a}(\varphi) &= \varphi(a).
+  \end{align*}
+\end{definition}
+\begin{theorem}
+  Let $A$ be a unital commutative Banach algebra. Then, $\hat{A}$ is nonempty and compact, with $\Gamma$ a contractive algebra homomorphism. The subalgebra $\Gamma(A)\subseteq C(\hat{A})$ separates points of $\hat{A}$.
+\end{theorem}
+\begin{proof}
+  Since there is a maximal ideal in $A$, there is a corresponding character.
+
+  Now, we show that $\hat{A}$ is $w^{\ast}$-closed. Let $\left( \varphi_{i} \right)_{i\in I}\xrightarrow{w^{\ast}} \varphi\in A^{\ast}$. Then, for any $a,b\in A$, we have
+  \begin{align*}
+    \varphi\left( ab \right) &= \lim_{i\in I} \varphi_i\left( ab \right)\\
+                             &= \lim_{i\in I}\varphi_i\left( a \right)\varphi_i\left( b \right)\\
+                             &= \varphi\left( a \right)\varphi\left( b \right),
+  \end{align*}
+  meaning that $\varphi$ is indeed a character. Since the unit ball of $A^{\ast}$ is $w^{\ast}$-compact by the Banach--Alaoglu theorem, it follows that $\hat{A}$ is a compact Hausdorff space.
+
+  We know that each $\hat{a}$ is a continuous function. Since every $\varphi\in \hat{A}$ has norm $1$, it follows that $\Gamma$ is necessarily contractive. Furthermore, since
+  \begin{align*}
+    \widehat{ab}\left( \varphi \right) &= \varphi\left( ab \right)\\
+                                       &= \varphi(a)\varphi(b)\\
+                                       &= \hat{a}(\varphi)\hat{b}(\varphi),
+  \end{align*}
+  it follows that $\Gamma$ is an algebra homomorphism.
+
+  Finally, since $A$ separates the points of $A^{\ast}$, it follows that $\Gamma(A)$ separates the points of $\hat{A}$.
+\end{proof}
+Now, we may specialize to the case of $C^{\ast}$-algebras.
+\begin{proposition}
+  Let $A$ be a non-unital $C^{\ast}$-algebra. Then, $A$ embeds into a unital $C^{\ast}$-algebra $\widetilde{A}$ as a maximal ideal with codimension $1$.
+\end{proposition}
+\begin{proof}
+  Adjoin a symbol $1$ by taking
+  \begin{align*}
+    \widetilde{A} &= A + \C 1,
+  \end{align*}
+  and define the norm by
+  \begin{align*}
+    \norm{a + \lambda 1} &= \norm{L_a + \lambda I}_{\op},
+  \end{align*}
+  where $L_a\colon A\rightarrow A$ is given by left-multiplication. Observe that for any $a\in A$, we have
+  \begin{align*}
+    \norm{L_a} &\leq \norm{a}\\
+               &= \frac{\norm{aa^{\ast}}}{\norm{a^{\ast}}}\\
+               &= \norm{L_a\frac{a^{\ast}}{\norm{a^{\ast}}}}\\
+               &\leq \norm{L_a},
+  \end{align*}
+  whence $\norm{L_a} = \norm{a}$. Now, to verify that this is in fact a $C^{\ast}$-norm on $\widetilde{A}$, we have
+  \begin{align*}
+    \norm{a + \lambda 1}^2 &= \sup_{\norm{b}\leq 1} \norm{ab + \lambda b}^2\\
+                           &= \sup_{\norm{b}\leq 1}\norm{\left( ab + \lambda b \right)^{\ast}\left( ab + \lambda b \right)}\\
+                           &= \sup_{\norm{b}\leq 1}\norm{b^{\ast}a^{\ast}ab + \lambda b^{\ast}a^{\ast}b + \overline{\lambda}b^{\ast}ab + \left\vert \lambda \right\vert^2 b^{\ast}b}\\
+                           &= \sup_{\norm{b}\leq 1} \norm{b^{\ast}\left( a^{\ast}a + \lambda a^{\ast} + \overline{\lambda}a + \left\vert \lambda \right\vert^21 \right)b}\\
+                           &\leq \norm{a^{\ast}a + \lambda a^{\ast} + \overline{\lambda}a + \left\vert \lambda \right\vert^21}\\
+                           &= \norm{\left( a + \lambda1 \right)^{\ast}\left( a+\lambda1 \right)}\\
+                           &\leq \norm{\left( a+\lambda1 \right)^{\ast}}\norm{a+\lambda1}.
+  \end{align*}
+  Thus, $\norm{a + \lambda1}\leq \norm{\left( a+\lambda1 \right)^{\ast}}$. Exchanging $a$ and $a^{\ast}$ gives $\norm{a+\lambda 1} = \norm{\left( a+\lambda1 \right)^{\ast}}$.
+
+  Therefore, we have
+  \begin{align*}
+    \norm{a+\lambda1}^2 &\leq \norm{\left( a+\lambda1 \right)^{\ast}\left( a+\lambda1 \right)}\\
+                        &\leq \norm{a+\lambda1}^2,
+  \end{align*}
+  which forces equality. Thus, $\widetilde{A}$ is a $C^{\ast}$-algebra.
+\end{proof}
+\begin{theorem}
+  Let $A$ be a commutative $C^{\ast}$-algebra. Then, the Gelfand map $\Gamma\colon A\rightarrow C_0(\hat{A})$ is an isometric $\ast$-isomorphism.
+\end{theorem}
+\begin{proof}
+  Assume $A$ is unital. Let $a = a^{\ast}\in A$, and $\varphi\in \hat{A}$. We claim that $\varphi(a)$ is real. Toward this end, take
+  \begin{align*}
+    u_t &= \exp(ita)\\
+        &= \sum_{n=0}^{\infty}\frac{\left( ita \right)^{n}}{n!}.
+  \end{align*}
+  Then, $u_t^{-1} = u_{-t}$, and so
+  \begin{align*}
+    u_t^{\ast} &= \sum_{n=0}^{\infty}\frac{\left( \left( ita \right)^{n} \right)^{\ast}}{n!}\\
+               &= \sum_{n=0}^{\infty}\frac{\left( -ita \right)^{n}}{n!}\\
+               &= u_{-t}\\
+               &= u_t^{-1},
+  \end{align*}
+  meaning that $u_t$ is unitary, so $\norm{u_t}^2 = 1$. We thus find
+  \begin{align*}
+    1 &\geq \left\vert \varphi\left( u_t \right) \right\vert\\
+      &= \left\vert \sum_{n=0}^{\infty} \frac{\varphi\left( ita \right)^{n}}{n!}\right\vert\\
+      &= \left\vert e^{i\varphi(a)t} \right\vert,
+  \end{align*}
+  so that $\varphi(a)\in \R$.
+
+  Now, for any $a\in A$, we may take $x = \frac{1}{2}\left( a+a^{\ast} \right)$ and $y = \frac{1}{2i}\left( a-a^{\ast} \right)$, so that $x = x^{\ast}$, $y=y^{\ast}$, and $a = x + iy$. It follows that
+  \begin{align*}
+    \varphi\left( a^{\ast} \right) &= \varphi\left( x-iy \right)\\
+                                   &= \varphi\left( x \right)-i\varphi\left( y \right)\\
+                                   &= \overline{\varphi(a)},
+  \end{align*}
+  so that $\Gamma\left( a^{\ast} \right) = \Gamma\left(a\right)^{\ast} $, meaning $\Gamma$ is a $\ast$-homomorphism.
+
+  Now, if $a\in A_{\sa}$, then $\norm{a}^2 = \norm{a^2}$, whence
+  \begin{align*}
+    \norm{\hat{a}} &= r(a)\\
+                   &= \lim_{n\rightarrow\infty}\norm{a^{2^n}}^{2^{-n}}\\
+                   &= \norm{a}.
+  \end{align*}
+  Meanwhile, for general $a\in A$, we have
+  \begin{align*}
+    \norm{a}^2 &= \norm{a^{\ast}a}\\
+               &= \norm{\widehat{a^{\ast}a}}\\
+               &= \norm{\hat{a}}^2.
+  \end{align*}
+  Thus, $\Gamma$ is isometric. Since $\Gamma(A)$ is a norm-closed unital self-adjoint subalgebra of $C(\hat{A})$ that separates points, it follows that $\Gamma(A) = C(\hat{A})$.
+
+  In the non-unital case, then we let $\widetilde{A}$ be the unitization of $A$. Then, $\Gamma(\widetilde{A}) = C(\widehat{\widetilde{A}})$, and $\hat{A} = \widehat{\widetilde{A}}\setminus \varphi_{\infty}$, where $\varphi_{\infty}(a + \lambda 1) = \lambda$. The restriction of $\Gamma$ to $A$ is the Gelfand map of $A$, and it is mapped into $\ker\left( \varphi_{\infty} \right) = C_0( \hat{A} )$, which is an isometric $\ast$-isomorphism which separates points and does not vanish except at $\varphi_{\infty}$. Thus, it is surjective.
+\end{proof}
+Since normal elements generate a commutative $C^{\ast}$-algebra, we get an immediate corollary.
 \begin{corollary}
-  Let $A$ and $B$ be $C^{\ast}$-algebras, $\phi\colon A\rightarrow B$ an injective $\ast$-homomorphism. Then, $\phi$ is isometric.
+  Let $a$ be a normal element. Then, $C^{\ast}(a)$ is $\ast$-isomorphic to $C(\sigma(a))$ via $\Gamma(a) = \iota$, where $\iota\colon \sigma(a)\rightarrow \sigma(a)$ is given by $\iota(z) = z$. The not necessarily unital subalgebra $C^{\ast}\left( a,a^{\ast} \right)$ is isomorphic to $C_0\left( \sigma(a)\setminus \set{0} \right)$.
 \end{corollary}
 \begin{proof}
-  By passing to the unitization (and using the fact that the injection into the unitization is isometric), we may assume without loss of generality that $\phi$ is isometric. If $a\in A$, then $x = a^{\ast}a$ is a normal element with a normal element as its image.
+  The non-closed $\ast$-algebra generated by $1,a,a^{\ast}$ consists of all polynomials in $a$ and $a^{\ast}$ for any $p\in \C\left[ x,y \right]$, with $C^{\ast}(a)$ the norm closure. Since $C^{\ast}(a)$ is a unital $C^{\ast}$-algebra, it is isomorphic to $C(\widehat{C^{\ast}(a)})$. Since characters in $\widehat{C^{\ast}(a)}$ are in bijection with $\sigma(a)$ via evaluation, so that $C^{\ast}(a)\cong C(\sigma(a))$.
 
-  By restricting $\phi$ to $P = C^{\ast}\left( x,1 \right)$ and taking $Q = \phi(C)$, then we observe that the map defined by $\pi = \Gamma_Q\circ \phi \circ \Gamma_P^{-1}$ is an injective homomorphism between $C( \hat{P} )$ and $C( \hat{Q} )$. Thus, since $\Gamma_C$ and $\Gamma_D$ are isometric, as well as $\pi$, we must have $\phi$ is isometric.
+  Meanwhile, the subalgebra generated by $a,a^{\ast}$ is isomorphic to the subalgebra of $C(\sigma(a))$ that is generated by both $z$ and $\overline{z}$. Since this is a self-adjoint subalgebra that separates points and vanishes at zero, it is either equal to the ideal of functions vanishing at $0$ if $0\in \sigma(a)$ or all of $C(\sigma(a))$ if not.
 \end{proof}
-\nocite{blackadar_operator_algebras,morita_equivalence_cstar_algebras}
+\begin{theorem}[Continuous Functional Calculus]
+  Let $a$ be a normal element of a unital $C^{\ast}$-algebra $A$. Then:
+  \begin{enumerate}[(i)]
+    \item there is an isometric $\ast$-isomorphism from $C(\sigma(a))$ onto $C^{\ast}(a)$ such that $\iota  (a) = a$;
+    \item $\sigma(f(a)) = f(\sigma(a))$ for $f\in C(\sigma(a))$;
+    \item if $g$ is continuous on $f(\sigma(a))$, then $g(f(a)) = (g\circ f)(a)$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item By the above corollary, $C^{\ast}(a)$ is a unital commutative $C^{\ast}$-algebra, where the Gelfand map is an isomorphism onto $C(\sigma(a))$ with $\Gamma(a) = \iota$. We may then define $f(a) = \Gamma^{-1}(f)$.
+    \item We show that $\Gamma$ preserves spectra by showing that $a$ is invertible if and only if $\hat{a}$ is invertible in $C(\hat{A})$. We observe that, since $\Gamma$ is an algebra homomorphism, we have $\hat{a}^{-1} = \Gamma\left( a^{-1} \right)$. Conversely, if $a$ is not invertible, then $\left\langle a \right\rangle$ is a proper ideal of $A$, and thus is contained in a maximal ideal $M$. If $\varphi$ is the character that has $\ker\left( \varphi \right) = M$, then $\varphi(a) = 0$, so $\hat{a}$ has a zero on $\hat{A}$, meaning $\hat{a}$ is not invertible in $C(\hat{A})$. In particular, spectral mapping follows from the fact that $\Gamma^{-1}$ also preserves spectrum.
+    \item Note that $f(a)$ is normal, so $g(f(a))$ makes sense via the functional calculus for $f(a)$. Since $g\circ f\in C(\sigma(a))$, it follows that $(g\circ f)(a)$ is defined.
+
+      If $g(z) = z^j \overline{z}^{k}$, we have $g\circ f(z) = f(z)^j \overline{f(z)}^k$, meaning
+      \begin{align*}
+        g(f(a)) &= f(a)^j \left( f(a)^{\ast} \right)^k\\
+                &= (g\circ f)(a).
+      \end{align*}
+      By linearity, this extends to polynomials $p\in \C\left[ z, \overline{z} \right]$. By Stone--Weierstrass and continuity, it follows for all $g\in C(\sigma(f(a)))$.
+  \end{enumerate}
+\end{proof}
+\begin{corollary}
+  If $a$ is a normal element of a non-unital $C^{\ast}$-algebra $A$, then $0\in \sigma(a)$ and there is an isometric $\ast$-isomorphism from $C_0\left(\sigma(a)\setminus \set{0}\right)$ onto $C^{\ast}\left( a,a^{\ast} \right)$ such that $\iota(a) = a$.
+\end{corollary}
+\begin{proof}
+  Since $C^{\ast}\left(a,a^{\ast}\right)$ is abelian and non-unital, with $a$ not invertible, we have $0\in \sigma(a)$ and $\Gamma$ carries $C^{\ast}\left( a,a^{\ast} \right)$ onto $C_0\left( \sigma(a)\setminus \set{0} \right)$.
+\end{proof}
+Finally, we note that functional calculus commutes with homomorphisms.
+\begin{corollary}
+  Let $\pi\colon A\rightarrow B$ be a continuous $\ast$-homomorphism of a $C^{\ast}$-algebra $A$ into a $C^{\ast}$-algebra $B$. Let $a$ be a normal element of $A$, and let $f\in C(\sigma(a))$ in the unital case and $f\in C_0\left( \sigma(a)\setminus \set{0} \right)$ in the non-unital case. Then, $\pi(f(a)) = f(\pi(a))$.
+\end{corollary}
+\begin{proof}
+  Let $b = \pi(a)$. Then, $b$ is normal, so for any polynomial $p\in \C\left[ z, \overline{z} \right]$, we have $\pi\left(p\left(a,a^{\ast}\right)\right) = p\left( b,b^{\ast} \right)$. In the non-unital case, we may use polynomials with constant term $0$. These polynomials are dense in their respective spaces $C(\sigma(a))$ or $C_0\left( \sigma(a)\setminus \set{0} \right)$. Continuity gives that this map extends to $\pi(f(a)) = f(b)$.
+\end{proof}
+\section{Ordering in $C^{\ast}$-Algebras}%
+\subsection{Positive Elements}%
+\begin{definition}
+  Let $A$ be a $C^{\ast}$-algebra. An element $x\in A$ is \textit{positive} if $x\in A_{\sa}$ and $\sigma(x)\subseteq [0,\infty)$.
+\end{definition}
+\begin{proposition}
+  Let $A$ be a $C^{\ast}$-algebra and $x,y\in A$. Then:
+  \begin{enumerate}[(i)]
+    \item if $x\geq 0$ and $-x \geq 0$, then $x = 0$;
+    \item if $x$ is normal, then $x^{\ast}x \geq 0$;
+    \item if $x\geq 0$, then $\norm{x} = \max\set{\lambda | \lambda\in \sigma(x)}$;
+    \item if $x\in A_{\sa}$ and $t\geq 0$ with $\norm{a}\leq t$, then $\sigma(x)\subseteq [0,\infty)$ if and only if $\norm{t1-x} \leq t$;
+    \item if $x,y\geq 0$, then $x + y\geq 0$ and $tx\geq 0$ for any $t\geq 0$;
+    \item if $x = x^{\ast}$, then there is a unique decomposition $x = x_{+}-x_{-}$ with $x_{+},x_{-}\geq 0$, $x_+x_{-} = 0$, with $x_{+},x_{-}\in C^{\ast}\left( x \right)$;
+    \item every positive element of a $C^{\ast}$-algebra has a unique positive square root;
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We use the continuous functional calculus to identify $C^{\ast}(x)\cong C\left( \sigma(x) \right)$ whenever $x$ is normal.
+  \begin{enumerate}[(i)]
+    \item We have that $x\geq 0$ if and only if $\iota\geq 0$, and $-x \geq 0$ if and only if $-\iota \geq 0$ if and only if $\iota \leq 0$, whence $\iota = 0$, so $x = 0$.
+    \item We have $x^{\ast}x$ can be identified with the function $\iota(z) = \left\vert z \right\vert^2$, which is always positive.
+    \item Compactness, the fact that the norm of a normal element is equal to the spectral radius, and the fact that $\sigma(x)\subseteq [0,\infty)$ gives the desired result.
+    \item We observe that $\sigma(a)\subseteq [-t,t]$. Using the continuous functional calculus, we have that
+      \begin{align*}
+        \norm{t1-x} &= \norm{t\1_{\sigma(x)} - \iota}_{u}
+                    &\leq t
+                    \intertext{if and only if}
+        \left\vert t-\lambda \right\vert&\leq t
+      \end{align*}
+      for all $\lambda\in \sigma(a)$, whence $\sigma(a)\subseteq [0,2t]$.
+    \item From spectral mapping, $\sigma(ta) = t\sigma(a)\subseteq [0,\infty)$. Meanwhile, from (iv), we have $\norm{\norm{x}1-x}\leq \norm{x}$ and $\norm{\norm{y}1-y}\leq \norm{y}$. Therefore, we have
+      \begin{align*}
+        \norm{\left( \norm{x} + \norm{y} \right)1 - \left( x+y \right)} &\leq \norm{\left( \norm{x}1 - x \right) + \left( \norm{y}1-y \right)}\\
+                                                                        &\leq \norm{\norm{x}1-x} + \norm{\norm{y}1-y}\\
+                                                                        &\leq \norm{x} + \norm{y},
+      \end{align*}
+      so from (iv), it follows that $\sigma(x+y)\subseteq [0,\infty)$.
+    \item We use the continuous functional calculus with $x_{+} = f(t)$ for $f(t) = \max(t,0)$, while $x_{-} = g(t)$ for $g(t) = -\min(t,0)$. 
+    \item We use the continuous functional calculus with $f(t) = \sqrt{t}$, which is necessarily unique if the element is positive.
+  \end{enumerate}
+\end{proof}
+\begin{proposition}
+  If $A$ is a $C^{\ast}$-algebra, then $A_{+}$ is a closed cone in $A_{\sa}$.
+\end{proposition}
+\begin{proof}
+  From the earlier proposition, we know that $A$ is indeed a cone. To see that $A$ is closed, we let $\left( a_n \right)_{n}$ be a sequence converging to $a\in A$. Since $\left( a_n \right)_n$ is a convergent sequence, it is bounded, so there is $C$ such that $\norm{a_n}\leq C$ for all $n$, as is $\norm{a}$.
+
+  In particular, this means that $\norm{C1 - a_n}\leq C$ for all $n$, so that $\norm{C1-a}\leq C$, so by the above proposition, we have that $a\in A_{+}$.
+\end{proof}
+This allows us to define a partial order on $A_{\sa}$ by taking $x\geq y$ if and only if $y-x\in A_{+}$.
+\begin{proposition}
+  Let $A$ be a $C^{\ast}$-algebra, with $0\leq x\leq y$. Then,
+  \begin{enumerate}[(i)]
+    \item $\norm{x}\leq \norm{y}$;
+    \item $a^{\ast}xa\leq a^{\ast}ya$;
+    \item if $A$ is unital, $x,y\in \GL(A)$, then $y^{-1}\leq x^{-1}$
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item Since $y\leq \norm{y}1$, we have $x\leq \norm{y}1$, whence $\norm{x}1 \leq \norm{y}1$.
+    \item We have $0\leq x\leq y$ if and only if $y-x = b^{\ast}b$ for some $b\in A$, whence $a^{\ast}ya - a^{\ast}xa = \left( ba \right)^{\ast}\left( ba \right)\in A_{+}$.
+    \item Since $x\leq y$, we have
+      \begin{align*}
+        y^{-1/2}xy^{-1/2} &\leq y^{-1/2}yy^{-1/2}\\
+                          &= 1,
+      \end{align*}
+      meaning that $\norm{\left( x^{1/2}y^{-1/2} \right)^{\ast}\left( x^{1/2}y^{-1/2} \right)}\leq 1$, or $\norm{x^{1/2}y^{-1/2}}\leq 1$.
+
+      A similar process gives $\norm{x{1/2}y^{-1}x^{1/2}}\leq 1$, so $x^{1/2}y^{-1}x^{1/2}\leq 1$. Thus, $y^{-1}\leq x^{-1/2}1x^{-1/2} = x^{-1}$.
+  \end{enumerate}
+\end{proof}
+\subsection{Comparison of Projections}%
+\begin{definition}
+  If $A$ is a $C^{\ast}$-algebra, a \textit{projection} is an element $p\in A$ with $p^2 = p^{\ast}= p$.
+
+  A \textit{partial isometry} in $A$ is an element $u\in A$ such that $u^{\ast}u$ and $uu^{\ast}$ are projections.
+\end{definition}
+\begin{proposition}
+  Let $A$ be a $C^{\ast}$-algebra, $a\in A_{+}$, and $q$ a projection in $A$. If $a\leq q$, then $aq = qa = a$.
+\end{proposition}
+\begin{proof}
+  Since $q$ is self-adjoint, so is $1-q$, so that
+  \begin{align*}
+    0 &\leq \left( 1- q\right)a \left( 1-q \right)\\
+      &\leq \left( 1-q \right)q\left( 1-q \right)\\
+      &= 0,
+  \end{align*}
+  so if $x = a^{1/2}\left( 1-q \right)$, then $x^{\ast}x = 0$, so $x = 0$, giving
+  \begin{align*}
+    a^{1/2} &= a^{1/2}q\\
+    a &= aq\\
+    a &= a^{\ast}\\
+      &= \left( aq \right)^{\ast}\\
+      &= q^{\ast}a^{\ast}\\
+      &= qa.
+  \end{align*}
+\end{proof}
+\begin{proposition}
+  If $p$ and $q$ are projections in a $C^{\ast}$-algebra $A$, then the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $p\leq q$
+    \item $p\leq \lambda q$ for some $\lambda > 0$;
+    \item $pq = qp = p$;
+    \item $q-p$ is a projection.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  The direction (iii) implies (iv) implies (i) implies (ii) follows directly from the definition of a projection. For the direction of (ii) implies (iii), we see that $p\leq \lambda q$ implies that $\lambda^{-1}p \leq q$, so that $pq = qp = p$.
+\end{proof}
+\begin{definition}
+  We say two projections $p,q\in A$ are Murray--von Neumann equivalent in $A$, written $p\sim q$, if there is a partial isometry $u\in A$ with $u^{\ast}u = p$ and $uu^{\ast} = q$. We say $p\preceq q$ if there is a partial isometry $u$ in $A$ with $u^{\ast}u = p$ and $uu^{\ast}\leq q$. Alternatively, we say $p$ is subordinate to $q$.
+\end{definition}
+\begin{proposition}
+  Let $A$ be a $C^{\ast}$-algebra, with $p,q$ projections in $A$. If $\norm{p-q} < 1$, then $p\sim q$. 
+
+  Furthermore, there is a unitary $v(p,q)\in \widetilde{A}$ such that $v(p,q) p v(p,q)^{\ast} = q$. The map $\left( p,q \right)\mapsto v\left( p,q \right)$ has the following properties:
+  \begin{enumerate}[(i)]
+    \item $v(p,p) = 1$ for all $p$;
+    \item $(p,q)\mapsto v(p,q)$ is jointly continuous in $p,q$, in that for any $\ve > 0$, there is $\delta > 0$ such that $\norm{v(p,q) - 1} < \ve$ whenever $\norm{p-q} < \delta$;
+    \item if $\phi\colon A\rightarrow B$ is a $\ast$-homomorphism, then $ \widetilde{\phi}\left( v(p,q) \right) = v(\phi(p),\phi(q)) $, where $\widetilde{\phi}\colon \widetilde{A}\rightarrow \widetilde{B}$ is the induced map on the unitization.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  To start, we let $x = qp + \left( 1-q \right)\left( 1-p \right)$. Then, $1-x^{\ast}x = 1-xx^{\ast} = \left( p-q \right)^2$, so that $\norm{1-x^{\ast}x} < 1$, meaning $x$ is invertible in $\widetilde{A}$.
+
+  Let $v(p,q)$ be the unitary in the polar decomposition of $x$ --- i.e, $x = v(p,q) \left\vert x \right\vert$, where $\left\vert x \right\vert = \left( x^{\ast}x \right)^{1/2}$. Then,
+  \begin{align*}
+    xp &= qx\\
+       &= qp\\
+    px^{\ast} &= x^{\ast}q\\
+              &= pq,
+  \end{align*}
+  so
+  \begin{align*}
+    x^{\ast}xp &= x^{\ast}qx\\
+               &= px^{\ast}x,
+  \end{align*}
+  or that $\left\vert x \right\vert$ commutes with $p$. Since $xpx^{-1} = q$, we have $v(p,q) p v(p,q)^{\ast} = q$.
+
+  Now, let $\gamma = \norm{p-q}$. Then, $x^{\ast}x = 1-\left( p-q \right)^2 \leq 1$, meaning $\norm{x}\leq 1$, and
+  \begin{align*}
+    \norm{x-1} &= \norm{qp + \left( 1-p \right)\left( 1-q \right) - p - \left( 1-p \right)}\\
+               &\leq \norm{qp-p} + \norm{\left( 1-q \right)\left( 1-p \right)-\left( 1-p \right)}\\
+               &\leq \norm{q-p} + \norm{\left( 1-q \right)-\left( 1-p \right)},
+  \end{align*}
+  where we used the fact that $\norm{p}\leq 1$ for all projections $p$. Now, since $\left( 1-\gamma^2 \right)1 \leq x^{\ast}x \leq 1$, we also have
+  \begin{align*}
+    \norm{\left( x^{\ast}x \right)^{-1/2}-1} &\leq \left( 1-\gamma^2 \right)^{-1/2}-1\\
+                                             &\eqcolon \alpha.
+  \end{align*}
+  Thus, we get
+  \begin{align*}
+    \norm{v\left( p,q \right) - 1} &= \norm{x\left\vert x \right\vert - x  + x - 1}\\
+                                   &\leq \norm{x\left( \left\vert x \right\vert-1 \right)} + \norm{x-1}\\
+                                   &\leq \alpha + 2\gamma.
+  \end{align*}
+\end{proof}
+\nocite{davidson_functional_analysis,blackadar_operator_algebras,pedersen_cstar_algebras_automorphism_groups}
 \printbibliography 
 \end{document}

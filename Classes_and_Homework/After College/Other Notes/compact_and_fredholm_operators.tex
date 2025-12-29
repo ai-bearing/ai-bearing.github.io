@@ -103,6 +103,99 @@ Equivalently, a map $T\colon X\rightarrow Y$ is not bounded below if and only if
 
   Let $W = X/(T-\lambda\id_X)X$. To show that $\left( T-\lambda\id_X \right)X$ has finite codimension, we show that $W$ is finite-dimensional, by showing that $W^{\ast}$ is finite-dimensional. Let $\pi\colon X\rightarrow W$ be the quotient map. Then, $\ker\left( \pi^{\ast} \right)\subseteq \ker\left( T^{\ast}-\lambda\id_{X^{\ast}} \right)$. Letting $\sigma\in \ker\left( T^{\ast}-\lambda\id_{X^{\ast}} \right)$, we have that $\sigma$ annihilates $\left( T-\lambda\id_X \right)X$, so it induces a bounded linear functional $\tau\colon W\rightarrow \C$ such that $\sigma = \tau\circ\pi = \pi^{\ast}(\tau)$. Since $T^{\ast}$ is compact, $\ker\left( T^{\ast}-\lambda\id_{X^{\ast}} \right)$ is finite-dimensional, so $\pi^{\ast}$ has finite-dimensional range, and since $\pi^{\ast}$ is injective, $W^{\ast}$ is thus finite-dimensional, so $W$ is finite-dimensional. 
 \end{proof}
+Note that if $T\colon X\rightarrow X$ is a linear map on a vector space, then the sequence of spaces $\left( \ker\left( T^n \right) \right)_{n}$ is increasing; if $\ker\left( T^n \right) \neq \ker\left( T^{n+1} \right)$ for all $n$, we say that $T$ has infinite \textit{ascent}, and write $\operatorname{asc}\left( T \right) = \infty$. Otherwise, we say $T$ has finite ascent, and define $\operatorname{asc}(T)$ to be the smallest $p$ such that $\ker\left( T^p \right) = \ker\left( T^{p+1} \right)$ for all $n \geq p$.
+
+Similarly, the sequence of spaces $T^{n}(X)$ is decreasing. We say $T$ has infinite \textit{descent} if $T^{n}(X)\neq T^{n+1}(X)$ for all $n$, and we write $\operatorname{desc}(T) = \infty$. Else, we say $T$ has finite descent, and define $\operatorname{desc}(T)$ to be the smallest $p$ such that $T^{p+1}(X) = T^{p}(X)$.
+
+To prove the next theorem, we recall the Riesz lemma.
+\begin{lemma}[Riesz Lemma]
+  Let $Y$ be a proper closed subspace of a normed vector space $X$. Then, for any $\ve > 0$, there is a unit vector $x\in X$ such that $\norm{x + Y} > 1-\ve$.
+\end{lemma}
+\begin{theorem}
+  Let $T$ be a compact operator on a Banach space $X$. Suppose $\lambda\in \C\setminus \set{0}$. Then, $T- \lambda I$ has finite ascent and descent.
+\end{theorem}
+\begin{proof}
+  Suppose toward contradiction that the ascent is infinite. Letting $N_n = \ker\left( T-\lambda I \right)^{n}$, we observe then that $N_{n-1}$ is a proper subspace of $N_n$, so by the Riesz Lemma, there is a unit vector $x_n\in N_n$ such that $\norm{x_n + N_{n-1}} \geq 1/2$. For any $m < n$, we have
+  \begin{align*}
+    Tx_n - Tx_m &= \lambda x_n + \left( T-\lambda \right)x_n - \left( T-\lambda \right)x_m - \lambda x_m\\
+                &= \lambda x_n - z
+  \end{align*}
+  for some $z\in N_{n-1}$. Thus, $\norm{Tx_n - Tx_m} = \norm{\lambda x_n - z} \geq \left\vert \lambda \right\vert/2$. It follows that $\left( Tx_n \right)_n$ has no convergent subsequence, which contradicts the compactness of $T$.
+
+  Similarly, if we let $V_n = \im\left( T-\lambda I \right)^{n}$, and suppose toward contradiction that $\operatorname{desc}\left( T-\lambda I \right) = \infty$, then we have that $V_{n}\leq V_{n-1}$ is a proper subspace, so there is some unit vector $x_n$ such that $\norm{x_n + V_{n-1}}\geq 1/2$. By a similar process, we find a sequence $\left( Tx_n \right)_n$ with no convergent subsequence, contradicting the assumption of compactness of the operator $T$.
+\end{proof}
+\section{Fredholm Operators and Connections}%
+\begin{definition}
+  Let $X,Y$ be Banach spaces, and let $T\in B(X,Y)$. We say $T$ is \textit{Fredholm} if both $\dim\ker(T)$ and $\dim\coker(T)$ are finite. The index of $T$ is given by
+  \begin{align*}
+  \ind(T) &= \dim\ker(T)-\dim\coker(T).
+  \end{align*}
+\end{definition}
+\begin{theorem}
+  Let $X,Y$ be Banach spaces, and let $T\in B(X,Y)$. Suppose there is a closed subspace $Z$ of $Y$ such that $T(X)\oplus Z = Y$. Then, $T(X)$ is closed in $Y$.
+\end{theorem}
+\begin{proof}
+  From the first isomorphism theorem, we may descend to the map $X/\ker(T)\rightarrow Y$ given by $x + \ker(T) \mapsto Tx$, so we may assume without loss of generality that $T$ is injective.
+
+  The map
+  \begin{align*}
+    V\colon X\oplus Z &\rightarrow Y\\
+    \left( x,z \right) &\mapsto Tx + z
+  \end{align*}
+  is a continuous isomorphism between Banach spaces, so by the open mapping theorem, $v^{-1}$ is also continuous. Letting $x\in X$, we have $\norm{x} = \norm{V^{-1}Tx}\leq \norm{V^{-1}}\norm{Tx}$, so that $\norm{Tx} \geq \norm{V^{-1}}^{-1}\norm{x}$, meaning $T$ is bounded below, and thus $T(X)$ is closed in $Y$.
+\end{proof}
+\begin{theorem}
+  Let 
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAA0QBfU9TXfIRQBGclVqMWbAJrdeIDNjwEiAJjHV6zVohAAtbuJhQA5vCKgAZgCcIAWyRkQOCElETtbACpyrth4juLkjqHlK6AMqGXEA
+    \begin{tikzcd}
+    X \arrow[r, "T"] & Y \arrow[r, "S"] & Z
+    \end{tikzcd}
+  \end{center}
+  be Fredholm linear maps between Banach spaces $X,Y,Z$. Then, $ST$ is Fredholm with
+  \begin{align*}
+    \ind(ST) &= \ind(S) + \ind(T).
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Set $Y_2 = \ker(S)\cap T(X)$, and let $Y_1,Y_3,Y_4$ be such that $T(X) = Y_2\oplus Y_3$, $\ker(S) = Y_1 \oplus Y_2$, and $Y = T_1\oplus T(X)\oplus Y_4$, where $Y_1,Y_2,Y_4$ are finite-dimensional. We have that the map $\ker\left( ST \right)\rightarrow Y_2$, $x\mapsto Tx$ is surjective and has the same kernel as $T$, so $\ker\left( ST \right)$ is finite-dimensional with $\dim\ker(ST) = \dim\ker(T) + \dim\left(Y_2\right)$.
+
+  Next, since $S(Y) = S\left( Y_3 \right)\oplus S\left( Y_4 \right)$ and $S\left( Y_3 \right) = ST(X)$, we have $S(Y) = ST(X)\oplus S\left(Y_4\right)$. Let $Z'$ be a finite-dimensional subspace of $Z$ such that $S(Y)\oplus Z' = Z$, so $Z = ST(X)\oplus S\left( Y_4 \right)\oplus Z'$. Since $S\left( Y_4 \right)\oplus Z'$ is finite-dimensional, $ST(X)$ has finite codimension in $Z$, so $ST$ is Fredholm.
+
+  The map $Y_4\rightarrow S\left(Y_4\right)$ given by $y\mapsto Sy$ is a linear isomorphism, so $\dim\left( Y_4 \right) = \dim\left( S\left( Y_4 \right) \right)$, and thus 
+  \begin{align*}
+    \dim\coker\left( ST \right) &= \dim\left( Y_4 \right) + \dim\left( Z' \right)\\
+                                &= \dim\left( Y_4 \right) + \dim\coker\left( S \right).
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    \dim\ker\left( ST \right) + \dim\coker\left( T \right) + \dim\coker\left( S \right) &= \dim\ker\left( T \right) + \dim\ker\left( S \right) + \dim\coker\left( ST \right),
+  \end{align*}
+  so that $\ind\left( ST \right) = \ind(S) + \ind(T)$.
+\end{proof}
+\begin{theorem}
+  Let $T$ be a compact operator on a Banach space $X$, and let $\lambda\in \C\setminus \set{0}$.
+  \begin{enumerate}[(i)]
+    \item The operator $T - \lambda I$ is Fredholm of index $0$.
+    \item If $p$ is the ascent of $T-\lambda I$, then
+      \begin{align*}
+        X &= \ker\left( T-\lambda I \right)^{p}\oplus \left( T-\lambda I \right)^{p}(X).
+      \end{align*}
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item We know from the above theorem that $\ker\left( T-\lambda I \right)$ and $\coker\left( T-\lambda I \right)$ are finite-dimensional. If $m,n$ are integers greater than the maximum of the ascent and descent of $T-\lambda I$, then we have $\dim\ker\left( T - \lambda I \right)^{n} = \dim\ker\left( T-\lambda I \right)^{m}$, and analogously for the cokernel, whence $\ind\left( T-\lambda I \right)^{m} = \ind\left( T-\lambda I \right)^{n}$ for all such $m,n$. Thus, $m\ind\left( T-\lambda I \right) = n\ind\left( T-\lambda I \right)$, so that $\ind\left( T-\lambda I \right) = 0$.
+    \item Let $x\in \ker\left( T-\lambda I \right)^{p}\cap \left( T-\lambda I \right)^{p}(X)$. Then, there is $y\in X$ such that $x = \left( T-\lambda I \right)^{p} y$ with $\left( T-\lambda I \right)^{2p} y = 0$. Since $\ker\left( T-\lambda I \right)^{p} = \ker\left( T-\lambda I \right)^{2p}$, it follow that $\left( T-\lambda I \right)^{p} y = 0$, whence $x= 0$. Moreover, since $\dim\ker\left( T-\lambda I \right)^{p} = \dim\coker\left( T-\lambda I \right)^{p}$, we have $X = \ker\left( T-\lambda I \right)^{p}\oplus \left( T-\lambda I \right)^{p}(X)$.
+  \end{enumerate}
+\end{proof}
+\begin{corollary}[Fredholm Alternative]
+  The operator $T-\lambda I$ is injective if and only if it is surjective.
+\end{corollary}
+\begin{proof}
+  We have that $\dim\ker\left( T-\lambda I \right) = 0$ if and only if $\dim\coker\left( T-\lambda I \right) = 0$, meaning that $T-\lambda I$ is injective if and only if it is surjective.
+\end{proof}
+
 \nocite{murphy_cstar_algebras_and_operator_theory}
 \printbibliography
 \end{document}
