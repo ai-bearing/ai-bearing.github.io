@@ -15,7 +15,7 @@ permalink: "/useful_resources.html"
 - Class notes:
     - Graduate classes:
         - [Differential Topology](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Differential Topology/differential_topology_notes.pdf)
-        - [Algebra I](https://ai-bearing.github.io/Classes_and_homework/After College/Classes/Algebra/algebra_i_notes.pdf)
+        - [Algebra I](https://ai-bearing.github.io/Classes_and_homework/After College/Classes/Algebra I/algebra_i_notes.pdf)
     - Qualifier prep:
         - [Real Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/real_analysis_prep.pdf)
         - [Complex Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/complex_analysis_prep.pdf)
