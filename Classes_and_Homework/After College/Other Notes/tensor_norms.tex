@@ -1,0 +1,320 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage{mlmodern}
+%\usepackage{newpxtext,eulerpx,eucal}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+%\usepackage{homework}
+\usepackage{notes}
+
+\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+\addbibresource{all_references.bib}
+
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Tensor Products of Banach Spaces}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Tensor Products, Bilinear Maps, and Linear Maps}%
+First, we review some definitions of algebraic tensor products.
+\subsection{Definition of Tensor Products}%
+From linear algebra, we know that if $X$ and $Y$ are vector spaces, then the \textit{tensor product} of $X$ and $Y$, denoted $X\otimes Y$, is the universal object such that if $t\colon X\times Y\rightarrow Z$ is a bilinear map, then there is a unique linear map $T\colon X\otimes Y\rightarrow Z$, alongside an injection $\left( x,y \right)\xmapsto{\iota} x\otimes y$ such that $T\circ\iota = t$.
+\begin{center}
+  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAA0AdTvAW3gAEATRABfUuky58hFAEZyVWoxZsunCH0Ejxk7HgJEFcpfWatEIAFpilMKAHN4RUADMAThF5IyIHBCQAJmozVUscEGoGOgAjGAYABSkDWRB3LAcACwjdEA8vH2p-JAVlczZufBw6SL86LAY2SDBWXPzvRFLixGCysJAAFVtRIA
+  \begin{tikzcd}
+  X\times Y \arrow[rd, "t"'] \arrow[r, "\iota"] & X\otimes Y \arrow[d, "T"] \\
+                                                & Z                        
+  \end{tikzcd}
+\end{center}
+Elements of the tensor product are linear combinations of the form
+\begin{align*}
+  u &= \sum_{i=1}^{n} x_i\otimes y_i.
+\end{align*}
+\subsection{Identifying Tensor Products as Spaces of Maps}%
+We observe that if $t$ is a bilinear \textit{form} --- i.e., a bilinear map $t\colon X\times Y\rightarrow \F$ for some field $\F$ --- then there is a unique linear map $T\colon X\otimes Y\rightarrow \F$, meaning that the space of bilinear forms, $\hom\left( X\times Y,\F \right)$, is in one-to-one correspondence with elements of the algebraic dual of the tensor product, $\left( X\otimes Y \right)'$.
+
+We can in fact view tensors in and of themselves as bilinear forms. For any $x\in X$ and $y\in Y$, we may define a bilinear form $B_{x,y}\colon X'\times Y'\rightarrow \F$ by $B_{x,y}(\varphi,\psi) = \varphi(x)\psi(y)$. Thus, we have a unique linear map $X\otimes Y\rightarrow \hom\left( X'\times Y',\F \right)$ taking $x\otimes y \mapsto B_{x,y}$.
+
+The map is injective, since if
+\begin{align*}
+  \sum_{i=1}^{n}B_{x_i,y_i} &= 0,
+\end{align*}
+then for any $\varphi\in X'$ and $\psi\in Y'$, we have
+\begin{align*}
+  \sum_{i=1}^{n}\varphi\left(x_i\right)\psi\left( y_i \right) &= 0.
+\end{align*}
+Since $X'$ separates the points of $X$ and similarly for $Y'$ and the points of $Y$, we must have that
+\begin{align*}
+  \sum_{i=1}^{n}x_i\otimes y_i &= 0.
+\end{align*}
+Thus, we have an embedding $X\otimes Y\hookrightarrow \hom\left( X'\times Y',\F \right)$; if $X$ and $Y$ are dual spaces, then there is a corresponding embedding $X'\otimes Y'\hookrightarrow \hom\left( X\times Y,\F \right)$ by identifying
+\begin{align*}
+  \sum_{i=1}^{n}\varphi_i\otimes \psi_i \mapsto \left( \left( x,y \right)\mapsto \sum_{i=1}^{n}\varphi_i(x)\psi_i(y) \right).
+\end{align*}
+For any bilinear form $B$, there are two associated linear maps, $L_B\colon X\rightarrow Y'$ and $R_B\colon Y\rightarrow X'$, given by
+\begin{align*}
+  B\left( x,y \right) &= \iprod{y}{L_B(x)}\\
+                      &= \iprod{x}{R_B(y)},
+\end{align*}
+where we let $ \iprod{\cdot}{\cdot}\colon X\times X'\rightarrow \F$ denote the canonical duality given by
+\begin{align*}
+  \iprod{x}{\varphi} &= \varphi(x).
+\end{align*}
+Thus, we see that every element of the tensor product,
+\begin{align*}
+  u &= \sum_{i=1}^{n}x_i\otimes y_i,
+\end{align*}
+gives us two linear maps
+\begin{align*}
+  L_u\left( \varphi \right) &= \sum_{i=1}^{n}\varphi\left( x_i \right)y_i\\
+  R_u\left( \psi \right) &= \sum_{i=1}^{n} \psi\left( y_i \right)x_i,
+\end{align*}
+giving two more identifications $X\otimes Y\hookrightarrow \hom\left( X',Y \right)$ and $X\otimes Y\hookrightarrow \hom\left( Y',X \right)$.
+
+If one of $X$ or $Y$ is a dual space, we get $X'\otimes Y\hookrightarrow \hom\left( X,Y \right)$ and $X\otimes Y'\hookrightarrow \hom\left( Y,X \right)$. 
+
+Specifically, the elements of $\hom\left( X,Y \right)$ that correspond to elements of $X'\otimes Y$ are the finite-rank linear maps. 
+\subsection{Examples}%
+\begin{example}[Matrices]
+  If we let $\F^{n}$ and $\F^{m}$ be endowed with the standard bases $\set{e_1,\dots,e_n}$ and $\set{f_1,\dots,f_m}$, we may identify $\F^{n}\otimes \F^{m}\cong \M_{m,n}\left( \F \right)$.
+
+  We may identify $e_i\otimes f_j$ with the matrix unit $e_{ij}$.
+\end{example}
+\begin{example}[Vector-Valued Functions]
+  Let $\mathcal{F}(S)$ denote the vector space of functions from a set $S$ into the field $\F$; if $X$ is a vector space, then $\mathcal{F}\left( S,X \right)$ may denote the vector space of all functions from $S$ to $X$ with pointwise operations. Given $f\in \mathcal{F}(S)$ and any $x\in X$, we may define a function from $S$ to $X$ by taking $s\mapsto f(s)x$. We may write this as $f\cdot x$
+
+  This defines a bilinear map $\mathcal{F}(S)\times X\rightarrow \mathcal{F}\left( S,X \right)$ taking $\left( f,x \right)\mapsto f\cdot x$.
+
+  We may thus find a linear map
+  \begin{align*}
+    \sum_{i=1}^{n} f_i\otimes x_i &\mapsto \sum_{i=1}^{n}f_i\cdot x_i.
+  \end{align*}
+  We show that this map is injective. Suppose we have
+  \begin{align*}
+    \sum_{i=1}^{n}f_i\cdot x_i &= 0,
+  \end{align*}
+  so that
+  \begin{align*}
+    \sum_{i=1}^{n}f_i(s)x_i &= 0.
+  \end{align*}
+  Yet, since the evaluation functionals $f\mapsto f(s)$ are a separating subset of $\mathcal{F}(S)$, we have
+  \begin{align*}
+    \sum_{i=1}^{n}f_i\otimes x_i &= 0.
+  \end{align*}
+  This gives an embedding of $\mathcal{F}(S)\otimes X\hookrightarrow \mathcal{F}(S,X)$.
+\end{example}
+\begin{example}[Vector-Valued Measures]
+  Let $\mathcal{A}$ be an algebra of subsets of $S$. The vector space $M_{\operatorname{f.a.}}\left( S \right)$ denotes the space of all finitely additive scalar-valued measures on $\mathcal{A}$. An element of $M_{\operatorname{f.a.}}(S)$ is a function from $\mathcal{A}$ to $\F$ such that $\mu(\emptyset) = 0$ and
+  \begin{align*}
+    \mu\left( \bigsqcup_{i=1}^{n}A_i \right) &= \sum_{i=1}^{n}\mu\left( A_i \right)
+  \end{align*}
+  for every finite collection of pairwise disjoint sets in $\mathcal{A}$.
+
+  For every vector space $X$, we can similarly define $M_{\operatorname{f.a.}}(S,X)$ to be the space of finitely  additive $X$-valued measures on on $\mathcal{A}$, and obtain an embedding of the tensor product $M_{\operatorname{f.a.}}(S)\otimes X\hookrightarrow M_{\operatorname{s.a.}}(S,X)$.
+\end{example}
+\subsection{Summary}%
+\begin{itemize}
+  \item If $X$ and $Y$ are vector spaces and $t\colon X\times Y\rightarrow Z$ is a bilinear map, then there is a unique linear map $T\colon X\otimes Y\rightarrow Z$ such that $T\circ \iota = t$.
+  \item Letting $\hom\left( X\times Y,\F \right)$ denote the space of bilinear forms on $X\times Y$ to an underlying field $\F$, there are identifications
+    \begin{align*}
+      \left( X\otimes Y \right)' &\leftrightarrow \hom\left( X\times Y,\F \right)\\
+      X\otimes Y &\hookrightarrow \hom\left( X'\times Y',\F \right)\\
+      X'\otimes Y &\hookrightarrow \hom\left( X,Y \right)\\
+      X\otimes Y' &\hookrightarrow \hom\left( Y,X \right).
+    \end{align*}
+  \item We may identify vector-valued functions and measures as
+    \begin{align*}
+      \mathcal{F}(S)\otimes X &\hookrightarrow \mathcal{F}\left( S,X \right)\\
+      M_{\operatorname{f.a.}}(S)\otimes X &\hookrightarrow M_{\operatorname{f.a.}}(S,X).
+    \end{align*}
+\end{itemize}
+\section{Projective Tensor Products}%
+If $X$ and $Y$ are Banach spaces, there are a variety of ways we may seek to norm the tensor product $X\otimes Y$. The basic requirement we have is that we want
+\begin{align*}
+  \norm{x\otimes y} &\leq \norm{x}\norm{y},
+\end{align*}
+and for any representation
+\begin{align*}
+  u &= \sum_{i=1}^{n}x_i\otimes y_i,
+\end{align*}
+we want
+\begin{align*}
+  \norm{u} &\leq \sum_{i=1}^{n} \norm{x_i}\norm{y_i}.
+\end{align*}
+Therefore, we must have
+\begin{align*}
+  \norm{u} &\leq \inf\set{\sum_{i=1}^{n}\norm{x_i}\norm{y_i} | u = \sum_{i=1}^{n}x_i\otimes y_i}.
+\end{align*}
+The latter value is thus the largest possible candidate for a norm on $X\otimes Y$ that has these desired qualities. We thus define
+\begin{align*}
+  \norm{u}_{\wedge} &= \inf\set{\sum_{i=1}^{n}\norm{x_i}\norm{y_i} | u=\sum_{i=1}^{n}x_i\otimes y_i}
+\end{align*}
+to be the \textit{projective norm} on $X\otimes Y$.
+\begin{proposition}
+  Let $X$ and $Y$ be Banach spaces. Then, $\norm{\cdot}_{\wedge}$ is a norm on $X\otimes Y$ with $\norm{x\otimes y}_{\wedge} = \norm{x}\norm{y}$.
+\end{proposition}
+\begin{proof}
+  We start by showing homogeneity. Assume $\lambda\neq 0$. Then, if
+  \begin{align*}
+    u &= \sum_{i=1}^{n}x_i\otimes y_i,
+    \intertext{we have}
+    \lambda u &= \sum_{i=1}^{n}\left( \lambda x_i \right)\otimes y_i,
+  \end{align*}
+  we have
+  \begin{align*}
+    \norm{\lambda u}_{\wedge} &\leq \sum_{i=1}^{n} \norm{\lambda x_i}\norm{y_i}\\
+                     &= \left\vert \lambda \right\vert\sum_{i=1}^{n}\norm{x_i}\norm{y_i}\\
+                     &= \left\vert \lambda \right\vert\norm{ u }_{\wedge}.
+  \end{align*}
+  Similarly,
+  \begin{align*}
+    \norm{u}_{\wedge} &\leq \left\vert \lambda \right\vert^{-1}\norm{\lambda u}_{\wedge},
+  \end{align*}
+  whence $\norm{\lambda u}_{\wedge} = \left\vert \lambda \right\vert\norm{u}_{\wedge}$.
+
+  Now, let $\ve > 0$ and let $u,v\in X\otimes Y$ have representations
+  \begin{align*}
+    u &= \sum_{i=1}^{n}x_i\otimes y_i\\
+    v &= \sum_{j=1}^{m}w_j\otimes z_j
+  \end{align*}
+  such that
+  \begin{align*}
+    \sum_{i=1}^{n}\norm{x_i}\norm{y_i} &\leq \norm{u}_{\wedge} + \ve/2\\
+    \sum_{j=1}^{m}\norm{w_j}\norm{z_j} &\leq \norm{v}_{\wedge} + \ve/2.
+  \end{align*}
+  Then, we have a representation
+  \begin{align*}
+    u + v &= \sum_{i=1}^{n}x_i\otimes y_i + \sum_{j=1}^{m}w_j\otimes z_j,
+  \end{align*}
+  so that
+  \begin{align*}
+    \norm{u + v}_{\wedge} &\leq \sum_{i=1}^{n}\norm{x_i}\norm{y_i} + \sum_{j=1}^{m}\norm{w_j}\norm{z_j}\\
+                          &\leq \norm{u}_{\wedge} + \norm{v}_{\wedge} + \ve.
+  \end{align*}
+  Since $\ve$ is arbitrary, we obtain the triangle inequality.
+
+  Now, we show that the norm is definite. Let $\norm{u}_{\wedge} = 0$. Then, for any $\ve > 0$, there is a representation
+  \begin{align*}
+    u &= \sum_{i=1}^{n}x_i\otimes y_i
+  \end{align*}
+  such that
+  \begin{align*}
+    \sum_{i=1}^{n}\norm{x_i}\norm{y_i} &\leq \ve.
+  \end{align*}
+  In particular, for any $\varphi\in X^{\ast}$ and $\psi\in Y^{\ast}$, we have
+  \begin{align*}
+    \left\vert \sum_{i=1}^{n}\varphi\left( x_i \right)\psi\left( y_i \right) \right\vert &\leq \ve \norm{\varphi}\norm{\psi}.
+  \end{align*}
+  Since the quantity $\sum_{i=1}^{n}\varphi\left( x_i \right)\psi\left( y_i \right)$ is independent of the representation of $u$, it follows that this sum equals zero. Yet, since $X^{\ast}$ and $Y^{\ast}$ separate the points of $X$ and $Y$, it follows that $u = 0$.
+
+  Finally, we know that $\norm{x\otimes y}_{\wedge}\leq \norm{x}\norm{y}$, so we let $\varphi\in B_{X^{\ast}}$ and $\psi\in B_{Y^{\ast}}$ such that $\varphi(x) = \norm{x}$ and $\psi(y) = \norm{y}$. We let $b\colon X\times Y\rightarrow \F$ be given by $B\left( w,z \right) = \varphi(w)\psi(z)$. The linearization $B$ is a linear functional on $X\otimes Y$ with
+  \begin{align*}
+    \left\vert B\left( \sum_{i=1}^{n}x_i\otimes y_i \right) \right\vert &\leq \sum_{i=1}^{n} \left\vert B\left( x_i\otimes y_i \right) \right\vert\\
+                                                                        &= \sum_{i=1}^{n} \left\vert \varphi\left( x_i \right)\psi\left( y_i \right) \right\vert\\
+                                                                        &\leq \sum_{i=1}^{n}\norm{x_i}\norm{y_i},
+  \end{align*}
+  so that $\left\vert B(u) \right\vert\leq \norm{u}_{\wedge}$ for every $u\in X\otimes Y$. In particular, this means that $B$ is a bounded linear functional on the normed space $\left( X\otimes Y,\norm{\cdot}_{\wedge} \right)$ with norm at most $1$, whence $\norm{x}\norm{y} = B\left( x\otimes y \right) \leq \norm{x\otimes y}_{\wedge}$.
+\end{proof}
+We may thus complete $\left( X\otimes Y,\norm{\cdot}_{\wedge} \right)$ with respect to the projective norm to obtain the \textit{projective tensor product} of the Banach spaces $X$ and $Y$, which we denote $X\hat{\otimes} Y$.
+
+If $A\subseteq X$ and $B\subseteq Y$ are subsets, then we will let
+\begin{align*}
+  A\otimes B &\coloneq \set{x\otimes y | x\in A,y\in B}.
+\end{align*}
+\begin{proposition}
+  The closed unit ball of $X\hat{\otimes}Y$ is the closed convex hull of $B_{X}\otimes B_{Y}$.
+\end{proposition}
+\begin{proof}
+  Since the closed unit ball is the closure of the unit ball in $X\otimes Y$, it suffices to prove the proposition for the space $\left( X\otimes Y,\norm{\cdot}_{\wedge} \right)$. Let $u$ be an element of the open unit ball of $\left( X\otimes Y,\norm{\cdot}_{\wedge} \right)$.
+
+  By the definition of the projective norm, there is a representation
+  \begin{align*}
+    u &= \sum_{i=1}^{n} x_i\otimes y_i
+  \end{align*}
+  such that
+  \begin{align*}
+    \sum_{i=1}^{n}\norm{x_i}\norm{y_i} < 1.
+  \end{align*}
+  Let
+  \begin{align*}
+    w_i &= \norm{x_i}^{-1}x_i\\
+    z_i &= \norm{y_i}^{-1}y_i\\
+    \lambda_i &= \norm{x_i}\norm{y_i}.
+  \end{align*}
+  Then, we have
+  \begin{align*}
+    u &= \sum_{i=1}^{n}\lambda_iw_i\otimes z_i
+  \end{align*}
+  with $w_i\in B_X$, $z_i\in B_Y$, $\lambda_i \geq 0$, and $\sum_{i=1}^{n}\lambda_i < 1$. Thus, $u\in \conv\left(B_X\otimes B_Y\right)$, meaning that the closed unit ball of $X\otimes Y$ is contained in $ \overline{\conv}\left(B_X\otimes B_Y\right) $. Yet, we must also have $ B_X\otimes B_Y $ contained in the closed unit ball of $\left( X\otimes Y,\norm{\cdot}_{\wedge} \right)$, so it holds for $ \overline{\conv}\left(B_X\otimes B_Y\right) $.
+\end{proof}
+\subsection{Tensor Products of Linear Operators on Banach Spaces}%
+In general, if we have two linear maps $S\colon X\rightarrow E$ and $T\colon Y\rightarrow F$, we have a bilinear map $X\times Y\rightarrow E\otimes F$ given by $\left( x,y \right)\mapsto \left( Sx \right)\otimes \left( Ty \right)$. From the universal property, we get a linear map $S\otimes T\colon X\otimes Y\rightarrow E\otimes F$ such that $\left( S\otimes T \right)\left( x\otimes y \right) = \left( Sx \right)\otimes \left( Ty \right)$.
+
+When $X$ and $Y$ have norms, and we are concerned with continuity, we observe that if $u\in X\otimes Y$ has representation
+\begin{align*}
+  u &= \sum_{i=1}^{n}x_i\otimes y_i,
+\end{align*}
+we have
+\begin{align*}
+  \norm{\left( S\otimes T \right)\left( u \right)}_{\wedge} &= \norm{\sum_{i=1}^{n}\left( Sx_i \right)\otimes \left( Ty_i \right)}\\
+                                                   &\leq \norm{S}_{\op}\norm{Y}_{\op}\sum_{i=1}^{n}\norm{x_i}\norm{y_i}<>
+\end{align*}
+whence
+\begin{align*}
+  \norm{\left( S\otimes T \right)\left( u \right)}_{\wedge} &\leq \norm{S}_{\op}\norm{T}_{\op}\norm{u}_{\wedge}.
+\end{align*}
+This gives that $\norm{S\otimes T}_{\op}\leq \norm{S}_{\op}\norm{T}_{\op}$. Meanwhile, since $\norm{x\otimes y}_{\wedge} = \norm{x}\norm{y}$, we have $\norm{S\otimes T}_{\op}\geq \norm{S}_{\op}\norm{T}_{\op}$, so that $\norm{S\otimes T}_{\op} = \norm{S}_{\op}\norm{T}_{\op}$.
+
+Finally, we may extend $S\otimes T$ to the completions $X\hat{\otimes}Y$ and $E\hat{\otimes}F$. This gives the following proposition.
+\begin{proposition}
+  Let $S\colon X\rightarrow E$ and $T\colon Y\rightarrow F$ be bounded linear operators. Then, there is a unique operator 
+  \begin{align*}
+    S\hat\otimes T\colon X\hat\otimes Y&\rightarrow W\hat\otimes Z
+    \left( x\otimes y \right) &\mapsto \left( Sx \right)\otimes \left( Ty \right).
+  \end{align*}
+  Furthermore, $\norm{S\hat\otimes T}_{\op} = \norm{S}_{\op}\norm{T}_{\op}$.
+\end{proposition}
+\subsection{Inheritance of the Projective Norm}%
+In general, the projective tensor product does not respect subspaces, in the sense that if $W\leq X$ is a subspace, so that $W\otimes Y\leq X\otimes Y$ is an algebraic subspace, the norm on $W\otimes Y$ induced by $\left( X\otimes Y,\norm{\cdot}_{\wedge} \right)$ is not necessarily the same as the projective norm on $W\otimes Y$.
+
+This follows from the fact that the definition of the norm $\left( W\otimes Y,\norm{\cdot}_{\wedge} \right)$ is restricted to all representations in $W\otimes Y$, and since there are more representations for $u$ in $X\otimes Y$, it follows that the norm of $u$ in $\left( X\otimes Y,\norm{\cdot}_{\wedge} \right)$ is lesser than or equal to the norm of $u$ in $\left( W\otimes Y,\norm{\cdot}_{\wedge} \right)$.
+
+We start by discussing the special case of complemented subspace. Recall that a closed subspace $E\leq X$ is called \textit{complemented} if there is another closed subspace $W$ such that $X = E\oplus W$. An equivalent characterization of a complemented subspace is that there is a continuous projection $P_E\colon X\rightarrow E$ such that $X = E\oplus \ker\left( P_E \right)$.
+\begin{proposition}
+  Let $E$ and $F$ be complemented subspaces of $X$ and $Y$ respectively. Then, $E\otimes F$ is complemented in $X\otimes Y$, and the norm on $E\otimes F$ induced by the projective norm on $X\otimes Y$ is equivalent to the projective norm (in the sense of norm equivalence) on $E\otimes F$.
+
+  If $E$ and $F$ are complemented by projections of norm $1$, then $E\otimes F$ is a subspace of $X\otimes Y$ that is also complemented by a projection of norm $1$.
+\end{proposition}
+\begin{proof}
+  Let $P$ and $Q$ be projections from $X,Y$ onto $E,F$ respectively. Then, $P\otimes Q$ is a projection of $X\otimes Y$ onto $E\otimes F$.
+
+  Let $u\in E\otimes F$. We have that $\norm{u}_{\wedge,X\otimes Y}\leq \norm{u}_{\wedge,E\otimes F}$, so we let
+  \begin{align*}
+    u &= \sum_{i=1}^{n}x_i\otimes y_i
+  \end{align*}
+  be a representation of $u$ in $X\otimes Y$. Then,
+  \begin{align*}
+    u &= P\otimes Q(u)\\
+      &= \sum_{i=1}^{n} \left( Px_i \right)\otimes \left( Qy_i \right)
+  \end{align*}
+  is a representation of $u$ in $E\otimes F$, whence
+  \begin{align*}
+    \norm{u}_{\wedge,E\otimes F} &\leq \sum_{i=1}^{n}\norm{Px_i}\norm{Qy_i}\\
+                                 &\leq \norm{P}_{\op}\norm{Q}_{\op}\sum_{i=1}^{n}\norm{x_i}\norm{y_i},
+  \end{align*}
+  so it follows that for every representation of $u$ in $X\otimes Y$, we have
+  \begin{align*}
+    \norm{u}_{\wedge,X\otimes Y} &\leq \norm{u}_{\wedge,E\otimes F}\\
+                                 &\leq \norm{P}_{\op}\norm{Q}_{\op}\norm{u}_{\wedge,X\otimes Y}.
+  \end{align*}
+  If $E$ and $F$ are complemented by projections of norm $1$, we have $\norm{u}_{\wedge,X\otimes Y} = \norm{u}_{\wedge,E\otimes F}$ for every $u\in E\otimes F$, as $\norm{P\otimes Q}_{\op} = \norm{P}_{\op}\norm{Q}_{\op}$.
+\end{proof}
+\nocite{ryan_tensor_products_banach_spaces,williams_crossed_products_cstar_algebras}
+\printbibliography
+\end{document}
