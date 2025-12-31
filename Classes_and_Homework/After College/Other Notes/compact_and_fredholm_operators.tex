@@ -124,6 +124,7 @@ To prove the next theorem, we recall the Riesz lemma.
 
   Similarly, if we let $V_n = \im\left( T-\lambda I \right)^{n}$, and suppose toward contradiction that $\operatorname{desc}\left( T-\lambda I \right) = \infty$, then we have that $V_{n}\leq V_{n-1}$ is a proper subspace, so there is some unit vector $x_n$ such that $\norm{x_n + V_{n-1}}\geq 1/2$. By a similar process, we find a sequence $\left( Tx_n \right)_n$ with no convergent subsequence, contradicting the assumption of compactness of the operator $T$.
 \end{proof}
+Note that this result also gives us that, if we let $N_{\lambda}\coloneq \ker\left( T - \lambda I \right)^{\operatorname{asc}(T)}$, we must have $\sigma\left( T|_{N_{\lambda}} \right) = \set{\lambda}$, seeing as the restriction $\left( T-\lambda I \right)|_{N_{\lambda}}$ is nilpotent on a finite-dimensional subspace.
 \section{Fredholm Operators and Connections}%
 \begin{definition}
   Let $X,Y$ be Banach spaces, and let $T\in B(X,Y)$. We say $T$ is \textit{Fredholm} if both $\dim\ker(T)$ and $\dim\coker(T)$ are finite. The index of $T$ is given by
@@ -195,7 +196,111 @@ To prove the next theorem, we recall the Riesz lemma.
 \begin{proof}
   We have that $\dim\ker\left( T-\lambda I \right) = 0$ if and only if $\dim\coker\left( T-\lambda I \right) = 0$, meaning that $T-\lambda I$ is injective if and only if it is surjective.
 \end{proof}
+Now, we will understand the structure of the Fredholm operators in the space of all bounded operators.
+\begin{proposition}
+  The space of Fredholm operators in $B\left( X,Y \right)$ is open. The index is a continuous integer-valued function on the space of Fredholm operators.
+\end{proposition}
+\begin{proof}
+  Let $T$ be Fredholm, with $N = \ker(T)$. Let $V$ be a complement for $N$ such that $X = N\oplus V$, so that $T(V) = T(X)$. Since $T(X)$ is closed and has finite codimension, we may find a subspace $W$ of $Y$ such that $T(X)\oplus W = Y$, and define $ \widetilde{T}\colon V\oplus W \rightarrow Y $ by $ \widetilde{T}(v,w) = Tv + w $.
 
-\nocite{murphy_cstar_algebras_and_operator_theory}
+  Note that
+  \begin{align*}
+    \norm{ \widetilde{T}(v,w) } &\leq \norm{Tv} + \norm{w}\\
+                                &\leq \max\left(\norm{T}_{\op},1\right)\left( \norm{v} + \norm{w} \right),
+  \end{align*}
+  meaning that $ \widetilde{T} $ is continuous, and is necessarily a bijection by the fact that exact sequences of vector spaces split.
+
+  Let $ S\in B(X,Y) $ be with $\norm{S-T}_{\op} < 1/\norm{ \widetilde{T}^{-1} }$. Define $ \widetilde{S}\colon V\oplus W \rightarrow Y $ by $ \widetilde{S}\left( v,w \right) = Sv + w $. Then, $ \widetilde{S} $ is continuous, with
+  \begin{align*}
+    \norm{ \widetilde{S} - \widetilde{T} }_{\op} &= \norm{ \left( S-T \right)|_{V} }_{\op}\\
+                                                 &< 1/\norm{ \widetilde{T}^{-1} }.
+  \end{align*}
+  Thus, $ \widetilde{S} $ is invertible, meaning that $ S(V) = \widetilde{S}(V) $ is closed, and $Y = S(V) + W$.
+
+  In particular, this means that $\dim(Y/S(X))\leq \dim(Y/S(V)) = \dim(W) < \infty$, and since $\ker(S)\cap V = \set{0}$, the quotient map $Q\colon X\rightarrow X/V$ is injective on $\ker(S)$, so that
+  \begin{align*}
+    \dim\ker(S) &\leq \dim(X/V)\\
+                &= \dim(N)\\
+                &< \infty,
+  \end{align*}
+  so $S$ is Fredholm. Thus, the space of Fredholm operators is open in $B(X,Y)$.
+
+  The subspace $V + \ker(S) = Q^{-1}\left( \left( \ker(S) + V \right)/V \right)$ is closed and of finite codmension. Choose a finite-dimensional $Z$ such that $X = V + \ker(S) + Z$. Then, $S(X) = S(V) + S(Z)$, since $S$ is injective on $V + Z$ and $Z$ is finite-dimensional. Letting $P\colon Y = S(V) + W \rightarrow W$ be the projection onto $W$ with kernel $S(V)$, we have
+  \begin{align*}
+    P(S(X)) &= P(S(Z))\\
+            &\cong Z
+  \end{align*}
+  since $S$ is injective on $Z$ and $P$ is injective on $S(Z)$. Thus,
+  \begin{align*}
+    Y/S(X) &= \left( Y/S(V) \right)/\left( S(X)/S(V) \right)\\
+           &\cong W/P(S(Z)).
+  \end{align*}
+  We may compute
+  \begin{align*}
+    \ind(S) &= \dim\ker(S) - \dim\coker(S)\\
+            &= \dim\ker(S) - (\dim(W) - \dim(Z))\\
+            &= \dim(\ker(S) \oplus Z) - \dim(W)\\
+            &= \dim\ker(T) - \dim\coker(T)\\
+            &= \ind(T),
+  \end{align*}
+  so the index is constant on an open ball around $T$, whence it is locally constant.
+\end{proof}
+We know that $K(X)$ is a (closed) ideal in $B(X)$, so we can consider the quotient $B(X)/K(X)$. It turns out that there is a characterization of Fredholm operators in the quotient $B(X)/K(X)$.
+\begin{theorem}[Atkinson]
+  An operator $T\in B(X)$ is Fredholm if and only if $ \pi(T)\in B(X)/K(X) $ is invertible.
+\end{theorem}
+\begin{proof}
+  Suppose $T$ is Fredholm. Let $N = \ker(T)$, $V$ a complement for $N$ so that $X = N\oplus V$. Since $T$ is Fredholm, we have a finite-dimensional complement $W$ such that $X = T(V) \oplus W$. If we let $T|_{V}\in B(V,T(V))$, then we have that $T|_{V}$ is a continuous bijection. By the bounded inverse theorem, there is a continuous inverse $S\in B(T(V),V)$. Let $ \overline{S}\in B(X) $ be such that $ \overline{S}(Tv + w) = v $ for $v\in V$ and $w\in W$.
+
+  Then, we have $ \overline{S}T(u + v) = \overline{S}Tv = v $ for any $u\in N$ and $v\in V$. That is, $ \overline{S}T$ is the projection of $X$ onto $V$, $P_V$. Since $I - P_V = P_N$ is finite-rank, we ahve
+  \begin{align*}
+    \pi( \overline{S} )\pi(T) &= \pi\left( I-P_N \right)\\
+                              &= \pi(I).
+  \end{align*}
+  Similarly, we have $T \overline{S}\left( Tv + w \right) = Tv = P_{T(V)}(Tv + w)$ is the projection onto $T(V)$ with kernel $W$, where $I-P_{T(V)} = P_W$ is finite-rank, meaning that $ \pi(T) \pi( \overline{S} ) = \pi(I)$, meaning $\pi(T)$ is invertible.
+
+  Now, if $\pi(T)$ is invertible, with inverse $\pi(S)$, we have compact operators $K$ and $L$ such that $ST = I + K$ and $TS = I + L$. Since $\ker(T) \subseteq \ker\left( I+K \right)$, $\ker(T)$ is finite-dimensional, and since $\img(T) \supseteq \img\left(I + L\right)$, we have that $\img(T)$ is closed with finite codimension. Thus, $T$ is Fredholm.
+\end{proof}
+Finally, our final application of the theory of compact and Fredholm operators is an important structural result. Recall the definition of the commutant and bicommutant.
+\begin{definition}
+  If $S\subseteq B(X)$ is a collection of operators, the \textit{commutant} of $S$ is the set
+  \begin{align*}
+    S' &= \set{T\in B(X) | TP = PT\text{ for all }P\in S}.
+  \end{align*}
+  The bicommutant of $S$, $S''$, is $(S')'$. Note that $S\subseteq S''$ always.
+\end{definition}
+\begin{theorem}
+  Let $X$ be an infinite-dimensional Banach space, and let $T\in K(X)$. Then, the following hold.
+  \begin{enumerate}[(i)]
+    \item We have $0\in \sigma(T)$. If $0\neq \lambda\neq\in \sigma(T) $, then $\lambda$ is in the point spectrum (that is, $\lambda$) is an isolated point.
+    \item The spectrum of $T$ is either finite or is equal to a countable set $\set{\lambda_n}_{n\geq 1}\cup \set{0}$ with $\lim_{n\rightarrow\infty}\lambda_n = 0$.
+    \item For each $\lambda\in \sigma(T)\setminus \set{0}$, there is a decomposition
+      \begin{align*}
+        X &= N_{\lambda} \oplus R_{\lambda},
+      \end{align*}
+      with
+      \begin{align*}
+        N_{\lambda} &= \ker\left( T-\lambda I \right)^{n_{\lambda}}\\
+        R_{\lambda} &= \img\left( T-\lambda I \right)^{n_{\lambda}},
+      \end{align*}
+      where $n_{\lambda} = \operatorname{asc}(T) = \operatorname{desc}(T)$.
+    \item We have $\sigma\left( T|_{N_{\lambda}} \right) = \set{\lambda}$ and $\sigma\left( T|_{R_{\lambda}} \right) = \sigma(T)\setminus \set{\lambda}$.
+    \item There is a unique finite-rank projection $E_{\lambda}$ in the bicommutant $\set{T}''$ such that $\img\left( E_{\lambda} \right) = N_{\lambda}$ and $\ker\left( E_{\lambda} \right) = R_{\lambda}$. Furthermore, both $N_{\lambda}$ and $R_{\lambda}$ are invariant for $\set{T}'$.
+    \item If $\lambda,\mu\in \sigm(T)\setminus \set{0}$ are distinct, then $E_{\lambda}E_{\mu} = 0$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Compact operators cannot be surjective, since by the open mapping theorem, there is $r$ such that $U(0,r)\subseteq T\left(U_X\right)$, which would contradict compactness. Thus, $0\in \sigma(T)$. By the Fredholm alternative, we know that if $\lambda\neq 0$ then either $\ker\left( T-\lambda I \right)\neq \set{0}$ or $T-\lambda I$ is invertible, so $\sigma(T) = \sigma_p(T)\cup \set{0}$ by the definition of the point spectrum, which consists of all the points such that $\ker\left( T-\lambda I \right)\neq \set{0}$. This shows (i).
+
+  If $\lambda\in \sigma(T)\setminus \set{0}$, then we know from an earlier result that $X = N_{\lambda} + R_{\lambda}$, and that $N_{\lambda}$ and $R_{\lambda}$ are $\set{T}'$-invariant. In particular, we have
+    \begin{align*}
+      \sigma(T) &= \sigma\left( T|_{N_{\lambda}} \right)\cup \sigma\left( T|_{R_{\lambda}} \right)\\
+                &= \set{\lambda}\cup \sigma\left( T|_{R_{\lambda}} \right). 
+    \end{align*}
+    This shows (iv).
+
+    Furthermore, since $\left( T-\lambda I \right)|_{R_{\lambda}}$ is invertible (again by the Fredholm alternative), we have that $\sigma\left( T|_{R_{\lambda}} \right) = \sigma\left( T \right)\setminus \set{\lambda}$, meaning that $\lambda$ is isolated. In particular, this means that the spectrum is at most countably infinite. 
+\end{proof}
+\nocite{murphy_cstar_algebras_and_operator_theory,davidson_functional_analysis}
 \printbibliography
 \end{document}
