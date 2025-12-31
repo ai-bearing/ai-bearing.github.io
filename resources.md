@@ -11,6 +11,7 @@ permalink: "/useful_resources.html"
     - [A Guided Tour of the Connes Embedding Problem](https://arxiv.org/abs/2109.12682)
     - [Introduction to Random Matrices](https://arxiv.org/pdf/1712.07903)
     - [Strong Convergence: A Short Survey](https://arxiv.org/pdf/2510.12520)
+    - [An Introduction to Hyperlinear and Sofic Groups](https://arxiv.org/pdf/0911.4266)
 - [AMS Open Math Notes](https://www.ams.org/open-math-notes)
 - Class notes:
     - Graduate classes:
