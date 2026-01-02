@@ -1,0 +1,121 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage{mlmodern}
+%\usepackage{newpxtext,eulerpx,eucal}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+%\usepackage{homework}
+\usepackage{notes}
+
+\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+\addbibresource{all_references.bib}
+
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Spectral Theory for Bounded Operators}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+We recall from linear algebra that a linear operator $T\colon V\rightarrow V$ is called diagonalizable if there is an orthonormal basis $\set{e_j}_{j\in J}$ and a bounded collection of elements $\set{\lambda_j}_{j\in J}$ such that for every $x\in V$, we have
+\begin{align*}
+  Tx &= \sum_{j\in J}\lambda_j \iprod{x}{e_j}e_j.
+\end{align*}
+When $V$ is a Hilbert space, there are a variety of generalizations. It will be useful to review the \href{https://ai-bearing.github.io/Classes_and_Homework/Other Notes/compact_and_fredholm_operators.pdf}{basic properties} of compact and Fredholm operators.
+\section{Spectral Theory for Compact Normal Operators}%
+The first, most basic version of the spectral theorem is the one for compact normal operators. We recall the different types of spectra.
+\begin{definition}
+  Let $T\in B(X)$, where $X$ is a Banach space.
+  \begin{enumerate}[(i)]
+    \item The \textit{point spectrum} of $T$ is the set
+      \begin{align*}
+        \sigma_{p}(T) &= \set{\lambda\in \C | \ker\left( T-\lambda I \right)\neq \set{0}},
+      \end{align*}
+      which are the eigenvalues of $T$.
+    \item The \textit{approximate point spectrum} of $T$ is the set
+      \begin{align*}
+        \pi(T) &= \set{\lambda\in \C | T-\lambda I\text{ is not bounded below}}.
+      \end{align*}
+    \item The \textit{compression spectrum} of $T$ is
+      \begin{align*}
+        \gamma(T) &= \set{\lambda\in \C | \img\left( T-\lambda I \right)\text{ is not dense in }X}.
+      \end{align*}
+  \end{enumerate}
+\end{definition}
+There is a useful characterization of compact operators as follows.
+\begin{lemma}
+  The following for $T\in B(H)$ are equivalent:
+  \begin{enumerate}[(i)]
+    \item $T$ is compact;
+    \item $T|_{B_H}$ is a weak--norm continuous function from $B_H$ into $H$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  Suppose $T$ is compact. Then, if $\left( x_{i} \right)_{i\in I}$ is a weakly convergent net in $B_H$ with limit $x$, and $\ve > 0$, there is some finite-rank $S\in F(H)$ with $\norm{S-T}_{\op} < \ve/3$. We have
+  \begin{align*}
+    \norm{Tx_i - Tx} &\leq \norm{Tx_i - Sx_i} + \norm{Sx_i - Sx} + \norm{Sx - Tx}\\
+                     &\leq 2\norm{T-S}_{\op} + \norm{Sx_i - Sx}.
+  \end{align*}
+  Every operator in $B(H)$ is weak--weak continuous, and since $\img(S)$ is finite-dimensional, all norms coincide, so that $Sx_i \rightarrow Sx$ in norm, giving that $\norm{Tx_i -Tx} < \ve/3$ for sufficiently large $i$. Thus, $T$ is weak--norm continuous.
+
+  If $T$ is weak--norm continuous, then since $B_H$ is weakly compact, it follows that $T\left(B_H\right)$ is compact by continuity.
+\end{proof}
+\begin{lemma}
+  A diagonalizable operator $T$ in $B(H)$ is compact if and only if its eigenvalues $\set{\lambda_j | j\in J}$ corresponding to an orthonormal basis $\set{e_j | j\in J}$ belongs to $c_0(J)$.
+\end{lemma}
+\begin{proof}
+  Since $T$ is diagonalizable, we have
+  \begin{align*}
+    Tx &= \sum_{j\in J}\lambda_j \iprod{x}{e_j}e_j.
+  \end{align*}
+  If $T\in K(H)$, and $\ve > 0$, then we set
+  \begin{align*}
+    J_{\ve} &= \set{j\in J | \left\vert \lambda_j \right\vert \geq \ve}.
+  \end{align*}
+  If $J_{\ve}$ is infinite, then since $ \iprod{x}{e_j} \rightarrow 0 $ by Parseval's identity, we have that the net $\left( e_j \right)_{j\in J_{\ve}}$ converges weakly to zero. Yet, since $\norm{Te_j} = \left\vert \lambda_j \right\vert \geq \ve$ for any $j\in J_{\ve}$, this contradicts the fact that $T$ is weak--norm continuous. Thus, $J_{\ve}$ is finite for any $\ve > 0$, so $\left( \lambda_j \right)_{j\in J}$ vanishes at infinity.
+
+  Now, if $J_{\ve}$ is finite for every $\ve > 0$, we may define $T_{\ve}\in F(H)$ by
+  \begin{align*}
+    T_{\ve} &= \sum_{j\in J_{\ve}}\llambda_j \iprod{\cdot}{e_j}e_j,
+  \end{align*}
+  and
+  \begin{align*}
+    \norm{\left( T-T_{\ve} \right)x}^2 &= \norm{\sum_{j\notin J_{\ve}} \lambda_j \iprod{x}{e_j}e_j}^2\\
+                                       &= \sum_{j\in J_{\ve}} \left\vert \lambda_j \right\vert^2 \left\vert \iprod{x}{e_j} \right\vert^2\\
+                                       &\leq \ve^2\norm{x}^2,
+  \end{align*}
+  so $\norm{T-T_{\ve}} \leq \ve$, meaning that $T\in \overline{F(H)} = K(H)$.
+\end{proof}
+Note that by some basic computations, if $T$ is diagonalizable, then we have
+\begin{align*}
+  T^{\ast} &= \sum_{j\in J} \overline{\lambda_j} \iprod{\cdot}{e_j}e_j\\
+  T^{\ast}T &= \sum_{j\in J} \left\vert \lambda_j \right\vert^2 \iprod{\cdot}{e_j}e_j\\
+            &= TT^{\ast}.
+\end{align*}
+Thus, in particular, we have that every diagonalizable operator is normal.
+\begin{theorem}
+  An operator $T\in B(H)$ is diagonalizable with eigenvalues vanishing at infinity if and only if it is a compact normal operator.
+\end{theorem}
+\begin{proof}
+  Now we only need to show that every compact normal operator is diagonalizable. Since $T$ is compact, we know that the spectrum of $T$ consists of $0$ and a countable set of isolated points, and since $T$ is normal, its spectral radius is equal to the operator norm, meaning that there is some $\lambda$ such that $\left\vert \lambda \right\vert = \norm{T}_{\op}$. In particular, there is an eigenvector for $T$.
+
+  Let $\mathcal{Z}$ be the family of orthonormal systems of eigenvectors of $T$, ordered by inclusion. Since we have established that this family is nonempty, and the union provides an upper bound for any chain in $\mathcal{Z}$, there is some maximal orthonormal system $\set{e_j}_{j\in J}$ with corresponding eigenvalues $\set{\lambda_j}_{j\in J}$. We let $P$ be the projection onto the closed subspace spanned by the $e_j$. For each $x\in H$, we have
+  \begin{align*}
+    TPx &= T\left( \sum_{j\in J} \iprod{x}{e_j}e_J \right)\\
+        &= \sum_{j\in J} \lambda_j \iprod{x}{e_j}e_j\\
+        &= \sum_{j\in J} \iprod{x}{ \overline{\lambda_j}e_j }e_j\\
+        &= \sum_{j\in J} \iprod{x}{T^{\ast}e_j}e_j\\
+        &= \sum_{j\in J} \iprod{Tx}{e_j}e_j\\
+        &= PTx.
+  \end{align*}
+  Thus, the operator $\left( I-P \right)T$ is normal, and is also compact. If $P\neq I$, then either $\left( I-P \right)T = 0$, and every unit vector in $\left( I-P \right)(H)$ is an eigenvector for $T$ (contradicting maximality), or else $\left( I-P \right)T\neq 0$, in which case there is $e_0\in \left( I-P \right)(H)$ with $Te_0 = \lambda e_0$ and $\left\vert \lambda \right\vert = \norm{\left( I-P \right)T}_{\op}$, which once again contradicts maximality.
+
+  Thus, $P = I$, and we are done.
+\end{proof}
+\nocite{pedersen_analysis_now,blackadar_operator_algebras,davidson_functional_analysis}
+\printbibliography
+\end{document}

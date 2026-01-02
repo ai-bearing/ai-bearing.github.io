@@ -40,16 +40,19 @@ permalink: "/useful_resources.html"
       - [Conjugation and the Sylow Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conjugation_and_sylow_theorems.pdf)
       - [Algebraic Geometry](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, Algebraic Geometry/algebraic_geometry.pdf) (partial work-through)
     - Analysis:
-      - [Inequalities and the $L_p$-Spaces](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/inequalities.pdf)
-      - [Egorov's Theorem and Lusin's Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/egorovs_theorem_lusins_theorem.pdf)
-      - [Extreme Points, the Krein--Milman Theorem, and Applications](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/extreme_points_krein_milman_and_stone_weierstrass.pdf)
-      - [Three Convergence Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/three_convergence_theorems.pdf)
-      - [The Lebesgue Measure](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/lebesgue_measure.pdf)
-      - [Signed Measures and the Lebesgue–Radon–Nikodym Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/radon_nikodym.pdf)
-      - [Folland Exercise Workthrough](http://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
-      - [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)
-      - [Banach Algebras and Operator Theory](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/banach_algebras_operator_theory.pdf)
+      - Measure Theory/Real Analysis:
+        - [Inequalities and the $L_p$-Spaces](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/inequalities.pdf)
+        - [Egorov's Theorem and Lusin's Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/egorovs_theorem_lusins_theorem.pdf)
+        - [Three Convergence Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/three_convergence_theorems.pdf)
+        - [The Lebesgue Measure](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/lebesgue_measure.pdf)
+        - [Signed Measures and the Lebesgue–Radon–Nikodym Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/radon_nikodym.pdf)
+      - Functional Analysis/Operator Algebras:
+        - [Extreme Points, the Krein--Milman Theorem, and Applications](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/extreme_points_krein_milman_and_stone_weierstrass.pdf)
+        - [Compact and Fredholm Operators](https://ai-bearing.github.io/Classes_and_Homework/Other Notes/compact_and_fredholm_operators.pdf)
+      - Miscellaneous Notes/Workthroughs:
+        - [Folland Exercise Workthrough](http://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
+        - [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)
+        - [Banach Algebras and Operator Theory](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/banach_algebras_operator_theory.pdf)
   - Topology:
       - [Urysohn's Lemma](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/urysohns_lemma.pdf)
       - [Compactness in Topological Spaces](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/compactness.pdf)
-

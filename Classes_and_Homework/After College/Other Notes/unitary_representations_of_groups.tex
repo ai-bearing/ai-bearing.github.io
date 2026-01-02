@@ -1,0 +1,143 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage{mlmodern}
+%\usepackage{newpxtext,eulerpx,eucal}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+%\usepackage{homework}
+\usepackage{notes}
+
+\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+\addbibresource{all_references.bib}
+
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Unitary Representations of Locally Compact Groups}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Quasi-Review: Locally Compact Groups and the Banach $\ast$-algebra $L_1(G)$}%
+\subsection{Basic Properties of Topological Groups}%
+A topological group is a group $G$ equipped with a topology such that the operations
+\begin{align*}
+  \left( x,y \right) &\mapsto xy\\
+  x &\mapsto x^{-1}
+\end{align*}
+are continuous. In general, we will let $1$ denote the identity of $G$.
+
+We call $G$ a locally compact group if the topology of $G$ is locally compact. Equivalently, the topology of $G$ is locally compact if there there is a neighborhood system about $1$ consisting of pre-compact open sets.
+
+We will refer to the following subset operations in $G$ regularly:
+\begin{align*}
+  Ax &= \set{ax | a\in A}\\
+  xA &= \set{xa | a\in A}\\
+  A^{-1} &= \set{a^{-1} | a\in A}\\
+  AB &= \set{ab | a\in A, b\in B}.
+\end{align*}
+A subset $V$ is called \textit{symmetric} if $V = V^{-1}$.
+
+These are some useful propositions.
+\begin{proposition}
+  Let $G$ be a topological group.
+  \begin{enumerate}[(i)]
+    \item The topology of $G$ is invariant under translations and inversion.
+    \item For every neighborhood $U$ of $1$, there is a symmetric neighborhood $V$ of $1$ such that $VV\subseteq U$.
+    \item If $H$ is a subgroup of $G$, then so is $ \overline{H} $.
+    \item Every open subgroup of $G$ is closed.
+    \item If $A$ and $B$ are compact subsets of $G$, then so is $AB$.
+  \end{enumerate}
+\end{proposition}
+\begin{proposition}
+  Suppose $H$ is a subgroup of the topological group $G$.
+  \begin{enumerate}[(i)]
+    \item If $H$ is closed, then $G/H$ is Hausdorff.
+    \item If $G$ is locally compact, then so is $G/H$.
+    \item If $H$ is normal, then $G/H$ is a topological group.
+  \end{enumerate}
+\end{proposition}
+We will assume all the time that $G$ is Hausdorff, via the following proposition.
+\begin{corollary}
+  If $G$ is a T1 topological group, then $G$ is Hausdorff. If $G$ is not T1, then $ \overline{\set{1}} $ is a closed normal subgroup with $G/ \overline{\set{1}}$ is a Hausdorff topological group.
+\end{corollary}
+\begin{proposition}
+  Every locally compact group $G$ has a subgroup $G_0$ that is open, closed, and $\sigma$-compact.
+\end{proposition}
+Considering various functions $f\colon G\rightarrow \C$, we define the left and right translates of $f$ as
+\begin{align*}
+  L_yf(x) &= f\left( y^{-1}x \right)\\
+  R_yf(x) &= f\left( xy \right),
+\end{align*}
+and say that $f$ is left (right) uniformly continuous if $\norm{L_yf-f}_{u}\rightarrow 0$ ($\norm{R_yf-f}_u\rightarrow 0$) as $y\rightarrow 1$.
+\begin{proposition}
+  If $f\in C_c(G)$, then $f$ is left and right uniformly continuous.
+\end{proposition}
+A left \textit{Haar measure} is a nonzero Radon measure $\mu$ on $G$ such that $\mu\left( xE \right)=\mu(E)$ for every Borel subset $E\subseteq G$.
+\begin{proposition}
+  Every locally compact group $G$ admits a left Haar measure $\lambda$. This Haar measure is unique up to a constant multiple.
+\end{proposition}
+If we have a left Haar measure $\lambda$, then if we define
+\begin{align*}
+  \lambda_x(E) &= \lambda\left( Ex \right),
+\end{align*}
+we have that $\lambda_x$ is again a left Haar measure, so there is some number $\Delta(x)$ such that $\lambda_x = \Delta(x)\lambda$, where $\Delta(x)$ is independent of the original choice of $\lambda$.
+
+The function $\Delta\colon G\rightarrow \left( 0,\infty \right)$ defined as such is known as the \textit{modular function} of $G$.
+\begin{proposition}
+  The function $\Delta$ is a continuous homomorphism from $G$ to $\R_{> 0}$, and for any $f\in L_1\left( \lambda \right)$, we have
+  \begin{align*}
+    \int_{}^{} R_yf\:d\lambda &= \Delta\left( y^{-1} \right) \int_{}^{} f\:d\lambda.
+  \end{align*}
+\end{proposition}
+We call $G$ \textit{unimodular} if $\Delta\equiv 1$.
+\begin{proposition}
+  If $G/\left[ G,G \right]$ is compact, then $G$ is unimodular.
+\end{proposition}
+\subsection{Convolutions and $L_1(G)$}%
+If $G$ is a locally compact group, we let $M(G)$ denote the space of complex-valued Radon measures on $G$. The convolution of two measures $\mu,\nu\in M(G)$ is given as follows. If we let
+\begin{align*}
+  I(\phi) &= \iint \phi(xy)\:d\mu(x)d\nu(y),
+\end{align*}
+then we observe that $I(\phi)$ is a linear functional on $C_0(G)$ that satisfies
+\begin{align*}
+  \left\vert I(\phi) \right\vert &\leq \norm{\phi}_{u}\norm{\mu}\norm{\nu},
+\end{align*}
+meaning that it is given by a measure $\mu\ast\nu\in M(G)$ with $\norm{\mu\ast\nu}\leq \norm{\mu}\norm{\nu}$. We call $\mu\ast\nu$ the convolution of $\mu$ and $\nu$.
+
+Observe that if $\delta_x\in M(G)$ is the point mass at $x\in G$, then
+\begin{align*}
+  \int_{}^{} \phi\:d\left( \delta_x\ast\delta_y \right) &= \iint \phi(uv)\:d\delta_x(u)\delta_y(v)\\
+                                                        &= \phi(xy)\\
+                                                        &= \int_{}^{} \phi\:d\delta_{xy},
+\end{align*}
+meaning that $\delta_x\ast\delta_y = \delta_{xy}$.
+
+The estimate $\norm{\mu\ast\nu}\leq \norm{\mu}\norm{\mu}$ gives that convolution makes $M(G)$ a Banach algebra, which we call the \textit{measure algebra} of $G$. Furthermore, $M(G)$ admits an involution
+\begin{align*}
+  \mu^{\ast}\left( E \right) &= \overline{\mu\left( E^{-1} \right)},
+\end{align*}
+so that
+\begin{align*}
+  \int_{}^{} \phi\:d\mu^{\ast} &= \int_{}^{} \phi\left( x^{-1} \right)\:d \overline{\mu(x)}.
+\end{align*}
+We may identify the space $L_1(G)$ to be the subspace of $M(G)$ where a function $f$ is identified with the measure $f(x)dx$. If $f,g\in L_1(G)$, then the convolution of $f$ and $g$ is the function
+\begin{align*}
+  f\ast g(x) &= \int_{}^{} f(y)g\left( y^{-1}x \right)\:dy.
+\end{align*}
+With convolution and the involution given by
+\begin{align*}
+  f^{\ast}(x)dx &= \overline{f\left( x^{-1} \right)}d\left( x^{-1} \right)\\
+  f^{\ast}(x)&= \Delta\left( x^{-1} \right) \overline{f\left( x^{-1} \right)},
+\end{align*}
+we have that $L_1(G)$ is a Banach $\ast$-algebra known as the \textit{group algebra} of $G$.
+\section{Representations of a Group and its Group $\ast$-Algebra}%
+
+\section{Functions of Positive Type}%
+
+\nocite{folland_abstract_harmonic_analysis,kazhdan_property_t}
+\printbibliography
+\end{document}
