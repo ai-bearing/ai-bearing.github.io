@@ -16,7 +16,7 @@ permalink: "/useful_resources.html"
 - Class notes:
     - Graduate classes:
         - [Differential Topology](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Differential Topology/differential_topology_notes.pdf)
-        - [Algebra I](https://ai-bearing.github.io/Classes_and_homework/After College/Classes/Algebra I/algebra_i_notes.pdf)
+        - [Algebra I](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Algebra I/algebra_i_notes.pdf)
     - Qualifier prep:
         - [Real Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/real_analysis_prep.pdf)
         - [Complex Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/complex_analysis_prep.pdf)
@@ -48,7 +48,8 @@ permalink: "/useful_resources.html"
         - [Signed Measures and the Lebesgue–Radon–Nikodym Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/radon_nikodym.pdf)
       - Functional Analysis/Operator Algebras:
         - [Extreme Points, the Krein--Milman Theorem, and Applications](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/extreme_points_krein_milman_and_stone_weierstrass.pdf)
-        - [Compact and Fredholm Operators](https://ai-bearing.github.io/Classes_and_Homework/Other Notes/compact_and_fredholm_operators.pdf)
+        - [Compact and Fredholm Operators](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/compact_and_fredholm_operators.pdf)
+        - [Functional Calculus in Banach and $C^{\ast}$-Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/continuous_functional_calculus.pdf)
       - Miscellaneous Notes/Workthroughs:
         - [Folland Exercise Workthrough](http://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
         - [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)
