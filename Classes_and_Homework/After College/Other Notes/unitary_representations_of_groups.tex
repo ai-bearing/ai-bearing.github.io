@@ -134,8 +134,100 @@ With convolution and the involution given by
   f^{\ast}(x)&= \Delta\left( x^{-1} \right) \overline{f\left( x^{-1} \right)},
 \end{align*}
 we have that $L_1(G)$ is a Banach $\ast$-algebra known as the \textit{group algebra} of $G$.
-\section{Representations of a Group and its Group $\ast$-Algebra}%
 
+Now, we observe that if $G$ is discrete, then if $\delta_e$ is the point mass at $1$, we have that $f\ast\delta = \delta\ast f = f$ for any function $f$. If $G$ is not discrete, we must use an \textit{approximate identity} for $G$. In particular, we can select a family of mollifiers $\set{\psi_U}_{U\in \mathcal{U}}$ such that
+\begin{align*}
+  \norm{\psi_U\ast f - f} &\rightarrow 0\\
+  \norm{f\ast\psi_U - f} &\rightarrow 0
+\end{align*}
+if $f$ is uniformly continuous and $U\rightarrow \set{1}$ in a neighborhood system $\mathcal{U}$ of $1$.
+\subsection{Homogeneous Spaces}%
+If $G$ is a locally compact group, then $G$ can act on a locally compact Hausdorff space by homeomorphisms. Recall from algebra that the group action is transitive if there is one orbit. We call $S$ a $G$-space.
+
+The standard example of a transitive $G$-space is the quotient space $G/H$ for some closed subgroup $H$ of $G$. These are, to an extent, the only $G$-spaces, as follows from the orbit-stabilizer theorem. If $S$ is a $G$-space, then we may define a map $\phi\colon G\rightarrow S$ by $\phi(x) = x\cdot s_0$, and take the quotient by the stabilizer subgroup
+\begin{align*}
+  H &= \set{x\in G | x\cdot s_0 = s_0},
+\end{align*}
+so that $\Phi\colon G/H\rightarrow S$ has $\Phi\circ q = \phi$ for the quotient map $q\colon G\rightarrow G/H$ is a continuous bijection.
+\begin{proposition}
+  If $G$ is $\sigma$-compact, then $\Phi$ is a homeomorphism. 
+\end{proposition}
+\begin{proof}
+  It suffices to show that $\phi$ maps open sets in $G$ to open sets in $S$. Suppose $U$ is open in $G$, $x_0\in U$. Pick a compact symmetric neighborhood $V$ of $1$ such that $x_0VV\subseteq U$. Since $G$ is $\sigma$-compact, there is a countable $\set{y_n}_{n\geq 1}\subseteq G$ such that $\set{y_nV}_{n\geq 1}$ covers $G$. Then, we have
+  \begin{align*}
+    S &= \bigcup_{n=1}^{\infty} \phi\left( y_nV \right).
+  \end{align*}
+  The sets $\phi\left( y_nV \right)$ are homeomorphic to $\phi(V)$ since the map $s\mapsto y_n\cdot s$ is a homeomorphism of $S$, and all the $y_nV$ are compact, hence closed.
+
+  By Baire Category Theorem for LCH spaces, it follows that $\phi(V)$ has an interior point, which we call $\phi\left(x_1\right)$ for $x_1\in V$. Then, $\phi\left(x_0\right)$ is an interior point of $\phi\left( x_0x_1^{-1}V \right)$, and $x_0x_1^{-1}V\in x_0VV\subseteq U$, so that $\phi\left(x_0\right)$ is an interior point of $\phi(U)$. Thus $\phi(U)$ is open.
+\end{proof}
+If $S$ is a transitive $G$-space that is isomorphic to a quotient space $G/H$, then will write $S\cong G/H$, and call $S$ a \textit{homogeneous space}. The identification is dependent on the choice of base point, but the identity $s_0' = x_0\cdot x_0$ induces a map $H' = x_0 H x_0^{-1}$, inducing a $G$-equivariant homeomorphism $G/H\cong G/H'$.
+
+We will address the question of whether there is a $G$-invariant Radon measure on $G/H$ --- that is, a radon measure $\mu$ such that $\mu\left( xE \right) = \mu\left( E \right)$ for every $x\in G$.
+
+We assume that $G$ is a locally compact group with left Haar measure $dx$, a $H$ is a closed subgroup of $G$ with left Haar measure $d\xi$, and $q\colon G\rightarrow G/H$ is the quotient map $q(x) = xH$, and $\Delta_G,\Delta_H$ the corresponding modular functions.
+
+Let $P\colon C_c(G)\rightarrow C_c(G/H)$ be defined by
+\begin{align*}
+  Pf(xH) &= \int_{H}^{} f\left( x\xi \right)\:d\xi.
+\end{align*}
+This is well-defined by left-invariance of $d\xi$. If $\phi\in C\left( G/H \right)$, then
+\begin{align*}
+  P\left( \left( \phi\circ q \right)\cdot f \right) &= \phi\cdot Pf.
+\end{align*}
+\begin{lemma}
+  If $E\subseteq G/H$ is compact, then there is a compact $K\subseteq G$ with $q(K) = E$.
+\end{lemma}
+\begin{proof}
+  Let $V$ be an open neighborhood of $1$ in $G$ with compact closure. Since $q$ is an open map, $q\left( xV \right)$ is an open cover of $E$, so there is a finite subcover $q\left( x_jV \right)$. Let $K = q^{-1}(E)\cap \bigcup_{j=1}^{n}x \overline{V}$. Then, since $q^{-1}(E)$ is closed, $K$ is compact with $q(K) = E$.
+\end{proof}
+\begin{lemma}
+  If $F\subseteq G/H$ is compact, then there is $f\geq 0$ in $C_c(G)$ with $Pf = 1$ on $F$.
+\end{lemma}
+\begin{proof}
+  Let $E$ be a compact neighborhood of $F$ in $G/H$. We find $K\subseteq G$ compact such that $q(K) = E$. Select positive $g\in C_c(G)$ with $g > 0$ on $K$, and $\phi\in C_c(G/H)$ supported in $E$ with $\phi = 1$ on $F$. Set
+  \begin{align*}
+    f &= \frac{\phi\circ q}{Pg\circ q}g,
+  \end{align*}
+  with the fraction equal to zero whenever the numerator is zero. We have $f$ is continuous, since $Pg > 0$ on $\supp\left( \phi \right)$, has support contained in $\supp\left( g \right)$, and $Pf = \frac{\phi}{Pg}Pg = \phi$.
+\end{proof}
+\begin{proposition}
+  If $\phi\in C_c(G/H)$, then there exists $f\in C_c(G)$ with $Pf = \phi$ and $q\left( \supp(f) \right) = \supp(\phi)$, and has $f\geq 0$ if $\phi \geq 0$.
+\end{proposition}
+\begin{proof}
+  If $\phi \in C_c(G)$, then by the previous lemma, then there exists $g\geq 0$ in $C_c(G)$ with $Pg = 1$ on $\supp(\phi)$. Letting $f = \left( \phi\circ q \right)g$, then $Pf = \phi\left( Pg \right) = \phi$.
+\end{proof}
+\begin{theorem}
+  Let $G$ be a locally compact group, $H$ a closed subgroup. There is a $G$-invariant Radon measure $\mu$ on $G/H$ if and only if $\Delta_G|_{H} = \Delta_H$. In this case, we have
+  \begin{align*}
+    \int_{G}^{} f(x)\:dx &= \int_{G/H}^{} Pf\:d\mu\\
+                         &= \int_{G/H}^{} \int_{H}^{} f\left( x\xi \right)\:d\xi\:d\mu(xH)
+  \end{align*}
+  for any $f\in C_c(G)$.
+\end{theorem}
+\begin{proof}
+  Suppose there is a $G$-invariant measure $\mu$. Then, $f\mapsto \int_{}^{} Pf\:d\mu$ is a nonzero left-invariant positive linear functional on $C_c(G)$, so by the uniqueness of Haar measure, we have $ \int_{}^{} Pf\:d\mu = c\int_{}^{} f(x)\:dx $ for some $c$.
+
+  This formula fully determines $\mu$, meaning that $\mu$ is unique up to the arbitrary constant factor in Haar measure. We may assume that $c = 1$, so we have for any $\eta\in H$,
+  \begin{align*}
+    \Delta_G(\eta) \int_{G}^{} f(x)\:dx &= \int_{G}^{} f\left( x\eta^{-1} \right)\:dx\\
+                                        &= \int_{G/H}^{} \int_{H}^{} f\left( x\xi\eta^{-1} \right)\:d\xi\:d\mu(xH)\\
+                                        &= \Delta_H(\eta) \int_{G/H}^{} \int_{H}^{} f\left( x\xi \right)\:d\xi\:d\mu(xH)\\
+                                        &= \Delta_H(\eta) \int_{G}^{} f(x)\:dx,
+  \end{align*}
+  so that $\Delta_G(\eta) = \Delta_H(\eta)$.
+\end{proof}
+\section{Representations of a Group and its Group $\ast$-Algebra}%
+If $G$ is a locally compact group, then a \textit{unitary representation} of $G$ is a homomorphism $\pi\colon G\rightarrow \mathcal{U}\left( \mathcal{H}_{\pi} \right)$, where $\mathcal{U}\left( \mathcal{H}_{\pi} \right)$ denotes the unitary group of a Hilbert space $\mathcal{H}_{\pi}$. We call $\mathcal{H}_{\pi}$ the \textit{representation space} of $\pi$, and the dimension of $\mathcal{H}_{\pi}$ is called the dimension (or degree) of the representation.
+
+We do not require $\pi$ to be continuous in the norm topology of $\mathcal{B}\left( \mathcal{H}_{\pi} \right)$, but as it turns out, both weak and strong continuity are equivalent as the WOT and SOT coincide on $\mathcal{U}\left( \mathcal{H}_{\pi} \right)$. If $\left( T_{\alpha} \right)_{\alpha}\rightarrow T$ is a net of unitary operators converging in WOT, then for any $u\in \mathcal{H}_{\pi}$, we have
+\begin{align*}
+  \norm{\left( T_{\alpha} - T\right)u}^2 &= \norm{T_{\alpha}u}^2 - 2\re \iprod{T_{\alpha}u}{Tu} + \norm{Tu}^2\\
+                                         &= \norm{u}^2 - 2\re \iprod{T_{\alpha}u}{Tu},
+\end{align*}
+and the latter term converges to $2\norm{Tu}^2 = 2\norm{u}^2$, so that $\norm{T_{\alpha}u-Tu}\rightarrow 0$.
+
+If $G$ acts on a locally compact Hausdorff space $S$, then $G$ acts on $C(S)$ by 
 \section{Functions of Positive Type}%
 
 \nocite{folland_abstract_harmonic_analysis,kazhdan_property_t}
