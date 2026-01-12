@@ -8,9 +8,9 @@ layout: home
 Hi, I'm Avinash. 
 
 ## Who am I?
-I am a first-year mathematics PhD student at the University of Virginia. I got my undergraduate degree from Occidental College, where I studied math and was an opinions editor for the school's newspaper. I also participated in an REU at East Texas A&M University where my group worked on Toeplitz operators acting on weighted Bergman spaces.
+I am a first-year mathematics PhD student at the University of Virginia. I got my undergraduate degree from Occidental College, where I studied math and was an editor of the opinions section for the school's newspaper. I also participated in an REU at East Texas A&M University where my group worked on Toeplitz operators acting on weighted Bergman spaces.
 
-For Fall 2025, I am a discussion leader for a section of Calculus II (Math 1320), as well as the grader for Advanced Linear Algebra (Math 4651).
+For Spring 2026, I am a learning assistant for Elementary Linear Algebra and a grader for Survey of Algebra.
 
 ## [My CV](https://ai-bearing.github.io/CV/cv_2.pdf)
 
