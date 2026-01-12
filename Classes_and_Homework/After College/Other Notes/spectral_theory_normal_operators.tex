@@ -14,7 +14,7 @@
 
 \fancyhf{}
 \fancyhead[R]{Avinash Iyer}
-\fancyhead[L]{Spectral Theory for Bounded Operators}
+\fancyhead[L]{Spectral Theory for Bounded Normal Operators}
 \fancyfoot[C]{\thepage}
 
 \setcounter{secnumdepth}{0}
@@ -163,7 +163,272 @@ It turns out that this generalizes to infinite-dimensional spaces, but the proof
   \end{align*}
   Thus, $ST^{\ast} - T^{\ast}S = 0$.
 \end{proof}
+In order to prove the spectral theorem for normal operators, we use the concept of a spectral measure.
+\begin{definition}
+  Let $\Omega$ be a compact Hausdorff space, and $H$ a Hilbert space. A \textit{spectral measure} $E$ relative to $\left( \omega,H \right)$ is a map $E$ from the Borel $\sigma$-algebra of $\Omega$ to the set of projections on $B(H)$ satisfying
+  \begin{enumerate}[(i)]
+    \item $E(\emptyset) = 0$, $E(\Omega) = I_H$;
+    \item $E\left(S_1\cap S_2\right) = E\left( S_1 \right)E\left( S_2 \right)$;
+    \item for all $x,y\in H$, the map $E_{x,y}\colon S\rightarrow \iprod{E(S)x}{y}$ is a regular complex Borel measure on $\Omega$.
+  \end{enumerate}
+\end{definition}
+We will let $B_{\infty}(\Omega)$ be the set of bounded Borel functions on $\Omega$, and $M(\Omega)$ the space of regular Borel complex measures with the total variation norm.
+\begin{example}
+  Let $\Omega$ be a compact Hausdorff space, $\mu$ a positive regular Borel measure on $\Omega$. Let $M_{\varphi}\in B\left( L_2\left( \Omega,\mu \right) \right)$ be defined by
+  \begin{align*}
+    M_{\varphi}f &= \varphi f.
+  \end{align*}
+  We observe that
+  \begin{align*}
+    \norm{M_{\varphi}f}^2 &= \int_{}^{} \left\vert \varphi f \right\vert^2\:d\mu\\
+                          &\leq \norm{\varphi}_{L_{\infty}} \int_{}^{} \left\vert f \right\vert^2\:d\mu.
+  \end{align*}
+  In particular, this means that $\norm{M_{\varphi}}_{\op}\leq \norm{\varphi}_{L_{\infty}}$.
 
-\nocite{pedersen_analysis_now,blackadar_operator_algebras,davidson_functional_analysis}
+  The map $L_{\infty}\left( \Omega,\mu \right)\rightarrow B\left( L_2\left( \Omega,\mu \right) \right)$ is thus a $\ast$-homomorphism of $C^{\ast}$-algebras, where $M_{\varphi}^{\ast} = M_{ \overline{\varphi} }$.
+
+  In fact, since this map is injective, it is in fact an isometric $\ast$-homomorphism of $C^{\ast}$-algebras, following from the continuous functional calculus.
+\end{example}
+\begin{lemma}
+  Let $\Omega$ be a compact Hausdorff space, $H$ a Hilbert space. Let $\mu_{x,y}\in M(\Omega)$ for each $x,y\in H$. Suppose that for each Borel set $S$ in $\Omega$, the function $\pi_S\colon H\times H\rightarrow \C$ given by $\left( x,y \right)\mapsto \mu_{x,y}\left( S \right)$ is a sesquilinear form.
+
+  Then, for any $f\in B_{\infty}(\Omega)$, the function
+  \begin{align*}
+    \pi_f\colon H\times H&\rightarrow \C\\
+    \left( x,y \right) &\mapsto \int_{}^{} f\:d\mu_{x,y}
+  \end{align*}
+  is a sesquilinear form.
+\end{lemma}
+\begin{proof}
+  This is a standard boostrapping argument. We start by letting $f$ be a simple function, so we may write
+  \begin{align*}
+    f &= \sum_{j=1}^{n}\lambda_j\1_{S_j}
+  \end{align*}
+  for pairwise disjoint Borel subsets $S_1,\dots,S_j$ of $\Omega$ and complex numbers $\lambda_1,\dots,\lambda_n$. Then,
+  \begin{align*}
+    \int_{}^{} f\:d\mu_{x,y} &= \sum_{j=1}^{n} \lambda_j\mu_{x,y}\left( S_j \right),
+  \end{align*}
+  and since the (bounded) sesquilinear forms on $H$ are in one to one correspondence with $B(H)$, it follows that the case for simple functions follows.
+
+  If $f\in B_{\infty}(\Omega)$ is arbitrary, then there is a sequence $\left( f_n \right)_n\rightarrow f$ of simple functions converging in the uniform norm. We observe that
+  \begin{align*}
+    \int_{}^{} \left\vert f_n-f \right\vert\:d\left\vert \mu_{x,y} \right\vert &\leq \norm{f_n-f}_{L_{\infty}} \left\vert \mu_{x,y} \right\vert(\Omega),
+  \end{align*}
+  so we may exchange limit and integral by dominated convergence, giving
+  \begin{align*}
+    \int_{}^{} f\:d\mu_{x,y} &= \lim_{n\rightarrow\infty} \int_{}^{} f_n\:d\mu_{x,y}
+  \end{align*}
+  for every $x,y\in H$. Thus, $\pi_f$ is a sesquilinear form on $H$.
+\end{proof}
+\begin{theorem}
+  Let $\Omega$ be a compact Hausdorff space, $H$ a Hilbert space, and $E$ a spectral measure on $\left( \Omega,H \right)$. Then, for any $f\in B_{\infty}(\Omega)$, the map $\pi_f\colon H\times H\rightarrow \C$ given by
+  \begin{align*}
+    \left( x,y \right) &\mapsto \int_{}^{} f\:dE_{x,y}
+  \end{align*}
+  is a bounded sesquilinear form, with $\norm{\pi_f}\leq \norm{f}_{L_{\infty}}$.
+\end{theorem}
+\begin{proof}
+  The previous lemma shows that $\pi_f$ is a sesquilinear form. We only need to show that $\norm{\pi_f}\leq \norm{f}_{L_{\infty}}$. Let $\Omega = S_1\cup\cdots\cup S_n$, with $S_1,\dots,S_n$ pairwise disjoint Borel sets. Then,
+  \begin{align*}
+    \sum_{j=1}^{n} \left\vert \iprod{E\left( S_j \right)x}{y} \right\vert &= \sum_{j=1}^{n}\left\vert \iprod{E\left( S_j \right)x}{E\left( S_j \right)y} \right\vert\\
+                                                                          &\leq \left( \sum_{j=1}^{n}\norm{E\left( S_j \right)x}^2 \right)^{1/2}\left( \sum_{j=1}^{n} \norm{E\left( S_j \right)y}^2 \right)^{1/2}\\
+                                                                          &= \norm{E(\Omega)x}\norm{E(\omega)y}\\
+                                                                          &= \norm{x}\norm{y}.
+  \end{align*}
+  Thus, $\norm{E_{x,y}}\leq \norm{x}\norm{y}$, so
+  \begin{align*}
+    \left\vert \int_{}^{} f\:dE_{x,y} \right\vert &\leq \norm{f}_{L_{\infty}}\norm{E_{x,y}}\\
+                                                  &\leq \norm{f}_{L_{\infty}}\norm{x}\norm{y}.
+  \end{align*}
+  Thus, $\norm{\pi_f}\leq \norm{f}_{L_{\infty}}$.
+\end{proof}
+Thus, paired with the correspondence of sesquilinear forms and bounded operators on a Hilbert space, we obtain the following result.
+\begin{theorem}
+  Let $\Omega$ be a compact Hausdorff space, $H$ a Hilbert space, and $E$ a spectral measure on $\left( \Omega,H \right)$. Then, for each $f\in B_{\infty}(\Omega)$, there is a unique bounded operator $T$ on $H$ such that
+  \begin{align*}
+    \iprod{Tx}{y} &= \int_{}^{} f\:dE_{x,y}.
+  \end{align*}
+\end{theorem}
+We will define the \textit{integral} of $f\in B_{\infty}(\Omega)$ to be the (unique) operator such that for all $x,y\in H$,
+\begin{align*}
+  \iprod{ \left( \int_{}^{} f\:dE \right)x }{y} &= \int_{}^{} f\:dE_{x,y}.
+\end{align*}
+\begin{proposition}
+  If $E$ is a spectral measure for $\left( \Omega,H \right)$, and we define
+  \begin{align*}
+    \rho\colon B_{\infty}(\Omega) &\rightarrow B(H)\\
+    f &\mapsto \int_{}^{} f\:dE,
+  \end{align*}
+  then $\rho$ is a representation for the $C^{\ast}$-algebra $B_{\infty}(\Omega)$. That is, $\rho$ is a unital $\ast$-homomorphism.
+\end{proposition}
+\begin{proof}
+  Linearity follows from a bootstrapping argument, and boundedness from the definition of the sesquilinear form.
+
+  Thus, we only need to show multiplicativity. Similarly from bootstrapping, we only need to show the case when $f$ and $g$ are simple. Suppose $f = \1_{S}$ and $g = \1_{S'}$. Then,
+  \begin{align*}
+    \rho\left( fg \right) &= \int_{}^{} \1_{S}\1_{S'}\:dE\\
+                             &= E\left( S\cap S' \right)\\
+                             &= E(S)E(S')\\
+                             &= \left( \int_{}^{} \1_{S}\:dE \right)\left( \int_{}^{} \1_{S'}\:dE \right)\\
+                             &= \rho(f)\rho(g)
+  \end{align*}
+  and similarly projections are self-adjoint.
+\end{proof}
+Now, we've elucidated a lot of properties of spectral measures, but we still have not answered the question of their existence. This is the spectral theorem.
+\begin{theorem}[Spectral Theorem for Bounded Normal Operators]
+  Let $\Omega$ be a compact Hausdorff space, $H$ a Hilbert space, and let $\varphi\colon C(\Omega)\rightarrow B(H)$ be a unital $\ast$-homomorphism. Then, there is a unique spectral measure $E$ with respect to $\left( \Omega,H \right)$ such that
+  \begin{align*}
+    \varphi(f) &= \int_{}^{} f\:dE
+  \end{align*}
+  for all $f\in C(\Omega)$. Moreover, if $T\in B(H)$, then $T$ commutes with $\varphi(f)$ for all $f\in C(\Omega)$ if and only if $T$ commutes with $E(S)$ for all Borel $S\subseteq \Omega$.
+\end{theorem}
+\begin{proof}
+  For any $x,y\in H$, the function $\tau_{x,y}\colon C(\Omega)\rightarrow \C$ given by
+  \begin{align*}
+    f &\mapsto \iprod{\varphi(f)x}{y}
+  \end{align*}
+  is linear with $\norm{\tau_{x,y}}_{\op}\leq \norm{x}\norm{y}$. From the Riesz Representation Theorem, there is a unique measure $\mu_{x,y}\in M(\Omega)$ such that 
+  \begin{align*}
+    \tau_{x,y}(f) &= \int_{}^{} f\:d\mu_{x,y}
+  \end{align*}
+  for all $f\in C(\Omega)$. We also have that $\norm{\mu_{x,y}} = \norm{\tau_{x,y}}_{\op}$. The function
+  \begin{align*}
+    \left( x,y \right) &\mapsto \iprod{\varphi(f)x}{y}
+  \end{align*}
+  is a sesquilinear map from $H$ to $M(\Omega)$ such that $x\mapsto \mu_{x,y}$ is linear and $y\mapsto \mu_{x,y}$ is conjugate-linear. Thus, for all $f\in B_{\infty}(\Omega)$, the map
+  \begin{align*}
+    \left( x,y \right) &\mapsto \int_{}^{} f\:d\mu_{x,y}
+  \end{align*}
+  is a sesquilinear form, with
+  \begin{align*}
+    \left\vert \int_{}^{} f\:d\mu_{x,y} \right\vert &\leq \norm{f}_{L_{\infty}}\norm{\mu_{x,y}}\\
+                                                    &\leq \norm{f}_{L_{\infty}}\norm{x}\norm{y},
+  \end{align*}
+  so there is a unique bounded operator, $\psi(f)\in B(H)$ such that
+  \begin{align*}
+    \iprod{\psi(f)x}{y} &= \int_{}^{} f\:d\mu_{x,y}
+  \end{align*}
+  for all $x,y\in H$. If $f\in C(\Omega)$, then we have that
+  \begin{align*}
+    \iprod{\psi(f)x}{y} &= \int_{}^{} f\:d\mu_{x,y}\\
+                        &= \tau_{x,y}(f)\\
+                        &= \iprod{\varphi(f)x}{y},
+  \end{align*}
+  so $\psi(f) = \varphi(f)$.
+
+  We now show that $\psi$ is a $\ast$-homomorphism. If $f\in C(\Omega)$ with $ \overline{f} = f $, then $\varphi(f)$ is self-adjoint, meaning that
+  \begin{align*}
+    \int_{}^{} f\:d\mu_{x,x} &= \iprod{\varphi(f)x}{x}
+  \end{align*}
+  is a real number, so $\mu_{x,x}$ is a real measure. Thus, if $f\in B_{\infty}(\Omega)$ is arbitrary, dominated convergence gives that
+  \begin{align*}
+    \iprod{\psi(f)x}{x} &= \int_{}^{} f\:d\mu_{x,x}
+  \end{align*}
+  is real. Thus, $\psi(f)$ is self-adjoint, so $\psi$ preserves involutions.
+
+  If $f\in B_{\infty}$ and $x\in H$, then we claim that it is enough to show that
+  \begin{align*}
+    \iprod{\psi(fg)x}{x} &= \iprod{\psi(f)\psi(g)x}{x}\tag*{$(\ast)$}
+  \end{align*}
+  holds for any $g\in C(\Omega)$. A way to rewrite $(\ast)$ is by
+  \begin{align*}
+    \int_{}^{} gf\:d\mu_{x,x} &= \int_{}^{} g\:d\mu_{x,\psi( \overline{f} )x},
+  \end{align*}
+  so if $(\ast)$ holds for all $g\in C(\Omega)$, then the measures $f\:d\mu_{x,x}$ and $\mu_{x,\psi( \overline{f} )x}$ are equal since their corresponding linear functionals are necessarily equal. In particular, this holds for all such $g$.
+
+  Since $\varphi$ is a $\ast$-homomorphism, the equation $(\ast)$ holds for all $f,g\in C(\Omega)$, so it holds if $f\in C(\Omega)$ and $g\in B_{\infty}(\Omega)$ by density. Similarly, by replacing $f$ and $g$ with their conjugates, we have
+  \begin{align*}
+    \iprod{\psi( \overline{fg} )x}{x} &= \iprod{\psi( \overline{f} ) \psi( \overline{g} )x}{x},
+  \end{align*}
+  so by taking conjugates and using the fact that $\psi$ is a homomorphism, we get
+  \begin{align*}
+    \iprod{\psi(gf)x}{x} &= \iprod{\psi(g)\psi(f)x}{x}\tag*{$(\ast\ast)$}
+  \end{align*}
+  for all $g\in B_{\infty}(\Omega)$. Using $(\ast)$ by interchanging $g$ and $f$, we obtain that $(\ast\ast)$ holds for all $f,g\in B_{\infty}(\Omega)$. Since $x\in H$ was arbitrary, we have $\psi(gf) = \psi(g)\psi(f)$, so $\psi$ is a homomorphism.
+
+  Now, if $S$ is a Borel subset of $\Omega$, we let $E(S) = \psi\left(\1_S\right)$. We see that $E(S)$ is a projection on $H$, and that the map $E\colon S\rightarrow E(S)$ is a spectral measure, with $E_{x,y} = \mu_{x,y}\in M(\Omega)$, as
+  \begin{align*}
+    E_{x,y}(S) &= \iprod{E(S)x}{y}\\
+               &= \iprod{\psi\left( \1_S \right)x}{y}\\
+               &= \int_{}^{} \1_S\:d\mu_{x,y}.
+  \end{align*}
+  If $f\in B_{\infty}(\Omega)$, then from a bootstrapping argument, we have
+  \begin{align*}
+    \iprod{\left( \int_{}^{} f\:dE \right)x}{y} &= \int_{}^{} f\:dE_{x,y}\\
+                                                &= \int_{}^{} f\:d\mu_{x,y}\\
+                                                &= \iprod{\psi(f)x}{y},
+  \end{align*}
+  so that
+  \begin{align*}
+    \psi(f) &= \int_{}^{} f\:dE,
+  \end{align*}
+  and in particular, for all $f\in C(\Omega)$,
+  \begin{align*}
+    \varphi(f) &= \int_{}^{} f\:dE.
+  \end{align*}
+  Additionally, for all $x,y\in H$, if $E'$ is another spectral measure that satisfies
+  \begin{align*}
+    \varphi(f) &= \int_{}^{} f\:dE',
+  \end{align*}
+  then we have for all $x,y\in H$,
+  \begin{align*}
+    \int_{}^{} f\:dE'_{x,y} &= \iprod{\varphi(f)x}{y}\\
+                            &= \int_{}^{} f\:dE_{x,y},
+  \end{align*}
+  so $E'_{x,y} = E_{x,y}$ for all $x,y$, meaning that for all Borel $S\subseteq \Omega$,
+  \begin{align*}
+    \iprod{E'(S)x}{y} &= \iprod{E(S)x}{y},
+  \end{align*}
+  meaning $E = E'$.
+
+  Finally, if $T$ is an operator on $H$ commuting with all the elements of the range of $\varphi$, then if $f\in C(\Omega)$, we have
+  \begin{align*}
+    \int_{}^{} f\:d\mu_{Tx,y} &= \iprod{\psi(f)Tx}{y}\\
+                              &= \iprod{T\psi(f)x}{y}\\
+                              &= \iprod{\psi(f)x}{T^{\ast}y}\\
+                              &= \int_{}^{} f\:d\mu_{x,T^{\ast}y},
+  \end{align*}
+  so that $E_{Tx,y} = E_{x,T^{\ast}y}$, and $E(S)T = TE(S)$ for all Borel $S\subseteq \Omega$. Conversely, if $T$ commutes with all the projections $E(S)$, then we have
+  \begin{align*}
+    \iprod{E(S)Tx}{y} &= \iprod{TE(S)x}{y}\\
+                      &= \iprod{E(S)x}{T^{\ast}y},
+  \end{align*}
+  or that $E_{Tx,y} = E_{x,T^{\ast}y}$, so for all $f\in C(\Omega)$,
+  \begin{align*}
+    \int_{}^{} f\:dE_{Tx,y} &= \int_{}^{} f\:dE_{x,T^{\ast}y},
+  \end{align*}
+  or that
+  \begin{align*}
+    \iprod{\varphi(f)Tx}{y} &= \iprod{\varphi(f)x}{T^{\ast}y}\\
+                           &= \iprod{T\varphi(f)x}{y},
+  \end{align*}
+  and since this holds for all $x,y\in H$, $\varphi(f)T = T\varphi(f)$.
+\end{proof}
+The most important case is when the $\ast$-homomorphism in question is a representation of the $C^{\ast}$-algebra generated by a normal operator, and is often known as \textit{the} spectral theorem.
+\begin{theorem}
+  Let $T$ be a normal operator on a Hilbert space $H$. There is a unique spectral measure $E$ relative to $\left( \sigma(T),H \right)$ such that
+  \begin{align*}
+    T &= \int_{}^{} \iota\:dE,
+  \end{align*}
+  where $\iota$ is the inclusion map of $\sigma(T)$ into $\C$.
+\end{theorem}
+\begin{proof}
+  Let $\varphi\colon C(\sigma(T))\rightarrow B(H)$ be the functional calculus at $T$. There is then a unique spectral measure $E$ relative to $(\sigma(T),H)$ such that
+  \begin{align*}
+    \varphi(f) &= \int_{}^{} f\:dE
+  \end{align*}
+  for all $f\in C(\sigma(T))$. In particular, we have
+  \begin{align*}
+    T &= \varphi(\iota)\\
+      &= \int_{}^{} \iota\:dE,
+  \end{align*}
+  and uniqueness following from the fact that $1$ and $\iota$ generate $C(\sigma(T))$ as a $C^{\ast}$-algebra.
+\end{proof}
+We call the spectral measure in this special case the \textit{resolution of the identity} for $T$. We have that for all $f\in B_{\infty}(\sigma(T))$, we may unambiguously define
+\begin{align*}
+  f(T) &= \int_{}^{} f\:dE.
+\end{align*}
+We call the unital $\ast$-homomorphism taking $f\mapsto f(T)$ the \textit{Borel functional calculus} at $T$.
+\nocite{pedersen_analysis_now,blackadar_operator_algebras,davidson_functional_analysis,conway_functional_analysis}
 \printbibliography
 \end{document}
