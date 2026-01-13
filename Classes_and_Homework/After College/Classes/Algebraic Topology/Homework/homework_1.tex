@@ -1,0 +1,96 @@
+\documentclass[12pt]{mypackage}
+
+\usepackage{mlmodern}
+%\usepackage{newpxtext,eulerpx,eucal}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\usepackage{homework}
+%\usepackage{notes}
+
+%\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+%\addbibresource{  }
+
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Algebraic Topology: Homework 1}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{problem}[Problem 1]\hfill
+  \begin{enumerate}[(a)]
+    \item Fix topological spaces $X$ and $Y$, and consider the set of all continuous maps $X\rightarrow Y$. Define a relation on this set by saying that $f$ is related to $g$ whenever $f$ is homotopic to $g$. Prove that this relation is an equivalence relation.
+    \item Prove that any space $X$ is homotopy equivalent to itself, that if $X$ is homotopy equivalent to $Y$, then $Y$ is homotopy equivalent to $X$, and that if $X$ is homotopy equivalent to $Y$ and $Y$ is homotopy equivalent to $Z$, then $X$ is homotopy equivalent to $Z$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item For reflexivity, we may select the identity homotopy $F\colon X\times I\rightarrow Y$, given by $F(x,t) = f(x)$ for all $t\in I$ and all $x\in X$.
+
+      For symmetry, if $F\colon X\times I\rightarrow Y$ is a homotopy with $F(x,0) = f(x)$ and $F(x,1) = g(x)$, then we may define the homotopy $G\colon X\times I\rightarrow Y$ by taking $G(x,t) = F(x,1-t)$. This is a composition of continuous maps, so it is continuous, and has $G(x,0) = g(x)$ and $G(x,1) = f(x)$, so the relation is symmetric.
+
+      For transitivity, we let $F\colon X\times I\rightarrow Y$ be a homotopy between $f$ and $g$, and let $G\colon X\times I\rightarrow Y$ be a homotopy between $g$ and $h$. Define a homotopy $H\colon X\times I\rightarrow Y$ by
+      \begin{align*}
+        H(x,t) &= \begin{cases}
+          F(x,2t) & 0\leq t \leq 1/2\\
+          G(x,2t-1) & 1/2\leq t \leq 1
+        \end{cases}.
+      \end{align*}
+      This is a well-defined function since $G(x,0) = F(x,1)$ by the definition of the homotopies $F$ and $G$, while it is continuous since both $F$ and $G$ are continuous, the functions $2t$ and $2t-1$ are continuous, and $F$ and $G$ agree at $t = 1/2$.
+
+      Therefore, the relation is transitive, so the relation $f\sim g$ if $f$ is homotopic to $g$ is an equivalence relation.
+    \item For the homotopy equivalences between $X$, $Y$, and $Z$, we will define them via the following collection of maps:
+      \begin{center}
+        % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAA0QBfU9TXfIRQBGclVqMWbAJrdeIDNjwEiAJjHV6zVohAAtbuJhQA5vCKgAZgCcIAWyRkQOCElEgARjDBQkAZictKV1LOStbB0R3F0dqLx9-JwY6LwYABX5lIRAGGEscEE1JHRAAHVKIGhhrBiwwGGBLLjCQG3s3ahjEdU9vX0QAou02Exa2yJ6u93j+wYlh3XLK6tr64BNmrgouIA
+        \begin{tikzcd}
+        X \arrow[r, "f", bend left] & Y \arrow[l, "\overline{f}", bend left] \arrow[r, "g", bend left] & Z \arrow[l, "\overline{g}", bend left]
+        \end{tikzcd}
+      \end{center}
+      where
+      \begin{align*}
+        \overline{f}\circ f &\simeq \id_X\\
+        f\circ \overline{f} &\simeq \id_Y\\
+        \overline{g}\circ g &\simeq \id_Y\\
+        g\circ \overline{g} &\simeq \id_Z.
+      \end{align*}
+      Reflexivity follows from the fact that the identity map is homotopic to itself via the identity homotopy, while symmetry follows from flipping the roles of $ f $ and $ \overline{f} $ in the definitions of the homotopy equivalence between $X$ and $Y$.
+
+      For transitivity, we claim that the functions $g\circ f$ and $ \overline{f}\circ \overline{g} $ are the pair between $X$ and $Z$ that satisfy our desired result. That is, we claim that
+      \begin{align*}
+        \left( \overline{f}\circ \overline{g} \right)\circ \left( g\circ f \right) &\simeq \id_X\\
+        \left( g\circ f \right)\circ \left( \overline{f}\circ \overline{g} \right) &\simeq \id_Z.
+      \end{align*}
+      We start by claiming that
+      \begin{align*}
+        \overline{f}\circ \overline{g}\circ g \circ f &\simeq \overline{f}\circ \id_Y \circ f\label{eq:claim1}\tag{$\ast$}
+      \end{align*}
+      Let $H\colon Y\times I \rightarrow Y$ be the homotopy that maps $ \overline{g}\circ g $ to $\id_Y$. Then, if we define
+      \begin{align*}
+        F\colon X\times I &\rightarrow X\\
+        \left( x,t \right) &\mapsto \overline{f}\circ H_t \circ f,
+      \end{align*}
+      we see that $F$ is continuous with 
+      \begin{align*}
+        F(x,0) &= \overline{f}\circ \overline{g}\circ g \circ f\\
+        F(x,1) &= \overline{f}\circ \id_Y \circ f.
+      \end{align*}
+      Therefore, the claim \eqref{eq:claim1} is established. Collapsing with $\id_Y$ and using the fact that ``is homotopic to'' is an equivalence relation, we thus establish
+      \begin{align*}
+        \overline{f}\circ \overline{g}\circ g \circ f &\simeq \overline{f}\circ \id_Y\circ f\\
+                                                      &= \overline{f}\circ f\\
+                                                      &\simeq \id_X.
+      \end{align*}
+      By a similar process using the homotopy between $ f\circ \overline{f} $ and $\id_Y$, we thus establish
+      \begin{align*}
+        g\circ f \circ \overline{f}\circ \overline{g} &\simeq g\circ \id_Y \circ \overline{g}\\
+                                                      &= g\circ \overline{g}\\
+                                                      &\simeq \id_Z.
+      \end{align*}
+      Therefore, homotopy equivalence is reflexive, symmetric, and transitive.
+  \end{enumerate}
+\end{solution}
+\end{document}

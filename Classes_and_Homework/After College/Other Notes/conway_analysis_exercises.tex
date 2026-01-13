@@ -1,0 +1,69 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage{mlmodern}
+%\usepackage{newpxtext,eulerpx,eucal}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\usepackage{homework}
+\usepackage{notes}
+
+\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+\addbibresource{all_references.bib}
+
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Miscellaneous Worked Examples and Exercises}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+
+\section{Spectral Theory}%
+
+\begin{problem}[{\cite[Exercise IX.1.2]{conway_functional_analysis}}]
+  Show that the unit ball of $B(H)$ is WOT-compact.
+\end{problem}
+\begin{solution}
+  Consider the set
+  \begin{align*}
+    K &= \prod_{x,y\in B_{H}} \overline{\D},
+  \end{align*}
+  where $\D$ represents the complex unit disk and $B_H$ denotes the closed unit ball of $H$. The space $K$ is compact by Tychonoff's theorem. Let $\phi\colon B_{B(H)}\rightarrow K$ be defined by
+  \begin{align*}
+    \phi(T) &= \left( \iprod{Tx}{y} \right)_{x,y}.
+  \end{align*}
+  Observe that by Cauchy--Schwarz, we have that
+  \begin{align*}
+    \left\vert \iprod{Tx}{y} \right\vert &\leq \norm{T}_{\op}\norm{x}\norm{y}\\
+                                         &\leq 1,
+  \end{align*}
+  so $\phi$ is indeed well-defined. Furthermore, $\phi$ is injective since for any two operators $T$ and $S$, we have that $T = S$ if and only if $ \iprod{Tx}{y} = \iprod{Sx}{y} $ for all $x,y\in B_{H}$, and $\phi$ is continuous by the definition of the weak operator topology. Therefore, we only need to show that $\phi$ has a closed range.
+
+  Let $\left( T_i \right)_i$ be a net of operators in $B_{B(H)}$ such that
+  \begin{align*}
+    \lim_{i\in I}\left( \iprod{T_i x}{y} \right)_{x,y} &= \left( z_{x,y} \right)_{x,y}.
+  \end{align*}
+  Then, from the Cauchy--Schwarz inequality, it follows that $\left( z_{x,y} \right)_{x,y}\in K$, and by the definition of convergence in the product topology, we have, for each $x,y$,
+  \begin{align*}
+    \lim_{i\in I} \iprod{T_i x}{y} &= z_{x,y}.
+  \end{align*}
+  Therefore, we may define a semidefinite sesquilinear form $F\colon H\times H\rightarrow \C$ given by
+  \begin{align*}
+    F(x,y) &= \lim_{i\in I} \iprod{T_i x}{y}
+  \end{align*}
+  for each $x,y\in H$. From the structure of sesquilinear forms, it then follows that there is some $T\in B_{B(H)}$ such that $F(x,y) = \iprod{Tx}{y}$, and thus $\left( T_i \right)_{i\in I}\rightarrow T$ in WOT.
+\end{solution}
+\begin{problem}[{\cite[Exercise IX.1.13]{conway_functional_analysis}}]
+  A representation $\rho\colon A\rightarrow B(H)$ is \textit{irreducible} if the only projections in $B(H)$ that commute with every $\rho(a)$ for $a\in A$ are $0$ and $1$. Prove that if $A$ is abelian and $\rho$ is an irreducible representation, then $\dim(H) = 1$. Find the corresponding spectral measure.
+\end{problem}
+\begin{solution}
+  Since $A$ is abelian, so too is $\rho(A)$, meaning that $\rho(A)\subseteq \rho(A)'$. Since $\rho(A)' = \C 1$ by the assumption of irreducibility, it follows then that $\rho(A) = \C 1$, whence $H = [\rho(A) v] = \C v$.
+
+  Without loss of generality, we may assume that $A = C_0(X)$ for some locally compact Hausdorff space $X$, and $\rho\colon C_0(X)\rightarrow \C$ is a character. The characters of $C_0(X)$ are given by evaluation at $x_0\in X$, meaning that their corresponding spectral measure is the Dirac mass $\delta_{x_0}$.
+\end{solution}
+\printbibliography
+\end{document}
