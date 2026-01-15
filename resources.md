@@ -34,8 +34,6 @@ permalink: "/useful_resources.html"
         - [Set Theory and Foundations of Mathematics](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Set Theory and Foundations/set_theory_and_foundations_notes.pdf)
         - Graph Theory Notes [(i)](https://ai-bearing.github.io/Classes_and_Homework/College/Y2/Y2S2, Math 382/midterm review/midterm_1_review.pdf) and [(ii)](https://ai-bearing.github.io/Classes_and_Homework/College/Y2/Y2S2, Math 382/classnotes/notes_after_midterm_1.pdf)
 - Supplementary Personal Notes:
-    - Miscellaneous:
-        - [Generating Functions](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/generating_functions.pdf)
     - Algebra:
       - [Conjugation and the Sylow Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conjugation_and_sylow_theorems.pdf)
       - [Algebraic Geometry](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, Algebraic Geometry/algebraic_geometry.pdf) (partial work-through)
