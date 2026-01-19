@@ -1,0 +1,127 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage{mlmodern}
+%\usepackage{newpxtext,eulerpx,eucal}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\usepackage{homework}
+%\usepackage{notes}
+
+%\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+%\addbibresource{  }
+
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Algebra II: Homework 1}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{problem}[Problem 1]
+  Let $R$ be a commutative ring. An $R$-module $M$ is called torsion if for any $m\in M$, there is a nonzero $r\in R$ such that $rm = 0$. An $R$-module $M$ is called divisible if for any nonzero $r\in R$, we have $rM = M$. In other words, $M$ is divisible if for any $m\in M$ and nonzero $r\in R$, there is $x\in M$ such that $rx = m$.
+  \begin{enumerate}[(a)]
+    \item Suppose $M$ is a torsion $R$-module and $N$ is a divisible $R$-module. Prove that $M\otimes_{R}N = \set{0}$.
+    \item Let $M = \Q/\Z$ considered as a $\Z$-module. Prove that $M\otimes_{\Z}M = \set{0}$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item It is enough to show that any simple tensor $m\otimes n\in M\otimes_{R}N$ is the zero tensor. To see this, we let $r\in R$ be such that $rm = 0$, and observe that there is some $x\in N$ such that $rx = n$. By using property (R3) of tensor products, we observe then that
+      \begin{align*}
+        m\otimes n &= m\otimes \left( rx \right)\\
+                   &= \left( rm \right)\otimes x\\
+                   &= 0\otimes x\\
+                   &= 0.
+      \end{align*}
+      Thus, $M\otimes_{R}N = \set{0}$.
+    \item It is enough to show that $\Q/\Z$ is both torsion and divisible, as we may then apply (a). To see that $\Q/\Z$ is torsion, we have that
+      \begin{align*}
+        b\left[ \frac{a}{b} \right] &= [a]\\
+                                    &= [0]
+      \end{align*}
+      for any element $\frac{a}{b}\in \Q/\Z$. Additionally, for any $n\in \Z$, we have
+      \begin{align*}
+        \left[ \frac{a}{b} \right] &= n\left[ \frac{a}{nb} \right],
+      \end{align*}
+      so $\Q/\Z$ is both torsion and divisible.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 2]
+  Let $R$ be a commutative ring, $\set{N_{\alpha}}_{\alpha\in A}$ a collection of $R$-modules, and $M$ another $R$-module.
+  \begin{enumerate}[(a)]
+    \item Prove that $M\otimes \left( \bigoplus_{\alpha}N_{\alpha} \right) \cong \bigoplus_{\alpha}\left( M\otimes N_{\alpha} \right)$.
+    \item Show by example that $M\otimes \left( \prod_{\alpha}N_{\alpha} \right)$ need not be isomorphic to $\prod_{\alpha}\left( M\otimes N_{\alpha} \right)$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Consider the map on elementary tensors
+      \begin{align*}
+        f\colon M\times \left( \bigoplus_{\alpha}N_{\alpha} \right) &\rightarrow \bigoplus_{\alpha}\left( M\otimes N_{\alpha} \right)
+      \end{align*}
+      that takes
+      \begin{align*}
+        \left( m,\left( n_{\alpha} \right)_{\alpha} \right) &\rightarrow \left( m\otimes n_{\alpha} \right)_{\alpha}.
+      \end{align*}
+      We observe that, since the $\left( n_{\alpha} \right)_{\alpha}$ are nonzero for all but finitely many indices $\alpha$, and that the map is $R$-bilinear, we have a well-defined and unique $R$-linear map $ \overline{f}\colon M\otimes \left( \bigoplus_{\alpha} N_{\alpha}\right) \rightarrow \bigoplus_{\alpha}\left( M\otimes N_{\alpha} \right)$ that maps $m\otimes \left( n_{\alpha} \right)_{\alpha}\mapsto \left( m\otimes n_{\alpha} \right))_{\alpha}$.
+
+      We observe that for each index $i$, we have an inclusion homomorphism
+      \begin{align*}
+        M\times N_{i} &\hookrightarrow M\otimes \left( \bigoplus_{\alpha}N_{\alpha} \right)
+      \end{align*}
+      that takes $\left( m,n_{\alpha} \right)\mapsto m\otimes \left( n_{\alpha} \right)_{\alpha}$, where $\left( n_{\alpha} \right)_{\alpha}$ is zero everywhere except for index $i$. By the universal property of the direct sum, this induces a unique homomorphism $g\colon \bigoplus_{\alpha}\left( M\otimes N_{\alpha} \right)\rightarrow M\otimes \left( \bigoplus_{\alpha}N_{\alpha} \right)$ given by taking
+      \begin{align*}
+        \left( m_{\alpha}\otimes n_{\alpha} \right)_{\alpha} &\mapsto \sum_{\alpha}m_{\alpha}\otimes \left( n_{\alpha} \right)_{\alpha},
+      \end{align*}
+      where the summand $\left( n_{\alpha} \right)_{\alpha}$ is defined as above, and the sum is finite by the definition of the direct sum. Since $g$ and $f$ are inverses of each other (as can be seen by the action on simple tensors), it follows that $M\otimes \left( \bigoplus_{\alpha}N_{\alpha} \right)\cong \bigoplus_{\alpha}\left( M\otimes N_{\alpha} \right)$.
+    \item We consider the direct product
+      \begin{align*}
+        M &= \prod_{i=1}^{\infty} \Z/2^{i}\Z,
+      \end{align*}
+      regarded as a $\Z$-module. Notice that $M$ is not torsion, as the element $m = \left( 1,1,\dots \right)$ is such that there is no $z\in \Z$ with $zm = 0$. Therefore, considering the extension of scalars
+      \begin{align*}
+        \Q\otimes M &= \Q\otimes \left( \prod_{i=1}^{\infty}\Z/2^{i}\Z \right),
+      \end{align*}
+      we have that this is not a zero module. Yet, since each of the individual $\Z/2^{i}\Z$ has torsion, it would follow that
+      \begin{align*}
+        \prod_{i=1}^{\infty}\left( \Q \otimes \Z/2^{i}\Z \right) &= 0,
+      \end{align*}
+      so it follows that tensor products do not commute with direct sums.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 4]
+  Let $R$ be commutative, and let $I$ and $J$ be ideals of $R$, so $R/I$ and $R/J$ are naturally $R$-modules.
+  \begin{enumerate}[(a)]
+    \item Prove that every element of $R/I\otimes_{R} R/J$ can be written as a simple tensor of the form $\left( 1 + I \right)\otimes \left( r + J \right)$.
+    \item Prove that there is an $R$-module isomorphism $R/I\otimes_{R}R/J\cong R/(I+J)$ mapping $\left( r+I \right)\otimes \left( r'+J \right)$ to $rr' + \left( I+J \right)$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item By using $R$-bilinearity, we observe that an arbitrary simple tensor in $R/I\otimes R/J$ can be written as
+      \begin{align*}
+        \left( r+I \right)\otimes \left( s+J \right) &= \left( r\left( 1+I \right) \right)\otimes \left( s+J \right)\\
+                                                     &= r\left( \left( 1+I \right)\otimes \left( s+J \right) \right)\\
+                                                     &= \left( 1+I \right)\otimes \left( rs + J \right).
+      \end{align*}
+      Since any element of $R/I\otimes_{R}R/J$ can be written as a sum of simple tensors, and each simple tensor can be written in the above form, it follows from bilinearity that every element of $R/I\otimes R/J$ can be written as $\left( 1+I \right)\otimes \left( r+J \right)$.
+    \item We consider the map
+      \begin{align*}
+        f\colon R/I\times R/J &\mapsto R/\left( I+J \right)
+      \end{align*}
+      given by
+      \begin{align*}
+        \left( r+I,r'+J \right) &\mapsto rr' + \left( I+J \right).
+      \end{align*}
+      This map is $R$-bilinear by the distributive properties of multiplication, so it induces a homomorphism on the tensor product given by
+      \begin{align*}
+        \left( r+I \right)\otimes \left( r' + J \right) &\mapsto rr' + \left( I+J \right).
+      \end{align*}
+      As was established above, any element of $R/I\otimes R/J$ can be written as $\left( 1+I \right)\otimes \left( s+J \right)$, so we may establish an inverse from any element of $R/\left( I+J \right)$ to $R/I\otimes R/J$ by taking $t + \left( I+J \right)\mapsto \left( 1+I \right)\otimes \left( t+J \right)$. This establishes our desired isomorphism.
+  \end{enumerate}
+\end{solution}
+\end{document}
