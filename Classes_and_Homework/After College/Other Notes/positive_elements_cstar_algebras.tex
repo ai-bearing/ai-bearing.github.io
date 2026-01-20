@@ -5,7 +5,7 @@
 %\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 
 %\usepackage{homework}
-%\usepackage{notes}
+\usepackage{notes}
 
 \usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
 \addbibresource{all_references.bib}
@@ -14,7 +14,7 @@
 
 \fancyhf{}
 \fancyhead[R]{Avinash Iyer}
-\fancyhead[L]{Order Structure of $C^{\ast}$-Algebras}
+\fancyhead[L]{Order and Ideal Structure of $C^{\ast}$-Algebras}
 \fancyfoot[C]{\thepage}
 
 \setcounter{secnumdepth}{0}
@@ -98,6 +98,162 @@ The element $v$ such that $v^2 = a$ is known as the square root of $a$. We defin
   Finally, if $a\in A_{+}\cap \left( -A_{+} \right)$, then $\sigma(a) = 0$, so $r(a) = 0$, but $r(a) = \norm{a}$ since $a$ is self-adjoint, and thus normal.
 \end{proof}
 The fact that $A_{+}$ is a closed cone in $A$ allows us to define an order on $A_{\sa}$ given by $a\leq b$ if $b-a\in A_{+}$.
-\nocite{conway_functional_analysis,kadison_and_ringrose_1}
+
+Note that an element $a\in A_{+}$ is invertible if and only if $a \geq t1$ for some $t > 0$. This follows from the fact that $a \geq t1$ if and only if $a-t1\in A_{+}$; by spectral mapping, this means that $\sigma\left( a-t1 \right) = \set{\lambda - t | \lambda\in \sigma(a)}$, which occurs only if $\sigma(a)\subseteq [t,\infty)$. In particular, this means that $0\notin \sigma(a)$, so that $a$ is invertible.
+\begin{proposition}
+  Let $a,b\in A_{\sa}$. The following hold:
+  \begin{enumerate}[(i)]
+    \item if $-b \leq a \leq b$, then $\norm{a}\leq \norm{b}$;
+    \item if $0\leq a \leq b$, then $a^{1/2}\leq b^{1/2}$;
+    \item if $0\leq a \leq b$ and $a$ is invertible, then $b$ is invertible and $b^{-1}\leq a^{-1}$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item Since $-\norm{b}1 \leq -b \leq a \leq b \leq \norm{b}1$, it follows that $\norm{a}\leq \norm{b}$.
+    \item From ($\ast$) in the proof of (iii),
+      \begin{align*}
+        \norm{b^{-1/4}a^{1/2}b^{-1/4}} &= r\left( b^{-1/4}a^{1/2}b^{-1/4} \right)\\
+                                       &= r\left( a^{1/2}b^{-1/4}b^{-1/4} \right)\\
+                                       &\leq \norm{a^{1/2}b^{-1/2}}\\
+                                       &\leq 1,
+      \end{align*}
+      meaning that $b^{-1/4}a^{1/2}b^{-1/4}\leq 1$, and thus $a^{1/2}\leq b^{1/2}$. This shows the case where $a$ is invertible
+
+      If $a$ is not invertible, then for any $\ve > 0$, we have that $\left( a + \ve 1 \right)^{1/2}\leq \left( b + \ve 1 \right)^{1/2}$. For some $c\in A_{\sa}$, define $f_{\ve}\in C(\sigma(c))$ by $f_{\ve}(t) = \left( t + \ve \right)^{1/2}$, meaning that $f_{\ve}\left( c \right)\in A_{+}$ and $\left( f_{\ve}(c) \right)^2 = c + \ve 1$. In particular, this means that $\left( c + \ve 1 \right)^{1/2} = f_{\ve}(c)$, and since $f_{\ve}(t)\rightarrow t^{1/2}$ uniformly as $\ve \rightarrow 0$, we have that $\norm{\left( c + \ve1 \right)^{1/2} - c^{1/2}}\rightarrow 0$, so we get $a^{1/2}\leq b^{1/2}$ in the general caseomte.
+    \item If $0\leq a \leq b$ and $a$ is invertible, then $a\geq t1$ for some $t > 0$, so $b \geq t1$ meaning $b$ is invertible. Moreover, we see that
+      \begin{align*}
+        0 &\leq b^{-1/2}ab^{-1/2}\\
+          &\leq b^{-1/2}bb^{-1/2}\\
+          &= 1,
+      \end{align*}
+      so that $\norm{b^{-1/2}ab^{-1/2}} \leq 1$. Therefore, we have
+      \begin{align*}
+        \norm{a^{1/2}b^{-1/2}} &= \norm{\left( a^{1/2} b^{-1/2}\right)^{\ast}a^{1/2}b^{-1/2}}^{1/2}\tag*{$\ast$}\\
+                               &= \norm{b^{-1/2}ab^{-1/2}}^{1/2}\\
+                               &\leq 1,
+      \end{align*}
+      so we have
+      \begin{align*}
+        \norm{a^{1/2}b^{-1}a^{1/2}} &= \norm{a^{1/2}b^{-1/2}\left( a^{1/2}b^{-1/2} \right)^{\ast}}\\
+                                    &\leq 1,
+      \end{align*}
+      so $a^{1/2}b^{-1}a^{1/2}\leq 1$, meaning $b^{-1}\leq a^{-1}$.
+  \end{enumerate}
+\end{proof}
+We say a function like $f(t) = t^{1/2}$ defined on $S\subseteq \R$ is \textit{operator-monotone} if $f(a)\leq f(b)$ whenever $a\leq b$ in $A_{\sa}$ and $\sigma(a)\cup \sigma(b)\subseteq S$.
+\section{Ideals in $C^{\ast}$-Algebras}%
+We seek to understand the structure of ideals in a $C^{\ast}$-algebra, which will allow us to establish a $C^{\ast}$-algebraic version of the first isomorphism theorem. We will also use some of these ideas when discussing approximate identities in $C^{\ast}$-algebras next section.
+\begin{proposition}
+  If $I$ is a closed left (or right) ideal in $A$, with $a\in I$ and $a = a^{\ast}$, then if $f\in C(\sigma(a))$ is such that $f(0) = 0$, then $f(a)\in I$.
+\end{proposition}
+\begin{proof}
+  We note that if $I$ is proper, we must have $0\in \sigma(a)$ since $a$ cannot be invertible. Since $\sigma(a)\subseteq \R$, the Stone--Weierstrass theorem implies there is a sequence $\left( p_n(t) \right)_n\rightarrow f(t)$ uniformly, so $p_n(0) \rightarrow f(0) = 0$. In particular, $q_n(t) = p_n(t) - p_n(0)$ converges to $f(t)$ uniformly on $\sigma(a)$ with $q_n(0) = 0$ for all $n$. Therefore, we see that $q_n(a) \in I$ for each $n$ by the definition of an ideal, and $\norm{q_n(a) - f(a)} \rightarrow 0$, so $f(a)\in I$.
+\end{proof}
+\begin{corollary}
+  If $I$ is a closed left or right ideal, and $a\in I$ with $a = a^{\ast}$, then $a_{+},a_{-},\left\vert a \right\vert,\left\vert a \right\vert^{1/2}\in I$.
+\end{corollary}
+\begin{theorem}
+  If $I$ is a closed ideal in $A$, then $I$ is self-adjoint.
+\end{theorem}
+\begin{proof}
+  Fix $a\in I$. Since $I$ is an ideal, $a^{\ast}a\in I$. We will construct a sequence of continuous functions $\left( u_n \right)_n$ defined on $[0,\infty)$ such that $u_n(0) = 0$ and $u_n(t) \geq 0$ for all $t$, such that
+  \begin{align*}
+    \norm{au_n\left( a^{\ast}a \right) - a} &\rightarrow 0.
+  \end{align*}
+  If such a sequence can be constructed, then $u_n\left(a^{\ast}a\right)\in I$, $u_n\left(a^{\ast}a\right)\in I$, and $u_n\left( a^{\ast}a \right)a^{\ast}\in I$ as $I$ is an ideal, giving
+  \begin{align*}
+    \norm{u_n\left( a^{\ast}a \right)a^{\ast} - a^{\ast}} &= \norm{au_n\left( a^{\ast}a \right) - a}\\
+                                                          &\rightarrow 0,
+  \end{align*}
+  so that $a^{\ast}\in I$ whenever $a\in I$. We observe that
+  \begin{align*}
+    \norm{au_n\left( a^{\ast}a \right) - a}^2 &= \norm{\left( au_n\left( a^{\ast}a \right) - a \right)^{\ast}\left( au_n\left( a^{\ast}a \right) - a \right)}\\
+                                              &= \norm{u_n\left( a^{\ast}a \right)a^{\ast}au_n\left( a^{\ast}a \right) - a^{\ast}au_n\left( a^{\ast}a \right) - u_n\left( a^{\ast}a \right)a^{\ast}a + a^{\ast}a},
+  \end{align*}
+  meaning that if $b = a^{\ast}a$, we have that $bu_n(b) = u_n(b)b$ implies that, if we set
+  \begin{align*}
+    f_n(t) &= tu_n(t)^2 - 2tu_n(t) + t\\
+           &= t\left( u_n(t) - 1 \right)^2,
+  \end{align*}
+  then we have $\norm{f_n(b)}\leq \sup_{t \geq 0}\left\vert f_n(t) \right\vert$. If we set $u_n(t) = nt$ for $0\leq t \leq \frac{1}{n}$ and $u(t) = 1$ for all $t \geq \frac{1}{n}$, then we have that
+  \begin{align*}
+    \sup_{t\geq 0} \left\vert f_n(t) \right\vert &= \frac{4}{27n},
+  \end{align*}
+  which gives our desired result.
+\end{proof}
+The function $u_n$ actually gives us a sequence $\left( e_n \right)_n$ of positive elements corresponding to each $a$ such that $e_1\leq e_2\leq \cdots$, $\norm{e_n}\leq 1$, and $\norm{ae_n - a}\rightarrow 0$. We will discuss a similar, more useful version in the following section.
+
+Now, we discuss quotients of $C^{\ast}$-algebras. 
+\begin{lemma}
+  If $I$ is an ideal in $A$, and $a\in A$, then
+  \begin{align*}
+    \norm{a + I} &= \inf\set{\norm{a-ax} | x\in I, x\geq 0,\norm{x}\leq 1}.
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  Let
+  \begin{align*}
+    \left( B_I \right)_{+} &= \set{x\in \left( B_X\cap I \right)\cap A_{+}}.
+  \end{align*}
+  Then, we have that
+  \begin{align*}
+    \norm{a + I} &\leq \inf_{x\in \left( B_I \right)_{+}} \norm{a-ax}.
+  \end{align*}
+  Now, if $\left( e_n \right)_n$ is a sequence in $\left( B_{I} \right)_{+}$ such that $\norm{y-ye_n}\rightarrow 0$ as $n\rightarrow\infty$, we have that $0\leq 1-e_n \leq 1$, meaning
+  \begin{align*}
+    \norm{\left( a + y \right)\left( 1-e_n \right)} &\leq \norm{a+y}.
+  \end{align*}
+  Hence,
+  \begin{align*}
+    \norm{a+y} &\geq \liminf_{n\rightarrow\infty} \norm{\left( a+y \right)\left( 1-e_n \right)}\\
+               &= \liminf_{n\rightarrow\infty}\norm{a-ae_n + y-ye_n}\\
+               &= \liminf_{n\rightarrow\infty} \norm{a-ae_n},
+  \end{align*}
+  meaning that
+  \begin{align*}
+    \norm{a+y} &\geq \inf_{n} \norm{a-ae_n}\\
+               &\geq \inf_{x\in \left( B_{I} \right)_{+}} \norm{a-ax}.
+  \end{align*}
+  This gives our desired result.
+\end{proof}
+\begin{theorem}
+  Let $A$ be a $C^{\ast}$-algebra, and let $I$ be a closed ideal of $A$. Defining $\left( a+I \right)^{\ast} = a^{\ast} + I$, we have that $A/I$ with the quotient norm is a $C^{\ast}$-algebra.
+\end{theorem}
+\begin{proof}
+  Since $A$ is a $C^{\ast}$-algebra, it is a Banach algebra, so since $I$ is a closed subspace of $A$, it follows that $A/I$ is a Banach algebra. The main thing we must prove is the $C^{\ast}$-identity. Since $I$ is self-adjoint, it follows that
+  \begin{align*}
+    \norm{a^{\ast} + I} &= \norm{a + I}
+  \end{align*}
+  for all $a\in A$, so since $A/I$ is a Banach algebra, we have
+  \begin{align*}
+    \norm{a^{\ast}a + I} &= \norm{\left( a^{\ast} + I \right)\left( a+I \right)}\\
+                         &\leq \norm{a^{\ast} + I} \norm{a + I}\\
+                         &= \norm{a + I}^2.
+  \end{align*}
+  Meanwhile, from the lemma, we have
+  \begin{align*}
+    \norm{a+I}^2 &= \inf_{x\in \left( B_I \right)_{+}} \norm{a-ax}^2\\
+                 &= \inf_{x\in \left( B_{I} \right)_{+}} \norm{a \left( 1-x \right)}^2\\
+                 &= \inf_{x\in \left( B_{I} \right)_{+}} \norm{\left( 1-x \right)a^{\ast}a\left( 1-x \right)}\\
+                 &\leq \inf_{x\in \left( B_I \right)_{+}}\norm{a^{\ast}a\left( 1-x \right)}\\
+                 &= \inf_{x\in \left( B_{I} \right)_{+}} \norm{a^{\ast}a - a^{\ast}ax}\\
+                 &= \norm{a^{\ast}}.
+  \end{align*}
+  This gives our desired result.
+\end{proof}
+\begin{theorem}
+  If $A$ and $B$ are $C^{\ast}$-algebras, and $\rho\colon A\rightarrow B$ is a $\ast$-homomorphism, then $\rho$ is a contraction, and $\img(\rho)$ is closed in $B$. If $\rho$ is injective, then $\rho$ is an isometry.
+\end{theorem}
+\begin{proof}
+  It suffices to assume that $A$ and $B$ are unital (else we simply use the unitization), so we know that $\sigma\left( \rho(x) \right)\subseteq \sigma(x)$ for each $x$, so $r\left( \rho(x) \right)\subseteq r(x)$. This gives the case for all normal elements, and by the $C^{\ast}$-identity, we get
+  \begin{align*}
+    \norm{\rho(a)}^2 &=\norm{\rho\left( a^{\ast}a \right)}\\
+                     &= r\left( \rho\left( a^{\ast}a \right) \right)\\
+                     &\leq r\left( a^{\ast}a \right)\\
+                     &= \norm{a}^2.
+  \end{align*}
+\end{proof}
+\nocite{conway_functional_analysis,kadison_and_ringrose_1,conway_operator_theory}
 \printbibliography
 \end{document}

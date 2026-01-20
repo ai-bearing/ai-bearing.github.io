@@ -49,3 +49,8 @@ permalink: "/quotes.html"
 
 - "It's okay because it's partial"\
   *Brandon Le*
+
+- "There are people that study what functions you can make on Turing machines with finite space"\
+  *Fausto Navarro Cepeda*
+  "Yeah, they're called software engineers"\
+  *Khoa Nguyen*
