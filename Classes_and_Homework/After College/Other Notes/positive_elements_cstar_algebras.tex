@@ -253,6 +253,86 @@ Now, we discuss quotients of $C^{\ast}$-algebras.
                      &\leq r\left( a^{\ast}a \right)\\
                      &= \norm{a}^2.
   \end{align*}
+  Since $\rho$ is a contraction, it follows that $I = \ker\left( \rho \right)$ is a closed ideal, and by the first isomorphism theorem, $ \overline{\rho}\colon A/I\rightarrow B $ is injective, so it is an isometry, meaning $\img\left( \overline{\rho} \right) = \img\left( \rho \right)$ is closed.
+\end{proof}
+\section{Approximate Identities}%
+Not all $C^{\ast}$-algebras have a unit (even though we can always pass to the unitization), but it is often useful to work with approximations of an identity without choosing to adjoin a unit.
+\begin{definition}
+  If $A$ is a $C^{\ast}$-algebra, a net $\left( e_{i} \right)_{i}$ is called an approximate identity for $A$ if
+  \begin{enumerate}[(i)]
+    \item $0\leq e_i \leq 1$ for each $i$;
+    \item $e_i\leq e_j$ whenever $i\leq j$;
+    \item $\lim_{i\in I}\norm{xe_i-x} = 0$ for all $x\in A$.
+  \end{enumerate}
+  If the net is a sequence, we call it a sequential approximate identity.
+\end{definition}
+\begin{lemma}
+  If $A$ is a $C^{\ast}$-algebra, $a,b\in A$ with $0\leq a \leq b \leq 1$, then
+  \begin{align*}
+    \norm{x-bx}^2 &\leq \norm{x^{\ast}\left( 1-a \right)x}\\
+    \norm{x-xb}^2 &= \norm{x^{\ast}\left( 1-a \right)x}
+  \end{align*}
+  for all $x\in A$.
+\end{lemma}
+\begin{proof}
+  For any $x\in A$, we have
+  \begin{align*}
+    \norm{x-bx}^2 &= \norm{\left( 1-b \right)x}^2\\
+                  &= \norm{x^{\ast}\left( 1-b \right)^2 x}\\
+                  &\leq \norm{x^{\ast}\left( 1-b \right)x}\\
+                  &\leq \norm{x^{\ast}\left( 1-a \right)x}.
+  \end{align*}
+  The other inequality follows similarly.
+\end{proof}
+\begin{theorem}
+  Let $I$ be a dense ideal of $A$. Letting
+  \begin{align*}
+    E &= \set{e\in I | 0\leq e < 1}
+  \end{align*}
+  be equipped with the natural ordering, then $E$ is directed and an approximate identity for $A$.
+\end{theorem}
+\begin{proof}
+  To establish that $E$ is directed, let $a,b\in E$, and define
+  \begin{align*}
+    \psi(t) &= 1-\left( 1+t \right)^{-1}\\
+    \phi(t) &= t\left( 1-t \right)^{-1},
+  \end{align*}
+  where $\psi(t)$ is defined for all $t\geq 0$ and $\phi(t)$ is defined for $0\leq t < 1$. Define $c = \phi(a) + \phi(b)$ and $d = \psi(c)$. For any $e\in E$, we then have
+  \begin{align*}
+    \phi(e) &= e\left( 1-e \right)^{-1}\\
+            &\in I_{+}.
+  \end{align*}
+  Therefore, $c\in I_{+}$ and $d = c\left( 1+c \right)^2\in I$. Since $0\leq \psi(t) < 1$ for all $t\geq 0$, we have $d\in E$ by functional calculus. Now, if we let $x = \phi(a)$, then $x \leq c$, so $\left( 1+x \right)^{-1} \geq \left( 1+c \right)^{-1}$, and since $\psi(\phi(t)) = t$, we have 
+  \begin{align*}
+    a &= \psi(x)\\
+      &= 1-\left( 1+x \right)^{-1}\\
+      &\leq \psi(c)\\
+      &= d,
+  \end{align*}
+  where the inequality emerges from the fact that continuous functional calculus preserves order. Thus, $d$ dominates both $a$ and $b$, so $E$ is directed.
+
+  For any $x\in I_{+}$, we define $a_n = \psi\left( nx \right)$, so $a_n\in E$, and take $\eta(t) = t^2\left( 1-\psi(nt) \right) = t^2\left( 1+nt \right)^{-1}\leq t/n$. Therefore, $\eta(x) = x^2\left( 1-\psi\left( nx \right) \right) = x\left( 1-a_n \right)x$, meaning
+  \begin{align*}
+    \norm{x\left( 1-a_n \right)x} &\leq \norm{\eta}_{u}\\
+                                  &\leq \norm{x}/n.
+  \end{align*}
+  If $\ve > 0$, then there is $n$ large enough such that for any $e\in E$ with $e\geq a_n$,
+  \begin{align*}
+    \norm{x-xe}^2 &\leq \ve,
+  \end{align*}
+  so that
+  \begin{align*}
+    \lim_{e\in E}\norm{xe-x} &= 0
+  \end{align*}
+  whenever $x\in I_{+}$.
+
+  For any $x\in A_{+}$, let $\left( y_n \right)_n\subseteq I_{+}$ such that $\left( y_n \right)_n\rightarrow x^{1/2}$. Then, $x_n = y_n^{\ast}y_n\rightarrow x$ with $x_n\in I_{+}$. Since $E$ is bounded, the limit holds for any $x\in A_{+}$. Finally, since any element of $A$ can be written as a linear combination of elements in $A_{+}$, this holds for all $x\in A$.
+\end{proof}
+\begin{corollary}
+  A separable $C^{\ast}$-algebra has a sequential approximate identity.
+\end{corollary}
+\begin{proof}
+  Let $\set{a_n}_{n\geq 1}$ be a countable dense subset of $A$, $\left( e_i \right)_{i}$ an approximate identity. By inducting, we have a sequence $\left( i_n \right)_n$ such that $\norm{a_ke_i - a_k} < 2^{-n}$ for $1\leq k \leq n$ and $i\geq i_n$. If we let $x_n = e_{i_n}$, then for all $k\geq 1$, $\norm{a_kx_n - a_k}\rightarrow 0$ as $n\rightarrow\infty$, and since $\left( x_n \right)_n$ is bounded, $\norm{ax_n - a} \rightarrow 0$ for all $a\in A$.
 \end{proof}
 \nocite{conway_functional_analysis,kadison_and_ringrose_1,conway_operator_theory}
 \printbibliography
