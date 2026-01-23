@@ -21,6 +21,8 @@
 
 \begin{document}
 \RaggedRight
+\section{Week 1}%
+
 \begin{problem}[Exercise 1.17]
   In this exercise, you will show that the moments of a standard Gaussian variable count pair partitions.
   \begin{enumerate}[(i)]
@@ -29,7 +31,10 @@
         \mathbb{E}\left( X^{2k} \right) &= \left( 2k-1 \right)!!\\
         \mathbb{E}\left( X^{2k-1} \right) &= 0.
       \end{align*}
-    \item Prove that $\left\vert P_2(2k) \right\vert = \left( 2k-1 \right)!!$ by putting $P_2\left( 2k \right)$ in explicit bijection with a set of cardinality $\left( 2k-1 \right)\left\vert P_2\left( 2k-2 \right) \right\vert$.
+    \item Prove that $\left\vert P_2(2k) \right\vert = \left( 2k-1 \right)!!$ by putting $P_2\left( 2k \right)$ in explicit bijection with a set of cardinality 
+      \begin{align*}
+        \left( 2k-1 \right)\left\vert P_2\left( 2k-2 \right) \right\vert.
+      \end{align*}
   \end{enumerate}
 \end{problem}
 \begin{remark}
@@ -47,6 +52,8 @@
       \item Considering the set $\left[ 2k \right] = \set{1,2,\dots,2k}$, we see that there are $2k-1$ ways to pair $1$ with any other element, and there are then $P_2\left( 2k-2 \right)$ pair partitions of the remaining $2k-2$ elements. This gives our desired bijection.
   \end{enumerate}
 \end{solution}
+\pagebreak
+\section{Week 2}%
 \begin{problem}[Exercise 2.23]\hfill
   \begin{enumerate}[(i)]
     \item Find a recursion for $\left\vert NC_2\left( 2k \right) \right\vert$.
@@ -71,11 +78,48 @@
 
       For each of these pairings, there are two separate ``sub-blocks'' that we use to count the non-crossing partitions, the ones ``between'' $\set{1,2\ell}$as $\ell$ ranges from $1$ to $k$, and the ones ``outside'' the pairing $\set{1,2\ell}$. Combined, this gives the recurrence relation
       \begin{align*}
-        \left\vert NC_2(2k) \right\vert &= \sum_{i=1}^{k} \left\vert NC_2\left( 2i-2 \right) \right\vert\left\vert NC_2\left( 2k-2i \right) \right\vert.
+        \left\vert NC_2(2k) \right\vert &= \sum_{i=1}^{k} \left\vert NC_2\left( 2i-2 \right) \right\vert\left\vert NC_2\left( 2k-2i \right) \right\vert,
       \end{align*}
-    \item Using the binomial theorem, we observe that
+      where $NC_2\left( 0 \right) = 1$ vacuously.
+    \item To evaluate the proposed expression for $C(z)$, we see that
       \begin{align*}
-        \frac{1-\sqrt{1-4z}}{2z} &= \frac{1}{z}
+        \frac{1}{2z} \left( 1-\sqrt{1-4z} \right) &= \frac{1}{2z} \left( 1-\sum_{k=0}^{\infty} {1/2\choose k} \left( -4z \right)^{k} \right)\\
+                                                  &= \frac{1}{2z} \left( -\sum_{k=1}^{\infty} \left( \frac{1}{k!}\prod_{i=0}^{k} \left( \frac{1}{2}-i \right) \right)\left( -1 \right)^{k}2^{2k}z^{k} \right)\\
+                                                  &= \frac{1}{2z}\left( -\sum_{k=1}^{\infty} \frac{\left( -1 \right)^{k-1}\left( 2k-3 \right)!!}{2^{k}k!} \left( -1 \right)^{k}2^{2k}z^{k} \right)\\
+                                                  &= \frac{1}{2z}\left( \sum_{k=0}^{\infty} \frac{2^{k+1}\left( 2k-1 \right)!!}{\left( k+1 \right)!}z^{k+1}\right)\\
+                                                  &= \frac{1}{2z}\left( \sum_{k=0}^{\infty}\frac{2^{k+1}\left( 2k \right)!}{2^{k}k! \left( k+1 \right)!}z^{k} \right)\\
+                                                  &= \sum_{k=0}^{\infty}\frac{1}{k+1}{2k\choose k} z^{k}\\
+                                                  &= \sum_{k=0}^{\infty} \operatorname{Cat}(k)z^{k}.
+      \end{align*}
+      By plugging the proposed functional equation into the closed-form expression into $C(z)$, we get
+      \begin{align*}
+        \frac{1-\sqrt{1-4z}}{2z} &= 1 + z\left( \frac{1-\sqrt{1-4z}}{2z} \right)^2\\
+                                 &= 1 + z\left( \frac{1 + \left( 1-4z \right)-2\sqrt{1-4z}}{4z^2} \right)\\
+                                 &= \frac{1-\sqrt{1-4z}}{2z}.
+      \end{align*}
+      Yet, we also observe that
+      \begin{align*}
+        1 + zC(z)^2 &= z\left( \sum_{k=0}^{\infty}\operatorname{Cat}(k)z^{k} \right)\left( \sum_{\ell=0}^{\infty}\operatorname{Cat}(\ell)z^{\ell} \right)\\
+                &= 1 + z\sum_{k=0}^{\infty}\sum_{\ell = 0}^{k}\operatorname{Cat}(k)\operatorname{Cat}\left(k-\ell\right) z^{k}\\
+                &= 1 + \sum_{k=0}^{\infty} \sum_{\ell = 0}^{k} \operatorname{Cat}\left( k \right)\operatorname{Cat}\left( k-\ell \right)z^{k+1}\\
+                &= 1 + \sum_{k=1}^{\infty} \sum_{\ell = 1}^{k} \operatorname{Cat}\left( k-1 \right)\operatorname{Cat}\left( k-\ell \right) z^{k}\\
+                &= \sum_{k=0}^{\infty} \operatorname{Cat}\left( k \right)z^{k},
+      \end{align*}
+      so that $\operatorname{Cat}(k)$ satisfies the same recurrence relation as the one for the noncrossing pair partitions.
+    \item The fact that
+      \begin{align*}
+        \int_{\R}^{} x^{2k-1}\:d\mu &= \frac{1}{2\pi}\int_{-2}^{2} x^{2k-1}\sqrt{1-4x^2}\:dx\\
+                                    &= 0,
+      \end{align*}
+      follows from the fact that this is an odd integrand over a symmetric interval. Else, we find
+      \begin{align*}
+        \frac{1}{2\pi} \int_{-2}^{2} x^{2k}\sqrt{4-x^2}\:dx &= \frac{1}{2\pi} \int_{0}^{\pi} 2^{2k+2}\sin^2\left( \theta \right)\cos^{2k}\left( \theta \right)\:d\theta\\
+                                                            &= 2^{2k+1}\left( \frac{\left( 2k-1 \right)!!}{\left( 2k \right)!!} - \frac{\left( 2k+1 \right)!!}{\left( 2k+2 \right)!!} \right)\\
+                                                            &= 2^{2k+1} \left( 1-\frac{2k+1}{2k+2} \right) \frac{\left( 2k-1 \right)!!}{\left( 2k \right)!!}\\
+                                                            &= 2^{2k+1} \frac{1}{2k+2} \frac{\left( 2k-1 \right)!!}{\left( 2k \right)!!}\\
+                                                            &= \frac{\left( 2k \right)!}{\left( k+1 \right)!k!}\\
+                                                            &= \frac{1}{k+1}{2k\choose k}\\
+                                                            &= \operatorname{Cat}(k).
       \end{align*}
   \end{enumerate}
 \end{solution}
