@@ -55,9 +55,57 @@ Note that since all representations are contractive, the direct sum is in fact a
   If $X$ is a compact topological space, and $\left( \mu_n \right)_n$ is a sequence of positive Borel measures for $X$, with corresponding representations $\pi_n\colon C(X)\rightarrow B\left( L_2\left( \mu_n \right) \right)$ taking $f\mapsto M_f$, then $\bigoplus_{n\geq 1}\pi_n$ is also a representation.
 \end{example}
 \begin{definition}
-  Two representations $\left( \pi_1,H_1 \right)$ and $\left( \pi_2,H_2 \right)$ are called equivalent if there is a unitary $U\colon H_1\rightarrow H_2$ such that $\pi_2(a) = U\pi_1(a)U^{-1}$. 
+  Two representations $\left( \pi_1,H_1 \right)$ and $\left( \pi_2,H_2 \right)$ are called equivalent if there is a unitary $U\colon H_1\rightarrow H_2$ such that $\pi_2(a) = U\pi_1(a)U^{-1}$.
 \end{definition}
+\begin{definition}
+  If $A$ is a $C^{\ast}$-algebra, then a representation $\rho\colon A\rightarrow B(H)$ is \textit{non-degenerate} if
+  \begin{align*}
+    \left[ \rho(A)H \right] &= \overline{\set{\rho(a)h | a\in A,h\in H}}\\
+                            &= H.
+  \end{align*}
+  That is, the reducing subspace $\left[ \rho(A)H \right]$ for $\rho(A)$ ``lives'' on the entire Hilbert space, or that the only $g\in H$ for which $\rho(a)g = 0$ for all $a\in A$ is $0$.
+\end{definition}
+\begin{definition}
+  A representation $\rho\colon A\rightarrow B(H)$ is called \textit{cyclic} if there is some $v\in H$ such that
+  \begin{align*}
+    H &= \left[ \rho(A)v \right].
+  \end{align*}
+  We call the vector $v$ a \textit{cyclic vector} for $\rho$.
+\end{definition}
+\begin{theorem}
+  Let $\pi$ be a representation for the $C^{\ast}$-algebra $A$. Then, there is a family of cyclic representations $\set{\pi_i}_{i\in I}$ for $A$ such that
+  \begin{align*}
+    \pi &\cong \bigoplus_{i\in I}\pi_i.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Let $ \mathcal{E} $ be the family of sets of nonzero vectors in $H$ such that $\left[ \pi(A)e \right]\perp \left[ \pi(a)f \right]$ for any $e\neq f\in E\in \mathcal{E}$. Ordering $E$ by inclusion, using Zorn's Lemma gives us that $\mathcal{E}$ has a maximal element $E_0$. Define
+  \begin{align*}
+    H_0 &= \bigoplus_{e\in E_0} \left[ \pi(A)e \right].
+  \end{align*}
+  Let $h\in H_0^{\perp}$, so that $ 0 = \iprod{\pi(a)e}{h} $ for all $a\in A$ and $e\in E_0$. Therefore, if we have $a,b\in A$ with $e\in E_0$, we have
+  \begin{align*}
+    0 &= \iprod{\pi\left( b^{\ast}a \right)e}{h}\\
+      &= \iprod{\pi(b)^{\ast}\pi(a)e}{h}\\
+      &= \iprod{\pi(a)e}{\pi(b)h}.
+  \end{align*}
+  That is, $\pi(A)e\perp \pi(A)h$ for all $e\in E_0$, meaning that $E_0\cup\set{h}\in \mathcal{E}$, meaning that by maximality of $E_0$, we must have that $h = 0$ and $H = H_0$.
 
+  Letting $H_e \coloneq \left[ \pi(A)e \right]$, then for any $a\in A$, we have $\pi(a)H_e\subseteq H_e$, and $\pi(a)^{\ast} = \pi\left( a^{\ast} \right)$, so that $H_e$ reduces $\pi(a)$. If we define $\pi_e\colon A\rightarrow B\left( H_e \right)$, we have that $\pi_e$ is a representation of $a$, with
+  \begin{align*}
+    \pi &= \bigoplus_{e\in E_0} \pi_e.
+  \end{align*}
+\end{proof}
+\begin{definition}
+  A representation $\pi$ of a $C^{\ast}$-algebra $A$ is called \textit{irreducible} if the only invariant subspaces for $\pi(A)$ are $0$ and $H$.
+\end{definition}
+The best example of an irreducible representation is a cyclic representation.
+\begin{lemma}
+  A representation of a $C^{\ast}$-algebra $A$ is irreducible if and only if the only operators commuting with $\pi(A)$ are multiples of the identity.
+\end{lemma}
+\begin{proof}
+  If $\pi$ has a nontrivial invariant subspace $V$, then $P_V$ commutes with every $\pi(a)$ and is not a scalar. Conversely, if there is a non-scalar operator $T$ commuting with $\pi(A)$, then either the real or imaginary part of $T$ is a non-scalar self-adjoint operator $S$ commuting with $\pi(A)$, so there is some spectral projection $P$ for $S$ that is neither the $0$ projection or the identity that commutes with $\pi(A)$, meaning that $P(H)$ is an invariant subspace for $\pi(A)$.
+\end{proof}
 \section{States}%
 For now, we will assume that $M$ is a unital self-adjoint subspace of a $C^{\ast}$-algebra $A$. If $\rho$ is a linear functional on $M$, then the equation
 \begin{align*}
@@ -80,7 +128,7 @@ If $a_0 = \re\left( \lambda a \right)$, we have $\norm{a_0}\leq 1$ with $\rho\le
 \end{align*}
 with the reverse inequality being true by definition.
 
-We say the linear functional $\rho$ is \textit{positive} if for any $a\in M_{+}$, $\rho(a)\geq 0$; if $\rho(1) = 1$, then we say $\rho$ is a state. In fact, if $\rho$ is positive, then $\rho$ is hermitian, since if $a = a^{\ast}$, then 
+We say the linear functional $\rho$ is \textit{positive} if for any $a\in M_{+}$, $\rho(a)\geq 0$; if $\rho(1) = 1$, then we say $\rho$ is a state. In fact, if $\rho$ is positive, then $\rho$ is hermitian (as we will see below).
 
 We start by considering a version of the Cauchy--Schwarz inequality for states.
 \begin{proposition}
@@ -96,7 +144,182 @@ We start by considering a version of the Cauchy--Schwarz inequality for states.
   \end{align*}
   defines a positive sesquilinear form on $A$, so the traditional Cauchy--Schwarz inequality gives the desired result.
 \end{proof}
+\begin{proposition}
+  Let $\rho$ be a bounded linear functional on a $C^{\ast}$-algebra $A$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $\rho$ is positive;
+    \item for every approximate unit $\left( e_i \right)_{i\in I}$, $\norm{\rho} = \lim_{i} \tau\left( e_i \right)$;
+    \item for some approximate unit $\left( e_i \right)_{i\in I}$, $\norm{\rho} = \lim_{i}\tau\left( e_i \right)$. 
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We may assume that $\norm{\rho} = 1$. To see that (i) implies (ii), we assume $\rho$ is positive, and let $\left( e_i \right)_{i\in I}$ be an approximate unit for $A$. Then, $\left( \rho\left( e_i \right) \right)_{i\in I}$ is an increasing net in $\R$ that converges to its supremum, which is not greater than $1$, so $\lim_{i}\rho\left( e_i \right) \leq 1$.
 
-\nocite{conway_operator_theory,kadison_and_ringrose_1,morita_equivalence_cstar_algebras}
+  Now, we let $a\in A$ be such that $\norm{a}\leq 1$. We have
+  \begin{align*}
+    \left\vert \rho\left( e_i a \right) \right\vert^2 &\leq \rho\left( e_i^2 \right)\rho\left( a^{\ast}a \right)\\
+                                                      &\leq \rho\left( e_i \right)\rho\left( a^{\ast}a \right)\\
+                                                      &\leq \lim_{i}\rho\left( e_i \right),
+  \end{align*}
+  so $\left\vert \rho\left( a \right) \right\vert^2 \leq \lim_{i}\rho\left( e_i \right)$, meaning $1\leq \lim_{i}\rho\left( e_i \right)$.
+
+  Showing that (ii) implies (iii) is pretty much by definition. For (iii) implies (i), let $\left( e_i \right)_i$ be an approximate unit with $1 = \lim_{i}\rho\left( e_i \right)$. Let $a\in A_{\sa}$ with $\norm{a}\leq 1$, and write $\rho(a) = \alpha + i\beta$ for $\alpha,\beta\in \R$. We may assume that $\beta\leq 0$, and we will show that $\beta = 0$. Letting $n$ be any positive integer, we have
+  \begin{align*}
+    \norm{a - ine_{i}}^2 &= \norm{\left( a+ine_{i} \right)\left( a-ine_{i} \right)}\\
+                         &= \norm{a^2 + n^2e_i^2 - in\left( ae_{i}-e_{i}a \right)}\\
+                         &\leq 1 + n^2 + n\norm{ae_i - e_ia},
+  \end{align*}
+  so that
+  \begin{align*}
+    \left\vert \rho\left( a-ine_{i} \right) \right\vert^2 &\leq 1 + n^2 + n\norm{ae_i - e_ia}.
+  \end{align*}
+  Yet, since $\lim_{i}\rho\left( a-ine_{i} \right) = \rho\left( a \right) - in$, with $\lim_{i}\norm{ae_i-e_ia} = 0$, in the limit, we get
+  \begin{align*}
+    \left\vert \alpha + i\beta - in \right\vert^2 &\leq 1 + n^2,
+  \end{align*}
+  so by expanding, we have
+  \begin{align*}
+    -2n\beta &\leq 1-\beta^2 - \alpha^2.
+  \end{align*}
+  Since $\beta\leq 0$, and this inequality holds for all positive $n$, it follows that $\beta = 0$. If $a$ is positive with $\norm{a}\leq 1$, we have $e_i-a$ is hermitian with $\norm{e_i-a}\leq 1$, so $\rho\left( e_i-a \right) \leq 1$. Then, $1-\rho(a)= \lim_{i}\rho\left( e_i-a \right)\leq 1$, meaning $\rho(a)\geq 0$. Thus, $\rho$ is positive.
+\end{proof}
+\begin{corollary}
+  If $\rho$ is a bounded linear functional on a unital $C^{\ast}$-algebra $A$, then $\rho$ is positive if and only if $\rho(1) = \norm{\rho}$.
+\end{corollary}
+\begin{proof}
+  The sequence consisting exclusively of $1$ is an approximate unit for $A$.
+\end{proof}
+The best-known example of a state is that of the \textit{vector state} on $B(H)$, given by $\rho_{v}\colon B(H)\rightarrow \C$,
+\begin{align*}
+  \rho_v(T) &= \iprod{Tv}{v}.
+\end{align*}
+for a unit vector $v\in H$.
+
+In fact, we will show in the next section that this is, to an extent, ``every'' state on a $C^{\ast}$-algebra.
+\subsection{The GNS Construction}%
+The most important fact about states is that they allow us to represent any $C^{\ast}$-algebra as a subalgebra of $B(H)$.
+\begin{theorem}[GNS Construction]
+  Let $A$ be a $C^{\ast}$-algebra, and let $\rho\colon A\rightarrow \C$ be a state. Then, there is a representation $\pi_{\rho}\colon A\rightarrow B\left( H_{\rho} \right)$ with unit cyclic vector $\xi_{\rho}$ such that
+  \begin{align*}
+    \iprod{\pi_{\rho}(a)\xi_{\rho}}{\xi_{\rho}} &= \rho(a)
+  \end{align*}
+  for all $a\in A$.
+
+  Furthermore, if $\xi$ is a unit cyclic vector for a representation $\pi\colon A\rightarrow B\left(H_{\pi}\right)$, then the vector state
+  \begin{align*}
+    \tau\colon A &\rightarrow \C\\
+    a &\mapsto \iprod{\pi(a)\xi}{\xi}
+  \end{align*}
+  induces a unitary isomorphism of $H_{\rho}$ onto $H_{\pi}$ such that $\pi(a) = U\pi_{\tau}(a)U^{-1}$ for all $a\in A$.
+\end{theorem}
+\begin{proof}
+  To start, we let $\rho$ be a state on a $C^{\ast}$-algebra $A$, and define the subspace
+  \begin{align*}
+    N_{\rho} &= \set{a\in A | \rho\left( a^{\ast}a \right) = 0}.
+  \end{align*}
+  We see that $\rho\left( b^{\ast}a \right) = 0$ if either $a$ or $b$ are in $N_{\rho}$, meaning there is a well-defined inner product on $A/N_{\rho}$ given by
+  \begin{align*}
+    \iprod{a + N_{\rho}}{b + N_{\rho}} &= \rho\left( b^{\ast}a \right).
+  \end{align*}
+  We may define $H_{\rho}$ to be the Hilbert space completion of $A/N_{\rho}$. We will show that $N_{\rho}$ is a left ideal, by taking, for $a\in A$ and $x\in N_{\rho}$, and using the identity $x^{\ast}a^{\ast}ax\leq \norm{a}^2x^{\ast}x$, to find
+  \begin{align*}
+    \iprod{ax}{ax} &= \phi\left( \left( ax \right)^{\ast}ax \right)\\
+                   &\leq \phi\left( \norm{a}^2 x^{\ast}x \right)\\
+                   &= 0,
+  \end{align*}
+  meaning that $ax\in N_{\rho}$. Furthermore, we see that
+  \begin{align*}
+    \norm{a\left( b + N_{\rho} \right)}^2 &= \rho\left( b^{\ast}a^{\ast}ab \right)\\
+                                          &\leq \norm{a}^2\rho\left( b^{\ast}b \right) 
+                                          &= \norm{a}^2\norm{b + N_{\rho}}^2
+  \end{align*}
+  Therefore, we may uniquely extend elements of $a$ to bounded operators on $H_{\rho}$, which defines a representation $\pi_{\rho}\colon A\rightarrow B\left( H_{\rho} \right)$.
+
+  Now, if $A$ is unital, we observe that $1 + N_{\rho}$ is cyclic for $\pi_{\rho}$, as
+  \begin{align*}
+    \left[ \pi_{\rho}(A)\xi_{\rho} \right] &= \overline{\set{\pi_{\rho}(a)\xi_{\rho} | a\in A}}\\
+                                           &= \overline{\set{a\left( 1 + N_{\rho} \right) | a\in A}}\\
+                                           &= \overline{A/N_{\rho}}\\
+                                           &= H_{\rho},
+  \end{align*}
+  and we observe that
+  \begin{align*}
+    \iprod{\pi_{\rho}(a)\xi_{\rho}}{\xi_{\rho}} &= \iprod{a\left( 1 + N_{\rho} \right)}{1 + N_{\rho}}\\
+                                                &= \iprod{a + N_{\rho}}{1 + N_{\rho}}\\
+                                                &= \rho\left( a \right).
+  \end{align*}
+  Meanwhile, if $A$ is not unital, then we may extend $\rho$ to a state $\tau$ on the unitization $ \widetilde{A} $, which induces an isometry $V$ of $H_{\rho}$ to $H_{\tau}$ mapping $a + N_{\rho}$ to $a + N_{\tau}$ that intertwines $\pi_{\rho}$ and $\pi_{\tau}$, in the sense that $V\pi_{\rho}(a) = \pi_{\tau}(a)V$. We may identify $H_{\rho}$ with the subspace $VH_{\rho}\subseteq H_{\tau}$. This gives that $\pi_{\tau}|_{A} = \pi_{\rho}\oplus 0$ in $H_{\rho}\oplus H_{\rho}^{\perp}$. The projection of $1 + N_{\tau}$ onto $H_{\rho}$, which we may denote $h_{\rho}$, then satisfies
+  \begin{align*}
+    \pi_{\rho}(a)h_{\rho} &= \pi_{\tau}(a)\left( 1 + N_{\tau} \right)\\
+                          &= a + N_{\tau},
+  \end{align*}
+  meaning that $h_{\rho}$ is cyclic for $\pi_{\rho}$, with
+  \begin{align*}
+    \iprod{\pi_{\rho}(a)h_{\rho}}{h_{\rho}} &= \iprod{\pi_{\tau}(a)\left( 1 + N_{\tau} \right)}{1 + N_{\tau}}\\
+                                            &= \tau(a)\\
+                                            &= \rho(a).
+  \end{align*}
+  Now, for the converse, we see that the linear functional $\tau$ defined by
+  \begin{align*}
+    \tau(a) &= \iprod{\pi(a)\xi}{\xi}
+  \end{align*}
+  is positive with norm at most $1$; in fact, since for any approximate identity we have $\pi\left( e_i \right)\xi\rightarrow \xi$, it follows that $\tau$ in fact has norm $1$. We have that
+  \begin{align*}
+    N_{\tau} &= \set{a\in A | \iprod{\pi\left( a^{\ast}a \right)\xi}{\xi}}\\
+             &= \set{a\in A | \pi(a)\xi = 0},
+  \end{align*}
+  so there is a well-defined linear map $U_0\colon A/N_{\tau}\rightarrow H_{\pi}$ defined by $U_0\left( a + N_{\tau} \right) = \pi(a)\xi$, which is isometric, since
+  \begin{align*}
+    \iprod{U_0\left( a + N_{\tau} \right)}{U_0\left( b + N_{\tau} \right)} &= \iprod{\pi\left( b^{\ast}a \right)\xi}{\xi}\\
+                                                                           &= \tau\left( b^{\ast}a \right)\\
+                                                                           &= \iprod{a + N_{\tau}}{b + N_{\tau}},
+  \end{align*}
+  meaning that $U_0$ extends to an isometric linear map $U$ on $H_{\tau}$ which surjects onto $\left[ \pi(A)\xi \right] = H_{\pi}$ since $\xi$ is cyclic. Therefore, $U$ is unitary, and we have
+  \begin{align*}
+    U\pi_{\tau}(a)\left( b + N_{\tau} \right) &= U\left( ab + N_{\tau} \right)\\
+                                              &= \pi\left( ab \right)\xi\\
+                                              &= \pi(a)\pi(b)\xi\\
+                                              &= \pi(a)U\left( b + N_{\tau} \right).
+  \end{align*}
+  Therefore, $U\pi_{\tau}(a)U^{-1} = \pi(a)$.
+\end{proof}
+\begin{corollary}
+  If $\pi$ is an irreducible representation of a $C^{\ast}$-algebra $A$, and $\xi\in H_{\pi}$ is any unit vector, then $\pi$ is unitarily equivalent to the GNS representation $\pi_{\tau}$, where $\tau$ is the vector state $a\mapsto \iprod{\pi(a)\xi}{\xi}$.
+\end{corollary}
+\begin{proof}
+  We observe that $K = \left[ \pi(A)\xi \right]$ is invariant under $\pi$, so by irreducibility we have that $K$  is either $0$ or $H_{\pi}$. Since $\pi$ is non-degenerate, it follows that $\pi\left( e_i \right)\xi \rightarrow \xi$ for some approximate unit $\left( e_i \right)_i$, so $\xi$ is a nonzero vector in $K$ and $K$ is all of $H_{\pi}$.
+\end{proof}
+\subsection{The Universal Representation}%
+To progress further, we must ensure that the state space separates the points of a $C^{\ast}$-algebra, so that we may use the states of a $C^{\ast}$-algebra to construct the universal representation.
+\begin{lemma}
+  Let $A$ be a $C^{\ast}$-algebra, and let $a\in A_{\sa}$. Then, there is a state $\rho$ of $A$ such that $\left\vert \rho(a) \right\vert = \norm{a}$. In particular, for any $a\in A$, there is a state $\rho$ such that $\rho\left( a^{\ast}a \right) = \norm{a}^2$.
+\end{lemma}
+\begin{proof}
+  We may assume that $A$ has a unit. If we let $B = C^{\ast}\left( a \right)$, then there is an isometric isomorphism from $C^{\ast}(a) \cong C(\hat{B})$, where $\hat{B}$ is the character space of $B$. In particular, since $\hat{a}$ is a continuous map on a compact space, there is some $\phi\in \hat{B}$ such that
+  \begin{align*}
+    \left\vert \phi(a) \right\vert &= \left\vert \hat{a}(\phi) \right\vert\\
+                                   &= \norm{\hat{a}}\\
+                                   &= \norm{a}.
+  \end{align*}
+  Therefore, there is some $\rho\in A^{\ast}$ such that $\rho|_{B} = \phi$ and $\norm{\rho} = \norm{\phi} = 1$. Since $\phi(1) = 1$, we have $\rho(1) = 1$, so $\rho$ is a state with $\left\vert \rho(a) \right\vert = \norm{a}$. Thus, $\rho$ is a state on $A$ with the desired property.
+\end{proof}
+\begin{proposition}
+  Every $C^{\ast}$-algebra $A$ has a faithful non-degenerate representation.
+\end{proposition}
+\begin{proof}
+  For each $a\neq 0$ in $A$, let $\rho_{a}$ be a state such that $\rho_a\left( a^{\ast}a \right)= \norm{a}^2$. Let $\pi_{\rho_a}$ be the corresponding GNS representation with cyclic vector $\xi_{\rho_a}$. Then, $\pi_{\rho_a}(a)\neq 0$, as
+  \begin{align*}
+    0 &< \norm{a}^2\\
+      &= \rho_a\left( a^{\ast}a \right)\\
+      &= \iprod{\pi_{\rho_a}\left( a^{\ast}a \right)\xi_{\rho_a}}{\xi_{\rho_a}}\\
+      &= \norm{\pi_{\rho_a}(a)\xi_{\rho_a}}^2.
+  \end{align*}
+  Therefore, the representation
+  \begin{align*}
+    \pi\coloneq \bigoplus_{\substack{a\in A\\a\neq 0}}\pi_{\rho_a}
+  \end{align*}
+  is a nondegenerate faithful representation.
+\end{proof}
+\nocite{conway_operator_theory,kadison_and_ringrose_1,morita_equivalence_cstar_algebras,murphy_cstar_algebras_and_operator_theory}
 \printbibliography
 \end{document}
