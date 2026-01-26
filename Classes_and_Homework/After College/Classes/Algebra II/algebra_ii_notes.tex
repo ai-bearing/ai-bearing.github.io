@@ -265,5 +265,84 @@ The most useful case for this proposition is the \textit{extension of scalars}. 
     \left( a\otimes b \right)\left( c\otimes d \right) &= ac\otimes bd.
   \end{align*}
 \end{theorem}
+\begin{proof}
+  See Proposition 1.4.3 in \href{https://ai.avinash-iyer.com/Classes_and_Homework/College/Y4/Honors\%20Thesis/Amenability\%20Text/amenability.pdf}{this document}.
+\end{proof}
+\begin{lemma}
+  If $R\subseteq S$ is a unital subring, with $S$ commutative, and $M$ is an $R$-algebra, then $S\otimes_{R}M$ is an $S$-algebra.
+\end{lemma}
+\begin{lemma}
+  With the same assumptions as above, we have isomorphisms
+  \begin{align*}
+    S\otimes_{R}\Mat_n\left( R \right) &\cong \Mat_n\left( S \right)\\
+    S\otimes_{R} R\left[ x_1,\dots,x_n \right] &\cong S\left[ x_1,\dots,x_n \right]\\
+  S\otimes_{R} R[x]/\left( f(x) \right) &\cong S[x]/\left( f(x) \right).
+  \end{align*}
+\end{lemma}
+The general proof approach for these types of problems is to use the universal properties to construct an isomorphism of abelian groups, then prove that the isomorphism is compatible with the $S$-action and products of elements.
+\subsection{Finitely Generated Modules over PIDs}%
+We will now turn our focus towards proving the structure theorem for finitely generated modules over a PID. For this, we will use the Smith Normal Form.
+\subsubsection{Smith Normal Form}%
+\begin{definition}
+  Let $R$ be a PID, and $A\in \Mat_n\left( R \right)$. We say $A$ is in Smith normal form if there exists $m\leq \min\left( k,n \right)$ and elements $d_1,\dots,d_m$ such that
+  \begin{align*}
+    A &= \begin{pmatrix}d_1 & \cdots & 0 & 0 \\ 0 & \ddots & 0 & 0\\
+      0 &0 &  d_m & 0 \\
+      \vdots & \vdots & \ddots & \vdots\\
+    0 & 0 & \cdots & 0\end{pmatrix},
+  \end{align*}
+  where $d_i\neq 0$ for all $i$ and $ \left( d_1 \right)\supseteq \left( d_2 \right)\supseteq\cdots\supseteq \left( d_m \right) $.
+\end{definition}
+\begin{theorem}
+  If $R$ is a PID with $A\in \Mat_n\left( R \right)$, then there are $U\in \GL_k\left( R \right)$ and $V\in \GL_n\left( R \right)$ such that $UAV$ is in Smith normal form.
 
+  This decomposition is essentially unique, in that if we have two Smith normal forms
+  \begin{align*}
+    D &= \begin{pmatrix}d_1' & \cdots & 0 & 0 \\ 0 & \ddots & 0 & 0\\
+      0 &0 &  d_m & 0 \\
+      \vdots & \vdots & \ddots & \vdots\\
+    0 & 0 & \cdots & 0\end{pmatrix}\\
+    D' &= \begin{pmatrix}d_1' & \cdots & 0 & 0 \\ 0 & \ddots & 0 & 0\\
+      0 &0 &  d_s' & 0 \\
+      \vdots & \vdots & \ddots & \vdots\\
+    0 & 0 & \cdots & 0\end{pmatrix},
+  \end{align*}
+  then $s = m$ and $d_i$ and $d_i'$ are associates for each $i$.
+\end{theorem}
+To show existence, we consider the elementary row (and column) operations, viewed as elementary matrices. Given $\lambda\in R$, we consider $E_{ij}(\lambda)$ with $i < j$ to be a square matrix of size to be determined size that has $1$ along the diagonal, $\lambda$ in position $(i,j)$, and $0$ everywhere else. Furthermore, for any $i\neq j$, we let $F_{ij}$ be the matrix obtained from an identity matrix of a certain size by swapping rows $i$ and $j$.\footnote{One may recognize this as the matrix corresponding to the permutation $\tau = \left( i,j \right)$.} Then, we have the following table of correspondences.
+\begin{center}
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabular}{c|c}
+    Elementary Row Operation & Interpretation as Matrix Multiplication\\
+    \hline
+    $R_i(A) \mapsto R_i(A) + \lambda R_j(A)$ & $A\mapsto A_{ij}(\lambda)A$\\
+    $C_i(A) \mapsto C_i(A) + \lambda C_j(A)$ & $A\mapsto AE_{ji}(\lambda)$\\
+    $R_i(A) \leftrightarrow R_j(A)$ & $A\mapsto F_{ij}A$\\
+    $C_i(A)\leftrightarrow C_j(A)$ & $A\mapsto AF_{ij}$
+  \end{tabular}
+\end{center}
+Thus, it suffices to show that every $A$ can be replaced via these elementary row operations to a matrix in Smith normal form.
+
+We will prove the special case where $R$ is a Euclidean domain, since the primary applications we will be using are for the cases of $\Z$ and $F[x]$ for some field $F$, and both of these rings are Euclidean domains. If $N$ is the Euclidean norm for $R$, then we will let $N(A) = \min_{a_{ij}\neq 0}N\left( a_{ij} \right)$ denote the norm of the matrix.
+\begin{proof}[Proof of Existence]
+  By induction, we may assume that existence holds for any matrices with smaller values of $k + n$. Starting with an arbitrary matrix with dimensions $k\times n$, we claim that we can reduce any nonzero matrix to either
+  \begin{enumerate}[(i)]
+    \item a matrix $A'$ with smaller norm
+    \item a matrix of the block diagonal form
+      \begin{align*}
+        \begin{pmatrix}d_1 & 0 \\ 0 & B\end{pmatrix},\label{eq:block_diag_form_snf}\tag{$\dag$}
+      \end{align*}
+      where $d_1$ divides all the entries of $B$.
+  \end{enumerate}
+  To see that this suffices to prove existence of Smith normal form, we start by seeing that if case $1$ occurs, we apply the reduction until case $2$ occurs, which necessarily happens by the well-ordering principle. Then, if $A$ is reduced to a matrix of the block diagonal form \eqref{eq:block_diag_form_snf}, then by the induction hypothesis we may reduce $B$ to Smith normal form using the elementary operations. We may then apply these same operations to $A$ to yield $A$ to have $d_2 | d_3 |\cdots | d_m$ and the block $d_1$ on the upper left hand corner, so since these elementary row operations yield $R$-linear combinations of the original element, with $d_1$ dividing all the entries of $B$, we have that $d_1 | d_2$.
+
+  Now, we will show that this is satisfactory. Using column and row flips, we may assume that $N\left( A \right) = N\left( a_{11} \right)$. Write
+  \begin{align*}
+    a_{1j} &= a_{11}q_{1j} + r_{1j}\\
+    a_{i1} &= a_{11}q_{i1} + r_{i1}
+  \end{align*}
+  for all $2\leq i,j\leq n$. Then, for any $i$ and $j$, we have $N\left( r_{i1} \right) < N\left( a_{11} \right)$ and $N\left( r_{1j} \right)\leq N\left( a_{11} \right)$, or we have $N\left( r_{i1} \right) = 0$ or $N\left( r_{1j} \right) = 0$. By applying the operations $C_j(A) \mapsto C_j(A) - q_{1j}C_1(A)$ and $R_i(A) \mapsto R_i(A) - q_{i1}R_1(A)$, we may perform the replacements $a_{i1}\mapsto r_{i1}$ and $a_{1j}\mapsto r_{1j}$. If there is at least one such nonzero remainder, then we have $N\left( A' \right) < N(A)$, and this shows case (i).
+
+  If all the remainders are $0$, then we have the block diagonal form \eqref{eq:block_diag_form_snf}, and split into two subcases. If we had $a_{11} | b_{ij}$ for all $b_{ij}\in B$, then we would be done. Else, suppose there were some $s,t \geq 2$ with $a_{11}\nmid a_{st}$. In this case, we may first perform the operation $R_1(A')\mapsto R_1(A') + R_s(A')$, write $a_{st} = a_{11}q + r$ with $r\neq 0$, and then perform $C_t(A) = C_t(A) - qC_1(A)$ to find that $N(A')$ is not minimal, so we may perform the process further. This gives existence.
+\end{proof}
 \end{document}
