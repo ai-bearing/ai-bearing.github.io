@@ -48,6 +48,9 @@ permalink: "/useful_resources.html"
         - [Extreme Points, the Krein--Milman Theorem, and Applications](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/extreme_points_krein_milman_and_stone_weierstrass.pdf)
         - [Compact and Fredholm Operators](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/compact_and_fredholm_operators.pdf)
         - [Functional Calculus in Banach and $C^{\ast}$-Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/continuous_functional_calculus.pdf)
+        - [Spectral Theory for Normal Operators](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/spectral_theory_normal_operators.pdf)
+        - [Positive Elements and Ideals in $C^{\ast}$-Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/positive_elements_cstar_algebras.pdf)
+        - [States and Representations](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/states_and_representations.pdf)
       - Miscellaneous Notes/Workthroughs:
         - [Functional Analysis Exercises](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conway_analysis_exercises.pdf)
         - [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
