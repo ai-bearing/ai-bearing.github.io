@@ -114,13 +114,9 @@ We start by recalling some of the topologies on $B(H)$.
     \item $W^{\ast}$ is a partial isometry;
     \item $W^{\ast}W$ is a projection (onto the initial space of $W$);
     \item $WW^{\ast}$ is a projection (onto the final space of $W$);
-    \item $WW^{\ast}W = W$;
-    \item $W^{\ast}WW^{\ast} = W^{\ast}$.
   \end{enumerate}
 \end{proposition}
 \begin{proof}
-  The equivalence between (v) and (vi) follows from taking adjoints.
-
   Let $W$ be a partial isometry, meaning that $W$ is an isometry from $\left( \ker\left( W \right) \right)^{\perp}$ to $\img(W)$. Since $\img(W)$ is dense in $\ker\left( W^{\ast} \right)^{\perp}$, it follows that we only need to show that $W^{\ast}$ is an isometry on $\img(W)$. Let $k\in \img(W)$, so there is $h\in \left( \ker\left( W \right) \right)^{\perp}$ such that $Wh = k$. Then, we have
   \begin{align*}
     \iprod{Wh}{Wh} &= \iprod{h}{h}
@@ -143,7 +139,30 @@ We start by recalling some of the topologies on $B(H)$.
                             &= \iprod{z}{z} - \iprod{Wz}{Wz}\\
                             &= 0,
   \end{align*}
-  since $\norm{Wz} = \norm{z}$ by definition. In particular, following from the polarization identity, this means that for all $v\in H$, we have $ \iprod{z-W^{\ast}Wx}{v} = 0 $, so that $z = W^{\ast}Wx$. This shows that (i) implies (iii). By taking adjoints, we see that (ii) implies that $WW^{\ast}$ is a projection onto the initial space of $W^{\ast}$, which is equal to the final space of $W$.
+  since $\norm{Wz} = \norm{z}$ by definition. In particular, following from the polarization identity, this means that for all $v\in H$, we have $ \iprod{z-W^{\ast}Wx}{v} = 0 $, so that $z = W^{\ast}Wx$. This shows that (i) implies (iii). By replacing all instances of $W$ with $W^{\ast}$, we see that (ii) implies that $WW^{\ast}$ is a projection onto the initial space of $W^{\ast}$, which is equal to the final space of $W$.
+\end{proof}
+\begin{theorem}[Polar Decomposition]
+  Let $A\in B(H)$. Then, there is a partial isometry $W$ with initial space $\left( \ker\left( A \right) \right)^{\perp}$ and final space $ \overline{\img(A)} $ such that $A = W \left\vert A \right\vert$. Moreover, if $A = UP$, where $P$ is a positive operator and $U$ is a partial isometry with $\ker(U) = \ker(P)$, then $P = \left\vert A \right\vert$  and $U = W$.
+\end{theorem}
+\begin{proof}
+  Let $h\in H$. Then, 
+  \begin{align*}
+    \norm{Ah} &= \iprod{A^{\ast}Ah}{h}\\
+              &= \iprod{\left\vert A \right\vert h}{\left\vert A \right\vert h},
+  \end{align*}
+  so that
+  \begin{align*}
+    \norm{Ah} &= \norm{ \left\vert A \right\vert h }.
+  \end{align*}
+  We may thus define $W\colon \img\left(\left\vert A \right\vert\right) \rightarrow \img\left( A \right)$ by taking
+  \begin{align*}
+    W\left( \left\vert A \right\vert h \right) &= Ah.
+  \end{align*}
+  Then, from above, we know that $W$ is an isometry, so it can be extended to an isometry from $ \overline{\img\left(\left\vert A \right\vert\right)} $ to $ \overline{\img\left( A \right)} $. We may then extend $W$ to all of $H$ by defining it to be $0$ on $ \left( \img\left( \left\vert A \right\vert \right) \right)^{\perp} $. This makes $W$ a partial isometry with $W\left\vert A \right\vert = A$. We must verify that $W$ has the correct initial space. That is, we must show that $ \overline{\img\left( \left\vert A \right\vert \right)} = \left( \ker\left( A \right) \right)^{\perp} $.
+
+  Suppose $f = A^{\ast}g$ for some $g\in \left( \ker\left( A^{\ast} \right) \right)^{\perp} = \overline{\img(A)}$. Then, $\img\left( A^{\ast}A \right)$ is dense in $ \left( \ker\left( A \right) \right)^{\perp} $. Yet, since $A^{\ast}Ak = \left\vert A \right\vert h$, where $h = \left\vert A \right\vert k$, it follows that $ \img\left( \left\vert A \right\vert \right) $ is dense in $ \left( \ker\left( A \right) \right)^{\perp} $.
+
+  For uniqueness, we have that $A^{\ast}A = PU^{\ast}UP$, but since $U^{\ast}U$ is the projection onto the initial space, it follows that $\left( \ker\left( U \right) \right)^{\perp} = \left( \ker\left( P \right) \right)^{\perp} = \overline{\img(P)}$, meaning $A^{\ast}A = P^2$, so $P = \left\vert A \right\vert$ by the uniqueness in the continuous functional calculus. For any $h\in H$, we have $W \left\vert A \right\vert h = Ah = U \left\vert A \right\vert h$, meaning that $U$ and $W$ agree on a dense subset of their initial space, so $U = W$.
 \end{proof}
 \subsection{Double Commutant Theorem}%
 \begin{definition}
@@ -198,8 +217,25 @@ for $j=1,\dots,n-1$, and $P_n = \chi_{\left[ t_{n-1},t_n \right]}$. Then, we nec
   \norm{a - \sum_{j=1}^{n}t_jP_j}_{\op} < \ve,
 \end{align*}
 so every self-adjoint operator is in the norm-closed linear span of the projections of $M$. Since every element of $M$ can be written as a decomposition of self-adjoint operators, it follows that $M$ is the norm-closed linear span of its projections.
+\begin{proposition}
+  Let $M$ be a von Neumann algebra, and let $A\in M$.
+  \begin{enumerate}[(a)]
+    \item If $A$ is normal, and $\phi$ is a bounded Borel function on $\sigma(A)$, then $\phi(A) \in M$.
+    \item The operator $A$ is the linear combination of four unitaries in $M$.
+    \item If $E$ and $F$ are the projections onto $ \overline{\img(A)} $ and $\ker (A)$ respectively, then $E,F\in M$.
+    \item If $A = W \left\vert A \right\vert$ is the polar decomposition for $A$, then $W$ and $ \left\vert A \right\vert $ are in $M$.
+  \end{enumerate}
+\end{proposition}
 \section{Abelian von Neumann Algebras}%
-
+\begin{definition}
+  Two subsets $M_1\subseteq B\left(H_1\right)$ and $M_2\subseteq B\left( H_2 \right)$ are said to be \textit{spatially isomorphic} if there is an isomorphism $U\colon H_1\rightarrow H_2$ such that $U M_1 U^{-1} = M_2$.
+\end{definition}
+\begin{definition}
+  A vector $e_0$ is said to be separating for $S\subseteq B\left( H \right)$ if the only operator $T\in S$ for which $Te_0 = 0$ is the $0$ operator.
+\end{definition}
+\begin{proposition}
+  If $S$ is a subspace of $B(H)$, then every cyclic vector for $S$ is separating for $S'$. If $A$ is a $C^{\ast}$-algebra of operators, then a vector is cyclic for $A$ if and only if it is separating for $A'$.
+\end{proposition}
 \section{Kaplansky Density Theorem and Pedersen's Up-Down Theorem}%
 \section{Comparison Theory of Projections}%
 
