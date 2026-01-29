@@ -31,14 +31,24 @@
 \end{problem}
 \begin{solution}\hfill
   \begin{enumerate}[(a)]
-    \item Observe that a square matrix is in Smith normal form if and only if it is a diagonal matrix of the form $D = \operatorname{diag}\left( d_1,\dots,d_m,0,\dots,0 \right)$ where $d_1 | d_2 | \cdots | d_m$. By the proof of the Smith normal form, we have that the matrix $UAV$ in Smith normal form is the product of three invertible matrices, so it is invertible, meaning that it is necessarily diagonal with $d_1,\dots,d_n\in R^{\times}$. Since the inverse of any $E_{ij}(\lambda)$ is another matrix of the form $E_{ij}(\lambda)$, and the inverse of $F_{ij}$ is $F_{ji}$, it follows that we may write any $A\in \GL_n\left( R \right)$ as
+    \item Observe that a square matrix is in Smith normal form if and only if it is a diagonal matrix of the form $D = \operatorname{diag}\left( d_1,\dots,d_m,0,\dots,0 \right)$ where $d_1 | d_2 | \cdots | d_m$. By the proof of the Smith normal form, we have that the matrix $UAV$ in Smith normal form is the product of three invertible matrices, so it is invertible, meaning that it is necessarily diagonal with $d_1,\dots,d_n\in R^{\times}$. Since the inverse of any $E_{ij}(\lambda)$ is another matrix of the form $E_{ij}(\lambda)$, and the inverse of $F_{ij}$ is itself, it follows that we may write any $A\in \GL_n\left( R \right)$ as
       \begin{align*}
         A &= U^{-1}DV^{-1},
       \end{align*}
       where $U^{-1}$ and $V^{-1}$ are collections of flips and $E_{ij}(\lambda)$ and $D$ is a diagonal matrix with $d_1,\dots,d_n\in R^{\times}$.
-    \item 
+    \item We observe that the following relation holds between the matrices $E_{ij}(\lambda)$ and $F_{ij}$:
+      \begin{align*}
+        E_{ij}(\lambda)F_{jk} &= F_{jk} E_{ik}(\lambda)\\
+        E_{ij}(\lambda)F_{ik} &= F_{ik}E_{kj}(\lambda)\\
+        E_{ij}(\lambda)F_{k\ell} &= F_{k\ell}E_{ij}(\lambda)
+      \end{align*}
+      where in the last case, we have both $k,\ell$ not equal to either $i$ or $j$. Since the form of these flip matrices is preserved, upon performing this reduction we may collect all the flip matrices at the front of the expression $A = U^{-1}DV^{-1}$.
   \end{enumerate}
 \end{solution}
+\begin{problem}[Problem 2]
+  Let $R$ be a Euclidean domain, let $k,n\in \N$, and let $i\leq \min\left( k,n \right)$. Given a matrix $A\in \Mat_{k,n}(R)$, define $d_i(A)$ to be the greatest common divisor of all $i\times i$ minors of $A$. Prove that $d_i(PAQ) = d_i(A)$ for all $P\in \GL_k(R)$ and $Q\in \GL_n(R)$.
+\end{problem}
+
 \begin{problem}[Problem 3]
   Let $R$ be a commutative ring with $1$.
   \begin{enumerate}[(a)]
@@ -65,7 +75,76 @@
         t\otimes \left( a+bi \right) &\mapsto ta + tbi.
       \end{align*}
       To see that this map is injective, observe that $ta + tbi = 0$ if and only if $ta = 0$ and $tb = 0$, meaning either that $t = 0$ or $a,b = 0$; in either case, the corresponding element of the tensor product is the zero tensor. As for surjectivity, if we have $x + yi\in \C$, then we may find the element $x\otimes 1 + y\otimes i\in \R\otimes_{\Z}\Z[i]$ that maps to $x + yi$. Since this is a bijective $\Z$-algebra homomorphism, it follows that $\R\otimes_{\Z}\Z[i]\cong \C$ as $\Z$-algebras, hence as rings.
+    \item Suppose $A$ is an $R$-algebra such that $A\otimes_{R}A$ is a field. 
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 5]
+  Let $V$ and $W$ be finite-dimensional vector spaces over $F$, with $\set{v_1,\dots,v_n}$ a basis for $V$ and $\set{w_1,\dots,w_m}$ a basis for $W$. Let $\varphi\colon V\otimes W\rightarrow \Mat_{n,m}(F)$ be given by $\varphi\left( v_i\otimes w_j \right) = e_{ij}$, where $e_{ij}$ is the matrix unit whose $\left( i,j \right)$ entry is $1$ and all other entries are $0$.
+  \begin{enumerate}[(a)]
+    \item Prove that for a matrix $A\in \Mat_{n,m}(F)$, the following are equivalent:
+      \begin{enumerate}[(i)]
+        \item $A = \varphi\left( v\otimes w \right)$ for some elements $v\in V$ and $w\in W$;
+        \item $\operatorname{rk}(A) \leq 1$.
+      \end{enumerate}
+    \item Let $A\in \Mat_{n,m}(F)$. Prove that $\operatorname{rk}(A)$ is the smallest $d$ such that $\varphi^{-1}(A)$ can be written as a sum of $d$ simple tensors.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Suppose that $A = \varphi\left( v\otimes w \right)$ for some $v\in V$ and $w\in W$. We may write
+      \begin{align*}
+        v\otimes w &= \sum_{i=1}^{n}\sum_{j=1}^{m} s_it_j e_i\otimes e_j\\
+        A &= \sum_{i=1}^{n}\sum_{j=1}^{m} s_it_je_{ij}.
+      \end{align*}
+      Then, using the identity
+      \begin{align*}
+        e_{ij}\left( e_k \right) &= \delta_{jk}e_i,
+      \end{align*}
+      where $\delta_{jk}$ denotes the Kronecker delta, we get that for an arbitrary vector
+      \begin{align*}
+        x &= \sum_{k=1}^{m} r_ke_k
+      \end{align*}
+      in $F^m$, we have
+      \begin{align*}
+        Ax &= \left( \sum_{i=1}^{n}\sum_{j=1}^{m}s_it_je_{ij} \right)\left( \sum_{k=1}^{m}r_ke_k \right)\\
+           &= \sum_{i=1}^{n} \sum_{j=1}^{m}\sum_{k=1}^{m}s_it_jr_ke_{ij}\left( e_k \right)\\
+           &= \sum_{i=1}^{n}\sum_{j=1}^{m}\sum_{k=1}^{m}s_it_jr_k \delta_{jk}e_i\\
+           &= \sum_{i=1}^{n}\sum_{j=1}^{m}t_jr_j s_ie_i\\
+           &= \sum_{j=1}^{m} t_jr_j\left( \sum_{i=1}^{n}s_ie_i \right)\\
+           &\in \Span\set{\sum_{i=1}^{n}s_ie_i}.
+      \end{align*}
+      Therefore, $\operatorname{rk}(A)\leq 1$.
+
+      If $\operatorname{rk}(A) = 0$, then $v\otimes w$ is the zero tensor since $\varphi$ is an isomorphism. Else, we assume $\operatorname{rk}(A) = 1$. Then, there are some coefficients $s_1,\dots,s_n$ such that
+      \begin{align*}
+        \img(A) &= \Span\set{\sum_{i=1}^{n}s_ie_i}.
+      \end{align*}
+      Now, let
+      \begin{align*}
+        x &= \sum_{k=1}^{m}r_ke_k.
+      \end{align*}
+      We may then define
+      \begin{align*}
+        w &= \sum_{j=1}^{m} t_je_j
+      \end{align*}
+      to be such that
+      \begin{align*}
+        \sum_{j=1}^{m}t_jr_j &= c,
+      \end{align*}
+      so that
+      \begin{align*}
+        \varphi\left( \left( \sum_{i=1}^{n}s_ie_i \right)\otimes \left( \sum_{j=1}^{m}t_je_j \right) \right) \left( \sum_{k=1}^{m}r_ke_k \right) &= c\sum_{i=1}^{n}s_ie_i.
+      \end{align*}
+      Thus, we find $v\otimes w$ such that $A = \varphi\left( v\otimes w \right)$.
     \item 
   \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 6]
+  Let $R$ be a ring with $1$, and let $M$ be a left $R$-module, $N$ a submodule. Prove that $M$ is Noetherian if and only if $N$ and $M/N$ are both Noetherian.
+\end{problem}
+\begin{solution}
+  Suppose $M$ is a Noetherian module. Then, any submodule of $M$ is finitely generated, so since any submodule of $N$ is a submodule of $M$, $N$ is Noetherian. Similarly, since any submodule of $M/N$ corresponds to a submodule of $M$ that contains $N$ by the Fourth Isomorphism Theorem, it follows that $M/N$ is also Noetherian.
+
+  Now, suppose $M$ is a module such that $M/N$ and $N$ are Noetherian. Let $P_1\leq P_2\leq\cdots$ be an ascending chain of submodules for $M$. Then, $P_1\cap N \leq P_2\cap N\leq \cdots$ is an ascending chain of submodules of $N$, so there is some index $k_1$ such that $P_{k_1 + i} = P_{k_1}$ for all $i\in \N$. Similarly, the set of submodules $P_1 + N\leq P_2 + N \leq \cdots$ is an ascending chain of submodules that contains $N$, so the submodules $\left( P_1+N \right)/N\leq \left( P_2+N \right)/N\leq\cdots$ forms an ascending chain of submodules in $M/N$, so there is some index $k_2$ such that $P_{k_2 + i} = P_{k_2}$ for all $i\in \N$. In particular, this means that for all $i\in \N$, $P_{k+i} = P_k$, where $k = \max\left( k_1,k_2 \right)$, so $M$ is Noetherian.
 \end{solution}
 \end{document}
