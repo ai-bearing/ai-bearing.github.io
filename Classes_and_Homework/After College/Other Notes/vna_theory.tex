@@ -21,6 +21,8 @@
 
 \begin{document}
 \RaggedRight
+Notationally, we will use $1$ to denote the identity operator.
+\tableofcontents
 \section{Introduction and Preliminaries}%
 We start by recalling some of the topologies on $B(H)$.
 \begin{definition}
@@ -172,7 +174,7 @@ We start by recalling some of the topologies on $B(H)$.
   \begin{align*}
     W \left\vert T \right\vert W^{\ast} W \left\vert T \right\vert W^{\ast} &= W \left\vert T \right\vert^2 W^{\ast}\\
                                                                             &= W T T^{\ast} W^{\ast}\\
-                                                                            &= TT^{\ast}.T
+                                                                            &= TT^{\ast}
   \end{align*}
   Therefore, by uniqueness, we have $W \left\vert T \right\vert W = \left\vert T^{\ast} \right\vert$. Furthermore, we see that
   \begin{align*}
@@ -204,7 +206,7 @@ We see that $M'$ is a WOT-closed subalgebra, and if $M'$ is self-adjoint, then $
 \begin{proof}
   The implications (i) implies (ii) follows from the discussion above, and (ii) if and only (iii) follow from the definitions (as subalgebras are convex). We focus on showing that (iii) implies (i).
 
-  For a fixed $\xi\in H$, let $P$ be the projection onto the closure of the subspace $\set{T\xi | T\in M}$. We see that $P\xi = \xi$, since $I_{H} \in M$. Additionally, $PTP = TP$ for each $T\in M$, so $P\in M'$. Letting $V\in M''$, we have that $PV = VP$, so $V\xi \in PH$. In particular, for each $\ve > 0$, there is $S\in M$ such that $\norm{\left( V-S \right)\xi} < \ve$.
+  For a fixed $\xi\in H$, let $P$ be the projection onto the closure of the subspace $\set{T\xi | T\in M}$. We see that $P\xi = \xi$, since $1 \in M$. Additionally, $PTP = TP$ for each $T\in M$, so $P\in M'$. Letting $V\in M''$, we have that $PV = VP$, so $V\xi \in PH$. In particular, for each $\ve > 0$, there is $S\in M$ such that $\norm{\left( V-S \right)\xi} < \ve$.
 
   Let $\xi_1,\dots,\xi_n\in H$, and set $\xi = \left( \xi_1,\dots,\xi_n \right)$ in $H^{(n)}$. Letting $\rho\colon B(H)\hookrightarrow B\left(H^{(n)}\right)$ be the embedding defined by
   \begin{align*}
@@ -331,29 +333,342 @@ so every self-adjoint operator is in the norm-closed linear span of the projecti
 \end{proof}
 \subsection{Preduals and Duals of von Neumann Algebras}%
 A theorem of Sakai says that a $C^{\ast}$-algebra $M\subseteq B(H)$ is a von Neumann algebra precisely whenever there exists a predual for $M$; we do not prove this here, but we start by seeking to understand the predual of certain von Neumann algebras. This will enable us to understand the dual space of a von Neumann algebra.
-\begin{definition}
-  An operator $T\in B(H)$ is called \textit{trace-class} if the quantity
-  \begin{align*}
-    \norm{T}_{1} &= \operatorname{Tr}\left( \left\vert T \right\vert \right)\\
-                 &= \sum_{i\in I} \iprod{\left\vert T \right\vert e_i}{e_i}
-  \end{align*}
-  is finite, where $\left( e_i \right)_{i\in I}$ is an orthonormal basis. The set of all trace-class operators is denoted $L_1\left( B(H) \right)$.
-\end{definition}
-The well-definition of the trace-class norm follows from Parseval's identity: if $\left( e_i \right)_{i\in I}$ and $\left( f_j \right)_{j\in J}$ are orthonormal bases for $H$, then
+
+An operator $T\in B(H)$ is called \textit{trace-class} if there exists an orthonormal basis $\left( e_i \right)_{i\in I}$ such that the quantity
 \begin{align*}
-  \sum_{i\in I} \iprod{\left\vert A \right\vert e_i}{e_i} &= \sum_{i\in I} \norm{ \left\vert A \right\vert^{1/2}e_i }^2\\
-                                                          &= \sum_{i\in I}\sum_{j\in J} \left\vert \iprod{\left\vert A \right\vert^{1/2}e_i}{f_j} \right\vert^2\\
-                                                          &= \sum_{i\in I} \sum_{j\in J} \left\vert \iprod{ \left( \left\vert A \right\vert^{1/2} \right)^{\ast}f_j }{e_i} \right\vert^2\\
-                                                          &= \sum_{j\in J}\sum_{i\in I} \left\vert \iprod{\left\vert A \right\vert^{1/2}f_j}{e_i} \right\vert^2
-                                                          &= \sum_{j\in J} \norm{\left\vert A \right\vert^{1/2}f_j}^2\\
-                                                          &= \sum_{j\in J} \iprod{\left\vert A \right\vert f_j}{f_j}.
+  \tr\left( \left\vert T \right\vert \right) &\coloneq \sum_{i\in I} \iprod{\left\vert T \right\vert e_i}{e_i}\\
+                                                           &< \infty.
 \end{align*}
+Similarly, an operator $T\in B(H)$ is called \textit{Hilbert--Schmidt} if the quantity $\tr\left( T^{\ast}T \right) < \infty$. The set of all trace-class operators is denoted $L_1\left( B(H) \right)$, while the set of Hilbert--Schmidt operators is denoted $L_2\left( B(H) \right)$. We list some essential properties of trace-class operators. The proofs can be found in \cite[Ch. 3, \S 18]{conway_operator_theory}.
+\begin{proposition}[Properties of trace-class and Hilbert--Schmidt operators]
+  Let $T_1\in L_1\left( B(H) \right)$ and $T_2\in L_2\left( B(H) \right)$. The following properties hold.
+  \begin{enumerate}[(i)]
+    \item The quantities 
+      \begin{align*}
+        \norm{T_1}_{1} &\coloneq \tr\left( \left\vert T_1 \right\vert \right)\\
+        \norm{T_2}_{2} &\coloneq \tr\left( T_2^{\ast}T_2 \right)
+      \end{align*}
+      define norms for $T_1$ and $T_2$ respectively.
+    \item For any $A\in B(H)$, we have $\tr\left( AT_1 \right) = \tr\left( T_1A \right)$, and $\left\vert \tr\left( AT_1 \right) \right\vert\leq \norm{A}_{\op}\norm{T_1}_{1}$.
+    \item Both $L_1\left( B(H) \right)$ and $L_2\left( B(H) \right)$ are ideals in $B(H)$ satisfying
+      \begin{align*}
+        \norm{AT_{1,2}}_{1,2} &\leq \norm{A}_{\op}\norm{T_{1,2}}_{1,2}.
+      \end{align*}
+      Furthermore, both $L_1\left( B(H) \right)$ and $L_2\left( B(H) \right)$ are subsets of $K(H)$.
+    \item The operator $T_1$ is the product of two Hilbert--Schmidt operators, and any operator $S$ is trace-class if and only if it is the product of two Hilbert--Schmidt operators.
+    \item The pairing $ \iprod{A}{B} = \tr\left( B^{\ast}A \right) $ defines an inner product on $L_2\left( B(H) \right)$, and $L_2\left( B(H) \right)$ is a Hilbert space with respect to this inner product.
+  \end{enumerate}
+\end{proposition}
+The main thing we are interested in is understanding the duality properties of trace-class operators. We observe that the following is an analogue of the duality $\left( c_0 \right)^{\ast} = \ell_1$.
+\begin{theorem}
+  For any $T\in L_1\left( B(H) \right)$, define the linear functional $\phi_T\colon K(H)\rightarrow \C$ by $\phi_T(A) = \tr\left( TA \right) = \tr\left( AT \right)$. Then, the map $T\mapsto \phi_T$ is an isometric isomorphism between $L_1\left( B(H) \right)$ and $\left( K(H) \right)^{\ast}$.
+\end{theorem}
+\begin{proof}
+  We observe that
+  \begin{align*}
+    \sup\set{\left\vert \tr\left( AC \right) \right\vert | C\in K(H),\norm{C}_{\op}\leq 1} &\leq \norm{A}_{1},
+  \end{align*}
+  so that $\Phi_A$ is a bounded linear functional on $K(H)$ satisfying $\norm{\Phi_A} \leq \norm{A}_{1}$. Defining $\rho\colon L_1\left( B(H) \right)\rightarrow K(H)$ by $\rho(A) = \Phi_A$, we have that $\rho$ is a linear map with $\norm{\rho(A)}\leq \norm{A}_{1}$ for all $A\in L_1\left( B(H) \right)$.
 
+  Now, we will show that $\rho$ is surjective with $\norm{\rho(A)}\geq \norm{A}_{1}$ for any $A\in L_1\left( B(H) \right)$. Define a sesquilinear form for $\Phi\in K(H)^{\ast}$ by $\left[ g,h \right] = \Phi\left( \theta_{g,h} \right)$, where $\theta_{g,h}$ is the rank-one bounded operator given by
+  \begin{align*}
+    \theta_{g,h}(k) &= \iprod{k}{h}g.
+  \end{align*}
+  We have that $\left\vert \left[ g,h \right] \right\vert\leq \norm{\Phi}\norm{g}\norm{h}$ for all $g$ and $h$, so $\left[ \cdot,\cdot \right]$ is bounded, so there is $A\in B(H)$ such that $\left[ g,h \right] = \iprod{Ag}{h}$. We will show that $A\in L_1\left( B(H) \right)$ with $\Phi = \Phi_A$.
+
+  Let $C\in F(H)$ be given by
+  \begin{align*}
+    C &= \sum_{k=1}^{n}\theta_{g_k,h_k},
+  \end{align*}
+  Then,
+  \begin{align*}
+    \Phi(C) &= \Phi\left( \sum_{k=1}^{n}\theta_{g_k\otimes h_k} \right)\\
+            &= \sum_{k=1}^{n} \iprod{Ag_k}{h_k}\\
+            &= \sum_{k=1}^{n} \tr\left( A\theta_{g_k,h_k} \right)\\
+            &= \tr\left( AC \right).
+  \end{align*}
+  If we can show that $A\in L_1\left( B(H) \right)$, then both $\Phi$ and $\Phi_A$ are bounded linear functionals on $K(H)$ that agree on $F(H)$.
+
+  For this, let $A = W\left\vert A \right\vert$ be the polar decomposition of $A$, and let $\left( e_i \right)_{i\in I}$ be an orthonormal basis. For any finite subset $F\subseteq I$, we have
+  \begin{align*}
+    C_F\coloneq \left( \sum_{i\in F} \theta_{e_i,e_i} \right)W^{\ast}
+  \end{align*}
+  is a contraction in $F(H)$ with 
+  \begin{align*}
+    \norm{\Phi} &\geq \left\vert \Phi\left( C_F \right) \right\vert\\
+                &= \left\vert \Phi\left( \sum_{i\in F} e_i\otimes We_i \right) \right\vert\\
+                &= \sum_{i\in F} \left\vert \iprod{Ae_i}{We_i} \right\vert\\
+                &= \sum_{i\in F} \iprod{\left\vert A \right\vert e_i}{e_i}.
+  \end{align*}
+  Letting $F$ grow arbitrarily gives $\norm{\Phi}\geq \norm{A}_1$, so $A\in L_1\left( B(H) \right)$, and $\Phi = \Phi_A$. Yet, this means $\norm{\Phi_A} \geq \norm{A}_1$, so $\rho$ is an isometry.
+\end{proof}
+Similarly, just as $\left( \ell_1 \right)^{\ast} = \ell_{\infty}$, the following holds.
+\begin{theorem}
+  Let $\Psi\colon L_1\left( B(H) \right)\rightarrow \C$ be given by
+  \begin{align*}
+    \Phi_B(A) &= \tr\left( AB \right).
+  \end{align*}
+  Then, the map $B\mapsto \Phi_B$ defines an isometric isomorphism of $B(H)$ onto $\ell_1\left( B(H) \right)^{\ast}$.
+\end{theorem}
+\begin{proof}
+  That $\norm{\Psi_B}\leq \norm{B}$ follows from the fact that $\left\vert \tr\left( AB \right) \right\vert\leq \norm{A}_1\norm{B}_{\op}$. Defining $\rho(B) = \Psi_B$, we have $\rho$ is linear. If $\ve > 0$, we use the Riesz lemma to find a unit vector $g$ such that $\norm{Bg} > \norm{B}_{\op}-\ve$. Find a unit vector $h$ such that $ \iprod{Bg}{h} = \norm{Bg} $. Then, letting $C = \theta_{g,h}$, we have $C\in L_1\left( B(H) \right)$ with $\norm{C}_1 = 1$, with
+  \begin{align*}
+    \norm{\Psi_B} &\geq \left\vert \tr\left( BC \right) \right\vert\\
+                  &= \iprod{Bg}{h}\\
+                  &= \norm{Bg}\\
+                  &> \norm{B}_{\op} - \ve.
+  \end{align*}
+  Since $\ve$ is arbitrary, we have $\norm{\Psi_B} = \norm{B}_{\op}$, and $\rho$ is an isometry.
+
+  Now, let $\Psi\in L_1\left( B(H) \right)^{\ast}$. Then, there is an operator $B\in B(H)$ such that $ \iprod{Bg}{h} = \Psi\left( \theta_{g,h} \right) $ for all $g,h\in H$. Then, it follows that $\Psi(T) = \Psi_B(T)$ for every finite-rank operator $T$, so since $F(H)$ is dense in $L_1\left( B(H) \right)$, we have that both $\Psi$ and $\Psi_B$ are bounded linear functionals with $\Psi = \Psi_B$.
+\end{proof}
+Therefore, we can talk about the weak* topology on $B(H)$ induced by $L_1\left( B(H) \right)$. We discuss an alternative form of convergence known as $\sigma$-WOT and $\sigma$-SOT convergence.
+\begin{definition}
+  Let $H$ be a Hilbert space. The $\sigma$-strong operator topology on $B(H)$ is the locally convex topology defined by the family of seminorms
+  \begin{align*}
+    p_{\xi}\left( T \right) &= \norm{\left( T\otimes 1 \right)\xi}
+  \end{align*}
+  for all $\xi\in H\otimes \ell_2$. The norm is defined by
+  \begin{align*}
+    \norm{\left( T\otimes 1 \right)\xi} &= \left( \sum_{k=1}^{\infty}\norm{T\xi_k}^{2} \right)^{1/2}.
+  \end{align*}
+  The $\sigma$-weak operator topology on $B(H)$ is the locally convex topology defined by the family of seminorms
+  \begin{align*}
+    q_{\xi,\eta} &= \left\vert \iprod{\left( T\otimes 1 \right)\xi}{\eta} \right\vert
+  \end{align*}
+  for all $\xi,\eta\in H\otimes \ell_2$. The inner product is defined by
+  \begin{align*}
+    \left\vert \iprod{\left( T\otimes 1 \right)\xi}{\eta} \right\vert &= \left\vert \sum_{k=1}^{\infty} \iprod{T\xi_k}{\eta_k}\right\vert.
+  \end{align*}
+\end{definition}
+We note that $\sigma$-WOT and WOT are equal on bounded subsets of $B(H)$. Furthermore, the following holds.
+\begin{proposition}
+  The weak* topology on $B(H)$ induced by $L_1\left( B(H) \right)$ and the $\sigma$-WOT are identical.
+\end{proposition}
+\begin{proof}
+  First, we observe that for any sequences $\xi,\eta\in H\otimes \ell_2$, we have that the operator
+  \begin{align*}
+    T &= \sum_{k=1}^{\infty}\theta_{\xi_k,\eta_k}\label{eq:trace_class_form}\tag{$\ast$}
+  \end{align*}
+  is trace-class. Since multiplication by an element of $B(H)$ is continuous with respect to the trace-class norm, it follows that, whenever $\left( S_i \right)_i\rightarrow S$ is a $w^{\ast}$-convergent net, then
+  \begin{align*}
+    \sum_{k=1}^{\infty} \iprod{S_i\xi_k}{\eta_k} &= \tr\left( \sum_{k=1}^{\infty}\theta_{S_i\xi_k,\eta_k} \right)\\
+                                                 &= \tr\left( S_iT \right)\\
+                                                 &\rightarrow \tr\left( ST \right)\\
+                                                 &= \sum_{k=1}^{\infty} \iprod{S\xi_k}{\eta_k}.
+  \end{align*}
+  Therefore, we have that each seminorm tends to $0$ for all $\xi,\eta\in H\otimes \ell_2$, meaning $\left( S_i \right)_{i}\rightarrow S$ in $\sigma$-WOT.
+
+  Now, if $\left( S_i \right)_i\rightarrow S$ in $\sigma$-WOT, then since every trace-class operator is of the form in \eqref{eq:trace_class_form}, it follows that $\tr\left( S_iT \right) \rightarrow \tr\left( ST \right)$ for every $T\in L_1\left( B(H) \right)$, so $\left( S_i \right)_i\rightarrow S$ is $w^{\ast}$-convergent.
+\end{proof}
+The existence of a predual for $B(H)$ extends to all von Neumann algebras.
+\begin{theorem}
+  Let $M\subseteq B(H)$ be a von Neumann algebra. Then, there is a Banach space $M_{\ast}$ such that $M$ is isometrically isomorphic to $\left( M_{\ast} \right)^{\ast}$, where the $w^{\ast}$ topology on $M$ is the $\sigma$-weak topology.
+\end{theorem}
+\begin{proof}
+  Let $M^{\perp}$ be the annihilator of $M$ in $B(H)$, in that
+  \begin{align*}
+    M^{\perp} &= \set{A\in L_1\left( B(H) \right) | \tr\left( AT \right) = 0\text{ for all }T\in M}.
+  \end{align*}
+  Then, $M^{\perp}$ is a norm-closed subspace of $L_1\left( B(H) \right)$, so we form the Banach space $M_{\ast} = L_1\left( B(H) \right)/M^{\perp}$. Since $M$ is $\sigma$-WOT closed (as it is WOT-closed), it follows that $M = \left( M^{\perp} \right)_{\perp}$, where $N_{\perp}$ denotes the pre-annihilator. The quotient map $Q\colon L_1\left( B(H) \right)\rightarrow M_{\ast}$ is thus an isometric embedding of $\left( M_{\ast} \right)^{\ast}$ onto $M$ in $B(H)$.
+\end{proof}
+We specifically consider $M_{\ast}$ to be the collection of $\sigma$-WOT continuous linear functionals on $M$.
 \section{Kaplansky Density Theorem and Pedersen's Up-Down Theorem}%
+We start by discussing two extremely useful theorems.
+\subsection{Kaplansky's Density Theorem}%
+\begin{lemma}
+  Let $\left( T_i \right)_{i\in I},\left( S_i \right)_{i\in I}\subseteq B(H)$ be nets with $\left( T_i \right)_i\rightarrow T, \left( S_i \right)_i\rightarrow S$ in SOT. If $\sup_{i\in I}\norm{T_i}< \infty$, then $\left( T_iS_i \right)_{i}\rightarrow TS$ in SOT.
+\end{lemma}
+\begin{proof}
+  Set $R = \sup_{i}\norm{T_i}$. Then, for any $\xi\in H$,
+  \begin{align*}
+    \norm{TS\xi - T_iS_i\xi} &\leq \norm{\left( T-T_i \right)S\xi} + \norm{T_i\left( S-S_i \right)\xi}\\
+                             &\leq \norm{\left( T-T_i \right)\xi} + R\norm{\left( S-S_i \right)\xi}\\
+                             &\rightarrow 0.
+  \end{align*}
+\end{proof}
+\begin{proposition}
+  Let $f\in C(\C)$. Then, the map $T\mapsto f(T)$ on normal operators in $B(H)$ is SOT-continuous on bounded subsets of $B(H)$.
+\end{proposition}
+\begin{proof}
+  Let $\left( T_i \right)_i$ be a uniformly bounded net of operators converging to $T$ in SOT, with $R = \sup_{i}\norm{T_i}$. By Stone--Weierstrass, we are able to approximate $f$ uniformly $B\left( 0,R \right)$ by a sequence of polynomials $\left( p_n \right)_n\subseteq \C\left[ z,\overline{z} \right]$. Since multiplication is SOT-continuous on bounded subsets, it follows that $\left( p_n\left( T_i,T_i^{\ast} \right) \right)_i\rightarrow p_n\left( T_i,T_i^{\ast} \right)$ in SOT.
 
+  Fix $\xi\in H$, $\ve > 0$, and set $N$ to be such that
+  \begin{align*}
+    \sup_{z\in B(0,R)} \left\vert f(z)-p_N\left( z, \overline{z} \right) \right\vert &< \frac{\ve}{3\norm{\xi}},
+  \end{align*}
+  and $i_0$ to be such that for all $i\geq i_0$,
+  \begin{align*}
+    \norm{\left( p_N\left( T_i,T_i^{\ast} \right) - p_N\left( T,T^{\ast} \right) \right)\xi} &< \ve/3.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \norm{\left( f(T)-f\left( T_i \right) \right)\xi} &\leq \norm{\left( f(T)-p_N\left( T,T^{\ast} \right) \right)}\norm{\xi} + \norm{\left( p_N\left( T,T^{\ast} \right)-p_N\left( T_i,T_i^{\ast} \right) \right)\xi} + \norm{\left( p_N\left( T_i,T_i^{\ast} \right)-f\left( T_i \right) \right)\xi}\\
+                                                      &< \ve.
+  \end{align*}
+\end{proof}
+Now, we observe that if $T\in B(H)_{\sa}$, then $\sigma(T)\subseteq \R$, meaning that $T + z1$ is invertible for any $z\in \C$ with $\im(z)\neq 0$.
+\begin{definition}
+  Let $T\in B(H)_{\sa}$. Then, the \textit{Cayley transform} of $T$ is given by the operator
+  \begin{align*}
+    c(T) &\coloneq \left( T-i1 \right)\left( T + i1 \right)^{-1}.
+  \end{align*}
+\end{definition}
+Observe that the Cayley transform emerges from the continuous functional calculus on $c(z) = \frac{z-i}{z+i}$, meaning that $c(T)$ is a unitary operator, and $\left( T-i1 \right)\left( T+i1 \right)^{-1} = \left( T+i1 \right)^{-1}\left( T-i1 \right)$. This gives the following.
+\begin{proposition}
+  The Cayley Transform is SOT-continuous on $B(H)_{\sa}$.
+\end{proposition}
+\begin{proof}
+  Let $\left( T_j \right)_j\rightarrow T$ be a net of self-adjoint operators. By continuous functional calculus, we have $\norm{\left( T_j + i1 \right)^{-1}}\leq 1$ for all $i\in I$. If $\xi\in H$, we have
+  \begin{align*}
+    \norm{c(T)\xi-c\left(T_j\right)\xi} &= \norm{c(T)\xi - \left( T_j+i1 \right)^{-1}\left( T_j-i1 \right)\xi}\\
+                                        &= \norm{2i\left( T_j+i1 \right)^{-1}\left( T-T_j \right)\left( T-i1 \right)^{-1}\xi}\\
+                                        &\leq 2\norm{\left( T-T_j \right)\left( T-i1 \right)^{-1}\xi}.
+  \end{align*}
+  Thus, SOT-convergence of $\left( T_j \right)_j$ to $T$ implies SOT convergence of the Cayley transform.
+\end{proof}
+\begin{corollary}
+  If $f\in C_0\left(\R\right)$, then the map $T\mapsto f(T)$ is SOT-continuous on $B(H)_{\sa}$.
+\end{corollary}
+\begin{proof}
+  Since $f$ vanishes at infinity, it follows that the function
+  \begin{align*}
+    g(z) &\coloneq \begin{cases}
+      0 & z = 1\\
+      f\left( i\frac{1+z}{1-z} \right) & \text{else}
+    \end{cases}
+  \end{align*}
+  defines a continuous function on $S^1$. Since any continuous function on $\C$ is SOT-continuous on bounded sets, it follows that $g$ is SOT-continuous on unitary operators, so by composing $g$ with the Cayley transform, it follows that $f$ is SOT-continuous.
+\end{proof}
+For any subset $S\subseteq B(H)$, we define
+\begin{align*}
+  \left( S \right)_1 &\coloneq \set{T\in S | \norm{T}\leq 1}.
+\end{align*}
+\begin{theorem}[Kaplansky Density Theorem]
+  Let $A\subseteq B(H)$ be a $\ast$-subalgebra. Then,
+  \begin{align*}
+    \overline{A_{\sa}}^{\text{SOT}} &= \left( \overline{A}^{\text{SOT}} \right)_{\sa}
+      \intertext{and}
+    \overline{\left( A \right)_1}^{\text{SOT}} &= \left( \overline{A}^{\text{SOT}} \right)_{1}.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Denote $B = \overline{A}^{\text{SOT}}$. We start by showing that it suffices to show that $A$ is (operator) norm-closed. This follows from the fact that norm convergence implies SOT convergence, meaning that if $C$ denotes the norm closure of $A$, then $ \overline{C}^{\text{SOT}} = \overline{A}^{\text{SOT}} $.
+
+  Since SOT convergence implies WOT convergence, it follows that $ \overline{A_{\sa}}^{\text{SOT}} \subseteq B_{\sa}$. If $T\in B_{\sa}$, then there exists a net $\left( T_i \right)_i\rightarrow T$ in SOT. Taking adjoints is WOT-continuous, so $ \left( \frac{T_i + T_i^{\ast}}{2} \right)_i\subseteq A_{\sa} $ converges to $T$ in WOT. Therefore, $T\in \overline{A_{\sa}}^{\text{WOT}}$, but since $A_{\sa}$ is convex, $ \overline{A_{\sa}}^{\text{WOT}} = \overline{A_{\sa}}^{\text{SOT}}$, meaning $B_{\sa} = \overline{A_{\sa}}^{\text{SOT}}$.
+
+  Now, to show that $ \overline{\left( A \right)_1}^{\text{SOT}} = \left( B \right)_1$, we start by showing that the SOT closure of $\left( A_{\sa} \right)_1$ and $\left( B_{\sa} \right)_1$ coincide. Let $x\in \left( B_{\sa} \right)_1$, and let $\left( T_i \right)_i\subseteq A_{\sa}$ converge to $T$ in SOT. Let $f\in C_0\left( \R \right)$ be a function with $\norm{f}_{u} = 1$ and $f(t) = t$ for $\left\vert t \right\vert\leq 1$. Then, $\left( f\left( T_i \right) \right)_i\subseteq \left( A_{\sa} \right)_1$, converging to $f(T) = T$ in SOT, meaning $\left( A_{\sa} \right)_1$ is SOT dense in $\left( B_{\sa} \right)_1$.
+
+  Next, we show that $ \overline{\M_2(A)}^{\text{SOT}} = \M_2(B)$. Fixing elements
+  \begin{align*}
+     \begin{pmatrix}S_{11} & S_{12} \\ S_{21} & S_{22}\end{pmatrix} &\in \M_2(B)\\
+    \begin{pmatrix}\xi_1\\\xi_2\end{pmatrix} &\in H\oplus H,
+  \end{align*}
+  we use the fact that $ B = \overline{A}^{\text{SOT}} $, so for each $i,j$, we can find $T_{ij}\in A$ such that $\norm{ \left( T_{ij}-S_{ij} \right)\xi_j } < \ve$. In particular, this gives
+  \begin{align*}
+    \norm{ \begin{pmatrix}T_{11} - S_{11} & T_{12} - S_{12} \\ T_{21} - S_{21} & T_{22} - S_{22} \end{pmatrix} \begin{pmatrix}\xi_1\\\xi_2\end{pmatrix} }^2 &= \sum_{i=1}^{2} \norm{\left( T_{i1}-S_{i1} \right)\xi_1 + \left( T_{i2} - S_{i2} \right)\xi_2}^2\\
+                                          &< 8\ve^2.
+  \end{align*}
+  Now, since we have $ \overline{\left( A \right)_1}^{\text{SOT}}\subseteq \left( B \right)_1 $, we then select $S\in \left( B \right)_1$, and consider
+  \begin{align*}
+    \overline{S} &= \begin{pmatrix}0 & S \\ S^{\ast} & \end{pmatrix}\\
+                 &\in \left( \M_2(B) \right)_1,
+  \end{align*}
+  which is self-adjoint. Therefore, by applying the earlier result replacing $A$ and $B$ with $\M_2(A)$ and $\M_2(B)$, we have a net $\left( \overline{S_i} \right)_i\subseteq \left( \M_2(A)_{\sa} \right)_{1}$ converging to $ \overline{S} $ in SOT.
+
+  Now, if $S_i$ denotes the $(1,2)$ entry of $ \overline{S_i} $, then we observe that $\norm{S_i}\leq 1$ and converges to $S$ in SOT upon application to the vector $\left( 0,\xi \right)$.
+\end{proof}
+Note that the choice of $1$ for the operator norm bound in the KDT is arbitrary; by introducing some factors, we find that for any $R$, we have $ \overline{\left( A \right)_R}^{\text{SOT}} = \left( B \right)_R $. The primary case will find use for is where $R = \norm{T}$ for some $T\in B$.
+\begin{corollary}
+  If $M\subseteq B(H)$ is a unital $\ast$-subalgebra, then the following are equal to each other:
+  \begin{itemize}
+    \item $ \overline{M}^{\text{$\sigma$-SOT}} $;
+    \item $ \overline{M}^{\text{$\sigma$-WOT}} $;
+    \item $ \overline{M}^{\text{SOT}} $;
+    \item $ \overline{M}^{\text{WOT}} $;
+    \item $ M'' $.
+  \end{itemize}
+  In particular, this means that $M$ is a von Neumann algebra if and only if it is $\sigma$-SOT or $\sigma$-WOT closed.
+\end{corollary}
+\begin{proof}
+  The latter three equivalences follow from the Double Commutant Theorem. Now, since $\sigma$-SOT convergence implies $\sigma$-WOT convergence, which implies WOT convergence, it follows that all we need to show that $ \overline{M}^{\text{SOT}}\subseteq \overline{M}^{\text{$\sigma$-SOT}} $. For $T\in \overline{M}^{\text{SOT}}$, we may find $\left( T_i \right)_i\rightarrow T$, where the net is contained in $\left( M \right)_{\norm{T}}$, convergent in SOT. Since the net is uniformly bounded, and the $\sigma$-SOT and SOT coincide on bounded subsets, it follows that $ \overline{M}^{\text{SOT}}\subseteq \overline{M}^{\text{$\sigma$-SOT}} $.
+\end{proof}
 \section{Projections, Factors, and the Type Decomposition}%
+From now on, we will use lower-case letters to denote elements of a von Neumann algebra, while retaining the use of upper-case letters to denote general operators in $B(H)$.
+\subsection{Comparison Theory of Projections}%
+Recall that an element $P\in B(H)$ is called a projection if $P = P^2 = P^{\ast}$, and projects onto a unique closed subspace.
+\begin{proposition}
+  If $P$ and $Q$ are projections in $B(H)$, then the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $QP = P$;
+    \item $\img(P)\subseteq \img(Q)$;
+    \item $P\leq Q$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  If we assume (i), then $Px = QPx$, so that $\img(Q)\supseteq Q(\img(P)) = \img(P)$, giving (ii). Similarly, (ii) implies (i) from the same definition.
 
+  Now, set $M = \img(P)$. For any $x\in H$, write $x = y + z$ for $y\in M$ and $z\in M^{\perp}$. Then, we have $ \iprod{Px}{x} = \norm{y}^2 $, and
+  \begin{align*}
+    \iprod{Qx}{x} &= \iprod{Qy + Qz}{y + z}\\
+                  &= \iprod{Qy}{y} + \iprod{Qz}{z} + \iprod{Qy}{z} + \iprod{Qz}{y}\\
+                  &= \norm{y}^2 + \iprod{Qy}{z} + \iprod{Qz}{y}\\
+                  &= \norm{y}^2 + \iprod{Qy}{z} + \iprod{z}{Qy}\\
+                  &= \norm{y}^2 + \iprod{Qy}{z}\\
+                  &\geq \iprod{Px}{x},
+  \end{align*}
+  so $P\leq Q$.
+
+  Finally, assuming $P\leq Q$, if $Qx = 0$, then $0\leq \iprod{Px}{x} \leq \iprod{Qx}{x} = 0$, so $Px = 0$, so $\ker(Q)\subseteq \ker(P)$, meaning $\img(P)\subseteq \img(Q)$.
+\end{proof}
+Projections form a complete lattice under the operations
+\begin{align*}
+  \bigwedge_{i\in I}P_{X_i} &= P_{ \bigcap_{i\in I}X_i }\\
+  \bigvee_{i\in I}P_i &= P_{ \overline{\sum_{i\in I}X_i} }.
+\end{align*}
+Unfortunately, the primary issue here is that these operations are too restrictive; for instance, the matrix units $e_{11}$ and $e_{22}$ both have rank $1$ in $\M_n\left(\C\right)$, but project onto different subspaces and are not comparable in the traditional sense. We will introduce a different way to compare projections that successfully deals with this issue.
+\begin{definition}
+  Let $M\subseteq B(H)$ be a von Neumann algebra, and let $ P(M) $ be its projection lattice. We say that projections $p,q\in P(M)$ are \textit{equivalent} if there is a partial isometry $v\in M$ such that $v^{\ast}v = p$ and $vv^{\ast} = q$. That is, the initial projection of $v$ is $p$ and the final projection of $v$ is $q$. We write $p\sim q$.
+
+  We say $p$ is \textit{sub-equivalent} to $q$, written $p \preceq q$, if there is a partial isometry $v\in M$ such that $v^{\ast}v = p$ and $vv^{\ast}\leq q$. We will write $p\prec q$ if $p\preceq q$ and $p\nsim q$.
+\end{definition}
+Note that the traditional ordering of projections yields that $p\leq q$ implies $p\preceq q$, but the reverse is not necessarily true.
+\begin{proposition}
+  For a von Neumann algebra, the relation $\sim$ is an equivalence relation on $P(M)$, and the relation $\preceq$ is a preorder.
+\end{proposition}
+\begin{proof}
+  Reflexivity follows from the fact that projections are partial isometries, and symmetry for $\sim$ follows from the fact that if $v$ is a partial isometry, then so too is $v^{\ast}$.
+
+  We will show transitivity for $\preceq$, from which it will be clear that $\sim$ is transitive. Let $p,q,r\in P(M)$ with $p\leq q$ and $q\leq r$. Then, we have partial isometries $u,v\in M$ with $u^{\ast}u = p, uu^{\ast}\leq q$, $v^{\ast}v = q$ and $vv^{\ast}\leq r$. Then, from 
+  \begin{align*}
+    qu &= quu^{\ast}u\\
+       &= uu^{\ast}u\\
+       &= u,
+  \end{align*}
+  meaning
+  \begin{align*}
+    \left( vu \right)^{\ast}\left( vu \right) &= u^{\ast}v^{\ast}vu\\
+                                              &= u^{\ast}qu\\
+                                              &= u^{\ast}u\\
+                                              &= p,
+  \end{align*}
+  and
+  \begin{align*}
+    \left( vu \right)\left( vu \right)^{\ast} &= vuu^{\ast}v\\
+                                              &\leq v^{\ast}qv\\
+                                              &= v\left( v^{\ast}v \right)v\\
+                                              &= vv^{\ast}\\
+                                              &\leq r,
+  \end{align*}
+  so $p\preceq r$, and $\preceq$ is a transitive relation.
+\end{proof}
+In fact, the preorder is a partial order, but this requires a bit more work; the proof is similar to the proof of the Cantor--Schröder--Bernstein theorem.
+\begin{theorem}[Cantor--Schröder--Bernstein for Projections]
+  Let $M$ be a von Neumann algebra, and let $p,q\in P(M)$. If $p\preceq q$ and $q\preceq p$, then $p\sim q$.
+\end{theorem}
 \section{Tracial von Neumann Algebras}%
 
+
 \nocite{pedersen_cstar_algebras_automorphism_groups,murphy_cstar_algebras_and_operator_theory,conway_operator_theory}
+\printbibliography
 \end{document}
