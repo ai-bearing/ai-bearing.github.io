@@ -662,10 +662,40 @@ Note that the traditional ordering of projections yields that $p\leq q$ implies 
   \end{align*}
   so $p\preceq r$, and $\preceq$ is a transitive relation.
 \end{proof}
-In fact, the preorder is a partial order, but this requires a bit more work; the proof is similar to the proof of the Cantor--Schröder--Bernstein theorem.
+In fact, the preorder is a partial order, but this requires a bit more work and a useful lemma.
+\begin{lemma}
+  Suppose $\tau\colon L\rightarrow L$ is an order-preserving map on a complete lattice. Then, $\phi$ has a fixed point.
+\end{lemma}
+\begin{proof}
+  Let $T = \set{x\in L | x\leq \tau(x)}$, and set $x_0$ to be the supremum of $T$. For any $x\in T$, we have $x\leq x_0$, meaning $x\leq \tau(x)\leq \tau\left( x_0 \right)$, meaning $x_0\leq \tau\left( x_0 \right)$ by the definition of the supremum. Yet, this means that $\tau\left( x_0 \right)\leq \tau\left( \tau\left( x_0 \right) \right)$, so $\tau\left( x_0 \right) \in T$ with $\tau\left( x_0 \right)\leq x_0$.
+\end{proof}
 \begin{theorem}[Cantor--Schröder--Bernstein for Projections]
   Let $M$ be a von Neumann algebra, and let $p,q\in P(M)$. If $p\preceq q$ and $q\preceq p$, then $p\sim q$.
 \end{theorem}
+\begin{proof}
+  Suppose $w$ and $v$ are partial isometries with $w^{\ast}w = p$, $ww^{\ast} \leq q$, $v^{\ast}v = q$, and $vv^{\ast}\leq p$. Let $L$ be the collection of all projections $e\in M$ with $e\leq q$. Then, $L$ is a complete lattice; defining $\tau\colon L\rightarrow L$ by
+  \begin{align*}
+    \tau(e) &= q - w\left( p-vev^{\ast} \right)w^{\ast}.
+  \end{align*}
+  Then, $\tau$ is the composition of two order-preserving maps ($\ast$-conjugation by a fixed element) and two order-reversing maps (subtraction), so $\tau$ is order-preserving on $L$. Thus, $\tau$ has a fixed point, which we will call $f$. That is, there is $f\in M$ such that $f\leq q$ and $f = q - w\left( p-vfv^{\ast} \right)w^{\ast}$.
+
+  Let $v_1 = fv^{\ast}$, so that
+  \begin{align*}
+    v_1v_1^{\ast} &= \left( fv^{\ast} \right)\left( fv^{\ast} \right)^{\ast}\\
+                  &= fv^{\ast}vf\\
+                  &= f
+  \end{align*}
+  as $f\leq q$, and
+  \begin{align*}
+    v_1^{\ast}v_1 &= vfv^{\ast}.
+  \end{align*}
+  Therefore, $f\sim vfv^{\ast}$. Now, setting $w_1 = \left( p-vfv^{\ast} \right)w^{\ast}$, we have
+  \begin{align*}
+    w_1^{\ast}w_1 &= q-p\\
+    w_1w_2^{\ast} &= p-vfv^{\ast},
+  \end{align*}
+  so $q-f\sim p-f$, meaning $q\sim p$.
+\end{proof}
 \section{Tracial von Neumann Algebras}%
 
 
