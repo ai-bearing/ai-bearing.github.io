@@ -14,7 +14,7 @@
 
 \fancyhf{}
 \fancyhead[R]{Avinash Iyer}
-\fancyhead[L]{Von Neumann Algebras: Theory and Structure}
+\fancyhead[L]{Von Neumann Algebras: Theory, Structure, and Examples}
 \fancyfoot[C]{\thepage}
 
 \setcounter{secnumdepth}{0}
@@ -703,6 +703,26 @@ In fact, the preorder is a partial order, but this requires a bit more work and 
   \end{align*}
   so $q-f\sim p-f$, meaning $q\sim p$.
 \end{proof}
+This is perhaps too slick a proof, and there is in fact a more involved proof that is similar to the proof of the Cantor--Schröder--Bernstein theorem. For this proof, we will let $e,f$ denote the projections in question.
+\begin{proof}[Alternative Proof]
+  Let $v$ and $w$ be partial isometries such that $v^{\ast}v = e$, $vv^{\ast} = f_1\leq f$, $w^{\ast}w = f$, and $ww^{\ast} = e_1\leq e$. We inductively define a sequence of projections as follows.
+
+  Since $v$ maps the range of $e_1$ isometrically onto the range of $f_2\leq f_1$, it follows that we may write $f_2 = ve_1\left( ve_1 \right)^{\ast}$, and since $w$ maps the range of $f_1$ onto the range of $e_2\leq e_1$, we may write $wf_1\left( wf_1 \right)^{\ast} = e_2$. Furthermore, observe that $v\left( e-e_1 \right)$ is a partial isometry with initial projection $e-e_1$ and final projection $f_1-f_2$.
+
+  We obtain two decreasing sequences of projections $\left( e_n \right)_n$ and $\left( f_n \right)_n$ where $v$ maps the range of $e_n$ isometrically onto that of $f_{n+1}$, and $w$ maps the range of $f_n$ isometrically onto that of $e_{n+1}$. In particular, if we let $e_{\infty} = \inf_{n}\left( e_n \right)$ and $f_{\infty} = \inf_{n}\left( f_n \right)$, we have that $v$ maps the range of $e_{\infty}$ onto that of $f_{\infty}$ and $w$ that of $f_{\infty}$ onto the range of $e_{\infty}$.
+
+  Similarly, $e_{n} - e_{n+1}\sim f_{n+1}-f_{n+2}$ as discussed earlier, so by the lemma below relating to sums of pairwise orthogonal families of projections, we have
+  \begin{align*}
+    \sum_{n=0}^{\infty} \left( e_{2n} - e_{2n+1} \right) &\sim \sum_{n=0}^{\infty} \left( f_{2n+1} - f_{2n+2} \right)\\
+    \sum_{n=0}^{\infty} \left( e_{2n+1} - e_{2n+2} \right) &\sin \sum_{n=0}^{\infty} \left( f_{2n} - f_{2n+1} \right).
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    e &= e_{\infty} + \sum_{n=0}^{\infty}\left( e_{2n}-e_{2n+1} \right) + \sum_{n=0}^{\infty} \left( e_{2n+1} - e_{2n+2} \right)\\
+      &\sim f_{\infty} + \sum_{n=0}^{\infty} \left( f_{2n+1} - f_{2n+2} \right) + \sum_{n=0}^{\infty} \left( f_{2n} - f_{2n+1} \right)\\
+      &= f.
+  \end{align*}
+\end{proof}
 \begin{proposition}
   Let $S\subseteq H$ be a subset, and let
   \begin{align*}
@@ -720,9 +740,135 @@ In fact, the preorder is a partial order, but this requires a bit more work and 
   \end{align*}
   We say $p,q\in P(M)$ are \textit{centrally orthogonal} if $z(p)z(q) = 0$.
 \end{definition}
+\begin{lemma}
+  Let $M\subseteq B(H)$ be a von Neumann algebra. The central support of any $p\in P(M)$ is given by
+  \begin{align*}
+    z(p) &= \sup_{x\in M} \left[ xpH \right]\\
+         &= \left[ MpH \right].
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  The second equality follows from the definition of the supremum. Suppose we have $w = \left[ MpH \right]$. Since $M$ is unital, we have that $p\leq w$. Since $ \overline{MpH} $ is reducing for both $M$ and $M'$, we have that $w\in M\cap M' = Z(M)$, meaning that $z(p)\leq w$.
+
+  Conversely, if $x\in M$, then
+  \begin{align*}
+    xpH &= xz(p)pH\\
+        &= z(p)xpH,
+  \end{align*}
+  so that $\left[ xpH \right]\leq z(p)$, meaning $w\leq z(p)$ as this holds for all $x\in M$.
+\end{proof}
+\begin{proposition}
+  Let $M$ be a von Neumann algebra. For any $p,q\in P(M)$, the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $p$ and $q$ are centrally orthogonal;
+    \item $pMq = \set{0}$;
+    \item there do not exist projections $0 < p_0 \leq p$ and $0 < q_0 \leq q$ such that $p_0 \sim q_0$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We start by showing that (i) and (ii) are equivalent. Let $p$ and $q$ be centrally orthogonal; then, for any $x\in M$, we have
+  \begin{align*}
+    pxq &= pz(p)xz(q)q\\
+        &= pxz(p)z(q)q\\
+        &= 0.
+  \end{align*}
+  Therefore, $pMq = \set{0}$. Now, if $pMq = \set{0}$, then $pz(q) = \left[ MqH \right] = 0$, meaning that $p\leq 1-z(q)$, so since $1-z(q)\in Z(M)$, we have $z(p)\leq 1-z(q)$, so that $z(p)z(q) = 0$.
+
+  Now, we will show that $(ii)$ and (iii) are equivalent. If $(ii)$ does not hold, we let $x\in M$ be such that $pxq \neq 0$. Then, $qx^{\ast}p\neq 0$, so if we define
+  \begin{align*}
+    p_0 &= \left[ pxqH \right]\\
+    q_0 &= \left[ qx^{\ast}pH \right],
+  \end{align*}
+  we have that $p_0,q_0$ are nonzero projections, with $p_0\leq p$ and $q_0\leq q$. Since $\left( pxq \right)^{\ast} = qx^{\ast}p$, it follows from the lemma above that $p_0\sim q_0$.
+
+  Meanwhile, if (iii) does not hold, we let $p_0\leq p$ and $q_0\leq q$ be such that $p_0,q_0$ are nonzero and $p_0\sim q_0$. If $v\in M$ is a partial isometry such that $v^{\ast}v = p_0$ and $vv^{\ast} = q_0$, we have that $v^{\ast} = p_0 v^{\ast}q_0$, and
+  \begin{align*}
+    pv^{\ast}q &= pp_0v^{\ast}q_0q\\
+               &= p_0v^{\ast}q_0\\
+               &= v^{\ast}\\
+               &\neq 0,
+  \end{align*}
+  so that $pMq\neq \set{0}$.
+\end{proof}
+\begin{lemma}
+  Let $M\subseteq B(H)$ be a von Neumann algebra. If $\set{p_i | i\in I}$ and $\set{q_0 | i\in I}$ are pairwise orthogonal families with $p_i\preceq q_i$, then $\sum_{i\in I}p_i\preceq \sum_{i\in I}q_i$.
+\end{lemma}
+\begin{proof}
+  Let $u_i$ be partial isometries with $u_i^{\ast}u_i = p_i$ and $r_i\coloneq u_iu_i^{\ast}\leq q_i$. Note that the $r_i$ are pairwise orthogonal since the $q_i$ are pairwise orthogonal. Therefore, for $i\neq j$, we have
+  \begin{align*}
+    u_i^{\ast}u_j &= u_i^{\ast}u_iu_i^{\ast}u_ju_js^{\ast}u_j\\
+                  &= u_ir_ir_ju_j\\
+                  &= 0\\
+    u_iu_j^{\ast} &= u_iu_i^{\ast}u_iu_j^{\ast}u_ju_j^{\ast}\\
+                  &= u_ip_ip_ju_j^{\ast}\\
+                  &= 0.
+  \end{align*}
+  Consequently, we have
+  \begin{align*}
+    \left( \sum_{i\in I}u_i \right)\left( \sum_{j\in J}u_j \right) &= \sum_{i\in I}u_i^{\ast}u_i\\
+                                                                   &= \sum_{i\in I}p_i
+  \end{align*}
+  and
+  \begin{align*}
+    \left( \sum_{i\in I}u_i \right)\left( \sum_{j\in J} u_j^{\ast}\right) &= \sum_{i\in I}r_i\\
+                                                                          &\leq \sum_{i\in I}q_i,
+  \end{align*}
+  so that $\sum_{i\in I}p_i\preceq \sum_{i\in I}q_i$.
+\end{proof}
+\begin{theorem}[Comparison Theorem]
+  Let $M\subseteq B(H)$ be a von Neumann algebra. For any $p,q\in P(M)$, there exists $z\in P(Z(M))$ such that $pz\preceq qz$ and $q\left( 1-z \right)\preceq p\left( 1-z \right)$.
+\end{theorem}
+\begin{proof}
+  By Zorn's Lemma, there exist maximal families $\set{p_i}_{i\in I}$ and $\set{q_i}_{i\in I}$ of pairwise orthogonal projections with $p_i\sim q_i$, and
+  \begin{align*}
+    \underbrace{\sum_{i\in I}p_i}_{\eqcolon p_0} &\leq p\\
+    \underbrace{\sum_{i\in I}q_i}_{\eqcolon q_0} &\leq q.
+  \end{align*}
+  From the above lemma, we know that $p_0\sim q_0$. Let $w \coloneq z\left( q-q_0 \right)$. By maximality, we must have $ z\left( p-p_0 \right)w = 0$, meaning that $\left( p-p_0 \right)w = 0$, or $pz = p_0 z$. If $v$ is a partial isometry such that $v^{\ast}v = p_0$ and $vv^{\ast} = q_0$, then the partial isometry $vz$ implements the equivalence $p_0z\sim q_0 z$. Therefore, we have $pz = p_0 z \sim q_0 z \leq qz$. Similarly, $p_0\left( 1-z \right) \sim q_0\left( 1-z \right)$ and we get $q\left( 1-z \right)\preceq p(1-z)$.
+\end{proof}
+\begin{corollary}
+  If $M$ is a factor, then any two projections can be compared.
+\end{corollary}
+\begin{proof}
+  There are no nontrivial central projections in a factor.
+\end{proof}
+\subsection{Compressions}%
+\begin{definition}
+  If $M$ is a von Neumann algebra, and $P\in B(H)$ is a projection (not necessarily in $M$), then
+  \begin{align*}
+    PMP &= \set{PxP | x\in M}
+  \end{align*}
+  is called a \textit{corner} (or \textit{compression}) of $M$.
+\end{definition}
+This terminology comes from the identification that, whenever $x\in M$, we have
+\begin{align*}
+  PxP &\leftrightarrow \begin{pmatrix}PxP & 0 \\ 0 & 0\end{pmatrix}\\
+      &\in B\left( PH\oplus \left( 1-P \right)H \right).
+\end{align*}
+In fact, we have $PB(H)P = B\left( PH \right)$. 
+\subsection{Type Decomposition}%
+\begin{definition}
+  Let $M$ be a von Neumann algebra. We say $p\in P(M)$ is
+  \begin{itemize}
+    \item \textit{finite} if $q\leq p$ and $q\sim p$ implies $ p = q $;
+    \item \textit{semi-finite} if there exists a family $\set{p_i}_{i\in I}$ of pairwise orthogonal finite projections such that $\sum_{i\in I}p_i = p$;
+    \item \textit{purely infinite} if $p\neq 0$ and there do not exist any nonzero finite projections $q\in P(M)$ with $q\leq p$;
+    \item \textit{properly infinite} if $p\neq 0$ and, for all nonzero $w\in P(Z(M))$, the projection $zp$ is not finite.
+  \end{itemize}
+  We say $M$ is finite, semi-finite, purely infinite, or properly infinite if the projection $1$ has the corresponding property in $M$.
+\end{definition}
+\begin{proposition}
+  A von Neumann algebra $M\subseteq B(H)$ is finite if and only if all isometries are unitaries.
+\end{proposition}
+\begin{proof}
+  Let $M$ be finite, and let $v\in M$ be an isometry, $v^{\ast}v = 1$. Then, $vv^{\ast}\leq 1$, so by finiteness, $vv^{\ast} = 1$, meaning $v$ is a unitary.
+
+  Conversely, suppose every isometry is a unitary, and suppose $p\leq 1$ satisfies $p\sim 1$. Then, if $v\in M$ is a partial isometry with $v^{\ast}v = 1$ and $vv^{\ast} = p$, we have that $v$ is an isometry, hence a unitary, so $vv^{\ast} = 1$, so $1$ is finite in $M$.
+\end{proof}
 \section{Tracial von Neumann Algebras}%
 
+\section{Two Fundamental von Neumann Algebras}%
 
-\nocite{pedersen_cstar_algebras_automorphism_groups,murphy_cstar_algebras_and_operator_theory,conway_operator_theory}
+\nocite{pedersen_cstar_algebras_automorphism_groups,murphy_cstar_algebras_and_operator_theory,conway_operator_theory,davidson_functional_analysis}
 \printbibliography
 \end{document}
