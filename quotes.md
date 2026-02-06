@@ -54,3 +54,6 @@ permalink: "/quotes.html"
   *Fausto Navarro Cepeda*
   "Yeah, they're called software engineers"\
   *Khoa Nguyen*
+
+- "You're supposed to develop schizophrenia *after* your PhD"\
+  *Liam Staker*
