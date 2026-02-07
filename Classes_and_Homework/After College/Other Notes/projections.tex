@@ -1,0 +1,458 @@
+
+\documentclass[10pt]{mypackage}
+
+\usepackage{mlmodern}
+%\usepackage{newpxtext,eulerpx,eucal}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+%\usepackage{homework}
+\usepackage{notes}
+
+\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+\addbibresource{all_references.bib}
+
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Projections, Factors, and the Type Decomposition}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Partial Isometries and the Polar Decomposition}%
+\begin{definition}
+  A \textit{partial isometry} is an operator $W\in B(H)$ such that for any $h\in \left( \ker(W) \right)^{\perp}$, we have $\norm{Wh} = \norm{h}$. The space $\left( \ker\left( W \right) \right)^{\perp}$ is called the \textit{initial space} of $W$, and the space $\img(W)$ is called the final space of $W$.
+\end{definition}
+\begin{proposition}
+  If $W\in B(H)$, the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $W$ is a partial isometry;
+    \item $W^{\ast}$ is a partial isometry;
+    \item $W^{\ast}W$ is a projection (onto the initial space of $W$);
+    \item $WW^{\ast}$ is a projection (onto the final space of $W$);
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Let $W$ be a partial isometry, meaning that $W$ is an isometry from $\left( \ker\left( W \right) \right)^{\perp}$ to $\img(W)$. Since $\img(W)$ is dense in $\ker\left( W^{\ast} \right)^{\perp}$, it follows that we only need to show that $W^{\ast}$ is an isometry on $\img(W)$. Let $k\in \img(W)$, so there is $h\in \left( \ker\left( W \right) \right)^{\perp}$ such that $Wh = k$. Then, we have
+  \begin{align*}
+    \iprod{Wh}{Wh} &= \iprod{h}{h}
+      \intertext{so}
+    \iprod{W^{\ast}Wh-h}{h} &= 0,
+  \end{align*}
+  meaning that $W^{\ast}W-I$ is zero on $\left( \ker\left( W \right) \right)^{\perp}$, so we have
+  \begin{align*}
+    \norm{W^{\ast}k} &= \norm{W^{\ast}Wh}\\
+                     &= \norm{h}\\
+                     &= \norm{Wh}\\
+                     &= \norm{k},
+  \end{align*}
+  meaning $W^{\ast}$ is a partial isometry.
+
+  By taking adjoints, we see that (i) and (ii) are equivalent. Let $x\in H$ have the decomposition $x = y + z$ where $y\in \ker\left( W \right)$ and $z\in \left( \ker\left( W \right) \right)^{\perp}$. We will show that $W^{\ast}Wx = z$. Observe that $Wx = Wz$, meaning that
+  \begin{align*}
+    \iprod{z-W^{\ast}Wx}{z} &= \iprod{z-W^{\ast}Wz}{z}\\
+                            &= \iprod{z}{z} - \iprod{W^{\ast}Wz}{z}\\
+                            &= \iprod{z}{z} - \iprod{Wz}{Wz}\\
+                            &= 0,
+  \end{align*}
+  since $\norm{Wz} = \norm{z}$ by definition. In particular, following from the polarization identity, this means that for all $v\in H$, we have $ \iprod{z-W^{\ast}Wx}{v} = 0 $, so that $z = W^{\ast}Wx$. This shows that (i) implies (iii). By replacing all instances of $W$ with $W^{\ast}$, we see that (ii) implies that $WW^{\ast}$ is a projection onto the initial space of $W^{\ast}$, which is equal to the final space of $W$.
+\end{proof}
+\begin{theorem}[Polar Decomposition]
+  Let $A\in B(H)$. Then, there is a partial isometry $W$ with initial space $\left( \ker\left( A \right) \right)^{\perp}$ and final space $ \overline{\img(A)} $ such that $A = W \left\vert A \right\vert$. Moreover, if $A = UP$, where $P$ is a positive operator and $U$ is a partial isometry with $\ker(U) = \ker(P)$, then $P = \left\vert A \right\vert$  and $U = W$.
+\end{theorem}
+\begin{proof}
+  Let $h\in H$. Then, 
+  \begin{align*}
+    \norm{Ah} &= \iprod{A^{\ast}Ah}{h}\\
+              &= \iprod{\left\vert A \right\vert h}{\left\vert A \right\vert h},
+  \end{align*}
+  so that
+  \begin{align*}
+    \norm{Ah} &= \norm{ \left\vert A \right\vert h }.
+  \end{align*}
+  We may thus define $W\colon \img\left(\left\vert A \right\vert\right) \rightarrow \img\left( A \right)$ by taking
+  \begin{align*}
+    W\left( \left\vert A \right\vert h \right) &= Ah.
+  \end{align*}
+  Then, from above, we know that $W$ is an isometry, so it can be extended to an isometry from $ \overline{\img\left(\left\vert A \right\vert\right)} $ to $ \overline{\img\left( A \right)} $. We may then extend $W$ to all of $H$ by defining it to be $0$ on $ \left( \img\left( \left\vert A \right\vert \right) \right)^{\perp} $. This makes $W$ a partial isometry with $W\left\vert A \right\vert = A$. We must verify that $W$ has the correct initial space. That is, we must show that $ \overline{\img\left( \left\vert A \right\vert \right)} = \left( \ker\left( A \right) \right)^{\perp} $.
+
+  Suppose $f = A^{\ast}g$ for some $g\in \left( \ker\left( A^{\ast} \right) \right)^{\perp} = \overline{\img(A)}$. Then, $\img\left( A^{\ast}A \right)$ is dense in $ \left( \ker\left( A \right) \right)^{\perp} $. Yet, since $A^{\ast}Ak = \left\vert A \right\vert h$, where $h = \left\vert A \right\vert k$, it follows that $ \img\left( \left\vert A \right\vert \right) $ is dense in $ \left( \ker\left( A \right) \right)^{\perp} $.
+
+  For uniqueness, we have that $A^{\ast}A = PU^{\ast}UP$, but since $U^{\ast}U$ is the projection onto the initial space, it follows that $\left( \ker\left( U \right) \right)^{\perp} = \left( \ker\left( P \right) \right)^{\perp} = \overline{\img(P)}$, meaning $A^{\ast}A = P^2$, so $P = \left\vert A \right\vert$ by the uniqueness in the continuous functional calculus. For any $h\in H$, we have $W \left\vert A \right\vert h = Ah = U \left\vert A \right\vert h$, meaning that $U$ and $W$ agree on a dense subset of their initial space, so $U = W$.
+\end{proof}
+\begin{corollary}
+  If $T = W \left\vert T \right\vert$ is the polar decomposition for $T\in B(H)$, then $\left\vert T^{\ast} \right\vert = W\left\vert T \right\vert W^{\ast}$, and $T^{\ast} = W^{\ast}\left\vert T^{\ast} \right\vert$.
+\end{corollary}
+\begin{proof}
+  We see that $W \left\vert T \right\vert W^{\ast}$ is positive, and
+  \begin{align*}
+    W \left\vert T \right\vert W^{\ast} W \left\vert T \right\vert W^{\ast} &= W \left\vert T \right\vert^2 W^{\ast}\\
+                                                                            &= W T T^{\ast} W^{\ast}\\
+                                                                            &= TT^{\ast}
+  \end{align*}
+  Therefore, by uniqueness, we have $W \left\vert T \right\vert W = \left\vert T^{\ast} \right\vert$. Furthermore, we see that
+  \begin{align*}
+    W^{\ast}\left\vert T^{\ast} \right\vert &= W^{\ast}W \left\vert T \right\vert W^{\ast}\\
+                                            &= \left\vert T \right\vert W^{\ast}\\
+                                            &= \left( W \left\vert T \right\vert \right)^{\ast}\\
+                                            &= T^{\ast}.
+  \end{align*}
+\end{proof}
+\begin{definition}
+  If $M$ is a von Neumann algebra in $B(H)$, then the \textit{center} of $M$ is given by
+  \begin{align*}
+    Z(M) &\coloneq M\cap M'.
+  \end{align*}
+  If $Z(M) = \C 1$, then we say $M$ is a \textit{factor}.
+\end{definition}
+\section{Comparison Theory of Projections in a von Neumann Algebra}%
+Recall that an element $p\in B(H)$ is called a projection if $p = p^2 = p^{\ast}$, and projects onto a unique closed subspace.
+\begin{proposition}
+  If $P$ and $Q$ are projections in $B(H)$, then the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $QP = P$;
+    \item $\img(P)\subseteq \img(Q)$;
+    \item $P\leq Q$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  If we assume (i), then $Px = QPx$, so that $\img(Q)\supseteq Q(\img(P)) = \img(P)$, giving (ii). Similarly, (ii) implies (i) from the same definition.
+
+  Now, set $M = \img(P)$. For any $x\in H$, write $x = y + z$ for $y\in M$ and $z\in M^{\perp}$. Then, we have $ \iprod{Px}{x} = \norm{y}^2 $, and
+  \begin{align*}
+    \iprod{Qx}{x} &= \iprod{Qy + Qz}{y + z}\\
+                  &= \iprod{Qy}{y} + \iprod{Qz}{z} + \iprod{Qy}{z} + \iprod{Qz}{y}\\
+                  &= \norm{y}^2 + \iprod{Qy}{z} + \iprod{Qz}{y}\\
+                  &= \norm{y}^2 + \iprod{Qy}{z} + \iprod{z}{Qy}\\
+                  &= \norm{y}^2 + \iprod{Qy}{z}\\
+                  &\geq \iprod{Px}{x},
+  \end{align*}
+  so $P\leq Q$.
+
+  Finally, assuming $P\leq Q$, if $Qx = 0$, then $0\leq \iprod{Px}{x} \leq \iprod{Qx}{x} = 0$, so $Px = 0$, so $\ker(Q)\subseteq \ker(P)$, meaning $\img(P)\subseteq \img(Q)$.
+\end{proof}
+Projections form a complete lattice under the operations
+\begin{align*}
+  \bigwedge_{i\in I}P_{X_i} &= P_{ \bigcap_{i\in I}X_i }\\
+  \bigvee_{i\in I}P_i &= P_{ \overline{\sum_{i\in I}X_i} }.
+\end{align*}
+Unfortunately, the primary issue here is that these operations are too restrictive; for instance, the matrix units $e_{11}$ and $e_{22}$ both have rank $1$ in $\M_n\left(\C\right)$, but project onto different subspaces and are not comparable in the traditional sense. We will introduce a different way to compare projections that successfully deals with this issue.
+\begin{definition}
+  Let $M\subseteq B(H)$ be a von Neumann algebra, and let $ P(M) $ be its projection lattice. We say that projections $p,q\in P(M)$ are \textit{equivalent} if there is a partial isometry $v\in M$ such that $v^{\ast}v = p$ and $vv^{\ast} = q$. That is, the initial projection of $v$ is $p$ and the final projection of $v$ is $q$. We write $p\sim q$.
+
+  We say $p$ is \textit{sub-equivalent} to $q$, written $p \preceq q$, if there is a partial isometry $v\in M$ such that $v^{\ast}v = p$ and $vv^{\ast}\leq q$. We will write $p\prec q$ if $p\preceq q$ and $p\nsim q$.
+\end{definition}
+Note that the traditional ordering of projections yields that $p\leq q$ implies $p\preceq q$, but the reverse is not necessarily true.
+\begin{proposition}
+  For a von Neumann algebra, the relation $\sim$ is an equivalence relation on $P(M)$, and the relation $\preceq$ is a preorder.
+\end{proposition}
+\begin{proof}
+  Reflexivity follows from the fact that projections are partial isometries, and symmetry for $\sim$ follows from the fact that if $v$ is a partial isometry, then so too is $v^{\ast}$.
+
+  We will show transitivity for $\preceq$, from which it will be clear that $\sim$ is transitive. Let $p,q,r\in P(M)$ with $p\leq q$ and $q\leq r$. Then, we have partial isometries $u,v\in M$ with $u^{\ast}u = p, uu^{\ast}\leq q$, $v^{\ast}v = q$ and $vv^{\ast}\leq r$. Then, from 
+  \begin{align*}
+    qu &= quu^{\ast}u\\
+       &= uu^{\ast}u\\
+       &= u,
+  \end{align*}
+  meaning
+  \begin{align*}
+    \left( vu \right)^{\ast}\left( vu \right) &= u^{\ast}v^{\ast}vu\\
+                                              &= u^{\ast}qu\\
+                                              &= u^{\ast}u\\
+                                              &= p,
+  \end{align*}
+  and
+  \begin{align*}
+    \left( vu \right)\left( vu \right)^{\ast} &= vuu^{\ast}v\\
+                                              &\leq v^{\ast}qv\\
+                                              &= v\left( v^{\ast}v \right)v\\
+                                              &= vv^{\ast}\\
+                                              &\leq r,
+  \end{align*}
+  so $p\preceq r$, and $\preceq$ is a transitive relation.
+\end{proof}
+In fact, the preorder is a partial order, but this requires a bit more work and a useful lemma.
+\begin{lemma}
+  Suppose $\tau\colon L\rightarrow L$ is an order-preserving map on a complete lattice. Then, $\phi$ has a fixed point.
+\end{lemma}
+\begin{proof}
+  Let $T = \set{x\in L | x\leq \tau(x)}$, and set $x_0$ to be the supremum of $T$. For any $x\in T$, we have $x\leq x_0$, meaning $x\leq \tau(x)\leq \tau\left( x_0 \right)$, meaning $x_0\leq \tau\left( x_0 \right)$ by the definition of the supremum. Yet, this means that $\tau\left( x_0 \right)\leq \tau\left( \tau\left( x_0 \right) \right)$, so $\tau\left( x_0 \right) \in T$ with $\tau\left( x_0 \right)\leq x_0$.
+\end{proof}
+\begin{theorem}[Cantor--Schröder--Bernstein for Projections]
+  Let $M$ be a von Neumann algebra, and let $p,q\in P(M)$. If $p\preceq q$ and $q\preceq p$, then $p\sim q$.
+\end{theorem}
+\begin{proof}
+  Suppose $w$ and $v$ are partial isometries with $w^{\ast}w = p$, $ww^{\ast} \leq q$, $v^{\ast}v = q$, and $vv^{\ast}\leq p$. Let $L$ be the collection of all projections $e\in M$ with $e\leq q$. Then, $L$ is a complete lattice; defining $\tau\colon L\rightarrow L$ by
+  \begin{align*}
+    \tau(e) &= q - w\left( p-vev^{\ast} \right)w^{\ast}.
+  \end{align*}
+  Then, $\tau$ is the composition of two order-preserving maps ($\ast$-conjugation by a fixed element) and two order-reversing maps (subtraction), so $\tau$ is order-preserving on $L$. Thus, $\tau$ has a fixed point, which we will call $f$. That is, there is $f\in M$ such that $f\leq q$ and $f = q - w\left( p-vfv^{\ast} \right)w^{\ast}$.
+
+  Let $v_1 = fv^{\ast}$, so that
+  \begin{align*}
+    v_1v_1^{\ast} &= \left( fv^{\ast} \right)\left( fv^{\ast} \right)^{\ast}\\
+                  &= fv^{\ast}vf\\
+                  &= f
+  \end{align*}
+  as $f\leq q$, and
+  \begin{align*}
+    v_1^{\ast}v_1 &= vfv^{\ast}.
+  \end{align*}
+  Therefore, $f\sim vfv^{\ast}$. Now, setting $w_1 = \left( p-vfv^{\ast} \right)w^{\ast}$, we have
+  \begin{align*}
+    w_1^{\ast}w_1 &= q-p\\
+    w_1w_2^{\ast} &= p-vfv^{\ast},
+  \end{align*}
+  so $q-f\sim p-f$, meaning $q\sim p$.
+\end{proof}
+This is perhaps too slick a proof, and there is in fact a more involved proof that is similar to the proof of the Cantor--Schröder--Bernstein theorem. For this proof, we will let $e,f$ denote the projections in question.
+\begin{proof}[Alternative Proof]
+  Let $v$ and $w$ be partial isometries such that $v^{\ast}v = e$, $vv^{\ast} = f_1\leq f$, $w^{\ast}w = f$, and $ww^{\ast} = e_1\leq e$. We inductively define a sequence of projections as follows.
+
+  Since $v$ maps the range of $e_1$ isometrically onto the range of $f_2\leq f_1$, it follows that we may write $f_2 = ve_1\left( ve_1 \right)^{\ast}$, and since $w$ maps the range of $f_1$ onto the range of $e_2\leq e_1$, we may write $wf_1\left( wf_1 \right)^{\ast} = e_2$. Furthermore, observe that $v\left( e-e_1 \right)$ is a partial isometry with initial projection $e-e_1$ and final projection $f_1-f_2$.
+
+  We obtain two decreasing sequences of projections $\left( e_n \right)_n$ and $\left( f_n \right)_n$ where $v$ maps the range of $e_n$ isometrically onto that of $f_{n+1}$, and $w$ maps the range of $f_n$ isometrically onto that of $e_{n+1}$. In particular, if we let $e_{\infty} = \inf_{n}\left( e_n \right)$ and $f_{\infty} = \inf_{n}\left( f_n \right)$, we have that $v$ maps the range of $e_{\infty}$ onto that of $f_{\infty}$ and $w$ that of $f_{\infty}$ onto the range of $e_{\infty}$.
+
+  Similarly, $e_{n} - e_{n+1}\sim f_{n+1}-f_{n+2}$ as discussed earlier, so by the lemma below relating to sums of pairwise orthogonal families of projections, we have
+  \begin{align*}
+    \sum_{n=0}^{\infty} \left( e_{2n} - e_{2n+1} \right) &\sim \sum_{n=0}^{\infty} \left( f_{2n+1} - f_{2n+2} \right)\\
+    \sum_{n=0}^{\infty} \left( e_{2n+1} - e_{2n+2} \right) &\sin \sum_{n=0}^{\infty} \left( f_{2n} - f_{2n+1} \right).
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    e &= e_{\infty} + \sum_{n=0}^{\infty}\left( e_{2n}-e_{2n+1} \right) + \sum_{n=0}^{\infty} \left( e_{2n+1} - e_{2n+2} \right)\\
+      &\sim f_{\infty} + \sum_{n=0}^{\infty} \left( f_{2n+1} - f_{2n+2} \right) + \sum_{n=0}^{\infty} \left( f_{2n} - f_{2n+1} \right)\\
+      &= f.
+  \end{align*}
+\end{proof}
+\begin{proposition}
+  Let $S\subseteq H$ be a subset, and let
+  \begin{align*}
+    \left[ S \right] &\coloneq P_{ \overline{\Span}(S) }.
+  \end{align*}
+  If $M\subseteq B(H)$ is a von Neumann algebra, with $x\in M$, then $\left[ xH \right], \left[ x^{\ast}H \right]\in M$ with $\left[ xH \right]\sim_{M} \left[ x^{\ast}H \right]$.
+\end{proposition}
+\begin{proof}
+  Let $x = v\left\vert x \right\vert$ be the polar decomposition, and note that $v\in M$. Since $vv^{\ast}$ is the projection onto $ \overline{xH} $ and $v^{\ast}v$ is the projection onto $\ker\left( x \right)^{\perp} = \overline{x^{\ast}H}$, it follows that these projections are equivalent in $M$.
+\end{proof}
+\begin{definition}
+  If $x\in M$, we define the \textit{central support} of $x$ in $M$ to be the projection
+  \begin{align*}
+    z(x) &\coloneq \inf\set{w\in P(Z(M)) | xw=wx=x}.
+  \end{align*}
+  We say $p,q\in P(M)$ are \textit{centrally orthogonal} if $z(p)z(q) = 0$.
+\end{definition}
+\begin{lemma}
+  Let $M\subseteq B(H)$ be a von Neumann algebra. The central support of any $p\in P(M)$ is given by
+  \begin{align*}
+    z(p) &= \sup_{x\in M} \left[ xpH \right]\\
+         &= \left[ MpH \right].
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  The second equality follows from the definition of the supremum. Suppose we have $w = \left[ MpH \right]$. Since $M$ is unital, we have that $p\leq w$. Since $ \overline{MpH} $ is reducing for both $M$ and $M'$, we have that $w\in M\cap M' = Z(M)$, meaning that $z(p)\leq w$.
+
+  Conversely, if $x\in M$, then
+  \begin{align*}
+    xpH &= xz(p)pH\\
+        &= z(p)xpH,
+  \end{align*}
+  so that $\left[ xpH \right]\leq z(p)$, meaning $w\leq z(p)$ as this holds for all $x\in M$.
+\end{proof}
+\begin{proposition}
+  Let $M$ be a von Neumann algebra. For any $p,q\in P(M)$, the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $p$ and $q$ are centrally orthogonal;
+    \item $pMq = \set{0}$;
+    \item there do not exist projections $0 < p_0 \leq p$ and $0 < q_0 \leq q$ such that $p_0 \sim q_0$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We start by showing that (i) and (ii) are equivalent. Let $p$ and $q$ be centrally orthogonal; then, for any $x\in M$, we have
+  \begin{align*}
+    pxq &= pz(p)xz(q)q\\
+        &= pxz(p)z(q)q\\
+        &= 0.
+  \end{align*}
+  Therefore, $pMq = \set{0}$. Now, if $pMq = \set{0}$, then $pz(q) = \left[ MqH \right] = 0$, meaning that $p\leq 1-z(q)$, so since $1-z(q)\in Z(M)$, we have $z(p)\leq 1-z(q)$, so that $z(p)z(q) = 0$.
+
+  Now, we will show that $(ii)$ and (iii) are equivalent. If $(ii)$ does not hold, we let $x\in M$ be such that $pxq \neq 0$. Then, $qx^{\ast}p\neq 0$, so if we define
+  \begin{align*}
+    p_0 &= \left[ pxqH \right]\\
+    q_0 &= \left[ qx^{\ast}pH \right],
+  \end{align*}
+  we have that $p_0,q_0$ are nonzero projections, with $p_0\leq p$ and $q_0\leq q$. Since $\left( pxq \right)^{\ast} = qx^{\ast}p$, it follows from the lemma above that $p_0\sim q_0$.
+
+  Meanwhile, if (iii) does not hold, we let $p_0\leq p$ and $q_0\leq q$ be such that $p_0,q_0$ are nonzero and $p_0\sim q_0$. If $v\in M$ is a partial isometry such that $v^{\ast}v = p_0$ and $vv^{\ast} = q_0$, we have that $v^{\ast} = p_0 v^{\ast}q_0$, and
+  \begin{align*}
+    pv^{\ast}q &= pp_0v^{\ast}q_0q\\
+               &= p_0v^{\ast}q_0\\
+               &= v^{\ast}\\
+               &\neq 0,
+  \end{align*}
+  so that $pMq\neq \set{0}$.
+\end{proof}
+\begin{lemma}
+  Let $M\subseteq B(H)$ be a von Neumann algebra. If $\set{p_i | i\in I}$ and $\set{q_0 | i\in I}$ are pairwise orthogonal families with $p_i\preceq q_i$, then $\sum_{i\in I}p_i\preceq \sum_{i\in I}q_i$.
+\end{lemma}
+\begin{proof}
+  Let $u_i$ be partial isometries with $u_i^{\ast}u_i = p_i$ and $r_i\coloneq u_iu_i^{\ast}\leq q_i$. Note that the $r_i$ are pairwise orthogonal since the $q_i$ are pairwise orthogonal. Therefore, for $i\neq j$, we have
+  \begin{align*}
+    u_i^{\ast}u_j &= u_i^{\ast}u_iu_i^{\ast}u_ju_js^{\ast}u_j\\
+                  &= u_ir_ir_ju_j\\
+                  &= 0\\
+    u_iu_j^{\ast} &= u_iu_i^{\ast}u_iu_j^{\ast}u_ju_j^{\ast}\\
+                  &= u_ip_ip_ju_j^{\ast}\\
+                  &= 0.
+  \end{align*}
+  Consequently, we have
+  \begin{align*}
+    \left( \sum_{i\in I}u_i \right)\left( \sum_{j\in J}u_j \right) &= \sum_{i\in I}u_i^{\ast}u_i\\
+                                                                   &= \sum_{i\in I}p_i
+  \end{align*}
+  and
+  \begin{align*}
+    \left( \sum_{i\in I}u_i \right)\left( \sum_{j\in J} u_j^{\ast}\right) &= \sum_{i\in I}r_i\\
+                                                                          &\leq \sum_{i\in I}q_i,
+  \end{align*}
+  so that $\sum_{i\in I}p_i\preceq \sum_{i\in I}q_i$.
+\end{proof}
+\begin{theorem}[Comparison Theorem]
+  Let $M\subseteq B(H)$ be a von Neumann algebra. For any $p,q\in P(M)$, there exists $z\in P(Z(M))$ such that $pz\preceq qz$ and $q\left( 1-z \right)\preceq p\left( 1-z \right)$.
+\end{theorem}
+\begin{proof}
+  By Zorn's Lemma, there exist maximal families $\set{p_i}_{i\in I}$ and $\set{q_i}_{i\in I}$ of pairwise orthogonal projections with $p_i\sim q_i$, and
+  \begin{align*}
+    \underbrace{\sum_{i\in I}p_i}_{\eqcolon p_0} &\leq p\\
+    \underbrace{\sum_{i\in I}q_i}_{\eqcolon q_0} &\leq q.
+  \end{align*}
+  From the above lemma, we know that $p_0\sim q_0$. Let $w \coloneq z\left( q-q_0 \right)$. By maximality, we must have $ z\left( p-p_0 \right)w = 0$, meaning that $\left( p-p_0 \right)w = 0$, or $pz = p_0 z$. If $v$ is a partial isometry such that $v^{\ast}v = p_0$ and $vv^{\ast} = q_0$, then the partial isometry $vz$ implements the equivalence $p_0z\sim q_0 z$. Therefore, we have $pz = p_0 z \sim q_0 z \leq qz$. Similarly, $p_0\left( 1-z \right) \sim q_0\left( 1-z \right)$ and we get $q\left( 1-z \right)\preceq p(1-z)$.
+\end{proof}
+\begin{corollary}
+  If $M$ is a factor, then any two projections can be compared.
+\end{corollary}
+\begin{proof}
+  There are no nontrivial central projections in a factor.
+\end{proof}
+\section{Type Decomposition of von Neumann Algebras}%
+\begin{definition}
+  If $M$ is a von Neumann algebra, and $p\in B(H)$ is a projection (not necessarily in $M$), then
+  \begin{align*}
+    pMp &= \set{pxp | x\in M}
+  \end{align*}
+  is called a \textit{corner} (or \textit{compression}) of $M$.
+\end{definition}
+This terminology comes from the identification that, whenever $x\in M$, we have
+\begin{align*}
+  PxP &\leftrightarrow \begin{pmatrix}PxP & 0 \\ 0 & 0\end{pmatrix}\\
+      &\in B\left( PH\oplus \left( 1-P \right)H \right).
+\end{align*}
+In fact, we have $PB(H)P = B\left( PH \right)$.
+\begin{theorem}
+  Let $M\subseteq B(H)$ be a von Neumann algebra, with $p\in P(M)$. Then, $pMp$ and $M'p$ are von Neumann algebras in $B(pH)$, with $\left( pMp \right)' = M'p$ and $\left( M'p \right)' = pMp$.
+\end{theorem}
+\begin{corollary}
+  Let $M\subseteq B(H)$ be a von Neumann algebra, $p\in P(M)$. If $M$ is a factor, then $pMp$ and $M'p$ are factors.
+\end{corollary}
+\begin{proof}
+  Since $pMp$ and $M'p$ are commutants of each other in $B(pH)$, they have the same center, so it suffices to show that $M'p$ is a factor. For any $y\in M'$, if we have $yp = 0$, then for all $x\in M$ and $\xi\in H$, we have
+  \begin{align*}
+    yxp\xi &= xyp\xi\\
+           &= 0.
+  \end{align*}
+ Since $M$ is a factor, we have $ z(p) = 1 $, meaning that $MpH$ is dense in $H$, and thus $y = 0$. If we have $wp\in Z\left(M'p\right)$ for $w\in M'$, then for all $y\in M'$, we have that $\left[ w,y \right]p = \left[ wp,yp \right] = 0$. Yet, this means that $\left[ w,y \right] = 0$, meaning $w\in Z\left(M'\right)$. Since $M'$ is a factor, we have $w\in \C$, so $zp\in \C p$. Therefore, $Z\left( M'p \right) = \C p$, and $M'p$ is a factor.
+\end{proof}
+\begin{proposition}
+  Let $M\subseteq B(H)$ be a von Neumann algebra. If $p,q\in P(M)$ are equivalent in $M$, then $pMp$ and $qMq$ are spatially isomorphic.
+\end{proposition}
+\begin{proof}
+  Let $v\in M$ be a partial isometry with $v^{\ast}v = p$ and $vv^{\ast} = q$. We will show that $v|_{pH}$ is an isomorphism from $pH$ to $qH$ implementing the spatial isomorphism. We observe that $v = qvp$, so that $v|_{pH}$ is valued in $qH$, and is surjective since $q\xi = vv^{\ast}\xi = vpv^{\ast}\xi$. Furthermore, for any $p\xi,p\eta\in pH$, we have
+  \begin{align*}
+    \iprod{vp\xi}{vp\eta} &= \iprod{v^{\ast}vp\xi}{p\eta}\\
+                          &= \iprod{p\xi}{p\eta},
+  \end{align*}
+  so that $v|_{pH}$ is a unitary. Additionally, by using $v = qvp$ yet again, we find that
+  \begin{align*}
+    vpxpv^{\ast} &= vxv^{\ast}\\
+                 &= q\left( vxv^{\ast} \right)q\\
+    qxq &= vv^{\ast}xvv^{\ast}\\
+        &= v\left( pv^{\ast}xvp \right)v^{\ast},
+  \end{align*}
+  so that $v\left( pMp \right)v^{\ast} = qMq$.
+\end{proof}
+\begin{definition}
+  Let $M$ be a von Neumann algebra. We say $p\in P(M)$ is
+  \begin{itemize}
+    \item \textit{finite} if $q\leq p$ and $q\sim p$ implies $ p = q $;
+    \item \textit{semi-finite} if there exists a family $\set{p_i}_{i\in I}$ of pairwise orthogonal finite projections such that $\sum_{i\in I}p_i = p$;
+    \item \textit{$\sigma$-finite} if every collection of pairwise orthogonal nonzero projections less than $P$ is at most countable;
+    \item \textit{purely infinite} if $p\neq 0$ and there do not exist any nonzero finite projections $q\in P(M)$ with $q\leq p$;
+    \item \textit{properly infinite} if $p\neq 0$ and, for all nonzero $w\in P(Z(M))$, the projection $wp$ is not finite.
+  \end{itemize}
+  We say $M$ is finite, semi-finite, purely infinite, or properly infinite if the projection $1$ has the corresponding property in $M$.
+\end{definition}
+An equivalent criterion for semi-finiteness is that, if $w$ is any central projection with $wp \neq 0$, then there is a finite projection $0 < q \leq wp$.
+
+Observe that for a von Neumann algebra, we have that finite implies semi-finite, and that any semi-finite von Neumann algebra is not purely infinite; similarly, any purely infinite von Neumann algebra is properly infinite.
+\begin{proposition}
+  A von Neumann algebra $M\subseteq B(H)$ is finite if and only if all isometries are unitaries.
+\end{proposition}
+\begin{proof}
+  Let $M$ be finite, and let $v\in M$ be an isometry, $v^{\ast}v = 1$. Then, $vv^{\ast}\leq 1$, so by finiteness, $vv^{\ast} = 1$, meaning $v$ is a unitary.
+
+  Conversely, suppose every isometry is a unitary, and suppose $p\leq 1$ satisfies $p\sim 1$. Then, if $v\in M$ is a partial isometry with $v^{\ast}v = 1$ and $vv^{\ast} = p$, we have that $v$ is an isometry, hence a unitary, so $vv^{\ast} = 1$, so $1$ is finite in $M$.
+\end{proof}
+\begin{definition}
+  Let $M\subseteq B(H)$ be a von Neumann algebra. We say $p\in P(M)$ is minimal in $M$ if $p\neq 0$ and $pMp = \C p$.
+
+  We say $p$ is abelian in $M$ if $pMp$ is abelian.
+\end{definition}
+\begin{definition}
+  We say a von Neumann algebra $M$ is discrete if for every nonzero central projection $z$, there is a nonzero abelian projection $f$ with $f\leq z$.
+
+  We say $M$ is continuous if it contains no nonzero abelian projections.
+
+  We say a projection $e\in M$ is discrete or continuous if the compression algebra $eMe$ is discrete or continuous, respectively.
+\end{definition}
+\begin{proposition}
+  Let $M$ be a von Neumann algebra.
+  \begin{enumerate}[(i)]
+    \item Suppose $0 < p_1 \leq p$, and $p$ is abelian, (resp. finite, semi-finite, purely infinite). Then, $p_1$ is abelian (resp. finite, semi-finite, purely infinite)
+    \item If $\set{p_i}_{i\in I}$ are purely infinite (resp. semifinite) projections, then $p = \sup_{i} p_i$ is purely infinite (resp. semifinite). Thus, there is a largest purely infinite (resp. semifinite) projection, and it lies in $Z(M)$.
+    \item If $p$ is a properly infinite projection, then it decomposes uniquely as a sum $p = p_s + p_p$ of a semifinite projection and a purely infinite projection, with $z\left(p_s\right)z\left( p_p \right) = 0$.
+    \item If $\set{p_i}_{i\in I}$ are abelian (resp. finite) projections with $z\left( p_i \right)z\left( p_j \right) = 0$ for each $i\neq j$, then $p = \sum_{i\in I}p_i$ is an abelian (resp. finite) projection. There is a smallest central projection $w$ that majorizes all abelian (resp. finite) projections, and there is an abelian (resp. finite) projection $p$ with $z(p) = w$. Additionally, there is a largest finite central projection.
+    \item If $e$ and $f$ are abelian projections with $z(e) = z(f)$, then $e\sim f$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item Pretty much by definition, we have that the statement holds if $p$ is abelian (subprojections yield subalgebras of compressions) or purely infinite.
+
+      If $p$ is finite, with $p_2\leq p_1\leq p$ and $p_2\sim p_1$, then $p_2 + \left( p-p_1 \right)\leq p$, and
+      \begin{align*}
+        p_2 + \left( p-p_1 \right) &\sim p_1 + \left( p-p_1 \right)\\
+                                   &= p,
+      \end{align*}
+      so since $p$ is finite, we have $p_2 + \left( p-p_1 \right) = p$, so $p_2 = p_1$, and $p_1$ is finite.
+
+      Now, suppose $P$ is semifinite, and let $0 < p_1 \leq p$. Set $z = z\left(p_1\right)$. There is a finite projection $0 < q \leq zp$; since $z$ is the supremum of all projections equivalent to $p_1$, there is a projection $q_1\sim q$ such that $p_1q_1\neq 0$. Thus, we have a projection $0 < q_2\leq q_1$ with $q_2\sim p_2\leq p_1$, so $q_2$, and thus $p_2$, are finite as desired.
+    \item Suppose each $p_i$ is purely infinite, and let $q$ be a finite projection with $q\leq p$. Then, for some $i$, we have $qp_i\neq 0$. Thus, there is some projection $0 < q_1\leq q$ with $q_1\sim p_1\leq p_{i}$. From (i), we have that $q_1$ is finite and $p_1$ is finite. Yet, this contradicts the fact that $p_{i}$ is purely infinite. Thus, $p = \sup_{i}p_i$ is purely infinite.
+
+      Furthermore, all the purely infinite projections are invariant under unitary conjugation. Therefore, the supremum of all purely infinite projections satisfies $q = uqu^{\ast}$ for all unitary $u\in M$. Since all elements of $M$ are linear combinations of unitaries, it follows that $q\in Z(M)$, and it necessarily majorizes all purely infinite projections.
+
+      Now, suppose each $p_i$ is semifinite. Let $q\leq p$. Then, for some $i$, we have $qp_i\neq 0$, so there is a projection $0 < q_1 \leq q$ such that $q_1\sim p_1\leq p_i$. Since $p_i$ is semifinite, then so is $p_1$. Since $q_1 = uu^{\ast}$ and $p_1 = u^{\ast}u$, we have $q_2 = up_2u^{\ast}\leq q_1\leq q$ is finite. Therefore, $p = \sup_{i}p_i$ is semifinite. Similarly to the unitary case, since the set of semifinite projections is invariant under unitary conjugation, so we have that the supremum over all semifinite projections is central and majorizes all semifinite projections.
+    \item Suppose $p$ is properly infinite. Let $p_s$ be the sum of all finite projections less than $p$. Then, $p_s$ is semifinite, and there are no finite projections less than $p_p = p - p_s$, so it is purely infinite.
+
+      First, we observe that $z\left( p_s \right)$ is spanned by the projections $q_1 \sim p_1\leq p$, and each of these are finite.
+
+      If $z\left( p_s \right)z\left( p_p \right)\neq 0$, then there is a finite projection $q_1$ with $q_1p_p \neq 0$. Then, there is a (necessarily finite) projection $0 < q_2 \leq q_1$ with $q_2\sim p_2 < p_p$, which contradicts the fact that $p_p$ is purely infinite. Therefore, $p_s$ and $p_p$ are centrally orthogonal.
+  \end{enumerate}
+\end{proof}
+
+\nocite{pedersen_cstar_algebras_automorphism_groups,murphy_cstar_algebras_and_operator_theory,conway_operator_theory,davidson_functional_analysis}
+\printbibliography
+\end{document}

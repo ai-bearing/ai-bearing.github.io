@@ -1,0 +1,120 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage{mlmodern}
+%\usepackage{newpxtext,eulerpx,eucal}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\usepackage{homework}
+%\usepackage{notes}
+
+%\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+%\addbibresource{  }
+
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Algebra II: Homework 4}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{problem}[Problem 1]
+  Let $F$ be a field, $a(x) = x^{n} + \sum_{k=0}^{n-1}a_kx^{k}\in F[x]$ a nonconstant monic polynomial, and let $A = C_{a(x)}$ be its companion matrix. Prove by direct computation that $\operatorname{SNF}\left(xI - A\right) = \operatorname{diag}\left( 1,\dots,1,a(x) \right)$.
+\end{problem}
+\begin{solution}
+  We observe that
+  \begin{align*}
+    xI - A &= \begin{pmatrix}x & 0 & \cdots & 0 & a_0\\ -1 & x & \cdots & 0 & a_1 \\ 0 & \ddots & \ddots & \vdots & \vdots \\ \vdots & \ddots & \ddots & \vdots & \vdots \\ 0 & 0 & \cdots & -1 & x + a_{n-1}\end{pmatrix}.
+  \end{align*}
+  Focusing on the bottom $2$ rows, we use the following reduction method
+  \begin{align*}
+    \begin{pmatrix}x & a_{n-2} \\ -1 & x + a_{n-1}\end{pmatrix} &\xrightarrow{R_{n-1}\leftarrow xR_n + R_{n-1}} \begin{pmatrix}0 & x^2 + a_{n-1}x + a_{n-2}\\ -1 & x + a_{n-1}\end{pmatrix}\\
+                     &\xrightarrow{C_{n}\leftarrow \left( x + a_{n-1} \right)C_{n-1} + C_n} \begin{pmatrix}0 & x^2 + a_{n-1}x + a_{n-2}\\ -1 & 0\end{pmatrix}.
+  \end{align*}
+  Inductively repeating this reduction method, we say at step $i$ that we perform the following two operations consecutively
+  \begin{itemize}
+    \item $\displaystyle R_{n-i} \leftarrow x R_{n-i+1} + R_{n-i}$;
+    \item $ \displaystyle C_{n-i+1} \leftarrow \left( x^{i} + a_{n-1}x^{i-1} + \cdots + a_{n-i} \right)C_{n-i} + C_{n-i+1} $
+  \end{itemize}
+  Upon completion of this process at step $n$, we obtain a matrix consisting entirely of $-1$ along the subdiagonal and $a(x)$ in position $(1,n)$. Next, we perform the following procedure as $i$ ranges from $1$ to $n-1$.
+  \begin{itemize}
+    \item $\displaystyle R_{i} \leftarrow \left( -1 \right)R_{i+1}+R_i$;
+    \item $\displaystyle R_{i+1}\leftarrow R_i + R_{i+1}$.
+  \end{itemize}
+  This gives a matrix with $1$ along the diagonal and $a(x)$ along column $n$. Then, upon performing the operation
+  \begin{itemize}
+    \item $\displaystyle R_{i}\leftarrow \left( -1 \right)R_n + R_i$
+  \end{itemize}
+  for each $1\leq i \leq n-1$, we obtain our desired diagonal matrix in Smith normal form, where we have $ \operatorname{diag}\left( 1,\dots,1,a(x) \right) $.
+\end{solution}
+\begin{problem}[Problem 2]
+  Prove that the constant term in the characteristic polynomial of the $n\times n$ matrix $A$ is $\left( -1 \right)^{n}\det(A)$, and that the coefficient of $x^{n-1}$ is the negative of the sum of the diagonal entries of $A$. Prove that $\det(A)$ is the product of the eigenvalues of $A$ and that the trace of $A$ is the sum of the eigenvalues of $A$.
+\end{problem}
+\begin{solution}
+  We start by showing that this holds for a companion matrix, $A = C_{a(x)}$. Note that in our computation showing that $\operatorname{SNF}\left( xI-A \right) = \operatorname{diag}\left( 1,1,\dots,a(x) \right)$, we exclusively used row and column operations (and employed no flips); as a result, it follows that the characteristic polynomial of a companion matrix for $a(x)$ is exactly $a(x)$. Then, we observe that
+  \begin{align*}
+    a_0 &= \chi_A\left( 0 \right)\\
+        &= \det\left( -A \right)\\
+        &= \det\left( \left( -I \right)A \right)\\
+        &= \det\left( -I \right)\det\left( A \right)\\
+        &= \left( -1 \right)^{n}\det(A),
+  \end{align*}
+  and that the coefficient on the $x^{n-1}$ is equal to $a_{n-1}$, or $-\left( -a_{n-1} \right)$, which is the trace of the companion matrix.
+
+  In the general case, we observe that $A$ is similar to a matrix in rational canonical form,
+  \begin{align*}
+    A &\sim \operatorname{diag}\left( A_1,\dots,A_r \right),
+  \end{align*}
+  and has
+  \begin{align*}
+    \chi_A(x) &= \chi_{A_1}(x)\cdots \chi_{A_r}(x),
+  \end{align*}
+  where we use the fact that characteristic polynomials are invariant under similarity transformation, so that
+  \begin{align*}
+    \chi_A(0) &= \chi_{A_1}(0)\cdots \chi_{A_r}(0)\\
+              &= a_{0,1}\cdots a_{0,r}\\
+              &= \left( -1 \right)^{n_1}\det\left( A_1 \right)\cdots \left( -1 \right)^{n_r}\det\left( A_r \right)\\
+              &= \left( -1 \right)^{n} \det\left( A_1 \right)\cdots \det\left( A_r \right)\\
+              &= \left( -1 \right)^{n}\det\left( A \right),
+  \end{align*}
+  where we let $n_i$ denote the dimension of the specific companion matrix $A_i$. Additionally, we observe that the coefficient on the $n-1$ degree term on $\chi_A(x)$ is given summing the coefficient of an $n_i-1$ degree term with the $n_j$ degree terms for all $j\neq i$. In particular, this means that we get
+  \begin{align*}
+    a_{n-1} &= \sum_{i=1}^{r} a_{n_i-1}\\
+            &= \sum_{i=1}^{r} -\operatorname{Tr}\left(A_i\right)\\
+            &= -\operatorname{Tr}(A).
+  \end{align*}
+  From basic properties of polynomials, we know that the constant term of a polynomial of degree $n$ is equal to $\left( -1 \right)^{n}$ multiplied by the product of the roots, while the coefficient on the degree $n-1$ term is equal to $-1$ multiplied by the sum of the roots. In particular, applying this to the characteristic polynomial, we get that the trace is the sum of the eigenvalues of $A$ and the determinant is the product of the eigenvalues.
+\end{solution}
+\begin{problem}[Problem 3]
+  Determine the number of possible RCFs of $8\times 8$ matrices over $\Q$ with $\chi_A(x) = x^8 - x^4$.
+\end{problem}
+\begin{solution}
+  Factoring over $\Q$, we have that 
+  \begin{align*}
+    \chi_A(x) &= x^{4}\left( x^2 + 1 \right)\left( x-1\right)\left( x+1 \right).
+  \end{align*}
+  In order to determine the possible rational canonical forms, we need to determine the possible invariant factors, $a_1(x) | a_2(x) | \cdots | a_d(x)$, subject to the constraint that $a_d(x) = \mu_A(x)$ has the same roots as $\chi_A(x)$. In particular, we must have that $\mu_A(x)$ can only be one of the following, where we observe that we cannot have $x^2 + 1$ anywhere in the invariant factor decomposition outside of the minimal polynomial since it has multiplicity $1$:
+  \begin{itemize}
+    \item $p_1(x) = x\left( x^2 + 1 \right)\left( x-1 \right)\left( x+1 \right)$;
+    \item $p_1(x) = x^2\left( x^2 + 1 \right)\left( x-1 \right)\left( x+1 \right)$;
+    \item $p_2(x) = x^3\left( x^2 + 1 \right)\left( x-1 \right)\left( x+1 \right)$;
+    \item $p_4(x) = x^4 \left( x^2 + 1 \right)\left( x-1 \right)\left( x+1 \right)$.
+  \end{itemize}
+  We find that the possible decompositions are thus
+  \begin{align*}
+    A_1 &= \left[ x,x,x,p_1(x) \right]\\
+    A_2 &= \left[ 1,x,x^2,p_1(x) \right]\\
+    A_3 &= \left[ 1,1,x^3,p_1(x) \right]\\
+    B_1 &= \left[ x,x,p_2(x) \right]\\
+    B_2 &= \left[ 1,x^2,p_2(x) \right]\\
+    C &= \left[ 1,x,p_3(x) \right]\\
+    D &= \left[ p_4(x) \right].
+  \end{align*}
+\end{solution}
+\begin{problem}[Problem 4]
+  Prove that two $3\times 3$ matrices over some field $F$ are similar if and only if they have the same minimal and characteristic polynomials. Give an example showing this does not hold for $4\times 4$ matrices.
+\end{problem}
+\end{document}
