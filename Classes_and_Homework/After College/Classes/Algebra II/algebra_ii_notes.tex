@@ -506,6 +506,96 @@ Since $E$ is unique by the uniqueness of the elementary divisors decomposition, 
                &\vdots
 \end{align*}
 so that the invariant factors are themselves unique.
-\subsubsection{Canonical Forms of Matrices}%
+\subsubsection{Invariant Factors and Rational Canonical Form}%
+Now that we've proven the classification of finitely generated modules over PIDs, we will use the special case of $F[x]$-modules to determine the rational canonical form.
 
+Given a field $F$ and a finite-dimensional vector space $V$ over $F$, with $T\colon V\rightarrow V$ an $F$-linear transformation, we want to find a basis $\beta$ of $V$ such that $\left[ T \right]_{\beta}$ is a simple form. The first one we will construct is the Rational Canonical Form, which exists over any field.
+
+Note that if we let $x\cdot v = Tv$, then we may turn $V$ into an $F[x]$-module. This is the only $F[x]$-module structure on $V$ that extends the original vector space structure with $x$ acting as $T$.
+
+Since $V$ is finite-dimensional over $F$, it is finitely generated as an $F$-module, so it is finitely-generated as an $F[x]$-module. Therefore, we may write
+\begin{align*}
+  V \cong \widetilde{V}\\
+  &\coloneq \bigoplus_{i=1}^{n} \frac{F[x]}{\left( a_i(x) \right)},
+\end{align*}
+with $a_1(x) | a_2(x) | \cdots | a_m(x)$ nonzero non-unit elements. Note that there is no free summand since $F[x]$ itself is infinite-dimensional as a vector space over $F$, so since $V$ is assumed to be finite-dimensional, it follows that there is no free summand.
+
+We may safely assume that the $a_i$ are monic, so that the $a_i$ are unique. We call them the invariant factors of this linear transformation.
+
+We let $\varphi\colon V\rightarrow \widetilde{V}$ be an isomorphism of $F[x]$-modules, which gives rise to the following commutative diagram.
+\begin{center}
+  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADUQBfU9TXfIRQBGclVqMWbTjz7Y8BImWHj6zVohAAdLQHcssPA1jB2XbrxAZ5goqJXU1UzTv2GsxmKfNdxMKADm8ESgAGYAThAAtkhkIDgQSKIS6mwAKhZhkTGIcQlIAEyOkhraWvThaAAWWCDUDHQARjAMAAr8CkIg4VgBVTiZIBHRSdT5iADMxaku5XSVNYPDOUXxiZPTzmUV1Vg6AMZY4fsABGkHR-s6OzUAesAAtMLm9U0t7TaKmj19A75cQA
+\begin{tikzcd}
+V \arrow[r, "T"] \arrow[d, "\varphi"']                      & V \arrow[d, "\varphi"] \\
+\widetilde{V} \arrow[r, "\varphi\circ T\circ\varphi^{-1}"'] & \widetilde{V}         
+\end{tikzcd}
+\end{center}
+Note that if $\beta$ is a basis of $V$, then $\varphi\left(\beta\right)$ is a basis for $\varphi(V)$, and we have $\left[ T \right]_{\beta} = \left[ \varphi\circ T \circ \varphi^{-1} \right]_{\varphi(\beta)}$, by the definition of the basis.
+
+Note that if $w\in \widetilde{V}$, then the action of $x$ on $w$ is given by
+\begin{align*}
+  x\cdot w &= x\cdot \varphi\left( \varphi^{-1}(w) \right)\\
+           &= \varphi\left( x\cdot \varphi^{-1}(w) \right)\\
+           &= \varphi\left( T\circ \varphi^{-1}(w) \right)\\
+           &= \left( \varphi\circ T \circ \varphi^{-1} \right)(w).
+\end{align*}
+Therefore, we may assume that in fact $V = \widetilde{V}$. Writing
+\begin{align*}
+  V_i &= F[x]/\left( a_i(x) \right),
+\end{align*}
+then we have
+\begin{align*}
+  V &= \bigoplus_{i=1}^{m} V_i,
+\end{align*}
+and if $\beta_i$ is a basis for $V_i$, then
+\begin{align*}
+  \left[ T \right]_{\beta} &= \operatorname{diag}\left( \left[ T|_{V_1} \right]_{\beta_1},\dots,\left[ T|_{V_m} \right]_{\beta_m} \right).
+\end{align*}
+Therefore, it suffices to consider the case of one invariant factor,
+\begin{align*}
+  V &= F[x]/\left( a(x) \right),
+\end{align*}
+where $a(x)$ is a nonconstant monic polynomial of degree $d > 0$. Write
+\begin{align*}
+  a(x) &= x^d + \sum_{i=0}^{d-1}a_ix^i.
+\end{align*}
+Then, for any $p(x)\in F[x]$, we define $ \overline{p(x)} = p(x) + \left( a(x) \right) $, and observe that $\set{ \overline{1}, \overline{x},\dots, \overline{x}^{d-1} } = \beta$ is a basis for $V$, and we have $ T \left( \overline{x}^i \right) = \overline{x}^{i+1} $, and we have the matrix form
+\begin{align*}
+  \left[ T \right]_{\beta} &= \begin{pmatrix}
+0 & 0 & \cdots & 0 & -a_0 \\
+1 & \ddots & \cdots & \vdots & -a_1 \\
+0 & 1 & \ddots & \vdots & \vdots \\
+0 & 0 & \ddots & \vdots & -a_{d-2} \\
+0 & 0 & \cdots & 1 & -a_{d-1} 
+\end{pmatrix}
+\end{align*}
+This matrix is known as the \textit{companion matrix} of the polynomial $a(x)$, and is denoted $C_{a(x)}$. In the general case, we have the block-diagonal matrix
+\begin{align*}
+  \left[ T \right]_{\beta} &= \operatorname{diag}\left( C_{a_1(x)},\dots,C_{a_m(x)} \right).
+\end{align*}
+The matrix of this form is known as the \textit{rational canonical form} of the linear transformation $T$.
+\begin{theorem}
+  Let $V$ be a finite-dimensional vector space over $F$, and let $T\colon V\rightarrow V$. Then, there exists a basis $\beta$ of $V$ and non-constant monic polynomials $a_1,\dots,a_m(x)\in F[x]$ with $a_1(x) | \cdots | a_m(x)$ such that
+  \begin{align*}
+    \left[ T \right]_{\beta} &= \operatorname{diag}\left( C_{a_1(x)},\dots,C_{a_m(x)} \right)
+  \end{align*}
+  is in block-diagonal form, where $C_{a_i(x)}$ is the companion matrix of $p(x)$.
+
+  Moreover, the number $m$ and the polynomials $a_i(x)$ are unique. The polynomials $a_i(x)$ are called the invariant factors of $T$.
+\end{theorem}
+\begin{corollary}
+  Let $K/F$ be a field extension. Suppose $A,B\in \Mat_n\left( F \right)$. Then, $A$ and $B$ are $F$-similar if and only if $A$ and $B$ are $K$-similar.
+\end{corollary}
+\begin{proof}
+  The forward direction is clear.
+
+  In the reverse direction, if $A$ and $B$ are not $F$-similar, then the RCF of $A$ is not equal to the RCF of $B$ over $F$, so they are not equal over $K$, so $A$ and $B$ are not similar over $K$.
+\end{proof}
+\begin{theorem}
+  If $A$ is a matrix, then the following Smith Normal Form computes the RCF of $A$:
+  \begin{align*}
+    \operatorname{SNF}\left( xI-A \right) &= \operatorname{diag}\left( 1,\dots,1,a_1(x),\dots,a_m(x) \right),
+  \end{align*}
+  where there are $n-m$ instances of $1$.
+\end{theorem}
 \end{document}
