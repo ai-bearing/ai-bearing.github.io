@@ -22,7 +22,7 @@
 \begin{document}
 \RaggedRight
 Here, we overview and discuss some of the most important results related to projections in von Neumann algebras.
-\section{Comparison of Projections: An Introduction}%
+\section{Comparison of Projections}%
 Recall that if $H$ is a Hilbert space, an element $w\in B(H)$ is called a partial isometry if, for any $h\in  \ker\left( w \right) ^{\perp}$, we have $\norm{Wh} = \norm{h}$. We call $\ker\left( w \right)^{\perp}$ the initial space of $W$ and $\img(w)$ the final space of $W$.
 
 There are a variety of equivalent definitions for partial isometries.
@@ -37,9 +37,15 @@ There are a variety of equivalent definitions for partial isometries.
     \item $w^{\ast}ww^{\ast} = w^{\ast}$.
   \end{enumerate}
 \end{proposition}
+\begin{theorem}[Polar Decomposition]
+  Let $a\in B(H)$. Then, there is a partial isometry $w\in B(H)$ with initial space $ \ker\left( a \right)^{\perp} $ and final space $ \overline{\img(a)} $ such that $a = w\left\vert a \right\vert$.
+
+  If $a\in M\subseteq B(H)$, where $M$ is a von Neumann algebra, then both $\left\vert a \right\vert$ and $w$ are in $M$.
+\end{theorem}
+\subsection{Equivalence of Projections}%
 If $M\subseteq B(H)$ is a von Neumann algebra, then we say two projections $p,q\in P(M)$, where $P(M)$ denotes the space of projections of $M$, are (Murray--von Neumann) \textit{equivalent} in $M$ if there is a partial isometry $v\in P(M)$ such that $v^{\ast}v = p$ and $vv^{\ast} = q$. We will write $p\sim q$.
 
-Note that projections have an ordering by saying that $p\leq q$ if $pq = qp = p$, or $\img(p)\subseteq \img(q) $. This allows us to say that $p$ is \textit{sub-equivalent} to $q$ (in $M$), written $p\preceq q$, if there is a partial isometry $v\in M$ such that $v^{\ast}v = p$ and $vv^{\ast}\leq q$. In this scenario we will say that $q$ majorizes $p$; the choice for this vocabulary will be seen below.
+Note that projections have an ordering by saying that $p\leq q$ if $pq = qp = p$, or $\img(p)\subseteq \img(q) $. This allows us to say that $p$ is \textit{sub-equivalent} to $q$ (in $M$), written $p\preceq q$, if there is a partial isometry $v\in M$ such that $v^{\ast}v = p$ and $vv^{\ast}\leq q$.\footnote{We will say that the projection $q$ majorizes $p$ if $p\preceq q$, and we will say that $q$ dominates $p$ if $p\leq q$.}
 
 The sub-equivalence relation in fact forms a partial order, and equivalence as projections forms an equivalence relation. We will first show that it is a preorder.
 \begin{proposition}
@@ -69,15 +75,88 @@ The sub-equivalence relation in fact forms a partial order, and equivalence as p
   \end{align*}
   Therefore, $p\preceq r$, so $\preceq$ is a transitive relation.
 \end{proof}
-To see that $\preceq$ is a partial order, we need an analogue of the Cantor--Schröder--Bernstein theorem for projections. In fact, it is proven in a similar manner.
+To see that $\preceq$ is a partial order, we need an analogue of the Cantor--Schröder--Bernstein theorem for projections. In fact, it can be proven in a similar manner. First, we discuss a simple lemma.
+\begin{lemma}
+  Let $M\subseteq B(H)$ be a von Neumann algebra. If $\set{p_i}_{i\in I}$ and $\set{q_i}_{i\in I}$ are pairwise orthogonal families of projections with $p_i\preceq q_i$, then $\sum_{i\in I}p_i\preceq \sum_{i\in I}q_i$.
+\end{lemma}
+\begin{proof}
+  Let $u_i$ be the partial isometries with $u_i^{\ast}u_i = p_i$ and $r_i\coloneq u_iu_i^{\ast}\leq q_i$. Then, the $r_i$ are pairwise orthogonal since the $q_i$ are pairwise orthogonal, and for any $i\neq j$,
+  \begin{align*}
+    u_i^{\ast}u_j &= u_i^{\ast}u_iu_i^{\ast}u_ju_j^{\ast}u_j\\
+                  &= u_ir_ir_ju_j\\
+                  &= 0\\
+    u_iu_j^{\ast} &= u_iu_i^{\ast}u_iu_j^{\ast}u_ju_j^{\ast}\\
+                  &= u_ip_ip_ju_j^{\ast}\\
+                  &= 0.
+  \end{align*}
+  Consequently, we get
+  \begin{align*}
+    \left( \sum_{i\in I}u_i^{\ast} \right)\left( \sum_{j\in I}u_j \right) &= \sum_{i\in I}u_i^{\ast}u_i\\
+                                                                          &= \sum_{i\in I}p_i\\
+    \left( \sum_{i\in I}u_i \right)\left( \sum_{j\in I}u_j^{\ast} \right) &= \sum_{i\in I}u_iu_i^{\ast}\\
+                                                                          &\leq \sum_{i\in I}q_i.
+  \end{align*}
+  This gives $\sum_{i\in I}p_i\preceq \sum_{i\in I}q_i$.
+\end{proof}
 \begin{theorem}
   If $e\preceq f$ and $f\preceq e$, then $e\sim f$.
 \end{theorem}
+\begin{proof}
+  We will let $e_0 \coloneq e$ and $f_0 \coloneq f$. Let $v$ and $w$ be partial isometries with $v^{\ast}v = e$, $vv^{\ast} = f_1\leq f$, $w^{\ast}w = f$, $ww^{\ast} = e_1\leq e$. Inductively define a sequence of projections as follows.
+
+  Since $v$ maps the range of $e_1$ isometrically onto the range of some projection dominated by $f_1$, it follows that we may write $f_2\coloneq ve_1 \left( ve_1 \right)^{\ast}$ with $f_2\leq f_1$. Since $w$ maps the range of $f_1$ onto the range of some projection dominated by $e_1$, it follows that we may write $wf_1 \left( wf_1 \right)^{\ast}\eqcolon e_2$. Observe also that $v\left( e-e_1 \right)$ is a partial isometry with initial projection $e-e_1$ and final projection $f_1-f_2$.
+
+  Inductively, we obtain decreasing sequences of projections $\left( e_n \right)_n$ and $\left( f_n \right)_n$ where $v$ maps the range of $e_n$ isometrically onto that of $f_{n+1}$, and $w$ maps the range of $f_n$ isometrically onto that of $e_{n+1}$. Defining $e_{\infty}\coloneq \inf_{n} e_n$ and $f_{\infty} = \inf_n f_n$, we have that $v$ maps the range of $e_{\infty}$ onto that of $f_{\infty}$, and $w$ that of $f_{\infty}$ onto the range of $e_{\infty}$. Note that we have $e_{\infty}\sim f_{\infty}$.
+
+  As discussed earlier, we have that $e_n-e_{n+1}\sim f_{n+1}-f_{n+2}$, so since sums of pairwise orthogonal families of projections respects equivalence, we have
+  \begin{align*}
+    \sum_{n=0}^{\infty} \left( e_{2n}-e_{2n+1} \right) &\sim \sum_{n=0}^{\infty}\left( f_{2n+1}-f_{2n+2} \right)\\
+    \sum_{n=0}^{\infty} \left( e_{2n+1}-e_{2n+2} \right) &\sim \sum_{n=0}^{\infty}\left( f_{2n}-f_{2n+1} \right).
+  \end{align*}
+  Therefore, we get
+  \begin{align*}
+    e &= e_{\infty} + \sum_{n=0}^{\infty} \left( e_{2n}-e_{2n+1} \right) + \sum_{n=0}^{\infty} \left( e_{2n+1}-e_{2n+2} \right)\\
+      &\sim f_{\infty} + \sum_{n=0}^{\infty} \left( f_{2n+1}-f_{2n+2} \right) + \sum_{n=0}^{\infty} \left( f_{2n}-f_{2n+1} \right)\\
+      &= f.
+  \end{align*}
+\end{proof}
+\subsection{Central Projections and the Comparison Theorem}%
 The projections in a von Neumann algebra form a complete lattice, as the collection of closed subspaces of $H$ form a complete lattice under the operations
 \begin{align*}
   \bigvee_{i\in I}X_i &\coloneq \overline{\sum_{i\in I}X_i}\\
   \bigwedge_{i\in I}X_i &\coloneq \bigcap_{i\in I} X_i.
 \end{align*}
+If $S\subseteq H$ is any subset, then we will define the range projection of $S$ by
+\begin{align*}
+  \left[ S \right] &\coloneq P_{ \overline{\Span}(S) }.
+\end{align*}
+\begin{proposition}
+  If $M\subseteq B(H)$ is a von Neumann algebra, and $x\in M$, then $\left[ xH \right]$ and $\left[ x^{\ast}H \right]$ are in $M$, with $\left[ xH \right] \sim \left[ x^{\ast}H \right]$ in $M$.
+\end{proposition}
+\begin{proof}
+  Let $x = v\left\vert x \right\vert$ be the polar decomposition. Note that $v\in M$. Now, $vv^{\ast}$ is the projection onto $ \overline{xH} $ and $ v^{\ast}v  $ is the projection onto $\ker\left( x \right)^{\perp} = \overline{x^{\ast}H}$. Thus, these projections are equivalent in $M$.
+\end{proof}
+\begin{definition}
+  Let $x\in M$. We define the \textit{central support} to be the projection
+  \begin{align*}
+    z(x) &= \inf\set{w\in P\left(Z(M)\right) | xw = wx = x}.
+  \end{align*}
+  We say $p$ and $q$ are centrally orthogonal if $z(p)z(q) = 0$.
+\end{definition}
+\begin{lemma}
+  If $M\subseteq B(H)$ is a von Neumann algebra, then the central support of any $p\in P(M)$ is given by
+  \begin{align*}
+    z(p) &= \left[ MpH \right].
+  \end{align*}
+  Let $w = \left[ MpH \right]$. Since $M$ is unital, it follows that $p\leq w$, and since $ \overline{MpH} $ is a reducing subspace for both $M$ and $M'$, we have $w\in M\cap M'$, so $z(p)\leq w$.
+
+  Conversely, if $x\in M$, then
+  \begin{align*}
+    xpH &= x z(p) p H\\
+        &= z(p) xpH,
+  \end{align*}
+  meaning that $\left[ xpH \right]\leq z(p)$, so $w\leq z(p)$ as $x$ was arbitrary.
+\end{lemma}
 \nocite{davidson_functional_analysis,conway_operator_theory}
 \printbibliography
 \end{document}
