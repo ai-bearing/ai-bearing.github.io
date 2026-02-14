@@ -57,3 +57,6 @@ permalink: "/quotes.html"
 
 - "You're supposed to develop schizophrenia *after* your PhD"\
   *Liam Staker*
+
+- "Diet coke is like drinking a hangnail"\
+  *Anonymous*

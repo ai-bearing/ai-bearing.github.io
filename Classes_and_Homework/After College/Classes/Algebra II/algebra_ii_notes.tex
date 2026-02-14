@@ -691,4 +691,76 @@ Thus, we find that
 \begin{align*}
   \left[ T \right]_{\beta} &= \begin{pmatrix}\lambda & 1 & 0 & \cdots & 0 & 0\\ 0 & \lambda & 1 & \cdots & 0 & 0 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & 0 & \cdots & 1 & 0 \\ 0 & 0 & 0 & \cdots & \lambda & 1 \\ 0 & 0 & 0 & \cdots & 0 & \lambda\end{pmatrix}
 \end{align*}
+We call a matrix of this form the \textit{Jordan block} with eigenvalue $\lambda$ and size $d$, denoted $J_d(\lambda)$. Combining this work gives us the following theorem, with proof similar to the proof of the rational canonical form, replacing the use of the invariant factor decomposition with the elementary divisor decomposition.
+\begin{theorem}[Jordan Canonical Form]
+  Let $T$ be a linear transformation on $V$, where $V$ is a finite-dimensional vector space over an algebraically closed field $F$.
+  \begin{enumerate}[(i)]
+    \item There is a basis $\beta$ such that
+      \begin{align*}
+        \left[ T \right]_{\beta} &= \bigoplus_{k=1}^{m} J_{d_k}\left( \lambda_k \right)\\
+                                 &= \operatorname{diag}\left( J_{d_1}\left( \lambda_1 \right),\dots,J_{d_m}\left( \lambda_m \right) \right).
+      \end{align*}
+    \item This arrangement is unique up to the rearranging of the blocks.
+  \end{enumerate}
+\end{theorem}
+There are two immediate corollaries.
+\begin{corollary}
+  If $T\colon V\rightarrow V$ is a linear map between finite dimensional vector spaces over an algebraically closed field $F$, then the following hold:
+  \begin{enumerate}[(a)]
+    \item $\displaystyle \chi_T(x) = \prod_{\lambda\in \sigma(T)}\left( x-\lambda \right)^{n_{\lambda}}$, where $n_{\lambda}$ is the sum of the sizes of all the Jordan blocks of $T$ with eigenvalue $\lambda$;
+    \item $\displaystyle \mu_T(x) = \prod_{\lambda\in \sigma(T)}\left( x-\lambda \right)^{m_{\lambda}}$, where $m_{\lambda}$ is the size of the largest Jordan block with eigenvalue $\lambda$.
+  \end{enumerate}
+\end{corollary}
+\begin{corollary}
+  Letting $T$ be as above, the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $T$ is diagonalizable, in that $V$ has a basis of eigenvectors for $T$;
+    \item all the blocks in the Jordan canonical form of $T$ have size $1$;
+    \item $\mu_T(x)$ is a product of distinct linear factors.
+  \end{enumerate}
+\end{corollary}
+Now, we will discuss a little bit on how to compute Jordan canonical forms by using the ranks of certain linear transformations. For any $\lambda$, we let $b_d(\lambda)$ denote the number of times the block $J_d(\lambda)$ appears in the Jordan canonical form of $T$. Then, the following holds.
+\begin{theorem}
+  \begin{align*}
+    \sum_{d\geq n} b_d(\lambda) &= \operatorname{rk}\left( \left( T-\lambda I \right)^{n-1} \right)- \operatorname{rk}\left( \left( T-\lambda I \right)^{n} \right),
+  \end{align*}
+  where we let $S^{0} = I$.
+\end{theorem}
+\begin{proof}
+  We start with a general observation. If $W$ is a finite-dimensional vector space, and $S\colon W\rightarrow W$ is a linear map, where
+  \begin{align*}
+    W &= \bigoplus_{k=1}^{m}W_k
+  \end{align*}
+  is a decomposition into $S$-invariant subspaces, then
+  \begin{align*}
+    \operatorname{rk}(S) &= \sum_{k=1}^{m} \operatorname{rk}\left( S|_{W_k} \right).
+  \end{align*}
+  Let $\beta$ be a Jordan basis for $T$, and write
+  \begin{align*}
+    \left[ T \right]_{\beta} &= \bigoplus_{k=1}^{m}J_{d_k}\left( \lambda_k \right).
+  \end{align*}
+  Let $\beta_k$ be a subset of $\beta$ corresponding to $J_{d_k}\left( \lambda_k \right)$, and set $V_k = \operatorname{Span}\left( \beta_k \right)$. Then, we have
+  \begin{align*}
+    V &= \bigoplus_{k=1}^{m}V_k,
+  \end{align*}
+  where each $V_k$ is $T$-invariant, meaning each $V_k$ is invariant under operators of the form $\left( T-\lambda I \right)^{n}$.
+
+  Thus, we have
+  \begin{align*}
+    \operatorname{rk}\left( \left( T-\lambda I \right)^{n-1} \right)-\operatorname{rk}\left( \left( T-\lambda I \right)^{n} \right) &= \sum_{k=1}^{m}\operatorname{rk}\left( \left( T-\lambda I \right)^{n-1}|_{V_k} \right) - \operatorname{rk}\left( \left( T-\lambda I \right)^{n}|_{V_k} \right)\\
+                                                                                                                                            &= \sum_{k=1}^{m} \operatorname{rk}\left( \left( J_{d_k}\left( \lambda_k \right) - \lambda I \right)^{n-1} \right) - \operatorname{rk}\left( \left( J_{d_k}\left( \lambda_k \right)-\lambda I \right)^{n} \right),\label{eq:ranks_sum}\tag{$\ast$}
+  \end{align*}
+  meaning that we only need to understand the ranks $\operatorname{rk}\left( J_{d}(\mu)^{s} \right)$, where $\mu\in F$, $d\in \N$, and $s\geq 0$. Observe that if $\mu\neq 0$, then $J_d(\mu)$ is invertible, so all its powers are full rank. Thus, if $\lambda_k\neq \lambda$, then all the summands in \eqref{eq:ranks_sum} are zero.
+
+  Concerning $J_d(0)^{s}$, we observe that it is an $s\times s$ matrix with $1$s on the superdiagonal and $0$ everywhere else, so it follows that $J_d(0)^{s}$ takes $e_1,\dots,e_s$ to $0$ and $e_{s+k}\mapsto e_k$ for $1\leq k \leq d-s$, and if $s \geq d$ then $J_d(0)^{s} = 0$. Thus, the rank of $J_d(0)^{s}$ is given by $d-s$ if $s \leq d$ and $0$ if $s\geq d$.
+
+  In particular, this means
+  \begin{align*}
+    \operatorname{rk}\left( J_d(0)^{n-1} \right)- \operatorname{rk}\left( J_d(0)^{n} \right) &= \begin{cases}
+      1 &d\geq n\\
+      0 & d < n
+    \end{cases}.
+  \end{align*}
+  Furthermore, if $\lambda\notin \sigma(T)$, then \eqref{eq:ranks_sum} is $0$. Meanwhile, if $\lambda\in \sigma(T)$, then the Jordan block $J_{d_k}\left(\lambda_k\right)$ contributes $1$ to \eqref{eq:ranks_sum} if and only if $\lambda_k = \lambda$ and $d_k \geq n$. This gives our desired result.
+\end{proof}
 \end{document}

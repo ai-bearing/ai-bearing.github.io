@@ -225,7 +225,100 @@ Recall that a factor is a von Neumann algebra $M$ such that $Z(M) = \C 1$.
 \begin{corollary}
   If $M$ is a factor and $p\in P(M)$, then $pMp$ and $M'p$ are both factors.
 \end{corollary}
+\begin{definition}
+  Let $M\subseteq B(H)$ be a von Neumann algebra. We say a projection $p\in P(M)$ is
+  \begin{itemize}
+    \item minimal if $p\neq 0$ and the only subprojections of $p$ are $0$ and $p$;
+    \item abelian if $pMp$ is abelian;
+    \item finite if $q\leq p$ and $q\sim p$ implies $q = p$;
+    \item semifinite if there are pairwise orthogonal finite projections $p_i\in P(M)$ such that $p = \sum_{i\in I}p_i$;
+    \item purely infinite if $p\neq 0$ and there is no nonzero finite projection $q\leq p$;
+    \item properly infinite if $p\neq 0$ and $zp$ is not finite for any nonzero central projection $z\in Z(P(M))$.
+  \end{itemize}
+  We say that the von Neumann algebra $M$ is finite/semifinite/purely infinite/properly infinite if the projection $1$ satisfies its respective condition.
+\end{definition}
+What we will be working towards is known as the type decomposition, which forms the basis for the dimension theory of von Neumann algebras. Eventually, we will show that every von Neumann algebra $M$ can be decomposed as
+\begin{align*}
+  M &= M_{\text{sf}}\oplus M_{\text{III}},
+\end{align*}
+where $M_{\text{sf}}$ is a semifinite von Neumann algebra and $M_{\text{III}}$ is a type III von Neumann algebra, a definition we will discuss shortly. First, we must expand on some of the ways that comparison of projections interacts with these properties of those projections.
+\begin{lemma}
+  Let $\set{p_i}_{i\in I}$ be a family of centrally orthogonal projections in a von Neumann algebra $M\subseteq B(H)$. If each $p_i$ is abelian (finite), then the sum $\sum_{i\in I}p_i$ is also abelian (finite).
+\end{lemma}
+\begin{proof}
+  If each $p_i$ is abelian, then since they are centrally orthogonal for any $i\neq j$, then for any $x,y\in M$, we have $p_ixpyp_j = 0$. Therefore, we have
+  \begin{align*}
+    \left( pxp \right)\left( pyp \right) &= \sum_{i\in I}p_ixp_iyp_i\\
+                                         &= \left( pyp \right)\left( pxp \right),
+  \end{align*}
+  so $p$ is abelian.
 
-\nocite{davidson_functional_analysis,conway_operator_theory}
+  Now, if each $p_i$ is finite, and $u\in M$ is such that $uu^{\ast}\leq u^{\ast}u = p$, then for all $i$ we have $z\left( p_i \right)u^{\ast}uz\left( p_i \right) = p$, and $uz\left( p_i \right)u^{\ast} = z\left( p_i \right)uu^{\ast} \leq p_i$, meaning $uz\left( p_i \right)u^{\ast} = p_i$, and
+  \begin{align*}
+    uu^{\ast} &= uz(p)u^{\ast}\\
+              &= \sum_{i\in I} uz\left( p_i \right)u^{\ast}\\
+              &= p.
+  \end{align*}
+\end{proof}
+\begin{proposition}
+  Let $p,q$ be nonzero projections in a von Neumann algebra with $p\preceq q$. If $q$ is finite (purely infinite), then $p$ is also finite (purely infinite).
+\end{proposition}
+\begin{proof}
+  Suppose $q$ is finite, and $p\sim q$, with $v\in M$ implementing the equivalence. Let $u\in M$ be such that $u^{\ast}u = p$ and $uu^{\ast}\leq p$. Then,
+  \begin{align*}
+    \left( vuv^{\ast} \right)^{\ast}\left( vuv^{\ast} \right) &= q\\
+    \left( vuv^{\ast} \right)\left( vuv^{\ast} \right)^{\ast} &\leq q,
+  \end{align*}
+  so since $q$ is finite, $\left( vuv^{\ast}\right)\left( vuv^{\ast} \right)^{\ast} = q$, so $uu^{\ast} = p$.
+
+  Now, if $p\leq q$, then if $u^{\ast}u = p$ with $uu^{\ast}\leq p$, then by setting $w = u + \left( q-p \right)$, we have that $w^{\ast}w = q$ and $ww^{\ast}\leq q$, so $u^{\ast}u + \left( q-p \right) = ww^{\ast} = q$, meaning $uu^{\ast} = p$.
+
+  In the general case, we have some $q_0\leq q$ such that $p\sim q_0 \leq q$.
+
+  Since projections are purely infinite when they have no nonzero finite subprojections, the purely infinite case follows from the finite case.
+\end{proof}
+\begin{proposition}
+  A projection $p\in P(M)$ is semifinite if and only if $p$ is the supremum of finite projections. In particular, a supremum of semifinite projections is also semifinite.
+\end{proposition}
+\begin{proof}
+  If $p$ is semifinite, then $p$ is the sum (and hence the supremum) of a family of pairwise orthogonal finite projections.
+
+  Now, suppose $p = \bigvee_{\alpha}p_{\alpha}$, where each $p_{\alpha}$ is finite. Let $\set{q_{\beta}}_{\beta}$ be a maximal family of pairwise orthogonal finite subprojections of $p$. If we set
+  \begin{align*}
+    q_0 &= p - \sum_{\beta}q_{\beta},
+  \end{align*}
+  and suppose that $q_0\neq 0$, then there exists some $p_{\alpha}$ such that $p_{\alpha}$ and $q_0$ are not orthogonal (else it would contradict maximality), so they are not centrally orthogonal. Therefore, we have a nonzero subprojection $q_1 \leq q_0$ such that $q_1\preceq p_{\alpha}$, so it is finite by what we showed previously; this contradicts the maximality of the set $\set{q_{\beta}}_{\beta}$.
+\end{proof}
+\begin{corollary}
+  Let $p$ be a projection in a von Neumann algebra $M$. If $p$ is semifinite (purely infinite), then the central support $z(p)$ is also semifinite (purely infinite).
+\end{corollary}
+\begin{proof}
+  The central support is the supremum over all equivalent projections, so since the supremum of semifinite projections is again semifinite, it follows from the previous proposition.
+
+  Furthermore, a nonzero projection is purely infinite if and only if it is centrally orthogonal to every semifinite projection, so we obtain the corollary in this case.
+\end{proof}
+\begin{corollary}
+  Let $p,q$ be nonzero projections in a von Neumann algebra such that $p\preceq q$. If $q$ is semifinite, then so is $p$.
+\end{corollary}
+\begin{proof}
+  It is enough to consider the case when $q$ is central, in which case we may take $p\leq q$. Let $p_0$ be the maximal semifinite subprojection of $p$. Since $q$ is semifinite, it is the supremum of its finite subprojections. Since $z\left( p-p_0 \right)\leq q = z(q)$, it follows that if $p-p_0\neq 0$, then there would exist a nonzero finite subprojection that would be equivalent to a subprojection of $p-p_0$, which contradicts the definition of $p_0$. Thus, $p$ is the supremum of its finite subprojections, so it is semifinite.
+\end{proof}
+\begin{lemma}
+  Let $M$ be a properly infinite von Neumann algebra. Then, there exists a projection $p\in P(M)$ such that $p\sim 1-p \sim 1$.
+\end{lemma}
+\begin{proof}
+  Since $M$ is properly infinite, there exists $u\in M$ with $uu^{\ast}\leq u^{\ast}u = 1$. Set $p_0 = 1-uu^{\ast}$. Then, $p_n = u^{n}p_0\left( u^n \right)^{\ast}$ is a pairwise orthogonal family of equivalent projections. Let $\set{q_i}_{i\in I}$ be a maximal family of pairwise orthogonal equivalent projections in $M$ extending $\set{p_n}_{n\in \N}$, and set $q_0 = 1-\sum_{i\in I}q_i$.
+
+  By the comparison theorem, there is $z\in Z(P(M))$ such that $q_0z\leq q_{i_0}z$ and $q_{i_0}\left( 1-z \right)\leq q_0\left( 1-z \right)$. If it were the case that $z = 0$, then we would have $q_{i_0}\leq q_0$, contradicting maximality of $\set{q_i}_{i\in I}$,  so $z\neq 0$, and we have
+  \begin{align*}
+    z &= q_0 z + \sum_{i\in I}q_i z\\
+      &\preceq q_{i_0}z + \sum_{i\neq i_0} q_{i} z\\
+      &= \sum_{i\in I}q_i z \leq z,
+  \end{align*}
+  so $z\sim \sum_{i\in i}q_i z$ by Cantor--Schröder--Bernstein for projections. Decomposing $\set{q_i}_{i\in I}$ into infinite subsets, we may construct two projections $p$ and $z-p$ such that $p \sim z-p \sim z$.
+
+  Now, let $\set{r_j}_{j\in J}$ be a maximal family of centrally orthogonal projections with $r_j\sim z\left( r_j \right)-r_j\sim z\left( r_j \right)$. Then, the argument above shows that $\sum_{j\in J}z\left( r_j \right) = 1$, so by setting $p = \sum_{j\in J}r_j$, we obtain our desired result.
+\end{proof}
+\nocite{davidson_functional_analysis,conway_operator_theory,takesaki_1}
 \printbibliography
 \end{document}
