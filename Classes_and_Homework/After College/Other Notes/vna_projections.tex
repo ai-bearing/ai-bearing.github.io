@@ -235,7 +235,7 @@ Recall that a factor is a von Neumann algebra $M$ such that $Z(M) = \C 1$.
     \item purely infinite if $p\neq 0$ and there is no nonzero finite projection $q\leq p$;
     \item properly infinite if $p\neq 0$ and $zp$ is not finite for any nonzero central projection $z\in Z(P(M))$.
   \end{itemize}
-  We say that the von Neumann algebra $M$ is finite/semifinite/purely infinite/properly infinite if the projection $1$ satisfies its respective condition.
+  We say that the von Neumann algebra $M$ is finite/semifinite/purely infinite/properly infinite if the projection $1$ satisfies its respective condition. Additionally, if $M$ has no minimal projections, we say it is diffuse.
 \end{definition}
 What we will be working towards is known as the type decomposition, which forms the basis for the dimension theory of von Neumann algebras. Eventually, we will show that every von Neumann algebra $M$ can be decomposed as
 \begin{align*}
@@ -319,6 +319,105 @@ where $M_{\text{sf}}$ is a semifinite von Neumann algebra and $M_{\text{III}}$ i
 
   Now, let $\set{r_j}_{j\in J}$ be a maximal family of centrally orthogonal projections with $r_j\sim z\left( r_j \right)-r_j\sim z\left( r_j \right)$. Then, the argument above shows that $\sum_{j\in J}z\left( r_j \right) = 1$, so by setting $p = \sum_{j\in J}r_j$, we obtain our desired result.
 \end{proof}
+\begin{proposition}
+  Let $p$ and $q$ be finite projections in a von Neumann algebra $M$. Then, $p\vee q$ is finite.
+\end{proposition}
+\begin{proof}
+  We use Kaplansky's formula for this, which gives $p\vee q - p \sim q-p\wedge q$. This follows from observing that $x = \left( 1-p \right)q$ has $\ker\left( x \right) = \ker\left( q \right)\oplus \left( qH \cap pH \right)$, meaning that $\left[ x^{\ast}H \right] = 1 - \left( \left( 1 - q \right) + q\wedge p \right) = q-q\wedge p$. Symmetrically, this gives
+  \begin{align*}
+    \left[ xH \right] &= \left( 1-p \right)-\left( 1-p \right)\wedge \left( 1-q \right)\\
+                      &= p\vee q - p.
+  \end{align*}
+  In particular, since $q-p\wedge q \leq q$, we may assume that $p$ and $q$ are orthogonal, replacing $q$ with $p\vee q - p$. We may also assume that $p + q = 1$ by passing to $\left( p+q \right)M\left( p+q \right)$.
+
+  Let $z_0$ be the supremum of all finite central projections. It follows that $z_0$ is finite. If $z_0 = 1$, then we are done. Else, we may use $\left( 1-z_0 \right)p$ and $\left( 1-z_0 q \right)$, wherein $z_0 = 0$ and thus we assume that $M$ is properly infinite.
+
+  Therefore, we have a projection $r\in P(M)$ such that $r\sim 1-r \sim 1$. By comparison, there is $z\in P(Z(M))$ such that
+  \begin{align*}
+    z\left( p\wedge r \right) \preceq z\left( q\wedge \left( 1-r \right) \right)\\
+    \left( 1-z \right)\left( q\wedge \left( 1-r \right) \right) &\preceq \left( 1-z \right)\left( p\wedge r \right).
+  \end{align*}
+  Additionally, $zr \sim z\left( 1-r \right)\sim z$, and
+  \begin{align*}
+    z\left( p\wedge r \right) &= zp\wedge zr\\
+                              &\preceq z\left( 1-r \right)\wedge zq,
+  \end{align*}
+  so by using Kaplansky's formula, we have
+  \begin{align*}
+    zr &= z\left( r-r\wedge p \right) + z\left( r\wedge p \right)\\
+       &\preceq z\left( r\vee p - p \right) + z\left( q\wedge \left( 1-r \right) \right)\\
+       &= zq,
+  \end{align*}
+  Therefore, $zr = 0$ since $zq$ is finite and $M$ is properly infinite, so $z \sim 0$. In particular, this gives $q\wedge \left( 1-r \right) \preceq p\wedge r$. Replacing $p$ with $q$ and $r$ with $1-r$, we get
+  \begin{align*}
+    1-r &= \left( 1-r-\left( 1-r \right)\wedge q \right) + \left( \left( 1-r \right)\wedge q \right)\\
+        &\preceq \left( \left( 1-r \right)\vee q - q \right) + \left( p\wedge r \right)\\
+        &= p,
+  \end{align*}
+  which gives a contradiction since $p$ is finite.
+\end{proof}
+\begin{proposition}
+  Let $p$ and $q$ be finite projections with $p\sim q$. Then, $1-p$ and $1-q$ are equivalent.
+\end{proposition}
+\begin{proof}
+  We have that $p\vee q$ is finite, so we may assume that $M$ is finite. By the comparison theorem, there are projections $p_1$ and $q_1$ and a central projection $z\in P(Z(M))$ such that
+  \begin{align*}
+    \left( 1-p \right)z \sim q_1 &\leq \left( 1-q \right)z\\
+    \left( 1-q \right)\left( 1-z \right)\sim p_1 &\leq \left( 1-p \right)\left( 1-z \right).
+  \end{align*}
+  Then, we have
+  \begin{align*}
+    z &= \left( 1-p \right)z + pz\\
+      &\sim q_1 + qz\\
+      &\leq \left( 1-q \right)z + qz\\
+      &= z
+  \end{align*}
+  and
+  \begin{align*}
+    \left( 1-z \right) &= \left( 1-q \right)\left( 1-z \right) + q\left( 1-z \right)\\
+                       &\sim p_1 + p\left( 1-z \right)\\
+                       &\leq \left( 1-z \right),
+  \end{align*}
+  so since both $z$ and $\left( 1-z \right)$ are finite, we have $q_1 = \left( 1-q \right)z$ and $p_1 = \left( 1-p \right)\left( 1-z \right)$. Thus, $1-q\sim 1-p$.
+\end{proof}
+
+\begin{definition}
+  Let $M$ be a von Neumann algebra.
+  \begin{itemize}
+    \item We say $M$ is type I if every nonzero central projection in $M$ majorizes a nonzero abelian projection in $M$.
+    \item We say $M$ is type II\textsubscript{1} if it is finite, has no nonzero abelian projections, and every nonzero central projection in $M$ majorizes a nonzero finite projection.
+    \item We say $M$ is type II\textsubscript{$\infty$} if every nonzero central projection majorizes a nonzero finite projection, and has no nonzero finite central projections.
+    \item We say $M$ is type III if it is purely infinite.
+  \end{itemize}
+\end{definition}
+\begin{theorem}
+  Every von Neumann algebra $M$ uniquely decomposes into a direct sum of those of type I, II\textsubscript{1}, II\textsubscript{$\infty$}, and III. Moreover, very projection $e$ in $M$ can be uniquely written as the sum of centrally orthogonal projections $e_1$ and $e_2$ in $M$ such that $e_1$ is finite and $e_2$ is properly infinite.
+\end{theorem}
+\begin{proof}
+  Let $\set{e_i}_{i\in I}$ be a maximal family of centrally orthogonal abelian projections in $M$, and let $e = \sum_{i\in I}e_i$. Then, $e$ is abelian; define $z_{\text{I}} = z(e)$.
+
+  If $z$ is a nonzero central projection majorized by $z_{\text{I}}$, then $ze$ is a nonzero abelian projection, so $Mz_{\text{I}}$ is of type I.
+
+  By construction, there is then no nonzero abelian projection in $M\left( 1-z_{\text{I}} \right)$, meaning that $M\left( 1-z_{\text{I}} \right)$ has no nontrivial direct summand of type I.
+
+  Let $\set{f_j}_{j\in J}$ be a maximal family of centrally orthogonal finite projections in $M\left( 1-z_{\text{I}} \right)$, and let $f = \sum_{j\in J}f_j$. Then, $f$ is finite. Set $z_{\text{II}} = z(f)$. By construction, we have that $Mz_{\text{II}}$ has no nonzero abelian projections, and every nonzero projection $z$ in $M z_{\text{II}}$ majorizes a nonzero finite projection $zf$. Thus, $Mz_{\text{II}}$ is of type II.
+
+  By the maximality of $\set{f_j}_{j\in J}$, it follows that $1-z_{\text{II}} = z_{\text{III}}$ does not majorize any finite projection, so $Mz_{\text{III}}$ is of type III. We have that $z_{\text{I}} + z_{\text{II}} + z_{\text{III}} = 1$.
+
+  Now, let $\set{z_k}_{k\in K}$ be a maximal orthogonal family of finite central projections in $Mz_{\text{II}}$, and set $z_{\text{II\textsubscript{1}}} = \sum_{k\in K}z_k$, and $z_{\text{II\textsubscript{$\infty$}}} = z_{\text{II}} - z_{\text{II\textsubscript{1}}}$. It follows that $Mz_{\text{II\textsubscript{1}}}$ is of type II\textsubscript{1} and $Mz_{\text{II\textsubscript{$\infty$}}}$ is of type II\textsubscript{$\infty$}. Therefore, we get the direct sum decomposition
+  \begin{align*}
+    M &= Mz_{\text{I}} \oplus Mz_{\text{II\textsubscript{1}}}\oplus Mz_{\text{II\textsubscript{$\infty$}}} \oplus Mz_{\text{III}}.
+  \end{align*}
+  As for uniqueness, we suppose that there is another orthogonal decomposition $1 = w_{\text{I}} + w_{\text{II\textsubscript{1}}} + w_{\text{II\textsubscript{$\infty$}}} + w_{\text{III}}$. Then, we must have that $w_{\text{I}}\left( 1-z_{\text{I}} \right) = 0$ since $1-z_{\text{I}}$ does not majorize any nonzero abelian projection, while $w_{\text{I}}\left( 1-z_{\text{I}} \right)$ is a central projection in $Mw_{\text{I}}$. Therefore, $w_{\text{I}}\leq z_{\text{I}}$. Similarly, $z_{\text{I}}\left( 1-w_{\text{I}} \right) = 0$ for the same reason, meaning $z_{\text{I}}\leq w_{\text{I}}$, so they are equal. By similar arguments, all the other summands are equal to each other.
+
+  Finally, we let $e$ be a nonzero projection in $M$. By considering $M_e\coloneq eMe$, we may assume that $e = 1$. We let $e_1$ be the sum of a maximal orthogonal family of finite central projections. Then, $e_1$ is finite and central, with $1-e_1$ properly infinite. The uniqueness of this decomposition has the same flavor as the arguments for $\set{z_{\text{I}},\dots,z_{\text{III}}}$.
+\end{proof}           
+\section{Structure of Type I and II von Neumann Algebras}%
+Now, we will discuss some structural results related to type I and II von Neumann algebras. Before we can do this, we must discuss tensor products.
+\subsection{Tensor Products of Hilbert Spaces and Operators}%
+\subsection{Type I von Neumann Algebras}%
+\subsection{Traces on Finite von Neumann Algebras}%
+\subsection{Traces on Semifinite von Neumann Algebras}%
 \nocite{davidson_functional_analysis,conway_operator_theory,takesaki_1}
 \printbibliography
 \end{document}
