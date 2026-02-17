@@ -411,11 +411,133 @@ where $M_{\text{sf}}$ is a semifinite von Neumann algebra and $M_{\text{III}}$ i
   As for uniqueness, we suppose that there is another orthogonal decomposition $1 = w_{\text{I}} + w_{\text{II\textsubscript{1}}} + w_{\text{II\textsubscript{$\infty$}}} + w_{\text{III}}$. Then, we must have that $w_{\text{I}}\left( 1-z_{\text{I}} \right) = 0$ since $1-z_{\text{I}}$ does not majorize any nonzero abelian projection, while $w_{\text{I}}\left( 1-z_{\text{I}} \right)$ is a central projection in $Mw_{\text{I}}$. Therefore, $w_{\text{I}}\leq z_{\text{I}}$. Similarly, $z_{\text{I}}\left( 1-w_{\text{I}} \right) = 0$ for the same reason, meaning $z_{\text{I}}\leq w_{\text{I}}$, so they are equal. By similar arguments, all the other summands are equal to each other.
 
   Finally, we let $e$ be a nonzero projection in $M$. By considering $M_e\coloneq eMe$, we may assume that $e = 1$. We let $e_1$ be the sum of a maximal orthogonal family of finite central projections. Then, $e_1$ is finite and central, with $1-e_1$ properly infinite. The uniqueness of this decomposition has the same flavor as the arguments for $\set{z_{\text{I}},\dots,z_{\text{III}}}$.
-\end{proof}           
+\end{proof}
+\begin{definition}
+  We say a factor is atomic if it contains a minimal projection, and otherwise we say it is diffuse.
+\end{definition}
 \section{Structure of Type I and II von Neumann Algebras}%
 Now, we will discuss some structural results related to type I and II von Neumann algebras. Before we can do this, we must discuss tensor products.
 \subsection{Tensor Products of Hilbert Spaces and Operators}%
+\begin{definition}
+  Let $H$ and $K$ be Hilbert spaces. There is an inner product on the algebraic tensor product $H\odot K$ given by
+  \begin{align*}
+    \iprod{\xi_1\otimes \xi_2}{\eta_1\otimes \eta_2} &= \iprod{\xi_1}{\eta_1} \iprod{\xi_2}{\eta_2},
+  \end{align*}
+  whenever $\xi_1,\eta_1\in H$ and $\xi_2,\eta_2\in K$. The Hilbert space tensor product of $H$ and $K$, denoted $H\otimes K$, is the completion of $H\odot K$ with respect to the norm induced by this inner product.
+\end{definition}
+\begin{proposition}
+  Let $H$ and $K$ be Hilbert spaces with orthonormal bases $\set{e_i}_{i\in I}$ and $\set{f_j}_{j\in J}$. Then,
+  \begin{enumerate}[(i)]
+    \item $\set{e_i\otimes f_j}_{i\in I,j\in J}$ is an orthonormal basis for $H\otimes K$;
+    \item if $\left\vert J \right\vert = \alpha$ for some cardinal $\alpha$, then $H\otimes K\cong H^{(\alpha)}\cong \bigoplus_{j\in J}H$;
+    \item if $H = L_2\left( X,\mu \right)$ for some $\sigma$-finite regular Borel measure space $\left( X,\mu \right)$, and $K$ is separable, then $H\otimes K \cong L_2\left( X,\mu,K \right)$, where the latter denotes the space of square-integrable Borel functions with respect to the norm on $K$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item We observe that the set $\set{e_i\otimes f_j}_{i\in I,j\in J}$ is an orthonormal set. The spans of these elementary tensors are all the vectors of the form $x\otimes y$, provided that $x$ is a finite linear combination of the $e_i$ and $y$ is a finite linear combination of the $f_j$. Therefore, the completion is equal to the completion of $H\otimes K$, so the set is an orthonormal basis.
+    \item We find that
+      \begin{align*}
+        H\otimes K &\cong \bigoplus_{j\in J} H\otimes \C f_j
+      \end{align*}
+      is an $\ell_2$ direct sum of $\left\vert J \right\vert$ copies of $H$.
+    \item Define maps $Y_j\colon L_2\left( X,\mu,K \right)\rightarrow L_2\left( X,\mu \right)$ by taking
+      \begin{align*}
+        \left( Y_jf \right)(x) &= \iprod{f(x)}{f_j},
+      \end{align*}
+      a representative of an equivalence class modulo $\mu$. Then, we have that
+      \begin{align*}
+        f &\mapsto \sum_{j\in J}Y_jf
+      \end{align*}
+      defines a map from $L_2\left( X,\mu,K \right)\rightarrow \bigoplus_{j\in J}H\otimes \C f_j$. By Tonelli's theorem and Parseval's identity, we get
+      \begin{align*}
+        \norm{Yf}^2 &= \sum_{j\in J}\norm{Y_jf}^2\\
+                    &= \sum_{j\in J} \int_{}^{} \left\vert \iprod{f(x)}{f_j} \right\vert^2\:d\mu\\
+                    &= \int_{}^{} \sum_{j\in J} \left\vert \iprod{f(x)}{f_j} \right\vert^2\:d\mu\\
+                    &= \int_{}^{} \norm{f(x)}^2\:d\mu\\
+                    &= \norm{f}^2.
+      \end{align*}
+      Therefore, $Y$ is an isometry. The range is dense since, if $h\in L_2\left( \mu \right)$, then $f\coloneq hf_j$ is mapped to the vector with $h$ in position $j$ and $0$ elsewhere. Thus, $Y$ is a unitary map from $L_2\left( X,\mu,K \right)$ onto $H\otimes K$.
+  \end{enumerate}
+\end{proof}
+\begin{proposition}
+  Let $A\in B(H)$ and $B\in B(K)$. Then, there is a unique $A\otimes B\in B\left( H\otimes K \right)$ such that $\left( A\otimes B \right)\left( \xi\otimes \eta \right) = A\xi\otimes B\eta$. Furthermore, $\norm{A\otimes B} = \norm{A}\norm{B}$.
+\end{proposition}
+\begin{proof}
+  Let $A\otimes I_K$ be the amplification to $H\otimes K$. Fixing an orthonormal basis $\set{\eta_j}_{j\in J}$ for $K$, then any vector $\omega\in H\otimes K$ (from part (ii) above) can be expressed as
+  \begin{align*}
+    \omega &= \left( \zeta_j\otimes \eta_j \right)_j
+  \end{align*}
+  for a collection of $\zeta_j\in H$, and we may define
+  \begin{align*}
+    \norm{\omega}^2 &= \sum_{j\in J}\norm{\zeta_j}^2\\
+                    &< \infty
+  \end{align*}
+  Therefore, we may rewrite
+  \begin{align*}
+    \left( A\otimes I \right)\omega &= \left( A\zeta_j\otimes \eta_j \right)_j,
+  \end{align*}
+  giving
+  \begin{align*}
+    \norm{\left( A\otimes I \right)\omega}^2 &= \norm{\left( A\zeta_j\otimes \eta_j \right)_j}^2\\
+                                             &= \sum_{j\in J} \norm{A\zeta_j}^2\\
+                                             &\leq \norm{A}^2 + \sum_{j\in J}\norm{\zeta_j}^2\\
+                                             &= \left( \norm{A}\norm{\omega} \right)^2.
+  \end{align*}
+  It follows that $\norm{A\otimes I} = \norm{A}$. Similarly, we may define $I\otimes B$, and set $A\otimes B = \left( A\otimes I \right)\left( I\otimes B \right)$. Thus, we have
+  \begin{align*}
+    \norm{A\otimes B}\left( \xi\otimes \eta \right) &= \left( A\otimes I \right)\left( I\otimes B \right)\left( \xi\otimes\eta \right)\\
+                                                    &= \left( A\otimes I \right)\left( \xi\otimes B\eta \right)\\
+                                                    &= A\xi\otimes B\eta.
+  \end{align*}
+  We have that $\norm{A\otimes B}\leq \norm{A\otimes I}\norm{I\otimes B} = \norm{A}\norm{B}$. Since $\norm{\left( A\otimes B \right)\left( \xi\otimes\eta \right)} = \norm{A\xi}\norm{B\eta}$, we may choose unit vectors $\xi$ and $\eta$ appropriately to approximate $\norm{A}\norm{B}$. Finally, since $H\odot K$ is dense in $H\otimes K$, we have that $A\otimes B$ is well-defined.
+\end{proof}
+\begin{definition}
+  Let $M$ and $N$ be von Neumann algebras. Then, the von Neumann algebra tensor product $M\bar\otimes N$ is the WOT-closure of $M\odot N$ in $B\left( H\otimes K \right)$. If $N = \C 1$, then $M\bar\otimes \C 1 = M^{(\alpha)}$ is an amplification of $M$.
+\end{definition}
 \subsection{Type I von Neumann Algebras}%
+We start by considering the structure of a von Neumann algebra of type I. For starters, we know that every projection dominates a rank one projection (which is minimal), so since any minimal projection is abelian, it follows that $B(H)$ is a factor of type I. Furthermore, we can show that any atomic von Neumann algebra is type I.
+\begin{proposition}\hfill
+  \begin{enumerate}[(i)]
+    \item If $A$ is an abelian von Neumann algebra, then $A\bar\otimes B(H)$ is type I for any Hilbert space $H$.
+    \item If $A$ is an abelian von Neumann algebra, then the matrix algebra $\M_n(A)$ is a finite von Neumann algebra of type I, and the $A$-valued map
+      \begin{align*}
+        \Phi(x) &= \frac{1}{n}\sum_{i=1}^{n}x_{ii}
+      \end{align*}
+      is
+      \begin{itemize}
+        \item center-valued: $\Phi\left( \left( \delta_{ij}a \right)_{i,j} \right) = a$ whenever $a\in A$;
+        \item $A$-modular: $\Phi\left( axb \right) = a\Phi(x)b$ whenever $a,b\in A$;
+        \item positive definiteness: $\Phi\left( x^{\ast}x \right)\geq 0$, with equality only when $x = 0$;
+        \item traciality: $\Phi\left( x^{\ast}x \right) = \Phi\left( xx^{\ast} \right)$.
+      \end{itemize}
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item Let $p$ be a minimal projection in $B(H)$, and let $e = 1\otimes p$. Then,
+      \begin{align*}
+        e\left( A\bar\otimes B(H) \right)e &= A\bar\otimes pB(H)p\\
+                                           &= A\otimes \C p,
+      \end{align*}
+      so $e$ is an abelian projection. Since the center of $A\bar\otimes B(H)$ is $A\otimes \C$, it follows that the central support $z(e)$ of $e$ is the identity. Thus, $A\bar\otimes B(H)$ is type I.
+    \item The first two properties follow from the definition, while the latter two properties follow from taking
+      \begin{align*}
+        \Phi\left( x^{\ast}x \right) &= \frac{1}{n}\sum_{i,j=1}^{n}x_{ij}^{\ast}x_{ij}\\
+                                     &= \frac{1}{n}\sum_{i,j=1}^{n} x_{ij}x_{ij}^{\ast}\\
+                                     &= \Phi\left( xx^{\ast} \right).
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+\begin{definition}
+  An $A$-valued map satisfying the properties in (ii), except for possibly the faithfulness condition, is known as an $A$-valued trace.
+\end{definition}
+\begin{lemma}
+  Suppose $e$ is an abelian projection. Then, for any projection $f$ with $e\leq z(f)$, we have $e\preceq f$.
+\end{lemma}
+\begin{proof}
+  We will show that if $e\leq z(f)$ and $e\succeq f$, then $e\sim f$. 
+\end{proof}
 \subsection{Traces on Finite von Neumann Algebras}%
 \subsection{Traces on Semifinite von Neumann Algebras}%
 \nocite{davidson_functional_analysis,conway_operator_theory,takesaki_1}
