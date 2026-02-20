@@ -5,7 +5,7 @@
 %\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 
 %\usepackage{homework}
-%\usepackage{notes}
+\usepackage{notes}
 
 \usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
 \addbibresource{project_references.bib}
@@ -14,13 +14,14 @@
 
 \fancyhf{}
 \fancyhead[R]{Avinash Iyer}
-\fancyhead[L]{Free Entropy Dimension}
+\fancyhead[L]{Free Entropy}
 \fancyfoot[C]{\thepage}
 
 \setcounter{secnumdepth}{0}
 
 \begin{document}
 \RaggedRight
+
 \section{Background: Asymptotic Freeness and Large Deviations}%
 We start by recalling the basic asymptotic freeness result discussed in class.
 \begin{proposition}
@@ -73,12 +74,85 @@ For a given distribution $\mu$, we can compute the rate function by using a fami
                           &= e^{-\lambda n x} E\left[ e^{\lambda\left( X_1 + \cdots + X_n \right)} \right]\\
                           &= \left( e^{-\lambda x}E\left[ e^{\lambda X} \right] \right)^{n},
 \end{align*}
-where $X$ is identically distributed to each of the $X_i$, and we use the fact that the $X_i$ are independent.
+where $X$ is identically distributed to each of the $X_i$, and we use the fact that the $X_i$ are independent. We may then define
+\begin{align*}
+  \Lambda\left( \lambda \right) &= \ln E\left[ e^{\lambda X} \right]\label{eq:cumulant_generating_function}\tag{$\ast$}
+\end{align*}
+to be an extended real-valued function, but we only consider $\mu$ for which $\Lambda\left( \lambda \right)$ is finite for all $\lambda$ in an open neighborhood of $0$. The equation \eqref{eq:cumulant_generating_function} is known as the cumulant generating function for $\mu$.
+
+This gives the inequality
+\begin{align*}
+  P\left( S_n > x \right) &\leq e^{-n\left( \lambda x - \Lambda\left( \lambda \right) \right)}.
+\end{align*}
+Since $\ln$ is a concave function, Jensen's inequality gives
+\begin{align*}
+  \Lambda\left( \lambda \right) &\geq E\left[ \ln\left( e^{\lambda X} \right) \right]\\
+                                &= E\left[ \lambda X \right]\\
+                                &= \lambda m.
+\end{align*}
+In particular, for any $\lambda < 0$ and $x > m$, we have $-n\left( \lambda x - \Lambda\left( \lambda \right) \right) \geq 0$, meaning this equation is valid for all $\lambda$. In particular, we have
+\begin{align*}
+  P\left( S_n > x \right) &\leq \inf_{\lambda\in \R} e^{-n\lambda x - \Lambda\left( \lambda \right)}.
+\end{align*}
+Now, we observe that $\Lambda$ is convex. This follows from Hölder's inequality
+\begin{align*}
+  E\left[ e^{\left( 1-t \right)\lambda_1 x + t\lambda_2 x} \right] &\leq E\left[ e^{\lambda_1 x} \right]^{1-t}E\left[ e^{\lambda_2 x} \right]^{t}
+\end{align*}
+so that
+\begin{align*}
+  \Lambda\left( \left( 1-t \right)\lambda_1 + t\lambda_2 \right) &\leq \left( 1-t \right)\Lambda\left( \lambda_1 \right) + t\Lambda\left( \lambda_2 \right).
+\end{align*}
+Defining the \textit{Legendre transform} of $\Lambda$ by
+\begin{align*}
+  \Lambda^{\ast}\left( x \right) &= \sup_{\lambda\in \R} \left( \lambda x - \Lambda\left( \lambda \right) \right),
+\end{align*}
+we find that this is a convex function of $x$, as it is a supremum of a family of convex functions of $x$.
+
+Now, since $\Lambda(0) = 0$, it follows that $\Lambda^{\ast}(x)\geq 0$, and has $\Lambda^{\ast}\left( m \right) = 0$. In particular, this gives
+\begin{align*}
+  P\left( S_n > x \right) &\leq e^{-n\Lambda^{\ast}\left( x \right)}
+\end{align*}
+whenever $x > m$.
+
+It can also be shown that $e^{-n\Lambda^{\ast}(x)}$ is an asymptotic lower bound, in that
+\begin{align*}
+  \liminf_{n\rightarrow\infty} \frac{1}{n}\ln P\left( x-\delta < S_n < x + \delta \right) \geq -\Lambda^{\ast}(x)
+\end{align*}
+for all $x\in \R$ and all $\delta > 0$. The method for doing so is outlined in \cite[Ch. 7, Section 2]{mingo_and_speicher}, and results in Cramér's theorem for real-valued random vectors.
+\begin{theorem}[Cramér's Theorem]
+  Let $X_1,X_2,\dots$ be a sequence of independent and identically distributed random vectors in $\R^d$ with common distribution $\mu$. Define
+  \begin{align*}
+    \Lambda(\lambda) &= \ln E\left[ e^{ \iprod{\lambda}{X_i} } \right]\\
+    \Lambda^{\ast}\left( x \right) &= \sup_{\Lambda\in \R^d} \left( \iprod{\lambda}{x}-\Lambda\left( \lambda \right) \right),
+  \end{align*}
+  and assume that $\Lambda\left( \lambda \right) < \infty$ for all $\lambda$. Set $S_n = \frac{1}{n}\left( X_1 + \cdots + X_n \right)$. Then, the distribution $\mu_{S_n}$ satisfies has
+  \begin{itemize}
+    \item $x\mapsto \Lambda^{\ast}(x)$ is convex;
+    \item $\set{x\in \R^d | \Lambda^{\ast}\left( x \right) \leq \alpha}$ is compact for all $\alpha\in \R$;
+    \item for any closed $F\subseteq \R^d$,
+      \begin{align*}
+        \limsup_{n\rightarrow\infty} \frac{1}{n}\ln P\left( S_n\in F \right) &\leq -\inf_{x\in F}\Lambda^{\ast}\left( x \right),
+      \end{align*}
+    \item and for any open $G\subseteq \R^d$,
+      \begin{align*}
+        \liminf_{n\rightarrow\infty} \frac{1}{n}\ln P\left( S_n\in G \right) &\geq -\inf_{x\in G}\Lambda^{\ast}\left( x \right).
+      \end{align*}
+  \end{itemize}
+\end{theorem}
+This theorem defines precisely the large deviation principle that the partial sums satisfy --- namely, it is the Legendre transform of the cumulant-generating function.
+
+Yet, the next step is to move from the sequence of partial sums to developing a large deviation principle for the empirical distribution itself. This will give us the idea of classical entropy.
+
+We start by considering the case of (independent and identically distributed) random variables $X_i\colon \Omega\rightarrow A$ taking values in a finite set $\set{a_1,\dots,a_d}$, and define $p_k\coloneq P\left( X_i = a_k \right)$. We expect that, as $n\rightarrow\infty$, the empirical distribution of the $X_i$ should converge to the probability measure $\left( p_1,\dots,p_d \right)$ on $A$.
+
+Toward this end, let $Y_i\colon \Omega\rightarrow \R^d$ be defined by
+\begin{align*}
+  Y_i &\coloneq \left( \chi_{\set{a_1}}\left( X_i \right),\dots,\chi_{\set{a_d}}\left( X_i \right) \right).
+\end{align*}
 \section{One-Dimensional Free Entropy}%
 
 \section{Microstates Free Entropy}%
 
 \section{Applications: Structural Properties of Free Group Factors}%
-
 \printbibliography
 \end{document}

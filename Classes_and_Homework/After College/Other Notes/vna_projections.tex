@@ -495,14 +495,50 @@ Now, we will discuss some structural results related to type I and II von Neuman
 \begin{definition}
   Let $M$ and $N$ be von Neumann algebras. Then, the von Neumann algebra tensor product $M\bar\otimes N$ is the WOT-closure of $M\odot N$ in $B\left( H\otimes K \right)$. If $N = \C 1$, then $M\bar\otimes \C 1 = M^{(\alpha)}$ is an amplification of $M$.
 \end{definition}
+\begin{definition}
+  A system $\set{w_{ij}|i,j\in I}$ of elements in a von Neumann algebra is called a system of \textit{matrix units} if
+  \begin{enumerate}[(i)]
+    \item $w_{ij}^{\ast} = w_{ji}$;
+    \item $w_{ij}w_{k\ell} = \delta_{jk}w_{i\ell}$;
+    \item $\sum_{i\in I}w_{ii} = 1$.
+  \end{enumerate}
+\end{definition}
 \begin{proposition}
-  Let $M$ be a von Neumann algebra. If $\set{e_i}_{i\in I}$ is an orthogonal family of mutually equivalent projections in $M$, then $\sum_{i\in I}e_i = 1$, then
+  Let $M\subseteq B(H)$ be a von Neumann algebra. Let $\set{w_{ij} | i,j\in I}$ be a system of matrix units. Fix $i_0\in I$, and let $e = w_{i_0i_0}$. Then,
   \begin{align*}
-     M &\cong e_1Me_1\bar\otimes B\left( \ell_2\left( I \right) \right).
+    M &\cong \left( eMe \right)\otimes B\left( \ell_2(I) \right).
   \end{align*}
 \end{proposition}
+\begin{proof}
+  Let $\set{\ve_i}_{i\in I}$ be an orthonormal basis in $\ell_2(I)$, and let $v_i = w_{i,i_0}$ for each $i\in I$. Then, $w_{ij} = v_iv_j^{\ast}$ and $v_i^{\ast}v_i = e$. Define a map
+  \begin{align*}
+    U\left( \sum_{i\in I}\xi_i\otimes \ve_i \right) &= \sum_{i\in I}v_i\xi_i
+  \end{align*}
+  for each $\sum_{i\in I}\xi_i\otimes \ve_i\in K\otimes \ell_2(I)$. Then, we have
+  \begin{align*}
+    \iprod{U\left( \sum_{i\in I}\xi_i\otimes \ve_i \right)}{U\left( \sum_{j\in i}\eta_j\otimes \ve_j \right)} &= \iprod{\sum_{i\in I}v_i\xi_i}{\sum_{j\in I}v_j\eta_j}\\
+                                                                                                              &= \sum_{i,j\in I} \iprod{v_j^{\ast}v_i\xi_i}{\eta_j}\\
+                                                                                                              &= \sum_{i\in I} \iprod{\xi_i}{\eta_i}\\
+                                                                                                              &= \iprod{\sum_{i\in I}\xi_i\otimes \ve_i}{\sum_{j\in I}\eta_j\otimes \ve_j},
+  \end{align*}
+  so that $U$ is a well-defined isometry of $K\otimes \ell_2(I)$ onto $H$. Since the range of $U$ contains all $v_iK = w_{ii}H$, it follows that $U$ is surjective as $\sum_{i\in I}w_{ii} = 1$.
+
+  Now, letting $x = \left( x_{ij} \right)\in eMe\otimes B\left( \ell_2(I) \right)$, we have
+  \begin{align*}
+    UxU^{\ast}\xi &= Ux\left( \sum_{j\in I}v_j^{\ast}\xi\otimes \ve_j \right)\\
+                  &= U\left( \sum_{i,j\in I}x_{ij}v_j\xi\otimes \ve_i \right)\\
+                  &= \sum_{i,j\in I}v_ix_{ij}v_j^{\ast}\xi,
+  \end{align*}
+  meaning that $UxU^{\ast} = \sum_{i,j\in I}v_ix_{ij}v_j^{\ast}$ is an element of $M$. Meanwhile, if $x\in M$, then
+  \begin{align*}
+    U^{\ast}xu\left( \sum_{j\in I}\xi_j\otimes \ve_j \right) &= U^{\ast}x\sum_{j\in I}v_j\xi_j\\
+                                                             &= U^{\ast}\sum_{j\in I}xv_j\xi_j\\
+                                                             &= \sum_{i,j\in I} \left( v_i^{\ast}xv_j\xi_j\otimes \ve_i \right).
+  \end{align*}
+  Therefore, $\left( U^{\ast}xU \right)_{i,j} = v_i^{\ast}xv_j$, so that $U^{\ast}xU\in eMe\bar\otimes B\left( \ell_2(I) \right)$.
+\end{proof}
 \subsection{Type I von Neumann Algebras}%
-We start by considering the structure of a von Neumann algebra of type I. For starters, we know that every projection dominates a rank one projection (which is minimal), so since any minimal projection is abelian, it follows that $B(H)$ is a factor of type I. Furthermore, we can show that any atomic von Neumann algebra is type I.
+We start by considering the structure and classification of type I von Neumann algebras. For starters, we know that every projection dominates a rank one projection (which is minimal), so since any minimal projection is abelian, it follows that $B(H)$ is a factor of type I. Furthermore, we can show that any atomic von Neumann algebra is type I.
 \begin{proposition}\hfill
   \begin{enumerate}[(i)]
     \item If $A$ is an abelian von Neumann algebra, then $A\bar\otimes B(H)$ is type I for any Hilbert space $H$.
@@ -538,60 +574,132 @@ We start by considering the structure of a von Neumann algebra of type I. For st
 \begin{definition}
   An $A$-valued map satisfying the properties in (ii), except for possibly the faithfulness condition, is known as an $A$-valued trace.
 \end{definition}
+We will discuss traces later. First, we will discuss further characterizations and structures of type I von Neumann algebras.
+\begin{proposition}
+  A von Neumann algebra is type I if and only if it has an abelian projection whose central support is $1$. We call such projections faithful.
+\end{proposition}
+\begin{proof}
+  Let $e$ be a faithful abelian projection in $M$, and let $g$ be any nonzero central projection. Then, $eg\neq 0$. Yet, $\left( eg \right)M\left( eg \right) = \left( eMe \right)g$, which is abelian; since $eg\leq g$, it follows that $M$ is type I.
+
+  Now, if $M$ is type I, then by Zorn's lemma, there is a maximal family of centrally orthogonal abelian projections $\set{e_i}_{i\in I}$. Set $z = \sum_{i}z\left( e_i \right)$. Then, $\left( 1-z \right)M\left( 1-z \right)$ is type I, so if $1-z\neq 0$ we get a contradiction by the maximality of $\set{e_i}_{i\in I}$. Thus, $\sum_{i\in I}z\left( e_i \right) = 1$.
+
+  If we let $e = \sum_{i\in I}e_i$, then $e$ is abelian and $z\left( e \right) = 1$.
+\end{proof}
+\begin{definition}
+  Let $n$ be a cardinal number. We say a type I von Neumann algebra is type $\text{I}_n$ if $1$ is a sum of $n$ equivalent nonzero abelian projections. We say it is type $\text{I}_{\infty}$ if it is type $\text{I}_n$ for an infinite cardinal $n$.
+
+  Furthermore, if $z$ is any projection that is the sum of $n$ equivalent abelian projections with central support equal to $z$, then we say $z$ is $n$-homogeneous.
+\end{definition}
 \begin{lemma}
-  Suppose $e$ is an abelian projection. Then, for any projection $f$ with $e\leq z(f)$, we have $e\preceq f$.
+  Let $M$ be a von Neumann algebra, and let $p\in P(M)$ be a projection with central support $z(p)$. Then,
+  \begin{align*}
+    M'z(p) \rightarrow M'p
+  \end{align*}
+  given by $yz(p)\mapsto yp$ is an isomorphism of $\ast$-algebras. In particular, $Z\left( pMp \right) = Z\left( Mz(p) \right)p$.
 \end{lemma}
 \begin{proof}
-  We will show that if $e\leq z(f)$ and $e\succeq f$, then $e\sim f$. In this case, we have $z(e) = z(f)$.
+  Recalling that $z(p) = \left[ MpH \right]$, we have that if $yp = 0$, then for all $x\in M$ and $\xi\in H$,
+  \begin{align*}
+    yxp\xi &= xyp\xi\\
+           &= 0.
+  \end{align*}
+  Therefore, $yz(p) = 0$, meaning that $yz(p)\mapsto yp$ is injective. Since this map is surjective, it follows that we get this as an isomorphism.
 
-  Let $Z\coloneq Z(M)$; observe that we have $eMe = Ze$. Choose a partial isometry $u\in M$ with $u^{\ast}u = f$ and $uu^{\ast} = e_1\leq e$. By the comparison theorem, there is a central projection $z$ such that $e_1 = ez$. Equivalence of projections preserves central support, so that $z(f) = z\left( e_1 \right)\leq z(e)$, meaning $z\left( e_1 \right) = z\left( e \right)$, so that $z(e) \leq z$ and $e = e_1$. Therefore, $f \sim e_1 = e$.
+  In particular, we have that $Z\left( pMp \right) = Z\left( M'p \right)$, and since $yp\in Z\left( M'p \right)$ if and only if $yz(p)\in Z\left( M'z(p) \right)$, we find our desired equality.
+\end{proof}
+An important fact about abelian projections is that their central supports fully encode their order relation (in the following sense).
+\begin{lemma}
+  Let $M\subseteq B(H)$ be a von Neumann algebra. If $p,q\in P(M)$ are abelian projections with $z(p) = z(q)$, then $p\sim q$.
+\end{lemma}
+Note that we already have that if $p\sim q$, then $z(p) = z(q)$, but this provides a type of converse.
+\begin{proof}
+  Suppose $p\preceq q$, and let $v\in M$ implement this subequivalence, where $vv^{\ast} = q_0\leq q$. Since $q$ is abelian, we have
+  \begin{align*}
+    qMq &= Z\left( qMq \right)\\
+        &= Z\left( Mz(q) \right)q,
+  \end{align*}
+  so since $q_0\in qMq$, we have $q_0 = zq$ for some central projection $z\in Z\left( Mz(q) \right)$. Therefore, we get
+  \begin{align*}
+    z(p) &= z\left( q_0 \right)\\
+         &= zz\left( q \right)\\
+         &= z(q)\\
+         &= z(p).
+  \end{align*}
+  In particular, this gives $zz\left( q \right) = z\left( q \right)$, so $z(q)\leq z$, and thus $z = z(q)$, $q_0 = q$, and $p\sim q$.
+
+  In the case that $p$ is not subequivalent to $q$, then by the comparison theorem, there is $z\in Z(M)$ such that $pz\preceq qz$ and $q\left( 1-z \right)\preceq p\left( 1-z \right)$. Now, we have $z\left( pz \right) = z\left( p \right)z = z\left( qz \right)$, so $pz\sim qz$, and $q\left( 1-z \right)\sim p\left( 1-z \right)$, so $p\sim q$.
 \end{proof}
 \begin{lemma}
-  Let $z$ be a central projection in $M$. If $\set{e_i}_{i\in I}$ and $\set{f_j}_{j\in J}$ are orthogonal families of abelian projections with $z\left( e_i \right) = z\left( f_j \right) = z$ for any $i\in I$ and $j\in J$, and if $\sum_{i\in I}e_i = z = \sum_{j\in J}$, then the cardinalities of $I$ and $J$ are equal.
+  Let $M\subseteq B(H)$ be a von Neumann algebra. If $n$ and $M$ are cardinals such that $M$ is type $\text{I}_n$ and $\text{I}_m$, then $n = m$.
 \end{lemma}
 \begin{proof}
-  By passing to $zMz$, we may assume that $z = 1$. By the above lemma, we have that $\set{e_i}_{i\in I}$ and $\set{f_j}_{j\in J}$, with $e_i\sim f_j$. If we let $\alpha$ and $\beta$ are the cardinalities of $I$ and $J$ respectively, then we have
+  Let $\set{p_i}_{i\in I}$ and $\set{q_j}_{j\in J}$ be pairwise orthogonal equivalent abelian projections with $\left\vert I \right\vert = n$ and $\left\vert J \right\vert = m$ such that
   \begin{align*}
-    M &\cong e_1Me_1\bar\otimes B\left( \ell_2\left( I \right) \right)\\
-      &\cong f_1Mf_1 \bar\otimes B\left( \ell_2\left( J \right) \right).
+    1 &= \sum_{i\in I} p_i \\
+      &= \sum_{j\in J}q_j.
   \end{align*}
-  Since $e_1$ and $f_1$ are abelian projections with $z\left( e_1 \right) = z\left( f_1 \right) = 1$, we must have $e_1Me_1 \cong f_1Mf_1 \cong Z$, where $Z$ is the center of $M$.
-
-  If $\alpha$ is finite, then we may consider the $Z$-valued trace defined by
+  Note that $z\left( p_i \right)$ is constant across $i$, so that
   \begin{align*}
-    \Phi(x) &= \frac{1}{n}\sum_{i=1}^{n}x_{ii},
+    1-z\left( p_i \right) &= \left( 1-z\left( p_i \right) \right)\sum_{k\in I}p_k\\
+                          &= 0,
   \end{align*}
-  based on the tensor product decomposition $M\cong e_1Me_1 \otimes B\left( \ell_2\left( I \right) \right) \cong Z\otimes B\left( \ell_2\left( I \right) \right)$. Since we have $e_i\sim f_j$, we have $\Phi\left( e_i \right) = \Phi\left( f_j \right)$ for all $i\in I$ and $j\in J$.
+  so that $z\left( p_i \right) = 1$ for all $i\in I$. Similarly, $z\left( q_j \right) = 1$ for all $j\in J$, meaning $p_i\sim q_j$ for all $i\in I$ and $j\in J$.
 
-  Therefore, we have
+  Now, we start by assuming that $n < \infty$. For each $i\in I$ and each $j\in J$, let $v_i^{\ast}v_i = u_j^{\ast}u_j = p_{i_0}$, $v_iv_i^{\ast} = p_i$, and $u_ju_j^{\ast} = q_j$. Now, consider the map
   \begin{align*}
-    \alpha\Phi\left( e_1 \right) &= \sum_{i\in I} \Phi\left( e_i \right)\\
-                                 &= \Phi\left( 1 \right)\\
-                                 &= \sum_{j\in J}\Phi\left( f_j \right)\\
-                                 &= \beta \Phi\left( f_1 \right),
+    \Phi(x) &= \frac{1}{n}\sum_{i\in I}v_i^{\ast}xv_i.
   \end{align*}
-  so that $\alpha = \beta$.
-
-  Now, suppose $\alpha$ is infinite. By symmetry, $\beta$ is infinite. If $\varphi$ is a normal ($\sigma$-WOT continuous) state on $Z$, we have that the map $\sigma_i\colon x\mapsto xe_i$ taking $Z\rightarrow e_iMe_i$ is an isomorphism, so that we may define a normal state $\varphi_i$ on $M$ by $\varphi_i(x) = \varphi\circ \sigma_i^{-1}\left( e_ixe_i \right)$. If $z$ is the support of $\varphi$ in $Z$, then $ze_i$ is the support of $\varphi_i$ for each $i$.
-
-  We let $J_i = \set{j\in J | \varphi_i\left( f_j \right)\neq 0}$. Since $\set{f_j}_{j\in J}$ is orthogonal, it follows that $J_i$ is countable. If $\varphi_i\left( f_j \right) = 0$, then $ze_if_jze_i = 0$, meaning that $ze_if_je_i = 0$, meaning $zf_je_i = 0$. Since
+  Then,
   \begin{align*}
-    \sum_{i\in I}zf_je_i &= zf_j\\
-                         &\neq 0,
+    \Phi\left( xy \right) &= \frac{1}{n}\sum_{i\in I}v_i^{\ast}xyv_i\\
+                          &= \frac{1}{n}\sum_{i,k\in I}v_i^{\ast}xv_kv_k^{\ast}yv_i\\
+                          &= \frac{1}{n}\sum_{i,k\in I} \left( p_{i_i}v_i^{\ast}xv_kp_{i_0} \right)\left( p_{i_0}v_k^{\ast}yv_ip_{i_0} \right)\\
+                          &= \frac{1}{n}\sum_{i,k\in I} \left( p_{i_0}v_i^{\ast}yv_kp_{i_0} \right)\left( p_{i_0}v_k^{\ast}xv_ip_{i_0} \right)\\
+                          &= \Phi\left( yx \right).
   \end{align*}
-  it follows that $\varphi_i\left( f_j \right)\neq 0$ for some $i\in I$. Therefore, we have $J = \bigcup_{i\in I}J_i$, meaning $\beta\leq \alpha \aleph_0$, meaning $\beta\leq \alpha$, and thus $\alpha = \beta$ by symmetry.
+  Consequently, $\Phi\left( p_i \right) = \Phi\left( q_j \right) = \Phi\left( p_{i_0} \right)$ for all $i\in I$ and all $j\in J$, with common image $p_{i_0}$. Therefore, we get
+  \begin{align*}
+    np_{i_0} &= \sum_{i\in I}\Phi\left( p_i \right)\\
+             &= \Phi\left( 1 \right)\\
+             &= \sum_{j\in J}\Phi\left( q_j \right)\\
+             &= mp_{i_0},
+  \end{align*}
+  so $n = m$.
+
+  Now, suppose $n$ is infinite. By a symmetric argument, we have $m$ is infinite. Let $\varphi$ be a normal state with support $z\in Z(M)$; that is, $w\in \ker\left( \varphi \right)$ if and only if $zwz = 0$. For each $i\in I$, define $\sigma_i\colon Z\left( M \right)\rightarrow p_iMp_i$ by $\sigma_i(z) = zp_i$. This is an isomorphism from the earlier lemma, so we may define $\varphi_i$ by
+  \begin{align*}
+    \varphi_i\left( x \right) &= \varphi\left( \sigma_i^{-1}\left( p_ixp_i \right) \right).
+  \end{align*}
+  We have that $\varphi_i$ is a state with support $zp_i$. Since $\sigma_i$ is $\sigma$-WOT continuous, we have
+  \begin{align*}
+    1 &= \varphi_i\left( 1 \right)\\
+      &= \varphi_i\left( \sum_{j\in J}q_j \right)\\
+      &= \sum_{j\in J}\varphi_i\left( q_j \right).
+  \end{align*}
+  Since $\varphi_i\left( q_j \right) \geq 0$ for each $j\in J$, the set of all $j$ for which $\varphi_i\left( q_j \right) > 0$ is countable. Yet, if $j\notin j_i$, we have $\varphi_i\left( q_j \right) = 0$, meaning $\left( zp_i \right)q_j\left( zp_i \right) = 0$, and by centrality, we have $zp_iq_jp_iz = 0$, so that $q_jp_iz = 0$.
+
+  Yet, for any $j\in J$, we have
+  \begin{align*}
+    \sum_{i\in I}q_jp_iz &= q_jz,
+  \end{align*}
+  which is nonzero as $z\left( q_j \right) = 1$. In particular, this means $q_jp_iz \neq 0$ for some $i\in I$, meaning $j\in J_i$ for some $i\in I$. That is, $J = \bigcup_{i\in I}J_i$, so that $m\leq n\aleph_0 = n$, and by symmetry, $m = n$.
 \end{proof}
 \begin{theorem}
-  Let $M$ be a type I von Neumann algebra. Then, there exists a unique family of orthogonal central projections $\set{z_{\alpha}}_{\alpha}$ indexed by cardinal numbers such that $\sum_{\alpha}z_{\alpha} = 1$, and $z_{\alpha}Mz_{\alpha}$ is isomorphic to the tensor product of an abelian von Neumann algebra $A_{\alpha}$ and $B\left( H_{\alpha} \right)$, where $\Dim\left( H_{\alpha} \right) = \alpha$. In particular, this gives
+  Let $M$ be a von Neumann algebra of type I. Then, there exists a unique family of orthogonal central projections $\set{z_{\alpha}}_{\alpha}$ indexed by cardinal numbers such that $\sum_{\alpha} z_{\alpha} = 1$, and $z_{\alpha}Mz_{\alpha}$ is isomorphic to the tensor product of an abelian von Neumann algebra $A_{\alpha}$ and $B\left( H_{\alpha} \right)$, where $\Dim\left( H_{\alpha} \right) = \alpha$. In particular, we have
   \begin{align*}
     M &\cong \bigoplus_{\alpha} A_{\alpha}\bar\otimes B\left( H_{\alpha} \right).
   \end{align*}
-  Additionally, if $M$ is finite, then each of the $\alpha$ is finite.
 \end{theorem}
 \begin{proof}
-  Call a central projection $z\in M$ $\alpha$-homogeneous if $z$ is the sum of $\alpha$ orthogonal abelian projections with central support equal to $z$.
+  We note that if $\set{z_i}_{i\in I}$ is a family of $\alpha$-homogeneous projections, then their sum is also $\alpha$-homogeneous. Therefore, upon taking suprema, we may find a greatest $z_{\alpha}$ that is $\alpha$-homogeneous.
 
-  Letting $\set{z_i}_{i\in I}$ be an orthogonal family of $\alpha$-homogeneous central projections, then we have that $\sum_{i\in I}z_{i}$ is $\alpha$-homogeneous. 
+  If $z_{\alpha}\neq 0$, then there exists an orthogonal family $\set{e_i}_{i\in I_{\alpha}}$ of abelian projections with $z\left( e_i \right) = z_{\alpha}$, and $I_{\alpha}$ has cardinality $\alpha$. Since these projections are mutually equivalent, we have
+  \begin{align*}
+    z_{\alpha}Mz_{\alpha} &\cong e_{1}Me_1\bar\otimes B\left( \ell_2\left( I_{\alpha} \right) \right).
+  \end{align*}
+  Since $e_1Me_1$ is abelian, we only have to show that $z_{\alpha}$ and $z_{\beta}$ are orthogonal for distinct $\alpha$ and $\beta$.
+
+  If $\alpha$ is infinite, then both $I_{\alpha}$ and $I_{\alpha}\setminus \set{i_0}$ have the same cardinality, meaning that $z_{\alpha} = \sum_{i\in I_{\alpha}}e_i\sim \sum_{i\in I_{\alpha}\setminus \set{i_0}}e_i < z_{\alpha}$, meaning $z_{\alpha}$ is not a finite projection. In particular, $\alpha$ must be finite if $M$ is finite.
 \end{proof}
 \subsection{Traces on Finite von Neumann Algebras}%
 \subsection{Traces on Semifinite von Neumann Algebras}%
