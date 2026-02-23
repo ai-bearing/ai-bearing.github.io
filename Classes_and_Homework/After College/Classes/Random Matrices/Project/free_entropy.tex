@@ -45,7 +45,7 @@ Now, from here, we may ask a seemingly simple question: as $N$ grows large, how 
 be its empirical spectral distribution. This is a random probability measure on $\R$, and as $N\rightarrow \infty$, the semicircle law gives that $\mu_A$ converges weakly to the semicircle distribution; this can be strengthened to almost sure convergence by an application of the argument for asymptotic freeness. The question then becomes, how quickly does the deviation between $\mu_A$ and any other probability distribution $\nu$ decrease as $N$ increases? This is where the theory of large deviations starts to take shape.
 
 Much of this exposition related to the classical notions of entropy will be centered around results discussed in \cite[Ch.\,7]{mingo_and_speicher}.
-\subsection{Large Deviations}%
+\subsection{Large Deviations for Random Variables}%
 We start with one of the classical examples of convergence of random variables to introduce large deviations. Consider a sequence of independent and identically distributed real-valued random variables $\left( X_i \right)_i$ with common distribution $\mu$. Set
 \begin{align*}
   S_n &= \frac{1}{n}\sum_{i=1}^{n}X_i.\\
@@ -140,8 +140,8 @@ for all $x\in \R$ and all $\delta > 0$. The method for doing so is outlined in \
   \end{itemize}
 \end{theorem}
 This theorem defines precisely the large deviation principle that the partial sums satisfy --- namely, it is the Legendre transform of the cumulant-generating function.
-
-Yet, the next step is to move from the sequence of partial sums to developing a large deviation principle for the empirical distribution itself. This will give us the idea of classical entropy.
+\subsection{Large Deviations for the Empirical Distribution}%
+Now, our next step is to develop an analogous large deviation principle for the empirical distribution of the random variables $X_1,X_2,\dots$. This will give us the idea of classical entropy.
 
 We start by considering the case of (independent and identically distributed) random variables $X_i\colon \Omega\rightarrow A$ taking values in a finite set $\set{a_1,\dots,a_d}$, and define $p_k\coloneq P\left( X_i = a_k \right)$. We expect that, as $n\rightarrow\infty$, the empirical distribution of the $X_i$ should converge to the probability measure $\left( p_1,\dots,p_d \right)$ on $A$.
 
@@ -149,10 +149,62 @@ Toward this end, let $Y_i\colon \Omega\rightarrow \R^d$ be defined by
 \begin{align*}
   Y_i &\coloneq \left( \chi_{\set{a_1}}\left( X_i \right),\dots,\chi_{\set{a_d}}\left( X_i \right) \right).
 \end{align*}
-\section{One-Dimensional Free Entropy}%
+We observe that $p_k$ is the probability that $Y_i$ will have $1$ in position $k$ and $0$ elsewhere, and that $\frac{1}{n}\left( Y_1 + \cdots + Y_n \right)$ gives the relative frequency of $a_1,\dots,a_d$ --- i.e., this has the same information as the empirical distribution of $X_1,\dots,X_n$.
 
+Any probability measure on $A$ is a $d$-tuple of positive real numbers satisfying $q_1 + \cdots + q_d = 1$. By Cramér's theorem and our discussion above, we have
+\begin{align*}
+  P\left( \frac{1}{n}\left( \delta_{X_1} + \cdots + \delta_{X_n} \right) \approx \left( q_1,\dots,q_d \right) \right) &= P\left( \frac{1}{n}\left( Y_1 + \cdots + Y_n \right) \approx \left( q_1,\dots,q_d \right) \right)\\
+                                                                                                                              &\sim e^{-n\Lambda^{\ast}\left( q_1,\dots,q_d \right)}.
+\end{align*}
+Applying our definitions for $\Lambda$ and $\Lambda^{\ast}$, we have
+\begin{align*}
+  \Lambda\left( \lambda_1,\dots,\lambda_d \right) &= \ln\left( p_1e^{\lambda_1} + \cdots + p_de^{\lambda_d} \right)\\
+  \Lambda^{\ast}\left( q_1,\dots,q_d \right) &= \sup_{\left( \lambda_1,\dots,\lambda_d \right)} \left( \lambda_1q_1 + \cdots + \lambda_dq_d - \ln\left( p_1e^{\lambda_1} + \cdots + p_de^{\lambda_d} \right) \right).
+\end{align*}
+To compute the supremum over all tuples, we find that the partial derivatives with respect to each $\lambda_i$ are given by
+\begin{align*}
+  q_i - \frac{1}{p_1e^{\lambda_1} + \cdots + p_de^{\lambda_d}}p_ie^{\lambda_i},
+\end{align*}
+so by concavity, we get that the maximum value occurs when
+\begin{align*}
+  \lambda_i &= \ln \left( \frac{q_i}{p_i} \right) + \Lambda\left( \lambda_1 ,\dots,\lambda_d \right).
+\end{align*}
+We thus get
+\begin{align*}
+  \Lambda^{\ast}\left( q_1,\dots,q_d \right) &= \sum_{i=1}^{d}q_i \ln\left( \frac{q_i}{p_i} \right).
+\end{align*}
+The quantity on the right is the relative Shannon entropy $H\left( \left( q_1,\dots,q_d \right) | \left( p_1,\dots,p_d \right) \right)$, which is strictly positive except when $q_1 = p_1,\dots,q_d = p_d$.
+
+In particular, we have that $\left( p_1,\dots,p_d \right)$ admits a large deviation principle with rate function given by the relative Shannon entropy. That this holds for any distribution is known as Sanov's theorem.
+\begin{theorem}[Sanov's Theorem]
+  Let $X_1,X_2,\dots$ be a sequence of independent and identically distributed real random variables with common distribution $\mu$, and let
+  \begin{align*}
+    \nu_n &\coloneq \frac{1}{n}\sum_{i=1}^{n}\delta_{X_i}
+  \end{align*}
+  be the empirical distribution. Then, the family $\set{\nu_n}_{n\geq 1}$ satisfies a large deviation principle given by the rate function
+  \begin{align*}
+    I\left( \nu \right) &= \begin{cases}
+      \int_{}^{} p\ln(p)\:d\mu & d\nu = p\:d\mu\\
+      +\infty & \text{else}.
+    \end{cases}
+  \end{align*}
+\end{theorem}
+\section{One-Dimensional Free Entropy: A Heuristic Approach}%
+The next logical step after defining a large deviation principle for a sequence of random variables is to define such a quantity for single free random variables.
+
+In \cite{voiculescu_analogues_1}, Voiculescu used a heuristic method based on random matrix theory to establish the value $\Sigma(x)$ for some random variable $x$ in a $C^{\ast}$-probability space $\left( \mathcal{A},\varphi \right)$ distributed according to a compactly supported measure $\nu$ on $\R$ (i.e., its spectral measure with respect to the state $\varphi$).
+
+It can be established (as in \cite[Exercise 1.8]{mingo_and_speicher}) that if $X$ is a $N\times N$ GUE matrix, then the density inside the real vector space $\M_N\left( \C \right)_{\sa}$ is given by
+\begin{align*}
+  dP_N(X) &= K e^{-N^2/2\tr\left( X^2 \right)}\:dm,
+\end{align*}
+where $m$ is the Lebesgue measure on $\R^{N^2}$ and $\tr$ denotes the normalized trace. It can be shown, as in \cite[Theorem 2.5.2]{anderson_guionnet_zeitouni}, that the joint distribution of the eigenvalues $\lambda_1(X) \leq\cdots\leq \lambda_N(X)$ has density given by
+\begin{align*}
+  dQ_N\left(\lambda_1,\dots,\lambda_N\right) &= \frac{N^{N^2/2}}{\left( 2\pi \right)^{N/2}\prod_{j=1}^{N}j!} e^{-\left( N\sum_{i=1}^{N}\lambda_i^2 \right)/2}\prod_{i < j}\left( \lambda_i - \lambda_j \right)^2 \prod_{i=1}^{N}d\lambda_i
+\end{align*}
 \section{Microstates Free Entropy}%
 
 \section{Applications: Structural Properties of Free Group Factors}%
+
 \printbibliography
 \end{document}

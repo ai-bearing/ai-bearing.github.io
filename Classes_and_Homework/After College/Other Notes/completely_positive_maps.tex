@@ -56,12 +56,150 @@ In the special case where the $C^{\ast}$-algebra $\mathcal{B}$ is the complex nu
   \end{align*}
 \end{proof}
 It turns out that this bound is strict.
+\begin{example}
+  Consider the subspace $\mathcal{S}\subseteq C\left( S^1 \right)$ spanned by $1,z,\bar{z}$. Then, we may define $\phi\colon \mathcal{S}\rightarrow \M_2$ given by
+  \begin{align*}
+    \phi\left( a + bz + c \bar{z} \right) &= \begin{pmatrix}a & 2b \\ 2c & a\end{pmatrix}.
+  \end{align*}
+  It follows that an element of $\mathcal{S}$ is positive if and only if $c = \overline{b}$ and $a \geq 2\left\vert b \right\vert$, while a self-adjoint element of $\M_2$ is positive if and only if its diagonal entries and determinant are positive real numbers. Therefore, it follows that $\phi$ is a positive map.
+
+  Yet,
+  \begin{align*}
+    2\norm{\phi(1)} &= 2\\
+                    &= \norm{\phi(z)}\\
+                    &\leq \norm{\phi},
+  \end{align*}
+  meaning that $\norm{\phi} = 2\norm{\phi(1)}$.
+\end{example}
 \section{Completely Positive Maps}%
+\begin{definition}
+  If $\mathcal{B}$ is a $C^{\ast}$-algebra and $\phi\colon \mathcal{S}\rightarrow \mathcal{B}$ is a linear map, then we may define $\phi_n\colon \M_n\left( \mathcal{S} \right)\rightarrow \M_n\left( \mathcal{B} \right)$ by $\phi_n\left( \left( a_{ij} \right)_{i,j} \right) = \left( \phi\left( a_{ij} \right) \right)_{i,j}$.
 
+  We call $\phi$ $n$-positive if $\phi_n$ is positive, and we call $\phi$ completely positive if $\phi$ is $n$-positive for all $n$.
+
+  We call $\phi$ completely bounded if
+  \begin{align*}
+    \norm{\phi}_{\text{cb}} &\coloneq \sup_{n}\norm{\phi_n}
+  \end{align*}
+  is finite. If $\norm{\phi}_{\text{cb}}\leq 1$, then we call $\phi$ completely contractive.
+\end{definition}
+\begin{lemma}
+  Let $\mathcal{A}$ be a unital $C^{\ast}$-algebra, and let $a,b\in \mathcal{A}$. Then,
+  \begin{enumerate}[(i)]
+    \item $\norm{a}\leq 1$ if and only if
+      \begin{align*}
+        \begin{pmatrix}1 & a \\ a^{\ast} & 1\end{pmatrix}
+      \end{align*}
+      is positive in $\M_2\left(\mathcal{A}\right)$.
+    \item The matrix
+      \begin{align*}
+        \begin{pmatrix}1 & a \\ a^{\ast} & b\end{pmatrix}
+      \end{align*}
+      is positive in $\M_2(\mathcal{A})$ if and only if $a^{\ast}a\leq b$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  Faithfully represent $\mathcal{A}$ on $\mathcal{H}$ via $\pi\colon \mathcal{A}\rightarrow B\left( \mathcal{H} \right)$, and set $A = \pi(a)$. Then, if $\norm{A}\leq 1$, for any $x,y\in \mathcal{H}$, we have
+  \begin{align*}
+    \iprod{ \begin{pmatrix}1 & A \\ A^{\ast} & 1\end{pmatrix} \begin{pmatrix}x\\y\end{pmatrix} }{ \begin{pmatrix}x\\y\end{pmatrix} } &= \iprod{x}{y} + \iprod{Ay}{x} + \iprod{x}{Ay} + \iprod{y}{y}\\
+                             &\geq \norm{x}^2 - 2\norm{A}\norm{x}\norm{y} + \norm{y}^2\\
+                             &\geq 0.
+  \end{align*}
+  Conversely, if $\norm{A} > 1$< then there are unit vectors $x$ and $y$ such that $ \iprod{Ay}{x} < -1 $, so the inner product above would be negative.
+
+  Now, if we let $B = \pi(b)$, then if we let $B\geq A^{\ast}A$, then $B-A^{\ast}A\geq 0$, so that $ \iprod{By}{y}\geq \iprod{Ay}{Ay} $ for all $y\in \mathcal{H}$, meaning that for all $x,y\in \mathcal{H}$, we have
+  \begin{align*}
+    \iprod{\begin{pmatrix}1 & A \\ A^{\ast} & B\end{pmatrix} \begin{pmatrix}x\\y\end{pmatrix}}{ \begin{pmatrix}x\\y\end{pmatrix} } &= \iprod{x}{x} + \iprod{Ax}{y} + \iprod{A^{\ast}x}{y} + \iprod{By}{y}\\
+                            &\geq \iprod{x}{x} + 2\re \iprod{Ax}{y} + \iprod{Ay}{Ay}\\
+                            &\geq \norm{x}^2 + \norm{Ay}^2 - 2\norm{Ay}\norm{x}\\
+                            &\geq 0.
+  \end{align*}
+  In the case that $B\not\geq A^{\ast}A$, then there is some unit vector $y$ such that $ \iprod{By}{y} < \norm{Ay}^2 $, which would yield the analogous outcome as in the proof of (i).
+\end{proof}
 \section{Dilations and Extensions}%
+\begin{theorem}[Stinespring's Dilation Theorem]
+  Let $\mathcal{A}$ be a unital $C^{\ast}$-algebra, and let $\phi\colon \mathcal{A}\rightarrow B\left( \mathcal{H} \right)$ be a completely positive map. Then, there exists a Hilbert space $\mathcal{K}$, a unital $\ast$-homomorphism $\pi\colon \mathcal{A}\rightarrow B\left( \mathcal{K} \right)$, and a bounded operator $V\colon \mathcal{H}\rightarrow \mathcal{K}$ with $\norm{\phi(1)} = \norm{V}^2$ such that
+  \begin{align*}
+    \phi(a) &= V^{\ast}\pi(a)V.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Let $A\odot \mathcal{H}$ be the algebraic tensor product, and define a symmetric bilinear map
+  \begin{align*}
+    \left( a\otimes x,b\otimes y \right) &= \iprod{\phi\left( b^{\ast}a \right)x}{y},
+  \end{align*}
+  and extend linearly, where $ \iprod{\cdot}{\cdot} $ is the inner product on $\mathcal{H}$. Then, since $\phi$ is completely positive, it follows that $ \left( \cdot,\cdot \right) $ is positive semidefinite, with
+  \begin{align*}
+    \left( \sum_{j=1}^{n}a_j\otimes x_j,\sum_{i=1}^{n}a_i\otimes x_i \right) &= \iprod{\phi_n\left( \left( a_i^{\ast}a_j \right)_{i,j} \right) \begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix}}{ \begin{pmatrix}x_1\\\vdots\\x_n\end{pmatrix} }\\
+                                                                             &\geq 0.
+  \end{align*}
+  Since positive semidefinite bilinear forms satisfy the Cauchy--Schwarz inequality, we may define the subspace
+  \begin{align*}
+    \mathcal{N} &= \set{u\in \mathcal{A}\odot \mathcal{H} | \left( u,u \right) = 0}\\
+                &= \set{u\in \mathcal{A}\odot \mathcal{H} | \left( u,v \right) = 0\text{ for all }v\in \mathcal{A}\odot \mathcal{H}},
+  \end{align*}
+  with an induced bilinear form on the quotient space $A\odot \mathcal{H}/\mathcal{N}$ defined by
+  \begin{align*}
+    \iprod{u + \mathcal{N}}{ v + \mathcal{N} } &= \left( u,v \right).
+  \end{align*}
+  Define $\mathcal{K}$ to be the Hilbert space completion of $\mathcal{A}\odot \mathcal{H}/\mathcal{N}$. Now, define a linear map $\pi(a)\colon \mathcal{A}\odot \mathcal{H}\rightarrow \mathcal{A}\odot \mathcal{H}$ by
+  \begin{align*}
+    \pi(a)\left( \sum_{i=1}^{n}a_i\otimes x_i \right) &= \sum_{i=1}^{n} \left( aa_i \right)\otimes x_i.
+  \end{align*}
+  We have that the inequality in $\M_n\left( \mathcal{A} \right)$ given by
+  \begin{align*}
+    \left( a_i^{\ast}a^{\ast}aa_j \right)_{i,j} &\leq \norm{a^{\ast}a}\left( a_i^{\ast}a_j \right)_{i,j}
+  \end{align*}
+  is satisfied, giving
+  \begin{align*}
+    \left( \pi(a)\left( \sum_{j=1}^{n}a_j\otimes x_j \right),\pi(a)\left( \sum_{i=1}^{n}a_i\otimes x_i \right) \right) &= \sum_{i,j=1}^{n} \iprod{\phi\left( a_i^{\ast}a^{\ast}aa_j \right)x_j}{x_i}\\
+                                                                                                                                &\leq \norm{a^{\ast}a}\sum_{i,j=1}^{n} \iprod{\phi\left( a_i^{\ast}a_j \right)x_j}{x_i}\\
+                                                                                                                                                                                                                                &= \norm{a}^2 \left( \sum_{j=1}^{n}a_j\otimes x_j,\sum_{i=1}^{n}a_i\otimes x_i \right).
+  \end{align*}
+  Therefore, $\pi(a)$ is invariant under $\mathcal{N}$, so induces a quotient map on $\mathcal{A}\otimes \mathcal{H}/\mathcal{N}$, which we will also denote by $\pi(a)$. We have that (this new) $\pi(a)$ is bounded with $\norm{\pi(a)}\leq \norm{a}$, meaning that it extends to a bounded linear map on $\mathcal{K}$.
 
+  We define $V\colon \mathcal{H}\rightarrow \mathcal{K}$ by
+  \begin{align*}
+    V(x) &= 1\otimes x + \mathcal{N}.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \norm{Vx}^2 &= \left( 1\otimes x,1\otimes x \right)\\
+                &= \iprod{\phi(1)x}{x}\\
+                &\leq \norm{\phi(1)}\norm{x}^2,
+  \end{align*}
+  and $\norm{V}^2 = \norm{\phi(1)}$.
+
+  Finally, we observe that
+  \begin{align*}
+    \iprod{V^{\ast}\pi(a)Vx}{y} &= \left( \pi(a)1\otimes x,1\otimes y \right)\\
+                                &= \iprod{\phi(a)x}{y}
+  \end{align*}
+  for all $x$ and $y$, so $V^{\ast}\pi(a)V = \phi(a)$.
+\end{proof}
+We observe that if $\phi$ is unital, then $V$ is an isometry, and we may identify $\mathcal{H}$ with the subspace $V\mathcal{H}$ of $\mathcal{K}$, and that $\phi(a) = P\pi(a)P$, where $P$ is the projection onto $\mathcal{H}$. In particular, this means that every unital completely positive map is the compression of a $\ast$-homomorphism.
+
+This construction is very similar to the GNS representation, and we call the triple $\left( \pi,V,\mathcal{K} \right)$ a Stinespring representation for $\phi$.
 \section{Nuclearity and Exactness}%
-
+\begin{definition}
+  We call a map $\theta\colon A\rightarrow B$ between $C^{\ast}$-algebras \textit{nuclear} if there are contractive completely positive maps $\varphi_n\colon A\rightarrow \M_{k(n)}\left( \C \right)$ and $\psi_n\colon \M_{k(n)}\left( \C \right)\rightarrow B$ such that $\psi_n\circ\varphi_n\rightarrow\theta$ pointwise in the norm topology:
+  \begin{align*}
+    \norm{\psi_n\circ\varphi_n(a)\rightarrow\theta(a)}&\rightarrow 0
+  \end{align*}
+  for all $a\in A$.
+\end{definition}
+\begin{definition}
+  If $A$ is a $C^{\ast}$-algebra, and $N$ is a von Neumann algebra, then a map $\theta\colon A\rightarrow N$ is called \textit{weakly nuclear} if there exist contractive completely positive maps $\varphi_n\colon A\rightarrow \M_{k(n)}\left( \C \right)$ and $\psi_n\colon \M_{k(n)}\left( \C \right)\rightarrow N$ such that $\psi_n\circ\varphi_n\rightarrow \theta$ pointwise in the ultraweak topology:
+  \begin{align*}
+    \eta\left( \psi_n\circ\varphi_n(a) \right)\rightarrow\eta\left( \theta(a) \right)
+  \end{align*}
+  for all $a\in A$ and normal functionals $\eta\in N_{\ast}$.
+\end{definition}
+By uniqueness of preduals, if $N\subseteq B\left(\mathcal{H}\right)$ is a faithful normal representation, then it suffices to observe that $\psi_n\circ\varphi_n\rightarrow\theta$ pointwise in the ultraweak topology if and only if
+\begin{align*}
+  \iprod{\psi_n\circ\varphi_n(a)v}{w} &\rightarrow \iprod{\theta(a)v}{w}
+\end{align*}
+for all $a\in A$ and $v,w\in \Omega$ for some collection $\Omega$ of vectors whose linear span is dense in $\mathcal{H}$.
 \section{Application to Amenability}%
 
 \nocite{paulsen_completely_bounded_maps,brown_and_ozawa}
