@@ -55,6 +55,7 @@ permalink: "/useful_resources.html"
         - [Positive Elements and Ideals in $C^{\ast}$-Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/positive_elements_cstar_algebras.pdf)
         - [States and Representations](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/states_and_representations.pdf)
         - [Fixed-Point Theorems](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/fixed_point_theorems.pdf)
+        - [Generalized Limits](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/banach_limits.pdf)
       - Miscellaneous Notes/Workthroughs:
         - [Functional Analysis Exercises](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conway_analysis_exercises.pdf)
         - [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)

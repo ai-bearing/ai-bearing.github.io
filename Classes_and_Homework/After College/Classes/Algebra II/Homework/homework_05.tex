@@ -1,0 +1,80 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage{mlmodern}
+%\usepackage{newpxtext,eulerpx,eucal}
+%\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
+
+\usepackage{homework}
+%\usepackage{notes}
+
+%\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+%\addbibresource{  }
+
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Algebra II: Homework 5}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{problem}[Problem 1]
+  Let $F$ be a field. Use JCF to prove that any square matrix $A\in \Mat_n(F)$ is similar to its transpose.
+\end{problem}
+\begin{solution}
+  It suffices to prove this for one Jordan block, as we may then apply the same process for every other separate Jordan block to obtain our desired transformation in the general case. For this, we observe that if $J_d(\lambda)$ is a Jordan block, then it is the expression of a linear transformation $T\colon V\rightarrow V$ in terms of the ordered basis
+  \begin{align*}
+    \beta_1 &= \set{ \overline{\left( x-\lambda \right)}^{d-1},\dots, \overline{\left( x-\lambda \right)}, \overline{1}},
+  \end{align*}
+  when $V$ is given the structure of an $F[x]$ module with $T$ acting via $x.v = Tv$. Reversing the order of this basis gives 
+  \begin{align*}
+    \beta_2 &= \set{ \overline{1}, \overline{\left( x-\lambda \right)},\dots, \overline{\left( x-\lambda \right)}^{d-1} },
+  \end{align*}
+  and we observe that acting via $T$ gives a matrix representation with $\lambda$ along the diagonal and $1$ along the sub-diagonal, which is exactly $J_{d}(\lambda)^{T}$. Thus, via the change of basis matrix $ P = \left[ \id \right]_{\beta_1}^{\beta_2} $, we find that $J_{d}(\lambda) = P^{-1}J_{d}(\lambda)^{T} P$, so $J_d(\lambda)$ is similar to its transpose.
+\end{solution}
+\begin{problem}[Problem 2]
+  Let $G$ be a group, $F$ a field, and $V$ a vector space over $F$. Prove that there is a natural bijection between linear representations of $G$ of the form $\left( \rho,V \right)$ and $F[G]$-module structures on $V$ that extend the given $F$-vector space structure on $V$.
+\end{problem}
+\begin{solution}
+  Let $\left( \rho,V \right)$ be a linear representation of $G$. We will determine an $F[G]$-module structure on $V$ extending the given $F$-vector space structure on $V$ by letting the basis $\set{\delta_g}_{g\in G}\subseteq F[G]$ act on vectors in $V$ via
+  \begin{align*}
+    \delta_g\cdot v &= \rho(g)v,
+  \end{align*}
+  and extending linearly via the universal property of the free module $F[G]$. That this is a module over $F[G]$ follows from the fact that $\rho$ is a homomorphism between $G$ and $\GL(V)$, so for any $g,h\in G$ and $v,v_1,v_2\in V$, we have
+  \begin{align*}
+    \delta_g\cdot \left( v_1 + v_2 \right) &= \rho(g)\left( v_1 + v_2 \right)\\
+                                           &= \rho(g)v_1 + \rho(g)v_2\\
+                                           &= \delta_g\cdot v_1 + \delta_g\cdot v_2\\
+    \left( \delta_g + \delta_h \right)\cdot v &= \left( \rho(g) + \rho(h) \right)v\\
+                                              &= \rho(g)v + \rho(h)v\\
+                                              &= \delta_g\cdot v + \delta_h\cdot v\\
+    \left( \delta_{g}\delta_h \right)\cdot v &= \delta_{gh}\cdot v\\
+                                             &= \rho\left( gh \right)v\\
+                                             &= \rho(g)\rho(h)v\\
+                                             &= \rho(g)\left( \rho(h)v \right)\\
+                                             &= \delta_g\left( \delta_h\cdot v \right).
+  \end{align*}
+  Now, if we have an $F[G]$-module structure on $V$ extending the $F$-vector space structure on $V$, then we claim that by defining $\rho\colon G\rightarrow \GL(V)$ by
+  \begin{align*}
+    \rho(g)v &= \delta_g\cdot v,
+  \end{align*}
+  then this defines a representation of $G$. We observe that $\delta_e\cdot v = v$ by the definition of the $F[G]$-module structure extending the $F$-vector space structure, that
+  \begin{align*}
+    v &= \delta_e\cdot v\\
+      &= \delta_g\delta_{g^{-1}}\cdot v \\
+      &= \delta_g\cdot \left( \delta_{g^{-1}}\cdot v \right),
+  \end{align*}
+  meaning that this is in fact a map into $\GL(V)$. Finally, we observe that if $g,h\in G$, then
+  \begin{align*}
+    \rho\left( gh \right)v &= \delta_{gh}\cdot v\\
+                           &= \delta_g\delta_h\cdot v\\
+                           &= \delta_g\cdot \left( \delta_h\cdot v \right)\\
+                           &= \delta_g\cdot \left( \rho(h)v \right)\\
+                           &= \rho(g)\rho(h)v,
+  \end{align*}
+  and since this holds for all $v\in V$, it follows that $\rho\left( gh \right) = \rho(g)\rho(h)$, giving that this is a homomorphism. 
+\end{solution}
+\end{document}

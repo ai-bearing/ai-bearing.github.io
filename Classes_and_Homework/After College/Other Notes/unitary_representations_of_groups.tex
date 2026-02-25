@@ -330,8 +330,86 @@ If $\lambda$ is the left-regular representation of $G$, then $\lambda(f)$ is lef
     \pi(f)\pi(x) &= \Delta\left( x^{-1} \right)\pi\left( R_{x^{-1}}f \right).
   \end{align*}
 \end{theorem}
-\section{Functions of Positive Type}%
+\begin{proof}
+  The correspondence $f\mapsto \pi(f)$ is linear, and by some formal manipulations, we obtain
+  \begin{align*}
+    \pi\left( f\ast g \right) &= \int_{}^{} \int_{}^{} f\left( y \right)g\left( y^{-1}x \right)\pi(x)\:dy\:dx\\
+                              &= \int_{}^{} \int_{}^{} f\left( y \right)g\left( x \right)\pi\left( yx \right)\:dx\:dy\\
+                              &= \int_{}^{} \int_{}^{} f\left( y \right)g\left( x \right)\pi\left( y \right)\pi\left( x \right)\:dx\:dy\\
+                              &= \pi(f)\pi(g)\\
+    \pi\left( f^{\ast} \right) &= \int_{}^{} \Delta\left( x^{-1} \right) \overline{f\left( x^{-1} \right)} \pi(x)\:dx\\
+                               &= \int_{}^{} \overline{f(x)}\pi\left( x^{-1} \right)\:dx\\
+                               &= \pi\left( f \right)^{\ast},
+  \end{align*}
+  and the latter two follow from similar manipulations. That these are valid manipulations follows from taking inner products with some $u\in \mathcal{H}_{\pi}$, and then using the fact that vector-valued integration commutes with the application of bounded linear maps.
 
+  To see that $\pi$ is nondegenerate, let $u\neq 0\in \mathcal{H}_{\pi}$. Let $V$ be a compact neighborhood of $1$ in $G$ such that $\norm{\pi(x)u-u} < \norm{u}$ for any $x\in V$, and let $f = \mu(V)^{-1}\chi_V$, so that
+  \begin{align*}
+    \norm{\pi(f)u-u} &= \frac{1}{\mu(V)} \norm{ \int_{V}^{} \left( \pi(x)u-u \right)\:dx }\\
+                     &< \norm{u},
+  \end{align*}
+  so $\pi(f)u\neq 0$.
+\end{proof}
+\begin{theorem}
+  Let $\pi$ be a nondegenerate $\ast$-representation of $L_1(G)$ on $\mathcal{H}$. Then, $\pi$ arises from a unique unitary representation of $G$ on $\mathcal{H}$.
+\end{theorem}
+\begin{proof}
+  We want $\pi(x)$ to be the limit of $\pi(f)$ as $f$ approaches $\delta_x$. Let $\set{\psi_U}$ be an approximate identity in $L_1(G)$. Then, for any $f\in L_1(G)$, we have $\psi_U\ast f \rightarrow f$ in $L_1$, meaning that $\left( L_x\psi_U \right)\ast f\rightarrow L_xf$ in $L_1$ for any $x\in G$, so $\pi\left( L_x\psi_U \right)\pi\left( f \right)v\rightarrow \pi\left( L_xf \right)v$ for all $v\in H$.
+
+  Let $\mathcal{D}$ be the finite linear span of $\set{\pi(f)v | f\in L_1(G),v\in \mathcal{H}}$. Then, $\mathcal{D}$ is dense in $\mathcal{H}$, as if $u\in \mathcal{D}^{\perp}$, then 
+  \begin{align*}
+  0 &= \iprod{u}{\pi(f)v}\\
+    &= \iprod{\pi\left( f^{\ast} \right)u}{v}
+  \end{align*}
+  for all $f$, whence $u = 0$ as $\pi$ is nondegenerate.
+
+  In particular, we have that $\pi\left( L_x\psi_U \right)$ converge in SOT on $\mathcal{D}$ to $ \widetilde{\pi}(x)\colon \mathcal{D}\rightarrow \mathcal{D} $ with $ \widetilde{\pi}(x)\pi(f)v = \pi\left( L_xf \right)v $. The value $ \widetilde{\pi}(x) $ is well-defined as
+  \begin{align*}
+    \sum_{j=1}^{n} \pi\left( f_j \right)v_j &= 0
+      \intertext{implies that}
+    \sum_{j=1}^{n} \pi\left( L_xf_j \right)v_j &= \lim_{U} \sum_{j=1}^{n}\pi\left( L_x\psi_U \right)\pi\left( f_j \right)v_j\\
+                                               &= 0,
+  \end{align*}
+  and the operators $\pi\left( L_x\psi_U \right)$ satisfy $\norm{\pi\left( L_x\psi_U \right)}\leq \norm{L_x\psi_U}_{L_1} = 1$, so $\widetilde{\pi}(x)$ extends uniquely to $\mathcal{H}$ such that $\norm{\widetilde{\pi}(x)}\leq 1$ and $\widetilde{\pi}(x)\pi(f) = \pi\left( L_xf \right)$.
+
+  We claim that $\widetilde{\pi}$ is a unitary representation of $G$. Now, we have
+  \begin{align*}
+    \widetilde{\pi}\left( xy \right) \pi(f) &= \pi\left( L_{xy}f \right)\\
+                                            &= \pi\left( L_xL_yf \right)\\
+                                            &= \widetilde{\pi}(x)\widetilde{\pi}(y)\pi(f)
+  \end{align*}
+  on $\mathcal{D}$, so it holds on $\mathcal{H}$. Next, since $\widetilde{\pi}(1) = I_{\mathcal{H}}$, we have $ \widetilde{\pi} $ is a homomorphism from $G$ to the group of invertible operators on $\mathcal{H}$.
+
+  Since
+  \begin{align*}
+    \norm{u} &= \norm{ \widetilde{\pi}\left( x^{-1} \right)\widetilde{\pi}(x)u }\\
+             &\leq \norm{ \widetilde{\pi}(x)u }\\
+             &\leq \norm{u},
+  \end{align*}
+  it follows that $\widetilde{\pi}(x)$ is an isometry, and hence is a unitary operator.
+
+  Finally, if $\left( x_{i} \right)_i\rightarrow x$ in $G$, then $L_{x_i}f\rightarrow L_xf$ in $L_1$, so $ \widetilde{\pi}\left( x_i \right)\pi(f) \rightarrow \widetilde{\pi}(x)\pi(f) $ in SOT. Therefore, it $\widetilde{\pi}\left( x_i \right)\rightarrow \widetilde{\pi}(x)$ on $\mathcal{D}$, so since $\norm{\widetilde{\pi}\left( x_i \right)} = 1$, it holds on $\mathcal{H}$, so $\widetilde{\pi}$ is continuous.
+
+  Next, we will show that $\pi(f) = \widetilde{\pi}(f)$ whenever $f\in L_1\left( G \right)$, where $ \widetilde{\pi}(f) $ arises from $\widetilde{\pi}$ via
+  \begin{align*}
+    \iprod{\widetilde{\pi}(f)u}{v} &= \int_{}^{} f(x) \iprod{\widetilde{\pi}(x)u}{v}\:dx.
+  \end{align*}
+  Yet, if $f,g\in L_1$, we have
+  \begin{align*}
+    f\ast g &= \int_{}^{} f(y)L_yg\:dy,
+  \end{align*}
+  so since $\pi$ is a bounded linear map, it commutes with integration, so that
+  \begin{align*}
+    \pi(f)\pi(g) &= \pi\left( f\ast g \right)\\
+                 &= \int_{}^{} f(y)\pi\left( L_yg \right)\:dy\\
+                 &= \int_{}^{} f(y)\widetilde{\pi}(y)\pi(g)\:dy\\
+                 &= \left( \int_{}^{} f(y)\widetilde{\pi}(y)\:dy \right)\pi(g)\\
+                 &= \widetilde{\pi}(f)\pi(g),
+  \end{align*}
+  so $\widetilde{\pi}(f) = \pi(f)$ on $\mathcal{D}$, hence on $\mathcal{H}$.
+
+  Finally, if $ \hat{\pi} $ is another unitary representation of $G$ such that $\hat{\pi}(f) = \pi(f)$ for any $f\in L_1(G)$, so $ \iprod{\hat{\pi}(x)u}{v} = \iprod{\widetilde{\pi}(x)u}{v} $, so $\hat{\pi}(x) = \widetilde{\pi}(x)$ for all $x\in G$.
+\end{proof}
 \nocite{folland_abstract_harmonic_analysis,kazhdan_property_t}
 \printbibliography
 \end{document}

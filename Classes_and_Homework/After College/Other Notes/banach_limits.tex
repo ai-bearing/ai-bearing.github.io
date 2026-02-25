@@ -7,7 +7,7 @@
 
 %\usepackage{homework}
 \usepackage{notes}
-\usepackage{mlmodern}
+%\usepackage{mlmodern}
 %\usepackage{newpxtext,eulerpx,eucal}
 %\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 \usepackage{parskip}
@@ -24,16 +24,6 @@
 \section{Banach Limits}%
 \begin{theorem}[Hahn--Banach--Minkowski]
   Let $X$ be a real vector space, and let $p\colon X\rightarrow \R$ be such that $p\left( x+y \right) \leq p(x) + p(y)$ for all $x,y\in X$ and $p\left( tx \right) = tp(x)$ for all $t \geq 0$. If $f\colon Y\rightarrow \R$ is a linear functional defined on a subspace $Y$ such that $f(x)\leq p(x)$ for all $x\in Y$, then there is an extension $F\colon X\rightarrow \R$ such that $F(x)\leq p(x)$ for all $x\in X$ and $F|_{Y} = f$.
-
-  Furthermore, if $v\in X\setminus Y$, the value of $F(v)$ can be designated to be in the closed interval defined by
-  \begin{align*}
-    m &= \sup_{w\in Y} \left( -p\left( -w-v \right) - f(w)\right)
-  \end{align*}
-  at the left endpoint, and
-  \begin{align*}
-    M &= \inf_{w\in Y} \left( p\left( w+v \right) - f(w) \right)
-  \end{align*}
-  at the right endpoint.
 \end{theorem}
 \begin{corollary}
   If $X$ is a complex normed vector space with subspace $E\subseteq X$ and $\varphi\in E^{\ast}$, then there is $\Phi\colon X\rightarrow \C$ such that $\Phi|_{E} = \varphi$ and $\norm{\Phi} = \norm{\varphi}$.
@@ -113,6 +103,7 @@ Regarding the case of $\left( -1 \right)^{n}$, we observe that from our work abo
 \end{align*}
 Every convergent sequence is almost convergent by definition.
 \section{Generalized Limits beyond Banach Limits}%
+\subsection{Constructing Banach Limits from Generalized Limits}%
 We have obtained one limit. However, there are lots of other extensions of the limit, each of which has norm $1$. In fact, if we consider the restriction of $\ell_{\infty}$ to the reals, we know from undergrad real analysis that
 \begin{align*}
   p(x) &= \limsup_{n\rightarrow\infty} \left( \left( x_n \right)_n \right)
@@ -125,7 +116,7 @@ we can specify an extension to the limit functional to $L\colon \ell_{\infty}\ri
 \begin{align*}
   \liminf_{n\rightarrow\infty}\left( \left( x_n \right)_n \right) \leq L(x)\leq \limsup_{n\rightarrow\infty}\left( \left( x_n \right)_n \right)
 \end{align*}
-However, these generalized limits may not align to the same requirement of shift-invariance as the aforementioned Banach limit. We can in fact construct a Banach limit from any generalized limit by using Césaro-type means: letting $x = \left( x_n \right)_n\in \ell_{\infty}$, we may define
+However, these generalized limits may not align to the same requirement of shift-invariance as the aforementioned Banach limit. We can in fact construct a Banach limit from any generalized limit by using Césaro-type summation: letting $x = \left( x_n \right)_n\in \ell_{\infty}$, we may define
 \begin{align*}
   c_n &= \frac{1}{n} \sum_{k=1}^{n} a_k,
 \end{align*}
@@ -148,34 +139,25 @@ as well. Thus, we see that
 with the second-to-last equality emerging from the fact that $a\in \ell_{\infty}$, so the sequence $\left( a_{n+1}-a_1 \right)_n$ is necessarily bounded.
 
 In particular, this means that there are plenty of Banach limits, since we can take \textit{any} generalized extension of the limit to $\ell_{\infty}$, then use this Césaro-type summation to yield a Banach limit.
+\subsection{Generalized Limits that are Algebra Homomorphisms}%
+We know from undergraduate real analysis that the limit satisfies the various properties described above --- positive, unital, shift-invariant --- and used some Hahn--Banach magic to construct a similar type of limit on all of $\ell_{\infty}$. Yet, there is one more property from undergraduate real analysis that classical limits have and we did not make use of; namely, that such limits are algebra homomorphisms. We will now discuss how to construct such types of limits.
 
-Now, the question becomes: what are all the generalized limits? To understand this, we need to take a tour of topology. First, we recall an important structural theorem.
-\begin{theorem}[Riesz Representation Theorem]
-  Let $X$ be a compact Hausdorff space. Then,
-  \begin{align*}
-    C(X)^{\ast}\cong M_r(X),
-  \end{align*}
-  where $M_r(X)$ denotes the space of complex regular Borel measures on $X$.
-\end{theorem}
-Now, we consider the fact that $\ell_{\infty} $ can be identified with $ C_b\left(\N\right)$ when $N$ is equipped with the discrete topology. In particular, there is some $R > 0$ such that, for any $x\in \ell_{\infty}$, we have $\img(x) \subseteq B\left( 0,R \right)$. The universal property of the \href{https://en.wikipedia.org/wiki/Stone–Čech_compactification}{Stone--\v{C}ech compactification} thus gives a unique extension $\beta x\colon \beta\N\rightarrow \C$ such that $\beta x |_{\N} = x$, where $\beta\N$ is the Stone--\v{C}ech compactification of the naturals. In particular, we may thus identify $\ell_{\infty}\cong C_b\left( \N \right)$ with $C\left( \beta\N \right)$, so $\ell_{\infty}^{\ast}\cong M_r\left( \beta \N \right)$.
-
-The next question emerges: what exactly \textit{is} $\beta\N$?
-\begin{proposition}
-  The space $\beta\N$ is the space of all ultrafilters on $\N$.
-\end{proposition}
-Recall that a filter $\mathcal{F}$ on a set $X$ is a family of subsets $\mathcal{F}$ that is ``closed upwards,'' in the sense that if $A\in \mathcal{F}$ and $A\subseteq B$, then $B\in \mathcal{F}$, and is such that $X\in \mathcal{F}$ and, if $A,B\in \mathcal{F}$, then so is $A\cap B$.
-
-An ultrafilter $\mathcal{U}$ on $X$ is a maximal \textit{proper} filter, and has the property that if $A\in P(X)$, then either $A\in \mathcal{U}$ or $A^{c}\in \mathcal{U}$. An ultrafilter on $\N$ is called principal if it contains a finite subset, else it is called a non-principal ultrafilter (or free ultrafilter). The principal ultrafilters in $\beta\N$ can be identified with $\N$, since they are all of the form
+To start, we observe that $\ell_{\infty}$ and its subspace $c_0$ are $C^{\ast}$-algebras. In particular, if we endow $\N$ with the discrete topology, then
 \begin{align*}
-  \mathcal{F}_q &= \set{A\subseteq N | q\in A}.
+  \ell_{\infty} &= C_b\left( \N \right)\\
+  c_0 &= C_0\left( \N \right).
 \end{align*}
-If $\mathcal{U}$ is an ultrafilter, then we can define a limit of a sequence $\left( x_n \right)_n$ along $\mathcal{U}$ by saying that $\lim_{\mathcal{U}}\left( x_n \right)_n = L$ if and only if, for every $\ve > 0$, we have
+Since $\ell_{\infty}$ is a unital $C^{\ast}$-algebra,the Gelfand--Naimark theorem says that we may view $\ell_{\infty}$ as the space of continuous functions over the space of characters on the space. That is, we let $\Omega\left( \ell_{\infty} \right)\subseteq \ell_{\infty}^{\ast}$ be the space of all algebra homomorphisms $\phi\colon \ell_{\infty}\rightarrow \C$ satisfying $\phi\left( \1 \right) = 1$, and endow $\Omega\left( \ell_{\infty} \right)$ with the weak* topology. Such characters are automatically positive and unital, so we may view them, in a sense, as limits.
+
+Characters are in one-to-one correspondence with maximal ideals (one direction is obvious, and the other direction follows from the Gelfand--Mazur theorem characterizing Banach algebras that are also division algebras). In particular, we may define a corresponding space of maximal ideals, $\beta\N$, endowed with the hull--kernel topology, where if $X\subseteq \beta\N$ is some set, then
 \begin{align*}
-  \set{n | \left\vert x_n - L \right\vert \leq \ve} &\in \mathcal{U}.
+  \overline{X} &= \set{p\in \beta\N | p\supseteq \bigcap_{q\in X}q}.
 \end{align*}
-Limits along principal ultrafilters are very boring --- if $\mathcal{F}_p$ is the principal ultrafilter corresponding to $p$, then $\lim_{\mathcal{F}_p}\left( x_n \right)_n = x_p$. However, limits along non-principal ultrafilters are where things start to get interesting.
+It can be shown that $\beta\N$ satisfies the universal property of the \href{https://en.wikipedia.org/wiki/Stone\%E2\%80\%93\%C4\%8Cech_compactification}{Stone--Cech compactification}. From some more hard work (see the book \textit{Algebra in the Stone--Cech Compactification}), it can be shown that the set $\beta\N$ is the space of ultrafilters on $\N$. Furthermore, any character $\phi\colon \ell_{\infty}\rightarrow \C$ is in one-to-one correspondence with an ultrafilter by defining the set $A\subseteq \N$ to be an element of $\mathcal{U}_{\phi}$ if $\phi\left( \chi_A \right) = 1$.
 
-A limit along a non-principal ultrafilter can be viewed as a special type of linear functional on $\ell_{\infty}$ --- specifically, it is a character (unital algebra homomorphism with range $\C$) with kernel containing $c_0$.\footnote{That its kernel contains $c_0$ follows from the fact that every non-principal ultrafilter contains the cofinite filter.} Some references then define limits along non-principal ultrafilters to be characters on the quotient $C^{\ast}$-algebra $\ell_{\infty}/c_0$. The relation comes from the fact that the character space of a general $C^{\ast}$-algebra $C^b(X)$, which is the space of continuous bounded functions on $X$, is given by $\beta X$, and that the remainder $\beta X \setminus X$ is the character space of the quotient $C^{\ast}$-algebra $C^b(X)/C_0(X)$.
-
-%In fact, we can consider all the generalized limits as some some probability measure on $\beta\N\setminus \N$, and the Banach limits as the probability measures that are invariant under the action of $\Z$-translation (i.e., elementwise addition on the ultrafilter). In particular, since the probability measures form a compact convex subset of $M_r\left( \beta\N \right)$, it follows that every generalized limit is in the $w^{\ast}$-closure of the extreme points of the probability measures, which are the limits along \textit{all} ultrafilters, including the principal ultrafilters.
+Yet, this idea of viewing limits as every such character is not really accurate. For instance, the map $\phi\colon \ell_{\infty}\rightarrow \C$ taking $\phi\left( x \right) = x_1$ is a character, but it doesn't really evaluate a sequence at a limit if it has one. For this purpose, we desire that any $c_0$ sequence evaluates to $0$; that is, we want the set of all elements of $\phi\in \Omega\left( \ell_{\infty} \right)$ such that $c_0\subseteq \ker\left( \phi \right)$. This induces a character, $\varphi\colon \ell_{\infty}/c_0\rightarrow \C$, following from the first isomorphism theorem (for $C^{\ast}$-algebras). Finally, we may view these as generalized limits, by setting
+\begin{align*}
+  \lim_{\varphi}\left( \left( a_n \right)_n \right) &= \phi\left( \left( a_n \right)_n + c_0 \right).
+\end{align*}
+To find the ultrafilters that correspond to these particular characters, observe that if $A\subseteq \N$ is finite, then $\chi_A$ is a $c_0$ sequence; in particular, this means that it evaluates to zero. Therefore, if $\phi\colon \ell_{\infty}\rightarrow \C$ is a character with $c_0\subseteq \ker\left( \phi \right)$, then the ultrafilter $\mathcal{U}_{\phi}$ must not have any finite subsets --- i.e., it is a free ultrafilter (rather than a principal ultrafilter).
 \end{document}
