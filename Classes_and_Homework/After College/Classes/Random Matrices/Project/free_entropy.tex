@@ -23,7 +23,7 @@
 \RaggedRight
 
 \section{Background: Asymptotic Freeness and Large Deviations}%
-We start by recalling the basic asymptotic freeness result discussed in class.
+We start by recalling the basic asymptotic freeness result.
 \begin{proposition}
   Let $\left( A_1^{N},\dots,A_r^{N} \right)$ be an independent $r$-tuple of GUE $N\times N$ matrices. Then, the family $A_1^N,\dots,A_r^N$ converge in distribution to $r$ independent semicircular elements, $s_1,\dots,s_r\in B\left( \mathcal{F}\left( \C^r \right) \right)$, in the sense that for all $m\geq 1$ and all $1\leq i_1,\dots,i_m \leq r$, we have
   \begin{align*}
@@ -70,7 +70,7 @@ For a given distribution $\mu$, we can compute the rate function by using a fami
 \begin{align*}
   P\left( S_n > x \right) &= P\left( nS_n > nx \right)\\
                           &= P\left( e^{\lambda\left( nS_n-nx \right)}\geq 1 \right)\\
-                          &leq E\left[ e^{\lambda\left( nS_n-nx \right)} \right]\\
+                          &\leq E\left[ e^{\lambda\left( nS_n-nx \right)} \right]\\
                           &= e^{-\lambda n x} E\left[ e^{\lambda\left( X_1 + \cdots + X_n \right)} \right]\\
                           &= \left( e^{-\lambda x}E\left[ e^{\lambda X} \right] \right)^{n},
 \end{align*}
@@ -209,7 +209,7 @@ Heuristically, letting $\mu_A$ denote the empirical spectral distribution on $\M
 we may consider a large deviation principle with $P_N\left( \mu_A\approx \nu \right)\sim e^{-N^2I\left(\nu\right)}$, and write it out as
 \begin{align*}
   P_N\left( \mu_A\approx \nu \right) &= Q_N\left( \frac{1}{N}\left( \delta_{\lambda_1} + \cdots + \delta_{\lambda_N} \right) \right)\\
-                                     &= \frac{N^{N^2/2}}{\left( 2\pi \right)^{N/2}\prod_{j=1}^{N}j!} \int_{E}^{} e&{-\left( N\sum_{i=1}^{N}\lambda_i^2 \right)/2}\prod_{i < j}\left( \lambda_i-\lambda_j \right)^2\:\prod_{i=1}^{N}d\lambda_i,
+                                     &= \frac{N^{N^2/2}}{\left( 2\pi \right)^{N/2}\prod_{j=1}^{N}j!} \int_{E}^{} e^{-\left( N\sum_{i=1}^{N}\lambda_i^2 \right)/2}\prod_{i < j}\left( \lambda_i-\lambda_j \right)^2\:\prod_{i=1}^{N}d\lambda_i,
 \end{align*}
 where $E$ is the given set in the $Q_N$. Whenever $\frac{1}{N}\left( \delta_{\lambda_1(A)} + \cdots + \delta_{\lambda_N(A)} \right) \approx \nu$, we have that
 \begin{align*}
@@ -240,7 +240,33 @@ The sum inside the argument of the exponential is a Riemann sum for the quantity
   \end{enumerate}
 \end{theorem}
 \section{Microstates Free Entropy}%
+Voiculescu's original definition of free entropy in the case with more than one free random variable can be viewed as a generalization of the microstates approach to entropy for a classical discrete random variable, discussed in the survey \cite{voiculescu2001freeentropy}. For the sections following, I will assume a certain level of proficiency with the theory of von Neumann algebras, as this is the setting where Voiculescu developed the theories around free entropy in \cite{voiculescu_analogues_2}.
 
+Consider a discrete random variable with output values in $\set{1,\dots,n}$ assigned with probabilities $p_1,\dots,p_n$. The microstates of this discrete random variable for a fixed $N$ are then the set \[\set{f | f\colon \set{1,\dots,N}\rightarrow \set{1,\dots,n}},\] and for a fixed $\ve$, the microstates that approximate this distribution are those $f$ with
+\begin{align*}
+  \left\vert \frac{\left\vert f^{-1}\left( \set{j} \right) \right\vert}{N}-p_j \right\vert &< \ve,
+\end{align*}
+where $ \left\vert \cdot \right\vert $ denotes the (necessarily finite) cardinality. We denote the collection of such $f$ by $\Gamma\left( p_1,\dots,p_n;\ve,N \right)$. One may find the Shannon entropy by evaluating the limit
+\begin{align*}
+  \lim_{\ve\rightarrow 0}\lim_{N\rightarrow\infty} \frac{1}{N} \ln \left\vert \Gamma\left( p_1,\dots,p_n;\ve,N \right) \right\vert
+\end{align*}
+Instead of a classical random variable, we will let $\left( M,\tau \right)$ be a tracial von Neumann algebra, and let $\left( x_1,\dots,x_n \right)$ be a tuple of self-adjoint free random variables in $M$.
+
+For a fixed $R$, we let the set of microstates $\Gamma_R\left( X_1,\dots,X_n;m,k,\ve \right)$ admit three degrees of approximation: $m$ denotes the level of approximation of mixed moments, $k$ denotes the size of the (self-adjoint) approximation matrices that have operator norm at most $R$, and $\ve$ denotes the closeness of the approximation. Put into symbols, we select all $n$-tuples $\left( A_1,\dots,A_n \right)\in \left( \M_k\left( \C \right)_{\sa} \right)^{n}$ with each $\norm{A_j} < R$ satisfying
+\begin{align*}
+  \left\vert \tau\left( x_{i_1}\cdots x_{i_p} \right)- \tr_{k}\left( A_{i_1}\cdots A_{i_p} \right) \right\vert < \ve
+\end{align*}
+for all $1\leq p \leq m$ and all multi-indices $ \mathbf{i}\colon \set{1,\dots,p}\rightarrow \set{1,\dots,n} $. Here, $\tr_k$ is the normalized trace.
+
+As in the case of entropy for classical random variables, free entropy emerges from a certain large deviation principle. Specifically, recall that the distribution of a family of noncommutative random variables is given by the collection of mixed moments with respect to the trace,
+\begin{align*}
+  \Delta\left( x_1,\dots,x_n \right) &= \set{\tau\left( x_{i_1}\cdots x_{i_p} \right) | p\in \N, \mathbf{i}\colon \set{1,\dots,p}\rightarrow \set{1,\dots,n}}.
+\end{align*}
+If we have an $n$-tuple of independent GUE matrices $\left( A_1,\dots,A_n \right)\in \left( \M_N\left( \C \right)_{\sa} \right)^{n}$, we know that as $N\rightarrow\infty$, that there is almost sure convergence in distribution to a family $\left( s_1,\dots,s_n \right)$ of free semicirculars in $M$. The large deviations will then be given by
+\begin{align*}
+  P_N\left( \Delta\left( A_1,\dots,A_n \right)\approx \Delta\left( x_1,\dots,x_n \right) \right) &\sim e^{-N^2I\left( x_1,\dots,x_n \right)},
+\end{align*}
+where $I$ is the free entropy. 
 \section{Applications: Structural Properties of Free Group Factors}%
 
 \printbibliography
