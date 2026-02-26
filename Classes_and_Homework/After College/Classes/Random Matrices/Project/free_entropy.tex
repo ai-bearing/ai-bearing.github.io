@@ -250,7 +250,8 @@ where $ \left\vert \cdot \right\vert $ denotes the (necessarily finite) cardinal
 \begin{align*}
   \lim_{\ve\rightarrow 0}\lim_{N\rightarrow\infty} \frac{1}{N} \ln \left\vert \Gamma\left( p_1,\dots,p_n;\ve,N \right) \right\vert
 \end{align*}
-Instead of a classical random variable, we will let $\left( M,\tau \right)$ be a tracial von Neumann algebra, and let $\left( x_1,\dots,x_n \right)$ be a tuple of self-adjoint free random variables in $M$.
+\subsection{Understanding the Microstates Free Entropy}%
+Instead of a classical random variable, we will let $\left( M,\tau \right)$ be a tracial von Neumann algebra,\footnote{A von Neumann algebra equipped with a faithful (injective on positive elements), normal ($w^{\ast}$-continuous), tracial ($\tau\left( xy \right) = \tau\left( yx \right)$) state ($\tau(1) = 1$) $\tau\colon M\rightarrow \C$.} and let $\left( x_1,\dots,x_n \right)$ be a tuple of self-adjoint free random variables in $M$.
 
 For a fixed $R$, we let the set of microstates $\Gamma_R\left( X_1,\dots,X_n;m,k,\ve \right)$ admit three degrees of approximation: $m$ denotes the level of approximation of mixed moments, $k$ denotes the size of the (self-adjoint) approximation matrices that have operator norm at most $R$, and $\ve$ denotes the closeness of the approximation. Put into symbols, we select all $n$-tuples $\left( A_1,\dots,A_n \right)\in \left( \M_k\left( \C \right)_{\sa} \right)^{n}$ with each $\norm{A_j} < R$ satisfying
 \begin{align*}
@@ -262,11 +263,65 @@ As in the case of entropy for classical random variables, free entropy emerges f
 \begin{align*}
   \Delta\left( x_1,\dots,x_n \right) &= \set{\tau\left( x_{i_1}\cdots x_{i_p} \right) | p\in \N, \mathbf{i}\colon \set{1,\dots,p}\rightarrow \set{1,\dots,n}}.
 \end{align*}
-If we have an $n$-tuple of independent GUE matrices $\left( A_1,\dots,A_n \right)\in \left( \M_N\left( \C \right)_{\sa} \right)^{n}$, we know that as $N\rightarrow\infty$, that there is almost sure convergence in distribution to a family $\left( s_1,\dots,s_n \right)$ of free semicirculars in $M$. The large deviations will then be given by
+If we have an $n$-tuple of independent GUE matrices $\left( A_1,\dots,A_n \right)\in \left( \M_k\left( \C \right)_{\sa} \right)^{n}$, we know that as $k\rightarrow\infty$, that there is almost sure convergence in distribution to a family $\left( s_1,\dots,s_n \right)$ of free semicirculars in $M$. The large deviations will then be given by
 \begin{align*}
-  P_N\left( \Delta\left( A_1,\dots,A_n \right)\approx \Delta\left( x_1,\dots,x_n \right) \right) &\sim e^{-N^2I\left( x_1,\dots,x_n \right)},
+  P_N\left( \Delta\left( A_1,\dots,A_n \right)\approx \Delta\left( x_1,\dots,x_n \right) \right) &\sim e^{-k^2I\left( x_1,\dots,x_n \right)},
 \end{align*}
-where $I$ is the free entropy. 
+where $I$ is the free entropy.
+
+To compute this value, we let $\lambda$ denote the Lebesgue measure on $\left( \M_k\left( \C \right)_{\sa} \right)^n\cong \R^{nk^2}$, and define
+\begin{align*}
+  \chi\left( x_1,\dots,x_n \right) &= \sup_{R > 0}\inf_{m\in \N}\inf_{\ve > 0} \limsup_{k\rightarrow\infty} \left( \frac{1}{k^2} \ln \lambda \left( \Gamma_{R}\left( x_1,\dots,x_n; m,k,\ve \right) \right) + \frac{n}{2}\ln k \right).
+\end{align*}
+It turns out that the value of $R$ has minor influence, and we only need choose a fixed $R$ greater than the norm of each $x_i$.
+\begin{proposition}[{\cite[Proposition 2.2]{voiculescu_analogues_2}}]
+  Let $C^2 = \tau\left( x_1^2 + \cdots + x_n^2 \right)$. Then,
+  \begin{align*}
+    \chi\left( x_1,\dots,x_n \right) &\leq 2^{-1}n\ln\left( 2\pi en^{-1}C^2 \right).
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  We will instead prove a slightly different inequality. Define
+  \begin{align*}
+    \chi_R\left( x_1,\dots,x_n;m,k,\ve \right) &= \ln \left( \lambda\left( \Gamma_{R}\left( x_1,\dots,x_n;m,k,\ve \right) \right) \right),
+  \end{align*}
+  and we will show that
+  \begin{align*}
+    \chi_R\left( x_1,\dots,x_n;m,k,\ve \right) &\leq 2^{-1}nk^2\left( \ln\left( 2\pi e n^{-1}\left( C^2 + n\ve \right) \right) - \ln k \right),
+  \end{align*}
+  assuming that $m\geq 2$. Applying the operations $\limsup_{k\rightarrow\infty}$, $\inf_{\ve > 0}$, $\inf_{m\in \N}$, and $\sup_{R > 0}$ in succession will give us the free entropy.
+
+  For this, we use the $p$-dimensional Shannon entropy inequality
+  \begin{align*}
+    - \int_{}^{} f\ln(f)\:d\lambda_p &\leq 2^{-1}p\ln\left( 2\pi e p^{-1} a^2 \right),
+  \end{align*}
+  where $f$ is some probability density function on $\R^p$ and
+  \begin{align*}
+    a^2 &= \int_{}^{} \left( x_1^2 + \cdots + x_p^2 \right)f\:d\lambda_p,
+  \end{align*}
+  where $\lambda_p$ denotes the Lebesgue measure on $\R^p$.
+
+  We apply this to the special case of the Lebesgue measure on $\left( \M_k\left( \C \right)_{\sa} \right)^{n}$, which is induced by the Hilbert--Schmidt metric
+  \begin{align*}
+    \iprod{\left( A_1,\dots,A_n \right)}{\left( B_1,\dots,B_n \right)} &= \sum_{i=1}^{n} \tr\left( A_iB_i \right),
+  \end{align*}
+  and take the indicator function
+  \begin{align*}
+    f\left( A_1,\dots,A_n \right) &= \begin{cases}
+      0 & \left( A_1,\dots,A_n \right)\notin \Gamma_R\left( x_1,\dots,x_n;m,k,\ve \right)\\
+      \left( \lambda\left( \Gamma_R\left( x_1,\dots,x_n;m,k,\ve \right) \right) \right)^{-1} & \left( A_1,\dots,A_n \right)\in \Gamma_R\left( x_1,\dots,x_n;m,k,\ve \right),
+    \end{cases}
+  \end{align*}
+  giving
+  \begin{align*}
+    \chi_R\left( x_1,\dots,x_n;m,k,\ve \right) &\leq 2^{-1}nk^2\left( \ln\left( 2\pi e n^{-1}k^{-2}a^2 \right)-\ln k \right).
+  \end{align*}
+  Finally, by the definition of the microstate space, we have
+  \begin{align*}
+    \left\vert \frac{1}{k} \int_{}^{} \Tr\left( \sum_{j=1}^{n}A_j^2 \right)f\:d\lambda - \tau\left( \sum_{j=1}^{n}x_j^2 \right)\right\vert &< n\ve,
+  \end{align*}
+  meaning that $a^2 \leq C^2 + n\ve$.
+\end{proof}
 \section{Applications: Structural Properties of Free Group Factors}%
 
 \printbibliography
