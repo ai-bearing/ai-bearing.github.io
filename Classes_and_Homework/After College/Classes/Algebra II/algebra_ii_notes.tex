@@ -1,6 +1,6 @@
 \documentclass[10pt]{mypackage}
 
-\usepackage{mlmodern}
+%\usepackage{mlmodern}
 %\usepackage{newpxtext,eulerpx,eucal}
 %\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 
@@ -763,4 +763,99 @@ Now, we will discuss a little bit on how to compute Jordan canonical forms by us
   \end{align*}
   Furthermore, if $\lambda\notin \sigma(T)$, then \eqref{eq:ranks_sum} is $0$. Meanwhile, if $\lambda\in \sigma(T)$, then the Jordan block $J_{d_k}\left(\lambda_k\right)$ contributes $1$ to \eqref{eq:ranks_sum} if and only if $\lambda_k = \lambda$ and $d_k \geq n$. This gives our desired result.
 \end{proof}
+\section{Representation Theory}%
+The primary idea behind representation theory is that if we have a group $G$, and some class of groups $\mathcal{C}$, we want to understand homomorphisms from $G$ to elements of $\mathcal{C}$. The primary focuses will be:
+\begin{itemize}
+  \item $\GL(V)$, where $V$ is a vector space over $F$, not necessarily finite-dimensional;
+  \item $\GL_n(F)$, where $F$ is a field and $n\in \N$ is some natural number.
+\end{itemize}
+\begin{definition}
+  Let $G$ be a group.
+  \begin{itemize}
+    \item A linear representation of $G$ is a pair $\left( \rho,V \right)$, where $V$ is a vector space over some field $F$, and $\rho\colon G\rightarrow \GL(V)$ is a homomorphism.
+    \item A matrix representation of $G$ is a homomorphism $\rho\colon G\rightarrow \GL_n(F)$, where $F$ is some field and $n\in \N$ is some natural number.
+  \end{itemize}
+\end{definition}
+\begin{definition}
+  Let $\left( \rho_1,V_1 \right)$ and $\left( \rho_2,V_2 \right)$ be two linear representations of $G$. We say $\rho_1\cong \rho_2$ if there exists an isomorphism $T\colon V_2\rightarrow V_1$ such that
+  \begin{align*}
+    \rho_2(g) &= T^{-1}\rho_1(g)T
+  \end{align*}
+  for all $g\in G$. We say $T$ \textit{intertwines} the representations $\rho_1$ and $\rho_2$.
+\end{definition}
+\begin{example}\hfill
+  \begin{enumerate}[(i)]
+    \item We start by discussing representation theory of cyclic groups.
+      \begin{itemize}
+        \item Suppose $G = \left\langle t \right\rangle\cong \Z$. Fixing $n\in \N$, and $F$ a field, then for any $A\in \GL_n(F)$, we may find $\rho_A\colon G\rightarrow \GL_n(F)$ given by $t^{k}\mapsto A^{k}$.
+        \item Suppose $G = \left\langle t | t^{d}=1 \right\rangle\cong \Z/d\Z$. Then, it is still the case that any representation is of the form $\rho_A$, for some $A\in \GL_n(F)$, defined by the same map as in the infinite cyclic case. Yet, there is not necessarily one for every $A$, since we need $o(A)$ to be well-defined and to divide $d$.
+      \end{itemize}
+    \item Suppose $G$ acts on the set $X$. Then, for any field $F$, we may define the free vector space $F[X]$ to be a vector space over $F$ with basis $X$. Define a linear representation $\left( \rho,F[X] \right)$ by
+      \begin{align*}
+        \rho(g)\left( \sum_{x\in X}\alpha_x x \right) &= \sum_{x\in X}\alpha_x \left( g\cdot x \right).
+      \end{align*}
+      In the case that $X = G$ and $G$ acts on $G$ by left-multiplication, then $F[G]$ is known as the group algebra of $G$, and $\left( \lambda,F[G] \right)$ is given by
+      \begin{align*}
+        \lambda(h)\left( \sum_{g\in G}\alpha_gg \right) &= \sum_{g\in G} \alpha_g \left( hg \right)\\
+                                         &= \sum_{g\in G}\alpha_{h^{-1}g} g.
+      \end{align*}
+      This is known as the \textit{left-regular representation}.
+    \item We can consider representations as $F[G]$-modules, akin to how vector spaces can be viewed as $F[x]$-modules where $x$ acts as an endomorphism.
+
+      We have a natural bijection between linear representations of a group $G$ of the form $\left( \rho,V \right)$ and $F[G]$-modules extending the $F$-vector space structure on $V$ by defining
+      \begin{align*}
+        \left( \lambda 1 \right).v &= \lambda v\\
+        \left( \sum_{\alpha}f_{\alpha}g_{\alpha} \right)v &= \sum_{\alpha}f_{\alpha}\rho\left( g_{\alpha} \right)v
+      \end{align*}
+      Moreover, the representations $\left( \rho_1,V_1 \right)$ and $\left( \rho_2,V_2 \right)$ are isomorphic if and only if their corresponding $F[G]$-modules are isomorphic.
+    \item Given representation $\rho_1$  and $\rho_2$ defined on $F$-vector spaces $V_1$ and $V_2$, we can construct other representations.
+      \begin{itemize}
+        \item The direct sum $\rho_1\oplus \rho_2$ is the representation on $V_1\oplus V_2$ given by
+          \begin{align*}
+            \left( \rho_1\oplus\rho_2 \right)\left( g \right)\left( v_1,v_2 \right) &= \left( \rho_1(g)v_1,\rho_2(g)v_2 \right).
+          \end{align*}
+          If $V_1$ and $V_2$ are finite-dimensional and we equip them with bases to convert $\rho_1$ and $\rho_2$ into matrix representations, then $\left( \rho_1\oplus\rho_2 \right)(g) = \operatorname{diag}\left( \rho_1(g),\rho_2(g) \right)$ in block-diagonal form.
+        \item The tensor product $\rho_1\otimes \rho_2$ acting on $V_1\otimes V_2$ is given by the action on simple tensors
+          \begin{align*}
+            \left( \rho_1\otimes \rho_2 \right)(g)\left( v_1\otimes v_2 \right) &= \rho_1(g)v_1\otimes \rho_2(g)v_2.
+          \end{align*}
+          If $V_1$ and $V_2$ are finite-dimensional, then the corresponding matrix representations have their tensor product given by the \textit{\href{https://en.wikipedia.org/wiki/Kronecker_product}{Kronecker product}} of their corresponding matrices on the space 
+          \begin{align*}
+            \GL_n\left( \GL_m(F) \right) \cong \GL_{mn}\left( F \right).
+          \end{align*}
+      \end{itemize}
+  \end{enumerate}
+\end{example}
+\subsection{Subrepresentations, Irreducible Representations, and Completely Reducible Representations}%
+\begin{definition}
+  A subrepresentation of a linear representation $\left( \rho,V \right)$ is a subspace $W\leq V$ such that $\left( \rho|_{W},W \right)$ is a linear representation.
+
+  Equivalently, a subrepresentation is a submodule of the corresponding $F[G]$-module structure on $V$.
+\end{definition}
+\begin{definition}
+  Let $R$ be a ring with $1$, and let $M$ be a left $R$-module.
+  \begin{enumerate}[(i)]
+    \item We say $M$ is irreducible (or simple) if $M$ is nonzero and the only submodules of $M$ are $\set{0}$ and $M$.
+    \item We say $M$ is completely reducible (or semisimple) if $M$ can be written as
+      \begin{align*}
+        M &= \bigoplus_{i\in I}M_i,
+      \end{align*}
+      where each $M_i$ is an irreducible submodule.
+  \end{enumerate}
+  We say a representation $\left( \rho,V \right)$ is irreducible or completely reducible if the corresponding $F[G]$-module structure has the same property.
+\end{definition}
+Ideally, if $G$ is some (finite) group, we would like all the representations of $G$ to be completely reducible, so we would only need to study irreducible representations of groups.
+
+We note that many modules are not completely reducible. For instance, $\Z$, viewed as a module over $\Z$, has no irreducible submodules,\footnote{The ring $\Z$ is not an Artinian ring, as we can take a descending chain $\left( a \right)\supseteq \left( 2a \right)\supseteq \left( 3a \right)\supseteq\cdots$ for some $a \neq 1$ without any stabilization point.} but also $\Z$ itself is not an irreducible submodule.
+
+Now, if $\left( \rho,V \right)$ is a group representation, and $\Dim(V) < \infty$ with $V\neq 0$, then $V$ does have an irreducible subrepresentation (by the well-ordering principle), but it may fail to be completely reducible. For instance, if $G = \Z$, $F$ is any field, and $V = F^2$, with the representation $\rho$ given by
+\begin{align*}
+  \rho(g) &= \begin{pmatrix}1 & g \\ 0 & 1\end{pmatrix},
+\end{align*}
+then we have that any proper nonzero subrepresentation of $V$ must have dimension $1$, meaning that we would have $V\cong W_1\oplus W_2$ with each of $W_1$ and $W_2$ $G$-invariant. This would imply that $W_1$ and $W_2$ are the spans of eigenvectors of $\rho(g)$ for all $g\in G$, but $\rho(1)$ only has one eigenvector. Similarly, if $F$ is a field of characteristic $p$, and $G = \Z/p\Z$, then we would find that $\left( \rho,V \right)$ is not completely reducible as before.
+
+Later, we will prove a very convenient way to show certain representations of finite groups are completely reducible.
+\begin{theorem}[Maschke's Theorem]
+  If $G$ is a finite group, $F$ a field of characteristic $q$ with $q\nmid \left\vert G \right\vert$ or $q= 0$, and $V$ is a vector space over $F$, then any representation $\left( \rho,V \right)$ of $G$ is completely reducible.
+\end{theorem}
 \end{document}

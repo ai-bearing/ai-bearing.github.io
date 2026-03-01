@@ -51,7 +51,7 @@ permalink: "/quotes.html"
   *Brandon Le*
 
 - "There are people that study what functions you can make on Turing machines with finite space"\
-  *Fausto Navarro Cepeda*
+  *Fausto Navarro Cepeda*\
   "Yeah, they're called software engineers"\
   *Khoa Nguyen*
 
