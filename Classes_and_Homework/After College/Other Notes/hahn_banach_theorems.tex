@@ -5,10 +5,10 @@
 %\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 
 %\usepackage{homework}
-%\usepackage{notes}
+\usepackage{notes}
 
-%\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
-%\addbibresource{all_references.bib}
+\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+\addbibresource{all_references.bib}
 
 \usepackage{parskip}
 
@@ -29,7 +29,7 @@ There are two primary notions we are concerned with when it comes to locally con
 \begin{definition}
   A subset $W\subseteq V$ is said to be \textit{absorbing} if for any $x\in V$, there is some $\lambda_0\in \C$ such that $x\in \lambda W$ for all $ \left\vert \lambda \right\vert\geq \left\vert \lambda_0 \right\vert $.
 
-  We say the subset $C\subseteq V$ is \textit{circled} if $\lambda C \subseteq C$ for all $\left\vert \lambda \right\vert\leq 1$.
+  We say the subset $C\subseteq V$ is \textit{balanced} if $\lambda C \subseteq C$ for all $\left\vert \lambda \right\vert\leq 1$.
 
   We say the subset $A\subseteq V$ is \textit{convex} if, for any $x,y\in A$, we have $\lambda x + \left( 1-\lambda \right) y\in A$ for all $0 < \lambda < 1$.
 \end{definition}
@@ -37,8 +37,60 @@ There are two primary notions we are concerned with when it comes to locally con
   A topology $\tau$ on $V$ is compatible with the vector space structure if and only if $\tau$ is translation-invariant and possesses a neighborhood base $\mathcal{B}$ at $0$ satisfying
   \begin{enumerate}[(i)]
     \item for each $W\in \mathcal{B}$, there is $U\in \mathcal{B}$ such that $U + U \subseteq W$;
-    \item each $W\in \mathcal{B}$ is circled and absorbing;
+    \item each $W\in \mathcal{B}$ is balanced and absorbing;
     \item there exists $0 < \left\vert \lambda \right\vert < 1$ such that whenever $W\in \mathcal{B}$, so too is $ \lambda W $.
   \end{enumerate}
 \end{proposition}
+\begin{proof}
+  Let $V$ be a topological vector space. If $W$ is a neighborhood of $0$ in $V$, then there is a neighborhood $U$ of $0$ and a real number $\ve > 0$ such that $\lambda U \subseteq W$ whenever $\left\vert \lambda \right\vert\leq \ve$, by virtue of the continuity of scalar multiplication. Since $\C$ is not discrete, we have
+  \begin{align*}
+    O &= \bigcup\set{\lambda U | \left\vert \lambda \right\vert\leq \ve}
+  \end{align*}
+  is a balanced neighborhood of $0$ that is contained in $W$. The family $\mathcal{B}$ of all balanced neighborhoods of $0$ thus forms a base at $0$. Since scalar multiplication is continuous at $0$ for every $x_0\in L$, we have that each $V\in \mathcal{B}$ is absorbing, so we have that (ii) holds. Since vector addition is continuous, we have that $\mathcal{B}$ satisfies condition (i) as well. Finally, for (iii), we observe that for some $0 < \left\vert \lambda \right\vert < 1$, we have $\lambda V$ for any $V\in \mathcal{B}$ is a balanced neighborhood of $0$. Finally, this topology is translation invariant since affine transformations of $V$ are homeomorphisms.
+
+  Conversely, let $\tau$ be a translation invariant topology on $V$ with a neighborhood base $\mathcal{B}$ at $0$ satisfying properties (i) through (iii). We will show that addition and scalar multiplication are continuous operations. We see that $\set{x_0 + W | W\in \mathcal{B}}$ is a neighborhood base for $x_0\in V$, so if we let $U\in \mathcal{B}$ be such that $U + U \subseteq W$, then $x-x_0\in U$ and $y-y_0\in U$ implies that $x + y\in x_0 + y_0 + W$, so continuity of vector addition holds.
+
+  For continuity of scalar multiplication, let $\lambda_0$ and $x_0$ be fixed elements of $\C$ and $V$ respectively. If we let $W\in \mathcal{B}$, then by (i), there is $U\in \mathcal{B}$ such that $U + U \subseteq W$. Since, from (ii), $U$ is absorbing, there is $\ve > 0$ such that $\left( \lambda-\lambda_0 \right)x_0\in U$ whenever $\left\vert \lambda-\lambda_0 \right\vert \leq \ve$. Letting $\mu$ satisfy the condition in (iii), there is some $n\in \N$ such that $\left\vert \mu^{-n} \right\vert \geq \left\vert \lambda_0 \right\vert + \ve$; if we let $O = \mu^{n}U$, then since $U$ is balanced, if we have $x-x_0\in W$ and $\left\vert \lambda-\lambda_0 \right\vert \leq \ve$, we have $\lambda\left( x-x_0 \right) \in U$, and since
+  \begin{align*}
+    \lambda x &= \lambda_0x_0 + \left( \lambda-\lambda_0 \right)x_0 + \lambda\left( x-x_0 \right),
+  \end{align*}
+  we get $\lambda x \in \lambda_0 x_0 + U + U \subseteq \lambda_0x_0 + W$.
+\end{proof}
+\section{The Hahn--Banach Theorems}%
+There are a variety of theorems related to locally convex topological vector spaces that all fall under the 
+\subsection{Geometric Hahn--Banach: Hyperplane Separation}%
+\begin{lemma}
+  Let $L$ be a Hausdorff topological vector space over $\R$ with dimension at least $2$. If $B$ is an open, convex subset of $L$ not containing $0$, then there exists a one-dimensional subspace of $L$ not intersecting $B$.
+\end{lemma}
+\begin{proof}
+  Let $E$ be any fixed two-dimensional subspace of $L$. If $E\cap B = \emptyset$, then we are done, so assume that $B_1 = E\cap B$ is nonempty. Then, $B_1$ is an open, convex subset of $E$ that does not contain $0$. We may identify $E$ with the Euclidean plane; projecting $B_1$ onto a subset of the unit circle by the map $f\colon \R^2\setminus \set{0}\rightarrow S^{1}$,
+  \begin{align*}
+    \left( x,y \right) &\mapsto \left( \frac{x}{\left( x^2 + y^2 \right)^{1/2}},\frac{y}{\left( x^2 + y^2 \right)^{1/2}} \right),
+  \end{align*}
+  we have that $f\left( B_1 \right)$ is connected as $B_1$ is connected and $f$ is continuous, and $f\left( B_1 \right)$ is an open subset of $C$. Thus, $f\left( B_1 \right)$ is an open arc on $C$ that subtends an angle less than or equal to $\pi$ at $0$. Consequently, there exists a straight line in $E$ passing through $0$ that does not intersect $B_1$.
+\end{proof}
+\begin{theorem}
+  Let $L$ be a topological vector space, and let $M$ be an affine subspace with $A$ a nonempty open convex subset of $L$ not intersecting $M$. Then, there exists a closed hyperplane in $L$ containing $M$ that does not intersect $A$.
+\end{theorem}
+This is also known as Mazur's theorem, but we can view it as the geometric form of the Hahn--Banach theorem. We recall that a hyperplane is a maximal proper affine subspace.
+\begin{proof}
+  After a translation, we may assume that $M$ is a subspace of $L$. We let $\mathcal{M}$ denote the collection of all closed real subspaces of $L$ that contain $M$ and do not intersect $A$; since $ \overline{M}\in \mathcal{M} $, we have that $\mathcal{M}$ is nonempty.
+
+  Ordering $\mathcal{M}$ by inclusion, we observe that $\mathcal{M}$ satisfies the criteria for Zorn's lemma. Thus, there exists a maximal element $H_0$ of $\mathcal{M}$. If $L_0$ denotes the real underlying space of $L$, then $L_0/H_0$ is Hausdorff, since $H_0$ is closed. Since $A\neq\emptyset$, we have that $L_0/H_0$ is (real) dimension at least $1$.
+
+  Suppose toward contradiction that $L_0/H_0$ has dimension greater than or equal to $2$. Since the quotient map $\pi\colon L_0\rightarrow L_0/H_0$ is linear and open, we have that $B = \pi(A)$ is a convex open subset of $L_0/H_0$ that does not contain $0$ as $H_0$ does not intersect $A$. Therefore, there is a one-dimensional subspace $N$ of $L_0/H_0$ not intersecting $B$. Then, $\pi^{-1}\left( N \right)$ is a closed subspace of $L_0$ properly containing $H_0$ not intersecting $A$, which contradicts the maximality of $H_0$ in $\mathcal{M}$. Thus, $H_0$ is a closed real hyperplane containing $M$ and not intersecting $A$.
+
+  In the case where $L$ is a vector space over $\C$, then $M = iM$ when we assume $M$ is a subspace. Consequently, $H_1 = H_0\cap iH_0$ is a closed hyperplane in $L$ not intersecting $A$ containing $M$, and we are done.
+\end{proof}
+\begin{corollary}
+  Let $L$ be a topological vector space. Then, there exists a continuous linear functional $f\neq 0$ on $L$ if and only if $L$ contains a proper nonempty open convex subset.
+\end{corollary}
+\begin{proof}
+  Suppose $f\neq 0$ is a continuous linear functional on $L$. Then, the subset $A = \set{x | \left\vert f(x) \right\vert < 1}$ is proper, nonempty, convex and open.
+
+  Conversely, if $A\subseteq L$ is open, and $x_0\notin A$, then $x_0$ is contained in a closed hyperplane not intersecting $A$, meaning there is a nonzero continuous linear functional on $L$.
+\end{proof}
+
+\nocite{conway_functional_analysis,schaefer_topological_vector_spaces}
+\printbibliography
 \end{document}
