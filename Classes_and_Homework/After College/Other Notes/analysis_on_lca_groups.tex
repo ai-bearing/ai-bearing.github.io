@@ -5,7 +5,7 @@
 %\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 
 %\usepackage{homework}
-%\usepackage{notes}
+\usepackage{notes}
 
 \usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
 \addbibresource{all_references.bib}
@@ -54,6 +54,97 @@ We have that $\hat{G}$ is an abelian group under pointwise multiplication, has t
 \end{align*}
 Endowing $G$ with the topology of uniform convergence on compact subsets. This coincides with the weak* topology on $L_{\infty}(G)$, but since $\hat{G}\cup \set{0}$ is the set of all characters from $L_1(G)$ to $\C$, it follows that $\hat{G}$ is locally compact. Thus, we consider $\hat{G}$ to be a locally compact abelian group in and of itself, and we call it the \textit{dual group} of $G$.
 \subsection{Properties and Examples}%
+\begin{proposition}
+  Suppose $G$ is compact, and Haar measure is normalized with $\left\vert G \right\vert = 1$. Then, $\hat{G}$ is an orthonormal set in $L_2(G)$.
+\end{proposition}
+\begin{proof}
+  Let $\xi\in \hat{G}$, meaning $\left\vert \xi \right\vert^2 = 1$, and thus $\norm{\xi}_{L_2} = 1$. If $\xi\neq\eta$, then there is $x_0\in G$ such that $ \iprod{x_0}{\xi\eta^{-1}}\neq 1 $, and
+  \begin{align*}
+    \int_{}^{} \xi \overline{\eta} &= \int_{}^{} \iprod{x}{\xi\eta^{-1}}\:dx\\
+                                   &= \iprod{x_0}{\xi\eta^{-1}} \int_{}^{} \iprod{x_0^{-1}x}{\xi\eta^{-1}}\:dx\\
+                                   &= \iprod{x_0}{\xi\eta^{-1}} \int_{}^{} \iprod{x}{\xi\eta^{-1}}\:dx\\
+                                   &= \iprod{x_0}{\xi\eta^{-1}} \int_{}^{}\xi \overline{\eta},
+  \end{align*}
+  meaning that the inner product $ \int_{}^{} \xi \overline{\eta} $ is equal to $0$.
+\end{proof}
+\begin{proposition}
+  If $G$ is discrete, then $\hat{G}$ is compact, and if $G$ is compact, then $\hat{G}$ is discrete.
+\end{proposition}
+\begin{proof}
+  If $G$ is discrete, then $L_1(G)$ has a unit $\delta_e$, so its character space is compact.
+
+  Meanwhile, if $G$ is compact, then $1\in L_1(G)$, so the set $\set{f\in L_{\infty} | \left\vert \int_{}^{} f \right\vert > 1/2}$ is $w^{\ast}$-open. For any $\xi\in\hat{G}$, we have $ \int_{}^{} \xi = 1 $ if $\xi = 1$ and $0$ otherwise, so $\set{1}$ is an open set in $\hat{G}$, meaning every singleton in $\hat{G}$ is open, so $G$ is discrete.
+\end{proof}
+We discuss some standard examples of dual groups.
+\begin{theorem}\hfill
+  \begin{enumerate}[(a)]
+    \item We have $\hat{\R}\cong \R$ via the pairing $ \iprod{x}{\xi} = e^{2\pi i x \xi} $.
+    \item We have $\hat{ \mathbb{T} }\cong \Z$ via the pairing $ \iprod{\alpha}{n} = \alpha^{n} $.
+    \item We have $ \hat{\Z}\cong \mathbb{T} $ via the pairing $ \iprod{n}{\alpha} = \alpha^{n} $.
+    \item We have $ \widehat{\Z/k\Z}\cong \Z/k\Z $ via the pairing $ \iprod{m}{n} = e^{2\pi i m n/k} $.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(a)]
+    \item Let $\phi\in\hat{\R}$. Then, $\phi(0) = 1$, so there is $\alpha > 0$ such that
+      \begin{align*}
+        \int_{0}^{a} \phi(t)\:dt &\neq 0.
+      \end{align*}
+      Defining
+      \begin{align*}
+        A &= \int_{0}^{a} \phi(t)\:dt,
+      \end{align*}
+      we have
+      \begin{align*}
+        A\phi(x) &= \int_{0}^{a} \phi\left( x +t  \right)\:dt\\
+                 &= \int_{x}^{a+x} \phi(t)\:dt,
+      \end{align*}
+      meaning $\phi$ is differentiable. In particular, we have
+      \begin{align*}
+        \phi'(x) &= A^{-1} \left( \phi\left( a+x \right)-\phi(x) \right)\\
+                 &= c\phi(x),
+      \end{align*}
+      where $c = A^{-1}\left( \phi(a)-1 \right)$. We thus have $\phi(t) = e^{ct}$, and since $\left\vert \phi \right\vert = 1$, $c = 2\pi i \xi$ for some $\xi\in \R$.
+    \item Since $ \mathbb{T} \cong \R/\Z $, the characters of $ \mathbb{T} $ are the characters of $\R$ that are trivial on $\Z$.
+    \item If $\phi\in\hat{\Z}$, then $\alpha = \phi(1)\in \mathbb{T}$, and $\phi(n) = \phi(1)^{n} = \alpha^{n}$.
+    \item The characters of $\Z/k\Z$ are the characters of $\Z$ that are trivial on $k\Z$, so are of the form $\phi(n) = \alpha^{n}$ where $\alpha$ is a $k$th root of unity.
+  \end{enumerate}
+\end{proof}
+Products also lend themselves to more dual group constructions.
+\begin{proposition}
+  If $G_1,\dots,G_n$ are locally compact abelian groups, then
+  \begin{align*}
+    \widehat{\prod_{i=1}^{n}G_i} &\cong \prod_{i=1}^{n}\widehat{G_i}.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Each $\left( \xi_1,\dots,\xi_n \right)\in \prod_{i=1}^{n}\widehat{G_i}$ defines a character by
+  \begin{align*}
+    \iprod{\left( x_1,\dots,x_n \right)}{ \left( \xi_1,\dots,\xi_n \right) } &= \prod_{i=1}^{n} \iprod{x_i}{\xi_i},
+  \end{align*}
+  whenever $x_i\in G_i$.
+
+  Every character $\chi$ on $ \prod_{i=1}^{n}G_i $ is of this form, and we may define $\xi_j$ by
+  \begin{align*}
+    \iprod{x_j}{\xi_j} &\coloneq \iprod{\left( 1,\dots,1,x_j,1,\dots,1 \right)}{\chi}.
+  \end{align*}
+\end{proof}
+If we consider the ``direct sum'' of a family of groups to be the subgroup of the product determined by the elements $\left( h_{\alpha} \right)_{\alpha}$ with $h_{\alpha} = 1$ for all but finitely many $\alpha$, then we have the following.
+\begin{proposition}
+  If each $G_{\alpha}$ is a compact abelian group, then we have
+  \begin{align*}
+    \widehat{\prod_{\alpha\in A}G_{\alpha}} &\cong \bigoplus_{\alpha\in A} \widehat{G_{\alpha}}.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  We see that every $\left( \xi_{\alpha} \right)_{\alpha}\in \bigoplus_{\alpha\in A}G_{\alpha}$ defines a character $\xi$ on $G = \prod_{\alpha\in A}G_{\alpha}$ by
+  \begin{align*}
+    \iprod{x}{\xi} &= \prod_{\alpha\in A} \iprod{x_{\alpha}}{\xi_{\alpha}},
+  \end{align*}
+  which is a finite product. Each $\xi\in \hat{G}$ defines an element $\left( \xi_{\alpha} \right)_{\alpha}$ in $\prod_{\alpha\in A}\widehat{G_{\alpha}}$ where $\xi_{\alpha}$ is the restriction of $\xi$ to the $\alpha$th factor. Therefore, we only need to show that $\xi_{\alpha}$ is $1$ for all but finitely many $\alpha$.
+
+  There is a neighborhood $V$ of $1$ in $G$ such that $ \left\vert \iprod{x}{\xi}-1 \right\vert < 1 $ for any $x\in V$. By the definition of the product topology, $V$ has a subset $\prod_{\alpha\in A}V_{\alpha}$ where $V_{\alpha} = G_{\alpha}$ for all but finitely many $\alpha$. If $V_{\alpha} = G_{\alpha}$, then we have $\xi(V)\supseteq \xi_{\alpha}\left( G_{\alpha} \right)$, which is then a subgroup of $ \mathbb{T} $ contained in $\set{\alpha\in \mathbb{T} | \left\vert \alpha - 1 \right\vert < 1}$. Thus, this subgroup equals $\set{1}$, meaning $\xi_{\alpha} = 1$.
+\end{proof}
 
 \subsection{Characters of $p$-adic Numbers}%
 
