@@ -52,7 +52,64 @@
                            &= \iprod{e_j}{e_k}\\
                            &= \delta_{jk},
       \end{align*}
-      so that the columns of $A$ form an orthonormal basis of $A$.
+      so that the columns of $A$ form an orthonormal basis of $\C^n$. Now, if the columns of $A$ form an orthonormal basis, then we observe that
+      \begin{align*}
+        \left( A^{\ast}A \right)_{i,j} &= \left( \sum_{k=1}^{n}a_{ik} \overline{a_{kj}} \right)_{i,j}\\
+                                       &= \left( \iprod{Ae_i}{Ae_j} \right)_{i,j}\\
+                                       &= \left( \delta_{ij} \right)_{i,j},
+      \end{align*}
+      so that $A^{\ast}A$ is identity. Since $A$ is square, this also gives that $AA^{\ast}$ is identity.
+
+      Now, if $A$ is unitary, then we know that both $A^{\ast}A$ is identity and $AA^{\ast}$ is identity. Expressing the latter as $\left( A^{\ast} \right)^{\ast}A^{\ast}$, we find that $A^{\ast}$ is also unitary, meaning that the columns of $A^{\ast}$ form an orthonormal basis. Yet, the columns of $A^{\ast}$ are the complex conjugates of the rows of $A$, so the rows of $A$ form an orthonormal basis.
+
+      If the rows of $A$ form an orthonormal basis, then the complex conjugates of the columns of $A^{\ast}$ form an orthonormal basis, so $A^{\ast}$ is unitary, meaning $A$ is unitary by the discussion from earlier.
+    \item 
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 3]
+  The goal of this problem is to prove the general case of Maschke's Theorem: if $G$ is a finite group and $F$ is any field with $\operatorname{char}\left( F \right)\nmid \left\vert G \right\vert$, then any representation of $G$ over $F$ is completely reducible.
+
+  We only need to show that every representation of $G$ over $F$ has the complement property. That is, if $\left( \rho,V \right)$ is a representation of $G$ over $F$, and $W$ is a $G$-invariant subspace, then there exists a $G$-invariant subspace $U$ such that $V = W\oplus U$.
+
+  Consider the following maps. Choose any subspace $Z$ of $V$ such that $V = W\oplus Z$, and let $P\colon V\rightarrow W$ be the projection onto $W$ along $Z$. Define $Q\colon V\rightarrow V$ by
+  \begin{align*}
+    Qv &= \frac{1}{\left\vert G \right\vert} \sum_{g\in G} \left( \rho\left( g \right)^{-1}P\rho(g) \right) v.
+  \end{align*}
+  \begin{enumerate}[(i)]
+    \item Show that $Qw = w$ for all $W\in W$ and $\img(Q) = W$. Deduce that $Q^2 = Q$.
+    \item Show that $\ker\left( Q \right)$ is $G$-invariant.
+  \end{enumerate}
+  Deduce from (i) that $V = W\oplus \ker\left( Q \right)$, and thus $U = \ker\left( Q \right)$ is the desired complement.
+\end{problem}
+\begin{solution}
+  We have, for any fixed $g\in G$ and any $w\in W$, we have $\rho(g)w\in W$, $P\rho(g)w = \rho(g)w$, so that $\rho\left( g \right)^{-1}\rho(g)w = w$. Averaging gives that $Qw = w$ for all $w\in W$, where the sum in the averaging formula cannot be equal to zero since $\operatorname{char}\left( F \right)\nmid \left\vert G \right\vert$.
+
+  Now, for any $z\in Z$, we have that $\rho(g)z = w_1 + z_1$ for some $w_1\in W$ and $z_1\in Z$, so that $Qz= w_1\in W$. Since $Qw = w$ for all $w\in W$ and $Qz\in W$ for all $z\in Z$, it follows that $\img\left( Q \right) = W$. For any $v\in V$, we have some $w\in W$ such that $Qv = w$, meaning that $Q^2 v = Qw = w$, so since $v$ is arbitrary, we have $Q^2 = Q$. In particular, this means that $Q$ is a projection onto $\img\left( Q \right) = W$. Since the exact sequence
+  \begin{align*}
+    0 \rightarrow \ker\left( Q \right)\rightarrow V \rightarrow W \rightarrow 0
+  \end{align*}
+  splits, as all vector spaces are projective modules, it follows that $V = W \oplus \ker\left( Q \right)$.
+
+  Now, suppose $v\in \ker\left( Q \right)$. Our goal is to show that for any $h\in G$, $\rho(h)v\in \ker\left( Q \right)$. Computing, we have
+  \begin{align*}
+    Q\rho(h)v &= \left( \frac{1}{\left\vert G \right\vert}\sum_{g\in G} \rho\left( g^{-1} \right)P\rho(g) \right)\rho(h)v\\
+              &= \rho\left( h \right)\rho\left( h \right)^{-1}\left( \frac{1}{\left\vert G \right\vert}\sum_{g\in G}\rho\left( g^{-1} \right)P\rho(gh) \right)v\\
+              &= \rho\left( h \right)\left( \frac{1}{\left\vert G \right\vert}\sum_{g\in G} \rho\left( \left( gh \right)^{-1} \right)P\rho\left( gh \right) \right)v\\
+              &= \rho\left( h \right) \left( \frac{1}{\left\vert G \right\vert}\rho\left( g^{-1} \right)P\rho(g) \right)v\\
+              &= 0.
+  \end{align*}
+  Thus, we find that $U = \ker\left( Q \right)$ is the desired complement to $W$.
+\end{solution}
+\begin{problem}[Problem 4]\hfill
+  \begin{enumerate}[(a)]
+    \item Let $M$ and $Q$ be modules over some ring $R$. Suppose $M$ is completely reducible and $Q$ is a quotient of $M$. Prove that $M$ has a submodule isomorphic to $Q$.
+    \item Use (a) and Maschke's theorem to prove that if $G$ is a finite group and $F$ is a field with $\operatorname{char}\left( F \right)\nmid \left\vert G \right\vert$, then for any irreducible representation $V$ of $G$, there is a subrepresentation of the regular representation $F[G]$ equivalent to $V$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Let $N$ be a submodule of $M$ such that $M/N\cong Q$. Since $M$ is completely reducible, it has the complement property, so there is some module $S$ such that $M = N\oplus S$. Since $N$ is a direct summand of $M$, it follows that $Q = M/N\cong S$.
+    \item From Maschke's theorem, we know that any representation of $G$ is completely reducible, so in particular, the regular representation of $G$, viewed as the free module of rank one over $F[G]$, is completely reducible.
   \end{enumerate}
 \end{solution}
 \end{document}
