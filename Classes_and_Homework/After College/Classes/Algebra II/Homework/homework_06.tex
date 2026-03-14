@@ -62,8 +62,23 @@
 
       Now, if $A$ is unitary, then we know that both $A^{\ast}A$ is identity and $AA^{\ast}$ is identity. Expressing the latter as $\left( A^{\ast} \right)^{\ast}A^{\ast}$, we find that $A^{\ast}$ is also unitary, meaning that the columns of $A^{\ast}$ form an orthonormal basis. Yet, the columns of $A^{\ast}$ are the complex conjugates of the rows of $A$, so the rows of $A$ form an orthonormal basis.
 
-      If the rows of $A$ form an orthonormal basis, then the complex conjugates of the columns of $A^{\ast}$ form an orthonormal basis, so $A^{\ast}$ is unitary, meaning $A$ is unitary by the discussion from earlier.
-    \item 
+      If the rows of $A$ form an orthonormal basis, then the complex conjugates of the columns of $A^{\ast}$ form an orthonormal basis (as these are the rows of $A$), so $A^{\ast}$ is unitary, meaning $A$ is unitary by the discussion from earlier.
+    \item Let $\beta = \set{v_1,\dots,v_n}$ be this orthonormal basis. If $\left( \rho,V \right)$ is a unitary representation, then we know that for all $1\leq i,j\leq n$ and $g\in G$,
+      \begin{align*}
+        \delta_{ij} &= \iprod{v_i}{v_j}\\
+                    &= \iprod{\rho(g)v_i}{\rho(g)v_j},
+      \end{align*}
+      so that $\set{\rho(g)v_1,\dots,\rho(g)v_n}$ forms an orthonormal basis for $V$. In particular, since $\rho(g)v_i$ forms column $i$ of the matrix $\left[ \rho(g) \right]_{\beta}$, it follows that the columns of $\left[ \rho(g) \right]_{\beta}$ form an orthonormal basis for $V$, so $\left[ \rho(g) \right]_{\beta}$ is a unitary matrix for each $g\in G$.
+
+      Now, suppose $\left[ \rho(g) \right]_{\beta}$ is a unitary matrix for each $g\in G$. Then, if $\set{e_1,\dots,e_n}$ denotes the standard basis for $\C^n$ and $\varphi\colon V\rightarrow \C^n$ is an inner product-preserving isomorphism, we have
+      \begin{align*}
+        \delta_{ij} &= \iprod{e_i}{e_j}_{\C^n}\\
+                    &= \iprod{\left[ \rho(g) \right]_{\beta}e_i}{\left[ \rho(g) \right]_{\beta}e_j}_{\C^n}\\
+                    &= \iprod{\left[ \rho(g)v_i \right]_{\beta}}{\left[ \rho(g)v_j \right]_{\beta}}_{\C^n}\\
+                    &= \iprod{\rho(g)v_i}{\rho(g)v_j}_{V}\\
+                    &= \iprod{v_i}{v_j}_{V},
+      \end{align*}
+      meaning that $\rho(g)$ is a unitary map on $V$, so $\rho$ is a unitary representation on $V$.
   \end{enumerate}
 \end{solution}
 \begin{problem}[Problem 3]
@@ -111,9 +126,9 @@
     \item Let $N$ be a submodule of $M$ such that $M/N\cong Q$. Since $M$ is completely reducible, it has the complement property, so there is some module $S$ such that $M = N\oplus S$. Since $N$ is a direct summand of $M$, it follows that $Q = M/N\cong S$.
     \item Representing the action of $G$ on $F[G]$ by regular permutations gives a $F[G]$-module structure on $F[G]$, meaning it is free of rank $1$.
 
-      Now, our goal is to show that if $V$ is an irreducible representation of $G$, then there is a surjection from $F[G]$ onto $V$, giving that $V$ is a quotient of $F[G]$ so by (a) and Maschke's theorem, there is a submodule of $F[G]$ that is isomorphic to $V$ as an $F[G]$-module, meaning that there is a subrepresentation of $F[G]$ that is isomorphic to $V$.
+      Now, our goal is to show that if $V$ is an irreducible representation of $G$, then there is a surjection from $F[G]$ onto $V$, giving that $V$ is a quotient of $F[G]$ so by Maschke's theorem, the representation is completely reducible, and so by (a) there is a submodule of $F[G]$ that is isomorphic to $V$ as an $F[G]$-module, meaning that there is a subrepresentation of $G$ that is isomorphic to $V$.
 
-      Endowing $V$ with the structure of an $F[G]$-module, we have that $V$ does not have any submodules. In particular, this means that $V$ is cyclic as an $F[G]$-module, so that $F[G]$ surjects onto $V$.
+      Endowing $V$ with the structure of an $F[G]$-module, we have that $V$ does not have any $F[G]$-submodules. If $v\in V$ is any nonzero vector, it then follows that $F[G]\cdot v = V$, so the homomorphism $\varphi\colon F[G]\rightarrow V$ given by $\sum_{g\in G}x_g \delta_g\mapsto \sum_{g\in G}x_g\rho(g)v$ is surjective, meaning $F[G]/\varphi\cong V$ as $F[G]$-modules. Since $V$ is a quotient of $F[G]$, we get our desired result.
   \end{enumerate}
 \end{solution}
 \begin{problem}[Problem 5]
@@ -135,126 +150,188 @@
         \Z/n\Z &= \left\langle a | a^{n} = 1 \right\rangle
       \end{align*}
       is written multiplicatively. Note that since this is a rotation matrix, any one-dimensional subspace of $\R^2$ will be subject to a $2\pi/n$ rotation when acted upon by the generator of $\Z/n\Z$, meaning that no one-dimensional subspace is invariant, as a one-dimensional subspace is only invariant if it is subject to an order $2$ rotation, but the generator of $\Z/n\Z$ has order greater than $2$ by assumption.
-    \item 
+    \item Assume $\rho\colon \Z/2\Z\rightarrow \GL\left( V \right)$ is an irreducible finite-dimensional representation, where we write $\Z/2\Z = \set{e,a}$. Since $V$ is irreducible as an $F[G]$-module, we have by Schur's Lemma that $\rho(a) - \lambda I$ is either zero or invertible for any $\lambda\in I$. Now, note that $A = \rho(a)$ has minimal polynomial given by $\mu_A(x) = x^2 - 1 = \left( x-1 \right)\left( x+1 \right)$. Since this minimal polynomial splits, it follows that we have some $\lambda\in F$ with $\rho(a) = \lambda I$. Yet, since this representation is irreducible, we have that $\rho(a)$ has no proper invariant subspaces if and only if $V$ is one-dimensional.
+    \item We claim that all the finite abelian groups of the form
+      \begin{align*}
+        G &= \bigoplus_{i=1}^{n}\Z/2\Z
+      \end{align*}
+      exclusively admit one-dimensional irreducible representations. For this, we use a similar proof strategy as in the case of part (b). If $\rho\colon G\rightarrow \GL(V)$ is any representation, then we know that $V$ is irreducible as an $F[G]$-module, meaning that $\operatorname{end}_{F[G]}(V)$ is a division ring. Letting $g\in G$ be any element, we have $\rho(g)-\lambda I\in \operatorname{end}_{F[G]}(V)$, meaning it is either zero or invertible. Thus, it suffices to show that there is some $\lambda\in F$ $\rho(g)-\lambda I$ is not invertible. Since all elements of the form $\rho(g)$ are of order $2$, it follows that they all admit minimal polynomial $\mu(x) = x^2 - 1$, which splits over $F$. In particular, this means that $\rho(g) = \lambda I$ for some $\lambda\in F$ with $\lambda^2 = 1$, and thus we can only have this is an irreducible representation if there are no nonzero proper subspaces of $V$, meaning that $V$ is one-dimensional.
   \end{enumerate}
 \end{solution}
-\begin{problem}[Problem 6]
-  Let $G = D_{2n}$ be the dihedral group of order $2n$. Recall that $G$ has presentation given by $G = \left\langle r,s | r^n=s^2=srs^{-1}r=1 \right\rangle$.
+%\begin{problem}[Problem 6]
+%  Let $G = D_{2n}$ be the dihedral group of order $2n$. Recall that $G$ has presentation given by $G = \left\langle r,s | r^n=s^2=srs^{-1}r=1 \right\rangle$.
+%  \begin{enumerate}[(a)]
+%    \item Let $\omega\in \C$ is an $n$th root of unity. Prove that $G$ has a representation $\rho_{\omega}\colon G\rightarrow \GL_2\left( \C \right)$ given by
+%      \begin{align*}
+%        \rho\left( r \right) &= \begin{pmatrix}\omega & 0 \\ 0 & \omega^{-1}\end{pmatrix}\\
+%        \rho\left( s \right) &= \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix}.
+%      \end{align*}
+%    \item Prove that the representation $\rho_{\omega}$ in part (a) is irreducible if and only if $\omega\neq \pm 1$.
+%    \item Let $\omega_1,\omega_2$ be $n$th roots of unity different from $\pm 1$. Prove that $\rho_{\omega_1}\cong \rho_{\omega_2}$ as representations if and only if $\omega_1 = \omega_2$ or $\omega_1^{-1} = \omega_2$.
+%    \item If we assume that $r$ is the counterclockwise rotation by $2\pi/n$ and $s$ is the reflection with respect to the $x$-axis, the corresponding $\rho$ is given by
+%      \begin{align*}
+%        \rho(r) &= \begin{pmatrix}\cos\left( 2\pi/n  \right) & -\sin\left( 2\pi/n \right)\\\sin\left( 2\pi/n \right) & \cos\left( 2\pi/n \right)\end{pmatrix}\\
+%        \rho\left( s \right) &= \begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix}.
+%      \end{align*}
+%      Technically $\rho$ is a real representation, but since every $2\times 2$ real matrix can be thought of as a $2\times 2$ complex matrix, we can think of $\rho$ as a complex representation. Prove that this $\rho$ is equivalent to some $\rho_{\omega}$ from part (a), explicitly find such an $\omega$, and compute the matrix $T\in \GL_2\left( \C \right)$ such that $T^{-1}\rho(g)T = \rho_{\omega}(g)$ for all $g\in G$.
+%    \item Prove that $\left[ G,G \right] = \left\langle r^2 \right\rangle$. Deduce that $\left\vert G/\left[ G,G \right] \right\vert = 2$ if $n$ is odd and $ \left\vert G/\left[ G,G \right] \right\vert = 4 $ if $n$ is even. Then, describe all one-dimensional complex representations of $G$ explicitly.
+%  \end{enumerate}
+%\end{problem}
+%\begin{solution}\hfill
+%  \begin{enumerate}[(a)]
+%    \item We want to verify that $\rho_{\omega}(s)$ and $\rho_{\omega}(r)$ satisfy the relations. First, observe that since $\omega$ is an $n$th root of unity and $\rho(r)$ is a diagonal matrix, that $\rho_{\omega}(r)^{n} = \1 = \rho_{\omega}\left( r^{n} \right)$. Similarly, $\rho_{\omega}(s)^2 = \1$ as Finally, we verify that $\rho(s)\rho(r) = \rho(r)^{-1}\rho(s)$, or
+%      \begin{align*}
+%        \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix}^2 &= \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix}.
+%      \end{align*}
+%      Finally,
+%      \begin{align*}
+%        \begin{pmatrix}0 & 1\\ 1 & 0\end{pmatrix} \begin{pmatrix}\omega & 0 \\ 0 & \omega^{-1}\end{pmatrix} \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix} \begin{pmatrix}\omega & 0 \\ 0 & \omega^{-1}\end{pmatrix} &=  \begin{pmatrix}0 & \omega^{-1}\\\omega & 0\end{pmatrix} \begin{pmatrix}0 & \omega^{-1} \\ \omega & 0\end{pmatrix}\\
+%                         &= \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix}.
+%      \end{align*}
+%    \item We will prove that the $\rho_{\omega}$ of (a) are irreducible if and only if $\omega \neq \pm 1$. We start by finding proper $G$-invariant subspaces of $\C^2$. Let $W\leq \C^2$ be a $G$-invariant subspace. Since $V$ has dimension $2$, this means $W$ has dimension less than $2$, meaning there exists some vector
+%      \begin{align*}
+%        W &= \Span\set{ \begin{pmatrix}\alpha\\\beta\end{pmatrix} }.
+%      \end{align*}
+%      It is sufficient to check the generators $\rho_{\omega}(r)$ and $\rho_{\omega}(s)$. Starting with $\rho_{\omega}(s)$, we have
+%      \begin{align*}
+%        \rho_{\omega}(s) \begin{pmatrix}\alpha \\ \beta\end{pmatrix} &= \begin{pmatrix}\beta\\\alpha\end{pmatrix}\\
+%                                                                     &= \lambda \begin{pmatrix}\alpha\\\beta\end{pmatrix}.
+%      \end{align*}
+%      From this relation, we have that $\beta = \lambda \alpha$ and $\alpha = \lambda\beta$, or $\alpha = \lambda^2\alpha$, so we may write
+%      \begin{align*}
+%        W &= \Span\set{ \begin{pmatrix}\alpha\\\lambda\alpha\end{pmatrix} }
+%      \end{align*}
+%      with $\lambda = \pm 1$ as $\alpha\neq 0$. Evaluating $\rho(r)$, we have
+%      \begin{align*}
+%        \rho(r) \begin{pmatrix}\alpha\\\lambda\alpha\end{pmatrix} &= \begin{pmatrix}\omega\alpha \\ \pm\omega^{-1}\alpha\end{pmatrix}\\
+%                                                                  &= \begin{pmatrix}\zeta \alpha\\\pm \zeta \alpha\end{pmatrix},
+%      \end{align*}
+%      which holds if and only if $\omega = \omega^{-1}$, meaning that this holds if and only if $\omega = \pm 1$.
+%
+%      If $\omega = \pm 1$, then we are guaranteed a $G$-invariant subspace generated by the vector 
+%      \begin{align*}
+%        v &= \begin{pmatrix}1\\1\end{pmatrix}.
+%      \end{align*}
+%
+%    \item  If $\omega_1 = \omega_2$, then clearly $\rho_{\omega_1} = \rho_{\omega_2}$. Meanwhile, if $\omega_1 = \omega_2^{-1}$, then
+%      \begin{align*}
+%        T &= \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix}.
+%      \end{align*}
+%      Observe that $\rho_{\omega_1}(s) = T$. This gives
+%      \begin{align*}
+%        \rho_{\omega_2}(r) &= T\rho_{\omega_1}(r)T^{-1}\\
+%                           &= \rho_{\omega_1}(s)\rho_{\omega_1}(r)\rho_{\omega_1}(s)^{-1}\\
+%                           &= \rho_{\omega_2}(r).
+%      \end{align*}
+%      Now, suppose $\rho_{\omega_1} \cong \rho_{\omega_2}$. Then, there exists some matrix $T\in \GL_2\left( \C \right)$ such that $\rho_{\omega_2}(g)T = T\rho_{\omega_1}(g)$ for all $g\in G$.
+%
+%      In particular, this holds on the generators. Taking
+%      \begin{align*}
+%        T &= \begin{pmatrix}a & b \\ c & d\end{pmatrix}\\
+%        \rho_{\omega_2}(s) &= \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix},
+%      \end{align*}
+%      so
+%      \begin{align*}
+%        \rho_{\omega_2}(s)T &= \begin{pmatrix}0 & 1\\0 & 1\end{pmatrix} \begin{pmatrix}a & b \\ c & d\end{pmatrix}\\
+%                            &= \begin{pmatrix}b & a \\ d & c\end{pmatrix}\\
+%                            &= \begin{pmatrix}a & b \\ c & d\end{pmatrix} \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix}\\
+%                            &= \begin{pmatrix}c & d \\ a &b\end{pmatrix},
+%      \end{align*}
+%      so $a = d$ and $b = c$, meaning
+%      \begin{align*}
+%        T &= \begin{pmatrix}a & b \\ b & a\end{pmatrix}.
+%      \end{align*}
+%      Now, we have
+%      \begin{align*}
+%        \rho_{\omega_2}(r)T &= \begin{pmatrix}a\omega_2 & b\omega_2 \\ b\omega_2^{-1} & a\omega_2^{-1}\end{pmatrix}\\
+%        T\rho_{\omega_1}(r) &= \begin{pmatrix}a\omega_1 & b\omega_1^{-1} \\ b\omega_{1} & a\omega_1^{-1}\end{pmatrix}.
+%      \end{align*}
+%      If $a\neq 0$, then $\omega_1 = \omega_2$, and if $a = 0$, then $b\neq 0$ and $\omega_1 = \omega_2^{-1}$.
+%    \item We observe that $\rho_{\omega}(s)$ has eigenvalues $\pm 1$ and eigenvectors given by
+%      \begin{align*}
+%        E_1 &= \Span\set{ \begin{pmatrix}1\\1\end{pmatrix} }\\
+%        E_{-1} &= \Span\set{ \begin{pmatrix}1\\-1\end{pmatrix} }.
+%      \end{align*}
+%      In particular, this means there is a unitary matrix $P\in \GL_2\left( \C \right)$ such that $P^{\ast}\rho(s)P = \rho_{\omega}(s)$ where the first column is in $E_1$ and the second column is in $E_{-1}$. Now, if we let $\theta = 2\pi/n$ and $\omega = \cos\left( \theta \right) + i\sin\left( \theta \right)$, then we observe that the matrix
+%      \begin{align*}
+%        \rho(r) &= \begin{pmatrix}\cos\left( \theta \right) & -\sin\left( \theta \right) \\ \sin\left( \theta \right) & \cos\left( \theta \right)\end{pmatrix}
+%      \end{align*}
+%      is unitarily equivalent to
+%      \begin{align*}
+%        R &= \begin{pmatrix}\omega & 0 \\ 0 & \omega^{-1}\end{pmatrix}.
+%      \end{align*}
+%      To find the desired matrix, observe that the matrix $\rho(r)$ has eigenvalues given by $\lambda_{1,2} = a \pm bi$, where $a = \cos\left( \theta \right)$ and $b = \sin\left( \theta \right)$. We then obtain eigenvectors
+%      \begin{align*}
+%        E_{\lambda_1} &= \Span\set{ \begin{pmatrix}i\\1\end{pmatrix} }\\
+%        E_{\lambda_2} &= \Span\set{ \begin{pmatrix}i\\-1\end{pmatrix} }.
+%      \end{align*}
+%    \item First, we show that $\left[ G,G \right] = \left\langle r^2 \right\rangle$. We will show that $r^2\in \left[ G,G \right]$. Since $\left( srs^{-1} \right)r^{-1}=r^{-2}$, we have $r^{-2}\in \left[ G,G \right]$ so $r^2\in \left[ G,G \right]$. In the reverse direction, note that $\left\langle r^2 \right\rangle = n/2$ if $n$ is even and $n$ if $n$ is odd. Since $\left\langle r^2 \right\rangle\trianglelefteq G$ is normal, as $sr^{k}r^2r^{-k}s = sr^2s = r^{-2}\in \left\langle r^2 \right\rangle$, we have that the quotient group $G/\left\langle r^2 \right\rangle$ has order either $2$ or $4$, meaning that $G/\left\langle r^2 \right\rangle$ is abelian, so $\left[ G,G \right]\subseteq \left\langle r^2 \right\rangle$ by the definition of the abelianization.
+%
+%      As a result, we have already shown that $ \left\vert G/\left[ G,G \right] \right\vert = 2 $ if $n$ is odd and $ \left\vert G/\left[ G,G \right] \right\vert = 4 $ if $n$ is even.
+%
+%      Describing all the $1$-dimensional complex representations of $G$, we have that if $\rho\colon G\rightarrow \C^{\times}$ is a $1$-dimensional representation, we have
+%      \begin{align*}
+%        \rho(s)\rho(r)\rho(s)^{-1} &= \rho(r)\\
+%                                   &= \rho\left( r^{-1} \right),
+%      \end{align*}
+%      meaning that $\rho(r)^2 = 1$, and we already have $\rho(s)^2 = 1$. These relations give representations either $\rho(r) = \pm 1$ or $\rho(s) = \pm 1$. If $n$ is even, then these are fully satisfactory of the relations in the definition of $G$. In the case when $n$ is odd, we must have $\rho(r)^{n} = 1$, and since $\left( -1 \right)^{n} \neq 1$, we have $\rho(r) = 1$.
+%  \end{enumerate}
+%\end{solution}
+\begin{problem}[Problem 7]
+  Let $\left( \alpha,V \right)$ and $\left( \beta,W \right)$ be representations of the same group over the same field. The tensor product of these representations is the representation $\left( \rho,V\otimes W \right)$ with $\rho(g) = \alpha(g)\otimes \beta(g)$ for each $g\in G$.
   \begin{enumerate}[(a)]
-    \item Let $\omega\in \C$ is an $n$th root of unity. Prove that $G$ has a representation $\rho_{\omega}\colon G\rightarrow \GL_2\left( \C \right)$ given by
-      \begin{align*}
-        \rho\left( r \right) &= \begin{pmatrix}\omega & 0 \\ 0 & \omega^{-1}\end{pmatrix}\\
-        \rho\left( s \right) &= \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix}.
-      \end{align*}
-    \item Prove that the representation $\rho_{\omega}$ in part (a) is irreducible if and only if $\omega\neq \pm 1$.
-    \item Let $\omega_1,\omega_2$ be $n$th roots of unity different from $\pm 1$. Prove that $\rho_{\omega_1}\cong \rho_{\omega_2}$ as representations if and only if $\omega_1 = \omega_2$ or $\omega_1^{-1} = \omega_2$.
-    \item If we assume that $r$ is the counterclockwise rotation by $2\pi/n$ and $s$ is the reflection with respect to the $x$-axis, the corresponding $\rho$ is given by
-      \begin{align*}
-        \rho(r) &= \begin{pmatrix}\cos\left( 2\pi/n  \right) & -\sin\left( 2\pi/n \right)\\\sin\left( 2\pi/n \right) & \cos\left( 2\pi/n \right)\end{pmatrix}\\
-        \rho\left( s \right) &= \begin{pmatrix}1 & 0 \\ 0 & -1\end{pmatrix}.
-      \end{align*}
-      Technically $\rho$ is a real representation, but since every $2\times 2$ real matrix can be thought of as a $2\times 2$ complex matrix, we can think of $\rho$ as a complex representation. Prove that this $\rho$ is equivalent to some $\rho_{\omega}$ from part (a), explicitly find such an $\omega$, and compute the matrix $T\in \GL_2\left( \C \right)$ such that $T^{-1}\rho(g)T = \rho_{\omega}(g)$ for all $g\in G$.
-    \item Prove that $\left[ G,G \right] = \left\langle r^2 \right\rangle$. Deduce that $\left\vert G/\left[ G,G \right] \right\vert = 2$ if $n$ is odd and $ \left\vert G/\left[ G,G \right] \right\vert = 4 $ if $n$ is even. Then, describe all one-dimensional complex representations of $G$ explicitly.
+    \item Prove that $\left( \rho,V\otimes W \right)$ is indeed a representation. That is, $\rho\colon G\rightarrow \GL\left( V\otimes W \right)$ is a homomorphism.
+    \item Prove that if $\left( \alpha,V \right)$ is \textit{not} irreducible, and $W\neq 0$, then $\left( \rho,V\otimes W \right)$ is not irreducible either.
+    \item Now prove that if $\left( \alpha,V \right)$ is irreducible and $\operatorname{dim}\left( W \right) = 1$, then $\left( \rho,V\otimes W \right)$ is irreducible.
   \end{enumerate}
 \end{problem}
 \begin{solution}\hfill
   \begin{enumerate}[(a)]
-    \item We want to verify that $\rho_{\omega}(s)$ and $\rho_{\omega}(r)$ satisfy the relations. First, observe that since $\omega$ is an $n$th root of unity and $\rho(r)$ is a diagonal matrix, that $\rho_{\omega}(r)^{n} = \1 = \rho_{\omega}\left( r^{n} \right)$. Similarly, $\rho_{\omega}(s)^2 = \1$ as Finally, we verify that $\rho(s)\rho(r) = \rho(r)^{-1}\rho(s)$, or
-      \begin{align*}
-        \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix}^2 &= \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix}.
-      \end{align*}
-      Finally,
-      \begin{align*}
-        \begin{pmatrix}0 & 1\\ 1 & 0\end{pmatrix} \begin{pmatrix}\omega & 0 \\ 0 & \omega^{-1}\end{pmatrix} \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix} \begin{pmatrix}\omega & 0 \\ 0 & \omega^{-1}\end{pmatrix} &=  \begin{pmatrix}0 & \omega^{-1}\\\omega & 0\end{pmatrix} \begin{pmatrix}0 & \omega^{-1} \\ \omega & 0\end{pmatrix}\\
-                         &= \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix}.
-      \end{align*}
-    \item We will prove that the $\rho_{\omega}$ of (a) are irreducible if and only if $\omega \neq \pm 1$. We start by finding proper $G$-invariant subspaces of $\C^2$. Let $W\leq \C^2$ be a $G$-invariant subspace. Since $V$ has dimension $2$, this means $W$ has dimension less than $2$, meaning there exists some vector
-      \begin{align*}
-        W &= \Span\set{ \begin{pmatrix}\alpha\\\beta\end{pmatrix} }.
-      \end{align*}
-      It is sufficient to check the generators $\rho_{\omega}(r)$ and $\rho_{\omega}(s)$. Starting with $\rho_{\omega}(s)$, we have
-      \begin{align*}
-        \rho_{\omega}(s) \begin{pmatrix}\alpha \\ \beta\end{pmatrix} &= \begin{pmatrix}\beta\\\alpha\end{pmatrix}\\
-                                                                     &= \lambda \begin{pmatrix}\alpha\\\beta\end{pmatrix}.
-      \end{align*}
-      From this relation, we have that $\beta = \lambda \alpha$ and $\alpha = \lambda\beta$, or $\alpha = \lambda^2\alpha$, so we may write
-      \begin{align*}
-        W &= \Span\set{ \begin{pmatrix}\alpha\\\lambda\alpha\end{pmatrix} }
-      \end{align*}
-      with $\lambda = \pm 1$ as $\alpha\neq 0$. Evaluating $\rho(r)$, we have
-      \begin{align*}
-        \rho(r) \begin{pmatrix}\alpha\\\lambda\alpha\end{pmatrix} &= \begin{pmatrix}\omega\alpha \\ \pm\omega^{-1}\alpha\end{pmatrix}\\
-                                                                  &= \begin{pmatrix}\zeta \alpha\\\pm \zeta \alpha\end{pmatrix},
-      \end{align*}
-      which holds if and only if $\omega = \omega^{-1}$, meaning that this holds if and only if $\omega = \pm 1$.
+    \item We will show that if $T_1\otimes S_1$ and $T_2\otimes S_2$ are elements of $\GL\left( V\otimes W \right)$, then $\left( T_1\otimes S_1 \right)\left( T_2\otimes S_2 \right) = T_1T_2\otimes S_1S_2$.
 
-      If $\omega = \pm 1$, then we are guaranteed a $G$-invariant subspace generated by the vector 
+      For this, it suffices to show equality on elementary tensors, as elements of $V\otimes W$ are finite sums of elementary tensors. If $v\otimes w\in V\otimes W$, then
       \begin{align*}
-        v &= \begin{pmatrix}1\\1\end{pmatrix}.
+        \left( \left( T_1\otimes S_1 \right)\left( T_2\otimes S_2 \right) \right)\left( v\otimes w \right) &= \left( T_1\otimes S_1 \right) \left( T_2v\otimes S_2w \right)\\
+                                                                                                           &= T_1\left( T_2v \right)\otimes S_1\left( S_2 w \right)\\
+                                                                                                           &= \left( T_1T_2 \right)v\otimes \left( S_1S_2 \right)w\\
+                                                                                                           &= \left( T_1T_2\otimes S_1S_2 \right)\left( v\otimes w \right).
       \end{align*}
+      Therefore, we have that for any $g,h\in G$, we have
+      \begin{align*}
+        \rho\left( gh \right) &= \alpha\left( gh \right)\otimes \beta\left( gh \right)\\
+                              &= \alpha(g)\alpha(h)\otimes \beta(g)\beta(h)\\
+                              &= \left( \alpha(g)\otimes \beta(g) \right)\left( \alpha(h)\otimes \beta(h) \right)\\
+                              &= \rho(g)\rho(h),
+      \end{align*}
+      meaning $\rho$ is a group homomorphism.
+    \item We will show that if $V'\leq V$ is any subspace, then $V'\otimes W\leq V\otimes W$ is a subspace. For any simple tensors $v_1\otimes w_1,v_2\otimes w_2\in V'\otimes W$, we observe that by definition, their sum is contained in $V'\otimes W$ as $V'\otimes W$ consists of sums of simple tensors $v\otimes w$ with $v\in V'$ and $w\in W$. Similarly, for any $\lambda\in F$, we have $\lambda\left( v_1\otimes w_1 \right) = v_1\otimes \lambda w_1\in V'\otimes W$. Thus, $V'\otimes W$ is a subspace of $V\otimes W$.
 
-    \item  If $\omega_1 = \omega_2$, then clearly $\rho_{\omega_1} = \rho_{\omega_2}$. Meanwhile, if $\omega_1 = \omega_2^{-1}$, then
+      In particular, if $\left( \alpha,V \right)$ not irreducible, then there is some subspace $V'\leq V$ with $V'$ invariant under $\alpha$. For any simple tensor $v\otimes w\in V'\otimes W$, we have
       \begin{align*}
-        T &= \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix}.
+        \rho\left( g \right)\left( v\otimes w \right) &= \alpha(g)v \otimes \beta(g)w\\
+                                                      &\in V'\otimes W,
       \end{align*}
-      Observe that $\rho_{\omega_1}(s) = T$. This gives
-      \begin{align*}
-        \rho_{\omega_2}(r) &= T\rho_{\omega_1}(r)T^{-1}\\
-                           &= \rho_{\omega_1}(s)\rho_{\omega_1}(r)\rho_{\omega_1}(s)^{-1}\\
-                           &= \rho_{\omega_2}(r).
-      \end{align*}
-      Now, suppose $\rho_{\omega_1} \cong \rho_{\omega_2}$. Then, there exists some matrix $T\in \GL_2\left( \C \right)$ such that $\rho_{\omega_2}(g)T = T\rho_{\omega_1}(g)$ for all $g\in G$.
+      meaning that $V'\otimes W$ is invariant under the action of $\rho$ on simple tensors, so it is invariant under the action of $\rho$ on all tensors, meaning $V'\otimes W\leq V\otimes W$ is a subrepresentation.
+    \item We see that if $\left( \alpha,V \right)$ is an irreducible representation, then by endowing $V$ with the structure of an $F[G]$-module that acts via $\alpha$, then $V$ is simple. We will label this structure as $V_{\alpha}$, and we observe that for any nonzero $v\in V$, we have $F[G]\cdot v = V_{\alpha}$. 
 
-      In particular, this holds on the generators. Taking
-      \begin{align*}
-        T &= \begin{pmatrix}a & b \\ c & d\end{pmatrix}\\
-        \rho_{\omega_2}(s) &= \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix},
-      \end{align*}
-      so
-      \begin{align*}
-        \rho_{\omega_2}(s)T &= \begin{pmatrix}0 & 1\\0 & 1\end{pmatrix} \begin{pmatrix}a & b \\ c & d\end{pmatrix}\\
-                            &= \begin{pmatrix}b & a \\ d & c\end{pmatrix}\\
-                            &= \begin{pmatrix}a & b \\ c & d\end{pmatrix} \begin{pmatrix}0 & 1 \\ 1 & 0\end{pmatrix}\\
-                            &= \begin{pmatrix}c & d \\ a &b\end{pmatrix},
-      \end{align*}
-      so $a = d$ and $b = c$, meaning
-      \begin{align*}
-        T &= \begin{pmatrix}a & b \\ b & a\end{pmatrix}.
-      \end{align*}
-      Now, we have
-      \begin{align*}
-        \rho_{\omega_2}(r)T &= \begin{pmatrix}a\omega_2 & b\omega_2 \\ b\omega_2^{-1} & a\omega_2^{-1}\end{pmatrix}\\
-        T\rho_{\omega_1}(r) &= \begin{pmatrix}a\omega_1 & b\omega_1^{-1} \\ b\omega_{1} & a\omega_1^{-1}\end{pmatrix}.
-      \end{align*}
-      If $a\neq 0$, then $\omega_1 = \omega_2$, and if $a = 0$, then $b\neq 0$ and $\omega_1 = \omega_2^{-1}$.
-    \item We observe that $\rho_{\omega}(s)$ has eigenvalues $\pm 1$ and eigenvectors given by
-      \begin{align*}
-        E_1 &= \Span\set{ \begin{pmatrix}1\\1\end{pmatrix} }\\
-        E_{-1} &= \Span\set{ \begin{pmatrix}1\\-1\end{pmatrix} }.
-      \end{align*}
-      In particular, this means there is a unitary matrix $P\in \GL_2\left( \C \right)$ such that $P^{\ast}\rho(s)P = \rho_{\omega}(s)$ where the first column is in $E_1$ and the second column is in $E_{-1}$. Now, if we let $\theta = 2\pi/n$ and $\omega = \cos\left( \theta \right) + i\sin\left( \theta \right)$, then we observe that the matrix
-      \begin{align*}
-        \rho(r) &= \begin{pmatrix}\cos\left( \theta \right) & -\sin\left( \theta \right) \\ \sin\left( \theta \right) & \cos\left( \theta \right)\end{pmatrix}
-      \end{align*}
-      is unitarily equivalent to
-      \begin{align*}
-        R &= \begin{pmatrix}\omega & 0 \\ 0 & \omega^{-1}\end{pmatrix}.
-      \end{align*}
-      To find the desired matrix, observe that the matrix $\rho(r)$ has eigenvalues given by $\lambda_{1,2} = a \pm bi$, where $a = \cos\left( \theta \right)$ and $b = \sin\left( \theta \right)$. We then obtain eigenvectors
-      \begin{align*}
-        E_{\lambda_1} &= \Span\set{ \begin{pmatrix}i\\1\end{pmatrix} }\\
-        E_{\lambda_2} &= \Span\set{ \begin{pmatrix}i\\-1\end{pmatrix} }.
-      \end{align*}
-    \item First, we show that $\left[ G,G \right] = \left\langle r^2 \right\rangle$. We will show that $r^2\in \left[ G,G \right]$. Since $\left( srs^{-1} \right)r^{-1}=r^{-2}$, we have $r^{-2}\in \left[ G,G \right]$ so $r^2\in \left[ G,G \right]$. In the reverse direction, note that $\left\langle r^2 \right\rangle = n/2$ if $n$ is even and $n$ if $n$ is odd. Since $\left\langle r^2 \right\rangle\trianglelefteq G$ is normal, as $sr^{k}r^2r^{-k}s = sr^2s = r^{-2}\in \left\langle r^2 \right\rangle$, we have that the quotient group $G/\left\langle r^2 \right\rangle$ has order either $2$ or $4$, meaning that $G/\left\langle r^2 \right\rangle$ is abelian, so $\left[ G,G \right]\subseteq \left\langle r^2 \right\rangle$ by the definition of the abelianization.
+      Similarly, since $W$ is a one-dimensional representation, it is necessarily irreducible, so endowing $W$ with the structure of an $F[G]$-module with the action via $\beta$, we have that $W$ is also simple. Furthermore, we view $\beta(g)w = \lambda_g w$ as multiplication by some nonzero scalar $\lambda_g$ dependent on $g\in G$.
 
-      As a result, we have already shown that $ \left\vert G/\left[ G,G \right] \right\vert = 2 $ if $n$ is odd and $ \left\vert G/\left[ G,G \right] \right\vert = 4 $ if $n$ is even.
-
-      Describing all the $1$-dimensional complex representations of $G$, we have that if $\rho\colon G\rightarrow \C^{\times}$ is a $1$-dimensional representation, we have
+      Now, since $W$ is one-dimensional, all elements of $W$ are of the form $\lambda w$ for some $\lambda\in F$ and $0\neq w\in W$. In particular, if $u = \sum_{i=1}^{n}v_i\otimes w_i$ is an element of $V\otimes W$, it is possible to consolidate these into one simple tensor via the process
       \begin{align*}
-        \rho(s)\rho(r)\rho(s)^{-1} &= \rho(r)\\
-                                   &= \rho\left( r^{-1} \right),
+        \sum_{i=1}^{n}v_i\otimes w_i &= \sum_{i=1}^{n}v_i\otimes \lambda_i w\\
+                                     &= \sum_{i=1}^{n}\lambda_iv_i\otimes w\\
+                                     &= \left( \sum_{i=1}^{n}\lambda_iv_i \right)\otimes w\\
+                                     &= v\otimes w,
       \end{align*}
-      meaning that $\rho(r)^2 = 1$, and we already have $\rho(s)^2 = 1$. These relations give representations either $\rho(r) = \pm 1$ or $\rho(s) = \pm 1$. If $n$ is even, then these are fully satisfactory of the relations in the definition of $G$. In the case when $n$ is odd, we must have $\rho(r)^{n} = 1$, and since $\left( -1 \right)^{n} \neq 1$, we have $\rho(r) = 1$.
+      where we define $v = \sum_{i=1}^{n}\lambda_iv_i$. In particular, this means that $V\otimes W$ consists of all the simple tensors of the form $v\otimes w$ where $w$ is our distinguished generator for $W$ and $v$ is any element of $V$.
+
+      In order to show that $V\otimes W$ is simple as an $F[G]$-module when acted upon by $\rho$, it suffices to show that for any nonzero $v\in V$, we have that $\rho\left( F[G] \right)\left( v\otimes w \right) = V\otimes W$. For an arbitrary element $\sum_{g\in G}x_g \delta_g\in F[G]$, we have
+      \begin{align*}
+        \rho\left( \sum_{g\in G}x_g\delta_g \right)\left( v\otimes w \right) &= \left( \alpha\left( \sum_{g\in G}x_g\delta_g \right)v \right)\otimes \left( \beta\left( \sum_{g\in G}x_g \delta_g \right)w \right)\\
+                                                                             &= \left( \sum_{g\in G}x_g\alpha(g)v \right)\otimes \left( \sum_{g\in G}x_g\lambda_g \right)w\\
+                                                                             &= \left( \sum_{g,h\in G}x_h\lambda_hx_g\alpha(g) \right)v\otimes w.
+      \end{align*}
+      Since all the $\lambda_h$ are nonzero constants, by varying the $x_g$ over $F$, we have that $\rho\left( F[G] \right)\left( v\otimes w \right) = V\otimes W$, and since $v\in V$ was an arbitrary nonzero vector, it follows that every nonzero vector in $V\otimes W$ is a generator for $V\otimes W$ as an $F[G]$-module, so $V\otimes W$ is simple as an $F[G]$-module, meaning $V\otimes W$ is irreducible as a representation of $G$.
   \end{enumerate}
 \end{solution}
 \end{document}
