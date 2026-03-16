@@ -888,7 +888,7 @@ Later, we will prove a very convenient way to show certain representations of fi
 
   Hence, we have that $0\neq m = n-p \in N\oplus P = M'$, meaning that $M_i\cap M'\neq 0$, so $M'\cap M_i = M_i$ by irreducibility, so $M_i\subseteq M'$.
 \end{proof}
-\subsection{Unitary Representations}%
+\subsection{Unitary and One-Dimensional Representations}%
 \begin{definition}
   Let $V$ be a (finite-dimensional) vector space over $\F = \R$ or $\C$. Then, an inner product $ \iprod{\cdot}{\cdot}\colon V\times V \rightarrow F $ is a map satisfying
   \begin{enumerate}[(i)]
@@ -900,7 +900,117 @@ Later, we will prove a very convenient way to show certain representations of fi
   We call a vector space equipped with an inner product an inner product space.
 \end{definition}
 Over $\R$, the inner product is a symmetric positive definite bilinear form, while over $\C$, the inner product is a conjugate-symmetric positive definite sesquilinear form.
-\subsection{One-Dimensional Representations, Characters, and Character Tables}%
+\begin{definition}
+  A representation $\left( \rho,V \right)$ on a finite-dimensional $\C$-inner product space is known as a \textit{unitary representation} if, for all $g\in G$ and all $v,w\in V$, we have
+  \begin{align*}
+    \iprod{v}{w} &= \iprod{\rho(g)v}{\rho(g)w}.
+  \end{align*}
+  Any complex representation $\left( \rho,V \right)$ of $G$ is called \textit{unitarizable} if there is an inner product on $V$ such that $\left( \rho,V \right)$ is unitary with respect to this inner product.
+\end{definition}
+\begin{lemma}
+  If $\left( \rho,V \right)$ is a unitary representation, then for any subrepresentation $W$ of $V$, its orthogonal complement $W^{\perp}$ is also a subrepresentation.
+\end{lemma}
+Note that this means any unitary representation is completely reducible.
+\begin{theorem}
+  If $G$ is a finite group, and $\left( \rho,V \right)$ is a finite-dimensional complex representation of $G$, then $\left( \rho,V \right)$ is unitarizable.
+\end{theorem}
+\begin{proof}
+  Choose an inner product $ \iprod{\cdot}{\cdot}_0 $ on $V$, which can be constructed by defining an isomorphism $\varphi\colon V\rightarrow \C^n$ and taking
+  \begin{align*}
+    \iprod{v}{w}_{0} &= \iprod{\varphi(v)}{\varphi(w)}_{\C^n}.
+  \end{align*}
+  We construct a new inner product on $V$ by taking
+  \begin{align*}
+    \iprod{v}{w} &= \frac{1}{\left\vert G \right\vert}\sum_{g\in G} \iprod{\rho(g)v}{\rho(g)w}_{0}.
+  \end{align*}
+  Then, $\rho(g)$ is a unitary map for any $g\in G$ with respect to this inner product.
+\end{proof}
+In particular, since any complex representation is equivalent to a unitary representation, and any unitary representation is a direct sum of irreducible representations, it suffices to study irreducible representations.
 
+The most important theorem in this realm is Schur's Lemma, which allows us to understand the irreducible representations of abelian groups very easily.
+\begin{theorem}[Schur's Lemma]
+  Let $F$ be an algebraically closed field, $V$ a finite-dimensional vector space over $F$, and $\left( \rho,V \right)$ an irreducible representation of $G$.
+
+  Then, if $g\in Z(G)$, we have $\rho(g) = \lambda I$ for some $\lambda\in F$.
+\end{theorem}
+\begin{corollary}
+  Any irreducible representation of an abelian group on a finite-dimensional complex vector space is $1$-dimensional.
+\end{corollary}
+Note that the assumption of finite-dimensionality is required. If $V = F(t)$ is the space of rational functions over $F$ in one variable (as a vector space over $F$), and $G = F(t)^{\times}$, then multiplication of elements of $V$ by elements of $G$ gives a representation of $G$ that is not one-dimensional and is not able to be reduced to one dimension.
+
+To prove the following proposition, we note that if $H$ and $K$ are any groups, and $A$ is any abelian group, then there is a natural bijection
+\begin{align*}
+  \hom\left( H\times K,A \right)\rightarrow \hom\left( H,A \right)\times \hom\left( K,A \right)
+\end{align*}
+given by applying the maps.
+\begin{proposition}
+  Let $G$ be a finite abelian group. Then,
+  \begin{align*}
+    \left\vert \hom\left( G,\C^{\times} \right) \right\vert &= \left\vert G \right\vert.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Writing out
+  \begin{align*}
+    G &= \Z/p_1^{d_1}\Z\times\cdots\times \Z/p_k^{d_k}\Z,
+  \end{align*}
+  we observe that it suffices to count the number of homomorphisms from $\Z/n\Z\rightarrow \C^{\times}$. Writing $\Z/n\Z = \left\langle g|g^n=1 \right\rangle$, we have that any homomorphism $\rho\colon G\rightarrow \C^{\times}$ is completely determined by $\rho(g)$, and the only valid choices for $\rho(g)$ are the $n$th roots of unity, of which there are $n$.
+\end{proof}
+In the case of non-abelian groups, we recall that the abelianization of $G$ is given by
+\begin{align*}
+  G^{\operatorname{ab}} &= G/\left[ G,G \right].
+\end{align*}
+Informally, $G/\left[ G,G \right]$ is the largest abelian quotient of $G$. That is, if $N\trianglelefteq G$ is such that $G/N$ is abelian, then $\left[ G,G \right]\leq N$.
+
+Formally, $G^{\operatorname{ab}}$ admits the following universal property: if $A$ is any abelian group and $\varphi\colon G\rightarrow A$ is a homomorphism, then there is a unique homomorphism $ \overline{\varphi}\colon G^{\operatorname{ab}}\rightarrow A $ such that $ \overline{\varphi} \circ \pi = \varphi $.
+
+This is to say that $\hom\left( G^{\operatorname{ab}},A \right) \mapsto \hom\left( G,A \right)$, meaning that
+\begin{align*}
+  \left\vert \hom\left( G,\C^{\times} \right) \right\vert &= \left\vert \hom\left( G^{\operatorname{ab}},\C^{\times} \right) \right\vert.
+\end{align*}
+\subsection{Characters and Character Tables}%
+From now on, we will assume that all reps are finite-dimensional, unless stated otherwise.
+\begin{definition}
+  Let $\left( \rho,V \right)$ be a representation of a group $G$. The \textit{character} of $\rho$ is the function
+  \begin{align*}
+    \chi_{\rho}\colon G &\rightarrow F\\
+    g &\mapsto \operatorname{Tr}\left( \rho(g) \right).
+  \end{align*}
+\end{definition}
+Observe that $\chi_{\rho}$ is a class function --- that is, since $\Tr\left( AB \right) = \Tr\left( BA \right)$ for any $A,B\in \Mat_n\left( F \right)$,\footnote{It is often said that the trace is tracial.} it follows that for any $P\in \Mat_n\left( F \right)$, we have $\Tr\left( PAP^{-1} \right) = \Tr(A)$. Furthermore, equivalent representations have the same character for the same reason.
+\begin{lemma}
+  If $\rho_1,\rho_2$ are representations of $G$ over the same field, then the following hold:
+  \begin{enumerate}[(i)]
+    \item $\chi_{\rho_1\oplus \rho_2} = \chi_{\rho_1} + \chi_{\rho_2}$;
+    \item $\chi_{\rho_1\otimes \rho_2} = \chi_{\rho_1}\chi_{\rho_2}$.
+  \end{enumerate}
+\end{lemma}
+Our goal is to be able to understand the character of irreducible representations if we are examining complex representations of some finite group. We will call a character of a representation of $G$ a character of $G$, and an \textit{irreducible} character is the character of some irreducible representation of $G$.
+
+If $G$ is a finite group, and $C_1,\dots,C_k$ are the conjugacy classes of $G$, and $\chi_1,\chi_2,\dots$ are (isomorphism classes of) irreducible characters of $G$, then the \textit{character table} is the matrix whose columns are labeled by the conjugacy classes $C_1,\dots,C_k$ and rows are labeled by the irreducible characters, where the $\left( i,j \right)$ entry is given by $\chi_i\left( g_j \right)$, where $g_1,\dots,g_k$ are representatives of the conjugacy classes.
+\begin{center}
+  \begin{tabular}{c|c|c|c|c}
+    & $C_1$ & $C_2$ & $\cdots$ & $C_k$\\
+    \hline
+    $\chi_1$ & $\chi_1\left( g_1 \right)$ & $\chi_1\left( g_2 \right)$ & $\cdots$ & $\chi_1\left( g_k \right)$\\
+    $\chi_2$ & $\chi_2\left( g_1 \right)$ & $\chi_2\left( g_2 \right)$ & $\cdots$ & $\chi_2\left( g_k \right)$\\
+    $\chi_3$ & $\chi_3\left( g_1 \right)$ & $\chi_3\left( g_2 \right)$ & $\cdots$ & $\chi_3\left( g_k \right)$\\
+    $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$
+  \end{tabular}
+\end{center}
+Soon, we will show that this is in fact a square table (i.e., the number of irreducible characters is equal to the number of conjugacy classes). For now, we will take this on faith, and work through some examples.
+\begin{example}
+  Let $G = \left\langle a,b|a^2,b^2,aba^{-1}b^{-1} \right\rangle\cong \Z/2\Z\times\Z/2\Z$ be the Klein $4$-group. All conjugacy classes have size $1$, so $G$ has exactly four $1$-dimensional representations. The character table is thus given below.
+  \begin{center}
+    \begin{tabular}{c|c|c|c|c}
+      & $e$ & $a$ & $b$ & $ab$\\
+      \hline
+      $\chi_1$ & $1$ & $1$ & $1$ & $1$\\
+      $\chi_2$ & $1$ & $1$ & $-1$ & $-1$\\
+      $\chi_3$ & $1$ & $-1$ & $1$ & $-1$\\
+      $\chi_4$ & $1$ & $-1$ & $-1$ & $1$
+    \end{tabular}
+  \end{center}
+\end{example}
 \end{document}
 
