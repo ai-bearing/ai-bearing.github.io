@@ -58,6 +58,7 @@ permalink: "/useful_resources.html"
         - [Generalized Limits](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/banach_limits.pdf)
         - [Structure of von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/vna_structure.pdf) (in progress)
         - [Projections in von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/vna_projections.pdf) (in progress)
+        - [Orbit Equivalence](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/orbit_equivalence.pdf) (in progress)
       - Miscellaneous Notes/Workthroughs:
         - [Functional Analysis Exercises](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conway_analysis_exercises.pdf)
         - [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)

@@ -921,7 +921,9 @@ It turns out that the stated properties are defining for conditional expectation
   Let $A$ be a unital $C^{\ast}$-algebra, $B\subseteq A$ a unital $C^{\ast}$-subalgebra, and $E\colon A\rightarrow B$ with $E|_{B} = \id$ and $\norm{E}\leq 1$. Then, $E$ is a conditional expectation.
 \end{theorem}
 \begin{proof}
-  Start by considering the case that $A$ is a von Neumann algebra and $B$ is a von Neumann subalgebra. Then, for any $p\in P(B)$ and $x\in A$, we have $\left( 1-p \right)E\left( px \right) = E\left( \left( 1-p \right)E\left( px \right) \right)$, so for all $t > 0$,
+  Start by considering the case that $A$ is a von Neumann algebra and $B$ is a von Neumann subalgebra.
+
+  Then, for any $p\in P(B)$ and $x\in A$, we have $\left( 1-p \right)E\left( px \right) = E\left( \left( 1-p \right)E\left( px \right) \right)$, so for all $t > 0$,
   \begin{align*}
     \left( 1+t \right)^2 \norm{pE\left( \left( 1-p \right)x \right)}^2 &= \norm{pE\left( \left( 1-p \right)x + tpE\left( \left( 1-p \right)x \right) \right)}^2\\
                                                                        &\leq \norm{\left( 1-p \right)x + tpE\left( \left( 1-p \right)x \right)}^2\\
@@ -937,6 +939,37 @@ It turns out that the stated properties are defining for conditional expectation
   so $E^{(n)}\left( \left( a_{ij} \right)_{i,j} \right)\geq 0$, meaning $E$ is completely positive.
 
   In the general case, we embed $A$ into its double dual, $A^{\ast\ast}$, which is a von Neumann algebra, and similarly for $B$, and use the fact that $E^{\ast\ast}\colon A^{\ast\ast}\rightarrow B^{\ast\ast}$ is equal to $E$ on the subalgebras $A$ and $B$.
+\end{proof}
+\begin{theorem}
+  Let $M$ be a finite von Neumann algebra with trace $\tau$, and let $N\subseteq M$ be a von Neumann subalgebra. Then, there exists a unique normal conditional expectation $E\colon M\rightarrow N$ with $\tau\circ E = \tau$.
+\end{theorem}
+\begin{proof}
+  Let $e_N\in B\left( L_2\left( M,\tau \right) \right)$ be the projection onto $L_2\left( N,\tau \right)\subseteq L_2\left( M,\tau \right)$. Let $J$ be the conjugation operator on $L_2\left( M,\tau \right)$, which we can also view as the conjugation operator on $L_2\left( N,\tau \right)$.
+
+  We have $N'\cap B\left( L_2\left( N,\tau \right) \right)$ from a basic result on the standard representation (see \href{https://ai-bearing.github.io/Classes_and_Homework/After\%20College/Other\%20Notes/orbit_equivalence.pdf}{orbit equivalence notes}). Since $L_2\left( N,\tau \right)$ is invariant under the operation $JNJ$, we must have $e_N\left( JyJ \right) = \left( JyJ \right)e_N$ for all $y\in N$.
+
+  For any $x\in M$ and $y\in N$, we get
+  \begin{align*}
+    e_Nxe_NJyJ &= e_NxJyJ\\
+               &= e_NxJyJxe_N\\
+               &= JyJe_Nxe_N,
+  \end{align*}
+  so $e_Nxe_N\in \left( JNJ \right)' = N$, and we may denote this operator by $E(x)$. We have that $E\colon M\rightarrow N$ is normal, unital, completely positive, and $E|_{N} = \id$, so $E$ is a normal conditional expectation. Furthermore, for any $x\in M$, we have
+  \begin{align*}
+    \tau\left( E(x) \right) &= \iprod{e_Nxe_n1_{\tau}}{1_{\tau}}\\
+                            &= \iprod{x1_{\tau}}{1_{\tau}}\\
+                            &= \tau(x),
+  \end{align*}
+  where $1_{\tau}$ denotes the cyclic vector on the GNS representation.
+
+  If $\hat{E}$ were another trace-preserving conditional expectation, then for any $x\in M$ and $y\in N$, we would have
+  \begin{align*}
+    \tau\left( \hat{E}(x)y \right) &=\tau\left( \hat{E}\left( xy \right) \right)\\
+                                   &= \tau\left( xy \right)\\
+                                   &= \tau\left( E\left( xy \right) \right)\\
+                                   &= \tau\left( E(x)y \right),
+  \end{align*}
+  meaning that $\hat{E} = E$ as $x$ is arbitrary and $\tau$ is faithful.
 \end{proof}
 \nocite{davidson_functional_analysis,conway_operator_theory,takesaki_1,ii1_factors_houdayer,ii1_factors_anantharaman_popa,goals_vna,von_neumann_algebras_peterson}
 \printbibliography
