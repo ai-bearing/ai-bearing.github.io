@@ -60,3 +60,8 @@ permalink: "/quotes.html"
 
 - "Diet coke is like drinking a hangnail"\
   *Anonymous*
+
+- "Are you feeling consumptive?"\
+  *Vivian Rogers*
+  "...like I have tuberculosis?"\
+  *Jovan Kessler*
