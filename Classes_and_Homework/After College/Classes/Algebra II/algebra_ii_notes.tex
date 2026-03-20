@@ -5,6 +5,7 @@
 %\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 
 %\usepackage{homework}
+\usepackage[light]{kpfonts}
 \usepackage{notes}
 
 %\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
@@ -968,7 +969,7 @@ This is to say that $\hom\left( G^{\operatorname{ab}},A \right) \mapsto \hom\lef
 \begin{align*}
   \left\vert \hom\left( G,\C^{\times} \right) \right\vert &= \left\vert \hom\left( G^{\operatorname{ab}},\C^{\times} \right) \right\vert.
 \end{align*}
-\subsection{Characters and Character Tables}%
+\subsection{Character Theory}%
 From now on, we will assume that all reps are finite-dimensional, unless stated otherwise.
 \begin{definition}
   Let $\left( \rho,V \right)$ be a representation of a group $G$. The \textit{character} of $\rho$ is the function
@@ -999,25 +1000,31 @@ If $G$ is a finite group, and $C_1,\dots,C_k$ are the conjugacy classes of $G$, 
   \end{tabular}
 \end{center}
 Soon, we will show that this is in fact a square table (i.e., the number of irreducible characters is equal to the number of conjugacy classes). For now, we will take this on faith, and work through some examples.
-\begin{example}
-  Let $G = \left\langle a,b|a^2,b^2,aba^{-1}b^{-1} \right\rangle\cong \Z/2\Z\times\Z/2\Z$ be the Klein $4$-group. All conjugacy classes have size $1$, so $G$ has exactly four $1$-dimensional representations. The character table is thus given below.
-  \begin{center}
-    \begin{tabular}{c|c|c|c|c}
-      & $e$ & $a$ & $b$ & $ab$\\
-      \hline
-      $\chi_1$ & $1$ & $1$ & $1$ & $1$\\
-      $\chi_2$ & $1$ & $1$ & $-1$ & $-1$\\
-      $\chi_3$ & $1$ & $-1$ & $1$ & $-1$\\
-      $\chi_4$ & $1$ & $-1$ & $-1$ & $1$
-    \end{tabular}
-  \end{center}
-\end{example}
+\subsubsection{Examples of Characters and Character Tables}%
+Let $G = \left\langle a,b|a^2,b^2,aba^{-1}b^{-1} \right\rangle\cong \Z/2\Z\times\Z/2\Z$ be the Klein $4$-group. All conjugacy classes have size $1$, so $G$ has exactly four $1$-dimensional representations. The character table is thus given below.
+\begin{center}
+  \begin{tabular}{c|c|c|c|c}
+    & $e$ & $a$ & $b$ & $ab$\\
+    \hline
+    $\chi_1$ & $1$ & $1$ & $1$ & $1$\\
+    $\chi_2$ & $1$ & $1$ & $-1$ & $-1$\\
+    $\chi_3$ & $1$ & $-1$ & $1$ & $-1$\\
+    $\chi_4$ & $1$ & $-1$ & $-1$ & $1$
+  \end{tabular}
+\end{center}
+Now, one of the most important groups is the symmetric group. If $G = S_3$, then the conjugacy classes of $G$ are defined by
+\begin{align*}
+  K_1 &= \set{e}\\
+  K_2 &= \set{\left( 1,2 \right),\left( 1,3 \right),\left( 2,3 \right)}\\
+  K_3 &= \set{\left( 1,2,3 \right),\left( 1,3,2 \right)}.
+\end{align*}
+We begin by describing three non-equivalent irreducible complex representations of $S^3$. 
 \subsubsection{Structure of Character Tables}%
 The shape of character tables is described below.
 \begin{theorem}[Shape of the Character Table]
   Let $G$ be a finite group, and let $r$ be the number of conjugacy classes of $G$. Then, there are exactly $r$ equivalence classes of irreducible complex representations for $G$. That is, the character table is a square matrix.
 \end{theorem}
-Letting $\chi_1,\dots,\chi_r$ denote the characters of these irreducible representations, then the following holds.
+Letting $\chi_1,\dots,\chi_r$ denote the characters of these irreducible representations, then the following orthogonality relations hold.
 \begin{theorem}[Orthogonality Relations]\hfill
   \begin{itemize}
     \item \textbf{First Orthogonality Relation:} given characters $\chi_j,\chi_k$ with $1\leq j,k\leq r$, define the inner product
@@ -1034,12 +1041,86 @@ Letting $\chi_1,\dots,\chi_r$ denote the characters of these irreducible represe
       \end{align*}
   \end{itemize}
 \end{theorem}
-We start by proving the First Orthogonality Relation. This will require us to go into the realm of dual representations.
+\subsubsection{Proof of First Orthogonality Relation}%
+To prove the first orthogonality relation, we will be required to go into the realm of dual representations.
 \begin{definition}
   Let $\left( \rho,V \right)$ be a representation of $G$ over $F$. The \textit{dual representation} is the pair $\left( \rho^{\ast},V^{\ast} \right)$, with $\rho^{\ast}$ defined by
   \begin{align*}
     \rho^{\ast}(g)f &= f\circ \rho\left( g^{-1} \right).
   \end{align*}
 \end{definition}
-It can be shown that $\left( \rho^{\ast},V^{\ast} \right)$ is a representation, and
+It can be shown that $\left( \rho^{\ast},V^{\ast} \right)$ is a representation, and that we have $\left[ \rho^{\ast}\left( g \right) \right]_{\beta^{\ast}} = \left[ \rho\left( g^{-1} \right) \right]_{\beta}^{T}$ whenever $\beta$ is a basis for $V$ and $\beta^{\ast}$ is the corresponding dual basis.\footnote{Recall that if $\beta$ is a basis, then the dual basis $\beta^{\ast}$ is defined by the family of $v_i^{\ast}$ where $v_i^{\ast}\left( v_j \right) = \delta_{ij}$.} In particular, $\rho^{\ast}\left( g \right) = \left( \rho\left( g^{-1} \right) \right)^{\ast}$, where $T^{\ast}\varphi = \varphi\circ T$ is the dual map.
+
+We start by seeing that if $F = \C$ and $\left( \rho,V \right)$ is unitarizable, then $\chi_{\rho^{\ast}}(g) = \overline{\chi_{\rho}(g)}$. This follows from the definition of a unitary map, as $A^{\ast}A = AA^{\ast} = I$ implies that $\left( A^{-1} \right)^{T} = \overline{A}$. Therefore, we have
+\begin{align*}
+  \chi_{\rho^{\ast}}\left( g \right) &= \Tr\left( \rho^{\ast}\left( g \right) \right)\\
+                                     &= \Tr\left( \left[ \rho\left( g^{-1} \right) \right]_{\beta}^{T} \right)\\
+                                     &= \Tr\left( \overline{\left[ \rho\left( g \right) \right]_{\beta}} \right)\\
+                                     &= \overline{\chi_{\rho}\left( g \right)}.
+\end{align*}
+Additionally, recall that if $V$ and $W$ are finite-dimensional $F$-vector spaces, then there is a natural isomorphism $\varphi\colon V^{\ast}\otimes W \rightarrow \hom\left( V,W \right)$ given by
+\begin{align*}
+  \varphi\left( f\otimes w \right)v &= f(v)w.
+\end{align*}
+Now, suppose $\left( \alpha,V \right)$ and $\left( \beta,W \right)$ are representations of the same $G$ over the same field $F$. Consider now a representation $\left( \gamma,\hom\left( V,W \right) \right)$, defined by
+\begin{align*}
+  \gamma(g)\left( f \right) &= \beta(g)\circ f \circ \alpha\left( g^{-1} \right)
+\end{align*}
+for any $f\in \hom\left( V,W \right)$. The map $\varphi\colon V^{\ast}\otimes W \rightarrow \hom\left( V,W \right)$ that implements the isomorphism $V^{\ast}\otimes W \cong \hom\left( V,W \right)$ induces an isomorphism $\left( \alpha^{\ast}\otimes \beta,V^{\ast}\otimes W \right)\cong \left( \gamma,\hom\left( V,W \right) \right)$.
+
+If $G$ is finite, and $F = \C$, then $\alpha$ is a unitarizable representation, and we may consider the inner product of characters to be given by
+\begin{align*}
+  \iprod{\chi_{\alpha}}{\chi_{\beta}} &= \frac{1}{\left\vert G \right\vert}\sum_{g\in G} \overline{\chi_{\alpha}(g)}\chi_{\beta}(g)\\
+                                      &= \frac{1}{\left\vert G \right\vert}\sum_{g\in G} \chi_{\alpha^{\ast}}(g)\chi_{\beta}(g)\\
+                                      &= \frac{1}{\left\vert G \right\vert}\sum_{g\in G} \chi_{\alpha^{\ast}\otimes\beta}\left( g \right)\\
+                                      &= \frac{1}{\left\vert G \right\vert}\sum_{g\in G} \chi_{\gamma}(g).
+\end{align*}
+\begin{lemma}
+  Let $\left( \rho,Z \right)$ be a representation of a finite group $G$ over a field $F$ that satisfies $\operatorname{char}(F)\nmid \left\vert G \right\vert$. Then,
+  \begin{align*}
+    \frac{1}{\left\vert G \right\vert}\sum_{g\in G}\chi_{\rho}(g) &= \dim\left( Z^{G} \right),
+  \end{align*}
+  where $Z^{G}$ denotes the set of fixed points of the representation.
+\end{lemma}
+\begin{proof}
+  Extend the group homomorphism $\rho\colon G\rightarrow \GL(Z)$ to a homomorphism of $F$-algebras also denoted $\rho\colon F[G]\rightarrow \operatorname{end}(Z)$, given by
+  \begin{align*}
+    \rho\left( \sum_{g\in G}\lambda_g g \right) &= \sum_{g\in G}\lambda_g\rho(g).
+  \end{align*}
+  Consider now the element in $F[G]$ given by
+  \begin{align*}
+    \Delta &= \frac{1}{\left\vert G \right\vert}\sum_{g\in G}g.
+  \end{align*}
+  Let $P = \rho\left( \Delta \right)\in \operatorname{end}(Z)$. Then, we have
+  \begin{align*}
+    \frac{1}{\left\vert G \right\vert}\sum_{g\in G}\chi_{\rho}(g) &= \frac{1}{\left\vert G \right\vert}\sum_{g\in G}\Tr\left( \rho(g) \right)\\
+                                                                  &= \Tr\left( \rho\left( \Delta \right) \right)\\
+                                                                  &= \Tr\left( P \right).
+  \end{align*}
+  Additionally, observe that $h\Delta = \Delta$, meaning $\Delta^2 = \Delta$, or that $P^2 = P$. Thus, we have that the minimal polynomial $\mu_P(x)$ divides $x\left( x-1 \right)$. In particular, since $\mu_P(x)$ has only linear factors, it follows that $P$ has eigenvalues either equal to $0$ or $1$, and $P$ is diagonalizable, meaning we may write
+  \begin{align*}
+    Z &= E_0 \oplus E_1\\
+      &= \ker\left( P \right) \oplus E_1,
+  \end{align*}
+  so $\Tr\left( P \right) = \Dim\left( E_1 \right)$. It suffices to show that $E_1 = Z^{G}$. For this, we have that $E_1\subseteq Z^G$ as we have already established that $g\Delta = \Delta$, so it suffices to show that $E_1\subseteq Z^G$. This follows from the fact that if $z\in Z^G$, then
+  \begin{align*}
+    Pz &= \frac{1}{\left\vert G \right\vert}\sum_{g\in G}\rho(g)z\\
+       &= z.
+  \end{align*}
+\end{proof}
+This finally allows us to prove the First Orthogonality Relation.
+\begin{proof}[Proof of First Orthogonality Relation]
+  From the lemma and the characterization of the inner product as described before the lemma, we have
+  \begin{align*}
+    \iprod{\chi_{\alpha}}{\chi_{\beta}} &= \frac{1}{\left\vert G \right\vert} \sum_{g\in G}\chi_{\gamma}(g)\\
+                                        &= \Dim\left( \hom\left( V,W \right)^{G} \right)
+                                        \intertext{which by extending the vector space $\hom\left( V,W \right)$ to a $\C[G]$-module, gives}
+                                        &= \Dim\left( \hom_{\C[G]}\left( V,W \right) \right)
+                                          \intertext{and by Schur's Lemma, we get}
+                                        &= \begin{cases}
+                                          0 & \alpha\ncong \beta\\
+                                          1 & \alpha \cong \beta.
+                                        \end{cases}
+  \end{align*}
+\end{proof}
 \end{document}
