@@ -62,6 +62,6 @@ permalink: "/quotes.html"
   *Anonymous*
 
 - "Are you feeling consumptive?"\
-  *Vivian Rogers*
+  *Vivian Rogers*\
   "...like I have tuberculosis?"\
   *Jovan Kessler*

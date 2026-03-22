@@ -1,10 +1,12 @@
-\documentclass[12pt]{mypackage}
+\documentclass[10pt]{mypackage}
 
 %\usepackage{mlmodern}
 %\usepackage{newpxtext,eulerpx,eucal}
 %\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 
 %\usepackage{homework}
+\usepackage[uprightgreeks,light]{kpfonts}
+\renewcommand{\coloneq}{\coloneqq}
 \usepackage{notes}
 
 \usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
@@ -22,6 +24,7 @@
 \begin{document}
 \RaggedRight
 Here, we overview and discuss some of the most important results related to projections in von Neumann algebras.
+\tableofcontents
 \section{Comparison of Projections}%
 Recall that if $H$ is a Hilbert space, an element $w\in B(H)$ is called a partial isometry if, for any $h\in  \ker\left( w \right) ^{\perp}$, we have $\norm{Wh} = \norm{h}$. We call $\ker\left( w \right)^{\perp}$ the initial space of $W$ and $\img(w)$ the final space of $W$.
 
@@ -911,6 +914,7 @@ If $0 < t \leq n$, then for any projections $p,q\in P\left( \M_n\left( M \right)
 
 We have that $\left( M^t \right)^{s} \cong M^{ts}$ for all $t,s > 0$. The fundamental group\footnote{No relation to the topological one.} of $M$ is the set of all $t\in \R_{ > 0 }$ with $M^{t}\cong M$. We have that the fundamental group is an isomorphism class invariant of $M$.
 \subsection{Conditional Expectations}%
+This subsection is copied in \href{https://ai-bearing.github.io/Classes_and_Homework/After\%20College/Other\%20Notes/completely_positive_maps.pdf}{completely positive maps} notes.
 \begin{definition}
   If $A$ is a unital $C^{\ast}$-algebra, and $B\subseteq A$ is a unital $C^{\ast}$-subalgebra, then a conditional expectation from $A$ to $B$ is a unital completely positive map $E\colon A\rightarrow B$ with $E|_{B} = \id$. 
 \end{definition}
@@ -970,6 +974,87 @@ It turns out that the stated properties are defining for conditional expectation
                                    &= \tau\left( E(x)y \right),
   \end{align*}
   meaning that $\hat{E} = E$ as $x$ is arbitrary and $\tau$ is faithful.
+\end{proof}
+\subsection{Semifinite Traces}%
+Similar to how, over a compact Hausdorff space $K$, states on $C(K)$ correspond to Radon probability measures on $K$. The notion of weight helps generalize the notion of not-necessarily-finite positive Radon measures.
+\begin{definition}
+  A \textit{weight} on a $C^{\ast}$-algebra $A$ is a map $\varphi\colon A_{+}\rightarrow [0,\infty]$ satisfying
+  \begin{align*}
+    \varphi\left( x + y \right) &= \varphi\left( x \right) + \varphi\left( y \right)\\
+    \varphi\left( \lambda x \right) &= \lambda\varphi\left( x \right)\\
+    \varphi\left( 0 \right) &= 0
+  \end{align*}
+  for all $x,y\in A_{+}$ and $\lambda > 0$.
+
+  The weight is faithful if $\varphi\left( x \right) \neq 0$ for all $x\neq 0$ and $\varphi$ is tracial if $\varphi\left( x^{\ast}x \right) = \varphi\left( xx^{\ast} \right)$ for all $x\in A$.
+  
+  If $A$ is a von Neumann algebra, the weight $\varphi$ is semifinite if the set
+  \begin{align*}
+    \mathfrak{p}_{\varphi} &= \set{x\in A_{+} | \varphi(x) < \infty}
+  \end{align*}
+  generates $A$ as a von Neumann algebra. We say $\varphi$ is normal if it is a normal map in $A_{+}$.
+\end{definition}
+\begin{proposition}
+  Let $\varphi$ be a weight on a $C^{\ast}$-algebra $A$. Then,
+  \begin{enumerate}[(i)]
+    \item $\mathfrak{n}_{\varphi} = \set{x\in A | x^{\ast}x\in \mathfrak{p}_{\varphi}}$ is a left ideal of $A$;
+    \item $\mathfrak{m}_{\varphi} = \set{\sum_{i=1}^{n}y_i^{\ast}x_i | x_1,\dots,x_n,y_1,\dots,y_n\in \mathfrak{n}_{\varphi}}$ is a $\ast$-subalgebra of $\mathfrak{n}_{\varphi}$ that is the span of $\mathfrak{p}_{\varphi}$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Since
+  \begin{align*}
+    \left( x + y \right)^{\ast}\left( x + y \right) &\leq \left( x + y \right)^{\ast}\left( x + y \right) + \left( x-y \right)^{\ast}\left( x-y \right)\\
+                                                    &= 2\left( x^{\ast}x + y^{\ast}y \right),
+  \end{align*}
+  we have that $\mathfrak{n}_{\varphi}$ is a linear subspace. It is a left ideal since $\left( ax \right)^{\ast}\left( ax \right) \leq \norm{a}^2x^{\ast}x$.
+
+  Since $\mathfrak{n}_{\varphi}$ is a linear subspace, we have that $\mathfrak{m}_{\varphi}$ is a $\ast$-subalgebra. We have that $\mathfrak{m}_{\varphi}$ contains $\mathfrak{p}_{\varphi}$, and since
+  \begin{align*}
+    4y^{\ast}x &= \sum_{k=0}^{3}i^{k}\left( x + i^{k}y \right)^{\ast}\left( x + i^{k}y \right),
+  \end{align*}
+  that $\mathfrak{m}_{\varphi}$ is equal to the span of $\mathfrak{p}_{\varphi}$ follows.
+\end{proof}
+We call $\mathfrak{m}_{\varphi}$ the domain of definition for $\varphi$.
+
+If $\varphi\left( 1 \right) < \infty$, then we can extend $\varphi$ to all of $A$, and upon rescaling, construct a state.
+
+Fixing a weight $\varphi$ on a $C^{\ast}$-algebra $A$, then the set
+\begin{align*}
+  N_{\varphi} &= \set{x\in A | \varphi\left( x^{\ast}x \right) = 0}
+\end{align*}
+is a left ideal of $A$ that is contained in $\mathfrak{n}_{\varphi}$. The quotient space $\mathfrak{n}_{\varphi}/N_{\varphi}$ with quotient map $\eta_{\varphi}\colon \mathfrak{n}_{\varphi}\rightarrow \mathfrak{n}_{\varphi}/N_{\varphi}$ allows us to define a sesquilinear form on $\mathfrak{n}_{\varphi}/N_{\varphi}$ by
+\begin{align*}
+  \iprod{\eta_{\varphi}(x)}{\eta_{\varphi}(y)} &= \varphi\left( y^{\ast}x \right).
+\end{align*}
+The space $L_2\left( A,\varphi \right)$ is the Hilbert space completion with respect to this form, and the inequality $\left( ax \right)^{\ast}\left( ax \right)\leq \norm{a}^{2}x^{\ast}x$ extends to a representation $\pi_{\varphi}\colon A\rightarrow B\left( L_2\left( A,\varphi \right) \right)$.
+
+This is essentially a version of the GNS construction with respect to a semifinite weight.
+\begin{theorem}
+  Let $M$ be a semifinite factor. Then, there exists a unique up to scalar multiplication faithful normal semifinite tracial weight $\Tr\colon M_{+}\rightarrow [0,\infty]$. Furthermore, $p\in P(M)$ is finite if and only if $\Tr(p) < \infty$.
+\end{theorem}
+\begin{proof}
+  Any finite trace is semifinite, so we only need to consider the case when $M$ is properly infinite.
+
+  Let $p_0\in M$ be a nonzero finite projection. Then, there exists an infinite family $\set{p_i}_{i\in I}$ with $\sum_{i\in I}p_i = 1$ and $p_0\sim p_i$ for each $i\in I$. Let $v_i$ be the partial isometries implementing this equivalence, with $v_i^{\ast}v_i = p_0$ and $v_iv_i^{\ast} = p_i$; let $\tau_0$ be the unique tracial state on $p_0Mp_0$.
+
+  Define $\Tr\colon M_{+}\rightarrow [0,\infty]$ by
+  \begin{align*}
+    \Tr(x) &= \sum_{i\in I} \tau_0\left( v_i^{\ast}xv_i \right).
+  \end{align*}
+  Then, $\Tr$ is a normal weight on $M$, with normality emerging from the fact that $x\mapsto \tau_0\left( v_i^{\ast}xv_i \right)$ is a normal map for each $i$.
+
+  Now, we have $v_i^{\ast}Mv_i\subseteq \mathfrak{m}_{\Tr}$ for each $i\in I$, meaning that $\mathfrak{m}_{\Tr}$ is weakly dense in $M$, so $\Tr$ is semifinite.
+
+  For each $x\in M$, we use Fubini's Theorem to find
+  \begin{align*}
+    \Tr\left( xx^{\ast} \right) &= \sum_{i,j\in I} \tau_0\left( v_i^{\ast}xv_jv_j^{\ast}x^{\ast}v_i \right)\\
+                                &= \sum_{i,j\in I}\tau_0\left( v_jx^{\ast}v_iv_i^{\ast}xv_j^{\ast} \right)\\
+                                &= \Tr\left( x^{\ast}x \right).
+  \end{align*}
+  Now, if $p\in P(M)$ is finite, then so is their supremum $p_0\vee p$. There is a nonzero monic subprojection $q\leq p_0$ in $\left( p_0\vee p \right)M \left( p_0\vee p \right)$. We must have $0 < \Tr\left( q \right)$, and $\Tr\left( p_0\vee p \right) < \infty$, so $\Tr$ is faithful and finite on finite projections.
+
+  Conversely, if $p$ is infinite, then there is a subprojection $q\leq p$ such that $q\sim p$ and $q\sim p-q$, meaning that $\Tr\left( p \right) = \Tr\left( p-q \right) = \Tr\left( q \right)$, so $\Tr\left( p \right) = 2\Tr\left( p \right)$. Since $\Tr$ is faithful, $\Tr\left( p \right) = \infty$.
 \end{proof}
 \nocite{davidson_functional_analysis,conway_operator_theory,takesaki_1,ii1_factors_houdayer,ii1_factors_anantharaman_popa,goals_vna,von_neumann_algebras_peterson}
 \printbibliography
