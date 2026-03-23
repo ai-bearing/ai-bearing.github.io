@@ -14,6 +14,7 @@ permalink: "/useful_resources.html"
     - [Introduction to Random Matrices](https://arxiv.org/pdf/1712.07903)
     - [Strong Convergence: A Short Survey](https://arxiv.org/pdf/2510.12520)
     - [An Introduction to Hyperlinear and Sofic Groups](https://arxiv.org/pdf/0911.4266)
+    - [Introduction to Sofic and Hyperlinear Groups and Connes' Embedding Conjecture](https://arxiv.org/pdf/1309.2034)
     - [Free Entropy](https://arxiv.org/pdf/math/0103168)
 - [AMS Open Math Notes](https://www.ams.org/open-math-notes)
 - Class notes:
@@ -58,7 +59,8 @@ permalink: "/useful_resources.html"
         - [Generalized Limits](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/banach_limits.pdf)
         - [Structure of von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/vna_structure.pdf) (in progress)
         - [Projections in von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/vna_projections.pdf) (in progress)
-        - [Orbit Equivalence](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/orbit_equivalence.pdf) (in progress)
+        - [Borel Equivalence Relations](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/orbit_equivalence.pdf) (in progress)
+        - [Standard Representation and Equivalence Relation von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/equivalence_relation_von_neumann_algebras.pdf) (in progress)
       - Miscellaneous Notes/Workthroughs:
         - [Functional Analysis Exercises](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conway_analysis_exercises.pdf)
         - [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
