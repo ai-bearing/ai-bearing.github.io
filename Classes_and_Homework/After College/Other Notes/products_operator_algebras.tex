@@ -5,6 +5,8 @@
 %\renewcommand*{\mathbb}[1]{\varmathbb{#1}}
 
 %\usepackage{homework}
+\usepackage[uprightgreeks,light]{kpfonts}
+\renewcommand{\coloneq}{\coloneqq}
 \usepackage{notes}
 
 \usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
@@ -82,6 +84,34 @@ Tackling questions (i) and (ii) is more difficult. For this, consider the fact t
 \begin{proposition}
   Let $\pi\colon A\odot B\rightarrow C$ be a $\ast$-homomorphism. Then, there exists a unique $\ast$-homomorphism $A\otimes_{\max}B\rightarrow C$ that extends $\pi$. In particular, a pair of $\ast$-homomorphisms $\pi_A\colon A\rightarrow C$ and $\pi_B\colon B\rightarrow C$ with commuting ranges induces a unique $\ast$-homomorphism on $A\otimes_{\max}B$.
 \end{proposition}
+\begin{corollary}
+  The norm $\norm{\cdot}_{\max}$ is the largest possible $C^{\ast}$-norm on $A\odot B$.
+\end{corollary}
+\begin{proof}
+  If $\norm{\cdot}_{\alpha}$ is any other $C^{\ast}$-norm, then there is a surjective $\ast$-homomorphism $A\otimes_{\max}B\rightarrow A\otimes_{\alpha}B$ (extend the identity map), which means that $\norm{x}_{\alpha}\leq \norm{x}_{\max}$ for all $x\in A\odot B$.
+\end{proof}
+In particular, this means that $\norm{\cdot}_{\max}$ dominates $\norm{\cdot}_{\min}$, so we only need to show that $\norm{\cdot}_{\min}$ is a norm.
+\begin{lemma}
+  The product $\ast$-homomorphism $B\left( \mathcal{H} \right)\odot B\left( \mathcal{K} \right)\rightarrow B\left( \mathcal{H}\otimes \mathcal{K} \right)$ induced by the representations $B\left( \mathcal{H} \right)\cong B\left( \mathcal{H} \right)\otimes \C 1_{\mathcal{K}}$ and $B\left( \mathcal{K} \right)\cong \C1_{\mathcal{H}}\otimes B\left( \mathcal{K} \right)$ is injective.
+\end{lemma}
+\begin{proof}
+  We will show that if a finite sum of tensor product operators $\sum_{i}S_i\otimes T_i\in B\left( \mathcal{H}\otimes \mathcal{K} \right)$ is zero, then the corresponding sum of elementary tensors is also zero. We will assume that the operators $S_i$ are linearly independent.
+
+  For this, we have for all $v,w\in \mathcal{H}$ and $\xi,\eta\in \mathcal{K}$, that
+  \begin{align*}
+    \iprod{\left( \sum_{i}S_i\otimes T_i \right)\left( v\otimes \xi \right)}{w\otimes \eta} &= 0\\
+                                                                                            &= \sum_{i} \iprod{\left( S_i\otimes T_i \right)\left( v\otimes \xi \right)}{w\otimes \eta}\\
+                                                                                            &= \sum_{i} \iprod{S_iv}{w} \iprod{T_i\xi}{\eta}\\
+                                                                                            &= \iprod{\left( \left( \sum_{i} \iprod{T_i\xi}{\eta} \right)S_i \right)v}{w}.
+  \end{align*}
+  Since this holds for all $v,w\in \mathcal{H}$, we have that the operator $\sum_{i} \iprod{T_i\xi}{\eta}S_i = 0$, so by linear independence, each of the $ \iprod{T_i\xi}{\eta} = 0 $, meaning that $T_i = 0$ for each $i$.
+\end{proof}
+\begin{corollary}
+  The quantity $\norm{\cdot}_{\min}$ is a norm.
+\end{corollary}
+\begin{proposition}
+  The spatial tensor product is independent of the choices of faithful representation $\pi\colon A\rightarrow B\left( \mathcal{H} \right)$ and $\sigma\colon B\rightarrow B\left( \mathcal{K} \right)$.
+\end{proposition}
 \section{Ultraproducts}%
 Let $\set{M_n}_{n\in \N}$ is a family of finite von Neumann algebras with respective traces $\tau_n$, we let $\omega\in \beta\N$ be a non-principal ultrafilter. Define
 \begin{align*}
@@ -106,8 +136,10 @@ This is also known as the $\ell_{\infty}$-direct product of the family $\set{M_n
   \end{align*}
 \end{proof}
 \begin{definition}
-  If $\set{M_n}_{n\in \N}$ is a family of finite von Neumann algebras with respective traces $\tau_n$, then the algebra $\ell_{\infty}\left( \N,\left( M_n \right)_n \right)/I$ is known as the \textit{ultraproduct} of the family $\set{M_n}_{n\in \N}$, equipped with norm $\norm{\left( x_n \right)_n} = \lim_{n\rightarrow\omega}\norm{x_n}$.
-
+  If $\set{M_n}_{n\in \N}$ is a family of finite von Neumann algebras with respective traces $\tau_n$, then the algebra $\ell_{\infty}\left( \N,\left( M_n \right)_n \right)/I$ is known as the \textit{ultraproduct} of the family $\set{M_n}_{n\in \N}$, equipped with norm
+  \begin{align*}
+    \norm{\left( x_n \right)_n} = \lim_{n\rightarrow\omega}\norm{x_n}.
+  \end{align*}
   If $M_n = M$ is fixed, we call this the \textit{ultrapower} of $M$, and it is denoted by $M^{\omega}$. The von Neumann algebra $M$ admits a diagonal embedding into the ultrapower $M^{\omega}$, which will still be denoted by $M$.
 \end{definition}
 \begin{theorem}
@@ -170,5 +202,11 @@ This gives us the covariant representation $\left( 1\otimes\lambda \right)\times
 \begin{definition}
   The \textit{reduced crossed product} of a $C^{\ast}$-dynamical system $\left( A,\Gamma,\alpha \right)$ is the norm closure of the image of some regular representation $C_c\left( \Gamma,A \right)\rightarrow B\left( \mathcal{H}\otimes \ell_2\left( \Gamma \right) \right)$.
 \end{definition}
+\begin{proposition}
+  The reduced crossed product $A\rtimes_{\alpha,r} \Gamma$ does not depend on the choice of faithful representation for $A$.
+\end{proposition}
+\begin{proof}
+  Let $F\subseteq \Gamma$ be finite, and let $P \in B\left( \ell_2\left( \Gamma \right) \right)$ be the finite rank projection onto the span of $\set{\delta_g | g\in F}$.
+\end{proof}
 \nocite{brown_and_ozawa,takesaki_1,goals_vna,ii1_factors_anantharaman_popa}
 \end{document}

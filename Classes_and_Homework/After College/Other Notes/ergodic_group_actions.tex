@@ -1,0 +1,81 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage[uprightgreeks,light]{kpfonts}
+\renewcommand{\coloneq}{\coloneqq}
+\renewcommand{\D}{\mathbb{D}}
+%\usepackage{homework}
+\usepackage{notes}
+
+\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+\addbibresource{all_references.bib}
+
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Actions of Groups on Probability Spaces}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Probability Measure-Preserving Actions}%
+\begin{definition}
+  Let $G\curvearrowright \left( X,\mu \right)$ be a probability measure preserving (pmp) action of $G$. Then, the \textit{Koopman representation} is the unitary representation $\kappa\colon G\rightarrow B\left( L_2\left( X \right) \right)$ given by
+  \begin{align*}
+    \kappa\left( s \right)f(x) &= f\left( s^{-1}x \right).
+  \end{align*}
+\end{definition}
+Since $\C 1$ is invariant under this action, we will usually restrict our focus to its orthogonal complemented, denoted $L_2\left( X \right)\ominus \C 1$.
+\begin{definition}
+  A pmp action $G\curvearrowright \left( X,\mu \right)$ is said to be \textit{ergodic} if, for any $G$-invariant subset $A\subseteq X$, $A$ is either null or co-null.
+\end{definition}
+\begin{definition}
+  The action $G\curvearrowright \left( X,\mu \right)$ is said to be (essentially) free if there is a $G$-invariant subset $X_0\subseteq X$ with $\mu\left( X_0 \right) = 1$ and, whenever $sx = x$ for any $x\in X_0$, we have $s = e$.
+\end{definition}
+We will usually specify that $G$ is a countable discrete group, and $X$ is \href{https://ai-bearing.github.io/Classes_and_Homework/After\%20College/Other\%20Notes/orbit_equivalence.pdf}{standard}.
+
+We can can characterize freeness through the action on subsets, which will allow us to better understand the interactions between ergodicity and freeness.
+\begin{proposition}
+  The action $G\curvearrowright \left( X,\mu \right)$ is free if and only if for every finite subset $F\subseteq G$ and any non-null set $A\subseteq X$, there is a non-null set $B\subseteq A$ such that $sB\cap tB = \emptyset$ for all distinct $s,t\in F$.
+\end{proposition}
+\begin{proof}
+  If the action is not free, then since $G$ is countable, one of the sets $\set{x\in X | sx = x}$ for some $s\in G\setminus \set{e}$ is positive measure. This set, along with the pair $\set{e,s}$, fails to have the property in the proposition statement.
+
+  In the converse direction, suppose the action is free. We induct on the number of elements in $F$. If $A$ is a non-null subset of $X$, then if $F$ is empty or a singleton, we find the conclusion by taking $B = A$. Suppose $F$ is an arbitrary nonempty finite subset of $G$, and there is a non-null subset $B_0\subseteq A$, with $sB_0\cap S'B_0 = \emptyset$ for all distinct $s,s'\in F$. Let $t\in G\setminus F$, and let $F = \set{s_1,\dots,s_n}$. A result from descriptive set theory provides for $A\supseteq B_1\supseteq\cdots\supseteq B_n$ with $tB_k\cap S_kB_k = \emptyset$ for all $k=1,\dots,n$. The set $B_n$ has the desired property with respect to $F\cup \set{t}$ and $A$.
+\end{proof}
+\begin{proposition}
+  If $G\curvearrowright X$ is a pmp action, then the action is ergodic if and only if for all subsets $A,B\subseteq X$ with positive measure, there is $s\in G$ such that $\mu\left( sA\cap B \right) > 0$.
+\end{proposition}
+\begin{proof}
+  If $A$ and $B$ are subsets of $X$ with positive measure, then the set
+  \begin{align*}
+    A' &\coloneq \bigcup_{s\in G}sA
+  \end{align*}
+  satisfies $sA'=A'$ for all $s\in G$, meaning that it must have measure one. In particular, its intersection with $B$ has the same measure as $B$, so since $G$ is countable, at least one of the sets $sA\cap B$ has positive measure.
+
+  In the reverse direction, if $A\subseteq X$ is such that $0 < \mu(A) < 1$, then there is some $s\in G$ such that $\mu\left( sA\cap \left( X\setminus A \right) \right) > 0$, so $A$ fails to be $G$-invariant.
+\end{proof}
+Working with the definition of ergodicity directly is quite difficult, so we will often use the Koopman representation, and can apply the terminology to general unitary representations.
+\begin{definition}
+  A unitary representation $\pi\colon G\rightarrow B\left( H \right)$ is called \textit{ergodic} if $\pi(s)\xi = \xi$ for all $s\in G$ implies $\xi = 0$. That is, there are no nonzero invariant vectors.
+\end{definition}
+\begin{proposition}
+  The action $G\curvearrowright \left( X,\mu \right)$ is ergodic if and only if the restriction of the Koopman representation to the orthogonal complement $L_2\left( X,\mu \right)\ominus \C 1$ of the constants is ergodic.
+\end{proposition}
+\begin{proof}
+  If $A$ is $G$-invariant with $0 < \mu(A) < 1$, then $\chi_A-\mu(A)1$ is a nonzero $G$-invariant vector in $L_2\left( X,\mu \right)\ominus \C 1$.
+
+  Conversely, if $f$ is a nonzero $G$-invariant vector in $L_2\left( X,\mu \right)\ominus \C1$, then we may find a measurable subset $D\subseteq \C$ with $0 < \mu\left( f^{-1}\left( D \right) \right) < 1$. For each $s\in G$, the sets $sf^{-1}\left( D \right)\triangle f^{-1}\left( D \right)$ have measure zero, as they are contained in the union over $n\in \N$ of the sets $\set{x\in X | \left\vert f(x)-sf(x) \right\vert > 1/n}$, each of which has measure zero since $\norm{f - sf}_{L_2} = 0$. Thus, the action is not ergodic.
+\end{proof}
+\section{Examples}%
+\subsection{Bernoulli Actions}%
+Let $Y$ be a Polish space. Form the product space $Y^{G}$, which is also a Polish space as $G$ is countable. If $d$ is a compatible complete metric on $Y$, then enumerating $G = \set{s_1,s_2,\dots}$, we may find a metric
+\begin{align*}
+  d'\left( x,y \right) &= \sum_{n=1}^{\infty} 2^{-n} \min\left( d\left( x_{s_n},y_{s_n} \right),1 \right)
+\end{align*}
+on $Y^{G}$.
+\nocite{kerr_and_li}
+\printbibliography
+\end{document}
