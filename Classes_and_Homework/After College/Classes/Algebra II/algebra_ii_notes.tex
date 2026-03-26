@@ -1190,12 +1190,124 @@ To prove this, we will prove that these quantities are equal to a third quantity
   \end{align*}
   It follows that $u\in Z\left( \C[G] \right)$ if and only if $u\in \Span\left( u_1,\dots,u_r \right)$. Since conjugacy classes are disjoint, it follows that the $u_i$ are linearly independent, so $\Dim\left( Z\left( \C[G] \right) \right) = \left\vert K(G) \right\vert$.
 \end{proof}
+Now, we will focus on proving the following theorem, which will be quite a bit more involved.
 \begin{theorem}
   We have
   \begin{align*}
     \Dim\left( Z\left( \C[G] \right) \right) &= \left\vert \operatorname{irr}\left( G \right) \right\vert.
   \end{align*}
 \end{theorem}
-\section{Field Theory and Galois Theory}%
+Recall that if $R$ is a ring, and $M$ is a left $R$-module, then $\operatorname{end}_R(M)$ denotes the ring of endomorphisms of $M$ over $R$.
+\begin{lemma}
+  If $R$ is a left $R$-module over itself, then $\operatorname{end}_R(R)\cong R^{\op}$, where $R^{\op}$ is the opposite ring (i.e., the ring with multiplication given by $a\ast b = ba$).
+\end{lemma}
+The proof is given by using the fact that $\varphi\left( a \right) = a\varphi(1)$, and translating that into an isomorphism between $\operatorname{end}_R(R)$ and $R^{\op}$ given by mapping $\varphi\mapsto \varphi(1)$.
+\begin{lemma}
+  Let $M$ be an $R$-module, and let $D = \operatorname{end}_R(M)$. Then,
+  \begin{align*}
+    \operatorname{end}_R\left(M^{n}\right) &\cong \Mat_n(D).
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  Given any $A = \left( a_{ij} \right)_{ij}\in \Mat_n(D)$, define a map $\varphi_A\colon M^{n}\rightarrow M^{n}$ by taking
+  \begin{align*}
+    \varphi_A \begin{pmatrix}v_1\\\vdots\\v_n\end{pmatrix} &= \begin{pmatrix}\sum_{j=1}^{n}a_{1j}\left(v_j\right) \\ \vdots \\ \sum_{j=1}^{n}a_{nj}\left(v_j\right)\end{pmatrix}.
+  \end{align*}
+  It can be seen that $\varphi_A$ is in fact an endomorphism of $M^{n}$ and the map $A\mapsto \varphi_A$ is injective. 
 
+  Now, we will show surjectivity. We let $\alpha_i \colon M\rightarrow M^{n}$ be the embedding into coordinate $i$, and let $\pi_j\colon M^{n}\rightarrow M$ be the projection onto coordinate $j$. Observe that we have
+  \begin{align*}
+    \id_{M^n} = \sum_{i=1}^{n}\alpha_i\circ\pi_i\\
+    \begin{pmatrix}m_1\\\vdots\\m_n\end{pmatrix} &= \sum_{i=1}^{n} \alpha_i\left( m_i \right).
+  \end{align*}
+  If $\varphi\in \operatorname{end}_R\left(M^n\right)$, then we have
+  \begin{align*}
+    \varphi \begin{pmatrix}m_1\\\vdots\\m_n\end{pmatrix} &= \sum_{i=1}^{n} \alpha_i\circ \pi_i\circ \varphi\left( \sum_{j=1}^{n}\alpha_j\left( m_j \right) \right)\\
+                                                         &= \sum_{i,j=1}^{n}\alpha_i\circ\pi_i\circ\varphi\circ\alpha_j\left( m_j \right).
+  \end{align*}
+  Defining $a_{ij} = \pi_i\circ\varphi\circ\alpha_j\in \operatorname{end}_R(M)$, then we have
+  \begin{align*}
+    \varphi \begin{pmatrix}m_1\\\vdots\\m_n\end{pmatrix} &= \sum_{i,j=1}^{n}\alpha_i\circ a_{ij}\left( m_j \right)\\
+                                                         &= \sum_{i=1}^{n}\alpha_i\left( \sum_{j=1}^{n}a_{ij}\left( m_j \right) \right)\\
+                                                         &= \begin{pmatrix}\sum_{j=1}^{n}a_{1j}\left( m_j \right)\\\vdots\\\sum_{j=1}^{n}a_{nj}\left( m_j \right)\end{pmatrix}\\
+                                                         &= \left( a_{ij} \right)_{i,j} \begin{pmatrix}m_1\\\vdots\\m_n\end{pmatrix}.
+  \end{align*}
+  Therefore, $\varphi = \varphi_A$.
+\end{proof}
+We will apply these two lemmas to prove that $\Dim\left( Z\left( \C[G] \right) \right) = \left\vert \operatorname{irr}\left( G \right) \right\vert$, by applying them both to the ring $R = \C[G]$. Observe that $R^{\op} = \C\left[ G^{\op} \right] \cong \C[G]$, where the latter isomorphism follows from the fact that inversion is an anti-automorphism of the group. In particular, this means that $R\cong R^{\op}\cong \operatorname{end}_R(R)$.
+\begin{proof}
+  By Maschke's Theorem, $R = \C[G]$ is an irreducible module over itself, so we may write
+  \begin{align*}
+    R &= \bigoplus_{j=1}^{n} V_j,
+  \end{align*}
+  where each $V_j$ is an irreducible submodule. Let $W$ be an irreducible complex representation over $G$, which we may represent as an module over $R$.
+
+  We claim that there must exist some $j$ such that $V_j\cong W$. For this, fix any element $w_0\in W$, and consider the map $\psi\colon R\rightarrow W$ taking $\psi(r) = rw_0$. This is a nonzero homomorphism of $R$-modules, meaning there is some $j$ such that $\psi|_{V_j}\neq 0$. In particular, this means we have that $\psi|_{V_j}\colon V_j\rightarrow W$ is a nonzero $R$-module homomorphism, but since both of these modules are irreducible, Schur's Lemma gives that this is an $R$-module isomorphism.
+
+  We now seek to understand $\operatorname{end}_R(R)$. Consider the maps $\alpha_j\colon V_j\rightarrow R$ the inclusions and $\pi_j\colon R\rightarrow V_j$ the projections. If $\varphi\in \operatorname{end}_R(R)$, then for any $1\leq j,k\leq n$, we have that $\pi_k\circ\varphi\circ\alpha_j\colon V_j\rightarrow V_k$ is an $R$-module homomorphism, meaning that by Schur's Lemma, this composition is zero if $V_j\ncong V_k$ as $V_j$ and $V_k$ are irreducible.
+
+  In particular, we have for each $j$ that
+  \begin{align*}
+    \varphi\left( V_j \right) &\subseteq \bigoplus\set{V_k | 1\leq k \leq n,V_k\cong V_j}.
+  \end{align*}
+  Recall now that $\left\vert \operatorname{irr}\left( G \right) \right\vert$ denotes the equivalence classes of irreducible complex representations of $G$. Let $r = \left\vert \operatorname{irr}\left( G \right) \right\vert$, and let $W_1,\dots,W_r$ be representatives of equivalence classes. For each $1\leq i \leq r$, let
+  \begin{align*}
+    \widetilde{W}_i &= \bigoplus\set{V_j | V_j\cong W_i}.
+  \end{align*}
+  Then, we have
+  \begin{enumerate}[(i)]
+    \item $\ds R \cong \bigoplus_{i=1}^{r} \widetilde{W}_i$;
+    \item each $ \widetilde{W}_i\neq 0 $ as we know there is at least one $j$ such that $W_i\cong V_j$;
+    \item for any endomorphism of $R$, we have $\varphi\left( \widetilde{W}_i \right)\subseteq \widetilde{W}_i$.
+  \end{enumerate}
+  In particular, (iii) implies that
+  \begin{align*}
+    \operatorname{end}_R(R) &\cong \prod_{i=1}^{r} \operatorname{end}_R\left( \widetilde{W}_i \right).
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    Z\left( R \right) &\cong Z\left( \operatorname{end}_R(R) \right)\\
+                      &\cong \prod_{i=1}^{r} Z\left( \operatorname{end}_R\left( \widetilde{W}_i \right) \right).
+  \end{align*}
+  Observe now that $ \widetilde{W}_i\cong W_i^{n_i} $ for some $n_i\in \N$, so that
+  \begin{align*}
+    \operatorname{end}_R\left( \widetilde{W}_i \right) &\cong \operatorname{end}_R\left( W_i^{n_i} \right)\\
+                                                       &\cong \Mat_{n_i}\left( \operatorname{end}_R\left( W_i \right) \right).
+  \end{align*}
+  Since $W_i$ is an irreducible submodule, Schur's Lemma gives
+  \begin{align*}
+    \operatorname{end}_R\left( W_i \right) &= \set{\lambda I | \lambda\in \C}|\
+                                           &\cong \C,
+  \end{align*}
+  so that $\operatorname{end}_R\left( \widetilde{W}_i \right)\cong \Mat_{n_i}\left( \C \right)$. Since
+  \begin{align*}
+    Z\left( \Mat_{n_i}\left( \C \right) \right) &= \set{\lambda I_{n_i} | \lambda\in \C}\\
+                                                &\cong \C,
+  \end{align*}
+  we have that
+  \begin{align*}
+    Z\left( R \right) &\cong \prod_{i=1}^{r} Z\left( \operatorname{end}_R\left( \widetilde{W}_i \right) \right)\\
+                      &\cong \C^{r},
+  \end{align*}
+  so $\Dim\left( Z\left( R \right) \right) = r$.
+\end{proof}
+\section{Field Theory and Galois Theory}%
+The final part of the course is going to be focused on field theory and Galois theory.
+\subsection{Field Extensions}%
+\begin{definition}
+  A \textit{field extension} is a pair of fields $\left( K,F \right)$ with $F\subseteq K$. We denote field extensions as $K/F$. If we have a sequence of field extensions $F_1\subseteq F_2\subseteq\cdots\subseteq F_n$, we write this tower of field extensions as $F_n/F_{n-1}/\cdots/F_1$.
+\end{definition}
+Observe that if $K/F$ is a field extension, then $K$ is a vector space over $F$.
+\begin{definition}
+  The \textit{degree} of a field extension $K/F$, denoted $\left[ K:F \right]$, is given by $\Dim_F(K)$.
+\end{definition}
+Usually we will be interested in finite-degree field extensions, but in principle, $\left[ K:F \right]$ is the cardinality of the dimension.
+\begin{proposition}
+  If $L/K/F$ is a tower of fields, then $L/F$ is finite if and only if $L/K$ and $K/F$ are finite, with $\left[ L:F \right] = \left[ L:K \right]\left[ K:F \right]$.
+\end{proposition}
+\begin{proof}
+  We show a stronger statement; namely, if $\set{\alpha_i}_{i\in I}$ is a basis for $K/F$ and $\set{\beta_j}_{j\in J}$ is a basis for $L/K$, then $S = \set{\alpha_i\beta_j}_{i\in I,j\in J}$ is a basis for $L/F$, with the $\alpha_i\beta_j$ distinct.
+
+  For this, we need to show that $S$ spans $L/F$ and that its elements are distinct and linearly independent.
+\end{proof}
 \end{document}
