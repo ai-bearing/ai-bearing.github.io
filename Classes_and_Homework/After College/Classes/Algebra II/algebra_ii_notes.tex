@@ -1293,7 +1293,7 @@ We will apply these two lemmas to prove that $\Dim\left( Z\left( \C[G] \right) \
 \end{proof}
 \section{Field Theory and Galois Theory}%
 The final part of the course is going to be focused on field theory and Galois theory.
-\subsection{Field Extensions}%
+\subsection{Overview of Field Extensions}%
 \begin{definition}
   A \textit{field extension} is a pair of fields $\left( K,F \right)$ with $F\subseteq K$. We denote field extensions as $K/F$. If we have a sequence of field extensions $F_1\subseteq F_2\subseteq\cdots\subseteq F_n$, we write this tower of field extensions as $F_n/F_{n-1}/\cdots/F_1$.
 \end{definition}
@@ -1381,4 +1381,118 @@ Observe that in all cases, the minimal polynomial is always irreducible (almost 
 
   This means that the map $F\left[ x \right]/\left( \mu_{\alpha,F}(x) \right)\rightarrow F\left[ \alpha \right]$ given by $ \overline{\mu(x)}\mapsto \mu\left( \alpha \right) $ is an isomorphism, so since $\set{1, \overline{x},\dots, \overline{x}^{n-1}}$ forms a basis for $F\left[ x \right]/\left( \mu_{\alpha,F}(x) \right)$, we have that $\set{1,\alpha,\dots,\alpha^{n-1}}$ forms a basis for $F\left[ \alpha \right] = F\left( \alpha \right)$.
 \end{proof}
+\begin{remark}
+  If $K/F$ is a field extension, and $\alpha\in K$, then the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $\alpha$ is algebraic over $F$;
+    \item $F(\alpha)/F$ is finite;
+    \item there exists a subfield $F\subseteq L\subseteq K$ such that $\alpha\in L$ and $L/F$ is finite.
+  \end{enumerate}
+\end{remark}
+\subsection{Algebraic Extensions and Algebraic Closures}%
+\begin{definition}
+  An extension $K/F$ is called algebraic if, for any $\alpha\in K$, we have $\alpha$ is algebraic over $F$.
+
+  If $\alpha$ is algebraic over $F$, then we define
+  \begin{align*}
+    \deg_F(\alpha) &= \deg\left( \mu_{\alpha,F}(x) \right)\\
+                   &= \left[ F(\alpha):F \right].
+  \end{align*}
+\end{definition}
+We start by discussing \textit{relative} algebraic closure before we prove the existence of algebraic closure for arbitrary fields.
+\begin{definition}
+  Let $K/F$ be a field extension. The set
+  \begin{align*}
+    \operatorname{cl}_K(F) &= \set{\alpha\in K | \alpha\text{ is algebraic over }F}
+  \end{align*}
+  is known as the relative algebraic closure of $F$ in $K$.
+\end{definition}
+For instance, $\operatorname{cl}_{\C}\left( \Q \right) = \mathbb{A}$, the algebraic numbers.
+\begin{theorem}
+  The set $\operatorname{cl}_K(F)\subseteq K$ is a subfield.
+\end{theorem}
+\begin{proof}
+  Let $\alpha,\beta\in \operatorname{cl}_K(F)$ with $\beta\neq 0$. We will show that $\alpha\pm\beta$, $\alpha\beta$, and $\alpha/\beta$ are in $\operatorname{cl}_K(F)$.
+
+  Let $L = F\left( \alpha,\beta \right)$. Then, all four of these elements are in $L$. It remains to show that $L/F$ is a finite extension. We observe that $F\left( \alpha,\beta \right) = F\left( \alpha \right)\left( \beta \right)$, giving the tower of extensions $F\subseteq F\left( \alpha \right)\subseteq F\left( \alpha,\beta \right)$, so that
+  \begin{align*}
+    \left[ L:F \right] &= \left[ F\left( \alpha,\beta \right):F\left( \alpha \right) \right]\left[ F\left( \alpha \right):F \right]\\
+                       &< \infty,
+  \end{align*}
+  as $\alpha$ is algebraic over $F$ and $\beta$, being algebraic over $F$, is algebraic over $F\left( \alpha \right)$.
+\end{proof}
+Now, we want to investigate the relation between these algebraic extensions and the minimal polynomials $\mu_{\alpha,F}$, $\mu_{\beta,F}$, etc.
+
+A remark on the proof is that the computation gives that
+\begin{align*}
+  \left[ F\left( \alpha,\beta \right):F \right] &= \deg_{F}(\alpha)\deg_{F(\alpha)}(\beta)\\
+                                                &\leq \deg_{F}(\alpha)\deg_{F}(\beta).
+\end{align*}
+We can elaborate on this.
+\begin{corollary}
+  Let $K/F$ be a field extension, and let $\alpha_1,\dots,\alpha_n\in K$ be algebraic over $F$. Then,
+  \begin{enumerate}[(i)]
+    \item $\ds \left[ F\left( \alpha_1,\dots,\alpha_n \right):F \right] \leq \prod_{i=1}^{n}\left[ F\left( \alpha_i \right):F \right]$;
+    \item $\ds \deg_F\left( \alpha_i \right) | \left[ F\left( \alpha_1,\dots,\alpha_n \right):F \right]$;
+    \item if $\deg_F\left( \alpha_i \right)$ are coprime, then the inequality in (i) is actually an equality.
+  \end{enumerate}
+\end{corollary}
+\begin{example}
+  The splitting field $K\subseteq \C$ of the polynomial $p(x) = x^3 - 2$ is given by adjoining $\Q$ with all the roots of $p$ --- i.e., $K = \Q\left( \sqrt[3]{2},\omega\sqrt[3]{2},\omega^2\sqrt[3]{2} \right)$, where $\omega$ is a primitive cube root of unity.
+
+  Yet, we may also write
+  \begin{align*}
+    K &= \Q\left( \sqrt[3]{2},\omega \right),
+  \end{align*}
+  as the extension $Q\left( \sqrt[3]{2},\omega \right)$ is contained in the previous expression for $K$, while $\omega = \frac{\omega\sqrt[3]{2}}{\sqrt[3]{2}}$.
+
+  In particular, $\deg_{\Q}\left( \sqrt[3]{2} \right) = 3$ and $\deg_{\Q}\left( \omega \right) = 2$, which are coprime, meaning that $\left[ K:\Q \right] = 6$.
+\end{example}
+\begin{lemma}
+  Let $L/K/F$ be a tower of fields where $L/K$ and $K/F$ are algebraic. Then, $L/F$ is algebraic.
+\end{lemma}
+\begin{proof}
+  Let $\alpha\in L$. Since $\alpha$ is algebraic over $K$, there is $p(x)\in K[x]$, given by
+  \begin{align*}
+    p(x) &= \sum_{i=0}^{n}c_ix^i
+  \end{align*}
+  such that $p\left( \alpha \right) = 0$.
+
+  Then, we have $p(x)\in F\left( c_0,\dots,c_n \right)[x]$, meaning $\alpha$ is algebraic over $F\left( c_0,\dots,c_n \right)$. Since $K/F$ is algebraic, we have $\left[ F\left( c_0,\dots,c_n \right):F \right] < \infty$, with
+  \begin{align*}
+    \left[ F\left( \alpha,c_0,\dots,c_n \right):F\left( c_0,\dots,c_n \right) \right] < \infty,
+  \end{align*}
+  meaning that $\alpha$ is algebraic over $F$.
+\end{proof}
+\begin{definition}
+  A field $K$ is called algebraically closed if any nonzero polynomial over $K$ has a root in $K$.
+\end{definition}
+\begin{lemma}
+  Let $K$ be a field. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $K$ is \textit{not} algebraically closed;
+    \item there exists a nonconstant $p(x)\in K[x]$ that does not split into a product of linear factors;
+    \item there exists an irreducible polynomial $p(x)\in K[x]$ with $\deg(p)\geq 2$;
+    \item there exists a nontrivial finite extension $L/K$;
+    \item there exists a nontrivial algebraic extension $L/K$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  To see that (iv) implies (v), note that finite extensions are algebraic.
+
+  For (iv) implies (iii), if $\alpha\in L$ is algebraic with $\alpha\notin K$, then $\mu_{\alpha,K}(x)$ is irreducible with $\deg_K\left( \alpha \right) \geq 2$, as else we would have $\alpha\in K$.
+
+  For (iii) implies (iv), observe that $K[x]/\left( p(x) \right)$ is a field that is a finite dimensional vector space over $K$, so it forms a finite extension.
+
+  The equivalence between (i), (ii), and (iii) follows from the fact that irreducible polynomials in $K[x]$ do not split into linear factors (and vice versa), and that a field being not algebraically closed implies the existence of a polynomial that does not have a root in $K$ (hence does not factor into linear terms).
+\end{proof}
+\begin{definition}
+  Let $F$ be a field. An algebraic closure of $F$ is an algebraically closed field $K$ such that $F\subseteq K$ and the extension $K/F$ is algebraic.
+\end{definition}
+\begin{theorem}
+  Every field $F$ has an algebraic closure.
+\end{theorem}
+This is a classic Zorn's Lemma argument, but it requires a bit of care. Ideally, we would consider the set of all pairs of fields $\left( K,F \right)$ with $K/F$ algebraic, and partially order this set by inclusion. Then, we would be able to use Zorn's Lemma to prove that there exists maximal algebraic extension $M/F$ and show that $M$ is algebraically closed.
+
+Yet, this has one problem: the notion of ``set of all fields'' is not logically sound. That is, fields are a proper class rather than a set. The solution will be to fix a set $S$ of ``sufficiently large'' cardinality with $F\subseteq S$, and consider pairs $\left( K,F \right)$ with $K\subseteq S$, ordering $K_1\leq K_2$ if and only if $K_1\subseteq K_2$ and $K_2|_{K_1} = K_1$.
 \end{document}
