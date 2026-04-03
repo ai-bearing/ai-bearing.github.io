@@ -65,3 +65,9 @@ permalink: "/quotes.html"
   *Vivian Rogers*\
   "...like I have tuberculosis?"\
   *Jovan Kessler*
+
+- "Up to philosophomorphism"\
+  *David Chasteen-Boyd*
+
+- Regarding the group $\operatorname{SO}^{+}(2,1)$, "so it's like general relativity for flat-earthers"\
+  *Alejandro de las Peñas Castaño*
