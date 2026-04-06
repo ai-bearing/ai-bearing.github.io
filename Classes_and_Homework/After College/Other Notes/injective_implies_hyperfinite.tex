@@ -21,8 +21,8 @@
 \begin{document}
 \RaggedRight
 Some of these notes were originally written by my advisor, Ben Hayes.
-\section{Amenability in von Neumann Algebras}%
-Some of this material is taken from the \href{https://ai-bearing.github.io/Classes_and_Homework/After\%20College/Other\%20Notes/completely_positive_maps.pdf}{completely positive maps} notes.
+\section{Overviewing Amenability in von Neumann Algebras}%
+This material is taken from the \href{https://ai-bearing.github.io/Classes_and_Homework/After\%20College/Other\%20Notes/completely_positive_maps.pdf}{completely positive maps} notes.
 
 Recall that a discrete group $G$ is called amenable if it admits $m\in \ell_{\infty}\left( G \right)^{\ast}$ such that $m\left( \lambda_s f \right) = m(f)$, where $\lambda_sf(t) = f\left( s^{-1} t\right)$. There are a variety of other equivalent notions, such as the existence of a net $\left( \xi_i \right)_{i}\in \ell_1\left( G \right)$ satisfying
 \begin{align*}
@@ -38,7 +38,7 @@ known as almost invariant vectors. The existence of almost invariant vectors is 
 \end{align*}
 known as a Følner net (or sequence).
 
-Most all of these have analogous ideas in von Neumann algebras.
+Most all of these have analogous ideas in von Neumann algebras. We will start by discussing an analogue of an invariant mean on a von Neumann algebra, known as a hypertrace.
 
 Let $\left( M,\tau \right)$ be a von Neumann algebra, and let $L_2\left( M \right)$ denote the standard representation of $M$, which is the GNS representation of $M$ with respect to the faithful state $\tau$. We observe that $L_2\left( M \right)$ is equipped with an $M$-$M$-bimodule structure.
 
@@ -65,8 +65,106 @@ We start by introducing a way to characterize amenability of a group via its gro
   \begin{align*}
     \iprod{\xi}{E(T)\eta} &= m\left( f_{\xi,\eta}^{T} \right).
   \end{align*}
-  Since $m$ is invariant under the left regular action, it is invariant under the right regular action, so that $\rho(s)E(T)\rho\left( s^{-1} \right) = E\left( T \right)$, meaning that $E(T)$ commutes with $\rho(G)$, whence $E(T)\in L(G)$. Furthermore, $E(T)$ is a conditional expectation as it is equal to the identity on $L(G)$ and has norm less than or equal to $1$.
+  Since $m$ is invariant under the left regular action, it is invariant under the right regular action, so that 
+  \begin{align*}
+    \rho(s)E(T)\rho\left( s^{-1} \right) = E\left( T \right),
+  \end{align*}
+  meaning that $E(T)$ commutes with $\rho(G)$, whence $E(T)\in L(G)$. Furthermore, $E(T)$ is a conditional expectation as it is equal to the identity on $L(G)$ and has norm less than or equal to $1$.
 \end{proof}
+This property motivates the following definition.
+\begin{definition}
+  We say a von Neumann algebra is \textit{amenable} (or \textit{injective}) if $M$ can be faithfully represented as a von Neumann subalgebra of some $B\left( H \right)$ such that there exists a conditional expectation $E\colon B\left( H \right)\rightarrow M$.
+\end{definition}
+\begin{proposition}
+  Let $M$ be a von Neumann algebra. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $M$ is injective;
+    \item for every inclusion $A\subseteq B$ of unital $C^{\ast}$-subalgebras, any unital completely positive map $\phi\colon A\rightarrow M$ extends to a completely positive map from $B$ to $M$;
+    \item for any $B(H)$ that contains $M$ as a von Neumann subalgebra, there is a conditional expectation from $B(H)$ onto $M$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  To show (i) implies (ii), assume $M$ is a von Neumann subalgebra of $B(H)$, and let $E\colon B(H)\rightarrow M$ be a conditional expectation. Extend $\phi$ to a completely positive map $ \widetilde{\phi}\colon B\rightarrow B(H) $ by using Arveson's extension theorem. Then, $E\circ \widetilde{\phi}\colon B\rightarrow M$ is a completely positive extension of $\phi$.
+
+  For (ii) implies (iii), if $M\subseteq B(H)$, then apply (ii) with $A = M$, $B = B(H)$, and the identity map $\id_M$. Then, there exists a completely positive map $\phi\colon B(H)\rightarrow M$ whose restriction to $M$ is $\id_M$, which is necessarily a conditional expectation.
+\end{proof}
+\begin{example}
+  The hyperfinite $\text{II}_1$ factor, $R$, is amenable. Recall that the hyperfinite $\text{II}_1$ factor is defined to be the SOT-closure of the inductive limit of $Q_n = \M_{2^n}\left( \C \right)$, where we equip $Q_n\rightarrow Q_{n+1}$ with the block-diagonal embedding,
+  \begin{align*}
+    A &\mapsto \begin{pmatrix}A  & 0 \\ 0 & A\end{pmatrix}.
+  \end{align*}
+  Let $J$ be the conjugation operator on $L_2\left( R \right)$. For any $n\geq 1$ and $T\in B\left( L_2\left( R \right) \right)$, set
+  \begin{align*}
+    E_n(T) &= J \left( \int_{U\left( 2^{n} \right)}^{} uJTJu^{\ast}\:d\mu(u) \right)J,
+  \end{align*}
+  where $\mu$ denotes the Haar probability measure on the compact group $U\left( 2^{n} \right)$, the group of unitary $2^{n}\times 2^{n}$ matrices. Then, $\left( E_n\left( T \right) \right)_n$ is a norm-bounded sequence of operators in $B\left( L_2\left( R \right) \right)$.
+
+  Take the limit of this sequence along a free ultrafilter, which allows for the existence of a unique bounded operator denoted $E(T)$ satisfying
+  \begin{align*}
+    \iprod{\xi}{E(T)\eta} &= \lim_{\omega} \iprod{\xi}{E_n\left( T \right)\eta}
+  \end{align*}
+  for all $\xi,\eta\in L_2\left( R \right)$. Observe that for any $n\geq n_0$, we have that $E_n(T)\in J\left( Q_{n_0} \right)'J$, so that
+  \begin{align*}
+    E(T) &\in \bigcap_{n_0\geq 1} J\left( Q_{n_0} \right)'J\\
+         &= R,
+  \end{align*}
+  and $E(T) = T$ if $T\in R$. This gives that $E$ is our desired conditional expectation.
+\end{example}
+\begin{definition}
+  Let $\left( M,\tau \right)$ be a tracial von Neumann algebra. A state $\psi$ on $B\left( L_2\left( M,\tau \right) \right)$ is called a \textit{hypertrace} if $\psi\left( xT \right) = \psi\left( Tx \right)$ for every $x\in M$ and every $T\in B\left( L_2\left( M,\tau \right) \right)$, with $\psi|_{M} = \tau$.
+\end{definition}
+\begin{proposition}
+  Let $\left( M,\tau \right)$ be a tracial von Neumann algebra. Then, $M$ is amenable if and only if it has a hypertrace.
+\end{proposition}
+\begin{proof}
+  If $M$ is amenable, then since $M\subseteq B\left( L_2\left( M,\tau \right) \right)$, we have a conditional expectation $E\colon B\left( L_2\left( M,\tau \right) \right)\rightarrow M$, so that $\tau\circ E$ is a hypertrace.
+
+  Conversely, if $\psi$ is a hypertrace, then given $T\in B\left( L_2\left( M,\tau \right) \right)_{+}$, we may define a positive linear functional $\varphi$ on $M$ by taking $\varphi(x) = \psi\left( Tx \right)$. For any $x\in M_{+}$, we then have
+  \begin{align*}
+    \left\vert \varphi(x) \right\vert^2 &= \left\vert \psi\left( x^{1/2}Tx^{1/2} \right) \right\vert^2\\
+                                        &\leq \psi\left( x^{1/2}T^2x^{1/2} \right)\psi\left( x \right)\\
+                                        &\leq \norm{T}^2\psi\left( x \right)^2.
+  \end{align*}
+  Since $\psi|_{M} = \tau$, we have $\varphi(x)\leq \norm{T}\tau(x)$ for any $x\in M_{+}$, and in particular, $\varphi$ is normal. By the noncommutative Radon--Nikodym theorem, there is some $E(T)\in M_{+}$ such that for all $x\in M$,
+  \begin{align*}
+    \psi\left( Tx \right) &= \tau\left( E(T)x \right).
+  \end{align*}
+  We may extend $E$ to yield a conditional expectation from $B\left( L_2\left( M,\tau \right) \right)\rightarrow M$.
+\end{proof}
+\section{Approximation-Type Characterizations}%
+Next, we will discuss some approximation-type properties (akin to the almost-invariant vectors characterization of amenability of $G$). For this, we must provide an overview of the trace-class and Hilbert--Schmidt operators on the space $L_2\left( M \right)$. This will allow us to use the Powers--Størmer inequality to prove that amenability of a von Neumann algebra is equivalent to the existence of almost central vectors in the coarse $M$-$M$-bimodule $L_2\left( M \right)\otimes L_2\left( M \right)$.
+\begin{definition}
+  If $H$ is a Hilbert space, then we set
+  \begin{align*}
+    S^1\left( H \right) &= \set{T\in K\left( H \right) | \Tr(T) = \sum_{i\in I} \iprod{\left\vert T \right\vert e_i}{e_i} < \infty}\\
+    S^2\left( H \right) &= \set{T\in K\left( H \right) | \Tr\left( T^{\ast}T \right) < \infty}.
+  \end{align*}
+  We call $S^1\left( H \right)$ the trace-class operators, and $S^2\left( H \right)$ the Hilbert--Schmidt operators. The Hilbert--Schmidt operators admit an inner product and norm defined by
+  \begin{align*}
+    \iprod{A}{B} &= \Tr\left( B^{\ast}A \right)\\
+    \norm{A}_{\operatorname{HS}} &= \Tr\left( A^{\ast}A \right)^{1/2}.
+  \end{align*}
+\end{definition}
+Some of the following properties can be shown:
+\begin{itemize}
+  \item the value of $\Tr\left( A \right)$ is independent of orthonormal basis;
+  \item the space $S^2\left( H \right)$ is a $B\left( H \right)$-$B\left( H \right)$-bimodule, as $\norm{AB}_{\operatorname{HS}}\leq \norm{A}\norm{B}_{\operatorname{HS}}$ and $\norm{BA}_{\operatorname{HS}}\leq \norm{A}\norm{B}_{\operatorname{HS}}$, where $A\in B(H)$ and $B\in S^2\left( H \right)$;
+  \item the trace is tracial, in that $\Tr\left( AB \right) = \Tr\left( BA \right)$;
+  \item the value $\norm{A}_{\Tr} = \Tr\left( \left\vert A \right\vert \right)$ defines a norm on $S^1\left( H \right)$;
+  \item the space $S^1\left( H \right)$ is a $B\left( H \right)$-$B\left( H \right)$-bimodule;
+  \item if $A,B\in S^2\left( H \right)$, then $\norm{AB}_{\Tr} \leq \norm{A}_{\operatorname{HS}}\norm{B}_{\operatorname{HS}}$.
+\end{itemize}
+We will focus on showing the triangle inequality for $\norm{\cdot}_{\Tr}$. This follows from the fact that if $A,B\in B\left( H \right)$, then
+\begin{align*}
+  0 &\leq \left( A-B \right)^{\ast}\left( A-B \right) \\
+  &= A^{\ast}A - A^{\ast}B - B^{\ast}A + B^{\ast}B\\
+                                              &= -2\re\left( B^{\ast}A \right) + \left\vert A \right\vert^2 + \left\vert B \right\vert^2,
+\end{align*}
+whence
+\begin{align*}
+  \re\left( B^{\ast}A \right) &\leq \frac{1}{2}\left( \left\vert A \right\vert^2 + \left\vert B \right\vert^2 \right).
+\end{align*}
+
 \nocite{ii1_factors_anantharaman_popa}
 \printbibliography
 \end{document}
