@@ -1495,4 +1495,49 @@ We can elaborate on this.
 This is a classic Zorn's Lemma argument, but it requires a bit of care. Ideally, we would consider the set of all pairs of fields $\left( K,F \right)$ with $K/F$ algebraic, and partially order this set by inclusion. Then, we would be able to use Zorn's Lemma to prove that there exists maximal algebraic extension $M/F$ and show that $M$ is algebraically closed.
 
 Yet, this has one problem: the notion of ``set of all fields'' is not logically sound. That is, fields are a proper class rather than a set. The solution will be to fix a set $S$ of ``sufficiently large'' cardinality with $F\subseteq S$, and consider pairs $\left( K,F \right)$ with $K\subseteq S$, ordering $K_1\leq K_2$ if and only if $K_1\subseteq K_2$ and $K_2|_{K_1} = K_1$.
+
+An important set-theoretic fact is that an infinite set $A$ has $\left\vert A\times A \right\vert = \left\vert A \right\vert$. Furthermore, if a set $K$ is finite, then any algebraic closure $L/K$ is countable, as there are countably many elements of $K[x]$, whence $\left\vert L \right\vert\leq \max\left( \aleph_0,\left\vert K \right\vert \right)$.
+\begin{theorem}
+  Every field has an algebraic closure.
+\end{theorem}
+\begin{proof}
+  We will write fields as $\left( K,\lambda \right)$, where $K$ is a set and $\lambda$ is a field structure on $K$. Let $\left( F,\lambda_0 \right)$ be a field for which we want to construct an algebraic closure.
+
+  Fix a set $S$ such that $F\subseteq S$ and $\left\vert S \right\vert > \max\left( \left\vert F \right\vert,\aleph_0 \right)$. Applying Zorn's Lemma on the set
+  \begin{align*}
+    \Omega &= \set{\left( K,\lambda \right) | \text{$F\subseteq K\subseteq S$, $\lambda$ is a field structure on $K$, $\lambda|_{F} = \lambda_0$, and $\left( K,\lambda \right)/\left( F,\lambda_0 \right)$ is a field extension}}
+  \end{align*}
+  partially ordered by the relation $\left( K,\lambda \right)\leq \left( K',\lambda' \right)$ whenever $K\subseteq K'$ and $\lambda'|_{K} = \lambda$, we find our desired maximal element $\left( M,\lambda \right)$.
+
+  Next, we will show that $\left( M,\lambda \right)$ is an algebraic closure of $\left( F,\lambda_0 \right)$. By construction, $\left( M,\lambda \right)$ is an algebraic extension, so we only need to show that it is algebraically closed.
+
+  Suppose $\left( M,\lambda \right)$ were not algebraically closed, so there exists an algebraic extension $\left( M',\lambda' \right)$ with $M\subsetneq M'$. Since $M'$ is a finite extension of $M$, $M'$ is algebraic over $F$, and
+  \begin{align*}
+    \left\vert M'\setminus M \right\vert &\leq \left\vert M' \right\vert\\
+                                         &\leq \max \left( \left\vert F \right\vert,\aleph_0 \right)\\
+                                         &< \left\vert S \right\vert,
+  \end{align*}
+  so since $\left\vert M \right\vert < \left\vert S \right\vert$, we have $\left\vert S\setminus M \right\vert = \left\vert S \right\vert$ , whence $\left\vert M'\setminus M \right\vert\leq \left\vert S\setminus M \right\vert$ gives an injection that extends to $\iota\colon M'\rightarrow S$. Thus, $\left( M',\lambda' \right)$ has an isomorphic copy in $S$, which violates the maximality of $\left( M,\lambda \right)$.
+\end{proof}
+Next, we concern ourselves with the uniqueness of algebraic closures.
+\begin{definition}
+  Let $K/F$ and $L/F$ be field extensions. A map $\varphi\colon K\rightarrow L$ is called an $F$-embedding (resp.\ $F$-isomorphism) if
+  \begin{enumerate}[(i)]
+    \item $\varphi$ is a ring homomorphism (resp.\ isomorphism);
+    \item $\varphi|_{F} = F$.
+  \end{enumerate}
+\end{definition}
+Recall that there are no nonzero proper ideals in a field, meaning that any nonzero ring homomorphism of fields is automatically injective.
+
+If $\sigma\colon K\rightarrow L$ is any field embedding (not necessarily an embedding with respect to a common subfield), then there is an extension to a ring homomorphism $\sigma_{\ast}\colon K[x]\rightarrow L[x]$ by
+\begin{align*}
+  \sigma_{\ast} \left( \sum_{i=0}^{n}a_ix^i \right) &= \sum_{i=0}^{n} \sigma\left( a_i \right)x^i.
+\end{align*}
+\begin{lemma}[Simple Extension Lemma]
+  Suppose we have a field embedding $\sigma\colon M\rightarrow L$, extensions $M'/M$ and $L'/L$, and algebraic elements $\alpha\in M'$ and $\beta\in L'$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item there exists a field embedding $\sigma_{1}\colon M\left( \alpha \right)\rightarrow L\left( \beta \right)$ with $\sigma_1|_{M} = \sigma$ and $\sigma_1\left( \alpha \right) = \beta$;
+    \item $\sigma_{\ast}\left( \mu_{\alpha,M}(x) \right) = \mu_{\beta,L}(x)$.
+  \end{enumerate}
+\end{lemma}
 \end{document}
