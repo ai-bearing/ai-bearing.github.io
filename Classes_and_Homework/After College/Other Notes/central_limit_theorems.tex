@@ -33,13 +33,106 @@ The classical central limit theorem is as follows.
   \end{align*}
 \end{theorem}
 \subsection{Overview of Probability Theory}%
+Where possible, we will be using the measure theoretic terms for ideas from probability. The following is a useful dictionary (from \cite[Section 10.1]{folland_real_analysis})in case we use terms from probability that appear in other references.
+\begin{center}
+  \begin{tabular}{c|c}
+    Measure Theory & Probability\\
+    \hline
+    Probability space & Sample space\\
+    $\sigma$-algebra & $\sigma$-field\\
+    Measurable set & Event\\
+    Measurable function & Random variable\\
+    $\ds \int_{}^{} f\:d\mu$ & $ E\left[ X \right] $\\
+    Convergence in measure & Convergence in probability\\
+    Almost everywhere & Almost surely\\
+    Borel probability measure on $\R$ & Distribution\\
+    Fourier transform of a measure & Characteristic function of a distribution\\
+    Characteristic Function & Indicator function
+  \end{tabular}
+\end{center}
+\begin{definition}
+  Suppose $\left( X,\mu \right)$ is a Borel probability measure. A collection of Borel subsets $\set{E_j}_{j}$ is said to be \textit{independent} if
+  \begin{align*}
+    \mu\left( E_{j_1}\cap E_{j_k} \right) &= \prod_{i=1}^{k} \mu\left( E_{j_i} \right).
+  \end{align*}
+  A collection of measurable functions $\set{f_i}_{i\in I}$ on $X$ is said to be independent if, for all Borel subsets $B\subseteq \R$, the sets $B_i = f_i^{-1}\left( B \right)$ are independent in $X$.
+\end{definition}
+\begin{definition}
+  If $f\colon X\rightarrow \R$ is a measurable function on a probability space $\left( X,\mu \right)$, we define the distribution of $f$ to be the pushforward measure $f_{\ast}\mu$, where for any Borel $B\subseteq \R$, we have
+  \begin{align*}
+    f_{\ast}\mu\left( B \right) &= \mu \left( f^{-1}\left( B \right) \right).
+  \end{align*}
+  The distribution function of $f$ is then given by $F(t) = f_{\ast}\mu\left( \left( -\infty,t \right] \right)$.
+
+  If $\left( f_1,\dots,f_n \right)\colon X\rightarrow \R^{n}$ is a tuple of measurable functions, then the joint distribution is the pushforward measure on $\R^{n}$ defined by $\left( f_1,\dots,f_n \right)$.
+\end{definition}
+\begin{definition}
+  Given a Borel probability measure $\lambda$ on $\R$, we define
+  \begin{align*}
+    \overline{\lambda} &= \int_{}^{} t\:d\lambda(t)\\
+    \sigma^2 &= \int_{}^{} \left( t- \overline{\lambda} \right)^2\:d\lambda(t)
+  \end{align*}
+  to be the mean and variance of $\lambda$. We say a 
+\end{definition}
+\begin{definition}
+Given a probability measure $\mu$ on $\R$, we define the \textit{characteristic function} of $\mu$ to be the Fourier transform of the measure,
+\begin{align*}
+  \varphi &= \int_{\R}^{} e^{itx}\:d\mu(x).
+\end{align*}
+  
+\end{definition}
 
 \subsection{Proof via Fourier Analysis}%
+
 \subsection{Proof via Moments and Partitions}%
+There is a significantly more combinatorial method to prove the central limit theorem. For this, we must show that the standard normal distribution is determined by its moments.
+\begin{theorem}
+  Let $\mu$ be a probability measure on $\R$ that has finite moments 
+  \begin{align*}
+    m_k &= \int_{\R}^{} x^{k}\:d\mu(x)
+  \end{align*}
+  of all orders. If the power series $\sum_{k} \frac{a_k z^{k}}{k!}$ has positive radius of convergence, then $\mu$ is the only probability measure with the moments $\alpha_1,\alpha_2,\dots$.
+\end{theorem}
+\begin{proof}
+  Let
+  \begin{align*}
+    \beta_k &= \int_{\R}^{} \left\vert x \right\vert^{k}\:d\mu(x)
+  \end{align*}
+  denote the absolute moments. We start by showing that for some $r > 0$, we have
+  \begin{align*}
+    \frac{\beta_k r^{k}}{k!} &\rightarrow 0.
+  \end{align*}
+  By the hypothesis, there is some $0 < s < 1$ such that $ \frac{\alpha_k s^{k}}{k!}\rightarrow 0 $. Select $0 < r < s$. Then, for a large enough value of $k$, we have $2kr^{2k-1} < s^{2k}$. Since $\left\vert x \right\vert^{2k-1} \leq 1 + \left\vert x \right\vert^{2k}$ for sufficiently large $k$, we have
+  \begin{align*}
+    \frac{\beta_{2k-1} r^{2k-1}}{\left( 2k-1 \right)!} &\leq \frac{r^{2k-1}}{\left( 2k-1 \right)!} + \frac{\beta_{2k}s^{2k}}{\left( 2k \right)!}
+  \end{align*}
+  for large enough $k$. Thus, we have our desired result for odd values. Since $\beta_k = \alpha_k$ for even $k$, it follows for all values.
+
+  By Taylor's Theorem, we have
+  \begin{align*}
+    \left\vert e^{itx} \left( e^{ihx} - \sum_{k=0}^{n} \frac{\left( ihx \right)^{k}}{k!} \right)  \right\vert &\leq \frac{\left\vert hx \right\vert^{n+1}}{\left( n+1 \right)!},
+  \end{align*}
+  whence the characteristic function $\varphi$ of $\mu$ satisfies
+  \begin{align*}
+    \left\vert \varphi\left( t + h \right) - \sum_{k=0}^{n} \frac{h^{k}}{k!} \int_{\R}^{} \left( ix \right)^{k}e^{itx}\:d\mu(x) \right\vert &\leq \frac{\left\vert h \right\vert^{n+1}\beta_{n+1}}{\left( n+1 \right)!}.
+  \end{align*}
+  The integral is exactly the $k$th derivative of $\varphi$, whence
+  \begin{align*}
+    \varphi\left( t+h \right) &= \sum_{k=0}^{\infty} \frac{\varphi^{(k)}(t)}{k!}h^{k}
+  \end{align*}
+  for all $\left\vert h \right\vert\leq r$.
+
+  If $\nu$ is another probability measure with moments $\alpha_k$ and characteristic function $\psi(t)$, the same argument gives us
+  \begin{align*}
+    \psi\left( t + h \right) &= \sum_{k=0}^{\infty} \frac{\psi^{(k)}(t)}{k!}h^{k}
+  \end{align*}
+  for all $\left\vert h \right\vert\leq r$. Yet, if $t = 0$, then $\psi^{(k)}(0) = \varphi^{(k)}(0) = i^{k}\alpha_k$, meaning that $\varphi$ and $\psi$ are equal to each other on $\left( -r,r \right)$. Applying the identity theorem for analytic functions gives that $\varphi$ and $\psi$ coincide, so since characteristic functions are unique, it follows that $\mu$ and $\nu$ coincide.
+\end{proof}
 
 \section{Free Central Limit Theorem}%
 \subsection{Overview of Noncommutative Probability}%
 \subsection{Proof using Moments and Noncrossing Partitions}%
 \subsection{Free Cumulants and the $R$-Transform}%
-
+\nocite{billingsley_probability_and_measure,lectures_combinatorics_free_probability}
+\printbibliography
 \end{document}
