@@ -248,12 +248,64 @@ The Powers--Størmer will allow us to establish the following equivalence, which
   \end{align*}
   Thus, $\varphi$ is our desired hypertrace.
 
-  Finally, if there is a hypertrace $\varphi$, then we observe that
+  Now, suppose $\varphi$ is a hypertrace.
+
+  We start by observing a general lemma. If $M\subseteq B(H)$ is a von Neumann algebra, then
   \begin{align*}
-    \varphi\in \overline{\set{\Tr\left( \cdot A \right) | A\in S^1\left( H \right)_{+}, \Tr\left( A \right) = 1}}^{w^{\ast}},
+    S(M) &= \underbrace{\overline{\set{\Tr\left( \cdot A \right) | A\in S^1\left( H \right)_{+},\Tr\left( A \right) = 1}}^{w^{\ast}}}_{\eqcolon K},
   \end{align*}
-  as otherwise, there exists some weak* continuous $L\colon B\left( H \right)^{\ast}\rightarrow \C$ and $\beta < \alpha$ in $\R$ such that $\re\left( L\left( \varphi \right) \right) \geq \alpha > \beta = \re\left( L\left( \psi \right) \right)$ for all $\psi$ of the form $\Tr\left( \cdot A \right)$ with $A\in S^1\left( H \right)_{+}$ and $\Tr\left( A \right) = 1$.
+  where we view $B(H) = \left( S^1\left( H \right) \right)^{\ast}$. Observe that both sides are $w^{\ast}$-compact and convex, meaning that $S(M)$ containing $K$ follows immediately from the fact that $\Tr\left( A \right) = 1$. For inclusion, suppose $\varphi\in S(M)\setminus K$. It follows that there is some $w^{\ast}$-continuous linear functional $L\colon M^{\ast}\rightarrow \C$ and $\alpha < \beta \in \R$ such that $\re\left( L\left( \varphi \right) \right) \geq \alpha > \beta \geq \re\left( L\left( \psi \right) \right)$ for all $\psi\in K$. Since $\left( M^{\ast},w^{\ast} \right)^{^{\ast}} = M$, there is some $a\in M$ such that $L\left( \rho \right) = \rho\left( a \right)$ for all $\rho\in M^{\ast}$. In particular, this means we may write
+  \begin{align*}
+    \re\left( \varphi\left( a \right) \right) &\geq \alpha\\
+                                              &> \beta\\
+                                              &\geq \re\left( \Tr\left( Aa \right) \right)
+  \end{align*}
+  for all $A\in S^1\left( H \right)_{+}$. In particular, this holds for the vector state, whence we may assume
+  \begin{align*}
+    \varphi\left( \re\left( a \right) \right) &\geq \alpha\\
+                                              &> \beta\\
+                                              &\geq \iprod{\re\left( a \right)\xi}{\xi}
+  \end{align*}
+  for all $\xi\in H$ with $\norm{\xi}=  1$. Thus, without loss of generality, $a = a^{\ast}$. Taking the supremum over all satisfactory $\xi$ gives
+  \begin{align*}
+    \sup_{\norm{\xi} = 1} \iprod{a\xi}{\xi} &= \norm{a_{+}}\\
+                                            &\leq \beta\\
+                                            &< \alpha\\
+                                            &\leq \varphi\left( a \right)\\
+                                            &= \varphi\left( a_{+} \right) - \varphi\left( a_{-} \right)\\
+                                            &\leq \varphi\left( a_{+} \right)\\
+                                            &\leq \norm{a_{+}},
+  \end{align*}
+  which gives our desired contradiction.
+
+  In order to show (ii), it suffices to show that for all $x_1,\dots,x_n\in M$, we have
+  \begin{align*}
+    0 &\in \overline{\set{ \left( \left[ x_j,A \right] \right)_{j=1}^{n} | A\in S^1\left( H \right)_{+}, \Tr\left( A \right) = 1 }}^{\norm{\cdot}_{\Tr}}\\
+      &\subseteq S^1\left( H \right)^{\left( n \right)}.
+  \end{align*}
+  Since this is convex, the weak and norm closures coincide, where the weak topology is defined via the trace. By the lemma, if $\varphi\colon B(H)\rightarrow \C$ is a hypertrace for $M$, then there exists $\left( A_i \right)_{i\in I}$ in $S^1\left( H \right)_{+}$ with $\Tr\left( A_i \right) = 1$ for each $i$ such that $\lim_{i}\Tr\left( \cdot A_i \right) = \varphi$.
+
+  It thus suffices to show that for all $B\in B(H)$, we have $\Tr\left( \left[ x_j,A_i \right]B \right) \rightarrow 0$ for each $x_j$. This follows from a computation, where we use traciality and the fact that the trace-class operators are a two-sided ideal, giving
+  \begin{align*}
+    \Tr\left( \left[ x_j,A_i \right]B \right) &= \Tr\left( x_jA_iB \right)-\Tr\left( A_ix_jB \right)\\
+                                              &= \Tr\left( Bx_jA_i \right)-\Tr\left( x_jBA_i \right)\\
+                                              &\rightarrow \varphi\left( Bx_j-x_jB \right)\\
+                                              &= 0,
+  \end{align*}
+  since $\varphi$ is a hypertrace. Therefore, for all $j = 1,\dots,n$, we have $\left[ x_j,A_i \right]\rightarrow 0$ weakly, giving our desired result.
 \end{proof}
+\section{Connes's Trick}%
+Thus far, we have shown an equivalence between amenability/injectivity, the existence of a hypertrace, and certain almost-invariant or almost-central vectors. The next step is to construct an analogue to the Følner sequences, and for this, we must use a noncommutative version of the classic Namioka trick.
+
+It can be observed (and is a classic exercise of real analysis) that for any $s_1,s_2\in \R$, we have
+\begin{align*}
+  \left\vert s_1-s_2 \right\vert &= \int_{-\infty}^{\infty} \left\vert \chi_{\left( t,\infty \right)}\left( s_1 \right) - \chi_{\left( t,\infty \right)}\left( s_2 \right) \right\vert\:dt.
+\end{align*}
+Applying various bootstrapping measures, we have that if $\left( X,\mu \right)$ is a $\sigma$-finite measure space, then
+\begin{align*}
+  \norm{f-g}_{L_1} &= \int_{-\infty}^{\infty} \norm{ \chi_{f^{-1}\left( t,\infty \right)} - \chi_{g^{-1}\left( t,\infty \right)} }_{L_1}\:dt\\
+  \norm{f}_{L_1} &= \int_{-\infty}^{\infty} \norm{\chi_{f^{-1}\left( t,\infty \right)}}_{L_1}\:dt
+\end{align*}
 \nocite{ii1_factors_anantharaman_popa}
 \printbibliography
 \end{document}
