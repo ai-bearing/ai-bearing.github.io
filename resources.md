@@ -7,6 +7,8 @@ permalink: "/useful_resources.html"
 
 - [Terence Tao's Notes](https://terrytao.wordpress.com/)
 - [Keith Conrad's Notes](https://kconrad.math.uconn.edu/blurbs/)
+- [AMS Open Math Notes](https://www.ams.org/open-math-notes)
+- [Amenability in Discrete Groups](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors%20Thesis/Amenability%20Text/amenability.pdf)
 - Topics of Interest:
     - [Lectures on the Combinatorics of Free Probability](https://rolandspeicher.com/wp-content/uploads/2020/06/nica-speicher-book.pdf)
     - [Free Probability and Random Matrices](https://mast.queensu.ca/~mingo/mingo_speicher_2017.pdf)
@@ -16,7 +18,6 @@ permalink: "/useful_resources.html"
     - [An Introduction to Hyperlinear and Sofic Groups](https://arxiv.org/pdf/0911.4266)
     - [Introduction to Sofic and Hyperlinear Groups and Connes' Embedding Conjecture](https://arxiv.org/pdf/1309.2034)
     - [Free Entropy](https://arxiv.org/pdf/math/0103168)
-- [AMS Open Math Notes](https://www.ams.org/open-math-notes)
 - Class notes:
     - Graduate classes:
         - [Differential Topology](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Differential Topology/differential_topology_notes.pdf)
@@ -36,7 +37,6 @@ permalink: "/useful_resources.html"
         - [Advanced Linear Algebra](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Advanced Linear/advanced_linear_notes.pdf)
         - [Algebra II](https://ai-bearing.github.io/Classes_and_Homework/College/Y3/Y3S2, Algebra II/alg_2_notes.pdf)
         - [Set Theory and Foundations of Mathematics](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S1, Set Theory and Foundations/set_theory_and_foundations_notes.pdf)
-        - Graph Theory Notes [(i)](https://ai-bearing.github.io/Classes_and_Homework/College/Y2/Y2S2, Math 382/midterm review/midterm_1_review.pdf) and [(ii)](https://ai-bearing.github.io/Classes_and_Homework/College/Y2/Y2S2, Math 382/classnotes/notes_after_midterm_1.pdf)
 - Supplementary Personal Notes:
     - Algebra:
       - [Conjugation and the Sylow Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conjugation_and_sylow_theorems.pdf)
@@ -60,8 +60,8 @@ permalink: "/useful_resources.html"
         - [Structure of von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/vna_structure.pdf) (in progress)
         - [Projections in von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/vna_projections.pdf) (in progress)
         - [Borel Equivalence Relations](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/orbit_equivalence.pdf) (in progress)
-        - [Standard Representation and Equivalence Relation von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/equivalence_relation_von_neumann_algebras.pdf) (in progress)
-      - Miscellaneous Notes/Workthroughs:
+        - [Completely Positive Maps](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/completely_positive_maps.pdf)
+      - Miscellaneous:
         - [Functional Analysis Exercises](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conway_analysis_exercises.pdf)
         - [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
         - [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)
