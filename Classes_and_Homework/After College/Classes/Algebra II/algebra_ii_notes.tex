@@ -1540,4 +1540,111 @@ If $\sigma\colon K\rightarrow L$ is any field embedding (not necessarily an embe
     \item $\sigma_{\ast}\left( \mu_{\alpha,M}(x) \right) = \mu_{\beta,L}(x)$.
   \end{enumerate}
 \end{lemma}
+\begin{proof}
+  For (i) implies (ii), we observe that if there exists such a field embedding, then this induces an injective homomorphism $M[x]/\left( \mu_{\alpha,M}(x) \right)\rightarrow L[x]/\left( \mu_{\beta,L}(x) \right)$ by pushing forward $\sigma_1$. Since $\sigma_{1}(\alpha) = \beta$, this corresponds to $\left( \sigma_{1} \right)_{\ast}\left( \mu_{\alpha,M}(x) \right) = \mu_{\beta,L}(x)$.
+
+  In the reverse direction since $\alpha$ is algebraic over $x$, it follows that any element of $M(\alpha)$ is given by $p(\alpha)$ for some $p\in M[x]$. Define
+  \begin{align*}
+    \sigma_1\left( p(\alpha) \right) &= \left( \sigma_{\ast}p \right)(\beta).
+  \end{align*}
+  This is well-defined since if $p(\alpha) = q(\alpha)$, then $\left( p-q \right)(\alpha) = 0$, so $\mu_{\alpha,M}(x) | \left( p-q \right)(x)$. Since $\sigma_{\ast}$ is a ring homomorphism, we have $\sigma_{\ast}\left( \mu_{\alpha,M} \right) | \sigma_{\ast}(p)-\sigma_{\ast}(q)$. Therefore, we have $\left( \sigma_{\ast}p \right)(\beta) = \left( \sigma_{\ast}q \right)(\beta)$.
+\end{proof}
+\begin{lemma}[Embedding Lemma]
+  Let $K/F$ and $L/F$ be extensions such that $K/F$ is algebraic and $L$ is algebraically closed. Then, there is an $F$-embedding $\sigma\colon K\rightarrow L$.
+\end{lemma}
+\begin{proof}
+  Apply Zorn's Lemma to the set
+  \begin{align*}
+    \set{\left( M,\varphi \right) | \text{$M$ is an intermediate field extension $F\subseteq M\subseteq K$, with $\varphi\colon M\rightarrow L$ an $F$-embedding}}
+  \end{align*}
+  partially ordered by $\left( M,\varphi \right)\preceq \left( M',\varphi' \right)$ if and only if $M\subseteq M'$ and $\varphi'|_{M} = \varphi$. Note that if the maximal element $M$ is not equal to $K$, then there is some algebraic element $\alpha\in K\setminus M$ and the simple extension lemma can be used to contradict maximality.
+\end{proof}
+\begin{theorem}[Uniqueness of Algebraic Closure]
+  If $K$ and $L$ are algebraic closures of $F$, then there is an $F$-isomorphism $K\rightarrow L$.
+\end{theorem}
+\begin{proof}
+  By the Embedding Lemma, there is an $F$-embedding $\sigma\colon K\rightarrow L$. All we need to show now is that $\sigma(K) = L$.
+
+  Since $L/F$ is algebraic and $\sigma(K)\supseteq F$, we have $L/\sigma(K)$ is algebraic.
+
+  Since $\sigma(K)\cong K$, and $K$ is algebraically closed, we must have $L = \sigma(K)$ since algebraically closed fields have no nontrivial algebraic extensions.
+\end{proof}
+We usually denote the algebraic closure of $F$ by $ \overline{F} $.
+
+Note that if $K/F$ is an algebraic extension, then $ \overline{K} = \overline{F} $.
+\subsection{Splitting Fields, Normal and Separable Extensions}%
+\begin{definition}
+  Let $K/F$ be a field extension and let $\Omega\subseteq F[x]\setminus F$ be a collection of nonconstant polynomials. We say $K$ is a \textit{splitting field} for $\Omega$ if
+  \begin{enumerate}[(i)]
+    \item every polynomial $f(x)\in \Omega$ splits over $K$ --- that is,
+      \begin{align*}
+        f(x) &= a\prod_{i=1}^{n}\left( x-\alpha_i \right);
+      \end{align*}
+    \item we have
+      \begin{align*}
+        K = F\left( \set{\text{$K$-roots of polynomials in $\Omega$}} \right).
+      \end{align*}
+  \end{enumerate}
+\end{definition}
+\begin{example}
+  If $F = \Q$ and $\Omega = \set{x^3 - 2}$, then over $ \overline{\Q} $, we have
+  \begin{align*}
+    x^3 - 2 &= \left( x-\sqrt[3]{2} \right)\left( x-\zeta_3\sqrt[3]{2} \right)\left( x-\zeta_3^2\sqrt[3]{2} \right),
+  \end{align*}
+  where $\zeta_3 = e^{2\pi i/3}$ is a primitive cube root of unity. Then, the field
+  \begin{align*}
+    K &= \Q\left( \sqrt[3]{2},\zeta_3 \right)
+  \end{align*}
+  is a splitting field for $\Omega$ over $\Q$.
+\end{example}
+\begin{proposition}[Existence and Uniqueness of Splitting Fields]
+  Let $F$ be a field, and let $\Omega$ be a family of nonconstant polynomials over $F$.
+  \begin{enumerate}[(i)]
+    \item For any algebraic closure $ \overline{F} $ of $F$, there exists a unique splitting field $K$ for $\Omega$ over $F$ with $K\subseteq \overline{F}$.
+    \item Any splitting field of $\Omega$ is contained in some algebraic closure of $F$.
+    \item A splitting field for $\Omega$ over $F$ is unique up to an $F$-isomorphism.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item Take $K = F(A)$, where $A$ is the set of all $ \overline{F} $-roots of polynomials in $\Omega$. This is the unique such $K$.
+    \item This is the special case of the observation that any algebraic extension is contained in an algebraic closure.
+    \item We apply (i) and (ii) along with the uniqueness of algebraic closures up to $F$-isomorphism.
+  \end{enumerate}
+\end{proof}
+Next, we move towards the central concepts in Galois theory.
+\begin{definition}
+  Let $K/F$ be an algebraic extension, and let $ \overline{F} $ be such that $K\subseteq \overline{F}$. The extension $K/F$ is called \textit{normal} if any of the following equivalent conditions hold
+  \begin{enumerate}[(i)]
+    \item for all irreducible polynomials $p(x)\in F[x]$, if $p(x)$ has a root in $K$, then $p(x)$ splits in $K$;
+    \item there exists $\Omega\subseteq F[x]\setminus F$ such that $K$ is the unique splitting field for $\Omega$ over $F$ in $ \overline{F} $;
+    \item for any $F$-embedding $\sigma\colon K\rightarrow \overline{F}$, we have $\sigma(K) = K$.
+  \end{enumerate}
+\end{definition}
+\begin{example}\hfill
+  \begin{enumerate}[(i)]
+    \item The field $\Q\left( \sqrt[3]{2},\zeta_3 \right)$ is a normal extension of $\Q$ as it is the splitting field for $x^3-2$ over $\Q$
+    \item The field $\Q\left( \sqrt[3]{2} \right)$ is not a normal extension of $\Q$, since $p(x) = x^3 - 2$ has a root in $\Q\left( \sqrt[3]{2} \right)$ but does not split into linear factors.
+  \end{enumerate}
+\end{example}
+\begin{theorem}
+  The conditions (i) through (iii) in the definition of a normal extension are in fact equivalent.
+\end{theorem}
+\begin{proof}
+  Let $K/F$ be an extension such that (i) holds. Define $\Omega$ by
+  \begin{align*}
+    \Omega &= \set{\mu_{\alpha,F} | \alpha\in K}.
+  \end{align*}
+  Then, if
+  \begin{align*}
+    A &= \set{\text{$ \overline{F} $-roots of polynomials in $ \Omega $}},
+  \end{align*}
+  we have $K = F(A)$.
+
+  Suppose (iii) holds. Let $p(x)\in F[x]$ be irreducible, and let $\alpha,\beta$ be $ \overline{F} $-roots with $\alpha\in K$. We want to show that $\beta\in K$.
+
+  Without loss of generality, we may assume that $p(x)$ is monic and irreducible, so we have $\mu_{\alpha,F} = \mu_{\beta,F}$. If $\sigma\colon F\rightarrow F$ is the identity map, then $\sigma_{\ast}\colon F[x]\rightarrow F[x]$ is the identity map, so by the simple extension lemma, we have an $F$-embedding $\tau\colon F(\alpha)\rightarrow F(\beta)\subseteq \overline{F}$.
+
+  Arguing as in the proof of the main embedding lemma, we may extend to $\tau_1\colon K\rightarrow \overline{F}$ by taking $\tau_1\left( \alpha \right) = \beta$. Applying (iii) to $\sigma = \tau_1$ has $\tau(K) = K$, so since $\tau_1\left( \alpha \right) = \beta$, it follows that $\beta\in K$.
+\end{proof}
 \end{document}

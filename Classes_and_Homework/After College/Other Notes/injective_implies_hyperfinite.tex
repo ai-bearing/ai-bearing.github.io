@@ -294,7 +294,7 @@ The Powers--Størmer will allow us to establish the following equivalence, which
   \end{align*}
   since $\varphi$ is a hypertrace. Therefore, for all $j = 1,\dots,n$, we have $\left[ x_j,A_i \right]\rightarrow 0$ weakly, giving our desired result.
 \end{proof}
-\section{Connes's Trick}%
+\section{Connes's Trick and Følner Projections}%
 Thus far, we have shown an equivalence between amenability/injectivity, the existence of a hypertrace, and certain almost-invariant or almost-central vectors. The next step is to construct an analogue to the Følner sequences, and for this, we must use a noncommutative version of the classic Namioka trick.
 
 It can be observed (and is a classic exercise of real analysis) that for any $s_1,s_2\in \R$, we have
@@ -306,6 +306,131 @@ Applying various bootstrapping measures, we have that if $\left( X,\mu \right)$ 
   \norm{f-g}_{L_1} &= \int_{-\infty}^{\infty} \norm{ \chi_{f^{-1}\left( t,\infty \right)} - \chi_{g^{-1}\left( t,\infty \right)} }_{L_1}\:dt\\
   \norm{f}_{L_1} &= \int_{-\infty}^{\infty} \norm{\chi_{f^{-1}\left( t,\infty \right)}}_{L_1}\:dt
 \end{align*}
+In particular, if we have $\norm{f-g}_{L_1} < \ve \norm{f}_{L_1}$ for some $\ve > 0$, then there is some $t_0\in \R$ such that
+\begin{align*}
+  \norm{\chi_{f^{-1}\left( t_0,\infty \right)} - \chi_{g^{-1}\left( t_0,\infty \right)}}_{L_1} < \ve \norm{\chi_{f^{-1}\left( t_0,\infty \right)}}_{L_1}.
+\end{align*}
+We will seek to obtain a noncommutative version of the Namioka trick. First, we must reduce computations of Hilbert--Schmidt norms to computations of $L_2$ norms of functions.
+\begin{proposition}
+  Let $ H $ be a Hilbert space, and let $x,y$ be two positive finite rank operators on $H$. There exists a positive Radon measure $\nu$ on $\R^2_{+}$ such that for every pair of Borel complex-valued functions on $\R_{+}$ with $f(0) = g(0) = 0$, we have
+  \begin{align*}
+    \norm{f(x)-g(y)}_{\operatorname{HS}}^2 &= \int_{\R^2_{+}}^{} \left\vert f\left( \alpha \right)-g\left( \beta \right) \right\vert^{2}\:d\nu\left( \alpha,\beta \right).
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Write
+  \begin{align*}
+    x &= \sum_{i=1}^{m} \lambda_i e_i\\
+    y &= \sum_{j=1}^{n}\mu_j f_j,
+  \end{align*}
+  where the $\lambda_i$ and $\mu_j$ are the distinct strictly positive eigenvalues of $x$ and $y$ respectively, and the $e_i$ and $f_j$ are the corresponding spectral projections. Set
+  \begin{align*}
+    e_0 &= 1-\sum_{i=1}^{m}e_i\\
+    f_0 &= 1-\sum_{j=1}^{n} f_j,
+  \end{align*}
+  and let $\Tr$ denote the usual trace on $B\left( H \right)_{+}$.
+
+  Define
+  \begin{align*}
+    X &= \left( \sigma(x)\times \sigma(y) \right)\setminus \set{\left( 0,0 \right)},
+  \end{align*}
+  where $\sigma(x)$ denotes the spectrum, and define a measure $\mu$ on $X$ by setting
+  \begin{align*}
+    \nu\left( \set{\left( \lambda_i,\mu_j \right)} \right) &= \Tr\left( e_if_j \right)\\
+    \nu\left( \set{\left( \lambda_i,0 \right)} \right) &= \Tr\left( e_if_0 \right)\\
+    \nu\left( \set{\left( 0,\mu_j \right)} \right) &= \Tr\left( e_0f_j \right).
+  \end{align*}
+  If we have two real-valued Borel functions on $\R_{+}$ with $f(0) = g(0) = 0$, then we have
+  \begin{align*}
+    f(x) &= \sum_{i=1}^{m}f\left( \lambda_i \right)e_i\\
+    g\left( y \right) &= \sum_{j=1}^{n}g\left( \mu_j \right)f_j
+  \end{align*}
+  are still finite-rank operators, and
+  \begin{align*}
+    \Tr\left( f\left( x \right)g\left( y \right) \right) &= \int_{\R_{+}^{2}}^{} f\left( \alpha \right)g\left( \beta \right)\:d\nu\left( \alpha,\beta \right)\\
+    \Tr\left( f\left( x \right)^2 \right) &= \int_{\R_{+}^{2}}^{} f\left( \alpha \right)^2\:d\nu\left( \alpha,\beta \right)\\
+    \Tr\left( g\left( y \right)^2 \right) &= \int_{\R^{2}_{+}}^{} g\left( \beta \right)^2\:d\nu\left( \alpha,\beta \right),
+  \end{align*}
+  so that
+  \begin{align*}
+    \norm{f(x)-g(y)}_{\operatorname{HS}}^2 &= \int_{\R^2_{+}}^{} \left\vert f\left( \alpha \right)-g\left( \beta \right) \right\vert^2\:d\nu\left( \alpha,\beta \right).
+  \end{align*}
+\end{proof}
+\begin{theorem}[Connes's Trick]
+  Let $x_1,\dots,x_n$ be positive finite-rank elements of $B(H)$, and $0 < \ve < 1$ such that $\norm{x_i-x_1}_{\operatorname{HS}} < \ve \norm{x_1}_{\operatorname{HS}}$. Then, there is $t_0 > 0$ such that
+  \begin{align*}
+    \norm{\chi_{\left( t_0,\infty \right)}\left( x_i \right) - \chi_{\left( t_0,\infty \right)}\left( x_1 \right)}_{\operatorname{HS}} < \left( 3n\ve \right)^{1/2} \norm{\chi_{\left( t_0,\infty \right)}\left( x_1 \right)}_{\operatorname{HS}}.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Applying the earlier lemma with $f = g = \chi_{\left( t^{1/2},\infty \right)}$ gives
+  \begin{align*}
+    \norm{\chi_{\left( t^{1/2},\infty \right)}\left( x \right) - \chi_{\left( t^{1/2},\infty \right)}\left( y \right)}_{\operatorname{HS}}^2 &= \int_{}^{} \left\vert \chi_{\left( t^{1/2},\infty \right)}\left( \alpha \right) - \chi_{\left( t^{1/2},\infty \right)}\left( \beta \right) \right\vert\:d\nu\left( \alpha,\beta \right).
+  \end{align*}
+  Integrating with respect to $t$, using Fubini's Theorem, and Hölder's Inequality respectively gives
+  \begin{align*}
+    \int_{0}^{\infty} \norm{\chi_{\left( t^{1/2},\infty \right)}\left( x \right) - \chi_{\left( t^{1/2},\infty \right)}\left( y \right)}_{\operatorname{HS}}^2\:dt &= 
+    \int_{\R^2_{+}}^{} \left( \int_{0}^{\infty} \left\vert \chi_{\left( t^{1/2},\infty \right)}\left( \alpha \right) - \chi_{\left( t^{1/2},\infty \right)}\left( \beta \right) \right\vert\:dt \right)\:d\nu\left( \alpha,\beta \right)\\
+                                                                 &= \int_{\R_{+}^2}^{} \left\vert \alpha^2-\beta^2 \right\vert\:d\nu\left( \alpha,\beta \right)\\
+                                                                 &\leq \left( \int_{\R^2_{+}}^{} \left\vert \alpha-\beta \right\vert^2\:d\nu\left( \alpha,\beta \right) \right)^{1/2} \left( \int_{\R^2_{+}}^{} \left\vert \alpha + \beta \right\vert^2\:d\nu\left( \alpha,\beta \right) \right)\\
+                                                                      &= \norm{x-y}_{\operatorname{HS}}\norm{x+y}_{\operatorname{HS}}
+  \end{align*}
+  For any $\ve < 1$, the triangle inequality gives that
+  \begin{align*}
+    \norm{x_j + x_1}_{\operatorname{HS}} &\leq 3\norm{x_1}_{\operatorname{HS}},
+  \end{align*}
+  so we have
+  \begin{align*}
+    \int_{0}^{\infty} \sum_{i=1}^{n}\norm{\chi_{\left( t^{1/2},\infty \right)}\left(x_j\right)-\chi_{\left( t^{1/2},\infty \right)}\left( x_1 \right)}_{\operatorname{HS}}\:dt &< 3n\ve \norm{x_1}_{\operatorname{HS}}^2\\
+                                                                                                                                                                                                &= 3n\ve \int_{0}^{\infty} \norm{\chi_{\left( t^{1/2},\infty \right)}\left( x_1 \right)}_{\operatorname{HS}}^2\:dt.
+  \end{align*}
+  Hence, the Namioka trick gives some $t_0 > 0$ with
+  \begin{align*}
+    \sum_{i=1}^{n} \norm{\chi_{\left( t_0,\infty \right)}\left( x_i \right) - \chi_{\left( t_0,\infty \right)}\left( x_1 \right)}_{\operatorname{HS}}^2 &< 3n\ve\norm{\chi_{\left( t_0,\infty \right)}\left( x_1 \right)}_{\operatorname{HS}}^2.
+  \end{align*}
+\end{proof}
+The theorem applies in any semifinite von Neumann algebra $\left( M,\Tr \right)$ instead of just $\left( B\left( H \right),\Tr \right)$ upon using one's preferred faithful representation.
+\begin{proposition}
+  Let $\left( M,\tau \right)$ be a tracial von Neumann algebra, and let $\xi,\eta\in L_2\left( M \right)_{+}$. There exists a positive Radon measure $\nu$ on $\R^2_{+}$ such that for all Borel functions $f,g$ on $\R_{+}$ with $f(0) = g(0) = 0$ and $f\left( \xi \right),g\left( \eta \right)\in L_2\left( M \right)$, the maps $\left( \alpha,\beta \right)\mapsto f\left( \alpha \right)$ and $\left( \alpha,\beta \right)\mapsto g\left( \beta \right)$ are square-integrable, with
+  \begin{align*}
+    \norm{f\left( \xi \right)-g\left( \eta \right)}_{L_2(M)}^2 &= \int_{\R^2_{+}}^{} \left\vert f\left( \alpha \right)-g\left( \beta \right) \right\vert^2\:d\nu\left( \alpha,\beta \right).
+  \end{align*}
+\end{proposition}
+\begin{theorem}
+  Let $\left( M,\tau \right)$ be a tracial von Neumann algebra, and let $\xi_1,\dots,\xi_n\in L_2\left( M \right)_{+}$. Let $0 < \ve < 1$ be such that
+  \begin{align*}
+    \norm{\xi_i - \xi_1}_{L_2(M)} &< \ve\norm{\xi_1}_{L_2(M)}.
+  \end{align*}
+  Then, there is $t_0 > 0$ such that
+  \begin{align*}
+    \norm{\chi_{\left( t_0,\infty \right)}\left( \xi_i \right) - \chi_{\left( t_0,\infty \right)}\left( \xi_1 \right)}_{L_2(M)} &< \left( 3n\ve \right)^{1/2} \norm{\chi_{\left( t_0,\infty \right)}\left( \xi_1 \right)}_{L_2(M)}.
+  \end{align*}
+\end{theorem}
+The main benefit we will find from the Connes trick is the existence of Følner projections.
+\begin{corollary}
+  If $M$ is amenable, then there exist projections $p_i\in B\left( L_2\left( M \right) \right)$ with $0 < \Tr\left( p_i \right) < \infty$ and
+  \begin{align*}
+    \frac{\norm{\left[ x,p_i \right]}_{\Tr}}{\Tr\left( p_i \right)} &\rightarrow 1
+      \intertext{and}
+    \frac{\Tr\left( xp_i \right)}{\Tr\left( p_i \right)} &\rightarrow \tau\left( x \right)
+  \end{align*}
+  for all $x\in M$, where $\Tr$ denotes the trace on $B\left( L_2\left( M \right) \right)$.
+\end{corollary}
+\begin{proof}
+  Given $\ve > 0$ and some subset $F\subseteq U(M)$ finite, there exists $A\in S^2\left( H \right)$ with $\norm{A}_{\operatorname{HS}} = 1$ and $\sum_{u\in F} \norm{uAu^{\ast}-A}_{\operatorname{HS}}^2 < \ve$.
+
+  This gives
+  \begin{align*}
+    \int_{0}^{\infty} \sum_{u\in F}\norm{u\chi_{\left( t^{1/2},\infty \right)}(A)u^{\ast}-\chi_{\left( t^{1/2},\infty \right)}\left( A \right)}\:dt &\leq 2\sum_{u\in F} \norm{uAu^{\ast}-A}_{\operatorname{HS}}^2\\
+                                                                                                                                                                       &< 2\ve^2\\
+                                                                                                                                                                                                                                                                                                                                                                                                         &= 2\ve^2 \int_{0}^{\infty} \norm{\chi_{\left( t^{1/2},\infty \right)}\left( A \right)}\:dt,
+  \end{align*}
+  so there exists $t_0$ such that $p = \chi_{\left( t_0^{1/2},\infty \right)}\left( A \right)$ has
+  \begin{align*}
+    \sum_{u\in F} \norm{u\chi_{\left( t_0^{1/2},\infty \right)}\left( A \right)u^{\ast} - \chi_{\left( t_0^{1/2},\infty \right)}(A)}_{\operatorname{HS}}^2 &< 2\ve^2 \Tr\left( \chi_{\left( t_0^{1/2},\infty \right)}(A) \right).
+  \end{align*}
+  
+\end{proof}
 \nocite{ii1_factors_anantharaman_popa}
 \printbibliography
 \end{document}
