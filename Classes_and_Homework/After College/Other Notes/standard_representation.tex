@@ -21,6 +21,51 @@
 \RaggedRight
 \section{Unbounded Operators}%
 We will discuss some preliminaries of unbounded operators.
+\begin{definition}
+  Let $H$ be a Hilbert space. A partially defined operator on $H$ with domain $D$ is a subspace $D\leq H$ with a linear transformation $T\colon D\rightarrow H$. We write $D = \dom(T)$.
+
+  A densely defined operator on $H$ with domain $D$ is a partially defined operator on $H$ whose domain is dense in $H$.
+\end{definition}
+\begin{definition}
+  If $S$ and $T$ are partially defined operators, then we say $S = T$ if $\dom(S) = \dom(T)$ and $S = T$ on $\dom(S)$.
+
+  We say $S\subseteq T$ if $\dom(S)\subseteq \dom(T)$ and $S = T$ on $\dom(S)$.
+
+  The operator $S + T$ is the partially defined operator whose domain is $\dom\left( S+T \right) = \dom\left( S \right) \cap \dom\left( T \right)$ and is equal to $S + T$ on $\dom\left( S+T \right)$. Similarly, $ST$ is the partially defined operator whose domain is defined by
+  \begin{align*}
+    \dom\left( ST \right) = \set{\xi\in H | \xi\in \dom(T),T\xi\in\dom(S)}
+  \end{align*}
+  and is equal to $ST$ on $\dom\left( ST \right)$. 
+\end{definition}
+\begin{remark}
+  Note that $\dom\left( S+T \right)$ or $\dom\left( ST \right)$ may not be dense even if $\dom(S)$ and $\dom(T)$ are dense, which is why unbounded operators require a certain level of care.
+
+  Furthermore, commutation relations are very strong. For instance, if $ST = TS$, then $\dom\left( ST \right) = \dom\left( TS \right)$, which is a very strong condition. For instance, any operator that is not everywhere defined will not commute with the zero operator.
+\end{remark}
+\begin{definition}
+  Given a densely defined operator $T$ on $H$, the adjoint operator $T^{\ast}$ is defined by setting $\dom\left( T^{\ast} \right)$ to be the set of vectors $x\in H$ for which the functional $y\mapsto \iprod{Ty}{x}$ is bounded (hence continuous). Since $\dom\left( T \right)$ is dense in $H$, the functional extends by continuity to $H$, so there is a unique vector $T^{\ast}x\in H$ such that $ \iprod{y}{T^{\ast}x} = \iprod{Ty}{x} $.
+\end{definition}
+Observe that $T^{\ast}$ may not be densely defined. If $S\subseteq T$, then $T^{\ast}\subseteq S^{\ast}$, and we have
+\begin{align*}
+  S^{\ast} + T^{\ast} &\subseteq \left( S+T \right)^{\ast}\\
+  T^{\ast}S^{\ast} &\subseteq \left( ST \right)^{\ast}
+\end{align*}
+given by $S$, $T$, $S + T$, and $ST$ are densely defined.
+\begin{definition}
+  A densely defined operator $S$ on $H$ is called symmetric if
+  \begin{align*}
+    \iprod{Sx}{y} &= \iprod{x}{Sy}.
+  \end{align*}
+\end{definition}
+It follows that this happens if and only if $S\subseteq S^{\ast}$. In particular, this means $S$ is symmetric if and only if $ \iprod{Sx}{x}\in \R $ for every $x\in \dom(S)$.
+
+Given a symmetric operator $S$ and $\lambda = \alpha + i\beta\in \C$, then for every $x\in \dom\left( S \right)$, we have
+\begin{align*}
+  \norm{\left( S-\lambda 1 \right)x}^2 &= \norm{\left( S-\alpha 1 \right)x}^2 + \beta^2\norm{x}^2
+\end{align*}
+since $S-\alpha 1$ is symmetric. It follows that $S-\lambda 1$ is injective whenever $\im\left( \lambda \right) = \beta$ is nonzero, with $\left( S-\lambda 1 \right)^{-1}$ defined on $\ran\left( S-\lambda 1 \right)$ is bounded by $\left\vert \beta \right\vert^{-1}$.
+
+A symmetric operator $S$ such that $S\subseteq T$ for any symmetric operator $T$ implies $S = T$ is called maximal symmetric. If $S = S^{\ast}$, then we say $S$ is self-adjoint. Every self-adjoint operator is maximal symmetric, but not vice versa.
 \section{The Standard Representation}%
 In order to understand the von Neumann algebra of countable Borel equivalence relations (and the predual of a von Neumann algebra generally), we must discuss the standard representation.
 \begin{proposition}
@@ -577,11 +622,30 @@ Now, we focus on computing the predual of $M$. Given $a\in L_1\left( M,\tau \rig
         \omega &= \sum_{k=1}^{\infty}\omega_{\xi_k,\eta_k}
       \end{align*}
       satisfying $\left( \xi_k \right)_{k},\left( \eta_k \right)_{k}\in L_2\left( M,\tau \right)\otimes \ell_2$ (i.e., they are square-summable with respect to the norms from $\tau$). By the polarization identity, we have $\omega$ is a linear combination of normal linear functionals, so that $\omega\in M_{\ast}$, meaning $M_{\ast}$ is complete and so is $L_1\left( M,\tau \right)$.
+
+      Finally, for each $x\in M$, define the map $ \widetilde{x} \colon M_{\ast}\rightarrow \C$ taking $\omega\mapsto \omega(x)$. Since $M$ is the dual space of $ M_{\ast} $, it follows that $\norm{x} = \norm{ \widetilde{x} }$ for any $x\in M$.
+
+      Let $v\in \left( M_{\ast} \right)^{\ast}$. The map $ \left( \xi,\eta \right)\mapsto \iprod{v}{\omega_{\xi,\eta}} $ is a continuous sesquilinear form, so there exists $x\in B\left( L_2\left( M,\tau \right) \right)$ such that
+      \begin{align*}
+        \iprod{v}{\omega_{\xi,\eta}} &= \iprod{\xi}{x\eta}
+      \end{align*}
+      for every $\xi,\eta\in L_2\left( M,\tau \right)$. Given $y\in M'$, the functionals induced by $\omega_{\xi,y\eta}$ and $\omega_{y^{\ast}\xi,\eta}$ are equal, so that $x$ commutes with $y$, whence $x\in M$ and $ \widetilde{x} = v $.
   \end{enumerate}
 \end{proof}
 \section{A Taste of Tomita--Takesaki Theory}%
 The standard representation in fact generalizes to a wider setting --- namely, $\tau$ can be merely a faithful normal state instead of having to be a trace. This is the realm of Tomita--Takesaki Theory. We discuss a little bit of the ideas therein.
 
-\nocite{takesaki_1,takesaki_2,von_neumann_algebras_peterson,ii1_factors_houdayer,ii1_factors_anantharaman_popa}
+From now on, we will assume that $M$ is a von Neumann algebra represented on the Hilbert space $H = L_2\left( M,\varphi \right)$ via the GNS representation from a faithful normal state $\varphi$ with cyclic and separating vector $\xi$.
+
+Define two closed conjugate-linear densely-defined linear operators $S$ and $F$ (for ``sharp'' and ``flat'') on $H$. Start by taking the densely defined linear operators $S_0$ and $F_0$ defined by
+\begin{align*}
+  x\xi = \eta \xmapsto{S_0} \eta^{\sharp} = x^{\ast}\xi
+\end{align*}
+when $x\in M$ and
+\begin{align*}
+  y\xi = \eta\xmapsto{F_0} \eta^{\flat} = y^{\ast}\xi
+\end{align*}
+when $y\in M'$.
+\nocite{takesaki_1,takesaki_2,von_neumann_algebras_peterson,ii1_factors_houdayer,ii1_factors_anantharaman_popa,blackadar_operator_algebras,conway_functional_analysis,pedersen_analysis_now}
 \printbibliography
 \end{document}

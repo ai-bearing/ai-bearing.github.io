@@ -17,6 +17,7 @@ permalink: "/useful_resources.html"
     - [An Introduction to Hyperlinear and Sofic Groups](https://arxiv.org/pdf/0911.4266)
     - [Introduction to Sofic and Hyperlinear Groups and Connes' Embedding Conjecture](https://arxiv.org/pdf/1309.2034)
     - [Free Entropy](https://arxiv.org/pdf/math/0103168)
+    - [A Survey of Measured Group Theory](https://arxiv.org/pdf/0901.0678)
 - Supplementary Personal Notes:
     - Algebra:
       - [Conjugation and the Sylow Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conjugation_and_sylow_theorems.pdf)
