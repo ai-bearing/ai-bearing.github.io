@@ -24,7 +24,7 @@ The primary text for Algebra II is Dummit and Foote's \textit{Abstract Algebra},
 \tableofcontents
 \section{Modules and Advanced Linear Algebra}%
 \subsection{Tensor Products of Modules}%
-The first major topic in Modules and Advanced Linear Algebra is tensor products.
+We start by discussing tensor products.
 \subsubsection{Introduction and Basic Definitions}%
 To motivate tensor products, we recall a basic fact from linear algebra. If we assume that $R$ is a field, and $M,N$ are finite-dimensional $R$-vector spaces, then the following equation necessarily holds:
 \begin{align*}
@@ -2073,4 +2073,80 @@ Before the following proposition, it is important to recall that if $K/F$ is a f
 
   For normality to hold, we need $\sigma(L) = L$ for all $\sigma\in \operatorname{Emb}_F\left( L, \overline{F} \right)$. This follows from the embedding lemma, as we may extend to $\sigma'\colon K\rightarrow \overline{F}$ satisfying $\sigma'(K) = K$, meaning that $\sigma'\in \gal\left( K/F \right)$ with $\sigma'\left( L \right) = L\subseteq \overline{F}$, whence $L/F$ is normal.
 \end{proof}
+\begin{proposition}
+  Let $K/F$ and $L/F$ be field extensions that are contained in some common field $M$. Assume that $L/F$ is finite and Galois. Then, $KL/K$ is finite and Galois, with
+  \begin{align*}
+    \gal\left( KL/K \right) &\cong \gal\left( L/K\cap L \right),
+  \end{align*}
+  where $KL$ is the composite field (defined to be the smallest subfield of $M$ containing both $K$ and L).
+
+  In particular, $\gal\left( KL/K \right)$ is congruent to some subgroup of $\gal\left( L/F \right)$, so that $\left[ KL:K \right]$ divides $\left[ L:F \right]$.
+\end{proposition}
+\begin{proof}
+  The extension $KL/K$ is separable since $L$ is a finite separable extension, hence equal to $F(\alpha)$ for some $\alpha$. In particular, we have $K\left( \alpha \right)\supseteq KL$, and since $\alpha$ is separable over $F$, $\alpha$ is separable over $K$, hence $KL$ is separable. Similarly, $KL$ is normal since $L$ is the splitting field for some family of polynomials over $F$, meaning that $KL$ is the splitting field for that family over $K$.
+
+  Now, define $R\colon \gal\left( KL/K \right)\rightarrow \gal\left( L/F \right)$ given by restriction. This map is injective since any $\sigma$ that acts trivially on $L$ that is contained in $\gal\left( KL/K \right)$ must necessarily act trivially on $KL$. Let $H = \img\left( R \right)$. Then, $H = \gal\left( L/E \right)$ for some subfield $E$ of $L/F$. We want to show now that $E = K\cap L$, which is equivalent to showing that $K\cap L = L^{H}$ by the Galois correspondence.
+
+  We have
+  \begin{align*}
+    K\cap L &= \left( KL \right)^{\gal\left( KL/K \right)}\cap L\\
+            &= L^{\gal\left( KL/K \right)}\\
+            &\eqqcolon L^{H}.
+  \end{align*}
+\end{proof}
+Now, we specialize to the case of cyclotomic extensions.
+\begin{definition}
+  The $n$th cyclotomic polynomial $\Phi_n(x)$ is the polynomial whose roots are the primitive $n$th roots of unity, or
+  \begin{align*}
+    \Phi_n(x) &= \prod_{\gcd\left( r,n \right) = 1} \left( x-\zeta_n^{r} \right).
+  \end{align*}
+\end{definition}
+Observe that the degree of $\Phi_n(x)$ is the totient function $\varphi(n)$, and furthermore, we have
+\begin{align*}
+  x^{n} - 1 &= \prod_{d | n} \Phi_d(x),
+\end{align*}
+which is equivalent to the assertion that
+\begin{align*}
+  n &= \sum_{d|n} \varphi(d).
+\end{align*}
+Define the $n$th cyclotomic extension to be
+\begin{align*}
+  K_n &\eqqcolon \operatorname{spl}_{\Q}\left( \Phi_n \right)\\
+      &= \Q\left( \zeta_n \right).
+\end{align*}
+This is a Galois extension that defines an isomorphism
+\begin{align*}
+  \gal\left( K_n/\Q \right)\rightarrow \left( \Z/n\Z \right)^{\times}.
+\end{align*}
+In the special case when $n = p$ is an odd prime, we observe that
+\begin{align*}
+  \Phi_p(x) &= \prod_{i=0}^{p-1} x^{i},
+\end{align*}
+and that $G = \gal\left( K_n/\Q \right)\cong \Z/\left( n-1 \right)\Z$. For the following, we assume that $n$ is prime.
+
+Observe that $G$ is even order, so there exist two subgroups of $G$, which we denote $A$ and $B$, where $\left\vert A \right\vert = 2$ and $\left[ G:B \right] = 2$. We wish to compute $K_n^{A}$ and $K_n^{B}$.
+
+Recall that if $K/F$ is any finite Galois extension, and $G = \gal\left( K/F \right)$, then $\left[ K:K^{H} \right] = \left\vert H \right\vert$ and $\left[ K^{H}:F \right] = \left[ G:H \right]$ for any subgroup $H$ of $G$.
+\begin{proposition}
+  We have
+  \begin{align*}
+    K_n^{A} &= \Q\left( \zeta_{n} + \zeta_{n}^{-1} \right).
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Define
+  \begin{align*}
+    \alpha_n = \zeta_n + \zeta_n^{-1}.
+  \end{align*}
+  It suffices to show that $\alpha_n\in K_n^{A}$ and $\left[ \Q\left( \zeta_n \right):\Q\left( \alpha_n \right) \right] \leq 2$.
+
+  For the first part, observe that if $K/F$ is any finite extension and $G = \aut\left( K/F \right)$ and $H\leq G$, then for any $\alpha\in K$, $\sum_{h\in H}h\cdot\alpha\in K^{H}$. Since $A\leq \left( \Z/n\Z \right)^{\times}$ has order $2$, it is the subgroup generated by $-1$, hence if $K = K_n$, $F = \Q$, $H = A$, and $\alpha = \alpha_n$, then since $A = \set{\id,\zeta_n\mapsto \zeta_n^{-1}}$, we have 
+  \begin{align*}
+    \sum_{h\in A} h\cdot \zeta_n &= \zeta_n + \zeta_n^{-1}\\
+                                 &= \alpha_n\
+                                 &\in K_n^{A}.
+  \end{align*}
+  For the second part, if we let $L = \Q\left( \alpha_n \right)$, then $K_n = L\left( \zeta_n \right)$. Therefore, we have $\left[ K_n:L \right] = \deg_{L}\left( \zeta_n \right)$. Factoring the expression $\zeta_n + \zeta_n^{-1} = \alpha_n$, we have $\zeta_n$ is a root of the polynomial $x^2 - \alpha_n x + 1$, so that $\deg_L\left( \zeta_n \right) \leq 2$.
+\end{proof}
+Now, we may turn our attention to computing $K_n^{B}$.
 \end{document}
