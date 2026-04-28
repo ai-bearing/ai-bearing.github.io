@@ -27,7 +27,6 @@ permalink: "/useful_resources.html"
       - Von Neumann Algebras (all various levels of incomplete):
         - [Structure of von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/vna_structure.pdf)
         - [Projections in von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/vna_projections.pdf)
-        - [Borel Equivalence Relations](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/orbit_equivalence.pdf)
         - [Completely Positive Maps](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/completely_positive_maps.pdf)
         - [Standard Representations and Modular Theory](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/standard_representation.pdf)
         - [Injective implies Hyperfinite](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/injective_implies_hyperfinite.pdf)
