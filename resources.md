@@ -18,6 +18,8 @@ permalink: "/useful_resources.html"
     - [Introduction to Sofic and Hyperlinear Groups and Connes' Embedding Conjecture](https://arxiv.org/pdf/1309.2034)
     - [Free Entropy](https://arxiv.org/pdf/math/0103168)
     - [A Survey of Measured Group Theory](https://arxiv.org/pdf/0901.0678)
+    - [Around the Orbit Equivalence Theory of the Free Group, Cost, and $$\ell^2$$-Betti Numbers](https://perso.ens-lyon.fr/gaboriau/Travaux-Publi/ME-Cost-L2-Lectures/ME-Cost-L2-lectures.pdf)
+    - [A Brief Introduction to Sofic Entropy Theory](https://arxiv.org/pdf/1711.02062)
 - Supplementary Personal Notes:
     - Algebra:
       - [Conjugation and the Sylow Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conjugation_and_sylow_theorems.pdf)
