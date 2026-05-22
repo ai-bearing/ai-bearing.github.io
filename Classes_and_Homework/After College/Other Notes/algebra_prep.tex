@@ -22,6 +22,8 @@
 \begin{document}
 \RaggedRight
 \section{Field/Galois Theory}%
+\subsection{Field Theory Notes}%
+
 \subsection{Field Theory Worked Solutions}%
 \begin{problem}[September `84, Problem 7]
   Factor $x^{8}-1$ into irreducibles in $\Z/p\Z[x]$ for all primes $p$.
@@ -88,14 +90,6 @@
   \end{align*}
   Observe that $\left( \F_{p^{n}} \right)^{\times}$ is cyclic, so $\left\vert A \right\vert = \frac{p^{n}+1}{2} $, and similarly, we have $\left\vert B \right\vert = \frac{p^{n}+1}{2}$. Yet, this means that $A\cap B\neq \emptyset$, so that there are some $\beta_1^2,\beta_2^2\in A$ such that $\alpha-\beta_1^2 = \beta_2^2$, whence $\alpha = \beta_1^2 + \beta_2^2$.
 \end{solution}
-\begin{theorem}
-  If $f(x)\in K[x]$ is a separable polynomial of degree $n$, then $f$ is irreducible if and only if the Galois group $\gal\left( \operatorname{spl}_{K}\left(f(x)\right)/K \right)$ is a transitive subgroup of $S_n$.
-\end{theorem}
-\begin{proof}
-  If $f(x)$ is irreducible, then we know that the Galois group acts transitively on the roots.
-
-  Meanwhile, if $f(x)$ is reducible, then $f(x)$ is a product of distinct irreducibles since it is separable. Let $r_i$ and $r_j$ be roots of different irreducible factors of $f(x)$. Then, for each $\sigma\in \gal\left( \operatorname{spl}_{K}\left( f(x) \right)/K \right)$, we have $\sigma\left( r_i \right)$ has the same minimal polynomial over $K$ as $r_i$, so we cannot have $\sigma\left( r_i \right) = r_j$, whence the Galois group is not transitive.
-\end{proof}
 \begin{problem}[August `08, Problem 3]
   Prove or disprove the following statements about irreducibility.
   \begin{enumerate}[(a)]
@@ -197,7 +191,87 @@
     \item If $F$ is finite, then $F = \F_q$ for some $q = p^{m}$. Since $F\left( a \right)/F$ and $F\left( b \right)/F$ are field extensions of degree at most $2$, the result follows if either $F\left( a \right) = F$ or $F\left( b \right) = F$. Else, if both $F\left( a \right)/F$ and $F\left( b \right)/F$ are extensions of degree $2$, then by uniqueness of finite fields, they are both equal to the field $\F_{q^{2}}$, whence $\left[ F\left( a,b \right):F \right] \leq 2$.
   \end{enumerate}
 \end{solution}
+\subsection{Galois Theory Notes}%
+\subsubsection{General Galois Theory Facts}%
+\begin{theorem}
+  If $f(x)\in K[x]$ is a separable polynomial of degree $n$, then $f$ is irreducible if and only if the Galois group $\gal\left( \operatorname{spl}_{K}\left(f(x)\right)/K \right)$ is a transitive subgroup of $S_n$.
+\end{theorem}
+\begin{proof}
+  If $f(x)$ is irreducible, then we know that the Galois group acts transitively on the roots.
+
+  Meanwhile, if $f(x)$ is reducible, then $f(x)$ is a product of distinct irreducibles since it is separable. Let $r_i$ and $r_j$ be roots of different irreducible factors of $f(x)$. Then, for each $\sigma\in \gal\left( \operatorname{spl}_{K}\left( f(x) \right)/K \right)$, we have $\sigma\left( r_i \right)$ has the same minimal polynomial over $K$ as $r_i$, so we cannot have $\sigma\left( r_i \right) = r_j$, whence the Galois group is not transitive.
+\end{proof}
+\subsubsection{Galois Groups of Polynomials}%
+\begin{definition}
+  Let $x_1,\dots,x_n$ be indeterminates. The \textit{elementary symmetric functions} $s_1,\dots,s_n$ are defined by
+  \begin{align*}
+    s_1 &= x_1 + x_2 + \cdots + x_n\\
+    s_2 &= \prod_{i < j}x_ix_j\\
+        &\vdots\\
+    s_n &= x_1x_2\cdots x_n.
+  \end{align*}
+  The \textit{general polynomial} of degree $n$ is the polynomial
+  \begin{align*}
+    g(x) &= \left( x-x_1 \right)\left( x-x-2 \right)\cdots \left( x-x_n \right)
+  \end{align*}
+  with roots $x_1,\dots,x_n$.
+\end{definition}
+Observe that the general polynomial can be written as
+\begin{align*}
+  \left( x-x_1 \right)\left( x-x_2 \right)\cdots \left( x-x_n \right) &= x^{n} -s_1x^{n-1} + \cdots + \left( -1 \right)^{n}s_n.
+\end{align*}
+This means that if $F$ is some field, then the extension $F\left( x_1,\dots,x_n \right)$ is a Galois extension of the field $F\left( s_1,\dots,s_n \right)$ since it is the splitting field of the general polynomial of degree $n$. Furthermore, $F\left( s_1,\dots,s_n \right)$ is contained in the fixed field of the action of $S_n$ on $F\left( x_1,\dots,x_n \right)$, where $\sigma\cdot x_i = x_{\sigma(i)}$ for any $\sigma\in S_n$. Since the fixed field of $S_n$ has index $n!$ in $F\left( x_1,\dots,x_n \right)$ by the fundamental theorem of Galois theory, it follows that we have
+\begin{align*}
+  \left[ F\left( x_1,\dots,x_n \right):F\left( s_1,\dots,s_n \right) \right]\leq n!,
+\end{align*}
+whence $F\left( s_1,\dots,s_n \right)$ is the full fixed field of $F\left( x_1,\dots,x_n \right)$.
+\begin{theorem}
+  The general polynomial
+  \begin{align*}
+    x^{n} -s_1x^{n-1} + s_2x^{n-2} + \cdots + \left( -1 \right)^{n}s_n
+  \end{align*}
+  over the field $F\left( s_1,\dots,s_n \right)$ is separable with Galois group $S_n$.
+\end{theorem}
+Now, we will discuss the discriminant, which is an essential tool in understanding the Galois groups of polynomials, especially those of degrees two, three, and four.
+\begin{definition}
+  The \textit{discriminant} of $x_1,\dots,x_n$ is given by
+  \begin{align*}
+    \Delta &= \prod_{i < j} \left( x_i-x_j \right)^2.
+  \end{align*}
+  The discriminant of a polynomial is the discriminant of the roots of the polynomial.
+\end{definition}
+We start by observing that the discriminant is a symmetric function in $x_1,\dots,x_n$, so it is an element of the field $K = F\left( s_1,\dots,s_n \right)$.
+
+Recalling the definition of the alternating group $A_n$, we have that $\sigma\in S_n$ is in $A_n$ if and only if $\sigma$ fixes
+\begin{align*}
+  \sqrt{\Delta} &= \prod_{i < j} \left( x_i-x_j \right)
+\end{align*}
+in $\Z\left[ x_1,\dots,x_n \right]$. Notice then that if $F$ has characteristic not equal to $2$, then $\sqrt{\Delta}$ generates the fixed field of $A_n$, which is a quadratic extension of $K$.
+
+If $f(x)$ is a monic degree $n$ polynomial with roots $\alpha_1,\dots,\alpha_n$, then the discriminant is given by
+\begin{align*}
+  \Delta &= \prod_{i < j} \left( \alpha_i - \alpha_j \right)^2.
+\end{align*}
+Observe that $\Delta\in F$ since $\Delta$ is fixed by the Galois group. Furthermore, $\Delta = 0$ if and only if $f(x)$ is separable, so if $F$ is perfect (i.e., characteristic zero or finite), then $f(x)$ is reducible if and only if $\Delta = 0$ since every irreducible polynomial over a perfect field is separable. Additionally, observe that $\sqrt{\Delta}\in F$ if and only if the Galois group of $f(x)$ is contained in $A_n$.
 \subsection{Galois Theory Worked Solutions}%
+\begin{problem}[January `17, Problem 1]
+  Consider the polynomial $f(x) = x^4 - 2x^2 - 6$. Prove this polynomial is irreducible. Describe the splitting field of this polynomial over $\Q$, and the Galois group of this splitting field.
+\end{problem}
+\begin{solution}
+  We observe that this polynomial is contained in $\Z[x]$, so viewing $f(x)$ as an element of $\Z[x]$, we have that $f(x)$ is monic and $6\notin \left( 2^2 \right)$, where $\left( 2 \right)\subseteq \Z$ is the ideal generated by the prime $2$. By Eisenstein's criterion, it follows that $f(x)$ is irreducible over $\Z$, and by Gauss's Lemma, $f(x)$ is irreducible over $\Q$. Let $K$ denote the splitting field of $f(x)$ over $\Q$.
+
+  Considering the set of roots
+  \begin{align*}
+    W &= \set{\sqrt{1 + \sqrt{7}},-\sqrt{1 + \sqrt{7}}, \sqrt{1-\sqrt{7}},-\sqrt{1-\sqrt{7}}},
+  \end{align*}
+  we observe that if we let
+  \begin{align*}
+    L &= \Q\left( \sqrt{1 + \sqrt{7}} \right),
+  \end{align*}
+  then $f(x)$ is reducible over $L$, but has only two roots in $L$, so that $\left[ K:L \right] = 2$. Since $\left[ L:\Q \right] = 4$, it follows that $\left[ K:\Q \right] = 8$.
+
+  Since $f(x)$ is irreducible, it follows that the Galois group of $f(x)$ acts transitively on the roots of $f$, and has order $8$, so that $G\cong D_8$.
+\end{solution}
 \begin{problem}[August `02, Problem 9]
   Construct a Galois extension of $\Q$ of degree $3$.
 \end{problem}
@@ -215,6 +289,37 @@
   whence $\mu_{\zeta_7,\Q\left( \alpha \right)}\left( x \right)$ has degree at most $2$.
 
   Therefore, we observe that $\Q\left( \zeta_7 + \zeta_7^{-1} \right)$ is an extension with $\left[ \Q\left( \zeta_7 \right):\Q\left( \zeta_7 + \zeta_7^{-1} \right) \right] = 2$, whence $\Q\left( \zeta_7 + \zeta_7^{-1} \right)$ is the desired extension of degree $3$ over $\Q$.
+\end{solution}
+\begin{problem}[August `20, Problem 8]
+  Let $K$ be the splitting field of the polynomial $f(x) = \left( x^3-11 \right)\left( x^2 + x - 1 \right)$ over $\Q$.
+  \begin{enumerate}[(a)]
+    \item Find (with proof) the degree of the extension $K/\Q$.
+    \item Determine the isomorphism class of the Galois group $\gal\left( K/\Q \right)$, and prove your answer. 
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Considering the embedding of $\Q\left[ x \right]\subseteq \C\left[ x \right]$, we observe that the roots of $f(x)$ are given by
+      \begin{align*}
+        A &= \set{\sqrt[3]{11},\omega\sqrt[3]{11},\omega^2\sqrt[3]{11},\frac{-1+\sqrt{5}}{2},\frac{-1-\sqrt{5}}{2}},
+      \end{align*}
+      where $\omega$ is a primitive cube root of unity. In particular, this means that the splitting field $K$ of $f(x)$ is contained in $F = \Q\left( \omega,\sqrt[3]{11},\sqrt{5} \right)$. Meanwhile, we have $F\subseteq K$ since we may find $\omega = \frac{\omega\sqrt[3]{11}}{\sqrt[3]{11}}$ and $\sqrt{5} = 1 + 2\frac{-1 + \sqrt{5}}{2}$, so that $K = \Q\left( \omega,\sqrt[3]{11},\sqrt{5} \right)$.
+
+      To compute the degree, we observe that the minimal polynomials are given by
+      \begin{align*}
+        \mu_{\sqrt[3]{11},\Q}(x) &= x^3 - 11\\
+        \mu_{\omega,\Q}\left( x \right) &= x^2 + x + 1\\
+        \mu_{\sqrt{5},\Q} &= x^2 - 5.
+      \end{align*}
+      Computing the degree, we observe that $\mu_{\sqrt[3]{11},\Q\left( \omega,\sqrt{5} \right)} = \mu_{\sqrt[3]{11}}$, and similarly for $\mu_{\omega,\Q\left( \sqrt{5} \right)}$ with $\mu_{\omega,\Q}$, so that the degree of $K/\Q$ is 12.
+    \item First, we recall the theorem that a separable polynomial $f(x)$ is irreducible if and only if the action of the Galois group on the roots of $f(x)$ is transitive. Since $f$ is separable (as we are working over $\Q$) and not irreducible, it follows that the Galois group of $f(x)$ is not transitive.
+
+      Now, we observe that $f(x)$ has two irreducible factors --- namely, $p(x) = x^3-11$ (which is irreducible by the Eisenstein criterion) and $q(x) = x^2 + x - 1$, and in particular, the extension $K/\Q$ is equal to the compositum of the splitting fields of $p(x)$ and $q(x)$, which we label as $L$ and $M$ respectively. Since these are finite degree extensions whose intersection is equal to $\Q$, it follows that
+      \begin{align*}
+        \gal\left( K/\Q \right) &\cong \gal\left( L/\Q \right)\times \gal\left( M/\Q \right).
+      \end{align*}
+      We start by seeing that $L = \Q\left( \omega,\sqrt[3]{11} \right)$. Since $p(x)$ has degree $3$ and not all of its roots are real, it follows that $\gal\left( L/\Q \right)\cong S_3$, while since $M$ has degree $2$ over $\Q$, it follows that $\gal\left( M/\Q \right)\cong \Z/2\Z$, so that $\gal\left( K/\Q \right)\cong S_3\times \Z/2\Z$.
+  \end{enumerate}
 \end{solution}
 \begin{problem}[Algebra II 2019 Midterm II, Problem 2]
   Let $K/F$ be a finite Galois extension with $G = \gal\left( K/F \right)$.

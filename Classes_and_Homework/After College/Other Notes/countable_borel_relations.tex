@@ -22,7 +22,8 @@
 \begin{document}
 \RaggedRight
 \section{Countable Borel Relations, Invariant Measures, and Graphings}%
-First, we recall some definitions.
+\subsection{Equivalence Relation Preliminaries}%
+First, we collect some definitions.
 \begin{definition}\hfill
   \begin{itemize}
     \item A relation $R$ on a set $X$ is a set of ordered pairs $R\subseteq X^2$. We will write $xRy$ to denote $\left( x,y \right)\in R$. We also define the \textit{sections} 
@@ -34,6 +35,7 @@ First, we recall some definitions.
       \begin{align*}
         R^{-1} &= \set{\left( y,x \right) : \left( x,y \right)\in R}.
       \end{align*}
+    \item If $X$ is equipped with a Borel structure, then the relation $R$ (i.e., equivalence relations, partial orders, total orders, etc.) is called Borel if $R\subseteq X^2$ is Borel.
     \item We will let $\dom\left( f \right)$, $\ran\left( f \right)$, and $\graph\left( f \right)$ denote the domain, range, and graph of $f$ respectively.
     \item A graph $G$ with vertex set $X$ is a non-reflexive, symmetric relation on $X$. The neighbors of $x\in X$ in the graph $G$ are the set of all $y\in X$ such that $\left( x,y \right)\in G$. The cardinality of the set of neighbors of $X$ is called the degree of $x$, denoted $d_G(x)$.
     \item A path in $G$ is a finite sequence of vertices $\left( x_0,x_1,\dots, x_n \right)$ where $\left( x_i,x_{i+1} \right)\in G$, and $x_i\neq x_j$ whenever $i\neq j$ except for possibly $x_n = x_0$. The equivalence classes of the relation $xEy$ if and only if there exists a path from $x$ to $y$ defines the connected components of the graph. If a graph has one connected component, we say the graph is connected.
@@ -46,6 +48,7 @@ First, we recall some definitions.
         \left[ \left[ E \right] \right] &= \set{\phi\colon A\rightarrow B : \phi\text{ is a bijection, }A,B\subseteq X\text{ are Borel, }\graph\left( \phi \right)\subseteq E}.
       \end{align*}
     \item We call a countable equivalence relation $E$ on $X$ \textit{aperiodic} if every equivalence class $\left[ x \right]_E$ is infinite.
+    \item Given Borel equivalence relations $E$ and $F$ on $X$ and $Y$ respectively, we say $E$ is \textit{Borel reducible} to $F$, denoted $E\leq_{B}F$, if there is a Borel map $f\colon X\rightarrow Y$ such that $xEy$ if and only if $f(x)Ff(y)$.
   \end{itemize}
 \end{definition}
 \begin{example}
@@ -56,6 +59,77 @@ First, we recall some definitions.
 \begin{theorem}[Feldman--Moore]
   Let $E$ be a countable Borel equivalence relation on $X$. Then, there is a countable group $\Gamma$ and a Borel action of $\Gamma$ on $X$ such that $E_{\Gamma}^X = E$. 
 \end{theorem}
+\begin{proposition}[Marker Lemma]
+  Let $E$ be an aperiodic countable Borel equivalence relation on $X$. Then, there is a sequence $\set{S_n}_{n\geq 1}$ of Borel sets $S_n\subseteq X$ such that
+  \begin{enumerate}[(i)]
+    \item $S_0\supseteq S_1\supseteq S_2\supseteq\cdots$;
+    \item $\bigcap_{n\geq 1}S_n = \emptyset$;
+    \item every $S_n$ is a complete section for $E$ (i.e., it has nonempty intersection with each equivalence class of $E$).
+  \end{enumerate}
+  Such a sequence is called a \textit{vanishing sequence of markers}.
+\end{proposition}
+\begin{proof}
+  Via some results from descriptive set theory, we may assume that the equivalence relation $E$ lives on the set $X = 2^{\N}$. Then, we let $s_n(x)$ be the lexicographically smallest $s\in 2^{n}$ such that $\left\vert [x]_E\cap \mathcal{N}_s \right\vert= \infty$, where $\mathcal{N}_s$ denotes the cylinder set in $X$ corresponding to $s$.
+
+  Define $x\in A_n$ if and only if $x|_{n} = s_n(x)$. Then, we have that $\set{A_n}_{n\geq 1}$ is a decreasing sequence of Borel sets which intersects each class of $E$ at infinitely many points. Then, $A = \bigcap_{n\in \N}A_n$ intersects each class of $E$ in at most one point, so that $B_n = A_n\setminus A$ is the vanishing sequence of markers as desired.
+\end{proof}
+\subsection{Invariant Measures}%
+\begin{definition}
+  If $E$ is a countable Borel equivalence relation on $X$, then we say $\mu$ is $E$-invariant if for all $f\in \left[ E \right]$, we have $f_{\ast}\mu = \mu$, where $f_{\ast}\mu$ is the pushforward measure, defined by
+  \begin{align*}
+    f_{\ast}\mu(A) &= \mu\left( f^{-1}\left( A \right) \right).
+  \end{align*}
+\end{definition}
+\begin{proposition}
+  The following are equivalent:
+  \begin{enumerate}[(a)]
+    \item $\mu$ is $E$-invariant;
+    \item $\mu$ is $\Gamma$-invariant for any countable group $\Gamma$ such that $E = E_{\Gamma}^X$;
+    \item $\mu$ is $\Gamma$-invariant for some $\Gamma$ such that $E = E_{\Gamma}^X$;
+    \item for all $\phi\in \left[ \left[ E \right] \right]$, we have $\mu\left( \dom(\phi) \right) = \mu\left( \ran\left( \phi \right) \right)$.
+  \end{enumerate}
+\end{proposition}
+If $\mu$ is invariant under $E$, then we may define a measure $ \overline{\mu} $ on $E$ by taking
+\begin{align*}
+  \overline{\mu}\left( A \right) &= \int_{}^{} \left\vert A_x \right\vert\:d\mu(x),
+\end{align*}
+where again,
+\begin{align*}
+  A_x &= \set{y: \left( x,y \right)\in A}.
+\end{align*}
+It is also possible to define
+\begin{align*}
+  \overline{\mu}'\left( A \right) &= \int_{}^{} \left\vert A^y \right\vert\:d\mu(y),
+\end{align*}
+but since $\mu$ is invariant, $ \overline{\mu} = \overline{\mu}' $. This follows from the fact that
+\begin{align*}
+  E &= \bigcup_{i\in \N} \graph\left( g_i \right)
+\end{align*}
+for some collection of relation-preserving automorphisms $g_i\in \left[ E \right]$. If $A\subseteq E$ is any Borel subset, then
+\begin{align*}
+  A &= \bigcup_{i\in \N} \left( \graph\left( g_i \right)\cap A \right),
+\end{align*}
+so there are $f_i\in \left[ \left[ E \right] \right]$ such that $\graph\left( f_i \right) = \graph\left( g_i \right)\cap A$. Therefore, we may write any $A\subseteq E$ as a countable disjoint union of graphs of functions $f\in \left[ \left[ E \right] \right]$. Therefore, it suffices to show that $ \overline{\mu}\left( \graph(f) \right) = \overline{\mu}'\left( \graph\left( f \right) \right)$ for any $f\in \left[ \left[ E \right] \right]$. If $C = \dom(f)$ and $D = \ran(f)$, then $ \overline{\mu}\left( \graph(f) \right) = \mu\left( C \right) $ and $ \overline{\mu}'\left( \graph\left( f \right) \right) = \mu\left( D \right) $, so by the definition of $\left[ \left[ E \right] \right]$, we are done.
+
+Now, we may define an equivalence relation $ \widetilde{E} $ on $E$ by taking $\left( x,y \right)E\left( z,w \right)$ if and only if $xEz$, or equivalently, $xEyEzEw$.
+\begin{proposition}
+  The invariant measure $M$ on $E$ is $\widetilde{E}$-invariant.
+\end{proposition}
+\begin{proof}
+  Let $\Gamma$ act on $X$ such that $E = E_{\Gamma}^X$. Then, if we define the action $\left( g,h \right)\cdot \left( x,y \right) = \left( g\cdot x,h\cdot y \right)$, then we have that $ E^{E}_{\Gamma^2} = \widetilde{E} $, so it suffices to show that the action preserves $M$.
+
+  For this, if $A\subseteq E$ is Borel, we have
+  \begin{align*}
+    M\left( \left( g,h \right)\cdot A \right) &= \int_{}^{} \left\vert \set{\left( g\cdot x,h\cdot y \right) : \left( x,y \right)\in A} \right\vert\:d\mu(x).
+  \end{align*}
+  Setting $B = \left( g,h \right)\cdot A$, then we have $y\in B_x$ if and only if $\left( x,y \right)\in B$, which holds if and only if $\left( g^{-1}\cdot x,h^{-1}\cdot y \right)\in A$, which holds if and only if $h^{-1}\cdot y\in A_{g^{-1}\cdot x}$. Therefore, $B_x = h\cdot A_{g^{-1}\cdot x}$, so that
+  \begin{align*}
+    M\left( \left( g,h \right)\cdot A \right) &= \int_{}^{} \left\vert A_{g^{-1}\cdot x} \right\vert\:d\mu(x)\\
+                                              &= \int_{}^{} \left\vert A_x \right\vert\:d\mu(x)\\
+                                              &= M\left( A \right),
+  \end{align*}
+  where we use the fact that $\mu$ is invariant under $\Gamma$.
+\end{proof}
 \nocite{topics_in_orbit_equivalence,classical_descriptive_set_theory}
 \printbibliography
 \end{document}

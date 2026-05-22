@@ -20,11 +20,13 @@ permalink: "/useful_resources.html"
   - [A Survey of Measured Group Theory](https://arxiv.org/pdf/0901.0678)
   - [Around the Orbit Equivalence Theory of the Free Group, Cost, and $$\ell^2$$-Betti Numbers](https://perso.ens-lyon.fr/gaboriau/Travaux-Publi/ME-Cost-L2-Lectures/ME-Cost-L2-lectures.pdf)
   - [A Brief Introduction to Sofic Entropy Theory](https://arxiv.org/pdf/1711.02062)
+  - [Random Matrices and Free Probability](https://jacobcampbell2.github.io/rmfp/notes/notes.pdf)
 - Personal Notes:
   - Graduate Classes:
     - [Differential Topology](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Differential Topology/differential_topology_notes.pdf)
     - [Algebra I](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Algebra I/algebra_i_notes.pdf)
     - [Algebra II](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Algebra II/algebra_ii_notes.pdf)
+    - [Project on Free Entropy](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Random Matrices/Project/free_entropy.pdf)
   - Qualifier Prep:
     - [Real Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/real_analysis_prep.pdf)
     - [Complex Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/complex_analysis_prep.pdf)

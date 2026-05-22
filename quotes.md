@@ -18,7 +18,7 @@ use_math: true
   *Don Lawrence*
 
 - "It's a little a lot."\
-  *Noah Smith, as recorded by Melia Valentine*
+  *Noah Smith*, as recorded by Melia Valentine
 
 - "Phenomenologizing"\
   *Kawena Jacobs*
@@ -70,5 +70,8 @@ use_math: true
 - "Up to philosophomorphism"\
   *David Chasteen-Boyd*
 
-- Regarding the group $\operatorname{SO}^{+}(2,1)$, "so it's like general relativity for flat-earthers"\
+- Regarding the group $\operatorname{SO}^{+}(2,1)$: "so it's like general relativity for flat-earthers"\
   *Alejandro de las Peñas Castaño*
+
+- "GTA is great, it's like the ultimate expression of free will"\
+  *Gabriel Diraviam*
