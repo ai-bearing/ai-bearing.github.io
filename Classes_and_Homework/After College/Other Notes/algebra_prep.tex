@@ -21,6 +21,68 @@
 
 \begin{document}
 \RaggedRight
+\section{Ring Theory}%
+\subsection{Ring Theory Notes}%
+We will discuss primality in the Gaussian integers. Recall that the Gaussian integers are given by
+\begin{align*}
+  \Z\left[ i \right] &= \set{a + bi | a,b\in \Z}\\
+                     &\cong \frac{\Z\left[ x \right]}{\left( x^2 + 1 \right)}.
+\end{align*}
+The Gaussian integers are equipped with a norm $N\colon \Z\left[ i \right]\rightarrow \Z_{\geq 0}$ given by $N\left( a+bi \right) = \left( a+bi \right)\left( a-bi \right) = a^2 + b^2$, which is a multiplicative norm satisfying $N\left( zw \right) = N\left( z \right)N\left( w \right)$. Furthermore, with this norm, the Gaussian integers form a Euclidean domain. The units of $\Z\left[ i \right]$ are $\pm 1$ and $\pm i$.
+\begin{lemma}
+  Let $q\in \Z\left[ i \right]$. Then, there is a prime integer $p\in \Z$ such that $N\left( q \right) = p$ or $N\left( q \right) = p^2$.
+\end{lemma}
+\begin{proof}
+  Since $q$ is not a unit, $N\left( q \right)\neq 1$. Therefore, $N\left( q \right)$ is a nontrivial product of prime integers, and since $q$ is prime in $\Z\left[ i \right]$, $q$ must divide one of the prime integer factors of $N\left( q \right)$. Let $p$ be this prime integer.
+
+  Then, $q | p$ in $\Z\left[ i \right]$, so $N\left( q \right) | N\left( p \right) = p^2$, so $N\left( q \right) = p$ or $N\left( q \right) = p^2$.
+\end{proof}
+\begin{example}
+  We observe that $3$ is a prime element of $\Z\left[ i \right]$. Since $\Z\left[ i \right]$ is a Euclidean domain, it is a UFD, so irreducibles are prime, meaning we only need to show that $3$ is irreducible in $\Z\left[ i \right]$.
+
+  Since $N\left( 3 \right) = 9$, it follows that the norm of any factor of $3$ must be a divisor of $9$. Therefore, it follows that the norm of any divisor of $3$ is equal to $1$, $3$, or $9$. If the norm is $9$, then the factor is an associate of $3$, while if the norm is $1$, then the factor is a unit, so it follows that any nontrivial factor of $3$ would have norm equal to $3$. Yet, there are no such elements.
+
+  Meanwhile, $5$ is not a prime element of $\Z\left[ i \right]$, since we may write $5 = \left( 2+i \right)\left( 2-i \right)$.
+\end{example}
+We will now focus on proving one of the most celebrated theorems in number theory: Fermat's Theorem on sums of squares. We will say a prime integer $p\in \Z$ \textit{splits} in $\Z\left[ i \right]$ if it is not a prime element of $\Z\left[ i \right]$. For example, $5$ splits in $\Z\left[ i \right]$ while $3$ does not.
+\begin{lemma}
+  A positive prime integer $p\in \Z$ splits in $\Z\left[ i \right]$ if and only if it is the sum of two squares in $\Z$.
+\end{lemma}
+\begin{proof}
+  Suppose $p = a^2 + b^2$ with $a,b\in \Z$. Then,
+  \begin{align*}
+    p = \left( a+bi \right)\left( a-bi \right)
+  \end{align*}
+  in $\Z\left[ i \right]$, so since $N\left( a\pm bi \right) = a^2 + b^2 = p \neq 1$, it follows that neither of the factors is a unit in $\Z\left[ i \right]$, so that $p$ is not irreducible, hence not prime.
+
+  Conversely, suppose $p$ is not irreducible in $\Z\left[ i \right]$. Then, $p$ has an irreducible factor $q\in \Z\left[ i \right]$ that is not an associate of $p$. Since $q | p$, multiplicativity of the norm gives that $N\left( q \right) | N\left( p \right) = p^2$, hence $N\left( q \right) = p $ as $q$ and $p$ are not associates and $q$ is not a unit. If we have $q = a + bi$, then
+  \begin{align*}
+    p &= N\left( q \right)\\
+      &= a^2 + b^2.
+  \end{align*}
+\end{proof}
+Next, we discuss a characterization of splitting via a single congruence. 
+\begin{lemma}
+  A positive odd prime integer $p$ splits in $\Z\left[ i \right]$ if and only if it is congruent to $1$ modulo $4$.
+\end{lemma}
+\begin{proof}
+  Our goal is to understand when $\Z\left[ i \right]/\left( p \right)$ is an integral domain. Yet, we have the series of isomorphisms
+  \begin{align*}
+    \frac{\Z\left[ i \right]}{\left( p \right)} &\cong \frac{\Z\left[ x \right]/\left( x^2 + 1 \right)}{\left( p \right)}\\
+                                                &\cong \frac{\Z\left[ x \right]}{\left( p,x^2 + 1 \right)}\\
+                                                &\cong \frac{\Z\left[ x \right]/\left( p \right)}{\left( x^2 + 1 \right)}\\
+                                                &\cong \frac{\Z/p\Z\left[ x \right]}{\left( x^2 + 1 \right)}.
+  \end{align*}
+  In particular, this means that $p$ splits in $\Z\left[ i \right]$ if and only if $x^2 + 1$ has a root in $\Z/p\Z$, or that there is some $n$ such that $n^2\equiv -1$ modulo $p$. We will show that this condition is equivalent to $p$ being congruent to $1$ modulo $4$.
+
+  Let $G = \left( \Z/p\Z \right)^{\times}$, and fix a generator $g$. Observe that $p$ is odd, so $p-1 = 2\ell$ for some integer $\ell$. Let $ \overline{n} $ denote the class of an integer $n$ mod $\left( p \right)$. For any $n\notin \left( p \right)$, it follows that there is some $m$ such that $ \overline{n} = g^{m} $.
+
+  Observe that the class $ \overline{-1} $ generates the unique subgroup of order $2$ of $G$, and since $g^{\ell}$ does the same, it follows that $g^{\ell} = -1$. In particular, we have that $n^2 = -1$ modulo $p$ if and only if $g^{2m} = g^{\ell}$, or that $2m\equiv \ell$ mod $2\ell$, or that $\left( p-1 \right) = 2\ell$ is a multiple of $4$, or $p\equiv 1$ mod $4$.
+\end{proof}
+This gives the following.
+\begin{theorem}[Fermat's Theorem on Sums of Squares]
+  A positive odd prime $p\in \Z$ is a sum of two squares if and only if $p\equiv 1$ mod $4$.
+\end{theorem}
 \section{Field/Galois Theory}%
 \subsection{Field Theory Notes}%
 
@@ -253,7 +315,141 @@ If $f(x)$ is a monic degree $n$ polynomial with roots $\alpha_1,\dots,\alpha_n$,
   \Delta &= \prod_{i < j} \left( \alpha_i - \alpha_j \right)^2.
 \end{align*}
 Observe that $\Delta\in F$ since $\Delta$ is fixed by the Galois group. Furthermore, $\Delta = 0$ if and only if $f(x)$ is separable, so if $F$ is perfect (i.e., characteristic zero or finite), then $f(x)$ is reducible if and only if $\Delta = 0$ since every irreducible polynomial over a perfect field is separable. Additionally, observe that $\sqrt{\Delta}\in F$ if and only if the Galois group of $f(x)$ is contained in $A_n$.
+
+Now, we start our investigation with the polynomials of degree $2$. The discriminant of a polynomial $x^2 + ax + b$ is given by $\Delta = \left( \alpha-\beta \right)^2$, which can be written as
+\begin{align*}
+  \Delta &= s_1^2 - 4s_2\\
+         &= a^2 - 4b.
+\end{align*}
+The polynomial is separable if and only if $a^2-4b \neq 0$, and the Galois group is a subgroup of $S_2 = \Z/2\Z$. This means that the Galois group is trivial if and only if $a^2 - 4b$ is a rational square.
+
+Next, we consider the cubic polynomials. If we have
+\begin{align*}
+  f(x) &= x^3 + ax^2 + bx + c,
+\end{align*}
+which upon the substitution $x = y-a/3$, yields a reduced cubic
+\begin{align*}
+  g(y) &= y^3 + py + q,
+\end{align*}
+where
+\begin{align*}
+  p &= \frac{1}{3} \left( 3b-a^2 \right)\\
+  q &= \frac{1}{27} \left( 2a^3 - 9ab + 27c \right).
+\end{align*}
+Since the roots of the polynomials $f$ and $g$ differ by the constant $a/3$, and the formula for the discriminant involves the difference of these roots, it follows that the polynomials have the same discriminant.
+
+Letting $\alpha,\beta,\gamma$ be the roots of the polynomial $g(y)$, then we have
+\begin{align*}
+  g'(y) &= \left( y-\alpha \right)\left( y-\beta \right) + \left( y-\alpha \right)\left( y-\gamma \right) + \left( y-\beta \right)\left( y-\gamma \right)\\
+  g'(\alpha) &= \left( \alpha-\beta \right)\left( \alpha-\gamma \right)\\
+  g'\left( \beta \right) &= \left( \beta-\alpha \right)\left( \beta-\gamma \right)\\
+  g'\left( \gamma \right) &= \left( \gamma-\alpha \right)\left( \gamma-\beta \right).
+\end{align*}
+Therefore, we have
+\begin{align*}
+  \Delta &= \left( \left( \alpha-\beta \right)\left( \alpha-\gamma \right)\left( \beta-\gamma \right) \right)^2\\
+         &= -g'\left( \alpha \right)g'\left( \beta \right)g'\left( \gamma \right).
+\end{align*}
+Since $g'(y) = 3y^2 + p$, it follows that
+\begin{align*}
+  -\Delta &= \left( 3\alpha^2 + p \right)\left( 3\beta^2 + p \right)\left( 3\gamma^2 + p \right)\\
+          &= 27\alpha^2\beta^2\gamma^2 + 9p\left( \alpha^2\beta^2 + \alpha^2\gamma^2 + \beta^2\gamma^2 \right) + 3p^2 \left( \alpha^2 + \beta^2 + \gamma^2 \right) + p^3.
+\end{align*}
+These expressions are elementary symmetric functions of the roots, where for $g$, $s_1 = 0$, $s_2 = p$, and $s_3 = -q$, whence
+\begin{align*}
+  \Delta &= -4p^3-27q^2.
+\end{align*}
+Therefore, expressing $\Delta$ in terms of $a,b,c$, we have
+\begin{align*}
+  \Delta &= a^2b^2 - 4b^3 - 4a^3c - 27c^2 + 18abc.
+\end{align*}
+This allows us to compute the Galois group as follows.
+\begin{enumerate}[(i)]
+  \item If $f(x)$ is reducible, then either $f(x)$ splits into three linear factors or into a linear factor and an irreducible quadratic. In the first case, the Galois group is trivial and in the second case, the Galois group is of order $2$.
+  \item If $f(x)$ is irreducible, then a root of $f(x)$ generates a degree $3$ extension over $F$. Therefore, the degree of the splitting field over $F$ is divisible by $3$.
+
+    Since the Galois group is a subgroup of $S_3$, it follows that there are only two options, either $A_3$ or $S_3$. In particular, the Galois group is $A_3$ if and only if the discriminant $\Delta$ is a square.
+
+    If $\Delta$ is a square, then the splitting field of the irreducible cubic $f(x)$ is obtained by adjoining any root of $f(x)$ to $F$. If $\Delta$ is not the square of an element of $F$, then the splitting field of $f(x)$ is of degree $6$ over $F$, given by $F\left( \theta,\sqrt{\Delta} \right)$ where $\theta$ is some root of $f(x)$. This extension is Galois over $F$ generated by the automorphisms $\sigma$ and $\tau$, where $\sigma$ takes $\theta$ to any other root of $f(x)$ fixing $\sqrt{\Delta}$ and $\tau$ takes $\sqrt{\Delta}\mapsto -\sqrt{\Delta}$ and fixing $\theta$.
+\end{enumerate}
+Finally, we discuss the Galois group of a quartic polynomial
+\begin{align*}
+  f(x) &= x^4 + ax^3 + bx^2 + cx + d.
+\end{align*}
+Then, by substituting with $x = y - a/4$, this yields the quartic
+\begin{align*}
+  g(y) &= y^{4} + py^2 + qy + r
+\end{align*}
+with
+\begin{align*}
+  p &= \frac{1}{8} \left( -3a^2 + 8b \right)\\
+  q &= \frac{1}{8} \left( a^3 - 4ab - 8c \right)\\
+  r &= \frac{1}{256} \left( -3a^4 + 16a^2 b - 64ac + 256d \right).
+\end{align*}
+Let $\alpha_1,\alpha_2,\alpha_3,\alpha_4$ be the roots of $g(y)$ and $G$ the Galois group for the splitting field of $g(y)$.
+
+If $g(y)$ is reducible, then the following cases hold.
+\begin{enumerate}[(i)]
+  \item If $g(y)$ splits into a linear and a cubic, then $G$ is the Galois group of the cubic.
+  \item If $g(y)$ splits into two irreducible quadratics, then the splitting field is $F\left( \sqrt{\Delta_1},\sqrt{\Delta_2} \right)$, where $\Delta_1$ and $\Delta_2$ are the discriminants of the quadratics.
+
+    If $\Delta_1$ and $\Delta_2$ do not differ by a square, then $G$ is isomorphic to a Klein $4$-subgroup of $S_4$.
+
+    If $\Delta_1$ is a square multiplied by $\Delta_2$, then $F\left( \sqrt{\Delta_1},\sqrt{\Delta_2} \right) = F\left( \sqrt{\Delta_1} \right)$ is a quadratic extension with $G$ isomorphic to $\Z/2\Z$.
+\end{enumerate}
+Now, we have the case of $g(y)$ irreducible.Then, the Galois group is transitive on its roots. There are five transitive subgroups (up to conjugation) of $S_4$, given by copies of $S_4,A_4,D_4,V,C$, where $V$ denotes the Klein $4$-group and $C$ denotes the copy of $\Z/4\Z$.
+
+We consider the elements
+\begin{align*}
+  \theta_1 &= \left( \alpha_1 + \alpha_2 \right)\left( \alpha_3 + \alpha_4 \right)\\
+  \theta_2 &= \left( \alpha_1 + \alpha_3 \right)\left( \alpha_2 + \alpha_4 \right)\\
+  \theta_3 &= \left( \alpha_1 + \alpha_4 \right)\left( \alpha_2 + \alpha_3 \right)
+\end{align*}
+inside the splitting field for $g(y)$. Notice that the elements are permuted among themselves by the permutations of $S_4$. The stabilizer of $\theta_1$ is the dihedral group $D_4$, while the stabilizer of all three of $\theta_1$, $\theta_2$, and $\theta_3$ is the copy of $V$.
+
+The elementary symmetric functions in the $\theta_i$ are fixed by $S_4$, so they are in $F$. These elementary symmetric functions evaluated on $\theta_1,\dots,\theta_3$ are given by $2p$, $p^2-4r$, and $-q^2$. This gives that $\theta_1$, $\theta_2$, and $\theta_3$ are the roots of
+\begin{align*}
+  h(x) &= x^3 - 2px^2 + \left( p^2-4r \right)x + q^2.
+\end{align*}
+This is known as the \textit{resolvent cubic} for the quartic $g(y)$. It can be shown (see DF p.614) that the discriminant $\Delta$ of the resolvent cubic is equal to the resolvent of $g(y)$. In particular, this gives
+\begin{align*}
+  \Delta &= 16p^{4}r - 4p^3q^2 - 128p^2r^2 + 144pq^2r - 27q^{4} + 256r^3.
+\end{align*}
+\begin{remark}
+  In the special case where $g(y) = y^4 + py^2 + r$ (which emerges during analysis of quartics whose roots are nested square roots), we have
+  \begin{align*}
+    \Delta &= 16p^{4}r - 128p^2r^2 + 256r^3.
+  \end{align*}
+\end{remark}
+In particular, since the splitting field for the resolvent cubic is a subfield of the splitting field of the original quartic, the Galois group for $h(x)$ is a quotient of $G$, so knowing the action of the Galois group of $h(x)$ on the roots of $h(x)$ gives information about the Galois group of $g(y)$.
+\begin{enumerate}[(i)]
+  \item If the resolvent cubic is irreducible, and $\Delta$ is not a square, then $G$ is not contained in $A_4$ with the Galois group of the resolvent cubic equal to $S_3$. In particular, this means that the degree of the splitting field for $g(y)$ is divisible by 6, so that $G = S_4$.
+  \item If the resolvent cubic is irreducible, and $\Delta$ is a square, then $G$ is a subgroup of $A_4$ and $3$ divides the order of $G$ since the Galois group of the resolvent cubic is $A_3$, so that $G = A_4$.
+  \item If the resolvent cubic is reducible, and $h(x)$ splits completely, then every element of $G$ fixes the elements $\theta_1$, $\theta_2$, and $\theta_3$, so $G = V$.
+  \item If the resolvent cubic splits into a linear factor and a quadratic, then $G$ stabilizes $\theta_1$ but not $\theta_2$ or $\theta_3$, so $G\subseteq D_4$ and $G\nsubseteq V$, so $G = D_4$ or $G = C$.
+
+    Now, notice that $F\left( \sqrt{\Delta} \right)$ is the fixed field of the elements of $G\cap A_4$. We have $D_4\cap A_4 = V$ and $C\cap A_4 = \set{e,(1,3)(2,4)}$, the latter of which is not transitive. Therefore, we have the case $D_4\cap A_4 = V$ if and only if $g(y)$ is irreducible over $F\left( \sqrt{\Delta} \right)$.
+\end{enumerate}
 \subsection{Galois Theory Worked Solutions}%
+\begin{problem}[August `89, Problem 8]
+  Let $\beta = \sqrt{2 + \sqrt{2}}$. Show $\Q\left( \beta \right)/\Q$ is Galois with $G$ cyclic; set up the Galois correspondence.
+\end{problem}
+\begin{solution}
+  Working over the algebraic numbers, we observe that $\sqrt{2 + \sqrt{2}}$ is a root of the irreducible polynomial
+  \begin{align*}
+    f(x) &= x^{4}-4x^2 + 2.
+  \end{align*}
+  The discriminant is given by
+  \begin{align*}
+    \Delta &= 16\left( -4 \right)^{4}\left( 2 \right) - 128\left( -4 \right)^2\left( 2 \right)^2 + 256\left( 2 \right)^3\\
+           &= 2^{11},
+  \end{align*}
+  so that $\Q\left( \sqrt{\Delta} \right) = \Q\left( \sqrt{2} \right)$. Then, over $\Q\left( \sqrt{2} \right)$, we have
+  \begin{align*}
+    f(x) &= \left( \left( x^2-2 \right)-\sqrt{2} \right)\left( \left( x^2-2 \right)+\sqrt{2} \right),
+  \end{align*}
+  which means that $f(x)$ is not irreducible over $\Q\left( \sqrt{2} \right)$. In particular, this means that the Galois group is equal to $\Z/4\Z$, and in particular, since the degree of $\Q\left( \beta \right)$ over $\Q$ is $4$, it follows that the extension is indeed Galois.
+\end{solution}
 \begin{problem}[January `17, Problem 1]
   Consider the polynomial $f(x) = x^4 - 2x^2 - 6$. Prove this polynomial is irreducible. Describe the splitting field of this polynomial over $\Q$, and the Galois group of this splitting field.
 \end{problem}
@@ -289,6 +485,39 @@ Observe that $\Delta\in F$ since $\Delta$ is fixed by the Galois group. Furtherm
   whence $\mu_{\zeta_7,\Q\left( \alpha \right)}\left( x \right)$ has degree at most $2$.
 
   Therefore, we observe that $\Q\left( \zeta_7 + \zeta_7^{-1} \right)$ is an extension with $\left[ \Q\left( \zeta_7 \right):\Q\left( \zeta_7 + \zeta_7^{-1} \right) \right] = 2$, whence $\Q\left( \zeta_7 + \zeta_7^{-1} \right)$ is the desired extension of degree $3$ over $\Q$.
+\end{solution}
+\begin{problem}[August `08, Problem 8]\hfill
+  \begin{enumerate}[(a)]
+    \item Find a splitting field $E$ of the polynomial $x^{4} + 3x^3 + 4x^2 + 3x + 3$ over $F = \Q$, and find its degree $\left[ E:F \right]$.
+    \item Find the Galois group $\gal\left( E/F \right)$ of the extension field.
+    \item Diagram the lattice of subgroups of the Galois group and the corresponding lattice of intermediate subfields of $E/F$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Taking the factorization over $\Q$, we have that the polynomial factorizes as $\left( x^2 + 1 \right)\left( x^2 + 3x + 3 \right)$. Over $\C$, we may factorize this as
+      \begin{align*}
+        p(x) &= \left( x-i \right)\left( x+i \right)\left( x-\left( -\frac{3}{2} + i\frac{\sqrt{3}}{2} \right) \right)\left( x-\left( -\frac{3}{2} - i\frac{\sqrt{3}}{2} \right) \right).
+      \end{align*}
+      Adjoining the roots to $\Q$ gives that $E\subseteq \Q\left( i,\sqrt{3} \right)\subseteq E$. Therefore, $E = \Q\left( i,\sqrt{3} \right)$. We have that
+      \begin{align*}
+        \left[ E:\Q \right] &= \left[ \Q\left( i,\sqrt{3} \right):\Q\left( i \right) \right]\left[ \Q\left( i \right):\Q \right]\\
+                            &= 4,
+      \end{align*}
+      where we use the fact that $\mu_{\sqrt{3},\Q\left( i \right)} = x^2 - 3$ is irreducible over $\Q\left[ i \right]$ as $3$ is not a square mod $4$.
+    \item We claim that the maps 
+      \begin{align*}
+        \sigma &= \begin{cases}
+          i\mapsto -i\\
+          \sqrt{3}\mapsto \sqrt{3}
+        \end{cases}\\
+          \tau &= \begin{cases}
+            i\mapsto i\\
+            \sqrt{3}\mapsto -\sqrt{3}
+          \end{cases}
+      \end{align*}
+      are automorphisms of $\Q\left( i,\sqrt{3} \right)/\Q$.
+  \end{enumerate}
 \end{solution}
 \begin{problem}[August `20, Problem 8]
   Let $K$ be the splitting field of the polynomial $f(x) = \left( x^3-11 \right)\left( x^2 + x - 1 \right)$ over $\Q$.

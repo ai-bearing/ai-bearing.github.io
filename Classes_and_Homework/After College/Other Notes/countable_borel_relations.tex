@@ -56,6 +56,17 @@ First, we collect some definitions.
 
   If $G$ is a standard Borel group and $\Gamma\subseteq G$ is a countable discrete subgroup (also known as a lattice), then the action of $\Gamma$ onto $G$ by left translation, taking $\gamma\cdot g = \gamma g$, yields the quotient space $G/\Gamma$ given by the set of \textit{right} cosets of $\Gamma$.
 \end{example}
+\begin{example}
+  The following are examples of countable Borel equivalence relations.
+  \begin{enumerate}[(i)]
+    \item If $X = 2^{\N}$, then the \textit{eventual equality} relation says that $xE_0 y$ if and only if there exists $m$ such that for all $n\geq m$, we have $x_n = y_n$. The tail equivalence relation says that $xE_t y$ if and only if there exist $m$ and $k$ such that for all $n$, we have $x_{m+n} = y_{k + n}$.
+    \item If $X = \R$, then the \textit{Vitali relation} says that $xE_v y$ if and only if $x-y\in \Q$.
+    \item If $X = \R_{+}$, then the \textit{commensurability relation} says that $xE_c y$ if and only if $x/y\in \Q$.
+    \item If $k\geq 2$ and $X$ is the space of subshifts of $k^{\Z}$, where a subshift is a nonempty closed subset of $k^{\Z}$ invariant under the shift map $\left( S(x) \right)_{i} = x_{i-1}$.
+
+      This is a compact subspace of the hyperspace of compact subsets of $k^{\Z}$, so it is a compact and metrizable space. Define two subshifts to be isomorphic if there is a homeomorphism between the two closed subsets that commutes with the shift, and define an equivalence relation as such.
+  \end{enumerate}
+\end{example}
 \begin{theorem}[Feldman--Moore]
   Let $E$ be a countable Borel equivalence relation on $X$. Then, there is a countable group $\Gamma$ and a Borel action of $\Gamma$ on $X$ such that $E_{\Gamma}^X = E$. 
 \end{theorem}
@@ -130,6 +141,47 @@ Now, we may define an equivalence relation $ \widetilde{E} $ on $E$ by taking $\
   \end{align*}
   where we use the fact that $\mu$ is invariant under $\Gamma$.
 \end{proof}
-\nocite{topics_in_orbit_equivalence,classical_descriptive_set_theory}
+\subsection{Graphings and Cost}%
+\begin{definition}
+  If $E\subseteq X^2$ is a countable Borel equivalence relation, then a (Borel) \textit{graphing} of $E$ is a graph $ G $ such that the connected components of $G$ are the equivalence classes of $E$. We say that $G$ generates $E$.
+\end{definition}
+\begin{definition}
+  A Levitt graph (L-graph) is a countable family $ \left[ \left[ E \right] \right]\supseteq \Phi=\set{\varphi_i}_{i\in I}$ of partial Borel isomorphisms $\varphi_i\colon A_i\rightarrow B_i$, where $A_i,B_i$ are Borel subsets of $X$.
+
+  We call $\Phi$ \textit{finite} if $I$ is finite. We say $\Phi$ is an Levitt graphing (L-graphing) if $\Phi$ generates $E$ in the sense that $xEy$ if and only if $x = y$ or there is a finite set $i_1,\dots,i_k\in I$ and $\ve_1,\dots,\ve_k\in \set{1,-1}$ such that $x = \varphi_{i_1}^{\ve_1}\cdots \varphi_{i_k}^{\ve_k}(y)$.
+\end{definition}
+For every L-graph $\Phi$, there is an associated graph $G_{\Phi}$ that generates the same equivalence relation. We say $xG_{\Phi}y$ if and only if $x\neq y$ and there exists $i$ such that $\varphi_i(x) = y$ or $\varphi_i(y) = x$.
+
+Conversely, for every graph $G$, there is an L-graph $\Phi_G$ such that $G = G_{\Phi_G}$. This follows from fixing a Borel (total) ordering $<$ on $X$, and finding a family of partial Borel functions $\set{f_i}_{i\in \N}$ with disjoint graphs such that for all $x\in X$, we have
+\begin{align*}
+  \set{\left( x,y \right) : xGy\text{ and }x < y} &= \bigcup_{i\in \N}\graph\left( f_i \right).
+\end{align*}
+Since the $f_i$ are countable-to-one, we have $\set{g_{i,j}}_{j\in K_i}$ a family of partial Borel automorphisms with disjoint graphs such that
+\begin{align*}
+  \graph\left( f_i \right)^{-1}&= \bigcup_{j\in K_i} \graph\left( g_{i,j} \right.
+\end{align*}
+(Recall that we define the inverse of a relation to be the coordinates flipped.) Define $\Phi_G = \set{g_{i,j}}_{i,j}$.
+
+Considering the case of an $E$-invariant $\mu$, if $G$ is a graphing of $E|_{A}$ for some conull $E$-invariant Borel subset $A$, then we say $G$ is a graphing of $E$ almost everywhere. Similarly, we may define an L-graphing almost everywhere.
+
+Now, we will discuss the theory of cost.
+\begin{definition}
+  Let $E$ be a countable Borel equivalence relation on $X$, and let $\mu$ be an $E$-invariant measure with corresponding measure on $E$ given by $M$. If $G\subseteq E$ is a subset, then we define its \textit{cost} to be
+  \begin{align*}
+    C_{\mu} \left( G \right) &= \frac{1}{2}M\left( G \right).
+  \end{align*}
+\end{definition}
+Observe that $0\leq C_{\mu}\left( G \right) \leq \infty$, and $0 < C_{\mu}\left( G \right)$ if $G$ is a graphing of $E$ provided that it's not the case that almost every $E$-class is a singleton. This follows from the fact that $G$ is a complete section for the relation $ \widetilde{E} $ on $E$, meaning that $M(G) > 0$.
+
+Now, if $\Phi = \set{\varphi_i}_{i\in I}$ is an L-graph, define its cost by taking
+\begin{align*}
+  C_{\mu}\left( \Phi \right) = \sum_{i\in I}\mu\left( \dom\left( \varphi_i \right) \right) = \sum_{i\in I}\mu\left( \ran\left( \varphi_i \right) \right).
+\end{align*}
+Then, we have
+\begin{align*}
+  C_{\mu}\left( \Phi \right) &= \frac{1}{2} \int_{}^{} \sum_{i\in I}\left( \chi_{A_i}(x) + \chi_{B_i}(x) \right)\:d\mu(x),
+\end{align*}
+where we have $A_i = \dom\left( \varphi_i \right)$ and $B_i = \ran\left( \varphi_i \right)$. 
+\nocite{topics_in_orbit_equivalence,classical_descriptive_set_theory,theory_countable_borel_equivalence_relations}
 \printbibliography
 \end{document}
