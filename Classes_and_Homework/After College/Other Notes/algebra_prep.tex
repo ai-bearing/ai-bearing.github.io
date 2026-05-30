@@ -85,7 +85,25 @@ This gives the following.
 \end{theorem}
 \section{Field/Galois Theory}%
 \subsection{Field Theory Notes}%
+\subsubsection{Irreducibility of Cyclotomic Polynomials}%
+We will let $\Phi_n$ denote the $n$th cyclotomic polynomial, defined by
+\begin{align*}
+  \Phi_n(x) &= \prod_{\gcd\left( d,n \right)=1} \left( x-\zeta_n^{d} \right).
+\end{align*}
+Recall that the cyclotomic polynomials satisfy
+\begin{align*}
+  x^{n}-1 &= \prod_{d | n} \Phi_d(x).
+\end{align*}
+\begin{theorem}
+  If $p$ does not divide $n$, then the irreducible factors of $ \overline{\Phi_n(x)}\in \F_p[x] $ are distinct and each has degree equal to the order of $p$ modulo $n$.
+\end{theorem}
+\begin{proof}
+  We observe that $ \Phi_n(x) | \left( x^{n}-1 \right) $ in $\Z[x]$, so the divisibility relation is preserved when reducing modulo $p$, meaning that $ \overline{\Phi_n(x)} $ is separable in $\F_p[x]$ as $ x^{n} - \overline{1} $ is separable in $\F_p[x]$ by the assumption that $\gcd\left( p,n \right) = 1$.
 
+  Let $\alpha$ be a root of $ \overline{\Phi_n(x)} $ in an extension of $\F_p$. We will show that $\alpha$ is a primitive $n$th root of unity. Since $ \overline{\Phi_n(x)} | \left( x^{n} - \overline{1}\right) $, it follows that we have $\alpha^{n} = 1$. If $\alpha$ were not of order $n$, then it has some order $m$ that properly divides $n$. In particular, this means that $\alpha$ is a root of some $\Phi_d(x)$ with $d | n$ properly. In particular, since $d | n$, it follows that $ \overline{\Phi_n(x)\Phi_d(x)} $ divides $x^{n}- \overline{1}$, meaning that $\alpha$ is a double root of $x^{n} - \overline{1}$, contradicting the fact that $x^{n} - \overline{1}$ does not have any repeated roots. Therefore, $\alpha$ is a primitive root of unity.
+
+  If $\pi(x)$ is an irreducible factor of $ \overline{\Phi_n(x)} $ in $\F_p[x]$, and $\alpha$ is a root of $\pi(x)$, then $\alpha$ is a primitive $n$th root of unity, so the degree of $\pi$, which is equal to $ \left[ \F_p(\alpha):\F_p \right] $, is the order of $p$ modulo $n$.
+\end{proof}
 \subsection{Field Theory Worked Solutions}%
 \begin{problem}[September `84, Problem 7]
   Factor $x^{8}-1$ into irreducibles in $\Z/p\Z[x]$ for all primes $p$.
@@ -504,8 +522,8 @@ In particular, since the splitting field for the resolvent cubic is a subfield o
         \left[ E:\Q \right] &= \left[ \Q\left( i,\sqrt{3} \right):\Q\left( i \right) \right]\left[ \Q\left( i \right):\Q \right]\\
                             &= 4,
       \end{align*}
-      where we use the fact that $\mu_{\sqrt{3},\Q\left( i \right)} = x^2 - 3$ is irreducible over $\Q\left[ i \right]$ as $3$ is not a square mod $4$.
-    \item We claim that the maps 
+      where we use the fact that $\mu_{\sqrt{3},\Q\left( i \right)} = x^2 - 3$ is irreducible over $\Q\left( i \right)$ as $3$ is not a square mod $4$.
+    \item We observe that the maps 
       \begin{align*}
         \sigma &= \begin{cases}
           i\mapsto -i\\
@@ -516,8 +534,21 @@ In particular, since the splitting field for the resolvent cubic is a subfield o
             \sqrt{3}\mapsto -\sqrt{3}
           \end{cases}
       \end{align*}
-      are automorphisms of $\Q\left( i,\sqrt{3} \right)/\Q$.
+      are automorphisms of $\Q\left( i,\sqrt{3} \right)$ that determine the order $4$ group $\gal\left( E/\Q \right)\cong \Z/2\Z\times\Z/2\Z$.
+    \item The fixed field for the group $\left\langle \sigma \right\rangle$ is $\Q\left( \sqrt{3} \right)$, while the fixed field for the group $ \left\langle \tau \right\rangle $ is $\Q\left( i \right)$.
   \end{enumerate}
+\end{solution}
+\begin{problem}[August `18, Problem 7]
+  What is the Galois group of $x^{5}-1$ over a field with $7$ elements?
+\end{problem}
+\begin{solution}
+  We seek to understand the factorization into irreducibles of $x^{5}-1$. Observe that we have
+  \begin{align*}
+    x^{5}-1 &= \left( x-1 \right)\left( x^{4} + x^3 + x^2 + x + 1 \right),
+  \end{align*}
+  where we observe that the latter factor is equal to $\Phi_5(x)$, the $5$th cyclotomic polynomial. Recalling the theorem that the $n$th cyclotomic polynomials factor over $\F_p$ into irreducibles whose degree is equal to the order of $p$ modulo $n$, we observe that $7\equiv 2$ mod $5$, and $2$ has order $4$ in $\left( \Z/5\Z \right)^{\times}$, so that $\Phi_5(x)$ is irreducible over $\F_7$.
+
+  In particular, this means that the Galois group of $x^{5}-1$ is equal to the Galois group of the splitting field; since $\left[ \F_7(\alpha):\F_7 \right] = 4$, it follows that the Galois group is isomorphic to $\Z/4\Z$.
 \end{solution}
 \begin{problem}[August `20, Problem 8]
   Let $K$ be the splitting field of the polynomial $f(x) = \left( x^3-11 \right)\left( x^2 + x - 1 \right)$ over $\Q$.
@@ -573,6 +604,68 @@ In particular, since the splitting field for the resolvent cubic is a subfield o
         \item $M_A\cap M_B = F$.
       \end{enumerate}
       The forward direction follows from our earlier work by setting $M_A = K^{A}$ and $M_B = K^{B}$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[DF Problem 14.2.12]
+  Determine the Galois group of the splitting field over $\Q$ of $x^{4}-14x^2 + 9$.
+\end{problem}
+\begin{solution}
+  Factorizing over $\C$, we observe that
+  \begin{align*}
+    p(x) &= x^{4}-14x^2+9\\
+         &= \left( x^2-7 \right)^2 - 40\\
+         &= \left( x-\sqrt{7+2\sqrt{10}} \right)\left( x+\sqrt{7+2\sqrt{10}} \right)\left( x-\sqrt{7-2\sqrt{10}} \right)\left( x+\sqrt{7-2\sqrt{10}} \right).
+  \end{align*}
+  If we let
+  \begin{align*}
+    \alpha &= \sqrt{7 + 2\sqrt{10}}\\
+    \beta &= -\sqrt{7 +2\sqrt{10}}\\
+    \gamma &= \sqrt{7-2\sqrt{10}}\\
+    \delta &= -\sqrt{7-2\sqrt{10}},
+  \end{align*}
+  then we observe that $\alpha\gamma = 3$, whence $\gamma\in \Q\left( \alpha \right)$ so that $\Q\left( \alpha \right)/\Q$ is the splitting field for $p(x)$. Since $p(x)$ is irreducible, it follows that $\Q\left( \alpha \right)/\Q$ has degree $4$. Furthermore, since $p(x)$ is a separable irreducible polynomial, there are automorphisms taking $\alpha$ to every other root, giving the automorphism group
+  \begin{align*}
+    G &= \set{\id,\left( \alpha\mapsto \gamma \right),\left( \alpha\mapsto \beta \right),\left( \alpha\mapsto \delta \right)}.
+  \end{align*}
+  Observe that all of these automorphisms fix $\Q$ and have order $2$, meaning that $G\cong \Z/2\Z\times\Z/2\Z$.
+\end{solution}
+\begin{problem}[August `21, Problem 6]
+  Consider $f(x) = x^4+ax^2-1\in \Q[x]$, where $a\in \Z\setminus\set{0}$. Let $K$ be the splitting field of $f(x)$ over $\Q$.
+  \begin{enumerate}[(a)]
+    \item Show that $f(x)$ is irreducible.
+    \item Show that $i\in K$.
+    \item Determine the isomorphism class of the Galois group $\gal\left( K/\Q \right)$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item From the rational roots theorem, we know that any rational root of $f(x)$ must be either $1$ or $-1$. Since both $f(1)$ and $f(-1)$ are equal to $a$, and $a\neq 0$, it follows that $f(x)$ has no rational roots, so $f(x)$ is irreducible.
+    \item Since $f(x)$ is irreducible over $K$, it follows that $f(x)$ is separable, and upon completing the square we may write
+      \begin{align*}
+        x^2 + ax^2 - 1 &= \left( x-\alpha \right)\left( x+\alpha \right)\left( x-\beta \right)\left( x+\beta \right)
+      \end{align*}
+      for some $\alpha,\beta\in K$, meaning that we have $\alpha^2\beta^2 = -1$. Therefore, it follows that $\alpha\beta = i$, so $i\in K$.
+    \item To determine the isomorphism class of the Galois group $\gal\left( K/\Q \right)$, we start by considering the three roots
+      \begin{align*}
+        \theta_1 &= 0\\
+        \theta_2 &= -\left( \alpha + \beta \right)^{2}\\
+                 &= -\left( \alpha^2 + \beta^2 + 2i \right)\\
+        \theta_3 &= -\left( \alpha-\beta \right)^2\\
+                 &= -\left( \alpha^2 + \beta^2 - 2i \right)
+      \end{align*}
+      Observe that $\theta_1\in \Q$, meaning that the Galois group is isomorphic to either $D_4$ or $\Z/4\Z$ as $\theta_1$ is stabilized by the Galois group. To distinguish, we will compute the order of $K = \Q\left( \alpha,i \right)$.
+
+      For this, it suffices to compute $\left[ K:\Q\left( \alpha \right) \right]$. Since we may write
+      \begin{align*}
+        \alpha &= \sqrt{\frac{-a + \sqrt{1+a^2}}{2}}\\
+               &\in \R,
+      \end{align*}
+      it follows that $\Q\left( \alpha \right)\subsetneq K$, so that 
+      \begin{align*}
+        \left[ K:\Q \right] &= \left[ K:\Q\left( \alpha \right) \right] \left[ \Q\left( \alpha \right):\Q \right]\\
+                            &= 8,
+      \end{align*}
+      where we use the fact that $f$ is irreducible to determine that $\left[ \Q\left( \alpha \right):\Q \right] = 4$.
   \end{enumerate}
 \end{solution}
 \end{document}
