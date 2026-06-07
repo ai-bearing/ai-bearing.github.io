@@ -21,8 +21,47 @@
 
 \begin{document}
 \RaggedRight
+\section{Group Theory}%
+\subsection{Group Theory Worked Solutions}%
+\begin{problem}[August `05, Problem 2]
+  Let $G$ be a finitely generated group.
+  \begin{enumerate}[(a)]
+    \item If $H$ is a finite group, show that there exist only finitely many group homomorphisms from $G$ to $H$.
+    \item If $n$ is a given natural number, show that there exist only finitely many normal subgroups $n$ of $G$ with $\left[ G:N \right] = n$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Since $H$ is finite, it is finitely generated and finitely presented, the latter of which follows from the fact that a finite group is fully determined by its Cayley table. We observe that any homomorphism $G\rightarrow H$ must map generators of $G$ to generators of $H$ and satisfy the relations of both $G$ and $H$; since there are finitely many generators and relations for $H$, it follows that there are finitely many such homomorphisms.
+    \item We observe that any normal subgroup $N$ of $G$ arises as the kernel of the homomorphism $G\rightarrow G/N$, so in particular, $\left[ G:N \right] = n$ if and only if $N$ is the kernel of a homomorphism from $G$ to a group of order $n$. There are finitely many such groups since any group of order $n$ must embed in $S_n$ by Cayley's theorem, and there are finitely many subgroups of $S_n$ of any order, so by part (a), it follows that there are finitely many group homomorphisms from $G$ to any group of order $n$, so there are finitely many normal subgroups $N$ with $\left[ G:N \right] = n$.
+  \end{enumerate}
+\end{solution}
 \section{Ring Theory}%
 \subsection{Ring Theory Notes}%
+\subsubsection{Localization}%
+If $R$ is a (commutative, unital) ring, then we may consider a subset $S\subseteq R$ such that $1\in S$, $0\notin S$, and for any $s_1,s_2\in S$, we have $s_1s_2\in S$ (such an $S$ is called a \textit{multiplicative set}). Then, we may construct the \textit{ring of fractions} $S^{-1}R$ as the set of equivalence classes in $R\times S$ with $\left( r_1,s_1 \right)\sim \left( r_2,s_2 \right) $ if and only if $ r_1s_2 - r_2s_1 = 0$. We write $\left[ \left( r,s \right) \right] = \frac{r}{s}$, and define addition and multiplication by
+\begin{align*}
+  \frac{r_1}{s_1} + \frac{r_2}{s_2} &= \frac{r_1s_2 + r_2s_1}{s_1s_2}\\
+  \frac{r_1}{s_1}\frac{r_2}{s_2} &= \frac{r_1r_2}{s_1s_2}.
+\end{align*}
+There is a natural embedding $\iota$ of $R$ into $S^{-1}R$ by taking $r\mapsto \frac{r}{1}$. 
+\begin{theorem}
+  Let $R$ be a commutative ring with unity, $S$ a multiplicatively closed subset, and $\phi\colon R\rightarrow T$ a ring homomorphism that maps $S$ to units in $T$. Then, there is a unique homomorphism $\varphi\colon S^{-1}R\rightarrow T$ such that $\varphi\circ\iota = \phi$.
+  \begin{center}
+    % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRACUQBfU9TXfIRQBGclVqMWbAMoA9YAFphXTjz7Y8BIqOHj6zVohAAVbuJhQA5vCKgAZgCcIAWyRkQOCEgBM1fVKMAHUC0AAssEGoGOgAjGAYABX5NIRAHLEtQnG5eEEcXN2pPJFEJAzZg-Bw6HPsnV0RS4sRfMoCQYPoHMIiuCi4gA
+    \begin{tikzcd}
+    R \arrow[rd, "\phi"'] \arrow[r, "\iota"] & S^{-1}R \arrow[d, "\varphi"] \\
+                                             & T                           
+    \end{tikzcd}
+  \end{center}
+\end{theorem}
+\begin{proof}
+  Define
+  \begin{align*}
+    \varphi\left( \frac{r}{s} \right) &= \phi\left( r \right)\phi\left( s \right)^{-1}.
+  \end{align*}
+\end{proof}
+\subsubsection{Primality in the Gaussian Integers}%
 We will discuss primality in the Gaussian integers. Recall that the Gaussian integers are given by
 \begin{align*}
   \Z\left[ i \right] &= \set{a + bi | a,b\in \Z}\\
@@ -83,6 +122,49 @@ This gives the following.
 \begin{theorem}[Fermat's Theorem on Sums of Squares]
   A positive odd prime $p\in \Z$ is a sum of two squares if and only if $p\equiv 1$ mod $4$.
 \end{theorem}
+\subsection{Ring Theory Worked Solutions}%
+\begin{problem}[August `05, Problem 3]
+  Let $R$ be a commutative ring with $1$ such that any ideal in $R$ is principal. Let $S\subseteq R$ be a multiplicatively closed subset of $R$. Show that any ideal in the ring of fractions $S^{-1}R$ is also principal.
+\end{problem}
+\begin{solution}
+  We claim that any ideal in $S^{-1}R$ is of the form $S^{-1}J$ for some ideal $J$ of $R$. For this, consider a proper ideal $I$ (one may choose their favorite maximal ideal) of $S^{-1}R$, and consider the ideal $J = I\cap R$. We claim that $J\cap S = \emptyset$.
+
+  Suppose not, and let $u\in J\cap S$, so by definition of the copy of $R$ in $S^{-1}R$, we have $\frac{u}{1}\in J\cap S$. Since $J\cap S$ is an ideal, it follows that $\frac{u}{1}\frac{1}{u}\in J\cap S$, so $1\in J\cap S$, so $1\in J$, meaning $1\in I$, meaning $I$ is not proper, which is a contradiction.
+
+  Since $J\cap S = \emptyset$, it follows that $S^{-1}J$ is a well-defined set. We start by showing that $I\subseteq S^{-1}J$. For this, consider an element $\frac{a}{b}\in I$. Then, we have $\frac{a}{1} = \frac{a}{b}\frac{b}{1}\in I$, so $\frac{a}{b}\in S^{-1}J$. Additionally, if we have some element $\frac{a}{b}\in S^{-1}J$, then we have $\frac{a}{b} = \frac{1}{b}\left( \frac{a}{1} \right)$, where by definition, $\frac{a}{1}\in I$ as $\frac{a}{1}\in I\cap R$, so that $\frac{a}{b}\in I$ since $I$ absorbs multiplication.
+
+  In the special case where every ideal of $R$ is principal, it follows that every ideal of $S^{-1}R$ is of the form $S^{-1}I$, meaning that every ideal of $S^{-1}R$ is principal generated by $\left( \frac{a}{1} \right)$, where $I = \left( a \right)$.
+\end{solution}
+\begin{problem}[August `20, Problem 4]
+  Let $R$ be a commutative ring with $1$. An ideal $I$ of $R$ is called irreducible if $I$ cannot be written as $I = J\cap K$, where $J$ and $K$ are both ideals strictly containing $I$.
+  \begin{enumerate}[(a)]
+    \item Prove that every prime ideal is irreducible.
+    \item Assume that $R$ contains a nonzero nilpotent element. Prove that $R$ contains an irreducible ideal which is not prime.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Let $P$ be a prime ideal of $R$. Suppose toward contradiction that there exist proper ideals $J$ and $K$ with $P = J\cap K$ and $P\subsetneq J,K$. Choose $a\in J\setminus P$ and $b\in K\setminus P$. Then, $ab\in P$ since $ab\in J\cap K$ by absorption of multiplication. Yet, by the definition of prime ideal, it follows that either $a\in P$ or $b\in P$, which contradicts the definition of $a$ and $b$.
+    \item Suppose $a\in R$ is a nonzero nilpotent element. We consider the set $\mathcal{S}$  of ideals that do not contain $a$, ordered by inclusion. This set is nonzero since the zero ideal is in this set and $a$ is not zero. If $\mathcal{C}$ is a chain in $\mathcal{S}$, then the union of the ideals in $\mathcal{C}$ is an upper bound in $\mathcal{S}$. If it were not the case that the union was in $\mathcal{S}$, then we would have some ideal $I\in \mathcal{C}$ with $a\in I$, which would imply that $I\notin \mathcal{S}$.
+
+      Therefore, by Zorn's Lemma, there is a maximal element $M$ of $\mathcal{S}$. Observe that the nilradical of $R$ is the intersection of all the prime ideals, so since $M$ does not contain $a$, it follows that $M$ is not prime.
+
+      Suppose toward contradiction that $M$ is not irreducible. Then, there would be ideals $J$ and $K$ where $M\subsetneq J,K$ with $M = J\cap K$. Without loss of generality, if $a\notin J$, then it would follow that $J\in \mathcal{S}$, which would violate the maximality of $M$. Meanwhile, if $a\in J$ and $a\in K$, then we would have $a\in J\cap K = M$, which would violate the fact that $M\in \mathcal{S}$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[January `22, Problem 3]
+  Let $f\left( x,y \right),g\left( x,y \right)\in \C\left[ x,y \right]$ be two polynomials that do not have a non-constant common factor.
+  \begin{enumerate}[(i)]
+    \item Show that $f$ and $g$ are relatively prime as elements of $\C\left( x \right)[y]$ and $\C\left( y \right)[x]$, where $\C\left( x \right)$ and $\C\left( y \right)$ are the fields of rational functions (i.e., the fraction fields of $\C\left[ x \right]$ and $\C\left[ y \right]$ respectively). Give a detailed argument.
+    \item Show that the system of polynomial equations $f\left( x,y \right) = 0$ and $g\left( x,y \right) = 0$ has finitely many solutions in $\C^2$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(i)]
+    \item Considering $\C\left[ x,y \right] \cong \left( \C\left[ x \right] \right)\left[ y \right]$ as the ring of polynomials in $y$ over the integral domain $\C\left[ x \right]$, then since $\C$ is a field, $\C\left[ x \right]$ is a PID, hence a UFD, so $\C\left[ x,y \right]$ is a UFD. In particular, the factorizations of $f\left( x,y \right)$ and $g\left( x,y \right)$ into irreducible polynomials in $y$ over the underlying domain $\C\left[ x \right]$ is unique. By Gauss's Lemma, irreducible polynomials in $y$ over $\C\left[ x \right]$ remain irreducible over $\C\left( x \right)$, so $f\left( x,y \right)$ and $g\left( x,y \right)$ do not share any factors in $\C\left( x \right)\left[ y \right]$, hence they are relatively prime. A similar argument applies to $\C\left( y \right)\left[ x \right]$ by switching the roles of $x$ and $y$.
+    \item 
+  \end{enumerate}
+\end{solution}
 \section{Field/Galois Theory}%
 \subsection{Field Theory Notes}%
 \subsubsection{Irreducibility of Cyclotomic Polynomials}%
@@ -104,6 +186,7 @@ Recall that the cyclotomic polynomials satisfy
 
   If $\pi(x)$ is an irreducible factor of $ \overline{\Phi_n(x)} $ in $\F_p[x]$, and $\alpha$ is a root of $\pi(x)$, then $\alpha$ is a primitive $n$th root of unity, so the degree of $\pi$, which is equal to $ \left[ \F_p(\alpha):\F_p \right] $, is the order of $p$ modulo $n$.
 \end{proof}
+
 \subsection{Field Theory Worked Solutions}%
 \begin{problem}[September `84, Problem 7]
   Factor $x^{8}-1$ into irreducibles in $\Z/p\Z[x]$ for all primes $p$.
@@ -272,7 +355,7 @@ Recall that the cyclotomic polynomials satisfy
   \end{enumerate}
 \end{solution}
 \subsection{Galois Theory Notes}%
-\subsubsection{General Galois Theory Facts}%
+\subsubsection{General Galois Theory Notes}%
 \begin{theorem}
   If $f(x)\in K[x]$ is a separable polynomial of degree $n$, then $f$ is irreducible if and only if the Galois group $\gal\left( \operatorname{spl}_{K}\left(f(x)\right)/K \right)$ is a transitive subgroup of $S_n$.
 \end{theorem}
@@ -579,6 +662,19 @@ In particular, since the splitting field for the resolvent cubic is a subfield o
         \gal\left( K/\Q \right) &\cong \gal\left( L/\Q \right)\times \gal\left( M/\Q \right).
       \end{align*}
       We start by seeing that $L = \Q\left( \omega,\sqrt[3]{11} \right)$. Since $p(x)$ has degree $3$ and not all of its roots are real, it follows that $\gal\left( L/\Q \right)\cong S_3$, while since $M$ has degree $2$ over $\Q$, it follows that $\gal\left( M/\Q \right)\cong \Z/2\Z$, so that $\gal\left( K/\Q \right)\cong S_3\times \Z/2\Z$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[January `98, Problem 5]
+  The Galois group $G$ of a polynomial $f(x)\in F[x]$ of degree $4$ is known to contain a subgroup isomorphic to the dihedral group $D_4$.
+  \begin{enumerate}[(a)]
+    \item Show that $f(x)$ is irreducible.
+    \item If some root $r_i$ of $f(x)$ lies in the subfield $F\left( r_j,r_k \right)$ generated by two other roots, show that $F\left( r_j,r_k \right)$ is a splitting field for $f(x)$ and that $G = D_4$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item We observe that the group $S_4$ is of order $24$, and by the Sylow theorems, there are three conjugate subgroups of order $8$, each of which is isomorphic to $D_4$. Since each of these copies of $D_4$ is transitive, it follows that the Galois group of $f(x)$ acts transitively on the roots of $f(x)$. Since the Galois group of $f(x)$ is transitive, it follows that $f(x)$ is irreducible.
+    \item 
   \end{enumerate}
 \end{solution}
 \begin{problem}[Algebra II 2019 Midterm II, Problem 2]
