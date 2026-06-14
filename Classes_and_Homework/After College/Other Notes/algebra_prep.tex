@@ -22,6 +22,255 @@
 \begin{document}
 \RaggedRight
 \section{Group Theory}%
+\subsection{Group Theory Notes}%
+\subsubsection{Useful Facts}%
+Let $G$ be a finite group, and suppose $G$ acts on itself by conjugation. Then, the stabilizer of $x\in G$ is denoted $C_G(x)$, and by the orbit-stabilizer theorem, it follows that the number of \textit{elements} of the conjugacy class of $x$, $K_G(x)$, is given by $\left[ G:C_G(x) \right]$. The \textit{class equation} says we may find
+\begin{align*}
+  \left\vert G \right\vert &= \left\vert Z(G) \right\vert + \sum_{i=1}^{r} \left[ G:C_G\left( x_i \right) \right],
+\end{align*}
+where $\set{x_1,\dots,x_r}$ is a family of representatives of conjugacy classes.
+
+If $G$ acts on its \textit{subgroups} by conjugation, then the \textit{normalizer} of $H\leq G$, denoted $N_G(H)$, is the stabilizer of $H$ under conjugation. Similarly, number of subgroups conjugate to $H\leq G$ is given by $\left[ G:N_G(H) \right]$.
+\subsubsection{Semidirect Products}%
+Suppose $N$ and $H$ are subgroups of a group $G$, where $N$ is normal and $H$ is such that $N\cap H = \set{e}$. We will obtain a description of the structure of $G$ in terms of the structure of $N$ and $H$.
+
+A short exact sequence of groups is a sequence of groups and homomorphisms
+\begin{align*}
+  1 \rightarrow N \xrightarrow{\varphi} G \xrightarrow{\psi} \xrightarrow{H} \rightarrow 1
+\end{align*}
+where $\psi$ is surjective and $\varphi$ identifies $N$ with $\ker\left( \psi \right)$. In other words, the sequence is exact if $N$ is normal in $G$ and $\psi$ induces an isomorphism $G/N\cong H$.
+\begin{definition}
+  Let $N$ and $H$ be groups. A group $G$ is an \textit{extension} of $H$ by $N$ if there is an exact sequence of groups
+  \begin{align*}
+    1 \rightarrow N\rightarrow G\rightarrow H\rightarrow 1.
+  \end{align*}
+  The exact sequence is said to split if $H$ can be identified with a subgroup of $G$, so that $N\cap H = \set{e}$.
+\end{definition}
+If $N$ is normal, then observe that any subgroup $H$ of $G$ acts on $N$ by conjugation; furthermore, conjugation determines a homomorphism
+\begin{align*}
+  \iota\colon H\rightarrow \aut\left( N \right)
+\end{align*}
+given by $h\mapsto \iota_h$, where $\iota_h(n) = hnh^{-1}$.
+
+Now, we consider a certain tautology. If $G = NH$ with $N\cap H = \set{e}$ and $N$ normal, then observe that
+\begin{align*}
+  n_1h_1n_2h_2 &= \left( n_1\left( h_1n_2h_1^{-1} \right) \right)\left( h_1h_2 \right).
+\end{align*}
+In particular, if we know the conjugation action of $H$ on $N$, then we can recover the operation in $G$ from this information and the operations in $N$ and $H$.
+
+This allows us to construct semidirect products by considering any two arbitrary groups $N$ and $H$ with an arbitrary group homomorphism
+\begin{align*}
+  \theta\colon H&\rightarrow \aut\left( N \right)\\
+  h &\mapsto \theta_h.
+\end{align*}
+Then, we may define an operation on $N\times H$ by taking
+\begin{align*}
+  \left( n_1,h_1 \right)\cdot \left( n_2,h_2 \right) &= \left( n_1\theta_{h_1}\left(n_2\right), h_1h_2 \right).
+\end{align*}
+Observe that in the special case where $N,H\leq G$ with $G = NH$, $N$ normal, and $N\cap H = \set{e}$, the operation $\theta$ can be given by the map $\iota$. The group $\left( N\times H,\cdot \right)$ is denoted $N\rtimes_{\theta}H$, and is called the semidirect product of $N$ and $H$ with respect to $\theta$. Observe that the ordinary direct product is a semidirect product where $\theta$ is the trivial map.
+
+We will discuss some examples.
+\begin{enumerate}[(i)]
+  \item Suppose $H$ is an abelian group of arbitrary order, and let $K = \Z/2\Z$. Define $\varphi\colon K\rightarrow \aut(H)$ by inversion. Then, $G = H\rtimes K$ contains the subgroup $H$ of index $2$, with $xhx^{-1} = h^{-1}$ for all $h\in H$ and $e\neq x\in K$.
+    
+    When $H\cong \Z/n\Z$, this yields the dihedral group $D_n$ of order $2n$, while if $H \cong \Z$, we have the infinite dihedral group $D_{\infty}$.
+  \item If $H$ is a group, and $K = \aut\left( H \right)$, then $\varphi\colon K\rightarrow \aut\left( H \right)$ given by the identity yields the semidirect product $H\rtimes \aut\left( H \right)$, denoted the \textit{holomorph} of $H$.
+\end{enumerate}
+\subsubsection{Solvable Groups}%
+\begin{definition}
+  A series of subgroups $G_i$ of a group $G$ is a decreasing sequence of subgroups
+  \begin{align*}
+    G = G_0\supsetneq G_1\supsetneq G_2\supsetneq\cdots,
+  \end{align*}
+  where the length of the series is the number of strict inclusions.
+
+  A normal series is a series of subgroups where $G_{i+1}\trianglelefteq G_i$ for each $i$. The number $\ell(G)$ is the length of a maximal normal series.
+
+  A \textit{composition series} is a normal series
+  \begin{align*}
+    G = G_0\supsetneq G_1\supsetneq\cdots\subsetneq G_n = \set{e}
+  \end{align*}
+  where the successive quotients $G_i/G_{i+1}$ are simple.
+\end{definition}
+\begin{theorem}[Jordan--Hölder Theorem]
+  Let $G$ be a group, and suppose there are two composition series
+  \begin{align*}
+    G = G_0\supsetneq G_1\supsetneq G_2\supsetneq\cdots\supsetneq G_n = \set{e}\\
+    G = G_0'\supsetneq G_1'\supsetneq G_2'\supsetneq\cdots\supsetneq G_m = \set{e}.
+  \end{align*}
+  Then, $m = n$, and the quotient groups $H_i = G_i/G_{i+1}$ and $H_i' = G_i'/G_{i+1}'$ agree up to isomorphism and permutation.
+\end{theorem}
+\begin{proof}
+  Considering the following composition series
+  \begin{align*}
+    G = G_0\supsetneq G_1\supsetneq G_2\supsetneq\cdots\supsetneq G_n = \set{e}
+  \end{align*}
+  we induct on $n$. If $n = 0$, then $G$ is trivial and there is nothing to prove.
+
+  Suppose $n > 0$, and consider another composition series
+  \begin{align*}
+    G = G_0'\supsetneq G_1'\supsetneq G_2'\supsetneq\cdots\supsetneq G_m' = \set{e}.
+  \end{align*}
+  If $G_1 = G_1'$, then the result follows from the induction hypothesis since $G_1$ has a composition series of length $n-1$.
+
+  Therefore, we may assume that $G_1 \neq G_1'$. We observe that $G_1G_1' = G$, since $G_1G_1'$ is normal in $G$ and $G_1\supsetneq G_1G_1'$, but there are no proper normal subgroups between $G_1$ and $G$ since $G/G_1$ is simple.
+
+  Consider the group $K = G_1\cap G_1'$. The distinct subgroups $G_i\cap K$ determine a composition series
+  \begin{align*}
+    K \supsetneq K_1\supsetneq K_2\supsetneq \cdots\supsetneq K_r = \set{e}.
+  \end{align*}
+  By the Second Isomorphism Theorem, we have
+  \begin{align*}
+    \frac{G_1}{K} &= \frac{G_1}{G_1\cap G_1'}\\
+                  &\cong \frac{G_1G_1'}{G_1'}\\
+                  &= \frac{G}{G_1'}
+  \end{align*}
+  and $G_1'/K \cong G/G_1$. These quotients are simple, so we obtain two new composition series
+  \begin{align*}
+    G \supsetneq G_1 \supsetneq K \supsetneq K_1\supsetneq\cdots\supsetneq \set{e}\\
+    G\supsetneq G_1'\supsetneq K \supsetneq K_1 \supsetneq \cdots\supsetneq \set{e}.
+  \end{align*}
+  These composition series only differ at the first step. The two series have the same length and the same quotients. Next, we claim that the first of these series has the same length and quotients of the original series. Since
+  \begin{align*}
+    G_1\supsetneq K\supsetneq K_1\supsetneq K_2\supsetneq\cdots\supsetneq K_r = \set{e}
+  \end{align*}
+  is a composition series for $G_1$, the induction hypothesis gives that it must have the same length and quotients as the composition series
+  \begin{align*}
+    G_1\supsetneq G_2\supsetneq \cdots \supsetneq G_n = \set{e}.
+  \end{align*}
+  Therefore, applying the induction hypothesis, it follows that the series
+  \begin{align*}
+    G_1'\supsetneq K \supsetneq K_1\supsetneq K_2\supsetneq \cdots \supsetneq K_r = \set{e}
+  \end{align*}
+  has the same length and quotients as 
+  \begin{align*}
+    G_1'\supsetneq G_2'\supsetneq\cdots\supsetneq G_m' = \set{e}.
+  \end{align*}
+\end{proof}
+\begin{proposition}
+  Let $G$ be a group, and let $N$ be a normal subgroup of $G$. Then, $G$ has a composition series if and only if $N$ and $G/N$ have composition series. Furthermore,
+  \begin{align*}
+    \ell\left( G \right) &= \ell\left( N \right) + \ell\left( G/N \right),
+  \end{align*}
+  and the composition factors of $G$ consist of the composition factors of $N$ and of $G/N$.
+\end{proposition}
+\begin{proof}
+  If $G/N$ has a composition series, then the subgroups appearing in it correspond to subgroups of $G$ containing $N$ with isomorphic quotients. Therefore, if both $G/N$ and $N$ have composition series, concatenating produces a composition series for $G$.
+
+  For the converse, suppose $G$ has a composition series
+  \begin{align*}
+    G &= G_0\supsetneq G_1\supsetneq G_2\supsetneq \cdots \supsetneq G_n = \set{e},
+  \end{align*}
+  and that $N$ is a normal subgroup of $G$. Taking intersections with $N$ gives a sequence of subgroups
+  \begin{align*}
+    N = G\cap N \supseteq G_1\cap N \supsetneq \cdots \supsetneq \set{e}\cap N = \set{e}
+  \end{align*}
+  such that $G_{i+1}\cap N$ is normal in $G_i\cap N$ for all $i$. We claim that this is a composition series upon deleting repetitions. For this, we will establish that the quotients $\left( G_{i}\cap N \right)/\left( G_{i+1}\cap N \right)$ are either trivial or isomorphic to $G_i/G_{i+1}$. Consider the homomorphism
+  \begin{align*}
+    G_i\cap N \hookrightarrow G_i\rightarrow \frac{G_i}{G_{i+1}}.
+  \end{align*}
+  The kernel is $G_{i+1}\cap N$, so by the first isomorphism theorem, we have an injective homomorphism
+  \begin{align*}
+    \frac{G_{i}\cap N}{G_{i+1}\cap N} \hookrightarrow \frac{G_i}{G_{i+1}},
+  \end{align*}
+  where we identify the image with a subgroup of $G_i/G_{i+1}$. This subgroup is normal since $N$ is normal in $G$, and since $G_i/G_{i+1}$ is simple, we get our desired result.
+
+  As for $G/N$, we have the composition series
+  \begin{align*}
+    \frac{G}{N} \supseteq \frac{G_1N}{N} \supseteq \frac{G_2N}{N}\supseteq\cdots \supseteq \set{e_{G/N}}.
+  \end{align*}
+  such that $\left( G_{i+1}N \right)/N$ is normal in $\left( G_iN \right)/N$. By the third isomorphism theorem, the quotients
+  \begin{align*}
+    \frac{\left( G_{i}N \right)/N}{\left( G_{i+1}N \right)/N} &\cong \frac{G_iN}{G_{i+1}N}
+  \end{align*}
+  are isomorphic. Considering the homomorphism 
+  \begin{align*}
+    G_i\hookrightarrow G_{i}N \rightarrow\frac{G_iN}{G_{i+1}N},
+  \end{align*}
+  we have that this homomorphism is surjective, and the subgroup $G_{i+1}$ of the source is sent to the identity of the target. By the first isomorphism theorem, there is a surjective homomorphism
+  \begin{align*}
+    \frac{G_{i}}{G_{i+1}} \rightarrow \frac{G_iN}{G_{i+1}N},
+  \end{align*}
+  so that $G_iN/G_{i+1}N$ is either trivial or isomorphic to it as $G_i/G_{i+1}$ is simple.
+\end{proof}
+Composition series are the first major step in understanding the structure of groups. Next, we consider a special series known as the \textit{derived series}.
+\begin{definition}
+  If $G$ is a group, then the commutator subgroup, denoted $G'$ or $\left[ G,G \right]$, is the subgroup generated by all the commutators $\left[ g,h \right] = ghg^{-1}h^{-1}$.
+\end{definition}
+The following follows directly from the definitions of the commutator subgroup.
+\begin{theorem}
+  If $G$ is a group, and $G'$ is its commutator subgroup, then
+  \begin{enumerate}[(i)]
+    \item $G'$ is normal in $G$ (in fact, $G'$ is \textit{characteristic} in $G$);
+    \item the quotient $G/G'$ is commutative;
+    \item $G'$ yields the ``maximal abelian quotient,'' in the sense that if $N\trianglelefteq G$ is another normal subgroup with $G/N$ commutative, then $G'\leq G$.
+  \end{enumerate}
+\end{theorem}
+\begin{definition}
+  The \textit{derived series} is a descending sequence of subgroups
+  \begin{align*}
+    G\supseteq G' \supseteq G'' \supseteq G''' \supseteq \cdots.
+  \end{align*}
+\end{definition}
+Note that if $G$ is commutative, then the sequence automatically hits $\set{e}$, and if $G$ is simple and noncommutative, then $G = G' = G'' = \cdots$.
+\begin{definition}
+  A group is called \textit{solvable} if its derived series terminates in the identity.
+\end{definition}
+We call a normal series abelian (resp.\,cyclic) if all the quotients are abelian (resp.\,cyclic).
+\begin{proposition}
+  For a finite group $G$, the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item all composition factors of $G$ are cyclic;
+    \item $G$ admits a cyclic series ending in $\set{e}$;
+    \item $G$ admits an abelian series ending in $\set{e}$;
+    \item $G$ is solvable.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Observe that (i) implies (ii) and (ii) implies (iii) follow immediately from the definition. Furthermore, (iii) implies (i) by refining an abelian series to a composition series into a family of cyclic $p$-groups. Furthermore, (iv) implies (iii) immediately from the fact that the derived series is an abelian series.
+
+  Therefore, we must show that (iii) implies (iv). Consider an abelian series
+  \begin{align*}
+    G = G_0\supsetneq G_1\supsetneq G_1\supsetneq \cdots \supsetneq G_n = \set{e}.
+  \end{align*}
+  Then, we claim that $G^{(i)}\subseteq G_i$, where $G^{(i)}$ denotes the $i$th iterated commutator subgroup.
+
+  This follows by induction. Since $G/G_1$ is commutative, it follows that $G'\subseteq G_1$. Since $G_i/G_{i+1}$ is abelian, it follows that $G_i'\subseteq G_{i+1}$, so that
+  \begin{align*}
+    G^{(i+1)} &= \left( G^{(i)} \right)'\\
+              &\subseteq G_i'\\
+              &\subseteq G_{i+1}.
+  \end{align*}
+  Therefore, we have that $G^{(n)}\subseteq G_n = \set{e}$, so that the derived series terminates at $\set{e}$.
+\end{proof}
+We will now discuss an application of solvability to understanding the structure of certain subgroups of the symmetric group. This has applications to Galois theory.
+\begin{proposition}
+  Let $p$ be prime. Then, any solvable subgroup of $S_p$ with order divisible by $p$ is contained in the normalizer of a $p$-Sylow subgroup of $S_p$. Furthermore, any such $p$-Sylow subgroup of $S_p$ is a Frobenius group of order $p\left( p-1 \right)$.
+\end{proposition}
+\begin{proof}
+  If $G$ is a solvable subgroup of $S_p$ with order divisible by $p$, then there exists a $p$-Sylow subgroup $P = \left\langle \sigma \right\rangle$ for some $p$-cycle $\sigma$. We will start by showing the second assertion.
+
+  If we identify the points that $P$ acts on with $\F_p$, then we may take $\sigma = \left( x\xmapsto{t_1} x + 1 \right)$. Observe that a permutation $\pi$ that commutes with $\sigma$ takes $\pi\left( x+1 \right) = \pi(x) + 1$; if $\pi(0) = c$, then $\pi = t_c$, meaning that $Z_{S_p}(P) = P$, which has order $p$. There is thus an embedding $N_{S_p}(P)/P\hookrightarrow \aut\left( \Z/p\Z \right)$, which is isomorphic to $\Z/\left( p-1 \right)\Z$. Observe that the dilations $x\xmapsto{m_a}ax$ define every automorphism of $\Z/p\Z$, the automorphisms of $P$, $\sigma\mapsto \sigma^{a}$, are implemented by conjugation $m_at_1m_a^{-1} = t_a$. Thus, we have that
+  \begin{align*}
+    N_{S_p}(P) &= P\rtimes \left\langle \text{dilations} \right\rangle\\
+               &= \Z/p\Z\rtimes \Z/\left( p-1 \right)\Z.
+  \end{align*}
+  Now, we will show that if $G$ is a solvable subgroup of $S_p$, then there is exactly one $p$-Sylow subgroup. First, observe that in the derived series, the group $G^{(n-1)}$ has $\left[ G^{(n-1)},G^{(n-1)} \right] = D^{(n)}(G) = 1$, so that $G^{(n-1)}$ is abelian. Since every derived subgroup is characteristic, $G^{(n-1)}$ is normal in $G$.
+
+  Consider the stabilizer $H$ of $0\in \F_p$. The index of $H$ is $p$, and observe that the group $G^{(n-1)}H$ is a subgroup of $G$ that contains $H$, meaning that $\left[ G:G^{(n-1)}H \right]$ divides $p$, so it is equal to either $1$ or $p$. If $G^{(n-1)}H = H$, then $G^{(n-1)}\leq H$, so $G^{(n-1)}$ fixes $0$, meaning $G^{(n-1)}$ fixes all of $\F_p$, implying that $G^{(n-1)}$ is contained in the kernel of a faithful action --- specifically, the faithful action of $S_p$ on $\F_p$ --- so that $G^{(n-1)}H = G$.
+
+  By the second isomorphism theorem, we have
+  \begin{align*}
+    \left[ G^{(n-1)}:G^{(n-1)}\cap H \right] &= \left[ G^{(n-1)}H:H \right]\\
+                                                   &= \left[ G:H \right]\\
+                                                   &= p,
+  \end{align*}
+  whence the size of a $G^{(n-1)}$-orbit of $0$ has size $p$, so that $G^{(n-1)}$ is transitive.
+
+  Set $A_0 = G^{(n-1)}\cap H$. We will show that $A_0 = 1$, which occurs from showing that the intersection is normal in $G$ and the fact that a normal subgroup fixing any point fixes all points. Observe that $G^{(n-1)}$ is abelian, so $A_0$ is normal in $G^{(n-1)}$. Furthermore, if $h\in H$ and $a\in A_0$, then $hah^{-1}\in G^{(n-1)}$ since $G^{(n-1)}$ is normal in $G$, and $hah^{-1}$ fixes $0$ since all three of $h^{-1}$, $a$, and $h$ fix $0$. Therefore, $A_0$ is normal in $H$. In particular, this means that $A_0$ is normal in both $H$ and $G^{(n-1)}$, so $A_0$ is normal in $G = G^{(n-1)}H$. Yet, since $a\cdot 0 = 0$ for all $a\in A_0$, and the conjugates of a stabilizer are the stabilizers of the other elements, it follows that $A_0$ stabilizes every element of $\F_p$, so that $A_0$ is contained in the kernel of a faithful action, whence $A_0 = 1$.
+
+  Therefore, we have that $\left\vert G^{(n-1)} \right\vert = \left[ G^{(n-1)} : A_0 \right] = p$, whence $G^{(n-1)}\cong \Z/p\Z$, and since $G^{(n-1)}$ is a normal subgroup in $G$, it follows that there is a unique $p$-Sylow subgroup.
+\end{proof}
 \subsection{Group Theory Worked Solutions}%
 \begin{problem}[August `05, Problem 2]
   Let $G$ be a finitely generated group.
@@ -34,6 +283,22 @@
   \begin{enumerate}[(a)]
     \item Since $H$ is finite, it is finitely generated and finitely presented, the latter of which follows from the fact that a finite group is fully determined by its Cayley table. We observe that any homomorphism $G\rightarrow H$ must map generators of $G$ to generators of $H$ and satisfy the relations of both $G$ and $H$; since there are finitely many generators and relations for $H$, it follows that there are finitely many such homomorphisms.
     \item We observe that any normal subgroup $N$ of $G$ arises as the kernel of the homomorphism $G\rightarrow G/N$, so in particular, $\left[ G:N \right] = n$ if and only if $N$ is the kernel of a homomorphism from $G$ to a group of order $n$. There are finitely many such groups since any group of order $n$ must embed in $S_n$ by Cayley's theorem, and there are finitely many subgroups of $S_n$ of any order, so by part (a), it follows that there are finitely many group homomorphisms from $G$ to any group of order $n$, so there are finitely many normal subgroups $N$ with $\left[ G:N \right] = n$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[August `11, Problem 7]
+  Let $G$ be a finite simple group of order $168$. 
+  \begin{enumerate}[(a)]
+    \item How many elements of order $7$ does $G$ have? Why?
+    \item How may conjugacy classes of elements of order $7$ does $G$ have?
+    \item Exhibit two elements of $G = \GL_3\left( \F_2 \right)$ of order $7$ that are not conjugate in $G$. Explain why they are not conjugate.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(i)]
+    \item We start by considering the factorization $168 = 2^3\cdot 3 \cdot 7$. The number of $7$-Sylow subgroups is congruent to $1$ mod $7$ and divides $24$. This gives the possible values of either $1$ or $8$. Since $G$ is simple, there cannot be only one $7$-Sylow subgroup, so there are $8$ $7$-Sylow subgroups. These $7$-Sylow subgroups must intersect at the identity, so there are $48$ elements of order $7$.
+    \item Since there are $8$ $7$-Sylow subgroups, it follows that the normalizer of any such $7$-Sylow subgroup has order $21$. In particular, this means that any $3$-Sylow subgroup must normalize a $7$-Sylow subgroup, and that no $2$-Sylow subgroup normalizes a $7$-Sylow subgroup. Suppose toward contradiction that there were an element of order $21$. Then, it would follow that the normalizer of any $3$-Sylow subgroup would have order divisible by $7$, meaning that the number of $3$-Sylow subgroups would divide $8$. This means there would be exactly $4$ $3$-Sylow subgroups. Acting $G$ on the set of these subgroups by conjugation yields a homomorphism $G\rightarrow S_4$, which by the Sylow theorems is nontrivial. Yet, since $G$ is simple, this means that the homomorphism is injective, implying that $\left\vert G \right\vert | \left\vert S_4 \right\vert$, which is a contradiction. Therefore, there cannot be any element of order $21$.
+
+      Given $x\in P$, where $P$ is a $7$-Sylow subgroup, observe that $P\leq C_G(x)\leq N_G(P)$. We have that the order of $C_G(x)$ is either $7$ or $21$. Suppose that the order of $C_G(x)$ is $21$. By Cauchy's Theorem, there is an element $g$ of order $3$ which generates a subgroup of order $3$. Yet, this means that $gx$ has order $21$, which contradicts what we have just shown. Therefore, the order of $C_G(x)$ is $7$. The number of elements in the conjugacy class is thus $\left[ G:C_G(x) \right] = 24$, so that there are $2$ conjugacy classes of elements of order $7$.
   \end{enumerate}
 \end{solution}
 \section{Ring Theory}%
@@ -581,6 +846,74 @@ so it follows that $\sigma^{i}$ does not fix $\left( \alpha,\zeta \right)$ for $
 \begin{proposition}
   Any cyclic extension of degree $n$ over a field $F$ of characteristic not dividing $n$ which contains the $n$th roots of unity is of the form $F\left( \sqrt[n]{a} \right)$ for some $a\in F$.
 \end{proposition}
+A group $G$ is said to have \textit{exponent} $n$ if $g^{n} = 1$ for each $g\in G$. If $F$ is a field of characteristic not dividing $n$ that contains the $n$th roots of unity, then if $a_1,\dots,a_k\in F^{\times}$, we observe that the extension
+\begin{align*}
+  K &= F\left( \sqrt[n]{a_1},\dots,\sqrt[n]{a_k} \right)
+\end{align*}
+is an abelian extension of $F$ whose Galois group is of exponent $n$. Furthermore, any abelian extension of exponent $n$ is of this form. The Galois group is isomorphic to the group generated by the elements $a_1,\dots,a_k$ in the group $F^{\times}/\left( F^{\times} \right)^{n}$, and any two such extensions are equal if and only if their associated groups are equal.
+
+From now on, we will consider base fields of characteristic $0$. The results are valid over fields whose characteristics do not divide the orders of the roots taken.
+\begin{definition}
+  An element $\alpha$ that is algebraic over $F$ can be \textit{solved in terms of radicals} if $\alpha$ is an element of a field $K$ that can be obtained by a succession of simple radical extensions
+  \begin{align*}
+    F = K_0\subseteq K_1\subseteq\cdots\subseteq K_{i+1}\subseteq K_i\subseteq K_s = K,
+  \end{align*}
+  where $K_{i+1} = K_i\left( \sqrt[n_i]{a_i} \right)$ for some $a_i\in K_i$, where $\sqrt[n_i]{a_i}$ denotes some root of the polynomial $x^{n_i}-a_i$. Such a field $K$ is called a \textit{root extension} of $F$.
+
+  A polynomial $f(x)\in F[x]$ is said to be solved by radicals if all its roots can be solved for in terms of radicals.
+\end{definition}
+\begin{lemma}
+  Suppose $\alpha$ is contained in a root extension $K$ of $F$. Then, $\alpha$ is contained in a root extension which is Galois over $F$ where each extension $K_{i+1}/K_i$ is cyclic.
+\end{lemma}
+\begin{proof}
+  Let $L$ be the Galois closure of $K$ over $F$. For any $\sigma\in \gal\left( L/F \right)$, we have the chain of subfields
+  \begin{align*}
+    F = \sigma K_0 \subseteq \sigma K_1\subseteq\cdots\subseteq \sigma K_{i}\subseteq \sigma K_{i+1}\subseteq\cdots\subseteq \sigma K_s = \sigma K,
+  \end{align*}
+  where $\sigma K_{i+1}/\sigma K_i$ is a simple radical extension since it is generated by the element $\sigma\left( \sqrt[n_i]{a_i} \right)$, which is a root of the equation $x^{n_i}-\sigma\left( a_i \right)$ over $\sigma\left( K_i \right)$.
+
+  The composite of two root extensions is again a root extension, since if $K'$ is a root extension with subfields $K_i'$, we may take the composite of $K_1'$ with the fields $K_0,K_1,\dots,K_s$, then the composite with $K_2'$, etc., so that each extension is a simple radical extension.
+
+  It follows that the composite of all the conjugate fields $\sigma\left( K \right)$ for all $\sigma\in \gal\left( L/F \right)$ is again a root extension. Yet, since this field is $L$, it follows that $\alpha$ is contained in a Galois root extension.
+
+  Now, adjoin to $F$ the $n_i$th roots of unity for all the roots $\sqrt[n_i]{a_i}$ of the simple radical extensions of the Galois root extension $K/F$. This gives the field $F'$. Form the composite of $F'$ with the root extension
+  \begin{align*}
+    F\subseteq F' = F'K_0 \subseteq F'K_1\subseteq\cdots\subseteq F'K_i\subseteq F'K_{i+1}\subseteq\cdots\subseteq F'K_s = F'K.
+  \end{align*}
+  The field $F'K$ is a Galois extension of $F$ since it is the composite of two Galois extensions. The extension from $F$ to $F' = F'K_0$ can be given as a chain of subfields with cyclic extensions (since this holds for any abelian extension). Each extension $F'K_{i+1}/F'K_i$ is a simple radical extension, and since there are roots of unity in the base fields, it follows that each individual extension from $F'$ to $F'K$ is a cyclic extension, so $F'K/F$ is a root extension which is Galois over $F$ with cyclic intermediate extensions.
+\end{proof}
+Recall that a finite group $G$ is called \textit{solvable} if there is a subgroup series
+\begin{align*}
+  1 = G_s\trianglelefteq G_{s-1}\trianglelefteq\cdots\trianglelefteq G_{i+1} \trianglelefteq G_i\trianglelefteq G_0=G
+\end{align*}
+where $G_i/G_{i+1}$ is cyclic.\footnote{Equivalently, the derived series $D^{(i)}(G)$ terminates at the identity. See the group theory notes for an explanation of the equivalence.} Note that subgroups and quotients of solvable groups are solvable, and that if $H\trianglelefteq G$ and $G/H$ are both solvable, then $G$ is solvable.
+\begin{theorem}
+  The polynomial $f(x)$ can be solved by radicals if and only if its Galois group is a solvable group.
+\end{theorem}
+\begin{proof}
+  Suppose $f(x)$ can be solved by radicals. Then, each root of $f(x)$ is contained in a root extension, and the composite $L$ of such extensions is another root extension. Let $G_i$ be the subgroups of the Galois group corresponding to the subfields $K_i$ where $i = 0,1,\dots,s-1$. Since
+  \begin{align*}
+    \gal\left( K_{i+1}/K_i \right) &= G_i/G_{i+1}
+  \end{align*}
+  by the Galois correspondence. Each such group is cyclic since $K_{i+1}/K_i$ is a root extension. It follows that the Galois group $G = \gal\left( L/F \right)$ is a solvable group, and since the Galois group of $f(x)$ is a quotient of the solvable group $G$, it follows that the Galois group is solvable.
+
+  Now, suppose that the Galois group $G$ of $f(x)$ is solvable, and let $K$ be the splitting field of $f(x)$. Taking fixed fields of the subgroups in the series, we have a chain
+  \begin{align*}
+    F = K_0\subseteq K_1\subseteq\cdots\subseteq K_{i}\subseteq K_{i+1}\subseteq\cdots\subseteq K_s = K,
+  \end{align*}
+  where $K_{i+1}/K_i$ is a cyclic extension of degree $n_i$. If $F'$ is the cyclotomic field of all roots of unity with order $n_i$, we get a sequence of extensions $K_i' = F'K_i$ given by
+  \begin{align*}
+    F\subseteq F'=F'K_0\subseteq K_1'\subseteq\cdots\subseteq K_i'\subseteq K_{i+1}'\subseteq\cdots\subseteq K_s'=F'K.
+  \end{align*}
+  The extension $F'K_{i+1}/F'K_i$ is cyclic of degree $n_i$. Since there are the appropriate roots of unity in the base fields, it follows that each of these cyclic extensions is a simple radical extension, so each of the roots of $f(x)$ is contained in the root extension $F'K$, so that $f(x)$ is solvable by radicals.
+\end{proof}
+\begin{theorem}
+  The general quintic is not solvable by radicals.
+\end{theorem}
+\begin{proof}
+  The general quintic has Galois group $S_5$, and $S_5$ is not solvable.
+\end{proof}
+We will now discuss the cases where a quintic \textit{is} solvable. This is equivalent to finding solvable subgroups of $S_5$.
 \subsection{Galois Theory Worked Solutions}%
 \begin{problem}[August `89, Problem 8]
   Let $\beta = \sqrt{2 + \sqrt{2}}$. Show $\Q\left( \beta \right)/\Q$ is Galois with $G$ cyclic; set up the Galois correspondence.
@@ -920,5 +1253,58 @@ so that the group is non-abelian. Observe that these are relations for any homom
       \end{align*}
       where the first two emerge from the cycle decomposition and the third emerges from the properties of conjugation in the symmetric group. That $\sigma$ and $\tau$ are $\Q$-automorphisms emerges from the fact that the first map does not affect any elements of $\Q$ while the second map is complex conjugation restricted to $F$. This gives that the group $ \left\langle \sigma,\tau \right\rangle $ is a quotient of $D_6$. Furthermore, since no power of $\sigma$ fixes any element, it must be the case that $ \left\vert \left\langle \sigma,\tau \right\rangle \right\vert \geq 12 $, so that the group generated by $\sigma$ and $\tau$ is isomorphic to $D_6$.
   \end{enumerate}
+\end{solution}
+\begin{problem}[DF 14.2.17 (d)]
+  Let $K/F$ be any finite extension, and let $\alpha\in K$. Let $L$ be a Galois extension of $F$ containing $K$, and let $H\leq \gal\left( L/F \right)$ be the subgroup corresponding to $K$. Define the \textit{norm} of $\alpha$ by
+  \begin{align*}
+    N_{K/F}\left( \alpha \right) &= \prod_{\sigma} \sigma\left( \alpha \right),
+  \end{align*}
+  where the product is taken over all embeddings of $K$ into an algebraic closure of $F$ --- equivalently, a set of coset representatives of $H$ in $\gal\left( L/F \right)$. Note that if $K/F$ is Galois, then this is given b y
+  \begin{align*}
+    N_{K/F}\left( \alpha \right) &= \prod_{\sigma\in \gal\left( K/F \right)} \sigma\left( \alpha \right).
+  \end{align*}
+  Suppose
+  \begin{align*}
+    m_{\alpha}\left( x \right) &= x^{d} + a_{d-1}x^{d-1} + \cdots + a_1 x + a_0
+  \end{align*}
+  is the minimal polynomial for $\alpha\in K$ over $F$. Let $n = \left[ K:F \right]$. Prove that $d$ divides $n$, there are $d$ distinct Galois conjugates of $\alpha$ over that are repeated $n/d$ times in the product above, and conclude that
+  \begin{align*}
+    N_{K/F}\left( \alpha \right) &= \left( -1 \right)^{n} a_0^{n/d}.
+  \end{align*}
+\end{problem}
+\begin{solution}
+  We start by observing that $L/F$ is separable, meaning $m_{\alpha}$ is separable, so there are exactly $d$ Galois conjugates $\alpha_1,\dots,\alpha_d$ such that $\alpha_1\cdots \alpha_d = \left( -1 \right)^{d}a_0$. Furthermore, observe that
+  \begin{align*}
+    n &= \left[ K:F \right]\\
+      &= \left[ K:F\left( \alpha_1,\dots,\alpha_d \right) \right]\left[ F\left( \alpha_1,\dots,\alpha_d \right):F \right]\\
+      &= md,
+  \end{align*}
+  so that $d$ divides $n$.
+
+  Since the number of embeddings of $K$ into an algebraic closure of $F$ is given by $\left[ K:F \right] = \left[ G:H \right]$, it follows that the product is taken over $n$ iterations, so by Vieta's formulas we have
+  \begin{align*}
+    N_{K/F}\left( \alpha \right) &= \prod_{\sigma} \sigma\left( \alpha \right)\\
+                                 &= \left( \prod_{\theta}\theta\left( \alpha \right) \right)^{n/d}\\
+                                 &= \left( \left( -1 \right)^{d}a_0 \right)^{n/d}\\
+                                 &= \left( -1 \right)^{n} a_0^{n/d}.
+  \end{align*}
+\end{solution}
+\begin{problem}[DF 14.2.18 (d)]
+  Define the trace of $\alpha$ from $K$ to $F$ by
+  \begin{align*}
+    \Tr_{K/F}\left( \alpha \right) &= \sum_{\sigma} \sigma\left( \alpha \right)
+  \end{align*}
+  a sum of Galois conjugates of $\alpha$ where the sum is over all embeddings of $K$ into a fixed algebraic closure of $F$. Prove that
+  \begin{align*}
+    \Tr_{K/F}\left( \alpha \right) &= -\frac{n}{d}a_{d-1}.
+  \end{align*}
+\end{problem}
+\begin{solution}
+  Observe that by our previous work, the total sum is given by $\left[ K:F \right] = n$, so by Vieta's formulas, we have
+  \begin{align*}
+    \Tr_{K/F}\left( \alpha \right) &= \sum_{\sigma} \sigma\left( \alpha \right)\\
+                                   &= \frac{n}{d} \left( \sum_{\theta} \theta\left( \alpha \right) \right)\\
+                                   &= -\frac{n}{d}a_{d-1}.
+  \end{align*}
 \end{solution}
 \end{document}
