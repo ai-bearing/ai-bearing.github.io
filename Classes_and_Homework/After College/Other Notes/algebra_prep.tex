@@ -24,13 +24,16 @@
 \section{Group Theory}%
 \subsection{Group Theory Notes}%
 \subsubsection{Useful Facts}%
-Let $G$ be a finite group, and suppose $G$ acts on itself by conjugation. Then, the stabilizer of $x\in G$ is denoted $C_G(x)$, and by the orbit-stabilizer theorem, it follows that the number of \textit{elements} of the conjugacy class of $x$, $K_G(x)$, is given by $\left[ G:C_G(x) \right]$. The \textit{class equation} says we may find
-\begin{align*}
-  \left\vert G \right\vert &= \left\vert Z(G) \right\vert + \sum_{i=1}^{r} \left[ G:C_G\left( x_i \right) \right],
-\end{align*}
-where $\set{x_1,\dots,x_r}$ is a family of representatives of conjugacy classes.
+\begin{itemize}
+  \item Let $G$ be a finite group, and suppose $G$ acts on itself by conjugation. Then, the stabilizer of $x\in G$ is denoted $C_G(x)$, and by the orbit-stabilizer theorem, it follows that the number of \textit{elements} of the conjugacy class of $x$, $K_G(x)$, is given by $\left[ G:C_G(x) \right]$. The \textit{class equation} says we may find
+    \begin{align*}
+      \left\vert G \right\vert &= \left\vert Z(G) \right\vert + \sum_{i=1}^{r} \left[ G:C_G\left( x_i \right) \right],
+    \end{align*}
+    where $\set{x_1,\dots,x_r}$ is a family of representatives of conjugacy classes.
+  \item If $G$ acts on its \textit{subgroups} by conjugation, then the \textit{normalizer} of $H\leq G$, denoted $N_G(H)$, is the stabilizer of $H$ under conjugation. Similarly, number of subgroups conjugate to $H\leq G$ is given by $\left[ G:N_G(H) \right]$.
+  \item If $P_1,\dots,P_r$ are $p$-Sylow subgroups of $G$, they are all conjugate to each other, and the normalizer $N_G\left( P_i \right)$ is a conjugate of $N_G\left( P_j \right)$ for $1\leq i,j \leq r$.
+\end{itemize}
 
-If $G$ acts on its \textit{subgroups} by conjugation, then the \textit{normalizer} of $H\leq G$, denoted $N_G(H)$, is the stabilizer of $H$ under conjugation. Similarly, number of subgroups conjugate to $H\leq G$ is given by $\left[ G:N_G(H) \right]$.
 \subsubsection{Semidirect Products}%
 Suppose $N$ and $H$ are subgroups of a group $G$, where $N$ is normal and $H$ is such that $N\cap H = \set{e}$. We will obtain a description of the structure of $G$ in terms of the structure of $N$ and $H$.
 
@@ -76,6 +79,7 @@ We will discuss some examples.
     When $H\cong \Z/n\Z$, this yields the dihedral group $D_n$ of order $2n$, while if $H \cong \Z$, we have the infinite dihedral group $D_{\infty}$.
   \item If $H$ is a group, and $K = \aut\left( H \right)$, then $\varphi\colon K\rightarrow \aut\left( H \right)$ given by the identity yields the semidirect product $H\rtimes \aut\left( H \right)$, denoted the \textit{holomorph} of $H$.
 \end{enumerate}
+
 \subsubsection{Solvable Groups}%
 \begin{definition}
   A series of subgroups $G_i$ of a group $G$ is a decreasing sequence of subgroups
@@ -271,6 +275,145 @@ We will now discuss an application of solvability to understanding the structure
 
   Therefore, we have that $\left\vert G^{(n-1)} \right\vert = \left[ G^{(n-1)} : A_0 \right] = p$, whence $G^{(n-1)}\cong \Z/p\Z$, and since $G^{(n-1)}$ is a normal subgroup in $G$, it follows that there is a unique $p$-Sylow subgroup.
 \end{proof}
+\subsubsection{Nilpotent Groups}%
+\begin{definition}
+  Let $G$ be a group. Define the following subgroups inductively:
+  \begin{align*}
+    Z_0\left( G \right) &= \set{e}\\
+    Z_1\left( G \right) &= Z(G)\\
+    Z_{i+1}(G)/Z_{i}(G) &= Z\left( G/Z_i(G) \right).
+  \end{align*}
+  That is, $Z_{i+1}(G)$ is the preimage of $Z\left( G/Z_i(G) \right)$ under the canonical projection. The series of subgroups
+  \begin{align*}
+    Z_0\left( G \right) \leq Z_1\left( G \right) \leq Z_2\left( G \right)\leq \cdots
+  \end{align*}
+  is called the \textit{upper central series} of $G$.
+
+  A group $G$ is called \textit{nilpotent} if $Z_c(G) = G$ for some integer $c$. The smallest such $c$ is called the \textit{nilpotence class} of $G$.
+\end{definition}
+\begin{proposition}
+  Let $p$ be a prime, and let $P$ be a group of order $p^{a}$. Then, $P$ is nilpotent with nilpotence class at most $a-1$.
+\end{proposition}
+\begin{proof}
+  For each $i > 0$, we have that $P/Z_i(P)$ is a $p$-group, so we know that if $\left\vert P/Z_i(P) \right\vert > 1$, then $Z\left( P/Z_i(P) \right)\neq 1$ by the properties of $p$-groups.
+
+  If $Z_i(P)\neq P$, then $\left\vert Z_{i+1}(P) \right\vert \geq p\left\vert Z_i(P) \right\vert$, meaning that $\left\vert Z_{i+1}(P) \right\vert \geq p^{i+1}$. In particular, $\left\vert Z_a(P) \right\vert \geq p^{a}$, so $P = Z_a\left( P \right)$, so $P$ is nilpotent of class at most $a$.
+
+  If $P$ were of nilpotence class $a$, then this would hold if and only if $ \left\vert Z_i(P) \right\vert = p^{i} $ for all $i$. Yet, this would give that $Z_{a-2}(P)$ would have index $p^2$ in $P$, so $P/Z_{a-2}(P)$ would be order $p^2$, hence abelian, meaning that $P/Z_{a-2}(P)$ would equal its center and $Z_{a-1}(P)$ would be equal to $p$. Therefore, $P$ is nilpotent of class at most $a-1$.
+\end{proof}
+\begin{proposition}
+  The direct product of a finite number of nilpotent groups is nilpotent.
+\end{proposition}
+\begin{proof}
+  Suppose $G = H\times K$ (the rest follows inductively). Furthermore, inductively, we assume that $Z_i\left( G \right) = Z_i\left( H \right) \times Z_i\left( K \right)$, where the base case follows from the definition of the direct product. Let $\pi_H\colon H\rightarrow H/Z_i(H)$ be the canonical projection, and let $\pi_K$ be defined analogously.
+
+  Then, we have that $\varphi\colon G\rightarrow G/Z_i(G)$ is given by
+  \begin{align*}
+    G &= H\times K\\
+      &\xrightarrow{\pi_H\times \pi_K} H/Z_i(H)\times K/Z_i(K)\\
+      &\xrightarrow{\psi} \frac{H\times K}{Z_i\left( H \right)\times Z_i\left( K \right)}\\
+      &= \frac{H\times K}{Z_i\left( H\times K \right)}\\
+      &= G/Z_i(G).
+  \end{align*}
+  For shorthand, write $\pi = \pi_H\times \pi_K$. Then, we have
+  \begin{align*}
+    Z_i(G) &= \varphi^{-1}\left( Z\left( G/Z_i(G) \right) \right)\\
+           &= \pi^{-1}\circ\psi^{-1} \left( Z\left( G/Z_i(G) \right) \right)\\
+           &= \pi^{-1} \left( Z\left( H/Z_i(H)\times K/Z_i(K) \right) \right)\\
+           &= \pi^{-1} \left( Z\left( H/Z_i(H) \right) \times Z\left( K/Z_i(K) \right) \right)\\
+           &= \pi_H^{-1}\left( Z\left( H/Z_i(H) \right) \right)\times \pi_K^{-1} \left( Z\left( K/Z_i(K) \right) \right)\\
+           &= Z_{i+1}(H)\times Z_{i+1}(K).
+  \end{align*}
+  Therefore, we have $Z_i(G) = Z_i(H) \times Z_i(K)$ for all $i$. Thus, $G$ is nilpotent with nilpotence class equal to the larger of the nilpotence class of $H$ and the nilpotence class of $K$.
+\end{proof}
+\begin{proposition}
+  If $H$ is a proper subgroup of a nilpotent group $G$, then $H$ is a proper subgroup of its normalizer $N_G(H)$.
+\end{proposition}
+\begin{proof}
+  Let $Z_0(G) = \set{e}$, and let $n$ be the largest index such that $Z_n(G) < H$; such an $n$ exists since $H$ is a proper subgroup and $G$ is nilpotent. Select $a\in Z_{n+1}(G)$ with $a\notin H$. Then, for every $h\in H$, we have $ahZ_n(G) = \left( aZ_n(G) \right)\left( hZ_n(G) \right)$, and since $aZ_n(G)$ is in the center of $G/Z_n(G)$ by the definition of $Z_{n+1}(G)$, it follows that $ahZ_n(G) = haZ_n(G)$. In particular, we have $ah = h'ha$ for some $h'\in Z_n(G) < H$, whence $aha^{-1}\in H$ with $a\in N_G(H)$. Since $a\notin H$, it follows that $H$ is a proper subgroup of $N_G(H)$.
+\end{proof}
+\begin{proposition}
+  A finite group is nilpotent if and only if it is the direct product of its Sylow subgroups.
+\end{proposition}
+\begin{proof}
+  If $G$ is a direct product of its $p$-Sylow subgroups, then $G$ is nilpotent since it is the direct product of a family of nilpotent groups.
+
+  Now, suppose $G$ is nilpotent and $P$ is a $p$-Sylow subgroup. Either, $P = G$, in which case $G$ is a $p$-group and we are done, or $G$ is a proper subgroup of $G$. If $P$ is a proper subgroup of $G$, then $P$ is a proper subgroup of $N_G(P)$ by the previous proposition. Since the normalizer of $N_G(P)$ is itself, it follows that $N_G(P) = G$ since it cannot be a proper subgroup, so $P$ is normal in $G$, hence it is the unique $p$-Sylow subgroup of $G$.
+
+  In the general case, let $\left\vert G \right\vert = p_1^{n_1}\cdots p_k^{n_k}$, where $p_i$ are distinct primes and $n_i > 0$. Let $P_1,\dots,P_k$ be the corresponding proper normal Sylow subgroups corresponding to $p_i$. Since $\left\vert P_i \right\vert = p_i^{n_i}$ for each $i$, it follows that $P_1P_2\cdots \widehat{P_i}\cdots P_k$ is a subgroup in wihch every element has order dividing $\left\vert G \right\vert/p_i^{n_i}$.
+
+  Consequently, $P_i\cap \left( P_1\cdots \widehat{P_i}\cdots P_k \right) = \set{e}$, so inductively, it follows that $P_1\cdots P_k = P_1\times\cdots\times P_k$. Therefore, since the order of $G$ equals the order of the direct product, it follows that $G = P_1\times\cdots\times P_k$.
+\end{proof}
+We consider another, equivalent characterization of the nilpotent groups.
+\begin{definition}
+  Let $G$ be a group. Define the groups $G_i$ inductively by $G_1 = G$ and $G_{i+1} = \left[ G_{i},G \right]$. The series
+  \begin{align*}
+    G = G_1 \geq G_2 \geq \cdots
+  \end{align*}
+  defines the \textit{lower central series} of $G$.
+\end{definition}
+\begin{lemma}
+  Let $K\trianglelefteq G$ and $K\leq H \leq G$. Then, $\left[ H,G \right] \leq K$ if and only if $H/K \leq Z\left( G/K \right)$.
+\end{lemma}
+\begin{proof}
+  If $h\in H$ and $g\in G$, then $hKgK = gKhK$ if and only if $\left[ h,g \right]K = K$ if and only if $\left[ h,g \right] \in K$.
+\end{proof}
+In particular, this means that $G_i/G_{i+1}\leq Z\left( G/G_{i+1} \right)$.
+\begin{theorem}
+  Let $G$ be a group. Then, $G$ is nilpotent of nilpotence class $c$ if and only if $G_{c+1} = \set{e}$. Moreover,
+  \begin{align*}
+    G_{i+1} \leq Z_{c-i} \left( G \right)
+  \end{align*}
+  for all $i$.
+\end{theorem}
+\begin{proof}
+  Suppose $Z_c(G) = G$. We will prove that the inclusion holds by induction on $i$. If $i = 0$, then $G_1 = Z_c(G) = G$. Inductively, we have
+  \begin{align*}
+    G_{i+2} &= \left[ G_{i+1},G \right]\\
+            &\leq \left[ Z_{c-i}\left( G \right),G \right]\\
+            &\leq Z_{c-i-1} \left( G \right),
+  \end{align*}
+  where the last inclusion emerges from the definition of $Z_k(G)$ and the previous lemma. Therefore, we have $G_{c+1}\leq Z_0(G) = \set{e}$.
+
+  Now, suppose $G_{c+1} = \set{e}$. We will prove that $G_{c+1-j}\leq Z_j\left( G \right)$ by induction on $j$. If $j = 0$, then $G_{c+1} = Z_0\left( G \right) = \set{e}$. By the third isomorphism theorem, we have a surjective homomorphism $G/G_{c+1-j}\rightarrow G/Z_j(G)$. Since $\left[ G_{c-j},G \right] = G_{c+1-j}$, we have that $G_{c-j}/G_{c+1-j} \leq Z\left( G/G_{c+1-j} \right)$. Passing to the image of the homomorphism, we have $G_{c-j}Z_{j}\left( G \right)/Z_j(G) \leq Z\left( G/Z_j(G) \right) = Z_{j+1}(G)/Z_j(G)$. Therefore, we have $G_{c-j} \leq G_{c-j}Z_j(G)\leq Z_{j+1}(G)$.
+\end{proof}
+\subsubsection{A Simple Group of Order 168}%
+We will work to understand the existence and uniqueness of a simple group of order $168 = 2^3\cdot 3 \cdot 7$ by understanding the structure of its Sylow subgroups.
+
+First, observe that $\left\vert G \right\vert$ does not divide $6!$, so $G$ has no proper subgroup of index less than $7$, as otherwise the action of $G$ on the cosets of this subgroup would give an action into some $S_n$ with $n\leq 6$. Since $G$ is simple, this action would necessarily be injective, implying that the order of $G$ would divide the order of this $S_n$.
+
+Next, since $G$ is simple and the Sylow theorems give that $n_7 = 1$ or $n_7 = 8$, it follows that $n_7 = 8$. Since the number of Sylow subgroups is the index of the normalizer, this gives that the normalizer of a $7$-Sylow subgroup is of order $21$. Furthermore, no order $2$ element normalizes a $7$-Sylow subgroup, so $G$ has no elements of order $14$.
+
+We will show now that $G$ has no elements of order $21$. Suppose $x$ had order $21$. Then, there is a $3$-Sylow subgroup contained in $ \left\langle x \right\rangle $, implying that the normalizer of this $3$-Sylow subgroup would have order divisible by $7$. Since we know that $n_3 | 8$, it follows that $n_3 = 4$ since $n_3\equiv 1$ mod $3$, which would contradict that $G$ has no subgroups of index less than $7$. Therefore, $n_3 = 7$ or $n_3 = 28$.
+
+Now, we will show that $n_3 = 28$. Suppose $n_3 = 7$. Let $P$ be a $3$-Sylow subgroup, and let $T$ be a $2$-Sylow subgroup of $N_G(P)$, where we note that $\left\vert N_G(P) \right\vert = 24$ (the order of $T$ is $8$). Since a $3$-Sylow subgroup normalizes some $7$-Sylow subgroup $R$ of $G$, it follows that for every $t\in T$, since $tPt^{-1} = P$, we have $P$ normalizes $tRt^{-1}$. Since $T$ acts by conjugation on the eight $7$-Sylow subgroups of $G$, and no element of order $2$ in $G$ normalizes a $7$-Sylow subgroup, we must have that $T$ acts transitively --- that is, $P$ normalizes all the $7$-Sylow subgroups. Then, $P$ is contained in the intersection of the normalizes of all the $7$-Sylow subgroups; yet, since this intersection is a proper normal subgroup of $G$, it is trivial. Therefore $n_3 = 28$.
+
+Next, we use a lemma.
+\begin{lemma}
+  In a finite group $G$, if $n_p$ is not congruent to $1$ modulo $p^{k}$, then there are distinct $p$-Sylow subgroups $P$ and $R$ of $G$ such that $P\cap R$ has index at most $p^{k-1}$ in both $P$ and $R$.
+\end{lemma}
+\begin{proof}
+  Let $P$ act by conjugation on the set of all the $p$-Sylow subgroups. Suppose $p^k$ divides $\left[ P:P\cap R \right]$ for all $p$-Sylow subgroups $R$ not equal to $P$. Then, each orbit has size divisible by $p^{k}$. Since the set of $p$-Sylow subgroups is equal to the sum of all the lengths of the orbits, then we have $n_p = 1 + \ell p^{k}$ for some integer $\ell$. Thus, there is some $R$ such that $\left[ P:P\cap R \right] \leq p^{k-1}$.
+\end{proof}
+Turning our attention to the $2$-Sylow subgroups, we observe that $n_2 = 7$ or $n_2 = 21$. In particular, this means that $n_2$ is not congruent to $1$ mod $8$, so there are $2$-Sylow subgroups $T_1$ and $T_2$ with nontrivial intersection such that $U = T_1\cap T_2$ is of maximum order.
+
+Now, we claim that $U$ is a Klein $4$-group with $N_G(U)\cong S_4$. Define $N = N_G(U)$. We have that $\left\vert U \right\vert = 2$ or $\left\vert U \right\vert = 4$, and $N$ permutes the non-identity elements of $U$ by conjugation. Observe that a subgroup of order $7$ in $N$ would then commute with some element of order $2$ in $U$, implying that an element of order $2$ would normalize a $7$-Sylow subgroup, which cannot happen. Therefore, the order of $N$ is not divisible by $7$.
+\begin{remark}
+In the setting of the lemma, we observe that if $P_0 = P\cap Q$ is an intersection of $p$-Sylow subgroups, then $P_0 < P$ and $P_0 < R$, so since $p$-groups are nilpotent, we have $P_0 < N_P\left( P_0 \right)$ and $P_0 < N_Q\left( P_0 \right)$. In the special case where $R = P\cap Q$ is maximal, then $R < N_P(R) \leq N_G(R)$ and $R < N_Q(R) \leq N_G(R)$.
+
+Now, consider a $p$-Sylow subgroup $H$ of $N_G\left( R \right)$. Then, there is a $p$-Sylow subgroup $S$ of $G$ such that $R\leq H \leq S$. Suppose it were the case that there were separate $p$-Sylow subgroups of $N_G(R)$ $H_1$ and $H_2$ that were both contained in $S$. Then, since $H_i\leq N_G(R)$, it follows that $H_i\leq N_S(R)$. Notice that $N_S(R)$ is a $p$-group that is a subgroup of $N_G(R)$; by maximality, it follows that $N_S(R)\leq H_i$ as the $H_i$ are $p$-Sylow subgroups, so that $N_S(R) = H_1 = H_2$, a contradiction. Therefore, if $H_1\leq S_1$ and $H_2\leq S_2$ are distinct $p$-Sylow subgroups of $G$ that contain $N_G(R)$, we have that $R\leq H_1\cap H_2 \leq S_1\cap S_2$. Yet, by maximality, it follows that $S_1\cap S_2 = R$.
+
+Suppose now toward contradiction that $N_G(R)$ has a unique $p$-Sylow subgroup $H$. Notice that $N_P(R) \leq H$ and $N_Q(R)\leq H$, and there is some $p$-Sylow subgroup $S $of $G$ such that $H\leq S$. This gives that $R < N_P(R) \leq P\cap S$ and $R < N_Q(R) \leq Q\cap S$. If (without loss of generality) $S = P$, then $N_Q(R) \leq S$ and $N_Q(R)\leq Q$, so $N_Q(R) \leq P\cap Q = R$, yet $R < N_P(R)$, a contradiction. If $S$ is not equal to $S$ or $P$, it follows that $P$ and $S$ are distinct $p$-Sylow subgroups of $G$ with $N_G(R) \leq P\cap S$, whence $\left\vert P\cap S \right\vert > \left\vert R \right\vert$.
+
+In particular, this means that if $P\cap Q$ is maximal, we have that $N_G\left( P\cap Q \right)$ has more than one $p$-Sylow subgroup.
+\end{remark}
+In the case of the group $N = N_G(U)$, we have automatically that $N$ has more than one $2$-Sylow subgroup, so $\left\vert N \right\vert = 2^{a}\cdot 3$ with $a = 2$ or $a = 3$. Suppose $P$ is a $3$-Sylow subgroup of $N$. Since $P$ is a $3$-Sylow subgroup of $G$, it follows that the group $N_N(P)$ has order $3$ or $6$ (since the order of $N_G(P)$ is $6$). Therefore, by the Sylow theorems, $N$ must have $4$ $3$-Sylow subgroups that are permuted transitively by conjugation. Observe that any group of order $12$ must have either a normal $2$-Sylow subgroup or a normal $3$-Sylow subgroup, but since $N$ has more than one $2$-Sylow subgroup, it follows that $\left\vert N \right\vert = 24$.
+
+Let $K$ be the kernel of $N$ acting by conjugation on its $4$ $3$-Sylow subgroups. Then, $K$ is the intersection of the normalizers of the $3$-Sylow subgroups of $N$. If $K = \set{e}$, then $N\cong S_4$. Else, suppose that $K\neq \set{e}$. Since we have that $K \leq N_N(P)$, it follows that $K$ has order dividing $6$, and since $P$ does not normalize any other $3$-Sylow subgroup, we cannot have $P\leq K$, so $\left\vert K \right\vert = 2$. Yet, $N/K$ is then a group of order $12$ that has more than one $2$-Sylow subgroup and has $4$ $3$-Sylow subgroups. Therefore, $N\cong S_4$. Now, we know that $S_4$ has a unique nontrivial normal $2$-subgroup, which is the Klein $4$-group, giving that $U$ is a Klein $4$-group.
+
+Since $N\cong S_4$, it follows that $N$ contains a $2$-Sylow subgroup of $G$, and that $N_N(P)\cong S_3$, so that $N_G(P)\cong S_3$ and the $2$-Sylow subgroups of $G$ are isomorphic to the dihedral group $D_4$ of order $8$. Furthermore, $G$ has no elements of order $6$.
+
+We thus find that any element of order $2$ does not commute with an element of order either $3$ (else we would have an element of order 6) or $7$ (since the order of the normalizers of the $7$-Sylow subgroups is 21). If $T$ is a $2$-Sylow subgroup, then $T\cong D_4$, so $Z(T)\cong \left\langle z \right\rangle$ for some element $z$ of order $2$.
 \subsection{Group Theory Worked Solutions}%
 \begin{problem}[August `05, Problem 2]
   Let $G$ be a finitely generated group.
@@ -299,6 +442,52 @@ We will now discuss an application of solvability to understanding the structure
     \item Since there are $8$ $7$-Sylow subgroups, it follows that the normalizer of any such $7$-Sylow subgroup has order $21$. In particular, this means that any $3$-Sylow subgroup must normalize a $7$-Sylow subgroup, and that no $2$-Sylow subgroup normalizes a $7$-Sylow subgroup. Suppose toward contradiction that there were an element of order $21$. Then, it would follow that the normalizer of any $3$-Sylow subgroup would have order divisible by $7$, meaning that the number of $3$-Sylow subgroups would divide $8$. This means there would be exactly $4$ $3$-Sylow subgroups. Acting $G$ on the set of these subgroups by conjugation yields a homomorphism $G\rightarrow S_4$, which by the Sylow theorems is nontrivial. Yet, since $G$ is simple, this means that the homomorphism is injective, implying that $\left\vert G \right\vert | \left\vert S_4 \right\vert$, which is a contradiction. Therefore, there cannot be any element of order $21$.
 
       Given $x\in P$, where $P$ is a $7$-Sylow subgroup, observe that $P\leq C_G(x)\leq N_G(P)$. We have that the order of $C_G(x)$ is either $7$ or $21$. Suppose that the order of $C_G(x)$ is $21$. By Cauchy's Theorem, there is an element $g$ of order $3$ which generates a subgroup of order $3$. Yet, this means that $gx$ has order $21$, which contradicts what we have just shown. Therefore, the order of $C_G(x)$ is $7$. The number of elements in the conjugacy class is thus $\left[ G:C_G(x) \right] = 24$, so that there are $2$ conjugacy classes of elements of order $7$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[August `06, Problem 3]
+  Show that any nilpotent group $G$ of order $900$ is abelian.
+\end{problem}
+\begin{solution}
+  We know that any nilpotent group is equal to the direct product of its Sylow subgroups. Observe that $900 = 2^2\cdot 3^2 \cdot 5^2$, so if we let $P_2,P_3,P_5$ denote the respective Sylow subgroups, we have that
+  \begin{align*}
+    G &\cong P_2\times P_3\times P_5.
+  \end{align*}
+  Notice that each of these groups is of order $p_i^2$, meaning that for each of these groups, we have $\left\vert Z\left( P_i \right) \right\vert \geq p_i$. Yet, if $\left\vert Z\left( P_i \right) \right\vert = p$ (i.e., assuming that the $P_i$ are not abelian), then $\left\vert P_i/Z\left( P_i \right) \right\vert = p_i$, meaning that $P_i/Z\left( P_i \right)$ would be cyclic, hence $P_i$ would be abelian, which is a contradiction. In particular, this means that the $P_i$ are abelian. Since $G$ is the direct product of abelian groups, it is abelian.
+\end{solution}
+\begin{problem}[August `16, Problem 4]
+  Fix a group $G$.
+  \begin{enumerate}[(a)]
+    \item Show that if $N$ is a normal $p$-Sylow subgroup of $G$ and $H$ is a subgroup of order not divisible by $p$, then $HN$ is a subgroup of $G$ isomorphic to a semidirect product $N\rtimes H$.
+    \item Consider a group $G$ of order $255$. Show that $G$ is cyclic.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item We start by observing that if $h$ is a non-identity element in $H$, then $h$ cannot have an order divisible by $p$, and we observe that any element of $N$ has order of the form $p^{k}$. In particular, this means that $N\cap H = \set{e}$ in $G$. Since $N$ is normal in $G$, it follows that $HN = NH$, so that $HN$ is a subgroup of $G$. Furthermore, $\left\vert HN \right\vert = \left\vert H \right\vert\left\vert N \right\vert$, so we have all the necessary requirements for $HN$ to be an internal semidirect product isomorphic to $N\rtimes H$.
+    \item We start by seeing that $G$ is a group of order $3\cdot 5 \cdot 17$. Observe that there is a unique $17$-Sylow subgroup since the number of $17$-Sylow subgroups divides $15$ and is congruent to $1$ mod $17$. If $P$ is this subgroup, then $\left\vert G/P \right\vert = 15$. Since any group of order $15$ is necessarily cyclic since there is no nontrivial homomorphism from $\Z/3\Z$ to $\aut\left( \Z/5\Z \right)$ or vice versa, it follows that $G\cong \Z/15\Z\times \Z/17\Z$, so $G$ is cyclic.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[August `19, Problem 1]\hfill
+  \begin{enumerate}[(a)]
+    \item Let $G$ be a group of order $12$. Prove that $G$ has a normal $2$-Sylow subgroup or a normal $3$-Sylow subgroup.
+    \item Prove that there are at least $5$ pairwise non-isomorphic groups of order $12$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Observe that we may factor $12 = 2^2 \cdot 3$. Therefore, there exists a $2$-Sylow subgroup and a $3$-Sylow subgroup. The number of $3$-Sylow subgroups is congruent to $1$ mod $3$ and divides $4$, so it is equal to either $1$ or $4$. If there is one $3$-Sylow subgroup, then this subgroup is normal and we are done. Else, if there are $4$, these subgroups intersect at the identity, so that there are $8$ elements of order $3$. This gives $4$ elements (including the identity) whose order does not divide $3$, meaning that this forms our $2$-Sylow subgroup, which is necessarily normal.
+    \item We start by considering the abelian groups of order $12$. By the classification theorem, it follows that there are two such groups
+      \begin{align*}
+        G_1 &= \Z/2\Z\times \Z/2\Z \times \Z/3\Z\\
+        G_2 &= \Z/4\Z \times \Z/3\Z.
+      \end{align*}
+      These groups are pairwise non-isomorphic since $G_1$ does not have any elements of order $4$.
+
+      Now, we start by considering non-abelian groups. We start by considering the map $\Z/2\Z\rightarrow \aut\left( \Z/2\Z\times \Z/3\Z \right)$ given by $0\mapsto \id$, $1\mapsto \left( w\mapsto w^{-1} \right)$. This yields a semidirect product $\Z/2\Z\rtimes \Z/6\Z = D_6$.
+
+      Next, we observe that the alternating group $A_4$ is of order $12$. We note that $A_4$ is not isomorphic to $D_6$ since $D_6$ has an element of order $6$ while there are no elements of order $6$ in $A_4$.
+
+      Finally, since $\Z/4\Z$ and $\aut\left( \Z/3\Z \right)\cong \Z/2\Z$ are of the same order, there is a nontrivial homomorphism $\Z/4\Z\rightarrow \aut\left( \Z/3\Z \right)$ giving rise to a semidirect product $\Z/3\Z\rtimes \Z/4\Z$. This group is not isomorphic to either $D_6$ or $A_4$ since neither $D_6$ nor $A_4$ contain an element of order $4$.
   \end{enumerate}
 \end{solution}
 \section{Ring Theory}%
