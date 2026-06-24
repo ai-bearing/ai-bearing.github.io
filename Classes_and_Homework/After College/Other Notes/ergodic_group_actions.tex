@@ -13,13 +13,106 @@
 
 \fancyhf{}
 \fancyhead[R]{Avinash Iyer}
-\fancyhead[L]{Measure-Preserving Actions and Representations}
+\fancyhead[L]{Measure-Preserving Actions and Ergodicity}
 \fancyfoot[C]{\thepage}
 
 \setcounter{secnumdepth}{0}
 
 \begin{document}
 \RaggedRight
+\section{Preliminary: Positive Definite Functions, the GNS Construction, and Representations}%
+We discuss some preliminaries on representations of groups via the GNS construction.
+\begin{definition}
+  A function $f\colon G\rightarrow \C$ is said to be \textit{positive definite} if, for all $s_1,\dots,s_n\in G$ and $c_1,\dots,c_n\in \C$, one has
+  \begin{align*}
+    \sum_{i,j=1}^{n} \overline{c_i}c_j f\left( s_i^{-1}s_j \right) &\geq 0.
+  \end{align*}
+  That is, the matrix $A = \left( f\left( s_i^{-1}s_j \right) \right)_{i,j}$ is a positive operator on $\C^n$. We let $\mathcal{P}(G)$ denote the set of all positive definite functions on $G$.
+\end{definition}
+\begin{proposition}
+  Let $f\colon G\rightarrow \C$ be a positive definite function. Then,
+  \begin{enumerate}[(i)]
+    \item $f\left( s^{-1} \right) = \overline{f(s)}$ for all $s\in G$;
+    \item $ \left\vert f\left( s \right) \right\vert\leq f\left( e \right) $ for all $s\in G$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Let $s\in G$. If we let $s_1 = e$ and $s_2 = s$, then the matrix
+  \begin{align*}
+    A &= \begin{pmatrix}f(e) & f(s) \\ f\left( s^{-1} \right) & f\left( e \right)\end{pmatrix}
+  \end{align*}
+  is positive. Therefore, $A$ is Hermitian, so $ f\left( s^{-1} \right) = \overline{f\left( s \right)} $.
+
+  Moreover, if
+  \begin{align*}
+    \xi &= \begin{pmatrix}1\\ -\frac{ \overline{f\left( s \right)} }{\left\vert f\left( s \right) \right\vert}\end{pmatrix},
+  \end{align*}
+  then we deduce from the fact that $ \iprod{A\xi}{\xi} \geq 0$ that $\left\vert f\left( s \right) \right\vert\leq f\left( e \right)$.
+\end{proof}
+We let $\mathcal{P}_1(G)$ denote the set of all positive definite functions $\varphi\colon G\rightarrow \C$ with $\varphi\left( e \right) = 1$. The weak* topology on $\mathcal{P}_1\left( G \right)$ emerges by regarding it as a subset of the closed unit ball of $\ell^{\infty}\left( G \right)$, which is the dual of $\ell^1\left( G \right)$.
+
+On the closed unit ball of $\ell^{\infty}\left( G \right)$, the weak* topology and the topology of pointwise convergence coincide.
+
+If $\pi\colon G\rightarrow B\left( H \right)$ is a unitary representation, and $\xi\in H$, then we may define the function
+\begin{align*}
+  f(s) &= \iprod{\pi(s)\xi}{\xi}.
+\end{align*}
+Observe that
+\begin{align*}
+  \sum_{i,j=1}^{n} \overline{c_i}c_j f\left( s_i^{-1}s_j \right) &= \iprod{\sum_{i=1}^{n}c_i\pi\left( s_i \right)\xi}{\sum_{i=1}^{n}c_i\pi\left( s_i \right)\xi}\\
+                                                                 &\geq 0,
+\end{align*}
+so that $f$ is positive definite.
+
+One can see a parallel between the case of positive definite functions and the case of states on $C^{\ast}$-algebras. This parallel extends further.
+\begin{theorem}[GNS Construction]
+  Let $f\colon G\rightarrow \C$ be a positive definite function. There is a unitary representation $\pi\colon G\rightarrow B\left( H \right)$ and a cyclic vector $\eta\in H$ such that
+  \begin{align*}
+    f(s) &= \iprod{\pi(s)\eta}{\eta}.
+  \end{align*}
+  In this case, $\norm{f}_{\ell^{\infty}} = \norm{\eta}^2$.
+
+  The triple $\left( \pi,H,\eta \right)$ is unique in the sense that if $\pi'\colon G\rightarrow B\left( H' \right)$ is another unitary representation, and $\eta'$ is a cyclic vector in $H'$ such that $f(s) = \iprod{\pi'(s)\eta'}{\eta'}$ for all $s\in G$, then there is a unitary isomorphism from $H$ to $H'$ that intertwines $\pi$ and $\pi'$ and maps $\eta\mapsto \eta'$.
+\end{theorem}
+\begin{proof}
+  On $\C[G]$, the vector space of complex-valued functions on $G$, define the sesquilinear form
+  \begin{align*}
+    \iprod{\xi}{\zeta} &= \sum_{s,t\in G} \overline{\zeta(t)} \xi(s) f\left( t^{-1}s \right).
+  \end{align*}
+  This satisfies $ \iprod{\xi}{\xi} \geq 0 $ for all $\xi\in V$ since $f$ is positive-definite.
+
+  Let $ \widetilde{V} $ be the quotient of $V$ by the subspace of vectors $\xi$ satisfying $ \iprod{\xi}{\xi} = 0 $. Then, $ \iprod{\xi}{\xi} $ descends to an inner product on $ \widetilde{V} $, and completing with respect to the induced norm yields the Hilbert space $H$.
+
+  Defining $\left( \pi(s)\xi \right)(t) = \xi\left( s^{-1}t \right)$ for $\xi\in V$ and $s,t\in G$, we get a homomorphism $\pi$ from $G$ into the space of linear transformations on $V$ that satisfies
+  \begin{align*}
+    \iprod{\pi(s)\xi}{\pi(s)\zeta} &= \sum_{t,u\in G} \overline{\zeta\left( s^{-1}u \right)}\xi\left( s^{-1}t \right)f\left( \left( s^{-1}u \right)^{-1}s^{-1}t \right)\\
+                                  &= \sum_{t,u\in G} \overline{\zeta(u)} \xi\left( t \right) f\left( u^{-1}t \right)\\
+                                  &= \iprod{\xi}{\zeta}.
+  \end{align*}
+  Therefore, we have a unitary representation of $G$ on $H$ which we denote by $\pi$. Taking $\eta$ in the theorem statement to be $\delta_e$ in $H$.
+
+  Suppose now that $\pi'\colon G\rightarrow B\left( H' \right)$ is another unitary representation and $\eta'$ another cyclic vector in $H'$ such that $f(s) = \iprod{\pi'(s)\eta'}{\eta'}$ for all $s\in G$. Define a linear map from the linear span of $\pi(G)\eta$ to $H'$ by taking
+  \begin{align*}
+    \sum_{s\in G} c_s\pi(s)\eta &\mapsto \sum_{s\in G} c_s\pi'(s)\eta',
+  \end{align*}
+  where the $c_s$ are all but finitely many zero.
+
+  This map is isometric, and extends to a unitary isomorphism $H\rightarrow H'$ which satisfies the desired properties.
+\end{proof}
+Next, we discuss weak containment of representations.
+\begin{definition}
+  Let $\pi\colon G\rightarrow B\left( H \right)$ and $\rho\colon G\rightarrow B\left( K \right)$ be unitary representations. We say that $\pi$ is \textit{weakly contained} in $\rho$, and write $ \pi\prec \rho $, if for every finite $F\subseteq G$, $\xi\in H$, and $\ve > 0$, there are $\zeta_1,\dots,\zeta_n\in K$ such that
+  \begin{align*}
+    \left\vert \iprod{\pi(s)\xi}{\xi} - \sum_{i=1}^{n} \iprod{\rho(s)\zeta_i}{\zeta_i} \right\vert &< \ve.
+  \end{align*}
+  That is, the matrix coefficients of $\pi(s)$ can be approximated by the matrix coefficients of $\rho(s)$.
+\end{definition}
+Equivalently, we can say that a positive definite function on $G$ is \textit{associated} to $\pi$ if it is of the form $s\mapsto \iprod{\pi(s)\xi}{\xi}$, and that $\pi\prec \rho$ if any positive definite function associated with $\pi$ is contained in the closure of the set of all finite sums of positive definite functions associated with $\rho$.
+\begin{lemma}
+  Let $\pi\colon G\rightarrow B\left( H \right)$ and $\rho\colon G\rightarrow B\left( K \right)$ be unitary representations, and let $T\colon H\rightarrow K$ an intertwining operator for $\pi$ and $\rho$. Then, $ \ker\left( T \right)^{\perp} $ and $ \overline{\img\left( T \right)} $ are closed $G$-invariant subspaces of $H$ and $K$ respectively, and the corresponding subrepresentations of $\pi$ and $\rho$ are equivalent.
+\end{lemma}
+\section{Preliminary: Conditional Expectations}%
+
 \section{Probability Measure-Preserving Actions}%
 \begin{definition}
   Let $G\curvearrowright \left( X,\mu \right)$ be a probability measure preserving (pmp) action of $G$. Then, the \textit{Koopman representation} is the unitary representation $\kappa\colon G\rightarrow B\left( L^2\left( X \right) \right)$ given by
@@ -639,6 +732,71 @@ Next, we discuss Gaussian Hilbert spaces. This will require a crash course in pr
   \end{align*}
   for some $m\in \R$ and $\sigma > 0$, where $\lambda$ denotes the Lebesgue measure on $\R$.
 \end{definition}
+\begin{definition}
+  A \textit{Gaussian Hilbert space} is a closed subspace $H$ of $L^2_{\R}\left( X \right)$ for some probability space $\left( X,\mu \right)$ such that the elements of $H$ are centered Gaussian random variables.
+\end{definition}
+Recall that the \textit{characteristic function} of a Borel probability $\mu$ on $\R^{k}$ is its Fourier transform (sans normalization constant)
+\begin{align*}
+  \left( t_1,\dots,t_k \right) &\mapsto \int_{}^{} e^{i\sum_{j=1}^{k}t_jx_j}\:d\mu\left( x_1,\dots,x_k \right).
+\end{align*}
+The characteristic function of a random variable is the characteristic function of ist distribution, i.e. the map
+\begin{align*}
+  \left( t_1,\dots,t_k \right) &\mapsto \mathbb{E}\left( e^{i\sum_{j=1}^{k}t_jf_j} \right)\\
+                               &= \int_{}^{} e^{i\sum_{j=1}^{k}t_jx_j}\:d\mu_{\left( f_1,\dots,f_k \right)}\left( x_1,\dots,x_k \right).
+\end{align*}
+It can be shown that the following facts hold.
+\begin{enumerate}[(i)]
+  \item A Borel probability measure on $\R^k$ is uniquely determined by its characteristic function.
+  \item If $f$ is a Gaussian random variable with mean $m$ and variance $\sigma^2$, then the characteristic function is given by $t\mapsto e^{imt-\sigma^2t^2/2}$.
+  \item If $\set{f_1,\dots,f_n}$ is a family of independent random variables, then
+    \begin{align*}
+      \mathbb{E}\left( e^{itf_1}\cdots e^{itf_n} \right) &= \mathbb{E}\left( e^{itf_1} \right)\cdots \mathbb{E}\left( e^{itf_n} \right).
+    \end{align*}
+\end{enumerate}
+\begin{proposition}
+  If $\set{f_1,\dots,f_n}$ is an independent family of centered Gaussian random variables, then the linear span of $\set{f_1,\dots,f_n}$ is a Gaussian Hilbert space.
+\end{proposition}
+\begin{proof}
+  If $\sigma_i^2$ denotes the variance of $f_i$, then for all $c_1,\dots,c_n\in \R$, the value of the characteristic function of the random variable $f = \sum_{j}c_jf_j$ at a given $t\in \R$ is
+  \begin{align*}
+    \mathbb{E}\left( e^{itf} \right) &= \mathbb{E}\left( e^{itc_1f_1}\cdots e^{itc_nf_n} \right)\\
+                                     &= e^{-c_1^2\sigma_1^2t^2/2}\cdots e^{-c_n^2\sigma_n^2t^2/2}\\
+                                     &= e^{-\left( c_1^2\sigma_1^2+\cdots+c_n^2\sigma_n^2 \right)t^2/2}.
+  \end{align*}
+  Therefore $f$ is a centered Gaussian random variable with variance $c_1^2\sigma_1^2 + \cdots + c_n^2\sigma_n^2$.
+\end{proof}
+\section{Multiple Recurrence and Szemeredi's Theorem}%
+We know that if $\pi\colon G\rightarrow B\left( H \right)$ is a unitary representation, then this representation decomposes uniquely into an orthogonal direct sum of a weakly mixing representation and a compact representation; these representations are $G$-invariant.
+
+If $G\curvearrowright \left( X,\mu \right)$ is a pmp action, then we can apply the decomposition to the Koopman representation of $G$ on $L^2\left( X \right)$, but this doesn't yield a description of the space $X$ as we may like. Fundamentally, $L^2\left( X \right)$ does not have the algebraic structure of $L^{\infty}\left( X \right)$, which is necessary to encode the dynamics of the action of $G$.
+
+We start by developing the idea of a Hilbert module $L^2\left( X|Y \right)$ associated to a measure-preserving map $X\rightarrow Y$. Let $\left( X,\mu \right)$ and $\left( Y,\nu \right)$ be standard probability spaces, and let $\varphi\colon X\rightarrow Y$ be a measurable map such that $\nu = \varphi_{\ast}\mu$. We may regard $L^{\infty}\left( Y \right)\subseteq L^{\infty}\left( X \right)$ as a von Neumann subalgebra by the composition map $f\mapsto f\circ\varphi$.
+
+Let $ \mathbb{E}_Y $ denote the orthogonal projection (or conditional expectation) $L^2\left( X \right)\rightarrow L^2\left( Y \right)$. Observe that for all $f\in L^{\infty}\left( X \right)$, we have
+\begin{align*}
+  \int_{X}^{} \mathbb{E}_Y\left( f \right)\:d\mu &= \iprod{ \mathbb{E}_Y\left( f \right) }{1}\\
+                                                 &= \iprod{f}{ \mathbb{E}_Y\left( 1 \right) }\\
+                                                 &= \iprod{f}{1}\\
+                                                 &= \int_{X}^{} f\:d\mu.
+\end{align*}
+Moreover, if $\M_n\left( L^{\infty}\left( X \right) \right)$ and $\M_n\left( L^{\infty}\left( Y \right) \right)$ denote the $n\times n$ matrix algebras with entries in $L^{\infty}\left( X \right)$ and $L^{\infty}\left( Y \right)$ respectively, then
+\begin{enumerate}[(i)]
+  \item $ \mathbb{E}_Y $ maps $L^{\infty}\left( X \right)$ contractively onto $ L^{\infty}\left( Y \right) $;
+  \item $ \mathbb{E}_Y $ is completely positive.
+\end{enumerate}
+For (i), if $f\in L^{\infty}\left( X \right)$, observe that for all $g,h\in L^{\infty}\left( Y \right)$, we have
+\begin{align*}
+  \left\vert \iprod{ \mathbb{E}_y\left( f \right)g }{h} \right\vert &= \left\vert \iprod{ \mathbb{E}_Y\left( f \right) }{h \overline{g}} \right\vert\\
+                                                                    &= \left\vert \iprod{f}{ \mathbb{E}_Y\left( h \overline{g} \right) } \right\vert\\
+                                                                    &= \left\vert \iprod{f}{h \overline{g}} \right\vert\\
+                                                                    &= \left\vert \iprod{fg}{h} \right\vert\\
+                                                                    &\leq \norm{f}_{L^{\infty}}\norm{g}_{L^2}\norm{h}_{L^2}.
+\end{align*}
+Therefore, we have
+\begin{align*}
+  \norm{ \mathbb{E}_Y\left( f \right)\left( \nu\left( D \right)^{-1/2}\chi_{D} \right) }_{L^2} &\leq \norm{f}_{L^{\infty}}
+\end{align*}
+for every set $D\subseteq Y$ with $\nu(D) > 0$. Therefore, $ \mathbb{E}_Y\left( f \right) $ is an element of $L^{\infty}\left( Y \right)$ with norm at most $\norm{f}_{L^{\infty}}$.
 \nocite{kerr_and_li}
 \printbibliography
 \end{document}
