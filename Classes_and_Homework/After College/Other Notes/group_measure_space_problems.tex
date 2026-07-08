@@ -1,0 +1,138 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage[uprightgreeks,light,noDcommand]{kpfonts}
+\renewcommand{\coloneq}{\coloneqq}
+\renewcommand{\eqcolon}{\eqqcolon}
+%\renewcommand{\mathbb}{\mathds}
+\usepackage{homework}
+\usepackage{notes}
+
+%\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+%\addbibresource{  }
+
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Group Measure Space Construction}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\begin{problem}[Problem 1]
+  Let $\Gamma\overset{\alpha}{\curvearrowright}L^{\infty}\left( X,\mu \right)$ for a countable discrete group $\Gamma$ and a probability space $\left( X,\mu \right)$.
+  \begin{enumerate}[(a)]
+    \item For $f\in L^{\infty}\left( X,\mu \right)$, show that $\pi_{\alpha}(f)$ is a bounded operator on $\ell^2\left( \Gamma \right)\otimes L^{2}\left( X,\mu \right)$ with $\norm{\pi_{\alpha}(f)} = \norm{f}_{L^{\infty}}$.
+    \item Show that $\pi_{\alpha}\colon L^{\infty}\left( X,\mu \right)\rightarrow B\left( \ell^2\left( \Gamma \right) \otimes L^2\left( X,\mu \right)\right)$ is a unital $\ast$-homomorphism.
+    \item Show that $\lambda_g\pi_{\alpha}(f)\lambda_{g^{-1}} = \pi_{\alpha}\left( \alpha_g(f) \right)$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item We start by recalling the definition of $\pi_{\alpha}(f)$, given by action on elementary tensors
+      \begin{align*}
+        \pi_{\alpha}(f) \left( \delta_g\otimes f_g \right) &= \delta_g \otimes \alpha_{g^{-1}}(f)f_g.
+      \end{align*}
+      Computing norms, we have
+      \begin{align*}
+        \norm{\pi_{\alpha}(f)\left( \sum_{g\in \Gamma}\delta_g\otimes f_g \right)}^2 &= \iprod{\pi_{\alpha}(f)\left( \sum_{g\in \Gamma}\delta_g\otimes f_g \right)}{\pi_{\alpha}(f)\left( \sum_{g\in\Gamma}\delta_g\otimes f_g \right)}\\
+                                                                                     &= \sum_{g,h\in\Gamma} \iprod{\delta_g\otimes \alpha_{g^{-1}}(f)f_g}{\delta_h\otimes \alpha_{g^{-1}}(f)f_h}\\
+                                                                                     &= \sum_{g,h\in\Gamma} \iprod{\delta_g}{\delta_h} \iprod{\alpha_{g^{-1}}(f)f_g}{\alpha_{g^{-1}}(f)f_h}\\
+                                                                                     &= \sum_{g\in\Gamma} \iprod{\alpha_{g^{-1}}(f)f_g}{\alpha_{g^{-1}}f_g}\\
+                                                                                     &\leq \sum_{g\in\Gamma} \norm{\alpha_{g^{-1}}(f)}_{L^{\infty}}^2 \norm{f_g}^2\\
+                                                                                     &= \sum_{g\in\Gamma} \norm{f}_{L^{\infty}}^2\norm{f_g}^2\\
+                                                                                     &= \norm{f}_{L^{\infty}} \norm{\sum_{g\in \Gamma}\delta_g\otimes f_g}^2.
+      \end{align*}
+      Therefore, the operator $\pi_{\alpha}(f)$ is bounded with norm at most $\norm{f}_{L^{\infty}}$. Furthermore, by applying $\pi_{\alpha}(f)$ to $\delta_g\otimes 1$, it follows that $\norm{\pi_{\alpha}(f)} = \norm{f}_{L^{\infty}}$.
+    \item We start by using the fact that $\alpha_{g^{-1}}$ is linear and the bilinearity of the tensor product to show that $\pi_{\alpha}$ is linear.
+
+      Next, observe that
+      \begin{align*}
+        \pi_{\alpha}(fh)\left( \delta_g\otimes f_g \right) &= \delta_g \otimes \alpha_{g^{-1}}\left( fh \right)f_g\\
+                                                           &= \delta_g\otimes \alpha_{g^{-1}}\left( hf \right)
+      \end{align*}
+    \item We recall that the action of $\lambda_g$ on $\ell^2\left( \Gamma \right)\otimes L^2\left( X,\mu \right)$ is given on simple tensors by
+      \begin{align*}
+        \lambda_g\left( \delta_h\otimes f_h \right) &= \delta_{gh} \otimes f_h.
+      \end{align*}
+      Therefore, computing, we have
+      \begin{align*}
+        \lambda_g\pi_{\alpha}(f)\lambda_{g^{-1}}\left( \delta_h\otimes f_h \right) &= \lambda_g\pi_{\alpha}(f)\left( \delta_{g^{-1}h}\otimes f_h \right)\\
+                                                                                   &= \lambda_g\left( \delta_{g^{-1}h}\otimes \alpha_{h^{-1}g}(f)f_h \right)\\
+                                                                                   &= \delta_h\otimes \alpha_{h^{-1}}\left( \alpha_g(f) \right)f_h\\
+                                                                                   &= \pi_{\alpha}\left( \alpha_g(f) \right)\left( \delta_h\otimes f_h \right).
+      \end{align*}
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 2]
+  Suppose $\Gamma\overset{\alpha}{\curvearrowright}L^{\infty}\left( X,\mu \right)$ for a countable discrete group $\Gamma$ and a probability space $\left( X,\mu \right)$. For $f\in L^{\infty}\left( X,\mu \right)$, define $\phi_{\alpha}(f)\in B\left( \ell^2\left( \Gamma \right)\otimes L^2\left( X,\mu \right) \right)$ by
+  \begin{align*}
+    \phi_{\alpha}(f)\left( \delta_g\otimes f_g \right) &= \delta_g\otimes f_g f,
+  \end{align*}
+  and define $\rho(g)$ for $g\in \Gamma$ by
+  \begin{align*}
+    \rho(g)\left( \delta_h\otimes f_h \right) &= \delta_{hg^{-1}}\otimes \alpha_g\left( f_h \right).
+  \end{align*}
+  Show that $\phi_{\alpha}\left( L^{\infty}\left( X,\mu \right) \right)\cup \rho\left( \Gamma \right)\subseteq \left( L^{\infty}\left( X,\mu \right)\rtimes_{\alpha} \Gamma \right)'$.
+\end{problem}
+\begin{solution}
+  We will compute directly on simple tensors as follows:
+  \begin{itemize}
+    \item
+      \begin{align*}
+        \lambda_g\rho_h\left( \delta_k\otimes f_k \right) &= \lambda_g\left( \delta_{kh^{-1}}\otimes \alpha_h\left( f_k \right) \right)\\
+                                                          &= \delta_{gkh^{-1}}\otimes \alpha_h\left( f_k \right)\\
+                                                          &= \rho_h\left( \delta_{gk}\otimes f_k \right)\\
+                                                          &= \rho_h\lambda_g\left( \delta_k\otimes f_k \right).
+      \end{align*}
+    \item 
+      \begin{align*}
+        \pi_{\alpha}(f)\phi_{\alpha}(g)\left( \delta_k\otimes f_k \right) &= \pi_{\alpha}(f)\left( \delta_k\otimes f_kg \right)\\
+                                                                          &= \delta_k\otimes \alpha_{k^{-1}}(f)\left( f_kg \right)\\
+                                                                          &= \delta_k\otimes \left( \alpha_{k^{-1}}(f)f_k \right)g\\
+                                                                          &= \phi_{\alpha}(g)\left( \delta_k\otimes \alpha_{k^{-1}}(f)f_k \right)\\
+                                                                          &= \phi_{\alpha}(g)\pi_{\alpha}(f)\left( \delta_k\otimes f_k \right).
+      \end{align*}
+    \item 
+      \begin{align*}
+        \pi_{\alpha}(f)\rho_g\left( \delta_k\otimes f_k \right) &= \pi_{\alpha}(f)\left( \delta_{kg^{-1}}\otimes \alpha_g\left( f_k \right) \right)\\
+                                                                &= \delta_{kg^{-1}}\otimes \alpha_{gk^{-1}}(f)\alpha_g\left( f_k \right)\\
+                                                                &= \delta_{kg^{-1}}\otimes \alpha_g\left( \alpha_{k^{-1}}(f)f_k \right)\\
+                                                                &= \rho_g\left( \delta_{k}\otimes \alpha_{k^{-1}}(f)f_k \right)\\
+                                                                &= \rho_g\pi_{\alpha}(f)\left( \delta_k\otimes f_k \right).
+      \end{align*}
+    \item 
+      \begin{align*}
+        \phi_{\alpha}(f)\lambda_g\left( \delta_k\otimes f_k \right) &= \phi_{\alpha}(f)\left( \delta_{gk}\otimes f_k \right)\\
+                                                                    &= \delta_{gk}\otimes f_kf\\
+                                                                    &= \lambda_g\left( \delta_{k}\otimes f_k \right)\\
+                                                                    &= \lambda_g\phi_{\alpha}(f)\left( \delta_k\otimes f_k \right).
+      \end{align*}
+  \end{itemize}
+\end{solution}
+\begin{problem}[Problem 3]
+  Suppose $\Gamma\overset{\alpha}{\curvearrowright}L^{\infty}\left( X,\mu \right)$.
+  \begin{enumerate}[(a)]
+    \item Show that $\delta_e\otimes 1$ is a cyclic vector for $L^{\infty}\left( X,\mu \right)\rtimes_{\alpha}\Gamma$.
+    \item Show that $\delta_e\otimes 1$ is a separating vector for $L^{\infty}\left( X,\mu \right)\rtimes_{\alpha}\Gamma$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item We start by observing that if $E\subseteq X$ is a measurable subset, and $g\in \Gamma$ is an arbitrary group element, then
+      \begin{align*}
+        \lambda_g \pi_{\alpha}\left( \alpha_g\left( \chi_E \right) \right)\left( \delta_e\otimes 1 \right) &= \delta_g\otimes \chi_{E}.
+      \end{align*}
+      By taking finite linear combinations of elements of this form, we obtain all elements of the tensor product $\ell^2\left( \Gamma \right)\otimes L^{2}\left( X,\mu \right)$ given by $\delta_g\otimes \theta$, where $\theta$ is a simple function. Since elements of this form are dense in $\ell^2\left( \Gamma \right)\otimes L^2\left( X,\mu \right)$, it follows that $\delta_e\otimes 1$ is a cyclic vector for $L^{\infty}\left( X,\mu \right)\rtimes_{\alpha}\Gamma$.
+    \item A vector is separating for a von Neumann algebra $M$ if and only if it is cyclic for the commutant $M'$. From our work in Problem 2, we know that the commutant of $L^{\infty}\left( X,\mu \right)\rtimes_{\alpha}\Gamma$ contains the von Neumann algebra generated by $\phi_{\alpha}\left( L^{\infty}\left( X,\mu \right) \right)$ and $\rho\left( \Gamma \right)$.
+
+      Observe then that if $E\subseteq X$ is measurable and $g\in G$, we have
+      \begin{align*}
+        \rho_g\phi_{\alpha}\left( \alpha_{g^{-1}}\left( \chi_E \right) \right)\left( \delta_e\otimes 1 \right) &= \delta_g\otimes \chi_E.
+      \end{align*}
+      Therefore, by the same reasoning as in part (a), it follows that $\delta_e\otimes 1$ is cyclic for $\left( L^{\infty}\left( X,\mu \right)\rtimes_{\alpha}\Gamma \right)'$, so $\delta_e\otimes 1$ is separating for $L^{\infty}\left( X,\mu \right)\rtimes_{\alpha}\Gamma$.
+  \end{enumerate}
+\end{solution}
+\end{document}
