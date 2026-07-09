@@ -75,3 +75,12 @@ use_math: true
 
 - "GTA is great, it's like the ultimate expression of free will"\
   *Gabriel Diraviam*
+
+- "[Rolando] is running back from where? A treadmill?"\
+  *Mike Hartglass*
+
+- "Two nices don't make nice"\
+  *Brent Nelson*
+
+- "It's still nuclear war, which isn't great"\
+  *Me*
