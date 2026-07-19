@@ -580,7 +580,7 @@ A normal $7$-Sylow subgroup of $H$ is characteristic in $H$, hence normal in $\G
 
   There is a homomorphism $\Z/3\Z\rightarrow \left( \Z/35\Z \right)$ given by $1\mapsto [11]$, which yields a semidirect product $\left( \Z/35\Z \right)\rtimes \Z/3\Z$.
 \end{solution}
-\section{Ring Theory}%
+\section{Ring Theory and Module Theory}%
 \subsection{Ring Theory Notes}%
 \subsubsection{Localization}%
 If $R$ is a (commutative, unital) ring, then we may consider a subset $S\subseteq R$ such that $1\in S$, $0\notin S$, and for any $s_1,s_2\in S$, we have $s_1s_2\in S$ (such an $S$ is called a \textit{multiplicative set}). Then, we may construct the \textit{ring of fractions} $S^{-1}R$ as the set of equivalence classes in $R\times S$ with $\left( r_1,s_1 \right)\sim \left( r_2,s_2 \right) $ if and only if there exists $t\in S$ such that $ t\left( r_1s_2 - r_2s_1 \right) = 0$. We write $\left[ \left( r,s \right) \right] = \frac{r}{s}$, and define addition and multiplication by
@@ -810,7 +810,66 @@ Considering distinct odd primes $p$ and $q$, the law of \textit{quadratic recipr
   \left( \frac{p}{q} \right) \left( \frac{q}{p} \right) &= \left( -1 \right)^{\left( \frac{p-1}{2} \right)\left( \frac{q-1}{2} \right)}.
 \end{align*}
 This is a very deep theorem with a difficult proof so we will not go through it here.
-\subsection{Ring Theory Worked Solutions}%
+\subsubsection{Module Theory: Useful Facts}%
+\begin{definition}
+  A module $M$ over $R$ is called \textit{cyclic} if there is a vector $v$ such that $ \left\langle v \right\rangle = Rv = M $.
+\end{definition}
+\begin{theorem}
+  If a module $M$ is cyclic with cyclic vector $v$, then
+  \begin{align*}
+    M &\cong R/\operatorname{Ann}_R(v),
+  \end{align*}
+  where $\operatorname{Ann}_R(v)$ is the \textit{annihilator ideal}, defined by
+  \begin{align*}
+    \operatorname{Ann}_R(v) &= \set{r\in R : rv = 0}.
+  \end{align*}
+\end{theorem}
+What follows are the most important theorems in module theory. We'll discuss an application of it to linear algebra.
+\begin{theorem}[Invariant Factors Decomposition]
+  Let $M$ be a finitely generated module over a PID $R$. Then, there exists a unique $k$, unique $\ell$, and unique up to associates $a_1 | a_2 | \cdots | a_{\ell}$ such that
+  \begin{align*}
+    M &\cong R^{k}\oplus \left( \bigoplus_{i=1}^{\ell} R/\left( a_i \right) \right).
+  \end{align*}
+\end{theorem}
+\begin{theorem}[Elementary Divisors Decomposition]
+  Let $M$ be a finitely generated module over a PID $R$. Then, there are primes $p_1,\dots,p_t\in R$ not necessarily unique and $d_1,\dots,d_t\in \N$ such that
+  \begin{align*}
+    M &\cong R^{k}\oplus \left( \bigoplus_{i=1}^{t}R/\left( p_i^{d_i} \right) \right).
+  \end{align*}
+  Here, $k$ is the same value as the $k$ in the invariant factors decomposition.
+\end{theorem}
+\subsubsection{Jordan Canonical Form}%
+If we are given a finite-dimensional vector space $V$ over a field $F$ and a linear transformation $T\colon V\rightarrow V$, then $V$ attains the structure of an $F[x]$-module by defining the action of $x$ by $x\cdot v = Tv$. In particular, this means that we may apply the invariant factors and elementary divisors decomposition(s) to $V$ to obtain different canonical forms of $T$. The application of the invariant factors decomposition yields the rational canonical form.
+
+Here, we will focus on applying the elementary divisors decomposition (in the special case of an algebraically closed field) to obtain the Jordan Canonical Form. Then, we will discuss some applications of this. By the definition of the $F[x]$-module structure on $V$, the element $T$ acts on $V$ by $x$ acting by multiplication on each of the cyclic summands $F[x]/\left( x-\lambda \right)^{k}$.
+
+Define an ordered basis
+\begin{align*}
+  \set{ \left( \overline{x}-\lambda \right)^{k-1}, \left( \overline{x}-\lambda \right)^{k-2},\dots, \overline{x}-\lambda, 1 }
+\end{align*}
+for the quotient $F[x]/\left( x-\lambda \right)^{k}$. Viewing $ \left( \overline{x}-\lambda \right)^{k} = 0 $ in the quotient, we have that $x$ acts as
+\begin{align*}
+  x\left( \overline{x}-\lambda \right)^{k-1} &= \lambda \left( \overline{x}-\lambda \right)^{k-1} + \left( \overline{x}-\lambda \right)^{k}\\
+                                             &= \lambda \left( \overline{x}-\lambda \right)^{k-1}\\
+  x\left( \overline{x}-\lambda \right)^{k-2} &= \lambda \left( \overline{x}-\lambda \right)^{k-2} + \left( \overline{x}-\lambda^{k-1} \right)\\
+                                             &\vdots\\
+  \overline{x}-\lambda &= \lambda \left( \overline{x}-\lambda \right) + \left( \overline{x}-\lambda \right)^{2}\\
+  x &= \lambda(1) + \left( \overline{x}-\lambda \right).
+\end{align*}
+This yields the matrix
+\begin{align*}
+  \begin{pmatrix}\lambda & 1 & & & \\ & \lambda & \ddots & & \\ & & \ddots & 1 & \\ & & & \lambda & 1 \\ & & & & \lambda\end{pmatrix}.
+\end{align*}
+Each of the cyclic summands $F[x]/\left( x-\lambda \right)^{k}$ correspond to the \textit{generalized eigenspaces} of $T$ corresponding to the eigenvalue $\lambda$.
+
+Notice that the minimal polynomial of a Jordan block $J_d(\lambda)$ is given by $\left( x-\lambda \right)^{d}$. In particular, if $\lambda = 0$, we have that $F[x]/x^{d}$ admits a minimal polynomial of $\mu(x) = x^d$. 
+
+Assume $\lambda\neq 0$. Considering the transformation corresponding to $T^2 = J_n(\lambda)^2$, we observe that we may write
+\begin{align*}
+  x^2-\lambda^2 &= \left( x-\lambda \right)\left( x+\lambda \right).
+\end{align*}
+In particular, this means that the minimal polynomial $\mu_{T^2}(y)$ divides $\left( y-\lambda \right)^{n}\left( y+\lambda \right)^{n}$. Since the greatest common divisor of $\left( x-\lambda \right)$ and $\left( x+\lambda \right)$ is $1$, we have that $\left( \overline{x}+\lambda \right)^{d}$ is invertible in $F[x]/\left( x-\lambda \right)^{n}$ for any exponent $d$; the minimal polynomial $\mu_{T^2}(y)$ of $T^2$ will thus divide $\left( y-\lambda^2 \right)^{n}$. Since $\left( \overline{x}^2-\lambda^2 \right)^{d} = \left( \overline{x}-\lambda \right)^{d} \theta$, where $\theta$ is some invertible element of $F[x]/\left( x-\lambda \right)^{n}$, it follows that $\left( \overline{x}^2-\lambda^2 \right)^{d} \neq 0$ for any $0\leq d < n$, meaning that the minimal polynomial $\mu_{T^2}$ of $T^2$ is equal to $\left( x-\lambda^2 \right)^{n}$.
+\subsection{Ring Theory and Module Theory Worked Solutions}%
 \begin{problem}[August `05, Problem 3]
   Let $R$ be a commutative ring with $1$ such that any ideal in $R$ is principal. Let $S\subseteq R$ be a multiplicatively closed subset of $R$. Show that any ideal in the ring of fractions $S^{-1}R$ is also principal.
 \end{problem}
@@ -973,7 +1032,7 @@ This is a very deep theorem with a difficult proof so we will not go through it 
   \end{align*}
   Therefore, it suffices to show that if $p\equiv 5$ mod $12$, then $x^2-3$ is irreducible over $\Z/p\Z$. Equivalently, we will have to show that $3$ is not a square mod $p$. Observe that since $p\equiv 5$ mod $12$, it follows that $p\equiv 1$ mod $4$; by the classification of primes over $\Z[i]$, it follows that $x^2 + 1$ is reducible mod $p$, or that $-1$ is a square mod $p$.
 
-  Now, suppose toward contradiction that $3$ is a square mod $p$, Then, it would follow that $-3 = \left( -1 \right)\left( -3 \right)$ is a square mod $p$. We claim that $-3$ is a square mod $p$ if and only if $p\equiv 1$ mod $3$. If there is some $t\in \Z/p\Z$ such that $t^2 = -3$, then we observe that there is then a primitive cube root of unity $\omega$; a primitive cube root of unity has order $3$ in $\left( \Z/p\Z \right)^{\times}$, or that $3 | \left( p-1 \right)$, or $p\equiv 1$ mod $3$. Yet, since we have that $p\equiv 2$ mod $3$, it follows that $-3$ is not a square mod $p$, so $3$ is not a square mod $p$.
+  Now, suppose toward contradiction that $3$ is a square mod $p$, Then, it would follow that $3 = \left( -1 \right)\left( -3 \right)$ is a square mod $p$. We claim that $-3$ is a square mod $p$ if and only if $p\equiv 1$ mod $3$. If there is some $t\in \Z/p\Z$ such that $t^2 = -3$, then we observe that there is then a primitive cube root of unity $\omega$; a primitive cube root of unity has order $3$ in $\left( \Z/p\Z \right)^{\times}$, or that $3 | \left( p-1 \right)$, or $p\equiv 1$ mod $3$. Yet, since we have that $p\equiv 2$ mod $3$, it follows that $-3$ is not a square mod $p$, so $3$ is not a square mod $p$.
 \end{solution}
 \section{Field/Galois Theory}%
 \subsection{Field Theory Notes}%
@@ -998,7 +1057,6 @@ Recall that the cyclotomic polynomials satisfy
 
   If $\pi(x)$ is an irreducible factor of $ \overline{\Phi_n(x)} $ in $\F_p[x]$, and $\alpha$ is a root of $\pi(x)$, then $\alpha$ is a primitive $n$th root of unity, so the degree of $\pi$, which is equal to $ \left[ \F_p(\alpha):\F_p \right] $, is the order of $p$ modulo $n$.
 \end{proof}
-
 \subsection{Field Theory Worked Solutions}%
 \begin{problem}[September `84, Problem 7]
   Factor $x^{8}-1$ into irreducibles in $\Z/p\Z[x]$ for all primes $p$.
@@ -2225,6 +2283,587 @@ so that the group is non-abelian. Observe that these are relations for any homom
     \frac{\Z[x]}{\left( x^2 + 1,15 \right)} &\cong \frac{\frac{\Z[x]}{\left( x^2 + 1 \right)}}{\frac{\left( x^2 + 1,15 \right)}{\left( x^2 + 1 \right)}}\\
                                             &\cong \frac{\Z[i]}{\left( 15 \right)}.
   \end{align*}
-  In particular, this means we want to find the maximal ideals in $\Z[i]$ containing $15$; we consider $ \overline{x} = i $ in $\Z[x]$ to correspond to $i$ in $\Z[x]/\left( x^2 + 1 \right)$. Since $\Z[i]$ is a Euclidean domain, maximal ideals are prime, and primes are irreducible as $\Z[i]$ is a unique factorization domain, so we only need to find the primes that divide $15$. Using the classification of primes in $\Z[i]$, it follows that there are three such maximal ideals given by $\set{\left( 3 \right), \left( 2-i \right),\left( 2+i \right)}$. These maximal ideals have generators in $\Z[x]$ given by $\set{\left( 3 \right),\left( x+2 \right),\left( x-2 \right)}$.
+  In particular, this means we want to find the maximal ideals in $\Z[i]$ containing $15$; we consider $ \overline{x} = i $ in $\Z[x]$ to correspond to $i$ in $\Z[x]/\left( x^2 + 1 \right)$. Since $\Z[i]$ is a Euclidean domain, maximal ideals are prime, and primes are irreducible as $\Z[i]$ is a unique factorization domain, so we only need to find the primes that divide $15$. Using the classification of primes in $\Z[i]$, it follows that there are three such maximal ideals given by $\set{\left( 3 \right), \left( 2-i \right),\left( 2+i \right)}$. Lifting to $\Z[x]$ after application of the homomorphism $\Z[x]\rightarrow \Z[i]$, we observe that these ideals correspond to $\set{\left( x^2+1,3 \right), \left( x^2 + 1,2-x \right),\left( x^2 + 1,2+x \right)}$ respectively.
 \end{solution}
+\begin{problem}[Problem 5]
+  Let $F$ be an algebraically closed field, $n\in \N$, and $a\in \GL_n\left( F \right)$ an invertible $n\times n$ matrix over $F$.
+  \begin{enumerate}[(a)]
+    \item Assume that $\operatorname{char}(F)\neq 2$. Prove that if $A^2$ is diagonalizable, then $A$ is also diagonalizable over $F$.
+    \item Give an example where $\operatorname{char}\left( F \right) = 2$, $A^2$ is diagonalizable, and $A$ is not diagonalizable.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Since $A^2$ is diagonalizable and invertible, it follows that $\mu_{A^2}(x)$ splits into distinct linear factors
+      \begin{align*}
+        \mu_{A^2}(x) &= \prod_{i=1}^{r} \left( x-\lambda_i \right)
+      \end{align*}
+      with each $\lambda_i\neq 0$. We observe then that, by definition, we have $\mu_{A}(x) | \prod_{i=1}^{r} \left( x^2-\lambda_i \right)$. Since $F$ is algebraically closed and not of characteristic $2$, it follows there are $\mu_i\neq 0$ such that $\left( x^2-\lambda_i \right) = \left( x-\mu_i \right)\left( x+\mu_i \right)$. Therefore, we have that $\mu_A(x)$ consists of distinct linear factors, so $A$ is diagonalizable.
+    \item If over $\F_2$, we have
+      \begin{align*}
+        A &= \begin{pmatrix}1 & 1 \\ 0 & 1\end{pmatrix},
+      \end{align*}
+      then $A$ is in Jordan canonical form, so $A$ is not diagonalizable, but
+      \begin{align*}
+        A^2 &= \begin{pmatrix}1 & 0 \\ 0 & 1\end{pmatrix}
+      \end{align*}
+      is the identity matrix, which is already diagonal.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 6]
+  Let $R$ be a commutative ring with $1$, $M$ an $R$-module, and $N$ a submodule of $M$.
+  \begin{enumerate}[(a)]
+    \item Prove that if both $N$ and $M/N$ are finitely generated, then $M$ is finitely generated.
+    \item Give an example where $M$ is finitely generated and $N$ is not.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Let $m\in M$. Take $\set{x_1 + N,\dots,x_m + N}$ to be a finite generating set for $M/N$, and $\set{y_1,\dots,y_n}$ a finite generating set for $N$.
+
+      Then, we may write
+      \begin{align*}
+        m + N &= \left( \sum_{j=1}^{m}r_jx_j \right) + N,
+      \end{align*}
+      so there exists $n\in N$ such that
+      \begin{align*}
+        m - \left( \sum_{j=1}^{m}r_jx_j \right) &= n,
+      \end{align*}
+      meaning we may write
+      \begin{align*}
+        n &= \sum_{i=1}^{n}s_iy_i,
+      \end{align*}
+      and thus
+      \begin{align*}
+        m &= \sum_{j=1}^{m}r_jx_j + \sum_{i=1}^{n}s_iy_i,
+      \end{align*}
+      so that $\set{x_1,\dots,x_m,y_1,\dots,y_n}$ is a finite generating set for $M$.
+    \item If $M = \Z\left[ x_1,x_2,\dots \right]$ is the polynomial ring in $\Z$ with infinitely many indeterminates, viewed as a ring over itself, then the ideal $N = \left( x_1,x_2,\dots \right)$ is infinitely generated, but $M$ is finitely generated since it is the free module over the ring $\Z\left[ x_1,x_2,\dots \right]$ with rank $1$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 8]
+  Let $p > 2$ be a prime, $\F_p$ the field of order $p$, and $ \overline{\F_p} $ an algebraic closure. Let $f(x) = x^m + 1$ for some $m\in \N$. Assume that $f$ is irreducible, and let $\alpha$ be a root of $f$ in $ \overline{\F_p} $.
+  \begin{enumerate}[(a)]
+    \item Prove that the multiplicative order of $\alpha$ is equal to $2m$.
+    \item Prove that $2m$ divides $p^m - 1$, and $2m$ does not divide $p^k - 1$ for any $0 < k < m$.
+    \item Prove that $m\neq 4$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Since $f$ is irreducible, we have that $\F_p\left( \alpha \right) = \F_{p^{m}}$, and $\alpha$ is not contained in any proper subfield of $\F_p\left( \alpha \right)$. In particular, this means that $\alpha^{k}\notin \F_p$ for any $1\leq k < m$, so since we have $\alpha^{m} = -1\neq 1$ (where the latter emerges from the fact that $p\neq 2$), it follows that $\alpha^{2m} = 1$, so that the multiplicative order of $\alpha$ is $2m$.
+    \item We have that $\alpha\neq 0$, so $\alpha\in \left( \F_{p^{m}} \right)^{\times}$, meaning that $o\left( \alpha \right) = 2m | \left\vert \F_{p^{m}}^{\times} \right\vert = p^{m}-1$, and since $\alpha\notin \F_{p^{k}}$ for any $1\leq k < m$, it follows that $o\left( \alpha \right)\nmid p^{k}-1$.
+    \item We may show that $x^{4} + 1$ is reducible mod $p$ by observing that, since $p$ is odd, $p^2 \equiv 1$ modulo $8$. Therefore, we have that $x^{8}-1 | x^{p^2-1}-1$ over $\F_p$, or that $x^{4} + 1 | x^{p^2}-x$. In particular, this means that $x^4 + 1$ splits over $\F_p^2$. Yet, since any element of $\F_p^2$ has a minimal polynomial over $\F_p$ with degree at most $2$, it follows that $x^{4} + 1$ is necessarily reducible over $\F_p$.
+  \end{enumerate}
+\end{solution}
+\subsection{August 2019}%
+\begin{problem}[Problem 2]
+  Let $n\geq 3$ be an integer, and $S_n$ the symmetric group on $\set{1,2,\dots,n}$. Let $H$ be a subgroup of $S_n$ with $\left[ S_n:H \right] = n$. Prove that $H\cong S_{n-1}$.
+\end{problem}
+\begin{solution}
+  Let $S_n$ act on the coset space $S_n/H$ by left multiplication; that is, $g\cdot H = gH$. This defines a permutation representation $\rho\colon S_n\rightarrow \sym\left( S_n/H \right)$. Observe that this action is transitive, and that $H$ is the stabilizer of this action; in particular, this means that $K = \ker\left( \rho \right)$ of this action is contained in $H$.
+
+  Since $K$ is normal in $S_n$, there are three cases for $K$ if $K$ is non-trivial.
+  \begin{itemize}
+    \item If $K = S_n$, then by orbit--stabilizer theorem, we have $n=\left[ S_n:H \right]\leq \left[ S_n:K \right] = 1$, but $n\geq 3$, which is a contradiction.
+    \item If $K = A_n$, then this implies that $\left\vert K \right\vert = \frac{n!}{2}$, but since $\left\vert H \right\vert = \left( n-1 \right)!$ and $\left\vert H \right\vert\geq \left\vert K \right\vert$, this implies that $\left( n-1 \right)!\geq \frac{n!}{2}$, which is not the case for any $n\geq 3$.
+    \item If $n = 4$ and $K = V$, the Klein $4$-group, then since $\left\vert H \right\vert = 6$, Lagrange's theorem implies that $4 | 6$, which is certainly false.
+  \end{itemize}
+  Therefore, it must be the case that $K = \set{e}$ is injective. Since $\rho$ is an injective map between groups of the same order, it is an isomorphism, so that the action of $S_n$ on $\set{1,\dots,n}$ is equivalent to the action of $S_n$ on $S_n/H$. In particular, this means that, up to relabeling, $H$ is the stabilizer of $1\in \set{1,\dots,n}$, so that $H\cong S_{n-1}$.
+\end{solution}
+\begin{problem}[Problem 3]
+  Let $m$ and $n$ be positive integers with $m | n$. Let $f\colon \Z/n\Z\rightarrow \Z/m\Z$ be the natural projection. Prove that the associated map of the group of units $f\colon \left( \Z/n\Z \right)^{\times}\rightarrow \left( \Z/m\Z \right)^{\times}$ is surjective.
+\end{problem}
+\begin{solution}
+  By Chinese Remainder Theorem and divisibility of $n$ by $m$, we may write
+  \begin{align*}
+    \Z/n\Z &\cong \frac{\Z}{p_1^{d_1}\Z}\oplus\cdots\oplus \frac{\Z}{p_r^{d_r}\Z}\\
+    \Z/m\Z &\cong \frac{\Z}{p_1^{e_1}\Z}\oplus\cdots\oplus \frac{\Z}{p_r^{e_r}\Z}\\
+    \left( \Z/n\Z \right)^{\times} &\cong \left( \frac{\Z}{p_1^{d_1}\Z} \right)^{\times}\times\cdots\times \left( \frac{\Z}{p_r^{d_r}\Z} \right)^{\times}\\
+    \left( \Z/m\Z \right)^{\times} &\cong \left( \frac{\Z}{p_1^{e_1}\Z} \right)^{\times}\times\cdots\times \left( \frac{\Z}{p_r^{e_r}\Z} \right)^{\times},
+  \end{align*}
+  where $d_i\geq 1$ and $e_i\leq d_i$ for each $i$. Therefore, we reduce the question to the case of a single factor $\Z/p^{d}\Z\rightarrow \Z/p^e\Z$; if $e = 0$, then there is no map of units since the latter is the zero ring, so we will assume $d\geq e \geq 1$, and we will show that the map $\left( \Z/p^d\Z \right)^{\times}\rightarrow \left( \Z/p^{e}\Z \right)^{\times}$ is surjective.
+
+  Now, if $a\in \left( \Z/p^{e}\Z \right)^{\times}$ with $1\leq a < p^{e}$, then $\gcd\left( a,p^{e} \right) = 1$. In particular, this means that the prime factorization of $a$ does not contain any factors of $p$, so that $\gcd\left( a,p^{d} \right) = 1$, whence the class of $a$ in $\Z/p^{d}\Z$ is a unit, and $a\mapsto a$ gives a surjection of the units of $\Z/p^{d}\Z$ and $\Z/p^{e}\Z$.
+\end{solution}
+\begin{problem}[Problem 4]
+  Let $R$ be a commutative ring with $1$, $S$ a subring of $R$ with $1$, and let $M,N$ be $R$-modules.
+  \begin{enumerate}[(a)]
+    \item Prove that there exists a surjective $S$-module homomorphism $\varphi\colon M\otimes_{S}N\rightarrow M\otimes_{R}N$ such that $\varphi\left( m\otimes_{S}m \right) = m\otimes_{R}n$.
+    \item Assume that $R$ and $S$ are fields, $R\neq S$, and $M$ and $N$ are nonzero. Prove that $\varphi$ is not injective.
+    \item Suppose we only know that $R$ is a field. Does the conclusion of (b) remain true?
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Define a $S$-balanced map $\phi\colon M\times N\rightarrow M\otimes_{R}N$ by $\varphi\left( m,n \right) = m\otimes_{R}n$. Use the universal property to define a unique $S$-module homomorphism $\varphi\colon M\otimes_{S}N\rightarrow M\otimes_{R}N$ that is necessarily surjective since any sum of elementary tensors in $M\otimes_{R}N$ is given by the sum of elementary tensors in $M\otimes_{S}N$.
+    \item Given $m\in M$ and $n\in N$ nonzero, with $r\in R\setminus S$, consider the vector
+      \begin{align*}
+        u &= m\otimes \left( rn \right) - \left( rm \right)\otimes n.
+      \end{align*}
+      Then, we observe that $u\in \ker\left( \varphi \right)$ since elementary tensors in $M\otimes_{R}N$ are $R$-bilinear.
+
+      We will show that $u\neq 0$ by determining an $S$-linear map $\theta\colon M\otimes_{S}N\rightarrow S$ such that $\theta\left( u \right)\neq 0$.
+
+      Since $R$ and $S $are fields, and $S\neq R$, we have that $m$ and $rm$ are $S$-linearly independent. Extending $\set{m,rm}$ to an $S$-basis $ \mathcal{B} $ for $M$, we may define $f\colon M\rightarrow S$ by taking $f(m) = 1$ and $f(m') = 0$ for any $m'\neq m$ in $ \mathcal{B} $, and extending linearly by using the universal property. Similarly, $n$ and $rn$ are $S$-linearly independent, we may extend $\set{n,rn}$ to an $S$-basis $ \mathcal{C} $ of $N$, and taking $g\colon N\rightarrow S$ by taking $g(n) = 1$ for all $n\in \mathcal{C}$ and extending linearly.
+
+      Defining $\beta\colon M\times N\rightarrow S$ by $\left( m,n \right)\mapsto f(m)g(n)$, we observe that $\beta$ is $S$-bilinear, so it extends to an $S$-linear map $\theta\colon M\otimes_{S}N\rightarrow S$ satisfying $\theta\left( m\otimes n \right) = f(m)g(n)$. Therefore, we have
+      \begin{align*}
+        \theta\left( u \right) &= f\left( m \right)g\left( rn \right) - f\left( rm \right)g\left( n \right)\\
+                                 &= 1\\
+                                 &\neq 0.
+      \end{align*}
+      Therefore, $u\neq 0$.
+    \item Consider $R = \Q$ and $S = \Z$. Observe that any simple tensor in $\Q\otimes_{\Z}\Q$ can be written as
+      \begin{align*}
+        \frac{a}{b}\otimes \frac{c}{d} &= \frac{a}{b} \otimes b\frac{c}{bd}\\
+                                       &= b\frac{a}{b}\otimes \frac{c}{bd}\\
+                                       &= a\otimes \frac{c}{bd}\\
+                                       &= 1\otimes \frac{ac}{bd},
+      \end{align*}
+      meaning that element in $\Q\otimes_{\Z}\Q$ is written $1\otimes q$, while under $\varphi$, we have that this element is given by $1\otimes q$ in $\Q\otimes_{\Q}\Q$; since any element in $\Q\otimes_{\Q}\Q$ is given by $1\otimes q$ by a similar process, it follows that $\varphi$ only maps $1\otimes q$ to $0$ when $q = 0$, meaning that $\ker\left( \varphi \right) = \set{0}$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 5]
+  Let $F$ be a field, $V$ a vector space over $F$ of finite dimension $n$, and let $T\colon V\rightarrow V$ an $F$-linear map.
+  \begin{enumerate}[(a)]
+    \item Assume that $F$ is algebraically closed. Prove that $V$ has at least $n+1$ $T$-invariant subspaces including $0$ and $V$.
+    \item Give an example showing that if $F$ is not algebraically closed, then (a) may be false.
+    \item Assume that $T$ is diagonalizable over $F$ and has $n$ distinct eigenvalues. Prove that the number of $T$-invariant subspaces depends only on $n$, and find that number.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Since $F$ is algebraically closed, $V$ admits a basis $ \mathcal{B} = \set{v_1,v_2,\dots,v_n} $ such that $\left[ T \right]_{\mathcal{B}}$ is in Jordan canonical form; in particular, $\left[ T \right]_{\mathcal{B}}$ is upper triangular. Taking the chain
+      \begin{align*}
+        0 \subseteq \Span\set{v_1}\supseteq \Span\set{v_1,v_2}\subseteq\cdots\subseteq \Span\set{v_1,v_2,\dots,v_n},
+      \end{align*}
+      we have a chain of contained subspaces of length $n+1$, and observe that $Tv_i\in \Span\set{v_1,v_2,\dots,v_i}$ by the fact that $\left[ T \right]_{\mathcal{B}}$ is upper triangular, so that each of these subspaces is $T$-invariant.
+    \item Considering the matrix
+      \begin{align*}
+        T &= \begin{pmatrix}0 & -1 \\ 1 & 0\end{pmatrix}
+      \end{align*}
+      in $\Mat_2\left( \R \right)$, we observe that this is a rotation by $\pi/2$, so it has the only invariant subspaces given by $0$ and $\R^2$.
+    \item If we consider $V$ as an $F[x]$-module with action $x\cdot v = Tv$, then we observe that a submodule is precisely a $T$-invariant subspace.
+
+      Since $T$ is diagonalizable, we may write
+      \begin{align*}
+        V &\cong \bigoplus_{i=1}^{n} \frac{F[x]}{\left( x-\lambda_i \right)}
+      \end{align*}
+      where each of the $\lambda_1,\dots,\lambda_n$ are distinct by assumption. Since each of the $\left( x-\lambda_i \right)\subseteq F[x]$ are maximal ideals, the modules $\frac{F[x]}{\left( x-\lambda_i \right)}$ are irreducible as $F[x]$-modules. In particular, this means there are no submodules in any summand, and the summands are pairwise non-isomorphic by the fact that $\lambda_1,\dots,\lambda_n$ are distinct; counting submodules is thus given by counting the total number of decompositions of $V$ into these summands, giving $2^{n}$ such submodules.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 8]
+  Let $q$ be a prime power, $\F_q$ a field of order $q$, and let $a\in \F_q$ be a nonzero element. Consider the polynomial
+  \begin{align*}
+    f(x) &= x^{q+1} - a.
+  \end{align*}
+  Let $L$ be the splitting field of $f(x)$ over $K = \F_q$. Prove that $\left[ L:K \right] = 2$.
+\end{problem}
+\begin{solution}
+  Write $\F_q = \F_{p^{n}}$. Observe that $f'(x) = x$, so that $\gcd\left( f,f' \right) = 1$, so in particular, $f(x)$ is separable. Furthermore, since $a\in \F_{q}\setminus \set{0}$, we have that $a^{p^n-1} = 1$, so we observe that if $\alpha$ is a root of $f(x)$, then
+  \begin{align*}
+    \alpha^{\left( p^n+1 \right)\left( p^n-1 \right)} &= \alpha^{p^{2n}-1}\\
+                                                      &= 1,
+  \end{align*}
+  meaning that $\alpha\in \F_{p^{2n}} = \F_q^2$.
+
+  Since $f(x)$ is separable, it follows that $f(x)$ admits $p^n + 1$ distinct roots in $ \overline{\F_p} $, so by the pigeonhole principle, at least one of the roots cannot be contained in $\F_q$; in particular, if $\alpha$ is this root, then $\alpha\in \F_{q^2}$, whence $L = \F_{q^2}$ has degree $2$ over $\F_q$.
+\end{solution}
+\subsection{January 2020}%
+\begin{problem}[Problem 1]\hfill
+  \begin{enumerate}[(a)]
+    \item Let $C$ be a cyclic group of order $n\geq 2$. Explain why $\aut\left( C \right)\cong \left( \Z/n\Z \right)^{\times}$, and why $\aut\left( C \right)\cong \Z/\left( n-1 \right)\Z$ if $n$ is prime.
+    \item Let $G$ be a finite group, $p$ the smallest prime dividing $G$, and suppose $G$ contains a normal subgroup $C$ of order $p$. Prove that $C$ lies in the center of $G$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item An automorphism $\Z/n\Z\rightarrow \Z/n\Z$ is determined by where it sends the generator $1$, and it must send $1$ to another generator of $\Z/n\Z$, namely an element of $\left( \Z/n\Z \right)^{\times}$. If $n$ is prime, then $\Z/n\Z$ is a field, so $\left( \Z/n\Z \right)^{\times}$ is cyclic of order $n-1$.
+    \item Let $x$ be the generator for $C$. Then, observe that, since $C$ is normal, $gxg^{-1} = x^{k}$ for some $1\leq k < p$. If it were the case that $k\neq 1$, then this gives rise to a nontrivial homomorphism $G\rightarrow \aut\left( C \right)\cong \Z/\left( n-1 \right)\Z$. This implies that $p-1$ divides the order of $G$, but $p$ is the smallest prime that divides the order of $G$, which is a contradiction.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 4]
+  Let $R$ be a commutative ring with $1$, and let $x\in R$.
+  \begin{enumerate}[(a)]
+    \item Prove that $x\notin R^{\times}$ if and only if $x\in M$ for some maximal ideal $M$ of $R$.
+    \item Prove that the following are equivalent:
+      \begin{enumerate}[(i)]
+        \item $x\in M$ for every maximal ideal $M$ of $R$;
+        \item $1 + xy\in R^{\times}$ for every $y\in R$.
+      \end{enumerate}
+  \end{enumerate}
+\end{problem}
+\subsection{August 2020}%
+\begin{problem}[Problem 1]
+  Let $A$ be a finitely generated abelian group. Prove that the following are equivalent:
+  \begin{enumerate}[(a)]
+    \item $\Dim_{\Q}\left( A\otimes_{\Z}\Q \right)\leq 1$;
+    \item $\Aut(A)$ is finite.
+  \end{enumerate}
+\end{problem}
+\begin{solution}
+  Using the classification theorem, we may write
+  \begin{align*}
+    A &\cong \Z^{d} \oplus T,
+  \end{align*}
+  where $T$ is a finite abelian group.
+
+  Suppose $A\otimes_{\Z}\Q$ has $\Q$-dimension less than or equal to $1$. Noting that $T\otimes_{\Z}\Q \cong \set{0}$, it follows that $A\otimes_{\Z}\Q\cong \Q^{d}$, meaning that there are two cases.
+  \begin{enumerate}[(i)]
+    \item If $d = 0$, then $A$ is a finite group, meaning that $\Aut(A)$ is finite as $\Aut(A)$ is a subgroup of the finite group $\Sym(A)$.
+    \item If $d = 1$, then we consider all the possible automorphisms of $A$. First, observe that any element of the form $\left( 0,s \right)$, where $s\in T$, must be mapped to an element of the form $\left( 0,s \right)$, since orders are preserved under automorphisms and $s$ is necessarily finite-order.
+
+      If $\left( 1,0 \right)$ denotes the generator of the $\Z$ summand in the expression of $A$ given by the classification, then we observe that if $\alpha\in \Aut(A)$ is any element, then $\alpha\left( 1,0 \right) = \left( n,s \right)$ and $\alpha^{-1}\left( 1,0 \right) = \left( n',s' \right)$. Since any automorphism must preserve $T$, it follows that the automorphism $\alpha$ descends to an automorphism of the quotient $A/T\cong \Z$; since automorphisms preserve generators, it follows that $n = \pm 1$ and similarly, $n' = \pm 1$. In particular, this means that any automorphism of $A$ is a composition of an automorphism of $\Z$, a shearing term $s$, and an automorphism of $T$; since each of these sets are finite, it follows that $\Aut(A)$ is finite.
+  \end{enumerate}
+  Now, suppose $A\otimes_{\Z}\Q$ has $\Q$-dimension at least $2$. Then, $d \geq 2$, meaning that we may write $A\cong \Z^2\oplus S$ for some finitely generated abelian group $S$. In particular, any automorphism of the form $U\oplus \id$ for some $U\in \GL_2(\Z)$ is an automorphism of $A$. Notice that $\GL_2\left( \Z \right)$ is an infinite group, as seen by the infinite family of elements given by
+  \begin{align*}
+    \set{ \begin{pmatrix}1 & a \\ 0 & 1\end{pmatrix} : a\in \Z }.
+  \end{align*}
+\end{solution}
+\begin{problem}[Problem 2]
+  Let $n\geq 3$ be an integer. Denote by $S_n$ the symmetric group on $\set{1,\dots,n}$, and $D_{2n}$ the dihedral group of order $2n$.
+  \begin{enumerate}[(a)]
+    \item Prove that for every $k\geq 3$, there exists an injective homomorphism $\varphi\colon D_{2k}\rightarrow Sk$ whose image contains a $k$-cycle.
+    \item Prove that every element of $S_n$ can be written as a product of two elements with order less than or equal to $2$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}
+  We write the presentation of $D_{2k}$ as
+  \begin{align*}
+    D_{2k} &= \left\langle r,s | r^{k},s^2,srsr \right\rangle.
+  \end{align*}
+  \begin{enumerate}[(a)]
+    \item Viewing $D_{2k}$ as the symmetry group of a regular $k$-gon, and labeling the vertices $\set{1,\dots,k}$ yields a homomorphism $D_{2k}\rightarrow S_k$ by defining the permutation in $S_k$ by the correspondence between the vertices and the set $\set{1,\dots,k}$. This homomorphism is injective since the only element of $D_{2k}$ that preserves every vertex of the regular $k$-gon is the identity permutation. Since injective homomorphisms preserve order, the image of $r$ has order $k$, and the only elements of $S_k$ that have order $k$ are $k$-cycles.
+    \item Notice that any element of $D_{2k}$ is a product of either one or two reflections. For instance, the element $r$ is given by $(rs)s$, where we observe that $(rs)^2 = rsrs = rs^2r^{-1} = e$. Taking a cycle decomposition, we have that every permutation $\sigma\in S_n$ is given by
+      \begin{align*}
+        \sigma &= \sigma_1\sigma_2\cdots \sigma_r
+      \end{align*}
+      is a product of disjoint cycles. We may assume that any of these cycles are of length at least $3$, as the product of a disjoint collection of transpositions is of order $2$. If we have a $k$-cycle defined by $\left( i_1,i_2,\dots,i_k \right)$, then we may view this $k$-cycle as the element $r$ in the subgroup $D_{2k}$ of $S_k$, where the action is defined on $\set{i_1,i_2,\dots,i_k}$. In particular, the supports of the cycles $\sigma_1,\dots,\sigma_r$ are disjoint. The $k$-cycle may then be expressed as a product of two reflections $\tau_{i,1}\tau_{i,2}$. Writing $\sigma$ in this form gives
+      \begin{align*}
+        \sigma &= \tau_{1,1}\tau_{1,2}\tau_{2,1}\tau_{2,2}\cdots \tau_{r,1}\tau_{r,2}.
+      \end{align*}
+      We observe that the support of $\tau_{1,2}$ and the support of $\tau_{2,1}$ are disjoint, so the cycles commute. Similarly, we have $\tau_{i,2}\tau_{i+1,1} = \tau_{i+1,1}\tau_{i,2}$ for all $1\leq i \leq r$. Therefore, we may write
+      \begin{align*}
+        \sigma &= \left( \tau_{1,1}\tau_{2,1}\cdots \tau_{r,1} \right)\left( \tau_{1,2}\tau_{2,2}\tau_{3,2}\cdots \tau_{r,2} \right).
+      \end{align*}
+      Each of these groupings is a product of disjoint transpositions, so this yields $\sigma$ as a product of two elements of order $2$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 3]
+  Let $R = \Z\left[ \sqrt{3} \right]$. You may assume without proof that $R$ is a Euclidean domain. Let $p\in \N$ be a prime number with $p\equiv 5$ mod $12$. Prove that $p$ is a prime element of $R$.
+\end{problem}
+\begin{solution}
+  We start by observing that
+  \begin{align*}
+    \Z\left[ \sqrt{3} \right] &\cong \frac{\Z[x]}{\left( x^2 - 3 \right)},
+  \end{align*}
+  where
+  \begin{align*}
+    a + b\sqrt{3} &\leftrightarrow a + bx + \left( x^2 - 3 \right).
+  \end{align*}
+  Furthermore, since $\Z\left[ \sqrt{3} \right]$ is a Euclidean domain, any prime ideals are maximal, so it suffices to show that if $p\equiv 5$ mod $12$, then $\Z\left[ \sqrt{3} \right]/\left( p \right)$ is a field. Writing in terms of $\Z[x]/\left( x^2-3 \right)$,
+  \begin{align*}
+    \Z\left[ \sqrt{3} \right]/\left( p \right) &\cong \frac{\Z[x]}{\left( p,x^2-3 \right)}\\
+                                               &\cong \frac{\left( \Z/p\Z \right)[x]}{\left( x^2-3 \right)}.
+  \end{align*}
+  Therefore, it suffices to show that if $p\equiv 5$ mod $12$, then $x^2-3$ is irreducible over $\Z/p\Z$. Equivalently, we will have to show that $3$ is not a square mod $p$. Observe that since $p\equiv 5$ mod $12$, it follows that $p\equiv 1$ mod $4$; by the classification of primes over $\Z[i]$, it follows that $x^2 + 1$ is reducible mod $p$, or that $-1$ is a square mod $p$.
+
+  Now, suppose toward contradiction that $3$ is a square mod $p$, Then, it would follow that $3 = \left( -1 \right)\left( -3 \right)$ is a square mod $p$. We claim that $-3$ is a square mod $p$ if and only if $p\equiv 1$ mod $3$. If there is some $t\in \Z/p\Z$ such that $t^2 = -3$, then we observe that there is then a primitive cube root of unity $\omega$; a primitive cube root of unity has order $3$ in $\left( \Z/p\Z \right)^{\times}$, or that $3 | \left( p-1 \right)$, or $p\equiv 1$ mod $3$. Yet, since we have that $p\equiv 2$ mod $3$, it follows that $-3$ is not a square mod $p$, so $3$ is not a square mod $p$.
+\end{solution}
+\begin{problem}[Problem 4]
+  Let $R$ be a commutative ring with $1$. An ideal $I$ of $R$ is called irreducible if $I$ cannot be written as $I = J\cap K$, where $J$ and $K$ are both ideals strictly containing $I$.
+  \begin{enumerate}[(a)]
+    \item Prove that every prime ideal is irreducible.
+    \item Assume that $R$ contains a nonzero nilpotent element. Prove that $R$ contains an irreducible ideal which is not prime.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Let $P$ be a prime ideal of $R$. Suppose toward contradiction that there exist proper ideals $J$ and $K$ with $P = J\cap K$ and $P\subsetneq J,K$. Choose $a\in J\setminus P$ and $b\in K\setminus P$. Then, $ab\in P$ since $ab\in J\cap K$ by absorption of multiplication. Yet, by the definition of prime ideal, it follows that either $a\in P$ or $b\in P$, which contradicts the definition of $a$ and $b$.
+    \item Suppose $a\in R$ is a nonzero nilpotent element. We consider the set $\mathcal{S}$  of ideals that do not contain $a$, ordered by inclusion. This set is nonzero since the zero ideal is in this set and $a$ is not zero. If $\mathcal{C}$ is a chain in $\mathcal{S}$, then the union of the ideals in $\mathcal{C}$ is an upper bound in $\mathcal{S}$. If it were not the case that the union was in $\mathcal{S}$, then we would have some ideal $I\in \mathcal{C}$ with $a\in I$, which would imply that $I\notin \mathcal{S}$.
+
+      Therefore, by Zorn's Lemma, there is a maximal element $M$ of $\mathcal{S}$. Observe that the nilradical of $R$ is the intersection of all the prime ideals, so since $M$ does not contain $a$, it follows that $M$ is not prime.
+
+      Suppose toward contradiction that $M$ is not irreducible. Then, there would be ideals $J$ and $K$ where $M\subsetneq J,K$ with $M = J\cap K$. Without loss of generality, if $a\notin J$, then it would follow that $J\in \mathcal{S}$, which would violate the maximality of $M$. Meanwhile, if $a\in J$ and $a\in K$, then we would have $a\in J\cap K = M$, which would violate the fact that $M\in \mathcal{S}$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 6]
+  Let $K$ be a field of characteristic zero, and fix some algebraic closure $ \overline{K} $ of $K$. Let $L/K$ be a finite extension with $L\subseteq \overline{K}$, and let $\alpha\in \overline{K}$.
+  \begin{enumerate}[(a)]
+    \item Prove that there is a surjective $K$-algebra homomorphism $\rho\colon L\otimes_{K}K\left( \alpha \right)\rightarrow L\left( \alpha \right)$.
+    \item Prove that there exists an injective $K$-algebra homomorphism not necessarily sending $1$ to $1$ $\iota\colon L\left( \alpha \right)\rightarrow L\otimes_{K}K\left( \alpha \right)$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Notice that, since $\alpha$ is algebraic over $K$, we have $K(\alpha) = K\left[ \alpha \right]$.
+
+      Consider a map $\phi\colon L\times K\left( \alpha \right)\rightarrow L\left( \alpha \right)$ defined by $\left( \ell,p(\alpha) \right)\mapsto \ell p(\alpha)$. We claim this map is $K$-bilinear. This follows from observing that
+      \begin{align*}
+        \phi\left( \ell,p_1\left( \alpha \right) + p_2\left( \alpha \right) \right) &= \ell p_1\left( \alpha \right) + \ell p_2\left( \alpha \right)\\
+                                                                                    &= \phi\left( \ell,p_1(\alpha) \right) + \phi\left( \ell,p_2\left( \alpha \right) \right)\\
+        \phi\left( \ell_1 + \ell_2,p\left( \alpha \right) \right) &= \ell_1 p\left( \alpha \right) + \ell_2 p\left( \alpha \right)\\
+                                                                  &= \phi\left( \ell_1,p\left( \alpha \right) \right) + \phi\left( \ell_2,p\left( \alpha \right) \right)\\
+        \phi\left( k\ell,p\left( \alpha \right) \right) &= k \left( \ell p\left( \alpha \right) \right)\\
+                                                        &= k \phi\left( \ell,p\left( \alpha \right) \right)\\
+                                                        &= \ell \left( kp\left( \alpha \right) \right)\\
+                                                        &= \phi\left( \ell,kp\left( \alpha \right) \right).
+      \end{align*}
+      Therefore, $\phi$ descends to a $K$-linear map $\rho\colon L\otimes_{K}K\left( \alpha \right)\rightarrow L\left( \alpha \right)$ taking $\ell\otimes p\left( \alpha \right)\mapsto \ell p\left( \alpha \right)$. We show that $\rho$ respects the multiplication operation, and that $\rho$ is surjective. First, we observe that
+      \begin{align*}
+        \rho\left( \left( \ell_1\otimes p_1\left( \alpha \right) \right)\left( \ell_2\otimes p_2\left( \alpha \right) \right) \right) &= \rho\left( \ell_1\ell_2\otimes p_1(\alpha)p_2(\alpha) \right)\\
+                                                                                                                                      &= \ell_1\ell_2p_1(\alpha)p_2(\alpha)\\
+                                                                                                                                      &= \ell_1p_1(\alpha)\ell_2p_2(\alpha)\\
+                                                                                                                                      &= \rho\left( \ell_1\otimes p_1(\alpha) \right)\rho\left( \ell_2\otimes p_2(\alpha) \right).
+      \end{align*}
+      Next, we observe that, since $\alpha$ is algebraic over $K$, $\alpha$ is algebraic over $L$, so $L(\alpha) = L\left[ \alpha \right]$. We can show that any polynomial $q\in L[x]$ evaluated at $\alpha$ is obtained by a sum of simple tensors as follows:
+      \begin{align*}
+        q(\alpha) &= a_n\alpha^{n} + a_{n-1}\alpha^{n-1} + \cdots + a_1 \alpha + a_0\\
+                  &= \rho\left( a_n\otimes \alpha^{n} \right) + \cdots + \rho\left( a_1\otimes \alpha \right) + \rho\left( a_0\otimes 1 \right)\\
+                  &= \rho\left( \sum_{i=0}^{n}a_i\otimes \alpha^{i} \right).
+      \end{align*}
+      Thus, $\rho$ is surjective.
+    \item Assume $\alpha$ is not contained in $K$ or $L$. We note that $K\left( \alpha \right) = \frac{K\left[ x \right]}{\left( \mu_{\alpha,K}(x) \right)}$. By the extension of scalars, we know that $L\otimes_{K}\frac{K\left[ x \right]}{\left( \mu_{\alpha,K}(x) \right)}\cong \frac{L\left[ x \right]}{\left( \mu_{\alpha,K}(x) \right)}$. Since $K\subseteq L$, we know that $\mu_{\alpha,L}(x) | \mu_{\alpha,K}(x)$. In particular, this means there is some $h(x)\in L[x]$ relatively prime to $\mu_{\alpha,L}(x)$ (since $\mu_{\alpha,K}(x)$ is separable as we are working in characteristic zero) such that $\mu_{\alpha,K}(x) = \mu_{\alpha,L}(x) h(x)$.
+
+      By the Chinese remainder theorem, we have
+      \begin{align*}
+        \frac{L[x]}{\left( \mu_{\alpha,K}(x) \right)} &\cong \frac{L\left[ x \right]}{\left( \mu_{\alpha,L}(x) \right)}\times \frac{L[x]}{\left( h(x) \right)}\\
+                                                      &\cong L\left( \alpha \right)\times \frac{L\left[ x \right]}{\left( h(x) \right)}.
+      \end{align*}
+      Therefore, we have that an element of $L\left( \alpha \right)$ injects into $L\otimes K\left( \alpha \right)$ via the sequence of isomorphisms to the first coordinate of the expression $L\left( \alpha \right)\times \frac{L\left[ x \right]}{\left( h(x) \right)}$.
+
+      If $\alpha\in L\setminus K$, then $L\left( \alpha \right) = L$, while $L$ injects into $L\otimes_{K}K\left( \alpha \right)$ by $\ell\mapsto \ell\otimes 1$. If $\alpha\in K$, then $L = L(\alpha)$ yet again injects into $L\otimes_{K}K(\alpha) \cong L\otimes_{K}K$ by $\ell \mapsto \ell\otimes 1$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 8]
+  Let $K$ be the splitting field of the polynomial $f(x) = \left( x^3-11 \right)\left( x^2 + x - 1 \right)$ over $\Q$.
+  \begin{enumerate}[(a)]
+    \item Find (with proof) the degree of the extension $K/\Q$.
+    \item Determine the isomorphism class of the Galois group $\gal\left( K/\Q \right)$, and prove your answer. 
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Considering the embedding of $\Q\left[ x \right]\subseteq \C\left[ x \right]$, we observe that the roots of $f(x)$ are given by
+      \begin{align*}
+        A &= \set{\sqrt[3]{11},\omega\sqrt[3]{11},\omega^2\sqrt[3]{11},\frac{-1+\sqrt{5}}{2},\frac{-1-\sqrt{5}}{2}},
+      \end{align*}
+      where $\omega$ is a primitive cube root of unity. In particular, this means that the splitting field $K$ of $f(x)$ is contained in $F = \Q\left( \omega,\sqrt[3]{11},\sqrt{5} \right)$. Meanwhile, we have $F\subseteq K$ since we may find $\omega = \frac{\omega\sqrt[3]{11}}{\sqrt[3]{11}}$ and $\sqrt{5} = 1 + 2\frac{-1 + \sqrt{5}}{2}$, so that $K = \Q\left( \omega,\sqrt[3]{11},\sqrt{5} \right)$.
+
+      To compute the degree, we observe that the minimal polynomials are given by
+      \begin{align*}
+        \mu_{\sqrt[3]{11},\Q}(x) &= x^3 - 11\\
+        \mu_{\omega,\Q}\left( x \right) &= x^2 + x + 1\\
+        \mu_{\sqrt{5},\Q} &= x^2 - 5.
+      \end{align*}
+      Computing the degree, we observe that $\mu_{\sqrt[3]{11},\Q\left( \omega,\sqrt{5} \right)} = \mu_{\sqrt[3]{11}}$, and similarly for $\mu_{\omega,\Q\left( \sqrt{5} \right)}$ with $\mu_{\omega,\Q}$, so that the degree of $K/\Q$ is 12.
+    \item First, we recall the theorem that a separable polynomial $f(x)$ is irreducible if and only if the action of the Galois group on the roots of $f(x)$ is transitive. Since $f$ is separable (as we are working over $\Q$) and not irreducible, it follows that the Galois group of $f(x)$ is not transitive.
+
+      Now, we observe that $f(x)$ has two irreducible factors --- namely, $p(x) = x^3-11$ (which is irreducible by the Eisenstein criterion) and $q(x) = x^2 + x - 1$, and in particular, the extension $K/\Q$ is equal to the compositum of the splitting fields of $p(x)$ and $q(x)$, which we label as $L$ and $M$ respectively. Since these are finite degree extensions whose intersection is equal to $\Q$, it follows that
+      \begin{align*}
+        \gal\left( K/\Q \right) &\cong \gal\left( L/\Q \right)\times \gal\left( M/\Q \right).
+      \end{align*}
+      We start by seeing that $L = \Q\left( \omega,\sqrt[3]{11} \right)$. Since $p(x)$ has degree $3$ and not all of its roots are real, it follows that $\gal\left( L/\Q \right)\cong S_3$, while since $M$ has degree $2$ over $\Q$, it follows that $\gal\left( M/\Q \right)\cong \Z/2\Z$, so that $\gal\left( K/\Q \right)\cong S_3\times \Z/2\Z$.
+  \end{enumerate}
+\end{solution}
+\subsection{January 2021}%
+\begin{problem}[Problem 1]
+  Let $F$ be a field. Let $f(x)\in F[x]$ be an irreducible separable polynomial of degree $n$, and let $G$ be the Galois group of $f$ over $F$, and assume that $G$ is abelian.
+  \begin{enumerate}[(a)]
+    \item Prove that if $g\in G$ is any nontrivial element, then $g$ does not fix any of the roots of $f$.
+    \item Assume that $F\subseteq R$, and $n$ is odd. Prove that all roots of $f$ must be real.
+    \item Now, let $F = \Q$. Prove that there are infinitely many $n$ for which there exist $f$ as above with a non-real root and cyclic $G$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Since $f$ is irreducible and separable, the Galois group $G$ acts transitively on the roots of $f$, defining a faithful representation $\rho\colon G\rightarrow S_n$. Now, suppose there is some $e\neq g\in G_{\theta}$. Then, for any $x\in G$, we have 
+      \begin{align*}
+        g\cdot \left( x\cdot \theta \right) &= \left( gx \right)\cdot \theta\\
+                                      &= \left( xg \right)\cdot \theta\\
+                                      &= x \cdot \left( g\cdot \theta \right)\\
+                                      &= x\cdot \theta,
+      \end{align*}
+      meaning that $g$ fixes every root, implying that $e\neq g\in \ker\left( \rho \right)$, contradicting the faithfulness of the representation $\rho$.
+    \item Observe that, by the orbit--stabilizer theorem, we have that $\set{\text{roots of }f}\cong G/H$ as sets, where $H$ is the stabilizer of any root of $f$. Yet, since there are no stabilizers as discussed above, it follows that $\left\vert G \right\vert = n$. In particular, since $n$ is odd, there are no order $2$ elements.
+
+      If there were a non-real root of $f$, then since complex conjugation fixes $\R$, it follows that complex conjugation would be an order $2$ element of the Galois group, which is a contradiction of the fact that $n$ is odd.
+    \item The $p$th cyclotomic polynomials $\Phi_p$ for odd primes $p$ have cyclic Galois groups given by $\left( \Z/p\Z \right)^{\times}\cong \Z/\left( p-1 \right)\Z$; each of these cyclotomic polynomials admit non-real primitive roots of unity, but are contained in $\Z[x]\subseteq \Q[x]$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 2]
+  Classify the conjugacy classes of matrices $A\in \GL_7\left( \Q \right)$ such that $A^3 = -I$.
+\end{problem}
+\begin{solution}
+  We see that $A^3 = -I$ implies that $\mu_A(x) | \left( x+1 \right)\left( x^2-x+1 \right)$. 
+  \begin{itemize}
+    \item If $\mu_A(x) = x + 1$, then $A = -I$.
+    \item If $\mu_A(x) = x^2 - x + 1$, then $\mu_A(x) = \Phi_6(x)$ is irreducible, but this would imply that any invariant factors are equal to $\mu_A(x)$ even though $A$ is an element of $\GL_7\left( \Q \right)$.
+    \item If $\mu_A(x) = \left( x+1 \right)\left( x^2-x+1 \right)$, then we may consider all the possible invariant factor decompositions from here:
+      \begin{itemize}
+        \item $\left( x+1 \right)\supseteq \left( x+1 \right)\supseteq \left( x+1 \right)\supseteq \left( x+1 \right)\supseteq \left( x^3 + 1 \right)$;
+        \item $\left( x+1 \right)\supseteq \left( x^3 + 1 \right)\supseteq \left( x^3 + 1 \right)$;
+        \item $\left( x^2-x+1 \right)\supseteq \left( x^2-x+1 \right)\supseteq \left( x^3 + 1 \right)$.
+      \end{itemize}
+  \end{itemize}
+  These invariant factor decompositions are the only viable ones for an element of the matrix $\GL_7\left( \Q \right)$ with minimal polynomial $\mu_A(x) = x^3 + 1$, so their corresponding rational canonical forms yield all the similarity classes for such elements.
+\end{solution}
+\begin{problem}[Problem 3]
+  Let $R$ be a commutative ring with $1$, and assume $\left\vert R \right\vert > 1$. Prove that $R$ has at least one minimal prime ideal.
+\end{problem}
+\begin{solution}
+  Since $R$ has a maximal ideal, the set
+  \begin{align*}
+    \mathcal{X} &= \set{P\subseteq R : \text{$P$ prime}}
+  \end{align*}
+  ordered by containment is non-empty. Apply Zorn's lemma with the upper bound for the chain $\mathcal{C} = \set{P_i}_{i\in I}$ given by
+  \begin{align*}
+    \bigcap_{i\in I}P_i
+  \end{align*}
+  by showing that this is a prime ideal.
+\end{solution}
+\begin{problem}[Problem 4]
+  Let $G$ be a finite abelian group, and let $p$ be a prime. Prove that the number of elements of order $p$ is equal to the number of nontrivial homomorphisms from $G$ to $\Z/p\Z$.
+\end{problem}
+\begin{solution}
+  Write the elementary divisors decomposition of $G$ as
+  \begin{align*}
+    G &\cong \bigoplus_{i=1}^{r} \Z/p^{d_i}\Z\oplus S,
+  \end{align*}
+  where $S$ consists of all the elementary divisors with no factors of $p$. These have no elements of order $p$. In the group $\Z/p^d\Z$, the elements of order $p$ are precisely the elements of the form $np^{d-1}$ for $1\leq n < p$. In particular, for each summand, there are $\left( p-1 \right)$ elements of order $p$, so there are a total of $r\left( p-1 \right)$ elements of order $p$ in $G$.
+
+  Meanwhile, we observe that by the universal property of direct sums, any homomorphism $\varphi\colon G\rightarrow \Z/p\Z$ is given by the sum of individual homomorphisms $\varphi_i\colon E_i\rightarrow \Z/p\Z$, where $E_i$ are summands in the elementary divisors decomposition of $G$. In particular, this means that any nontrivial homomorphisms $G\rightarrow \Z/p\Z$ are given by sums of nontrivial homomorphisms $\Z/p^{d_i}\Z\rightarrow \Z/p\Z$. Counting the number of nontrivial homomorphisms $\Z/p^{d_i}\Z\rightarrow \Z/p\Z$ is equivalent to finding the number of maps of generators $\left[ 1 \right]_{p^{d_i}}\mapsto w$, where $w$ is a generator for $\Z/p\Z$; in particular, this means there are exactly $\left( p-1 \right)$ such nontrivial homomorphisms, so we obtain $r\left( p-1 \right)$ total homomorphisms $G\rightarrow \Z/p\Z$.
+\end{solution}
+\begin{problem}[Problem 5]
+  Let $n\geq 2$ be an integer, $g = \left( 1,2,\dots,n \right)\in S_n$, and $H = \left\langle g \right\rangle$.
+  \begin{enumerate}[(a)]
+    \item Prove that the centralizer of $g$ in $S_n$ is equal to $H$.
+    \item Now, assume that $n$ is prime, and let $N$ be the normalizer of $H$ in $S_n$. Prove that $\left\vert N \right\vert = n\left( n-1 \right)$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item For any $\sigma\in Z_{S_n}(g)$, we have 
+      \begin{align*}
+        \sigma g \sigma^{-1} &= g\\
+                             &= \left( \sigma(1),\sigma(2),\dots,\sigma(n) \right).
+      \end{align*}
+      In particular, $\sigma$ must be a cyclic permutation of $\left( 1,2,\dots,n \right)$ so that it is equal to $\left( 1,2,\dots,n \right)$ upon applying another cyclic permutation. Thus, $\sigma = g^{k}$ for some $k$.
+    \item First, we note that if $n = p$ is prime, then $g^{k}$ is a $p$-cycle for each $1\leq k < p$.
+
+      Since $\left\vert H \right\vert = p$, there are $\left( p-1 \right)!$ elements in the conjugacy class of $g$. The subgroups these conjugacy classes generate are either equal to $ \left\langle g \right\rangle $ or intersect at the identity with $ \left\langle g \right\rangle $; since there are $\left( p-1 \right)$ elements of the conjugacy class of $g$ that generate $ \left\langle g \right\rangle $, it follows there are $\left( p-2 \right)!$ subgroups of $S_p$ conjugate to $ \left\langle g \right\rangle $, whence $\left[ G:N_G(H) \right] = \left( p-2 \right)!$ by orbit--stabilizer. Thus, $\left\vert N_G(H) \right\vert = p\left( p-1 \right)$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 6]
+  In both parts of this problem, $R$ is a commutative ring with $1$, $\left\vert R  \right\vert > 1$, and $M$ is a flat $R$-module; that is, if $0\rightarrow N\xrightarrow{f} N'$ is an injective map of $R$-modules, then $0\rightarrow N\otimes_{R}M\xrightarrow{f\otimes \id_M}N'\otimes_{R}M$ is injective.
+  \begin{enumerate}[(a)]
+    \item Assume $R$ is a domain. Prove that $M$ must be torsion-free.
+    \item Let $R$ arbitrary. Prove that the following are equivalent:
+      \begin{enumerate}[(i)]
+        \item for every nonzero $R$-module $N\neq 0$, we have $N\otimes_{R}M\neq 0$;
+        \item for every maximal ideal $ \mathfrak{m} $ of $R$, we have $ \mathfrak{m}M \neq M $.
+      \end{enumerate}
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Suppose toward contradiction that $M$ is nonzero and torsion. Observe that $R\rightarrow F$ is an injective map of $R$-modules, where $F = \operatorname{frac}\left( R \right)$ is the field of fractions. Therefore, it must be the case that $R\otimes M\rightarrow F\otimes M$ is an injective map; notice that $R\otimes M$ surjects onto $M$, so $R\otimes M\neq 0$. Yet, for any element $r\otimes m$ of $F\otimes M$, we observe that there is nonzero $s\in R$ such that $sm = 0$, while we have
+      \begin{align*}
+        r\otimes m &= \frac{r}{s}s\otimes m\\
+                   &= \frac{r}{s}\otimes sm\\
+                   &= 0,
+      \end{align*}
+      so any elementary tensor in $F\otimes M$ is zero, so $F\otimes M$ is the zero module. There are no injective maps from from a nonzero module to the zero module.
+    \item Assume (i). Notice that if $ \mathfrak{m} $ is a maximal ideal, then $R/ \mathfrak{m}$ is a nonzero $R$-module, so that $\left( R/ \mathfrak{m} \right)\otimes_{R}M\neq 0$. Since $R/ \mathfrak{m}\otimes_{R} M\cong M/ \mathfrak{m}M$, it follows that $ M/ \mathfrak{m}M\neq 0 $, so $ \mathfrak{m}M \neq M $.
+
+      Assume (ii). Suppose $N\neq 0$ is a nonzero $R$-module. If $0\neq x\in N$ is any element, then $ \left\langle x \right\rangle\cong R/\operatorname{Ann}_R(x) $ by the definition of the annihilator ideal. Write $I = \operatorname{Ann}_R(M)$. We obtain an injective map $ \left\langle x \right\rangle\rightarrow N $, so since $M$ is flat, we have $ \left\langle x \right\rangle\otimes M\rightarrow N\otimes M $ is an injective map. In particular, we have $R/I\otimes M\rightarrow N\otimes M$. Notice that $R/I\otimes M\cong M/IM$. There is a maximal ideal $ \mathfrak{m}\supseteq I $, and since $ \mathfrak{m}M\neq M $, it follows that there is some $m\in M\setminus \mathfrak{m}M$, meaning that $m\in M\setminus IM$, so $m + IM\neq 0 + IM$, meaning that $M/IM\neq 0$. In particular, we have an injective map $M/IM\rightarrow N\otimes M$ where $M/IM$ is nonzero, so $N\otimes M$ is nonzero.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 7]
+  Recall that a field $F$ is called perfect if $F$ either has characteristic zero or $F$ has characteristic $p > 0$ and every element of $F$ is equal to $a^{p}$ for some $a\in F$. Prove that $F$ admits a finite inseparable extension if and only if $F$ is not perfect.
+\end{problem}
+\begin{solution}
+  Observe that if $F$ has characteristic zero, then any irreducible polynomial over $F$ is separable, so $F$ cannot admit any inseparable extensions. Therefore, we will assume that the characteristic of $F$ is equal to $p\neq 0$.
+
+  Suppose $F$ admits no finite inseparable extensions. Then, any irreducible polynomial over $F$ is separable, and in particular, any polynomial of the form
+  \begin{align*}
+    q(x) &= x^{p}-b
+  \end{align*}
+  is not irreducible, seeing as $q'(x) = 0$. In the algebraic closure $ \overline{F} $, we have that $q(x) = \left( x-a \right)^{p}$ for some $a\in \overline{F}$, but since $q(x)$ is reducible, we have that $q(x) = x^{p} - a^{p}$, so that $a^{p} = b$. Thus, $F$ is perfect.
+
+  Meanwhile, if $F$ is perfect, we observe that if we take an inseparable polynomial $f(x) = g\left( x^{p} \right)$, then
+  \begin{align*}
+    f(x) &= a_n x^{u_n p} + a_{n-1}x^{u_{n-1}p} + \cdots + a_1 x^{p} + a_0.
+  \end{align*}
+  There are $b_0,\dots,b_n\in F$ such that $b_i^{p} = a_{i}$, so by using the Frobenius map and the fact that $F$ has characteristic $p$, we have that
+  \begin{align*}
+    f(x) &= \left( b_n x^{u_n} + \cdots + b_1 x + b_0 \right)^{p},
+  \end{align*}
+  meaning that $f$ is not irreducible over $F$. Therefore, $F$ has no finite inseparable extensions.
+\end{solution}
+\begin{problem}[Problem 8]
+  Let $p\neq 3$ be a prime, and let $R = \F_p[x]/\left( x^3 - 1 \right)$. Describe the multiplicative group $R^{\times}$ as a direct product of cyclic groups.
+\end{problem}
+\begin{solution}
+  By the Chinese remainder theorem, we have
+  \begin{align*}
+    R &\cong \frac{\F_p[x]}{\left( x-1 \right)} \times \frac{\F_p[x]}{\left( \Phi_3(x) \right)}\\
+      &\cong \F_p\times \frac{\F_p[x]}{\left( \Phi_3(x) \right)}.
+  \end{align*}
+  Therefore, we concern ourselves with the reducibility of $\Phi_3(x)$. Using the reducibility criterion for cyclotomic polynomials mod $p$, where, assuming $p\nmid n$, we have that $\Phi_n(x)$ splits into factors with degree equal to the multiplicative order of $p$ mod $n$. In particular, if $p\equiv 1$ mod $3$, then $\Phi_3(x)$ splits into (distinct) linear factors, so we have
+  \begin{align*}
+    R &\cong \F_p\times \left( \frac{\F_p}{\left( x-\omega \right)}\times \frac{\F_p}{\left( x-\omega^2 \right)} \right)\\
+      &\cong \F_p\times \F_p\times \F_p,
+        \intertext{and}
+    R^{\times } &\cong \left( \Z/(p-1)\Z \right)\times \left( \Z/\left( p-1 \right)\Z \right)\times \left( \Z/\left( p-1 \right)\Z \right).
+  \end{align*}
+  Meanwhile, if $p\equiv 2$ mod $3$, then $\Phi_3$ admits exactly one factor of degree $2$, implying that
+  \begin{align*}
+    R &\cong \F_p\times \F_{p^2},
+      \intertext{and}
+    R^{\times} &\cong \left( \Z/\left( p-1 \right)\Z \right)\times \left( \Z/\left( p^2-1 \right)\Z \right).
+  \end{align*}
+\end{solution}
+\subsection{August 2021}%
+\begin{problem}[Problem 1]
+  Let $n\in \N$, and let $A = \left( a_{ij} \right)_{i,j}\in \Mat_n\left( \Q \right)$ be the matrix given by $a_{ij} = i$ for each $1\leq i,j\leq n$. Compute:
+  \begin{enumerate}[(a)]
+    \item the characteristic polynomial of $A$;
+    \item the minimal polynomial of $A$;
+    \item the Jordan canonical form of $A$;
+    \item the rational canonical form of $A$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item We start by noting that $A$ is a rank $1$ matrix. In particular, this means that the eigenvalue $0$ has geometric multiplicity equal to $\left( n-1 \right)$, so it has algebraic multiplicity at least $\left( n-1 \right)$. Furthermore, we note that $\Tr\left( A \right) = \frac{n\left( n+1 \right)}{2}$, so it must be the case that the algebraic multiplicity of $0$ is equal to $\left( n-1 \right)$ (as else we would have a trace zero matrix), so that we have characteristic polynomial of $A$ given by
+      \begin{align*}
+        \chi_A(x) &= x^{n} - \frac{n\left( n+1 \right)}{2}x^{n-1}.
+      \end{align*}
+    \item By using an ansatz, we observe that $A$ satisfies the polynomial $p(x) = x\left( x-\frac{n\left( n+1 \right)}{2} \right)$. In particular, this means that the minimal polynomial of $A$ satisfies $\mu_A(x) | x\left( x-\frac{n\left( n+1 \right)}{2} \right)$. Since $A\neq 0$ and $A - \frac{n\left( n+1 \right)}{2}I\neq 0$, it follows that $\mu_A(x) = x\left( x-\frac{n\left( n+1 \right)}{2} \right)$.
+    \item Since $\mu_A(x)$ consists exclusively of linear factors, it follows that $A$ is diagonalizable, so the Jordan canonical form of $A$ is given by
+      \begin{align*}
+        A \sim \operatorname{diag}\left( 0,0,\dots,0,\frac{n\left( n+1 \right)}{2} \right).
+      \end{align*}
+    \item Since the characteristic polynomial is the sum of all the invariant factors of $A$ and the minimal polynomial is the largest invariant factor, it follows that the invariant factors of $A$ consist of a chain of $\left( n-2 \right)$ factors of $x$ (corresponding to $1\times 1$ blocks) and one $2\times 2$ block corresponding to the minimal polynomial. This gives a rational canonical form in block diagonal
+      \begin{align*}
+        A \sim \begin{pmatrix} \mathbf{O}_{n-2} & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 1 & \frac{n\left( n+1 \right)}{2}\end{pmatrix}.
+      \end{align*}
+  \end{enumerate}
+\end{solution}
+\subsection{January 2022}%
+\begin{problem}[Problem 2]
+  Prove that there exist precisely $3$ isomorphism classes of groups $G$ that contain a subgroup $H$ which is infinite cyclic of index $2$.
+\end{problem}
+\begin{solution}
+  We start with the abelian case. We observe that $G$ is then a finitely generated abelian group, since if $t$ denotes the generator for $H$ and $g$ is such that $gH\neq H$, then $ \left\langle t,g \right\rangle = H $ as $H$ has index $2$. Therefore, by the classification theorem, we may write
+  \begin{align*}
+    G &\cong \Z^{r} \oplus T,
+  \end{align*}
+  where $T$ is a finite abelian group. Since $H$ has finite index, we must have $r = 1$. Furthermore, $H\cap T = \set{e}$ since $H$ has no torsion elements. Therefore, we have $ \left\vert G/\Z \right\vert \leq \left\vert G/H \right\vert = 2$, whence $G \cong \Z$, where $H = 2\Z$ has index $2$ in $\Z$, or $G\cong \Z \oplus \Z/2\Z$, which has torsion elements and thus is not isomorphic to $\Z$.
+
+  In the non-abelian case, we start by observing that $H$ is normal in $G$, which implies that conjugation yields a non-trivial homomorphism in $\aut(H)$. Since $\Aut(H)\cong \set{-1,1}$, it follows that inversion is the only non-identity element of $\aut(H)$, and any element of $G$ not in $H$ must act on $H$ by inversion. For each such $g\notin H$, we observe that $g^2H = H$, so that $g^2\in H$. Writing $g^2 = t^{k}$, we have that $gt^{k}g^{-1} = t^{-k}$, so that $g^2 = t^{-k}$, implying that $k = 0$, so that $g$ has order $2$. This yields the unique nontrivial semidirect product $\Z\rtimes \Z/2\Z$.
+\end{solution}
+
 \end{document}
