@@ -31,6 +31,15 @@
     \end{align*}
     where $\set{x_1,\dots,x_r}$ is a family of representatives of conjugacy classes.
   \item If $G$ acts on its \textit{subgroups} by conjugation, then the \textit{normalizer} of $H\leq G$, denoted $N_G(H)$, is the stabilizer of $H$ under conjugation. Similarly, number of subgroups conjugate to $H\leq G$ is given by $\left[ G:N_G(H) \right]$.
+  \item If $H\trianglelefteq G$ is a normal subgroup, then $G$ acts on $H$ by conjugation. The corresponding permutation $\rho\colon G\rightarrow \aut\left( H \right)$ has kernel $C_G(H)$, where
+    \begin{align*}
+      C_G(H) &= \set{g\in G : ghg^{-1} = h\text{ for all }h\in H}.
+    \end{align*}
+  \item A subgroup $H\leq G$ is called \textit{characteristic} if $\sigma(H) = H$ for all automorphisms $\sigma\in \aut\left( G \right)$. If $K\leq H\trianglelefteq G$ is a chain of subgroups with $K$ characteristic in $H$, while $H$ is normal in $G$, then $K\trianglelefteq G$ is normal.
+
+    The subgroups $\left[ G,G \right]$ and $Z(G)$ are characteristic in $G$.
+  \item Every $p$-group has nontrivial center.
+  \item If $G$ acts on a set $X$, and $H$ is the stabilizer subgroup of some $x\in X$, then if $\rho\colon G\rightarrow \sym\left( X \right)$ is the permutation representation for this action, then $\ker\left( \rho \right) \leq H$.
   \item If $P_1,\dots,P_r$ are $p$-Sylow subgroups of $G$, they are all conjugate to each other, and the normalizer $N_G\left( P_i \right)$ is a conjugate of $N_G\left( P_j \right)$ for $1\leq i,j \leq r$.
   \item Every conjugacy class in the symmetric group $S_n$ is given by the cycle type. Moreover, given an element $\sigma\in A_n$, the conjugacy classes $K_{A_n}\left(\sigma\right) = K_{S_n}\left(\sigma\right)$ if and only if there is an odd permutation in the centralizer $C_{S_n}\left(\sigma\right)$. If there is no odd permutation in $C_{S_n}\left(\sigma\right)$, then the conjugacy class $K_{S_n}\left(\sigma\right)$ splits into two separate conjugacy classes over $A_n$.
 \end{itemize}
@@ -86,7 +95,7 @@ We will discuss some examples.
 \begin{definition}
   A series of subgroups $G_i$ of a group $G$ is a decreasing sequence of subgroups
   \begin{align*}
-    G = G_0\supsetneq G_1\supsetneq G_2\supsetneq\cdots,
+    G = G_0\triangleright G_1\triangleright G_2\supsetneq\cdots,
   \end{align*}
   where the length of the series is the number of strict inclusions.
 
@@ -94,7 +103,7 @@ We will discuss some examples.
 
   A \textit{composition series} is a normal series
   \begin{align*}
-    G = G_0\supsetneq G_1\supsetneq\cdots\subsetneq G_n = \set{e}
+    G = G_0\triangleright G_1\triangleright\cdots\triangleright G_n = \set{e}
   \end{align*}
   where the successive quotients $G_i/G_{i+1}$ are simple.
 \end{definition}
@@ -681,7 +690,7 @@ meaning that an element $p\in \Z$ is prime if and only if
                                                      &\cong \frac{\left( \Z/p\Z \right)\left[ x \right]}{\left( x^2-d \right)}
 \end{align*}
 is an integral domain; equivalently, we want to see whether or not $x^2-d$ is irreducible mod $p$.
-\subsubsection{Module Theory: Useful Facts}%
+\subsection{Module Theory: Useful Facts}%
 \begin{definition}
   A module $M$ over $R$ is called \textit{cyclic} if there is a vector $v$ such that $ \left\langle v \right\rangle = Rv = M $.
 \end{definition}
@@ -696,6 +705,24 @@ is an integral domain; equivalently, we want to see whether or not $x^2-d$ is ir
   \end{align*}
 \end{theorem}
 What follows are the most important theorems in module theory. We'll discuss an application of it to linear algebra.
+\begin{definition}
+  Let $R$ be a PID. A matrix $A\in \Mat_{k,n}\left( R \right)$ is said to be in Smith Normal Form if there exists $m\leq \min\left( k,n \right)$ and nonzero elements $d_1,\dots,d_m$ such that $A = \operatorname{diag}_{k,n}\left( d_1,\dots,d_m \right)$ satisfying $\left( d_1 \right)\supseteq \left( d_2 \right)\supseteq\cdots\supseteq \left( d_m \right)$.
+\end{definition}
+\begin{theorem}[Smith Normal Form Decomposition]
+  Let $R$ be a PID, and let $A\in \Mat_{k,n}\left( R \right)$. Then, there are $U\in \GL_k\left( R \right)$ and $V\in \GL_n\left( R \right)$ such that $UAV$ is in Smith Normal Form.
+\end{theorem}
+These matrices are found by a product of elementary row and column operations. Specifically, the following row operations can be interpreted by matrix multiplication, where $E_{ij}(\lambda)$ denotes the elementary matrix consisting of $1$ along the diagonal and $\lambda$ at the $(i,j)$ position, while $F_{ij}$ denotes the transposition matrix with row $i$ and row $j$ exchanged.
+\begin{center}
+  \begin{tabular}{c|c}
+    Elementary Row Operation & Interpretation as Matrix Multiplication\\
+    \hline
+    $R_i(A)\mapsto R_i(A) + \lambda R_j(A)$ & $A\mapsto E_{ij}(\lambda)A$\\
+    $C_i(A)\mapsto C_i(A) + \lambda C_j(A)$ & $A\mapsto AE_{ij}(\lambda)$\\
+    $R_i(A)\leftrightarrow R_j(A)$ & $A\mapsto F_{ij} A$\\
+    $C_i(A)\leftrightarrow C_j(A)$ & $A\mapsto AF_{ij}$
+  \end{tabular}
+\end{center}
+
 \begin{theorem}[Compatible Basis Theorem]
   Let $M$ be a rank $n$ free module over a principal ideal domain $R$, and let $N$ be a submodule of $M$. Then, $N$ is a free module with rank $m\leq n$, and there is a basis $\set{y_1,\dots,y_n}$ for $M$ and nonzero non-units $d_1 | d_2 | \cdots | d_m$ such that $\set{d_1y_1,d_2y_2,\dots,d_my_m}$.
 
@@ -756,7 +783,69 @@ M \arrow[r, "\varphi"'] & N \arrow[r]                                           
 \end{tikzcd}
 \end{center}
 \end{definition}
+\subsubsection{Tensor Products}%
+\begin{definition}
+  Let $R$ be any ring. If $M$ is a \textit{right} $R$-module, $N$ is a left $R$-module, and $P$ is an abelian group, a map $\varphi\colon M\times N\rightarrow P$ is called \textit{$R$-balanced} if
+  \begin{align*}
+    \varphi\left( m_1 + m_2,n \right) &= \varphi\left( m_1,n \right) + \varphi\left( m_2,n \right)\\
+    \varphi\left( m,n_1 + n_2 \right) &= \varphi\left( m,n_1 \right) + \varphi\left( m,n_2 \right)\\
+    \varphi\left( mr,n \right) &= \varphi\left( m,rn \right)
+  \end{align*}
+  for all $m,m_1,m_2\in M$, $n,n_1,n_2\in N$, and $r\in R$.
 
+  If $R$ is commutative, (i.e., both $M$ and $N$ can be considered as left $R$-modules) then the map $\varphi$ is called \textit{$R$-bilinear} if we also have $\varphi\left( rm,n \right) = r\varphi\left( m,n \right) = \varphi\left( m,rn \right)$.
+\end{definition}
+\begin{definition}
+  Let $R$ be any ring. If $M$ and $N$ are a right $R$-module and left $R$-module respectively, their \textit{tensor product} is the unique abelian group satisfying the following universal property: for any $R$-balanced map $\phi\colon M\times N\rightarrow P$, there is a unique abelian group homomorphism $\varphi\colon M\otimes_{R}N\rightarrow P$ satisfying $\varphi\left( m\otimes n \right) = \phi\left( m,n \right)$.
+
+  If $R$ is a commutative ring (i.e., left and right $R$-modules are the same), then $M\otimes_{R}N$ satisfies the following stronger universal property: for any $R$-bilinear map $\phi\colon M\times N\rightarrow P$ of left $R$-modules, there is a unique $R$-module homomorphism $\varphi\colon M\otimes_{R}N\rightarrow P$, where $M\otimes_{R}N$ is endowed with the $R$-module structure given by $r\left( m\otimes n \right)= \left( rm \right)\otimes n = m\otimes \left( rn \right)$.
+\end{definition}
+A very useful case study is the \textit{extension of scalars}. Given an inclusion of unital rings $R\rightarrow S$, there is a natural right $R$-module structure on $S$ given by left multiplication; taking the left multiplication by $S$ yields a $\left( S,R \right)$-bimodule structure on the ring $S$. If $N$ is a left $R$-module, then $S\otimes_{R}N$ becomes a left $S$-module with a copy of $N$ included via the map $\iota\colon N\rightarrow S\otimes_{R}N$ taking $n\mapsto 1\otimes n$.
+
+If $f\colon R\rightarrow S$ is a unital ring homomorphism, then $S$ receives the structure of a right $R$-module by taking $s\cdot r = sf\left( r \right)$, and $S$ becomes a $\left( S,R \right)$-bimodule with respect to the standard left $S$-module structure and the described right $R$-module structure. The tensor product $S\otimes_{R}N$ of any left $R$-module with $S$ yields a \textit{change of base} from the ring $R$ to the ring $S$.
+
+Finally, if $I$ is a two-sided ideal of a (not necessarily commutative) ring $R$, then $R/I$ is a $\left( R/I,R \right)$-bimodule; given a left $R$-module $N$, then $R/I\otimes_{R}N$ becomes a left $R/I$-module (i.e., the change of base with respect to the quotient homomorphism). Defining
+\begin{align*}
+  IN &= \set{\sum_{i=1}^{n}a_in_i : a_i\in I, n_i\in N},
+\end{align*}
+we obtain that $IN$ is a left $R$-submodule of $N$.
+
+The tensor product $\left( R/I \right)\otimes_{R}N$ is generated by the simple tensors $\left( r+I \right)\otimes n = r\left( \left( 1 + I \right)\otimes n \right)$ for any $r\in R$ and $n\in N$. Therefore, the elements $\left( 1+I \right)\otimes n$ generate $\left( R/I \right)\otimes_{R}N$ as an $R/I$-module. Define the map $N\rightarrow \left( R/I \right)\otimes_{R}N$ by taking $n\mapsto \left( 1+I \right)\otimes n$. This is a surjective left $R$-module homomorphism with kernel containing $IN$, seeing as if $a\in I$ and $n\in N$, then $\left( 1+I \right)\otimes an = \left( a + I \right)\otimes n = 0$. We obtain a surjective $R$-module homomorphism $f\colon N/IN\rightarrow \left( R/I \right)\otimes_{R}N$ taking $n + IN\mapsto \left( 1+I \right)\otimes n$. Define an inverse $R$-balanced map $R/I\times N\rightarrow N/IN$ taking $\left( r + I,n \right)\mapsto rn + IN$. Using the universal property yields the following standard isomorphism:
+\begin{align*}
+  R/I\otimes_{R}N &\cong N/IN.
+\end{align*}
+\subsubsection{Nakayama's Lemma}%
+\begin{definition}
+  The \textit{Jacobson radical} $ \mathfrak{J} $ of a commutative ring $A$ is the intersection of all the maximal ideals.
+\end{definition}
+\begin{lemma}
+  Let $x\in A$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $x\in \mathfrak{J} $;
+    \item $1 + xy\in A^{\times}$ for all $y\in R$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  Suppose $x\in \mathfrak{J}$. If it were the case that $1+ x\notin A^{\times}$, then $ \left( 1 + x \right)\neq A $, so it is contained in some maximal ideal $ \mathfrak{m} $ of $A$. Yet, that implies that $1$ is in the maximal ideal $ \mathfrak{m} $ since $x\in \mathfrak{m}$, implying that $ \mathfrak{m} = A $.
+
+  Suppose $x\notin \mathfrak{m}$ for some maximal ideal $ \mathfrak{m} $ of $A$. Then, $ \mathfrak{m} + \left( x \right) = A $, so there is some $y\in A$ such that $1 + xy\in \mathfrak{m}$, implying that $1 + xy\notin A^{\times}$.
+\end{proof}
+\begin{lemma}
+  Let $ \mathfrak{a} $ be an ideal of a commutative ring $A$ that is contained in the Jacobson radical $ \mathfrak{J} $. Let $E$ be a finitely generated $A$-module. Suppose $ \mathfrak{a}E = E $. Then, $E = \set{0}$.
+\end{lemma}
+\begin{proof}
+  We induct on the number of generators of $E$. Let $x_1,\dots,x_s$ be generators of $E$. Then, there exist $a_1,\dots,a_s\in \mathfrak{a}$ such that
+  \begin{align*}
+    x_s &= a_1x_2 + \cdots + a_sx_s,
+  \end{align*}
+  meaning there is some $a\in \mathfrak{a}$ such that $\left( 1 + a \right)x_s\in \left\langle x_1,\dots,x_{s-1} \right\rangle$. Notice that $1 + a$ is a unit in $ A $ since $ \mathfrak{a}\subseteq \mathfrak{J}$. Therefore, $x_s\in \left\langle x_1,\dots,x_{s-1} \right\rangle$, so induction gives the desired result.
+\end{proof}
+\begin{lemma}
+  If $A$ is a local ring, and $E$ is a finitely generated $A$-module with a submodule $F$, then if $E = F + \mathfrak{m}E$, we have $E = F$.
+\end{lemma}
+\begin{proof}
+  Apply the previous lemma to the quotient ring $E/F$.
+\end{proof}
 \subsubsection{Jordan Canonical Form}%
 If we are given a finite-dimensional vector space $V$ over a field $F$ and a linear transformation $T\colon V\rightarrow V$, then $V$ attains the structure of an $F[x]$-module by defining the action of $x$ by $x\cdot v = Tv$. In particular, this means that we may apply the invariant factors and elementary divisors decomposition(s) to $V$ to obtain different canonical forms of $T$. The application of the invariant factors decomposition yields the rational canonical form. It can be shown that the rational canonical form of $A\in \Mat_{n}\left( F \right)$ is computed by taking the Smith Normal Form of the matrix $xI - A$.
 
@@ -793,6 +882,7 @@ In particular, this means that the minimal polynomial $\mu_{T^2}(y)$ divides $\l
 \section{Representation Theory}%
 We assume that the group $G$ is finite and that all representations are complex unless stated otherwise.
 \begin{itemize}
+  \item \textbf{Schur's Lemma:} If $M$ is a simple $R$-module, then $\operatorname{End}_{R}\left( M \right)$ is a division ring. Equivalently, if $M$ is a simple $\C$-module, then any element $T\in \operatorname{End}_{\C}\left( M \right)$ is a diagonal operator $T = \lambda I$.
   \item \textbf{Maschke's Theorem:} Suppose we are given a representation $\rho\colon G\rightarrow \GL_n(F)$ over an arbitrary field. If $\operatorname{char}(F) $ does not divide the order of $G$ (or $\operatorname{char}(F) = 0$), then the representation $\rho$ is completely reducible. Equivalently, the $F[G]$-module structure on $V$ decomposes as a direct sum
     \begin{align*}
       V &\cong \bigoplus_{i=1}^{r}V_i
@@ -807,6 +897,8 @@ We assume that the group $G$ is finite and that all representations are complex 
   \item \textbf{Number of Characters:} The characters $\chi_{\rho}(\cdot) = \Tr\left( \rho(\cdot) \right)$ of any representation $\rho\colon G\rightarrow \GL_k\left(\C\right)$ are constant on conjugacy classes. The number of (equivalence classes of) \textit{irreducible} complex characters is equal to the number of conjugacy classes.
   \item \textbf{Finding the Center:} A conjugacy class $K$ in $G$ is an element of $Z(G)$ if and only if the size of the conjugacy class equals $1$.
   \item \textbf{Abelianization:} The number of one-dimensional irreducible characters is equal to the order $\left\vert G/\left[ G,G \right] \right\vert$ of the abelianization. Furthermore, a conjugacy class $K$ of $G$ is contained in $\left[ G,G \right]$ if and only if $\chi_{s}\left(K\right) = 1$ for all $1$-dimensional characters $\chi_s$.
+
+    The one-dimensional characters $\chi\colon G\rightarrow \C^{\times}$ descend to a map on the abelianization $\chi\colon G/\left[ G,G \right]\rightarrow \C^{\times}$. The group of one-dimensional characters with pointwise multiplication is isomorphic to the abelianization $G/\left[ G,G \right]$.
   \item \textbf{First Orthogonality Relation:}
     \begin{align*}
       \iprod{\chi_j}{\chi_k} &= \frac{1}{\left\vert G \right\vert} \sum_{g\in G} \overline{\chi_j(g)}\chi_k(g)\\
@@ -827,6 +919,12 @@ We assume that the group $G$ is finite and that all representations are complex 
     \begin{align*}
       \left\vert G \right\vert &= \sum_{j=1}^{r} \chi_j\left(e\right)^2.
     \end{align*}
+  \item \textbf{Decomposition of Regular Representation:} If $G$ is a finite group, then the regular representation $\lambda\colon G\rightarrow \C[G]$ decomposes into a direct sum of irreducible representations
+    \begin{align*}
+      \C[G] &\cong \bigoplus_{i=1}^{r} V_i^{\oplus n_i}\\
+                                    &\cong \bigoplus_{i=1}^{r} \Mat_{n_i}\left( \C \right)
+    \end{align*}
+    where each $n_i$ is equal to the dimension of the representation $V_i$. 
 \end{itemize}
 \section{Field/Galois Theory}%
 \subsection{Field Theory Notes}%
@@ -857,8 +955,39 @@ Recall that the cyclotomic polynomials satisfy
 
   If $\pi(x)$ is an irreducible factor of $ \overline{\Phi_n(x)} $ in $\F_p[x]$, and $\alpha$ is a root of $\pi(x)$, then $\alpha$ is a primitive $n$th root of unity, so the degree of $\pi$, which is equal to $ \left[ \F_p(\alpha):\F_p \right] $, is the order of $p$ modulo $n$.
 \end{proof}
+\subsubsection{The Nullstellensatz}%
+We know that if $K$ is an algebraically closed field, then the only irreducible polynomials are linear, so that the maximal ideals are of the form $\left( x-c \right)$ for some $c\in K$. 
+
+It turns out this extends to polynomial rings over several indeterminates. That is, if $K$ is algebraically closed, then every maximal ideal over $K\left[ x_1,\dots,x_n \right]$ is of the form $\left( x_1-c_1,\dots,x_n-c_n \right)$. This result is part of the \textit{Nullstellensatz} (or zero locus theorem) originally proved by Hilbert.
+
+We will not prove the general case (which holds for any algebraically closed field), but we will prove it for the special case of uncountable fields.
+\begin{definition}
+  We say an $R$-algebra $S$ is \textit{finitely generated} (or of ``finite type'') if there is a surjective $R$-algebra homomorphism $R\left[ x_1,\dots,x_n \right]\rightarrow S$ from the free algebra on some finite number of indeterminates to $S$. That is, a finite-type algebra is some quotient of a polynomial ring.
+\end{definition}
+\begin{theorem}[Nullstellensatz, Special Case]
+  Let $K/F$ be a field extension. Assume that $K$ is a finite-type $F$-algebra. Then, $K/F$ is an algebraic extension.
+\end{theorem}
+\begin{proof}
+  Assume $F$ is uncountable. Let $K/F$ be a field extension, and assume $K$ is a finitely generated $F$-algebra. Then, it is finitely generated as a field extension. Let $\alpha\in K\setminus F$. We will show that $\alpha$ is the root of some nonzero $f(x)\in F[x]$.
+
+  By the hypothesis, we have a surjective homomorphism $F\left[ x_1,\dots,x_n \right]\rightarrow K$, meaning that there is a countable basis for $K$ as a vector space over $F$, since there is a countable basis for $F\left[ x_1,\dots,x_n \right]$ as a vector space over $F$.
+
+  Since the set
+  \begin{align*}
+    \set{\frac{1}{\alpha - c} : c\in F}
+  \end{align*}
+  is uncountable, it is linearly dependent over $F$, so there exist distinct $c_1,\dots,c_m\in F$ and nonzero $\lambda_1,\dots,\lambda_m\in F$ such that
+  \begin{align*}
+    0 &= \frac{\lambda_1}{\alpha - c_1} + \cdots + \frac{\lambda_m}{\alpha - c_m}.
+  \end{align*}
+  Taking a common denominator yields
+  \begin{align*}
+    0 &= \frac{f(\alpha)}{g(\alpha)}
+  \end{align*}
+  for some $f(x)\neq 0\in F[x]$ and  $g(\alpha)\neq 0$. Therefore, $f(\alpha) = 0$ for some nonzero $f(x)\in F[x]$.
+\end{proof}
 \subsection{Galois Theory Notes}%
-\subsubsection{General Galois Theory Notes and Exam Tips}%
+\subsubsection{General Galois Theory Notes}%
 \begin{theorem}
   If $f(x)\in K[x]$ is a separable polynomial of degree $n$, then $f$ is irreducible if and only if the Galois group $\gal\left( \operatorname{spl}_{K}\left(f(x)\right)/K \right)$ is a transitive subgroup of $S_n$.
 \end{theorem}
@@ -868,8 +997,14 @@ Recall that the cyclotomic polynomials satisfy
   Meanwhile, if $f(x)$ is reducible, then $f(x)$ is a product of distinct irreducibles since it is separable. Let $r_i$ and $r_j$ be roots of different irreducible factors of $f(x)$. Then, for each $\sigma\in \gal\left( \operatorname{spl}_{K}\left( f(x) \right)/K \right)$, we have $\sigma\left( r_i \right)$ has the same minimal polynomial over $K$ as $r_i$, so we cannot have $\sigma\left( r_i \right) = r_j$, whence the Galois group is not transitive.
 \end{proof}
 \begin{itemize}
+  \item An extension $K/F$ is Galois if and only if $K$ is the splitting field of a separable polynomial $f(x)\in F[x]$.
   \item Correspondence: if $K/F$ is a finite Galois extension, then the correspondence between subfields of $K/F$ (that is, subfields of $K$ that contain $F$) and subgroups of $\gal\left( K/F \right)$ is given by $K\supseteq L\mapsto \gal\left( K/L \right)\subseteq \gal\left( K/F \right)$ and $\gal\left( K/F \right)\geq H\mapsto K^{H}\subseteq K$.
+  \item Suppose $K_1,K_2\subseteq K$ are subfields of a Galois extension $K/F$ corresponding to subgroups $H_1$ and $H_2$. Then, the composite $K_1K_2$ corresponds to $H_1\cap H_2$, while the intersection $K_1\cap K_2$ corresponds to the group $ \left\langle H_1,H_2 \right\rangle $ generated by $H_1$ and $H_2$.
   \item If $K/F$ is a finite Galois extension, $L$ is a subfield of $K/F$, then $L/F$ is a Galois extension if and only if $\gal\left( K/L \right)\trianglelefteq \gal\left( K/F \right)$ is normal. Furthermore, $\gal\left( L/F \right)\cong \gal\left( K/F \right)/\gal\left( K/L \right)$.
+  \item If $K/F$ is a Galois extension, and $F'/F$ is any extension, then the composite $KF'/F'$ is Galois, and $\gal\left( KF'/F' \right)\cong \gal\left( K/K\cap F' \right)$.
+  \item If $K_1$ and $K_2$ are Galois extensions over $F$, then $K_1\cap K_2$ is Galois over $F$ and $K_1K_2$ is Galois over $F$, with $\gal\left( K_1K_2/F \right)$ isomorphic to the subgroup of $\gal\left( K_1/F \right)\times \gal\left( K_2/F \right)$ consisting of all $\left( \sigma,\tau \right)$ with $\sigma|_{K_1\cap K_2} = \tau|_{K_1\cap K_2}$.
+
+    If $K/F$ is Galois and $\gal\left( K/F \right)\cong G_1\times G_2$ is the direct product of two subgroups, then $K$ is the composite of two Galois extensions $K_1$ and $K_2$ with $K_1\cap K_2 = F$.
   \item Given a finite field $\F_{p^{m}}$, its Galois group is precisely the group generated by $\operatorname{fr}^{m}$, where $\operatorname{fr}\colon \overline{\F_p}\rightarrow \overline{\F_p}$ is given by $ \operatorname{fr}\left( x \right) = x^{p} $.
   \item Given a separable irreducible polynomial $f(x)\in F[x]$ and its splitting field $K/F$, the minimal polynomial of any element $\theta\in K$ is given by
     \begin{align*}
@@ -906,6 +1041,22 @@ Recall that the cyclotomic polynomials satisfy
 \begin{corollary}
   If $\sigma_1,\dots,\sigma_n\in \gal\left( K/F \right)$, then $\sigma_1,\dots,\sigma_n$ are linearly independent.
 \end{corollary}
+\begin{theorem}[Normal Basis Theorem]
+  Let $K/F$ be a finite Galois extension of degree $n$. Let $\sigma_1,\dots,\sigma_n$ be elements of the Galois group $G$. Then, there exists an element $w\in K$ such that $\set{\sigma_1(w),\dots,\sigma_n(w)}$ forms a basis of $K$ over $F$.
+\end{theorem}
+\begin{proof}
+  We will prove for the case that $F$ is infinite. For any $\sigma,\tau\in G$, let $X_{\sigma}$ be an indeterminate and let $t_{\sigma,\tau} = X_{\sigma^{-1}\tau}$. If $X_i = X_{\sigma_i}$, then we let
+  \begin{align*}
+    f\left( X_1,\dots,X_n \right) &= \det \left( t_{\sigma_i,\sigma_j} \right).
+  \end{align*}
+  We observe that $f$ is not identically zero; since $F$ is infinite, $f$ is reduced as a polynomial, so $f$ is not equal to zero for all $x\in K$ substituting $\sigma_i(x)$ for $X_i$ in the expression of $f$. In particular, this means that $\det\left( \sigma_i^{-1}\sigma_j(w) \right) \neq 0$ for some $w\in K$.
+
+  If $a_1,\dots,a_n\in F$ are such that
+  \begin{align*}
+    a_1\sigma_1(w) + \cdots + a_n\sigma_n(w) &= 0,
+  \end{align*}
+  then applying $\sigma_i^{-1}$ to this relation for each $i=1,\dots,n$, we find that we obtain a system of linear equations regarding the $a_j$ as unknowns. Since the determinant $\det\left( \sigma_i^{-1}\sigma_j(w) \right)$ is nonzero, it follows that we must have $a_j = 0$ for each $j=1,\dots,n$, so that $w$ is the desired element.
+\end{proof}
 \subsubsection{Galois Groups of Polynomials}%
 \begin{definition}
   Let $x_1,\dots,x_n$ be indeterminates. The \textit{elementary symmetric functions} $s_1,\dots,s_n$ are defined by
@@ -1624,7 +1775,7 @@ In the special case where $H$ is the unique index $2$ subgroup of $\left( \Z/p\Z
 
       We will show that $u\neq 0$ by determining an $S$-linear map $\theta\colon M\otimes_{S}N\rightarrow S$ such that $\theta\left( u \right)\neq 0$.
 
-      Since $R$ and $S $are fields, and $S\neq R$, we have that $m$ and $rm$ are $S$-linearly independent. Extending $\set{m,rm}$ to an $S$-basis $ \mathcal{B} $ for $M$, we may define $f\colon M\rightarrow S$ by taking $f(m) = 1$ and $f(m') = 0$ for any $m'\neq m$ in $ \mathcal{B} $, and extending linearly by using the universal property. Similarly, $n$ and $rn$ are $S$-linearly independent, we may extend $\set{n,rn}$ to an $S$-basis $ \mathcal{C} $ of $N$, and taking $g\colon N\rightarrow S$ by taking $g(n) = 1$ for all $n\in \mathcal{C}$ and extending linearly.
+      Since $R$ and $S$ are fields, $M$ and $N$ are nonzero free $R$-modules that are also free $S$-modules; since $S\neq R$, we have that $m$ and $rm$ are $S$-linearly independent. Extending $\set{m,rm}$ to an $S$-basis $ \mathcal{B} $ for $M$, we may define $f\colon M\rightarrow S$ by taking $f(m) = 1$ and $f(m') = 0$ for any $m'\neq m$ in $ \mathcal{B} $, and extending linearly by using the universal property. Similarly, $n$ and $rn$ are $S$-linearly independent, we may extend $\set{n,rn}$ to an $S$-basis $ \mathcal{C} $ of $N$, and taking $g\colon N\rightarrow S$ by taking $g(n) = 1$ for all $n\in \mathcal{C}$ and extending linearly.
 
       Defining $\beta\colon M\times N\rightarrow S$ by $\left( m,n \right)\mapsto f(m)g(n)$, we observe that $\beta$ is $S$-bilinear, so it extends to an $S$-linear map $\theta\colon M\otimes_{S}N\rightarrow S$ satisfying $\theta\left( m\otimes n \right) = f(m)g(n)$. Therefore, we have
       \begin{align*}
@@ -1655,7 +1806,7 @@ In the special case where $H$ is the unique index $2$ subgroup of $\left( \Z/p\Z
   \begin{enumerate}[(a)]
     \item Since $F$ is algebraically closed, $V$ admits a basis $ \mathcal{B} = \set{v_1,v_2,\dots,v_n} $ such that $\left[ T \right]_{\mathcal{B}}$ is in Jordan canonical form; in particular, $\left[ T \right]_{\mathcal{B}}$ is upper triangular. Taking the chain
       \begin{align*}
-        0 \subseteq \Span\set{v_1}\supseteq \Span\set{v_1,v_2}\subseteq\cdots\subseteq \Span\set{v_1,v_2,\dots,v_n},
+        0 \subseteq \Span\set{v_1}\subseteq \Span\set{v_1,v_2}\subseteq\cdots\subseteq \Span\set{v_1,v_2,\dots,v_n},
       \end{align*}
       we have a chain of contained subspaces of length $n+1$, and observe that $Tv_i\in \Span\set{v_1,v_2,\dots,v_i}$ by the fact that $\left[ T \right]_{\mathcal{B}}$ is upper triangular, so that each of these subspaces is $T$-invariant.
     \item Considering the matrix
@@ -2843,6 +2994,29 @@ In the special case where $H$ is the unique index $2$ subgroup of $\left( \Z/p\Z
     \item a direct product of fields.
   \end{enumerate}
 \end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Since $K[x]$ is a principal ideal domain, irreducibles are prime, and prime ideals are maximal. Therefore, $K[x]/\left( f \right)$ is a field if and only if $f$ is irreducible, which holds if and only if $r = 1$ and $a_1 = 1$ in the factorization $f = p_1^{a_1}\cdots p_r^{a_r}$.
+    \item The ring $K[x]/\left( f \right)$ is a non-field if $f$ has a nontrivial factorization into irreducibles. Since any ideal of $K[x]/\left( f \right)$ corresponds to an ideal $\left( q \right)\supseteq \left( f \right)$, which is given by a polynomial $q | f$. The maximal ideals of $K[x]/\left( f \right)$ then correspond to irreducible factors $p | f$. Therefore, if $K[x]$ is a local ring, there is then only one irreducible factor of $f$, and if $K[x]$ is not a field, then this irreducible factor must have exponent greater than $1$. That is, $r = 1$ and $a_1 > 1$.
+    \item Since, for any $i\neq j$, $p_i,p_j | f$, and $a_i,a_j \geq 1$, $\gcd\left( p_i^{a_i},p_j^{a_j} \right) = 1$, we have that the ideals $\left( p_i^{a_i} \right)$ and $\left( p_j^{a_j} \right)$ are coprime. Therefore, by Chinese Remainder Theorem, we have
+      \begin{align*}
+        K[x]/\left( f \right)  &\cong \bigoplus_{i=1}^{r} \frac{K[x]}{\left( p_i^{a_i} \right)}.
+      \end{align*}
+      Assuming that $K[x]/\left( f \right)$ is a field thus implies that each of the ideals $\left( p_i^{a_i} \right)$ are maximal, meaning that each $a_i = 1$. Therefore, we have that $K[x]/\left( f \right)$ with $r \geq 1$ and $a_i = 1$ for each $i=1,\dots,r$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 6]
+  Let $L/K$ be a finite Galois extension of degree $n$. Show that for every prime $p$ dividing $n$, there exists an intermediate subfield $K\subseteq M\subseteq L$ such that $\left[ M:K \right]$ is prime to $p$.
+\end{problem}
+\begin{solution}
+  Let $G = \gal\left( L/K \right)$. Then, if $p | \left[ L:K \right] = \left\vert G \right\vert = n$, we may write $\left\vert G \right\vert = p^{k}m$ with $\gcd\left( m,p \right) = 1$. There exists a $p$-Sylow subgroup $H\leq G$. Taking $M = L^{H}$ as the fixed field, then we have $\gal\left( L/M \right) = H$, so that
+  \begin{align*}
+    \left[ M:K \right] &= \frac{\left[ L:K \right]}{\left[ L:M \right]}\\
+                       &= m.
+  \end{align*}
+  In particular, we have $\gcd\left( \left[ M:K \right],p \right) = 1$. Since, for any prime $p | \left[ L:K \right]$, there exists a $p$-Sylow subgroup, the corresponding fixed field has $\left[ M:K \right]$ is prime to $p$.
+\end{solution}
+
 \subsection{August 2024}%
 \begin{problem}[Problem 1]
   Let $s,n$ be positive integers, and let $I_n$ denote the $n\times n$ identity matrix. Consider the following matrix
@@ -3038,5 +3212,72 @@ In the special case where $H$ is the unique index $2$ subgroup of $\left( \Z/p\Z
   \end{align*}
   Inside $M$, we see that this yields $M_1 = p_{+}M$ and $M_2 = p_{-}M$. Taking the action of $x$ on $M$ then yields $x\cdot \left( p_{+}m \right) = \left( x p_{+} \right)m$; observe that $\varphi\left( x\cdot p_{+} \right) = \left( \left( xp_{+} \right)(3),\left( xp_{+} \right)(-3) \right) = \left( 3,0 \right)$, so that $\left( x p_{+} \right)m = 3p_{+}m$. Similarly, we have $x\cdot \left( p_{-}m \right) = \left( xp_{-} \right)m$, and $\varphi\left( xp_{-} \right) = \left( \left( xp_{-} \right)(3),\left( xp_{-} \right)(-3) \right) = \left( 0,-3 \right)$, whence $\left( xp_{-} \right)m = -3p_{-}m$.
 \end{solution}
+\subsection{January 2025}%
+\begin{problem}[Problem 4]
+  Let $\phi\colon \Z^r\rightarrow \Z^r$ be a homomorphism of free abelian groups given by multiplication by a square matrix $A\in \Mat_r\left( \Z \right)$.
+  \begin{enumerate}[(a)]
+    \item Show that $\img\left( \phi \right)$ is of finite index in the target if and only if $\det\left( A \right)\neq 0$.
+    \item Show that when the index is finite, it is equal to $\left\vert \det\left( A \right) \right\vert$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}\hfill
+  \begin{enumerate}[(a)]
+    \item Write $N = \img\left( \phi \right)$. Then, since $N\leq \Z^r$ is a submodule of a finitely generated free module over a principal ideal domain, the compatible basis theorem yields the existence of $y_1,\dots,y_r\in \Z^{r}$ and nonzero elements $a_1,\dots,a_k\in \Z$ with $\left( a_1 \right)\supseteq \left( a_2 \right)\supseteq\cdots\supseteq \left( a_k \right)$ such that
+      \begin{align*}
+        \Z^{r} &= \left\langle \set{y_1,\dots,y_r} \right\rangle\\
+        N &= \left\langle \set{a_1y_1,\dots,a_ky_k} \right\rangle.
+      \end{align*}
+      Notice that the compatible bases are determined by the matrices $P,Q\in \GL_r\left( \Z \right)$ in the Smith Normal Form decomposition $\operatorname{SNF}\left( A \right) = PAQ$.
 
+      Suppose $N$ has finite index in $\Z^{r}$. Then, we must have that $\Z^{r}/N$ is a finite abelian group; by the compatible basis theorem, since
+      \begin{align*}
+        \Z^{r}/N &\cong \Z^{r-k} \oplus \left( \bigoplus_{i=1}^{k} \Z/\left( a_i \right) \right),
+      \end{align*}
+      it follows that $r = k$ (as else this would contradict the finitude of the index), so that the coefficients in the Smith Normal Form of $A$ are given by $a_1,\dots,a_r$, all of which are nonzero. Since
+      \begin{align*}
+        \det\left( \operatorname{SNF}\left( A \right) \right) &= \det\left( PAQ \right)\\
+                                                              &= \det\left( P \right)\det\left( A \right)\det\left( Q \right)\\
+                                                              &= \pm \det\left( A \right)
+      \end{align*}
+      for some unit $u$ of $\Z$; since $u = \pm 1$, it follows that $\det\left( A \right) = \pm \left( a_1\cdots a_k \right)\neq 0$.
+
+      Meanwhile, if $N$ has infinite index in $\Z^{r}$, then we have
+      \begin{align*}
+        \Z^{r}/N &= \Z^{r-k} \oplus \left( \bigoplus_{i=1}^{k}\Z/\left( a_i \right) \right),
+      \end{align*}
+      with $r > k$. In particular, this means that there are $k < r$ invariant factors $a_1,\dots,a_k$, and the Smith Normal form of $A$ is given by $\operatorname{diag}\left( a_1,\dots,a_k,0,\dots,0 \right)$. In particular, this means that $\det\left( A \right) = 0$.
+    \item Recalling that if $N\leq \Z^{r}$ has finite index, then the Smith Normal Form of $A$ has determinant given by $\det\left( \operatorname{SNF}\left( A \right) \right) = a_1\cdots a_k$, and that $\det\left( A \right) = \pm \det\left( \operatorname{SNF}\left( A \right) \right)$. Furthermore, the index of $N$ is given by the total number of elements in $\Z^{r}/N$, which is equal to the absolute value of the product $a_1\cdots a_k$ of the invariant factors since $N$ is a direct sum of cyclic groups, whence the index is equal to $\left\vert \det\left( A \right) \right\vert$.
+  \end{enumerate}
+\end{solution}
+\begin{problem}[Problem 6]
+  Let $A$ be a finitely generated abelian group such that $A\otimes_{\Z}\Z/25\Z\cong A$. Classify all such groups up to isomorphism.
+\end{problem}
+\begin{solution}
+  First, we establish the isomorphism that $R/I\otimes_{R}R/J\cong R/\left( I + J \right)$, where $R$ is a commutative unital ring. For this, observe that any simple tensor of $R/I\otimes_R R/J$ can be written using the $R$-balancedness of the tensor product as
+  \begin{align*}
+    \left( a + I \right)\otimes \left( b + J \right) &= a\left( 1 + I \right)\otimes \left( b + J \right)\\
+                                                     &= \left( 1 + I \right)\left( ab + J \right).
+  \end{align*}
+  In particular, since any element of $R/I\otimes_{R}R/J$ is a sum of simple tensors all of the form $\left( 1 + I \right)\left( t + J \right)$, it follows that any element of $R/I\otimes_{R}R/J$ is of the form $\left( 1 + I \right)\left( t + J \right)$.
+
+  Defining the $R$-balanced map $\phi\colon R/I\times R/J\rightarrow R/\left(  I +J \right)$ by $\left( a + I,b+J \right)\mapsto \left( ab \right) + \left( I+J \right)$ yields an $R$-module homomorphism $R/I\otimes_{R}R/J\rightarrow R/\left( I + J \right)$ taking $\left( 1 + I \right)\otimes \left( t + J \right)\mapsto t + \left( I+J \right)$. Since this map admits the inverse $t + \left(  I +J \right)\mapsto \left( 1+I \right)\otimes \left( t + J \right)$, it follows that $R/I\otimes_{R}R/J\cong R/\left( I + J \right)$.
+
+  Using the classification of finitely generated abelian groups in elementary divisors form as well as the fact that tensor products distribute over direct sums yields that $A\otimes \Z/25\Z$ is given by
+  \begin{align*}
+    \left( \Z^{k}\oplus \bigoplus_{i=1}^{r}\Z/\left( p_i^{d_i} \right)\Z \right)\oplus \Z/25\Z &\cong \left( \Z/25\Z \right)^{k} \oplus \bigoplus_{i=1}^{r} \Z/\left( \left( p_i^{d_i} \right) + \left( 25 \right) \right).
+  \end{align*}
+  In order for such an isomorphism $A\otimes_{\Z}\Z/25\Z\cong A$ to hold, we cannot have any free part as the right-hand side is a torsion $\Z$-module, and by the definition of the greatest common denominator, we have $\left( p_i^{d_i} \right) + \left( 25 \right) = \left( \gcd\left( p_i^{d_i},25 \right) \right)$ in $\Z$. Since $\gcd\left( p_i^{d_i},25 \right) = p_i^{d_i}$ if and only if $p_i = 5$ for each $i$ and $d_i = 1,2$, it follows that the isomorphism $A\otimes_{\Z}\Z/\left( 25 \right)\cong A$ holds if and only if $A$ is of the form
+  \begin{align*}
+    A &\cong \left( \Z/5\Z \right)^{\oplus n}\oplus \left( \Z/25\Z \right)^{\oplus m}
+  \end{align*}
+  for some integers $n,m\geq 0$.
+\end{solution}
+\begin{problem}[Problem 8]
+  Let $F$ be a field of characteristic $p > 0$, and consider the polynomial $f(x) = x^{p}-x-c$. Let $\alpha$ be a root of $f(x)$ in an algebraic closure $ \overline{F} $ of $F$.
+  \begin{enumerate}[(a)]
+    \item Prove that $f(x)$ has roots $\alpha,\alpha + 1,\dots,\alpha + p - 1$.
+    \item Prove that $F\left( \alpha \right)/F$ is a Galois extension.
+    \item Prove that $f(x)$ is either irreducible or splits into linear factors in $F[x]$.
+  \end{enumerate}
+\end{problem}
 \end{document}
