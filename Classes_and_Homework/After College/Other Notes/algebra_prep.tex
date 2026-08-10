@@ -724,7 +724,7 @@ These matrices are found by a product of elementary row and column operations. S
 \end{center}
 
 \begin{theorem}[Compatible Basis Theorem]
-  Let $M$ be a rank $n$ free module over a principal ideal domain $R$, and let $N$ be a submodule of $M$. Then, $N$ is a free module with rank $m\leq n$, and there is a basis $\set{y_1,\dots,y_n}$ for $M$ and nonzero non-units $d_1 | d_2 | \cdots | d_m$ such that $\set{d_1y_1,d_2y_2,\dots,d_my_m}$.
+  Let $M$ be a rank $n$ free module over a principal ideal domain $R$, and let $N$ be a submodule of $M$. Then, $N$ is a free module with rank $m\leq n$, and there is a basis $\set{y_1,\dots,y_n}$ for $M$ and nonzero elements $d_1 | d_2 | \cdots | d_m$ such that $\set{d_1y_1,d_2y_2,\dots,d_my_m}$.
 
   Moreover, the rank $m$ of $N$ is unique, and the $d_1,\dots,d_m$ are unique up to associates.
 \end{theorem}
@@ -928,6 +928,83 @@ We assume that the group $G$ is finite and that all representations are complex 
 \end{itemize}
 \section{Field/Galois Theory}%
 \subsection{Field Theory Notes}%
+\subsubsection{Normal and Separable Extensions}%
+\begin{theorem}
+  Suppose $E/F$ is a finite extension, and let $K/F$ be any extensions. If $ \mathcal{B} $ is a (finite) basis for $E/F$, then $ \mathcal{B} $ spans $EK$ over $K$. In particular,
+  \begin{align*}
+    \left[ EK:K \right] &\leq \left[ E:F \right].
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Let $ \mathcal{B} = \set{\beta_1,\dots,\beta_n} $ be a basis for $E$ over $F$. We may lift the basis to $EK = K\left( \beta_1,\dots,\beta_n \right)$, where each $\beta_i$ is algebraic over $K$. Since $EK$ is then the set of polynomials over $K$ in $\beta_1,\dots,\beta_n$, and each monomial in the $\beta_i$ is a linear combination of $\beta_1,\dots,\beta_n$ over $F$, it follows that $EK$ is the set of linear combinations of $\beta_1,\dots,\beta_n$ over $K$. Therefore, $ \mathcal{B} $ spans $EK$ over $K$.
+\end{proof}
+\begin{definition}
+  Let $\sigma\colon F\rightarrow L$ be an embedding (i.e., injective ring/field homomorphism) of the field $F$ into $L$, and let $E/F$ be an extension. An embedding $ \overline{\sigma}\colon E\rightarrow L $ for which $ \overline{\sigma}|_{F} = \sigma $ is an extension of $\sigma$ to $E$. If $ \overline{\sigma} $ extends the identity map $ \iota\colon F\rightarrow F $, then we call it an $F$-embedding.
+
+  The set of all $F$-embedding $\sigma\colon E\rightarrow L$ is denoted $ \Hom_F\left( E,L \right) $.
+\end{definition}
+\begin{definition}
+  If $K/F$ is an algebraic extension for which every $F$-embedding $\sigma\colon K\rightarrow \overline{F}$ takes $\sigma(K) = K$, then we call this extension \textit{normal}. Some texts write $F\triangleleft K$.
+\end{definition}
+\begin{proposition}
+  Let $K/F$ be an algebraic extension. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $K$ is normal;
+    \item if $p(x)\in F[x]$ is any irreducible polynomial, then if $p(x)$ has a root in $K$, then $p(x)$ splits over $K$;
+    \item $K$ is a splitting field for the family $\set{\mu_{\alpha,F}(x) : \alpha\in K}$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Suppose $K$ is normal. If $p(x)$ is any irreducible polynomial over $F$ that has a root $\alpha$ in $K$, then if $\beta$ is a root of $p(x)$ in $ \overline{F} $, there is an embedding $\sigma\colon \Hom_F\left(K, \overline{F}\right)$ that takes $\sigma(\alpha) = \beta$. Since $K$ is invariant under $\sigma$, it follows that $\beta\in K$. This also gives that $K/F$ is the splitting field for the set of all minimal polynomials $\mu_{\alpha,F}(x)$ with $\alpha\in K$. This gives (i) implies (ii) and (ii) implies (iii).
+
+  Now, suppose $K$ is a splitting field of a family $ \mathcal{F} $ of polynomials over $F$. Then, $K = F\left( R \right)$, where $R$ is the set of all roots of the polynomials in $ \mathcal{F} $. Any embedding $\sigma\colon K\rightarrow \overline{F}$ must send roots to roots, so we have
+  \begin{align*}
+    \sigma\left( K \right) &= \sigma\left( F\left( R \right) \right)\\
+                           &= F\left( \sigma(R) \right)\\
+                           &= F\left( R \right)\\
+                           &= K,
+  \end{align*}
+  where we use the fact that $\sigma$ is an $F$-embedding that takes roots to roots. Since $\sigma$ is an embedding of $K$ to itself over $F$, and $K/F$ is algebraic, it follows that $\sigma$ is an $F$-automorphism of $K$.
+\end{proof}
+\begin{theorem}[Inheritance Properties of Normal Extensions]\hfill
+  \begin{enumerate}[(i)]
+    \item If $E/K/F$ is a tower of extensions, and $F\triangleleft E$ is normal, then $K\triangleleft E$ is normal.
+    \item If $F\triangleleft E$ is normal, and $K/F$ is any extension, then $K\triangleleft EK$ is normal.
+    \item If $\set{E_i}_{i\in I}$ is a family of fields, and $F\triangleleft E_i$ is normal for each $i$, then
+      \begin{align*}
+        F\triangleleft \bigvee_{i\in I}E_i\\
+        F \triangleleft \bigwedge_{i\in I}E_i,
+      \end{align*}
+      where $\bigvee_{i\in I}E_i$ denotes the composite of all the fields $E_i$ and $\bigwedge_{i\in I}E_i$ denotes the infimum (/intersection) of all the fields $E_i$.
+  \end{enumerate}
+\end{theorem}
+\begin{problem}\hfill
+  \begin{enumerate}[(i)]
+    \item A splitting field for a family of polynomials over $F$ is also a splitting field for the same family of polynomials over $K$.
+    \item Let $E$ be a splitting field for a family $ \mathcal{F} $ of polynomials over $F$, and let $R$ be the set of roots in $E$ of all the polynomials in $ \mathcal{F} $. Then, $E = F(R)$. Therefore, $EK = K(R)$, so $EK$ is a splitting field for the family $ \mathcal{F} $ considered as polynomials over $K$. Therefore, $K\triangleleft EK$.
+    \item Let $\sigma\colon \bigvee_{i\in I}E_i\rightarrow \overline{F}$ be an embedding. Then, $\sigma|_{E_i}\colon E_i\rightarrow \overline{F}$ is an embedding, so since each $E_i$ is normal over $F$, $\sigma\left( E_i \right) = E_i$, whence
+      \begin{align*}
+        \sigma\left( \bigvee_{i\in I}E_i \right) &= \bigvee_{i\in I}\sigma\left( E_i \right)\\
+                                                 &= \bigvee_{i\in I}E_i,
+      \end{align*}
+      we obtain that $\sigma$ is an automorphism of $ \bigvee_{i\in I}E_i $. Similarly, $\sigma\colon \bigwedge_{i\in I}E_i\rightarrow \overline{F}$ has
+      \begin{align*}
+        \sigma\left( \bigwedge_{i\in I}E_i \right) &= \bigwedge_{i\in I}\sigma\left( E_i \right)\\
+                                                   &= \bigcap_{i\in I}E_i,
+      \end{align*}
+      giving the desired result.
+  \end{enumerate}
+\end{problem}
+\begin{definition}
+  If $E/F$ is not a normal extension, then there is a smallest extension $N$ of $E$ in an algebraic closure $ \overline{F} $ for which $N$ is normal over $F$. This is denoted the \textit{normal closure} of $E$ over $F$, and we write $ \left\langle E/F \right\rangle $.
+\end{definition}
+\begin{proposition}
+  Let $E/F$ be an algebraic extension. Then,
+  \begin{align*}
+    \left\langle E/F \right\rangle &= \bigvee_{\sigma\in \Hom_{F}\left( E, \overline{F} \right)} \sigma\left( E \right).
+  \end{align*}
+
+\end{proposition}
 \subsubsection{Irreducibility of Cyclotomic Polynomials over Finite Fields}%
 We will let $\Phi_n$ denote the $n$th cyclotomic polynomial, defined by
 \begin{align*}
