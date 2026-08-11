@@ -42,6 +42,11 @@
   \item If $G$ acts on a set $X$, and $H$ is the stabilizer subgroup of some $x\in X$, then if $\rho\colon G\rightarrow \sym\left( X \right)$ is the permutation representation for this action, then $\ker\left( \rho \right) \leq H$.
   \item If $P_1,\dots,P_r$ are $p$-Sylow subgroups of $G$, they are all conjugate to each other, and the normalizer $N_G\left( P_i \right)$ is a conjugate of $N_G\left( P_j \right)$ for $1\leq i,j \leq r$.
   \item Every conjugacy class in the symmetric group $S_n$ is given by the cycle type. Moreover, given an element $\sigma\in A_n$, the conjugacy classes $K_{A_n}\left(\sigma\right) = K_{S_n}\left(\sigma\right)$ if and only if there is an odd permutation in the centralizer $C_{S_n}\left(\sigma\right)$. If there is no odd permutation in $C_{S_n}\left(\sigma\right)$, then the conjugacy class $K_{S_n}\left(\sigma\right)$ splits into two separate conjugacy classes over $A_n$.
+  \item Burnside's Lemma: If a finite group $G$ acts on a finite set $X$, then the number of orbits $\left\vert X/G \right\vert$ is given by
+    \begin{align*}
+      \left\vert X/G \right\vert &= \frac{1}{\left\vert G \right\vert}\sum_{g\in G} \left\vert X^{g} \right\vert,
+    \end{align*}
+    where $X^{g} = \set{x\in X : g\cdot x = x}$ is the set of fixed points of $g\in G$.
 \end{itemize}
 
 \subsubsection{Semidirect Products}%
@@ -90,7 +95,31 @@ We will discuss some examples.
     When $H\cong \Z/n\Z$, this yields the dihedral group $D_n$ of order $2n$, while if $H \cong \Z$, we have the infinite dihedral group $D_{\infty}$.
   \item If $H$ is a group, and $K = \aut\left( H \right)$, then $\varphi\colon K\rightarrow \aut\left( H \right)$ given by the identity yields the semidirect product $H\rtimes \aut\left( H \right)$, denoted the \textit{holomorph} of $H$.
 \end{enumerate}
+We now discuss a special case of a semidirect product, known as a \textit{wreath product}.
+\begin{definition}
+  Let $D$ and $Q$ be groups. Let $Q\curvearrowright\Omega$ act on a finite set. Write $K = D^{\Omega} = \prod_{\omega\in\Omega}D$. Then, the \textit{wreath product} of $D$ by $Q$, written $D\wr Q$, is given by $Q\rtimes_{\varphi}K$, where
+  \begin{align*}
+    \varphi(q)\cdot \left( d_{\omega} \right)_{\omega} &= \left( d_{q\cdot \omega} \right)_{\omega}.
+  \end{align*}
+\end{definition}
+If $D\curvearrowright \Lambda$ is another action of a finite set, then we may naturally take an action $\left( D\wr Q \right)\curvearrowright \left( \Lambda\times\Omega \right)$ by taking, for each $d\in D$ and $\omega\in \Omega$, a permutation $d_{\omega}^{\ast}$ by taking
+\begin{align*}
+  d_{\omega}^{\ast}\left( \lambda,\omega' \right) &= \begin{cases}
+    \left( d\lambda,\omega' \right) & \text{if }\omega' = \omega,\\
+    \left( \lambda,\omega' \right) & \text{if }\omega'\neq \omega.
+  \end{cases}
+\end{align*}
+We have $d_{\omega}^{\ast}e_{\omega}^{\ast} = \left( de \right)_{\omega}^{\ast}$ for any $d,e\in D$. Defining
+\begin{align*}
+  D_{\omega}^{\ast} &= \set{d_{\omega}^{\ast} : d\in D},
+\end{align*}
+we obtain that $D_{\omega}^{\ast}$ is a subgroup of $\sym\left( \Lambda\times\Omega \right)$ and for each $\omega$, the map $d\mapsto d_{\omega}^{\ast}$ defines an isomorphism $D\cong D_{\omega}^{\ast}$.
 
+For each $q\in Q$, we may define a permutation $q^{\ast}$ of $\Lambda\times\Omega$ by taking
+\begin{align*}
+  q^{\ast}\left( \lambda,\omega' \right) &= \left( \lambda,q\omega' \right),
+\end{align*}
+and take $Q^{\ast}=\set{q^{\ast} : q\in Q}$. Similarly, we have that the map $q\mapsto q^{\ast}$ defines an isomorphism $Q\rightarrow Q^{\ast}$.
 \subsubsection{Solvable Groups}%
 \begin{definition}
   A series of subgroups $G_i$ of a group $G$ is a decreasing sequence of subgroups
@@ -260,31 +289,24 @@ We call a normal series abelian (resp.\,cyclic) if all the quotients are abelian
 \end{proof}
 We will now discuss an application of solvability to understanding the structure of certain subgroups of the symmetric group. This has applications to Galois theory.
 \begin{proposition}
-  Let $p$ be prime. Then, any solvable subgroup of $S_p$ with order divisible by $p$ is contained in the normalizer of a $p$-Sylow subgroup of $S_p$. Furthermore, any such $p$-Sylow subgroup of $S_p$ is a Frobenius group of order $p\left( p-1 \right)$.
+  If $G\leq S_p$ is a transitive solvable subgroup of the symmetric group $S_p$ (where $p$ is prime), then $G$ is contained in the normalizer of some $p$-Sylow subgroup. The normalizer of any $p$-Sylow subgroup is a Frobenius group of order $p\left( p-1 \right)$.
 \end{proposition}
 \begin{proof}
-  If $G$ is a solvable subgroup of $S_p$ with order divisible by $p$, then there exists a $p$-Sylow subgroup $P = \left\langle \sigma \right\rangle$ for some $p$-cycle $\sigma$. We will start by showing the second assertion.
+  We start by showing that the normalizer of any $p$-Sylow subgroup of $S_p$ is a Frobenius group of order $p\left( p-1 \right)$. For this, observe that the $p$-Sylow subgroups of $S_p$ are precisely the $p$-cycles. Given a $p$-Sylow subgroup $ \left\langle \sigma \right\rangle $, we start by determining the number of conjugate subgroups of $\left\langle \sigma \right\rangle$. Counting, we have $\left( p-1 \right)!$ elements of $S_p$ in the conjugacy class of $\sigma$ (i.e., the number of $p$-cycles), and there are $\left( p-1 \right)$ elements of the form $ \sigma^{k} $ that remain in the group $ \left\langle \sigma \right\rangle $. That is, there are $\left( p-2 \right)!$ conjugate subgroups of $ \left\langle \sigma \right\rangle $, so the normalizer of $ \left\langle \sigma \right\rangle $ is a group of order $p\left( p-1 \right)$.
 
-  If we identify the points that $P$ acts on with $\F_p$, then we may take $\sigma = \left( x\xmapsto{t_1} x + 1 \right)$. Observe that a permutation $\pi$ that commutes with $\sigma$ takes $\pi\left( x+1 \right) = \pi(x) + 1$; if $\pi(0) = c$, then $\pi = t_c$, meaning that $C_{S_p}(P) = P$, which has order $p$. There is thus an embedding $N_{S_p}(P)/P\hookrightarrow \aut\left( \Z/p\Z \right)$, which is isomorphic to $\Z/\left( p-1 \right)\Z$. Observe that the dilations $x\xmapsto{m_a}ax$ define every automorphism of $\Z/p\Z$, the automorphisms of $P$, $\sigma\mapsto \sigma^{a}$, are implemented by conjugation $m_at_1m_a^{-1} = t_a$. Thus, we have that
+  Since the automorphisms of the form $\tau\sigma\tau^{-1} = \sigma^{k}$ for $1\leq k \leq \left( p-1 \right)$ are contained in $N_{S_p}\left( \left\langle \sigma \right\rangle \right)$, it follows that if we let $\Z/p\Z\rtimes \aut\left( \Z/p\Z \right)$ denote this isomorphic subgroup, then $N_{S_p}\left( \left\langle \sigma \right\rangle \right)\geq \Z/p\Z\rtimes \aut\left( \Z/p\Z \right)$, whence $N_{S_p}\left( \left\langle \sigma \right\rangle \right) = \Z/p\Z\rtimes\aut\left( \Z/p\Z \right)$, or that $N_{S_p}\left( \left\langle \sigma \right\rangle \right)$ is a Frobenius group of order $p\left( p-1 \right)$.
+
+  If $G$ is a solvable subgroup, then there is a minimal normal subgroup $N$ of $G$ such that $\left[ N,N \right] = \set{e}$ (i.e., $N$ is abelian).
+
+  We now look at a fundamental group theory fact. Let $N\trianglelefteq G$ be any normal subgroup of a finite group acting on a finite set. Consider an orbit $N\cdot \alpha$. If $g\in G$ is any element, then since $N$ is normal, we have
   \begin{align*}
-    N_{S_p}(P) &= P\rtimes \left\langle \text{dilations} \right\rangle\\
-               &= \Z/p\Z\rtimes \Z/\left( p-1 \right)\Z.
+    g\cdot \left( N\cdot \alpha \right) &= \left( gN \right)\cdot \alpha\\
+                                        &= \left( Ng \right)\cdot \alpha\\
+                                        &= N\cdot \left( g\cdot \alpha \right).
   \end{align*}
-  Now, we will show that if $G$ is a solvable subgroup of $S_p$, then there is exactly one $p$-Sylow subgroup. First, observe that in the derived series, the group $G^{(n-1)}$ has $\left[ G^{(n-1)},G^{(n-1)} \right] = D^{(n)}(G) = 1$, so that $G^{(n-1)}$ is abelian. Since every derived subgroup is characteristic, $G^{(n-1)}$ is normal in $G$.
+  In particular, this means that $G$ acts on the set of $N$-orbits. Returning to our discussion, observe that if $G$ acts transitively, then $N$ partitions $\set{1,\dots,p}$ into orbits of size $m$; if there are $t$ such orbits, then we have $mt = p$, so that $m = 1$ or $m = p$. If it were the case that $m = p$, then $N$ would be transitive. Else, if $m = 1$, then it would follow that every $N$-orbit is a single point (i.e., $N$ fixes all points); yet, since $S_p$ acts faithfully, this would imply that $N = \set{e}$, which would contradict the fact that $N$ is a minimal (nontrivial) normal subgroup. Thus, $m = p$, meaning that $N$ is transitive.
 
-  Consider the stabilizer $H$ of $0\in \F_p$. The index of $H$ is $p$, and observe that the group $G^{(n-1)}H$ is a subgroup of $G$ that contains $H$, meaning that $\left[ G:G^{(n-1)}H \right]$ divides $p$, so it is equal to either $1$ or $p$. If $G^{(n-1)}H = H$, then $G^{(n-1)}\leq H$, so $G^{(n-1)}$ fixes $0$, meaning $G^{(n-1)}$ fixes all of $\F_p$, implying that $G^{(n-1)}$ is contained in the kernel of a faithful action --- specifically, the faithful action of $S_p$ on $\F_p$ --- so that $G^{(n-1)}H = G$.
-
-  By the second isomorphism theorem, we have
-  \begin{align*}
-    \left[ G^{(n-1)}:G^{(n-1)}\cap H \right] &= \left[ G^{(n-1)}H:H \right]\\
-                                                   &= \left[ G:H \right]\\
-                                                   &= p,
-  \end{align*}
-  whence the size of a $G^{(n-1)}$-orbit of $0$ has size $p$, so that $G^{(n-1)}$ is transitive.
-
-  Set $A_0 = G^{(n-1)}\cap H$. We will show that $A_0 = 1$, which occurs from showing that the intersection is normal in $G$ and the fact that a normal subgroup fixing any point fixes all points. Observe that $G^{(n-1)}$ is abelian, so $A_0$ is normal in $G^{(n-1)}$. Furthermore, if $h\in H$ and $a\in A_0$, then $hah^{-1}\in G^{(n-1)}$ since $G^{(n-1)}$ is normal in $G$, and $hah^{-1}$ fixes $0$ since all three of $h^{-1}$, $a$, and $h$ fix $0$. Therefore, $A_0$ is normal in $H$. In particular, this means that $A_0$ is normal in both $H$ and $G^{(n-1)}$, so $A_0$ is normal in $G = G^{(n-1)}H$. Yet, since $a\cdot 0 = 0$ for all $a\in A_0$, and the conjugates of a stabilizer are the stabilizers of the other elements, it follows that $A_0$ stabilizes every element of $\F_p$, so that $A_0$ is contained in the kernel of a faithful action, whence $A_0 = 1$.
-
-  Therefore, we have that $\left\vert G^{(n-1)} \right\vert = \left[ G^{(n-1)} : A_0 \right] = p$, whence $G^{(n-1)}\cong \Z/p\Z$, and since $G^{(n-1)}$ is a normal subgroup in $G$, it follows that there is a unique $p$-Sylow subgroup.
+  Observe now that $N$ is an abelian group acting transitively on the set $\set{1,\dots,p}$. Since abelian groups that act transitively act by regular permutations, it follows that $\left\vert N \right\vert = p$. In particular, this means that, since $G$ normalizes $N$, we have that $G\leq N_{S_p}\left( \left\langle \rho \right\rangle \right)$ for some $p$-cycle $\rho$ in $S_p$.
 \end{proof}
 \subsubsection{Nilpotent Groups}%
 \begin{definition}
@@ -388,6 +410,7 @@ In particular, this means that $G_i/G_{i+1}\leq Z\left( G/G_{i+1} \right)$.
 
   Now, suppose $G_{c+1} = \set{e}$. We will prove that $G_{c+1-j}\leq Z_j\left( G \right)$ by induction on $j$. If $j = 0$, then $G_{c+1} = Z_0\left( G \right) = \set{e}$. By the third isomorphism theorem, we have a surjective homomorphism $G/G_{c+1-j}\rightarrow G/Z_j(G)$. Since $\left[ G_{c-j},G \right] = G_{c+1-j}$, we have that $G_{c-j}/G_{c+1-j} \leq Z\left( G/G_{c+1-j} \right)$. Passing to the image of the homomorphism, we have $G_{c-j}Z_{j}\left( G \right)/Z_j(G) \leq Z\left( G/Z_j(G) \right) = Z_{j+1}(G)/Z_j(G)$. Therefore, we have $G_{c-j} \leq G_{c-j}Z_j(G)\leq Z_{j+1}(G)$.
 \end{proof}
+
 \subsubsection{A Simple Group of Order 168}%
 We will work to understand the existence and uniqueness of a simple group of order $168 = 2^3\cdot 3 \cdot 7$ by understanding the structure of its Sylow subgroups.
 
@@ -497,6 +520,7 @@ By the second isomorphism theorem, $\left[ H:H\cap N \right] = \left[ HN:N \righ
 A normal $7$-Sylow subgroup of $H$ is characteristic in $H$, hence normal in $\GL(V)$, meaning that $H$ does not have a unique $7$-Sylow subgroup. Since $n_7(H)\equiv 1$ mod $7$, and $n_7(H)\leq n_7\left( \GL(V) \right) = 8$, it follows that $n_7(H) = 8$. Thus, $\left\vert H \right\vert$ is divisible by $8$, so $56$ divides $H$, and since $H$ is proper, $\left\vert H \right\vert = 56$. By applying a Sylow-style counting argument to $H$, we see that $H$ has a normal (hence characteristic) $2$-Sylow subgroup, which is thus normal in $\GL(V)$. Yet, this would mean that $\GL(V)$ has a unique $2$-Sylow subgroup. Note that the upper and lower triangular matrices are subgroups of $\GL_3\left( \F_2 \right)$ with order $8$, so we achieve a contradiction.
 \section{Ring Theory and Module Theory}%
 \subsection{Ring Theory Notes}%
+
 \subsubsection{Localization}%
 If $R$ is a (commutative, unital) ring, then we may consider a subset $S\subseteq R$ such that $1\in S$, $0\notin S$, and for any $s_1,s_2\in S$, we have $s_1s_2\in S$ (such an $S$ is called a \textit{multiplicative set}). Then, we may construct the \textit{ring of fractions} $S^{-1}R$ as the set of equivalence classes in $R\times S$ with $\left( r_1,s_1 \right)\sim \left( r_2,s_2 \right) $ if and only if there exists $t\in S$ such that $ t\left( r_1s_2 - r_2s_1 \right) = 0$. We write $\left[ \left( r,s \right) \right] = \frac{r}{s}$, and define addition and multiplication by
 \begin{align*}
@@ -814,6 +838,89 @@ The tensor product $\left( R/I \right)\otimes_{R}N$ is generated by the simple t
 \begin{align*}
   R/I\otimes_{R}N &\cong N/IN.
 \end{align*}
+Next, we discuss some categorical properties of tensor products. We will assume that our ring $R$ is commutative (meaning that all left $R$-modules are right $R$-modules, and we work with $R$-bilinear maps).
+
+If $\alpha\colon M_1\rightarrow M_2$ is an $R$-module homomorphism, and $N$ is any $R$-module, then we may define an $R$-bilinear map $M_1\times N\rightarrow M_2\times N\rightarrow M_2\otimes N$ given by $\left( m_1,n \right)\mapsto \alpha\left( m_1 \right)\otimes n$, which induces an $R$-module homomorphism $\alpha\otimes \id_N\colon M_1\otimes N\rightarrow M_2\otimes N$.
+
+This map is functorial, since if $\beta\colon M_0\rightarrow M_1$ is another homomorphism, then $\left( \alpha\otimes \id_N \right)\circ \left( \beta\otimes \id_N \right)$ agrees with $\left( \alpha\circ\beta \right)\otimes \id_N$ on simple tensors, so they must agree on all tensors.
+
+Consider now the functor $P\mapsto \hom_{R}\left( N,P \right)$, where any map $\varphi\colon P_1\rightarrow P_2$ yields a map $\varphi_{\ast}\colon \hom_{R}\left( N,P_1 \right)\rightarrow \hom_R\left( N,P_2 \right)$ defined by $\varphi_{\ast}\theta(n) = \varphi\left( \theta(n) \right)$ for any $\theta\in \hom_R\left( N,P_1 \right)$ and $n\in N$.
+
+Recall that any $R$-linear map $M\otimes_{R}N\rightarrow P$ is equivalent to defining an $R$-bilinear map $M\times N\rightarrow P$. Any $R$-bilinear map $\varphi\colon M\times N\rightarrow P$ is defined by the fact that $\varphi\left( m,\cdot \right)$ and $\varphi\left( \cdot,n \right)$ are $R$-linear maps for all $m\in M$ and $n\in N$. That is, $\varphi$ defines an $R$-module homomorphism $M\rightarrow \hom_R\left( N,P \right)$. In particular, this means that an $R$-bilinear map is ``equivalent'' in a sense to an element of $\hom_R\left( M,\hom_R\left( N,P \right) \right)$.
+\begin{lemma}
+  For all $R$-modules $M$, $N$, and $P$, we have an isomorphism of $R$-modules
+  \begin{align*}
+    \hom_R\left( M,\hom_R\left( N,P \right) \right) &\cong \hom_R\left( M\otimes_{R}N,P \right).
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  We note that any $\alpha\in \hom_R\left( M,\hom_R\left( N,P \right) \right)$ determines an $R$-bilinear map $\varphi\colon M\times N\rightarrow P$ defined by $\left( m,n \right)\mapsto \alpha\left( m \right)\left( n \right)$. By the universal property, $\varphi$ factors through an $R$-linear map $ \overline{\varphi}\colon M\otimes_{R}N\rightarrow P $, so $\alpha$ determines a well-defined $ \overline{\varphi}\in \hom_R\left( M\otimes_{R}N,P \right) $. The map $\alpha\mapsto \overline{\varphi}$ is $R$-linear and has inverse given by $\varphi\mapsto \left( \left( m,n \right)\mapsto \varphi\left(m\otimes n\right) \right)$.
+\end{proof}
+\begin{corollary}
+  For every $R$-module $N$, the functor $\operatorname{-}\otimes_{R}N$ is left adjoint to the functor $\hom_{R}\left( N,\operatorname{-} \right)$
+\end{corollary}
+We can use the following general theorems to apply it to the special case of the functors $ \operatorname{-}\otimes_{R}N $ and $\hom_{R}\left( N,\operatorname{-} \right)$.
+\begin{theorem}
+  If $ \mathcal{F} $ is a functor with a right adjoint (i.e., a left-adjoint functor), then $ \mathcal{F} $ commutes with categorical colimits (e.g., direct sums). Similarly, if $\mathcal{G}$ is a functor with a left adjoint (i.e., a right-adjoint functor), then $ \mathcal{G} $ commutes with categorical limits (e.g., products).
+\end{theorem}
+\begin{theorem}
+  If $ \mathcal{F} $ is a left-adjoint functor (on $R$-modules), then $ \mathcal{F} $ preserves right-exact sequences. That is, given an exact sequence $A\rightarrow B\rightarrow C\rightarrow 0$,
+  \begin{align*}
+    \mathcal{F}\left( A \right)\rightarrow \mathcal{F}\left( B \right)\rightarrow \mathcal{F}\left( C \right)\rightarrow 0.
+  \end{align*}
+  Similarly, if $\mathcal{G}$ is a right-adjoint functor on $R$-modules, then $\mathcal{G}$ preserves left-exact sequences. That is, given an exact sequence $0\rightarrow A\rightarrow B\rightarrow C$,
+  \begin{align*}
+    0 \rightarrow \mathcal{G}\left( A \right)\rightarrow \mathcal{G}\left( B \right)\rightarrow \mathcal{G}\left( C \right).
+  \end{align*}
+\end{theorem}
+Therefore, we obtain the following results.
+\begin{corollary}
+  For all $R$-modules $M_1$, $M_2$, and $N$, we have
+  \begin{align*}
+    \left( M_1\oplus M_2 \right)\otimes_{R}N &\cong \left( M_1\otimes_{R}N \right)\oplus \left( M_2\otimes_{R}N \right).
+  \end{align*}
+\end{corollary}
+\begin{corollary}
+  If $A$ and $B$ are any sets, then
+  \begin{align*}
+    R^{\oplus A}\otimes_{R}R^{\oplus B} &\cong R^{\oplus \left( A\times B \right)}.
+  \end{align*}
+\end{corollary}
+Without having to go through the full process of proof, we obtain the following previously established result.
+\begin{corollary}
+  For all $R$-modules $N$ and all ideals $I$ of $R$, we have
+  \begin{align*}
+    \left( R/I \right)\otimes_{R}N &\cong N/IN.
+  \end{align*}
+\end{corollary}
+\begin{corollary}
+  For all ideals $I$ and $J$ of $R$,
+  \begin{align*}
+    \left( R/I \right)\otimes_{R}\left( R/J \right) &\cong \frac{R}{I + J}.
+  \end{align*}
+\end{corollary}
+\begin{proof}
+  We have
+  \begin{align*}
+    \left( R/I \right)\otimes_{R} \left( R/J \right) &\cong \frac{\left( R/J \right)}{I\left( R/J \right)}\\
+                                                     &\cong \frac{\left( R/J \right)}{\left( I+J \right)/J}\\
+                                                     &\cong \frac{R}{I + J},
+  \end{align*}
+  where the second line emerges from the correspondence in the fourth isomorphism theorem.
+\end{proof}
+A question we're interested in is what happens when the functor $\operatorname{-}\otimes_{R}N$ preserves an entire short exact sequence (i.e., the functor is exact). This is not always the case. For instance, consider the following short exact sequence
+\begin{align*}
+  0 \rightarrow \Z \xrightarrow{\cdot 2} \Z\rightarrow \Z/2\Z\rightarrow 0.
+\end{align*}
+Taking the tensor product with $\Z/2\Z$ yields the operation $\Z/2\Z\xrightarrow{\cdot 2}\Z/2\Z$, which is the zero map (hence it is not injective).
+
+Meanwhile, if the module $N\cong R^{\oplus A}$ is free, then $\operatorname{-}\otimes_{R}N$ is exact, since any inclusion $M_1\subseteq M_2$ yields a map $M_1\otimes_{R}R^{\oplus A}\rightarrow M_2\otimes_{R}R^{\oplus A}$, and since tensor products and direct sums commute, this yields an inclusion $M_1^{\oplus A}\rightarrow M_2^{\oplus A}$.
+\begin{definition}
+  An $R$-module $N$ is called \textit{flat} if $\operatorname{-}\otimes_{R}N$ is exact.
+\end{definition}
+In other words, flatness is sort of the counterpart of projectivity, where we recall that an $R$-module $N$ is projective if and only if the functor $\hom_{R}\left( N,\operatorname{-} \right)$ is exact.
+
+Furthermore, it can be shown that all projective modules are flat, and over integral domains, all flat modules are torsion-free.
 \subsubsection{Nakayama's Lemma}%
 \begin{definition}
   The \textit{Jacobson radical} $ \mathfrak{J} $ of a commutative ring $A$ is the intersection of all the maximal ideals.
@@ -924,7 +1031,7 @@ We assume that the group $G$ is finite and that all representations are complex 
       \C[G] &\cong \bigoplus_{i=1}^{r} V_i^{\oplus n_i}\\
                                     &\cong \bigoplus_{i=1}^{r} \Mat_{n_i}\left( \C \right)
     \end{align*}
-    where each $n_i$ is equal to the dimension of the representation $V_i$. 
+    where each $n_i$ is equal to the dimension of the irreducible representation $V_i$. 
 \end{itemize}
 \section{Field/Galois Theory}%
 \subsection{Field Theory Notes}%
@@ -936,7 +1043,7 @@ We assume that the group $G$ is finite and that all representations are complex 
   \end{align*}
 \end{theorem}
 \begin{proof}
-  Let $ \mathcal{B} = \set{\beta_1,\dots,\beta_n} $ be a basis for $E$ over $F$. We may lift the basis to $EK = K\left( \beta_1,\dots,\beta_n \right)$, where each $\beta_i$ is algebraic over $K$. Since $EK$ is then the set of polynomials over $K$ in $\beta_1,\dots,\beta_n$, and each monomial in the $\beta_i$ is a linear combination of $\beta_1,\dots,\beta_n$ over $F$, it follows that $EK$ is the set of linear combinations of $\beta_1,\dots,\beta_n$ over $K$. Therefore, $ \mathcal{B} $ spans $EK$ over $K$.
+  Let $ \mathcal{B} = \set{\beta_1,\dots,\beta_n} $ be a basis for $E$ over $F$. We may lift the basis to $EK = K\left( \beta_1,\dots,\beta_n \right)$, where each $\beta_i$ is algebraic over $K$. Since $EK$ is then the set of polynomials over $K$ in $\beta_1,\dots,\beta_n$, and each monomial in the $\beta_i$ is a linear combination of $\beta_1,\dots,\beta_n$ over $F$, it follows that $EK$ is the set of linear combinations of the $\beta_i$ over $K$. Therefore, $ \mathcal{B} $ spans $EK$ over $K$.
 \end{proof}
 \begin{definition}
   Let $\sigma\colon F\rightarrow L$ be an embedding (i.e., injective ring/field homomorphism) of the field $F$ into $L$, and let $E/F$ be an extension. An embedding $ \overline{\sigma}\colon E\rightarrow L $ for which $ \overline{\sigma}|_{F} = \sigma $ is an extension of $\sigma$ to $E$. If $ \overline{\sigma} $ extends the identity map $ \iota\colon F\rightarrow F $, then we call it an $F$-embedding.
@@ -978,7 +1085,7 @@ We assume that the group $G$ is finite and that all representations are complex 
       where $\bigvee_{i\in I}E_i$ denotes the composite of all the fields $E_i$ and $\bigwedge_{i\in I}E_i$ denotes the infimum (/intersection) of all the fields $E_i$.
   \end{enumerate}
 \end{theorem}
-\begin{problem}\hfill
+\begin{proof}\hfill
   \begin{enumerate}[(i)]
     \item A splitting field for a family of polynomials over $F$ is also a splitting field for the same family of polynomials over $K$.
     \item Let $E$ be a splitting field for a family $ \mathcal{F} $ of polynomials over $F$, and let $R$ be the set of roots in $E$ of all the polynomials in $ \mathcal{F} $. Then, $E = F(R)$. Therefore, $EK = K(R)$, so $EK$ is a splitting field for the family $ \mathcal{F} $ considered as polynomials over $K$. Therefore, $K\triangleleft EK$.
@@ -994,7 +1101,7 @@ We assume that the group $G$ is finite and that all representations are complex 
       \end{align*}
       giving the desired result.
   \end{enumerate}
-\end{problem}
+\end{proof}
 \begin{definition}
   If $E/F$ is not a normal extension, then there is a smallest extension $N$ of $E$ in an algebraic closure $ \overline{F} $ for which $N$ is normal over $F$. This is denoted the \textit{normal closure} of $E$ over $F$, and we write $ \left\langle E/F \right\rangle $.
 \end{definition}
@@ -1073,6 +1180,14 @@ We will not prove the general case (which holds for any algebraically closed fie
 
   Meanwhile, if $f(x)$ is reducible, then $f(x)$ is a product of distinct irreducibles since it is separable. Let $r_i$ and $r_j$ be roots of different irreducible factors of $f(x)$. Then, for each $\sigma\in \gal\left( \operatorname{spl}_{K}\left( f(x) \right)/K \right)$, we have $\sigma\left( r_i \right)$ has the same minimal polynomial over $K$ as $r_i$, so we cannot have $\sigma\left( r_i \right) = r_j$, whence the Galois group is not transitive.
 \end{proof}
+\begin{theorem}[Artin's Lemma]
+  Let $K$ be a field, $G$ a finite subgroup of $\aut(K)$, and $F = K^{G}$ the corresponding fixed field. Then,
+  \begin{enumerate}[(i)]
+    \item $K/F$ is Galois;
+    \item $K/F$ is a finite;
+    \item $\gal\left( K/F \right) = G$ as a subgroup of $\aut\left( K \right)$.
+  \end{enumerate}
+\end{theorem}
 \begin{itemize}
   \item An extension $K/F$ is Galois if and only if $K$ is the splitting field of a separable polynomial $f(x)\in F[x]$.
   \item Correspondence: if $K/F$ is a finite Galois extension, then the correspondence between subfields of $K/F$ (that is, subfields of $K$ that contain $F$) and subgroups of $\gal\left( K/F \right)$ is given by $K\supseteq L\mapsto \gal\left( K/L \right)\subseteq \gal\left( K/F \right)$ and $\gal\left( K/F \right)\geq H\mapsto K^{H}\subseteq K$.
@@ -1134,6 +1249,36 @@ We will not prove the general case (which holds for any algebraically closed fie
   \end{align*}
   then applying $\sigma_i^{-1}$ to this relation for each $i=1,\dots,n$, we find that we obtain a system of linear equations regarding the $a_j$ as unknowns. Since the determinant $\det\left( \sigma_i^{-1}\sigma_j(w) \right)$ is nonzero, it follows that we must have $a_j = 0$ for each $j=1,\dots,n$, so that $w$ is the desired element.
 \end{proof}
+\subsubsection{Galois Groups with Nested Square Roots}%
+We will let $F = \Q$ for each of the following.
+\begin{enumerate}[(a)]
+  \item Let $\alpha$ be the nested square root $\sqrt{4 + \sqrt{5}}$. Let $\alpha' = \sqrt{4-\sqrt{5}}$, so that the polynomial
+    \begin{align*}
+      f(x) &= \left( x-\alpha \right)\left( x+\alpha \right)\left( x-\alpha' \right)\left( x+\alpha'\right)\\
+           &= x^{4}-8x^2 + 11
+    \end{align*}
+    is irreducible. If $K$ is the splitting field for $f(x)$ over $F$, then we have $F\left( \alpha,\alpha' \right) = K$; since $f$ is irreducible, $\left[ F\left( \alpha \right):F \right] = 4$, and since $\sqrt{5}$ is in $F\left( \alpha \right)$, we have $\alpha'$ has degree at most $2$ over $F\left( \alpha \right)$, so we hope to determine whether $K/F$ is degree $4$ or $8$.
+
+    Writing
+    \begin{align*}
+      \alpha_1 &= \alpha\\
+      \alpha_2 &= \alpha'\\
+      \alpha_3 &= -\alpha\\
+      \alpha_4 &= -\alpha',
+    \end{align*}
+    we observe that any automorphism that takes $\alpha_1\mapsto\alpha_i$ takes $\alpha_3\mapsto -\alpha_i$. Permutations of this form yield the dihedral group $D_4$ generated by $\sigma = \left( 1,2,3,4 \right)$ and $\tau = \left( 2,4 \right)$. Therefore, we must determine whether this group is isomorphic to $\Z/4\Z$, $\Z/2\Z\times\Z/2\Z$ (the unique copy of $V$ in $S_4$ that is transitive), or $D_4$.
+
+    We observe that the permutation $\left( 1,3 \right)\left( 2,4 \right)$ is contained in all three subgroups of $D_4$, so it extends to $\rho\in \gal\left( K/F \right)$; we hope to determine the subgroup $N$ of $\gal\left( K/F \right)$ with order $2$. Notice that
+    \begin{align*}
+      \alpha^2 &= 4 + \sqrt{5}\\
+      \alpha\alpha' &= \sqrt{11},
+    \end{align*}
+    meaning that $K^{N}$ contains $L = F\left( \sqrt{5},\sqrt{11} \right)$. The chain of fields $F\subseteq L\subseteq K^{N}\subseteq K$ yields that $\left[ K:F \right]\leq 8$, $\left[ L:F \right]= 4$, and $\left[ K:K^{N} \right] = 2$. Therefore, $L = K^{N}$, and $\left[ K:F \right] = 8$, so $\gal\left( K/F \right)\cong D_4$.
+  \item Let $\alpha = \sqrt{2 + \sqrt{2}}$. Then, $f(x) = x^4 - 4x^2 + 2$ is the minimal polynomial for $\alpha$ over $F$, with roots given by $\alpha$, $\alpha' = \sqrt{2-\sqrt{2}}$, $-\alpha$, and $-\alpha'$. Notice that $\alpha\alpha' = \sqrt{2}$, and $\sqrt{2}\in F\left( \alpha \right)$, so $\alpha'\in F\left( \alpha \right)$. Thus, $\left[ K:F \right] = 4$, meaning that $\gal\left( K/F \right)\cong \Z/4\Z$ or $\gal\left( K/F \right)\cong \Z/2\Z\times\Z/2\Z$.
+
+    Since $f(x)$ is irreducible, the operation of $G = \gal\left( K/F \right)$ on the roots of $f$ is transitive. There is an element $\sigma'$ of $G$ that takes $\alpha\mapsto \alpha'$, so since $\alpha^2 = 2 + \sqrt{2}$ and $\alpha'^2 = 2-\sqrt{2}$, we have $\sigma'$ takes $\sqrt{2}\mapsto -\sqrt{2}$ and $\alpha\alpha' \mapsto -\alpha\alpha'$. In particular, this means that $\alpha'\mapsto -\alpha$, so that $\sigma' = \sigma$, where $\sigma$ is the permutation from part (a), so that $\gal\left( K/F \right)\cong \Z/4\Z$.
+  \item Let $\alpha = \sqrt{4 + \sqrt{7}}$. The corresponding minimal polynomial over $F$ is $f(x) = x^4 - 8x^2 + 9$. Then, $\alpha\alpha' = 3$, and $\alpha'$ is in the field $F\left( \alpha \right)$, so that $\left[ K:F \right] = 4$. If $\sigma'$ takes $\alpha\mapsto \alpha'$, then since $\alpha\alpha' = 3$, it must take $\alpha' = \alpha$, so that the Galois group is $\Z/2\Z\times\Z/2\Z$.
+\end{enumerate}
 \subsubsection{Galois Groups of Polynomials}%
 \begin{definition}
   Let $x_1,\dots,x_n$ be indeterminates. The \textit{elementary symmetric functions} $s_1,\dots,s_n$ are defined by
