@@ -10,7 +10,7 @@ Hi, I'm Avinash.
 ## Who am I?
 I am a mathematics PhD student at the University of Virginia studying under [Ben Hayes](https://sites.google.com/site/benhayeshomepage/home). I got my undergraduate degree from Occidental college.
 
-For Spring 2026, I am a learning assistant for Elementary Linear Algebra and a grader for Survey of Algebra.
+I am the instructor of record for Math 1310 (Calculus I) for the section on Tuesday/Thursday 12:30–13:45 and Friday 11:00–11:50.
 
 ## [My CV](https://ai-bearing.github.io/CV/cv_2.pdf)
 
