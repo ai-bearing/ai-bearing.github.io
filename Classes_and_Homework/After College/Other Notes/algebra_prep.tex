@@ -1075,7 +1075,35 @@ In fact, the localization $S^{-1}M$ is an $R$-module (with each $r$ acting as $r
         0\rightarrow S^{-1}L\rightarrow S^{-1}M\rightarrow S^{-1}N\rightarrow 0
       \end{align*}
       of $S^{-1}R$-modules splits (as tensor products and direct sums commute).
-    \item 
+    \item Suppose we have a short exact sequence 
+      \begin{align*}
+        0\rightarrow L\xrightarrow{\psi} M\xrightarrow{\varphi} N\rightarrow 0
+      \end{align*}
+      of $R$-modules. Every element of $S^{-1}N$ is of the form $\frac{n}{s}$ for some $n\in N$ and $s\in S$. Since $\varphi$ is surjective, $n = \varphi(m)$ for some $m\in M$, so the extension of $\varphi$ yields $\varphi'\left( \frac{m}{s} \right) = \frac{\varphi(m)}{s} = \frac{n}{s}$, meaning that $\varphi'$ is surjective.
+
+      If $\frac{m}{s}\in \ker\left( \varphi \right)$, then $s_1\varphi(m) = 0$ for some $s_1\in S$. So, we have $\varphi\left( s_1m \right)= 0$, so $s_1m = \psi(\ell)$ for some $\ell\in L$ by exactness of the original sequence at $M$. Therefore,
+      \begin{align*}
+        \frac{m}{s} &= \frac{s_1m}{s_1s}\\
+                    &= \frac{\psi(\ell)}{s_1s}\\
+                    &= \psi'\left( \frac{\ell}{s_1s} \right),
+      \end{align*}
+      meaning that $\ker\left( \varphi' \right)\subseteq \img\left( \psi' \right)$. If $\frac{\psi(\ell)}{s}\in \img\left( \psi' \right)$, then
+      \begin{align*}
+        \varphi'\left( \frac{\psi(\ell)}{s} \right) &= \frac{\varphi\left( \psi(\ell) \right)}{d}\\
+                                                    &= 0,
+      \end{align*}
+      so that $\img\left( \psi' \right)\subseteq \ker\left( \varphi' \right)$. This yields exactness of the induced sequence at $S^{-1}M$.
+
+      Suppose $\psi'\left( \frac{\ell}{d} \right) = 0$. Then, $s_2\psi(\ell) = 0$ for some $s_2\in S$, meaning that $\psi\left( s_2\ell \right) = 0$. By the injectivity of $\psi$, $s_2\ell = 0$, so that
+      \begin{align*}
+        \frac{\ell}{s} &= \frac{s_2\ell}{s_2s}\\
+                       &= 0.
+      \end{align*}
+      Thus, the sequence
+      \begin{align*}
+        0\rightarrow S^{-1}L\rightarrow S^{-1}M\rightarrow S^{-1}N \rightarrow 0
+      \end{align*}
+      is exact.
   \end{enumerate}
 \end{proof}
 \subsubsection{Nakayama's Lemma}%
@@ -1389,6 +1417,26 @@ We may then compute the multiplicity $d_i$ by $ \iprod{\chi_V}{\chi_{V_i}} $.
 \begin{definition}
   An algebraic extension $K/F$ is called separable if for any $\alpha\in K$, $\mu_{\alpha,F}(x)$ is a separable polynomial (i.e., the polynomial has distinct roots).
 \end{definition}
+We note that, given a field embedding $\sigma\colon K\rightarrow L$, it is possible to define a ring homomorphism $\sigma_{\ast}\colon K[x]\rightarrow L[x]$ by taking
+\begin{align*}
+  \sigma_{\ast}\left( \sum_{i=0}^{n}a_ix^i \right) &= \sum_{i=0}^{n}\sigma\left( a_i \right)x^{i}.
+\end{align*}
+\begin{theorem}[Simple Extension Lemma]
+  Suppose we have a field embedding $\sigma\colon M\rightarrow L$, extensions $M'/M$ and $L'/L$, and algebraic elements $\alpha\in M'$ and $\beta\in L'$. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item there exists a field embedding $\sigma_{1}\colon M\left( \alpha \right)\rightarrow L\left( \beta \right)$ with $\sigma_1|_{M} = \sigma$ and $\sigma_1(\alpha) = \beta$;
+    \item $\sigma_{\ast}\left( \mu_{\alpha,M}(x) \right) = \mu_{\beta,L}(x)$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Suppose such a field embedding exists. Then, pushing forward $\sigma_1$ to $\left( \sigma_1 \right)_{\ast}\colon \frac{M[x]}{\left( \mu_{\alpha,M}(x) \right)}\rightarrow \frac{L[x]}{\left( \mu_{\beta,L}(x) \right)}$, we have that, since $\sigma_1(\alpha) = \beta$, it follows that $\left( \sigma_1 \right)_{\ast}\left( \mu_{\alpha,M}(x) \right) = \mu_{\beta,L}(x)$.
+
+  In the reverse direction, since $\alpha$ is algebraic over $x$, we have that any element of $M(\alpha)$ is given by $p(\alpha)$ for some $p\in M[x]$. Defining
+  \begin{align*}
+    \sigma_1\left( p\left( \alpha \right) \right) &= \left( \sigma_{\ast}(p) \right)(\beta),
+  \end{align*}
+  we have a well-defined extension of $\sigma$ since if $p(\alpha) = q(\alpha)$, then $\left( p-q \right)(\alpha) = 0$, whence $\mu_{\alpha,M}(x) | \left( p-q \right)(x)$. Since $\sigma_{\ast}$ is a ring homomorphism, it preserves divisibility, so that $\sigma_{\ast}\left( \mu_{\alpha,M}(x) \right) | \sigma_{\ast}(p) - \sigma_{\ast}(q)$, whence $\left( \sigma_{\ast}(p) \right)(\beta) = \left( \sigma_{\ast}(q) \right)(\beta)$.
+\end{proof}
 \begin{definition}
   Let $F$ be a field, and let $ \alpha\in \overline{F} $. We define the separable degree, $\operatorname{sdeg}_F\left( \alpha \right)$, to be the number of distinct $ \overline{F} $-roots of $\mu_{\alpha,F}(x)$.
 \end{definition}
@@ -1410,7 +1458,42 @@ We may then compute the multiplicity $d_i$ by $ \iprod{\chi_V}{\chi_{V_i}} $.
 
   Assuming (ii), we observe that $K_i = F\left( \alpha_1,\dots,\alpha_i \right)$ has $K_i = K_{i-1}\left( \alpha_i \right)$, and for any $\alpha\in K_i$, $\mu_{\alpha,K_{i-1}} | \mu_{\alpha,F}$, meaning that $\mu_{\alpha,K_{i-1}}$ is separable, whence $\alpha_i$ is separable over $K_{i-1}$. This gives (iii).
 
+  Now, suppose we have $K_i$ and $\alpha_i$ defined as in (iii). We will construct an $F$-embedding of $K = K_n$ into $ \overline{F} $ as follows. Start with the inclusion $\sigma_0\colon F\rightarrow \overline{F}$, and extend via the simple extension lemma to $\sigma_1\colon K_1\rightarrow \overline{F}$, $\sigma_2\colon K_2\rightarrow \overline{F}$, etc. up to $\sigma_n\colon K_n\to \overline{F}$.
 
+  Counting degrees, we see that if $\sigma_{i-1}\colon K_{i-1}\rightarrow \overline{F}$ is chosen, then the extension to $\sigma_i$ is uniquely determined by its value at $\alpha_i$, and the valid choices are the roots of $\left( \sigma_{i-1} \right)_{\ast}\left( \mu_{\alpha_i,K_{i-1}} \right)$. The number of these roots is equal to the separable degree of $\alpha_i$ over $K_{i-1}$. Yet, since the separable degree of the $\alpha_i$ equals the degree of the $\alpha_i$, it follows that
+  \begin{align*}
+    \left\vert \Hom_F\left( K, \overline{F} \right) \right\vert &= \prod_{i=1}^{n} \operatorname{sdeg}_{K_{i-1}}\left( \alpha_i \right)\\
+                                                                &= \prod_{i=1}^{n} \deg \left( \mu_{\alpha_i,K_{i-1}} \right)\\
+                                                                &= \prod_{i=1}^{n} \left[ K_i:K_{i-1} \right]\\
+                                                                &= \left[ K:F \right].
+  \end{align*}
+  Finally, assume that $\operatorname{sdeg}_{K_{i-1}}\left(\alpha_i\right) = \deg \left( \mu_{\alpha_i,K_{i-1}} \right)$ for any choices of $\alpha_i$ and $K_i$. We may take the case of one arbitrary element $\alpha_1$ that is algebraic over $F$, hence separable by assumption.
+\end{proof}
+\begin{theorem}[Primitive Element Theorem]
+  If $K/F$ is a finite separable extension, then there is $\gamma\in K$ such that $K = F\left( \gamma \right)$.
+\end{theorem}
+\begin{proof}
+  If $F$ is finite, then $K$ is finite, so $K^{\times}$ is cyclic, so there exists $\gamma\in K^{\times}$ such that $K^{\times} = \left\langle \gamma \right\rangle$, whence $F\left( \gamma \right)\supseteq \set{0}\cup \left\langle \gamma \right\rangle = K$.
+
+  If $F$ is infinite, then $K = F\left( \alpha_1,\dots,\alpha_n \right)$ by (ii) above. It thus suffices to prove for the case of $n = 2$.
+
+  Suppose we have $K = F\left( \alpha,\beta \right)$, and let $m = \left[ K:F \right]$. Since $K/F$ is separable, $\left\vert \Hom_F\left( K, \overline{F} \right)  \right\vert = m$. Call these embeddings $\sigma_1,\dots,\sigma_m$.
+
+  We claim that there exists some $c\in F$ such that $\set{\sigma_i(\alpha + c\beta) : 1\leq i \leq m}$ are all distinct. It suffices to show that the set of all $c\in F$ such that there exists $i\neq j$ with $\sigma_i\left( \alpha + c\beta \right) = \sigma_j\left( \alpha + c\beta \right)$ is finite.
+
+  Notice that we have $\sigma_i(\alpha) + c\sigma_i(\beta) = \sigma_j(\alpha) + c\sigma_j(\beta)$. If it were the case that $\sigma_i(\beta) = \sigma_j(\beta)$, then we would have $\sigma_i(\alpha) = \sigma_j(\beta)$, implying that $\sigma_i = \sigma_j$ since they're defined as elements of $\Hom_F\left(K, \overline{F}\right)$ solely by where they map $\alpha$ and $\beta$. If it were the case that $\sigma_i(\beta)\neq \sigma_j(\beta)$, then we solve for $c$ by taking
+  \begin{align*}
+    c &= \frac{\sigma_j(\alpha) - \sigma_i(\alpha)}{\sigma_i(\beta) - \sigma_j(\beta)},
+  \end{align*}
+  which has only finitely many options.
+
+  We will obtain the primitive element $\gamma = \alpha + c\beta$ as in the claim. Then, for all $1\leq i \leq m$, we have $\sigma_i|_{F(\gamma)}$ is an element of $\Hom_F\left( F(\gamma), \overline{F} \right)$, so that
+  \begin{align*}
+    \left[ F\left( \gamma \right):F \right] &\geq \left\vert \Hom_F\left( F(\gamma), \overline{F} \right) \right\vert\\
+                                            &\geq m\\
+                                            &= \left[ K:F \right]\\
+                                            &\geq \left[ F\left( \gamma \right):F \right].
+  \end{align*}
 \end{proof}
 \subsubsection{Irreducibility of Cyclotomic Polynomials over Finite Fields}%
 We will let $\Phi_n$ denote the $n$th cyclotomic polynomial, defined by
@@ -1497,12 +1580,57 @@ We will not prove the general case (which holds for any algebraically closed fie
   \item If $K_1$ and $K_2$ are Galois extensions over $F$, then $K_1\cap K_2$ is Galois over $F$ and $K_1K_2$ is Galois over $F$, with $\gal\left( K_1K_2/F \right)$ isomorphic to the subgroup of $\gal\left( K_1/F \right)\times \gal\left( K_2/F \right)$ consisting of all $\left( \sigma,\tau \right)$ with $\sigma|_{K_1\cap K_2} = \tau|_{K_1\cap K_2}$.
 
     If $K/F$ is Galois and $\gal\left( K/F \right)\cong G_1\times G_2$ is the direct product of two subgroups, then $K$ is the composite of two Galois extensions $K_1$ and $K_2$ with $K_1\cap K_2 = F$.
-  \item Given a finite field $\F_{p^{m}}$, its Galois group is precisely the group generated by $\operatorname{fr}^{m}$, where $\operatorname{fr}\colon \overline{\F_p}\rightarrow \overline{\F_p}$ is given by $ \operatorname{fr}\left( x \right) = x^{p} $.
+  \item If $\F_p$ denotes the field of order $p$, then any finite field $\F_{p^{m}}$ over $\F_p$ has cyclic Galois group with order $m$ generated by $\operatorname{fr}\colon \overline{\F_p}\rightarrow \overline{\F_p}$, given by $ \operatorname{fr}\left( x \right) = x^{p} $.
+
+    Furthermore, if $ \F_{q^{k}}/\F_q $ is a finite extension of a finite field of order $q = p^{\ell}$, then the Galois group is generated by $ \operatorname{fr}^{\ell} $ and is of order $k/\ell$.
   \item Given a separable irreducible polynomial $f(x)\in F[x]$ and its splitting field $K/F$, the minimal polynomial of any element $\theta\in K$ is given by
     \begin{align*}
       \mu_{\theta,F}(x) &= \prod_{i=1}^{r} \left( x-\theta_i \right),
     \end{align*}
     where $\set{\theta_1,\dots,\theta_r}$ is the $\Gal\left( K/F \right)$-orbit of $\theta$.
+\end{itemize}
+We now discuss the special case of the discriminant, and a simple decision process to compute Galois group for cubics and quartics
+
+Define the discriminant of a polynomial $p(x)\in F[x]$ by
+\begin{align*}
+  \Delta &= \prod_{i < j} \left( \alpha_i - \alpha_j \right)^2,
+\end{align*}
+where $\set{\alpha_1,\dots,\alpha_n}$ denotes the roots of the polynomial $p(x)$, with possible multiplicity. If $p(x)$ is separable and irreducible with splitting field $K$, observe that $\gal\left( K/F \right)$ preserves $\Delta$ (i.e., $\Delta\in F$), and it preserves $\sqrt{\Delta}$ if and only if $\gal\left( K/F \right)\leq A_n$.
+
+We now focus on the special cases of cubics and quartics.
+\begin{itemize}
+  \item Assume $p(x)$ is cubic (and irreducible and separable). A root of $p(x)$ then generates a degree $3$ extension over $F$, so the degree of the splitting field $K/F$ is divisible by $3$.
+    \begin{itemize}
+      \item If $\Delta$ is a square in $F$, then $\Gal\left( K/F \right)\cong A_3 \cong \Z/3\Z$, and the splitting field is given by $K = F\left( \theta \right)$ for any root $\theta$ of $p(x)$.
+      \item If $\Delta$ is \textit{not} a square in $F$, then $\gal\left( K/F \right)\cong S_3$, and the splitting field is given by $K = F\left( \sqrt{\Delta},\theta \right)$ for any root $\theta$ of $p(x)$. The subgroup is then generated by automorphisms $\sigma$ and $\tau$, where $\sigma$ shuffles the root $\theta$ to the other roots of $f$ while fixing $\sqrt{\Delta}$ and $\tau$ takes $\sqrt{\Delta}\mapsto -\sqrt{\Delta}$ and fixes $\theta$.
+    \end{itemize}
+  \item Assume $p(x)$ is quartic (and irreducible and separable). Define the resolvent cubic to be the polynomial in $g(x)\in F[x]$ with roots
+    \begin{align*}
+      \theta_1 &= \left( \alpha_1 + \alpha_2 \right)\left( \alpha_3 + \alpha_4 \right)\\
+      \theta_2 &= \left( \alpha_1 + \alpha_3 \right)\left( \alpha_2 + \alpha_4 \right)\\
+      \theta_3 &= \left( \alpha_1 + \alpha_4 \right)\left( \alpha_2 + \alpha_3 \right).
+    \end{align*}
+    Notice that $g(x)$ is indeed in $F[x]$ since the Galois group $\gal\left( K/F \right)$ simply shuffles the $\theta_i$. Furthermore, it can  be shown that the discriminant of $g(x)$ is equal to the discriminant of $p(x)$.
+
+    Furthermore, observe that the stabilizer of the element $\theta_1$ is a copy of the dihedral group $D_4$ sitting inside $S_4$, while the stabilizer of all three of the $\theta_i$ is equal to the intersection of these three subgroups, which is the copy of the Klein $4$-group $V$ sitting inside $S_4$.
+    \begin{itemize}
+      \item If the resolvent cubic $g(x)$ is irreducible, then we consider the discriminant $\Delta$.
+        \begin{itemize}
+          \item If $\Delta$ is not a square, then $\gal\left( K/F \right)$ is not contained in $A_4$ and the Galois group of the resolvent cubic is equal to $S_3$. Therefore, the degree of the splitting field for $p(x)$ is divisible by $6$, meaning $\gal\left( K/F \right)\cong S_4$.
+          \item If $\Delta$ is a square, then $\gal\left( K/F \right)$ is contained in $A_4$, and the Galois group of the resolvent cubic is $A_3$. Hence, $3$ divides the order of the Galois group, so $\gal\left( K/F \right)\cong A_4$.
+        \end{itemize}
+      \item If the resolvent cubic is reducible, then we consider the following cases.
+        \begin{itemize}
+          \item If the resolvent cubic splits completely into linear factors, then all of $\theta_1$, $\theta_2$, and $\theta_3$ are in $F$, so they are all fixed by the Galois group. Therefore, $\gal\left( K/F \right)\cong V$.
+          \item If the resolvent cubic splits into a linear factor and an irreducible quadratic factor, then $\gal\left( K/F \right)\subseteq D_4$ and $\gal\left( K/F \right)\nsubseteq V$.
+
+            Consider the field $F\left( \sqrt{\Delta} \right)$, which is the fixed field of $\gal\left( K/F \right)\cap A_4$. Since we assume that $p(x)$ is irreducible, it follows that we must have $\gal\left( K/F \right) = D_4$ or $\gal\left( K/F \right) = C$, where $C = \left\langle \left( 1,2,3,4 \right) \right\rangle$. Notice that $D_4\cap A_4 = V$ and $C\cap A_4 = \set{\id, \left( 1,3 \right)\left( 2,4 \right)}$, the latter of which is not transitive.
+          \begin{itemize}
+            \item If $p(x)$ is irreducible over $F\left( \sqrt{\Delta} \right)$, then the Galois group $\gal\left( K/F\left( \sqrt{\Delta} \right) \right) = \gal\left( K/F \right)\cap A_4$ is transitive. Thus, $\gal\left( K/F\left( \sqrt{\Delta} \right) \right) = V$, so $\gal\left( K/F \right) \cong D_4$.
+            \item If $p(x)$ is reducible over $F\left( \sqrt{\Delta} \right)$, then the Galois group $\gal\left( K/F\left( \sqrt{\Delta} \right) \right) = \gal\left( K/F \right)\cap A_4$ is not transitive. Therefore, $\gal\left( K/F\left( \sqrt{\Delta} \right) \right) = \set{\id, \left( 1,3 \right)\left( 2,4 \right)}$, so $\gal\left( K/F \right)\cong C$.
+          \end{itemize}
+        \end{itemize}
+    \end{itemize}
 \end{itemize}
 \subsubsection{Linear Independence of Characters}%
 \begin{definition}
@@ -1577,7 +1705,7 @@ We will let $F = \Q$ for each of the following.
   \item Let $\alpha = \sqrt{2 + \sqrt{2}}$. Then, $f(x) = x^4 - 4x^2 + 2$ is the minimal polynomial for $\alpha$ over $F$, with roots given by $\alpha$, $\alpha' = \sqrt{2-\sqrt{2}}$, $-\alpha$, and $-\alpha'$. Notice that $\alpha\alpha' = \sqrt{2}$, and $\sqrt{2}\in F\left( \alpha \right)$, so $\alpha'\in F\left( \alpha \right)$. Thus, $\left[ K:F \right] = 4$, meaning that $\gal\left( K/F \right)\cong \Z/4\Z$ or $\gal\left( K/F \right)\cong \Z/2\Z\times\Z/2\Z$.
 
     Since $f(x)$ is irreducible, the operation of $G = \gal\left( K/F \right)$ on the roots of $f$ is transitive. There is an element $\sigma'$ of $G$ that takes $\alpha\mapsto \alpha'$, so since $\alpha^2 = 2 + \sqrt{2}$ and $\alpha'^2 = 2-\sqrt{2}$, we have $\sigma'$ takes $\sqrt{2}\mapsto -\sqrt{2}$ and $\alpha\alpha' \mapsto -\alpha\alpha'$. In particular, this means that $\alpha'\mapsto -\alpha$, so that $\sigma' = \sigma$, where $\sigma$ is the permutation from part (a), so that $\gal\left( K/F \right)\cong \Z/4\Z$.
-  \item Let $\alpha = \sqrt{4 + \sqrt{7}}$. The corresponding minimal polynomial over $F$ is $f(x) = x^4 - 8x^2 + 9$. Then, $\alpha\alpha' = 3$, and $\alpha'$ is in the field $F\left( \alpha \right)$, so that $\left[ K:F \right] = 4$. If $\sigma'$ takes $\alpha\mapsto \alpha'$, then since $\alpha\alpha' = 3$, it must take $\alpha' = \alpha$, so that the Galois group is $\Z/2\Z\times\Z/2\Z$.
+  \item Let $\alpha = \sqrt{4 + \sqrt{7}}$. The corresponding minimal polynomial over $F$ is $f(x) = x^4 - 8x^2 + 9$. Then, $\alpha\alpha' = 3$, and $\alpha'$ is in the field $F\left( \alpha \right)$, so that $\left[ K:F \right] = 4$. If $\sigma'$ takes $\alpha\mapsto \alpha'$, then since $\alpha\alpha' = 3$, we must have $\alpha' = \alpha$, so that the Galois group is $\Z/2\Z\times\Z/2\Z$.
 \end{enumerate}
 \subsubsection{Galois Groups of Polynomials}%
 \begin{definition}
@@ -1727,7 +1855,7 @@ The elementary symmetric functions in the $\theta_i$ are fixed by $S_4$, so they
 \begin{align*}
   h(x) &= x^3 - 2px^2 + \left( p^2-4r \right)x + q^2.
 \end{align*}
-This is known as the \textit{resolvent cubic} for the quartic $g(y)$. It can be shown (see DF p.614) that the discriminant $\Delta$ of the resolvent cubic is equal to the resolvent of $g(y)$. In particular, this gives
+This is known as the \textit{resolvent cubic} for the quartic $g(y)$. It can be shown (see DF p.614) that the discriminant $\Delta$ of the resolvent cubic is equal to the discriminant of $g(y)$. In particular, this gives
 \begin{align*}
   \Delta &= 16p^{4}r - 4p^3q^2 - 128p^2r^2 + 144pq^2r - 27q^{4} + 256r^3.
 \end{align*}
