@@ -30,6 +30,7 @@ permalink: "/useful_resources.html"
   - Qualifier Prep:
     - [Real Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/real_analysis_prep.pdf)
     - [Complex Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/complex_analysis_prep.pdf)
+    - [Algebra](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/algebra_prep.pdf)
   - Algebra:
     - [Conjugation and the Sylow Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conjugation_and_sylow_theorems.pdf)
     - [Algebraic Geometry](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, Algebraic Geometry/algebraic_geometry.pdf) (partial work-through)
