@@ -1,0 +1,96 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage[uprightgreeks,light,noDcommand]{kpfonts}
+\renewcommand{\coloneq}{\coloneqq}
+\renewcommand{\eqcolon}{\eqqcolon}
+%\renewcommand{\mathbb}{\mathds}
+%\usepackage{homework}
+\usepackage{notes}
+
+\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+\addbibresource{all_references.bib}
+
+\usepackage{parskip}
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Von Neumann Dimension and $L^2$-Betti Numbers}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Preliminaries}%
+We start by recalling the construction of the group von Neumann algebra. Let $G$ be a countable discrete group. Then, we may form the space
+\begin{align*}
+  \ell^2(G) &= \set{\left( \xi_g \right)_{g\in G} : \sum_{g\in G} \left\vert \lambda_g \right\vert^2 < \infty},
+\end{align*}
+with orthonormal basis $\set{\delta_g}_{g\in G}$. The left regular representation of $G$ is the map $\lambda\colon G\rightarrow B\left( \ell^2(G) \right)$ that takes $\lambda_g\xi(h) = \xi\left( g^{-1}h \right)$. The \textit{group von Neumann algebra} is then the WOT-closed linear span of $\lambda(G)\subseteq B\left( \ell^2(G) \right)$. We will denote this by $L(G)$. Using the right regular representation (as opposed to the left regular representation) $\rho_g\xi(h) = \xi(hg)$ yields the group von Neumann algebra $R(G)$. We have $R(G) = L(G)'$ and $L(G)' = R(G)$. We will usually work with $R(G)$.
+
+The most important fact about the group von Neumann algebra is that it admits a trace, denoted $\tau_G$, defined by
+\begin{align*}
+  \tau_G\left( T\right) &= \iprod{x\delta_e}{\delta_e}.
+\end{align*}
+We will use this trace as part of the construction of the von Neumann dimension. We note that this trace extends to the space $\M_n\left( R(G) \right) = R(G)\otimes \M_n(\C)$ via the operator $\tau^{(n)}\coloneq \tau\otimes \Tr$, where
+\begin{align*}
+  \tau^{(n)}(x) &= \sum_{i=1}^{n} \tau\left( x_{ii} \right).
+\end{align*}
+
+We note that the $\ell^2(G)$ can be viewed as a left $\C[G]$-module by using the \textit{right} $G$-action,
+\begin{align*}
+  G\times \ell^2(G)&\rightarrow \ell^2(G)\\
+  \left( g,\xi \right) &\mapsto \rho_g\xi.
+\end{align*}
+In particular, this means that we may view $R(G)$ as the space of \textit{left} $\C[G]$-equivariant operators in $B\left( \ell^2(G) \right)$ --- recall that $\rho_g$ and $\lambda_g$ are commutants of each other, so any of the left $\C[G]$ operators will commute with the right action.
+\section{Traces of $G$-module Endomorphisms}%
+\begin{definition}
+  A Hilbert $G$-module is a Hilbert space $V$ over $\C$ equipped with a $\C$-linear isometric left $G$-action such that there exists $n\in \N$ and an isometric $G$-equivariant embedding $V\rightarrow \ell^2(G)^{\oplus n}$. Here, it is equivariant with the diagonal left action of $G$, which we will denote $\lambda^{(n)}$.
+\end{definition}
+Consider a Hilbert $G$-module $H$ with embedding $i\colon H\rightarrow \left( \ell^2(G) \right)^n$. We may identify $H$ with a closed $G$-invariant subspace of $\ell^2(G)^{\oplus n}$. Let $p_{i(H)}\in B\left( \ell^2(G)^{\oplus n} \right)^{\lambda^{(n)}}$ be the orthogonal projection onto $i(H)$. We will let $B(H)^{G}$ be the set of all $G$-module endomorphisms of $H$.
+\begin{proposition}
+  We claim that the quantity
+  \begin{align*}
+    \dim_{R(G)}\left( H \right) &= \tau^{(n)} \left( p_{i(H)} \right)
+  \end{align*}
+  is independent of the embedding $i(H)$.
+\end{proposition}
+\begin{proof}
+  Suppose $j\colon H\rightarrow \ell^2(G)^{\oplus m}$ is another embedding with corresponding projection $q_{j(H)}$. Define the map $u\colon \ell^2(G)^{\oplus n}\rightarrow \ell^2(G)^{\oplus m}$ by taking $u = j\circ i^{-1}$ on $\img(i)$ and $0$ on $\img(i)^{\perp}$. In particular, we have $j = u\circ i$, and $q_{j(H)} = p_{i(H)}\circ u^{\ast}$ upon taking adjoints. Therefore, we have
+  \begin{align*}
+    \tau^{(m)}\left( q_{j(H)} \right) &= \tau^{(m)} \left( j\circ q_{j(H)} \right)\\
+                                      &= \tau^{(m)} \left( u\circ i \circ q_{j(H)} \right)\\
+                                      &= \tau^{(m)} \left( u\circ i \circ p_{i(H)} \circ u^{\ast} \right).
+                                      \intertext{Using the tracial property of $\tau^{(m)}$ and exchanging dimension to account for the new range, we have}
+                                      &= \tau^{(n)} \left( i\circ p_{i(H)}\circ u^{\ast}\circ u \right)\\
+                                      &= \tau^{(n)} \left( i\circ p_{i(H)}^2 \right)\\
+                                      &= \tau^{(n)} \left( i\circ p_{i(H)} \right).
+  \end{align*}
+  Therefore, the quantity $\dim_{R(G)}(H)$ is well-defined.
+\end{proof}
+\begin{remark}
+  For maximum generality, we may consider any linear isometric $G$-embedding into $\ell^2(G)\otimes K$ for any Hilbert space $K$, but this will not be an issue we will deal with for a while.
+\end{remark}
+The quantity $\dim_{R(G)}(H)$ is called the von Neumann dimension of $H$. Certain authors, such as \cite{luck_l2_homology} and \cite{kammeyer_l2_invariants} define it slightly differently than the way that \cite{loh_l2_homology} does. However, these are equivalent definitions at the end of the day. We note that this quantity is also always positive, since if $P\in \M_n\left( R(G) \right)$ is the matrix corresponding to the projection $p_{i(H)}$, then all the diagonal entries $P_{jj}$ of $P$ are positive operators, so since $\tau^{(n)}$ is itself positive, $\Dim_{R(G)} = \tau^{(n)}\left(p_{i(H)}\right)$ is positive.
+
+Hilbert $G$-modules are quite like standard $\C[G]$-modules in a variety of ways.
+\begin{enumerate}[(i)]
+  \item If $K\subseteq H$ is a closed $G$-invariant subspace of a Hilbert $G$-module $H$, then $K$ is itself a $G$-module, and we call $H$ a submodule.
+  \item If $K\subseteq H$ is a closed $G$-invariant subspace of a Hilbert $G$-module $H$, then $H/K$ is also a Hilbert $G$-module since we may identify it with the closed $G$-invariant subspace $K^{\perp}\subseteq H$. We call $H/K$ a quotient module.
+  \item If $H_1$ and $H_2$ are Hilbert $G$-modules with corresponding embeddings $i_1\colon H_1\rightarrow \ell^2(G)^{\oplus n_1}$ and $i_2\colon H_2\rightarrow \ell^2(G)^{\oplus n_2}$, then there is an embedding
+    \begin{align*}
+      i_1\oplus i_2\colon H_1\oplus H_2\rightarrow \ell^2(G)^{\oplus \left( n_1 + n_2 \right)},
+    \end{align*}
+    yielding the direct sum Hilbert module.
+  \item Let $H_1$ be a Hilbert $G_1$-module and $H_2$ a Hilbert $G_2$-module with corresponding embeddings $i_1\colon H_1\rightarrow \ell^2\left( G_1 \right)^{\oplus n}$ and $i_2\colon H_2\rightarrow \ell^2\left( G_2 \right)^{\oplus m}$. These yield a tensor product
+    \begin{align*}
+      i_1\otimes i_2\colon H_1\otimes H_2\rightarrow \ell^2\left( G_1 \right)^{\oplus n} \otimes \ell^2\left( G_2 \right)^{\oplus m},
+    \end{align*}
+    where we observe that the codomain is isomorphic to $\ell^2\left( G_1\times G_2 \right)^{\oplus mn}$. This yields a tensor product Hilbert $\left( G_1\times G_2 \right)$-module.
+  \item Suppose $G_0\leq G$ is a finite-index subgroup with index $m$. There is a functor $\operatorname{Res}_{G_0}^{G}$ from Hilbert $G$-modules to Hilbert $G_0$-modules obtained by restricting the group action to $G_0$.
+
+    The corresponding embedding emerges from the fact that taking a system of representatives for the coset space $G/G_0$ yields a unitary $\operatorname{Res}_{G_0}^{G} \left( \ell^2(G) \right)\cong \ell^2\left( G_0 \right)^{\oplus m}$. The restriction $\operatorname{Res}_{G_0}^{G}\left( H \right)$ is a restricted Hilbert module.
+\end{enumerate}
+\nocite{luck_l2_homology,loh_l2_homology,kammeyer_l2_invariants}
+\printbibliography
+\end{document}
