@@ -8,7 +8,7 @@ layout: home
 Hi, I'm Avinash. 
 
 ## Who am I?
-I am a mathematics PhD student at the University of Virginia studying under [Ben Hayes](https://sites.google.com/site/benhayeshomepage/home). I got my undergraduate degree from Occidental college.
+I am a second-year mathematics PhD student at the University of Virginia studying under [Ben Hayes](https://sites.google.com/site/benhayeshomepage/home). I got my undergraduate degree from Occidental college.
 
 I am the instructor of record for Math 1310 (Calculus I) for the section on Tuesday/Thursday 12:30–13:45 and Friday 11:00–11:50.
 
