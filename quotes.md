@@ -56,7 +56,7 @@ use_math: true
   "Yeah, they're called software engineers"\
   *Khoa Nguyen*
 
-- "You're supposed to develop schizophrenia *after* your PhD"\
+- "You're supposed to develop schizophrenia after your PhD"\
   *Liam Staker*
 
 - "Diet coke is like drinking a hangnail"\
@@ -84,3 +84,9 @@ use_math: true
 
 - "It's still nuclear war, which isn't great"\
   *Me*
+
+- "When I'm really tired my brain tries to find the nearest meme"\
+  *Joey Politano*
+
+- "Polyamorous improv wedding."\
+  *Daphne Hansell*
