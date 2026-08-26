@@ -88,5 +88,8 @@ use_math: true
 - "When I'm really tired my brain tries to find the nearest meme"\
   *Joey Politano*
 
-- "Polyamorous improv wedding."\
+- "Polyamorous improv wedding"\
   *Daphne Hansell*
+
+- "I forgot about half the numbers"\
+  *Ben Hayes*
