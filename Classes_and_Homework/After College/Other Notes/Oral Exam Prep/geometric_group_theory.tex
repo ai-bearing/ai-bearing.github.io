@@ -22,7 +22,9 @@
 
 \begin{document}
 \RaggedRight
-\section{Group-Theoretic Constructions}%
+This is one of my two preparation documents for my oral exam, focused on geometric/combinatorial group theory.
+\section{Preliminaries}%
+\subsection{Group-Theoretic Constructions}%
 There are two major ways we may construct new groups out of old: extensions/semidirect products and pushouts/amalgamated free products. We will provide a brief overview of both of these.
 \begin{definition}
   Let $Q$ and $N$ be groups. We say a group $G$ is an extension of $Q$ and $N$ if there is an exact sequence
@@ -48,17 +50,220 @@ There are two major ways we may construct new groups out of old: extensions/semi
       \end{align*}
   \end{itemize}
 \end{example}
+\begin{definition}
+  Let $A$ be a group, $\alpha_1\colon A\rightarrow G_1$, and $\alpha_2\colon A\rightarrow G_2$ group homomorphisms. We say a group $G$ is a \textit{pushout} of $G_1$ and $G_2$ over $A$ with respect to $\alpha_1$ and $\alpha_2$ if there are homomorphisms $\beta_1\colon G_1\rightarrow G$ and $\beta_2\colon G_2\rightarrow G$ satisfying $\beta_1\circ \alpha_1 = \beta_2\circ \alpha_2$ and the universal property for pushouts.
 
-\section{Groups acting on Graphs}%
+  That is, for every group $H$ and all group homomorphisms $\varphi_1\colon G_1\rightarrow H$ and $\varphi_2\colon G_2\rightarrow H$ satisfying $\varphi_1\circ \alpha_1 = \varphi_2\circ \alpha_2$, there is exactly one homomorphism $\varphi\colon G\rightarrow H$ satisfying $\varphi\circ\beta_i = \varphi_i$ for each $i=1,2$. We denote the pushout by $G_1\ast_{A}G_2$.
+  \begin{itemize}
+    \item If $A = \set{e}$ is the trivial group, then the pushout $G_1\ast_A G_2 = G_1\ast G_2$ is called the \textit{free product} of $G_1$ and $G_2$.
+    \item If $\alpha_1$ and $\alpha_2$ are injective, then $G_1\ast_{A}G_2$ is called an amalgamated free product of $G_1$ and $G_2$ over $A$.
+  \end{itemize}
+\end{definition}
+\begin{example}\hfill
+  \begin{itemize}
+    \item The free group $F_n$ on $n$ letters is the $n$-fold free product $\Z\ast\cdots\ast\Z$.
+    \item The infinite dihedral group $D_{\infty}\cong \Z/2\Z\ltimes \Z$ is isomorphic to the free product $\Z/2\Z\ast \Z/2\Z$.
+    \item The matrix group $\SL_2\left(\Z\right)$ is isomorphic to the amalgamated free product $\Z/6\Z\ast_{\Z/2\Z}\Z/4\Z$.
+    \item If $X$ and $Y$ are pointed, non-empty, path-connected topological spaces with nonempty and path-connected intersection, then the fundamental group of their union (which is a type of pushout) is given by the amalgamated free product of their fundamental groups over the fundamental group of the intersection.
+  \end{itemize}
+\end{example}
+\begin{theorem}
+  Pushout groups exist and are unique up to isomorphism.
+\end{theorem}
+\begin{proof}
+  Take presentations
+  \begin{align*}
+    G_i &= \left\langle \set{x_g : g\in G_i}|R_i \right\rangle.
+  \end{align*}
+  Then, the presentation
+  \begin{align*}
+    G\coloneq \left\langle \set{x_g : g\in G_1}\cup \set{x_g : g\in G_2} | \set{x_{\alpha_1(a)}x_{\alpha_2(a)}^{-1} : a\in A} \cup R_1 \cup R_2 \right\rangle.
+  \end{align*}
+  The group homomorphisms $\beta_i\colon G_i\rightarrow G$ taking $g\mapsto x_g$, along with the relations $\set{x_{\alpha_1(a)}x_{\alpha_2(a)}^{-1} : a\in A}$, give $\beta_1\circ \alpha_1 = \beta_2\circ \alpha_2$. The universal property then follows from the universal property of generators and relations.
+\end{proof}
+\begin{definition}
+  Let $G$ be a group, and let $A,B\subseteq G$ be isomorphic subgroups with isomorphism $\theta\colon A\rightarrow B$. The \textit{HNN extension} of $G$ with respect to $\theta$ is the group
+  \begin{align*}
+    G \ast_{\theta} &\coloneq \left\langle \set{x_g : g\in G}\cup\set{t} | \set{t^{-1}x_a t x_{\theta(a)}^{-1} : a\in A}\cup R \right\rangle,
+  \end{align*}
+  where $R$ is the relations for $G$. We say that $t$ is the stable letter of the HNN extension.
+\end{definition}
+The HNN extension is the universal (in a sense) way to force isomorphic subgroups to be conjugate to each other.
+\subsection{Group Homology/Cohomology}%
+\begin{definition}
+  Let $R$ be a commutative unital ring. The \textit{group ring} is the ring $R[G]$ with
+  \begin{itemize}
+    \item underlying abelian group $\bigoplus_{g\in G}Rg$, where the $g$ are formal symbols corresponding to the elements of $G$;
+    \item multiplication given by the $R$-bilinear extension of the group multiplication $\left( g,h \right)\mapsto gh$.
+  \end{itemize}
+\end{definition}
+If $G$ is a non-abelian group and $R$ is non-trivial, then the group ring $R[G]$ is not commutative.
+\begin{definition}
+  Let $G$ be a group.
+  \begin{itemize}
+    \item The \textit{simplicial resolution} of $G$, denoted $C_{\ast}(G)$, is the chain complex of $\Z$-modules whose chains are defined by
+      \begin{align*}
+        C_n &\coloneq \bigoplus_{G^{n+1}} \Z,
+      \end{align*}
+      with boundary maps given by $\partial_n\colon C_n(G)\rightarrow C_{n-1}(G)$ taking
+      \begin{align*}
+        \partial_n\left( \sum_{g\in G^{n+1}}a_g \left( g_0,\dots,g_n \right) \right) &= \sum_{g\in G^n} a_g\sum_{j=0}^{n} \left( -1 \right)^{j} \left( g_0,\dots,g_{j-1},g_{j+1},\dots,g_n \right).
+      \end{align*}
+    \item If $A$ is a left $\Z[G]$-module, then the simplicial chain complex of $G$ with $A$-coefficients is given by $C_n\left( G;A \right) = A\otimes_{\Z[G]}C_{\ast}(G)$ with boundary operator $\partial_{\ast}^A = \id_A\otimes_{\Z[G]}\partial_{\ast}$. The elements of $\ker\left( \partial_n^A \right)$ are called the $n$-cycles.
+
+      The $n$-th homology of $G$ with $A$-coefficients is the $\Z$-module given by
+      \begin{align*}
+        H_n\left( G;A \right) &\coloneq \frac{\ker\left( \partial_n^A\colon C_n\left( G;A \right)\rightarrow C_{n-1}\left( G;A \right) \right)}{\img\left( \partial_{n+1}^{A}\colon C_{n+1}\left( G;A \right)\rightarrow C_n\left( G;A \right) \right)}.
+      \end{align*}
+    \item Let $A$ be a left $\Z[G]$-module. The simplicial cochain complex of $G$ with $A$-coefficients is defined by
+      \begin{align*}
+        C^{\ast}\left( G;A \right) \coloneq \Hom_{\Z[G]} \left( C_{\ast}(G),A \right)
+      \end{align*}
+      with coboundary operator $\partial_A^{\ast}$ given by the $A$-dual of $\partial_{\ast}$. Elements of $\ker\left( \delta_A^n \right)$ are called the $n$-cocycles. The $n$th cohomology of $G$ with $A$-coefficients is the $\Z$-module
+      \begin{align*}
+        H^n\left( G;A \right) &\coloneq \frac{\ker\left( \partial^n_A\colon C^n\left( G;A \right)\rightarrow C^{n+1}\left( G;A \right) \right)}{\img\left( \partial^{n-1}_A\colon C^{n-1}\left( G;A \right)\rightarrow C^n\left( G;A \right) \right)}.
+      \end{align*}
+  \end{itemize}
+\end{definition}
+\section{Groups and Graphs}%
+One of the first connections between groups and geometry is the notion of a Cayley graph, and the way that the action of a group on a graph is connected to the structure of the group.
+\subsection{Graph Theory Review}%
+\begin{definition}\hfill
+  \begin{itemize}
+    \item A graph is a pair $X = \left( V,E \right)$, where $E\subseteq V^{[2]} \coloneq \set{e : e\subseteq V,\left\vert e \right\vert = 2}$. Elements of $E$ are denoted by $\set{v_1,v_2}$ if the graph is undirected. If the graph is directed, then elements of $E$ are denoted by tuples $\left( v_1,v_2 \right)$.
+    \item If $\left( V,E \right)$ is a graph, then we say vertices $v,v'\in V$ are adjacent if $\set{v,v'}\in E$. The number of neighbors is the degree of the vertex.
+    \item If $X = \left( V,E \right)$ and $X' = \left( V',E' \right)$ are graphs, then we say $X$ and $X'$ are isomorphic if there is a graph isomorphism between $X$ and $X'$ --- that is, a bijection $f\colon V\rightarrow V'$ such that for any $v,w\in V$, we have $\set{v,w}\in E$ if and only if $\set{f(v),f(w)}\in E'$.
+  \end{itemize}
+\end{definition}
+\begin{definition}
+  Let $X = \left( V,E \right)$ be a graph. 
+  \begin{itemize}
+    \item A path in $X$ is a sequence $\left[ v_0,\dots,v_n \right]$ of distinct vertices such that $\set{v_j,v_{j+1}}\in E$.
+    \item A graph is called connected if every pair of its vertices can be connected by a path in $X$.
+    \item A cycle of length $n$ is a path $\left[ v_0,\dots,v_{n} \right]$ such that $\set{v_n,v_0}\in E$.
+    \item A tree is a connected graph without cycles. Note that this is equivalent to a graph where every pair of vertices has exactly one path connecting them.
+    \item If $X$ is a connected graph, a \textit{spanning tree} for $X$ is a tree that contains all the vertices of $X$.
+  \end{itemize}
+\end{definition}
+In algebraic topology, we use spanning trees as a way to compute fundamental groups. This is done by using the fact that spanning trees are CW subcomplexes (viewing the graph as a CW complex).
+\subsection{Cayley Graphs}%
+\begin{definition}
+  Let $G$ be a group, and let $S\subseteq G$ be a generating set for $G$ without the identity. The Cayley graph of $G$ with respect to $S$ is the graph $ \operatorname{Cay}\left( G,S \right) $, with
+  \begin{itemize}
+    \item vertices given by elements of $G$;
+    \item edges given by
+      \begin{align*}
+        \set{\set{g,gs} : g\in G,s\in S\cup S^{-1}}.
+      \end{align*}
+  \end{itemize}
+\end{definition}
+\begin{example}\hfill
+  \begin{itemize}
+    \item The Cayley graph of $\Z$ with respect to $\set{1}$ appears as an infinite line, while the Cayley graph of $\Z$ with respect to the generating set $\set{2,3}$ appears as a particular $4$-regular graph. See \cite[Figure 3.3]{loh_geometric_group_theory}.
+    \item The Cayley graph of $\Z^2\subseteq \R^2$ with respect to the generating set $\set{\left( 1,0 \right),\left( 0,1 \right)}$ appears as the integer lattice.
+    \item The Cayley graph of $\Z/6\Z$ with respect to $\set{[1]}$ is a cycle graph.
+    \item The Cayley graph of the symmetric group $S_3$ with respect to the generating set $\set{\sigma,\tau}$, where we have
+      \begin{align*}
+        S_3 &\coloneq \left\langle \sigma,\tau | \sigma^3,\tau^2,\tau\sigma\tau\sigma \right\rangle.
+      \end{align*}
+    \item The Cayley graph of any group with respect to the generating set given by the group itself is a complete graph.
+  \end{itemize}
+\end{example}
+One of the seemingly simple questions one might ask is when exactly finitely generated groups $G$ and $H$ with finite generating sets $S\subseteq G$ and $T\subseteq H$ are such that $ \operatorname{Cay}\left( G,S \right) \cong \operatorname{Cay}\left( H,T \right) $ are isomorphic as graphs. This is essentially a question about Cayley graphs whose automorphisms are affine (i.e., given by a group isomorphism and translation by a fixed group element).
+\begin{itemize}
+  \item Cayley graphs of finitely generated abelian groups satisfy the rigidity question; the automorphisms are affine on the free part, and Cayley graphs remember the rank of the group and the size of the torsion subgroup.
+  \item Automorphisms of Cayley graphs of finitely generated torsion-free nilpotent groups are affine.
+  \item Finitely generated free groups admit isomorphic Cayley graphs if and only if they have the same rank.
+\end{itemize}
+Given a presentation of a group, the presentation complex is a two-dimensional CW complex given by taking one zero-cell, adding circles for every generator, and attaching disks for every relation (attached by the word for the relation).
+
+The presentation complex associated to $ \left\langle x,y | xyx^{-1}y^{-1} \right\rangle $. The presentation complex associated to $ \left\langle x|x^2 \right\rangle $ is $ \mathbb{RP}^2 $.
+
+In general, any group admits a classifying space (known as the Eilenberg MacLane space) whose fundamental group is the underlying group and whose higher homotopy groups are trivial. These spaces are unique up to homotopy equivalence. For example, the torus is a classifying space for $\Z^2$ and $ \mathbb{RP}^{\infty} $ is a classifying space for $\Z/2\Z$.
+
+The $1$-skeleton of the universal cover of the presentation complex of the presentation $ \left\langle X|R \right\rangle $ is basically the Cayley graph (save for generators of order $2$).
+\begin{theorem}
+  Let $F$ be a free group freely generated by $S\subseteq F$. Then, $ \operatorname{Cay}\left( F,S \right) $ is a tree.
+\end{theorem}
+\begin{proof}
+  Every element of $F$ is a unique word in elements of $S$, so there is a unique path between the identity and any word, so there is a unique path between any two elements, so $ \operatorname{Cay}\left( F,S \right) $ is a tree.
+\end{proof}
+There is a converse, but it requires a caveat. In particular, we see that $ \operatorname{Cay}\left( \Z/2\Z,[1] \right) $ is a one-edge two-vertex graph (which is a tree). 
+\begin{theorem}
+  Let $G$ be a group, $S\subseteq G$ a generating set satisfying $st\neq e$ for all $s,t\in S$. If $\operatorname{Cay}\left( G,S \right)$ is a tree, then $G \cong F(S)$ is freely generated by $S$.
+\end{theorem}
+\begin{proof}
+  Let $S$ and $G$ be such that $\operatorname{Cay}\left( G,S \right)$ is a tree. We will show that $G$ is isomorphic to $F(S)$ by an isomorphism that is the identity on $S$.
+
+  First, we observe that, by the universal property applied to the inclusion $S\subseteq G$, there is a group homomorphism $\varphi\colon F(S)\rightarrow G$ that is the identity on $S$. Since $S$ generates $G$, it follows that $\varphi$ is surjective.
+
+  Assume toward contradiction that $\varphi$ is not injective. Let $s_1\cdots s_n\in F(S)\setminus \set{\ve}$ be a word of minimal length mapped to $e\in G$ by $\varphi$.
+
+  First, since $\varphi|_{S} = \id_S$, we must have $n > 1$.
+
+  Next, if $n = 2$, then we would have
+  \begin{align*}
+    e &= \varphi\left( s_1s_2 \right)\\
+      &= \varphi\left( s_1 \right)\varphi\left( s_2 \right)\\
+      &= s_1s_2,
+  \end{align*}
+  contradicting the fact that $s_1\cdots s_n$ is reduced with $st\neq e$ in $G$.
+
+  Next, suppose $n\geq 3$. Inductively, we may consider the sequence of elements $g_0,\dots,g_{n-1}$ in $G$ given by $g_{j+1} = g_js_{j+1}$ for all $0\leq j \leq n-2$. By minimality of the word $s_1\cdots s_n$, the elements $g_0,\dots,g_{n-1}$ are distinct, and since $g_n = s_1\cdots s_n = e$, it follows that $\left[ g_0,\dots,g_{n-1} \right]$ is a cycle in $\operatorname{Cay}\left( G,S \right)$. Yet, this contradicts the fact that $\operatorname{Cay}\left( G,S \right)$ is a tree. Thus, $\varphi$ is injective.
+\end{proof}
+\subsection{Free Groups and Actions on Trees}%
 
 \section{Quasi-Isometry of Metric Spaces and Groups}%
 
 \section{Growth types of Groups}%
-
-\section{Group Homology/Cohomology}%
+\begin{definition}
+  Let $G$ be a finitely generated group with symmetric generating set $S$. The \textit{word length} of $g\in G$ with respect to $S$, denoted $\ell_S(g)$, is the smallest $n\geq 0$ such that $g$ may be written as a product of $n$ elements of $S$. That is,
+  \begin{align*}
+    \ell_S(g) &= \min\set{n : g = s_1s_2\cdots s_n\text{ with }s_i\in S\text{ and }n\geq 0}.
+  \end{align*}
+  The word metric is then
+  \begin{align*}
+    d_S(g,h) &= \ell_S\left( g^{-1}h \right).
+  \end{align*}
+\end{definition}
+\begin{proposition}
+  The word metric is a left-invariant metric. That is, it satisfies the following:
+  \begin{enumerate}[(i)]
+    \item $d_S\left( g,h \right) = 0$ if and only if $g = h$;
+    \item $d_S\left( g,h \right) = d_S\left( h,g \right)$;
+    \item $d_S\left( g,h \right) \leq d_S\left( g,k \right) + d_S\left( k,h \right)$;
+    \item $d_S\left( g,h \right) = d_S\left( kg,kh \right)$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item We have that $\ell\left( g \right) = 0$ if and only if $g = e$ by the fact that any nontrivial element must be a nontrivial product of elements of $S$.
+    \item Notice that $\ell\left( g \right) = \ell\left( g^{-1} \right)$ since $S$ is symmetric, so if
+      \begin{align*}
+        g &= s_1\cdots s_n
+          \intertext{realizes $\ell(g)$, then}
+        g^{-1} &= s_n^{-1}\cdots s_1^{-1}
+      \end{align*}
+      must realize $\ell\left( g^{-1} \right)$, as otherwise we would have a smaller representation for $g$ in terms of a product of elements of $S$.
+    \item Observe that, by the existence of relations and word reductions, we have $\ell\left( gh \right)\leq \ell\left( g \right) + \ell\left( h \right)$.
+    \item We have
+      \begin{align*}
+        d\left( kg,kh \right) &= \ell\left( \left( kg \right)^{-1}\left( kh \right) \right)\\
+                              &= \ell\left( g^{-1}k^{-1}kh \right)\\
+                              &= \ell\left( g^{-1}h \right)\\
+                              &= d\left( g,h \right).
+      \end{align*}
+  \end{enumerate}
+\end{proof}
 
 \section{Amenability of Groups}%
 
-\nocite{loh_geometric_group_theory,topics_groups_geometry}
+% Coamenability
+
+\section{Residually Finite Groups}%
+
+\section{Soficity and Hyperlinearity}%
+
+\nocite{loh_geometric_group_theory,topics_groups_geometry,cellular_automata_and_groups}
 \printbibliography
 \end{document}
