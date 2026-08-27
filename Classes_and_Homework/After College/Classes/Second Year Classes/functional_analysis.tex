@@ -39,9 +39,10 @@ Recall that if $X$ is a set, then $ \mathcal{T}\subseteq \mathcal{P}\left( \math
 \begin{itemize}
   \item $\emptyset,X\in \mathcal{T}$;
   \item $ U_1,U_2\in \mathcal{T} $ implies $U_1\cap U_2\in \mathcal{T}$;
-  \item $\set{U_i}_{i\in I}\subseteq \mathcal{T}$ implies $\bigcup_{i\in I}U_i\in \mathcal{T}$.
+  \item $\set{U_i : i\in I}\subseteq \mathcal{T}$ implies $\bigcup_{i\in I}U_i\in \mathcal{T}$.
 \end{itemize}
 \begin{definition}
+  \subsection{Definitions}%
   We say $\left( V, \mathcal{T}\right)$ is a \textit{topological vector space} (over $\K$) if $V$ is a $\K$-vector space whose topology is such that the maps
   \begin{align*}
     V\times V &\rightarrow V\\
@@ -92,7 +93,101 @@ We observe that the subsets of the form $U\left( x,\set{\rho},\ve \right)$ as $\
   \begin{align*}
     \bigcap_{\rho\in \mathcal{N}} \set{v : \rho(v) = 0} = \set{0}.
   \end{align*}
+  A family $\mathcal{N}$ of seminorms that satisfies this property is said to be \textit{separating}.
 \end{definition}
+\begin{example}
+  If $ H $ is a Hilbert space with orthonormal basis $\set{e_n : n\in \N}$, then the seminorms $ v\mapsto \left\vert \iprod{v}{e_i} \right\vert $ are separating.
+\end{example}
+%Theorem/Proof required
+\begin{theorem}
+  If $V$ is a $\K$-LCTVS and $ \mathcal{N} $ is a collection of seminorms that defines the topology on $V$, then $ \left( V,\mathcal{T}\left( \mathcal{N} \right) \right) $ is Hausdorff if and only if $ \mathcal{N} $ separates the points of $V$.
+\end{theorem}
+\begin{proof}
+  Assume $\mathcal{N}$ separates the points of $V$. Suppose $v\neq w$ are distinct elements of $V$. Then, since $v-w\neq 0$, there is some $\rho\in \mathcal{N}$ such that $\rho\left( v-w \right) = \ve_0 > 0$. Consider the finite set $F = \set{\rho}$, and choose some $0 < \ve < \ve_0/2$. Then, we claim that 
+  %Finish proof
+\end{proof}
+% Lecture 2
+\subsection{Examples}%
+\begin{remark}
+  If we remove the assumption that the family $\mathcal{N}$ is separating, then the topology induced by the trivial seminorm $\rho\colon V\rightarrow [0,\infty)$ is the indiscrete topology on $V$. Similarly, there is a family of seminorms that induces the discrete topology on $V$.
+\end{remark}
+\begin{enumerate}[(i)]
+  \item Let $\left( V,\norm{\cdot} \right)$ be a normed vector space over $\K$. Examples of these include Banach spaces such as $L^p\left( X, \Sigma,\mu \right)$, where $\Sigma$ is a $\sigma$-algebra and $\mu$ is a positive measure on the measurable space $\left( X,\Sigma \right)$, and $p\in [1,\infty]$. 
+
+    There is a metric on this normed space $d\left( x,y \right) = \norm{x-y}$, which gives rise to the metric topology $ \mathcal{T}\left( d \right) $. We have $U\in \mathcal{T}\left( d \right)$ if and only if $U\subseteq V$ is such that for any $x\in U$, there exists $\ve > 0$ such that
+    \begin{align*}
+      \set{y\in V : d\left( x,y \right) < \ve} &\eqcolon U\left( x,\ve \right)\\
+                                               &\subseteq U.
+    \end{align*}
+    This is a locally convex space with seminorm $ \mathcal{N} = \set{\norm{\cdot}} $. There are two possibilities for finite subsets $F\subseteq \set{\norm{\cdot}}$, meaning that if $F = \emptyset$, then $U\left( x,F,\ve \right) = U\left( x,\emptyset,\ve \right) = V$, while if $F = \set{\norm{\cdot}}$, then
+    \begin{align*}
+      U\left( x,F,\ve \right) &= \set{y\in V : \rho\left( x-y \right) < \ve\text{ for all }\rho \in F}\\
+                              &= \set{y\in V : \norm{x-y} < \ve}\\
+                              &= U\left( x,\ve \right).
+    \end{align*}
+  \item Define $s \left( \N,\K \right)$ to be the space of sequences $x = \left( x_n \right)_{n\geq 0}$ in $\K^{\N}$ such that for all $ k\geq 0 $, $\sup_{n\geq 0} \left\langle n \right\rangle^{k} \left\vert x_n \right\vert < \infty$, where $ \left\langle n \right\rangle = \sqrt{1 + n^2} $ is the bracket. This is the space of \textit{rapidly decaying sequences} in $\K$. In essence, elements of $s\left( \N,\K \right)$ decay faster than any inverse power of the index $n$.
+
+    We define the seminorms 
+    \begin{align*}
+      \rho_{k}(x) &= \sup_{n\geq 0} \left\langle n \right\rangle^{k} \left\vert x_n \right\vert.
+    \end{align*}
+    In fact, the $\set{\rho_k : k\in \N}$ are norms. Let
+    \begin{align*}
+      \mathcal{N}\coloneq \set{\rho_k : k\in \N}
+    \end{align*}
+    We obtain a locally convex on $s\left( \N,\K \right)$ with topology induced by the family $ \mathcal{N} $.
+
+    Later, we will see that $ \left( s\left( \N,\K \right), \mathcal{T}\left( \mathcal{N} \right) \right) $ is \textit{not} a normed space. That is, there does not exist a norm $\norm{\cdot}$ such that $ \mathcal{T}\left( \mathcal{N} \right) = \mathcal{T}\left( \set{\norm{\cdot}} \right) $.
+  \item Take $V = C\left( [0,\infty),\R \right)$ to be the set of all real-valued continuous functions on $[0,\infty)$ with pointwise addition and scalar multiplication. This is a real vector space.
+
+    At first, we may think $\norm{f} = \sup_{t\in \R}\left\vert f(t) \right\vert$ would define a norm, but this is not satisfactory since the functions in $V$ are not necessarily bounded.
+
+    Therefore, we want to restrict to compact subsets. Take
+    \begin{align*}
+      \rho_k(f) &\coloneq \sup_{0\leq t \leq k} \left\vert f(t) \right\vert.
+    \end{align*}
+    Notice that the $\rho_k$ are not norms (use Urysohn's Lemma or your favorite piecewise function to construct one). However, the family $\mathcal{N} = \set{\rho_k : k\geq 0}$ is a separating family.
+
+    Consider the set of functions $V_0 = \set{f\in V : f(0) = 0}$. Then, $V_0\leq V$ is a closed subset.
+    \begin{proof}
+      % Insert Proof Here
+    \end{proof}
+    We claim that the subspace topology on $V_0$ is given by $\mathcal{T}_0 = \mathcal{T}\left( \set{\rho_k|_{V_0} : k\geq 0} \right)$.
+    \begin{proof}
+      % Insert Proof Here
+    \end{proof}
+    We may consider $ \mathcal{B}\left( \mathcal{T}_0 \right) $ to be the Borel $\sigma$-algebra on $V_0$. Brownian motions are a special class of probability measure on $ \left( V_0,\mathcal{B}\left( \mathcal{T}_0 \right) \right) $. Specifically, they are the probability measures such that for every $n\geq 0$, partition $ 0< t_1 < t_2 < \cdots < t_n $, the random variables
+    \begin{align*}
+      X_1 &= f\mapsto f\left( t_1 \right)\\
+      X_2 &= f\mapsto \left( f\left( t_2 \right)-f\left( t_1 \right) \right)\\
+      X_3 &= f\mapsto \left( f\left( t_3 \right)-f\left( t_2 \right) \right)\\
+          &\vdots\\
+      X_n &= f\mapsto \left( f\left( t_n \right)-f\left( t_{n-1} \right) \right)
+    \end{align*}
+    are independent centered Gaussian random variables with variances $t_1,t_2-t_2,\dots, t_n-t_{n-1}$ for an arbitrary $f$. 
+
+    Similar to the case of $s\left( \N,\K \right)$, the space $\left( V_0,\mathcal{T}_0 \right)$ is not a normed space.
+  \item Consider the vector space $V = \R^{\N}$, which is the space of all real-valued sequences. Let $ \mathcal{T} $ be the product topology on $\R^{\N}$. We are curious as to whether $\left( V,\mathcal{T} \right)$ is a locally convex topological vector space.
+
+    Consider the function $d\colon V\times V \rightarrow [0,\infty)$ defined by
+    \begin{align*}
+      d\left( x,y \right) &= \sum_{n=0}^{\infty} 2^{-n} \min\left( 1, \left\vert x_n-y_n \right\vert \right).
+    \end{align*}
+    Then, we claim that $d$ is a distance metric, and $ \mathcal{T} = \mathcal{T}\left( d \right) $.
+    \begin{proof}
+      %Insert Proof Here
+    \end{proof}
+    In particular, we may consider the seminorms
+    \begin{align*}
+      \rho_n(x) &= \left\vert x_n \right\vert,
+    \end{align*}
+    and $ \mathcal{N} = \set{\rho_n : n\geq 0} $. Then, we claim that $ \mathcal{T}= \mathcal{T}\left( \mathcal{N} \right) $. 
+    \begin{proof}
+      %Insert Proof Here
+    \end{proof}
+    In particular, $V$ is not a normed space.
+  \item Consider $c_{00}\left( \N,\K \right)\cong \K[x]$ to consist of all the finitely supported sequences $\left( x_n \right)_{n\geq 0}$. This is a vector space. Consider the seminorms $ \mathcal{N} = \operatorname{SN}\left( V \right) $, and the locally convex space $\left( V, \mathcal{T}\left( \mathcal{N} \right) \right)$. Then, this is a locally convex space that is not metrizable. The topology $ \mathcal{T}\left( \mathcal{N} \right) $ is known as the finest locally convex topology.
+\end{enumerate}
 \section{Notation}%
 \begin{itemize}
   \item The natural numbers are given by $\N = \set{0,1,2,3,\dots}$.
@@ -114,6 +209,13 @@ We observe that the subsets of the form $U\left( x,\set{\rho},\ve \right)$ as $\
       \partial^{\alpha}f &= \frac{\partial^{\left\vert \alpha \right\vert}}{\partial x_1^{\alpha_1}\cdots \partial x_n^{\alpha_n}}.
     \end{align*}
   \item If $A$ is a set, we will write $ \mathcal{P}(A) $ for the power set of $A$. If $A$ and $B$ are sets, then the set $B^{A}\subseteq \mathcal{P}\left( A\times B \right)$ is the set of all functions $f\colon A\rightarrow B$.
+
+    We will write $ \mathcal{P}_{\operatorname{fin}}\left( X \right) $ to consist of all finite subsets subsets of $X$.
+  \item If $x\in \R^{n}$ is given by $\left( x_1,\dots,x_n \right)$, we will define the bracket 
+    \begin{align*}
+      \left\langle x \right\rangle \coloneq  \sqrt{1 + x_1^2 + \cdots + x_n^2}.
+    \end{align*}
+    In the particular case of $n = 1$, we will write $ \left\langle k \right\rangle = \sqrt{1 + k^2} $ for any $k\in \N$.
   \item If $n\in \N$, then
     \begin{align*}
       \left[ n \right] &= \set{1,2,\dots,n},

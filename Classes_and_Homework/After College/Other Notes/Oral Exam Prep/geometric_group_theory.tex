@@ -320,8 +320,85 @@ There is a converse, but it requires a caveat. In particular, we see that $ \ope
 
   Next, suppose $n\geq 3$. Inductively, we may consider the sequence of elements $g_0,\dots,g_{n-1}$ in $G$ given by $g_{j+1} = g_js_{j+1}$ for all $0\leq j \leq n-2$. By minimality of the word $s_1\cdots s_n$, the elements $g_0,\dots,g_{n-1}$ are distinct, and since $g_n = s_1\cdots s_n = e$, it follows that $\left[ g_0,\dots,g_{n-1} \right]$ is a cycle in $\operatorname{Cay}\left( G,S \right)$. Yet, this contradicts the fact that $\operatorname{Cay}\left( G,S \right)$ is a tree. Thus, $\varphi$ is injective.
 \end{proof}
-\subsection{Free Groups and Actions on Trees}%
+It turns out that, generally speaking, we are able to reconstruct a Cayley graph from any action of a group on a graph.
+\begin{proposition}
+  Let $G$ be a group, and let $G$ act on a connected graph $X = \left( V,E \right)$ by graph automorphisms. If this action is free and transitive on the set $V$ of vertices of $X$, then for a distinguished vertex $x$, the set
+  \begin{align*}
+    S \coloneq \set{s\in G : \set{x,s\cdot x}\in E}
+  \end{align*}
+  generates $G$, and $\operatorname{Cay}\left( G,S \right)\cong X$ are isomorphic as graphs.
+\end{proposition}
+\begin{proof}
+  Since the action of $G$ on the vertices is free and transitive, we may identify $V$ with $G$ by the identification $g\mapsto g\cdot x$.
 
+  We start by showing that $S$ generates $G$. Let $g\in G$. Since the graph $X$ is connected, there is a path $\left[ x_0,x_1,\dots,x_n \right]$, where $x_0 = x$ and $x_n = g\cdot x$, that joins $x$ and $g\cdot x$. We will translate this path into steps in the group $G$ as follows.
+
+  For each $0\leq j \leq \left( n-1 \right)$, define
+  \begin{align*}
+    g_j &= \varphi^{-1}\left( x_j \right)
+  \end{align*}
+  in $G$. Then, we take $s_j = g_j^{-1}g_{j+1}$. We will show that $s_j\in S$. Since $\left[ x_0,\dots,x_n \right]$ is a path in $X$, we have $\set{x_j,x_{j+1}}$ is an edge of $X$. Since $G$ acts by graph automorphisms, we have that $\set{g_j^{-1}\cdot x_j,g_j^{-1}\cdot x_{j+1}}$ is also an edge of $X$, but this is equal to $\set{x,\left( g_j^{-1}g_{j+1} \right)\cdot x}$. In particular, this means that
+  \begin{align*}
+    g &= g_n\\
+      &= g_0g_0^{-1}g_1g_1^{-1}\cdots g_{n-1}g_{n-1}^{-1}g_n\\
+      &= s_0s_1\cdots s_{n-1},
+  \end{align*}
+  so $S$ is a generating set for $G$.
+
+  We only need to show now that $\operatorname{Cay}\left( G,S \right)$ is isomorphic to the graph $X$. We will show that $\varphi$ induces a graph isomorphism. If $g,h\in G$, then we observe that $\set{\varphi(g),\varphi(h)} = \set{g\cdot x, h\cdot x}$. Since $G$ acts by graph automorphisms on $X$, the set is an edge of $X$ if and only if $\set{x,\left( g^{-1}h \right)\cdot x}$ is an edge of $X$, which holds if and only if $g^{-1}h\in S$, which is equivalent to $\set{g,h}$ being an edge of $\operatorname{Cay}\left( G,S \right)$. Thus, $ \operatorname{Cay}\left( G,S \right) $ is isomorphic to $X$.
+\end{proof}
+
+\subsection{Actions of Groups on Trees}%
+Similar to how a group is a free group with generating set $S$ if and only if $\operatorname{Cay}\left( G,S \right)$ is a tree, there is a converse direction. That is, a group is free if and only if it admits a free action on a non-empty tree.
+
+One direction emerges immediately from the fact that left-translation is a free action of $G$ on itself that acts on its Cayley graph.
+
+The reverse direction is a little more difficult. If $G\curvearrowright T$ is an action, we will have to find a tree that is a Cayley graph for $G$.
+\begin{definition}
+  Let $G$ be a group that acts on a connected graph $X$ by graph automorphisms. A \textit{spanning tree} of this action is a subgraph of $X$ that is both a tree and contains exactly one vertex of every orbit of the action of $G$ on the vertices of $X$.
+\end{definition}
+\begin{theorem}
+  Every action of a group on a connected graph by automorphisms has a spanning tree.
+\end{theorem}
+\begin{proof}
+  Let $G$ be a group acting on a connected graph $X$. We may assume that $X$ is nonempty.
+
+  Consider the set $ T_G $ of all subtrees of $X$ that contain at most one vertex of every orbit. This is a nonempty set since $X$ has at least one vertex. The set $T_G$ is partially ordered by the subgraph relation, and every totally ordered chain of $T_G$ has an upper bound in $T_G$ (namely, the union of the trees in this chain). Thus, by Zorn's Lemma, there is a maximal element $T$ in $T_G$ that is necessarily nonempty since $X$ is nonempty.
+
+  Suppose toward contradiction that $T$ is not a spanning tree for the action of $G$. Then, there is a vertex $v$ such that none of the vertices of the orbit $G\cdot v$ is a vertex of $T$. We will show that there is some such $v$ that is adjacent to a vertex of $T$.
+
+  Since $X$ is connected, there is a path $p$ connecting some vertex $u$ of $T$ with $v$, which we will label as
+  \begin{align*}
+    p &= [u,\dots,v',\dots,v],
+  \end{align*}
+  where $v'$ is the first vertex of $p$ that is not in $T$.
+  \begin{enumerate}[(i)]
+    \item If none of the vertices of the orbit $G\cdot v'$ are contained in $T$, then $v'$ is the vertex with our desired property.
+    \item If there is some $g\in G$ such that $g\cdot v'$ is a vertex of $T$, write a subpath $p' = \left[ v',\dots,v \right]$ of $p$, and consider the path
+      \begin{align*}
+        g\cdot p' &= \left[ g\cdot v',\dots,g\cdot v \right].
+      \end{align*}
+      Notice that $g\cdot v$ is not contained in $T$ since none of the elements of the orbit of $v$ are contained in $T$ by assumption. Since the length of $p'$ is smaller than the length of $p$, we may iterate this process to eventually obtain our desired vertex.
+  \end{enumerate}
+  Having obtained our vertex $v$ with none of the vertices of the orbit $G\cdot v$ in $T$ and some neighbor $u$ of $v$ is contained in $T$, we may add the edge $\set{u,v}$ to $T$ to produce a tree in $T_G$ that contains $T$ as a proper subgraph. This yields the contradiction, as we had assumed $T$ was maximal. Thus, $T$ is a spanning tree for the action of $G$ on $X$.
+\end{proof}
+In order to show the reverse direction, we will have to determine, given an action $G\curvearrowright T$, a set $S$ such that $\operatorname{Cay}\left( G,S \right)$ is a tree.
+\begin{theorem}
+  If a group $G$ acts freely on a tree $T$, then $G$ is a free group.
+\end{theorem}
+\begin{proof}
+  Let $T'$ be a spanning tree for the action of $T$. Say two translations $g\cdot T'$ and $h\cdot T'$ are adjacent if $g\cdot T'\neq h\cdot T'$ and there exist vertices $v\in g\cdot T'$ and $w\in h\cdot T'$ such that $\set{v,w}$ is an edge of $T$.
+
+  We will start by showing that if $g\neq h$, then $g\cdot T'\neq h\cdot T'$. We may reduce this question to showing that for any $g\neq e$, we have that $g\cdot T'\neq T'$. Yet, this follows directly from our assumptions; there is exactly one representative from each orbit in the spanning tree, and we cannot have $g\cdot v = v$ for any $v\in T'$ unless $g = e$ by the assumption of the freeness of the action $G$.
+
+  For any adjacent $g\cdot T'$ and $h\cdot T'$, we claim that there is a unique connecting edge.
+\end{proof}
+The following is a more topological proof that relies heavily on covering space theory.
+\begin{proof}[Proof via Covering Spaces]
+  Let $G\curvearrowright T$ freely by graph automorphisms. We may view $T$ as a one-dimensional CW complex; since $T$ is a tree, this one-dimensional CW complex is simply connected, so the covering map $T\rightarrow T/G$ has it such that $T$ is the universal cover for the CW complex $T/G$. In particular, we have that the deck transformations of $T$ are exactly $G$, and $\pi_1\left( T/G \right)\cong G$.
+
+  Since any one-dimensional CW complex is homotopy-equivalent to a bouquet of circles, the Seifert--Van Kampen theorem gives that $\pi_1\left( T/G \right)\cong F(S)$ for some generating set $S$, so that $G$ is free.
+\end{proof}
 \section{Quasi-Isometry of Metric Spaces and Groups}%
 
 \section{Growth types of Groups}%
