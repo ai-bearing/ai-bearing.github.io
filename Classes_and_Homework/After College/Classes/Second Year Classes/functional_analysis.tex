@@ -103,8 +103,9 @@ We observe that the subsets of the form $U\left( x,\set{\rho},\ve \right)$ as $\
   If $V$ is a $\K$-LCTVS and $ \mathcal{N} $ is a collection of seminorms that defines the topology on $V$, then $ \left( V,\mathcal{T}\left( \mathcal{N} \right) \right) $ is Hausdorff if and only if $ \mathcal{N} $ separates the points of $V$.
 \end{theorem}
 \begin{proof}
-  Assume $\mathcal{N}$ separates the points of $V$. Suppose $v\neq w$ are distinct elements of $V$. Then, since $v-w\neq 0$, there is some $\rho\in \mathcal{N}$ such that $\rho\left( v-w \right) = \ve_0 > 0$. Consider the finite set $F = \set{\rho}$, and choose some $0 < \ve < \ve_0/2$. Then, we claim that 
-  %Finish proof
+  Assume $\mathcal{N}$ separates the points of $V$. Suppose $v\neq w$ are distinct elements of $V$. Then, since $v-w\neq 0$, there is some $\rho\in \mathcal{N}$ such that $\rho\left( v-w \right) = \ve_0 > 0$. Consider the finite set $F = \set{\rho}$, and choose some $0 < \ve < \ve_0/2$. Then, we claim that the basic open sets $U\left( v,F,\ve \right)$ and $U\left( w,F,\ve \right)$ are disjoint. This follows from the fact that if $x\in U\left( v,F,\ve \right)$, then $\ve_0 = \rho\left( v-w \right)\leq \rho\left( v-x \right) + \rho\left( x-w \right)$, so that $\rho\left( w-x \right) \geq \ve_0 - \ve > \ve_0 - \ve_0/2 > \ve$, yielding the desired result.
+
+  Now, suppose $ \mathcal{N} $ does not separate the points of $V$. Then, there are some distinct $v\neq w$ such that for all $\rho\in \mathcal{N}$, we have $\rho\left( v-w \right) = 0$. In particular, observe that for all finite subsets $F\subseteq \mathcal{N}$ and all $\ve > 0$, we have that $w$ is contained in $U\left( v,F,\ve \right)$, meaning that there are no basic open sets that separate $v$ and $w$. Since any open subset of $V$ contains a basic open subset, it follows that for any open subsets $v\in U$ and $w\in U'$, we have some finite $F$ such that $U\left( v,F,\ve \right)\subseteq U$, but this also has $w\in U\left( v,F,\ve \right)$, implying that $U\cap U'\neq \emptyset$. Thus, $ V $ is not Hausdorff.
 \end{proof}
 % Lecture 2
 \subsection{Examples}%
@@ -150,11 +151,28 @@ We observe that the subsets of the form $U\left( x,\set{\rho},\ve \right)$ as $\
 
     Consider the set of functions $V_0 = \set{f\in V : f(0) = 0}$. Then, $V_0\leq V$ is a closed subset.
     \begin{proof}
-      % Insert Proof Here
+      Consider the linear functional $ \operatorname{ev}_0\colon V\rightarrow \R $ given by $f\mapsto f(0)$. We claim that this linear functional is continuous.
+
+      Let $U\subseteq \R$ be open. Let $z\in U$, and let $\ve > 0$ be such that $U\left( z,\ve \right)\coloneq \set{y\in \R : \left\vert z-y \right\vert < \ve}$ is contained in $U$. Let $f\in \operatorname{ev}_0^{-1}\left( U\left( z,\ve \right) \right)$, and set $\ve_0 = \left\vert z - f(0) \right\vert$. To show that $ \operatorname{ev}_{0}^{-1}\left( U\left( z,\ve \right) \right) $ is open, it suffices to find some seminorm $\rho_k$ and some $\delta > 0$ such that $U\left( f,\rho_k,\delta \right)\subseteq \operatorname{ev}_0^{-1}\left( U\left( z,\ve \right) \right)$.
+
+      In fact, we may choose $k = 1$ and $\delta = \ve - \ve_0$. Suppose $g\in U\left( f,\rho_1, \delta\right)$. Then, we have that 
+      \begin{align*}
+        \left\vert g(0) - z \right\vert &\leq \left\vert g(0) - f(0) \right\vert + \left\vert f(0) - z \right\vert\\
+                                        &\leq \sup_{t\in [0,1]} \left\vert g(t)-f(t) \right\vert + \ve_0\\
+                                        &< \delta + \ve_0\\
+                                        &= \ve.
+      \end{align*}
+      In particular, Thus, $U\left( f,\rho_1,\delta \right)\subseteq \operatorname{ev}_0^{-1}\left( U\left( z,\ve \right) \right)$, so that $\operatorname{ev}_0^{-1}\left( U\left( z,\ve \right) \right)$ is open as any element in this set admits a basic open neighborhood contained in the set. Therefore, $\operatorname{ev}_0$ is continuous.
+
+      Since $V_0 = \operatorname{ev}_0^{-1}\left( \set{0} \right)$, it follows that $V_0$ is closed since $\set{0}\subseteq \R$ is closed.
     \end{proof}
-    We claim that the subspace topology on $V_0$ is given by $\mathcal{T}_0 = \mathcal{T}\left( \set{\rho_k|_{V_0} : k\geq 0} \right)$.
+    We claim that the subspace topology on $V_0$ is given by $\mathcal{T}_0 = \mathcal{T}\left( \set{\rho_k\vert_{V_0} : k\geq 0} \right)$.
     \begin{proof}
-      % Insert Proof Here
+      First, consider a subbasic open set $ U\left( y,\rho_k\vert_{V_0},\ve \right) $ in $ \mathcal{T}\left( \set{\rho_k\vert_{V_0}:k\geq 0} \right) $. By definition, we have that $U\left( y,\rho_k\vert_{V_0},\ve \right) = U\left( y,\rho_k,\ve \right)|_{V_0}$, but this is given by $V_0\cap U\left( y,\rho_k,\ve \right)$. Therefore, it follows that any subbasic open set $U\left( y,\rho_k\vert_{V_0},\ve \right)$ in $ \mathcal{T}\left( \set{\rho_k\vert_{V_0} : k\geq 0} \right) $ is contained in $ \mathcal{T}_0 $.
+
+      Consider a subbasic open set in $ \mathcal{T}_0 $, which is given by $U = V_0 \cap U\left( x,\rho_k,\ve \right) $ for some $ k\in \N $, $x\in V$, and $\ve > 0$. We will show that there is some subbasic open set $ U\left( y,\rho_j\vert_{V_0},\delta \right) \subseteq U$. We assume $U$ is not empty, so there is some $y\in U$. By the openness of $U\left( x,\rho_k,\ve \right)$, there is some finite subset $F\subseteq \set{\rho_k : k\geq 0}$ and some $\delta > 0$ with $U\left( y,F,\delta \right)$. Since if $j > k$, we have $U\left( y,\rho_j,\delta \right)\subseteq U\left( y,\rho_k,\delta \right)$, it follows that choosing the largest such $j$ in $F$ yields a subbasic open set $U\left( y,\rho_j,\delta \right)\subseteq U\left( x,\rho_k,\ve \right)$. The restriction of $\rho_j$ to $V_0$ yields $U\left( y,\rho_j|_{V_0},\delta \right)\subseteq U\left( y,\rho_j,\delta \right)$, whence we obtain a subbasic open set $U\left( y,\rho_j|_{V_0},\delta \right)\subseteq V_0\cap U\left( x,\rho_k,\ve \right)$.
+
+      Since each of the subbasic open sets of $ \mathcal{T}_0 $ and $ \mathcal{T}\left( \set{\rho_j\vert|_{V_0} : k\geq 0} \right) $ are contained in each other, it follows that they are equal.
     \end{proof}
     We may consider $ \mathcal{B}\left( \mathcal{T}_0 \right) $ to be the Borel $\sigma$-algebra on $V_0$. Brownian motions are a special class of probability measure on $ \left( V_0,\mathcal{B}\left( \mathcal{T}_0 \right) \right) $. Specifically, they are the probability measures such that for every $n\geq 0$, partition $ 0< t_1 < t_2 < \cdots < t_n $, the random variables
     \begin{align*}
@@ -173,7 +191,7 @@ We observe that the subsets of the form $U\left( x,\set{\rho},\ve \right)$ as $\
     \begin{align*}
       d\left( x,y \right) &= \sum_{n=0}^{\infty} 2^{-n} \min\left( 1, \left\vert x_n-y_n \right\vert \right).
     \end{align*}
-    Then, we claim that $d$ is a distance metric, and $ \mathcal{T} = \mathcal{T}\left( d \right) $.
+    Then, we have that $d$ is a distance metric, and $ \mathcal{T} = \mathcal{T}\left( d \right) $.
     \begin{proof}
       %Insert Proof Here
     \end{proof}
