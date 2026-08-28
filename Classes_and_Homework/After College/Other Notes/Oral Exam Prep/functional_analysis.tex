@@ -22,6 +22,69 @@
 \begin{document}
 \RaggedRight
 \section{Locally Convex Topological Vector Spaces}%
+\subsection{Definitions and Examples}%
+\begin{definition}
+  A topological vector space (TVS) is a vector space $X$ with a topology $ \mathcal{T} $ such that, with respect to this topology, the maps
+  \begin{enumerate}[(i)]
+    \item $X\times X \rightarrow X$, $\left( x,y \right)\mapsto x + y$
+    \item $\F\times X \rightarrow X$, $\left( \alpha,x \right)\mapsto \alpha x$
+  \end{enumerate}
+  are continuous with respect to $ \mathcal{T} $.
+\end{definition}
+\begin{example}
+  If $ \mathcal{P} $ is a family of seminorms on $X$, and $\mathcal{T}$ is the topology on $X$ with subbasic sets $U \left( x_0,p,\ve \right) = \set{x\in X : p\left( x-x_0 \right) < \ve}$, then $\left( X,\mathcal{T} \right)$ is a topological vector space.
+\end{example}
+\begin{definition}
+  A locally convex topological vector space (LCS) is a TVS equipped with a family of seminorms $ \mathcal{P} $ that satisfy
+  \begin{align*}
+    \bigcap_{p\in \mathcal{P}} \set{x : p(x) = 0} = \set{0}.
+  \end{align*}
+  That is, the family $ \mathcal{P} $ separates the points of $X$.
+\end{definition}
+\begin{proposition}
+  Let $X$ be a TVS, and let $ p $ be a seminorm on $X$. The following are equivalent:
+  \begin{enumerate}[(a)]
+    \item $p$ is continuous;
+    \item $\set{x\in X : p(x) < 1}$  is open;
+    \item $0\in \set{x\in X : p(x) < 1}^{\circ}$;
+    \item $0\in \set{x\in X : p(x) \leq 1}^{\circ}$;
+    \item $p$ is continuous at $0$;
+    \item there is a continuous seminorm $q$ on $X$ such that $p\leq q$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We see immediately that (a) implies (b) since the set is equal to the inverse image of the open subset $[0,1)\subseteq [0,\infty)$. Similarly, if $p^{-1}\left( [0,1) \right)$ is open, then it is equal to its own interior, and since $0\in p^{-1}\left( [0,1) \right)$, it follows that there is a subbasic open neighborhood of $0$ contained in $p^{-1}\left( [0,1) \right)$, giving (c). Similarly, we obtain (d) by the fact that $0\in p^{-1}\left( [0,1) \right)^{\circ}\subseteq p^{-1}\left( [0,1] \right)^{\circ}$.
+
+  Next, we see that (d) implies that for every $\ve > 0$, $0\in p^{-1}\left( [0,\ve] \right)^{\circ}$, so if $\left( x_i \right)_i$ is a net in $X$ converging to $0$ and $\ve > 0$, there is some $i_0$ such that for all $i\geq i_0$, $x_i\in \set{x : p(x) \leq \ve}$. That is, $p\left( x_i \right)\leq \ve$ for all $i\geq i_0$, whence $p$ is continuous at $0$. This gives (e).
+
+  If $p$ is continuous at $0$, then if $x_i\rightarrow x$ is a convergent net in $X$, the reverse triangle inequality gives $\left\vert p\left( x \right) - p\left( x_i \right) \right\vert\leq p\left( x_i-x \right)$, whence $p\left( x_i \right) \rightarrow p\left( x \right)$, so $p$ is continuous. This gives that (e) implies (a).
+
+  Taking $q = p$ yields (a) implies (f). We will show that (f) implies (e).If $x_i\rightarrow 0$ in $X$, then $q\left( x_i \right)\rightarrow 0$, but since $0\leq p\left( x_i \right)\leq q\left( x_i \right)$, it follows that $p\left( x_i \right)\rightarrow 0$.
+\end{proof}
+\begin{example}\hfill
+  \begin{enumerate}[(a)]
+    \item Let $X$ be a completely regular topological space, and let $C(X)$ be the set of all continuous functions from $X$ to $\F$. If $K$ is compact in $X$, we may define a seminorm $p_K\left( f \right) = \sup_{x\in K}\left\vert f(x) \right\vert$. Then, 
+      \begin{align*}
+        \set{p_K : K\subseteq X\text{ compact}}
+      \end{align*}
+      forms a separating family of seminorms for $C(X)$.
+    \item Let $G$ be an open subset of $\C$. If $H(G)$ is the set of holomorphic functions on $G$, then the same seminorms $\set{p_K : K\subseteq G\text{ compact}}$ forms a locally compact space whose topology is uniform convergence on compact subsets.
+    \item Let $X$ be a normed vector space. For each $\varphi\in X^{\ast}$, let $p_{\varphi}(x) = \left\vert \varphi(x) \right\vert$. Then, $ \mathcal{P} = \set{p_{\varphi} : \varphi\in X^{\ast}} $ forms a separating family of seminorms for $X$. The topology these seminorms induce is called the \textit{weak topology} on $X$. It is often denoted $\sigma\left( X,X^{\ast} \right)$.
+    \item If $X$ is a normed space, then for each $x\in X$, we may define a seminorm $p_x\colon X^{\ast}\rightarrow [0,\infty)$ by taking $p_x\left( \varphi \right) = \left\vert \varphi(x) \right\vert$. This defines a separating family of seminorms $\mathcal{P} = \set{p_x : x\in X}$, and the topology on $X^{\ast}$ induced by these seminorms is called the weak*, or $w^{\ast}$, topology. It is often denoted $\sigma\left( X^{\ast},X \right)$.
+  \end{enumerate}
+\end{example}
+Next, we focus on an examination of the ``convexity'' part of the notion of locally convex topological vector spaces.
+\begin{definition}
+  A subset $A\subseteq X$ is said to be convex if for all $v,w\in A$, the segment
+  \begin{align*}
+    \left[ v,w \right]\coloneq \set{tv + \left( 1-t \right)q : 0\leq t \leq 1}
+  \end{align*}
+  is contained in $A$.
+\end{definition}
+Note that the intersection of any family of convex subsets is convex.
+\begin{definition}
+  If $A\subseteq X$ is any subset, then the \textit{convex hull} of $A$, denoted $ \conv\left( A \right) $, is the intersection of all the convex subsets that contain $A$. If $X$ is a TVS, the \textit{closed convex hull} of $A$, denoted $ \overline{\conv}\left( A \right) $, is the intersection of all the closed convex sets that contain $A$.
+\end{definition}
 \section{Weak Topologies and Extremal Structure}%
 \section{$C^{\ast}$-Algebras}%
 \section{Spectral Theory}%
