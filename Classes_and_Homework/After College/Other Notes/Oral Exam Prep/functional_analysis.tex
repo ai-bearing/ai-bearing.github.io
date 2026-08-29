@@ -85,6 +85,93 @@ Note that the intersection of any family of convex subsets is convex.
 \begin{definition}
   If $A\subseteq X$ is any subset, then the \textit{convex hull} of $A$, denoted $ \conv\left( A \right) $, is the intersection of all the convex subsets that contain $A$. If $X$ is a TVS, the \textit{closed convex hull} of $A$, denoted $ \overline{\conv}\left( A \right) $, is the intersection of all the closed convex sets that contain $A$.
 \end{definition}
+Given any linear map $T\colon X\rightarrow Y$ of real vector spaces, and $C\subseteq X$ a convex subset of $Y$, then $T^{-1}\left( C \right)$ is convex in $X$. If $X^{\ast}$ is the dual of any complex vector space, then since $X$ is also a real vector space, it then follows that the sets
+\begin{align*}
+  A_0 &= \set{x : \left\vert f(x) \right\vert \leq 1}\\
+  A_1 &= \set{x : \re\left( f(x) \right) \leq 1}\\
+  A_3 &= \set{x : \re\left( f(x) \right) > 1}
+\end{align*}
+are all convex.
+\begin{proposition}
+  Let $X$ be a TVS, and let $A$ be a convex subset of $X$. Then,
+  \begin{enumerate}[(a)]
+    \item $ \overline{A} $ is convex;
+    \item if $a\in A^{\circ}$ and $b\in \overline{A}$, then
+      \begin{align*}
+        [a,b) \coloneq \set{tb + \left( 1-t \right)a : 0\leq t < 1}
+      \end{align*}
+      is contained in $A^{\circ}$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Let $a\in A$, $b\in \overline{A}$, and let $0\leq t \leq 1$. Let $\left( x_i \right)_i$ be a net in $A$ such that $x_i\rightarrow b$. Then, $tx_i + \left( 1-t \right)a \rightarrow tb + \left( 1-t \right)a$. In particular, this means that if $b\in \overline{A}$ and $a\in A$, then $\left[ a,b \right]\subseteq \overline{A}$. So, given any $a,b\in \overline{A}$, we have that the net $\left( x_i \right)_i\rightarrow b$ is such that $\left[x_i,a\right]\subseteq \overline{A}$, so it follows that $\left[ b,a \right]\subseteq \overline{A}$, whence $ \overline{A} $ is convex.
+
+  For (b), fix $0 < t < 1$, and set $c = tb + \left( 1-t \right)a$ for some $a\in A^{\circ}$ and $b\in \overline{A}$. Since $a\in A^{\circ}$, there is an open neighborhood $V$ of $0$ such that $a + V\subseteq A$. Therefore, for any $d\in A$, we have
+  \begin{align*}
+    A &\supseteq td + \left( 1-t \right)\left( a + V \right)\\
+      &= t\left( d-b \right) + tb + \left( 1-t \right)\left( a + V \right)\\
+      &= \left( t\left( d-b \right) + \left( 1-t \right)V \right) + c.
+  \end{align*}
+  We hope to find some $d\in A$ such that $0\in t\left( d-b \right) + \left( 1-t \right)V$, which we call $U$. The preceding inclusion then shows that $c\in A^{\circ}$, since $U$ is an open neighborhood of $0$ with $c + U\subseteq A$.
+
+  Finding such a $d$ is equivalent to finding $d$ such that $0\in \frac{1}{t}\left( 1-t \right)V + \left( d-b \right)$, or $d\in b-\frac{1}{t}\left( 1-t \right)V$,. Yet, we know that $0\in - \frac{1}{t}\left( 1-t \right)V$ by the assumption that $V$ is an open neighborhood of $0$. Since $b\in \overline{A}$, it follows that $b-\frac{1}{t}\left( 1-t \right)V \cap A \neq \emptyset$ by the definition of closure, whence such a $d\in A$ exists.
+\end{proof}
+\begin{corollary}
+  If $A\subseteq X$, then $ \overline{\conv}(A) = \overline{\conv(A)} $.
+\end{corollary}
+\begin{definition}
+  A set $A\subseteq X$ is called balanced if for any $ \left\vert \alpha \right\vert\leq 1 $ and any $x\in A$, we have $\alpha x\in A$.
+
+  We say a set $A$ is \textit{absorbing} if for any $x\in X$, there is some $\ve > 0$ such that $tx\in A$ for all $0\leq t < \ve$. We say $A$ is absorbing at $a$ if for any $x\in X$, there is $\ve > 0$ such that $a + tx\in A$ for all $0\leq t < \ve$.
+\end{definition}
+Given a seminorm $p$ on $V$, the set $V = \set{x : p(x) < 1}$ is a convex balanced set that is absorbing at each of its points. We will show that the converse actually holds --- that is, a vector space is a LCS if and only if the set of all open, convex, balanced subsets of $X$ forms a neighborhood basis at $0$.
+\begin{proposition}
+  Suppose $X$ is a vector space over $F$, and $V$ is a nonempty convex balanced set that is absorbing at each of its points. Then, there is a unique seminorm $p$ on $X$ such that
+  \begin{align*}
+    V &= \set{x\in X : p(x) < 1}.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Let
+  \begin{align*}
+    p(x) &= \inf \set{t\geq 0: x\in tV}.
+  \end{align*}
+  Since $V$ is absorbing, it follows that $X = \bigcup_{n=1}^{\infty}nV$, so this is a well-defined quantity. Furthermore, $p(0) = 0$.
+
+  To show that $p\left( \alpha x \right) = \left\vert \alpha \right\vert p(x)$, we suppose $\alpha\neq 0$, and since $V$ is balanced,
+  \begin{align*}
+    p\left( \alpha x \right) &= \inf\set{t\geq 0 : \alpha x\in tV}\\
+                             &= \inf\set{t \geq 0 : x\in \frac{t}{\alpha}V}\\
+                             &= \inf\set{t\geq 0 : x\in \frac{t}{\left\vert \alpha \right\vert}V}\\
+                             &= \left\vert \alpha \right\vert\inf\set{\frac{t}{\left\vert \alpha \right\vert} : x\in \frac{t}{\left\vert \alpha \right\vert}V}\\
+                             &= \left\vert \alpha \right\vert p(x).
+  \end{align*}
+  We now observe that if $\alpha,\beta\geq 0$, then for any $a,b\in V$, we have
+  \begin{align*}
+    \alpha a + \beta b &= \left( \alpha + \beta \right) \left( \frac{\alpha}{\alpha + \beta}a + \frac{\beta}{\alpha + \beta}b \right)\\
+                       &\in \left( \alpha + \beta \right)V,
+  \end{align*}
+  since $V$ is convex. For any $x,y\in X$, take $p(x) = \alpha$ and $p(y) = \beta$, and let $\delta > 0$. Then, $x\in \left( \alpha + \delta \right)V$ and $y\in \left( \beta + \delta \right)V$ by the definition of the infimum, so that $x + y\in \left( \alpha + \beta + 2\delta \right)V$. Therefore, we have $p\left( x + y \right)\leq \alpha + \beta + 2\delta$, which holds for all $\delta > 0$, so that $p\left( x + y \right)\leq p(x) + p(y)$.
+
+  Finally, we will have to show that $V = \set{x : p(x) < 1}$. If $p(x) = \alpha < 1$, then for any $\alpha < \beta < 1$, we have $x\in \beta V\subseteq V$, which emerges from the fact that $V$ is balanced. Thus, $V \supseteq \set{x : p(x) < 1}$. If $x\in V$, then $p(x)\leq 1$, and since $V$ is absorbing at $x$, there is some $\ve > 0$ such that for $0 < t < \ve$, we have $y = x + tx\in V$. Yet, this means $x = \frac{1}{1+t}y$ with $y\in V$, so that $p(x) = \frac{1}{1 + t}p(y)\leq \frac{1}{1+t} < 1$.
+\end{proof}
+The seminorm $p$ is called the Minkowski function for $V$, or the \textit{gauge} of $V$.
+\begin{proposition}
+  Let $X$ be a TVS, and let $\mathcal{U}$ be the collection of open, convex, balanced subsets of $X$. Then, $X$ is locally convex if and only if $ \mathcal{U} $ is a basis for the neighborhood system at $0$.
+\end{proposition}
+\begin{proof}
+  Suppose $X$ is locally convex with topology defined by the family of seminorms $ \mathcal{P} $. Then, we observe that each of the subbasic open neighborhoods of $0$, 
+  \begin{align*}
+    \set{U\left( 0,p,\ve \right) : \ve > 0,p\in \mathcal{P}},
+  \end{align*}
+  are open, convex, and balanced; since the set of all finite intersections of all these subbasic open neighborhoods yields a neighborhood basis for $0$, and finite intersections of open, balanced, convex subsets are open, balanced, and convex, so it follows that $\mathcal{U}$ contains the set of all finite intersections of all these subbasic open neighborhoods, whence $ \mathcal{U} $ contains a basis for the neighborhood system at $0$. In particular, this means $\mathcal{U}$ also must generate the neighborhood system at $0$, so $\mathcal{U}$ forms a basis for the neighborhood system at $0$.
+
+  Now, suppose $\mathcal{U}$ forms a basis for the neighborhood system at $0$. Observe that an open, convex, balanced subset of $V$ contains $0$, and is itself absorbing. We claim that the family of Minkowski functionals
+  \begin{align*}
+    \mathcal{P} &= \set{p_V\left( \cdot - z \right) : z\in X, V\in \mathcal{U}}
+  \end{align*}
+  generates the topology for $X$.
+\end{proof}
 \section{Weak Topologies and Extremal Structure}%
 \section{$C^{\ast}$-Algebras}%
 \section{Spectral Theory}%
