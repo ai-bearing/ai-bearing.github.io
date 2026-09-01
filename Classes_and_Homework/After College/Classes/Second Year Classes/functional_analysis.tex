@@ -168,7 +168,24 @@ We observe that the subsets of the form $U\left( x,\set{\rho},\ve \right)$ as $\
     \end{proof}
     We claim that the subspace topology on $V_0$ is given by $\mathcal{T}_0 = \mathcal{T}\left( \set{\rho_k\vert_{V_0} : k\geq 0} \right)$.
     \begin{proof}
-      First, we will show that, given a subbasic open neighborhood $U = V_0\cap U\left( x,\rho_k,\ve \right)$ in the subspace topology of $V_0$ and any element $y$ in this subbasic open neighborhood, there is a subbasic open neighborhood $U\left( y,\rho_j|_{V_0},\delta \right)\subseteq U$.
+      First, we will show that, given a subbasic open neighborhood $U = V_0\cap U\left( x,\rho_k,\ve \right)$ in the subspace topology of $V_0$ and any element $y$ in this subbasic open neighborhood, there is an open neighborhood $V\in \mathcal{T}\left( \set{\rho_k\vert_{V_0} : k\geq 0} \right)$ such that such that $y\in V\subseteq U$.
+
+      If $y\in U$, we observe that $y\in U\left( x,\rho_k,\ve \right)$. In particular, since these form a subbase for $\mathcal{T}\left( \set{\rho_k : k\geq 0} \right)$, it follows that there is some finite collection $F = \set{\rho_{i_j} : j=1,\dots,m}$ of seminorms and some $\delta > 0$ such that 
+      \begin{align*}
+        U\left( y,F,\delta \right) &= \bigcap_{j=1}^{m} U\left( y,\rho_{i_j},\delta \right).
+      \end{align*}
+      Since $U\left( y,\rho_{i_j}|_{V_0},\delta \right)\subseteq U\left( y,\rho_{i_j},\delta \right)$ for each $j$, it follows that we have
+      \begin{align*}
+        \bigcap_{j=1}^{m} U\left( y,\rho_{i_j}|_{V_0},\delta \right) &\subseteq V_0 \cap \left( \bigcap_{j=1}^{m}U\left( y,\rho_{i_j},\delta \right) \right),
+      \end{align*}
+      whence setting $V$ to equal the left hand side yields the desired result. Therefore, $ \mathcal{T}\left( \set{\rho_{k}\vert_{V_0} : k\geq 0} \right) $ refines the subspace topology $ \mathcal{T}_0 $.
+
+      In the reverse direction, observe that if $y\in U\left( x,\rho_j|_{V_0},\ve \right)$ in $V_0$, then $y\in U\left( x,\rho_j,\ve \right)$, so there is some $\delta > 0$ and finite $F = \set{\rho_{i_j} : j=1,\dots,m}$ such that 
+      \begin{align*}
+        U\left( y,F,\ve \right) &= \bigcap_{j=1}^{m} U\left( y,\rho_{i_j},\delta \right)\\
+                                &\subseteq U\left( x,\rho_j,\ve \right),
+      \end{align*}
+      but we notice then that $U\left( x,\rho_j,\ve \right)\cap V_0\subseteq U\left( x,\rho_j|_{V_0},\ve \right)$, so that $V_0\cap U\left( y,F,\ve \right)\subseteq U\left( x,\rho_j|_{V_0},\ve \right)$, so that $ \mathcal{T}_0 $ refines $ \mathcal{T}\left( \set{\rho_k\vert_{V_0} : k\geq 0} \right) $. Thus, these topologies are equal.
     \end{proof}
     We may consider $ \mathcal{B}\left( \mathcal{T}_0 \right) $ to be the Borel $\sigma$-algebra on $V_0$. Brownian motions are a special class of probability measure on $ \left( V_0,\mathcal{B}\left( \mathcal{T}_0 \right) \right) $. Specifically, they are the probability measures such that for every $n\geq 0$, partition $ 0< t_1 < t_2 < \cdots < t_n $, the random variables
     \begin{align*}
@@ -189,7 +206,33 @@ We observe that the subsets of the form $U\left( x,\set{\rho},\ve \right)$ as $\
     \end{align*}
     Then, we have that $d$ is a distance metric, and $ \mathcal{T} = \mathcal{T}\left( d \right) $.
     \begin{proof}
-      %Insert Proof Here
+      We start by showing that if $x\in V$ is any element and $\ve > 0$, then $U\left( x,\ve \right)$ is open in $ \mathcal{T} $. Translating, we take $x = 0$ (since the metric $d$ is translation-invariant), so that we are now seeking to show that $U\left( 0,\ve \right)$ is open. This is equivalent to showing that if $x\in U\left( 0,\ve \right)$, then there is a finite collection of subbasic open sets $\pi_j^{-1}\left( U_j \right)$ whose intersection $W$ contains $x$ and is contained in $U\left( 0,\ve \right)$.
+
+      To start, we observe that there is some index $n_0$ such that
+      \begin{align*}
+        \sum_{n=n_0 + 1}^{\infty} 2^{-n} &< \ve/2.
+      \end{align*}
+      We then select $U_j = \left( x_j-\ve/4,x_j+\ve/4 \right)$ for each $j=0,\dots,n_0$. It then follows that $x\in W$, and we have for any $y\in W$ that
+      \begin{align*}
+        d\left( x,y \right) &= \sum_{j=0}^{\infty} 2^{-j}\min\left( 1,\left\vert x_j-y_j \right\vert \right)\\
+                            &\leq \sum_{j=0}^{n_0} 2^{-j}\min\left( 1,\left\vert x_j-y_j \right\vert \right) + \sum_{j=n_0 + 1}^{\infty} 2^{-j}\\
+                            &< \sum_{j=0}^{n_0} 2^{-j} \left( \ve/4 \right) + \ve/2\\
+                            &\leq \ve,
+      \end{align*}
+      whence $x\in W\subseteq U\left( 0,\ve \right)$.
+
+      Now, consider a basic open set $W = \bigcap_{j=0}^{n_0}\pi_j^{-1}\left( U_j \right)$. Let $x\in W$. Let $\delta_0,\dots,\delta_{n_0}$ be such that $\left( x_j-\delta_j,x_j + \delta_j \right)\subseteq U_j$ for each $j=1,\dots,n$, and set $\delta = 2^{-n_1}\min\left( \delta_0,\dots,\delta_{n_0} \right)$, where $n_1$ is any integer strictly larger than $n_0$.
+
+      Notice then that if $y\in U\left( x,\delta \right)$, then we have for each $j=0,\dots,n_0$ that
+      \begin{align*}
+        \left\vert x_j - y_j \right\vert &< 2^{j}\delta\\
+                                         &\leq 2^{n_0}2^{-n_1}\min\left( \delta_0,\dots,\delta_{n_0} \right)\\
+                                         &< \min\left( \delta_0,\dots,\delta_{n_0} \right)\\
+                                         &\leq \delta_j.
+      \end{align*}
+      In particular, this means we must have $U\left( x,\delta \right) \subseteq W$.
+
+      Therefore, we have that $\mathcal{T}$ and $\mathcal{T}\left( d \right)$ generate the same topology on $V$.
     \end{proof}
     In particular, we may consider the seminorms
     \begin{align*}
