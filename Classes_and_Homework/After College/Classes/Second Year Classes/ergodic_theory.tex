@@ -22,4 +22,118 @@
 \begin{document}
 \RaggedRight
 These are notes I'm taking for Ben Hayes's Ergodic Theory class for Fall 2026.
+
+The main texts are Petersen's \textit{Ergodic Theory} and Walters's \textit{An Introduction to Ergodic Theory}, as well as some other 
+\section{General Motivation and Common Examples}%
+The basic structure of ergodic theory is a standard probability space $\left( X,\mu \right)$ and, in its most basic form, a measurable map $T\colon X\rightarrow X$ satisfying $T_{\ast}\mu = \mu$. Recall that the pushforward measure is defined by
+\begin{align*}
+  T_{\ast}\mu\left( A \right) &= \mu\left( T^{-1}(A) \right).
+\end{align*}
+We call $T$ a measure-preserving transformation.
+
+Generalizing this, if $T$ is invertible, then we may take a group action $G\curvearrowright \left( X,\mu \right)$ by measure-preserving transformations. If $T$ is not invertible, then we may consider a semigroup action $N\curvearrowright \left( X,\mu \right)$.
+
+The main items we are interested in are analytical considerations, such as
+\begin{itemize}
+  \item asymptotic structure
+  \item connections to unitary representation theory
+  \item isomorphism.
+\end{itemize}
+Ergodic theory appears in a number of fields, such as
+\begin{itemize}
+  \item unitary representation theory
+  \item analytic and geometric group theory
+  \item functional analysis
+  \item probability theory
+  \item geometry
+  \item analytic number theory.
+\end{itemize}
+\subsection{Background}%
+More aptly, this may be written as ``background.'' Most of these results are covered in a functional analysis class.
+\begin{definition}
+  A measurable space $\left( X,\Sigma \right)$ is called \textit{standard Borel} if there is a separable and completely metrizable space (also known as a Polish space) $K$ such that $\left( K, \mathcal{B} \right)\cong \left( X,\Sigma \right)$ are isomorphic as measurable spaces, where $ \mathcal{B} $ denotes the Borel $\sigma$-algebra on $K$.
+\end{definition}
+\begin{remark}
+  In the special case of standard probability spaces, we may take $K$ to be compact. This emerges from the fact we are only concerned with Radon measures.
+\end{remark}
+\begin{example}
+  The following are examples:
+  \begin{itemize}
+    \item finite or countably infinite sets;
+    \item products of standard Borel spaces;
+    \item $[0,1)\cong S^1$;
+    \item $(0,1)\cong \R\cong [0,1)\times \Z$;
+    \item $\R^{\N}$, where we use the complete distance metric
+      \begin{align*}
+        d\left( t,s \right) &= \sum_{j=1}^{\infty} 2^{-j} \frac{\left\vert t_j-s_j \right\vert}{1 + \left\vert t_j-s_j \right\vert}
+      \end{align*}
+      to provide the desired isomorphism;
+    \item the set $\R\setminus \Q$ is a $G_{\delta}$ subset of the Polish space $\R$, so it is also a Polish space.
+  \end{itemize}
+\end{example}
+\begin{theorem}
+  If $\left( X,\Sigma \right)$ is standard Borel and $B$ is Borel, then $\left( B,\Sigma|_{B} \right)$ is standard Borel.
+\end{theorem}
+\begin{theorem}[Riesz Representation Theorem]
+  Let $K$ be a compact Hausdorff space, and $L\colon C(K)\rightarrow \C$ a continuous linear functional. Then, there is a unique complex-valued Borel measure such that
+  \begin{align*}
+    L(f) &= \int_{}^{} f\:d\mu.
+  \end{align*}
+  Furthermore, this measure is a Radon measure.
+\end{theorem}
+\begin{remark}
+  From the Riesz Representation Theorem, it can be shown that the following hold:
+  \begin{itemize}
+    \item $L$ is positive if and only if $\mu$ is a positive measure;
+    \item $L(1) = 1$ if and only if $\mu$ is a probability measure.
+  \end{itemize}
+\end{remark}
+One of the fundamental constructions in ergodic theory, especially when we are concerned with actions by a countable discrete group on a standard probability space, is the projective limit of a (countable) family of standard probability spaces. This is a vital theorem.
+
+Consider a system of standard probability spaces $\left( X_k,\Sigma_k \right)_{k=1}^{\infty}$ with connecting maps $\varphi_{k}\colon X_{k+1}\rightarrow X_k$ satisfying $\left( \varphi_k \right)_{\ast}\mu_{k+1} = \mu_k$.
+
+Then, the projective limit
+\begin{align*}
+  X_{\infty} &= \varprojlim X_k\\
+             &= \set{\left( x_k \right)_{k}\in \prod_{k=1}^{\infty}X_k : \varphi_k\left( x_{k+1} \right) = x_k}
+\end{align*}
+admits a family of projection maps $\varphi_{k,\infty}\colon X_{\infty}\rightarrow X_k$, where we have $\varphi_{k,\infty}\left( \left( x_n \right)_n \right) = x_k$ such that $\varphi_{k}\circ \varphi_{k+1,\infty} = \varphi_{k,\infty}$.
+\begin{center}
+  % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAA0B9YAHR6zAAzHAE8AviDGl0mXPkIoyARiq1GLNl2ABrANRKJUmdjwEiS0iur1mrRB07bJqmFADm8IqEEAnCAFskMhAcCCQAJmt1OxA+eh80AAssbm1SPgFhcUlpEF8AoOpQpAsQBjoAIxgGAAVZUwUQHyw3RJwQKNs2OLoE5NT9dP4hUUNc-MDEUuLESLLK6rqTeTZm1vbOjXsevpSnMQoxIA
+\begin{tikzcd}
+X_{\infty} \arrow[rd, "{\varphi_{k,\infty}}"] \arrow[d, "{\varphi_{k+1,\infty}}"'] &     \\
+X_{k+1} \arrow[r, "\varphi_k"']                                                    & X_k
+\end{tikzcd}
+\end{center}
+The projective limit is universal in the sense that if we have a family of maps $f_{k+1}\colon Y\rightarrow X_{k+1}$ satisfying $\varphi_k\circ f_{k+1} = f_k$, then there is a unique map $f\colon Y\rightarrow X$ such that $\varphi_{k,\infty}\circ f = f_k$ for all $k$.
+
+We define the $\sigma$-algebra on $X_{\infty}$ to be
+\begin{align*}
+  \Sigma_{\infty} &= \sigma\left( \bigcup_{k=1}^{\infty}\set{\varphi_{k,\infty}^{-1}\left( E_k \right) : E_k\in \Sigma_k} \right).
+\end{align*}
+Then, the \textbf{Kolmogorov Extension Theorem} says the following.
+\begin{theorem}
+  There is a unique probability measure $\mu_{\infty}$ on $\left( X_{\infty},\Sigma_{\infty} \right)$ satisfying
+  \begin{align*}
+    \mu_{\infty} \left( \varphi_{k,\infty}^{-1}\left( E \right) \right) &= \mu_k\left( E \right)
+  \end{align*}
+  for all $E\in \Sigma_k$.
+\end{theorem}
+\begin{proof}
+  % Insert Proof Here
+\end{proof}
+The most important case is when the projective limit is the infinite product measure.
+\subsection{Canonical Examples}%
+\begin{example}[Bernoulli Actions]
+  Let $\left( X,\mu \right)$ be a standard probability space, and let $G$ be any countable group. Then, there is a unique probability measure on the product space $\left( X,\mu \right)^{G}$, and we have that $G\curvearrowright \left( X,\mu \right)^{G}$ in a probability measure-preserving manner by translation --- that is, $h\cdot \left( x_g \right)_{g\in G} = \left( x_{h^{-1}g} \right)_{g\in G} $. This follows from the fact that $G$ is probability measure-preserving on all the Borel cylinder sets
+  \begin{align*}
+    \bigcup_{\substack{F\subseteq G\\F\text{ finite}}} \set{\pi_{F}^{-1}\left( E \right) : E\subseteq X^{F}},
+  \end{align*}
+  so we may apply the monotone class lemma (that no one remembers from measure theory) to see that it applies for all the Borel sets of $\left( X,\mu \right)^{G}$.
+\end{example}
+\begin{example}
+  Suppose $G$ is a compact Hausdorff topological group. Then, there is a unique (regular) Borel probability measure $\mu$, known as the Haar (probability) measure that is invariant under left translation. If $\pi\colon \Gamma\rightarrow G$ is a group homomorphism of a discrete group $\Gamma$ on $G$, then the action $\gamma\cdot g = \pi(\gamma)g$ yields a probability measure-preserving action of $\Gamma$ on $G$.
+
+  For instance, this yields actions $\Z\curvearrowright S^1$ given by rotations --- that is, $e^{2\pi i \theta}\mapsto e^{2\pi i \left( \theta + \alpha \right)}$.
+\end{example}
 \end{document}

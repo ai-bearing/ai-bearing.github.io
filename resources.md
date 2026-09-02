@@ -9,20 +9,21 @@ permalink: "/useful_resources.html"
 - [Keith Conrad's Notes](https://kconrad.math.uconn.edu/blurbs/)
 - [AMS Open Math Notes](https://www.ams.org/open-math-notes)
 - Topics of Interest:
+  - Sofic and Hyperlinear Groups:
+    - [An Introduction to Hyperlinear and Sofic Groups](https://arxiv.org/pdf/0911.4266)
+    - [Introduction to Sofic and Hyperlinear Groups and Connes' Embedding Conjecture](https://arxiv.org/pdf/1309.2034)
+    - [A Brief Introduction to Sofic Entropy Theory](https://arxiv.org/pdf/1711.02062)
+  - Measured Group Theory and Cost:
+    - [A Survey of Measured Group Theory](https://arxiv.org/pdf/0901.0678)
+    - [Around the Orbit Equivalence Theory of the Free Group, Cost, and $\ell^2$-Betti Numbers](https://perso.ens-lyon.fr/gaboriau/Travaux-Publi/ME-Cost-L2-Lectures/ME-Cost-L2-lectures.pdf)
   - Free Probability/Entropy:
     - [Lectures on the Combinatorics of Free Probability](https://rolandspeicher.com/wp-content/uploads/2020/06/nica-speicher-book.pdf)
     - [Free Probability and Random Matrices](https://mast.queensu.ca/~mingo/mingo_speicher_2017.pdf)
     - [A Guided Tour of the Connes Embedding Problem](https://arxiv.org/pdf/2109.12682)
     - [Introduction to Random Matrices](https://arxiv.org/pdf/1712.07903)
     - [Strong Convergence: A Short Survey](https://arxiv.org/pdf/2510.12520)
-    - [An Introduction to Hyperlinear and Sofic Groups](https://arxiv.org/pdf/0911.4266)
-    - [Introduction to Sofic and Hyperlinear Groups and Connes' Embedding Conjecture](https://arxiv.org/pdf/1309.2034)
     - [Free Entropy](https://arxiv.org/pdf/math/0103168)
-    - [A Brief Introduction to Sofic Entropy Theory](https://arxiv.org/pdf/1711.02062)
     - [Random Matrices and Free Probability](https://jacobcampbell2.github.io/rmfp/notes/notes.pdf) Lecture Notes
-  - Measured Group Theory and Cost
-    - [A Survey of Measured Group Theory](https://arxiv.org/pdf/0901.0678)
-    - [Around the Orbit Equivalence Theory of the Free Group, Cost, and $\ell^2$-Betti Numbers](https://perso.ens-lyon.fr/gaboriau/Travaux-Publi/ME-Cost-L2-Lectures/ME-Cost-L2-lectures.pdf)
 - Personal Notes:
   - Graduate Classes:
     - [Differential Topology](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Differential Topology/differential_topology_notes.pdf)

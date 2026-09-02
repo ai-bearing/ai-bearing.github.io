@@ -493,8 +493,144 @@ The following is a more topological proof that relies heavily on covering space 
 
 \section{Residually Finite Groups}%
 
-\section{Soficity and Hyperlinearity}%
+\section{Four Perspectives on Soficity}%
+We will work to understand soficity (a type of generalized approximation property for groups) with a variety of perspectives.
+\subsection{The Law of the Group von Neumann Algebra}%
+This is the approach that my advisor, Ben Hayes, takes towards tracial von Neumann algebras, specialized to the case of groups.
 
-\nocite{loh_geometric_group_theory,topics_groups_geometry,cellular_automata_and_groups}
+A tracial von Neumann algebra is a pair $\left( M,\tau \right)$, where $M$ is a von Neumann algebra and $\tau\colon M\rightarrow \C$ is a linear functional that satisfies:
+\begin{itemize}
+  \item positivity: $\tau\left( x^{\ast}x \right) \geq 0$ for all $x\in M$;
+  \item normalization: $\tau\left( 1 \right) = 1$;
+  \item traciality: for all $x,y\in M$, $\tau\left( xy \right) = \tau\left( yx \right)$.
+\end{itemize}
+If $I$ is any index set, an $I$-tuple $a\in M^{I}$ yields a $\ast$-algebra homomorphism from the space of all noncommutative $\ast$-polynomials, denoted $ \C^{\ast}\left\langle \left( T_i \right)_{i\in I} \right\rangle $, given by $P(a)\in M$ for all $P\in \C^{\ast}\left\langle \left( T_i \right)_{i\in I} \right\rangle$.
+
+The \textit{law} of an $I$-tuple $a\in M^{I}$ is then a linear functional $\ell_a\colon \C^{\ast}\left\langle \left( T_i \right)_{i\in I} \right\rangle\rightarrow \C$ given by
+\begin{align*}
+  \ell_a\left( P \right) &= \tau\left( P(a) \right).
+\end{align*}
+Notice that in the case of a single-element set for $I$ and a normal or self-adjoint element for $A$, the law is given by integration with respect to the spectral measure of $a$,
+\begin{align*}
+  \ell_a(P) &= \int_{}^{} P\:d\mu_a.
+\end{align*}
+In a sense, the law is a generalization of the spectral measure.
+
+Now, consider a group $G$ with finite symmetric generating set $S$. Then, in the group von Neumann algebra $L(G)$, there is a distinguished tuple $\left( \lambda_s \right)_{s\in S}\in L(G)^{S}$ given by the left-translation operators $\lambda_s$ for each $s\in S$. The corresponding law is then given by
+\begin{align*}
+  \ell_S\left( P \right) &= \iprod{P\left( \left( \lambda_s \right)_{s\in S} \right)\delta_e}{\delta_e}.
+\end{align*}
+We start by viewing the symmetric group $\Sym(n)\subseteq U\left( \M_n\left( \C \right) \right)$ as permutation matrices. Then, any $S$-tuple $\sigma\in \sym(n)^{S}$ has law given by
+\begin{align*}
+  \ell_{\sigma}\left( P \right) &= \tr_n\left( P\left( \left( \sigma_s \right)_{s\in S} \right) \right).
+\end{align*}
+Notice that, given a word $w$ in $\F_S$, which we can view as a monomial in $\C^{\ast}\left\langle \left( T_i \right)_{i\in I} \right\rangle$, we observe that the non-normalized trace is the cardinality of the fixed-point set, so that
+\begin{align*}
+  \tr_n\left( w\left( \left( \sigma_s \right)_{s\in S} \right) \right) &= \frac{1}{n}\left\vert \set{j\in [n] : w\left( \left( \sigma_{s} \right)_{s\in S} \right)(j) = j} \right\vert.
+\end{align*}
+We then say that $G$ is sofic if and only if there is a sequence of natural numbers $\left( k_n \right)_{n}$ and a corresponding sequence of $S$-tuples $\left( \sigma_n \right)_{n}$ with each $\sigma_n\in \sym\left( k_n \right)^{S}$, such that the laws $\ell_{\sigma_n}$ converge weak* (i.e., pointwise) to the law $\ell_S$.
+
+\subsection{Metric Ultraproducts}%
+The original notion of an ultraproduct came from consideration of normed spaces and a development of nonstandard analysis.
+
+Let $E_{\alpha}$ be a family of normed spaces indexed by a set $A$. We may form the $\ell^{\infty}$-direct product of the set $\set{E_{\alpha}\colon \alpha\in A}$ by taking
+\begin{align*}
+  \prod_{\alpha\in A} E_{\alpha} &\coloneq \set{\left( x_{\alpha} \right)_{\alpha\in A} : x_{\alpha}\in E_{\alpha}\text{ and }\sup_{\alpha}\norm{x_{\alpha}} < \infty},
+\end{align*}
+and we may equip it with a norm
+\begin{align*}
+  \norm{x} &= \sup_{\alpha\in A} \norm{x_{\alpha}}_{\alpha}.
+\end{align*}
+Write $ \mathcal{E} $ for the $\ell^{\infty}$-direct product.
+
+Given a (non-principal) ultrafilter $ \mathcal{U} $ on $A$, there is a way to define a ``null subspace'' by taking
+\begin{align*}
+  \mathcal{N}_{\mathcal{U}} &= \set{x\in \mathcal{E} : \lim_{ \mathcal{U} }\norm{x_{\alpha}} = 0},
+\end{align*}
+where the limit along the ultrafilter $\mathcal{U}$ of a sequence $\left( y_{\alpha} \right)_{\alpha}$ is defined to be $y$ if for all $\ve > 0$, the set $\set{\alpha : \norm{y_{\alpha}-y} < \ve}$ is contained in $ \mathcal{U} $. The subspace $ \mathcal{N}_{\mathcal{U}} $  is closed. The metric ultraproduct of the family $\left( E_{\alpha} \right)_{\alpha\in A}$ is then given by
+\begin{align*}
+  \prod_{\mathcal{U}} E_{\alpha} &\coloneq \mathcal{E}/\mathcal{N}_{\mathcal{U}},
+\end{align*}
+with norm given by
+\begin{align*}
+  \norm{\left[ x \right]_{\mathcal{U}}} &= \lim_{\mathcal{U}} \norm{x_{\alpha}}.
+\end{align*}
+We write $E$ for the ultraproduct. When the ultrafilter is nonprincipal, then the ultraproduct is complete. If $\left( x_k \right)_k$ is a Cauchy sequence of elements of $ E $, then for each $i\in \N$, we may find some $N_i$ such that
+\begin{align*}
+  \norm{x_N' - x_N} &< 2^{-i}
+\end{align*}
+for all $N,N' \geq N_i$. For each $k$, we select a representative $\left( x_k(\alpha) \right)_{\alpha\in A}$, and define
+\begin{align*}
+  I_i &= \set{\alpha\in A : \norm{x_{N_i}(\alpha) - x_{N_{i+1}}(\alpha)} < 2^{-i}}.
+\end{align*}
+We have that each $I_i$ is contained in $ \mathcal{U} $, and without loss of generality we may assume that $I_1\supseteq I_2\supseteq\cdots$ with empty intersection, since the ultrafilter $ \mathcal{U} $ is non-principal, and thus is countably incomplete. Define an element $x\in \mathcal{E}$ by taking
+\begin{align*}
+  x|_{I_i\setminus I_{i+1}} &= x_{N_i}|_{I_i\setminus I_{i+1}}.
+\end{align*}
+The equivalence class $\left[ x \right]_{\mathcal{U}}$ is the limit of the Cauchy sequence $\left( x_k \right)_k$.
+
+Next, we concern ourselves with ultraproducts of metric groups. Given a family $\left( G_{\alpha},d_{\alpha} \right)$ of topological groups with left-invariant metrics,\footnote{Such invariant metrics always exist for metrizable groups by a theorem of Kakutani.} we may form an ultraproduct by following an analogous process for the case of metric spaces, but the result is only a metric space on which the Cartesian product group $\prod_{\alpha\in A}G_{\alpha}$ acts by isometries (i.e., a homogeneous space), rather than a proper group.
+\begin{example}
+  Consider the symmetric group $\sym\left(\N\right)$ on the natural numbers. The standard Polish topology on $\sym(\N)$ is the subspace topology induced by the product topology on the prodiscrete space $\N^{\N}$. This is a separable group topology with a compatible metric given by
+  \begin{align*}
+    d\left( \sigma,\tau \right) &= \sum_{i=1}^{\infty} \set{2^{-i} : \sigma(i)\neq \tau(i)}.
+  \end{align*}
+  We note that this is a bounded analogue of the Hamming distance for finite symmetric groups.
+
+  We will form an ultrapower of the group $\left( \sym(\N),d \right)$ with regard to a nonprincipal ultrafilter $ \mathcal{U} $ on $\N$. Since the metric $d$ is itself bounded, we see that the space $\mathcal{G} = \left( \sym(\N) \right)^{\N}$ is the analogue of the space $\mathcal{E}$ from the construction of the ultraproduct of normed spaces.
+
+  The set
+  \begin{align*}
+    \mathcal{N} &= \set{x : \lim_{\mathcal{U}}d\left( x_{\alpha},e \right) = 0}
+  \end{align*}
+  is a subgroup of $ \mathcal{G} $, seeing as the invariance of the metric $d$ yields
+  \begin{align*}
+    d\left( xy, e\right) &= d\left( y,x^{-1} \right)\\
+                         &\leq d\left( y,e \right) + d\left( x^{-1},e \right)\\
+                         &= d\left( y,e \right) + d\left( x,e \right).
+  \end{align*}
+  Yet, it is not normal. If we have transpositions $x = \left( x_i \right)_{i} = \left( \left( i,i+1 \right) \right)_{i\in \N}$ and $y = \left( y_i \right)_{i} = \left( \left( 1,i \right) \right)_{i\in \N}$, then $x\in \mathcal{N}$ but $y^{-1}xy\notin \mathcal{N}$, since $y_i^{-1}x_iy_i = \left( 1,i+1 \right)$ for each $i$, and we have $d\left( y_i^{-1}x_iy_i,e \right) \rightarrow 1/2$.
+
+  In particular, this means that the homogeneous space $ \mathcal{G}/\mathcal{N} $ admits a $\mathcal{G}$-invariant metric $d\left( x,y \right) = \lim_{\mathcal{U}}d\left( x_n,y_n \right)$, it is not a group.
+\end{example}
+In order to develop an ultraproduct of metric groups that is actually a group, we need to use bi-invariant metrics. That is, metrics that satisfy $d\left( x,y \right) = d\left( gx,gy \right) = d\left( xg,yg \right)$. These metrics are special because they admit topologies whose conjugation-invariant open subsets form a neighborhood basis at the identity.
+
+If $\left( G_{\alpha},d_{\alpha} \right)_{\alpha}$ are a family of metric groups with bi-invariant metrics, then the ``null set'' subgroup $\mathcal{N}$ is normal, and for any ultrafilter $ \mathcal{U} $ on $A$, the ultraproduct
+\begin{align*}
+  \prod_{\mathcal{U}} G_{\alpha} &= \mathcal{G}/\mathcal{N}
+\end{align*}
+is indeed a group. The bi-invariant metric
+\begin{align*}
+  d\left( x\mathcal{N},y\mathcal{N} \right) &= \lim_{\mathcal{U}} d_{\alpha}\left( x_{\alpha},y_{\alpha} \right)
+\end{align*}
+yields the metric ultraproduct of the family $\left( G_{\alpha},d_{\alpha} \right)$ with respect to the ultrafilter $ \mathcal{U} $.
+\begin{example}[Groups with Bi-Invariant Metrics]\hfill
+  \begin{enumerate}[(i)]
+    \item If $\left( X,\mu \right)$ is a finite measure space, then group $\aut\left( X,\mu \right)$ admits a bi-invariant metric given by
+      \begin{align*}
+        d\left( \sigma,\tau \right) &= \mu\left( \set{x\in X : \sigma(x)\neq \tau(x)} \right).
+      \end{align*}
+    \item The (normalized) Hamming distance on the symmetric group $S_n$ is given by
+      \begin{align*}
+        d_{H}\left( \sigma,\tau \right) &= \frac{1}{n}\left\vert \set{i\in [n] : \sigma(i)\neq \tau(i)} \right\vert.
+      \end{align*}
+      This is the special case of a finite set $[n]$ equipped with the (normalized) counting measure.
+    \item If $H$ is a Hilbert space, then $U\left( H \right)$ denotes the group of unitary operators on $H$. The \textit{uniform operator metric} is given by
+      \begin{align*}
+        d_{u}\left( u,v \right) &= \norm{u-v}.
+      \end{align*}
+      This is a bi-invariant metric.
+    \item If $H = \C^n$ is an $n$-dimensional Hilbert space, then $U(H) = U(n)$ is the unitary group of rank $n$. The \textit{normalized Hilbert--Schmidt metric} on $U(n)$ is given by
+      \begin{align*}
+        d_{\operatorname{HS}}\left( u,v \right) &= \sqrt{\tr_n\left( (u-v)^{\ast}(u-v) \right)},
+      \end{align*}
+      where $\tr_n$ is the normalized trace $\tr_n = \frac{1}{n}\Tr$.
+  \end{enumerate}
+\end{example}
+Every metric group $G$ embeds into its ultrapower $ G^{\mathcal{U}} $ with the diagonal embedding.
+\subsection{Approximate Homomorphisms}%
+\subsection{Cayley Graphs}%
+
+\nocite{loh_geometric_group_theory,topics_groups_geometry,cellular_automata_and_groups,pestov2008hyperlinearsoficgroupsbrief,pestov2012introductionhyperlinearsoficgroups,hayes2020randommatrixapproachabsorption}
 \printbibliography
 \end{document}
