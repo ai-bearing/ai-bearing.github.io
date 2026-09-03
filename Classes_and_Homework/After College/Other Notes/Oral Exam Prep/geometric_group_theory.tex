@@ -432,11 +432,15 @@ In order to show the reverse direction, we will have to determine, given an acti
   If a group $G$ acts freely on a tree $T$, then $G$ is a free group.
 \end{theorem}
 \begin{proof}
-  Let $T'$ be a spanning tree for the action of $T$. Say two translations $g\cdot T'$ and $h\cdot T'$ are adjacent if $g\cdot T'\neq h\cdot T'$ and there exist vertices $v\in g\cdot T'$ and $w\in h\cdot T'$ such that $\set{v,w}$ is an edge of $T$.
+  Let $T'$ be a spanning tree for the action of $T$. Say two translations $g\cdot T'$ and $h\cdot T'$ are adjacent if $g\cdot T'\neq h\cdot T'$ and there exist vertices $v\in g\cdot T'$ and $w\in h\cdot T'$ such that $\set{v,w}$ is an edge of $T$. Define the graph $X$ by saying $V(X)$ consists of the set $\set{g\cdot T' : g\in G}$ and $E(X)$ consists of all the adjacent trees $\set{g\cdot T',h\cdot T'}$.
 
   We will start by showing that if $g\neq h$, then $g\cdot T'\neq h\cdot T'$. We may reduce this question to showing that for any $g\neq e$, we have that $g\cdot T'\neq T'$. Yet, this follows directly from our assumptions; there is exactly one representative from each orbit in the spanning tree, and we cannot have $g\cdot v = v$ for any $v\in T'$ unless $g = e$ by the assumption of the freeness of the action $G$.
 
-  For any adjacent $g\cdot T'$ and $h\cdot T'$, we claim that there is a unique connecting edge.
+  For any adjacent $g\cdot T'$ and $h\cdot T'$, we claim that there is a unique connecting edge. We observe that $g\cdot T'$ and $h\cdot T'$ are adjacent if and only if $h^{-1}g\cdot T'$ is adjacent to $T'$ --- that is, there exists $u\in T'$ and $v\in h^{-1}g\cdot T'$ such that $\set{u,v}$ is an edge. Yet, since $u$ is a unique representative of the orbit of $v$, it follows that there is only one such edge. (In Löh's book, such an edge is dubbed an ``essential edge'' on page 89.)
+
+  We observe that, since each copy of $T'$ is a tree (hence connected), and $T$ itself is a tree, it follows that there can only be one unique path between any two vertices in $T'$ as else that implies the existence of two non-unique paths in the original graph $T$.
+
+  Finally, since $V(X) \curvearrowleft G$ freely by taking $\left( h\cdot T' \right)\cdot g = \left( hg \right)\cdot T'$, we must have that $\operatorname{Cay}\left( G,S \right)\cong X$. Since $X$ is a tree, it follows that $G$ is a free group.
 \end{proof}
 The following is a more topological proof that relies heavily on covering space theory.
 \begin{proof}[Proof via Covering Spaces]
@@ -444,8 +448,32 @@ The following is a more topological proof that relies heavily on covering space 
 
   Since any one-dimensional CW complex is homotopy-equivalent to a bouquet of circles, the Seifert--Van Kampen theorem gives that $\pi_1\left( T/G \right)\cong F(S)$ for some generating set $S$, so that $G$ is free.
 \end{proof}
+We now focus on some applications. 
+\begin{theorem}[Nielsen--Schreier Theorem]
+  Let $G$ be a free group, and let $H\leq G$ be a subgroup. Then, $H$ is a free group.
+\end{theorem}
+\begin{proof}
+  If $G\curvearrowright T$ acts freely, then so too does $H$. 
+\end{proof}
 \section{Quasi-Isometry of Metric Spaces and Groups}%
-
+\begin{definition}
+  Consider two metric spaces $\left( X,d \right)$ and $\left( Y,\rho \right)$, and a map $f\colon X\rightarrow Y$.
+  \begin{itemize}
+    \item We say $f$ is an isometric embedding if for all $x,x'\in X$, $\rho\left( f\left( x \right),f\left( x' \right) \right) = d\left( x,x' \right)$.
+    \item We say $f$ is an isometry (or isometric isomorphism) if $f$ is an isometric embedding, and there exists an isometric embedding $g\colon Y\rightarrow X$ satisfying $f\circ g = \id_Y$ and $g\circ f = \id_X$.
+    \item We say $f$ is a bilipschitz embedding if there is some constant $C > 0$ such that for all $x,x'\in X$,
+      \begin{align*}
+        \frac{1}{C}d\left( x,x' \right)\leq \rho\left( f\left( x \right),f\left( x' \right) \right)\leq Cd\left( x,x' \right).
+      \end{align*}
+    \item We say $f$ is a bilipschitz equivalence if it is a bilipschitz embedding and there exists a bilipschitz embedding $g\colon Y\rightarrow X$ satisfying $f\circ g = \id_Y$, $g\circ f = \id_X$. The spaces $X$ and $Y$ are then called bilipschitz equivalent.
+    \item The map $f$ is called a $\left( C,K \right)$-quasi-isometric embedding if for all $x,x'\in X$, we have
+      \begin{align*}
+        \frac{1}{C}d\left( x,x' \right)-K \leq \rho\left( f\left( x \right),f\left( x' \right) \right)\leq Cd\left( x,x' \right) + K.
+      \end{align*}
+    \item The map $f'\colon X\rightarrow Y$ is said to have finite distance from $f$ if there is some $K > 0$ such that for all $x\in X$, we have $\rho\left( f(x),f'(x) \right) \leq K$.
+    \item The map $f$ is called a quasi-isometry if there is a quasi-inverse quasi-isometric embedding $g\colon Y\rightarrow X$. That is, $g$ is a quasi-isometric embedding with $g\circ f$ having finite distance from $\id_X$ and $f\circ G$ having finite distance from $\id_Y$. We say $X$ and $Y$ are quasi-isometric, and write $X\sim_{\operatorname{QI}}Y$.
+  \end{itemize}
+\end{definition}
 \section{Growth types of Groups}%
 \begin{definition}
   Let $G$ be a finitely generated group with symmetric generating set $S$. The \textit{word length} of $g\in G$ with respect to $S$, denoted $\ell_S(g)$, is the smallest $n\geq 0$ such that $g$ may be written as a product of $n$ elements of $S$. That is,
@@ -490,8 +518,6 @@ The following is a more topological proof that relies heavily on covering space 
 \section{Amenability of Groups}%
 
 % Coamenability
-
-\section{Residually Finite Groups}%
 
 \section{Four Perspectives on Soficity}%
 We will work to understand soficity (a type of generalized approximation property for groups) with a variety of perspectives.
