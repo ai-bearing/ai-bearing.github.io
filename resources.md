@@ -10,12 +10,14 @@ permalink: "/useful_resources.html"
 - [AMS Open Math Notes](https://www.ams.org/open-math-notes)
 - Topics of Interest:
   - Sofic and Hyperlinear Groups:
-    - [An Introduction to Hyperlinear and Sofic Groups](https://arxiv.org/pdf/0911.4266)
-    - [Introduction to Sofic and Hyperlinear Groups and Connes' Embedding Conjecture](https://arxiv.org/pdf/1309.2034)
-    - [A Brief Introduction to Sofic Entropy Theory](https://arxiv.org/pdf/1711.02062)
+    - [An Introduction to Hyperlinear and Sofic Groups](https://arxiv.org/pdf/0911.4266), Pestov and Kwiatowska
+    - [Introduction to Sofic and Hyperlinear Groups and Connes' Embedding Conjecture](https://arxiv.org/pdf/1309.2034), Capraro and Lupini
+    - [A Brief Introduction to Sofic Entropy Theory](https://arxiv.org/pdf/1711.02062), Bowen
+    - [On Sofic Groups](https://arxiv.org/pdf/math/0305352)
   - Measured Group Theory and Cost:
     - [A Survey of Measured Group Theory](https://arxiv.org/pdf/0901.0678)
     - [Around the Orbit Equivalence Theory of the Free Group, Cost, and $\ell^2$-Betti Numbers](https://perso.ens-lyon.fr/gaboriau/Travaux-Publi/ME-Cost-L2-Lectures/ME-Cost-L2-lectures.pdf)
+    - [Invariants of Orbit Equivalence Relations and Baumslag–Solitar Groups](https://projecteuclid.org/journalArticle/Download?urlId=10.2748%2Ftmj%2F1404911861)
   - Free Probability/Entropy:
     - [Lectures on the Combinatorics of Free Probability](https://rolandspeicher.com/wp-content/uploads/2020/06/nica-speicher-book.pdf)
     - [Free Probability and Random Matrices](https://mast.queensu.ca/~mingo/mingo_speicher_2017.pdf)

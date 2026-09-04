@@ -93,3 +93,6 @@ use_math: true
 
 - "I forgot about half the numbers"\
   *Ben Hayes*
+
+- "That's how you prove theorems. You first prove it, then state the theorem"\
+  *Malek Abdesselam*
