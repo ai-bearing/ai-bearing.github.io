@@ -172,10 +172,35 @@ The seminorm $p$ is called the Minkowski function for $V$, or the \textit{gauge}
   \end{align*}
   generates the topology for $X$.
 \end{proof}
+\subsection{Metrizability and Normability}%
+When we look at a locally convex space, we concern ourselves with whether the topology of the space is given by a metric or not. It turns out this is (effectively) equivalent to there being countably many seminorms defining the topology.
+\begin{proposition}
+  Let $\set{p_n : n\geq 1}$ be a sequence of separating seminorms on $X$. For any $x,y\in X$, we may take
+  \begin{align*}
+    d\left( x,y \right) &= \sum_{n=1}^{\infty} 2^{-n} \frac{p_n\left( x-y \right)}{1 + p_n\left( x-y \right)}.
+  \end{align*}
+  Then, the topology on $X$ is defined by this metric.
+\end{proposition}
+\begin{definition}
+  A Fréchet space is a locally convex space whose topology is defined by a metric that is complete.
+\end{definition}
+\begin{definition}
+  If $X$ is a topological vector space, and $B\subseteq X$, then we say $B$ is bounded if, for every open set $U$ containing $0$, there is some $\ve > 0$ such that $\ve B \subseteq U$.
+\end{definition}
+\begin{proposition}
+  If $X$ is a locally convex space, then $X$ is normable if and only if $X$ has a nonempty bounded open set.
+\end{proposition}
+\begin{proof}
+  The open unit ball $U_X$ is bounded. Therefore, we only need to show one direction. Suppose $X$ is a locally convex space with a bounded open set $U$. Translating if necessary, we may assume $0\in U$.
+
+  Since $X$ is locally convex, there is an open, convex, balanced subset of $U$ which we call $V$; using the gauge of $V$, we may find a continuous seminorm $p$ such that $\set{x : p(x) < 1} = V$. We will show that $p$ is a norm and that $p$ defines the topology on $X$.
+\end{proof}
 \section{Weak Topologies and Extremal Structure}%
 \section{$C^{\ast}$-Algebras}%
 \section{Spectral Theory}%
 Spectral theory is primarily concerned with representations of abelian $C^{\ast}$-algebras. Consider a normal operator $N$ on $H$. Then, $C^{\ast}\left( N \right)$ is an abelian $C^{\ast}$-algebra, and the continuous functional calculus $f\mapsto f\left( N \right)$ yields a $\ast$-isomorphism of $C\left( \sigma(N) \right)$ onto $C^{\ast}\left( N \right)$. In particular, $f\mapsto f\left( N \right)$ is a representation of the abelian $C^{\ast}$-algebra $C^{\ast}\left( N \right)$.
+
+We will find a way to extend this further, as well as find some useful applications to the structure of abelian von Neumann algebras and understanding unitary invariants for normal operators.
 \begin{definition}
   Let $X$ be a set, $\Sigma$ a $\sigma$-algebra on $X$, and $H$ a Hilbert space. A \textit{spectral measure} for $\left( X,\Sigma,H \right)$ is a map $E\colon \Sigma\rightarrow B\left( H \right)$ satisfying
   \begin{enumerate}[(a)]
@@ -263,9 +288,9 @@ We next concern ourselves with establishing ``integration'' with respect to the 
   Consider a partition $\set{\Delta_1,\dots,\Delta_n}$ satisfying the conditions in the proposition. For any arbitrary vectors $g,h\in H$ and $x_k\in \Delta_k$, we have
   \begin{align*}
     \left\vert \iprod{Ag}{h} - \sum_{k=1}^{n} \phi\left( x_k \right) \iprod{E\left( \Delta_k \right)g}{h} \right\vert &= \left\vert \sum_{k=1}^{n} \int_{\Delta_k}^{} \left( \phi(x)-\phi\left( x_k \right) \right)\:dE_{g,h} \right\vert\\
-                                                                                                                            &\leq \sum_{k=1}^{n} \int_{\Delta_k}^{} \left\vert \phi(x)-\phi\left( x_k \right) \right\vert\:d\left\vert E_{g,h} \right\vert\\
-                                                                                                                                                                                                                    &\leq \ve \int_{}^{} \:d\left\vert E_{g,h} \right\vert\\
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    &\leq \ve \norm{g}\norm{h}.
+                  &\leq \sum_{k=1}^{n} \int_{\Delta_k}^{} \left\vert \phi(x)-\phi\left( x_k \right) \right\vert\:d\left\vert E_{g,h} \right\vert\\
+                  &\leq \ve \int_{}^{} \:d\left\vert E_{g,h} \right\vert\\
+                  &\leq \ve \norm{g}\norm{h}.
   \end{align*}
   This yields the desired result.
 \end{proof}
@@ -277,7 +302,88 @@ That is, for any $g,h\in H$ and bounded $\Omega$-measurable function $\phi$ on $
 \begin{align*}
   \iprod{\left( \int_{}^{} \phi\:dE \right)g}{h} &= \int_{}^{} \phi\:dE_{g,h}.
 \end{align*}
+If $B_{\infty}\left( X,\Omega \right)$ denotes the set of bounded $\Omega$-measurable functions $\phi\colon X\rightarrow \C$ with the norm $\norm{\phi} = \sup_{x\in X} \left\vert \phi(x) \right\vert$, then $B_{\infty}\left( X,\Omega \right)$ is a unital Banach algebra --- in fact, it is an abelian $C^{\ast}$-algebra.
+\begin{proposition}
+  Suppose $E$ is a spectral measure for $\left( X,\Omega, H \right)$, and $\rho\colon B_{\infty}\left( X,\Omega \right)$ is defined by taking $\rho(\phi) = \int_{}^{} \phi\:dE$.
 
+  Then, $\rho$ is a representation of $B_{\infty}\left( X,\Omega \right)$ and $\rho(\phi)$ is a normal operator for every $\phi\in B_{\infty}\left( X,\Omega \right)$.
+\end{proposition}
+\begin{proof}
+  We will only focus on showing that $\rho$ is multiplicative. Suppose $\phi,\psi\in B_{\infty}\left( X,\Omega \right)$. Let $\ve > 0$, and let $\set{\Delta_1,\dots,\Delta_n}$ be a Borel partition of $X$ satisfying
+  \begin{align*}
+    \sup\set{\left\vert \omega(x)-\omega(x') \right\vert : x,x'\in\Delta_k,\omega=\phi,\psi,\phi\psi} &< \ve.
+  \end{align*}
+  In particular, we have that for any $x_k\in \Delta_k$ and $\omega = \phi,\psi,\phi\psi$, we have
+  \begin{align*}
+    \norm{ \int_{}^{} \omega\:dE - \sum_{k=1}^{n} \omega\left( x_k \right)E\left( \Delta_k \right) } &< \ve.
+  \end{align*}
+  The triangle inequality then gives
+  \begin{align*}
+    \norm{ \int_{}^{} \phi\psi\:dE - \left( \int_{}^{} \phi\:dE \right) \left( \int_{}^{} \psi\:dE \right) } &\leq \ve + \norm{\sum_{k=1}^{n}\phi\left( x_k \right)\psi\left( x_k \right)E\left( \Delta_k \right) - \left( \sum_{i=1}^{n}\phi\left( x_i \right)E\left( \Delta_i \right) \right)\left( \sum_{j=1}^{n}\psi\left( x_j \right)E\left( \Delta_{x_j} \right) \right)}\\
+                & + \norm{ \left( \sum_{i=1}^{n}\phi\left( x_i \right)E\left( \Delta_i \right) \right)\left( \sum_{j=1}^{n} \psi\left( x_j \right)E\left( \Delta_j \right) \right) - \left( \int_{}^{} \phi\:dE \right)\left( \int_{}^{} \psi\:dE \right) }.
+  \end{align*}
+  Since $E\left( \Delta_i \right)E\left( \Delta_j \right) = E\left( \Delta_i\cap \Delta_j \right)$, and $\set{\Delta_1,\dots,\Delta_n}$ is a partition, we have that the second term on the right-hand side is zero. Thus, we have
+  \begin{align*}
+    \norm{ \int_{}^{} \phi\psi\:dE - \left( \int_{}^{} \phi\:dE \right) \left( \int_{}^{} \psi\:dE \right) } &\leq \ve + \norm{ \left( \sum_{i=1}^{n}\phi\left( x_i \right)E\left( \Delta_i \right) \right) \left( \sum_{j=1}^{n} \psi\left( x_j \right)E\left( \Delta_j \right) - \int_{}^{} \psi\:dE \right) }\\
+                &+ \norm{ \left( \sum_{i=1}^{n}\phi\left( x_i \right)E\left( \Delta_i \right) - \int_{}^{} \phi\:dE\right) \left( \int_{}^{} \psi\:dE \right) }\\
+                &\leq \ve\left( 1 + \norm{\phi} + \norm{\psi} \right).
+  \end{align*}
+  Thus, we get multiplicativity.
+\end{proof}
+\begin{corollary}
+  If $X$ is a compact Hausdorff space, and $E$ is a spectral measure on $H$ defined on the Borel sets of $X$, then $\rho\colon C(X)\rightarrow B(H)$ given by $ \rho(u) = \int_{}^{} u\:dE $ is a representation of $C(X)$.
+\end{corollary}
+Thus far, all we have obtained is a variety of the properties of a spectral measure. However, we do not know if such a measure exists. The following is the proof that it does.
+\begin{theorem}
+  Suppose $\rho\colon C(X)\rightarrow B(H)$ is a representation. Then, there is a unique spectral measure $E$ defined on the Borel subsets of $X$ such that for all $g,h\in H$, $E_{g,h}$ is a regular measure, and we have
+  \begin{align*}
+    \rho(u) &= \int_{}^{} u\:dE
+  \end{align*}
+  for all $u\in C(X)$.
+\end{theorem}
+\begin{theorem}
+  Let $g,h\in H$. The map $u\mapsto \iprod{\rho(u)g}{h}$ is a linear functional on $C(X)$ with norm at most $\norm{g}\norm{h}$. So, there is a unique measure $\mu_{g,h}$ in $M(X)$ such that
+  \begin{align*}
+    \iprod{\rho(u)g}{h} &= \int_{}^{} u\:d\mu_{g,h}.
+  \end{align*}
+  The pairing $ \left( g,h \right)\mapsto \mu_{g,h} $ is sesquilinear, and for fixed $\phi\in B_{\infty}(X)$, the form
+  \begin{align*}
+    \left[ g,h \right] &= \int_{}^{} \phi\:d\mu_{g,h}
+  \end{align*}
+  is a sesquilinear form with $ \norm{\left[ g,h \right]}\leq \norm{\phi}\norm{g}\norm{h} $. Therefore, there is a unique bounded operator $A$ such that $ \left[ g,h \right] = \iprod{Ag}{h} $ with $\norm{A}\leq \norm{\phi}$. We will denote this operator $A$ by $ \widetilde{\rho}(\phi) $. We obtain a well-defined map $ \widetilde{\rho}\colon B_{\infty}(X)\rightarrow B(H) $ satisfying $ \norm{ \widetilde{\rho}(\phi) }\leq \norm{\phi} $ such that
+  \begin{align*}
+    \iprod{ \widetilde{\rho}(\phi)g }{h} &= \int_{}^{} \phi\:d\mu_{g,h}.
+  \end{align*}
+  We start by claiming that $ \widetilde{\rho}\colon B_{\infty}(X)\rightarrow B(H) $ is a representation with $ \widetilde{\rho}|_{C(X)} = \rho $. That $ \widetilde{\rho} $ restricted to $C(X)$ is equal to $\rho$ follows directly from the definition of $ \widetilde{\rho} $.
+
+  Now, let $\phi\in B_{\infty}(X)$. Consider $ \phi $ as an element of $ M(X)^{\ast} = C(X)^{\ast\ast}$ by viewing it as corresponding to the linear functional
+  \begin{align*}
+    \mu &\mapsto \int_{}^{} \phi\:d\mu.
+  \end{align*}
+  By the Banach--Alaoglu theorem, we have that $\set{u\in C(X) : \norm{u}\leq \norm{\phi}}$ is weak*-dense in $\set{L\in M(X)^{\ast} : \norm{L}\leq \norm{\phi}}$. Then, there is a net $\left( u_i \right)_i\subseteq C(X)$ with $\norm{u_i}\leq \norm{\phi}$ for all $i$ and
+  \begin{align*}
+    \int_{}^{} \phi\:d\mu &= \lim_{i} \int_{}^{} u_i\:d\mu
+  \end{align*}
+  for all $\mu\in M(X)$. For any $\psi\in B_{\infty}(X)$, we have $\psi\mu \in M(X)$ for any $\mu\in M(X)$. In particular, we have
+  \begin{align*}
+    \int_{}^{} \phi\psi\:d\mu &= \lim_{i} \int_{}^{} u_i\psi\:d\mu
+  \end{align*}
+  for all $\psi\in B_{\infty}(X)$ and $\mu\in M(X)$, whence $ \widetilde{\rho}\left( u_i\psi \right)\rightarrow \widetilde{\rho}\left( \phi\psi \right) $ in WOT. For any $\psi\in C(X)$, we have that 
+  \begin{align*}
+    \widetilde{\rho}\left( \phi\psi \right) &= \lim_i \widetilde{\rho}\left( u_i\psi \right)\\
+                                            &= \lim_i \rho\left( u_i \right)\rho\left( \psi \right)\\
+                                            &= \widetilde{\rho}\left( \phi \right)\rho\left( \psi \right).
+  \end{align*}
+  In particular, we have $ \widetilde{\rho}\left( u_i\psi \right) = \rho\left( u_i \right) \widetilde{\rho}\left( \psi \right) $ for any $\psi\in B_{\infty}(X)$ for all $u_i\in C(X)$. Therefore, we have $ \widetilde{\rho}\left( u_i\psi \right) \rightarrow \widetilde{\rho}\left( \phi\psi \right) $ in WOT, whence
+  \begin{align*}
+    \widetilde{\rho}\left( \phi\psi \right) &= \widetilde{\rho}\left( \phi \right)\widetilde{\rho}\left( \psi \right)
+  \end{align*}
+  for any $\phi,\psi\in B_{\infty}(X)$.
+
+  The linearity of measures gives that $ \widetilde{\rho} $ itself is linear. A similar bootstrapping argument gives $ \widetilde{\rho}\left( \phi \right)^{\ast} = \widetilde{\rho}\left( \overline{\phi} \right) $.
+
+  Now, let $\Delta\subseteq X$ be Borel. Let $E\left( \Delta \right) = \widetilde{\rho}\left( \chi_{\Delta} \right)$.
+\end{theorem}
 \nocite{analysis_now,conway_functional_analysis}
 \printbibliography
 \end{document}

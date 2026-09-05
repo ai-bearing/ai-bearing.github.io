@@ -96,3 +96,6 @@ use_math: true
 
 - "That's how you prove theorems. You first prove it, then state the theorem"\
   *Malek Abdesselam*
+
+- "Functionally I don't think it would be good to be killed by a computer"\
+  *Anonymous*
