@@ -99,3 +99,6 @@ use_math: true
 
 - "Functionally I don't think it would be good to be killed by a computer"\
   *Anonymous*
+
+- "I feel like *Shrek* is up there with *The Godfather*"\
+  *Oscar Arevalo*
