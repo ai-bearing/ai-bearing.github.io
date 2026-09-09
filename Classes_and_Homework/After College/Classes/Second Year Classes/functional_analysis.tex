@@ -1,6 +1,6 @@
 \documentclass[10pt]{mypackage}
 
-\usepackage[uprightgreeks,light,noDcommand]{kpfonts}
+\usepackage[uprightgreeks,noDcommand]{kpfonts}
 \renewcommand{\coloneq}{\coloneqq}
 \renewcommand{\eqcolon}{\eqqcolon}
 %\renewcommand{\mathbb}{\mathds}
@@ -58,9 +58,10 @@ In the special case that $L = \id_V$, then the kernel $K\left( x,y \right)$ is g
     We will write $ \mathcal{P}_{\operatorname{fin}}\left( X \right) $ to consist of all finite subsets subsets of $X$.
   \item If $x\in \R^{n}$ is given by $\left( x_1,\dots,x_n \right)$, we will define the bracket 
     \begin{align*}
-      \left\langle x \right\rangle \coloneq  \sqrt{1 + x_1^2 + \cdots + x_n^2}.
+      \left\langle x \right\rangle &\coloneq  \sqrt{1 + x_1^2 + \cdots + x_n^2}\\
+                                   &= \sqrt{1 + \left\vert x \right\vert^2}.
     \end{align*}
-    In the particular case of $n = 1$, we will write $ \left\langle k \right\rangle = \sqrt{1 + k^2} $ for any $k\in \N$.
+    In the particular case of $n = 1$, we will write $ \left\langle k \right\rangle = \sqrt{1 + k^2} $ for any $k\in \N$. Note here that $\left\vert \cdot \right\vert$ denotes the norm on Euclidean space.
   \item If $n\in \N$, then
     \begin{align*}
       \left[ n \right] &= \set{1,2,\dots,n},
@@ -520,9 +521,98 @@ Recall that $\left( X,\tau \right)$ is \textit{first countable} if for any $x\in
 \begin{example}\hfill
   \begin{enumerate}[(i)]
     \item Banach spaces are Fréchet spaces.
-    \item The space of rapidly decreasing sequences $s\left( \N,\K \right)$ is a Fréchet space that is not normable.
+    \item The space of rapidly decreasing sequences $s\left( \N,\K \right)$ is a Fréchet space that is not normable. The distance metric is given by
+      \begin{align*}
+        d\left( x,y \right) &= \sum_{k=0}^{\infty} 2^{-k} \min\left( 1,\rho_k\left( x-y \right) \right).
+      \end{align*}
     \item The vector space $V = \R^{\N}$ with the product topology is a Fréchet space.
-    \item The space of finitely supported sequences $c_{00}\left( \N,\K \right)$ with the finest locally convex topology is a topological vector space that is not metrizable, let alone a Fréchet space.
+    \item The space of finitely supported sequences $c_{00}\left( \N,\K \right)$, henceforth denoted $c_{00}$, with the finest locally convex topology is a topological vector space that is not metrizable, let alone a Fréchet space. This follows from a diagonal argument on the assumption of countably many seminorms.
+
+      Consider the uncountable collection of seminorms $\mathcal{N}$ given by, for any $\omega\in [0,\infty)^{\N}$,
+      \begin{align*}
+        \rho_{\omega}(x) &= \sum_{n=0}^{\infty}\omega_n \left\vert x_n \right\vert,
+      \end{align*}
+      where we observe that each $\rho_{\omega}$ is distinct. It is possible to show that $ \mathcal{T}\left( \mathcal{N} \right) = \mathcal{T}\left( \operatorname{SN}\left( c_{00} \right) \right)$.
+
+      One direction follows directly from the definition. The reverse direction uses the fact that $\set{e_n : n\geq 0}$ forms an algebraic basis for $c_00$. If $\rho$ is a seminorm, then we will define $\omega_n = \rho\left( e_n \right)$. For any $x\in c_{00}$, then we may write
+      \begin{align*}
+        x &= \sum_{n=0}^{N}x_ne_n,
+      \end{align*}
+      satisfying
+      \begin{align*}
+        \rho(x) &= \rho\left( \sum_{n=0}^{N} x_ne_n \right)\\
+                &\leq \sum_{n=0}^{N} \omega_n \left\vert x_n \right\vert\\
+                &= \rho_{\omega}\left( x \right).
+      \end{align*}
+      Since $x$ is arbitrary, it  follows that every seminorm is continuous with respect to the seminorms of the family $ \mathcal{N} $, whence the family $ \mathcal{N} $ defines the topology on $ c_{00} $.
+
+      In fact, we may assume that $\omega\in \N^{\N}$ by replacing $\left( \omega_n \right)_n\in [0,\infty)^{\N}$ with $\left( \left\lceil \omega_n \right\rceil \right)_n$.
   \end{enumerate}
+\end{example}
+\subsection{Notable Examples}%
+\begin{example}
+  Let $K\subseteq \R^d$ be a compact subset. Define
+  \begin{align*}
+    \mathcal{D}_K\left( \R^d \right) &= C_{K}^{\infty} \left( \R^{d} \right)
+  \end{align*}
+  to be the space of $C^{\infty}$ with $ \supp\left( f \right)\subseteq K $. Define seminorms for each $N\geq 0$ by
+  \begin{align*}
+    \rho_{N}\left(f\right) &= \max_{\substack{\alpha\in \N^d\\\left\vert \alpha \right\vert\leq N}} \,\sup_{x\in \R^d} \left\vert \partial^{\alpha}f(x) \right\vert.
+  \end{align*}
+  Let $ \mathcal{T} = \mathcal{T}\left( \set{\rho_N : N\geq 0} \right) $. This is a countable collection of seminorms, so the space $C_K^{\infty}\left( \R^d \right)$ equipped with $ \mathcal{T} $ is a Fréchet space with the metric
+  \begin{align*}
+    d\left( f,g \right) &= \sum_{N\geq 0} 2^{-N} \min\left( 1, \rho_N\left( f-g \right) \right).
+  \end{align*}
+\end{example}
+\begin{example}
+  A function $f\colon \R^d\rightarrow \C$ is called a Schwartz function if $f\in C^{\infty}\left( \R^d \right)$ and for all $\alpha\in \N^d$ and all $k\in \N$,
+  \begin{align*}
+    \sup_{x\in \R^d} \left\langle x \right\rangle^{k} \left\vert \partial^{\alpha}f(x) \right\vert &< \infty.
+  \end{align*}
+  We label these seminorms by $\rho_{\alpha,k}(f)$. The space $ \mathcal{S}\left( \R^d \right) $ of all such functions is known as the \textit{Schwartz space} for $\R^d$.
+
+  The standard topology on $ \mathcal{S}\left( \R^d \right) $  is given by $ \mathcal{T} = \mathcal{T}\left( \mathcal{N} \right) $, where $ \mathcal{N} $ is the collection of all such $\rho_{\alpha,k}$.
+
+  We can also consider the family of all such $\rho_N$ with
+  \begin{align*}
+    \rho_N\left( f \right) &= \max_{\substack{ \left\vert \alpha \right\vert\leq N\\k\leq N }} \rho_{\alpha,k}(f),
+  \end{align*}
+  which yields the metric
+  \begin{align*}
+    d\left( f,g \right) &= \sum_{N=0}^{\infty} 2^{-N} \min\left( 1, \rho_N\left( f-g \right) \right).
+  \end{align*}
+  This induces the same topology as the family of all the $\rho_{\alpha,k}$.
+
+  With this distance metric, the Schwartz space is complete. In particular, this means that $\mathcal{S}\left( \R^d \right)$ is an example of a Fréchet space. The Schwartz space is needed to define the Fourier transform (which we will discuss more heavily later). The Fourier transform is defined by
+  \begin{align*}
+    \hat{f}\left( \xi \right) &= \int_{\R^d}^{} e^{-ix\xi}f(x)\:d^{d}x.
+  \end{align*}
+  When $f\in L^1$, we have that $\hat{f}$ is well-defined, but $\hat{f}$ is not necessarily in $L^1$. It turns out that the Fourier transform is an automorphism of the Schwartz space (over $\C$). Note that Schwartz functions are $L^1$ since they decay faster than functions of the form
+  \begin{align*}
+    u(x) &= \left\langle x \right\rangle^{\lambda}
+  \end{align*}
+  where $\lambda < d$. That such a $u(x)$ is integrable can be found by using the hyperspherical coordinates.
+\end{example}
+\begin{example}[A Non-Example]
+  The dual space of the Schwartz space, $ \mathcal{S}\left( \R^d \right)^{\ast} $, is called the space of \textit{tempered distributions}. We say $ \mathcal{S}\left( \R^d \right)^{\ast}\subseteq C_c^{\infty}\left( \R^d \right)^{\ast} $, where the dual space $C_c^{\infty}\left( \R^d \right)^{\ast}$ is called the space of all distributions. We will discuss these more soon.
+
+  The space $C_c\left( \R^d \right)$ is the space of compactly supported $C^{\infty}$ functions. In particular,
+  \begin{align*}
+    C_c^{\infty} \left( \R^d \right) &= \bigcup_{K\text{ compact}} C_K^{\infty}\left( \R^d \right)\\
+                                     &= \bigcup_{N\geq 1} C_{B\left(0,N\right)}^{\infty}\left( \R^d \right),
+  \end{align*}
+  where 
+  \begin{align*}
+    B\left( 0,N \right) &= \set{x\in \R^d : \left\vert x \right\vert \leq N}
+  \end{align*}
+  is the closed ball centered at $0$.
+
+  Though $C_c^{\infty}\left( \R^d \right)$ is the increasing countable union of Fréchet spaces, it is not itself Fréchet; in fact, $C_c^{\infty}\left( \R^d \right)$ is not even metrizable. It is an example of an inductive limit of a family of Fréchet spaces.
+
+  Let
+  \begin{align*}
+    \iota_K\colon C_K^{\infty} \left( \R^d \right)\rightarrow C_c^{\infty}\left( \R^d \right)
+  \end{align*}
+  denote the inclusion maps. We say a seminorm $\rho$ on $C_c^{\infty}\left( \R^d \right)$ is compatible if and only if for every compact $K\subseteq \R^d$, $\rho\circ \iota_K$ is a continuous seminorm on $C_K^{\infty}\left( \R^d \right)$. The topology on $ C_c^{\infty} \left( \R^d \right)$ is the topology generated by all compatible seminorms.
 \end{example}
 \end{document}
