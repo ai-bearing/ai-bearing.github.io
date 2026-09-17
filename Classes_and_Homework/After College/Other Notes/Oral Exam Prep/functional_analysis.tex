@@ -331,6 +331,9 @@ Local convexity is a very useful property to have, as the following result exhib
   \end{align*}
   for all $a\in \overline{A}$. Yet, this means that $ \overline{A}\subseteq \set{y\in X : \re\left( \left\langle y,\varphi \right\rangle \right)\leq \alpha} $, even though the latter is weakly closed. Since $x\notin B$, it follows that $x\notin \overline{A}$, which yields a contradiction.
 \end{proof}
+\begin{corollary}
+  A convex subset of $X$ is closed if and only if it is weakly closed.
+\end{corollary}
 \subsection{Duality in Subspaces and Quotient Spaces}%
 \begin{proposition}
   Let $p$ be a seminorm on $ X $, $M$ a subspace of $X$, and $ \overline{p}\colon X/M\rightarrow [0,\infty) $ is defined by
@@ -339,6 +342,91 @@ Local convexity is a very useful property to have, as the following result exhib
   \end{align*}
   then $ \overline{p} $ is a seminorm on $X/M$. If $ \mathcal{P} $ is a family of continuous seminorms on $X$ defining a locally convex topology, then $ \overline{ \mathcal{P} } $ defines the quotient topology on $X/M$.
 \end{proposition}
+In particular, if $X$ is a locally convex space and $M\leq X$ is a subspace, then $X/M$ is a locally convex space. Suppose $f\in \left( X/M \right)^{\ast}$. Then, $f\circ \pi\in X^{\ast}$, where $\pi\colon X\rightarrow X/M$ is the projection. Furthermore, observe that $f\circ \pi$ an element of
+\begin{align*}
+  M^{\perp} &= \set{\varphi\in X^{\ast} : \varphi(m) = 0\text{ for all }m\in M}.
+\end{align*}
+In particular, we obtain the map $f\mapsto f\circ\pi$, yielding a linear map $\left( X/M \right)^{\ast}\rightarrow M^{\perp}\subseteq X^{\ast}$.
+\begin{theorem}
+  Let $X$ be a locally convex space, $M\leq X$ a subspace, and $\pi\colon X\rightarrow X/M$ the natural map. Then, $f\mapsto f\circ \pi$ defines a bijection between $\left( X/M \right)^{\ast}$ and $M^{\perp}$.
+
+  Equipping $\left( X/M \right)^{\ast}$ with the weak* topology, and $M^{\perp}$ with the relative weak* topology, yields that this bijection is a homeomorphism. If $X$ is a normed space, then the bijection is an isometry and a weak*--weak* homeomorphism.
+\end{theorem}
+\begin{proof}
+  Define $\rho\colon \left( X/M \right)^{\ast}\rightarrow M^{\perp}$ by $\rho(f) = f\circ \pi$. Then, we have that $\rho$ is well-defined and takes $\left( X/M \right)^{\ast}$ to $M^{\perp}$. Notice that if $0 \rho(f)$, then $f\circ \pi = 0$, but since $\pi$ is surjective, $f$ must be the zero map, whence $\rho$ is injective.
+
+  Let $\varphi\in M^{\perp}$, and let $f\colon X/M\rightarrow \C$ be given by $f\left(x+M\right) = \left\langle x,\varphi \right\rangle$. Since $M\subseteq \ker\left( \varphi \right)$, $f$ is well-defined and linear. Since 
+  \begin{align*}
+    \pi^{-1}\left( \set{x + M : \left\vert f\left( x+M \right) \right\vert < 1} \right) &= \set{x\in X : \left\vert \iprod{x}{\varphi} \right\vert < 1}
+  \end{align*}
+  is open in $X$, it follows that $\set{x + M : \left\vert f\left( x+M \right) \right\vert < 1}$ is open in $X/M$, so $f$ is continuous.
+
+  If $X$ is a normed space, then results from Banach space theory yields that $\rho$ is an isometry. If $\left( f_i \right)_{i}\subseteq \left( X/M \right)^{\ast}$ converges to $0$ in the weak* topology on $\left( X/M \right)^{\ast}$, then for each $x\in X$, we have that
+  \begin{align*}
+    \iprod{x}{\rho\left( f_i \right)} &= f_i\left( \pi(x) \right)\\
+                                      &\rightarrow 0,
+  \end{align*}
+  so that $\rho\left( f_i \right)\rightarrow 0$ weak* in $X^{\ast}$. Conversely, if $\rho\left( f_i \right)\rightarrow 0$ weak* in $X^{\ast}$, it follows that for each $x\in X$, we have $f_i\left( x+M \right) = \iprod{x}{\rho\left( f_i \right)}\rightarrow 0$ weak* in $\left( X/M \right)^{\ast}$.
+\end{proof}
+\subsection{Banach--Alaoglu Theorem and Applications}%
+\begin{theorem}
+  If $X$ is a normed space, then the unit ball $B_{X^{\ast}}$ of $X^{\ast}$ is weak*-compact.
+\end{theorem}
+\begin{proof}
+  Let $D_x = \set{\alpha\in \C : \left\vert \alpha \right\vert\leq 1}$. Set $D = \prod_{x\in B_X}D_x$. By Tychonoff's theorem, $D$ is compact. Let $\tau\colon B_{X^{\ast}}\rightarrow D$ be defined by
+  \begin{align*}
+    \tau\left( \varphi \right)\left( x \right) &= \iprod{x}{\varphi}.
+  \end{align*}
+  Then, $\tau\left( \varphi \right)\in D$ with $x$ coordinate given by $ \iprod{x}{\varphi} $. We will show that $\tau$ is a homeomorphism from $B_{X^{\ast}}$ with the weak* topology onto $\tau\left( B_{X^{\ast}} \right)\subseteq D$ with the subspace topology, and that $\tau\left( B_{X^{\ast}} \right)\subseteq D$ is closed.
+
+  Suppose $\tau\left( \varphi_1 \right) = \tau\left( \varphi_2 \right)$. Then, for each $x\in B_X$, $ \iprod{x}{\varphi_1} = \iprod{x}{\varphi_2} $. Since $B_X$ separates the points of $X^{\ast}$, it follows that $\varphi_1 = \varphi_2$.
+
+  Let $\left( \varphi_i \right)_{i}$ be a net in $B_{X^{\ast}}$ with $\varphi_i\xrightarrow{\operatorname{wk}^{\ast}} \varphi$. For each $x\in B_X$, it follows that $\tau\left( \varphi_i \right)(x)\rightarrow \tau\left( \varphi \right)(x)$, or that each coordinate of $\left( \tau\left( \varphi_i \right) \right)_{i}$ converges to $\tau\left( \varphi \right)$, so that $\tau\left( \varphi_i \right)\rightarrow \tau\left( \varphi \right)$, meaning $\tau$ is continuous.
+
+  Let $\left( \varphi_i \right)_i$ be a net in $B_{X^{\ast}}$, $f\in D$, and $\tau\left( \varphi_i \right)\rightarrow f$ in $D$. Then, $f(x) = \lim\iprod{x}{\varphi_i}$ exists for each $x\in B_X$. If $x\in X$, we choose $\alpha > 0$ such that $\norm{\alpha x} \leq 1$. Take $f(x) = \alpha^{-1}f\left( \alpha x \right)$.
+
+  If $\beta > 0$ is also such that $\norm{\beta x} \leq 1$, then 
+  \begin{align*}
+    \alpha^{-1}f\left( \alpha x \right) &= \alpha^{-1} \lim \iprod{\alpha x}{\varphi_i}\\
+                                        &= \beta^{-1} \lim \iprod{\beta x}{\varphi_i}\\
+                                        &= \beta^{-1} f\left( \beta x \right),
+  \end{align*}
+  so that $f(x)$ is well-defined. Notice that by the way $f$ is defined, it is necessarily a linear functional. If $\norm{x}\leq 1$, then $f(x)\in D_x$, so $ \left\vert f(x) \right\vert\leq 1 $, meaning that there is $\varphi\in B_{X^{\ast}}$ such that $\tau\left( \varphi \right) = f$. Thus, $\tau\left( B_{X^{\ast}} \right)$ is closed in $D$, so $\tau\left( B_{X^{\ast}} \right)$ is compact.
+\end{proof}
+Recall that a Banach space $X$ is called reflexive if the embedding of $X$ into its double dual $X^{\ast\ast}$ is surjective, where we recall that $\hat{x}\in X^{\ast\ast}$ is defined by
+\begin{align*}
+  \iprod{\varphi}{\hat{x}} &= \iprod{x}{\varphi}.
+\end{align*}
+\begin{theorem}[Goldstine's Theorem]
+  Let $X$ be a normed space. Then, $B_X$ is weak*-dense in $X^{\ast\ast}$.
+\end{theorem}
+\begin{proof}
+  We will denote by $w^{\ast\ast}$ the weak* topology on $X^{\ast\ast}$ induced by $X^{\ast}$. Let $B = \overline{B_X}^{w^{\ast\ast}}$, and notice that $B\subseteq B_{X^{\ast\ast}}$. Suppose there is some $\theta\in B_{X^{\ast\ast}}\setminus B$. The Hahn--Banach theorem implies there is some $\varphi\in X^{\ast}$, $\alpha\in \R$, and $\ve > 0$ such that
+  \begin{align*}
+    \re \left( \iprod{x}{\varphi} \right) < \alpha < \alpha + \ve < \re\left( \iprod{\varphi}{\theta} \right)
+  \end{align*}
+  for all $x\in B_X$. Since $0\in B_X$, it follows that $0 < \alpha$. Dividing, we may assume that there is $\varphi\in X^{\ast}$ and $\ve > 0$ such that
+  \begin{align*}
+    \re\left( \iprod{x}{\varphi} \right) < 1 < 1 + \ve < \re\left( \iprod{\varphi}{\theta} \right).
+  \end{align*}
+  Notice that $\left\vert \iprod{x}{\varphi} \right\vert \leq 1$ (multiplying by a phase) for any $\norm{x}\leq 1$, so that $\varphi\in B_{X^{\ast}}$. Yet, we also have
+  \begin{align*}
+    1 + \ve &< \re\left( \iprod{\varphi}{\theta} \right)\\
+            &\leq \left\vert \iprod{\varphi}{\theta} \right\vert\\
+            &\leq \norm{\theta}\\
+            &\leq 1,
+  \end{align*}
+  which is a contradiction.
+\end{proof}
+\begin{theorem}
+  Let $X$ be a Banach space. The following are equivalent:
+  \begin{enumerate}[(a)]
+    \item $X$ is reflexive;
+    \item $X^{\ast}$ is reflexive;
+    \item the weak* topology on $X^{\ast}$ coincides with the weak topology on $X^{\ast}$ induced by $X^{\ast\ast}$;
+    \item $B_X$ is weakly compact.
+  \end{enumerate}
+\end{theorem}
 \section{$C^{\ast}$-Algebras}%
 \section{Spectral Theory}%
 Spectral theory is primarily concerned with representations of abelian $C^{\ast}$-algebras. Consider a normal operator $N$ on $H$. Then, $C^{\ast}\left( N \right)$ is an abelian $C^{\ast}$-algebra, and the continuous functional calculus $f\mapsto f\left( N \right)$ yields a $\ast$-isomorphism of $C\left( \sigma(N) \right)$ onto $C^{\ast}\left( N \right)$. In particular, $f\mapsto f\left( N \right)$ is a representation of the abelian $C^{\ast}$-algebra $C^{\ast}\left( N \right)$.
@@ -588,6 +676,123 @@ The primary use of the existence of spectral measures is to enable the Borel fun
   \end{align*}
   Thus, $\Omega$ contains all the open subsets of $\sigma(N)$, so it must be the collection of Borel sets. The converse follows from bootstrapping by approximating with simple functions.
 \end{proof}
+The spectral measure will provide us a way to reframe normal operators as multiplication operators on $L^{\infty}\left( X,\mu \right)$ for some measure space $\left( X,\mu \right)$.
+\begin{definition}
+  We call $e_0\in H$ \textit{star-cyclic} for an operator $A$ if the smallest reducing subspace for $A$ that contains $e_0$ is $H$.
+
+  The operator $A$ is star-cyclic if it contains a star-cyclic vector.
+
+  Similarly, $e_0\in H$ is cyclic for $A$ if $H$ is the smallest invariant subspace for $A$ that contains $e_0$, and $A$ is cyclic if it contains a cyclic vector.
+\end{definition}
+Equivalently, $e_0$ is star-cyclic if and only if 
+\begin{align*}
+  H = \overline{\set{Te_0 : T\in C^{\ast}\left( A \right)}}
+\end{align*}
+ and $e_0$ is cyclic if and only if 
+ \begin{align*}
+   H = \overline{\set{p(A)e_0 : p\in \C[x]}}.
+ \end{align*}
+\begin{proposition}
+  If $A$ has either a cyclic or star-cyclic vector, then $H$ is separable.
+\end{proposition}
+\begin{proof}
+  Notice that $C^{\ast}\left( A \right)$ and $\set{p(A) : p\in \C[x]}$ are separable subalgebras of $B(H)$.
+\end{proof}
+If $\mu$ is a compactly supported measure on $K\subseteq \C$, and $N_{\mu}$ is the operator defined by $N_{\mu} \equiv M_z$, where $\left( M_zf \right)(z) = zf(z)$, then we observe that $C^{\ast}\left( N_{\mu} \right)$ is given by $M_{u}$ for all $u\in C(K)$. Since continuous functions are dense in $L^2\left( \mu \right)$, it follows that $1$ is a star-cyclic vector for $N_{\mu}$.
+
+Furthermore, the converse holds.
+\begin{theorem}
+  A normal operator $N$ is star-cyclic if and only if $N$ is unitarily equivalent to $N_{\mu}$ for some compactly supported measure $\mu$ on $\C$. If $e_0$ is a star-cyclic vector for $N$, then $\mu$ can be chosen such that there is an isomorphism $V\colon H\rightarrow L^2\left( \mu \right)$ with $Ve_0 = 1$ and $VNV^{-1} = N_{\mu}$. Furthermore, $V$ is unique.
+\end{theorem}
+\begin{proof}
+  Suppose $N\cong N_{\mu}$. Then, we have already seen that $N$ is star-cyclic.
+
+  Suppose $N$ has a star-cyclic vector $e_0$. Let $E$ be the spectral measure for $N$. Set $\mu\left( \Delta \right) = \iprod{E\left( \Delta \right)e_0}{e_0} = \norm{E\left( \Delta \right)e_0}^2$ for each Borel subset $\Delta$ of $\C$.
+
+  Let $K = \operatorname{supp}\left( \mu \right)$. For any $\phi\in B_{\infty}(K)$, we have
+  \begin{align*}
+    \norm{\phi(N)e_0}^2 &= \iprod{\left\vert \phi \right\vert^2\left( N \right)e_0}{e_0}\\
+                        &= \int_{}^{} \left\vert \phi(z) \right\vert^2\:d \iprod{E(z)e_0}{e_0}\\
+                        &= \int_{}^{} \left\vert \phi \right\vert^2\:d\mu.
+  \end{align*}
+  Viewing $B_{\infty}(K)\subseteq L^2\left( \mu \right)$, we have that $U\phi = \phi(N)e_0$ defines an isometry from $B_{\infty}(K)$ onto $\set{\phi(N)e_0 : \phi\in B_{\infty}(K)}$.
+
+  Since $e_0$ is star-cyclic, it follows that the range of $U$ is dense in $H$, so $U$ extends to an isomorphism $U\colon L^2\left( \mu \right)\rightarrow H$.
+
+  For any $\phi\in B(K)$, then we have
+  \begin{align*}
+    UN_{\mu}U^{-1} \left( \phi(N)e_0 \right) &= UN_{\mu}\left( \phi \right)\\
+                                             &= U\left( z\phi \right)\\
+                                             &= N\phi(N)e_0,
+  \end{align*}
+  so that $UN_{\mu}U^{-1} = N$ on the dense subset $\set{\phi(N)e_0 : \phi\in B_{\infty}(K)}$ of $L^2\left( \mu \right)$. Therefore $UN_{\mu}U^{-1} = N$, and $V = U^{-1}$ is our desired selection.
+\end{proof}
+We say two measures $\mu_1$ and $\mu_2$ are mutually absolutely continuous (or of the same measure class) if they have the same null sets. We will write $\left[ \mu_1 \right] = \left[ \mu_2\right]$. If the respective Radon--Nikodym derivatives $\frac{d\mu_1}{d\mu_2}$ and $ \frac{d\mu_2}{d\mu_1} $ are essentially bounded, then we say $\mu_1$ and $\mu_2$ are boundedly mutually absolutely continuous.
+\begin{theorem}
+  We have that $N_{\mu_1}\cong N_{\mu_2}$ if and only if $\left[ \mu_1 \right] = \left[ \mu_2 \right]$.
+\end{theorem}
+\begin{proof}
+  Suppose $\left[ \mu_1 \right] = \left[ \mu_2 \right]$, and let $\phi = \frac{d\mu_1}{d\mu_2}$. If $g\in L^1\left( \mu_1 \right)$, then $g\phi\in L^1\left( \mu_2 \right)$, with
+  \begin{align*}
+    \int_{}^{} g\phi\:d\mu_2 &= \int_{}^{} \phi\:d\mu_1.
+  \end{align*}
+  For any $f\in L^2\left( \mu_1 \right)$, we have $f\sqrt{\phi}\in L^2\left( \mu_2 \right)$ with 
+  \begin{align*}
+    \norm{f\sqrt{\phi}}_{L^2\left(\mu_2\right)} &= \norm{f}_{L^2\left( \mu_1 \right)}.
+  \end{align*}
+  Define $U\colon L^2\left( \mu_1 \right)\to L^2\left( \mu_2 \right)$ by $Uf = f\sqrt{\phi}$. This is an isometry.
+
+  For any $g\in L^2\left( \mu_2 \right)$, we have that $f = \phi^{-1/2}g\in L^2\left( \mu_1 \right)$ with $Uf = g$, so $U$ is surjective with $U^{-1}g = \phi^{-1/2}g$ for any $g\in L^2\left( \mu_2 \right)$. For any $g\in L^2\left( \mu_2 \right)$, $UN_{\mu_1}U^{-1}g = zg$, so $UN_{\mu_1}U^{-1} = N_{\mu_2}$.
+
+  Now, suppose $V\colon L^2\left( \mu_1 \right)\rightarrow L^2\left( \mu_2 \right)$ is an isomorphism satisfying $VN_{\mu_1}V^{-1} = N_{\mu_2}$. Let $\psi = V(1)$, with $\psi\in L^2\left( \mu_2 \right)$. We will write $N_j = N_{\mu_j}$. Notice that for any polynomial $p\in \C\left[ z, \overline{z}\right]$, we have $Vp\left( N_1,N_1^{\ast} \right)V^{-1} = p\left( N_2,N_2^{\ast} \right)$. Since $N_1\cong N_2$, $\sigma\left( N_1 \right) = \sigma\left( N_2 \right)$, so $\mu_1$ and $\mu_2$ have the same support, which we will dub $K$.
+
+  Taking uniform limits of polynomials yields for all $u\in C(K)$, we have $Vu\left( N_1 \right)V^{-1} = u\left( N_2 \right)$, so we have $V(u) = u\psi$. Since $V$ is an isometry, we have
+  \begin{align*}
+    \int_{}^{} \left\vert u \right\vert^2\:d\mu_1 &= \int_{}^{} \left\vert u \right\vert^2\left\vert \psi \right\vert^2\:d\mu_2
+  \end{align*}
+  for every $u\in C(K)$. Therefore, we have
+  \begin{align*}
+    \int_{}^{} v\:d\mu_1 &= \int_{}^{} v \left\vert \psi \right\vert^2\:d\mu_2
+  \end{align*}
+  for all $v\in C(K)$ with $v\geq 0$. By the Riesz representation theorem, we have that $\mu_1 = \left\vert \psi \right\vert^2 \mu_2$, so $\mu_1\ll\mu_2$. Reversing the roles of $N_1$ and $N_2$, and substituting $V^{-1}$ for $V$ where necessary, we obtain that $\mu_2\ll\mu_1$, whence $\left[ \mu_1 \right] = \left[ \mu_2 \right]$.
+\end{proof}
+\subsection{Applications of the Spectral Theorem}%
+\begin{proposition}
+  If $N$ is a normal operator with spectral decomposition $N = \int_{}^{} z\:dE(z)$, we have that $N$ is compact if and only if for every $\ve > 0$, $E\left( \set{z : \left\vert z \right\vert > \ve} \right)$ is finite rank.
+\end{proposition}
+\begin{proof}
+  Let $\ve > 0$, and let $\Delta_{\ve} = \set{z : \left\vert z \right\vert > \ve}$, with $E_{\ve} = E\left( \Delta_{\ve} \right)$. Then,
+  \begin{align*}
+    N-NE_{\ve} &= \int_{}^{} z\chi_{\Delta_{\ve}^{c}}\:dE(z)\\
+               &= \phi(N),
+  \end{align*}
+  where $\phi(z) = z\chi_{\Delta_{\ve}^{c}}(z)$. In particular, $\norm{N-NE_{\ve}}\leq \ve$. If $E_{\ve}$ has finite rank for every $\ve > 0$, then $NE_{\ve}$ has finite rank, so $N\in \overline{F\left( H \right)}$.
+
+  If $N$ is compact, then $\phi(z) = z^{-1}\chi_{\Delta_{\ve}}(z)$ has $\phi(z)\in B\left( \C \right)$. Since $N$ is compact, we have that $N\phi(N)$ is compact, but then
+  \begin{align*}
+    N\phi(N) &= \int_{}^{} zz^{-1}\chi_{\Delta_{\ve}}(z)\:dE(z)\\
+             &= E_{\ve},
+  \end{align*}
+  so $E_{\ve}$ is a compact projection, whence it is finite rank.
+\end{proof}
+\begin{theorem}
+  If $H$ is separable, and $I$ is an ideal of $B(H)$ that contains a noncompact operator, then $I = B(H)$.
+\end{theorem}
+\begin{proof}
+  Let $A\in I\setminus K(H)$. Take the spectral decomposition
+  \begin{align*}
+    A^{\ast}A &= \int_{}^{} t\:dE(t).
+  \end{align*}
+  By the preceding proposition, there is some $\ve > 0$ such that $P = E\left( \set{t\geq 0: \ve < t < \infty} \right)$ has infinite rank. This yields that
+  \begin{align*}
+    P &= \left( \int_{}^{} t^{-1}\chi_{\left( \ve,\infty \right)}(t)\:dE(t) \right)A^{\ast}A\\
+      &\in I.
+  \end{align*}
+  Since $H$ is separable, $\operatorname{hdim}\left( PH \right) = \aleph_0 = \operatorname{hdim}\left( H \right)$. There is a surjective isometry $U\colon H\rightarrow PH$ satisfying $1 = U^{\ast}PU$. Sine $P\in I$, $1\in I$, so $I = B(H)$.
+\end{proof}
+\begin{corollary}
+  The only nontrivial closed ideal of $B(H)$ is $K(H)$.
+\end{corollary}
 \nocite{analysis_now,conway_functional_analysis}
 \printbibliography
 \end{document}
