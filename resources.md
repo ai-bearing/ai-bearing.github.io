@@ -4,10 +4,6 @@ use_math: true
 title: "Resources"
 permalink: "/useful_resources.html"
 ---
-
-- [Terence Tao's Notes](https://terrytao.wordpress.com/)
-- [Keith Conrad's Notes](https://kconrad.math.uconn.edu/blurbs/)
-- [AMS Open Math Notes](https://www.ams.org/open-math-notes)
 - Topics of Interest:
   - Sofic and Hyperlinear Groups:
     - [An Introduction to Hyperlinear and Sofic Groups](https://arxiv.org/pdf/0911.4266), Pestov and Kwiatowska
@@ -26,52 +22,59 @@ permalink: "/useful_resources.html"
     - [Strong Convergence: A Short Survey](https://arxiv.org/pdf/2510.12520)
     - [Free Entropy](https://arxiv.org/pdf/math/0103168)
     - [Random Matrices and Free Probability](https://jacobcampbell2.github.io/rmfp/notes/notes.pdf) Lecture Notes
+- Neat Links:
+    - [Slick Proof of the Mazur–Ulam Theorem](https://arxiv.org/pdf/1306.2380)
+    - [Notes on Thompson's Groups](https://www.imo.universite-paris-saclay.fr/~emmanuel.breuillard/Cannon.pdf)
+    - [Open Problems in Operator Algebras](https://math.vanderbilt.edu/peters10/problems.html)
+- Class Notes:
+  - [Differential Topology](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Differential Topology/differential_topology_notes.pdf)
+  - [Algebra I](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Algebra I/algebra_i_notes.pdf)
+  - [Algebra II](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Algebra II/algebra_ii_notes.pdf)
+  - [Project on Free Entropy](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Random Matrices/Project/free_entropy.pdf)
+- Qualifier Prep:
+  - [Real Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/real_analysis_prep.pdf)
+  - [Complex Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/complex_analysis_prep.pdf)
+  - [Algebra](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/algebra_prep.pdf)
+- [Amenability in Discrete Groups](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors%20Thesis/Amenability%20Text/amenability.pdf)
+- [Terence Tao's Notes](https://terrytao.wordpress.com/)
+- [Keith Conrad's Notes](https://kconrad.math.uconn.edu/blurbs/)
+- [AMS Open Math Notes](https://www.ams.org/open-math-notes)
+- [Jesse Peterson's Notes](https://math.vanderbilt.edu/peters10/notes.html)
 - Personal Notes:
-  - Graduate Classes:
-    - [Differential Topology](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Differential Topology/differential_topology_notes.pdf)
-    - [Algebra I](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Algebra I/algebra_i_notes.pdf)
-    - [Algebra II](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Algebra II/algebra_ii_notes.pdf)
-    - [Project on Free Entropy](https://ai-bearing.github.io/Classes_and_Homework/After College/Classes/Random Matrices/Project/free_entropy.pdf)
-  - Qualifier Prep:
-    - [Real Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/real_analysis_prep.pdf)
-    - [Complex Analysis](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/complex_analysis_prep.pdf)
-    - [Algebra](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/algebra_prep.pdf)
   - Algebra:
     - [Conjugation and the Sylow Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conjugation_and_sylow_theorems.pdf)
     - [Algebraic Geometry](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Y4S2, Algebraic Geometry/algebraic_geometry.pdf) (partial work-through)
-  - Analysis:
-    - [Amenability in Discrete Groups](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Honors%20Thesis/Amenability%20Text/amenability.pdf)
-    - Von Neumann Algebras (all various levels of incomplete):
-      - [Structure of von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/vna_structure.pdf)
-      - [Projections in von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/vna_projections.pdf)
-      - [Completely Positive Maps](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/completely_positive_maps.pdf)
-      - [Standard Representations and Modular Theory](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/standard_representation.pdf)
-      - [Injective implies Hyperfinite](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/injective_implies_hyperfinite.pdf)
-      - [Product-Type Constructions](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/products_operator_algebras.pdf)
-    - Measure Theory/Real Analysis:
-      - [Inequalities and the $L_p$-Spaces](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/inequalities.pdf)
-      - [Egorov's Theorem and Lusin's Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/egorovs_theorem_lusins_theorem.pdf)
-      - [Three Convergence Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/three_convergence_theorems.pdf)
-      - [The Lebesgue Measure](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/lebesgue_measure.pdf)
-      - [Signed Measures and the Lebesgue–Radon–Nikodym Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/radon_nikodym.pdf)
-    - Functional Analysis/General Operator Algebras:
-      - [Extreme Points, the Krein--Milman Theorem, and Applications](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/extreme_points_krein_milman_and_stone_weierstrass.pdf)
-      - [Compact and Fredholm Operators](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/compact_and_fredholm_operators.pdf)
-      - [Functional Calculus in Banach and $C^{\ast}$-Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/continuous_functional_calculus.pdf)
-      - [Spectral Theory for Normal Operators](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/spectral_theory_normal_operators.pdf)
-      - [Positive Elements and Ideals in $C^{\ast}$-Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/positive_elements_cstar_algebras.pdf)
-      - [States and Representations](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/states_and_representations.pdf)
-      - [Fixed-Point Theorems](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/fixed_point_theorems.pdf)
-      - [Generalized Limits](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/banach_limits.pdf)
-    - Miscellaneous:
-      - [Functional Analysis Exercises](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conway_analysis_exercises.pdf)
-      - [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
-      - [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)
-      - [Banach Algebras and Operator Theory](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/banach_algebras_operator_theory.pdf)
+  - Von Neumann Algebras (all various levels of incomplete):
+    - [Structure of von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/vna_structure.pdf)
+    - [Projections in von Neumann Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/vna_projections.pdf)
+    - [Completely Positive Maps](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/completely_positive_maps.pdf)
+    - [Standard Representations and Modular Theory](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/standard_representation.pdf)
+    - [Injective implies Hyperfinite](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/injective_implies_hyperfinite.pdf)
+    - [Product-Type Constructions](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/products_operator_algebras.pdf)
+  - Measure Theory/Real Analysis:
+    - [Inequalities and the $L_p$-Spaces](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/inequalities.pdf)
+    - [Egorov's Theorem and Lusin's Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/egorovs_theorem_lusins_theorem.pdf)
+    - [Three Convergence Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/three_convergence_theorems.pdf)
+    - [The Lebesgue Measure](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/lebesgue_measure.pdf)
+    - [Signed Measures and the Lebesgue–Radon–Nikodym Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/radon_nikodym.pdf)
+  - Functional Analysis/General Operator Algebras:
+    - [Extreme Points, the Krein--Milman Theorem, and Applications](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/extreme_points_krein_milman_and_stone_weierstrass.pdf)
+    - [Compact and Fredholm Operators](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/compact_and_fredholm_operators.pdf)
+    - [Functional Calculus in Banach and $C^{\ast}$-Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/continuous_functional_calculus.pdf)
+    - [Spectral Theory for Normal Operators](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/spectral_theory_normal_operators.pdf)
+    - [Positive Elements and Ideals in $C^{\ast}$-Algebras](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/positive_elements_cstar_algebras.pdf)
+    - [States and Representations](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/states_and_representations.pdf)
+    - [Fixed-Point Theorems](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/fixed_point_theorems.pdf)
+    - [Generalized Limits](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/banach_limits.pdf)
+  - Miscellaneous Analysis Notes:
+    - [Functional Analysis Exercises](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/conway_analysis_exercises.pdf)
+    - [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
+    - [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)
+    - [Banach Algebras and Operator Theory](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/banach_algebras_operator_theory.pdf)
   - Topology:
     - [Urysohn's Lemma](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/urysohns_lemma.pdf)
     - [Compactness in Topological Spaces](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/compactness.pdf)
-- Undergraduate Notes:
+- Undergraduate Class Notes:
   - [Real Analysis II](https://ai-bearing.github.io/Classes_and_Homework/College/Y3/Y3S2, Real II/real_2_notes.pdf)
   - [Real Analysis](https://ai-bearing.github.io/Classes_and_Homework/College/Y3/Y3S1, Math 310/real_analysis_notes.pdf)
   - [Complex Analysis](https://ai-bearing.github.io/Classes_and_Homework/College/Y3/Y3S2, Complex/complex_analysis_notes.pdf)
