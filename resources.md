@@ -16,7 +16,6 @@ permalink: "/useful_resources.html"
     - [Invariants of Orbit Equivalence Relations and Baumslag–Solitar Groups](https://projecteuclid.org/journalArticle/Download?urlId=10.2748%2Ftmj%2F1404911861)
   - Free Probability/Entropy:
     - [Lectures on the Combinatorics of Free Probability](https://rolandspeicher.com/wp-content/uploads/2020/06/nica-speicher-book.pdf)
-    - [Free Probability and Random Matrices](https://mast.queensu.ca/~mingo/mingo_speicher_2017.pdf)
     - [A Guided Tour of the Connes Embedding Problem](https://arxiv.org/pdf/2109.12682)
     - [Introduction to Random Matrices](https://arxiv.org/pdf/1712.07903)
     - [Strong Convergence: A Short Survey](https://arxiv.org/pdf/2510.12520)
