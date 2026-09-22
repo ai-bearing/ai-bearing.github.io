@@ -550,6 +550,52 @@ We note that it is possible to extend this method to show that, if we let
   A &= G_1\cap G_2,
 \end{align*}
 then $\SL_2\left( \Z \right)\cong G_1\ast_{A}G_2$. Since $G\cong \Z/6\Z$, $G_2\cong \Z/4\Z$, and $A\cong \Z/2\Z$, it follows that $\SL_2\left( \Z \right)\cong \Z/6\Z\ast_{\Z/2\Z}\Z/4\Z$.
+
+The next application is about regular graphs of large girth. Recall that if $X$ is a graph, then the girth $g(X)$ is the length of the shortest cycle in $X$. A tree (and/or a forest) has infinite girth.
+
+Finding graphs of large girth, especially those with minimal vertex count, is a very important goal, and the solution can be found through the group-theoretic constructions we are interested in. We will focus on the specific case of $4$-regular graphs.
+\begin{theorem}
+  Let $N \geq 5$. Then, there exists a graph $X_N$ with the following properties:
+  \begin{itemize}
+    \item $X_N$ is $4$-regular;
+    \item $X_N$ has at most $N^3$ vertices;
+    \item the graph $X_N$ satisfies
+      \begin{align*}
+        g\left( X_N \right) &\geq 2 \frac{\ln\left( N/2 \right)}{\ln\left( 1 + \sqrt{2} \right)} - 1.
+      \end{align*}
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  Let
+  \begin{align*}
+    a &= \begin{pmatrix}1 & 2 \\ 0 & 1\end{pmatrix}\\
+    b &= \begin{pmatrix}1 & 0 \\ 2 & 1\end{pmatrix}
+  \end{align*}
+  be the matrices in $\SL_2\left( \Z \right)$ that generate a free subgroup of rank $2$. Then, we consider the homomorphism $\varphi_N\colon \SL_2\left( \Z \right)\rightarrow \SL_2\left( \Z/N\Z \right)$ given by reduction modulo $N$. Let $a_N = \varphi_N\left( a \right)$ and $b_N = \varphi_N\left( b \right)$.
+
+  Let $G_N = \left\langle a_N,b_N \right\rangle$ and $X_N = \operatorname{Cay}\left( G,\set{a_N,b_N} \right)$. Then, $X_N$ is $4$-regular by construction, and $X_N$ has at most $\left\vert \SL_2\left( \Z/N\Z \right) \right\vert\leq N^3$ vertices.
+
+  Thus, our task is to show the lower girth bound. Let $v,w$ be reduced words in the free group $F(a,b)$ with $w\neq v$ and $\varphi_N\left( w \right) = \varphi_N\left( v \right)$. We may assume that the lengths $m$ and $n$ of $w$ and $v$ respectively satisfy
+  \begin{align*}
+    g\left( X_N \right) &= m + n\\
+    \max\left( m,n \right) &\leq \frac{m + n + 1}{2}.
+  \end{align*}
+  Let $c = w-v\in \Mat_{2}\left( \Z \right)$. Since $w\neq v$, it follows that $c\neq 0$, but $c_N = \varphi_N\left( c \right)$, given by reduction modulo $N$, we have that $c_N = 0$. Therefore, we have $c'\in \Mat_2\left( \Z \right)$ such that $c = Nc'$. Therefore, we have estimates of the operator norm given by
+  \begin{align*}
+    \norm{w} + \norm{v} &\geq \norm{c}\\
+                        &= N\norm{c'}\\
+                        &\geq N\max\left( \left\vert c'_{11} \right\vert,\left\vert c'_{12} \right\vert,\left\vert c'_{21} \right\vert,\left\vert c'_{22} \right\vert \right)\\
+                        &\geq N.
+  \end{align*}
+  Yet, we already have that $\norm{a} \leq 1 + \sqrt{2}\eqcolon d$, and $\norm{b}\leq d$ as well. Therefore, we have
+  \begin{align*}
+    N&\leq \norm{c}\\
+     &\leq d^m + d^n\\
+     &\leq 2d^{\frac{m + n + 1}{2}}\\
+     &= 2d^{\frac{g\left( X_N \right) + 1}{2}},
+  \end{align*}
+  giving our desired result.
+\end{proof}
 \section{Quasi-Isometry}%
 \subsection{Quasi-Isometry of Metric Spaces}%
 \begin{definition}
@@ -1493,8 +1539,30 @@ where we note that $\operatorname{Cay}\left( G,S \right)$ is edge-symmetric with
   Let $X = \left( V,E \right)$ be an $S$-labeled graph, $r_0,i\in \N$. Suppose $q_0\in Q\left( \left( i+1 \right)r_0 \right)$. Then, $B\left( q_0,r_0 \right)\subseteq Q\left( ir_0 \right)$.
 \end{lemma}
 \begin{proof}
-  Let $q'\in B\left( q_0,r_0 \right)$. We will show that $q'\in Q\left( ir_0 \right)$. From the triangle inequality, we have that $B\left( q',ir_0 \right)\subsetneq B\left( q_0,\left( i+1 \right)r_0 \right)$. Since $\psi_{q_0,\left( i+1 \right)r_0}$ is isometric, we have that $g = \psi_{q_0,\left( i+1 \right)r_0}^{-1}\left( q' \right)$ is contained in $B_S\left( e,r_0 \right)$. In particular, this means that $gh\in B\left( \left( i+1 \right)r_0 \right)$. Therefore, the map $\psi_{q',ir_0}$ defined by taking $\psi_{q',ir_0}(h) = \psi_{q_0,\left( i+1 \right)r_0}(gh)$ for all $h\in B_S\left( ir_0 \right)$ yields an $S$-labeled graph isomorphism with $\psi_{q',ir_0}(e) = q'$. Therefore, $q'\in Q\left( ir_0 \right)$, so that $B\left( q_0,r_0 \right)\subseteq Q\left( ir_0 \right)$.
+  Let $q'\in B\left( q_0,r_0 \right)$. We will show that $q'\in Q\left( ir_0 \right)$. From the triangle inequality, we have that $B\left( q',ir_0 \right)\subsetneq B\left( q_0,\left( i+1 \right)r_0 \right)$. Since $\psi_{q_0,\left( i+1 \right)r_0}$ is isometric, we have that $g = \psi_{q_0,\left( i+1 \right)r_0}^{-1}\left( q' \right)$ is contained in $B_S\left( e,r_0 \right)$. In particular, this means that $gh\in B\left( \left( i+1 \right)r_0 \right)$. Therefore, the map $\psi_{q',ir_0}$ defined by taking $\psi_{q',ir_0}(h) = \psi_{q_0,\left( i+1 \right)r_0}(gh)$ for all $h\in B_S\left( e,ir_0 \right)$ yields an $S$-labeled graph isomorphism with $\psi_{q',ir_0}(e) = q'$. Therefore, $q'\in Q\left( ir_0 \right)$, so that $B\left( q_0,r_0 \right)\subseteq Q\left( ir_0 \right)$.
 \end{proof}
+\begin{lemma}
+  Let $G = \left( V,E \right)$ be an $S$-labeled graph, and let $r_0\in \N$. Let $q_1,q_2\in Q\left( 2r_0 \right)$ be such that $q_1\neq q_2$ and $g\in B_S\left(e, r_0 \right)$. Then,
+  \begin{align*}
+    \psi_{q_1,2r_0}(g) &\neq \psi_{q_2,2r_0}(g).
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  If $g = e_G$, then since $q_1\neq q_2$, we obtain the desired result.
+
+  Suppose $g \neq e_G$, and assume toward contradiction that $\psi_{q_1,2r_0}(g) = \psi_{q_2,2r_0}(g)$. Call this value $q_0$. Since $g\in B_S\left(e, r_0 \right)$, there is $1\leq r' \leq r_0$ and elements $s_1,\dots,s_{r'}$ in $S$ such that $g = s_1s_2\cdots s_{r'}$. Let
+  \begin{align*}
+    \pi &= \left[ e_G,s_1,s_1s_2,\dots,s_1\cdots s_{r'-1},g \right]
+  \end{align*}
+  be a path traversing from $e_G$ to $g$. Notice that $\pi$ is contained in $B_S\left(e, r_0 \right)$. The path $\pi$ is mapped by $\psi_{q_1,2r_0}$ and $\psi_{q_2,2r_0}$ to paths $\pi_1$ and $\pi_2$ with initial vertices $\pi_1^{-1} = q_1$ and $\pi_2^{-} = q_2$ with common terminal vertex $\pi_{1}^{+} = \pi_2^{+} = q_0$. Since $\psi_{q_1,2r_0}$ and $\psi_{q_2,2r_0}$ are isometric, $\pi_1$ and $\pi_2$ are contained in $B\left( q_0,r_0 \right)$.
+
+  Moreover, since $\psi_{q_1,2r_0}$ and $\psi_{q_2,2r_0}$ are label-preserving, it follows that $\pi_1$ and $\pi_2$ have the same labels; namely, their edges are labeled by $s_1\cdots s_{r'}$.
+
+  The inverse images of $\pi_1$ and $\pi_2$ under the $S$-labeled graph isomorphism $\psi_{q_0,r_0}\colon B_S\left(e, r_0 \right)\rightarrow B\left( q_0,r_0 \right)$ are equal to $\pi$. Yet, this means that $\pi_1 = \pi_2$, so $\pi_1^{-} = \pi_2^{-}$, or that $q_1 = q_2$, which is a contradiction. Thus, $\psi_{q_1,2r_0} \neq \psi_{q_2,2r_0}$.
+\end{proof}
+\begin{lemma}
+  Let $G = \left( V,E \right)$ be an $S$-labeled graph, and let $r_0\in \N$. Let $h,k\in B_S\left( e,r_0 \right)$, and let $q_0\in Q\left( 2r_0 \right)$. Then, $\psi_{q_0,2r_0}\in Q\left( r_0 \right)$.
+\end{lemma}
 \nocite{loh_geometric_group_theory,topics_groups_geometry,cellular_automata_and_groups,pestov2008hyperlinearsoficgroupsbrief,pestov2012introductionhyperlinearsoficgroups,hayes2020randommatrixapproachabsorption}
 \printbibliography
 \end{document}
