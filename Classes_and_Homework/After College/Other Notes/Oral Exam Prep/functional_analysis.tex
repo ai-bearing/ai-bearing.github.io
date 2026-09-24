@@ -511,8 +511,118 @@ Closed subspaces satisfying the property that for any $x_0\in X\setminus M$, the
   \end{align*}
   so $\frac{\varphi}{\norm{\varphi}}\in U_n$ for all $n\geq 1$, whence $\varphi = 0$. Therefore, $F^{\perp} = \set{0}$, meaning its pre-annihilator is $X$. Thus, $X$ is separable.
 \end{proof}
+We may be curious about an analogous result for the weak topology. That is, if $X^{\ast}$ is separable, is the weak topology on $B_X$ metrizable? This follows immediately from the above theorem when we consider the embedding of $X$ into $X^{\ast\ast}$. However, this isn't very useful unless we're considering a separable reflexive space.
 
+However, in general, if $X$ is separable, it is not necessarily the case that $B_X$ equipped with the weak topology is metrizable.
+\begin{theorem}
+  If a sequence in $\ell^1$ converges weakly, then the sequence converges in norm.
+\end{theorem}
+\begin{proof}
+  Since $\ell^1$ is separable, we have that $B_{\ell^{\infty}}$ is weak* metrizable. Since $B_{\ell^{\infty}}$ is weak* compact (i.e., it is a compact metrizable space), we may use the Baire Category Theorem.
+
+  Let $\left( f_n \right)_n\rightarrow 0$ weakly in $\ell^1$, and let $\ve > 0$. For each $m\geq 0$, let
+  \begin{align*}
+    F_m &= \set{\phi\in B_{\ell^{\infty}} : \left\vert \iprod{f_n}{\phi} \right\vert \leq \ve/3\text{ for all }n\geq m}.
+  \end{align*}
+  Then, $F_m$ is weak*-closed in $B_{\ell^{\infty}}$. Since $\left( f_n \right)_n\rightarrow 0$ weakly, it follows that the union of all such $F_m$ is equal to $B_{\ell^{\infty}}$.
+
+  By the Baire Category Theorem, there is some $F_m$ with nonempty interior. A metric on $B_{\ell^{\infty}}$ inducing the weak* topology is given by
+  \begin{align*}
+    d\left( \phi,\psi \right) &= \sum_{j=1}^{\infty} 2^{-j} \left\vert \phi(j)-\psi(j) \right\vert.
+  \end{align*}
+  Since $F_m$ has nonempty weak* interior, there is $\phi\in F_m$ and $\delta > 0$ such that $U\left( \phi,\delta \right)\subseteq F_m$, where we recall that
+  \begin{align*}
+    U\left( \phi,\delta \right) &= \set{\psi\in B_{\ell^{\infty}} : d\left( \phi,\psi \right) < \delta}.
+  \end{align*}
+  Let $J$ be such that $2^{-(J-1)} < \delta$. Let $n\geq m$, and let $\psi\in \ell^{\infty}$ be defined by $\psi(j) = \phi(j)$ for each $1\leq j \leq J$ and $\psi(j) = \sgn\left( f_n(j) \right)$ for each $j > j$. Then, $\psi(j)f_n(j) = \left\vert f_n(j) \right\vert$ for each $j > J$. We have that $\psi\in B_{\ell^{\infty}}$.
+
+  Furthermore, we have
+  \begin{align*}
+    d\left( \phi,\psi \right) &= \sum_{j=J+1}^{\infty}2^{-j} \left\vert \phi(j)-\psi(j) \right\vert\\
+                              &\leq 2^{-\left( J-1 \right)}\\
+                              &< \delta.
+  \end{align*}
+  Thus, $\psi\in F_m$, so $\left\vert \iprod{f_n}{\psi} \right\vert \leq \ve/3$ for all $n\geq m$. In particular, we have
+  \begin{align*}
+    \left\vert \sum_{j=1}^{J}\phi(j)f_n(j) + \sum_{j=J+1}^{\infty}\left\vert f_n(j) \right\vert \right\vert \leq \frac{\ve}{3}
+  \end{align*}
+  for all $n\geq m$.
+
+  Yet, since $\left( f_n \right)_{n}\rightarrow 0$ in $\ell^1$, we have some $m_1\geq m$ such that for all $n\geq m_1$, we have
+  \begin{align*}
+    \sum_{j=1}^{J} \left\vert f_n(j) \right\vert &< \ve/3.
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    \norm{f_n} &= \sum_{j=1}^{\infty} \left\vert f_n(j) \right\vert\\
+               &< \frac{\ve}{3} + \left\vert \sum_{j=J+1}^{\infty}\left\vert f_n(j) \right\vert + \sum_{j=1}^{J}\phi(j)f_n(j) \right\vert + \left\vert \sum_{j=1}^{J}\phi(j)f_n(j) \right\vert\\
+               &< \frac{2\ve}{3} + \sum_{j=1}^{J} \left\vert f_n(j) \right\vert\\
+               &< \ve
+  \end{align*}
+  whenever $n\geq m_1$. This gives norm convergence.
+\end{proof}
+In particular, if it were the case that $B_{\ell^1}$ with the weak topology was metrizable, then we would have that the weak and norm topologies on $\ell^1$ agreed. Yet, this is not the case.
+\subsection{Extremal Structure}%
+\begin{definition}
+  Let $X$ be a vector space, and let $K\subseteq X$ be a convex set. We call a subset $F\subseteq K$ a \textit{face} if $F$ is a convex subset satisfying the following criterion: if $0 < t < 1$, and $x,y\in K$ with $\left( 1-t \right)x + ty\in F$ then $x,y\in F$.
+
+  A singleton set $\set{z}\in K$ that is a face is called an extreme point. We write $\operatorname{ext}\left( K \right)$ for the set of extreme points of $K$.
+\end{definition}
+In particular, $z\in K$ is an extreme point if and only if, for any $0 < t < 1$, if there are $x,y\in K$ with $\left( 1-t \right)x + ty = z$, then $x = y = z$. In fact, we can take $t = 1/2$ --- that is, we only need to concern ourselves with the midpoint of any such line segment. To see this, we assume without loss of generality that $t < 1/2$. Then, the vector $w = \left( 1-2t \right)x + 2ty$ lies in $C$ since $C$ is convex, and satisfies $\frac{1}{2}\left( x+w \right) = z$. In particular, this means that $x = z = w$, so that $y = z$.
+
+There are convex subsets not admitting extreme points.
+\begin{example}
+  Let $X = c_0$. We will show that the unit ball $B_{c_0}$ has no extreme points.
+
+  Let $z\in \operatorname{ext}\left( B_{c_0} \right)$. Notice that for any $0 < \norm{z} < 1$, we have
+  \begin{align*}
+    z &= \left( 1- \norm{z} \right)0 + \norm{z} \frac{z}{\norm{z}},
+  \end{align*}
+  meaning in particular that $z$ cannot be an extreme point if $\norm{z} < 1$. In particular, this means that $\norm{z} = 1$.
+
+  Since $z\in c_0$, there is $n_0\in \N$ with $\left\vert z\left( n_0 \right) \right\vert < 1$. Write $z\left( n_0 \right) = \left( 1-t \right)\lambda + t\mu$ for some $0 < t < 1$ and $\left\vert \lambda \right\vert = \left\vert \mu \right\vert = 1$. Consider the sequences defined by
+  \begin{align*}
+    x(n) &= \begin{cases}
+      z(n) & n\neq n_0\\
+      \lambda & n = n_0
+    \end{cases}\\
+      y(n) &= \begin{cases}
+        z(n) & n\neq n_0\\
+        \mu & n = n_0.
+      \end{cases}
+  \end{align*}
+  Then, $\norm{x},\norm{y}\leq 1$, but $\left( 1-t \right)x + ty = z$ with $x\neq z$ and $y\neq z$, meaning that $z$ cannot be extreme.
+\end{example}
+\begin{proposition}
+  Let $\Omega$ be a locally compact Hausdorff space.
+  \begin{enumerate}[(i)]
+    \item If $\Omega$ is not compact, then $\operatorname{ext}\left( B_{C_0(\Omega)} \right) = \emptyset$.
+    \item If $\Omega$ is compact, then 
+      \begin{align*}
+        \operatorname{ext}\left( B_{C(\Omega)} \right) &= \set{u\in C(\Omega) : \left\vert u(x) \right\vert = 1\text{ for all }x\in \Omega}.
+      \end{align*}
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Let $f\in \operatorname{ext}\left( B_{C_0(\Omega)} \right)$. Then, $\norm{f} = 1$. Suppose there is some $x_0$ with $ \left\vert f\left( x_0 \right) \right\vert < 1 $. Choose $\delta$ such that $\left\vert f\left( x_0 \right) \right\vert < \delta < 1$. By continuity, there is some open neighborhood $U$ of $x_0$ with $\left\vert f \right\vert < \delta$ on $U$. By Urysohn's Lemma, there is a continuous function $g\colon \Omega\rightarrow [0,1]$ with $\supp\left( g \right)\subseteq U$ and $g\left( x_0 \right) = 1$.
+
+  Then, we may write
+  \begin{align*}
+    f &= \frac{1}{2}\left( \left( f + \left( 1-\delta \right)g \right) + \left( f-\left( 1-\delta \right)g \right) \right).
+  \end{align*}
+  First, we observe that on $U^{c}$, we have that $\left\vert f \pm \left( 1-\delta \right)g \right\vert = \left\vert f \right\vert \leq 1$, while on $U$ we have
+  \begin{align*}
+    \left\vert f \pm \left( 1-\delta \right)g \right\vert &\leq \left\vert f \right\vert + \left( 1-\delta \right)\\
+                                                          &\leq 1.
+  \end{align*}
+  In particular, since $f\pm \left( 1-\delta \right)g \neq f$, this contradicts the fact that $f$ is extreme, so in particular, we must have $\left\vert f(x) \right\vert = 1$ for all $x\in \Omega$, yielding that $\Omega$ is compact. This gives (i).
+
+  Having seen that (i) holds, we have that $\operatorname{ext}\left( B_{C(\Omega)} \right)$ is contained in the set of all $u\in C(\Omega)$ with $\left\vert u \right\vert = 1$ on $\Omega$. Our next task is to show that any such $u$ is extreme.
+
+  Write $u = \frac{1}{2}\left( f+g \right)$ with $f,g\in B_{C(\Omega)}$. Then, $u(x) = \frac{1}{2}\left( f(x) + g(x) \right)$ with $\left\vert f(x) \right\vert,\left\vert g(x) \right\vert\leq 1$ and $\left\vert u(x) \right\vert = 1$. Since the extreme points of the closed unit ball of $\C$ is $S^1$, it follows that $f(x) = g(x) = u(x)$ for all $x\in \Omega$.
+\end{proof}
 \section{$C^{\ast}$-Algebras}%
+
 \section{Spectral Theory}%
 Spectral theory is primarily concerned with representations of abelian $C^{\ast}$-algebras. Consider a normal operator $N$ on $H$. Then, $C^{\ast}\left( N \right)$ is an abelian $C^{\ast}$-algebra, and the continuous functional calculus $f\mapsto f\left( N \right)$ yields a $\ast$-isomorphism of $C\left( \sigma(N) \right)$ onto $C^{\ast}\left( N \right)$. In particular, $f\mapsto f\left( N \right)$ is a representation of the abelian $C^{\ast}$-algebra $C^{\ast}\left( N \right)$.
 

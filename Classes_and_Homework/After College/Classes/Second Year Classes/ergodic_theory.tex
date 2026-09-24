@@ -155,7 +155,7 @@ We will give two proofs: one uses the Carathéodory criterion and is more explic
   \end{align*}
   If $n_k$ does not diverge to $\infty$, then there exists some subsequence $n_{k_j}$ that is constant equal to $n$, and $F_{k_j}$ all have $\varphi_{n,\infty}\left( F_{k_j} \right) = E_{n_{k_j}}$. Since $\mu_n$ is a measure, we are done in this case, following from the fact that all the $F_n$ past $F_{k_j}$ lie in $X_n$.
 \end{proof}
-The most important case is when the projective limit is the infinite product measure.
+The most important case is when the projective limit is the infinite product measure. If $\left( X_n,\mu_n \right)$ is a countable family of standard probability spaces, then the product measure $\bigotimes_{n=1}^{\infty}\mu_n$ is a probability measure.
 \subsection{Canonical Examples}%
 \begin{example}[Bernoulli Actions]
   Let $\left( X,\mu \right)$ be a standard probability space, and let $G$ be any countable group. Then, there is a unique probability measure on the product space $\left( X,\mu \right)^{G}$, and we have that $G\curvearrowright \left( X,\mu \right)^{G}$ in a probability measure-preserving manner by translation --- that is, $h\cdot \left( x_g \right)_{g\in G} = \left( x_{h^{-1}g} \right)_{g\in G} $. This follows from the fact that $G$ is probability measure-preserving on all the Borel cylinder sets
@@ -168,5 +168,197 @@ The most important case is when the projective limit is the infinite product mea
   Suppose $G$ is a compact Hausdorff topological group. Then, there is a unique (regular) Borel probability measure $\mu$, known as the Haar (probability) measure that is invariant under left translation. If $\pi\colon \Gamma\rightarrow G$ is a group homomorphism of a discrete group $\Gamma$ on $G$, then the action $\gamma\cdot g = \pi(\gamma)g$ yields a probability measure-preserving action of $\Gamma$ on $G$.
 
   For instance, this yields actions $\Z\curvearrowright S^1$ given by rotations --- that is, $e^{2\pi i \theta}\mapsto e^{2\pi i \left( \theta + \alpha \right)}$.
+
+  In general, if $G$ is a compact group, and $\phi\colon \Gamma\rightarrow \aut(G)$ is an action of a discrete group $\Gamma$ that preserves the Haar measure, we call such an action an \textit{algebraic action}.
 \end{example}
+\begin{example}
+  If $M$ is a finite volume Riemannian manifold with volume form $\operatorname{vol}$, and $\phi\in \operatorname{Diff}\left( M \right)$ is a diffeomorphism satisfying $\det\left( \phi'(p)^{\ast}\phi'(p) \right) = 1$ for all $p\in M$, then the pushforward measure satisfies $\phi_{\ast}\operatorname{vol} = \operatorname{vol}$.
+
+  Group actions $\Gamma\to \operatorname{Diff}\left( M \right)$ appear in geodesic and \href{https://en.wikipedia.org/wiki/Horocycle}{horocycle flow}.
+\end{example}
+\section{The Ergodic Theorems}%
+We will now discuss the mean and pointwise ergodic theorems.
+\subsection{Mean Ergodic Theorem}%
+\begin{proposition}
+  Let $X$ be a Banach space. Let $\left( T_n \right)_n\in B(X)$ be a uniformly operator-norm bounded. Then, for all $S\in B(X)$, the sets
+  \begin{align*}
+    V &= \set{x\in X : T_nx\text{ converges}}\\
+    W &= \set{x\in X : \norm{T_nx - Sx}\rightarrow 0}
+  \end{align*}
+  are norm-closed subspaces of $X$.
+\end{proposition}
+\begin{theorem}[Mean Ergodic Theorem]
+  Let $H$ be a Hilbert space, and let $T\in B(H)$ be such that $\norm{T}\leq 1$. Define
+  \begin{align*}
+    V &= \set{\xi\in H : T\xi = \xi},
+  \end{align*}
+  and let $P = \proj_V$. Then, 
+  \begin{align*}
+    \left( \frac{1}{n}\sum_{j=0}^{n-1}T^{j} \right) &\xrightarrow{\operatorname{SOT}} P.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Let $K_1 = \img\left( 1-T \right)$ and $K_2 = \ker\left( 1-T \right)$. We claim that $K_1$ and $K_2$ are orthogonal to each other and satisfy $ \overline{K_1} + K_2 = H $. For the first point, we have for all $v\in K_1$ and $w\in K_2$, we write $v = \left( 1-T \right)\xi$, and have
+  \begin{align*}
+    \iprod{\left( 1-T \right)\xi}{w} &= \iprod{\xi}{w} - \iprod{\xi}{T^{\ast}w}\\
+    \norm{T^{\ast}w - w}^2 &= \norm{T^{\ast}w}^2 - 2\re\left( \iprod{w}{Tw} \right) + \norm{w}^2\\
+                           &= \norm{T^{\ast}w}^2 - \norm{w}^2\\
+                           &\leq 0,
+  \end{align*}
+  where we note that $\norm{T^{\ast}} = \norm{T}$. Therefore, $T^{\ast}w = w$, so we have that $K_2\subseteq K_1^{\perp}$.
+
+  Now, suppose $\xi\in K_1^{\perp}$. Then,
+  \begin{align*}
+    \norm{\left( 1-T \right)\xi}^2 &= \norm{T\xi}^2 - 2\re \left( \iprod{T\xi}{\xi} \right) + \norm{\xi}^2,
+      \intertext{with}
+    \iprod{T\xi}{\xi} &= \iprod{\left( T-1 \right)\xi}{\xi} + \norm{\xi}^2\\
+                      &= \norm{\xi}^2
+  \end{align*}
+  since $\xi\in K_1^{\perp}$. Therefore,
+  \begin{align*}
+    \norm{\left( 1-T \right)\xi}^2 &\leq \norm{\xi}^2 - \norm{\xi}^2\\
+                                   &= 0
+  \end{align*}
+  since $\norm{T}\leq 1$. Therefore, $K_2 = K_1^{\perp}$.
+
+  Therefore, it suffices to show that
+  \begin{align*}
+    \frac{1}{n}\sum_{j=0}^{n-1}T^{j}\xi &\rightarrow P\xi
+  \end{align*}
+  for all $\xi\in K_1\cup K_2$. For each $\xi\in K_2$, we obtain the desired result since both sides are equal to $\xi$.
+
+  For each $\xi\in K_1$, we have that $P\xi = 0$. If $\xi = \left( 1-T \right)\eta$, then
+  \begin{align*}
+    \frac{1}{n}\sum_{j=0}^{n-1}T^{j}\xi &= \frac{1}{n}\left( 1-T^{n} \right)\eta,
+  \end{align*}
+  so that
+  \begin{align*}
+    \norm{\frac{1}{n}\sum_{j=0}^{n-1}T^{j}\xi} &\leq \frac{2}{n}\norm{\eta}\\
+                                             &\xrightarrow{n\to\infty}0.
+  \end{align*}
+\end{proof}
+\subsection{Pointwise Ergodic Theorem}%
+Now, consider a probability space $\left( X,\mu \right)$ and a measure-preserving map $T\colon X\rightarrow X$. Then, the operator $V_T\in B\left( L^2\left( X,\mu \right) \right)$ is given by $V_Tf = f\circ T$ is an isometry.
+
+If $f\in L^{\infty}\left(X,\mu\right)$, and $P = \proj\left( \operatorname{fix}\left( V_T \right) \right)$, then we have $\norm{Pf}_{L^{\infty}}\leq \norm{f}_{L^{\infty}}$. This follows from the fact that we may find a subsequence such that
+\begin{align*}
+  \frac{1}{n_k}\sum_{j=0}^{n_k-1}f\circ T^{j} &\rightarrow Pf
+\end{align*}
+pointwise almost everywhere. Therefore, we have
+\begin{align*}
+  \norm{Pf}_{L^{\infty}} &\leq \liminf_{k\rightarrow\infty} \frac{1}{n_k}\norm{\sum_{j=0}^{n_k-1}f\circ T^{j}}_{L^{\infty}}\\
+                         &\leq \norm{f}_{L^{\infty}}.
+\end{align*}
+A similar result holds on $L^p$ for general $p$. We discuss this below.
+\begin{corollary}
+  Suppose $\left( X,\mu \right)$ is a probability space, and $T\colon X\rightarrow X$ is a probability measure-preserving action. Then, for all $f\in L^p\left( X,\mu \right)$ with $1\leq p < \infty$, there exists $ \widetilde{f}\in L^p\left( X,\mu \right) $ such that
+  \begin{align*}
+    \norm{\widetilde{f} - \frac{1}{n}\sum_{j=0}^{n-1}f\circ T^{j}}_{L^p} &\xrightarrow{n\to \infty}0.
+  \end{align*}
+  The element $ \widetilde{f} $ satisfies:
+  \begin{enumerate}[(i)]
+    \item $\widetilde{f}\circ T = \widetilde{f}$ almost everywhere;
+    \item $ \ds \int_{}^{} \widetilde{f}g\:d\mu = \int_{}^{} fg\:d\mu $ for all $g\in L^{q}\left( X,\mu \right)$ satisfying $g\circ T = g$ almost everywhere, where $q$ is the conjugate exponent for $p$;
+    \item $\norm{\widetilde{f}}_{L^p}\leq \norm{f}_{L^p}$.
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  In the following proof, we will still be concerned with the operator $P$ defined as
+  \begin{align*}
+    P &= \proj\left( \operatorname{fix}\left( V_T \right) \right)\\
+      &= \proj\left( \set{f\in L^2\left( X,\mu \right) : V_Tf = f} \right).
+  \end{align*}
+  \begin{enumerate}[(i)]
+    \item Let $V_T\in B\left( L^p\left( X,\mu \right) \right)$ be defined by $V_Tf = f\circ T$. Then,
+      \begin{align*}
+        \norm{\frac{1}{n}\sum_{j=0}^{n-1}V_T^{j}} &\leq 1.
+      \end{align*}
+      We have that
+      \begin{align*}
+        W &= \set{f\in L^p\left( X,\mu \right) : \frac{1}{n}\sum_{j=0}^{n-1}V_T^{j}f\text{ converges}}
+      \end{align*}
+      is a norm-closed subspace. It suffices to show that $L^{\infty}\left( X,\mu \right)\subseteq W$, as then the $L^p$-closure of $L^{\infty}\left( X,\mu \right)$ is contained in $W$, but that is equal to $L^{p}\left( X,\mu \right)$.
+
+      Fix $f\in L^{\infty}\left( X,\mu \right)$.
+
+      If $1\leq p \leq 2$, we have that
+      \begin{align*}
+        \norm{\frac{1}{n}\sum_{j=0}^{n-1}V_T^{j}f - Pf}_{L^p} &\leq \norm{\frac{1}{n}\sum_{j=0}^{n-1}V_T^{j}f - Pf}_{L^2}\\
+                                                              &\rightarrow 0.
+      \end{align*}
+      If $p\geq 2$, then
+      \begin{align*}
+        \norm{\frac{1}{n}\sum_{j=0}^{n-1}V_T^{j}f - Pf}_{L^p}^{p} &\leq 2\norm{f}_{L^{\infty}}^{p-2} \norm{\frac{1}{n}\sum_{j=0}^{n-1}V_T^{j}f - Pf}_{L^2}^2\\
+                                                                  &\rightarrow 0.
+      \end{align*}
+    \item We have that $\left( fg \right)\circ T^{j} = \left( f\circ T^{j} \right)g$, so that
+      \begin{align*}
+        \norm{ \widetilde{f}g - \frac{1}{n}\sum_{j=0}^{n-1}\left( f\circ T^{j} \right)g }_{L^1} &\leq \norm{g}_{q} \norm{ \widetilde{f} - \frac{1}{n}\sum_{j=0}^{n-1}V_T^{j}f }_{L^p}.
+      \end{align*}
+      In particular, we may write $\widetilde{f}g$ using the asymptotic form for $\widetilde{f}$. Therefore, we have
+      \begin{align*}
+        \int_{}^{} \widetilde{f}g\:d\mu &= \lim_{n\rightarrow\infty} \frac{1}{n}\sum_{j=0}^{n-1} \int_{}^{} f\left( T^{j}(x) \right)g(x)\:d\mu(x)\\
+                                        &= \lim_{n\rightarrow\infty} \frac{1}{n}\sum_{j=0}^{n-1} \int_{}^{} \left( fg \right)\left( T^{j}(x) \right)\:d\mu(x)\\
+                                        &= \int_{}^{} fg\:d\mu.
+      \end{align*}
+    \item We have that
+      \begin{align*}
+        \norm{\widetilde{f}}_{L^p} &= \lim_{n\rightarrow\infty} \frac{1}{n}\norm{\sum_{j=0}^{n-1}f\circ T^{j}}_{L^p}\\
+                                   &\leq \lim_{n\rightarrow\infty}\frac{1}{n}\sum_{j=0}^{n-1} \widetilde{f}\circ T^{j}_{L^p}\\
+                                   &= \norm{f}_{L^p}.
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+The next result we will be concerned with is the Pointwise Ergodic Theorem. To prove it, we must prove a version of this theorem known as the Maximal Ergodic Theorem. This concerns a maximal function defined by
+\begin{align*}
+  f^{\ast}\left( x \right) &= \sup_{n} \frac{1}{n}\sum_{j=0}^{n-1} f\circ T^{j}(x).
+\end{align*}
+\begin{theorem}
+  If $f\in L^1\left( X,\mu \right)$, then
+  \begin{align*}
+    \int_{\set{f^{\ast} > 0}}^{} f\:d\mu &\geq 0.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  The set on which $f^{\ast}$ is strictly greater than zero is the disjoint union of the sets
+  \begin{align*}
+    B_1 &= \set{x : f(x) \geq 0}\\
+        &\vdots\\
+    B_n &= \set{x : f(x)\leq 0,f(x) + f\circ T(x) \leq 0,\dots,f(x) + \cdots + f\circ T^{n-2}(x) \leq 0, f(x) + \cdots + f\circ T^{n-1}(x) > 0}.
+  \end{align*}
+  If we are able to show that
+  \begin{align*}
+    \int_{B_1\cup\cdots\cup B_n}^{} f\:d\mu &\geq 0
+  \end{align*}
+  holds, then dominated convergence yields the desired result.
+
+  In order to obtain this, we will break up the set $B_1\cup\cdots\cup B_n$ into a family of disjoint pieces on which the integral of $f$ is strictly positive. We will view them as towers of the form $B_k'\cup T\left( B_k' \right)\cup\cdots\cup T^{k-1}\left( B_k' \right)$.
+
+  First, we observe that $T^{k}\left( B_n \right)\subseteq B_1\cup\cdots\cup B_{n-k}$ for each $k=1,\dots,n-1$, since if $x\in B_n$, then we have
+  \begin{align*}
+    0\geq f\left( x \right) + f\circ T(x) + \cdots + f\circ T^{k-1}(x)\\
+      \intertext{while}
+      0 &< f(x) + f\circ T(x) + \cdots + f\circ T^{k-1}(x) + f\circ T^{k}(x) + \cdots + f\circ T^{n-1}(x).
+  \end{align*}
+  In particular, this means that
+  \begin{align*}
+    0 &< f\circ T^{k}(x) + \cdots + f\circ T^{n-1}(x)\\
+      &= f\left( T^{k}(x) \right) + f\circ T\left( T^{k}(x) \right) + \cdots + f\circ T^{n-k-1}\left( T^{k}(x) \right).
+  \end{align*}
+
+  Next, we note that the sets $B_n,T\left( B_n \right),\dots,T^{n-1}\left( B_n \right)$ are pairwise disjoint. This follows from the fact that if $T^{i}\left( B_n \right)\cap T^{j}\left( B_n \right)\neq \emptyset$ for some $i < j$, then $B_n\cap T^{j-i}\left( B_n \right)\neq \emptyset$, but we have already established the family of sets $B_i$ are disjoint, while $T^{j-i}\left( B_n \right)\subseteq B_1\cup\cdots\cup B_{n-(j-i)}$.
+
+  We will define the decomposition of $B_1\cup\cdots\cup B_{n}$ as follows. Take
+  \begin{align*}
+    B_n' &= B_n\\
+    C_n &= B_n'\cup T\left( B_n' \right)\cup\cdots\cup T^{n-1}\left( B_n' \right)\\
+    B_{n-1}' &= B_{n-1}\setminus C_n\\
+    C_{n-1} &= B_{n-1}'\cup T\left( B_{n-1}' \right) \cup\cdots\cup T^{n-2}\left( B_{n-1}' \right)\\
+            &\vdots\\
+    B_1' &= B_1\setminus \left( C_2\cup\cdots\cup C_n \right)\\
+    C_1 &= B_1'.
+  \end{align*}
+  The picture one must have in mind is viewing each $C_k$ as a ``column'' in a table with disjoint ``levels'' given by $T^{j}\left( B_k' \right)$ for each $0\leq j \leq k-1$. Each ``base'' $B_k'$ is disjoint 
+\end{proof}
+
 \end{document}
