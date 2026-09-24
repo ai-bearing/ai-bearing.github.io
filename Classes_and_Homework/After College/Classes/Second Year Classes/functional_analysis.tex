@@ -801,12 +801,12 @@ We will assume that $\K = \C$.
 \end{proof}
 The most important Fourier transform that we will compute is the Gaussian. That is, $f(x) = e^{-x^2/2}$.
 \begin{theorem}
-  If $f(x) = e^{-x^2/2}$ over $\R^d$, we have $\hat{f}(\xi) = \left( 2\pi \right)^{d/2}e^{-\xi^2/2}$.
+  If $f(x) = e^{-\left\vert x \right\vert^2/2}$ over $\R^d$, we have $\hat{f}(\xi) = \left( 2\pi \right)^{d/2}e^{-\xi^2/2}$.
 \end{theorem}
 \begin{proof}
   Notice that $f(x)\in \mathcal{S}\left( \R^d \right)$. Fubini's theorem yields
   \begin{align*}
-    \hat{f}(\xi) &= \int_{\R^d}^{} e^{-i \iprod{x}{\xi}} e^{-x^2/2}\:d^{d}x\\
+    \hat{f}(\xi) &= \int_{\R^d}^{} e^{-i \iprod{x}{\xi}} e^{-\left\vert x \right\vert^2/2}\:d^{d}x\\
                  &= \int_{\R^d}^{} \prod_{j=1}^{d}e^{-i\xi_jx_j-\left( x_j^2/2 \right)}\:d^{d}x\\
                  &= \prod_{j=1}^{d} \int_{\R}^{} e^{-x^2/2 - i\xi x}\:dx.
   \end{align*}
@@ -837,6 +837,95 @@ The most important Fourier transform that we will compute is the Gaussian. That 
   \begin{align*}
     \int_{-\infty}^{\infty} e^{-x^2/2-i\xi x}\:dx &= \left( 2\pi \right)^{1/2}\sum_{k=0}^{\infty} \frac{\left( -i \right)^{2k}\xi^{2k}}{\left( 2k \right)!} \frac{\left( 2k \right)!}{2^{k}k!}\\
                                                   &= \left( 2\pi \right)^{1/2} e^{-\xi^2/2}.
+  \end{align*}
+\end{proof}
+Our goal is to prove the Fourier Inversion Theorem.
+\begin{theorem}[Fourier Inversion Theorem]
+  Let $\mathcal{F}$ and $ \mathcal{G} $ be defined by 
+  \begin{align*}
+    \mathcal{F}\left[ f \right](\xi) &= \int_{\R^d}^{} e^{-i \iprod{x}{\xi}}f(x)\:d^{d}x\\
+    \mathcal{G}\left[ \hat{f} \right]\left( x \right) &= \int_{\R^{d}}^{} e^{i \iprod{x}{\xi}}\hat{f}\left( \xi \right)\:d^{d}\xi.
+  \end{align*}
+  Then, $ \mathcal{G}\circ \mathcal{F} = \mathcal{F}\circ \mathcal{G} = \left( 2\pi \right)^{d} $.
+\end{theorem}
+In particular, we obtain the following corollary.
+\begin{corollary}
+  The map $\mathcal{F}$ is a topological vector space isomorphism from $ \mathcal{S}\left( \R^d,\C \right) $ to itself, with inverse given by
+  \begin{align*}
+    \mathcal{F}^{-1}\left[ f \right]\left( x \right) &= \frac{1}{\left( 2\pi \right)^{d}}\int_{\R^d}^{} e^{i \iprod{x}{\xi}}f\left( \xi \right)\:d^{d}\xi.
+  \end{align*}
+  We will write $\check{f}(x)$ for $\mathcal{F}^{-1}\left[ f \right](x)$.
+\end{corollary}
+To prove the Fourier Inversion Theorem, we will need the following proposition.
+\begin{proposition}
+  We have
+  \begin{align*}
+    \lim_{\ve\searrow 0}\left( 2\pi \ve \right)^{-d/2} e^{-\frac{\left\vert y-x \right\vert^2}{2\ve}} &= \delta^{d}_{x}\left( y \right)
+  \end{align*}
+  in $ \mathcal{S}\left( \R^d,\C \right)^{\ast} $ with the strong topology. Here, $\delta^{d}_{x}$ is the evaluation map implemented by the duality pairing
+  \begin{align*}
+    \iprod{f}{\delta^{d}_x} &= \int_{\R^d}^{} f(y)\delta^{d}_x(y)\:d^{d}y.
+  \end{align*}
+\end{proposition}
+\begin{remark}
+  The duality pairing for $f\in \mathcal{S}\left( \R^d,\C \right)$ and $\varphi\in \mathcal{S}\left( \R^d,\C \right)^{\ast}$ written as
+  \begin{align*}
+    \iprod{f}{\varphi} &= \int_{}^{} f(y)\varphi(y)\:dy
+  \end{align*}
+  is not really an integral. However, physicists like writing it this way.
+\end{remark}
+\begin{proof}[Proof of Proposition]
+  Let $\varphi_{x,\ve}\in \mathcal{S}\left( \R^d,\C \right)$ be defined by
+  \begin{align*}
+    \varphi_{x,\ve}\left( y \right) &= \left( 2\pi \ve \right)^{-d/2} e^{-\frac{\left\vert y-x \right\vert^2}{2\ve}}.
+  \end{align*}
+  There is a canonical injection $\iota\colon \mathcal{S}\left( \R^d,\C \right)\rightarrow \mathcal{S}\left( \R^d,\C \right)^{\ast}$.
+
+  Let $I = \left[ 0,\infty \right)$ be directed by taking $\ve_1\preceq \ve_2$ if and only if $\ve_2 \leq \ve_1$. Then, our goal is to show that the net $\left( \iota\left( \varphi_{x,\ve} \right) \right)_{\ve\in I}$ converges to $\delta^d_x$ in the strong topology.
+
+  We want to show that, for all bounded subsets $A\subseteq \mathcal{S}\left( \R^d,\C \right)$, one has
+  \begin{align*}
+    0 &= \lim_{\ve\searrow 0} \norm{\iota_{\varphi_{x,\ve}} - \delta_x^d}_A\\
+      &= \sup_{f\in A} \left\vert \iprod{f}{\iota\left( \varphi_{x,\ve} \right) - \delta_x^d} \right\vert.
+  \end{align*}
+  We see that
+  \begin{align*}
+    \iprod{f}{\iota\left( \varphi_{x,\ve} \right)-\delta_x^d} &= \int_{\R^d}^{} \varphi_{x,\ve}(y)f(y)\:d^{d}y - f(x)\\
+                                  &= \int_{\R^d}^{} \varphi_{x,\ve}\left( y \right)\left( f(y)-f(x) \right)\:d^{d}y,
+                                                              \intertext{where we note that $\varphi_{x,\ve}$ was specifically chosen to have integral $1$ over $\R^d$. Using the Fundamental Theorem of Calculus, we have}
+                                  &= \int_{\R^d}^{} \varphi_{x,\ve}\left( y \right) \int_{0}^{1} \iprod{y-x}{\nabla f\left( x + t\left( y-x \right) \right)}\:dt\:d^{d}y\\
+                                  &= \int_{\R^d}^{} \left( 2\pi \ve \right)^{-d/2}e^{- \frac{\left\vert y-x \right\vert^2}{2}} \int_{0}^{1} \iprod{\left( y-x \right)}{\nabla f\left( x + t\left( y-x \right) \right)}\:dt\:d^{d}y\\
+                                  &= \sum_{j=1}^{d} \int_{\R^d}^{} \left( 2\pi \ve \right)^{-d/2}e^{-\frac{\left\vert y-x \right\vert^2}{2\ve}} \int_{0}^{1} \iprod{y_j-x_j}{\partial_jf\left( x + t\left( y-x \right) \right)}\:dt\:d^{d}y.
+                                    \intertext{Estimating the inner integral yields}
+    \left\vert \iprod{f}{\iota\left( \varphi_{x,\ve} \right)-\partial_x^d} \right\vert &\leq \sum_{j=1}^{d} \norm{f}_{e_j,0} \int_{\R^d}^{} \left\vert y_j-x_j \right\vert\left( 2\pi \ve \right)^{-d/2}e^{-\frac{\left\vert y-x \right\vert^2}{2\ve}}\:d^{d}y\\
+                                 &\leq d\max_{1\leq j \leq d} \int_{\R^d}^{} \left( 2\pi \ve \right)^{-d/2}e^{-\frac{\left\vert y-x \right\vert^2}{2\ve}}\left\vert y-x \right\vert\:d^{d}y.
+                                 \intertext{Substituting $u = \frac{y-x}{\sqrt{\ve}}$ yields $y = x + \sqrt{\ve}u$, so that}
+                                 &\leq d\left( \max_{1\leq j \leq d} \sup_{f\in A}\norm{f}_{e_j,0} \right) \sqrt{\ve} \left( \int_{\R^d}^{} \left( 2\pi \right)^{-d/2} e^{-\frac{\left\vert u \right\vert^2}{2}}\left\vert u \right\vert\:d^{d}u \right).
+  \end{align*}
+  Since the integral is finite, we obtain that $\norm{\iota\left( \varphi_{x,\ve} \right) - \delta^d_x}_A \leq C \sqrt{\ve}$.
+\end{proof}
+\begin{remark}
+  The functions of the form $\left( 2\pi \ve \right)^{-d/2}e^{-\frac{\left\vert y-x \right\vert^2}{2\ve}}$ are a special class of functions known as \href{https://en.wikipedia.org/wiki/Mollifier?useskin=vector}{mollifiers}.
+\end{remark}
+We will now prove the Fourier Inversion Theorem.
+\begin{proof}[Proof of the Fourier Inversion Theorem]
+  Let $f\in \mathcal{S}\left( \R^d,\C \right)$. We compute
+  \begin{align*}
+    \mathcal{G}\circ \mathcal{F}\left[ f \right](x)&= \int_{\R^d}^{} e^{i \iprod{x}{\xi}}\hat{f}(\xi)\:d^{d}\xi.
+    \intertext{Since $\hat{f}$ is a Schwartz function, dominated convergence gives}
+                                   &= \lim_{\ve\searrow 0} \int_{}^{} e^{i \iprod{x}{\xi} - \frac{\ve}{2}\left\vert \xi \right\vert^2} \hat{f}(\xi)\:d\xi\\
+                                   &= \int_{\R^d}^{} \left( \int_{\R^d}^{} e^{-i \iprod{x}{\xi} - \frac{\ve}{2} \left\vert \xi \right\vert^2}e^{-i \iprod{y}{\xi}}f(y)\:d^{d}y \right)\:d^{d}\xi
+                                   \intertext{Making use of the factor of $e^{-\frac{\ve}{2}\left\vert \xi \right\vert^2}$ allows us to use Fubini's theorem to obtain}
+                                   &= \int_{\R^d}^{} \left( \int_{\R^d}^{} e^{i \iprod{x}{\xi} - \frac{\ve}{2}\left\vert \xi \right\vert^2}e^{-i \iprod{y}{\xi}}\:d^{d}\xi \right)f(y)\:d^{d}y.
+                                   \intertext{Evaluating the inner integral, we substitute $\eta = \sqrt{\ve}\xi$ to obtain}
+    \int_{\R^d}^{}  e^{- \iprod{y-x}{\xi}}e^{-\frac{\ve}{2}\left\vert \xi \right\vert^2}\:d^{d}\xi &= \ve^{-d/2}\int_{\R^d}^{} e^{-i \left( \iprod{\frac{y-x}{\sqrt{\ve}}}{\eta} \right)} e^{- \frac{\left\vert \eta \right\vert^2}{2}}\:d^{d}\eta\\
+                                   &= \ve^{-d/2} \mathcal{F}\left[ \eta\mapsto e^{-\frac{\left\vert \eta \right\vert^2}{2}} \right] \left( \frac{y-x}{\sqrt{\ve}} \right)\\
+                                   &= \left( \ve \right)^{-d/2}\left( 2\pi \right)^{d/2} e^{-\frac{\left\vert y-x \right\vert^2}{2\ve}}\\
+                                   &= \left( 2\pi \right)^{d} \left( \left( 2\pi \right)^{-d/2} e^{-\frac{\left\vert y-x \right\vert^2}{2\ve}} \right).
+                                   \intertext{Rewriting as $\varphi_{x,\ve}$, we have}
+    \mathcal{G}\circ \mathcal{F}\left[ f \right](x) &= \left( 2\pi \right)^{d}\lim_{\ve\searrow 0} \int_{\R^d}^{} f(y)\varphi_{x,\ve}(y)\:d^{d}y\\
+                                                    &= \left( 2\pi \right)^{d}\delta_x^d(f)\\
+                                                    &= \left( 2\pi \right)^{d}f(x).
   \end{align*}
 \end{proof}
 \end{document}
