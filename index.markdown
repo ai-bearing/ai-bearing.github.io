@@ -16,3 +16,5 @@ I am the instructor of record for Math 1310 (Calculus I) for the section on Tues
 
 ## Interests
 I am interested in operator algebras and their connections to measured group theory, ergodic theory, and descriptive set theory.
+
+## [Posts](https://ai-bearing.github.io/postdir.md)
