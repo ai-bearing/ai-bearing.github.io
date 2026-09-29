@@ -5,7 +5,7 @@
 \renewcommand{\eqcolon}{\eqqcolon}
 %\usepackage{dsfont}
 %\renewcommand{\mathbb}{\mathds}
-%\usepackage{homework}
+\usepackage{homework}
 %\usepackage{notes}
 
 %\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
@@ -22,18 +22,21 @@
 
 \begin{document}
 \RaggedRight
+\section{Problem I}%
+
+\section{Problem II}%
 \begin{problem}[Problem II.1]
   Let $V$ and $W$ be $\K$-TVSs, and let $T\colon V\rightarrow W$ be a continuous linear map. Show that if $\left( x_i \right)_i$ is a Cauchy net in $V$, then $\left( Tx_i \right)_i$ is a Cauchy net in $W$.
 \end{problem}
 \begin{solution}
-  Let $U$ be a neighborhood of $0$ in $W$. Then, the inverse image $T^{-1}\left( U \right)$ is an open neighborhood of $0$ in $V$. There is some index $k$ such that for all $i,j\in I$ with $k\preceq i$ and $k\preceq j$, we have that $x_i-x_j\in T^{-1}(U)$. Yet, this means that $Tx_i - Tx_j\in U$ for all $i,j\in I$ with $k\preceq i$ and $k\preceq j$. This gives the desired result.
+  Let $U$ be a neighborhood of $0$ in $W$. Then, the inverse image $T^{-1}\left( U \right)$ is an open neighborhood of $0$ in $V$. There is some index $k$ such that for all $i,j\in I$ with $i,j\succeq k$, we have that $x_i-x_j\in T^{-1}(U)$. Yet, this means that $Tx_i - Tx_j\in U$ for all $i,j\in I$ with $i,j\succeq k$. This gives the desired result.
 \end{solution}
 \begin{problem}[Problem II.2]
   Let $\left( V, \mathcal{T}\left( \mathcal{N} \right) \right)$ be a LCTVS, and let $\left( x_i \right)_i$ be a net in $V$. Let $ \overline{x}\in V $ be some element. Show that the following are equivalent:
   \begin{enumerate}[(i)]
     \item the net $\left( x_i \right)_i$ converges to $ \overline{x} $;
-    \item for all $\rho\in \mathcal{N}$ and for all $\ve > 0$, there exists $k\in I$ such that for all $i\in I$ with $k\preceq i$, one has $\rho\left( x_i - \overline{x} \right) \leq \ve$;
-    \item for all continuous seminorms $\rho$ and for all $\ve > 0$, there exists $k\in I$ such that for all $i\in I$ with $k\preceq i$, one has $\rho\left( x_i - \overline{x} \right) \leq \ve$.
+    \item for all $\rho\in \mathcal{N}$ and for all $\ve > 0$, there exists $k\in I$ such that for all $i\in I$ with $i\succeq k$, one has $\rho\left( x_i - \overline{x} \right) \leq \ve$;
+    \item for all continuous seminorms $\rho$ and for all $\ve > 0$, there exists $k\in I$ such that for all $i\in I$ with $i\succeq k$, one has $\rho\left( x_i - \overline{x} \right) \leq \ve$.
   \end{enumerate}
 \end{problem}
 \begin{solution}
@@ -43,12 +46,75 @@
   \begin{align*}
     U\left( 0,\rho,\ve \right) &= \set{y\in V : \rho(y) < \ve}
   \end{align*}
-  is an open neighborhood of $0$. In particular, this means there is some $k\in I$ such that for all $i\in I$ with $k\preceq i$, one has $x_i\in U\left( 0,\rho,\ve \right)$, or that $\rho\left( x_i \right) < \ve$. This gives (ii).
+  is an open neighborhood of $0$. In particular, this means there is some $k\in I$ such that for all $i\in I$ with $i\succeq k$, one has $x_i\in U\left( 0,\rho,\ve \right)$, or that $\rho\left( x_i \right) < \ve$. This gives (ii).
 
   To show (iii) from (ii), one observes that if $\rho$ is a continuous seminorm, then there are defining seminorms $\rho_1,\dots,\rho_n$ and a constant $C$ such that
   \begin{align*}
     \rho\left( x \right) &\leq C \max\set{\rho_1(x),\dots,\rho_n(x)}.
   \end{align*}
-  Given $\ve > 0$, for each $j=1,\dots,n$ we select $k_j\in I$ such that for all $i_j\in I$ satisfying $k_j\preceq i_j$, one has $\rho\left( x_{i_j} \right) < \ve/C$. There is some $k$ such that $k_j\preceq k$ for each $j=1,\dots,n$. Then, for any $i\in I$ with $k\preceq i$, one has $\rho\left(x_i\right)\leq \ve$, yielding (iii).
+  Given $\ve > 0$, for each $j=1,\dots,n$ we select $k_j\in I$ such that for all $i_j\in I$ satisfying $i_j \succeq k_j$, one has $\rho\left( x_{i_j} \right) < \ve/C$. There is some $k$ such that $k\succeq k_j$ for each $j=1,\dots,n$. Then, for any $i\in I$ with $i\succeq k$, one has $\rho\left(x_i\right)\leq \ve$, yielding (iii).
+
+  Finally, assuming (iii) holds, we observe that for any neighborhood $U$ of $0$, there is some continuous seminorm $\rho$ and some $\ve > 0$ such that
+  \begin{align*}
+    U\left( 0,\rho,\ve \right) &= \set{y\in V : \rho(y) < \ve}\\
+                               &\subseteq U.
+  \end{align*}
+  In particular, this means that there exists some $k\in I$ such that for all $i\in I$ with $i\succeq k$, one has $\rho\left( x_i \right)\leq \ve/2 < \ve$ by the assumption of (iii). In particular, this means for all $i\succeq k$, one has $x_i\in U\left( 0,\rho,\ve \right)\subseteq U$. Thus, the net $\left( x_i \right)_i$ converges to $x$.
 \end{solution}
+\begin{problem}[Problem II.3]
+  Let $\left( V, \mathcal{T}\left( \mathcal{N} \right) \right)$ be a locally convex topological vector space, and let $\left( x_i \right)_i$ be a net in $V$. Show that the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item the net $\left( x_i \right)_i$ is Cauchy;
+    \item for all $\rho\in \mathcal{N}$ and for all $\ve > 0$, there exists $k\in I$ such that for all $i,j\in I$ with $i,j\succeq$, one has $\rho\left( x_i - x_j \right) \leq \ve$;
+    \item for all continuous seminorms $\rho$ and for all $\ve > 0$, there exists $k\in I$ such that for all $i,j\in I$ with $i,j\succeq k$, one has $\rho\left( x_i-x_j \right) \leq \ve$.
+  \end{enumerate}
+\end{problem}
+\begin{solution}
+  Suppose $\left( x_i \right)_i$ is Cauchy. Let $\rho$ be a defining seminorm for the topology on $V$. Then, the subbasic open set
+  \begin{align*}
+    U\left( 0,\rho,\ve  \right) &= \set{y\in V : \rho\left( y \right) < \ve}
+  \end{align*}
+  is an open neighborhood of $0$. Therefore, there is $k$ such that for all $i,j\succeq k$, one has $x_i-x_j\in U\left( 0,\rho,\ve \right)$. Equivalently, we have that $\rho\left( x_i-x_j \right) \leq \ve$, giving (ii).
+
+  Now, suppose (ii) holds. Then, if $\rho$ is a continuous seminorm, there are defining $\rho_1,\dots,\rho_n$ and there is a constant $C$ such that for all $x\in V$, one has
+  \begin{align*}
+    \rho\left( x \right) &\leq C\max\set{\rho_j(x) : j=1,\dots,n}.
+  \end{align*}
+  Since (ii) holds, it follows that there is some $k$ such that for all $i,j\succeq k$, one has $\rho_1\left( x_i-x_j \right),\dots,\rho_n\left( x_i-x_j \right) \leq \ve/C$, whence $\rho\left( x_i-x_j \right) \leq \ve$.
+
+  Finally, suppose (iii) holds. Let $U$ be an open neighborhood of $0$. Then, there is some continuous seminorm $\rho$ and some $\ve > 0$ such that $U\left( 0,\rho,\ve \right)\subseteq U$. 
+\end{solution}
+\section{Problem III}%
+\begin{problem}[Problem III.1]
+  We say a neighborhood $U$ of the origin in a topological vector space $\left( V,\mathcal{T} \right)$ is balanced if and only if for all $x\in U$ and all $\lambda\in \K$ with $\left\vert \lambda \right\vert\leq 1$, we have $\lambda x\in U$. Show that for all open neighborhoods $U\in \mathcal{O}_V(0)$, there exists $B\in \mathcal{O}_V(0)$ with $B\subseteq U$ and $B$ balanced.
+\end{problem}
+\begin{solution}
+  Let $U$ be an open neighborhood of $0$. Then, since the scalar multiplication map $m\colon \K\times V\rightarrow V$ is continuous, it follows that $m^{-1}\left( U \right)$ is an open subset of $\K\times V$. Therefore, there is a basic open subset $U\left( 0,\ve \right)\times W\subseteq m^{-1}(U)$, where
+  \begin{align*}
+    U\left( 0,\ve \right) &= \set{z\in \K : \left\vert z \right\vert < \ve}.
+  \end{align*}
+  It follows that
+  \begin{align*}
+    m\left( U\left( 0,\ve \right)\times W \right) &= \bigcup_{\left\vert z \right\vert < \ve} zW
+  \end{align*}
+  is a balanced open subset of $U$ containing $0$. This yields our desired result.
+\end{solution}
+\begin{problem}[Problem III.2]
+  Show that, in a topological vector space, if two subsets $A$ and $B$ are bounded, then $A\cup B$ is bounded.
+\end{problem}
+\begin{solution}
+  Let $U\in \mathcal{O}_V(0)$ be a neighborhood of $0$. Then, there is a balanced subset $W\in \mathcal{O}_V(0)$ with $W + W\subseteq U$, where $W + W$ denotes the Minkowski sum of $W$ with itself. Such a neighborhood can be found by obtaining a balanced subset $W'$ of $U$, then taking $W = \frac{1}{2}W'$.
+
+  There is $\ve_1$ such that $\ve_1 A \subseteq W$ and $\ve_2 B \subseteq W$, so taking $\ve = \min\left( \ve_1,\ve_2 \right)$ yields that $\ve A\subseteq W$ and $\ve B\subseteq W$.
+
+  We have that $\ve \left( A\cup B \right) = \ve A \cup \ve B \subseteq W + W\subseteq U$. Thus, $A\cup B$ is bounded.
+\end{solution}
+\begin{problem}[Problem III.3]
+  We define sets of nonnegative sequences with specified behavior at infinity as follows
+  \begin{align*}
+    s_{+}\left( \N,\K \right) &= s\left( \N,\K \right)\cap [0,\infty)^{\N}\\
+    s_{0,+}\left( \N,\K \right) &= s_{0}\left( \N,\K \right)\cap [0,\infty)^{\N}.
+  \end{align*}
+  Show that $A\subseteq s\left( \N,\K \right)$ is bounded if and only if there exists $\omega\in s_{+}\left( \N,\K \right)$ such that for all $x = \left( x_n \right)_n\in A$ and for all $n\geq 0$, we have $\left\vert x_n \right\vert\leq \omega_n$. Show that a similar result holds for the finitely supported sequences.
+\end{problem}
 \end{document}

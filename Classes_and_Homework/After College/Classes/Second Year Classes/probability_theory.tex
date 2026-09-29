@@ -37,13 +37,18 @@ We will assume a lot of measure theory background, so we will instead discuss th
     $\ds \limsup_{n\rightarrow\infty} E_n$ & $\set{E_n\text{ infinitely often}}$, $\set{E_n\text{ i.o.}}$\\
     $\ds \liminf_{n\rightarrow\infty} E_n$ & $\set{E_n\text{ eventually}}$, $ \set{E_n\text{ ev}} $\\
     Borel Measurable Function $f\colon X\rightarrow \R$ & Random Variable $X\colon \Omega\rightarrow \R$\\
+    Integral $ \int_{}^{} f\:d\mu $ & Expectation $E[X]$\\
     Pushforward measure $f_{\ast}\mu$ & Law $\Lambda_X$\\
     $\mu\left( S \right)$ & $P\left( \omega\in S \right)$\\
     $f_{\ast}\mu\left( S' \right)$ & $P\left( X\in S' \right)$\\
     \hline
   \end{tabular}
 \end{center}
+\begin{remark}
+  In probability, rather than the non-calligraphic $L^p$ spaces (whose elements are equivalence classes of almost-everywhere equal functions), one uses the calligraphic $\mathcal{L}^p$, whose elements are the functions themselves. This does not fundamentally change anything in particular (as probabilists are only concerned with almost-everywhere equivalence regardless), but it is useful to note.
+\end{remark}
 \subsection{Important Theorems}%
+\subsubsection{$\sigma$-Algebras and Measures}%
 \begin{definition}
   Let $S$ be a set, and let $\mathcal{D}$ be a collection of subsets. We call $ \mathcal{D} $ a $\pi$-system on $S$ if it is closed under finite intersection.
 
@@ -80,6 +85,115 @@ We will assume a lot of measure theory background, so we will instead discuss th
   \begin{itemize}
     \item $S\in \mathcal{D}_1$;
     \item for any $B_1,B_2\in \mathcal{D}_1$ with $B_1\subseteq B_2 $, we have that for any given $C\in \mathcal{I}$, $\left( B_2\setminus B_1 \right)\cap C = \left( B_2\cap C \right)\setminus \left( B_1\cap C \right)$, so since $\lambda\left( \mathcal{I} \right)$ is a $\lambda$-system, it follows that $B_2\setminus B_1\in \mathcal{D}_1$;
+    \item if $\left( B_n \right)_n\subseteq \mathcal{D}_1$ increases to $B$, then for each $C\in \mathcal{I}$, one has $\left( B_n\cap C \right)_n\nearrow B\cap C$, so that $B\cap C\in \lambda\left( \mathcal{I} \right)$, meaning $B\in \mathcal{D}_1$.
   \end{itemize}
+  Thus, $\mathcal{D}_1$ is a $\lambda$-system containing $I$, so since $\mathcal{D}_1\subseteq \lambda\left( \mathcal{I} \right)$ by definition, one has $\mathcal{D}_1 = \lambda\left( \mathcal{I} \right)$.
+
+  Next, define
+  \begin{align*}
+    \mathcal{D}_2 &= \set{A\in \lambda\left( \mathcal{I} \right) : B\cap A\in \lambda\left( \mathcal{I} \right)\text{ for all }B\in \lambda\left( \mathcal{I} \right)}.
+  \end{align*}
+  From above, we have that $\mathcal{D}_2$ contains $I$. Similarly to above, we can prove that $\mathcal{D}_2$ inherits the $\lambda$-system structure from $\lambda\left( \mathcal{I} \right)$, so that $\mathcal{D}_2 = \lambda\left( \mathcal{I} \right)$. Yet, this means that $\mathcal{D}_2 = \lambda\left( \mathcal{I} \right)$, so $\lambda\left( \mathcal{I} \right)$ is a $\pi$-system.
 \end{proof}
+\begin{corollary}
+  If two probability measures $\mu_1$ and $\mu_2$ agree on a $\pi$-system $\mathcal{I}$, then they agree on the $\sigma$-algebra $\sigma\left( \mathcal{I} \right)$.
+\end{corollary}
+\begin{theorem}[Carathéodory Extension Theorem]
+  Let $S$ be a set, $\Sigma_0$ an algebra of subsets on $S$, and $\Sigma = \sigma\left( \Sigma_0 \right)$. If $\mu_0\colon \Sigma_0\rightarrow [0,\infty]$ is a countably additive map, then there exists a measure $\mu$ on $\left( S,\Sigma \right)$ such that $\mu = \mu_0$ on $\Sigma_0$.
+
+  Furthermore, if $\mu_0\left( S \right) < \infty$, then the extension is unique.
+\end{theorem}
+\subsection{Convergence Theorems}%
+We recall some of the useful convergence theorems from measure theory, specializing to the case with measure $1$ and rewriting in the language of probability.
+\begin{theorem}[Monotone Convergence Theorem]
+  If $\left( X_n \right)_n$ is a sequence of real-valued random variables increasing pointwise almost surely to a real-valued random variable $X$, then
+  \begin{align*}
+    E[X] &= \lim_{n\rightarrow\infty} E\left[ X_n \right].
+  \end{align*}
+\end{theorem}
+\begin{theorem}[Fatou's Lemma]
+  If $\left( X_n \right)_n$ is a sequence of positive-valued random variables, then
+  \begin{align*}
+    E\left[ \liminf_{n\rightarrow\infty}X_n \right] &\leq \liminf_{n\rightarrow\infty} E\left[ X_n \right]\\
+    \limsup_{n\rightarrow\infty} E\left[ X_n \right] &\leq E\left[ \limsup_{n\rightarrow\infty}E\left[ X_n \right] \right].
+  \end{align*}
+\end{theorem}
+\begin{theorem}[Dominated Convergence Theorem]
+  Let $\left( X_n \right)_n$ be a sequence of complex-valued random variables converging pointwise almost surely to a complex-valued random variable $X$. If there exists some positive-valued integrable random variable $Y$ such that $\left\vert X_n \right\vert\leq Y$ for all $n$, then $\left( X_n \right)_n\xrightarrow{\mathcal{L}^1}X$. That is,
+  \begin{align*}
+    E\left[ \left\vert X_n-X \right\vert \right] &\rightarrow 0,
+  \end{align*}
+  so that $E\left[ X_n \right]\rightarrow E\left[ X \right]$.
+\end{theorem}
+\begin{theorem}[Scheffé Convergence Theorem]
+  If $\left( X_n \right)_n$ is a sequence of (real valued) integrable random variables converging to an integrable random variable $X$ almost surely, and $E\left( \left\vert X_n \right\vert \right)\rightarrow E\left( \left\vert X \right\vert \right)$, then $\left( X_n \right)_n\xrightarrow{\mathcal{L}^1}X$.
+\end{theorem}
+\begin{remark}
+  The Scheffé convergence theorem is proven by splitting into positive and negative components.
+\end{remark}
+\subsection{Independence}%
+\begin{definition}
+  We say sub-$\sigma$-algebras $\mathcal{G}_1,\mathcal{G}_2,\dots$ of $\mathcal{F}$ are \textit{independent} if for any $G_i\in \mathcal{G}_i$ with distinct $i$, one has
+  \begin{align*}
+    P\left( G_{i_1}\cap\cdots\cap G_{i_n} \right) &= \prod_{k=1}^{n} P\left( G_{i_k} \right).
+  \end{align*}
+  We say random variables $X_1,X_2,\dots$ are independent if their produced $\sigma$-algebras $\sigma\left( X_1 \right),\sigma\left( X_2 \right),\dots$ are independent.
+
+  Events $E_1,E_2,\dots$ are independent if their $\sigma$-algebras $\mathcal{E}_n$, where
+  \begin{align*}
+    \mathcal{E}_n &= \set{\emptyset,E_n,E_n^{c},\Omega},
+  \end{align*}
+  are independent. 
+\end{definition}
+\begin{theorem}
+  If $X$ and $Y$ are independent random variables, then
+  \begin{align*}
+    E\left[ XY \right] &= E\left[ X \right]E\left[ Y \right].
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Bootstrap from simple functions.
+\end{proof}
+\subsection{Asymptotic Results}%
+\begin{theorem}[First Borel--Cantelli Lemma]
+  Let $\left( E_n \right)_n$ be a family of events such that $\sum_{n}P\left( E_n \right) < \infty$. Then,
+  \begin{align*}
+    P\left( \limsup_{n\to\infty} E_n \right) &= P\left( E_n\text{ i.o.} \right)\\
+                                             &= 0.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Let
+  \begin{align*}
+    G_m &= \bigcup_{n=m}^{\infty} E_n.
+  \end{align*}
+  Then, $G_m\searrow \limsup E_n$, and one has
+  \begin{align*}
+    P\left( \limsup E_n \right) &\leq P\left( G_m \right)\\
+                                &\leq \sum_{n=m}^{\infty}P\left( E_n \right).
+  \end{align*}
+  Taking $m\rightarrow\infty$ yields our desired result.
+\end{proof}
+\begin{theorem}[Second Borel--Cantelli Lemma]
+  Suppose $\left( E_n \right)_n$ is a sequence of independent events. Then, if $\sum_{n}P\left( E_n \right) = \infty$, one has
+  \begin{align*}
+    P\left( \limsup E_n \right) &= 1.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Recall that $\left( \limsup E_n \right)^{c} = \liminf E_n^{c}$. If $p_n = P\left( E_n \right)$, then one has
+  \begin{align*}
+    P\left( \bigcap_{n\geq m}E_n^{c} \right) &= \prod_{n\geq m} \left( 1-p_n \right).
+  \end{align*}
+  Notice that if $x \geq 0$, then $1-x \leq e^{-x}$. Therefore, we have
+  \begin{align*}
+    \prod_{n\geq m} \left( 1-p_n \right) &\leq \exp\left( -\sum_{n\geq m}p_n \right)\\
+                                         &= 0,
+  \end{align*}
+  where the latter equality emerges from the fact that $\sum_{n}p_n = \infty$.
+
+  Therefore $P\left( \liminf E_n^{c} \right) = 0$, meaning $P\left( \limsup E_n \right) = 1$.
+\end{proof}
+\subsection{Inequalities}%
+
 \end{document}
