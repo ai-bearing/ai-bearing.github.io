@@ -313,10 +313,10 @@ The next result we will be concerned with is the Pointwise Ergodic Theorem. To p
 \begin{align*}
   f^{\ast}\left( x \right) &= \sup_{n} \frac{1}{n}\sum_{j=0}^{n-1} f\circ T^{j}(x).
 \end{align*}
-\begin{theorem}
+\begin{theorem}[Maximal Ergodic Theorem]
   If $f\in L^1\left( X,\mu \right)$, then
   \begin{align*}
-    \int_{\set{f^{\ast} > 0}}^{} f\:d\mu &\geq 0.
+    \int_{\set{x:f^{\ast}(x) > 0}}^{} f\:d\mu &\geq 0.
   \end{align*}
 \end{theorem}
 \begin{proof}
@@ -358,7 +358,195 @@ The next result we will be concerned with is the Pointwise Ergodic Theorem. To p
     B_1' &= B_1\setminus \left( C_2\cup\cdots\cup C_n \right)\\
     C_1 &= B_1'.
   \end{align*}
-  The picture one must have in mind is viewing each $C_k$ as a ``column'' in a table with disjoint ``levels'' given by $T^{j}\left( B_k' \right)$ for each $0\leq j \leq k-1$. Each ``base'' $B_k'$ is disjoint 
-\end{proof}
+  The picture one must have in mind is viewing each $C_k$ as a ``column'' in a table with disjoint ``levels'' given by $T^{j}\left( B_k' \right)$ for each $0\leq j \leq k-1$. The ``bases'' $B_k'$ are pairwise disjoint, as well as the ``levels'' $T^{j}\left( B_k' \right)$ for each $0\leq j \leq k-1$. The union of the columns $C_k$ is equal to $B_1\cup\cdots\cup B_n$. Furthermore, we note that the bases $B_k'$ are disjoint from the columns $C_{j}$ for each $1\leq j \leq k-1$. Therefore, if two columns were to intersect, we would apply $T^{-1}$ until one column intersects the base of the other, which is not the case.
 
+  Therefore, we have
+  \begin{align*}
+    \int_{B_1\cup\cdots\cup B_n}^{} f\:d\mu &= \sum_{k=1}^{n} \int_{C_k}^{} f\:d\mu\\
+                                            &= \sum_{k=1}^{n}\int_{B_k'\cup\cdots\cup T^{k-1}\left( B_k' \right)}^{} f\:d\mu\\
+                                            &= \sum_{k=1}^{n} \int_{B_k'}^{} \left( f + f\circ T + \cdots + f\circ T^{k-1} \right)\:d\mu\\
+                                            &\geq 0,
+  \end{align*}
+  where we use the fact that $f + f\circ T + \cdots + f\circ T^{k-1} > 0$ on $B_k\supseteq B_k'$.
+\end{proof}
+\begin{corollary}
+  For each $\alpha \in \R$, one has
+  \begin{align*}
+    \int_{\set{x : f^{\ast}(x) > \alpha}}^{} f\:d\mu &\geq \alpha \mu\left( \set{x : f^{\ast}\left( x \right) > \alpha} \right).
+  \end{align*}
+\end{corollary}
+\begin{proof}
+  Let $g = f - \alpha$. Then, $\set{x : f^{\ast}\left( x \right) > \alpha} = \set{x : g^{\ast}\left( x \right) > 0}$, so that
+  \begin{align*}
+    0 &\leq \int_{\set{x : g^{\ast}\left( x \right) > 0}}^{} g\:d\mu\\
+      &= \int_{\set{x : f^{\ast}\left( x \right) > \alpha}}^{} f-\alpha\:d\mu.
+  \end{align*}
+\end{proof}
+We may now prove the pointwise ergodic theorem.
+\begin{theorem}[Pointwise Ergodic Theorem]
+  Let $\left( X, \mathcal{B},\mu \right)$ be a probability space, and let $T\colon X\rightarrow X$ a measure-preserving transformation. Let $f\in L^1\left( \mu \right)$. Then, the following hold:
+  \begin{enumerate}[(i)]
+    \item the function $ \overline{f} = \lim_{n\rightarrow\infty} \frac{1}{n}\sum_{k=0}^{n-1}f\circ T^{k}\left( x \right)$ is defined almost everywhere;
+    \item $ \overline{f}\circ T = \overline{f} $ almost everywhere;
+    \item $ \overline{f}\in L^1\left( \mu \right) $ with $ \norm{ \overline{f} }_{L^1} \leq \norm{f}_{L^1}$;
+    \item if $A\in \mathcal{B}$ is a $T$-invariant subset, then $ \int_{A}^{} \overline{f}\:d\mu = \int_{A}^{} f\:d\mu $;
+    \item one has $\left( \frac{1}{n}\sum_{k=0}^{n-1}f\circ T^{k} \right) \rightarrow \overline{f}$ in $L^1$.
+  \end{enumerate}
+\end{theorem}
+\begin{remark}
+  Part (iv) effectively says that $ \overline{f} = E\left[ f | \mathcal{I} \right] $ almost everywhere, where $E\left[ f : \mathcal{I} \right]$ denotes the conditional expectation onto the $\sigma$-algebra of $T$-invariant subsets.
+
+  If $X$ has infinite measure, then (i)--(iii) hold, and (iv) and (v) only hold for finite measure invariant subsets.
+\end{remark}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item For each $\alpha,\beta$ with $\alpha < \beta$, let
+      \begin{align*}
+        E_{\alpha,\beta} &= \set{x\in X : \liminf_{n\rightarrow\infty}\frac{1}{n} \sum_{k=0}^{n-1}f\circ T^{k}(x) < \alpha < \beta < \limsup_{n\rightarrow\infty} \frac{1}{n}\sum_{k=0}^{n-1}f\circ T^{k}(x)}.
+      \end{align*}
+      We will show that $\mu\left( E_{\alpha,\beta} \right) = 0$ for each $\alpha,\beta$. It would follow that the union over all rational $\alpha,\beta$ would have measure $0$, so the limit would exist almost everywhere.
+
+      Notice that $E_{\alpha,\beta}$ is an invariant subset of $\set{x : f^{\ast}(x) > \beta}$. Restricting $T$ to $E_{\alpha,\beta}$, the maximal ergodic theorem implies that
+      \begin{align*}
+        \int_{E_{\alpha,\beta}}^{} f\:d\mu &\geq \beta \mu\left( E_{\alpha,\beta} \right).
+      \end{align*}
+      We notice that if $x\in E_{\alpha,\beta}$, then there is $n\geq 1$ such that
+      \begin{align*}
+        \frac{1}{n}\sum_{k=0}^{n-1}f\circ T^{k}(x) &< \alpha,
+      \end{align*}
+      so that $E_{\alpha,\beta}\subseteq \set{x : \left( -f \right)(x) > -\alpha}$. The maximal ergodic theorem then gives
+      \begin{align*}
+        \int_{E_{\alpha,\beta}}^{} -f\:d\mu &\geq -\alpha\mu\left( E_{\alpha,\beta} \right),
+      \end{align*}
+      or
+      \begin{align*}
+        \int_{E_{\alpha,\beta}}^{} f\:d\mu &\leq \alpha\mu\left( E_{\alpha,\beta} \right).
+      \end{align*}
+      Therefore, we obtain that $\beta\mu \left( E_{\alpha,\beta} \right)\leq \alpha\mu\left( E_{\alpha,\beta} \right)$, which can only hold when $\mu\left( E_{\alpha,\beta} \right) = 0$.
+    \item This is immediate from the definition of $ \overline{f} $.
+    \item By Fatou's Lemma, we have
+      \begin{align*}
+        \left\vert \frac{1}{n}\sum_{k=0}^{n-1}f\circ T^{k} \right\vert &\leq \frac{1}{n}\sum_{k=0}^{n-1} \left\vert f \right\vert\circ T^{k},
+      \end{align*}
+      so that $\left\vert \overline{f} \right\vert \leq \overline{\left\vert f \right\vert}$, whence
+      \begin{align*}
+        \int_{}^{} \left\vert \overline{f} \right\vert\:d\mu &\leq \int_{}^{} \overline{\left\vert f \right\vert}\:d\mu\\
+                                                             &\leq \liminf_{n\rightarrow\infty} \int_{}^{} \frac{1}{n}\sum_{k=0}^{n-1}\left\vert f\circ T^{k}\right\vert\:d\mu\\
+                                                             &= \int_{}^{} \left\vert f \right\vert\:d\mu\\
+                                                             &< \infty,
+      \end{align*}
+      where we use the fact that $T$ is measure-preserving in the second-to-last line.
+    \item Suppose $A$ is a $T$-invariant set. For each $n\geq 0$ and each $k\in \Z$, we let
+      \begin{align*}
+        A_{n,k} &= \set{x\in A : \frac{k}{2^{n}} \leq \overline{f}(x) \leq \frac{k+1}{2^{n}}}.
+      \end{align*}
+      We have that $A_{n,k}$ are pairwise disjoint invariant sets in $k$ with $A = \bigcup_{k}A_{n,k}$. Fix $\ve > 0$. Then, $ f^{\ast} > \frac{k}{2^{n}} - \ve $ on $A_{n,k}$, meaning
+      \begin{align*}
+        \int_{A_{n,k}}^{} f\:d\mu &\geq \left( \frac{k}{2^{n}} - \ve \right)\mu\left( A_{n,k} \right).
+      \end{align*}
+      Similarly, $ \left( -f \right)^{\ast} > -\frac{k+1}{2^{n}} $ on $A_{n,k}$, so that
+      \begin{align*}
+        \int_{A_{n,k}}^{} -f\:d\mu &\geq -\frac{k+1}{2^{n}} \mu\left( A_{n,k} \right).
+      \end{align*}
+      Letting $\ve\rightarrow 0$ gives 
+      \begin{align*}
+        \frac{k}{2^{n}} \mu\left( A_{n,k} \right) \leq \int_{A_{n,k}}^{} f\:d\mu \leq \frac{k+1}{2^{n}}\mu\left( A_{n,k} \right).
+      \end{align*}
+      Since by definition, we have
+      \begin{align*}
+        \frac{k}{2^{n}}\mu\left( A_{n,k} \right) \leq \int_{A_{n,k}}^{} \overline{f}\:d\mu \leq \frac{k+1}{2^{n}} \mu\left( A_{n,k} \right),
+      \end{align*}
+      it follows that
+      \begin{align*}
+        \left\vert \int_{A_{n,k}}^{} f\:d\mu - \int_{A_{n,k}}^{} \overline{f}\:d\mu \right\vert &\leq \frac{1}{2^{n}} \mu\left( A_{n,k} \right).
+      \end{align*}
+      Summing over $k$ gives
+      \begin{align*}
+        \left\vert \int_{A}^{} f\:d\mu - \int_{A}^{} \overline{f}\:d\mu\right\vert &\leq \frac{1}{2^{n}} \mu\left( A \right).
+      \end{align*}
+      Choosing $n$ sufficiently large gives the desired result.
+    \item Considering bounded functions yields the desired result through dominated convergence. Else, we approximate by bounded functions, and assume without loss of generality that $f\geq 0$. If $0\leq g \leq f$ is a bounded function, then
+      \begin{align*}
+          \norm{\frac{1}{n}\sum_{k=0}^{n-1}f\circ T^{k} - \overline{f}}_{L^1} &\leq \norm{\frac{1}{n}\sum_{k=0}^{n-1}\left( f\circ T^{k} - g\circ T^{k} \right)}_{L^1} + \norm{\frac{1}{n}\sum_{k=0}^{n-1} g\circ T^{k} - \overline{g}}_{L^1} + \norm{ \overline{g} - \overline{f} }_{L^1}\\
+                              &\leq \norm{\frac{1}{n}\sum_{k=0}^{n-1}\left( \left( f-g \right)\circ T^{k} \right)}_{L^1} + \norm{\frac{1}{n}\sum_{k=0}^{n-1} g\circ T^{k} - \overline{g}}_{L^1} + \norm{ f - g }_{L^1}
+      \end{align*}
+      Choosing a satisfactory bounded function $g$ gives our desired result.
+  \end{enumerate}
+\end{proof}
+\subsection{Ergodicity}%
+\begin{definition}
+  We say a measure-preserving map $T\colon X\rightarrow X$ is \textit{ergodic} if, for any $A\subseteq X$, one has $\mu\left( T^{-1}\left( A \right)\triangle A \right) = 0$ implies $\mu\left( A \right) = 0$ or $\mu\left( A^{c} \right) = 0$.
+\end{definition}
+If $\mu$ is a probability measure, then the pointwise ergodic theorem and the ergodicity of the transformation $T$ gives that
+\begin{align*}
+  \frac{1}{n}\sum_{k=0}^{n-1} f\circ T^{k}\left( x \right) &\xrightarrow{n\to\infty} \int_{X}^{} f\:d\mu.
+\end{align*}
+\begin{proposition}
+  Let $\left( X,\mu \right)$ be a probability measure space, and let $T\colon X\rightarrow X$ be a measure-preserving transformation. Then, the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $T$ is ergodic;
+    \item for all measurable $f\colon X\rightarrow \C$, if $f\circ T = f$ almost everywhere, then there is $\lambda\in \C$ such that $f = \lambda$ almost everywhere (i.e., if $f$ is $T$-invariant, then $f$ is almost everywhere constant);
+    \item there exists $1\leq p \leq \infty$ such that if $f\in L^p\left( \mu \right)$ is $T$-invariant, then $f$ is almost everywhere constant;
+    \item there is a total subset $D\subseteq L^2\left( \mu \right)$ such that
+      \begin{align*}
+        \lim_{n\rightarrow\infty} \norm{\frac{1}{n}\sum_{k=0}^{n-1}f\circ T^{k} - \int_{X}^{} f\:d\mu}_{L^2} &= 0.
+      \end{align*}
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  The direction (ii) implies (i) follows immediately from the measurable functions $\chi_A$.
+
+  To show (i) implies (ii), we see that $\re\left( f \right)$ and $\im\left( f \right)$ are $T$-invariant, so without loss of generality, $f$ is $\R$-valued. Similarly, $f_{+}$ and $f_{-}$ are $T$-invariant if $f$ is $T$-invariant.
+
+  Let
+  \begin{align*}
+    E_t &= \set{x\in X : f(x) > t}.
+  \end{align*}
+  Then,
+  \begin{align*}
+    \mu\left( T^{-1}\left( E_t \right)\triangle E_t \right) &= 0
+  \end{align*}
+  almost everywhere, so by (i), it follows that $\mu\left( E_t \right) = 0$ or $\mu\left( E_t^{c} \right) = 0$. If
+  \begin{align*}
+    s &= \sup\set{t\in \R : \mu\left( E_t^{c} \right) = 0},
+  \end{align*}
+  then
+  \begin{align*}
+    \mu\left( \set{x : f(x) \geq s}^{c} \right) &= 0.
+  \end{align*}
+  Furthermore, for all $t > s$, we have $\mu\left( \set{x : f(x) > t} \right) = 0$, so that
+  \begin{align*}
+    \mu\left( \set{x : f(x) < s}^{c} \right) &= 0.
+  \end{align*}
+  Thus $f = s$ almost everywhere.
+
+  Next, we have that (ii) implies (iii) immediately. Similarly, (iii) implies (i) since $\chi_E\in L^p\left( X,\mu \right)$ for all measurable $E\subseteq X$ as $\mu$ is a probability measure.
+
+  We show now that (ii) implies (iv). By the pointwise ergodic theorem, we have that
+  \begin{align*}
+    \overline{f}(x) &= \lim_{n\rightarrow\infty} \frac{1}{n}\sum_{k=0}^{n-1} f\circ T^{k}(x)
+  \end{align*}
+  is defined almost everywhere, and by the mean ergodic theorem, the latter sum converges in $L^2$. Passing to a subsequence, we have that 
+  \begin{align*}
+    \lim_{n\rightarrow\infty} \frac{1}{n}\sum_{k=0}^{n-1} f\circ T^{k} &\xrightarrow{L^2} \overline{f}.
+  \end{align*}
+  Since $ \overline{f} = \lambda $ by the assumption in (ii), it follows from the pointwise ergodic theorem that
+  \begin{align*}
+    \lambda &= \int_{}^{} \overline{f}\:d\mu\\
+            &= \int_{}^{} f\:d\mu.
+  \end{align*}
+  In particular, this gives
+  \begin{align*}
+    \lim_{n\rightarrow\infty} \norm{\frac{1}{n}\sum_{k=0}^{n-1}f\circ T^{k} - \int_{}^{} f\:d\mu}_{L^2} &= 0.
+  \end{align*}
+  Next, we have that (iv) implies (iii) by taking $p = 2$. Then, we have
+  \begin{align*}
+    \overline{f} &= \lim_{n\rightarrow\infty} \frac{1}{n}\sum_{j=0}^{n-1}f\circ T^{j}
+  \end{align*}
+  has $ \int_{}^{} \overline{f}\:d\mu = \int_{}^{} f\:d\mu $ by the pointwise ergodic theorem, and one has
+  \begin{align*}
+    \norm{ \overline{f} - \int_{}^{} f\:d\mu }_{L^2}^2 &= \norm{ \overline{f} }_{L^2}^2 - \left\vert \int_{}^{} f\:d\mu \right\vert^2\\
+                                                       &= \lim_{n\rightarrow\infty} \frac{1}{n}\norm{\sum_{j=0}^{n-1} f\circ T^{j}}_{L^2}^2 - \left\vert \int_{}^{} f\:d\mu \right\vert^2.
+  \end{align*}
+\end{proof}
 \end{document}

@@ -928,4 +928,232 @@ We will now prove the Fourier Inversion Theorem.
                                                     &= \left( 2\pi \right)^{d}f(x).
   \end{align*}
 \end{proof}
+% Lecture on September 29, 2026
+\begin{theorem}[Plancherel's Theorem]
+  For any $f,g\in \mathcal{S}\left( \R^d,\C \right)$, one has
+  \begin{align*}
+    \int_{\R^d}^{} \overline{\hat{f}\left( \xi \right)} \hat{g}\left( \xi \right)\:d^{d}\xi &= \left( 2\pi \right)^{d} \int_{}^{} \overline{f(x)}g(x)\:d^{d}x.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  The left-hand side can be written as follows
+  \begin{align*}
+    \int_{\R^d}^{} \overline{\left( \int_{\R^d}^{} e^{-i \iprod{x}{\xi}} f(x)\:d^{d}x \right)} \hat{g}\left( \xi \right)\:d^{d}\xi &= \int_{\R^d}^{} \int_{\R^d}^{} e^{i \iprod{x}{\xi}} \overline{f(x)}\hat{g}(\xi)\:d^{d}\xi\:d^{d}x \label{eq:plancherel_1}\tag{$\ast$}
+  \end{align*}
+  This follows from the estimate with Tonelli's Theorem
+  \begin{align*}
+    \int_{\R^d}^{} \int_{\R^d}^{} \left\vert e^{i \iprod{x}{\xi}} \overline{f(x)} \hat{g}(\xi) \right\vert\:d^{d}x\:d^{d}\xi &= \left( \int_{\R^d}^{} \left\vert f(x) \right\vert\:d^{d}x \right) \left( \int_{\R^d}^{} \left\vert \hat{g}\left( \xi \right) \right\vert\:d^{d}\xi \right)
+  \end{align*}
+  and using the fact that functions on the Schwartz space are integrable. Yet again using Fubini's theorem on \eqref{eq:plancherel_1}, we have
+  \begin{align*}
+    \int_{\R^d}^{} \int_{\R^d}^{} e^{i \iprod{x}{\xi}} \overline{f(x)}\hat{g}(\xi)\:d^{d}\xi\:d^{d}x &= \int_{\R^d}^{} \overline{f(x)} \left( \int_{\R^d}^{} e^{i \iprod{x}{\xi}}\hat{g}(\xi)\:d^{d}\xi \right)\:d^{d}x\\
+             &= \int_{\R^d}^{} \overline{f(x)} \mathcal{G}\left( \mathcal{F}\left[ g \right] \right)(x)\:d^{d}x\\
+             &= \left( 2\pi \right)^{d} \int_{\R^d}^{} \overline{f(x)} g(x)\:d^{d}x.
+  \end{align*}
+\end{proof}
+We note that one can show that $\mathcal{U} = \left( 2\pi \right)^{-d/2} \mathcal{F}$ is an isometry on the Schwartz space $\mathcal{S}\left( \R^d,\C \right)$. Since $\mathcal{S}\left( \R^d,\C \right)$ is dense in $L^2\left( \R^d \right)$, continuity gives that there is a unique extension $ \widetilde{ \mathcal{U} }\colon L^2\left( \R^d \right)\rightarrow L^2\left( \R^d \right) $. The map $ \widetilde{ \mathcal{U} } $ is the definition of the Fourier transform on $L^2\left( \R^d \right)$.
+\subsection{Convolution and Properties of the Fourier Transform on $\mathcal{S}\left( \R^d,\C \right)$}%
+\begin{definition}
+  We define the space $ \mathcal{O}_M\left( \R^d,\K \right) $ to consist of all functions $f\colon \R^d\to \K$ such that $f$ is $C^{\infty}$ and for every $\alpha\in \N^{d}$, there exists $k\in \N$ and a constant $C \geq 0$ such that for all $x\in \R^d$, one has
+  \begin{align*}
+    \left\vert \partial^{\alpha}f(x) \right\vert &\leq C \left\langle x \right\rangle^{k}.
+  \end{align*}
+  These are known as the smooth functions of tempered growth.
+\end{definition}
+\begin{proposition}
+  Let $g\in \mathcal{O}_M$. Then, for all $f\in \mathcal{S}\left( \R^d \right)$, $fg\in \mathcal{S}\left( \R^d \right)$, and one has that the map $f\mapsto fg$ is continuous.
+\end{proposition}
+\begin{proof}
+  We will assume that $\left\vert \partial^{\alpha}g(x) \right\vert\leq C \left\langle x \right\rangle^{k_{\alpha}}$.
+
+  Now, we have
+  \begin{align*}
+    \partial^{\alpha}\left( fg \right) &= \sum_{\substack{\beta\in \N^d\\\beta\leq \alpha}} \frac{\alpha!}{\beta!\left( \alpha-\beta \right)!}\partial^{\alpha-\beta}f \partial^{\beta}f.
+  \end{align*}
+  So,
+  \begin{align*}
+\left\langle x \right\rangle^{k} \left\vert \partial^{\alpha}\left( fg \right)(x) \right\vert &\leq \left\langle k \right\rangle \sum_{\substack{\beta\in \N^d\\\beta\leq\alpha}} \frac{\alpha!}{\beta!\left( \alpha-\beta! \right)} \left\vert \partial^{\alpha-\beta}f(x) \right\vert C_{\beta} \left\langle x \right\rangle^{k_{\beta}}\\
+                              &\leq \sum_{\substack{\beta\in \N^d\\\beta\leq\alpha}} \frac{\alpha!}{\beta!\left( \alpha-\beta \right)!} C_{\beta}\norm{f}_{\alpha-\beta,k + k_{\beta}}\\
+                              &< \infty.
+  \end{align*}
+  So, one has that $\norm{fg}_{\alpha,k} < \infty$ for all $\alpha\in \N^d$ and all $k\in \N$. The seminorm criterion also gives continuity of the map $f\mapsto fg$.
+\end{proof}
+\begin{remark}
+  There is a converse to this theorem. Namely, if $g\colon \R^d\rightarrow \K$ is a function such that $fg\in \mathcal{S}\left( \R^d \right)$ for all $f\in \mathcal{S}\left( \R^d \right)$.
+
+  Bumpfunctionology (for lack of a better term) gives smoothness of such a $g$, but showing the polynomial bound requires a bit more work.
+\end{remark}
+\begin{example}
+  Monomials $x\mapsto x^{\alpha}$ satisfy
+  \begin{align*}
+    \partial^{\beta} x^{\alpha} &= \chi_{\set{\beta\leq\alpha}} \frac{\alpha!}{\left( \alpha-\beta \right)!}x^{\alpha-\beta},
+  \end{align*}
+  so since $\left\vert x_j \right\vert\leq \left\vert x \right\vert\leq \left\langle x \right\rangle$, one has
+  \begin{align*}
+    \left\vert \partial^{\beta}x^{\alpha} \right\vert &\leq C_{\beta} \left\langle x \right\rangle^{k_{\beta}},
+  \end{align*}
+  where $k_{\beta} = \max\left( 0,\left\vert \alpha-\beta \right\vert \right)$, and $C_{\beta} = \chi_{\set{\beta\leq\alpha}} \frac{\alpha!}{\left( \alpha-\beta \right)!}$.
+
+  We use
+  \begin{align*}
+    m_{\alpha}\colon \mathcal{S}\left( \R^d,\K \right) &\rightarrow \mathcal{S}\left( \R^d,\K \right)\\
+    f &\mapsto x^{\alpha}f.
+  \end{align*}
+\end{example}
+\begin{proposition}
+  The operator $\partial^{\alpha}\colon \mathcal{S}\left( \R^d,\K \right)\rightarrow \mathcal{S}\left( \R^d,\K \right)$ taking $f\mapsto \partial^{\alpha}f$ is linear and continuous.
+\end{proposition}
+\begin{proof}
+  To be written.
+\end{proof}
+\begin{theorem}[Intertwining Property of Fourier Transform]
+  As continuous linear operators on $\mathcal{S}\left( \R^d,\C \right)$, one has
+  \begin{align*}
+    \partial^{\alpha} \mathcal{F} &= \left( -i \right)^{\left\vert \alpha \right\vert}\mathcal{F}\circ m_{\alpha}\\
+    m_{\alpha}\circ \mathcal{F} &= \left( -i \right)^{\left\vert \alpha \right\vert}\mathcal{F} \circ \partial^{\alpha}
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Using dominated convergence, we may bring the derivative inside the integral, so that
+  \begin{align*}
+    \partial^{\alpha}_{\xi} \hat{f}\left( \xi \right) &= \partial^{\alpha}_{\xi} \int_{\R^d}^{} e^{-i \iprod{x}{\xi}} f(x)\:d^{d}x\\
+                                                      &= \int_{\R^d}^{} \partial^{\alpha}_{\xi}\left( e^{-i \iprod{x}{\xi}} \right) f(x)\:d^{d}x\\
+                                                      &=  \int_{\R^d}^{} \left( -ix \right)^{\left\vert \alpha \right\vert} e^{-i \iprod{x}{\xi}}f(x)\:d^{d}x\\
+                                                      &= \left( -i \right)^{\left\vert \alpha \right\vert} \int_{\R^d}^{} e^{-i \iprod{x}{\xi}}x^{\alpha}f(x)\:d^{d}x\\
+                                                      &= \left( -i \right)^{\left\vert \alpha \right\vert} \left( \mathcal{F}\circ m_{\alpha}[f] \right)(x).
+  \end{align*}
+  For the other direction, integration by parts yields
+  \begin{align*}
+    \xi^{\alpha}\hat{f}(\xi) &= \int_{\R^d}^{} \xi^{\alpha}e^{-i \iprod{x}{\xi}}f(x)\:d^{d}x\\
+                             &= \int_{\R^d}^{} i^{\left\vert \alpha \right\vert}\partial^{\alpha}_x\left( e^{-i \iprod{x}{\xi}} \right)f(x)\:d^{d}x\\
+                             &= \left( -i \right)^{\left\vert \alpha \right\vert} \int_{\R^d}^{} e^{-i \iprod{x}{\xi}}\partial^{\alpha}_x\left( f(x) \right)\:d^{d}x\\
+                             &= \left( -i \right)^{\left\vert \alpha \right\vert} \left( \mathcal{F}\circ \partial^{\alpha}[f] \right)(x)
+  \end{align*}
+\end{proof}
+\begin{proposition}
+  Pointwise multiplication $\mathcal{S}\left( \R^d,\C \right)\times \mathcal{S}\left( \R^d,\C \right)\rightarrow \mathcal{S}\left( \R^d,\C \right)$ is bilinear and (jointly) continuous.
+\end{proposition}
+\begin{proof}
+  We have
+  \begin{align*}
+    \partial^{\alpha}\left( fg \right) &= \sum_{\substack{\beta\in \N^d\\\beta\leq\alpha}} \frac{\alpha!}{\beta!\left( \alpha-\beta \right)!} \partial^{\alpha-\beta}f \partial^{\beta}g
+      \intertext{so}
+    \left\langle x \right\rangle^{k} \left\vert \partial^{\alpha}\left( fg \right)\left( x \right) \right\vert &\leq \sum_{\substack{\beta\in \N^d\\\beta\leq\alpha}} \frac{\alpha!}{\beta!\left( \alpha-\beta \right)!}\norm{f}_{\alpha-\beta,k}\norm{g}_{\beta,0}\\
+                   &\leq \tau_1\left( f \right)\tau_2(g)
+                     \intertext{where}
+    \tau_1(f) &= \left( \sum_{\substack{\beta\in \N^d\\\beta\leq\alpha}}\max_{\beta\leq\alpha}\frac{\alpha!}{\beta!\left( \alpha-\beta \right)!} \right) \max_{\beta\leq\alpha} \norm{f}_{\beta,k}\\
+    \tau_2(g) &= \max_{\beta\leq\alpha} \norm{g}_{\beta,0}.
+  \end{align*}
+  Therefore, by the seminorm criterion for continuity of multilinear maps, it follows that $\left( f,g \right)\mapsto fg$ is continuous.
+\end{proof}
+\begin{definition}
+  If $f,g\in \mathcal{S}\left( \R^d,\K \right)$, then 
+  \begin{align*}
+    \left( f\ast g \right)\left( x \right) &= \int_{\R^d}^{} f\left( y \right)g\left( x-y \right)\:d^{d}y
+  \end{align*}
+  is called the convolution of two functions.
+\end{definition}
+Note that
+\begin{align*}
+  \int_{\R^d}^{} \left\vert f(y)g\left( x-y \right) \right\vert\:d^{d}y &\leq \int_{\R^d}^{} \left\langle y \right\rangle^{-\left( d+1 \right)} \norm{f}_{0,d+1}\norm{g}_{0,0}\:d^{d}y,
+\end{align*}
+so this is well-defined.
+\begin{proposition}
+  The convolution $f\ast g$ is $C^{\infty}$, and for every $\alpha$, $\partial^{\alpha}\left( f\ast g \right) = f\ast \left( \partial^{\alpha}g \right)$.
+\end{proposition}
+\begin{proof}
+  Dominated convergence (more work here) gives
+  \begin{align*}
+    \partial^{\alpha}\left( f\ast g \right)\left( x \right) &= \partial^{\alpha}_{x} \int_{\R^d}^{} f\left( y \right)g\left( x-y \right)\:d^{d}y\\
+                                                            &= \int_{\R^d}^{} f(y)\partial^{\alpha}_x\left( g\left( x-y \right) \right)\:d^{d}y\\
+                                                            &= \int_{\R^d}^{} f(y)\left( \partial^{\alpha}_xg \right)(x-y)\:d^{d}y\\
+                                                            &= f\ast \left( \partial^{\alpha}g \right).
+  \end{align*}
+\end{proof}
+\begin{lemma}
+  For all $u,v\in \R^d$, one has
+\end{lemma}
+\begin{proof}
+  We have
+  \begin{align*}
+    \left\langle u + v \right\rangle^2 &= 1 + \left\vert u + v \right\vert^2\\
+                                       &\leq 1 + \left\vert u \right\vert^2 + \left\vert v \right\vert^2 + 2\left\vert u \right\vert\left\vert v \right\vert\\
+                                       &\leq 1 + 2\left\vert u \right\vert^2 + 2\left\vert v \right\vert^2\\
+                                       &\leq 2 + 2\left\vert u \right\vert^2 + 2\left\vert v \right\vert^2\\
+                                       &\leq 2 \left( 1 + \left\vert u \right\vert^2 \right) \left( 1 + \left\vert v \right\vert^2 \right).
+  \end{align*}
+\end{proof}
+\begin{theorem}
+  The convolution $\mathcal{S}\left( \R^d,\K \right)\times \mathcal{S}\left( \R^d,\K \right)\rightarrow \mathcal{S}\left( \R^d,\K \right)$ is well-defined, bilinear, and continuous.
+\end{theorem}
+\begin{proof}
+  We have that $\partial^{\alpha}\left( f\ast g \right)$ is $C^{\infty}$. Taking brackets, we get
+  \begin{align*}
+    \left\langle x \right\rangle^{k} \left\vert \partial^{\alpha}\left( f\ast g \right) \right\vert &= \left\langle x \right\rangle^k \left\vert \int_{\R^d}^{} f(y)\left( \partial^{\alpha}_xg \right)\left( x-y \right)\:d^{d}y \right\vert\\
+                   &\leq \left\langle x \right\rangle \int_{}^{} \left\langle y \right\rangle^{\ell}\norm{f}_{0,\ell}\left\langle x-y \right\rangle^{m}\norm{g}_{\alpha,m}\:d^{d}y,
+  \end{align*}
+  where $\ell$ and $m$ are to be determined. Using the fact that $\left\langle x \right\rangle\leq \sqrt{2}\left\langle y \right\rangle\left\langle x-y \right\rangle$, we get
+  \begin{align*}
+    \left\langle x \right\rangle \int_{}^{} \left\langle y \right\rangle^{\ell}\norm{f}_{0,\ell}\left\langle x-y \right\rangle^{m}\norm{g}_{\alpha,m}\:d^{d}y &\leq 2^{k/2}\norm{f}_{0,\ell}\norm{g}_{\alpha,m} \int_{\R^d}^{} \left\langle y \right\rangle^{k-\ell} \left\langle x-y \right\rangle^{k-m}\:d^{d}y.
+  \end{align*}
+  Therefore, if we take $m = k$ and $\ell = d + k +1$, we obtain that the right hand side is a constant, so that the convolution is in Schwartz space. Furthermore, we have shown that $\norm{f\ast g}_{\alpha,k} \leq K \norm{f}_{0,\ell}\norm{g}_{\alpha,m}$ for some constant $K \geq 0$, so that the map is bilinear and continuous.
+\end{proof}
+\begin{proposition}
+  Convolution on $\mathcal{S}\left( \R^d,\K \right)$ satisfies
+  \begin{enumerate}[(i)]
+    \item $f\ast g = g\ast f$;
+    \item $\partial \left( f\ast g \right) = f\ast \left( \partial^{\alpha}g \right)$;
+    \item $\partial^{\alpha}\left( f\ast g \right) = \left( \partial^{\alpha}f \right)\ast g$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item Taking a substitution of $z = x-y$ has Jacobian equal to $1$, so that
+      \begin{align*}
+        f\ast g\left( x \right) &= \int_{\R^d}^{} f\left( y \right)g\left( x-y \right)\:d^{d}y\\
+                                &= \int_{\R^d}^{} f\left( x-z \right)g\left( z \right)\:d^{d}z\\
+                                &= g\ast f.
+      \end{align*}
+    \item Shown earlier.
+    \item Commutativity.
+  \end{enumerate}
+\end{proof}
+\begin{theorem}
+  For all $f,g\in \mathcal{S}\left( \R^d,\C \right)$, one has
+  \begin{align*}
+    \mathcal{F}\left[ f\ast g \right] &= \mathcal{F}\left[ f \right]\mathcal{F}\left[ g \right].
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Using Fubini's Theorem, we have
+  \begin{align*}
+    \mathcal{F}\left[ f\ast g \right]\left( \xi \right) &= \int_{\R^d}^{} e^{ -i \iprod{x}{\xi} }\int_{\R^d}^{} f\left( y \right)g\left( x-y \right)\:d^{d}y\:d^{d}x.
+  \end{align*}
+  The proper estimate is found by using Tonelli's theorem so that
+  \begin{align*}
+    \int_{\R^d}^{} \int_{\R^d}^{} \left\vert f(y)g\left( x-y \right) \right\vert\:d^{d}y\:d^{d}x &= \int_{\R^d}^{} \left\vert f\left( y \right) \right\vert\int_{\R^d}^{} \left\vert g\left( x-y \right) \right\vert\:d^{d}x\:d^{d}y\\
+                   &= \left( \int_{\R^d}^{} \left\vert f(y) \right\vert\:d^{d}y \right) \left( \int_{\R^d}^{} g\left( z \right)\:d^{d}z \right)\\
+                   &< \infty.
+  \end{align*}
+  Therefore, Fubini's Theorem and the substitution $z = x-y$ gives
+  \begin{align*}
+    \mathcal{F}\left[ f\ast g \right]\left( \xi \right) &= \int_{\R^d}^{} \int_{\R^d}^{} e^{-i \iprod{\xi}{y}}e^{-i \iprod{\xi}{x-y}} f\left( y \right)g\left( x-y \right)\:d^{d}x\:d^{d}y\\
+                                                        &= \left( \int_{\R^d}^{} e^{-i \iprod{\xi}{y}}f\:d^{d}y \right) \left( \int_{\R^d}^{} e^{-i \iprod{\xi}{z}}g\left( z \right)\:d^{d}z \right)\\
+                                                        &= \mathcal{F}\left[ f \right]\mathcal{F}\left[ g \right].
+  \end{align*}
+\end{proof}
+\subsection{Operations and Fourier Transform for $\mathcal{S}\left( \R^d,\K \right)^{\ast}$}%
+First, we define the derivative of a distribution $\varphi\in \mathcal{S}\left( \R^d,\K \right)^{\ast}$, we want to define $\partial^{\alpha}\varphi$.
+
+First, we work like physicists. We will write
+\begin{align*}
+  \varphi\left( f \right) &= \iprod{f}{\varphi}\\
+                          &= \int_{\R^d}^{} \varphi(x)f(x)\:d^{d}x,
+\end{align*}
+where we consider $\varphi(x)$ as a generalized function associated to $\varphi$. We would then consider the ``derivative'' of the distribution $\varphi$ by using integration by parts, so that
+\begin{align*}
+  \int_{\R^d}^{} \partial^{\alpha}\varphi(x)f(x)\:d^{d}x &= \left( -1 \right)^{\left\vert \alpha \right\vert} \int_{\R^d}^{} \varphi(x)\partial^{\alpha}f(x)\:d^{d}x\\
+                                                         &= \left( -1 \right)^{\left\vert \alpha \right\vert}\left\langle \partial^{\alpha}f,\varphi \right\rangle\\
+                                                         &\eqcolon \left\langle f,\partial^{\alpha}(\varphi) \right\rangle.
+\end{align*}
 \end{document}
