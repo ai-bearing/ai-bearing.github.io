@@ -1262,19 +1262,57 @@ This allows us a well-defined notion of growth type for a finitely generated gro
 \end{definition}
 This trichotomy emerges from the fact that any group has its growth dominated by the growth of the free group on its generating set, which is exponential.
 \section{Amenability of Groups}%
-We are only concerned with discrete groups here. 
+We are only concerned with discrete groups.
+\subsection{Means on Groups}%
 \begin{definition}
   A group $G$ is called \textit{amenable} if there exists a map $m\colon \ell^{\infty}\left( G \right)\rightarrow \C$ (known as a mean) satisfying
   \begin{itemize}
     \item $m(1) = 1$ (that is, the map $1\colon G\rightarrow \C$ taking all elements to $1$);
     \item $m\left( f \right) \geq 0$ for all positive $f\in \ell^{\infty}\left( G \right)$;
-    \item for all $g\in G$ and all $f\in \ell^{\infty}\left( G \right)$, we have $m\left( \lambda_g(f) \right) = m(f)$, where
+    \item for all $g\in G$ and all $f\in \ell^{\infty}\left( G \right)$, we have $m\left( g.f \right) = m(f)$, where
       \begin{align*}
-        \lambda_g(f)(s) &= f\left( g^{-1}s \right)
+        g.(f)(s) &= f\left( g^{-1}s \right)
       \end{align*}
       is the left regular action of $G$ on itself.
   \end{itemize}
 \end{definition}
+The set of means in $\ell^{\infty}\left( G \right)^{\ast}$ is a compact convex subset of the ball $B_{\ell^{\infty}(G)^{\ast}}$. This follows from the fact that if $m_1$ and $m_2$ are means, then for any $0\leq t \leq 1$, $\left( tm_1 + \left( 1-t \right)m_2 \right)\left( 1 \right) = 1$, and $\left( tm_1 + \left( 1-t \right)m_2 \right)\left( f \right) \geq 0$ for all $f\geq 0$. Finally, a net of means admits a subnet in the ball $B_{\ell^{\infty}(G)^{\ast}}$ by Banach--Alaoglu, and this subnet is a mean, so that any net of means admits a subnet converging to a mean.
+\begin{definition}
+  Let $G$ be a group. We define the set $\operatorname{Prob}(G)$ to be the set of all left-invariant probability measure on the power set $P(G)$. That is, a measure $\mu\colon P(G)\rightarrow [0,1]$ satisfying $\mu\left( G \right) = 1$ and $\mu\left( gA \right) = \mu\left( A \right)$ for all $A\subseteq G$.
+\end{definition}
+\begin{proposition}
+  Given a mean $m\in \ell^{\infty}\left( G \right)^{\ast}$, define a probability measure $\hat{m}$ by taking
+  \begin{align*}
+    \hat{m}\left( A \right) &= m\left( \chi_A \right).
+  \end{align*}
+  Then, the map $\Phi$ taking $m\mapsto \hat{m}$ is a bijection between the set of means on $G$ and the set of invariant probability measures on $G$.
+\end{proposition}
+\begin{proof}
+  Recall that the set of all finitely supported functions $\C[G]\subseteq \ell^{\infty}(G)$ is norm-dense.
+
+  Given a measure $\mu\in \operatorname{Prob}\left( G \right)$, define a map $ \overline{\mu}\colon \C[G]\rightarrow \C $ by
+  \begin{align*}
+    \overline{\mu}\left( f \right) &= \sum_{\lambda\in \C} \mu\left( f^{-1}\left( \set{\lambda} \right) \right)\lambda.
+  \end{align*}
+  We may extend $ \overline{\mu} $ to a map $ \widetilde{\mu}\colon \ell^{\infty}\left( G \right)\rightarrow \C $, satisfying
+  \begin{align*}
+    \widetilde{\mu}\left( 1 \right) &= \overline{\mu}\left( 1 \right)\\
+                                    &= \mu\left( G \right)\\
+                                    &= 1.
+  \end{align*}
+  For any $y\in \C[G]$ with $y\geq 0$, one has $ \widetilde{\mu}\left( y \right) = \mu\left( y \right)\geq 0 $. Given any $f\in \ell^{\infty}\left( G \right)$ with $f\geq 0$, we may find a sequence of positive elements $\left( z_n \right)_n\rightarrow f$. Since $ \widetilde{\mu} $ is continuous, it follows that
+  \begin{align*}
+    \widetilde{\mu}\left( f \right) &= \lim_{n\rightarrow\infty} \overline{\mu}\left( z_n \right)\\
+                                    &\geq 0,
+  \end{align*}
+  so that $ \widetilde{\mu} $ is a mean.
+
+  Meanwhile, for any $A\subseteq G$, we have $ \widetilde{\mu}\left( \chi_A \right) = \overline{\mu}\left( \chi_A \right) = \mu(A) $, so that $\Phi$ is surjective.
+
+  To show that $\Phi$ is injective, we consider means $m_1$ and $m_2$ with $\Phi\left( m_1 \right) = \Phi\left( m_2 \right)$. Then, $m_1$ and $m_2$ coincide on $\C[G]$, so since $\C[G]$ is dense in $\ell^{\infty}\left( G \right)$, it follows that $m_1 = m_2$ by continuity. Thus, $\Phi$ is injective.
+\end{proof}
+Therefore, we may equivalently define an amenable group to be a group that admits a left-invariant probability measure on $P(G)$.
+\subsection{Examples and Inheritance Properties}%
 \begin{proposition}
   Finite groups are amenable.
 \end{proposition}
@@ -1285,9 +1323,73 @@ We are only concerned with discrete groups here.
   \end{align*}
   is a mean.
 \end{proof}
-To show that abelian groups are amenable, we recall the Markov--Kakutani Fixed-Point Theorem.
-% Coamenability
+\begin{proposition}
+  Subgroups of amenable groups are amenable.
+\end{proposition}
+\begin{proof}
+  Let $G$ be an amenable group, $H\leq G$, and let $\mu\colon P(G)\rightarrow [0,1]$ a left-invariant probability measure. Let $R$ be a complete set of representatives for the right cosets $G/H$. Then, for each $g\in G$, there is a unique $\left( h,r \right)\in H\times R$ such that $g = hr$. Defining
+  \begin{align*}
+    \widetilde{\mu}\left( A \right) &= \mu\left( \bigcup_{r\in R}Ar \right)
+  \end{align*}
+  is a left-invariant finitely additive probability measure.
+\end{proof}
+\begin{proposition}
+  Quotients of amenable groups are amenable.
+\end{proposition}
+\begin{proof}
+  Let $G$ be amenable, $N\trianglelefteq G$ a normal subgroup, and let $\rho\colon G\rightarrow G/N$ the canonical homomorphism. Define $\hat{\mu}\colon P\left(G/N\right)\rightarrow [0,1]$ by
+  \begin{align*}
+    \hat{\mu}\left( A \right) &\coloneq \mu\left( \rho^{-1}\left( A \right) \right).
+  \end{align*}
+\end{proof}
+\begin{proposition}
+  Let $G$ be a group, and let $H$ be a normal subgroup of $G$. Suppose $H$ and $G/H$ are amenable. Then, $G$ is amenable.
+\end{proposition}
+\begin{proof}
+  Find a left-invariant mean $m_0\in \ell^{\infty}\left( H \right)^{\ast}$. Let $ f\in \ell^{\infty}\left( G \right) $. Let
+  \begin{align*}
+    \widetilde{x}\left( \overline{g} \right) &= m_0\left( \left( g^{-1}.x \right)|_{H} \right),
+  \end{align*}
+  where $ \overline{g} = gH\in G/H $ is the equivalence class of $g$ modulo $H$. Then, $ \widetilde{x} $ is well-defined, since if $ \overline{g_1} = \overline{g_2} $, then there is $h$ such that $g_1 = g_2 h$, whence
+  \begin{align*}
+    m_0\left( \left( g_2^{-1}.x \right)|_{H} \right) &= m_0\left( h^{-1}.\left( \left( g_1^{-1}.x \right)|_{H} \right) \right)\\
+                                                     &= m_0\left( \left( g_1^{-1}.x \right)|_{H} \right),
+  \end{align*}
+  where the latter equivalence follows from left invariance of $m_0$. Furthermore, $\widetilde{x}\in \ell^{\infty}\left( G/H \right)$. Since $G/H$ is amenable, there is a mean $m_1\in \ell^{\infty}\left( G/H \right)^{\ast}$. Set $m(x) = m_1\left( \widetilde{x} \right)$ for any $x\in \ell^{\infty}\left( G \right)$.
 
+  We will show that $m$ is invariant. Let $g\in G$, and let $x\in\ell^{\infty}\left( G \right)$. Then, for all $g'\in G$, we have
+  \begin{align*}
+    \widetilde{g.x}\left( \overline{g'} \right) &= m_0\left( \left( g'^{-1}g.x \right)|_{H} \right)\\
+                                                &= m_0\left( \left( \left( g^{-1}g' \right)^{-1}.x \right)|_{H} \right)\\
+                                                &= \widetilde{x}\left( \overline{g^{-1}g'} \right)\\
+                                                &= \overline{g}. \widetilde{x}\left( \overline{g'} \right).
+  \end{align*}
+  Therefore, $ \widetilde{g.x} = \overline{g}.\widetilde{x} $. Since $m_1$ is left-invariant under $G/H$, we get our desired result.
+\end{proof}
+\begin{corollary}
+  Every virtually amenable group is amenable.
+\end{corollary}
+\begin{proof}
+  Let $G$ be a virtually amenable group, and let $H$ be an amenable subgroup of finite index. Then, the set $K = \bigcap_{g\in G}gHg^{-1}$ is a normal subgroup of finite index contained in $H$. Therefore, $K$ is amenable since it is a subgroup of an amenable group, while $G/K$ is finite (hence amenable), so $G$ is amenable.
+\end{proof}
+\begin{proposition}
+  Every group that is the inductive limit of a system of amenable groups is amenable.
+\end{proposition}
+\begin{proof}
+  Let $\left( G_i \right)_i$ be an inductive system of amenable groups, and let $G = \varinjlim G_i$. Let $H_i = h_i\left( G_i \right)$, where $h_i\colon G_i\rightarrow G$ is the canonical inclusion homomorphism. Since each $H_i$ is amenable, we may find a family $ \widetilde{m_i}\in \ell^{\infty}\left( H_i \right)^{\ast} $ of means.
+
+  Let $m_i\in \ell^{\infty}\left( G \right)^{\ast}$ be a family of means defined by
+  \begin{align*}
+    m_i\left( x \right) &= \widetilde{m_i}\left( x|_{H_i} \right).
+  \end{align*}
+  For each $g\in G$, there is some $i_0(g)\in I$ such that $g\in H_i$ for all $i\succeq i_0(g)$. It follows that $g.m_i(x) = \widetilde{m_i}\left( g.x|_{H_i} \right) = m_i\left(x\right)$ for all $i\succeq i_0$; in particular, extracting a subnet, we have that $m = \lim_{j}m_{i_j}$ is an invariant mean.
+\end{proof}
+\begin{corollary}
+  Every locally amenable (all finitely generated subgroups are amenable) group is amenable.
+\end{corollary}
+\begin{corollary}
+  Every locally finite group is amenable.
+\end{corollary}
 \section{Soficity}%
 We will work to understand soficity (a type of generalized approximation property for groups) with a variety of perspectives. This will allow us to establish soficity for a variety of circumstances.
 \subsection{The Law of the Group von Neumann Algebra}%
