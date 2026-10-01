@@ -1062,12 +1062,22 @@ so this is well-defined.
   The convolution $f\ast g$ is $C^{\infty}$, and for every $\alpha$, $\partial^{\alpha}\left( f\ast g \right) = f\ast \left( \partial^{\alpha}g \right)$.
 \end{proposition}
 \begin{proof}
-  Dominated convergence (more work here) gives
+  By induction on $\left\vert \alpha \right\vert$, we start by observing that $\left\vert \partial_{i}\left( f(y)g\left( x-y \right) \right) \right\vert = \left\vert f(y)\partial_{i}\left( g\left( x-y \right) \right) \right\vert$, where $\partial_i$ denotes a single partial derivative with respect to the coordinate $x_i$. Since the derivative of any Schwartz function is Schwartz, and the product of any two Schwartz functions is Schwartz, it follows that the latter function is Schwartz, hence in $L^1$. Therefore, by Dominated Convergence, it follows that
+  \begin{align*}
+    \partial_{i} \int_{}^{} f\left( y \right)g\left( x-y \right)\:d^{d}y &= \int_{}^{} f(y)\partial_{i}\left( g\left( x-y \right) \right)\:d^{d}y.
+  \end{align*}
+  By Clairaut's Theorem, we may write any $n$-fold partial derivative $\partial^{\alpha}_x$ as $\partial_{i}\partial^{\beta}_x$, where $\beta$ is a $d$-dimensional multi-index satisfying $\left\vert \beta \right\vert = \left\vert \alpha \right\vert-1$. Since
+  \begin{align*}
+    \left\vert \partial^{\alpha}_x\left( f(y)g\left( x-y \right) \right) \right\vert &= \left\vert \partial_i\left( \partial^{\beta}_x\left( f(y)g\left( x-y \right) \right) \right) \right\vert,
+  \end{align*}
+  and once again the latter function is a Schwartz function since the derivative of a Schwartz function is Schwartz. Therefore, by Dominated Convergence, it follows that we may exchange derivative and integral, yielding
   \begin{align*}
     \partial^{\alpha}\left( f\ast g \right)\left( x \right) &= \partial^{\alpha}_{x} \int_{\R^d}^{} f\left( y \right)g\left( x-y \right)\:d^{d}y\\
-                                                            &= \int_{\R^d}^{} f(y)\partial^{\alpha}_x\left( g\left( x-y \right) \right)\:d^{d}y\\
-                                                            &= \int_{\R^d}^{} f(y)\left( \partial^{\alpha}_xg \right)(x-y)\:d^{d}y\\
-                                                            &= f\ast \left( \partial^{\alpha}g \right).
+                                          &= \partial_i\partial^{\beta}_x\int_{\R^d}^{} f(y)\partial^{\beta}_x\left( g\left( x-y \right) \right)\:d^{d}y\\
+                                          &= \partial_i\int_{\R^d}^{} f(y)\left( \partial^{\beta}_xg \right)(x-y)\:d^{d}y\\
+                                          &= \int_{}^{} f(y)\partial_i\partial^{\beta}_x\left( g\left( x-y \right) \right)\:d^{d}y\\
+                                          &= \int_{}^{} f(y)\partial^{\alpha}\left( g\left( x-y \right) \right)\:d^{d}y\\
+                                          &= f\ast \left( \partial^{\alpha}g \right).
   \end{align*}
 \end{proof}
 \begin{lemma}
@@ -1090,11 +1100,11 @@ so this is well-defined.
   We have that $\partial^{\alpha}\left( f\ast g \right)$ is $C^{\infty}$. Taking brackets, we get
   \begin{align*}
     \left\langle x \right\rangle^{k} \left\vert \partial^{\alpha}\left( f\ast g \right) \right\vert &= \left\langle x \right\rangle^k \left\vert \int_{\R^d}^{} f(y)\left( \partial^{\alpha}_xg \right)\left( x-y \right)\:d^{d}y \right\vert\\
-                   &\leq \left\langle x \right\rangle \int_{}^{} \left\langle y \right\rangle^{\ell}\norm{f}_{0,\ell}\left\langle x-y \right\rangle^{m}\norm{g}_{\alpha,m}\:d^{d}y,
+                                               &\leq \left\langle x \right\rangle^k \int_{}^{} \left\langle y \right\rangle^{\ell}\norm{f}_{0,\ell}\left\langle x-y \right\rangle^{m}\norm{g}_{\alpha,m}\:d^{d}y,
   \end{align*}
   where $\ell$ and $m$ are to be determined. Using the fact that $\left\langle x \right\rangle\leq \sqrt{2}\left\langle y \right\rangle\left\langle x-y \right\rangle$, we get
   \begin{align*}
-    \left\langle x \right\rangle \int_{}^{} \left\langle y \right\rangle^{\ell}\norm{f}_{0,\ell}\left\langle x-y \right\rangle^{m}\norm{g}_{\alpha,m}\:d^{d}y &\leq 2^{k/2}\norm{f}_{0,\ell}\norm{g}_{\alpha,m} \int_{\R^d}^{} \left\langle y \right\rangle^{k-\ell} \left\langle x-y \right\rangle^{k-m}\:d^{d}y.
+    \left\langle x \right\rangle^k \int_{}^{} \left\langle y \right\rangle^{\ell}\norm{f}_{0,\ell}\left\langle x-y \right\rangle^{m}\norm{g}_{\alpha,m}\:d^{d}y &\leq 2^{k/2}\norm{f}_{0,\ell}\norm{g}_{\alpha,m} \int_{\R^d}^{} \left\langle y \right\rangle^{k-\ell} \left\langle x-y \right\rangle^{k-m}\:d^{d}y.
   \end{align*}
   Therefore, if we take $m = k$ and $\ell = d + k +1$, we obtain that the right hand side is a constant, so that the convolution is in Schwartz space. Furthermore, we have shown that $\norm{f\ast g}_{\alpha,k} \leq K \norm{f}_{0,\ell}\norm{g}_{\alpha,m}$ for some constant $K \geq 0$, so that the map is bilinear and continuous.
 \end{proof}
@@ -1108,14 +1118,20 @@ so this is well-defined.
 \end{proposition}
 \begin{proof}\hfill
   \begin{enumerate}[(i)]
-    \item Taking a substitution of $z = x-y$ has Jacobian equal to $1$, so that
+    \item Taking a substitution of $z = x-y$ has Jacobian determinant equal to $1$, so that
       \begin{align*}
         f\ast g\left( x \right) &= \int_{\R^d}^{} f\left( y \right)g\left( x-y \right)\:d^{d}y\\
                                 &= \int_{\R^d}^{} f\left( x-z \right)g\left( z \right)\:d^{d}z\\
                                 &= g\ast f.
       \end{align*}
-    \item Shown earlier.
-    \item Commutativity.
+    \item We showed this earlier.
+    \item By commutativity, we have
+      \begin{align*}
+        \partial^{\alpha}\left( f\ast g \right) &= \partial^{\alpha}\left( g\ast f \right)\\
+                                                &= g\ast \left( \partial^{\alpha}f \right)\\
+                                                &= \left( \partial^{\alpha}f \right)\ast g.
+      \end{align*}
+
   \end{enumerate}
 \end{proof}
 \begin{theorem}
@@ -1156,4 +1172,152 @@ where we consider $\varphi(x)$ as a generalized function associated to $\varphi$
                                                          &= \left( -1 \right)^{\left\vert \alpha \right\vert}\left\langle \partial^{\alpha}f,\varphi \right\rangle\\
                                                          &\eqcolon \left\langle f,\partial^{\alpha}(\varphi) \right\rangle.
 \end{align*}
+% Not the September 29 Lecture
+From now on, we will write $\mathcal{S} = \mathcal{S}\left( \R^d,\K \right)$ (with $\K$ most likely equal to $\C$) and $\mathcal{S}^{\ast} = \mathcal{S}\left( \R^d \right)^{\ast}$.
+\begin{definition}
+  Given a multi-index $\alpha\in \N^d$, the map $\partial^{\alpha}\colon \mathcal{S}^{\ast}\to \mathcal{S}^{\ast}$ takes
+  \begin{align*}
+    \varphi &\mapsto \left( f\mapsto \left( -1 \right)^{\left\vert \alpha \right\vert}\iprod{\partial^{\alpha}f}{\varphi} \right).
+  \end{align*}
+\end{definition}
+\begin{proposition}
+  The map $\partial^{\alpha}\colon S^{\ast}\rightarrow S^{\ast}$ is continuous with respect to the strong dual topology.
+\end{proposition}
+\begin{proof}
+  We have
+  \begin{align*}
+    \partial^{\alpha}_{\mathcal{S}^{\ast}} &= \left( -1 \right)^{\left\vert \alpha \right\vert}\left( \partial^{\alpha}_{\mathcal{S}} \right)^{\ast}
+  \end{align*}
+  by definition. The transpose/adjoint is strong--strong continuous.
+\end{proof}
+Now, we note that $\mathcal{S}\subseteq \mathcal{S}^{\ast}$ by the standard evaluation. If $\iota\colon \mathcal{S}\to \mathcal{S}^{\ast}$ is the corresponding injection, then we need $\partial^{\alpha}_{\mathcal{S}^{\ast}} \circ \iota = \iota\circ \partial^{\alpha}_{\mathcal{S}}$.
+\begin{proof}
+  We recall that for any $f\in \mathcal{S}$, the definition of the duality between $\mathcal{S}$ and $\mathcal{S}^{\ast}$ is given by
+  \begin{align*}
+    \iprod{g}{\iota(f)} &= \int_{}^{} g(x)f(x)\:d^{d}x.
+  \end{align*}
+  We note that integration by parts gives
+  \begin{align*}
+\left( -1 \right)^{\left\vert \alpha \right\vert} \iprod{\partial^{\alpha}_{\mathcal{S}}\left( g \right)}{\iota(f)} &= \left( -1 \right)^{\left\vert \alpha \right\vert}\int_{\R^d}^{} f(x) \partial^{\alpha}_{\mathcal{S}}\left( g(x) \right)\:d^{d}x\\
+                                              &= \int_{}^{} \partial^{\alpha}_{\mathcal{S}}\left( f(x) \right)g(x)\:d^{d}x\\
+                                              &= \iprod{g}{\iota\left( \partial^{\alpha}_{\mathcal{S}}\left( f \right) \right)}
+  \end{align*}
+\end{proof}
+\begin{example}
+  Let $d = 1$, and let
+  \begin{align*}
+    H(x) &= \begin{cases}
+      1 & x\geq 0\\
+      0 & x < 0.
+    \end{cases}
+  \end{align*}
+  Define a distribution $\varphi\in \mathcal{S}^{\ast}$ by taking
+  \begin{align*}
+    \iprod{f}{\varphi} &= \int_{\R}^{} H(x)f(x)\:dx.
+  \end{align*}
+  Notice that
+  \begin{align*}
+    \left\vert \varphi(f) \right\vert &\leq \norm{f}_{0,2} \int_{}^{} \left\langle x \right\rangle^{-2}\:dx,
+  \end{align*}
+  so that $\varphi$ is indeed continuous. We compute the derivative to be
+  \begin{align*}
+    \iprod{f}{\partial\varphi} &= - \iprod{f}{\varphi}\\
+                               &= - \int_{-\infty}^{\infty} H(x)f'(x)\:dx\\
+                               &= - \int_{0}^{\infty} f'(x)\:dx\\
+                               &= f(0)-f(\infty)\\
+                               &= f(0)\\
+                               &= \iprod{f}{\delta_0}\\
+                               &\eqcolon \underbrace{\int_{-\infty}^{\infty} \delta(x)f(x)\:dx}_{\text{physics notation}}.
+  \end{align*}
+  That is, we may write $ \frac{d}{dx}\left( H(x) \right) = \delta(x) $ if we were physicists.
+\end{example}
+\begin{example}
+  We want now to find the second derivative. That is,
+  \begin{align*}
+    \iprod{f}{\partial \delta} &= - \iprod{f'}{\delta}\\
+                               &= - f'(0)\\
+                               &= \underbrace{\int_{-\infty}^{\infty} \frac{d}{dx}\left( \delta(x) \right)f'(x)\:dx}_{\text{physics notation}}
+  \end{align*}
+\end{example}
+Next, we concern ourselves with multiplication of distributions by elements of $\mathcal{O}_M$. 
+\begin{definition}
+  If $\varphi\in \mathcal{S}^{\ast}$ and $g\in \mathcal{O}_M$, then we define the pointwise product $g\varphi$ by setting it to be the unique distribution such that
+  \begin{align*}
+    \iprod{g\varphi}{f} &= \iprod{\varphi}{gf}.
+  \end{align*}
+  for all $f\in \mathcal{S}$.
+\end{definition}
+Note that this function is well-defined since $gf\in \mathcal{S}$ whenever $f\in \mathcal{S}$ and $g\in \mathcal{O}_M$. Notice that this is a transpose of the continuous map $f\mapsto gf \mapsto \iprod{\varphi}{gf}$, so that the map taking $\varphi\mapsto g\varphi$ is linear and continuous.
+\begin{remark}
+  The set $\iota\left( \mathcal{S} \right)\subseteq \mathcal{S}^{\ast}$ is sequentially dense, so in particular, the derivative $\partial^{\alpha}_{\mathcal{S}^{\ast}}$ and pointwise product $\varphi\mapsto g\varphi$ are the unique extensions to $\mathcal{S}^{\ast}$ from their corresponding operations on $\mathcal{S}$.
+\end{remark}
+Finally, we concern ourselves with Fourier transforms of elements of $\mathcal{S}^{\ast}$.
+
+Heuristically,\footnote{That is, completely and comically unrigorously.} we write
+\begin{align*}
+  \iprod{f}{\varphi} &= \int_{}^{} f(x)\varphi(x)\:dx.
+\end{align*}
+Imagine we may construct some $\hat{\varphi}\left( \xi \right)$ as
+\begin{align*}
+  \hat{\varphi}\left( \xi \right) &= \int_{\R}^{} e^{-i \iprod{x}{\xi}}\varphi(x)\:d^{d}x,
+\end{align*}
+and ``define'' the distribution $\hat{\varphi}$ by
+\begin{align*}
+  \iprod{f}{\hat{\varphi}} &= \int_{}^{} \hat{\varphi}(\xi)f(\xi)\:d^{d}\xi.
+\end{align*}
+Plugging in directly would then yield
+\begin{align*}
+  \int_{\R^d}^{} \hat{\varphi}\left( \xi \right)f\left( \xi \right)\:d^{d}\xi &= \int_{}^{} \int_{}^{} e^{-i \iprod{x}{\xi}}\varphi(x)f(\xi)\:d^{d}x\:d^{d}\xi\\
+                                                                              &= \int_{}^{}\varphi(x) \int_{}^{} e^{-i \iprod{x}{\xi}}f(\xi)\:d^{d}\xi\:d^{d}x\\
+                                                                              &= \iprod{\hat{f}}{\varphi}\\
+                                                                              &\eqcolon \iprod{f}{\mathcal{F}\left[ \varphi \right]}.
+\end{align*}
+\begin{definition}
+  If $\varphi\in \mathcal{S}^{\ast}$, we define the Fourier transform of $\varphi$ by
+  \begin{align*}
+    \iprod{f}{\mathcal{F}\left[ \varphi \right]} &= \iprod{\mathcal{F}\left[ f \right]}{\varphi}.
+  \end{align*}
+\end{definition}
+This map extends $\mathcal{F}$ on $\mathcal{S}\subseteq \mathcal{S}^{\ast}$. Notice that on $\mathcal{S}^{\ast}$, $\mathcal{F}$ is the adjoint of $\mathcal{F}$ on $\mathcal{S}$, so that $\mathcal{F}$ is continuous. Furthermore, exercising the same process on $\mathcal{F}^{-1}$ yields that $\mathcal{F}$ is a strong topological isomorphism of $\mathcal{S}^{\ast}$ onto itself.
+\begin{remark}
+  The operator $\left( 2\pi \right)^{-d/2}\mathcal{F}_{\mathcal{S}^{\ast}}|_{L^2\left( \R^d \right)}$, where we view $L^2\left( \R^d \right)\subseteq \mathcal{S}^{\ast}$, is the Fourier transform on $L^2$, and it is a unitary.
+\end{remark}
+\begin{example}
+  Physicists often write
+  \begin{align*}
+    \int_{-\infty}^{\infty} e^{-i x \xi}\:dx &= 2\pi \delta\left( \xi \right).
+  \end{align*}
+  This makes no sense. We may actually interpret this as $\mathcal{F}\left[ \varphi \right]$ where $\varphi$ is the distribution given by the constant function $1$. That is,
+  \begin{align*}
+    \iprod{f}{\varphi} &= \int_{-\infty}^{\infty} f(x)\:dx.
+  \end{align*}
+  If we take the Fourier transform of $\varphi$ under this notion, we expect it to equal $2\pi \delta\left( \xi \right)$. Computing is then given by
+  \begin{align*}
+    \iprod{f}{\mathcal{F}\left[ \varphi \right]} &= \iprod{\varphi}{\mathcal{F}\left[ f \right]}\\
+                                                 &= \int_{-\infty}^{\infty} \hat{f}\left( x \right)\:dx
+                                                   \intertext{Multiplying by $1$ twice over yields}
+                                                 &= 2\pi \left( \frac{1}{2\pi}\int_{-\infty}^{\infty} e^{i\left( 0 \right)x} \hat{f}(x)\:dx \right)\\
+                                                 &= 2\pi f(0)\\
+                                                 &= \iprod{2\pi \delta}{f}.
+  \end{align*}
+\end{example}
+\begin{example}
+  Given some $0 < \alpha < d$, physicists may write
+  \begin{align*}
+    \int_{\R^d}^{} e^{-i \iprod{x}{\xi}} \frac{1}{\left\vert x \right\vert^{\alpha}}\:d^{d}x &= \frac{\Gamma\left( \frac{d-\alpha}{2} \right)}{\Gamma\left( \frac{\alpha}{2} \right)} 2^{d-\alpha}\pi^{d/2} \frac{1}{\left\vert \xi \right\vert^{d-\alpha}}.
+  \end{align*}
+  Once again, this doesn't make much sense (i.e., it's not a well-defined Lebesgue integral). Similar to the previous case, we will define an honest distribution $\varphi\in \mathcal{S}^{\ast}$ and then establish the Fourier transform of this distribution.
+
+  Let
+  \begin{align*}
+    \iprod{f}{\varphi} &= \int_{\R^d\setminus \set{0}}^{} \frac{1}{\left\vert x \right\vert^{\alpha}}f(x)\:dx.
+  \end{align*}
+  We claim that this is a convergent Lebesgue integral. This emerges from the fact that
+  \begin{align*}
+\int_{\R^d\setminus \set{0}}^{} \frac{1}{\left\vert x \right\vert^{\alpha}}\left\vert f(x) \right\vert\:d^{d}x &= \int_{0< \left\vert x \right\vert \leq 1}^{} \frac{1}{\left\vert x \right\vert^{\alpha}}\left\vert f(x) \right\vert\:d^{d}x + \int_{\left\vert x \right\vert\geq 1}^{} \frac{1}{\left\vert x \right\vert^\alpha}\left\vert f(x) \right\vert\:d^{d}x\\
+                     &\leq \norm{f}_{0,0}\frac{2\pi^{d/2}}{\Gamma\left( d/2 \right)} \int_{0}^{1} r^{d-1-\alpha}\:dr + \norm{f}_{0,d+1} \int_{\left\vert x \right\vert\geq 1}^{} \left\langle x \right\rangle^{-\left( d+1 \right)}\:d^{d}x\\
+                     &< \infty.
+  \end{align*}
+  This inequality automatically gives that $\varphi$ is an honest distribution.
+\end{example}
 \end{document}
