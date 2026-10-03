@@ -27,15 +27,108 @@
 We will always assume that $X$ is a standard Borel space, possibly equipped with a probability measure $\mu$.
 \begin{definition}\hfill
   \begin{itemize}
-    \item If $\Gamma\curvearrowright X$ by Borel automorphisms, then the orbit equivalence relation $E$ is defined by taking $\left( x,y \right)\in E$ if and only if there is $\gamma\in \Gamma$ such that $\gamma.x = y$. We write $E_X^{\Gamma}$.
+    \item If $\Gamma\curvearrowright X$ by Borel automorphisms, then the orbit equivalence relation $E$ is defined by taking $\left( x,y \right)\in E$ if and only if there is $\gamma\in \Gamma$ such that $\gamma.x = y$. We write $E_{\Gamma}^{X}$.
     \item We say an equivalence relation $E$ on $X$ is finite/countable if the equivalence classes are finite/countable.
     \item Given an equivalence relation $E$, we let $\left[ E \right]$ denote the group of Borel automorphisms of $X$ whose graphs are contained in $E$ (known as the \textit{full group}). The set $\left[ \left[ E \right] \right]$ consists of partial Borel isomorphisms $\phi\colon A\to B$ whose graphs are contained in $E$; we write $A = \dom\left( \phi \right)$ and $B = \ran\left( \phi \right)$.
     \item We say a probability measure $\mu$ is $E$-invariant if for all $f\in [E]$, we have $f_{\ast}\mu = \mu$. Equivalently, for all $\phi\in \left[ \left[ E \right] \right]$, we have that $\mu\left( \dom\left( \phi \right) \right) = \mu\left( \ran\left( \phi \right) \right)$.
     \item We say a measure $\mu$ is $E$-ergodic if every $E$-invariant Borel set is null or conull.
     \item We say $\left( X,E \right)$ and $\left( Y,F \right)$ are Borel isomorphic if there is a Borel bijection $\pi\colon X\to Y$ such that for all $x,y\in X$, we have $xEy$ if and only if $\pi(x)F\pi(y)$.
+    \item We say Borel actions $\Gamma\curvearrowright X$ and $\Lambda\curvearrowright Y$ are orbit equivalent if $E_{\Gamma}^X$ and $E_{\Lambda}^Y$ are orbit equivalent.
+    \item Similar notions apply for measure-preserving actions on probability spaces by using almost-everywhere bijections/isomorphisms.
   \end{itemize}
 \end{definition}
+\begin{theorem}[Feldman--Moore Theorem]
+  Let $E$ be a countable Borel relation. Then, there is a countable group $\Gamma$ and a Borel action $\Gamma\curvearrowright X$ such that $E = E_{\Gamma}^X$. Moreover, the group $\Gamma$ can be chosen such that $xEy$ if and only if there exists $g\in G$ with $g^2 = e$ such that $g.x = y$.
+\end{theorem}
+\section{Hyperfinite Equivalence Relations}%
+\begin{definition}
+  A Borel relation $E$ on a set $X$ is called \textit{smooth} if there is a Borel function $\phi\colon X\rightarrow Y$ with $Y$ standard Borel satisfying $xEy$ if and only if $\phi(x) = \phi(y)$.
+\end{definition}
+\begin{example}
+  Every finite Borel equivalence relation is smooth. This is determined by setting a Borel linear order on $X$, then defining $\phi(x)$ to be the smallest element of $[x]$ for each $x\in X$.
+\end{example}
+\begin{remark}
+  If $E$ is countable and smooth, then $\phi\colon X\to Y$ is countable-to-one, so its range is Borel. In particular, we may assume that $\phi$ is surjective.
+\end{remark}
+Given any Borel equivalence relation $E$ on $X$, we may define the space of equivalence classes $X/E$ to have the quotient Borel structure by saying $A\subseteq X/E$ is Borel if and only if $\bigcup A$ is Borel in $X$.
+\begin{proposition}
+  A countable Borel relation is smooth if and only if $X/E$ is standard Borel.
+\end{proposition}
+\begin{proof}
+  If $\phi\colon X\to Y$ is a surjection witnessing the smoothness of $E$, we let $ \overline{\phi}\colon X/E\rightarrow Y $ be the corresponding bijection. It suffices to show that $ \overline{\phi} $ induces an isomorphism from the quotient Borel structure of $X/E$ to the standard Borel structure of $Y$. Since $\phi$ is countable to one, $\phi$ maps Borel sets to Borel sets, so any $E$-invariant set $B$ is Borel if and only if $ \overline{\phi}(B) = \phi(B) $ is Borel.
 
-\nocite{topics_in_orbit_equivalence}
+  In the reverse direction, if the quotient Borel structure on $X/E$ is standard, then there is a countable family $\set{B_n:n\in \N}$ of subsets of the quotient Borel structure on $X/E$ which separates points. However, such a family induces a Borel separating family on $E$; by considering the functions $\set{\chi_{B_n}}_{n\in \N}\colon E\rightarrow 2^{\N}$, we obtain our desired result.
+\end{proof}
+\begin{definition}
+  A complete section for $E$ is a set $B\subseteq X$ such that $B$ intersects every class of $E$.
+
+  A transversal for $E$ is a complete section that intersects at exactly one point.
+
+  A selector for $E$ is a function $f\colon X\rightarrow X$ with $\graph\left( f \right) \subseteq E$ and $\img\left( f \right)$ is a transversal.
+\end{definition}
+Notice that if $E$ is a Borel equivalence relation that admits a transversal $T\subseteq X$, then we may define a map $f\colon X\rightarrow X$ by taking $f(x) = [x]\cap T$. This is our desired map to witness smoothness of $E$, which is well-defined since $T$ intersects $[x]$ at exactly one point, and has it such that $xEy$ if and only if $y\in [x]$ if and only if $\phi(y) = [x]\cap T = \phi(x)$.
+\begin{proposition}
+  If $E$ is a smooth countable Borel relation, then $E$ admits a selector.
+
+  Moreover, if all the classes of $E$ are some fixed size $n\in \N\cup\set{\infty}$, then there is a sequence $\left( f_i \right)_{i < n}$ of Borel selectors for $E$ whose images partition $X$.
+\end{proposition}
+\begin{proof}
+  Let $\phi\colon X\to Y$ witness the smoothness of $E$, and let $R\subseteq Y\times X$ be defined by $yRx$ if and only if $\phi(x) = y$.
+
+  Since $R$ is Borel and has countable sections, the Lusin--Novikov Uniformization Theorem gives a Borel map $f\colon \operatorname{proj}_Y(R)\to X$ such that $\graph\left( f \right)\subseteq R$. Here,
+  \begin{align*}
+    \operatorname{proj}_Y(R) &= \set{y\in Y : \text{ there exists }x\in X\text{ such that }\left( y,x \right)\in R}.
+  \end{align*}
+  Such a map is known as a Borel uniformization. The map $f\circ \phi\colon X\rightarrow X$ is our desired Borel selector.
+
+  Suppose all the classes of $E$ are of size $n\in \N\cup\set{\infty}$. Then, there is a sequence $\left( f_i \right)_{i < n}$ of Borel uniformizations of $R$ with disjoint ranges whose union is $X$. The maps $\left( f_i\circ \phi \right)_{i < n}$ is our desired sequence.
+\end{proof}
+We say a countable Borel relation $E$ on $X$ is \textit{hyperfinite} if there is an increasing sequence $\set{F_n}_{n\in \N}$ of finite Borel subequivalence relations of $E$.
+\section{Dye's Theorem}%
+The goal is to show the following theorem.
+\begin{theorem}[Dye's Theorem]
+  All non-atomic probability measure-preserving ergodic actions of $\Z$ are orbit equivalent.
+\end{theorem}
+Equivalently, let $\left( X,E,\mu \right)$ and $\left( Y,F,\nu \right)$ be a.e. aperiodic hyperfinite Borel equivalence relations with invariant ergodic probability measures. Then, they are isomorphic.
+\begin{definition}
+  Let $E$ be a countable Borel relation. A FSR (finite partial subequivalence relation) is a finite Borel relation $F$ defined on $\dom\left( F \right)\subseteq X$ with $F\subseteq E$.
+
+  If $\left[ X \right]^{<\infty}$ is the standard Borel space of finite subsets of $X$, and $\left[ E \right]^{<\infty}$ is the Borel subset of $\left[ X \right]^{<\infty}$ of pairwise $E$-related finite subsets, then if $\Phi\subseteq \left[ E \right]^{<\infty}$, we say a FSR $F\subseteq E$ is $\Phi$-maximal if
+  \begin{itemize}
+    \item for all $x\in \dom\left( F \right)$, $\left[ x \right]_F\in \Phi$;
+    \item for all $S\in \left[ X\setminus \dom\left( F \right) \right]^{<\infty}$, we have that $S\notin \Phi$.
+  \end{itemize}
+\end{definition}
+\begin{lemma}
+  Let $E$ be a countable Borel relation, and let $\Phi\subseteq \left[ E \right]$ be Borel. Then, $E$ admits a $\Phi$-maximal FSR.
+\end{lemma}
+\begin{proof}
+  Define a graph $G$ on $\left[ E \right]^{ <\infty }$ by taking $\left( S,T \right)\in G$ if and only if $S\neq T$ with $S\cap T\neq \emptyset$.
+
+  Then, $G$ admits a Borel $\aleph_0$-coloring. That is, a map $c\colon \left[ E \right]^{ <\infty }\to I$ (where $I$ is countable and discrete) with $\left( S,T \right)\in G$ implying that $c(S)\neq c(T)$. We will show this now.
+
+  Let $\set{g_n : n\in \N}$ be a sequence of Borel involutions whose graphs cover $E$ (which exist by Feldman--Moore). Let $ < $ be a Borel linear order of $X$. Let $S\in \left[ E \right]^{ <\infty }$, and let $\set{x_i}_{ i<n }$ be an enumeration with respect to the corresponding ordering of $S$. Let $c(S)$  be the lexicographically smallest sequence $\set{k_{ij} : i,j < \left\vert S \right\vert}\subseteq \N$ such that $g_{k_{ij}}.x_i = x_j$. That is, we will let $I$ be given by $\N^{ \infty }$, which is the set of finitely supported natural number sequences.
+
+  Suppose toward contradiction that $c$ is not a coloring. Then, there is $\left( S,T \right)\in G$ such that $c(S) = c(T)$. Since $c(S)$ and $c(T)$ are equal, it follows that the enumerations $\set{x_i}_{i < n}$ and $\set{y_i}_{ i < n }$ are of equal cardinality. Since we assume that $S\cap T\neq \emptyset$, we may select $x_i = y_j$ without loss of generality to have $i < j$. Then, we have that $ i < j $ if and only if $x_i < x_j$ if and only if $x_i < g_{k_{ij}}\left( x_i \right)$ if and only if $y_j \leq g_{k_{ij}}\left( y_j \right)$ if and only if $y_j < y_i$ if and only if $j < i$. This gives that $i = j$. Yet, this means that for all $\ell < n$, we also have
+  \begin{align*}
+    x_{\ell} &= g_{k_{i\ell}} \left( x_i \right)\\
+             &= g_{k_{i\ell}}\left( y_i \right)\\
+             &= y_{\ell},
+  \end{align*}
+  so that $S = T$, which contradicts the definition of $\left( S,T \right)\in G$.
+
+  Now, we may assume that $c$ is a natural number coloring. Define a sequence $\set{F_n : n\in \N}$ of FSRs by saying $xF_ny$ if there exists $S\in \Phi$ such that $c(S) = n$, $x,y\in S$, and
+  \begin{align*}
+    S\cap \left( \bigcup_{m < n}\dom\left( F_m \right) \right) &= \emptyset.
+  \end{align*}
+  Since $\dom\left( F_m \right)\cap \dom\left( F_n \right) = \emptyset$ for any $m\neq n$, it follows that
+  \begin{align*}
+    F &= \bigcup_{n\in \N}F_n
+  \end{align*}
+  is a FSR of $E$. Furthermore, $\left[ x \right]_F\in \Phi$ for all $x\in \dom\left( F \right)$>
+
+  Suppose $S\in \left[ E \right]^{ < \infty }$ with $S\in \Phi$. Then, $c(S) = n$ for some $n\in \N$, so that $S\cap \dom\left( F_m \right)\neq \emptyset$ for some $m\leq n$, meaning that $F$ is $\Phi$-maximal.
+\end{proof}
+\nocite{topics_in_orbit_equivalence,classical_descriptive_set_theory}
 \printbibliography
 \end{document}
