@@ -10,6 +10,7 @@
 \addbibresource{exam_prep_references.bib}
 
 \usepackage{parskip}
+\frenchspacing
 
 \fancyhf{}
 \fancyhead[R]{Avinash Iyer}
@@ -685,7 +686,85 @@ One central application of the Krein--Milman Theorem is a proof of the Stone--We
   Since $\mu\in A^{\perp}$, and $1\in A$, it follows that $0 = \int_{}^{} 1\:d\mu = \gamma$, which is a contradiction. Thus, $A^{\perp} = 0$, so $A = C(X)$.
 \end{proof}
 \section{$C^{\ast}$-Algebras}%
+\subsection{The Structure of Abelian $C^{\ast}$-Algebras}%
+\begin{definition}
+  If $A$ is a (unital) abelian Banach algebra, then nonzero algebra homomorphisms $\alpha\colon A\rightarrow \C$ are known as characters.
+\end{definition}
+\begin{proposition}
+  Let $A$ be an abelian (unital) Banach algebra, and $M$ a maximal ideal. Then, there is a homomorphism $h\colon A\rightarrow \C$ such that $M = \ker\left( h \right)$. Furthermore, if $h\colon A\rightarrow \C$ is a nonzero homomorphism, then $\ker\left( h \right)$ is a maximal ideal.
+\end{proposition}
+\begin{proof}
+  If $M$ is a maximal ideal, then $M$ is closed, so $A/M$ is a unital Banach algebra. Let $\pi\colon A\rightarrow A/M$ be the corresponding quotient map. Suppose $a\in A$ and $\pi(a)$ is not invertible in $A/M$. Then, $\pi\left( Aa \right) = \pi(a)$ modulo $A/M$ is a proper ideal. If $I = \pi^{-1}\left( \pi(Aa) \right)$, then $I$ is a proper ideal of $A$ with $M\subseteq I$. Since $M$ is maximal, $M = I$, so that $\pi(Aa) = \pi(M)$, meaning $\pi(a) = 0$.
 
+  Thus, $A/M$ is a field. By the Gelfand--Mazur theorem, $A/M = \C$. If $ \widetilde{h}\colon A/M\rightarrow \C $ is defined by $\widetilde{h}\left( \lambda + M \right) = \lambda$, then $h\colon A\rightarrow \C$ defined by $h = \widetilde{h}\circ \pi$ is a homomorphism with $\ker(h) = M$.
+
+  Conversely, if $h\colon A\to\C$ is a nonzero homomorphism, then $\ker\left( h \right) = M$ is a nontrivial closed ideal with $A/M\cong \C$, so $M$ is maximal.
+
+  If $h$ and $h'$ are two such homomorphisms with $\ker\left( h \right) = \ker\left( h' \right)$, then there is $\alpha\in \C$ such that $h = \alpha h'$, but this means $1 = h(1) = \alpha h'(1) = \alpha$, so that $h = h'$.
+\end{proof}
+\begin{definition}
+  Let $A$ be an abelian (unital) Banach algebra. We let $\Sigma(A)$ be the set of all unital algebra homomorphisms equipped with the relative weak* topology as a subset of $A^{\ast}$. We call this the \textit{character space} or \textit{maximal ideal space}.
+\end{definition}
+\begin{theorem}
+  If $A$ is an abelian Banach algebra, then $\Sigma(A)$ is a compact Hausdorff space. Furthermore, if $a\in A$, then $\sigma(a) = \set{h(a) : h\in \Sigma(A)}$.
+\end{theorem}
+\begin{proof}
+  Since all unital Banach algebra homomorphisms have norm $1$, it suffices to show that $\Sigma$ is weak*-closed. Let $\left( h_i \right)_i$ be a net in $\Sigma$, and let $h\in B_{A^{\ast}}$ be such that $h_i\xrightarrow{\operatorname{wk}^{\ast}} h$. We observe that
+  \begin{align*}
+    h(ab) &= \lim_{i}h_i(ab)
+          &= \lim_{i} h_i(a)h_i(b)\\
+          &= h(a)h(b).
+  \end{align*}
+  Thus, $h$ is a homomorphism, with $\lim_ih_i(1) = 1$, so that $h\in \Sigma$.
+
+  Suppose $h\in \Sigma$, and $\lambda = h(a)$. Then, $a-\lambda1\in \ker\left( h \right)$, so that $a-\lambda$ is not invertible and $\lambda\in \sigma(a)$. Now, if $\lambda\in \sigma(a)$, then $a-\lambda1$ is not invertible, so $A\left( a-\lambda1 \right)$ is a proper ideal. Let $M$ be a maximal ideal of $A$ containing $A\left( a-\lambda1 \right)$. Then, $M = \ker\left( h \right)$ for some $h\in \Sigma(A)$, so that $\sigma(a) = \set{h(a) : h\in \Sigma(A)}$.
+\end{proof}
+\begin{theorem}
+  If $X$ is compact, then $\Sigma\left( C(X) \right) \cong X$ via the identification $x\mapsto \delta_x$.
+\end{theorem}
+\begin{proof}
+  Let $\Delta\colon X\rightarrow \Sigma\left( C(X) \right)$ be defined by $\Delta(x) = \delta_x$. Then, we have that $\Delta\left( X \right)\subseteq \Sigma\left( C(X) \right)$, and $\Delta$ is a homeomorphism onto its image when the image is given the weak* topology.
+
+  Let $h\in \Sigma\left( C(X) \right)$. Then, we have some measure $\mu$ such that
+  \begin{align*}
+    h(f) &= \int_{}^{} f\:d\mu
+  \end{align*}
+  with $\norm{\mu} = 1$, and $\mu\left( X \right) = h(1) = 1$, so that $\mu\geq 0$. Let $x\in \supp\left( \mu \right)$.
+
+  If $M = \set{f\in C(X) : f(x) = 0}$, then $M$ is a maximal ideal of $C(X)$. Our goal is to show that $\ker\left( h \right)\subseteq M$. Let $f\in \ker\left( h \right)$. Since $\ker\left( h \right)$ is an ideal, it follows that $ \left\vert f \right\vert^2 \in \ker\left( h \right) $, so that
+  \begin{align*}
+    0 &= \int_{}^{} \left\vert f \right\vert^2\:d\mu,
+  \end{align*}
+  whence $\left\vert f \right\vert^2 = 0$ $\mu$-a.e., so since $f$ is continuous, $f\equiv 0$ on $\supp\left( \mu \right)$. Thus, $f(x) = 0$, so $f\in M$.
+\end{proof}
+\begin{definition}
+  Let $A$ be an abelian Banach algebra with character space $\Sigma(A)$. The \textit{Gelfand Transform} of $a\in A$ is the map $\hat{a}\colon \Sigma(A)\rightarrow \C$ given by $\hat{a}(h) = h(a)$. We let $\Gamma(a) = \hat{a}$ denote the Gelfand transform on occasion.
+\end{definition}
+\begin{theorem}
+  If $A$ is an abelian Banach algebra with character space $\Sigma(A)$, then $\Gamma\colon A\rightarrow C\left( \Sigma(A) \right)$ taking $a\mapsto \hat{a}$ is a norm $1$ continuous algebra homomorphism of $A$ with kernel given by
+  \begin{align*}
+    \bigcap \set{M : M\text{ is a maximal ideal of }A}.
+  \end{align*}
+  Moreover, $\norm{\hat{a}} = r(a)$, where $r(a)$ is the spectral radius.
+\end{theorem}
+\begin{proof}
+  If $\left( h_i \right)_i\rightarrow H$ in $\Sigma(A)$, then $h_i\xrightarrow{\operatorname{wk}^{\ast}} h$ in $A^{\ast}$. Therefore, for any $a\in A$, we have
+  \begin{align*}
+    \hat{a}\left( h_i \right) &= h_i(a)\\
+                              &\rightarrow h(a)\\
+                              &= \hat{a}(h),
+  \end{align*}
+  so that $\hat{a}\in C\left( \Sigma\left( A \right) \right)$.
+
+  Next, observe that
+  \begin{align*}
+    \Gamma\left( ab \right)\left( h \right) &= \widehat{ab}\left( h \right)\\
+                                            &= h\left( ab \right)\\
+                                            &= h(a)h(b)\\
+                                            &= \hat{a}(h)\hat{b}(h).
+  \end{align*}
+  Thus, $\Gamma\left( ab \right) = \Gamma\left( a \right)\Gamma\left( b \right)$. Moreover, since each character has norm $1$, we have $\left\vert \hat{a}(h) \right\vert = \left\vert h(a) \right\vert\leq \norm{a}$, so that $\norm{\Gamma(a)} \leq \norm{a}$, meaning $\Gamma$ is continuous with norm at most $1$. Since $\gamma(1) = 1$, it follows that $\norm{\gamma} = 1$.
+\end{proof}
 \section{Spectral Theory}%
 Spectral theory is primarily concerned with representations of abelian $C^{\ast}$-algebras. Consider a normal operator $N$ on $H$. Then, $C^{\ast}\left( N \right)$ is an abelian $C^{\ast}$-algebra, and the continuous functional calculus $f\mapsto f\left( N \right)$ yields a $\ast$-isomorphism of $C\left( \sigma(N) \right)$ onto $C^{\ast}\left( N \right)$. In particular, $f\mapsto f\left( N \right)$ is a representation of the abelian $C^{\ast}$-algebra $C^{\ast}\left( N \right)$.
 
@@ -901,6 +980,9 @@ Thus far, all we have obtained is a variety of the properties of a spectral meas
 
   The uniqueness of $E$ follows from the fact that the measures $E_{g,h}$ are unique for each $g,h\in H$ as part of the Riesz Representation Theorem.
 \end{theorem}
+\begin{remark}
+  By the way the measures $E_{g,h}$ are defined (i.e., they are regular Borel measures by the Riesz Representation Theorem), it follows that the spectral projections $E\left( U \right)$ are nonzero when evaluated on any open subset of $\sigma(N)$.
+\end{remark}
 The primary use of the existence of spectral measures is to enable the Borel functional calculus for normal operators on Hilbert spaces.
 \begin{theorem}
   Let $N$ be a normal operator on $H$. There is a unique spectral measure $E$ on the Borel subsets of $\sigma(N)$ such that:

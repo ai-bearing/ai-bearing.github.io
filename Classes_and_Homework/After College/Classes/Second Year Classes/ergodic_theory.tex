@@ -11,6 +11,7 @@
 %\addbibresource{  }
 
 \usepackage{parskip}
+\frenchspacing
 
 \fancyhf{}
 \fancyhead[R]{Avinash Iyer}
@@ -642,7 +643,83 @@ The notion of isomorphism mod null sets is useful in the following example, wher
   (i.e., $E_n$ is the set of all $n$-normal numbers), then $E = \bigcap_{n=1}^{\infty}E_n$ is the set of all normal numbers. Since each $E_n$ has measure $1$, it follows that $E$ is the intersection of a countable intersection of a family of measure $1$ subsets, so it is measure $1$.
 \end{example}
 \section{Mixing, Weak Mixing, and Compactness}%
-For this section, we will concern ourselves with probability measure-preserving actions of monoids(/semigroups) $S\curvearrowright \left( X,\mu \right)$, with properties defined via their corresponding representations $\pi\colon S\rightarrow \mathbb{B}\left( H \right)$, taking $s\mapsto \pi_s$, by contractions. That is, $\pi_{st} = \pi_s\pi_t$, and $\norm{\pi_s}\leq 1$ for all $s\in S$. However, we do not assume there are inverses yet. These will be generalized to unitary representations of groups very shortly.
+For this section, we will concern ourselves with probability measure-preserving actions of either semigroups or groups. The corresponding representations will be either by isometries (in the case of semigroups) or unitaries (in the case of groups).
+\begin{definition}
+  A representation $G\rightarrow B(H)$ is called mixing if $G$ is infinite and, for all $\xi,\eta\in H$, we have $\lim_{s\rightarrow\infty} \iprod{\pi(s)\xi}{\eta} = 0$. That is, for all $\ve > 0$, there exists some finite subset $F\subseteq G$ such that for all $s\in G\setminus F$, we have $\left\vert \iprod{\pi(s)\xi}{\eta} \right\vert < \ve$.
 
+  The representation is called weak mixing if, for all $\xi_1,\dots,\xi_k\in H$ and all $\ve > 0$, there exists $s\in G$ such that $\left\vert \left\langle \pi(s)\xi_i,\xi_j \right\rangle \right\vert < \ve$ for all $i,j=1,\dots,k$.
+\end{definition}
+We recall the definition of ergodic representations here.
+\begin{definition}
+  A representation $G\to B(H)$ is ergodic if $G$ is infinite and $\pi(s)\xi = 0$ for all $s\in G$ implies $\xi = 0$.
+\end{definition}
+For both of these definitions, it suffices to verify on a total subset.
 
+The following two facts are very useful.
+\begin{itemize}
+  \item We have the isomorphism $L^2\left( X,\mu \right)\otimes L^2\left( Y,\nu \right)\cong L^2\left( X\times Y,\mu\otimes \nu \right)$.
+  \item If $S\curvearrowright \left( X,\mu \right)$ is a semigroup acting by probability measure-preserving transformations, then the Koopman representation $\alpha\colon S^{\operatorname{op}}\rightarrow B\left( L^2_0\left( X \right) \right)$ is given by $\alpha_{s^{\operatorname{op}}} f(x) = f(s.x)$.
+\end{itemize}
+\begin{proposition}
+  Let $S\curvearrowright \left( X,\mu \right)$ be a semigroup acting by probability measure-preserving transformations, and let $\alpha\colon S^{\operatorname{op}}\rightarrow B\left( L^2_0\left( X \right) \right)$ be the corresponding Koopman representation. Then, the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $\alpha$ is weak mixing;
+    \item for all probability measure-preserving actions $S\curvearrowright \left( Y,\nu \right)$ with corresponding Koopman representation $\beta\colon S^{\operatorname{op}}\to B\left( L^2_0\left( Y \right) \right)$, $\alpha\otimes \beta$ has no nonzero invariant vectors;
+    \item $\alpha\otimes\alpha$ has no nonzero invariant vectors.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We start by showing that (i) implies (iii). Consider the total subset
+  \begin{align*}
+    D &= \set{f\otimes g : f\in L^2_0\left( X \right),g\in K},
+  \end{align*}
+  where $K$ is the maximal $S$-invariant subspace of $L^2_0\left( Y \right)$. We have for all $s\in S$ that
+  \begin{align*}
+    \iprod{\left( \alpha_{s^{\operatorname{op}}}\otimes \beta_{s^{\operatorname{op}}} \right)\left( f_1\otimes g_1 \right)}{f_2\otimes g_2} &= \iprod{\alpha_{s^{\operatorname{op}}}\left( f_1 \right)}{f_2} \iprod{\beta_{s^{\operatorname{op}}}\left( g_1 \right)}{g_2}\\
+                                              &= \iprod{\alpha_{s^{\operatorname{op}}}\left( f_1 \right)}{f_2} \iprod{g_1}{g_2}.
+  \end{align*}
+  We observe that $\alpha_{s^{\operatorname{op}}}\left( f_1 \right) = f_1$ if and only if $f_1 = 0$, so that we have that $f_1\otimes g_1 = 0$.
+
+  Next, we show that (iii) implies (i). Suppose not. Then, there exists some $\ve > 0$ and some $\xi_1,\dots,\xi_k\in L^2_0\left( X \right)$ such that, for all $s\in S$,
+  \begin{align*}
+    \sum_{i,j=1}^{k} \left\vert \iprod{\pi_s\xi_i}{\xi_j} \right\vert^2 &\geq \ve^2.
+  \end{align*}
+  Let
+  \begin{align*}
+    \xi &= \sum_{i=1}^{k} \xi_i\otimes \overline{\xi_i}.
+  \end{align*}
+  Let
+  \begin{align*}
+    C &= \overline{\conv}\set{ \left( \alpha_{s^{\operatorname{op}}}\otimes \alpha_{s^{\operatorname{op}}} \right)\xi : s\in S }.
+  \end{align*}
+  By the Hilbert projection theorem, there is some $\eta\in C$ with minimal norm. We claim that $\eta\neq 0$. This follows from the fact that
+  \begin{align*}
+    \re\left( \iprod{\left( \alpha_{s^{\operatorname{op}}}\otimes \alpha_{s^{\operatorname{op}}} \right)\xi}{\xi} \right) &= \re \left( \sum_{i,j=1}^{k} \iprod{\alpha_{s^{\operatorname{op}}}\xi_i\otimes \alpha_{s^{\operatorname{op}}} \overline{\xi_i}}{\xi_j\otimes \overline{\xi_j}} \right)\\
+                               &= \re\left( \sum_{i,j=1}^{k} \iprod{\alpha_{s^{\operatorname{op}}}\xi_i}{\xi_j} \iprod{\alpha_{s^{\operatorname{op}}} \overline{\xi_i}}{ \overline{\xi_j} } \right)\\
+                               &= \sum_{i,j=}^{k} \left\vert \iprod{\alpha_{s^{\operatorname{op}}}\xi_i}{\xi_j} \right\vert^2\\
+                               &\geq \ve^2.
+  \end{align*}
+  Thus, $\re\left( \iprod{\eta}{\xi} \right)\geq \ve^2 > 0$, so that $\eta\neq 0$. Since $S$ acts by probability measure-preserving transformations, it follows that
+  \begin{align*}
+    \norm{\left( \alpha_{s^{\operatorname{op}}}\otimes \alpha_{s^{\operatorname{op}}} \right)\eta} &= \norm{\eta}
+  \end{align*}
+  with $\left( \alpha_{s^{\operatorname{op}}}\otimes \alpha_{s^{\operatorname{op}}} \right)\eta\in C$ for all $s\in S$, so that $\eta$ is fixed by $S$.
+\end{proof}
+\begin{definition}
+  A probability measure-preserving transformation $S\curvearrowright\left( X,\mu \right) $ is called weak mixing if for all $\ve > 0$ and all measurable $A_1,\dots,A_k\subseteq X$, there exists some $s\in S$ such that
+  \begin{align*}
+    \left\vert \mu\left( s^{-1}.A_i\cap A_j \right)-\mu\left( A_i \right)\mu\left( A_j \right) \right\vert &< \ve.
+  \end{align*}
+\end{definition}
+\begin{theorem}
+  Let $S\curvearrowright \left( X,\mu \right)$ be a probability measure-preserving transformation. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item the action $S\curvearrowright \left( X,\mu \right)$ is weak mixing;
+    \item $\alpha\colon S^{\operatorname{op}}\rightarrow L^2_0\left( X,\mu \right)$ is weak mixing;
+    \item the diagonal action $S\curvearrowright \left( X\times X,\mu\otimes \mu \right)$ is ergodic.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+
+\end{proof}
 \end{document}
