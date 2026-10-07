@@ -717,11 +717,12 @@ There is another locally convex topology on $V^{\ast}$ that is the analogue of t
   \end{align*}
   We note that $\varphi(A)$ is itself bounded.
 \end{proof}
+\section{Fourier Analysis}%
+The next section of our coverage is focused on Fourier analysis.
+\subsection{Schwartz Distributions}%
 Recall that the dual space $C_c^{\infty}\left( \R^d \right)^{\ast}$ of compactly supported $C^{\infty}$ functions is called the space of \textit{distributions}, while the dual space $ \mathcal{S}\left( \R^d \right)^{\ast} $ is called the space of \textit{tempered distributions}.
 
-Given $\theta\in \mathcal{S}\left( \R^d \right)^{\ast}$ and $f\in \mathcal{S}\left( \R^d \right)$, we write $ \iprod{f}{\theta} = \theta(f) $.
-
-Since $ C_c^{\infty}\left( \R^d \right)\subseteq \mathcal{S}\left( \R^d \right) $, we will define a canonical inclusion map $\varphi\colon C_c^{\infty}\left( \R^d \right)\rightarrow \mathcal{S}\left( \R^d \right)$.
+Given $\theta\in \mathcal{S}\left( \R^d \right)^{\ast}$ and $f\in \mathcal{S}\left( \R^d \right)$, we write $ \iprod{f}{\theta} = \theta(f) $ (this will be held more generally for dual systems too). Since $ C_c^{\infty}\left( \R^d \right)\subseteq \mathcal{S}\left( \R^d \right) $, we will define a canonical inclusion map $\varphi\colon C_c^{\infty}\left( \R^d \right)\rightarrow \mathcal{S}\left( \R^d \right)$.
 \begin{theorem}
   The inclusion $\varphi$ is continuous with respect to the locally convex topology on each space.
 \end{theorem}
@@ -736,8 +737,83 @@ Since $ C_c^{\infty}\left( \R^d \right)\subseteq \mathcal{S}\left( \R^d \right) 
   \end{align*}
   Defining $C = \sup_{x\in K} \left\langle x \right\rangle^{k}$, we have that $C < \infty$ by compactness, so we obtain our desired result.
 \end{proof}
-\section{Fourier Analysis}%
-The next section of our coverage is focused on Fourier analysis.
+\begin{theorem}
+  The space of test functions, $C_c^{\infty}\left( \R^d \right)$, is sequentially dense in the Schwartz space.
+\end{theorem}
+\begin{proof}
+  We start by defining a smooth bump function $\varphi\colon \R^d\rightarrow [0,1]$ such that $\varphi(x) = 1$ for any $x\in [-1,1]^{d}$ and $\varphi(x) = 0$ for all $x\in \R^d\setminus \left( -2,2 \right)^{d}$. Take $\rho_1,\rho_2\colon \R\to\R$ by taking
+  \begin{align*}
+    \rho_1(x) &= \begin{cases}
+      0 & x\leq 0\\
+      e^{-1/x} & x > 0
+    \end{cases}\\
+      \rho_2(x) &= \rho_1(x)\rho_1\left( 1-x \right).
+  \end{align*}
+  Then, $\rho_1$ is smooth, so $\rho_2$ is smooth as well. Moreover, $\rho_2(x) = 0$ for any $x\notin (0,1)$, and $\rho_2(x) \geq 0$ For any $x\in (0,1)$. Let
+  \begin{align*}
+    C &= \int_{0}^{1} \rho_2(x)\:dx\\
+    \rho_3(x) &= \frac{1}{C}\int_{0}^{x} \rho_2(y)\:dy.
+  \end{align*}
+  Then, $\rho_3(x) = 1$ for all $x\geq 1$, $\rho_3(x) = 0$ for all $x\leq 0$, and it is smooth in between. If we let $\rho_4$ be given by $\rho_4(x) = \rho_3\left( 2-x \right) \rho_3\left( 2+x \right)$, then for any $1\leq x \leq 1$, we have $\rho_3\left( 2-x \right) = \rho_3\left( 2+x \right) = 1$, and $\rho_4(x) = 0$ for any $\left\vert x \right\vert\geq 2$, with $\rho_4$ otherwise smooth and bounded between $0$ and $1$. Finally, let $\varphi\colon \R^d\rightarrow [0,1]$ be given by
+  \begin{align*}
+    \varphi &= \rho_4\left( x_1 \right)\cdots \rho_4\left( x_d \right).
+  \end{align*}
+  Let $f\in \mathcal{S}\left( \R^d \right)$. Let $\varphi_n(x) = \varphi\left( \frac{x}{n} \right)$, and let $f_n(x) = f(x)\varphi_n(x)$. Our goal is to show that $f_n\rightarrow f$ in the topology of $\mathcal{S}\left( \R^d \right)$. Let $\alpha\in \N^d$ and $k\in \N$. We must show that
+  \begin{align*}
+    \norm{f-f_n}_{\alpha,k} &= \sup_{x\in \R^d} \left\langle x \right\rangle^{k} \left\vert \partial^{\alpha}f_n(x) - \partial^{\alpha}f(x) \right\vert\\
+                            &\xrightarrow{n\to \infty} 0.
+  \end{align*}
+  Note that for any $x\in \left( -n,n \right)^{d}$, we have $\left\vert \partial^{\alpha}f_n(x) - \partial^{\alpha}f(x) \right\vert = 0$ since the truncation and the original function are equal on $\left[ -n,n \right]^{d}$. Thus, we only need to consider $x\notin \left( -n,n \right)^{d}$. By the Leibniz rule, we have
+  \begin{align*}
+    \partial^{\alpha}f_n(x) &= \partial^{\alpha}\left( \varphi_n(x)f(x) \right)\\
+                            &= \sum_{\substack{\beta,\gamma\in \N^d\\\beta + \gamma = \alpha}} \frac{\alpha!}{\beta!\gamma!} \partial^{\beta}\varphi_n(x) \partial^{\gamma}f(x).
+  \end{align*}
+  Applying chain rule gives
+  \begin{align*}
+    \partial^{\alpha}f_n(x) &= \sum_{\substack{\beta,\gamma\in \N^d\\\beta + \gamma = \alpha}} \frac{\alpha!}{\beta!\gamma!} n^{-\left\vert \beta \right\vert} \left( \partial^{\beta} \varphi \right)\left( \frac{x}{n} \right) \partial^{\gamma}f(x).
+  \end{align*}
+  Since the $\gamma=\alpha$ term is eliminated, we get
+  \begin{align*}
+    \partial^{\alpha}f_n(x) - \varphi_n(x)\partial^{\alpha}f(x)&= \sum_{\substack{\beta,\gamma\in \N^d\\\beta + \gamma = \alpha,\left\vert \beta \right\vert\geq 1}} \frac{\alpha!}{\beta!\gamma!} n^{-\left\vert \beta \right\vert} \left( \partial^{\beta} \varphi \right)\left( \frac{x}{n} \right) \partial^{\gamma}f(x)
+  \end{align*}
+  Therefore, we obtain
+  \begin{align*}
+    \left\vert \partial^{\alpha}f_n(x) - \varphi_n(x)\partial^{\alpha}f(x) \right\vert &\leq \sum_{\substack{\beta,\gamma\in \N^{d}\\\beta + \gamma = \alpha,\left\vert \beta \right\vert\geq 1}} \frac{\alpha!}{\beta!\gamma!} \norm{\varphi}_{\beta,0} \left\langle x \right\rangle^{-k-1} \norm{f}_{\gamma,k+1}.
+  \end{align*}
+  Choose some constant $C_1$ greater than or equal to the right hand side, so that we have
+  \begin{align*}
+    \left\langle x \right\rangle^{k} \left\vert \partial^{\alpha}f_n(x) - \varphi_n(x)\partial^{\alpha}f(x) \right\vert &\leq C_1 \left\langle x \right\rangle^{-1}.
+  \end{align*}
+  Therefore, by the triangle inequality, we have
+  \begin{align*}
+    \left\langle x \right\rangle^{k} \left\vert \partial^{\alpha}f_n(x) - \partial^{\alpha}f(x) \right\vert &\leq C_1\left\langle x \right\rangle^{-1} + \left\langle x \right\rangle^{k} \left\vert \varphi_n(x)\partial^{\alpha}f(x) - \partial^{\alpha}f(x) \right\vert.
+  \end{align*}
+  Since $0\leq \varphi_n(x) \leq 1$, we have
+  \begin{align*}
+    \left\langle x \right\rangle^{k} \left\vert \varphi_n(x)\partial^{\alpha}f(x) - \partial^{\alpha}f(x) \right\vert &\leq \left\langle x \right\rangle^{k} \left( \left\langle x \right\rangle^{-k-1}\norm{f}_{\alpha,k+1} \right)\left\vert \varphi_n(x)-1 \right\vert\\
+                                                                                                                                           &\leq \left\langle x \right\rangle^{-1} \norm{f}_{\alpha,k+1},
+  \end{align*}
+  so that
+  \begin{align*}
+    \left\langle x \right\rangle^{k} \left\vert \partial^{\alpha}f_n(x) - \partial^{\alpha}f(x) \right\vert &\leq \frac{C + \norm{f}_{\alpha,k+1}}{\left\langle x \right\rangle}.
+  \end{align*}
+  Since for any $x\notin \left( -n,n \right)^{d}$, we have $\left\langle x \right\rangle\geq \left\vert x \right\vert\geq n$, it follows that
+  \begin{align*}
+    \norm{f_n-f}_{\alpha,k} &= \sup_{x\in \R^d} \left\langle x \right\rangle^{k} \left\vert \partial^{\alpha}f_n(x) - \partial^{\alpha}f(x) \right\vert\\
+                            &\leq \frac{C_1 + \norm{f}_{\alpha,k}}{\left\langle x \right\rangle}\\
+                            &\leq \frac{C_1 + \norm{f}_{\alpha,k+1}}{n}\\
+                            &\xrightarrow{n\to\infty} 0.
+  \end{align*}
+\end{proof}
+\begin{corollary}
+  The space of tempered distributions, $\mathcal{S}\left( \R^d \right)^{\ast}$ is contained in the space of distributions $C_c^{\infty}\left( \R^d \right)^{\ast}$.
+\end{corollary}
+\begin{proof}
+  We have shown that the inclusion map $\varphi\colon C_c^{\infty}\left( \R^d \right)\rightarrow \mathcal{S}\left( \R^d \right)$ is linear and continuous, so the transpose $\varphi^{\ast}\colon \mathcal{S}\left( \R^d \right)^{\ast}\to C_c^{\infty}\left( \R^d \right)^{\ast}$ is linear and continuous. Our goal is to show the injectivity of the transpose map.
+
+  Yet, this follows from the fact that if $L\in \mathcal{S}\left( \R^d \right)^{\ast}$ is such that $\varphi^{\ast}\left( L \right) = 0$, then $L(f) = 0$ for all $f\in C_c^{\infty}\left( \R^d \right)$, but since $L$ is continuous and $C_c^{\infty}\left( \R^d \right)\subseteq \mathcal{S}\left( \R^d \right)$ is sequentially dense, we have that $L = 0$ so $\varphi^{\ast}$ is injective.
+\end{proof}
+
 \subsection{Classical Fourier Transform}%
 We will assume that $\K = \C$.
 \begin{definition}
