@@ -3,6 +3,11 @@
 \usepackage[uprightgreeks,noDcommand]{kpfonts}
 \renewcommand{\coloneq}{\coloneqq}
 \renewcommand{\eqcolon}{\eqqcolon}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\ca}{\mathcal}
+\newcommand{\brak}[1]{\langle #1 \rangle}
+\newcommand{\lin}{\overline}
+\usepackage{dsfont}
 %\usepackage{dsfont}
 %\renewcommand{\mathbb}{\mathds}
 \usepackage{homework}
@@ -15,7 +20,7 @@
 \frenchspacing
 
 \fancyhf{}
-\fancyhead[R]{Avinash Iyer}
+\fancyhead[R]{Avinash Iyer, Yizhen Li, and Atticus Yohn}
 \fancyhead[L]{Functional Analysis: Homework 1}
 \fancyfoot[C]{\thepage}
 
@@ -24,7 +29,133 @@
 \begin{document}
 \RaggedRight
 \section{Problem I}%
+\begin{problem}[Problem I.1]
+  Show that in a directed set $\left( I,\preceq \right)$, for all $n\geq 0$ and for all $i_1,\dots,i_n\in I$, there exists $k\in I$ such that $k\succeq i_1,\dots,k\succeq i_n$.
+\end{problem}
+\begin{solution}
+  Let $\left(I,\preceq\right)$ be a directed set, $n \geq 0$, and $i_1,\ldots,i_n\in I$.
 
+Let $k_1 = i_1$. Since $\left(I,\preceq\right)$ is a directed set, there is some $k_2\in I$ such that $k_1 \preceq k_2$ and $i_2\preceq k_2$. By the same reasoning, there is some $k_3\in I$ such that $k_2\preceq k_3$ and $i_3 \preceq k_3$. 
+
+  This process can be continued $n$ times to find some $k_n\in I$ such that $k_{n-1}\preceq k_n$ and $i_n\preceq k_n$.
+
+  Since $\left(I,\preceq\right)$ is a preordered set, $\preceq$ is transitive, so for any $j\in[n]$, $i_j\preceq k_{1,\ldots,j}\preceq k_{1,\ldots,j,j+1}\preceq\cdots\preceq k_{1,\ldots, n-1}\preceq k_n \Rightarrow i_j\preceq k_n$. In other words, there is some $k=k_n\in I$ such that $k\succeq i_1,\ldots, k\succeq i_n$.
+\end{solution}
+\begin{problem}[Problem I.2]
+  Let $J$ be a subset of a directed set $I$. We say $J$ is cofinal if for all $i\in I$, there exists $j\in J$ such that $i\preceq j$. We equip $J$ with the induced preorder inherited from $I$. Show that if $J$ is cofinal, then $J$ is also a directed set.
+\end{problem}
+\begin{solution}
+  Let $J$ be a cofinal subset of a directed set $I$.
+
+  It is clear that $\left(J,\preceq\right)$ is still a preordered set because if there were any $i,j,k\in J$ which did not satisfy the properties of reflexivity or transitivity, this would contradict that $\left(I,\preceq\right)$ is a preordered set.
+
+  For any $i,j\in J$, we know that $i,j \in I$. Since $\left(I,\preceq\right)$ is directed, there is then some $m\in I$ such that $i \preceq m$ and $j\preceq m$. But, $J$ is cofinal, so there must be some $k \in J$ such that $m \preceq k$. Then, since $\left(I,\preceq\right)$ is preordered, we know that $i\preceq k$ and $j\preceq k$.
+
+Finally, as $I \neq \emptyset$, we can take some $i\in I$. Since $J$ is cofinal, there must be some $j\in J$ such that $i \preceq j$, so we know that $J\neq\emptyset$ too.
+
+Thus, $\left(J,\preceq\right)$ is also a directed set.
+\end{solution}
+\begin{problem}[Problem I.3]
+  Show that for a net $\left( x_i \right)_i$ in a Hausdorff separated space $\left( X, \mathcal{T}_X \right)$, if it converges to some element $ \bar{x} $, then this element is unique.
+\end{problem}
+\begin{solution}
+  Let $\left(X, \mathcal{T}_X\right)$ be a Hausdorff separated space and $\left(x_i\right)_{i\in I}$ be a net converging to some $\bar x\in X$.
+
+  Suppose towards a contradiction that there is some other $\bar y \in X$ such that $\bar x\neq \bar y$ and $x_i\to \bar y$. Then, since $\left(X,\mathcal{T}_X\right)$ is Hausdorff, there are some $U, V \in \mathcal{T}_X$ such that $\bar x\in U$, $\bar y\in V$, and $U\cap V = \emptyset$.
+
+However, as $\left(x_i\right)_{i\in I}$ converges to both $\bar x$ and $\bar y$, there are some $k_{\bar x},k_{\bar y}\in I$ such that $i\succeq k_{\bar x} \Rightarrow x_i\in U$ and $j\succeq k_{\bar y} \Rightarrow x_j\in V$.
+
+Since $I$ is a directed set, there is some $N \in I$ with $N \succeq k_{\bar x}$ and $N \succeq k_{\bar y}$. In other words, we have that $x_N \in U$ and $x_N \in V$, which contradicts that $U\cap V = \emptyset$.
+
+Thus, $\bar x$ must be the unique element that $\left(x_i\right)_{i\in I}$ converges to.
+\end{solution}
+\begin{problem}[Problem I.4]
+  Consider a function $f\colon X\to Y$ between topological spaces. Let $ \bar{x}\in X $ and $\bar{y}\in Y$. We say $\lim_{x\to\bar{x}}f(x) = \bar{y}$ if and only if for all $V\in \mathcal{O}_Y\left(\bar{y}\right)$, there exists $U\in \mathcal{O}_X\left( \bar{x} \right)$ with $f\left( U\setminus \set{\bar{x}} \right)\subseteq V$. Define the auxiliary function $ \tilde{f}\colon X\to Y $ by letting $ \tilde{f}(x) = f(x) $ if $x\neq \bar{x}$ and $ \tilde{f}\left( \bar{x} \right) = \bar{y} $. Show that $\lim_{x\to \bar{x}}f(x) = \bar{y}$ if and only if $ \tilde{f} $ is continuous at $\bar{x}$.
+\end{problem}
+\begin{solution}
+  Let $f\colon X\to Y$ be a function between topological spaces as above with $\bar x\in X$ and $\bar y\in Y$. Define $\tilde{f}\colon X\to Y$ by $\tilde f(x) = f(x)$ for $x \neq \bar x$ and $\tilde f\left(\bar x\right) = \bar y$.
+
+  Suppose that $\lim_{x\to\bar x}f(x) = \bar y$. Then, for any $V\in \mathcal{O}_Y\left(\bar y\right)$, there is some $U\in\mathcal{O}_X\left(\bar x\right)$ such that $f\left(U\setminus \set{\bar x}\right)\subseteq V$. Clearly $\set{\bar y}\subseteq V$, so by definition of $\tilde f$, $\tilde f(U) = \tilde f(U\setminus \set{\bar x}) \cup \tilde f(\set{\bar x}) = f(U\setminus\set{\bar x}) \cup \set{\bar y} \subseteq V$. Thus, $\tilde f$ is continuous at $\bar x$.
+
+  On the other hand, if we suppose that $\tilde f$ is continuous at $\bar x$, then for any $V \in \mathcal{O}_Y\left(\tilde f\left(\bar x\right)\right) = \mathcal{O}_Y(\bar y)$, there is some $U\in\mathcal{O}_X(\bar x)$ such that $\tilde f(U) \subseteq V$. By definition of $\tilde f$, $\tilde f(U\setminus \set{\bar x}) = f(U\setminus \set{\bar x})$, so we have that $f(U\setminus\set{\bar x}) \subseteq \tilde f(U) \subseteq V$. Thus, $\lim_{x\to\bar x}f(x) = \bar y$.
+\end{solution}
+\begin{problem}[Problem I.5]
+  Show that $\lim_{x\to\bar{x}}f(x) = \bar{y}$ if and only if for all nets $\left( x_i \right)_i$ in $ X\setminus \set{\bar{x}} $ that converge to $\bar{x}$, we have that $\left( f\left( x_i \right) \right)_{i}$ converges to $\bar{y}$.
+\end{problem}
+\begin{solution}
+  Let $f\colon X\to Y$ and $\tilde f\colon X\to Y$ be functions between topological spaces as defined previously with $\bar x\in X$ and $\bar y \in Y$. We know from II.4 that $\lim_{x\to\bar x} f(x) = \bar y$ if and only if $\tilde f$ is continuous at $\bar x$. However, we also know that the continuity of $\tilde f$ at $\bar x$ is true if and only if for any net $\left(x_i\right)_{i\in I}$ in $X$ with $x_i\to \bar x$, then $\tilde f\left(x_i\right)\to \tilde f(\bar x) = \bar y$.
+
+In other words, to prove the desired statement we only need to show that for any net $\left(x_i\right)_{i\in I}$ in $X$ with $x_i\to \bar x$ we have $\tilde f\left(x_i\right)\to \bar y$ if and only if for any net $\left(x_i\right)_{i\in I}$ in $X\setminus \set{\bar x}$ with $x_i\to\bar x$ we have $f\left(x_i\right)\to \bar y$.
+
+The forward direction is clear because if any convergent net in $X$ implies that the image of the net under $\tilde f$ converges, then for any net $\left(x_i\right)_{i\in I}$ in $X\setminus\set{\bar x}$ (which is still a net in $X$) with $x_i\to \bar x$, we must have that $\tilde f\left(x_i\right)\to \bar y$. But, since the net is in $X\setminus\set{\bar x}$ we also have that $\tilde f\left(x_i\right) = f\left(x_i\right)$ for any $i\in I$, so in fact $f\left(x_i\right)\to\bar y$ as desired.
+
+Suppose on the other hand that we know any convergent net in $X\setminus \set{\bar x}$ implies the image of the net under $f$ converges and we are given some net $\left(x_i\right)_{i\in I}$ in $X$ with $x_i\to \bar x$. Let $J = \set{i \in I : x_i\neq \bar x}$.
+
+Suppose that $J$ is cofinal. As $x_i\to\bar x$, for any $U\in \mathcal{O}_X\left(\bar x\right)$, there is some $u\in I$ such that if $i \succeq u $, then$ x_i\in U$. As $J$ is cofinal, there is some $v \in J$ such that $v \succeq u$, so for any $j\in J$ with $j\succeq v$, we have $x_j\in U$. In other words, $\left(x_j\right)_j$ is a net in $X\setminus \set{\bar x}$ converging to $\bar x$. By assumption, we then have that $\left(f\left(x_j\right)\right)_{j\in J}\to \bar y$. Since $f\left(x_j\right) = \tilde f\left(x_j\right)$ for any $j\in J$ and $f\left(x_i\right) = \tilde f\left(x_i\right) = \bar y$ for any $i \in I\setminus J$, we then have that 
+\begin{align*}
+  \left(\tilde f\left(x_i\right)\right)_{i\in I}\to \bar y.
+\end{align*}
+
+If $J$ is not cofinal, then there is some $N\in I$ such that for any $j \in J$, $j \preceq N$. It is clear that $\left(x_i\right)_{N\preceq i\in I}$ is then a net in $X\setminus \set{\bar x}$ converging to $\bar x$. So, $\left(f\left(x_i\right)\right)_{N \preceq i\in I}\to \bar y$ and again we conclude that $\left(\tilde f\left(x_i\right)\right)_{i\in I}\to \bar y$.
+\end{solution}
+\begin{problem}[Problem I.6]
+  Let $Y$ be a subset of a topological space $\left( X,\mathcal{T}_X \right)$. Recall that closure is defined by $ \overline{Y} = \bigcap \set{F\in \mathcal{P}(X) : F\text{ is closed and }Y\subseteq F} $. Show that
+  \begin{align*}
+    \overline{Y} &= \set{x\in X : \text{ for all }U\in \mathcal{O}_X(x), U\cap Y \neq \emptyset}.
+  \end{align*}
+\end{problem}
+\begin{solution}
+  Let $Y$ be a subset of a topological space $(X,\mathcal T_X)$ and $\overline{Y} := \cap_{F\in\Gamma}F$ where 
+  \begin{align*}
+    \Gamma = \set{F\in \mathcal P(X): F^c\in \mathcal T_X \text{ and } Y\subseteq F}.
+  \end{align*}
+  Furthermore, denote $K = \set{x\in X: \text{ for all } U\in \mathcal{O}_X(x), U\cap Y \neq \emptyset}$.
+
+  Suppose that $x \in K$ and $F \in \Gamma$. Suppose towards a contradiction that $x \notin F$ so that $x\in F^c$. As $F\in \Gamma$, $F^c \in \mathcal T_X$, so it is a neighborhood of $x$, so $F^c \cap Y \neq \emptyset$ because $x \in K$. However, as $F\in \Gamma$, $Y\subseteq F \Rightarrow Y\cap F^c = \emptyset$, which is a contradiction. Thus, we must have that $x \in F$ for any $F\in \Gamma$, so $x \in \overline{Y} $. Thus, $ K\subseteq \overline{Y}$.
+
+Suppose on the other hand that $x\in \overline{Y}$ so that $x \in F$ for any $F \in \Gamma$. Suppose towards a contradiction that there is some $U \in \mathcal{O}_X(x)$ such that $U\cap Y = \emptyset$. Then, we have that $Y\subseteq U^c$ and $\left(U^c\right)^c\in \mathcal T_X$, so $U^c\in \Gamma$, but $x\notin U^c$ which contradicts that $x\in \overline{Y}$. 
+
+Thus, for any $U\in \mathcal{O}_X(x)$, we must have that $U\cap Y \neq \emptyset$, so $x\in K$ and $\overline{Y}\subseteq K$.
+
+Therefore,
+\begin{align*}
+ \overline{Y} = \set{x\in X: \text{ for all } U\in \mathcal{O}_X(x), U\cap Y \neq \emptyset}. 
+\end{align*}
+\end{solution}
+\begin{problem}[Problem I.7]
+  Show that $x\in \overline{Y}$ if and only if there exists a net $\left( y_i \right)_i$ contained in $Y$ such that $\lim_{i} y_i = x$.
+\end{problem}
+\begin{solution}
+  Let $Y$ be a subset of a topological space $(X,\mathcal T_X)$.
+
+Suppose that there exists some net $\left(y_i\right)_{i\in I}$ in $Y$ with $\lim_iy_i=x$. Then, for all $U\in \mathcal{O}_X(x)$, there is some $N\in I$ such that for all $i\succeq N $, $ y_i\in U$. Thus, $y_N\in U $, so that $ U\cap Y \neq \emptyset $. Thus, $ x\in \overline{Y}$.
+
+Now, suppose otherwise that $x\in \overline{Y}$. If $x \in Y$, then clearly the sequence $\left(y_i\right)_{i\in\N}$ where $y_i = x$ for all $i\in\N$ is a net in $Y$ with $\lim_iy_i=x$, so suppose that $x \notin Y$. 
+
+The function $\chi\colon X\to\set{0,1}$ given by $\chi(u) = \mathds{1}\set{u\in Y}$ is then not continuous at $x$ because $\set{0}$ is an open neighborhood of $\chi(x) = 0$. Yet, for any $U \in \mathcal{O}_X(x)$, as $x\in \overline{Y}$, $U\cap Y \neq \emptyset $, so $ \chi(U) = \set{0,1} \nsubseteq \set{0}$.
+Let $(I,\preceq)$ be the directed set given by 
+\begin{align*}
+   I = \set{\left(U,z\right) \in \mathcal{O}_X(x)\times X: z\in U} 
+\end{align*}
+with the relation
+\begin{align*}
+   \left(U_1,x_1\right) \preceq \left(U_2,x_2\right) \text{ if and only if } U_2\subseteq U_1 
+\end{align*}
+and define the net from $I$ to $X$ by $\left(U,z\right)\mapsto z$.
+
+By construction, the above net converges to $x$. However, for any $\left(U,z\right)\in I$, since $U\cap Y \neq \emptyset$, as $x\in\overline{Y}$, we can take some $w\in Y$ such that $\left(U,w\right)\in I$. As such, $(U,z)\preceq (U,w)$ and $\chi(w) = 1$. In other words, the set $J = \set{i\in I: \chi\left(x_i\right) \neq 0}$ is a cofinal subset of $I$.
+
+Let $\left(y_j\right)_{j\in J}$ be the net on $X$ above restricted to $J$. By construction, $\chi\left(y_j\right) \neq 0$ for any $j\in J$, so $\left(y_j\right)_{j\in J}$ is actually a net on $Y$. Furthermore, since $\left(x_i\right)_{i\in I}$ converged to $x$, for any $U \in \mathcal{O}_X(x)$, there is some $N\in I$ such that for all $i\succeq N $, $ x_i\in U$. As $J$ is a cofinal subset of $I$, there is some $M \in J$ such that $N \preceq M$, so for any $j\in J$ with $j \succeq M$, we must have that $y_j\in U$. In other words, $\lim_jy_j= x$.
+\end{solution}
+
+\begin{problem}[Problem I.8]
+  Let $\left( x_i \right)_i$ be a net in a topological space $\left( X,\mathcal{T}_X \right)$ converging to some element $\bar{x}$. Let $F$ be a closed subset such that there exists $k\in I$ such that for all $i\in I$ with $i\succeq k$, $x_i\in F$. Prove that one can ``pass to the limit'' and affirm that $\bar{x}\in F$.
+\end{problem}
+\begin{solution}
+Let $\left(x_i\right)_{i\in I}$ be a net in some topological space $\left(X,\mathcal T_X\right)$ which converges to some element $\bar x$ and $F\subseteq X$ be a closed subset such that there exists $k \in I$ such that for all $ i\in I$ with $i\succeq k $,  $ x_i\in F$.
+
+Let $J = \set{i\in I : i \succeq k}$. It is clear that $\left(x_i\right)_{i\in J}$ is still a net converging to $\bar x$ and $\left(x_i\right)_{i\in J}$ is contained within $F$. Since $F$ is closed, $F = \overline{F}$, so we obtain that $\bar x \in F$ by I.7.
+\end{solution}
 \section{Problem II}%
 \begin{problem}[Problem II.1]
   Let $V$ and $W$ be $\K$-TVSs, and let $T\colon V\rightarrow W$ be a continuous linear map. Show that if $\left( x_i \right)_i$ is a Cauchy net in $V$, then $\left( Tx_i \right)_i$ is a Cauchy net in $W$.
@@ -217,15 +348,298 @@
   Show that $A\subseteq s\left( \N,\K \right)$ is bounded if and only if there exists $\omega\in s_{+}\left( \N,\K \right)$ such that for all $x = \left( x_n \right)_n\in A$ and for all $n\geq 0$, we have $\left\vert x_n \right\vert\leq \omega_n$. Show that a similar result holds for the finitely supported sequences.
 \end{problem}
 \begin{solution}
-  Let $A$ be a bounded subset of $s\left( \N,\K \right)$. Since $s\left( \N,\K \right)$ with the given family of seminorms is metrizable with the metric
+  The solution to this problem is detailed at the beginning of the next problem.
+\end{solution}
+\section{Problem IV}%
+Throughout the proof, write \(s_0=s_0(\mathbb{N},\mathbb{K})\), \(s=s(\mathbb{N},\mathbb{K})\), and \(s'=s'(\mathbb{N},\mathbb{K})\), where \(\mathbb{K}=\mathbb{R}\) or \(\mathbb{C}\).
+
+For these spaces, we add a $+$ in the subscript when we intersecting them with \([0,\infty)^{\mathbb{N}}\) and call them the positive part.
+
+Recall that \(\langle n\rangle=(1+n^2)^{1/2}\) and
+\begin{align*}
+  \norm{x}_k &=\sup_{n\geq 0}\langle n\rangle^k\left\vert x_n \right\vert\\
+  \norm{x}_{\omega} &- \sup_{n\geq 0} \omega_n \left\vert x_n \right\vert.
+\end{align*}
+The topology of \(s\) is generated by \(\|\cdot\|_k\).
+
+By Problem II.6, the topology of \(s_0\) is equivalently generated by \(\|\cdot\|_\omega\), with \(\omega\in[0,\infty)^{\mathbb{N}}\).
+
+On \(s'\), the defining weights are \(\omega\in s_+\); on \(\mathbb{K}^{\mathbb{N}}\), the defining seminorms are \(x\mapsto\left\vert x_n \right\vert\). All continuous duals carry the strong topology, generated by
+\begin{align*}
+  \norm{L}_B=\sup_{y\in B}\left\vert L(y) \right\vert,
+\end{align*}
+where \(B\) ranges over the nonempty bounded subsets of the original space.
+
+We first characterize bounded sets in the four sequences spaces above. We claim that for each of the four spaces, a nonempty subset \(B\) is bounded if and only if there is a nonnegative sequence \(b=\left(b_n\right)_{n\geq 0}\) such that \(|x_n|\le b_n\) for all \(x\in B\) and all \(n\), with \(b\) belonging to their positive part.
+
+We prove all four statements directly from the fact that boundedness is equivalent to uniform boundedness of every defining seminorm on \(B\).
+
+First, sets dominated by a sequence \(b\) is obviously bounded since their defining seminorms are bounded by those of $b$.
+
+Conversely, suppose that \(B\) is bounded and set \(b_n=\sup_{x\in B}\left\vert x_n \right\vert\).
+
+Coordinate projections are continuous in all four spaces, so each \(b_n\) is finite. This proves the assertion for \(\mathbb{K}^{\mathbb{N}}\).
+
+If \(B\subseteq s\), interchanging the two suprema gives
+\begin{align*}
+  \norm{b}_k & =\sup_{x\in B}\norm{x}_k\\
+             &<\infty 
+\end{align*}
+for any $k\geq 0$, so \(b\in s_+\).
+
+If \(B\subseteq s_0\) and \(b\) had infinite support, we could choose strictly increasing indices \(n_j\) and \(x^{(j)}\in B\), for \(j\ge1\), with \(x^{(j)}_{n_j}\ne0\). Define \(\omega_{n_j}=j/|x^{(j)}_{n_j}|\) and \(\omega_n=0\) elsewhere. This is an admissible weight for \(s_0\), but \(\|x^{(j)}\|_\omega\ge j\), contradicting boundedness. Thus \(b\in s_{0,+}\).
+
+Finally, if \(B\subseteq s'\), then for every \(\omega\in s_+\),
+\begin{align*}
+  \sup_{n\ge0}\omega_nb_n &=\sup_{x\in B}\norm{x}_\omega\label{eq:envelope-bound}\tag{1}\\
+                          &<\infty.
+\end{align*}
+If \(b\) did not have polynomial growth, then \(\left(\langle n\rangle^{-j}b_n\right)_n\) would be unbounded for each \(j\ge1\). We can choose strictly increasing \(n_j\) such that \(b_{n_j}>j\langle n_j\rangle^j\). Set \(\omega_{n_j}=\langle n_j\rangle^{-j}\) and \(\omega_n=0\) elsewhere.
+
+For every fixed \(k\ge0\),
+\begin{align*}
+  \norm{\omega}_k &=\sup_{j\ge1}\langle n_j\rangle^{k-j}\label{eq:sparse-weight}\tag{2}\\
+                  &<\infty.
+\end{align*}
+Hence \(\omega\in s_+\), whereas \(\omega_{n_j}b_{n_j}>j\), contradicting \eqref{eq:envelope-bound}. This completes the proof of the bounded set characterizations.
+
+We need one more result before starting the proof. For \(x\) in any of these spaces, let \(x^{(N)}=\sum_{n=0}^N x_ne_n\), we assert its truncations converge to \(x\) in that space. In the product topology, each coordinate eventually agrees with that of \(x\); in \(s_0\), the whole sequence eventually equals \(x\).
+
+If \(x\in s\), then
+\begin{align*}
+  \norm{x-x^{(N)}}_{k} &\le\frac{\|x\|_{k+1}}{\langle N+1\rangle}\\
+                       &\to 0.
+\end{align*}
+If \(x\in s'\), choose \(\left\vert x_n \right\vert\le C\langle n\rangle^m\). For \(\omega\in s_+\),
+\begin{align*}
+  \norm{x-x^{(N)}}_{\omega} &\le C\sup_{n>N}\omega_n\langle n\rangle^m\\
+                            &\leq \frac{C\norm{\omega}_{m+1}}{\langle N+1\rangle}\\
+                            &\to 0.
+\end{align*}
+In particular, \(s_0\) is dense in all four spaces, and every continuous linear form satisfies
+\begin{align*}
+  L(y)=\lim_{N\to\infty}\sum_{n=0}^N L(e_n)y_n.\label{eq:truncation}\tag{3}
+\end{align*}
+Thus its coefficients \(L(e_n)\) determine it uniquely.
+
+For the converse constructions, define
+\begin{align*}
+  L_a(y)&=\langle a,y\rangle\\
+        &=\sum_{n\ge0}a_ny_n. 
+\end{align*}
+The pairing is bilinear. Set \(A=\sum_{n\ge0}\langle n\rangle^{-2}<\infty\). The following estimates show that each \(L_a\) is a continuous linear form on the corresponding space:
+\begin{itemize}
+ \item If \(a\in\mathbb{K}^{\mathbb{N}}\) and \(y\in s_0\), the sum is finite. With \(\omega_n=2^{n+1}|a_n|\),
+   \begin{align*}
+     \sum_{n\geq 0} \left\vert a_ny_n \right\vert &\leq \sum_{n\geq 0} 2^{-n-1} \norm{y}_{\omega}\\
+                                                  &= \norm{y}_{\omega}.
+   \end{align*}
+ \item If \(a\in s_0\) and \(y\in\mathbb{K}^{\mathbb{N}}\), choose \(N\) such that \(a_n=0\) for \(n>N\). Then
+   \begin{align*}
+     \sum_{n\geq 0} \left\vert a_ny_n \right\vert &\leq \left( \sum_{n=0}^{n}\left\vert a_n \right\vert \right) \max\set{\left\vert y_n \right\vert : 0\leq n \leq N}.
+   \end{align*}
+ \item If \(a\in s'\) and \(y\in s\), choose \(|a_n|\le C\langle n\rangle^m\). Then
+   \begin{align*}
+     \sum_{n\geq 0} \left\vert a_ny_n \right\vert &\leq C\sum_{n\geq 0} \left\langle n \right\rangle^{m}\left\vert y_n \right\vert\\
+                                                  &\leq CA \norm{y}_{m+2}
+   \end{align*}
+ \item If \(a\in s\) and \(y\in s'\), put \(\omega_n=\langle n\rangle^2|a_n|\). Since \(\|\omega\|_k=\|a\|_{k+2}<\infty\), we have \(\omega\in s_+\), and
+   \begin{align*}
+     \sum_{n\geq 0} \left\vert a_ny_n \right\vert &= \sum_{n\geq 0} \left\langle n \right\rangle^{-2}\omega_n\left\vert y_n \right\vert\\
+                                                  &\leq A\norm{y}_{\omega}
+   \end{align*}
+\end{itemize}
+These estimates prove absolute convergence and continuity of \(L_a\) in each case. Moreover, \(L_a(e_n)=a_n\). Consequently, once the coefficient sequence of a continuous linear functional \(L\) is shown to belong to the indicated space, \eqref{eq:truncation} gives \(L=L_a\). The corresponding coefficient map is then a linear bijection with inverse \(a\mapsto L_a\), and the required pairing formula follows. We will use this observation in parts 1, 2, 4, and 5. The continuity and well-definedness of these bijection and their inverse will be checked separately.
+\begin{problem}[Problem IV.1]
+  Show that the map $\phi$ from the strong topological dual $s_0\left( \N,\K \right)'$ of the space $s_0\left( \N,\K \right)$ to $\K^{\N}$ which sends a linear form $L$ to the sequence $\left( L\left( e_n \right) \right)_{n\geq 0}$ is a TVS isomorphism.
+\end{problem}
+\begin{solution}
+  For every \(n\), the set \(\{e_n\}\) is bounded in \(s_0\), and
   \begin{align*}
-    d\left( x,y \right) &= \sum_{k=0}^{\infty} 2^{-k} \min\left( 1,\rho_k\left( x-y \right) \right),
+    \left\vert \phi(L)_n \right\vert= \norm{L}_{\set{e_n}}
   \end{align*}
-  there is some $r > 0$ such that $A\subseteq U\left( 0,r \right)$. The latter set consists of all sequences $\left( u_n \right)_n$ such that
+Thus \(\phi\) is continuous for the product topology. For the inverse, let \(B\subseteq s_0\) be nonempty and bounded. By the bounded set characterization above, choose \(b\in s_{0,+}\) such that \(|y_n|\le b_n\) for all \(y\in B\), and choose \(N\) such that \(b_n=0\) for \(n>N\). Then
+\begin{align*}
+  \norm{L_a}_{B} &\leq \sum_{n=0}^{N} b_n\left\vert a_n \right\vert.
+\end{align*}
+The last seminorm is continuous for the product topology, so \(\phi^{-1}\) is continuous.
+\end{solution}
+\begin{problem}[Problem IV.2]
+  Show that the map $\psi$ from the strong topological dual $\left( \K^{\N} \right)'$ to $s_0\left( \N,\K \right)$ which sends a linear form $L$ to the sequence $\left( L\left( e_n \right) \right)_{n\geq 0}$ is a TVS isomorphism. Also, show for all $L\in \left( \K^{\N} \right)'$ and all $y\in \K^{\N}$ that $L(y) = \iprod{\psi(L)}{y}$.
+\end{problem}
+\begin{solution}
+  For \(L\in(\mathbb{K}^{\mathbb{N}})'\), continuity gives \(C>0\) and \(N\ge0\) such that
   \begin{align*}
-    d\left( 0,u \right) &= \sum_{k=0}^{\infty} 2^{-k} \max\left( 1, \rho_k\left( u \right) \right)\\
-                        &< r.
+    \left\vert L(y) \right\vert &\leq C\max\set{\left\vert y_n \right\vert : 0\leq n \leq N}.
   \end{align*}
-  Let $r_0 = \inf_{r} \set{r : A\subseteq U\left( 0,r \right)}$. Then, we choose $\omega_n\geq 0$.
+  Thus \(L\left(e_n\right)=0\) for \(n>N\), so \(\psi(L)\in s_0\). For any \(\omega\in[0,\infty)^{\mathbb{N}}\), the set \(B_\omega=\{\omega_ne_n:n\ge0\}\) is dominated by \(\omega\), hence bounded in \(\mathbb{K}^{\mathbb{N}}\). Then
+  \begin{align*}
+    \norm{\psi(L)}_\omega&=\sup_{n\ge0}\omega_n\left\vert L\left(e_n\right) \right\vert\\
+                         &=\norm{L}_{B_\omega},   
+  \end{align*}
+  so \(\psi\) is continuous.
+
+  For the inverse, let \(B\subset\mathbb{K}^{\mathbb{N}}\) be nonempty and bounded. Choose a nonnegative sequence \(b\) dominating \(B\), and set \(\omega_n=2^{n+1}b_n\). Then
+  \begin{align*}
+    \norm{L_a}_{B} &\leq \sum_{n\geq 0} b_n\left\vert a_n \right\vert\\
+                   &\leq \sum_{n\geq 0} 2^{-n-1} \norm{a}_{\omega}\\
+                   &= \norm{a}_{\omega},
+  \end{align*}
+  so \(\psi^{-1}\) is continuous.
+\end{solution}
+\begin{problem}[Problem IV.3]
+  Let us introduce a new space of sequences $s'\left( \N,\K \right)$, which are the sequences $x = \left( x_n \right)_{n\geq 0}\in \K^{\N}$ such that there exists $k\in \N$ and $C\geq 0$ such that for all $n\in \N$, $\left\vert x_n \right\vert\leq C \left\langle n \right\rangle^{k}$.
+
+  On it, we define the seminorms $\norm{x}_{\omega} = \sup_{n\geq 0} \omega_n\left\vert x_n \right\vert$ indexed by $\omega\in s_{+}\left( \N,\K \right)$. Show that $s'\left( \N,\K \right)$ is not metrizable.
+\end{problem}
+\begin{solution}
+  Suppose, for a contradiction, that a countable subset of the defining seminorms generates the topology of \(s'\). Write its weights as \((\omega^{(j)})_{j\ge1}\subseteq s_+\).
+
+  Consider all positive integer combinations of these weights as \((a^{(j)})_{j\ge1}\subseteq s_+\). Choose strictly increasing \(n_j\) such that \(\langle n_j\rangle>\|a^{(j)}\|_{j+1}\). Then
+  \begin{align*}
+    a_{n_j}^{(j)} &\leq \norm{a^{(j)}}_{j+1} \left\langle n_j \right\rangle^{-j-1}\\
+                  &< \left\langle n_j \right\rangle^{-j}.
+  \end{align*}
+Set \(\omega_{n_j}=\langle n_j\rangle^{-j}\) and \(\omega_n=0\) elsewhere. As in \eqref{eq:sparse-weight}, \(\omega\in s_+\). By the seminorm criterion, there are \(c_i>0\) and a finite nonempty set \(F\) such that
+\begin{align*}
+  \norm{x}_{\omega} &\leq \sup_{i\in F}c_i \norm{x}_{\omega^{(i)}}
+\end{align*}
+for any $x\in s'$.
+
+Taking \(x=e_n\), we get
+\begin{align*}
+  \omega_n &\leq \sum_{i\in F} C_i \omega^{(i)}_{n}.
+\end{align*}
+The weight on the right is one of the listed combinations, say \(a^{(r)}\). But \(\omega_{n_r}=\langle n_r\rangle^{-r}>a^{(r)}_{n_r}\), a contradiction. By the metrizability criterion for locally convex spaces, \(s'\) is not metrizable.
+\end{solution}
+\begin{problem}[Problem IV.4]
+  Show that the map $\theta$ from $s\left( \N,\K \right)'$ to $s'\left( \N,\K \right)$ which sends a linear form $L$ to the sequence $\left( L\left( e_n \right) \right)_{n\geq 0}$ is a TVS isomorphism. Also, show that for all $L\in s\left( \N,\K \right)'$ and all $y\in s\left( \N,\K \right)$ that $ L(y) = \iprod{\theta(L)}{y} $.
+\end{problem}
+\begin{solution}
+For \(L\in(s)'\), continuity gives \(C>0\) and \(m\ge0\) such that
+\begin{align*}
+  \left\vert L(y) \right\vert &\leq C\norm{y}_{m}.
+\end{align*}
+Thus \(|L(e_n)|\le C\langle n\rangle^m\), so \(\theta(L)\in s'\). For any \(\omega\in s_+\), the set \(B_\omega=\{\omega_ne_n:n\ge0\}\) is dominated by \(\omega\), hence bounded in \(s\). Then
+\begin{align*}
+  \norm{\theta(L)}_{\omega} &= \sup_{n\geq 0} \omega_n \left\vert L\left( e_n \right) \right\vert\\
+                            &= \norm{L}_{B_{\omega}},
+\end{align*}
+so \(\theta\) is continuous. For the inverse, let \(B\subseteq s\) be nonempty and bounded. Choose \(b\in s_+\) dominating \(B\), and set \(\omega_n=\langle n\rangle^2b_n\). Since \(\|\omega\|_k=\|b\|_{k+2}<\infty\), we have \(\omega\in s_+\). Then
+\begin{align*}
+  \norm{L_a}_{B} &\leq \sum_{n\geq 0} \left\vert a_n \right\vert b_n\\
+                 &= \sum_{n\geq 0} \left\langle n \right\rangle^{-2} \omega_n \left\vert a_n \right\vert\\
+                 &\leq A\norm{a}_{\omega},
+\end{align*}
+so \(\theta^{-1}\) is continuous.
+\end{solution}
+\begin{problem}[Problem IV.5]
+  Show that the map $\nu$ from the strong topological dual $\left( s'\left( \N,\K \right) \right)'$ to $s\left( \N,\K \right)$ which sends a linear form $L$ to the sequence $\left( L\left( e_n \right) \right)_{n\geq 0}$ is a TVS isomorphism. Also, show that for all $L\in \left( s'\left( \N,\K \right) \right)'$ and all $y\in s'\left( \N,\K \right)$ that $L(y) = \iprod{\nu(L)}{y}$.
+\end{problem}
+\begin{solution}
+  For every \(k\), the set \(B_k=\{\langle n\rangle^ke_n:n\ge0\}\) is dominated by the polynomial growth sequence \((\langle n\rangle^k)_n\), hence bounded in \(s'\). For \(L\in(s')'\), we have
+  \begin{align*}
+    \norm{\nu\left( L \right)}_{k} &= \sup_{n\geq 0} \left\langle n \right\rangle^{k} \left\vert L\left( e_n \right) \right\vert\\
+                                   &= \norm{L}_{B_k}\\
+                                   &< \infty.
+  \end{align*}
+Thus \(\nu(L)\in s\), and the same equality proves that \(\nu\) is continuous. For the inverse, let \(B\subseteq s'\) be nonempty and bounded. By the bounded set characterization above, there are \(C>0\) and \(m\ge0\) such that \(|y_n|\le C\langle n\rangle^m\) for all \(y\in B\). Then
+\begin{align*}
+  \norm{L_a}_{B} &\leq C\sum_{n\geq 0} \left\langle n \right\rangle^{m} \left\vert a_n \right\vert\\
+                 &\leq CA \norm{a}_{m+2}.
+\end{align*}
+so \(\nu^{-1}\) is continuous.
+\end{solution}
+\section{Problem V}%
+\begin{problem}
+  For any $d\geq 1$, we define the following generalization of $s\left( \N,\K \right)$ using multisequences (or multi-dimensional sequences). Let $s\left( \N^d,\K \right)$ be the vector space of multisequences $x = \left( x_{\alpha} \right)_{\alpha\in \N^d}$ such that for all $k\geq 0$,
+  \begin{align*}
+    \norm{x}_k &= \sup_{\alpha\in \N^d}\left\langle \alpha \right\rangle^{k} \left\vert x_{\alpha} \right\vert < \infty.
+  \end{align*}
+  Here, $ \left\langle \alpha \right\rangle $ is defined using the inclusion $\N^d\subseteq \R^d$ and the bracket on $\R^d$. We set the locally convex topology defined by the seminorms $\norm{\cdot}_{k}$ for each $k\in \N$. Show that for any $d\geq 1$, $s\left( \N^d,\K \right)$ is isomorphic as a topological vector space to $s\left( \N,\K \right)$.
+\end{problem}
+\begin{solution}
+Let $d \geq 1$ and $s\left(\N^d,\K\right)$ be the vector space of multisequences $x = \left(x_\alpha\right)_{\alpha\in\N^d}\in\K^{\N^d}$ such that for any integer $k\geq 0$,
+\begin{align*}
+ \norm{x}_k \coloneq \sup_{\alpha\in\N^d}\brak{\alpha}^k\left\vert x_\alpha \right\vert < \infty 
+\end{align*}
+where $\brak{\alpha}$ is defined using the inclusion $\N^d\subseteq \R^d$ and the bracket of $\R^d$.
+
+Define $p:\N^2\to\N$ by $p(m,n) = \frac{(m+n)(m+n+1)}{2}+n$. For any $k\in\N$, choose $s\in \N$ such that 
+\begin{align*}
+   \frac{s(s+1)}{2} \leq k \leq s+\frac{s(s+1)}{2},
+\end{align*}
+which is clearly guaranteed to exist because we can always find $s$ such that $s(s+1)/2$ is less than $k$ and $s+s(s+1)/2$ is at least one greater than $s(s+1)/2$. This condition is equivalent to $0 \leq k - s(s+1)/2 \leq s$. By the well-ordering principle, there exists a minimal such $s\in\N$ such that this is true. 
+
+If there were some other $l\in\N$ such that $0 \leq k - l(l+1)/2 \leq l$, then we must have that $l > s $, or that$ l = s + u$ for some $0\neq u\in \N$. Then, $0 \leq k - (s+u)(s+u+1)/2 $, meaning $ u(u+1)/2 + s \leq k - s(s+1)/2$, which contradicts that $k - s(s+1)/2 \leq s$. In other words, for each $k\in\N$, there is a unique $s\in\N$ such that $s(s+1)/2 \leq k \leq s+s(s+1)/2$.
+
+We may then take 
+\begin{align*}
+  n &= k - \frac{s(s+1)}{2}\\
+  m &= s - n = s+\frac{s(s+1)}{2} 
+\end{align*}
+(which are both positive integers according to the restrictions placed on $s$ above) so that $p(m,n) = s(s+1)/2 + k - s(s+1)/2 = k$. Since the value of $s$ is unique, $p^{-1}(k) = (k-s(s+1)/2, s+s(s+1)/2)$ is the well-defined inverse of $p$. As such, $p$ is a bijection from $\N^2$ to $\N$.\\
+
+We may then define $f:\N^d\to\N$ by 
+\begin{align*}
+ f(\alpha_1,\ldots,\alpha_d) = p(\alpha_1,p(\alpha_2,\ldots,p(\alpha_{d-1},\alpha_d)\ldots)). 
+\end{align*}
+Since $p$ is a bijection, if we denote $p^{-1}(k) = (p^{-1}_1(k), p^{-1}_2(k))$, then $f$ has the well-defined inverse
+\[
+f^{-1}(k) = (p^{-1}_1(k), p^{-1}_1(p^{-1}_2(k)),\ldots,p^{-1}_1(p^{-1}_2(\ldots p^{-1}_2(k))), p^{-1}_2(\ldots p^{-1}_2(k))).
+\]
+In other words, for any $k\in\N$, $f^{-1}(k) = \alpha \in \N^d$ where $\alpha_i = p^{-1}_1(p^{-1}_2(\ldots p^{-1}_2(k)))$ if $1\leq i < d$ and $\alpha_d = p^{-1}_2(\ldots p^{-1}_2(k))$ where in either case there are $i$ many total nested inverse functions of $p$ being applied to $k$. We then have that $f$ is then a bijection between $\N^d$ and $\N$.
+
+Finally, we define $F:s(\N^d,\K)\to s(\N,\K)$ by 
+\begin{align*}
+ F\left( \left(x_\alpha\right)_{\alpha\in\N^d} \right) = \left(x_{f(\alpha)}\right)_{f\left(\alpha\right)\in\N} 
+\end{align*}
+with its inverse similarly defined as 
+\begin{align*}
+ F^{-1}\left( (x_\beta)_{\beta\in\N} \right) = \left(x_{f^{-1}(\beta)}\right)_{f^{-1}(\beta)\in\N^d}. 
+\end{align*}
+It is clear that $F$ is then a bijection between $s\left(\N^d,\K\right)$ and $s(\N,\K)$.\\
+
+For any $\left(x_\alpha\right)_{\alpha\in\N^d},\left(y_\alpha\right)_{\alpha\in\N^d}\in\K^{\N^d}$ and $u,v\in\K$, we can define $z_\alpha = ux_\alpha + vy_\alpha$ so that
+\begin{align*}
+  F\left( u(x_\alpha)_{\alpha\in\N^d} + v(y_\alpha)_{\alpha\in\N^d} \right) &= F\left( (z_\alpha)_{\alpha\in\N^d} \right)\\
+ &= (z_{f(\alpha)})_{f(\alpha)\in\N} \\
+ &= u(x_{f(\alpha)})_{f(\alpha)\in\N} + v(y_{f(\alpha)})_{f(\alpha)\in\N}\\
+ & = uF\left( (x_\alpha)_{\alpha\in\N^d}] + vF[(y_\alpha)_{\alpha\in\N^d} \right).
+\end{align*}
+shows the map is linear.
+
+We here note that for any $m,n\in\N$, $p(m,n) \geq (m+n)(m+n+1)/2 $, meaning $ \left( p(m,n) \right)^2 \geq (m+n)^2(m+n+1)^2/4 \geq (m+n)^2 \geq m^2+n^2$, and so $\left( f(\alpha_1,\ldots,\alpha_d) \right) \geq \alpha_1^2+\cdots +\alpha_d^2$. Similarly, $p(m,n) \leq (m+n+1)^2$, so applying this bound recursively in the definition of $f$, we find that $\left( f(\alpha_1,\ldots,\alpha_d) \right) \leq C(1+\alpha_1^{2^d}+\cdots+\alpha_d^{2^d})$ for some constant $C\in \N$. In other words, for any $\alpha\in\N^d$, we have that
+\begin{align*}
+   \brak{\alpha} \leq \brak{f\left(\alpha\right)} \leq C\brak{\alpha}^d. 
+\end{align*}
+If $(x_\alpha)_{\alpha\in\N^d}\in s(\N^d,\K)$, then we have that
+\begin{align*}
+ \norm{(x_\alpha)_{\alpha\in\N^d}}_k = \sup_{\alpha\in\N^d}\brak{\alpha}^k|x_\alpha| < \infty 
+\end{align*}
+for any $k \geq 0$, so
+\begin{align*}
+\norm{F[(x_\alpha)_{\alpha\in\N^d}]}_k &= \sup_{f(\alpha)\in\N}\brak{f(\alpha)}^k\left\vert x_{f(\alpha)} \right\vert\\
+                                       &\leq \sup_{\alpha\in\N^d}C\brak{\alpha}^{dk}\left\vert x_\alpha \right\vert\\
+                                       &= C\norm{(x_\alpha)_{\alpha\in\N^d}}_{dk} \\
+                                       & < \infty.
+\end{align*}
+Thus, $F$ is continuous because any of the defining seminorms $\norm{F(\cdot)}_k$ on $s(\N,\K)$ can be bounded by the continuous seminorm $C\norm{\cdot}_{dk}$ on $s(\N^d,\K)$.
+
+Similarly, for any $(y_\alpha)_{\alpha\in\N} \in s(\N,\K)$,
+\begin{align*}
+  \norm{(y_\alpha)_{\alpha\in\N}}_k &= \sup_{\alpha\in\N}\brak{\alpha}^k\left\vert x_\alpha \right\vert \\
+                                    &< \infty 
+\end{align*}
+for any $k > 0$, so
+\begin{align*}
+\norm{F^{-1}[(y_\alpha)_{\alpha\in\N}]}_k &= \sup_{f^{-1}(\alpha)\in\N^d}\brak{f^{-1}(\alpha)}^k\left\vert y_{f^{-1}(\alpha)} \right\vert\\
+                                          &\leq \sup_{\alpha\in\N}\brak{\alpha}^{k}\left\vert y_\alpha \right\vert \\
+                                          &= \norm{(y_\alpha)_{\alpha\in\N}}_{k}\\
+                                          &< \infty
+\end{align*}
+because $\brak{\beta}\leq \brak{f(\beta)}$ for any $\beta\in \N^d$ gives us that $\brak{f^{-1}(\alpha)}\leq \brak{\alpha}$ for any $\alpha\in\N$ because $f$ is a bijection. Thus, $F^{-1}$ is also continuous because any of the defining seminorms $\norm{F^{-1}(\cdot)}_k$ on $s(\N^d,\K)$ can be bounded by the continuous seminorm $\norm{\cdot}_k$ on $s(\N,\K)$.
+
+Since $F$ is a linear homeomorphism between $s(\N^d,\K)$ and $s(\N,\K)$, it is a TVS isomorphism.
 \end{solution}
 \end{document}
