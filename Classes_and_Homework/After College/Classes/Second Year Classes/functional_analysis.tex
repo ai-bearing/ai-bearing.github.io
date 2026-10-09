@@ -70,6 +70,7 @@ In the special case that $L = \id_V$, then the kernel $K\left( x,y \right)$ is g
     where we have $\left[ 0 \right] = \emptyset$.
   \item If $A$ is a finite set, then $\left\vert A \right\vert$ is the cardinality of $A$. 
   \item Generally we will denote by $ \K $ for either $\R$ or $\C$.
+  \item If $V_1,\dots,V_n,W$ are topological vector spaces, we will write $ \mathcal{L}_n\left( V_1,\dots,V_n;W \right) $ to denote the space of (jointly) continuous multilinear maps $V_1\times\cdots\times V_n\to W$. If $n = 1$, we will just write $\mathcal{L}\left( V,W \right)$.
 \end{itemize}
 \section{Locally Convex Topological Vector Spaces}%
 Recall that if $X$ is a set, then $ \mathcal{T}\subseteq \mathcal{P}\left( \mathcal{P}\left( X \right) \right) $ is a topology on $X$ if it satisfies:
@@ -900,7 +901,7 @@ We will assume that $\K = \C$.
 
   Similarly, the map $ \mathcal{G} $ simply substitutes $i$ for $-i$, so that $\mathcal{G}$ is also continuous.
 \end{proof}
-The most important Fourier transform that we will compute is the Gaussian. That is, $f(x) = e^{-x^2/2}$.
+The most important Fourier transform that we will compute is the Gaussian. That is, $f(x) = e^{-\left\vert x \right\vert^2/2}$.
 \begin{theorem}
   If $f(x) = e^{-\left\vert x \right\vert^2/2}$ over $\R^d$, we have $\hat{f}(\xi) = \left( 2\pi \right)^{d/2}e^{-\xi^2/2}$.
 \end{theorem}
@@ -909,23 +910,23 @@ The most important Fourier transform that we will compute is the Gaussian. That 
   \begin{align*}
     \hat{f}(\xi) &= \int_{\R^d}^{} e^{-i \iprod{x}{\xi}} e^{-\left\vert x \right\vert^2/2}\:d^{d}x\\
                  &= \int_{\R^d}^{} \prod_{j=1}^{d}e^{-i\xi_jx_j-\left( x_j^2/2 \right)}\:d^{d}x\\
-                 &= \prod_{j=1}^{d} \int_{\R}^{} e^{-x^2/2 - i\xi x}\:dx.
+                 &= \prod_{j=1}^{d} \int_{\R}^{} e^{-\left\vert x \right\vert^2/2 - i \iprod{\xi}{x}}\:dx.
   \end{align*}
   Therefore, we reduce to the one-dimensional case. One can complete the square, yielding
   \begin{align*}
-    \int_{-\infty}^{\infty} e^{-x^2/2 - i\xi x}\:dx &= e^{-\xi^2/2} \int_{-\infty}^{\infty} e^{-\frac{1}{2}\left( x + i\xi \right)^2}\:dx\\
+    \int_{-\infty}^{\infty} e^{-\left\vert x \right\vert^2/2 - i\left\langle \xi, x \right\rangle}\:dx &= e^{-\xi^2/2} \int_{-\infty}^{\infty} e^{-\frac{1}{2}\left( x + i\xi \right)^2}\:dx\\
                                                     &= e^{-\xi^2/2} \lim_{A\rightarrow\infty}\int_{-A}^{A} e^{-\frac{1}{2}\left( x + i\xi \right)^2}\:dx
   \end{align*}
   Translating by $-i\xi$ and using the residue theorem on the resulting rectangular contour yields that the integral is the same as the original Gaussian integral.
 
   The second method follows by a Taylor expansion. By dominated convergence, we have
   \begin{align*}
-    \int_{-\infty}^{\infty} e^{-x^2/2 - i\xi x}\:dx &= \int_{-\infty}^{\infty} x^{n}e^{-x^2/2}\sum_{n=0}^{\infty} \frac{\left( i\xi \right)^{n}}{n!}\:dx\\
-                                                    &= \sum_{n=0}^{\infty} \frac{\left( i\xi \right)^{n}}{n!} \int_{-\infty}^{\infty} x^{n}e^{-x^2/2}\:dx.
+    \int_{-\infty}^{\infty} e^{-\left\vert x \right\vert^2/2 - i\left\langle \xi, x \right\rangle}\:dx &= \int_{-\infty}^{\infty} x^{n}e^{-\left\vert x \right\vert^2/2}\sum_{n=0}^{\infty} \frac{\left( i\left\vert \xi \right\vert \right)^{n}}{n!}\:dx\\
+                                                    &= \sum_{n=0}^{\infty} \frac{\left( i\left\vert \xi \right\vert \right)^{n}}{n!} \int_{-\infty}^{\infty} x^{n}e^{-\left\vert x \right\vert^2/2}\:dx.
   \end{align*}
   If $X$ is a random variable with standard normal distribution, we note that the integral evaluates to
   \begin{align*}
-    \int_{-\infty}^{\infty} x^{n}e^{-x^2}\:dx &= \left( 2\pi \right)^{1/2} \mathbb{E}\left[ X^{n} \right],
+    \int_{-\infty}^{\infty} x^{n}e^{-\left\vert x \right\vert^2}\:dx &= \left( 2\pi \right)^{1/2} \mathbb{E}\left[ X^{n} \right],
   \end{align*}
   while
   \begin{align*}
@@ -936,7 +937,7 @@ The most important Fourier transform that we will compute is the Gaussian. That 
   \end{align*}
   In particular, we have that
   \begin{align*}
-    \int_{-\infty}^{\infty} e^{-x^2/2-i\xi x}\:dx &= \left( 2\pi \right)^{1/2}\sum_{k=0}^{\infty} \frac{\left( -i \right)^{2k}\xi^{2k}}{\left( 2k \right)!} \frac{\left( 2k \right)!}{2^{k}k!}\\
+    \int_{-\infty}^{\infty} e^{-\left\vert x \right\vert^2/2-i\left\langle \xi,x \right\rangle}\:dx &= \left( 2\pi \right)^{1/2}\sum_{k=0}^{\infty} \frac{\left( -i \right)^{2k}\xi^{2k}}{\left( 2k \right)!} \frac{\left( 2k \right)!}{2^{k}k!}\\
                                                   &= \left( 2\pi \right)^{1/2} e^{-\xi^2/2}.
   \end{align*}
 \end{proof}
@@ -1420,5 +1421,68 @@ This map extends $\mathcal{F}$ on $\mathcal{S}\subseteq \mathcal{S}^{\ast}$. Not
                      &< \infty.
   \end{align*}
   This inequality automatically gives that $\varphi$ is an honest distribution.
+
+  Therefore, our goal is to compute the Fourier transform of $\varphi$. We start by observing that, by taking $u = t \left\vert \xi \right\vert^2$, we have that
+  \begin{align*}
+    \int_{0}^{\infty} e^{-t\left\vert \xi \right\vert^2} t^{\alpha/2-1}\:dt &= \int_{0}^{\infty} e^{-u}\left( \frac{1}{\left\vert \xi \right\vert^2} \right)^{\alpha/2-1}u^{\alpha/2-1}\:du\\
+                                                                            &= \frac{1}{\left\vert \xi \right\vert^{\alpha}} \int_{0}^{\infty} e^{-u}u^{\alpha/2-1}\:du\\
+                                                                            &= \frac{1}{\left\vert \xi \right\vert^{\alpha}}\Gamma\left( \frac{\alpha}{2} \right).
+  \end{align*}
+  Furthermore, we compute that
+  \begin{align*}
+    \mathcal{F}\left[ e^{-a \left\vert x \right\vert^2} \right]\left( \xi \right) &= \int_{\R^d}^{} e^{-i \iprod{\xi}{x} - a\left\vert x \right\vert^2}\:d^{d}x\\
+                                                           &= \left( 2a \right)^{-d/2}\int_{}^{} e^{-i \frac{\iprod{u}{\xi}}{\sqrt{2a}} - \left\vert u \right\vert^2/2}\:d^{d}u\\
+                                                           &= \left( 2a \right)^{-d/2} \left( 2\pi \right)^{d/2} e^{- \frac{1}{2}\left( \frac{\left\vert \xi \right\vert^2}{2a} \right)}\\
+                                                           &= \left( \frac{\pi}{a} \right)^{d/2} e^{- \frac{\left\vert \xi \right\vert^2}{4a}}.
+  \end{align*}
+  By the definition of $\mathcal{F}\left[ \varphi \right]$, we have
+  \begin{align*}
+    \iprod{f}{\mathcal{F}\left[ \varphi \right]} &= \iprod{\mathcal{F}\left[ f \right]}{\varphi}\\
+               &= \int_{\R^d\setminus \set{0}}^{} \frac{1}{\left\vert \xi \right\vert^{\alpha}}\hat{f}(\xi)\:d^{d}\xi\\
+               &= \int_{\R^d\setminus\set{0}}^{} \left( \frac{1}{\Gamma\left( \frac{\alpha}{2} \right)} \int_{\R^d}^{} e^{-t\left\vert \xi \right\vert^2}t^{\alpha/2 - 1}\:dt \right)\hat{f}(\xi)\:d^{d}\xi\\
+               &= \frac{1}{\Gamma\left( \alpha/2 \right)}\int_{\R^d\setminus\set{0}}^{} \int_{\R^d}^{} \hat{f}(\xi)e^{-t\left\vert \xi \right\vert^2}t^{\alpha/2-1}\:dt\:d^{d}\xi
+                 \intertext{Observe that}
+    \int_{\R^d}^{} \int_{0}^{\infty} \left\vert \frac{1}{\Gamma\left( \alpha/2 \right)}e^{-t\xi^2}t^{\alpha/2-1} \hat{f}(\xi) \right\vert\:dt\:d^{d}\xi&\leq \int_{\R^d\setminus \set{0}}^{}\frac{1}{\left\vert \xi \right\vert^{\alpha}}\left\vert \hat{f}(\xi) \right\vert \:d^{d}\xi,
+                 \intertext{so the integral is finite by Tonelli's theorem. By Fubini's theorem, we may switch the order of the integrand, giving}
+               &= \frac{1}{\Gamma\left( \alpha/2 \right)}\int_{0}^{\infty} \int_{\R^d\setminus\set{0}}^{} \hat{f}(\xi)e^{-t\left\vert \xi \right\vert^2}t^{\alpha/2-1}\:d^{d}\xi\:dt
+                 \intertext{Introducing a set of measure zero gives}
+               &= \int_{0}^{\infty} \left( \int_{\R^d}^{} e^{-t\left\vert \xi \right\vert^2}\hat{f}(\xi)\:d^{d}\xi \right)\frac{t^{\alpha/2-1}}{\Gamma\left( \alpha/2 \right)}\:dt\\
+               &= \int_{0}^{\infty} \left( \int_{\R^d}^{} \overline{e^{-t\left\vert \xi \right\vert^2}}\hat{f}(\xi)\:d^{d}\xi \right)\frac{t^{\alpha/2-1}}{\Gamma\left( \alpha/2 \right)}\:dt\\
+               &= \int_{0}^{\infty} \left( \int_{\R^d}^{} \overline{\mathcal{F}\left[ \left( 4t\pi \right)^{-d/2}e^{-\frac{\left\vert x \right\vert^2}{4t}} \right](\xi)}\hat{f}(\xi) \:d^{d}\xi \right)\frac{t^{\alpha/2-1}}{\Gamma\left( \alpha/2 \right)}\:dt
+                 \intertext{By Plancherel's Theorem, we get}
+               &= \int_{}^{} \left( \left( 2\pi \right)^{d} \int_{\R^d}^{} \left( 4t\pi \right)^{-d/2}e^{-\frac{\left\vert x \right\vert^2}{4t}}f(x)\:d^{d}x \right)\frac{t^{\alpha/2-1}}{\Gamma\left( \alpha/2 \right)}\:dt\\
+               &= \frac{\pi^{d/2}}{\Gamma\left( \alpha/2 \right)} \int_{0}^{\infty} \int_{\R^d}^{} t^{\alpha/2-1-d/2}e^{-\frac{\left\vert x \right\vert^2}{4t}}f(x)\:d^{d}x\:dt
+                 \intertext{By Fubini's Theorem and deleting a measure zero set, we get}
+               &= \frac{\pi^{d/2}}{\Gamma\left( \alpha/2 \right)} \int_{\R^d\setminus\set{0}}^{} \left( \int_{0}^{\infty} e^{-\frac{\left\vert x \right\vert^2}{4t}}t^{\frac{\alpha}{2}-\frac{d}{2}-1}\:dt \right)f(x)\:d^{d}x.
+                 \intertext{Using $v = \left\vert x \right\vert^2/4t$, we get}
+               &= \frac{\pi^{d/2}}{\Gamma\left( \alpha/2 \right)} \int_{\R^d\setminus\set{0}}^{} \left( \left\vert x \right\vert^{\alpha-d}2^{d-\alpha} \int_{0}^{\infty} v^{\frac{d-\alpha}{2}-1}e^{-v}\:dv \right)f(x)\:d^{d}x\\
+               &= \int_{\R^d\setminus\set{0}}^{} \left( \frac{\pi^{d/2}2^{d-\alpha}\Gamma\left( \frac{d-\alpha}{2} \right)}{\Gamma\left( \alpha/2 \right)}\frac{1}{\left\vert x \right\vert^{d-\alpha}} \right)f(x)\:dx\\
+               &= \iprod{f}{\mathcal{F}\left[ \varphi \right]}.
+  \end{align*}
+  The most important example is $d = 3$ and $\alpha = 2$. Then, $\frac{1}{\left\vert \xi \right\vert^2}$ maps to $\frac{2\pi^{d/2}\Gamma\left( 1/2 \right)}{\Gamma\left( 1 \right)}\frac{1}{\left\vert x \right\vert} = \frac{2\pi^2}{\left\vert x \right\vert}$.
+
+  In particular, concerning the Poisson equation $-\Delta \varphi = \rho$, one finds that $\varphi = \mathcal{F}^{-1}\left( \frac{1}{\left\vert \xi \right\vert^2} \right)\ast\rho$. Therefore, in three dimensions, we have
+  \begin{align*}
+    \varphi(y) &= \left( \frac{1}{\left( 2\pi \right)^3}\frac{2\pi^2}{\left\vert x \right\vert} \right)\ast \rho\\
+               &= \int_{\R^3\setminus\set{x}}^{} \frac{1}{4\pi \left\vert x-y \right\vert}\rho(y)\:d^{3}y.
+  \end{align*}
 \end{example}
+\section{Normed Vector Spaces}%
+Our main focus is going to be on Banach spaces.
+
+First, we note that if $V_1,\dots,V_n,W$ are locally convex topological vector spaces, then $\mathcal{L}_n\left( V_1,\dots,V_n;W \right)$ can be equipped with the topology given by
+\begin{align*}
+  \norm{M} &= \sup\set{ \tau\left( M\left( x_1,\dots,x_n \right) \right) : \tau\text{ a continuous seminorm on }W,\left( x_1,\dots,x_n \right)\in A_1\times\cdots\times A_n }.
+\end{align*}
+In particular, for $n = 1$ and $W = \C$, this gives the strong topology on the dual $V^{\ast}$. When $V_1,\dots,V_n,W$ are normed spaces, then the topology on $\mathcal{L}_n\left( V_1,\dots,V_n;W \right)$ is the operator norm topology.
+\begin{proposition}
+  If $V$ and $W$ are normed spaces, and $\mathcal{L}\left( V,W \right)$ is equipped with the operator norm topology, then if $W$ is complete, so is $\mathcal{L}\left( V,W \right)$ is complete.
+\end{proposition}
+\subsection{The Classic Theorems of Normed Spaces}%
+\begin{theorem}
+  If $V$ and $W$ are Banach spaces, and $T\colon V\to W$ is a surjective continuous linear map, then $T$ is an open map.
+\end{theorem}
+\begin{corollary}
+  If $T\colon V\to W$ is a continuous linear bijection of Banach spaces, $T$ is an isomorphism of topological vector spaces.
+\end{corollary}
 \end{document}
