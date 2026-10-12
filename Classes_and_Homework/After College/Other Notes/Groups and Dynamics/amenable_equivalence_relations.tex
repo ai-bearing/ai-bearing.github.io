@@ -1,0 +1,172 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage[uprightgreeks,noDcommand]{kpfonts}
+\renewcommand{\coloneq}{\coloneqq}
+\renewcommand{\eqcolon}{\eqqcolon}
+%\usepackage{dsfont}
+%\renewcommand{\mathbb}{\mathds}
+%\usepackage{homework}
+\usepackage{notes}
+
+\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+\addbibresource{../all_references.bib}
+
+\usepackage{parskip}
+\frenchspacing
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Amenability for Equivalence Relations}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Measure-Preserving Equivalence Relations}%
+\begin{definition}\hfill
+  \begin{itemize}
+    \item Given a Borel relation $R\subseteq X\times Y$, we define the sections
+      \begin{align*}
+        R_x &= \set{y\in Y : \left( x,y \right)\in R}\\
+        R^y &= \set{x\in X : \left( x,y \right)\in R}.
+      \end{align*}
+    \item We say a relation $Q\subseteq X\times Y$ is a \textit{graph} if, whenever $\left( x,y \right)$ and $\left( x,y' \right)$ are in $Q$, one has $y = y'$. Equivalently, a relation $Q\subseteq X\times Y$ is a graph if and only if it is equal to $\graph\left( f \right)$ for some partial function $f\colon \dom\left( f \right)\rightarrow \ran\left( f \right)$.
+    \item Given a relation $R\subseteq X\times Y$, the projection $\operatorname{proj}_X\left( R \right)$ is defined by
+      \begin{align*}
+        \operatorname{proj}_X\left( R \right) &= \set{x\in X : \text{ there exists }y\in Y\text{ such that }\left( x,y \right)\in R}.
+      \end{align*}
+  \end{itemize}
+\end{definition}
+We will black box the following two theorems. The proofs require deep results in descriptive set theory.
+\begin{theorem}[Lusin--Novikov Theorem]
+  Let $K\subseteq X\times Y$ be a relation. If every section $K_x$ is countable, then $\operatorname{proj}_X\left( K \right)\subseteq X$ is Borel, and there is a $Q\subseteq K$ such that $\operatorname{proj}_X\left( Q \right) = \operatorname{proj}_X\left( K \right)$. Equivalently, there is a Borel partial function $f\colon \operatorname{proj}_X\left( K \right)\rightarrow Y $ such that $\graph\left( f \right)\subseteq K$ (such a function is called a \textit{uniformization} for the relation).
+
+  Moreover, $K$ is a countable union of all such Borel graphs.
+\end{theorem}
+\begin{theorem}[Lusin--Suslin Theorem]
+  Let $f\colon X\to Y$ be a map of standard Borel spaces. If $A\subseteq X$ is Borel and $f|_{A}$ is injective, then $f(A)$ is Borel, and $f$ is a Borel isomorphism of $A$ onto $f(A)$.
+\end{theorem}
+\begin{remark}
+  Since any pair of standard Borel spaces can be equipped with a zero-dimensional Polish topology making a given Borel map continuous, the proof proceeds via the reduction to the continuous case.
+\end{remark}
+\begin{definition}
+  Let $ \left( X,\mu \right) $ be a standard probability space.
+  \begin{itemize}
+    \item Given a Borel equivalence relation $R\subseteq X\times X$, the \textit{full group} of $R$ is the set of all Borel automorphisms $f\colon X\to X$ such that $\graph\left( f \right)\subseteq R$.
+    \item The set $\left[ \left[ R \right] \right]$ consists of all partial automorphisms $\phi\colon \dom\left( \phi \right)\rightarrow \ran\left( \phi \right)$.
+    \item The equivalence relation $R$ is said to measure-preserving if for all $\phi\in \left[ \left[ R \right] \right]$, we have $\mu\left( \dom\left( \phi \right) \right) = \mu\left( \ran\left( \phi \right) \right)$. 
+    \item If $A\subseteq X$ is any subset, then the saturation $\left[ A \right]_R$ is given by
+      \begin{align*}
+        \left[ A \right]_R &= \bigcup_{x\in A} \left[ x \right]_R.
+      \end{align*}
+    \item We say $A$ is $R$-invariant if $\mu\left( A\triangle \left[ A \right]_R \right) = 0$. A measure-preserving relation $R$ is said to be ergodic if any $R$-invariant subset is either null or conull.
+  \end{itemize}
+\end{definition}
+\begin{remark}
+  Given a Borel map $f\colon R\rightarrow \C$, we define the action of $T\in \left[ \left[ R \right] \right]$ by $Tf\left( x,y \right) = f\left( T^{-1}.x,y \right)$ if $x\in \ran\left( T \right)$ and $Tf\left( x,y \right) = 0$ otherwise.
+
+  Analogously, if $f\colon X\to \C$ is a Borel map, we let $Tf\left( x \right) = f\left( T^{-1}.x \right)$ if $x\in \ran\left( T \right)$ and $Tf\left( x \right) = 0$ otherwise.
+
+  Finally, if $A\subseteq X$ is Borel, then $\id_A\in \left[ \left[ R \right] \right]$ is the partial transformation with domain $A$ and is the identity map on $A$.
+\end{remark}
+The most important case of a measure-preserving equivalence relation is the \textit{orbit equivalence relation} of a probability measure-preserving action $G\curvearrowright \left( X,\mu \right)$. The relation is given by saying $x\sim y$ if there exists some $s\in G$ such that $y = s.x$.
+
+Two probability measure-preserving actions of groups $G\curvearrowright \left( X,\mu \right)$ and $G\curvearrowright \left( Y,\nu \right)$ are said to be orbit equivalent if there is a $G$-invariant conull set $X'\subseteq X$, an $H$-invariant conull set $Y'\subseteq Y$, and a Borel isomorphism $\varphi\colon X'\to Y'$ satisfying $\varphi\left( G.x \right) = H.\varphi(x)$. One observes that, given a probability measure-preserving action $G\curvearrowright \left( X,\mu \right)$, the $G$-invariance of any subset only depends on the orbit equivalence relation, so a probability measure-preserving action is ergodic if and only if its orbit equivalence relation is ergodic.
+
+Furthermore, one can show that a countable Borel relation is the orbit equivalence relation of some group (not necessarily that of a freely acting group, though). This is the \textit{Feldman--Moore theorem}.
+\begin{definition}
+  Given a measure-preserving equivalence relation $R$ on $\left( X,\mu \right)$, we say $Q\subseteq R$ is a \textit{partial subequivalence relation} if $Q$ is an equivalence relation defined on
+  \begin{align*}
+    \dom\left( Q \right) &= \set{x\in X : \left( x,x \right)\in Q}.
+  \end{align*}
+  A genuine subequivalence relation $Q\subseteq R$ is a partial subequivalence relation with $\dom\left( Q \right) = X$.
+\end{definition}
+Given a (countable) measure-preserving equivalence relation on $\left( X,\mu \right)$. Define a measure on the Borel subsets $A\subseteq R$ by
+\begin{align*}
+  \omega\left( A \right) &= \int_{X}^{} \left\vert A_x \right\vert\:d\mu(x).
+\end{align*}
+Then, we observe that $\omega$ is a $\sigma$-finite measure as follows.
+\begin{itemize}
+  \item Using the Lusin--Novikov Theorem, the relation $R$ is a countable union of Borel graphs, which we will write as $R = \bigcup_{n} G_n$. Notice that if $Q\subseteq R$ is any such Borel graph, then $\left\vert Q_x \right\vert = 0$ or $\left\vert Q_x \right\vert = 1$ depending on if $x\in \operatorname{proj}_X\left( Q \right)$.
+  \item For any relation $E$, let
+    \begin{align*}
+      E^{-1} &= \set{\left( y,x \right) : \left( x,y \right)\in E}.
+    \end{align*}
+    Each set of the form
+    \begin{align*}
+      G_n' &= G_n\setminus \bigcup_{m < n}G_m
+    \end{align*}
+    is a graph of a partial function contained in $R$ (one that is countable-to-one). Since $R$ is an equivalence relation, the sections $\left( \left( G_n' \right)^{-1} \right)_{x} = \left( G_n' \right)^{x}$ are also countable, so we may split $G_n'$ into countably many disjoint pieces $H_{k,n}$ corresponding to partially defined maps $X\to X$ that are one-to-one (i.e., partially defined transformations $X\to X$). 
+  \item Reindexing the $H_{k,n}$ to $\set{B_n : n\in \N}$, we define $f_n = \pi_1|_{B_n}$ to be the restriction of the first coordinate projection to $B_n$. Each $f_n$ is continuous and injective, so it is a Borel isomorphism onto its image. If we define
+    \begin{align*}
+      \omega_n(A) &= \mu\left( f_n\left( A\cap B_n \right) \right),
+    \end{align*}
+    then each $\omega_n$ is a finite Borel measure on $R$, following from the fact that $\mu$ is a probability measure.
+  \item Finally, the function $x\mapsto \left\vert A_x \right\vert$ is given by $\sum_{n}\chi_{f_n\left( A\cap B_n \right)}$, and is Borel.
+\end{itemize}
+Therefore, $\omega$ is a well-defined $\sigma$-finite measure.
+\section{Amenability and Hyperfiniteness}%
+\begin{definition}
+  Let $R$ be a countable Borel equivalence relation.
+  \begin{enumerate}[(i)]
+    \item The relation $R$ is \textit{amenable} if there is a unital positive linear map $\varphi\colon L^{\infty}\left( R,\omega \right)\to L^{\infty}\left( X \right)$ satisfying $\varphi\left( T.f \right) = T.\varphi(f)$ for all $T\in \left[ \left[ R \right] \right]$ and $f\in L^{\infty}\left( R,\omega \right)$.
+    \item The relation $R$ is said to satisfy \textit{Reiter's property} if there is a sequence of positive Borel functions $\lambda^n\colon R\to\C$ such that for each $y\in X$, the map $\varphi^n_y$ on $\left[ y \right]_R$ given by $\varphi^n_y(x) = \lambda^n\left( x,y \right)$ is a norm-one element of $\ell^1\left( \left[ y \right]_R \right)$ and $\norm{\lambda^n_y - \lambda^n_{y'}}_{\ell^1}\xrightarrow{n\to \infty} 0$ for $\omega$-a.e. $\left( y,y' \right)\in R$.
+    \item We say the relation $R$ is \textit{hyperfinite} if it is a.e. equal to the union of an increasing sequence of finite Borel subequivalence relations.
+  \end{enumerate}
+\end{definition}
+Notice that if we write the $C^{\ast}$-algebra $L^{\infty}\left( X \right)$ as $C\left( \Sigma \right)$ for some pathological compact space $\Sigma$, then composing point evaluation with the unital positive linear functional $\varphi\colon L^{\infty}\left( R,\omega \right)\to L^{\infty}\left( X \right)$ is a contractive homomorphism, so $\varphi$ is itself contractive.
+\begin{theorem}[Slaman--Steel and Weiss]
+  Let $R$ be a countable Borel equivalence relation. Then, the following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $R$ is the countable union of an increasing sequence $R_1\subseteq R_2\subseteq\cdots$ of finite Borel subequivalence relations;
+    \item $R$ is the orbit equivalence relation of a Borel $\Z$-action.
+  \end{enumerate}
+\end{theorem}
+Suppose $R$ is a probability measure-preserving equivalence relation on $\left( X,\mu \right)$. If $R$ is amenable, and $\varphi\colon L^{\infty}\left( R,\omega \right)\to L^{\infty}\left( X \right)$ witnesses the amenability, then we may define a unital positive linear functional $\sigma\colon L^{\infty}\left( R,\omega \right)\to \C$ by
+\begin{align*}
+  \sigma\left( f \right) &= \int_{X}^{} \varphi\left( f \right)\:d\mu.
+\end{align*}
+Notice then that $\sigma\left( T.f \right) = \sigma\left( \id_{\dom(T)}.f \right)$ for all $T\in \left[ \left[ R \right] \right]$ and $f\in L^{\infty}\left( R,\omega \right)$. Such a linear functional is called an invariant state on $L^{\infty}\left( R,\omega \right)$. The existence of an invariant state is a weakened condition of amenability.
+
+Given Borel subsets $A,B\subseteq X$, write
+\begin{align*}
+  R_A &= R\cap \left( A\times A \right)\\
+  R_{A,B} &= R\cap \left( A\times B \right).
+\end{align*}
+If $A$ is not null, we may view $R_A$ as a probability measure-preserving equivalence relation upon normalizing the measure of $A$, and similarly, we may consider invariant states on $L^{\infty}\left( R_A,\mu(A)^{-1}\omega \right)$. We say two Borel subsets $A,B\subseteq X$ are equivalent if there is $T\in \left[ \left[ R \right] \right]$ such that $\dom\left( T \right) = A$ and $\ran\left( T \right) = B$.
+\begin{lemma}
+  Let $A$ and $B$ be Borel subsets of $X$. If $\mu\left( \left[ B \right]_R\cap A \right) > 0$, then there is a nonnull Borel subset of $B$ that is equivalent to a subset of $A$.
+\end{lemma}
+\begin{proof}
+  By multiple applications of the Lusin--Novikov theorem (akin to how we proved that $\omega$ was a $\sigma$-finite measure), we may find a countable partition $R_n$ of $R_{A,B}$ such that each $R_n$ is the graph of some $T_n\in \left[ \left[ R \right] \right]$. Then,
+  \begin{align*}
+    \left[ B \right]_R \cap A &= \bigcup_{n=1}^{\infty}\dom\left( T_n \right).
+  \end{align*}
+  Since $\mu\left( \left[ B \right]_R\cap A \right) > 0$, $\mu\left( \dom\left( T_n \right) \right) > 0$ for some $n\in \N$, and $\ran\left( T_n \right)\subseteq B$ has measure $\mu\left( \dom\left( T_n \right) \right)$ equivalent to $\dom\left( T_n \right)\subseteq A$.
+\end{proof}
+\begin{lemma}
+  Let $A$ and $B$ be Borel subsets of $X$. There exists a Borel subset $B_1\subseteq B$ such that $B_1$ is equivalent to a subset of $A$ and $\mu\left( \left[ B\setminus B_1 \right]_R\cap A \right)\leq \mu\left( B \right)$.
+\end{lemma}
+\begin{proof}
+  Let $\mathcal{R}$ be the collection of all families of Borel subsets $\set{R_j}_{j\in J}$ such that each $R_j$ is non-null and $R_j = \graph\left( T_j \right)$ for some family of maps $\set{T_j}_{j\in J}$ with each of $\set{\ran\left( T_j \right)}_{j\in J}$ and $\set{\dom\left( T_j \right)}_{j\in J}$ pairwise disjoint.
+
+  Say $\set{R_j}_{j\in J}\preceq \set{R'_{j'}}_{j'\in J'}$ if $J\subseteq J'$ and $R_j = R'_j$ for all $j\in J$. By Zorn's Lemma, there is a maximal element which we will denote $\set{R_j}_{j\in J}$. Let
+  \begin{align*}
+    A_1 &= \bigcup_{j\in J}\dom\left( T_j \right)\\
+    B_1 &= \bigcup_{j\in J}\img\left( T_j \right).
+  \end{align*}
+  Since $\bigcup_{j\in J}R_j$ is the graph of some element in $\left[ \left[ R \right] \right]$, we have that $A_1$ and $B_1$ are equivalent. If it were the case that $\mu\left( \left[ B\setminus B_1 \right]_R,A\setminus A_1 \right) > 0$, then there would be some nonnull Borel subset of $B\setminus B_1$ equivalent to a subset of $A\setminus A_1$ via some map $T\in \left[ \left[ R \right] \right]$; adding the graph of $T$ to $\set{R_j}_{j\in J}$ would contradict maximality. Therefore, we have
+  \begin{align*}
+    \mu\left( \left[ B\setminus B_1 \right]\cap \left( A\setminus A_1 \right) \right) &= 0
+      \intertext{so}
+    \mu\left( \left[ B\setminus B_1 \right]_R,A \right) &\leq \mu\left( A_1 \right)\\
+                                                        &= \mu\left( B_1 \right)\\
+                                                        &\leq \mu\left( B \right).
+  \end{align*}
+\end{proof}
+\begin{lemma}
+  Let $A$ and $B$ be Borel subsets of $X$ with $B\subseteq \left[ A \right]_R$, $\ve > 0$. Then, there is a finite collection $\set{B_k}_{k=1}^{n}$ of pairwise disjoint Borel subsets of $B$ such that each $B_j$ is equivalent to a subset of $A$ and $ \mu\left( B\setminus \bigcup_{k=1}^{n}B_k \right) < \ve $.
+\end{lemma}
+\nocite{kerr_and_li,topics_in_orbit_equivalence}
+\end{document}
