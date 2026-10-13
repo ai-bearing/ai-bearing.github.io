@@ -10,7 +10,9 @@
 %\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
 %\addbibresource{  }
 
+\frenchspacing
 \usepackage{parskip}
+\DeclareMathOperator{\diam}{diam}
 
 \fancyhf{}
 \fancyhead[R]{Avinash Iyer}
@@ -71,6 +73,8 @@ In the special case that $L = \id_V$, then the kernel $K\left( x,y \right)$ is g
   \item If $A$ is a finite set, then $\left\vert A \right\vert$ is the cardinality of $A$. 
   \item Generally we will denote by $ \K $ for either $\R$ or $\C$.
   \item If $V_1,\dots,V_n,W$ are topological vector spaces, we will write $ \mathcal{L}_n\left( V_1,\dots,V_n;W \right) $ to denote the space of (jointly) continuous multilinear maps $V_1\times\cdots\times V_n\to W$. If $n = 1$, we will just write $\mathcal{L}\left( V,W \right)$.
+  \item The Borel $\sigma$-algebra on a topological space $\left( X,\mathcal{T}_X \right)$ is given by $\mathcal{B}_X$.
+  \item If $X$ is a compact metric space, the space $C\left( X \right)$ is the Banach space of continuous functions with values in the assumed field.
 \end{itemize}
 \section{Locally Convex Topological Vector Spaces}%
 Recall that if $X$ is a set, then $ \mathcal{T}\subseteq \mathcal{P}\left( \mathcal{P}\left( X \right) \right) $ is a topology on $X$ if it satisfies:
@@ -1485,4 +1489,144 @@ In particular, for $n = 1$ and $W = \C$, this gives the strong topology on the d
 \begin{corollary}
   If $T\colon V\to W$ is a continuous linear bijection of Banach spaces, $T$ is an isomorphism of topological vector spaces.
 \end{corollary}
+\section{The Riesz Representation Theorem}%
+Our focus will be on the version of the Riesz Representation Theorem for compact metrizable spaces.
+
+Let $\left( X,\mathcal{T}_X \right)$ be a topological space. We will write $\mathcal{B}_X$ for the Borel $\sigma$-algebra on $X$ --- i.e., $\sigma\left( \mathcal{T}_X \right)$. We will assume that $X$ is metrizable. Our goal is to study positive Borel measures on $X$; that is, $\mu\colon \mathcal{B}_X\to [0,\infty]$.
+\begin{definition}
+  Let $\left( X,d \right)$ be a metric space. Let $A\subseteq X$. Then, we define the diameter
+  \begin{align*}
+    \diam\left( A \right) &\coloneq \sup_{x,y\in A} d\left( x,y \right).
+  \end{align*}
+  In particular, if $A\subseteq B$, then $\diam\left( A \right)\subseteq \diam\left( B \right)$.
+
+  If $x\in X$ and $A\subseteq X$, then we define the distance from $x$ to $A$ by 
+  \begin{align*}
+    \dist\left( x,A \right) &= \inf_{y\in A}d\left( x,y \right).
+  \end{align*}
+\end{definition}
+Notice that if $x,y\in X$ and $z\in A$, we have that 
+\begin{align*}
+  \dist\left( x,A \right) &\leq d\left( x,z \right)\\
+                          &\leq d\left( x,y \right) + d\left( y,z \right),
+\end{align*}
+so we obtain that for all $x,y\in A$, $\left\vert \dist\left( x,A \right)-\dist\left( y,A \right) \right\vert\leq d\left( x,y \right)$, meaning that the distance function is continuous.
+\begin{proposition}
+  If $A$ is closed, then $d\left( x,A \right) = 0$ if and only if $x\in A$.
+\end{proposition}
+\begin{proposition}[Urysohn's Lemma for Metric Spaces]
+  Let $A$ and $B$ be nonempty, closed, and disjoint. Then, there exists $f\colon X\to\R$ continuous such that $f(x)\in [0,1]$, $f|_{A} = 1$, and $f|_{B} = 0$.
+\end{proposition}
+\begin{proof}
+  Take
+  \begin{align*}
+    f &= \frac{\dist\left( x,B \right)}{\dist\left( x,A \right) + \dist\left( x,B \right)}.
+  \end{align*}
+\end{proof}
+\begin{remark}
+  In fact, $f(x) = 1$ if and only if $x\in A$, and similarly, $f(x) = 0$ if and only if $x\in B$.
+
+  The notion of bumpfunctionology is a smooth version of the Urysohn lemma.
+\end{remark}
+From now on, assume that $X$ is a nonempty compact metrizable space with compatible metric $d$. Furthermore, we will assume that $\K = \R$, and so $C(X)$ is the space of real-valued continuous functions on $X$. Let $\mu\colon \mathcal{B}_X\to [0,\mu(X)]$ be a finite Borel measure on $X$ with $\mu(X) < \infty$.
+
+Define $\mathcal{R}[\mu]\colon C(X)\to \R$ given by
+\begin{align*}
+  \mathcal{R}\left[ \mu \right](f) &= \int_{X}^{} f\:d\mu.
+\end{align*}
+This map is well-defined, $\R$-linear, and continuous. The continuity emerges from the fact that for any $f\in C(X)$, we have
+\begin{align*}
+  \left\vert \int_{}^{} f\:d\mu \right\vert &\leq \int_{}^{} \left\vert f \right\vert\:d\mu\\
+                                                                 &\leq \norm{f}\mu(X),
+\end{align*}
+so that $\mathcal{R}\left[ \mu \right]\in C(X)^{\ast}$ is continuous of operator norm at most $\mu(X)$. Furthermore, we have
+\begin{align*}
+  \mathcal{R}\left[ \mu \right]\left( 1 \right) &= \mu(X),
+\end{align*}
+so $\norm{\mathcal{R}[\mu]}_{\op} = \mu(X)$.
+\begin{definition}
+  Let $L\colon C(X)\to \R$ be an $\R$-linear form. We say $L$ is positive if for all $f\geq 0$, one has $L(f)\geq 0$.
+\end{definition}
+\begin{proposition}
+  Let $L\colon C(X)\to \R$ be a positive. Then, $L$ is positive if and only if $L$ is continuous and $\norm{L}_{\op} = L(1)$.
+\end{proposition}
+\begin{proof}
+  Suppose $L$ is positive. Then, $\norm{f}1\leq f\leq \norm{f}1$, so that $\norm{f}L(1)\leq L(f)\leq \norm{f}L(1)$. Therefore, $\left\vert L(f) \right\vert\leq \norm{f}L(1)$. Thus, $L$ is continuous with norm at most $L(1)$; taking $f = 1$ yields the desired outcome.
+
+  Let $f\geq 0$. By the hypothesis, for all $g\in C(X)$ we have $\left\vert L(g) \right\vert\leq \norm{g}L(1)$. Note that $0\leq f \leq \norm{f}1$. In particular, this means that $0\leq \norm{f}1 - f \leq \norm{f}1$. Take $g = \norm{f}1-f$. Then, we have that $\norm{g}\leq \norm{f}$. Therefore, we have that $L(g)\leq \norm{g}L(1)\leq \norm{f}L(1)$. Yet, substituting the definition of $f$, we have
+  \begin{align*}
+    L\left( \norm{f}1-f \right) &= \norm{f}L(1) - L(f)\\
+                                &\leq \norm{f}L(1),
+  \end{align*}
+  so that $L(f)\geq 0$.
+\end{proof}
+We have a map
+\begin{align*}
+  \mathcal{R}\colon \set{\text{finite regular positive Borel measures on $X$}} \to \set{\text{positive $\R$-linear forms on $C\left( X \right)$}}
+\end{align*}
+taking $\mu\mapsto \mathcal{R}\left[ \mu \right]$.
+\begin{theorem}[Riesz Representation Theorem]
+  The map $\mathcal{R}$ is a bijection.
+\end{theorem}
+We will first show that $\mathcal{R}$ is an injection. We will let $\left( X,d \right)$ be a compact metric space. Let $\mu$ be a finite Borel measure on $X$. For any $A\subseteq X$ (not necessarily Borel), define
+\begin{align*}
+  \mu^{\ast}\left( A \right) &= \inf\set{\mu(U) : U\text{ open, }A\subseteq U}.
+\end{align*}
+Note that $0\leq \mu^{\ast}\left( A \right)\leq \mu(X)$.
+\begin{proposition}
+  The map $\mu^{\ast}\colon \mathcal{P}(X)\to \R$ is an outer measure.
+\end{proposition}
+\begin{proof}
+  Observe that $\emptyset$ is open, so $\mu^{\ast}\left( \emptyset \right) = 0$.
+
+  If $A\subseteq B$, then for any $U\supseteq B$, we have $U\subseteq A$, so that $\mu^{\ast}\left( A \right)\subseteq \mu^{\ast}\left( B \right)$.
+
+  Finally, suppose $\set{A_n : n\in \N}$ is a sequence of subsets. Let $\ve > 0$. For any $n\in \N$, there is $U_n\supseteq A_n$ such that $\mu\left( U_n \right)\leq \mu^{\ast}\left( A_n \right) + \ve 2^{-\left( n+1 \right)}$. Let $W = \bigcup_{n} U_n$. Then,
+  \begin{align*}
+    \mu^{\ast}\left( \bigcup_{n=0}^{\infty}A_n \right) &\leq \mu\left( W \right)\\
+                                                       &\leq \sum_{n=0}^{\infty}\mu\left( U_n \right)\\
+                                                       &\leq \sum_{n=0}^{\infty}\left( \mu^{\ast}\left( A_n \right) + \ve 2^{-\left( n+1 \right)} \right)\\
+                                                       &\leq \sum_{n=0}^{\infty}\mu^{\ast}\left( A_n \right) + \ve.
+  \end{align*}
+  Since $\ve > 0$, we obtain our desired result.
+\end{proof}
+Recall that if $A\subseteq X$ is any subset, then $A$ is $\mu^{\ast}$-measurable if and only if for any $E\subseteq P(X)$, we have $\mu^{\ast}\left( E \right) = \mu^{\ast}\left( E\cap A \right) + \mu^{\ast}\left( E\cap A^{c} \right)$. That is, $A$ is a good ``cookie cutter'' for $\mu^{\ast}$.
+\begin{proposition}
+  We have $A$ is $\mu^{\ast}$-measurable if and only if $\mu^{\ast}\left( X \right) = \mu^{\ast}\left( A \right) + \mu^{\ast}\left( A^{c} \right)$.
+\end{proposition}
+\begin{proof}
+  We only need to show that $\mu^{\ast}\left( E \right)\geq \mu^{\ast}\left( E\cap A \right) + \mu^{\ast}\left( E\cap A^{c} \right)$ assuming this property.
+
+  Let $U,V,W\subseteq X$ be open such that $A\subseteq U$, $A^{c}\subseteq V$, and $E\subseteq W$, and let $ \ve > 0 $. Our goal is to show that given such a $W$, one can pick $U$ and $V$ such that $\mu\left( W \right) \geq \mu\left( W\cap U \right) + \mu\left( W\cap V \right) - \ve$.
+
+  Notice that if $C$ and $D$ are Borel, then $\mu\left( C \right) + \mu\left( D \right) = \mu\left( C\cup D \right) + \mu\left( C\cap D \right)$. Taking $C = W\cap U$ and $D = W\cap V$, then
+  \begin{align*}
+    \mu\left( W\cap U \right) + \mu\left( W\cap V \right) &= \mu\left( W\cap \left( U\cup V \right) \right) + \mu\left( W\cap U \cap V \right)\\
+                                                          &= \mu\left( W \right) + \mu\left( W\cap U \cap V \right),
+  \end{align*}
+  where we use the fact that $A\subseteq U$ and $A^{c}\subseteq V$ so that $U\cup V = X$. Our amended goal is to find $W$ such that $\mu\left( W\cap U\cap V \right) \leq \ve$. In fact, it is enough to pick $U$ and $V$ such that $\mu\left( U\cap V \right)\leq \ve$.
+
+  To find this, we pick $U$ such that $\mu\left( U \right)\leq \mu^{\ast}\left( A \right) + \ve/2$ and $V$ such that $\mu\left( V \right) \leq \mu^{\ast}\left( A^{c} \right) + \ve/2$. Then,
+  \begin{align*}
+    \mu\left( U\cap V \right) &= \mu\left( U \right) + \mu\left( V \right) - \mu\left( U\cup V \right)\\
+                              &= \mu\left( U \right) + \mu\left( V \right) - \mu\left( X \right).
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    \mu\left( U\cap V \right) &\leq \mu^{\ast}\left( A \right) + \ve/2 + \mu^{\ast}\left( A^{c} \right) + \ve/2 -\mu\left( X \right)\\
+                              &= \left( \mu^{\ast}\left( A \right) + \mu^{\ast}\left( A^{c} \right) - \mu\left( X \right) \right) + \ve\\
+                              &= \ve.
+  \end{align*}
+  This yields our desired result.
+\end{proof}
+\begin{definition}
+  If $A\subseteq X$ is an arbitrary subset, then we define
+  \begin{align*}
+    \mu_{\ast}\left( A \right) &= \sup\set{\mu(K) : K\text{ compact, }K\subseteq A}.
+  \end{align*}
+\end{definition}
+\begin{proposition}
+  For every $A\subseteq X$, $\mu_{\ast}(A) = \mu(X)-\mu^{\ast}\left( A^{c} \right)$.
+\end{proposition}
+So, $A$ is $\mu^{\ast}$-measurable if and only if $\mu^{\ast}\left( A \right) = \mu_{\ast}\left( A \right)$. In particular, for every $A\subseteq \mathcal{B}_X$, we have $\mu_{\ast}(A)\leq \mu\left( A \right)\subseteq \mu^{\ast}\left( A \right)$. In particular, by Carathéodory's Theorem, we have that the $\mu^{\ast}$-measurable subsets form a $\sigma$-algebra.
 \end{document}
