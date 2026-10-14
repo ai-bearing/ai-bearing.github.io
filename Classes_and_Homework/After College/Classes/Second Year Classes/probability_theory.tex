@@ -249,10 +249,69 @@ We recall some of the useful convergence theorems from measure theory, specializ
 \begin{theorem}[Cauchy--Schwarz Inequality]
   If $X$ and $Y$ are in $\mathcal{L}^2$, then $XY\in \mathcal{L}^1$ and satisfy $E\left[ \left\vert XY \right\vert \right]\leq \norm{X}_{\mathcal{L}^2}\norm{Y}_{\mathcal{L}^2}$.
 \end{theorem}
-\subsection{The Law of a Probability Measure}%
-
-\subsection{Strong Law of Large Numbers}%
-
 \section{Martingales}%
-
+The idea behind martingales is intimately connected to the notion of conditional expectation.
+\begin{theorem}
+  Let $\left( \Omega,\mathcal{F},P \right)$ be a probability measure, and let $X$ be a random variable with $E\left[ \left\vert X \right\vert \right] < \infty$. Let $\mathcal{G}$ be some sub-$\sigma$-algebra of $\mathcal{F}$. Then, there exists a random variable $Y$ such that
+  \begin{enumerate}[(i)]
+    \item $Y$ is $\mathcal{G}$-measurable;
+    \item $E\left[ \left\vert Y \right\vert \right] < \infty$;
+    \item for every $G\in \mathcal{G}$, we have
+      \begin{align*}
+        \int_{G}^{} Y\:dP &= \int_{G}^{} X\:dP.
+      \end{align*}
+  \end{enumerate}
+  The random variable $Y$ is unique up to almost sure equality, and we call it a version of the \textit{conditional expectation} $E\left[ X|\mathcal{G} \right]$.
+\end{theorem}
+\begin{proof}
+  Define a measure $\mu$ on $\mathcal{G}$ by taking, for any $G\in \mathcal{G}$,
+  \begin{align*}
+    \mu\left( G \right) &= \int_{G}^{} X\:dP.
+  \end{align*}
+  Since $X$ is integrable, $\mu\left( G \right)$ is finite, and we have $\mu\ll P$ on $\mathcal{G}$. Therefore, the Radon--Nikodym derivative $\frac{d\mu}{dP}$ exists, is integrable, $\mathcal{G}$-measurable, and definitionally satisfies what we desire from a conditional expectation.
+\end{proof}
+There is a method by using the Hilbert Projection Theorem to construct the conditional expectation by first defining it for $\mathcal{L}^2$-random variables, then approximating by truncation. The conditional expectation satisfies the following properties commensurate with how we defined the measure $\mu$, though parts (j) and (k) are proven via bootstrapping.
+\begin{theorem}
+  The conditional expectation $E\left[ X|\mathcal{G} \right]$ satisfies the following properties:
+  \begin{enumerate}[(a)]
+    \item $E\left[ E\left[ X|\mathcal{G} \right] \right] = E\left[ X \right]$;
+    \item if $X$ is $\mathcal{G}$-measurable, then $E\left[ X|\mathcal{G} \right] = E\left[ X \right]$;
+    \item $E\left[ a_1X_1 + a_2X_2|\mathcal{G} \right] = a_1E\left[ X_1|\mathcal{G} \right] + a_2E\left[ X_2|\mathcal{G} \right]$;
+    \item if $X\geq 0$, then $E\left[ X|\mathcal{G} \right]\geq 0$;
+    \item if $0\leq X_n\nearrow X$, then $E\left[ X_n|\mathcal{G} \right]\nearrow E\left[ X|\mathcal{G} \right]$;
+    \item if $X_n\geq 0$, then $E\left[ \liminf X_n|\mathcal{G} \right]\leq \liminf E\left[ X_n|\mathcal{G} \right]$ and $E\left[ \limsup X_n|\mathcal{G} \right]\geq \limsup E\left[ X_n|\mathcal{G} \right]$;
+    \item if $\left\vert X_n(\omega) \right\vert\leq V(\omega)$ for all $n$, $E\left[ V \right] < \infty$, and $X_n\to X$ almost surely, then $E\left[ X_n|\mathcal{G} \right]\to E\left[ X|\mathcal{G} \right]$;
+    \item if $c\colon \R\to\R$ is convex with $E\left[ \left\vert c\left( X \right) \right\vert \right] < \infty$, then $E\left[ c(X)|\mathcal{G} \right]\geq c\left( E\left[ X|\mathcal{G} \right] \right)$;
+    \item if $\mathcal{H}$ is a sub-$\sigma$-algebra of $\mathcal{G}$, then $E\left[ E\left[ X|\mathcal{G} \right]|\mathcal{H} \right] = E\left[ X|\mathcal{H} \right]$;
+    \item if $Z$ is $\mathcal{G}$-measurable and bounded, then $E\left[ ZX|\mathcal{G} \right] = ZE\left[ X|\mathcal{G} \right]$;
+    \item if $\mathcal{H}$ is independent of $\sigma\left( \sigma\left( X \right),\mathcal{G} \right)$, then $E\left[ X|\sigma\left( \mathcal{G},\mathcal{H} \right) \right] = E\left[ X|\mathcal{G} \right]$.
+  \end{enumerate}
+\end{theorem}
+\subsection{Stochastic Processes and the Definition of a Martingale}%
+\begin{definition}
+  Let $\left( \Omega,\mathcal{F},P \right)$ be a probability space. A (discrete) filtration $\set{\mathcal{F}_n : n\geq 0}$ is a sequence of sub-$\sigma$-algebras $\mathcal{F}_0\subseteq \mathcal{F}_1\subseteq\cdots\subseteq \mathcal{F}$. We will define
+  \begin{align*}
+    \mathcal{F}_{\infty} &= \sigma\left( \bigcup_{n=0}^{\infty}\mathcal{F}_n \right).
+  \end{align*}
+  The tuple $\left( \Omega,\mathcal{F},\set{\mathcal{F}_n}_{n},P \right)$ is called a \textit{filtered probability space}.
+\end{definition}
+\begin{definition}
+  A stochastic process $W = \left( W_n \right)_{n\geq 0}$ is a sequence of $\mathcal{F}$-measurable random variables. A stochastic process is said to be \textit{adapted} to a filtration $\set{\mathcal{F}_n}_{n}$ if each $W_n$ is $\mathcal{F}_n$-measurable.
+\end{definition}
+\begin{example}
+  If $W$ is a stochastic process, and
+  \begin{align*}
+    \mathcal{F}_n &= \sigma\left( W_0,\dots,W_n \right)
+  \end{align*}
+  is the corresponding produced $\sigma$-algebra, then $W$ is adapted to the filtration $\set{\mathcal{F}_n}_{n}$. Such a filtration is dubbed the natural filtration on a given stochastic process.
+\end{example}
+\begin{definition}
+  A stochastic process $X$ is called a \textit{martingale} relative to some filtration $\set{\mathcal{F}_n}$ if
+  \begin{enumerate}[(i)]
+    \item $X$ is adapted to the filtration;
+    \item each $X_n$ in $X$ satisfies $E\left[ \left\vert X_n \right\vert \right] < \infty$;
+    \item $E\left[ X_n|\mathcal{F}_{n-1} \right] = X_{n-1}$ for all $n\geq 1$.
+  \end{enumerate}
+  If $X_{n-1}\geq E\left[ X_n|\mathcal{F}_{n-1} \right]$, then we call the process a \textit{supermartingale}, and if $X_{n-1}\leq E\left[ X_n|\mathcal{F}_n \right]$, then we call the process a \textit{submartingale}.
+\end{definition}
 \end{document}
