@@ -1482,13 +1482,40 @@ In particular, for $n = 1$ and $W = \C$, this gives the strong topology on the d
 \begin{proposition}
   If $V$ and $W$ are normed spaces, and $\mathcal{L}\left( V,W \right)$ is equipped with the operator norm topology, then if $W$ is complete, so is $\mathcal{L}\left( V,W \right)$ is complete.
 \end{proposition}
-\subsection{The Classic Theorems of Normed Spaces}%
+\subsection{The Classics of Functional Analysis}%
+We start by quickly reviewing the Baire Category Theorem and some other results about complete metric spaces.
+\begin{theorem}
+  Let $\left( X,d \right)$ be a complete metric space. Let $F_0\supseteq F_1\supseteq\cdots$ be a nested sequence of nonempty closed subsets with $\operatorname{diam}\left( F_n \right)\to 0$. Then, there is a unique $x$ such that
+  \begin{align*}
+    \set{x} &= \bigcap_{n\geq 0}F_n.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Pick elements $x_n\in F_n$. Then, $\left( x_n \right)_n$ is Cauchy, so it converges to some point $ x\in X $.
+\end{proof}
+\begin{theorem}[Baire Category Theorem]
+  Let $\left( X,d \right)$ be a complete metric space. Suppose $\left( U_n \right)_{n\geq 0}$ is a sequence of dense open subsets of $X$. Then, $\bigcap_{n\geq 0}U_n$ is dense.
+\end{theorem}
+\begin{proof}
+  Let $y\in X$, and let $W\in \mathcal{O}(y)$. We must show that $W\cap \bigcap_{n\geq 0}U_n \neq \emptyset$.
+
+  Recursively, we construct two sequences $\left( x_n \right)_n\subseteq X$ and $\left( r_n \right)_n\subseteq (0,\infty)$ such that
+  \begin{itemize}
+    \item $r_n \leq 2^{-n}$ for all $n\geq 0$;
+    \item $B\left( x_0,r_0 \right)\subseteq U_0\cap W$;
+    \item $B\left( x_n,r_n \right)\subseteq U_n\cap U\left( x_{n-1},r_{n-1} \right)$ for all $n\geq 1$.
+  \end{itemize}
+  Suppose for any $N\geq 0$, we have constructed $x_0,\dots,x_N$ and $r_0,\dots,r_N$ such that $B\left( x_0,r_0 \right)\subseteq W$, for all $0\leq n \leq N$ we have $r_n\leq 2^{-n}$, and for every $1\leq n \leq N$ we have $B\left( x_n,r_n \right)\subseteq U_n\cap B\left( x_{n-1},r_{n-1} \right)$. Then, we can construct $x_{N+1}$ and $r_{N+1}$ such that the conditions hold. Such an existence follows from the fact that $U_{N+1}$ is dense.
+
+  Finally, we apply the Cantor intersection theorem to the family of closed unit balls $\set{B\left( x_n,r_n \right) : n\geq 0}$ to find $x\in \bigcap_{n\geq 0}U_n$.
+\end{proof}
 \begin{theorem}
   If $V$ and $W$ are Banach spaces, and $T\colon V\to W$ is a surjective continuous linear map, then $T$ is an open map.
 \end{theorem}
 \begin{corollary}
   If $T\colon V\to W$ is a continuous linear bijection of Banach spaces, $T$ is an isomorphism of topological vector spaces.
 \end{corollary}
+
 \section{The Riesz Representation Theorem}%
 Our focus will be on the version of the Riesz Representation Theorem for compact metrizable spaces.
 
@@ -1628,5 +1655,85 @@ Recall that if $A\subseteq X$ is any subset, then $A$ is $\mu^{\ast}$-measurable
 \begin{proposition}
   For every $A\subseteq X$, $\mu_{\ast}(A) = \mu(X)-\mu^{\ast}\left( A^{c} \right)$.
 \end{proposition}
-So, $A$ is $\mu^{\ast}$-measurable if and only if $\mu^{\ast}\left( A \right) = \mu_{\ast}\left( A \right)$. In particular, for every $A\subseteq \mathcal{B}_X$, we have $\mu_{\ast}(A)\leq \mu\left( A \right)\subseteq \mu^{\ast}\left( A \right)$. In particular, by Carathéodory's Theorem, we have that the $\mu^{\ast}$-measurable subsets form a $\sigma$-algebra.
+So, $A$ is $\mu^{\ast}$-measurable if and only if $\mu^{\ast}\left( A \right) = \mu_{\ast}\left( A \right)$. In particular, for every $A\subseteq \mathcal{B}_X$, we have $\mu_{\ast}(A)\leq \mu\left( A \right)\leq \mu^{\ast}\left( A \right)$. In particular, by Carathéodory's Theorem, we have that the $\mu^{\ast}$-measurable subsets form a $\sigma$-algebra.
+\begin{proposition}
+  If $U\subseteq X$ is open, then $\mu_{\ast}(U) = \mu(U) = \mu^{\ast}\left( U \right)$.
+\end{proposition}
+\begin{proof}
+  We have the inequalities $\mu_{\ast}(U)\leq \mu\left( U \right) = \mu^{\ast}\left( U \right)$ since $U$ is Borel and $U$ is a satisfactory for $\mu^{\ast}\left( U \right)$.
+
+  Our goal is to show that $\mu_{\ast}(U)\geq \mu\left( U \right)$.
+
+  If $U = X$, then we are done. If $U\neq X$, then $U^{c}$ is closed and non-empty, so we have access to the function $x\mapsto \dist\left( x,U^{c} \right)$. For any $n\geq 1$, let $K_n = \set{x\in X : \dist\left( x,U^{c} \right) \geq 1/n}$.
+
+  The sets $K_n$ are closed (hence compact), nested, and satisfy
+  \begin{align*}
+    \bigcup_{n\geq 1}K_n &= \set{x\in X : \dist\left( x,U^{c} \right) > 0}\\
+                         &= \set{x\in X : \dist\left( x,U^{c} \right) = 0}^{c}\\
+                         &= \left( U^{c} \right)^{c}\\
+                         &= U.
+  \end{align*}
+  Therefore, we have
+  \begin{align*}
+    \mu_{\ast}\left( U \right) &\geq \sup_{n}\mu\left( K_n \right)\\
+                               &= \mu\left( \bigcup_{n\geq 1}K_n \right)\\
+                               &= \mu\left( U \right)
+  \end{align*}
+  by continuity from below.
+\end{proof}
+Therefore, the $\sigma$-algebra of $\mu^{\ast}$-measurable subsets of $X$ contains all the open subsets of $X$, so it contains $\mathcal{B}_X$. In particular, we have shown the following theorem.
+\begin{theorem}
+  Let $\left( X,\mathcal{T}_X \right)$ be a compact metrizable space. Let $\mu$ be a finite Borel measure on $X$. Then, for every $A\in \mathcal{B}_X$, we have
+  \begin{align*}
+    \mu\left( A \right) &= \inf\set{\mu(U) : U\supseteq A\text{ open}}\label{eq:outer_regularity}\tag{$\ast$}\\
+                        &= \sup\set{\mu(K) : A\supseteq K\text{ compact}}.\label{eq:inner_regularity}\tag{$\ast\ast$}
+  \end{align*}
+\end{theorem}
+We say that a measure that satisfies \eqref{eq:outer_regularity} is \textit{outer regular} and a measure that satisfies \eqref{eq:inner_regularity} is \textit{inner regular}. A measure that is both outer regular and inner regular is called regular (or Radon).\footnote{On a locally compact Hausdorff space, one requires that a Radon measure has $\mu\left( K \right) < \infty$ for all compact subsets of $X$.}
+
+We note that we will only be focused on compact metrizable spaces. There are versions of the Riesz Representation Theorem that apply to locally compact Hausdorff spaces that may not be metrizable, such as $\left[ 0,1 \right]^{\R}$ and $\R^{\R}$.
+\begin{remark}
+ During the development of measure theory, there was a schism of the approach towards the subject. Those that focused on locally compact Hausdorff spaces primarily studied on functional analysis/operator algebras (results such as Gelfand duality are applicable in the setting of locally compact Hausdorff spaces), while those that focused on Polish spaces primarily studied descriptive set theory and probability.
+\end{remark}
+We will show now that the map $\mu\mapsto \mathcal{R}\left[ \mu \right]$ is injective.
+\begin{proposition}
+  Let $\left( X,d \right)$ be a compact metric space, $\mu$ a finite Borel measure, and let $\mathcal{R}\left[ \mu \right] = L\colon C(X)\to \K$ be defined by
+  \begin{align*}
+    L(f) &= \int_{}^{} f\:d\mu.
+  \end{align*}
+  Then, for all $U\subseteq X$ open, 
+  \begin{align*}
+    \mu\left( U \right) &= \sup\set{L(f) : 0\leq f \leq \chi_{U}}.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  First, we observe that, by definition,
+  \begin{align*}
+    \int_{}^{} f\:d\mu &\leq \int_{}^{} \chi_{U}\:d\mu\\
+                       &= \mu\left( U \right),
+  \end{align*}
+  so that the supremum is less than or equal to $\mu\left( U \right)$.
+
+  In the reverse direction, we split into three cases. If $\mu = \emptyset$, then we are done. If $\mu = X$, then $f = 1$ is a continuous function, so we are done.
+
+  If $\emptyset\neq U\subsetneq X$, then $U^{c}\neq \emptyset$. So, we let $K_n$ be the aforementioned exhaustion of $U$ by compact subsets. When $n$ is large enough, $K_n\neq \emptyset$ since $U^{c}$ is nonempty. By Urysohn's Lemma, there is a function $f_n\colon X\to [0,1]$ continuous such that $f_n|_{K_n} = 1$ and $f_n|_{U^{c}} = 0$. Therefore, for large enough $n$, we have
+  \begin{align*}
+    \mu\left( K_n \right) &\leq L\left( f_n \right)\\
+                          &\leq \mu\left( U \right).
+  \end{align*}
+  By continuity from below, since $\sup_{n}\mu\left( K_n \right) = \mu\left( U \right)$, it follows that
+  \begin{align*}
+    \mu\left( U \right) &= \sup\set{L(f) : 0\leq f \leq \chi_U}.
+  \end{align*}
+\end{proof}
+Thus, the map $\mu\mapsto \mathcal{R}\left[ \mu \right]$ is injective.
+
+In order to show surjectiveness, given some linear functional $L$, we consider the ``definition'' of $\mu\colon \mathcal{B}_X\to [0,\infty]$ given by
+\begin{align*}
+  \mu\left( U \right) &= \sup\set{L(f) : 0\leq f \leq \chi_U}\\
+  \mu\left( A \right) &= \inf\set{\mu(U) : U\supseteq A\text{ open}}
+\end{align*}
+for any Borel subset $A\subseteq X$. This is the way it is proven in classic references such as Folland's \textit{Real Analysis} and Rudin's \textit{Real and Complex Analysis}.
+
+However, we will prove it a different way.
 \end{document}

@@ -94,6 +94,9 @@ use_math: true
 - "I forgot about half the numbers"\
   *Ben Hayes*
 
+- "[The reason we don't prove the Monotone Class Lemma is that] it would make for a very monotone class"\
+  *Connor MacMahon*
+
 - "That's how you prove theorems. You first prove it, then state the theorem"\
   *Malek Abdesselam*
 
@@ -105,3 +108,10 @@ use_math: true
 
 - "Going from Wells Fargo to jail is like pretty bad"\
   *Ben Hilbert*
+
+- "Compactness means never having to work hard"\
+  *Ben Hayes*
+
+- "Do you accept the higher power of Arzelà–Ascoli?"\
+  *Ben Hayes*
+
