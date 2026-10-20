@@ -1509,13 +1509,132 @@ We start by quickly reviewing the Baire Category Theorem and some other results 
 
   Finally, we apply the Cantor intersection theorem to the family of closed unit balls $\set{B\left( x_n,r_n \right) : n\geq 0}$ to find $x\in \bigcap_{n\geq 0}U_n$.
 \end{proof}
+\begin{corollary}
+  Suppose $\left( X,d \right)$ is a nonempty complete metric space. Suppose $\left( F_n \right)_n$ is a sequence of closed subsets. If $\bigcup_{n}F_n = X$, then there exists some $n$ such that $F_n^{\circ}\neq \emptyset$.
+\end{corollary}
+\begin{proof}
+  Let $U_n = F_n^{c}$. Suppose toward contradiction that for all $n\in \N$, $F_n^{\circ} = \emptyset$. Then, $ \left( F_n^{\circ} \right)^{c} = \overline{F_n^{c}} = X $ for each $n$, or that $ U_n $ are a dense family of open sets. Thus, by Baire Category Theorem, $ \overline{\bigcap_{n}U_n} = X $. Yet, we have
+  \begin{align*}
+    \overline{\bigcap_{n} U_n} &= \overline{\left( \bigcup_{n\geq 0}F_n \right)^{c}}\\
+                               &= \overline{X^{c}}\\
+                               &= \emptyset,
+  \end{align*}
+  or that $X$ is empty, which is a contradiction.
+\end{proof}
+To state and prove the open mapping theorem, we need some prep work.
+
+Throughout, $\left( V,\norm{\cdot} \right)$ is a normed space.
+\begin{definition}
+  A subset $A\subseteq V$ is called symmetric if for all $x\in A$, $-x\in A$. Equivalently, $A = -A$.
+\end{definition}
+\begin{definition}
+  A subset $A\subseteq V$ is called convex if for all $x,y\in A$ and all $t\in [0,1]$, we have that $\left( 1-t \right)x + ty \in A$.
+\end{definition}
+\begin{proposition}
+For all $v\in V$ and all $r > 0$, the open ball $U\left( v,r \right)$ and the closed ball $B\left( v,r \right)$ are symmetric and convex.
+\end{proposition}
+\begin{proposition}\hfill
+  \begin{enumerate}[(i)]
+    \item If $A\subseteq V$ is symmetric and convex, and $v\in V$ with $r > 0$, then $U\left( v,r \right)\subseteq A$ implies $U\left( 0,r \right)\subseteq A$.
+    \item If $B\left( v,r \right)\subseteq A$, then $B\left( 0,r \right)\subseteq A$.
+  \end{enumerate}
+\end{proposition}
+\begin{proposition}
+  Let $A\subseteq V$ be a subset.
+  \begin{enumerate}[(i)]
+    \item If $A$ is symmetric, then $ \overline{A} $ is symmetric.
+    \item If $A$ is convex, then $ \overline{A} $ is convex.
+  \end{enumerate}
+\end{proposition}
+\begin{proposition}
+  Let $ \mathcal{F} $.
+  \begin{enumerate}[(i)]
+    \item If $A\in \mathcal{F}$ is symmetric for all $A$, then $\bigcap_{A\in \mathcal{F}}A$ is symmetric and $\bigcup_{A\in \mathcal{F}}A$ is symmetric.
+    \item If $A\in \mathcal{F}$ is convex for all $A$, then $\bigcap_{A\in \mathcal{F}}A$ is convex.
+  \end{enumerate}
+\end{proposition}
+\begin{proposition}
+  Let $V$ and $W$ be two normed spaces. Let $T\colon V\to W$ be a $\K$-linear map.
+  \begin{enumerate}[(i)]
+    \item If $A\subseteq V$ is symmetric, then $T(A)\subseteq W$ is symmetric.
+    \item If $A\subseteq V$ is convex, then $T(A)\subseteq W$ is convex.
+    \item If $B\subseteq W$ is symmetric, then $T^{-1}\left( B \right)\subseteq V$ is symmetric.
+    \item If $B\subseteq W$ is convex, then $T^{-1}\left( B \right)\subseteq V$ is convex.
+  \end{enumerate}
+\end{proposition}
+\begin{definition}
+  A map $\rho\colon V\to \R$ is called a convex function if for all $0\leq t \leq 1$ and all $x,y\in V$, we have 
+  \begin{align*}
+    \rho\left( \left( 1-t \right)x + ty \right)\leq \left( 1-t \right)\rho(x) + t\rho(y).
+  \end{align*}
+\end{definition}
+\begin{proposition}
+  The map $\rho\colon V\to \R$ is convex if and only if $\set{\left( x,v \right)\in V\times \R : \lambda\geq \rho(x)}$ is a convex subset of $V\times \R$.
+\end{proposition}
 \begin{theorem}
   If $V$ and $W$ are Banach spaces, and $T\colon V\to W$ is a surjective continuous linear map, then $T$ is an open map.
 \end{theorem}
+\begin{proof}
+  For each $n\geq 0$, let $F_n = \overline{T\left( U\left( 0,n+1 \right) \right)}$. This is a closed subset of $W$. Since $0\in W$, $W$ is nonempty. Since $W = \bigcup_{n}F_n$, it follows by the corollary to Baire Category Theorem, there is some $n$ such that $F_n^{\circ}\neq \emptyset$.
+
+  By linearity, since $F_n = \left( n +1 \right)F_0$, it follows that $F_0^{\circ}\neq\emptyset$. Thus, there exists $w\in W$ and $r_0 > 0$ such that $U\left( w,r_0 \right)\subseteq \overline{T\left( U\left( 0,1 \right) \right)}$. Notice that $ \overline{T\left( U\left( 0,1 \right) \right)} $ is convex and symmetric. In particular, $U\left( 0,r_0 \right)\subseteq \overline{T\left( U\left( 0,1 \right) \right)}$, so $ B\left( 0,r_0 \right)\subseteq \overline{T\left( U\left( 0,1 \right) \right)} $.
+
+  We claim that for all $w\in W$, if $\norm{w}\leq r_0$, then there exists $v\in V$ such that $\norm{v}\leq 1$ and $\norm{w-Tv} \leq \frac{1}{2}r_0$. In particular, we observe that any such $w$ is an element of $ \overline{T\left( U\left( 0,1 \right) \right)} $. Thus, $U\left( w,r_0/2 \right)\cap T\left( U\left( 0,1 \right) \right)\neq \emptyset$. Therefore, we choose such a $ \widetilde{w} $ in this intersection, and let $ v\in U\left( 0,1 \right) $ be such that $Tv = \widetilde{w}$. Furthermore, for all $n\geq 0$ and all $w\in W$ with $\norm{w}\leq 2^{-n}r_0$, there exists $v$ with $\norm{v}\leq 2^{-n}$ and $\norm{w-Tv}\leq 2^{-\left( n+1 \right)}r_0$. This emerges from rescaling the details from the previous paragraph.
+
+  Next, we claim that $ B\left( 0,r_0 \right)\subseteq T\left( B\left( 0,2 \right) \right) $. If $w_0\in W$ is such that $\norm{w_0}\leq r_0$, then we see that there is $v_0$ with $\norm{v_0}\leq 1$ and $\norm{w_0-Tv_0}\leq \frac{1}{2}r_0$. Recursively, we construct $\left( w_n \right)_n$ by letting $w_n = w_{n-1} - \sum_{j=0}^{n-1}Tv_j$, where we have that $\norm{v_j}\leq 2^{-j}$ and $\norm{w_{k} - Tv_k}\leq 2^{-(k+1)}r_0$. Notice that $w_n\to0$ as $n\to\infty$, so that
+  \begin{align*}
+    w_0 &= \lim_{n\to\infty} T\left( \sum_{j=0}^{n-1}v_j \right).
+  \end{align*}
+  Moreover, $\sum_{j=0}^{\infty}\norm{v_j} < \infty$, so $v = \sum_{j=0}^{\infty}v_j$ is defined in $V$ since $V$ is complete. Since $T$ is continuous, it follows that $w_0 = Tv$. Finally, we have that $\norm{v}\leq \sum_{j=0}^{\infty}\norm{v_j} \leq 2$.
+
+  Let $U\subseteq V$ be open, $w\in T(U)$. There is $v\in U$ such that $Tv = w$. Let $\ve > 0$ to be determined; we will show that $U\left( w,\ve \right)\subseteq T(U)$. Notice that
+  \begin{align*}
+    U\left( w,\ve \right) &= Tv + U\left( 0,\ve \right)\\
+                          &\subseteq Tv + B\left( 0,ve \right)\\
+                          &= Tv + \frac{\ve}{r_0}B\left( 0,r_0 \right)\\
+                          &\subseteq Tv + \frac{\ve}{r_0}T\left( B\left( 0,2 \right) \right)\\
+                          &= T\left( B\left( v,\frac{2\ve}{r_0} \right) \right)\\
+                          &\subseteq T\left( U\left( v,\frac{3\ve}{r_0} \right) \right).
+  \end{align*}
+  We choose $\ve$ small enough such that $U\left( v,\frac{3\ve}{r_0} \right)\subseteq U$, and obtain the desired result.
+\end{proof}
 \begin{corollary}
   If $T\colon V\to W$ is a continuous linear bijection of Banach spaces, $T$ is an isomorphism of topological vector spaces.
 \end{corollary}
+The next classic of functional analysis is the \textit{closed graph theorem}.
 
+If $V$ and $W$ are Banach spaces, we let $V \times W$ be equipped with the norm given by
+\begin{align*}
+  \norm{\left( v,w \right)} &= \max\left( \norm{v},\norm{w} \right).
+\end{align*}
+Then, $V\times W$ with this norm is a Banach space.
+
+Let $T\colon V\to W$ be a $\K$-linear map. The \textit{graph} of $T$ is 
+\begin{align*}
+  \graph(T) &= \set{\left( v,Tv \right)\in V\times W : v\in V}.
+\end{align*}
+In particular, $\graph(T)$ is a linear subspace.
+\begin{theorem}
+  The map $T$ is continuous if and only if $\graph(T)\subseteq V\times W$ is closed in the product topology.
+\end{theorem}
+\begin{proof}
+  If $T$ is continuous, then if $\left( v_n \right)_n\to v\in V$ , we have $\left( Tv_n \right)_n\to Tv$ by definition, so $\left( v_n,Tv_n \right)\to \left( v,Tv \right)\in \graph(T)$.
+
+  If $\Gamma = \graph(T)$ is closed, then we define maps $\pi_1\colon V\times W\to V$ and $\pi_2\colon V\times W\to W$ are given by $\pi_1(v,w) = v$ and $\pi_2(v,w) = w$. These are continuous linear maps. Since $\Gamma$ admits a norm given by the restriction from the product, and $\Gamma$ is closed, it follows that $\Gamma$ is a Banach space.
+
+  Notice that $\pi_1|_{\Gamma}\colon \Gamma\to V$ is a continuous bijection. Therefore, there is a continuous inverse $\left( \pi_1|_{\Gamma} \right)^{-1}$ Since
+  \begin{align*}
+    T &= \pi_2\circ \left( \pi_1|_{\Gamma} \right)^{-1},
+  \end{align*}
+  it follows that $T$ is continuous.
+\end{proof}
+\begin{remark}
+  Often, to prove continuity, we want to show that $\left( x_n \right)_n\to x$ implies $\left( Tx_n \right)_n\to Tx$. Using the closed graph theorem gives a free extra hypothesis that $\left( Tx_n \right)_n\to y$, so it is only necessary to show that $y = Tx$.
+\end{remark}
+The next classic of functional analysis is the Uniform Boundedness Principle.
+\begin{theorem}
+  Suppose $\set{T_i : i\in I}$ is a family of continuous linear operators $V \to W$, where $V$ is a Banach space and $W$ is a normed space. If it is the case that for all $x\in V$, we have $\sup_{i\in I}\norm{T_ix} < \infty$ (i.e., pointwise bounded), then $\sup_{i\in I}\norm{T_i} < \infty$.
+\end{theorem}
 \section{The Riesz Representation Theorem}%
 Our focus will be on the version of the Riesz Representation Theorem for compact metrizable spaces.
 

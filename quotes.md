@@ -109,6 +109,12 @@ use_math: true
 - "Going from Wells Fargo to jail is like pretty bad"\
   *Ben Hilbert*
 
+- "You could use topology. That's not a bad way to do things."\
+  *Ben Hayes*
+
+- "The way you present mathematics is a reflection of your personality."\
+  *Ben Hayes*
+
 - "Compactness means never having to work hard"\
   *Ben Hayes*
 

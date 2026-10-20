@@ -764,9 +764,124 @@ The following two facts are very useful.
   \begin{align*}
     \alpha\otimes\alpha &= 1\oplus \left( 1\otimes \alpha_0 \right)\oplus \left( \alpha_0\otimes 1 \right)\oplus \left( \alpha_0\otimes\alpha_0 \right).
   \end{align*}
+  For (iii) implies (i), we observe that if $f\in L^2_0\left( X \right)$ and $f$ is $S$-invariant, then $f\otimes 1\in L^2_0\left( X\times X \right)$ is also $S$-invariant. Since the diagonal action is ergodic, $f\otimes 1$ is equal to $0$, so $f$ is equal to $0$.
 \end{proof}
 \subsection{Compactness and Factor Maps}%
+\begin{definition}
+  Let $S$ be a semigroup, and let $\pi\colon S\to B\left( H \right)$ be a representation by contractions. We say $\pi$ is \textit{compact} if for all $\xi\in H$, we have that $\set{\pi_s\xi : s\in X}$ is precompact.
 
+  The action $S\curvearrowright \left( X,\mu \right)$ is compact if the Koopman representation
+  \begin{align*}
+    \alpha\colon S^{\operatorname{op}} \to B\left( L^2\left( X,\mu \right) \right)
+  \end{align*}
+  is compact.
+\end{definition}
+We note that, by using total boundedness, we have that a representation $\pi\colon S\to B(H)$ is compact if for all $\ve > 0$, there exists a finite $F\subseteq S$ such that $\pi(S)\xi\subseteq_{\ve} \pi(F)\xi$. We say $A\subseteq_{\ve}B$ in a metric space $\left( X,d \right)$ if for all $a\in A$, there exists $b\in B$ such that $d\left( a,b \right) < \ve$. Similarly, by total boundedness, it suffices to show that there exists some finite $E\subseteq H$ such that $\pi(S)\xi \subseteq_{\ve}\xi$.
+
+Notice that by the triangle inequality, if $A,E\subseteq X$ are such that $A\subseteq_{\ve}E$, then there exists some subset $A_0\subseteq A$ with $\left\vert A_0 \right\vert\leq \left\vert A \right\vert$ such that $A\subseteq_{2\ve} A_0$.
+\begin{proposition}
+  Let $S$ be a semigroup, $\pi\colon S\to B(H)$ a representation by isometries. Then,
+  \begin{enumerate}[(i)]
+    \item $H_c = \set{\xi\in H : \overline{\pi(S)\xi}^{\norm{\cdot}}\text{ is compact}}$ is a subrepresentation;
+    \item if $K\subseteq H_c$ is a nonzero subrepresentation, then $\pi|_{K}$ is not weak mixing.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item If $\xi_1,\xi_2\in H_c$, we let $F_i\subseteq S$ be finite subsets with $\pi(S)\xi_i \subseteq_{\ve}\pi\left( F_i \right)\xi_i$. Then,
+      \begin{align*}
+        \pi(S)\left( \xi_1 + \xi_2 \right) &\subseteq_{2\ve} \pi\left( F_1 \right)\xi_1 + \pi\left( F_2 \right)\xi_2.
+      \end{align*}
+      Since the right-hand side is a finite subset of $H$, it follows that $ \overline{\pi(S)\left( \xi_1 + \xi_2 \right)}^{\norm{\cdot}} $ is compact.
+
+      Let $\eta\in \overline{H_c}^{\norm{\cdot}}$, and let $\ve > 0$. There exists $\xi\in H_c$ such that $\norm{\xi - \eta} < \ve$. Then, since $\pi$ acts by isometries, we have a finite $F\subseteq S$ that $\pi(S)\eta \subseteq_{\ve}\pi(S)\xi \subseteq_{\ve}\pi(F)\xi$, so that $\pi(S)\eta \subseteq_{2\ve}\pi(F)\xi$. Since this holds for all $\ve > 0$, it follows that $\eta$ is $S$-invariant.
+
+      Finally, if $t\in S$, then
+      \begin{align*}
+        \pi_t\left( \overline{\pi(S)\xi}^{\norm{\cdot}} \right) &\subseteq \overline{\pi_t\left( \pi(S)\xi \right)}^{\norm{\cdot}}\\
+                                                                &\subseteq \overline{\pi(S)\xi}^{\norm{\cdot}},
+      \end{align*}
+    \item Let $\xi\in K$, and $\ve > 0$. There exists a finite $F\subseteq S$ such that $\pi(S)\xi\subseteq_{\ve} \pi(F)\xi$.
+
+      Choose $s_n\in S$ such that
+      \begin{align*}
+        \iprod{\pi_{s_n}\pi_{t_1}\xi}{\pi_{t_2}\xi} &\xrightarrow{n\to\infty} 0
+      \end{align*}
+      for all $t_1,t_2\in F$. Without loss of generality, there exists $t\in F$ such that $\norm{\pi_{s_n}\xi - \pi_t\xi} < \ve$ for all $n\in \N$, passing to a subsequence when necessary. Therefore, we have
+      \begin{align*}
+        \ve^2 &> \norm{\pi_{s_n}\xi - \pi_t\xi}^2\\
+              &= 2\norm{\xi}^2 - 2\re \iprod{\pi_{s_n}\xi}{\pi_{t}\xi}\\
+              &\xrightarrow{n\to\infty} 2\norm{\xi}^2.
+      \end{align*}
+      Therefore, $\xi = 0$.
+  \end{enumerate}
+\end{proof}
+An alternative way to phrase both compactness and weak mixing is to say that a representation of a semigroup is weak mixing if and only if $0\in \overline{\pi(S)}^{\operatorname{WOT}}$ and a representation is compact if and only if $ \overline{\pi(S)}^{\operatorname{SOT}} $ is compact. Equivalently, a representation is weak mixing if and only if for all $\xi\in H^{\oplus n}$, we have $0\in \overline{\pi^{\oplus n}(S)\xi}^{\operatorname{wk}}$.
+
+Now, suppose we are dealing with a unitary representation of a group. Let $\alpha\colon G\to U\left( L^2\left( X \right) \right)$ be the Koopman representation. Then, we note that if $K\subseteq L^2(X)$ is a closed subspace, then $\alpha|_{K}$ is weak mixing if and only if $\alpha\otimes \alpha\colon G\to K\otimes K$ has no nonzero invariant vectors.
+
+Given $\xi\in L^2\left( X\times X \right)$, we note that we may define $T_{\xi}\in B\left( L^2\left( X \right) \right)$ by
+\begin{align*}
+  T_{\xi}f(x) &= \int_{}^{} \xi\left( x,y \right)f(y)\:d\mu(y).
+\end{align*}
+By Fubini's Theorem, we have that $\norm{T_{\xi}} = \norm{\xi}_{L^2}$.
+\begin{proposition}
+  For all $\xi\in K\otimes L^2\left( X \right)$, one has that $T_{\xi}\left( L^2(X) \right)\subseteq K$.
+\end{proposition}
+\begin{proof}
+  Since simple tensors form a total set in $L^2\left( X\times X \right)\cong L^2\left( X \right)\otimes L^2\left( X \right)$, it suffices to show that this holds for all $\xi\otimes\eta\in K\otimes L^2\left( X \right)$. Therefore, we have for any $f\in L^2\left( X \right)$ that
+  \begin{align*}
+    T_{\xi\otimes\eta}\left( f \right) &= \int_{}^{} \xi(x)\eta(y)f(y)\:d\mu(y)\\
+                                       &= \iprod{f}{ \overline{\eta} }\xi\\
+                                       &\in K.
+  \end{align*}
+\end{proof}
+Recall that a linear map $T\in B(H)$ is called compact if $ \overline{T\left( B_H \right)}^{\norm{\cdot}} $ is compact. Recall that $K(H)$ is the set of all compact operators on $H$.
+\begin{proposition}
+  \begin{enumerate}[(i)]
+    \item The space $K(H)$ is a norm-closed two-sided ideal in $B(H)$.
+    \item We have that $T\in B(H)$ is compact if and only if $T = \overline{F(H)}$, where $F(H)$ denotes the finite rank operators on $H$.
+    \item The map $T_{\xi}$ is compact for each $\xi\in L^2\left( X\times X \right)$.
+  \end{enumerate}
+\end{proposition}
 \section{A Foray into Topological Dynamics}%
+\begin{definition}
+  Let $X$ be a compact metrizable space, and let $G\curvearrowright X$ be an action by homeomorphisms. We say that this action is \textit{minimal} if, for any $E\subseteq X$, we have that $E$ is $G$-invariant if and only if $E = X$ or $ E = \emptyset $.
+\end{definition}
+\begin{proposition}
+  The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $G\curvearrowright X$ is minimal;
+    \item for all $x\in X$, $ \overline{G.x} = X $.
+  \end{enumerate}
+\end{proposition}
+\begin{proposition}
+  If $X$ is compact metrizable, with $G\curvearrowright X$ by homeomorphisms, with $K\subseteq X$ a closed $G$-invariant subset, then there exists some $E\subseteq X$ such that $E$ is nonempty, $G$-invariant, closed, and $G\curvearrowright E$ is minimal.
+\end{proposition}
+\begin{example}
+  Irrational rotation is a minimal action.
 
+  The Bernoulli action $G\curvearrowright X^{G}$ is not minimal --- the diagonal is invariant.
+\end{example}
+\begin{definition}
+  We say $G\curvearrowright X$ is topologically transitive if, for any $U,V\subseteq X$ are nonempty and open, there exists some $g\in G$ such that $g.U\cap V \neq\emptyset$.
+\end{definition}
+\begin{definition}
+  We say $G\curvearrowright X$ is topologically mixing if for all $U,V\subseteq X$ nonempty and open, then there exits some finite $F\subseteq G$ such that $g.U\cap V \neq \emptyset$ for all $g\in G\setminus F$.
+\end{definition}
+\begin{proposition}
+  The action $G\curvearrowright X$ has a dense orbit if and only if $G\curvearrowright X$ is topologically transitive.
+\end{proposition}
+\begin{proof}
+  Suppose $x$ is such that $ \overline{G.x} = X $. Then, for all $U,V\subseteq X$ nonempty and open, there exists some $g,h\in G$ such that $g.x\in U$ and $h.x\in V$, so that $h.x\in \left( hg^{-1} \right).U$.
+
+  Suppose the action is topologically transitive. Let $E = \set{x\in X : \overline{G.x}=X}$. If $\left( U_n \right)_n$ is a basis for $X$, then
+  \begin{align*}
+    E &= \bigcap_{n=1}^{\infty}\underbrace{\bigcup_{g\in G} \set{x : g.x\in U_n}}_{\eqcolon W_n}.
+  \end{align*}
+  The family of $W_n$ are open. We claim that $W_n$ are dense. If $U\subseteq X$ is nonempty and open, then $W_n\cap U\neq \emptyset$ if and only if there exists $g\in G$ such that $g.x\in U_n$ and $x\in U$, or that $x\in g^{-1}.U_n$. By topological transitivity, we have that $g^{-1}.U_n\cap U_n\neq \emptyset$. Therefore, $E$ is the countable intersection of dense open sets, hence dense by the Baire Category Theorem.
+\end{proof}
+\begin{definition}
+  We say the action $G\curvearrowright X$ is compact if for all $f\in C(X)$, we have that $ \overline{\set{\alpha_g(f) : g\in G}}^{\norm{\cdot}} $ is compact in the supremum norm. Here, $\left( \alpha_g(f) \right)\left( x \right) = f\left( g^{-1}.x \right)$.
+\end{definition}
 \end{document}

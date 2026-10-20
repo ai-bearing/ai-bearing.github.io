@@ -49,7 +49,21 @@ We will black box the following two theorems. The proofs require deep results in
 \end{theorem}
 \begin{remark}
   Since any pair of standard Borel spaces can be equipped with a zero-dimensional Polish topology making a given Borel map continuous, the proof proceeds via the reduction to the continuous case.
+
+  Furthermore, any uncountable standard Borel is Borel isomorphic to $2^{\N}$.
 \end{remark}
+\begin{lemma}[Marker Lemma]
+  Every aperiodic (i.e., has infinite classes) countable Borel equivalence relation $E$ admits a sequence of subsets $\left( B_n \right)_n$ of complete sections with $B_n\supseteq B_{n+1}$ and $\bigcap_{n\in \N}B_n = \emptyset$. Such a sequence is called a \textit{vanishing sequence of markers}.
+\end{lemma}
+\begin{proof}
+  Assume that the equivalence relation $E$ is on $X = 2^{\N}$. Let $s_n(x)$ be the lexicographically smallest $s\in 2^{n}$ such that $\left\vert \left[ x \right]_E\cap \mathcal{N}_s \right\vert = \infty$, where $\mathcal{N}_s$ is the Borel cylinder set for $s$.
+
+  Say $x\in A_n$ if and only if $x|_{n} = s_n(x)$. Then, $\set{A_n : n\in \N}$ is a decreasing sequence of Borel sets which intersects each class of $E$ in infinitely many points. It follows that
+  \begin{align*}
+    A &= \bigcap_{n\in \N}A_n
+  \end{align*}
+  intersects each class of $E$ in at most one point. Therefore, $B_n = A_n\setminus A$ is our desired sequence of markers.
+\end{proof}
 \begin{definition}
   Let $ \left( X,\mu \right) $ be a standard probability space.
   \begin{itemize}
@@ -149,14 +163,14 @@ If $A$ is not null, we may view $R_A$ as a probability measure-preserving equiva
   Let $A$ and $B$ be Borel subsets of $X$. There exists a Borel subset $B_1\subseteq B$ such that $B_1$ is equivalent to a subset of $A$ and $\mu\left( \left[ B\setminus B_1 \right]_R\cap A \right)\leq \mu\left( B \right)$.
 \end{lemma}
 \begin{proof}
-  Let $\mathcal{R}$ be the collection of all families of Borel subsets $\set{R_j}_{j\in J}$ such that each $R_j$ is non-null and $R_j = \graph\left( T_j \right)$ for some family of maps $\set{T_j}_{j\in J}$ with each of $\set{\ran\left( T_j \right)}_{j\in J}$ and $\set{\dom\left( T_j \right)}_{j\in J}$ pairwise disjoint.
+  Let $\mathcal{R}$ be the collection of all families of Borel subsets $\set{R_j : j\in J}$ such that each $R_j$ is non-null and $R_j = \graph\left( T_j \right)$ for some family of maps $\set{T_j : j\in J}$ with each of $\set{\ran\left( T_j \right) : j\in J}$ and $\set{\dom\left( T_j \right) : j\in J}$ pairwise disjoint.
 
-  Say $\set{R_j}_{j\in J}\preceq \set{R'_{j'}}_{j'\in J'}$ if $J\subseteq J'$ and $R_j = R'_j$ for all $j\in J$. By Zorn's Lemma, there is a maximal element which we will denote $\set{R_j}_{j\in J}$. Let
+  Say $\set{R_j : j\in J}\preceq \set{R'_{j'}: j'\in J'}$ if $J\subseteq J'$ and $R_j = R'_j$ for all $j\in J$. By Zorn's Lemma, there is a maximal element which we will denote $\set{R_j : j\in J}$. Let
   \begin{align*}
     A_1 &= \bigcup_{j\in J}\dom\left( T_j \right)\\
     B_1 &= \bigcup_{j\in J}\img\left( T_j \right).
   \end{align*}
-  Since $\bigcup_{j\in J}R_j$ is the graph of some element in $\left[ \left[ R \right] \right]$, we have that $A_1$ and $B_1$ are equivalent. If it were the case that $\mu\left( \left[ B\setminus B_1 \right]_R,A\setminus A_1 \right) > 0$, then there would be some nonnull Borel subset of $B\setminus B_1$ equivalent to a subset of $A\setminus A_1$ via some map $T\in \left[ \left[ R \right] \right]$; adding the graph of $T$ to $\set{R_j}_{j\in J}$ would contradict maximality. Therefore, we have
+  Since $\bigcup_{j\in J}R_j$ is the graph of some element in $\left[ \left[ R \right] \right]$, we have that $A_1$ and $B_1$ are equivalent. If it were the case that $\mu\left( \left[ B\setminus B_1 \right]_R,A\setminus A_1 \right) > 0$, then there would be some nonnull Borel subset of $B\setminus B_1$ equivalent to a subset of $A\setminus A_1$ via some map $T\in \left[ \left[ R \right] \right]$; adding the graph of $T$ to $\set{R_j : j\in J}$ would contradict maximality. Therefore, we have
   \begin{align*}
     \mu\left( \left[ B\setminus B_1 \right]\cap \left( A\setminus A_1 \right) \right) &= 0
       \intertext{so}
@@ -166,7 +180,49 @@ If $A$ is not null, we may view $R_A$ as a probability measure-preserving equiva
   \end{align*}
 \end{proof}
 \begin{lemma}
-  Let $A$ and $B$ be Borel subsets of $X$ with $B\subseteq \left[ A \right]_R$, $\ve > 0$. Then, there is a finite collection $\set{B_k}_{k=1}^{n}$ of pairwise disjoint Borel subsets of $B$ such that each $B_j$ is equivalent to a subset of $A$ and $ \mu\left( B\setminus \bigcup_{k=1}^{n}B_k \right) < \ve $.
+  Let $A$ and $B$ be Borel subsets of $X$ with $B\subseteq \left[ A \right]_R$, $\ve > 0$.
+
+  Then, there is a finite collection $\set{B_k: k=1,\dots,n}$ of pairwise disjoint Borel subsets of $B$ such that each $B_j$ is equivalent to a subset of $A$ and $ \mu\left( B\setminus \bigcup_{k=1}^{n}B_k \right) < \ve $.
+\end{lemma}
+\begin{proof}
+  Let $\mathcal{R}$ be the family of collections of pairwise disjoint Borel subsets $\set{B_j : j\in J}$ with each $B_j$ nonnull and equivalent to a subset of $A$. Define a partial order on the family by saying that $\set{B_j : j\in J}\preceq \set{C_{j'} : j'\in J'}$ if $J\subseteq J'$ and $B_j = C_j$ for all $j\in J$.
+
+  Zorn's Lemma gives a maximal such family, which we denote that $\set{B_j : j\in J}$. We observe that if $\mu\left( B\setminus \bigcup_{j}B_j \right) > 0$, then $B\setminus \bigcup_{B_j}$ has a nonnull Borel subset equivalent to a subset of $A$, which would contradict the maximality of $\set{B_j: j\in J}$. Thus $\mu\left( B\setminus \bigcup_{j}B_j \right) = 0$. Since each $B_j$ is nonnull and the $B_j$ are pairwise disjoint, $J$ is countable. Let $J'\subseteq J$ be finite and $\mu\left( \bigcup_{j\in J\setminus J'} B_j \right) < \ve$. Then, we have
+  \begin{align*}
+    \mu\left( B\setminus \bigcup_{j\in J'}B_j \right) &= \mu\left( \bigcup_{j\in J\setminus J'}B_j \right)\\
+                                                      &< \ve.
+  \end{align*}
+\end{proof}
+\begin{lemma}
+  Let $A$ and $B$ be Borel subsets of $X$. Then, there is a sequence $\set{B_n : n\in \N}$ of pairwise disjoint Borel subsets of $B$ such that each $B_n$ is equivalent to a subset of $A$ with
+  \begin{align*}
+    \lim_{n\to\infty} \mu\left( \left[ B\setminus\bigcup_{j=1}^{n}B_j \right]_R\cap A \right) = 0.
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  Replacing $B$ with $\left[ A \right]_R\cap B$, we assume that $B\subseteq \left[ A \right]_R$.
+
+  We will show that for any $\ve > 0$, there is a finite collection $\set{B_i : i\in I}$ of pairwise disjoint Borel subsets of $B$ such that each $B_i$ is equivalent to a subset of $A$, and
+  \begin{align*}
+    \mu\left( \left[ B\setminus\bigcup_{i\in I}B_i \right]_R\cap A \right) &< \ve.
+  \end{align*}
+  By the previous lemma, we have a finite collection of subsets $\set{B_j : j\in J}$ of pairwise disjoint Borel subsets of $B$ such that each $B_j$ is equivalent to a subset of $A$ and $\mu\left( B\setminus \bigcup_{j\in J}B_j \right) < \ve$.
+
+  We may then find a Borel subset $C$ of $B\setminus \bigcup_{j\in J}B_j$ such that $C$ is equivalent to a subset of $A$ with
+  \begin{align*}
+    \mu\left( \left[ B\setminus \left( C\cup \bigcup_{j\in J}B_j \right) \right]_R \cap A \right) &\leq \mu\left( B\setminus \bigcup_{j\in J}B_j \right)\\
+      &< \ve.
+  \end{align*}
+  Set $\set{B_i : i\in I} = \set{B_j : j\in J}\cup \set{C}$.
+
+  Recursively, for each $k = 1,2,\dots$, we may find a finite collection $\set{B_i : i\in I_k}$ of pairwise disjoint Borel subsets of $B\setminus \bigcup_{j=1}^{k-1}\bigcup_{i\in I_j}B_i$ such that each $B_i$ is equivalent to a subset of $A$ and
+  \begin{align*}
+    \mu\left( \left[ B\setminus \bigcup_{j=1}^{k}\bigcup_{i\in I_k}B_i \right]_{R}\cap A \right) &< 1/k.
+  \end{align*}
+  Setting $n_k = \bigcup_{j=1}^{k}\left\vert I_j \right\vert$, and we list out $\set{B_i : i\in I_k}$ as $B_{n_{k-1}+1},\dots,B_{n_k}$.
+\end{proof}
+\begin{lemma}
+  Let $\sigma\colon L^{\infty}\left( R,\omega \right)\to \C$ be an invariant state such that $\left\vert \sigma\left( \id_B.f \right) \right\vert\leq \mu\left( B \right)\norm{f}$ for all Borel $B\subseteq X$ and all $f\in L^{\infty}\left( R,\omega \right)$. Let $A$ be a Borel subset of $X$ with $\sigma\left( \chi_{R_A} \right) = 0$. Then, $\sigma\left( \chi_{R_{X,A}} \right) = 0$.
 \end{lemma}
 \nocite{kerr_and_li,topics_in_orbit_equivalence}
 \end{document}
