@@ -1,0 +1,224 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage[uprightgreeks,noDcommand]{kpfonts}
+\renewcommand{\coloneq}{\coloneqq}
+\renewcommand{\eqcolon}{\eqqcolon}
+%\usepackage{dsfont}
+%\renewcommand{\mathbb}{\mathds}
+%\usepackage{homework}
+\usepackage{notes}
+
+\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+\addbibresource{../all_references.bib}
+
+\usepackage{parskip}
+\frenchspacing
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Conditional Expectations and the Disintegration Theorem}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{A Quick Overview of Conditional Expectations}%
+\begin{definition}
+  Let $f\in L^1\left( X,\mu \right)$ on a finite measure space $\left( X,\mathcal{A},\mu \right)$. A \textit{conditional expectation} of $f$ with respect to a sub-$\sigma$-algebra $\mathcal{B}\subseteq \mathcal{A}$ is a $\mathcal{B}$-measurable $\mu$-integrable function $ \mathbb{E}_{\mathcal{B}}\left( f \right) $ such that
+  \begin{align*}
+    \int_{}^{} gf\:d\mu &= \int_{}^{} g \mathbb{E}_{\mathcal{B}}\left( f \right)\:d\mu\label{eq:conditional_expectation_defining_property}\tag{$\dag$}
+  \end{align*}
+  for all bounded $\mathcal{B}$-measurable functions $g$.
+
+  For any positive measurable function $\varphi$, we will define $ \mathbb{E}_{\mathcal{B}}\left( \varphi \right) = \lim_{n\to\infty} \mathbb{E}_{\mathcal{B}}\left( \min\left( \varphi,n \right) \right) $.
+\end{definition}
+\begin{theorem}
+  Conditional expectations exist and are unique $\mu$-almost everywhere. They also satisfy the following:
+  \begin{enumerate}[(i)]
+    \item $ \mathbb{E}_{\mathcal{B}}\left( f \right) = f$ $\mu$-a.e. for all $\mathcal{B}$-measurable $\mu$-integrable functions $f$;
+    \item $ \mathbb{E}_{\mathcal{B}}\left( f \right) \geq 0 $ $\mu$-a.e. if $f\geq 0$ $\mu$-a.e.;
+    \item if $\left( f_n \right)_n$ is an increasing sequence of positive $\mu$-integrable functions converging almost everywhere to a $\mu$-integrable function $f$, then $ \mathbb{E}_{\mathcal{B}}\left( f_n \right)\to \mathbb{E}_{\mathcal{B}}\left( f \right) $ $\mu$-a.e.;
+    \item if $\left( f_n \right)_n\to f$ is a sequence of integrable functions converging $\mu$-a.e. to an integrable function $f$, and $\left\vert f_n \right\vert\leq F$ for some $F\in L^1\left( X,\mu \right)$, then $\lim_{n\to\infty} \mathbb{E}_{\mathcal{B}}\left( f_n \right) = \mathbb{E}_{\mathcal{B}}\left( f \right)$;
+    \item if $f_n\leq F$ $\mu$-a.e. for some $F\in L^1\left( X,\mu \right)$, we have $\limsup_{n\to\infty} \mathbb{E}_{\mathcal{B}}\left( f_n \right)\leq \mathbb{E}_{\mathcal{B}}\limsup_{n\to\infty}f_n$ $\mu$-a.e.;
+    \item if $f_n\geq G$ $\mu$-a.e. for some $G\in L^1\left( X,\mu \right)$, then $ \mathbb{E}_{\mathcal{B}} \left( \liminf_{n\to\infty}f_n \right)\leq \liminf_{n\to\infty} \mathbb{E}_{\mathcal{B}}\left( f_n \right)$;
+    \item if $\left( X, \mathcal{A},\mu \right)$ is a probability space, and $\left( \mathcal{B}_n \right)_{n}$ is a filtration on $\mathcal{A}$, then for every $f\in L^1\left( X,\mu \right)$, we have that $ \mathbb{E}_{\mathcal{B}_n}\left( f \right)\to \mathbb{E}_{\mathcal{B}_{\infty}}\left( f \right) $ pointwise almost everywhere.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  If
+  \begin{align*}
+    \nu(E) &= \int_{}^{} f 1_E\:d\mu,
+  \end{align*}
+  then we observe that $\nu\ll\mu$. Define $ \mathbb{E}_{\mathcal{B}}(f) \coloneq \frac{d\nu}{d\mu} $. By bootstrapping and the properties of the Radon--Nikodym derivative, we obtain the conditional expectation properties, and since Radon--Nikodym derivatives are unique, it follows that the conditional expectation itself is unique.
+  \begin{enumerate}[(i)]
+    \item Radon--Nikodym derivatives are unique.
+    \item If $\nu$ is a positive measure, then $\frac{d\nu}{d\mu}$ is necessarily a positive function.
+    \item If $\left( f_n \right)_n\to f$ with $f_n,f\in L^1\left( X,\mu \right)$ is increasing, it follows that $g_n = \mathbb{E}_{\mathcal{B}}\left( f_n \right)$ is almost everywhere increasing. So, $\lim_{n\to\infty}g_n\eqcolon g$ is $\mathcal{B}$-measurable and $\mu$-integrable by Fatou's lemma, so by dominated convergence, the defining property \eqref{eq:conditional_expectation_defining_property}, and the uniqueness of Radon--Nikodym derivatives, we obtain that $g = \mathbb{E}_{\mathcal{B}}\left( f \right)$.
+    \item Use dominated convergence along with the defining property \eqref{eq:conditional_expectation_defining_property}.
+    \item This emerges from the reverse Fatou's Lemma on finite measure spaces along with the defining property \eqref{eq:conditional_expectation_defining_property}.
+    \item This emerges from Fatou's Lemma along with the defining property \eqref{eq:conditional_expectation_defining_property}.
+    \item We start by showing $L^1$ convergence. Observe that, if we let $\mathcal{B}_{\infty} = \sigma\left( \bigcup_{n}\mathcal{B}_n \right)$, then we have that $ \mathbb{E}_{\mathcal{B}_{n}}\left( f \right) = \mathbb{E}_{\mathcal{B}_{n}} \mathbb{E}_{\mathcal{B}_{\infty}}\left( f \right)$. If $f = 1_B$ and $\ve > 0$, then there is some $N$ and $C\in \mathcal{B}_N$ such that $\mu\left( B\triangle C \right) < \ve$ since such a set exists in the algebra generated by all the $\mathcal{B}_n$. Let $g = 1_C$. Then, $ \mathbb{E}_{\mathcal{B}_n}g = g $ for all $n\geq N$. Since
+      \begin{align*}
+        f - \mathbb{E}_{\mathcal{B}_n}\left( f \right) &= \left( f-g \right) + \mathbb{E}_{\mathcal{B}_n} \left( g-f \right),
+      \end{align*}
+      and $ \mathbb{E}_{\mathcal{B}} \colon L^1\left( X, \mathcal{A},\mu \right)\to L^1\left( X,\mathcal{B},\mu \right)$ is a contractive linear map, we have that
+      \begin{align*}
+        \norm{ \mathbb{E}_{\mathcal{B}_n}\left( f \right) - \mathbb{E}_{\mathcal{B}_n}\left( g \right) }_{L^1} &\leq \norm{f-g}_{L^1}\\
+                                                                                                                                &= \ve,
+      \end{align*}
+      so the claim is true for indicators. Bootstrapping yields the desired result.
+
+      Next, we show that a version of Chebyshev's inequality holds. That is, we have that
+      \begin{align*}
+        \mu\left( \set{x : \sup_{n} \left\vert \mathbb{E}_{\mathcal{B}_n}\left( f \right) \right\vert > c} \right) &\leq \frac{1}{c} \int_{X}^{} \left\vert f \right\vert\:d\mu.
+      \end{align*}
+      For nonnegative $f_n\coloneq \mathbb{E}_{\mathcal{B}_n}\left( f \right)$, we let $E = \set{x : \sup_{n}f_n(x) > c}$. If 
+      \begin{align*}
+        E_j = \set{x : f_j(x) > c\text{ and }f_i(x)\leq c\text{ for all }i=1,\dots,j-1},
+      \end{align*}
+      then $E_j$ are measurable, disjoint, and their union is $E$. Since $E_j\in \mathcal{B}_j$ and $\left( \mathcal{B}_j \right)_{j}$ is a filtration, we have that $f_j$ is $\mathcal{B}_j$-measurable. In particular, using monotone convergence and the defining property \eqref{eq:conditional_expectation_defining_property}, we have
+      \begin{align*}
+        \int_{X}^{} f\:d\mu &\geq \int_{E}^{} f\:d\mu\\
+                            &= \sum_{j=1}^{\infty} \int_{E_j}^{} f\:d\mu\\
+                            &= \sum_{j=1}^{\infty} \int_{E_j}^{} f_j\:d\mu\\
+                            &\geq c\sum_{j=1}^{\infty} \mu\left( E_j \right)\\
+                            &= c\mu\left( E \right).
+      \end{align*}
+      Define
+      \begin{align*}
+        \psi(x) &= \limsup_{n\to\infty} \left\vert \mathbb{E}_{\mathcal{B}_n}\left( f \right)(x) - f(x) \right\vert.
+      \end{align*}
+      Let $\ve > 0$. For sufficiently large $n$, there is a $\mathcal{B}_n$-measurable integrable function $g$ such that $\norm{f-g}_{L^1} < \ve^2$. Since $ \mathbb{E}_{\mathcal{B}_m}\left( g \right) = g$ for all $m\geq n$, we have
+      \begin{align*}
+        \psi(x) &\leq \limsup_{n\to\infty} \left\vert \mathbb{E}_{\mathcal{B}_n}\left( f-g \right)\left( x \right) \right\vert + \limsup_{n\to\infty} \left\vert \mathbb{E}_{\mathcal{B}_n}\left( g \right)(x) - g(x) \right\vert + \left\vert f(x)-g(x) \right\vert\\
+                &= \limsup_{n\to\infty} \left\vert \mathbb{E}_{\mathcal{B}_n}\left( f-g \right)(x) \right\vert + \left\vert f(x)-g(x) \right\vert.
+      \end{align*}
+      We have
+      \begin{align*}
+        \mu\left( \set{x : \limsup_{n\to\infty} \left\vert \mathbb{E}_{\mathcal{B}_n}\left( f-g \right)(x) \right\vert > \ve} \right) &\leq \mu\left( \set{x: \sup_{n} \left\vert \mathbb{E}_{\mathcal{B}_n}\left( f-g \right)(x) \right\vert > \ve} \right)\\
+                                                &\leq \frac{1}{\ve}\norm{f-g}_{L^1}\\
+                                                &< \ve,
+      \end{align*}
+      and
+      \begin{align*}
+        \mu\left( \set{x : \left\vert f(x)-g(x) \right\vert > \ve} \right) &\leq \frac{1}{\ve}\norm{f-g}_{L^1}\\
+                                                                           &< \ve,
+      \end{align*}
+      we have that
+      \begin{align*}
+        \mu\left( \set{x : \psi(x) > 2\ve} \right) &\leq 2\ve,
+      \end{align*}
+      so that $\psi \equiv 0$ almost everywhere.
+  \end{enumerate}
+\end{proof}
+\section{Conditional Measures}%
+When $f = 1_A$ is the indicator function on some $A\in \mathcal{A}$, then we define $ \mathbb{E}_{\mathcal{B}} \left( 1_A \right) \eqcolon \mu\left( A|\mathcal{B} \right)$ as the \textit{conditional measure} of $A$ with respect to the sub-$\sigma$-algebra $\mathcal{B}$.
+
+We may assert that the sub-$\sigma$-algebra $ \mathcal{B} $ is produced by a measurable mapping $\pi\colon X\to \left( Y,\mathcal{E} \right)$. For a positive $\mu$, we may find for any $A\in \mathcal{A}$ a $\mathcal{B}$-measurable function $\mu\left( A,\cdot \right)$ such that
+\begin{align*}
+  \mu\left( A\cap B \right) &= \int_{B}^{} \mu\left( A,x \right)\:d\mu(x)
+\end{align*}
+for all $B\in \mathcal{B}$. Since $x\mapsto \mu\left( A,x \right)$ is $\mathcal{B}$-measurable, there is a $\mathcal{E}$-measurable function $y\mapsto \mu^y\left( A \right)$ on $Y$ such that $\mu\left( A,x \right) = \mu^{\pi(x)}\left( A \right)$. If $\nu = \mu\circ \pi^{-1}$ is the pushforward measure of $\mu$ with respect to $\pi$ on $Y$, then we may write
+\begin{align*}
+  \mu\left( A\cap \pi^{-1}\left( E \right) \right) &= \int_{E}^{} \mu^y(A)\:d\nu(y)
+\end{align*}
+for all $E\in \mathcal{E}$. If $E = Y$, then we have
+\begin{align*}
+  \mu(A) &= \int_{}^{} \mu^y(A)\:d\nu(y).
+\end{align*}
+That is, we have a Fubini-type theorem where we may compute $\mu\left( A \right)$ by computing the conditional measures on the level sets $\pi^{-1}\left( \set{y} \right)$ and integrating with respect to the measure $\nu$.
+\begin{definition}
+  Let $\left( X,\mathcal{A},\mu \right)$ be a measure space, and let $\mathcal{B}\subseteq \mathcal{A}$ be a sub-$\sigma$-algebra. We say a function $\mu^{\mathcal{B}}\colon \mathcal{A}\times X\to \R$ is a \textit{regular conditional measure} on $\mathcal{A}$ with respect to $ \mathcal{B} $ if
+  \begin{enumerate}[(i)]
+    \item for every $x$, $A\mapsto \mu^{\mathcal{B}}\left( A,x \right)$ is a measure on $\mathcal{A}$;
+    \item for every $A\in \mathcal{A}$, the function $x\mapsto \mu^{\mathcal{B}}\left( A,x \right)$ is $\mathcal{B}$-measurable and $\left\vert \mu \right\vert$-integrable;
+    \item one has
+      \begin{align*}
+        \mu\left( A\cap B \right) &= \int_{}^{} \mu^{\mathcal{B}}\left( A,x \right)\:d\left\vert \mu \right\vert(x)
+      \end{align*}
+      for all $A\in \mathcal{A}$ and $B\in \mathcal{B}$.
+  \end{enumerate}
+\end{definition}
+\begin{definition}
+  A system of regular conditional measures $\mu^y$ generated by a $\mathcal{A}$-$\mathcal{E}$-measurable map $\pi\colon X\to Y$ is a function $\left( A,y \right)\mapsto \mu^y(A)$ on $\mathcal{A}\times Y$ such that, $\mu^y(\cdot)$ is a measure on $\mathcal{A}$ for fixed $y$ and $y\mapsto \mu^y(A)$ is $\mathcal{E}$-measurable and $\pi_{\ast}\left\vert \mu \right\vert$-integrable for fixed $A$. Furthermore, for all $A\in \mathcal{A}$ and $E\in \mathcal{E}$, it satisfies
+  \begin{align*}
+    \mu\left( A\cap \pi^{-1}\left( E \right) \right) &= \int_{}^{} \mu^{y}(A)\:d\pi_{\ast}\left\vert \mu \right\vert.
+  \end{align*}
+  If for $\pi_{\ast}\left\vert \mu \right\vert$-almost every point $y\in Y$, we have $\pi^{-1}\left(\set{y}\right)\in A$, and $\mu^{y}$ is concentrated on $\pi^{-1}\left( \set{y} \right)$, then we say $\set{\mu^y : y\in Y}$ is a system of \textit{proper} conditional measures.
+\end{definition}
+\begin{lemma}
+  Let $\mathcal{A}$ be countably generated. Then, regular conditional measures on $\mathcal{A}$ are essentially unique.
+
+  Furthermore, if $\mu$ is a probability measure, then $\mu^{\mathcal{B}}\left( \cdot,x \right)$ is a probability measure for $\mu$-a.e. $x$. 
+\end{lemma}
+\begin{proof}
+  Let $\mu_1^{\mathcal{B}}$ and $\mu_2^{\mathcal{B}}$ be two such conditional measures. Let $\mathcal{R} = \set{A_n : n\in \N}$ be a countable algebra generating $\mathcal{A}$. We have that for every $A_n\in \mathcal{R}$, there is $Z_n\in \mathcal{B}$ such that $\mu_1^{\mathcal{B}}\left( A_n,x \right) = \mu_2^{\mathcal{B}}\left( A_n,x \right)$ for all $x\in X\setminus Z_n$, and $\left\vert \mu \right\vert \left( Z_n \right) = 0$. Take $Z = \bigcup_{n}Z_n$.
+
+  If $\mu$ is a probability measure, then $\mu^{\mathcal{B}}\left( A_n,x \right)$ is positive $\mu$-a.e. since its integral over every $B\in \mathcal{B}$ is positive, and $\mu^{\mathcal{B}}\left( X,x \right) = 1$ for $\mu$-a.e. $x$, so $\mu^{\mathcal{B}}\left( \cdot,x \right)$ is a probability measure on $\mathcal{R}$, so it is a probability measure on $\mathcal{A}$.
+\end{proof}
+Our next goal is to understand exactly when regular conditional measures exist.
+\begin{definition}
+  A family $\mathcal{K}\subseteq \mathcal{A}$ is called a compact approximating class if it satisfies the following:
+  \begin{itemize}
+    \item for any sequence $\left( K_n \right)_n$ of elements of $\mathcal{K}$ with $\bigcap_{n} K_n = \emptyset$, there exists $N$ such that $\bigcap_{n=1}^{N} K_n = \emptyset$;
+    \item for any $A\in \mathcal{A}$ and any $\ve > 0$, there is $K_{\ve}\in \mathcal{K}$ and $A_{\ve}\in \mathcal{A}$ such that $A_{\ve}\subseteq K_{\ve}\subseteq A$ and $\mu\left( A\setminus A_{\ve} \right) < \ve$.
+  \end{itemize}
+\end{definition}
+\begin{theorem}
+  Suppose the $\sigma$-algebra $\mathcal{A}$ is countably generated, and that there is a compact approximating class in $\mathcal{A}$. Then, for every sub-$\sigma$-algebra $\mathcal{B}\subseteq \mathcal{A}$, there is a regular conditional measure $\mu^{\mathcal{B}}$ such on $\mathcal{A}$.
+
+  More generally, let $\mathcal{A}_0$ be a sub-$\sigma$-algebra of $\mathcal{A}$ with countable generating subalgebra $\mathcal{U}$. Then, for every sub-$\sigma$-algebra $\mathcal{B}\subseteq A$, there is a regular conditional measure $\mu^{\mathcal{B}}_{\mathcal{A}_0}$ on $\mathcal{A}_0$.
+
+  Furthermore, for every $\mathcal{A}_0$-measurable $\mu$-integrable function $f$, we have
+  \begin{align*}
+    \int_{}^{} f\:d\mu &= \int_{}^{} \int_{}^{} f\left( y \right)\:d\mu_{\mathcal{A}_0}^{\mathcal{B}}\left( y,x \right)\:d\left\vert \mu \right\vert(x).
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  We start by considering a probability measure. Let $\mathcal{U} = \set{A_n : n\in \N}$ be a countable family of subsets of $\mathcal{A}$. Then, for every $n$, we find $C_{n,k}\in \mathcal{K}$ and $A_{n,k}\in \mathcal{A}$ such that $A_{n,k}\subseteq C_{n,k}\subseteq A$ and $\mu\left( A_n\setminus A_{n,k} \right) < 1/k$. Let $\mathcal{U}_0$ be the algebra generated by $\set{A_{n,k}: n, k\in \N}$ and $\set{A_n : n\in \N}$. By the Radon--Nikodym theorem, for every $A\in \mathcal{U}_0$, there is some positive $\mathcal{B}$-measurable function $x\mapsto p_0\left( A,x \right)$ such that $p_0\left( X,x \right) = 1$, $p_0\left( \emptyset,x \right) = 0$ for all $x\in X$ and
+  \begin{align*}
+    \mu\left( A\cap B \right) &= \int_{B}^{} p_0\left( A,x \right)\:d\mu(x).
+  \end{align*}
+  for all $B\in \mathcal{B}$. Notice that $p_0\left( A\cup B,x \right) = p_0\left( A,x \right) + p_0\left( B,x \right)$ for all disjoint $A,B\in \mathcal{U}_0$ and for $\mu$-almost every $x\in X$. Since the set of all pairs $\left( A,B \right)$ for which this identity fails is countable as $\mathcal{U}_0$ is countable, the union of all subsets in $\mathcal{B}$ for which this equality fails is measure zero. Therefore, there is a measure zero subset $B_0\in \mathcal{B}$ such that $A\mapsto p_0\left( A,x \right)$ is additive on $\mathcal{U}_0$ for all $x\in X\setminus B_0$.
+
+  We will show for almost every $x$, $p_0\left( A_n,x \right) = \sup_{k}p_0\left( A_{n,k},x \right)$ for all $n\in \N$. Write $q_n(x) = \sup_{k}p_0\left( A_{n,k},x \right)$. We will show that the set function $p_0\left( \cdot,x \right)$ is approximated on the algebra $\mathcal{U}$ by the class $\mathcal{K}$ with respect to $\mathcal{U}_0$.
+
+  Since $A_{n,k}\subseteq A_n$, we have a measure zero set $N_{n,k}\in \mathcal{B}$ such that $p_0\left( A_{n,k},x \right)\leq p_0\left( A_n,x \right)$ for all $x\in X\setminus N_{n,k}$. Therefore, $q_n(x)\leq p_0\left( A_n,kx \right)$ for all $x\notin N_0\coloneq \bigcup_{n,k=1}^{\infty}N_{n,k}$. However, since $p_0\left( A_{n,k},x \right)\leq q_n(x)$, we have that
+  \begin{align*}
+    \mu\left( A_{n,k} \right) &= \int_{X}^{} p_0\left( A_{n ,k},x \right)\:d\mu(x)\\
+                              &\leq \int_{X}^{} q_n(x)\:d\mu(x).
+  \end{align*}
+  Since $\mu\left( N_0 \right) = 0$, we have that
+  \begin{align*}
+    \sup_{k}\mu\left( A_{n,k} \right) &\leq \int_{X}^{} q_n(x)\:d\mu(x)\\
+                                      &\leq \int_{X}^{} p_0\left( A_n,x \right)\:d\mu(x)\\
+                                      &= \mu\left( A_n \right).
+  \end{align*}
+  Since $\sup_{k}\mu\left( A_{n,k} \right) = \mu\left( A_n \right)$, we have that $q_n(x) = p_0\left( A_n,x \right)$ for all $x$ save for some measure zero set $B_1\in \mathcal{B}$.
+
+  Thus, for all $x\notin N\coloneq B_0 \cup B_1$, the additive set function $p_0\left( \cdot,x \right)$ on the algebra $\mathcal{U}_0$ is such that $\mathcal{K}$ approximates $p_0\left( \cdot,x \right)$ with respect to $\mathcal{U}_0$. This set function is countably additive on $\mathcal{U}$, so by the Carathéodory extension theorem, it extends to a countably additive measure on $\mathcal{A}_0$. If we take $\mu\left( \cdot,x \right) = \mu^{\mathcal{B}}_{\mathcal{A}_0}\left( \cdot,x \right)$, then for all $x\in N$, we define $\mu\left( \cdot,x \right) = \mu$.
+
+  We will now verify that this is our desired family of conditional measures. If $A = A_n$, then $x\mapsto \mu\left( A,x \right)$ is measurable with respect to $ \mathcal{B} $. The class of all sets $A\in \sigma\left( \mathcal{U} \right)$ for which this is true is a monotone class. Therefore, it coincides with $\sigma\left( \mathcal{U} \right)$. If $B\in \mathcal{B}$ and $A = A_n$, then by construction, we have
+  \begin{align*}
+    \mu\left( A\cap B \right) &= \int_{B}^{} \mu\left( A,x \right)\:d\mu(x).
+  \end{align*}
+  Let $B\in \mathcal{B}$ be fixed. The class $\mathcal{E}$ of all $A\in \sigma\left( \mathcal{U} \right)$ for which this equation holds is monotone. If $E_j\nearrow E$ in $\mathcal{E}$, then $\lim_{j\to\infty}\mu\left( E_j,x \right) = \mu\left( E,x \right)$, so by the dominated convergence theorem, we have that $E\in \mathcal{E}$. Thus, $\mathcal{E} = \sigma\left( \mathcal{U} \right)$. Since $\sigma\left( \mathcal{U} \right) = \mathcal{A}_0$, we obtain the desired result.
+
+  Finally, it suffices to show the integral equality 
+  \begin{align*}
+    \int_{X}^{} f\:d\mu &= \int_{X}^{} \int_{X}^{} f(y)\:d\mu\left( y,x \right)\:d\mu(x)
+  \end{align*}
+  for indicator functions on sets in $ \mathcal{A}_0 $, but it already is the case by definition.
+\end{proof}
+Finally, we may represent this result in terms of a map $\pi$ producing a $\sigma$-algebra $\mathcal{B}$.
+\begin{theorem}
+  Let $\mu$ be a (possibly signed) measure on a measurable space $\left( X,\mathcal{A} \right)$, $\left( Y,\mathcal{E} \right)$ a measurable space, and $\pi\colon \left( X,\mathcal{A} \right)\to \left( Y,\mathcal{E} \right)$ a map measurable with respect to $\left( \mathcal{A}_{\mu},\mathcal{E} \right)$, where $\mathcal{A}_{\mu}$ is the $\sigma$-algebra of $\mu$-measurable subsets of $X$ with respect to $\mathcal{A}$. Suppose $\pi(X)\in \mathcal{E}_{\pi_{\ast}\left\vert \mu \right\vert}$, where $\mathcal{E}_{\pi_{\ast}\left\vert \mu \right\vert}$ is the completion of $\mathcal{E}$ with respect to $\pi_{\ast}\left\vert \mu \right\vert$. Additionally, assume that $\mathcal{A}$ is countably generated and $\mu$ has a compact approximating class. Then, there exist regular conditional measures $\mu^y$ generated by $\pi$ on $\mathcal{A}$.
+\end{theorem}
+\begin{proof}
+  Let $\mathcal{B} = \pi^{-1}\left( \mathcal{E} \right)$. Then, if $\mathcal{A}_0 = \mathcal{A}$ and $\mathcal{A} = \mathcal{A}_{\mu}$ in the previous theorem, we find a conditional measure $\mu^{\mathcal{B}}\left( A,x \right)A$ on $\mathcal{A}$ such that the function $x\mapsto \mu^{\mathcal{B}}\left( A,x \right)$ is $\mathcal{B}$-measurable. Therefore, for every $A\in \mathcal{A}$, there is a $\mathcal{E}$-measurable function $\eta\left( A,y \right)$ such that $\mu^{\mathcal{B}}\left( A,x \right) = \eta\left( A,\pi(x) \right)$.
+
+  By the hypothesis, there is $Y_0\in \mathcal{E}$ with $Y_0\subseteq \pi(X)$ and $\pi_{\ast}\left\vert \mu \right\vert\left( Y\setminus Y_0 \right) = 0$. Thus, for all $y\in Y_0$, $\eta\left( A,y \right)$ is a measure as a function of $A$. Define $\mu^y(A) = \eta\left( A,y \right)$. If $y\notin Y_0$, we let $\mu^y = \mu$. For each $A\in A$, the function $y\mapsto \mu^y(A)$ is $\mathcal{E}$-measurable since $Y\setminus Y_0\in \mathcal{E}$. These are our desired regular conditional measures.
+\end{proof}
+\nocite{measure_theory_bogachev,folland_real_analysis}
+\end{document}

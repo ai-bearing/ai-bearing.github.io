@@ -56,6 +56,7 @@ permalink: "/useful_resources.html"
     - [Three Convergence Theorems](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/Miscellaneous%20Analysis/three_convergence_theorems.pdf)
     - [The Lebesgue Measure](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/Miscellaneous%20Analysis/lebesgue_measure.pdf)
     - [Signed Measures and the Lebesgue–Radon–Nikodym Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/Miscellaneous%20Analysis/radon_nikodym.pdf)
+    - [The Disintegration Theorem](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/Miscellaneous%20Analysis/disintegration_theorem.pdf)
   - Functional Analysis/General Operator Algebras:
     - [Extreme Points, the Krein--Milman Theorem, and Applications](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/Operator%20Algebras%20and%20Functional%20Analysis/extreme_points_krein_milman_and_stone_weierstrass.pdf)
     - [Compact and Fredholm Operators](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/Operator%20Algebras%20and%20Functional%20Analysis/compact_and_fredholm_operators.pdf)
