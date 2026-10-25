@@ -331,7 +331,7 @@ Local convexity is a very useful property to have, as the following result exhib
   \begin{align*}
     \re\left( \left\langle a,\varphi \right\rangle \right) \leq \alpha < \alpha + \ve \leq \re\left( \iprod{x}{\varphi} \right)
   \end{align*}
-  for all $a\in \overline{A}$. Yet, this means that $ \overline{A}\subseteq \set{y\in X : \re\left( \left\langle y,\varphi \right\rangle \right)\leq \alpha} $, even though the latter is weakly closed. Since $x\notin B$, it follows that $x\notin \overline{A}$, which yields a contradiction.
+  for all $a\in \overline{A}$. Yet, this means that $ \overline{A}^{\operatorname{wk}}\subseteq \set{y\in X : \re\left( \left\langle y,\varphi \right\rangle \right)\leq \alpha} \eqcolon B$, even though the latter is weakly closed. Since $x\notin B$, it follows that $x\notin \overline{A}^{\operatorname{wk}}$, which yields a contradiction.
 \end{proof}
 \begin{corollary}
   A convex subset of $X$ is closed if and only if it is weakly closed.
@@ -777,9 +777,185 @@ If $G$ is a locally compact group, then we let $f,g\in L^1\left( G \right)$ be e
 \begin{align*}
   f\ast g(x) &= \int_{}^{} f\left( xy^{-1} \right)g(y)\:dy,
 \end{align*}
-where the integral is taken with respect to the Haar measure on $G$. If $G$ is discrete, then $\delta_e\in L^2\left( G \right)$, and $\delta_3$ is an identity under the convolution. However, if $G$ is not discrete, then $L^1(G)$ does not have an identity.
+where the integral is taken with respect to the Haar measure on $G$. If $G$ is discrete, then $\delta_e\in L^2\left( G \right)$, and $\delta_3$ is an identity under the convolution. However, if $G$ is not discrete, then $L^1(G)$ does not have an identity. However, $L^1(G)$ does have an approximate identity.
+\begin{theorem}
+  Let $G$ be a locally compact abelian group. If $\gamma\colon G\to S^1$ is a continuous homomorphism, we define
+  \begin{align*}
+    \hat{f}\left( \gamma \right) &= \int_{}^{} f(x)\gamma\left( x^{-1} \right)\:dx
+  \end{align*}
+  to be the Fourier transform of $f\in L^1\left( G \right)$. Then, for each $\gamma$, $f\mapsto \hat{f}(\gamma)$ is a nonzero homomorphism $L^1\left( G \right)\to \C$, and if $h\colon L^1\left( G \right)\to \C$ is a nonzero homomorphism, there is a continuous $\gamma\colon G\to S^1$ such that $h(f) = \hat{f}(\gamma)$.
+\end{theorem}
+\begin{proof}
+  If $f,g\in L^1\left( G \right)$, then relabeling as necessary, we have
+  \begin{align*}
+    \widehat{f\ast g}(\gamma) &= \int_{}^{} \left( f\ast g \right)(x)\gamma\left( x^{-1} \right)\:dx\\
+                              &= \int_{}^{} \left( \int_{}^{} f\left( xy^{-1} \right)g(y)\:dy \right)\gamma\left( x^{-1} \right)\:dx\\
+                              &= \int_{}^{} \left( \int_{}^{} f\left( xy^{-1} \right)\gamma\left( \left( xy^{-1} \right)^{-1} \right)\:dx \right)g(y)\gamma\left( y^{-1} \right)\:dy.
+  \end{align*}
+  By the invariance of the Haar integral, we have that
+  \begin{align*}
+  \widehat{ f\ast g }(\gamma) &= \hat{f}(\gamma)\hat{g}(\gamma).
+  \end{align*}
+  Thus, $f\mapsto \hat{f}(\gamma)$ is a homomorphism. Since $\gamma(G)\subseteq S^1$, it follows that $\gamma\in L^{\infty}\left( G \right)$ and $\norm{\gamma} = 1$, meaning that $f\mapsto \hat{f}(\gamma)$ is not identically zero.
+\end{proof}
 \subsection{Continuous Functional Calculus}%
+\begin{proposition}
+  If $A$ is a $C^{\ast}$-algebra, and $h\colon A\to \C$ is a nonzero homomorphism, then $h(a)\in \R$ whenever $a\in A_{\sa}$.
+\end{proposition}
+\begin{proof}
+  Assume $A$ has an identity. For any $t\in \R$, we have
+  \begin{align*}
+    \left\vert h\left( a + it1 \right) \right\vert &\leq \norm{a + it1}^2\\
+                                                  &= \norm{a^2 + t^21}\\
+                                                  &\leq \norm{a}^2 + t^2.
+  \end{align*}
+  If $h = x + iy$ with $x,y\in \R$, then
+  \begin{align*}
+    \norm{a}^2 + t^2 &\geq \left\vert \alpha + i\left( \beta + t \right) \right\vert^2\\
+                     &= \alpha^2 + \left( \beta + t \right)^2\\
+                     &= \alpha^2 + \beta^2 + 2\beta t + t^2.
+  \end{align*}
+  If it were the case that $\beta\neq 0$, then $t\to \pm \infty$ would yield a contradiction given the sign of $\beta$. So, $\beta = 0$, hence $h(a)\in \R$.
+\end{proof}
+\begin{theorem}
+  If $A$ is a unital abelian $C^{\ast}$-algebra, and $\Sigma\left( A \right)$ is its character space, then the Gelfand transform $\Gamma\colon A\to C\left( \Sigma(A) \right)$ is an isometric $\ast$-isomorphism.
+\end{theorem}
+\begin{proof}
+If $a\in A$ and $h\in \Sigma(A)$, then $\widehat{a^{\ast}}\left( h \right) = h\left( a^{\ast} \right) = \overline{\hat{a}(h)}$, whence $\widehat{a^{\ast}} = \overline{\hat{a}}$.
 
+  We have that $\norm{\hat{x}}\leq \norm{x}$ for every $x\in A$. Since $\norm{\hat{x}}$ is the spectral radius of $x$, it follows that $\norm{x^{\ast}x} = \norm{\hat{x}^{\ast}\hat{x}}$ for all $x\in A$, but this means that $\norm{x}^2 = \norm{\hat{x}}^2$ for all $x\in A$, whence $\Gamma$ is an isometry.
+
+  Since $\Gamma$ is an isometry, it has closed range, so it suffices to show it is dense. Since $\Gamma(1) = 1$, it follows that $\Gamma(A)$ contains the constants. Since $\Gamma$ preserves complex conjugation and separates the points of $\Sigma(A)$, we get the desired result.
+\end{proof}
+If $a\in A$ is an element, we let $E = C^{\ast}\left( A \right)$. Then, the map $\operatorname{ev}_a\colon \Sigma(E)\to \sigma(a)$ be the evaluation map $h\mapsto h(a)$. Since this is a homeomorphism, as it is a continuous bijection from a compact space to a Hausdorff space where we recognize that the value of $h$ is uniquely determined by its value on $a$. Gelfand duality gives an isometric $\ast$-isomorphism $\operatorname{ev}_a^{\ast}\colon C\left( \sigma(a) \right)\to C\left( \Sigma(E) \right)$, given by $\operatorname{ev}_a^{\ast}\left( f \right) = f\circ \operatorname{ev}_a$.
+
+The Gelfand transform gives an isometric $\ast$-isomorphism $\Gamma\colon E\to C\left( \Sigma(E) \right)$, so the composition $\Gamma_a\coloneq \Gamma^{-1}\circ \operatorname{ev}_a^{\ast}$ from $C\left( \sigma(a) \right)\to E$. In particular, this gives us the \textit{continuous functional calculus} for any function $f\in C\left( \sigma(a) \right)$, and that $C^{\ast}\left( a \right)\cong C\left( \sigma(a) \right)$.
+
+In particular, we get the \textit{spectral mapping property}, which says that for any $a\in A$, we have that $f\left( \sigma(a) \right) = \sigma\left( f(a) \right)$, since $\Gamma_a\colon C\left( \sigma(a) \right)\to C^{\ast}\left( a \right)$ is an isomorphism, so that spectra are preserved, and we recall that $\sigma\left( f \right) = \ran\left( f \right)$ for all $f\in C\left( \sigma(a) \right)$.
+\subsection{Ordering and Positivity}%
+\begin{definition}
+  If $A$ is a $C^{\ast}$-algebra, we say $a\in A$ is \textit{positive} if $a\in A_{\sa}$ and $\sigma\left( a \right)\subseteq [0,\infty)$. If $a$ is positive, then we write $a\geq 0$. We let $A_{+}$ be the set of all positive elements of $A$.
+\end{definition}
+\begin{theorem}
+  For any $a\in A_{\sa}$, there are positive elements $u,v\in A_{+}$ such that $ a = u-v $ and $uv = 0$. Such a decomposition is unique. We call this the orthogonal decomposition.
+\end{theorem}
+\begin{proof}
+  Using functional calculus on $\sigma(a)\subseteq \R$, take
+  \begin{align*}
+    f_1(t) &= \max\left( 0,t \right)\\
+    f_2(t) &= -\min\left( 0,t \right),
+  \end{align*}
+  so that $u = f_1(a)$ and $v = f_2(a)$.
+
+  The proof of uniqueness follows from examining the uniqueness of the $C^{\ast}$-algebra $C^{\ast}\left( a,u,v,u_1,v_1 \right)$ if $u_1-v_1 = a$ is another orthogonal decomposition.
+\end{proof}
+\begin{theorem}
+  The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $a\geq 0$;
+    \item $a = b^2$ for some $b\in A_{\sa}$;
+    \item $a = x^{\ast}x$ for some $x\in A$;
+    \item $a\in A_{\sa}$ and $\norm{t1-a}\leq t$ for all $t\geq \norm{a}$;
+    \item $a\in A_{\sa}$ and $\norm{t1-a}$ for some $t\geq \norm{a}$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  We start by showing that (v) implies (i). Since $a\in A_{\sa}$, we have that $C^{\ast}\left( a \right)$ is abelian, and $X = \sigma\left( a \right)$ is contained in $\R$. Then, $f\mapsto f(a)$ is a $\ast$-isomorphism of $C(X)$ onto $C^{\ast}\left( a \right)$. Then, assuming the isomorphism, we have $\left\vert t-x \right\vert\leq t$ for some $t\geq \norm{a} = \sup\set{\left\vert s \right\vert : s\in \sigma(a)}$. We observe then that $x\geq 0$ for all $x\in X$, so that $\sigma(a)\subseteq [0,\infty)$.
+
+  Analogously, if $a\geq 0$, then the isomorphism $C^{\ast}\left( a \right)\cong C\left( \sigma(a) \right)$ yields that $\left\vert t-x \right\vert\leq t$ for all $t\geq \sup\set{x : x\in \sigma(a)}$, so that we get that $\norm{t1-a}\leq t$ for all $t\geq \norm{a}$, giving (i) implies (iv).
+
+  Next, assuming (iii), we have that if $a = x^{\ast}x$, then $a\in A_{\sa}$. Write $a = u-v$ with $u,v\geq 0$ and $uv=vu = 0$. Write
+  \begin{align*}
+    xv^{1/2} &= b + ic
+  \end{align*}
+  for some $b,c\in A_{\sa}$. Then, $\left( xv^{1/2} \right)^{\ast}\left( xv^{1/2} \right) = b^2 + c^2 - i\left( bc-cb \right)$. At the same time, we have $\left( xv^{1/2} \right)^{\ast}\left( xv^{1/2} \right) = v^{1/2}x^{\ast}xv^{1/2} = -v^2$. Thus, $i\left( bc-cb \right) = -v^2-b^2-c^2$. In particular, since $A_{+}$ is a closed cone (see below), we have that $i\left( bc-cb \right) \leq 0$. Analogously, we have that $\left( xv^{1/2} \right)^{\ast}\left( xv^{1/2} \right)= -v^2\leq 0$, and that $-y\coloneq \left( xv^{1/2} \right)\left( xv^{1/2} \right)^{\ast}\leq 0$, where $y\in A_{+}$. Therefore, we have $-y = \left( b+ic \right)\left( b-ic \right) = b^2 + c^2 - i\left( bc-cb \right)$. Thus, we have
+  \begin{align*}
+    i\left( bc-cb \right) &= b^2 + c^2 + y\\
+                          &\in A_{+},
+  \end{align*}
+  meaning that $i\left( bc-cb \right) = \left( -A_{+} \right)\cap A_{+} = 0$. Yet, this means that $-v^2 \in A_{+}\cap \left( -A_{+} \right)$, so $v^2 = 0$. Since $v\leq 0$, we have that $v = 0$, so that $a = u \geq 0$.
+\end{proof}
+\begin{proposition}
+  If $A$ is a $C^{\ast}$-algebra, then $A_{+}$ is a closed cone.
+\end{proposition}
+\begin{proof}
+  Let $\left( a_n \right)_{n}\subseteq A_{+}$. Suppose $a_n\to a$. We have that $a\in A_{\sa}$. Since $\norm{a_n-\norm{a_n}}\leq \norm{a_n}$, it follows that $\norm{a-\norm{a}}\leq \norm{a}$, so that $a\geq 0$.
+
+  We have that $\lambda a\geq 0$ whenever $a\geq 0$ and $\lambda\geq 0$. If $a,b\in A_{+}$, we will show that $ a + b\geq 0 $. It suffices to assume that $\norm{a},\norm{b}\leq 1$. Since
+  \begin{align*}
+    \norm{1 - \frac{1}{2}\left( a+b \right)} &= \frac{1}{2}\norm{\left( 1-a \right) + \left( 1-b \right)}\\
+                                             &\leq 1,
+  \end{align*}
+  it follows that $\frac{1}{2}\left( a+b \right)\geq 0$.
+
+  If $a\in A_{+}\cap \left( -A_{+} \right)$, then $a=a^{\ast}$ and $\sigma\left( a \right) = \set{0}$. Since $\norm{a} = r(a)$, it follows that $a= 0$.
+\end{proof}
+We recall that the definition of the absolute value of an element is given by $\left\vert a \right\vert = \left( a^{\ast}a \right)^{1/2}$. The most immediate application of the continuous functional calculus applied to operators on a Hilbert space is the polar decomposition.
+\begin{theorem}[Polar Decomposition]
+  If $A\in B(H)$, then there is a partial isometry $W$ with initial space $\ker(A)^{\perp}$ and final space $ \overline{\ran}(A) $ such that $A = W\left\vert A \right\vert$. This decomposition is also unique.
+\end{theorem}
+\begin{proof}
+  We have that $\norm{Ah}^2 = \norm{\left\vert A \right\vert h}^2$. Since $ \ran\left( A^{\ast} \right)^{\perp} = \ker\left( A \right) $, it follows that $\ran\left( A^{\ast} \right)\subseteq \ker\left( A \right)^{\perp}$ is dense. If $f\in \ran\left( A^{\ast} \right)$, then $f = A^{\ast}g$ for some $g\in \overline{\ran}\left( A \right)$, so that $\set{A^{\ast}A k : k\in H}$ is dense in $ \overline{\ran}\left( A^{\ast} \right) = \left( \ker\left( A \right) \right)^{\perp}$.
+
+  Since $A^{\ast}Ak = \left\vert A \right\vert^2k$, it follows that $\set{\left\vert A \right\vert h : h\in H}$ is dense in $\ker\left( A \right)^{\perp}$. If $W = \ran\left( \left\vert A \right\vert \right)\to \ran\left( A \right)$ is defined by $W\left( \left\vert A \right\vert h \right) = Ah$, then $W$ is a well-defined isometry that extends to $\ker\left( A \right)^{\perp}$. Defining $W$ to be $0$ on $\ker\left( A \right)$ yields a partial isometry with initial space $ \ker\left( A \right)^{\perp} $ and final space $ \overline{\ran}\left( A \right) $.
+\end{proof}
+\begin{proposition}
+  If $\rho\colon A\to B$ is an injective $\ast$-homomorphism of (unital) $C^{\ast}$-algebras, then $\rho$ is an isometry.
+\end{proposition}
+\begin{proof}
+  Let $\rho$ be injective. Let $a\in A$ with $a = a^{\ast}$. Then, $\rho(a) = \rho(a)^{\ast}$ and $\sigma\left( \rho(a) \right)\subseteq \sigma\left( a \right)$. Suppose $\sigma\left( \rho(a) \right)\neq \sigma\left( a \right)$. Then, by Urysohn's Lemma, we may find some function $f$ on $\sigma\left( \rho(a) \right)$ such that $f(t) = 0$ on $\sigma\left( \rho(a) \right)$ but $f\neq 0$ on $\sigma\left( a \right)$. In particular, by continuous functional calculus, $f\left( \rho(a) \right) = 0$ and $f(a)\neq 0$.
+
+  Let $\left( p_n \right)_n$ be polynomials uniformly converging to $f$ on $\sigma(a)$. Thus, $p_n\left( a \right) \to f(a)$ and $p_n\left( \rho(a) \right)\to f\left( \rho(a) \right)$. Since $p_n\left( \rho(a) \right) = \rho\left( p_n(a) \right)\to \rho\left( f(a) \right)$, it follows that $\rho\left( f(a) \right) = f\left( \rho(a) \right) = 0$. However, $\rho$ was assumed injective, so it follows that $\sigma\left( a \right) = \sigma\left( \rho(a) \right)$ if $a = a^{\ast}$. Thus, $a$ and $\rho(a)$ have equal spectral radii, so by using the $C^{\ast}$-identity, we obtain the desired result.
+\end{proof}
+\subsection{The GNS Representation}%
+\begin{proposition}
+  Suppose $f$ is a positive linear functional on a $C^{\ast}$-algebra $A$. Then,
+  \begin{align*}
+    \left\vert f\left( y^{\ast}x \right) \right\vert \leq f\left( y^{\ast}y \right)f\left( x^{\ast}x \right).
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  For any $x,y\in A$, we may define a positive sesquilinear form $\left[ x,y \right] = f\left( y^{\ast}x \right)$. The Cauchy--Schwarz inequality thus applies.
+\end{proof}
+\begin{theorem}[GNS Construction]
+  Let $A$ be a unital $C^{\ast}$-algebra. If $\varphi$ is a positive linear functional on $A$, then there is a cyclic representation $\left( \lambda_\varphi,L^2\left( A,\varphi \right) \right)$ for $A$ with cyclic vector $e$ such that $\varphi(a) = \iprod{\lambda_{\varphi}(a)e}{e}$.
+\end{theorem}
+\begin{proof}
+  Let $\varphi$ be a positive linear functional on $A$, and let $N = \set{x\in A : \varphi\left( x^{\ast}x \right) = 0}$. Then, $N$ is a closed (since $\varphi$ is continuous) left ideal in $A$, where the fact that $N$ is a left ideal emerges from the fact that for all $x\in N$ and $a\in A$,
+  \begin{align*}
+    \left\vert \varphi\left( \left( ax \right)^{\ast}\left( ax \right) \right) \right\vert^2 &= \left\vert \varphi\left( x^{\ast}\left( a^{\ast}ax \right) \right) \right\vert^2\\
+                                                                                       &\leq \varphi\left( x^{\ast}x \right)\varphi\left( x^{\ast}a^{\ast}aa^{\ast}ax \right)\\
+                                                                                       &= 0.
+  \end{align*}
+  We will write $\hat{x}\coloneq x + N$ whenever $x\in A$. Thus, we may view the vector space $A/N$ to be equipped with the inner product $ \iprod{\hat{x}}{\hat{y}} = \varphi\left( y^{\ast}x \right) $. We will let $L^2\left( A,\varphi \right)$ denote the completion of $A/N$ with respect to the norm defined by this inner product.
+
+  Since $N$ is a left ideal, we have that $\hat{x}\mapsto \widehat{ax}$ is a well-defined linear transformation satisfying
+  \begin{align*}
+    \norm{\widehat{ax}}^2 &= \iprod{\widehat{ax}}{\widehat{ax}}\\
+                          &= f\left( x^{\ast}a^{\ast}ax \right).
+  \end{align*}
+  Since $\norm{a^{\ast}a}1 - a^{\ast}a\geq 0$, it follows that $0\leq x^{\ast}\left( \norm{a^{\ast}a}1-a^{\ast}a \right)x$, so that $x^{\ast}a^{\ast}ax\leq \norm{a}^2x^{\ast}x$. In particular, we have that $\norm{\widehat{ax}}^2\leq \norm{a}^2f\left( x^{\ast}x \right) = \norm{a}^2\norm{\hat{x}}^2$. In particular, we may extend the map $\lambda(a)\left( \hat{x} \right) = \widehat{ax}$ to $\lambda_{\varphi}\in B\left( L^2\left( A,\varphi \right) \right)$.
+
+  If we set $e = \hat{1}$, then $\hat{A}\coloneq \set{\hat{a} : a\in A}$ is dense in $L^2\left( A,\varphi \right)$, so $e$ is a cyclic vector for $\lambda_{\varphi}$.
+\end{proof}
+\begin{remark}
+  If $\tau\colon A\to \C$ is a trace (rather than simply a positive linear functional or a state), then the left-ideal $N$ is a two-sided ideal, so we are automatically equipped with a right action $\rho_{\tau}\colon A^{\operatorname{op}}\to B\left( L^2\left( A,\tau \right) \right)$ such that $\rho_{\tau}\left( a^{\op} \right)\hat{x} = \widehat{xa}$.
+\end{remark}
+\begin{proposition}
+  If $A$ is a unital $C^{\ast}$-algebra, then for any $a\in A_{+}$, we have
+  \begin{align*}
+    \norm{a} &= \sup\set{\varphi(a) : \varphi\in S(A)}.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  When $A = C(X)$ with $X$ compact, and $f\in C(X)_{+}$, we have some $x\in X$ such that
+  \begin{align*}
+    \norm{f} &= f(x)\\
+             &= \int_{}^{} f\:d\delta_x\\
+             &= \sup\set{ \int_{}^{} f\:d\mu : \mu\in \operatorname{Prob}\left( X \right) }.
+  \end{align*}
+  Applying this argument to $C^{\ast}\left( a \right)$ yields a state $\varphi_0$. By the Hahn--Banach theorem, there is a norm-one linear functional $\varphi\colon A\to \C$ such that $\varphi|_{C^{\ast}\left( a \right)} = \varphi_0$. Since $1\in C^{\ast}\left( a \right)$, it follows that $\varphi(1) = 1 = \norm{\varphi}$, so that $\varphi$ is a state.
+\end{proof}
 \section{Spectral Theory}%
 Spectral theory is primarily concerned with representations of abelian $C^{\ast}$-algebras. Consider a normal operator $N$ on $H$. Then, $C^{\ast}\left( N \right)$ is an abelian $C^{\ast}$-algebra, and the continuous functional calculus $f\mapsto f\left( N \right)$ yields a $\ast$-isomorphism of $C\left( \sigma(N) \right)$ onto $C^{\ast}\left( N \right)$. In particular, $f\mapsto f\left( N \right)$ is a representation of the abelian $C^{\ast}$-algebra $C^{\ast}\left( N \right)$.
 
@@ -1215,6 +1391,214 @@ When $\Sigma = \Sigma\left( A \right)$ is the character space of a (unital) $C^{
   \end{align*}
   meaning that $\re\left( A \right)\subseteq \overline{\Span}\left( P(A) \right)$, yielding the desired result.
 \end{proof}
+\subsection{Commutants and von Neumann Algebras}%
+\begin{proposition}
+  Let $L\colon B(H)\to \C$ be a linear functional. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $L$ is SOT-continuous;
+    \item $L$ is WOT-continuous;
+    \item there are $g_1,\dots,g_n$ and $h_1,\dots,h_n$ in $H$ such that $L(A) = \sum_{k=1}^{n} \iprod{Ag_k}{h_k}$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  We have that (iii) implies (ii) and (ii) implies (i), so we only need to show that (i) implies (iii). Let $L$ be SOT-continuous. Then, there are vectors $g_1,\dots,g_n$ in $H$ such that
+  \begin{align*}
+    \left\vert L(A) \right\vert &\leq \sum_{k=1}^{n} \norm{Ag_k}\\
+                                &\leq \sqrt{n} \left( \sum_{k=1}^{n}\norm{Ag_k} \right)^{1/2}.
+  \end{align*}
+  We may thus define
+  \begin{align*}
+    p(A) &= \sqrt{n} \left( \sum_{k=1}^{n} \norm{Ag_k}^2 \right)^{1/2},
+  \end{align*}
+  and we have that $\left\vert L(A) \right\vert\leq p(A)$. Notice that $p(A)$ is a seminorm, and that $p(A) = 0$ implies $L(A) = 0$.
+
+  Let
+  \begin{align*}
+    K &= \overline{\set{Ag_1\oplus\cdots\oplus Ag_n : A\in B(H)}}.
+  \end{align*}
+  In particular, $K\subseteq H^{\oplus n}$. Notice that if $Ag_1\oplus\cdots\oplus Ag_n = 0$, then $p(A) = 0$, so $L(A) = 0$. If we define the linear functional $F\left( Ag_1\oplus\cdots\oplus Ag_n \right) = L(A)$, then we have that $F$ is well-defined on a dense subspace of $K$ with
+  \begin{align*}
+    \left\vert F\left( Ag_1\oplus\cdots\oplus Ag_n \right) \right\vert &\leq \norm{Ag_1\oplus\cdots\oplus Ag_n},
+  \end{align*}
+  so that $F$ can be extended to a bounded linear functional on $H^{\oplus n}$. Since all linear functionals on $H^{\oplus n}$ are given by
+  \begin{align*}
+    F_1\left( f_1\oplus\cdots\oplus f_n \right) &= \iprod{f_1\oplus\cdots\oplus f_n}{h_1\oplus\cdots\oplus h_n}\\
+                                                &= \sum_{k=1}^{n} \iprod{f_k}{h_k},
+  \end{align*}
+  it follows that $L(A) = \sum_{k=1}^{n} \iprod{Ag_k}{h_k}$.
+\end{proof}
+\begin{theorem}
+  Let $M\subseteq B(H)$ be a $\ast$-subalgebra. A closed subspace $K\subseteq H$ is reducing for $M$ if and only if the projection $p\coloneq P_K$ is in the commutant of $M$.
+\end{theorem}
+\begin{proof}
+  Suppose $K$ is reducing for $M$. Then, for all $x\in M$ and $\xi\in K$, we have $x\xi\in K$, so that $x\xi = px\xi = xp\xi$. Analogously, since $K$ is reducing if and only if $K$ and $K^{\perp}$ are invariant under $M$, it follows that $\eta\in K^{\perp}$ satisfies $px\eta = 0 = xp\eta$, whence $px = xp$.
+
+  If $p\in M'$, then we have for all $\xi\in K$ and $\eta\in K^{\perp}$ that
+  \begin{align*}
+    \iprod{x\xi}{\eta} &= \iprod{xp\xi}{\eta}\\
+                       &= \iprod{px\xi}{\eta}\\
+                       &= \iprod{x\xi}{p\eta}\\
+                       &= 0,
+  \end{align*}
+  so that $x\xi\in \left( K^{\perp} \right)^{\perp} = K$, or that both $K$ and $K^{\perp}$ are $M$-invariant.
+\end{proof}
+\begin{theorem}[Double Commutant Theorem]
+  Let $M$ be a unital $\ast$-subalgebra of $B(H)$. Then, $ \overline{M}^{\operatorname{SOT}} = \overline{M}^{\operatorname{WOT}} = M'' $.
+\end{theorem}
+\begin{proof}
+  Since $M''$ is a WOT-closed subalgebra, we have the inclusions $ \overline{M}^{\operatorname{SOT}}\subseteq \overline{M}^{\operatorname{WOT}}\subseteq M'' $, so we only need to show that $M''\subseteq \overline{M}^{\operatorname{SOT}}$.
+
+  If $x\in M''$, it suffices to show that for all $\xi_1,\dots,\xi_n\in H$ and all $\ve > 0$ there is some $y\in M$ such that $\norm{\left( x-y \right)\xi_i} < \ve$.
+
+  Observe that
+  \begin{align*}
+    \left( M^{(n)} \right)' &= \set{\left( a_{ij} \right)_{i,j}\in \M_n\left( B(H) \right) : a_{ij}\in M'}.
+  \end{align*}
+  Define $\xi = \left( \xi_1,\dots,\xi_n \right)\in H^{(n)}$. Then,
+  \begin{align*}
+    S &= \overline{\set{y^{(n)}\xi : y\in M}}
+  \end{align*}
+  is reducing for $M$. Therefore, the projection $p\in \M_n\left( B(H) \right)$ is in the commutant $\left( M^{(n)} \right)'$. Observe that for all $x\in M''$, we have
+  \begin{align*}
+    x^{(n)} \xi &= x^{(n)}p\xi\\
+                &= p^{(n)}x\xi\\
+                &\in S,
+  \end{align*}
+  so by the way that $S$ was defined, we have some $y\in M$ such that $\norm{x^{(n)}\xi - y^{(n)}\xi} < \ve$, so that $\norm{\left( x-y \right)\xi_i} < \ve$ for all $i=1,\dots,n$.
+\end{proof}
+\subsection{The Characterization of Abelian von Neumann Algebras}%
+\begin{theorem}
+  Let $\left( X,\Omega,\mu \right)$ be a $\sigma$-finite measure space, and let $\phi\in L^{\infty}\left( X,\mu \right)$. Define $M_{\phi}f = \phi f$ for any $f\in L^2\left( X,\mu \right)$. If $A_{\mu} = \set{M_{\phi} : \phi\in L^{\infty}\left( X,\mu \right)}$, then $A_{\mu} = A_{\mu}' = A_{\mu}''$.
+\end{theorem}
+\begin{proof}
+  It suffices to show that $A_{\mu}' \subseteq A_{\mu}$. We start by assuming that $\mu(X) < \infty$. Then, $1\in L^2\left( X,\mu \right)$, so we define $\phi = A(1)$. Then, $\phi\in L^2\left( X,\mu \right)$. For any $\psi\in L^{\infty}\left( X,\mu \right)$, then $\psi\in L^2\left( X,\mu \right)$, and $A\psi = AM_{\psi}1 = M_{\psi}A(1) = \phi\psi$, with $\norm{\phi\psi}_{L^2}\leq \norm{A}\norm{\psi}_{L^2}$.
+
+  If we let $\Delta_n = \set{x\in X : \left\vert \phi(x) \right\vert \geq n}$, and $\psi = \chi_{\Delta_n}$ in the preceding argument, then we have
+  \begin{align*}
+    \norm{A}^2\mu\left( \Delta_n \right) &= \norm{A}^2\norm{\psi}^2\\
+                                         &\geq \norm{\phi\psi}^2\\
+                                         &= \int_{\Delta_n}^{} \left\vert \phi \right\vert^2\:d\mu\\
+                                         &\geq n^2\mu\left( \Delta_n \right).
+  \end{align*}
+  Therefore, if $\mu\left( \Delta_n \right) \neq 0$, we have that $\norm{A} \geq n$. Since $A$ is bounded, $\mu\left( \Delta_n \right) = 0$ for some $n$, or that $\phi\in L^{\infty}\left( X,\mu \right)$. Yet, since $A = M_{\phi}$ on $L^{\infty}\left( X,\mu \right)$, and $L^{\infty}\left( X,\mu \right)\subseteq L^2\left( X,\mu \right)$ is dense, it follows that $A = M_{\phi}$ on $L^2\left( X,\mu \right)$.
+
+  In the general $\sigma$-finite case, we may decompose $X = \bigsqcup_{n=1}^{\infty}X_n$ as a countable union of disjoint subsets with finite measure, and use the same process to show that on each $L^{\infty}\left( X_n,\mu|_{X_n} \right)$, we have that $A = M_{\phi_n}$, where $\phi_n = \phi|_{X_n}$.
+\end{proof}
+\begin{theorem}[Fuglede's Theorem]
+  Suppose $N$ and $M$ are normal operators on $H$ and $K$ respectively, and there is some $B\colon K\to H$ satisfying $NB = BM$. Then, $N^{\ast}B = BM^{\ast}$.
+\end{theorem}
+\begin{proof}
+  We have that $p(N)B = Bp(M)$ for any polynomial $p(z)$. Since, for a fixed $z\in \C$, we have that $\exp\left( i \overline{z}N \right)$ and $ \exp \left( i \overline{z}M \right) $ are limits of polynomials in $N$ and $M$ respectively. Thus, $\exp\left( i \overline{z}N \right)B = B\exp\left( i \overline{z}M \right)$ for all $z\in \C$, or that $B = e^{-i \overline{z}N}Be^{i \overline{z}M}$.
+
+  Since $\exp\left( X + Y \right) = \exp\left( X \right)\exp\left( Y \right)$ for any commuting operators $X$ and $Y$, and $N$ and $M$ are normal, we have that
+  \begin{align*}
+    f(z) &= e^{-i z N^{\ast}}B e^{iz M^{\ast}}\\
+         &= e^{-iz N^{\ast}} \left( e^{-i \overline{z}N}B e^{-i \overline{z}M} \right) e^{iz M^{\ast}}\\
+         &= e^{-i \left( zN^{\ast} + \overline{z}N \right)}B e^{i\left( zM^{\ast} + \overline{z}M \right)}.
+  \end{align*}
+  For every $z\in \C$, we have that $z N^{\ast} + \overline{z}N$ and $zM^{\ast} = \overline{z}M$ are Hermitian operators. Since, for any Hermitian operator $A$ and any real $t$, we have
+  \begin{align*}
+    e^{itA} &= \int_{\sigma(A)}^{} e^{itx}\:dE(x)\\
+    e^{-itA} &= \int_{\sigma(A)}^{} e^{-itx}\:dE(x)\\
+             &= \int_{\sigma(A)}^{} \left( e^{itx} \right)^{\ast}\:dE(x)\\
+             &= \left( \int_{\sigma(A)}^{} e^{itx}\:dE(x) \right)^{\ast}\\
+             &= \left( e^{itA} \right)^{\ast},
+  \end{align*}
+  it follows that $e^{itA}\left( e^{itA} \right)^{\ast} = \int_{\sigma(A)}^{} 1\:dE(x) = \left( e^{itA} \right)^{\ast}e^{itA}$, so that $e^{itA}$ is then unitary. In particular, $\exp\left( -i\left( zN^{\ast} + \overline{z}N \right) \right)$ and $\exp\left( i\left( zM^{\ast} + \overline{z}M \right) \right)$ are unitary, so $\norm{f(z)}\leq \norm{B}$. Since $f\colon \C\to B\left( K,H \right)$ is an entire function, Liouville's Theorem gives that $f$ is constant.
+
+  Thus,
+  \begin{align*}
+    0 &= f'(z)\\
+      &= -iN^{\ast}e^{-izN^{\ast}}Be^{izM^{\ast}} + ie^{-izN^{\ast}}BM^{\ast}e^{izM^{\ast}}.
+  \end{align*}
+  Setting $z = 0$ yields that $0 = iN^{\ast}B + iBM^{\ast}$, whence $N^{\ast}B = BM^{\ast}$.
+\end{proof}
+\begin{definition}
+  We say $e_0\in H$ is a separating vector for a $\ast$-subalgebra $A\subseteq B(H)$ if $Te_0 = 0$ implies $T = 0$.
+\end{definition}
+\begin{proposition}
+If $e_0$ is a cyclic vector for $A$, then $e_0$ is separating for $A'$.
+\end{proposition}
+\begin{proof}
+  If $T\in A'$ satisfies $Te_0 = 0$, then for every $S\in A$, we have $TSe_0 = STe_0 = 0$. Since the closed $A$-orbit of $e_0$ is $H$, it follows that $T = 0$.
+\end{proof}
+\begin{theorem}
+  Let $H$ be separable, and let $A$ be an abelian $C^{\ast}$-algebra. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $A = A'$;
+    \item $A$ is unital, has a cyclic vector, and SOT-closed;
+    \item there is a compact metric space $X$, a positive Borel measure $\mu$ with $\operatorname{supp}\left( \mu \right) = X$, and an isomorphism $U\colon L^2\left( X,\mu \right)\to H$ such that $U A_{\mu} U^{-1} = A$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Assume (i) holds. By Zorn's Lemma and separability of $H$, there is a maximal sequence of unit vectors $\set{e_n : n\in \N}$ with $ \overline{Ae_n} \perp \overline{Ae_m} $. By maximality, $H = \bigoplus_{n=1}^{\infty} \overline{Ae_n}$.
+
+  Let
+  \begin{align*}
+    e_0 &= \sum_{n=1}^{\infty} \frac{1}{2^{n/2}}e_n.
+  \end{align*}
+  We have that $\norm{e_0}^2 = 1$ by the pairwise orthogonality of the $e_n$. If $P_n$ is the projection onto $H_n\coloneq \overline{Ae_n}$, we have that $H_n$ is $A$-invariant, meaning that $H_n$ is reducing for $A$. Thus, $P_n\in A' = A$. Since
+  \begin{align*}
+    \overline{Ae_0} &\supseteq \overline{AP_ne_0}\\
+                    &= \overline{Ae_n}\\
+                    &= H_n,
+  \end{align*}
+  it follows that $ \overline{Ae_0} = H $, and $e_0$ is a cyclic vector for $A$. This shows (ii).
+
+  Now, suppose (ii) holds. Since $H$ is separable, the ball $B_A$ of $A$ is WOT-metrizable and compact. Choosing a countable WOT-dense subset of $B_A$ and letting $A_1$ be the $C^{\ast}$-algebra generated by this subset, it follows that $A_1$ is a separable $C^{\ast}$-algebra whose SOT closure is $A$.
+
+  Let $X = \Sigma\left( A_1 \right)$. Let $\rho\colon C\left( X \right)\to A_1\subseteq A\subseteq B(H)$ be the inverse Gelfand transform. There is then a spectral measure $E$ such that $\rho(u) = \int_{}^{} u\:dE$ for all $u\in C(X)$. For any $\phi\in B_{\infty}(X)$, there is a net $\left( u_i \right)_{i\in I}$ in $C(X)$ converging to $\phi$ in the weak* topology. That is,
+  \begin{align*}
+    \int_{}^{} u_i\:d\nu &\to \int_{}^{} \phi\:d\nu
+  \end{align*}
+  for all $\nu\in M(X)$. Thus, $ \rho\left( u_i \right) \to \int_{}^{} \phi\:dE $ in WOT, meaning that
+  \begin{align*}
+    \set{ \int_{}^{} \phi\:dE : \phi\in B_{\infty}(X) } &\subseteq A
+  \end{align*}
+  since $A$ is SOT-closed.
+
+  Let $e_0$ be a cyclic vector for $A$. Set $\mu\left( \Delta \right) = \iprod{E\left( \Delta \right)e_0}{e_0}$. Then,
+  \begin{align*}
+    \iprod{ \left( \int_{}^{} \phi\:dE \right)e_0 }{e_0} &= \int_{}^{} \phi\:d\mu
+  \end{align*}
+  for all $\phi\in B_{\infty}(X)$. Viewing $B_{\infty}(X)\subseteq L^2\left( X,\mu \right)$ by identifying functions equal $\mu$-a.e., we have
+  \begin{align*}
+    \norm{\left( \int_{}^{} \phi\:dE \right)e_0}^2 &= \iprod{ \left( \int_{}^{} \left\vert \phi \right\vert^2\:dE \right)e_0 }{e_0}\\
+                                                   &= \int_{}^{} \left\vert \phi \right\vert^2\:d\mu.
+  \end{align*}
+  In particular, if we have $U\colon B_{\infty}(X)\to H$ defined by $U\phi = \left( \int_{}^{} \phi\:dE \right)e_0$, then $U$ is a well-defined map from the dense subspace $B_{\infty}\left( X \right)\subseteq L^2\left( X,\mu \right)$ into $H$, and $U$ is an isometry. Finally, the domain and range of $U$ are dense. The density of the range emerges from the fact that, since $A = \overline{A_1}^{\operatorname{WOT}}$, we have that $ \overline{Ae_0}^{\operatorname{wk}} = \overline{A_1e_0}^{\operatorname{wk}} $, so since weak and norm closures coincide on convex subsets, we have that $ \overline{Ae_0}^{\norm{\cdot}} = \overline{Ae_0}^{\operatorname{wk}} $, giving the desired result.
+
+  For any $\phi\in B_{\infty}\left( X \right)$ and $\psi\in L^{\infty}\left( \mu \right)$, we have that
+  \begin{align*}
+    UM_{\psi}\phi &= U\left( \psi\phi \right)\\
+                  &= \left( \int_{}^{} \psi\phi\:dE \right)e_0\\
+                  &= \left( \int_{}^{} \psi\:dE \right)\left( \int_{}^{} \phi\:dE \right)e_0\\
+                  &= \left( \int_{}^{} \psi\:dE \right)U\phi,
+  \end{align*}
+  so that $UM_{\psi}U^{-1} = \int_{}^{} \psi\:dE$, whence $UA_{\mu}U^{-1}\subseteq A$.
+
+  Yet, since $UA_{\mu}U^{-1}$ is a SOT-closed $C^{\ast}$-subalgebra of $B(H)$ that contains $UC(X)U^{-1} = A_1$, it follows that $UA_{\mu}U^{-1} = A$. Since $A_1$ is separable, $X$ is thus metrizable. This yields (iii).
+
+  Finally, (iii) implies (i) since $UA_{\mu}U^{-1} = A$ implies that $UA_{\mu}'U^{-1} = A'$, and $A_{\mu}' = A_{\mu}$ by the previous theorem.
+\end{proof}
+In particular, we thus obtain that any abelian von Neumann algebra (on a separable Hilbert space) is given by $L^{\infty}\left( X,\mu \right)$ for some compact metric space $X$.
+
+We will show now that given any normal operator $N$ on $B(H)$, we have that
+\begin{align*}
+  W^{\ast}\left( N \right) = \set{N}'' = \set{\phi(N) : \phi\in B_{\infty}\left( \sigma(N) \right)}.
+\end{align*}
+First, observe that the first equality follows from the Double Commutant theorem and Fuglede's Theorem. If we have spectral decomposition $ N = \int_{}^{} z\:dE(z) $, then we observe that $ \int_{}^{} \phi\:dE\in W^{\ast}\left( N \right) $. Since $W^{\ast}\left( N \right)$ is an abelian von Neumann algebra, it admits a cyclic and separating vector $e_0$. Let $\mu$ be defined on $\sigma(N)$ by
+\begin{align*}
+  \mu\left( \Delta \right) &= \norm{E\left( \Delta \right)e_0}^2\\
+                           &= \iprod{E\left( \Delta \right)e_0}{e_0}.
+\end{align*}
+\begin{proposition}
+  One has $\mu\left( \Delta \right) = 0$ if and only if $E(\Delta) = 0$.
+\end{proposition}
+\begin{proof}
+  If $\mu\left( \Delta \right) = 0$, then $E\left( \Delta \right)e_0 = 0$. Since $E\left( \Delta \right) = \chi_{\Delta}\left( N \right)$, and $e_0$ is separating for $W^{\ast}\left( N \right)$, it follows that $E\left( \Delta \right) = 0$. The reverse proposition follows immediately.
+\end{proof}
+
 \nocite{analysis_now,conway_functional_analysis,brown_and_ozawa}
 \printbibliography
 \end{document}

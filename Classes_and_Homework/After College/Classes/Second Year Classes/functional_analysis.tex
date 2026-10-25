@@ -1535,7 +1535,7 @@ For all $v\in V$ and all $r > 0$, the open ball $U\left( v,r \right)$ and the cl
 \end{proposition}
 \begin{proposition}\hfill
   \begin{enumerate}[(i)]
-    \item If $A\subseteq V$ is symmetric and convex, and $v\in V$ with $r > 0$, then $U\left( v,r \right)\subseteq A$ implies $U\left( 0,r \right)\subseteq A$.
+    \item If $A\subseteq V$ is symmetric and convex, and $v\in V$ with $r > 0$, then $U\left( v,r \right)\subseteq A$ implies $U\left( 0,r \right)\subseteq A$. We call this the ``tube argument.''
     \item If $B\left( v,r \right)\subseteq A$, then $B\left( 0,r \right)\subseteq A$.
   \end{enumerate}
 \end{proposition}
@@ -1635,6 +1635,75 @@ The next classic of functional analysis is the Uniform Boundedness Principle.
 \begin{theorem}
   Suppose $\set{T_i : i\in I}$ is a family of continuous linear operators $V \to W$, where $V$ is a Banach space and $W$ is a normed space. If it is the case that for all $x\in V$, we have $\sup_{i\in I}\norm{T_ix} < \infty$ (i.e., pointwise bounded), then $\sup_{i\in I}\norm{T_i} < \infty$.
 \end{theorem}
+\begin{proof}
+  For any $n\geq 0$, let 
+  \begin{align*}
+    F_n &= \set{v\in V : \sup_{i\in I}\norm{T_iv} \leq n+1}\\
+        &= \bigcap_{i\in I} T_i^{-1}\left( B\left( 0,n+1 \right) \right).
+  \end{align*}
+  Then, $F_n$ is closed for each $n\geq 0$, with $\bigcup_{n\geq 0} F_n = V$. By Baire Category Theorem, there is some $n\geq 0$ such that $F_n^{\circ}\neq \emptyset$. Since $F_n = \left( n+1 \right)F_0$, it follows that $F_0^{\circ} \neq \emptyset$. There exists $v\in V$ and $\ve > 0$ such that $U\left( v,\ve \right)\subseteq F_0$. Since $F_0$ is symmetric and convex, the tube argument gives that $U\left( 0,\ve \right)\subseteq F_0$. In particular, this means that for any $\lambda > 0$, we have
+  \begin{align*}
+    U\left( 0,\lambda\ve \right) &\subseteq \set{v\in V : \sup_{i}\norm{T_iv}\leq \lambda}.
+  \end{align*}
+  If $\lambda = 2/\ve$, then $B\left( 0,1 \right)\subseteq U\left( 0,2 \right)$, so that we get our desired result.
+\end{proof}
+\begin{example}[Hellinger--Toeplitz Theorem]
+  Let $H$ be a Hilbert space with inner product $ \iprod{\cdot}{\cdot} $. The convention for this class is that we will let the inner product be conjugate linear in the first coordinate.
+
+  Let $A\colon H\to H$ be a symmetric operator. Then, $A$ is continuous.
+
+  One way we can prove this is by using the closed graph theorem. Suppose $\left( x_i \right)_i$ is a net in $H$ converging to some $x\in H$. 
+\end{example}
+\subsection{Hahn--Banach Theorems}%
+In order to discuss extending linear functionals, we start by assuming that the vector space $V$ is separable, so we won't need the axiom of choice.
+
+We start by discussing a result in linear algebra. Suppose $V$ is a $\K$-vector space, and $S\subseteq V$. Then, we recall that
+\begin{align*}
+  \operatorname{span}\left( S \right) &= \bigcap\set{W : S\subseteq W,W\text{ is a linear subspace}}\\
+                                      &= \set{\sum_{\text{finite}}\lambda_iw_i: \lambda_i\in \C, w_i\in S}.
+\end{align*}
+The first definition is what we might call an ``external definition,'' while the second is what we might call an ``internal definition.''
+\begin{definition}
+  A partially ordered set $\left( X,\preceq \right)$ is called
+  \begin{itemize}
+    \item totally ordered if for all $x,y\in X$, $x\preceq y$ or $y\preceq x$;
+    \item well-ordered if and only if for all $\emptyset\neq S\subseteq X$, $\min\left( S \right)$ exists;
+    \item a subset $I\subseteq X$, where $\left( X,\preceq \right)$ is well-ordered, is called an initial segment if for all $x\in I$ and $y\in X$, $y\preceq x$ implies that $y\in I$.
+  \end{itemize}
+\end{definition}
+\begin{example}
+  The natural numbers $\N$ are well-ordered under the standard additive ordering, and an initial segment is of the form $\set{0,1,\dots,N-1}$ or is equal to all of $\N$.
+\end{example}
+\begin{lemma}[Algorithmic Cleanup Lemma]
+  Let $V$ be a vector space, $W$ a subspace, and $\left( u_n \right)_{n\in \N}$ a sequence in $V$. Then, there exists an initial segment $I\subseteq \N$ and $\left( v_n \right)_{n\in \N}$ such that
+  \begin{enumerate}[(i)]
+    \item $\Span\left( W\cup \set{u_n : n\in \N} \right)$ = $\Span\set{W\cup \set{v_n : n\in I}}$;
+    \item for all $n\in I$, $v_n\notin \Span\left( W\cup \set{v_m : m < n} \right)$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  For any $n\in \N$, let $X_n = \Span\left( W\cup \set{u_m : m  < n} \right)$. Let
+  \begin{align*}
+    J &= \set{n\in \N : u_n\notin X_n}.
+  \end{align*}
+  Let $Y_n = \Span\left( W\cup \set{u_m : m\in J,m < n} \right)$. We claim that for all $n\in \N$, $X_n = Y_n$.
+
+  We proceed by ``ill-founded induction'' (i.e., no base case). Let $n\in \N$, and suppose for all $m\in \N$ with $m < n$, we have $X_m = Y_m$. We will show that $X_n = Y_n$. Let $w\in X_n$. Then, $w$ is a finite linear combination of some elements of $W$ and elements $u_m$ with $m\in J$ and $m < n$. Observe that $W\subseteq Y_n$. For such an $m$, then either
+  \begin{itemize}
+    \item $m\in J$ and $m < n$, meaning $u_m\in Y_n$, so $w\in Y_n$;
+    \item $m\notin J$ and $m < n$, so by the way we defined $J$, $u_m\in X_{m}$, which equals $Y_m$ by the hypothesis; since $Y_m\subseteq Y_n$, we once again have $w\in Y_n$.
+  \end{itemize}
+  Thus, the claim is proven.
+
+  Now, if $J = \set{n\in \N : u_n\notin X_n}$, then there is $I$ an initial segment of $\N$ and a strictly increasing bijection $\varphi\colon I\to J$. Then, we may define $v_n = u_{\varphi(n)}$ to get the desired result.
+\end{proof}
+\begin{remark}
+  To generalize strong induction to properties $P_i$ defined over well-ordered sets $I$, we let
+  \begin{align*}
+    B &= \set{i\in I : P_i\text{ is false}},
+  \end{align*}
+  and if $B$ is nonempty, then there is a least element $i_0$. That is, for all $i < i_0$, $P_i$ holds. If we show the general statement ``if $P_i$ holds for any $i < j$, then $P_j$ holds,'' then we obtain a contradiction because then it would follow that $i_0$.
+\end{remark}
 \section{The Riesz Representation Theorem}%
 Our focus will be on the version of the Riesz Representation Theorem for compact metrizable spaces.
 
