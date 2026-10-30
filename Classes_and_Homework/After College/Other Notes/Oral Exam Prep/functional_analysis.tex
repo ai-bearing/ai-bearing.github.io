@@ -911,7 +911,7 @@ We recall that the definition of the absolute value of an element is given by $\
 \begin{proposition}
   Suppose $f$ is a positive linear functional on a $C^{\ast}$-algebra $A$. Then,
   \begin{align*}
-    \left\vert f\left( y^{\ast}x \right) \right\vert \leq f\left( y^{\ast}y \right)f\left( x^{\ast}x \right).
+    \left\vert f\left( y^{\ast}x \right) \right\vert^2 \leq f\left( y^{\ast}y \right)f\left( x^{\ast}x \right).
   \end{align*}
 \end{proposition}
 \begin{proof}
@@ -955,6 +955,38 @@ We recall that the definition of the absolute value of an element is given by $\
              &= \sup\set{ \int_{}^{} f\:d\mu : \mu\in \operatorname{Prob}\left( X \right) }.
   \end{align*}
   Applying this argument to $C^{\ast}\left( a \right)$ yields a state $\varphi_0$. By the Hahn--Banach theorem, there is a norm-one linear functional $\varphi\colon A\to \C$ such that $\varphi|_{C^{\ast}\left( a \right)} = \varphi_0$. Since $1\in C^{\ast}\left( a \right)$, it follows that $\varphi(1) = 1 = \norm{\varphi}$, so that $\varphi$ is a state.
+
+  We may use the same process for self-adjoints and the $C^{\ast}$-identity to obtain the desired result.
+\end{proof}
+\begin{corollary}
+  If $A$ is a $C^{\ast}$-algebra, then $A$ admits a faithful representation.
+\end{corollary}
+\begin{proof}
+  Consider the direct sum
+  \begin{align*}
+    H &= \bigoplus_{\varphi\in S(A)} L^2\left( A,\varphi \right).
+  \end{align*}
+  The corresponding representation $a\mapsto \left( \hat{a}_{\varphi} \right)_{\varphi\in S(A)}$ is then injective since there is some $\varphi\in S(A)$ such that $\hat{a}_{\varphi}\neq 0$.
+\end{proof}
+Note that the state space $S(A)$ is a weak*-compact convex subset of $A^{\ast}$, so it has extreme points that are known as pure states.
+\begin{theorem}
+  Let $\rho$ be a state. Then, the GNS representation $\pi_{\rho}$ is irreducible if and only if $\rho$ is a pure state.
+\end{theorem}
+\begin{proof}
+  Let $\pi = \pi_{\rho}$ be not irreducible. Then, there is an invariant subspace $K$ of $L^2\left( A,\rho \right)$ such that $P = P_K$ satisfies $P\neq 0 \neq 1-P$. We will write $\rho$ as a nontrivial convex combination of states. Since $K$ is invariant, we have for any $a\in A$ that $\pi(a)P = P\pi(a)$. In particular, we also have that $\norm{P\xi_{\rho}}\neq 0$, and similarly, $\norm{\left( 1-P \right)\xi_{\rho}}\neq 0$. Therefore, $\lambda = \norm{P\xi_{\rho}}^2$ satisfies $0 < \lambda < 1$, and
+  \begin{align*}
+    \phi(a) &= \frac{1}{\lambda} \iprod{\pi(a)P\xi_{\rho}}{P\xi_{\rho}}\\
+    \psi\left( a \right) &= \frac{1}{1-\lambda} \iprod{\pi(a)\left( 1-P \right)\xi_{\rho}}{\left( 1-P \right)\xi_{\rho}}.
+  \end{align*}
+  Therefore, we have 
+  \begin{align*}
+    \rho\left( a \right) &= \iprod{\pi(a)\xi_{\rho}}{\xi_{\rho}}\\
+                         &= \iprod{\pi(a)P\xi_{\rho}}{P\xi_{\rho}} + \iprod{\pi(a)\left( 1-P \right)\xi_{\rho}}{\left( 1-P \right)\xi_{\rho}}\\
+                         &= \lambda\phi(a) + \left( 1-\lambda \right)\psi(a).
+  \end{align*}
+  We note that if it were the case that $\phi = \rho$, then we would have $\norm{P\xi_{\rho}}^2\xi_{\rho} = P\xi_{\rho}$, which would imply that $\norm{P\xi_{\rho}}^2 = 1$, contradicting the fact that $0 < \lambda < 1$.
+  
+  Now, suppose $\phi$
 \end{proof}
 \section{Spectral Theory}%
 Spectral theory is primarily concerned with representations of abelian $C^{\ast}$-algebras. Consider a normal operator $N$ on $H$. Then, $C^{\ast}\left( N \right)$ is an abelian $C^{\ast}$-algebra, and the continuous functional calculus $f\mapsto f\left( N \right)$ yields a $\ast$-isomorphism of $C\left( \sigma(N) \right)$ onto $C^{\ast}\left( N \right)$. In particular, $f\mapsto f\left( N \right)$ is a representation of the abelian $C^{\ast}$-algebra $C^{\ast}\left( N \right)$.
@@ -1582,7 +1614,7 @@ If $e_0$ is a cyclic vector for $A$, then $e_0$ is separating for $A'$.
   Finally, (iii) implies (i) since $UA_{\mu}U^{-1} = A$ implies that $UA_{\mu}'U^{-1} = A'$, and $A_{\mu}' = A_{\mu}$ by the previous theorem.
 \end{proof}
 In particular, we thus obtain that any abelian von Neumann algebra (on a separable Hilbert space) is given by $L^{\infty}\left( X,\mu \right)$ for some compact metric space $X$.
-
+\subsection{The $L^{\infty}$-Functional Calculus}%
 We will show now that given any normal operator $N$ on $B(H)$, we have that
 \begin{align*}
   W^{\ast}\left( N \right) = \set{N}'' = \set{\phi(N) : \phi\in B_{\infty}\left( \sigma(N) \right)}.
@@ -1598,7 +1630,66 @@ First, observe that the first equality follows from the Double Commutant theorem
 \begin{proof}
   If $\mu\left( \Delta \right) = 0$, then $E\left( \Delta \right)e_0 = 0$. Since $E\left( \Delta \right) = \chi_{\Delta}\left( N \right)$, and $e_0$ is separating for $W^{\ast}\left( N \right)$, it follows that $E\left( \Delta \right) = 0$. The reverse proposition follows immediately.
 \end{proof}
+\begin{definition}
+  A \textit{scalar-valued spectral measure} for $N$ is a positive Borel measure $\mu$ on $\sigma\left( N \right)$ such that $\mu\left( \Delta \right) = 0$ if and only if $E\left( \Delta \right) = 0$. That is, $\mu$ and $E$ are ``mutually absolutely continuous.''
+\end{definition}
+Technically, $\mu$ and $E$ are not directly absolutely continuous due to the fact that $E$ is projection-valued.
 
+In particular, the earlier proposition says that scalar-valued spectral measures exist. We will show that every scalar-valued spectral measure is given by $\mu\left( \Delta \right) = \norm{D\left( \Delta \right)e_0}^2$.
+
+If $h\in H$, let $\mu_{h} = E_{h,h}$ and $H_{h} = \overline{W^{\ast}\left( N \right)h}$. That is, $H_h$ is a reducing subspace for $N$ that contains $h$. Let $N_h = N|_{H_h}$. Then, $N_{h}$ is a $\ast$-cyclic normal operator with $\ast$-cyclic vector $h$. By the uniqueness of the spectral measure for a normal operator, we have that the spectral measure for $N_h$ is $E\left( \Delta \right)|_{H_h}$, or $\chi_{\Delta}\left( N_h \right) = \chi_{\Delta}\left( N \right)|_{H_h}$. So, there is a unique isomorphism $U_h\colon H_h\to L^2\left( \mu_h \right)$ such that $U_hh = 1$ and $U_{h}N_hU_h^{\ast} = zf$ for all $f\in L^2\left( \mu_h \right)$.
+
+We already know how to analyze the local behavior of $N$ on each of its $\ast$-cyclic subspaces by our earlier analysis. Our goal is to show that if $h$ is a separating vector for $W^{\ast}\left( N \right)$, then the functional calculus for $N$ is determined by the functional calculus for $N_h$. This is done by establishing a $\ast$-isomorphism $W^{\ast}\left( N \right)\to W^{\ast}\left( N_h \right)$ when $h$ is a separating vector taking $A\mapsto A|_{H_h}$.
+\begin{lemma}
+  If $h\in H$, and $\rho_h\colon W^{\ast}\left( N \right)\to W^{\ast}\left( N_h \right)$ is given by $\rho_h(A) = A|_{H_h}$, then $\rho_h$ is a surjective WOT-continuous $\ast$-homomorphism. Moreover, if $\psi\in B_{\infty}\left( \sigma(N) \right)$, then $\rho_h\left( \psi(N) \right) = \psi\left( N_h \right)$, and if $A\in W^{\ast}\left( N \right)$, then there is some $\phi\in B_{\infty}\left( \sigma\left( N_h \right) \right)$ such that $\rho_h\left( A \right) = \phi\left( N_h \right)$.
+\end{lemma}
+\begin{proof}
+  We start by showing that $\rho_h\colon W^{\ast}\left( N \right)\to W^{\ast}\left( N_h \right)$ has the correct codomain. Observe that if $p\left( z, \overline{z} \right)$ is a polynomial in $z$ and $ \overline{z} $, then $\rho_h\left( p\left( N,N^{\ast} \right) \right) = p\left( N_h,N_h^{\ast} \right)$.
+
+  If $\left( p_i \right)_i$ is a net of polynomials converging to $A$ in WOT, then for any $f,g\in H_h$, we have
+  \begin{align*}
+    \iprod{p_i\left( N,N^{\ast} \right)f}{g} &\to \iprod{Af}{g}
+  \end{align*}
+  In particular, this means that $p_i\left( N_h,N_h^{\ast} \right)\to \rho_h\left( A \right)$ in WOT. Since $\rho_h$ is a $\ast$-homomorphism as $H_h$ is reducing for $W^{\ast}\left( N \right)$, we have the desired result.
+
+  Let $\psi\in B_{\infty}\left( \sigma\left( N \right) \right)$. Then, there is a net of polynomials $\left( p_i\left( z, \overline{z} \right) \right)_{i}$ such that
+  \begin{align*}
+    \int_{}^{} p_i\:d\nu &\to \int_{}^{} \psi\:d\nu
+  \end{align*}
+  for all $\nu\in M\left( \sigma\left( N \right) \right)$, as emerges from the fact that $L_{\psi}\left( \nu \right) = \int_{}^{} \psi\:d\nu$ defines a bounded linear functional on $M\left( \sigma\left( N \right) \right)$, and $C\left( K \right)\subseteq C\left( K \right)^{\ast\ast}$ is weak*-dense. Since $\sigma\left( N_h \right)\subseteq \sigma\left( N \right)$ as $N = N_h\oplus N'$ for some other operator $N'$, it follows that
+  \begin{align*}
+    \int_{}^{} p_i\:d\eta &\to \int_{}^{} \psi\:d\eta
+  \end{align*}
+  for every $\eta$ in $M\left( \sigma\left( N_h \right) \right)$. In particular, since this holds for all the measure $E_{g,h}$, it follows that $p_i\left( N,N^{\ast} \right)\to \psi\left( N \right)$ in WOT, and $p_i\left( N_h,N_h^{\ast} \right)\to \psi\left( N_h \right)$ in WOT. Yet, we have
+  \begin{align*}
+    \rho_h\left( p_i\left( N,N^{\ast} \right) \right) &= p_i\left( N_h,N_h^{\ast} \right),
+  \end{align*}
+  and $\rho_h\left( p_i\left( N,N^{\ast} \right) \right)\to \rho\left( \psi\left( N \right) \right)$. Thus, $\rho_h\left( \psi\left( N \right) \right) = \psi\left( N_h \right)$.
+
+  Let $U_h\colon H_h\to L^2\left( \mu_h \right)$ is the isomorphism with $U_hh = 1$ and $U_hN_hU_h^{-1} = N_{\mu_h}$. Then, if $A\in W^{\ast}\left( N \right)$ with $A_h = \rho_h\left( A \right)$, we have $A_hN_h = N_hA_h$, so that $U_hA_hU_h^{-1}\in \set{N_{\mu_h}}'$. Thus, there is $\phi$ such that $U_hA_hU_h^{\ast} = M_{\phi}$, so that $A_h = \phi\left( N_h \right)$.
+
+  To show that $\rho_h$ is surjective, we note that if $B\in W^{\ast}\left( N_h \right)$, then we have $B = \psi\left( N_h \right)$ for some $\psi\in B_{\infty}\left( \sigma\left( N_h \right) \right)$ by the analogous previous argument. We may extend $\psi$ to $\sigma\left( N \right)$ by letting $\psi = 0$ on $\sigma\left( N \right)\setminus \sigma\left( N_h \right)$. Thus, $\psi\left( N \right)\in W^{\ast}\left( N \right)$ with $\rho_h\left( \psi\left( N \right) \right) = \psi\left( N_h \right) = B$.
+\end{proof}
+\begin{lemma}
+  If $e\in H$ is such that $\mu_e$ is a scalar-valued spectral measure for $N$, and $\nu$ is a positive measure on $\sigma\left( N \right)$ such that $\nu\ll\mu_e$, then there is $h\in H_e$ such that $\nu = \mu_h$.
+\end{lemma}
+\begin{proof}
+  We let $f = \left( \frac{d\nu}{d\mu} \right)^{1/2}\in L^2\left( \mu_e \right)$, and set $h = U_e^{-1}f$. Then, $h\in H_e$, and for any Borel set $\Delta$, we have
+  \begin{align*}
+    \nu\left( \Delta \right) &= \int_{}^{} \chi_{\Delta}\:d\nu\\
+                             &= \int_{}^{} \chi_{\Delta}f^2\:d\mu_e\\
+                             &= \iprod{M_{\chi_{\Delta}}f}{f}\\
+                             &= \iprod{U_e^{-1}M_{\chi_{\Delta}}f}{U_e^{-1}f}\\
+                             &= \iprod{E\left( \Delta \right)h}{h}\\
+                             &= \mu_h\left( \Delta \right).
+  \end{align*}
+\end{proof}
+\begin{lemma}
+  We have that
+  \begin{align*}
+    W^{\ast}\left( N \right) &= \set{\phi(N) : \phi\in B_{\infty}\left( \sigma\left( N \right) \right)}
+  \end{align*}
+\end{lemma}
 \nocite{analysis_now,conway_functional_analysis,brown_and_ozawa}
 \printbibliography
 \end{document}

@@ -195,6 +195,72 @@ We recall some of the useful convergence theorems from measure theory, specializ
 
   Therefore $P\left( \liminf E_n^{c} \right) = 0$, meaning $P\left( \limsup E_n \right) = 1$.
 \end{proof}
+\begin{definition}
+  Let $X_1,X_2,\dots$ be random variables, and let
+  \begin{align*}
+    \mathcal{T}_n &= \sigma\left( X_{n+1},X_{n+1},\dots \right)\\
+    \mathcal{T} &= \bigcap_{n} \mathcal{T}_n.
+  \end{align*}
+  We call $\mathcal{T}$ the \textit{tail} $\sigma$-algebra of the sequence $\left( X_n \right)_n$.
+\end{definition}
+We notice that $\mathcal{T}$ contains many important such events:
+\begin{enumerate}[(i)]
+  \item $F_1 = \set{\lim_{k}X_k\text{ exists}}$;
+  \item $F_2 = \set{\sum_{k}X_k\text{ exists}}$;
+  \item $F_3 = \set{\lim_{k}\frac{\sum_{i=1}^{k}X_i}{k}\text{ exists}}$.
+\end{enumerate}
+The most useful fact about the tail $\sigma$-algebra for a sequence of independent random variables is the \textit{Kolmogorov Zero-One Law}, which says that tail events occur with either probability $0$ or probability $1$.
+\begin{theorem}
+  Let $\left( X_n \right)_n$ be a sequence of independent random variables, and let $\mathcal{T}$ be the tail $\sigma$-algebra. Then,
+  \begin{enumerate}[(i)]
+    \item $F\in \mathcal{T}$ implies $P(F) = 0$ or $P(F) = 1$;
+    \item if $\xi$ is a $\mathcal{T}$-measurable random variables, then there is some constant $c$ in $[-\infty,\infty]$ such that $P(\xi = c) = 1$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item Let 
+      \begin{align*}
+        \mathcal{X}_n &= \sigma\left( X_1,\dots,X_n \right)\\
+        \mathcal{T}_n &= \sigma\left( X_{n+1},X_{n+1},\dots \right).
+      \end{align*}
+      First, we observe that $\mathcal{X}_n$ and $\mathcal{T}_n$ are independent. This follows from the fact that the class $\mathcal{K}$ defined by
+      \begin{align*}
+        \mathcal{K} &= \set{\set{\omega: X_i(\omega)\leq x_i} : x_i\in \R\cup\set{\infty},1\leq i \leq n}
+      \end{align*}
+      is a $\pi$-system that generates $\mathcal{X}_n$. The class $\mathcal{J}$ defined by
+      \begin{align*}
+        \mathcal{J} &= \set{\set{\omega : X_j(\omega) \leq x_j} : x_j\in \R\cup\set{\infty},r\in \N,n+1\leq j \leq n+r}
+      \end{align*}
+      is a $\pi$-system that generates $\mathcal{T}_n$. By the assumption that the sequence $\left( X_n \right)_n$ is independent, we have that $\mathcal{K}$ and $\mathcal{J}$ are independent. Therefore, the corresponding $\sigma$-algebras are independent as well.
+
+      Since $\mathcal{T}\subseteq \mathcal{T}_n$, it follows that $\mathcal{X}_n$ and $\mathcal{T}$ are independent. Next, if we let $\mathcal{X}_{\infty} = \sigma\left( X_1,X_2,\dots \right)$, then we have that $\mathcal{K}_{\infty} = \bigcup_{n}\mathcal{X}_n$ is a $\pi$-system that generates $\mathcal{X}_{\infty}$. Furthermore, since $\mathcal{K}_{\infty}$ and $\mathcal{T}$ are independent, it follows that $\mathcal{X}_{\infty}$ and $\mathcal{T}$ are independent.
+
+      Yet, we have that $ \mathcal{T}\subseteq \mathcal{X}_{\infty} $, meaning that $\mathcal{T}$ is independent of $\mathcal{T}$. Therefore, if $F\in \mathcal{T}$, we have that
+      \begin{align*}
+        P(F) &= P\left( F\cap F \right)\\
+             &= P(F)P(F),
+      \end{align*}
+      whence $P(F) = 0$ or $P(F) = 1$.
+    \item For every $x\in \R$, we have that $P\left( \xi\leq x \right) = 0$ or $P\left( \xi\leq x \right) = 1$.
+
+      Let
+      \begin{align*}
+        c &= \sup\set{x : P\left( \xi \leq x \right) = 0}.
+      \end{align*}
+      Then, if $c = -\infty$, we have that $P\left( \xi = -\infty \right) = 1$, while if $c = \infty$, then $P\left( \xi = \infty \right) = 1$. Else, if $c$ is finite, then $P\left( \xi\leq c-1/n \right) = 0$ for all $n$, whence
+      \begin{align*}
+        P\left( \bigcup_{n}\set{\xi\leq c-1/n} \right) &= 0\\
+                                                       &= P\left( \xi < c \right),
+      \end{align*}
+      while $P\left( \xi\leq c + 1/n \right) = 1$ for all $n$, so that
+      \begin{align*}
+        P\left( \bigcap_{n}\set{\xi\leq c + 1/n} \right) &= 1\\
+                                                         &= P\left( \xi\leq c \right).
+      \end{align*}
+      Thus, $P\left( \xi = c \right) = 1$.
+  \end{enumerate}
+\end{proof}
 \subsection{Inequalities}%
 \begin{theorem}[Chebyshev's Inequality]
   Let $Z$ be a measurable function on $\left( \Omega, \mathcal{F},P \right)$, and let $g\colon \R\to[0,\infty]$ be a Borel measurable increasing function. Then,
@@ -287,7 +353,7 @@ There is a method by using the Hilbert Projection Theorem to construct the condi
     \item if $\mathcal{H}$ is independent of $\sigma\left( \sigma\left( X \right),\mathcal{G} \right)$, then $E\left[ X|\sigma\left( \mathcal{G},\mathcal{H} \right) \right] = E\left[ X|\mathcal{G} \right]$.
   \end{enumerate}
 \end{theorem}
-\subsection{Stochastic Processes and the Definition of a Martingale}%
+\subsection{Definition and Examples of a Martingale}%
 \begin{definition}
   Let $\left( \Omega,\mathcal{F},P \right)$ be a probability space. A (discrete) filtration $\set{\mathcal{F}_n : n\geq 0}$ is a sequence of sub-$\sigma$-algebras $\mathcal{F}_0\subseteq \mathcal{F}_1\subseteq\cdots\subseteq \mathcal{F}$. We will define
   \begin{align*}
@@ -312,6 +378,313 @@ There is a method by using the Hilbert Projection Theorem to construct the condi
     \item each $X_n$ in $X$ satisfies $E\left[ \left\vert X_n \right\vert \right] < \infty$;
     \item $E\left[ X_n|\mathcal{F}_{n-1} \right] = X_{n-1}$ for all $n\geq 1$.
   \end{enumerate}
-  If $X_{n-1}\geq E\left[ X_n|\mathcal{F}_{n-1} \right]$, then we call the process a \textit{supermartingale}, and if $X_{n-1}\leq E\left[ X_n|\mathcal{F}_n \right]$, then we call the process a \textit{submartingale}.
+  If $X_{n-1}\geq E\left[ X_n|\mathcal{F}_{n-1} \right]$, then we call the process a \textit{supermartingale}, and if $X_{n-1}\leq E\left[ X_n|\mathcal{F}_n \right]$, then we call the process a \textit{submartingale}. Notice that submartingales are increasing in expectation while supermartingales are decreasing in expectation.
+
+  Equivalently, we say that $\left( X_n \right)_n$ is a submartingale if
+  \begin{align*}
+    E\left[ X_n-X_{n-1}|\mathcal{F}_{n-1} \right] &\geq 0
+  \end{align*}
+  and $\left( X_n \right)_n$ is a supermartingale if
+  \begin{align*}
+    E\left[ X_{n}-X_{n-1}|\mathcal{F}_{n-1} \right] &\leq 0.
+  \end{align*}
 \end{definition}
+\begin{example}[Sums of Independent Random Variables]
+  Suppose $\left( X_n \right)_n$ is a sequence of independent, integrable, centered random variables. Let $S_0 = 0$, $S_n = X_1 + \cdots + X_n$, and $\mathcal{F}_n = \sigma\left( X_1,\dots,X_n \right)$, where $\mathcal{F}_0 = \set{\emptyset,\Omega}$. Then, for any $n\geq 1$, we have that
+  \begin{align*}
+    E\left[ S_n|\mathcal{F}_{n-1} \right] &= E\left[ S_{n-1}|\mathcal{F}_{n-1} \right] + E\left[ X_n|\mathcal{F}_{n-1} \right]\\
+                                          &= S_{n-1} + E\left[ X_n \right]\\
+                                          &= S_{n-1}.
+  \end{align*}
+  The first equality follows from linearity, the second from the fact that $S_{n-1}$ is $\mathcal{S}_{n-1}$-measurable and that $X_n$ is independent of $\mathcal{F}_{n-1}$, and the third from the fact that the $X_n$ are centered.
+\end{example}
+\begin{example}[Products of Independent Random Variables]
+  Suppose $\left( X_n \right)_n$ is a sequence of independent integrable random variables with mean $1$. Then, defining
+  \begin{align*}
+    M_0 &= 1\\
+    M_n &= X_1\cdots X_n\\
+    \mathcal{F}_0 &= \set{\emptyset,\Omega}\\
+    \mathcal{F}_n &= \sigma\left( X_1,\dots,X_n \right),
+  \end{align*}
+  we have by a similar procedure that
+  \begin{align*}
+    E\left[ M_n|\mathcal{F}_{n-1} \right] &= E\left[ M_{n-1}X_n|\mathcal{F}_{n-1} \right]\\
+                                          &= M_{n-1}E\left[ X_n|\mathcal{F}_{n-1} \right]\\
+                                          &= M_{n-1}E\left[ X_n \right]\\
+                                          &= M_{n-1}.
+  \end{align*}
+\end{example}
+\begin{example}[Accumulating Information]
+  Let $\set{\mathcal{F}_n : n\in \N}$ be a filtration, and let $\xi\in \mathcal{L}^1\left( \Omega \right)$. Let $M_n = E\left[ \xi| \mathcal{F}_n \right]$. By the tower property, we have
+  \begin{align*}
+    E\left[ M_n|\mathcal{F}_{n-1} \right] &= E\left[ \xi|\mathcal{F}_n|\mathcal{F}_{n-1} \right]\\
+                                          &= E\left[ \xi|\mathcal{F}_{n-1} \right]\\
+                                          &= M_{n-1}.
+  \end{align*}
+\end{example}
+\subsection{Martingale Transforms and Stopping Times}%
+\begin{definition}
+  We call a process $C = \left( C_n \right)_{n\geq 1}$ \textit{predictable} (or \textit{previsible}) if $C_n$ is $\mathcal{F}_{n-1}$-measurable.
+\end{definition}
+We may consider $C_n$ as a stake on game $n$ in some repeated game. The winnings at time $n$ are given by $C_n\left( X_n-X_{n-1} \right)$. The total winnings up to time $n$ are then given by
+\begin{align*}
+  Y_n &= \sum_{k=1}^{n} C_k\left( X_k-X_{k-1} \right)\\
+      &\eqcolon \left( C\cdot X \right)_{n}.
+\end{align*}
+This is known as the \textit{martingale transform} of $X$ by $C$. It is the discrete analogue of a stochastic integral $ \int_{}^{} C\:dX $. We define $C_0 = 0$.
+\begin{theorem}[No Beating a Fair Game]\hfill
+  \begin{enumerate}[(i)]
+    \item Let $C$ be a bounded positive predictable process. That is, there is some $K\geq 0$ such that $\left\vert C_n\left( \omega \right) \right\vert\leq K$ for all $n$ and $\omega$. Let $X$ be a supermartingale. Then, $C\cdot X$ is a supermartingale with $\left( C\cdot X \right)_0 = 0$.
+    \item If $C$ is a bounded predictable process, and $X$ is a martingale, then $C\cdot X$ is a martingale with $\left( C\cdot X \right)_0 = 0$.
+    \item In (i) and (ii), we may replace boundedness with the condition that $C_n\in \mathcal{L}^2$ assuming that $X\in \mathcal{L}^2$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item Let $Y = C\cdot X$. Since $C_n$ is bounded, positive, and $\mathcal{F}_{n-1}$-measurable, we have
+      \begin{align*}
+        E\left[ Y_n-Y_{n-1}|\mathcal{F}_{n-1} \right] &= C_n E\left[ X_n-X_{n-1}|\mathcal{F}_n \right]\\
+                                                      &\leq 0.
+      \end{align*}
+    \item Replace $\leq 0$ with $=0$ in the above expression.
+    \item This result follows from applying the definition of the conditional expectation emerging from the formulation via the Hilbert projection theorem.
+  \end{enumerate}
+\end{proof}
+\begin{definition}
+  We say a map $T\colon \Omega\to \set{0,1,2,\dots,\infty}$ is a \textit{stopping time} if $\set{T\leq n}\coloneq \set{\omega : T(\omega)\leq n}$ is contained in $\mathcal{F}_n$ for all $n\leq \infty$. Equivalently, $\set{T = n} \in \mathcal{F}_n$ for all $n\leq \infty$. 
+\end{definition}
+By convention, we have $\inf\left( \emptyset \right) = \infty$ and $\sup\left( \emptyset \right) = 0$.
+\begin{example}
+  Suppose $\left( A_n \right)_n$ is an adapted process, and let $B\in \mathcal{F}$. Let
+  \begin{align*}
+    T &= \inf\set{n\geq 0 : A_n\in B}.
+  \end{align*}
+  Then, $T$ is a stopping time, seeing as
+  \begin{align*}
+    \set{T\leq n} &= \bigcup_{k\leq n} \set{A_k\in B}\\
+                  &\in \mathcal{F}_n.
+  \end{align*}
+\end{example}
+Consider a supermartingale $X$, and let $T$ be a stopping time. The betting process is given by betting $1$ unit at each time and quitting at time $T$. The stake process is then given by $C^{(T)}_{n} = 1_{\set{n\leq T}}$, where $1_E$ is the indicator function. Then,
+\begin{align*}
+  C^{(T)}_{n} &= \begin{cases}
+    1 & n\leq T(\omega)\\
+    0 & \text{else}.
+  \end{cases}
+\end{align*}
+The martingale transform is then given by $\left( C^{(T)}\cdot X \right)_{n} = X_{T\wedge n}-X_0$. The \textit{stopped process} is then given by 
+\begin{align*}
+  X^T_{n}(\omega) &= X_{T(\omega)\wedge n}(\omega),
+\end{align*}
+so that $C^{(T)}\cdot X = X^{T}-X_0$. Notice that $C^{(T)}$ is bounded and positive, and is predictable since $C^{(T)}_{n}$ can only be $0$ or $1$, and $\set{C^{(T)}_{n} = 0} = \set{T\leq n-1}\in \mathcal{F}_{n-1}$ for any $n\geq 1$. Thus, since $C^{(T)}$ is a bounded positive predictable process, we have the following.
+\begin{theorem}
+  If $X$ is a supermartingale, and $T$ is a stopping time, then the stopped process $X^{T}$ is a supermartingale. In particular, $E\left[ X_{T\wedge n} \right]\leq E\left[ X_0 \right]$.
+
+  Similarly, if $X$ is a martingale, and $T$ is a stopping time, then $X^{T}$ is a martingale. In particular, $E\left[ X_{T\wedge n} \right] = E\left[ X_0 \right]$.
+\end{theorem}
+Consider a simple symmetric random walk on $\Z$ with stopping time
+\begin{align*}
+  T &= \inf\set{n : X_n = 1}.
+\end{align*}
+It can be shown that $P\left( T < \infty \right) = 1$, as we will show later. However, even though $E\left[ X_{T\wedge n} \right] = E\left[ X_0 \right] = 0$ for every $n$, we have $E\left[ X_{T} \right] = 1$. Our goal is to understand when $E\left[ X_T \right] = E\left[ X_0 \right]$.
+\begin{theorem}[Doob's Optional Stopping Theorem]\hfill
+  \begin{enumerate}[(a)]
+    \item Let $T$ be a stopping time, and $X$ a supermartingale. Then, $X_T$ is integrable with $E\left[ X_T \right]\leq E\left[ X_0 \right]$ if any of the following conditions hold:
+      \begin{enumerate}[(i)]
+        \item $T$ is bounded --- that is, for some $N\in \N$, $T(\omega)\leq N$ for all $\omega$;
+        \item $X$ is bounded (that is, uniformly bounded) and $T$ is almost surely finite;
+        \item $E\left[ T \right] < \infty$ and $X$ has bounded increments, in that there exists $K \geq 0$ such that
+          \begin{align*}
+            \left\vert X_n\left( \omega \right)-X_{n-1}\left( \omega \right) \right\vert &\leq K
+          \end{align*}
+          for all $n\in \N$ and $\omega\in \Omega$.
+      \end{enumerate}
+    \item If any of (i)--(iii) hold, and $X$ is a martingale, then $E\left[ X_T \right] = E\left[ X_0 \right]$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(a)]
+    \item We know that $X_{T\wedge n}$ is integrable with $E\left[ X_{T\wedge n}-X_0 \right]\leq 0$. To obtain (i), we may take $n = N$, so that $T\wedge N = T$. To obtain (ii), we may let $n\to\infty$ and use the dominated convergence theorem. Finally, to obtain (iii), we observe that
+      \begin{align*}
+        \left\vert X_{T\wedge n}-X_0 \right\vert &= \left\vert \sum_{k=1}^{T\wedge n} \left( X_k-X_{k-1} \right) \right\vert\\
+                                                 &\leq KT.
+      \end{align*}
+      Since $E\left[ KT \right] < \infty$, we may use dominated convergence yet again by taking $n\to\infty$.
+    \item Apply the result in (a) to $X$ and $-X$.
+  \end{enumerate}
+\end{proof}
+\begin{corollary}\hfill
+  \begin{enumerate}[(a)]
+    \item Suppose $M$ is a martingale with bounded increments, $C$ is a bounded predictable process, and $T$ is a stopping time with $E\left[ T \right] < \infty$. Then, $E\left[ \left( C\cdot M \right)_{T} \right] = 0$.
+    \item If $X$ is a positive supermartingale and $T$ is an almost surely finite stopping time, then $E\left[ X_T \right] \leq E\left[ X_0 \right]$.
+  \end{enumerate}
+\end{corollary}
+Knowing when $E\left[ T \right] < \infty$ is a valuable criterion to understand when $X_T$ is a martingale.
+\begin{lemma}
+  Suppose $T$ is a stopping time such that for some $N\in \N$ and some $\ve_0 > 0$, we have for every $n\in \N$ that
+  \begin{align*}
+    P\left( T\leq n + N | \mathcal{F}_n \right) &\geq \ve
+  \end{align*}
+  almost surely. Then, $E\left[ T \right] < \infty$.
+\end{lemma}
+\begin{proof}
+  Our goal is to show that $P\left( T = \infty \right) = 0$. For this, consider the tail of all such $kN$. We will show that $P\left( T > kN \right)\leq \left( 1-\ve \right)^{k}$. Automatically, we have
+  \begin{align*}
+    P\left( T > N \right) &= 1-P\left( T\leq N \right)\\
+                          &= 1- P\left( T\leq N | \mathcal{F}_{0} \right)\\
+                          &= 1- \ve.
+  \end{align*}
+  Now, if we assume that the relation $P\left( T > kN \right)\leq \left( 1-\ve \right)^{k}$ holds, then we find that
+  \begin{align*}
+    P\left( T > \left( k+1 \right)N \right) &= P\left( T > \left( k+1 \right)N\cap T > kN \right)\\
+                                            &= E\left[ 1_{\set{T> \left( k+1 \right)N}}1_{\set{T> kN}} \right]\\
+                                            &= E\left[ E\left[ 1_{\set{T > kN}}1_{\set{T > \left( k+1 \right)N}}|\mathcal{F}_{kN} \right] \right]\\
+                                            &= E\left[ 1_{\set{T> kN}} E\left[ 1_{\set{T> \left( k+1 \right)N}}|\mathcal{F}_{kN} \right] \right]\\
+                                            &= E\left[ \left( 1-\ve \right)1_{\set{T > kN}} \right]\\
+                                            &= \left( 1-\ve \right)P\left( T > kN \right)\\
+                                            &= \left( 1-\ve \right)^{k+1}.
+  \end{align*}
+  Notice that
+  \begin{align*}
+    P\left( T = \infty \right) &= \lim_{k\to\infty} P\left( T > kN \right)\\
+                               &= \lim_{k\to\infty} \left( 1-\ve \right)^{k}\\
+                               &= 0.
+  \end{align*}
+  Therefore, $T < \infty$ almost surely, so that $E\left[ T \right] < \infty$.
+\end{proof}
+Our next consideration is understanding hitting times for a simple random walk. Suppose $\left( X_n \right)_{n}$ is a sequence of independent and identically distributed random variables with $P \left( X=1 \right) = P\left( X = 0 \right) = 1/2$. If $S_0 = 0$ and $S_n = X_1 + \cdots + X_n$, then we set
+\begin{align*}
+  T &= \inf\set{n : S_n = 1},
+\end{align*}
+with the natural filtration $\mathcal{F}_n = \sigma\left( S_0,\dots,S_n \right)$. Notice that if $X$ is the random variable with identical distribution to the  $X_n$, then$E\left[ e^{\theta X} \right] = \cosh\left( \theta \right)$, so that $E\left[ \left( \operatorname{sech}\left( \theta \right) \right)e^{\theta X_n} \right] = 1$. In particular, $M_{n}^{\theta}$, given by
+\begin{align*}
+  M_n^{\theta} &= \left( \operatorname{sech}\left( \theta \right) \right)^{n} e^{\theta S_n}
+\end{align*}
+is a martingale as it is a product of mean-1 i.i.d. random variables.
+\subsection{Martingale Convergence Theorem}%
+Suppose $\left( X_n \right)_n$ is some stochastic process, and let $Y = C\cdot X$ be the corresponding transform by some predictable process $C$. We will consider a strategy as follows: after choosing two numbers $a < b$
+\begin{itemize}
+  \item wait until $X < a$;
+  \item bet one unit until $X$ is above $b$
+  \item repeat this betting strategy forever.
+\end{itemize}
+We inductively define
+\begin{align*}
+  C_1 &= 1_{\set{X_0 < a}}\\
+  C_n &= 1_{\set{C_{n-1} = 1}}1_{\set{X_{n-1} < b}} + 1_{\set{C_{n-1} = 0}}1_{\set{X_{n-1} < a}}
+\end{align*}
+to formally define this betting strategy.
+\begin{definition}
+  The \textit{upcrossing number} $U_N[a,b](\omega)$ counts the largest $k$ such that
+  \begin{align*}
+    0\leq s_1 < t_1 < s_2 < \cdots < s_k < t_k\leq N
+  \end{align*}
+  such that $X_{s_i}(\omega) < a$ and $X_{t_i}(\omega) > b$ for each $1\leq i \leq k$.
+\end{definition}
+In this context, the upcrossing number essentially defines our winnings. Notice that for each $N$, we have
+\begin{align*}
+  Y_N(\omega) &\geq \left( b-a \right)U_N[a,b](\omega) + \left( X_N(\omega)-a \right)_{-},
+\end{align*}
+where 
+\begin{align*}
+  f_{-} &= -\min\left( f,0 \right)
+\end{align*}
+is the negative part of the function $f$.
+\begin{lemma}[Doob Upcrossing Lemma]
+  Let $X$ be a supermartingale, and let $U_N[a,b]$ be the number of upcrossings of $[a,b]$ by time $N$. Then,
+  \begin{align*}
+    \left( b-a \right)E\left[ U_N[a,b] \right] &\leq E\left[ \left( X_{N}-a \right)_{-} \right].
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  Since $C$ is predictable, bounded, and positive with $Y = C\cdot X$, it follows that $Y$ is a supermartingale, so that $E\left[ Y_N \right]\leq 0$.
+\end{proof}
+\begin{corollary}
+  Let $X$ be a uniformly bounded supermartingale in $\mathcal{L}^1$. That is,
+  \begin{align*}
+    \sup_{n} E\left[ \left\vert X_n \right\vert \right] < \infty.
+  \end{align*}
+  Let $a,b\in \R$ with $a < b$. Then, $U_{\infty}\left[ a,b \right] = \lim_{N\to\infty} U_N\left[ a,b \right]$ satisfies
+  \begin{align*}
+    \left( b-a \right)E\left[ U_{\infty}\left[ a,b \right] \right] &\leq \left\vert a \right\vert + \sup_{n} E\left[ \left\vert X_n \right\vert \right],
+  \end{align*}
+  whence $P\left( U_{\infty}\left[ a,b \right] = \infty \right) = 0$.
+\end{corollary}
+\begin{proof}
+  As a general fact, we have that $\left( X_N-a \right)_{-}\leq \left\vert a \right\vert + \left\vert X_N \right\vert$. Therefore, we have
+  \begin{align*}
+    \left( b-a \right)E\left[ U_N\left[ a,b \right] \right] &\leq \left\vert a \right\vert + E\left[ \left\vert X_N \right\vert \right]\\
+                                                            &\leq \left\vert a \right\vert + \sup_{n}E\left[ \left\vert X_n \right\vert \right].
+  \end{align*}
+  Using the monotone convergence theorem then gives our desired result.
+\end{proof}
+\begin{theorem}[`Forward' Convergence Theorem]
+  Let $X$ be a uniformly bounded supermartingale in $\mathcal{L}^1$. Then, $X_{\infty}\coloneq \lim_{n}X_n$ exists and is finite a.s.
+\end{theorem}
+\begin{proof}
+  For definiteness, we will write $X_{\infty}(\omega) = \limsup_{n}X_{n}(\omega)$. Let
+  \begin{align*}
+    \Lambda &\coloneq \set{\omega : X_n(\omega)\text{ does not converge to a limit in }[-\infty,\infty]}\\
+            &= \set{\omega : \liminf_{n}X_n(\omega) < \limsup_{n\to\infty}X_n(\omega)}\\
+            &= \bigcup_{\substack{a,b\in \Q\\a < b}} \set{\omega : \liminf_{n}X_n(\omega) < a < b < \limsup_{n}X_n(\omega)}\\
+            &\eqcolon \bigcup_{\substack{a,b\in \Q\\a < b}} \Lambda_{a,b}.
+  \end{align*}
+  Yet, we have that $\Lambda_{a,b}\subseteq \set{\omega : U_{\infty}\left[ a,b \right](\omega) = \infty}$, so that $P\left( \Lambda_{a,b} \right) = 0$. Thus, $P\left( \Lambda \right) = 0$, whence $X_{\infty} \coloneq \lim_{n}X_n$ exists almost surely in $[-\infty,\infty]$.
+
+  By Fatou's Lemma, we have
+  \begin{align*}
+    E\left[ \left\vert X_{\infty} \right\vert \right] &= E\left[ \liminf_{n}\left\vert X_n \right\vert \right]\\
+                                                      &\leq \liminf_{n} E\left[ \left\vert X_n \right\vert \right]\\
+                                                      &\leq \sup_{n} E\left[ \left\vert X_n \right\vert \right]\\
+                                                      &< \infty.
+  \end{align*}
+  Thus $P\left( X_{\infty} = \infty \right) = 0$.
+\end{proof}
+\subsection{Square-Integrable Martingales}%
+When we specialize to the case of martingales in $\mathcal{L}^2$, we may use a variety of useful properties of the geometry of $\mathcal{L}^2$ space. This enables, for instance, the proof of the three series theorem and the vaunted strong law of large numbers for i.i.d. random variables.
+
+We work with martingales $\left( M_n \right)_n$ that are bounded in $\mathcal{L}^2$, in the sense that
+\begin{align*}
+  \sup_{n} E\left[ M_n^2 \right] &< \infty.
+\end{align*}
+Since, for any $s\leq t \leq u \leq v$, we have
+\begin{align*}
+  E\left[ M_v|\mathcal{F}_u \right] &= M_u,
+\end{align*}
+it follows that
+\begin{align*}
+  \iprod{M_t-M_s}{M_v-M_u} &= 0.
+\end{align*}
+Therefore, writing
+\begin{align*}
+  M_n &= M_0 + \sum_{k=1}^{n} \left( M_{k}-M_{k-1} \right),
+\end{align*}
+we have that $M_n$ is expressed as the sum of pairwise orthogonal terms, so that by the Pythagorean theorem,
+\begin{align*}
+  E\left[ M_n^2 \right] &= E\left[ M_0^2 \right] + \sum_{k=1}^{n} E\left[ \left( M_k-M_{k-1} \right)^2 \right].
+\end{align*}
+Immediately we get the following result.
+\begin{theorem}
+  Let $M$ be a martingale for which $M_n\in \mathcal{L}^2$ for all $n$. Then, $M$ is bounded in $\mathcal{L}^2$ if and only if
+  \begin{align*}
+    \sum_{k=1}^{\infty} E\left[ \left( M_{k}-M_{k-1} \right)^2 \right] &< \infty.
+  \end{align*}
+  When this occurs, we have $M_n\to M_{\infty}$ a.s. and in $\mathcal{L}^2$.
+\end{theorem}
+\begin{proof}
+  Our main job will be to show that $M_n\to M_{\infty}$ a.s. and in $\mathcal{L}^2$. That $M$ is bounded in $\mathcal{L}^2$ emerges immediately from the above decomposition of $M_n$ into orthogonal components. So, $M_{\infty}$ exists as $\mathcal{L}^2$-boundedness implies $\mathcal{L}^1$-boundedness, meaning that by the Forward Convergence Theorem, $M_{\infty}\coloneq \lim_{n}M_n$ exists.
+
+  By the Pythagorean theorem, we have
+  \begin{align*}
+    E\left[ \left( M_{n+1}-M_{n} \right)^2 \right] &= \sum_{k=n+1}^{n+r}E\left[ \left( M_k-M_{k-1} \right)^2 \right].
+  \end{align*}
+  Letting $r\to\infty$ and applying Fatou's lemma, we have
+  \begin{align*}
+    E\left[ \left( M_{\infty}-M_n \right)^2 \right] &\leq \sum_{k= n+1}^{\infty}E\left[ \left( M_k-M_{k-1} \right)^2 \right].
+  \end{align*}
+  We may take the right-hand side to be arbitrarily small by assumption, so that
+  \begin{align*}
+    \lim_{n} E\left[ \left( M_{\infty}-M_n \right)^2 \right]&=0.
+  \end{align*}
+\end{proof}
 \end{document}
