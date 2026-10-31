@@ -1,0 +1,137 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage[uprightgreeks,noDcommand]{kpfonts}
+\renewcommand{\coloneq}{\coloneqq}
+\renewcommand{\eqcolon}{\eqqcolon}
+%\usepackage{dsfont}
+%\renewcommand{\mathbb}{\mathds}
+\usepackage{homework}
+%\usepackage{notes}
+
+%\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+%\addbibresource{  }
+
+\usepackage{parskip}
+\frenchspacing
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Homework 2: Problem III and Problem I (6)--(10)}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Problem I}%
+\begin{problem}[Problem I.6]
+  For $x,m,\omega\in \R^d$ and $0 < \sigma < \infty$, let
+  \begin{align*}
+    G_{m,\omega,\sigma} &= \left( \sigma\sqrt{2\pi} \right)^{-d} e^{-\frac{\left( x-m \right)^2}{2\sigma^2} + i\omega x}.
+  \end{align*}
+  Show that
+  \begin{align*}
+    \mathcal{F}\left[ G_{m,\omega,\sigma} \right] &= \left( 2\pi \right)^{d/2}\sigma^{-d} e^{i\omega m} G_{\omega,-m,\sigma^{-1}}.
+  \end{align*}
+\end{problem}
+\begin{solution}
+  Similar to the case of the Gaussian, we may reduce to the case of $d = 1$ using Fubini's Theorem. Therefore, we will write
+  \begin{align*}
+    f(x) &= \left( \sigma\sqrt{2\pi} \right)^{-1} e^{-\frac{\left( x-m \right)^2}{2\sigma^2}}e^{i\omega x}e^{-ix\xi}.
+  \end{align*}
+  Taking $u = x-m$, it follows that
+  \begin{align*}
+    \int_{}^{} f(x)\:dx &= \left( \sigma\sqrt{2\pi} \right)^{-1} e^{i\omega m - im\xi}\int_{}^{} e^{-\frac{u^2}{2\sigma^2} + i\omega u - i u\xi}\:du\\
+                        &= \left( \sigma\sqrt{2\pi} \right)^{-1}\exp\left( i\omega m - im\xi-\frac{1}{2}\sigma^2\left( \omega-\xi \right)^2 \right) \int_{}^{} e^{-\frac{1}{2\sigma^2}\left( u + i\sigma^2\left( \omega-\xi \right) \right)^2}\:du\\
+                        &= \left( \sigma\sqrt{2\pi} \right)^{-1}e^{i\omega m} \exp\left( -im\xi - \frac{1}{2}\sigma^2\left( \omega-\xi \right)^2 \right) \lim_{A\to\infty} \int_{}^{} e^{-\frac{1}{2\sigma^2}\left( u + i\sigma^2\left( \omega-\xi \right) \right)^2}\:du.
+                          \intertext{Translating $t = u + i\sigma^2\left( \omega-\xi \right)$, it can be shown that by using the residue theorem, the translated integral has the same value as the original integral. Thus,}
+                        &= \left( \sigma\sqrt{2\pi} \right)^{-1}e^{i\omega m} \exp\left( -im\xi - \frac{1}{2}\sigma^2\left( \omega-\xi \right)^2 \right) \int_{}^{} e^{-\frac{1}{2\sigma^2}t^2}\:dt\\
+                        &= e^{i\omega m} e^{-\frac{1}{2}\sigma^2\left( \xi-\omega \right)^2-im\xi}\\
+                        &= e^{i\omega}G_{\omega,-m,\sigma^{-1}}.
+  \end{align*}
+\end{solution}
+\begin{problem}[Problem I.8]
+  Let $f\colon (0,\infty)\to [0,\infty)$ be a Borel measurable function. For all constants $a,b > 0$, show that we have the equality
+  \begin{align*}
+    \int_{0}^{\infty} f\left( \left( ax - \frac{b}{x} \right)^{2} \right)\:dx &= \int_{0}^{\infty} f\left( y^2 \right)\:dy.
+  \end{align*}
+\end{problem}
+\begin{solution}
+  Let $u = \frac{b}{ax}$, so that we have $ax = \frac{b}{u}$ and $\frac{b}{x} = au$, while $du = -\frac{b}{ax^2}dx$, or $-\frac{b}{au^2}du = dx$. Therefore,
+  \begin{align*}
+    \int_{0}^{\infty} f\left( \left( ax - \frac{b}{x} \right)^2 \right)\:dx &= -\frac{b}{a}\int_{\infty}^{0} \frac{1}{u^2}f\left( \left( \frac{b}{u}- au \right)^2 \right)\:du\\
+                                                                            &= \frac{b}{a} \int_{0}^{\infty} \frac{1}{u^2}f\left( \left( au-\frac{b}{u} \right)^2 \right)\:du.
+  \end{align*}
+  In particular, we have 
+  \begin{align*}
+    \int_{0}^{\infty} f\left( \left( ax - \frac{b}{x} \right)^2 \right)\:dx &= \frac{1}{2} \int_{0}^{\infty} \left( 1 + \frac{b}{au^2} \right)f\left( \left( au - \frac{b}{u} \right)^2 \right)\:du.
+  \end{align*}
+  Therefore, taking $y = au-\frac{b}{u}$, we get $dy = a\left( 1 + \frac{b}{au^2} \right)\:du$, whence
+  \begin{align*}
+    \frac{1}{2}\int_{0}^{\infty} \left( 1 + \frac{b}{au^2} \right)f\left( \left( au - \frac{b}{u} \right)^2 \right)\:du &= \frac{1}{2a} \int_{-\infty}^{\infty} f\left( y^2 \right)\:dy\\
+                                                                                                                                  &= \frac{1}{a} \int_{0}^{\infty} f\left( y^2 \right)\:dy
+  \end{align*}
+\end{solution}
+\begin{problem}[Problem I.9]
+  Suppose $f\colon (0,\infty)\to \R$ can take positive or negative values. Suppose the right-hand side of the earlier expression is a convergent Lebesgue integral. Then, show the left-hand side also converges and the same equality holds.
+\end{problem}
+\begin{solution}
+  Write
+  \begin{align*}
+    f_{+} &= \frac{1}{2}\left( f + \left\vert f \right\vert \right)\\
+    f_{-} &= \frac{1}{2}\left( f-\left\vert f \right\vert \right)
+  \end{align*}
+  for the positive and negative parts of the function $f$. By the way we define the Lebesgue integral of a real-valued function, it follows that
+  \begin{align*}
+    \int_{}^{} f\:d\mu &= \int_{}^{} f_{+}\:d\mu - \int_{}^{} f_{-}\:d\mu,
+  \end{align*}
+  and the integral $ \int_{}^{} f\:d\mu $ converges if and only if both $ \int_{}^{} f_{+}\:d\mu $ and $ \int_{}^{} f_{-}\:d\mu $ are finite. Writing for the previous problem then gives
+  \begin{align*}
+    \int_{0}^{\infty} f\left( y^2 \right)\:dy &= \int_{0}^{\infty} f_{+}\left( y^2 \right)\:dy - \int_{0}^{\infty} f_{-}\left( y^2 \right)\:dy.
+  \end{align*}
+  Since both the integrals of $f_{+}(y^2)$ and $f_{-}(y^2)$ are finite, it follows that for each one we have
+  \begin{align*}
+    \int_{0}^{\infty} f_{\pm}\left( y^2 \right)\:dy &= \int_{0}^{\infty} f_{\pm}\left( \left( ax-\frac{b}{x} \right)^2 \right)\:dx,
+  \end{align*}
+  so that
+  \begin{align*}
+    \int_{0}^{\infty} f(y^2)\:dy &= \int_{0}^{\infty} f_{+}\left( \left( ax - \frac{b}{x} \right)^2 \right)\:dx - \int_{0}^{\infty} f_{-}\left( \left( ax - \frac{b}{x} \right)^2 \right)\:dx\\
+                                 &= \int_{0}^{\infty} f\left( \left( ax - \frac{b}{x} \right)^2 \right)\:dx.
+  \end{align*}
+\end{solution}
+\begin{problem}[Problem I.10]
+  Derive the Fourier transform of the Cauchy distribution by using real variable methods.
+\end{problem}
+\begin{solution}
+  Write
+  \begin{align*}
+    \frac{1}{x^2 + 1} &= \int_{0}^{\infty} e^{-t\left( x^2 + 1 \right)}\:dt.
+  \end{align*}
+  Then, we may write
+  \begin{align*}
+    \int_{\R}^{} \frac{e^{-ix\xi}}{\pi\left( x^2 + 1 \right)}\:dx &= \frac{1}{\pi}\int_{\R}^{} \int_{0}^{\infty} e^{-t\left( x^2 + 1 \right)-ix\xi}\:dt\:dx.
+  \end{align*}
+  Since $\left\vert e^{-t\left( x^2 + 1 \right)-ix\xi} \right\vert = e^{-t\left( x^2 + 1 \right)}$ is integrable on $[0,\infty)\times \R$, it follows by Fubini--Tonelli that we may switch the order of integration. Therefore, we have
+  \begin{align*}
+    \frac{1}{\pi} \int_{\R}^{} \int_{0}^{\infty} e^{-tx^2-ix\xi-t}\:dt\:dx &= \frac{1}{\pi} \int_{0}^{\infty} e^{-t}\int_{\R}^{} e^{-tx^2}e^{-ix\xi}\:dx\:dt.
+    \intertext{Taking $u = x\sqrt{2t}$ and completing the substitution yields}
+                                         &= \frac{1}{\pi} \int_{0}^{\infty} \frac{1}{\sqrt{2t}}e^{-t} e^{-\frac{\xi^2}{4t}}\int_{\R}^{} e^{-\frac{1}{2}\left( u + i\frac{\xi}{\sqrt{2t}} \right)^2}\:du\:dt.
+                                         \intertext{Taking the transformation on the $u$-integral as $u\mapsto z-i\frac{\xi}{\sqrt{2t}}$ and observing a vanishing contour integral yields that the $u$-integral equals $\sqrt{2\pi}$. Thus, we have}
+                                         &= \frac{1}{\sqrt{\pi}}\int_{0}^{\infty} \frac{1}{\sqrt{t}}e^{-\left( t + \frac{\xi^2}{4t} \right)}\:dt.
+                                         \intertext{Substituting $s = \sqrt{t}$ and assuming $\xi > 0$, we get}
+                                         &= \frac{1}{\sqrt{\pi}} e^{-\xi}\int_{0}^{\infty} e^{-\left( s - \frac{\xi}{2s} \right)^2}\:ds.
+                                           \intertext{Using Cauchy's trick then yields}
+                                         &= e^{-\xi}.
+                                         \intertext{Meanwhile, if $\xi < 0$, we have}
+                                         &= \frac{1}{\sqrt{\pi}} e^{\xi} \int_{0}^{\infty} e^{-\left( s - \frac{-\xi}{2s} \right)^2}\:dx\\
+                                         &= e^{\xi}.
+                                           \intertext{Finally, when $\xi = 0$, we have that the integral is given by}
+                                         &= \frac{1}{\sqrt{\pi}} \int_{}^{} e^{-s^2}\:ds\\
+                                         &= e^{0}.
+  \end{align*}
+  Thus, 
+  \begin{align*}
+    \int_{\R}^{} \frac{e^{-ix\xi}}{\pi\left( x^2 + 1 \right)}\:dx &= e^{-\left\vert \xi \right\vert}.
+  \end{align*}
+\end{solution}
+\end{document}
