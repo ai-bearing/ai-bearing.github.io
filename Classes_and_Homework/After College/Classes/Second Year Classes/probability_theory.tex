@@ -38,6 +38,7 @@ We will assume a lot of measure theory background, so we will instead discuss th
     $\ds \limsup_{n\rightarrow\infty} E_n$ & $\set{E_n\text{ infinitely often}}$, $\set{E_n\text{ i.o.}}$\\
     $\ds \liminf_{n\rightarrow\infty} E_n$ & $\set{E_n\text{ eventually}}$, $ \set{E_n\text{ ev}} $\\
     Borel Measurable Function $f\colon X\rightarrow \R$ & Random Variable $X\colon \Omega\rightarrow \R$\\
+    Characteristic function $\chi_A$ & Indicator function $1_A$\\
     Integral $ \int_{}^{} f\:d\mu $ & Expectation $E[X]$\\
     Pushforward measure $f_{\ast}\mu$ & Law $\Lambda_X$\\
     $\mu\left( S \right)$ & $P\left( \omega\in S \right)$\\
@@ -687,4 +688,96 @@ Immediately we get the following result.
     \lim_{n} E\left[ \left( M_{\infty}-M_n \right)^2 \right]&=0.
   \end{align*}
 \end{proof}
+\begin{theorem}
+  Suppose $\left( X_k \right)_{k}$ is a sequence of independent random variables such that $E\left[ X_k \right]= 0$ for each $k$ and $\sigma_k^2\coloneq \operatorname{var}\left( X_k \right) < \infty$. Then,
+  \begin{enumerate}[(a)]
+    \item $\sum_{k}\sigma_k^2 < \infty$ implies $\sum_{k}X_k$ converges a.s.;
+    \item if the variables $\left( X_k \right)_{k}$ are uniformly bounded, then $\sum_{k}X_k$ converges a.s. implies that $\sum_{k}\sigma_k^2 < \infty$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Define
+  \begin{align*}
+    \mathcal{F}_n &= \sigma\left( X_1,\dots,X_n \right)\\
+    M_n &= X_1 + X_2 + \cdots + X_n\\
+    A_n &= \sum_{k=1}^{n}\sigma_k^2\\
+    N_n &= M_n^2-A_n,
+  \end{align*}
+  with $A_0 = 0$ and $N_0 = 0$.
+  \begin{enumerate}[(a)]
+    \item We know that $M$ is a martingale since it is the sum of mean-zero independent random variables. Moreover,
+      \begin{align*}
+        E\left[ \left( M_k-M_{k-1} \right)^2 \right] &= E\left[ X_k^2 \right]\\
+                                                     &= \sigma_k^2,
+      \end{align*}
+      so by the Pythagorean theorem,
+      \begin{align*}
+        E\left[ M_n^2 \right] &= \sum_{k=1}^{n}\sigma_k^2\\
+                              &= A_n.
+      \end{align*}
+      If $\sum_{k}\sigma_k^2 < \infty$, then $M$ is $\mathcal{L}^2$-bounded, so $\lim_{n}M_n$ exists a.s.
+    \item Since $X_k$ is independent of $\mathcal{F}_{k-1}$, we have that
+      \begin{align*}
+        E\left[ \left( M_k-M_{k-1} \right)^2|\mathcal{F}_{k-1} \right] &= E\left[ X_k^2|\mathcal{F}_{k-1} \right]\\
+                                                                       &= E\left[ X_k^2 \right]\\
+                                                                       &= \sigma_k^2.
+      \end{align*}
+      Since $M_{k-1}$ is $\mathcal{F}_{k-1}$-measurable, we have that
+      \begin{align*}
+        \sigma_k^2 &= E\left[ M_k^2|\mathcal{F}_{k-1} \right] - 2M_{k-1}E\left[ M_{k-1}|\mathcal{F}_{k-1} \right] + M_{k-1}^2\\
+                   &= E\left[ M_{k}^2|\mathcal{F}_{k-1} \right]-M_{k-1}^2.
+      \end{align*}
+      Yet, this gives that $N$ is a martingale. Let $0 < c < \infty$, and define $T = \inf\set{r : \left\vert M_r \right\vert > c}$. Then, the stopped martingale $N^T$ is a martingale, so for every $n$, we have
+      \begin{align*}
+        E\left[ N_n^{T} \right] &= E\left[ \left( M_n^{T} \right)^2 \right]-E\left[ A_{T\wedge n} \right]\\
+                                &= 0.
+      \end{align*}
+      Since $\left\vert M_T-M_{T-1} \right\vert = \left\vert X_T \right\vert\leq K$ if $T$ is finite, it follows that $\left\vert M_n^T \right\vert\leq K + c$ for all $n$, whence $E\left[ A_{T\wedge n} \right] \leq \left( K+c \right)^2$.
+
+      Since $\sum_{n}X_n$ converges a.s., the partial sums are bounded, and it must be the case that for some $c$, $P\left( T = \infty \right) > 0$. Thus, $A_{\infty}\coloneq \sum_{k=1}^{\infty}\sigma_k^2 < \infty$.
+  \end{enumerate}
+\end{proof}
+\begin{remark}
+  We note that the convergence of $\sum_{k}X_k$ is a tail event, so if $\left( X_n \right)_n$ is a sequence of independent random variables that is uniformly bounded, then if the probability that the partial sums of $\sum_{k}X_k$ are bounded is strictly positive, it follows that the sum $\sum_{k}X_k$ is almost surely.
+\end{remark}
+\begin{example}
+  If $\left( a_n \right)_n$ is a sequence of real numbers, and $\left( \ve_n \right)_n$ is a sequence of i.i.d. random variables with 
+  \begin{align*}
+    P\left( \ve_n = \pm 1 \right) = 1/2,
+  \end{align*}
+  then the results above show that $\sum_{n}\ve_na_n$ converges if and only if $\sum_{n}a_n^2 < \infty$.
+\end{example}
+We will prove the following result by using a special technique known as symmetrization.
+\begin{lemma}
+  Suppose $\left( X_n \right)_n$ is a sequence of independent random variables uniformly bounded by a constant $0\leq K < \infty$ and $\sum_{n}X_n$ converges almost surely. Then, $\sum_{n}E\left[ X_n \right]$ converges and $\sum_{n}\operatorname{var}\left( X_n \right) < \infty$.
+\end{lemma}
+\begin{proof}
+  If each $X_n$ has mean zero, then we use the above theorem.
+
+  Else, we will construct a family of mean zero independent random variables that are uniformly bounded. We will write $\left( \Omega',\mathcal{F}',P' \right)$ be an exact copy of $\left( \Omega,\mathcal{F},P \right)$, and similarly let $\left( X_n' \right)_{n}$ a copy of $\left( X_n \right)_n$.
+  \begin{align*}
+    \left( \Omega^{\ast},\mathcal{F}^{\ast},P^{\ast} \right) &= \left( \Omega,\mathcal{F},P \right)\times \left( \Omega',\mathcal{F}',P' \right)\\
+    Y_n\left( \omega,\omega' \right) &= X_n\left( \omega \right)\\
+    Y_n'\left( \omega,\omega' \right) &= X_n'\left( \omega' \right)\\
+    Z_n\left( \omega,\omega' \right) &= X_n\left( \omega \right)-X_n'\left( \omega' \right).
+  \end{align*}
+  The family of random variables $\set{Y_n,Y_n' : n\in \N}$ is independent on $\left( \Omega^{\ast},\mathcal{F}^{\ast} ,P^{\ast}\right)$, and both $Y_n$ and $Y_n'$ have the same $P^{\ast}$-distribution as the $P$-distribution of $X_n$.
+
+  In particular, $\left( Z_n \right)_{n}$ is a mean-zero sequence of independent random variables on $\left( \Omega^{\ast},\mathcal{F}^{\ast},P^{\ast} \right)$ with $\left\vert Z_n\left( \omega\omega' \right) \right\vert\leq 2K$ and $\operatorname{var}\left( Z_n \right) = 2\sigma_n^2$.
+
+  Suppose
+  \begin{align*}
+    G &= \set{\omega\in \Omega : \sum_{n}X_n(\omega)\text{ converges}},
+  \end{align*}
+  and similarly define $G'$ on $\Omega'$. Then, $P\left( G \right) = P\left( G' \right) = 1$, so the rectangle set has probability $P\left( G\times G' \right) = P\left( G \right)P\left( G' \right) = 1$. Since $\sum_{n}Z_n\left( \omega,\omega' \right)$ converges on $G\times G'$, we have that $P^{\ast}\left( \sum_{n}Z_n\text{ converges} \right) = 1$. Since we have a sum of uniformly bounded mean-zero independent random variables that converges a.s., it follows that $\sum_{n}\sigma_n^2 < \infty$, and $\sum_{n}\left( X_n-E\left[ X_n \right] \right)$ converges almost surely. Therefore, $\sum_{n}E\left[ X_n \right]$ converges.
+\end{proof}
+These above two characterizations of convergence for sums of square-integrable random variables will be used to prove the celebrated Kolmogorov Three-Series Theorem.
+\begin{theorem}[Kolmogorov Three-Series Theorem]
+  Let $\left( X_n \right)_{n}$ be a sequence of independent random variables. Then, $\sum_{n}X_n$ converges almost surely if and only if for some $K$, the following series converge:
+  \begin{enumerate}[(i)]
+    \item $\ds\sum P\left( \left\vert X_n \right\vert > K \right)$;
+    \item $\ds\sum E\left[ X_n1_{\set{\left\vert X_n \right\vert \leq K}} \right]$;
+    \item $\ds\sum \operatorname{var}\left( X_n1_{\left\vert X_n \right\vert\leq K} \right)$.
+  \end{enumerate}
+\end{theorem}
 \end{document}
