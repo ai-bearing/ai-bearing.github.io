@@ -1462,10 +1462,10 @@ for all $g\in G$.
   is a mean, following from the fact that, for all $g\in G$, we have
   \begin{align*}
     \left\vert m\left( g.f \right)-m\left( f \right) \right\vert &= \lim_{\omega} \left\vert \frac{1}{\left\vert F_n \right\vert}\left(  \sum_{h\in F_n} f\left( g^{-1}h \right) - \sum_{h\in F_n}f\left( h \right) \right) \right\vert\\
-                          &= \lim_{\omega} \left\vert \frac{1}{\left\vert F_n \right\vert} \left( \sum_{h\in gF_n} f\left( h \right) - \sum_{h\in F_n} f\left( h \right) \right) \right\vert\\
-                          &= \lim_{\omega}\left\vert \frac{1}{\left\vert F_n \right\vert} \sum_{h\in gF_n\triangle F_n} f\left( h \right) \right\vert\\
-                          &\leq \lim_{\omega} \norm{f}_{\ell^{\infty}} \frac{\left\vert gF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert}\\
-                          &= 0
+                          &= \lim_{\omega} \left\vert \frac{1}{\left\vert F_n \right\vert} \left( \sum_{h\in g^{-1}F_n} f\left( h \right) - \sum_{h\in F_n} f\left( h \right) \right) \right\vert\\
+                          &= \lim_{\omega} \left\vert \frac{1}{\left\vert F_n \right\vert}\left( \sum_{h\in g^{-1}F_n\setminus F_n} f(h) - \sum_{h\in F_n\setminus g^{-1}F_n} f(h) \right) \right\vert\\
+                          &\leq \norm{f}_{\ell^{\infty}}\lim_{\omega}\frac{\left\vert g^{-1}F_n\triangle F_n \right\vert}{\left\vert F_n \right\vert}\\
+                          &= 0,
   \end{align*}
   since limits along ultrafilters are an extension of standard limits.
 
@@ -1715,7 +1715,7 @@ for some family of representatives for right cosets $E$ of $\Gamma/\Lambda$. Thi
     \lambda\left( m_{\varphi_i}(x) \right) &= m_{\varphi_i}\left( \lambda(x) \right)\\
                                            &= 0
   \end{align*}
-  for all $i$. Yet, since $\varphi_i$ is finitely supported, we have $m_{\varphi_i}(x)\in \C\left[ \Gamma \right]$, so $\lambda\left( m_{\varphi_i}(x) \right) = 0$ implise that $m_{\varphi_i}(x) = 0$, so $x = \lim_{i}m_{\varphi_i}(x) = 0$, so $\lambda\colon C^{\ast}\left( \Gamma \right)\to C^{\ast}_{\lambda}\left( \Gamma \right)$ is injective. Thus, (iii) implies (iv).
+  for all $i$. Yet, since $\varphi_i$ is finitely supported, we have $m_{\varphi_i}(x)\in \C\left[ \Gamma \right]$, so $\lambda\left( m_{\varphi_i}(x) \right) = 0$ implies that $m_{\varphi_i}(x) = 0$, so $x = \lim_{i}m_{\varphi_i}(x) = 0$, so $\lambda\colon C^{\ast}\left( \Gamma \right)\to C^{\ast}_{\lambda}\left( \Gamma \right)$ is injective. Thus, (iii) implies (iv).
 
   Next, we observe that $C^{\ast}\left( \Gamma \right)$ admits a character by using the universal property to extend from the trivial representation. Thus, since $C^{\ast}\left( \Gamma \right) = C^{\ast}_{\lambda}\left( \Gamma \right)$, it follows that $C^{\ast}_{\lambda}\left( \Gamma \right)$ admits a character.
 
@@ -1886,6 +1886,25 @@ The metric ultraproduct definition is equivalent to another definition that show
   \end{enumerate}
   Here, $d_F$ denotes the normalized Hamming distance on $\sym(F)$.
 \end{definition}
+We note that for any two permutations $\sigma$ and $\tau$, we have that
+\begin{align*}
+  d_F\left( \sigma,\tau \right) &= 1-\frac{\left\vert \operatorname{fix}\left( \sigma^{-1}\tau \right) \right\vert}{\left\vert F \right\vert}.
+\end{align*}
+Furthermore, if $F_1,\dots,F_m$ are nonempty finite sets, and $F = F_1\times\cdots\times F_m$ is the Cartesian product with the natural action of $\prod_{i=1}^{m}\sym\left( F_i \right)$ on $F$ by the action 
+\begin{align*}
+  \left( \sigma_1,\dots,\sigma_m \right)\left( x_1,\dots,x_m \right) &= \left( \sigma_1\left(x_1\right),\dots,\sigma_m\left( x_m \right) \right).
+\end{align*}
+Moreover, we have for any $\alpha = \left( \alpha_1,\dots,\alpha_m \right)\in \prod_{i=1}^{m}\sym\left( F_i \right)$ that
+\begin{align*}
+  d_F\left( \id_F, \alpha \right) &= 1-\frac{\left\vert \operatorname{fix}\left( \alpha \right) \right\vert}{\left\vert F \right\vert}\\
+                                  &= 1-\frac{\prod_{i=1}^{m}\left\vert \operatorname{fix}\left( \alpha_i \right) \right\vert}{\prod_{i=1}^{m}\left\vert F_i \right\vert}\\
+                                  &= 1-\prod_{i=1}^{m} \frac{\left\vert \operatorname{fix}\left( \alpha_i \right) \right\vert}{\left\vert F_i \right\vert}\\
+                                  &= 1-\prod_{i=1}^{m}\left( 1-d_{F_i}\left( \id_{F_i},\alpha_i \right) \right).
+\end{align*}
+If we consider the homomorphism $\psi\colon \sym\left( F \right)\to \sym\left( F^m \right)$ given by acting diagonally, then
+\begin{align*}
+  d_{F^m}\left( \id_{F^m},\alpha^{(m)} \right) &= 1-\left( 1-d_F\left( \id_{F},\alpha \right) \right)^{m}.
+\end{align*}
 \begin{definition}
   A group $G$ is called sofic if, for every finite subset $K\subseteq G$ and every $\ve > 0$, there is a nonempty finite set $F$ and a $\left( K,\ve \right)$-almost-homomorphism $\varphi\colon G\rightarrow \sym(F)$.
 \end{definition}

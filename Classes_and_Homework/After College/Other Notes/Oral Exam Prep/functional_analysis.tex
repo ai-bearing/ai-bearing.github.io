@@ -777,7 +777,7 @@ If $G$ is a locally compact group, then we let $f,g\in L^1\left( G \right)$ be e
 \begin{align*}
   f\ast g(x) &= \int_{}^{} f\left( xy^{-1} \right)g(y)\:dy,
 \end{align*}
-where the integral is taken with respect to the Haar measure on $G$. If $G$ is discrete, then $\delta_e\in L^2\left( G \right)$, and $\delta_3$ is an identity under the convolution. However, if $G$ is not discrete, then $L^1(G)$ does not have an identity. However, $L^1(G)$ does have an approximate identity.
+where the integral is taken with respect to the Haar measure on $G$. If $L^1(G)$ has an identity under convolution, then this identity is necessarily given by the Dirac mass $\delta_e$, but since $\delta_e$ is both in $L^1(G)$ and $L^{\infty}(G)$, it follows that $\delta_e\ast \delta_e = \delta_e$ is continuous, so that $\set{e}$ is a clopen set, implying that $G$ is discrete. Analogously, if $G$ is discrete, then $\delta_e$ is the identity. Conversely, if  However, if $G$ is not discrete, then $L^1(G)$ does not have an identity. However, $L^1(G)$ does have an approximate identity.
 \begin{theorem}
   Let $G$ be a locally compact abelian group. If $\gamma\colon G\to S^1$ is a continuous homomorphism, we define
   \begin{align*}
@@ -797,6 +797,54 @@ where the integral is taken with respect to the Haar measure on $G$. If $G$ is d
   \widehat{ f\ast g }(\gamma) &= \hat{f}(\gamma)\hat{g}(\gamma).
   \end{align*}
   Thus, $f\mapsto \hat{f}(\gamma)$ is a homomorphism. Since $\gamma(G)\subseteq S^1$, it follows that $\gamma\in L^{\infty}\left( G \right)$ and $\norm{\gamma} = 1$, meaning that $f\mapsto \hat{f}(\gamma)$ is not identically zero.
+
+  Suppose $h\colon L^1(G)\to \C$ is a nonzero homomorphism. Since $h$ is a bounded linear functional, then there is some $\psi$ such that
+  \begin{align*}
+    h(f) &= \int_{}^{} f(x)\psi(x)\:dx 
+  \end{align*}
+  with $\norm{\phi}_{L^{\infty}} = \norm{h} = 1$. We have, by using Fubini's theorem,
+  \begin{align*}
+    h\left( f\ast g \right) &= \int_{}^{} \left( f\ast g \right)(x)\psi(x)\:dx\\
+                            &= \int_{}^{} \int_{}^{} g(y)f\left( y^{-1}x \right)\psi(x)\:dy\:dx\\
+                            &= \int_{}^{} g(y)\int_{}^{} f\left( y^{-1}x \right)\psi(x)\:dx\:dy\\
+                            &= \int_{}^{} g(y)h\left( L_yf \right)\:dy,
+  \end{align*}
+  where $L_yf(x) = f\left( y^{-1}x \right)$. Yet, we also have
+  \begin{align*}
+    h\left( f\ast g \right) &= h(f)h(g)\\
+                            &= \int_{}^{} g(y)h(f)\psi(y)\:dy,
+  \end{align*}
+  so that
+  \begin{align*}
+    0 &= \int_{}^{} g(y)\left( h\left( L_yf \right)-h(f)\psi(y) \right)\:dy
+  \end{align*}
+  for all $g\in L^1(G)$. Since $y\mapsto h\left( L_yf \right)-h(f)\psi(y)$ is an element of $L^{\infty}(G)$, so that $h\left( L_yf \right) = h(f)\psi(y)$ for almost every $y\in G$. Choose $f\in L^1(G)$ such that $h(f)\neq 0$. Then, $\psi(y) = \frac{h\left( L_yf \right)}{h(f)}$ almost everywhere. The right-hand side of this equation is continuous in $y$, so we may assume that $h\left( L_yf \right) = h(f)\psi(y)$ holds everywhere.
+\end{proof}
+We note that this means we may identify $\Sigma\left( L^1\left( G \right) \right)$ with the Pontryagin dual $\hat{G}$. It is equipped with the weak*-topology (i.e., pointwise convergence).
+\begin{theorem}
+  If $y\in \R$, then $\gamma_y(x) = e^{ixy}$ defines a character on $\R$, and all characters on $\R$ are of this form. For any $y\in \R$ and $f\in L^1\left( \R \right)$, one has that
+  \begin{align*}
+    \hat{f}(y) &= \int_{}^{} f(x)e^{-ixy}\:dx.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  If $y\in \R$, then $\left\vert \gamma_y(x) \right\vert = 1$ for all $x$, and $\gamma_y\left( x_1 + x_2 \right) = \gamma_y\left(x_1\right)\gamma_y\left( x_2 \right)$. In particular, $\gamma_y\in \hat{\R}$, and $\gamma_{y_1 + y_2}(x) = \gamma_{y_1}(x) \gamma_{y_2}(x)$, and so $y\mapsto \gamma_y$ is a homomorphism of $\R$ into $\hat{\R}$.
+
+  Now, suppose $\gamma\in \hat{\R}$. Then, $\gamma(0) = 1$, so there is some $\delta > 0$ such that
+  \begin{align*}
+    \int_{0}^{\delta} \gamma(x)\:dx &= a,
+  \end{align*}
+  with $a\neq 0$. In particular, we have
+  \begin{align*}
+    a\gamma(x) &= \gamma(x)\int_{0}^{\delta} \gamma(t)\:dt\\
+               &= \int_{0}^{\delta} \gamma\left( x + t \right)\:dt\\
+               &= \int_{x}^{x + \delta} \gamma(t)\:dt.
+  \end{align*}
+  So, we have that $\gamma(x) = a^{-1}\int_{x}^{x+\delta} \gamma(t)\:dt$. Since $\gamma$ is continuous, one has that $\gamma$ is differentiable, and
+  \begin{align*}
+    \frac{\gamma\left( x+h \right)-\gamma(x)}{h} &= \gamma(x) \left( \frac{\gamma(h)-1}{h} \right),
+  \end{align*}
+  meaning that $\gamma'(x) = \gamma(0)\gamma(x)$. Since $\gamma(0) = 1$ and $\left\vert \gamma(x) \right\vert = 1$ for all $x$, we have that $\gamma = \gamma_y$ for some $y\in \R$.
 \end{proof}
 \subsection{Continuous Functional Calculus}%
 \begin{proposition}

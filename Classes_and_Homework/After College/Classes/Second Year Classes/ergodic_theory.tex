@@ -836,7 +836,7 @@ By Fubini's Theorem, we have that $\norm{T_{\xi}} = \norm{\xi}_{L^2}$.
                                        &\in K.
   \end{align*}
 \end{proof}
-Recall that a linear map $T\in B(H)$ is called compact if $ \overline{T\left( B_H \right)}^{\norm{\cdot}} $ is compact. Recall that $K(H)$ is the set of all compact operators on $H$.
+Recall that a linear map $T\in B(H)$ is called compact if $ \overline{T\left( \operatorname{ball}(H) \right)}^{\norm{\cdot}} $ is compact. Recall that $K(H)$ is the set of all compact operators on $H$.
 \begin{proposition}
   \begin{enumerate}[(i)]
     \item The space $K(H)$ is a norm-closed two-sided ideal in $B(H)$.
@@ -884,4 +884,132 @@ Recall that a linear map $T\in B(H)$ is called compact if $ \overline{T\left( B_
 \begin{definition}
   We say the action $G\curvearrowright X$ is compact if for all $f\in C(X)$, we have that $ \overline{\set{\alpha_g(f) : g\in G}}^{\norm{\cdot}} $ is compact in the supremum norm. Here, $\left( \alpha_g(f) \right)\left( x \right) = f\left( g^{-1}.x \right)$.
 \end{definition}
+\begin{proposition}
+  The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $G\curvearrowright X$ is compact;
+    \item the family of continuous maps $\set{x\mapsto g.x : g\in G}$ is equicontinuous when $X$ is equipped with any compatible metric;
+    \item there exists a $G$-invariant compatible metric on $X$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Observe that (iii) implies (i) from the fact that if $X$ is compact metrizable, one has $\operatorname{Isom}\left( X,d \right)$ is compact, and
+  \begin{align*}
+    \set{\alpha_g(f) : g\in G} &\subseteq \set{f\circ T : T\in \operatorname{Isom}\left( X,d \right)}.
+  \end{align*}
+  To establish (i) implies (ii), we start by noting that any two compatible metrics on $X$ are equivalent as metrics. Let $\left( f_n \right)_{n}\subseteq \operatorname{ball}\left( C(X) \right)$ be a dense subset, and define a metric on $X$ by
+  \begin{align*}
+    d\left( x,y \right) &= \sum_{n=1}^{\infty} 2^{-n}\left\vert f_n(x)-f_n(y) \right\vert.
+  \end{align*}
+  Then, $X\curvearrowright \prod_{n\in \N}\set{z\in \C : \left\vert z \right\vert\leq \norm{f_n}}$.
+
+  Let $\ve > 0$. Then, choose $N$ such that $2^{-N} < \frac{\ve}{2}$. It follows that
+  \begin{align*}
+    \overline{\set{\alpha_g\left( f_n \right) : 1\leq n \leq N,g\in G}}^{\norm{\cdot}}
+  \end{align*}
+  is compact. By Arzelà--Ascoli, there exists $\delta > 0$ such that if $d\left( x,y \right) < \delta$, we have that $\left\vert \alpha_gf_n(x) - \alpha_gf_n(y)\right\vert < \ve/2$ for all $1\leq n \leq N$. Thus, we have that if $d\left( x,y \right) < \delta$, then $d\left( g.x,g.y \right) < \ve$ for all $g\in G$, whence the family $\set{x\mapsto g.x : g\in G}$ is equicontinuous.
+
+  Finally, we show that (ii) implies (iii). For each $g\in G$, define $T_g(x) = g.x$. Choose a compatible metric $\rho$, and set
+  \begin{align*}
+    K &= \overline{\set{T_g : g\in G}}^{\norm{\cdot}}.
+  \end{align*}
+  This is a compact group, so it admits a Haar measure which we denote $dT$. If we define
+  \begin{align*}
+    \widetilde{\rho}\left( x,y \right) &= \int_{K}^{} \rho\left( T(x),T(y) \right)\:dT.
+  \end{align*}
+  First, observe that $ \widetilde{\rho} $ is a $G$-invariant metric, since $K$ acts by homeomorphisms. Our goal now is to show that this metric is compatible.
+
+  Suppose $\left( x_n \right)_n\to x$ in $\rho$. Then, for all $T$, we have that $\rho\left( T\left( x_n \right),T(x) \right)\to 0$ by continuity. Since convergent sequences are bounded, dominated convergence gives that $ \widetilde{\rho}\left( x_n,x \right)\to 0 $, meaning that the identity map $\id\colon \left( X,\rho \right)\to \left( X,\widetilde{\rho} \right)$ is a homeomorphism.
+\end{proof}
+\section{Measurable Dynamics and Properties of Groups}%
+We now focus on using properties from measurable dynamics to establish how they can inform properties of the underlying group.
+\subsection{Amenability}%
+\begin{definition}
+Suppose $G\curvearrowright X$ acts by homeomorphisms. We define
+\begin{align*}
+  \operatorname{Prob}\left( X \right) &= \set{\text{Regular Borel probability measures on $X$}}\\
+  \operatorname{Prob}_G(X) &= \set{\text{$G$-invariant Regular Borel probability measures on $X$}}.
+\end{align*}
+We say $\mu\in \operatorname{Prob}\left( X \right)$ is \textit{faithful} if for all open $U\subseteq X$, one has $\mu\left( U \right) > 0$.
+\end{definition}
+\begin{proposition}
+  Suppose $G\curvearrowright X$ acts by homeomorphism, and $\mu\in \operatorname{Prob}_G(X)$. If $G\curvearrowright \left( X,\mu \right)$ is ergodic and $\mu$ is faithful, then for almost every $x\in X$, $ \overline{G.x} = X $.
+\end{proposition}
+\begin{proof}
+  Let $\left( U_n \right)_n$ be a countable basis. We may write
+  \begin{align*}
+    \set{x : \overline{G.x} = X} &= \bigcap_{n=1}^{\infty}\bigcup_{g\in G}\set{x\in X : g.x\in U_n}\\
+                                 &= \bigcap_{n=1}^{\infty}\bigcup_{g\in G}g^{-1}.U_n\\
+                                 &= \bigcap_{n=1}^{\infty}\bigcup_{g\in G}g.U_n.
+  \end{align*}
+  Our goal is to show that
+  \begin{align*}
+    \mu\left( \bigcup_{g\in G}g.U_n \right) &= 1
+  \end{align*}
+  for all $n$. Yet, this follows from the fact that
+  \begin{align*}
+    \mu\left( \bigcup_{g\in G}g.U_n \right) &\geq \mu\left( U_n \right)\\
+                                            &> 0
+  \end{align*}
+  by the faithfulness of $\mu$ , so since the action of $G$ is ergodic, it follows that $\mu\left( \bigcup_{g\in G}g.U_n \right) = 1$ as it is a $G$-invariant subset of $X$ with strictly positive measure.
+\end{proof}
+This leads us to the question of when there even exist invariant measures. The weak* topology on $\operatorname{Prob}\left( X \right)$ is defined by the subbasic open subsets
+\begin{align*}
+  U\left( \mu;f,\ve \right) &= \set{\nu\in \operatorname{Prob}\left( X \right) : \left\vert \int_{}^{} f\:d\mu - \int_{}^{} f\:d\nu \right\vert < \ve}
+\end{align*}
+for some $f\in C(X)$ and $\ve > 0$.
+\begin{proposition}\hfill
+  \begin{enumerate}[(i)]
+    \item If $X$ is compact Hausdorff, then $\operatorname{Prob}\left( X \right)$ is $\operatorname{wk}^{\ast}$-compact Hausdorff.
+    \item If $X$ is compact metrizable, then $\operatorname{Prob}\left( X \right)$ is $\operatorname{wk}^{\ast}$-compact metrizable.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item We may write
+      \begin{align*}
+        \Phi\colon \operatorname{Prob}\left( X \right) &\hookrightarrow \prod_{f\in C(X)}\set{z\in \C : \left\vert z \right\vert\leq \norm{f}}\\
+        \mu &\mapsto \left( \int_{}^{} f\:d\mu \right)_{f\in C(X)}.
+      \end{align*}
+      Call the product $K$. It suffices to show that $\Phi\left( \operatorname{Prob}\left( X \right) \right)$ is closed. Notice that this is given by
+      \begin{align*}
+        \Phi\left( \operatorname{Prob}\left( X \right) \right) &= \bigcap\set{z\in K : z_{\alpha f + \beta g} = \alpha z_f + \beta z_g\text{ for all $\alpha,\beta\in \C$ and $f,g\in C(X)$}}\\
+                                                               &\cap \bigcap\set{z\in K : z_f\in [0,\infty)\text{ for all $f\in C(X)$ with $f\geq 0$}}\\
+                                                               &\cap \bigcap\set{z\in K : z_1 = 1}.
+      \end{align*}
+      This is a giant intersection of closed subsets, so it is closed.
+    \item Since $C(X)$ is separable if and only if $X$ is compact metrizable, we may use the process above and use a countable dense subset of $C(X)$ as the defining family.
+  \end{enumerate}
+\end{proof}
+Naturally, this leads us to the question of when any action of a group on some compact Hausdorff space has a $G$-invariant probability measure. These are special groups.
+\begin{definition}
+  A countable discrete group $G$ is called amenable if there exists a sequence $\left( F_n \right)_n$ of finite subsets of $G$ such that for all $g\in G$,
+  \begin{align*}
+    \frac{\left\vert gF_n\triangle F_n \right\vert}{\left\vert F_n \right\vert} &\xrightarrow{n\to\infty} 0
+      \intertext{or}
+    \frac{\left\vert gF_n\cap F_n \right\vert}{\left\vert F_n \right\vert} &\xrightarrow{n\to\infty} 1
+  \end{align*}
+  Such a sequence is called a Følner sequence.
+
+  Equivalently, for any $\ve > 0$ and for all finite $E\subseteq G$, there exists some nonempty finite $F\subseteq G$ such that $\frac{\left\vert gF\triangle F \right\vert}{\left\vert F \right\vert} < \ve$ for all $g\in G$, or $\frac{\left\vert gF\cap F \right\vert}{\left\vert F \right\vert} > 1-\ve$.
+\end{definition}
+\begin{theorem}
+  Let $G$ be a countable group. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $G$ is amenable;
+    \item there exists a $G$-invariant state $m\in \ell^{\infty}\left( G \right)^{\ast}$;
+    \item there exists $\left( \xi_n \right)_n\subseteq \ell^2\left( G \right)$ such that $\norm{\xi_n} = 1$ and $\norm{\lambda_g\xi_n-\xi_n} \to 0$, where $\lambda_g\xi_n\left(h\right) = \xi_n\left( g^{-1}h \right)$;
+    \item there exists a net $\left( \mu_i \right)_i\subseteq \operatorname{Prob}\left( G \right)\subseteq \ell^1(G)$ such that $\norm{g.\mu_i-\mu_i}_{\ell^1}\to 0$, where $g.\mu_i\left( E \right) = \mu_i\left( g^{-1}E \right)$;
+    \item if $G$ acts on a compact Hausdorff space by homeomorphisms, then there exists a $G$-invariant probability measure on the space.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  First, we show that (ii) and (iv) are equivalent. Notice that if $\left( \mu_n \right)_n\subseteq \ell^1\left( G \right)$ is an almost-invariant sequence/net of probability measures on $G$, then since we may embed $\ell^1\left( G \right)\subseteq \ell^{\infty}\left( G \right)^{\ast}$ and $\left( \mu_n \right)_n\subseteq \operatorname{ball}\left( \ell^{\infty}\left( G \right)^{\ast} \right)$, it follows that there is some subnet $\left( \mu_i \right)_{i}\xrightarrow{\operatorname{wk}^{\ast}} m\in \operatorname{ball}\left( \ell^{\infty}\left( G \right)^{\ast} \right)$ by the Banach--Alaoglu theorem, which is our desired $G$-invariant mean.
+
+  In the reverse direction, if there is a $G$-invariant state $m\in \operatorname{ball}\left( \ell^{\infty}\left( G \right)^{\ast} \right)$, then by Goldstine's theorem, there is some net $\left( \mu_i \right)_{i}\subseteq \operatorname{Prob}\left( G \right)$ converging weak* to $m$. We observe that, on the copy of $\ell^1\left( G \right)\subseteq \ell^{\infty}\left( G \right)^{\ast}$, one has that convergence weak* in $\ell^{\infty}\left( G \right)^{\ast}$ is equivalent to weak convergence on $\ell^1\left( G \right)$; the net $\left( s.\mu_i-\mu_i \right)_{i}$ converges weak* in $\ell^{\infty}\left( G \right)^{\ast}$ to $0$ by assumption, but since $0\in \ell^1\left( G \right)$, it follows that this is equivalent to weak convergence in $\ell^1\left( G \right)$. So, for any finite subset $E\subseteq G$, the weak closure of the convex subset
+  \begin{align*}
+    \bigoplus_{s\in E} \set{s.\mu-\mu : \mu\in \operatorname{Prob}\left( G \right)}
+  \end{align*}
+  contains $0$. Since weak and norm closures coincide, it follows by the Hahn--Banach theorem that $\left( \mu_i \right)_{i}$ is our desired net of probability measures.
+\end{proof}
 \end{document}
