@@ -2084,4 +2084,166 @@ We start by showing the Riesz representation theorem for the Cantor set, $\Delta
   \end{align*}
   Since $f_N\to f$ uniformly, we get our desired result.
 \end{proof}
+% Lecture Notes
+\begin{proposition}
+  The space $\left( C\left( \set{0,1}^{\N},\R \right),\norm{\cdot} \right)$ is a separable normed space.
+\end{proposition}
+\begin{proof}
+  If $f\colon \set{0,1}^{\N}\to \R$ is continuous, then we know that $f$ can be approximated by the family of $f_N$, where
+  \begin{align*}
+    f_N &= \sum_{\set{0,1}^{N+1}} f\left( i_0,\dots,i_N,0,0,\dots \right)\chi_{\set{i_0}\times\cdots\times\set{i_n}\times \set{0,1}^{\N}}.
+  \end{align*}
+  uniformly.
+
+  Therefore, we take all the elements of $\Q^{<\N}$, which are finitely supported functions of the form
+  \begin{align*}
+    \sum_{\set{0,1}^{N+1}}\lambda_{i_0,\dots,i_{N}} \chi_{\set{i_0}\times\cdots\times\set{i_N}\times\set{0,1}^{\N}},
+  \end{align*}
+  where $N\geq 0$ and $\lambda$ are in $\Q$. This is a countable dense subset.
+\end{proof}
+\begin{theorem}[Hausdorff--Alexandroff]
+  Let $X$ be a compact metrizable space. Then, there exists $\Phi\colon \set{0,1}^{\N}\to X$ such that $\Phi$ is surjective and continuous.
+\end{theorem}
+\begin{proof}
+  Pick a compatible metric $d$ on $X$.
+
+  We start by taking
+  \begin{align*}
+    X &= \bigcup_{x\in X} B\left( x,1 \right),
+  \end{align*}
+  where $B\left( x,1 \right)$ denotes the closed ball. These are of diameter $2$. The open balls $\bigcup_{x\in X}U\left( x,1 \right)$ cover $X$, so that there are $x_1,\dots,x_{m_0}$  such that
+  \begin{align*}
+    X &= \bigcup_{i_0=1}^{m_0} U\left( x_{i_0},1 \right).
+  \end{align*}
+  Thus, if we define $B^{(0)}_{i_0} = B\left( x_{i_0},1 \right)$ for each $i_0\in \left[ m_0 \right]$, this defines our base case.
+
+  Let $N\geq 0$. Suppose we have found $m_0,\dots,m_N\geq 1$ and sets 
+  \begin{align*}
+    \mathcal{B}_0 &= \set{B^{(0)}_{i_0} : i_0\in \left[ m_0 \right]}\\
+    \mathcal{B}_1 &= \set{B^{(1)}_{i_0,i_1} : \left( i_0,i_1 \right)\in \left[ m_0 \right]\times \left[ m_1 \right]}\\
+                  &\vdots\\
+    \mathcal{B}_N &= \set{B^{(N)}_{i_0,\dots,i_N} : \left( i_0,\dots,i_N \right)\in \left[ m_0 \right]\times\cdots\times \left[ m_N \right]}
+  \end{align*}
+  such that all of these sets are nonempty, compact, and for all $0\leq M \leq N$, $ \operatorname{diam}\left( B^{(M)}_{i_0,\dots,i_M} \right) \leq 2^{-M + 1} $ for all $\left( i_0,\dots,i_M \right)\in \left[ m_0 \right]\times\cdots\times \left[ m_M \right]$. Furthermore, for all $M$ with $0\leq M < N$ and $\left( i_0,\dots,i_M \right)\in \left[ m_0 \right]\times\cdots\times \left[ m_M \right]$, we have that 
+  \begin{align*}
+    B^{(M)}_{i_0,\dots,i_M} &= \bigcup_{i_{M+1}=1}^{m_{M+1}} B^{(M+1)}_{i_0,\dots,i_M,i_{M+1}}\label{eq:compatibility_condition}\tag{$\ast$}
+  \end{align*}
+  Fix $\left( i_0,\dots,i_N \right)\in \left[ m_0 \right]\times\cdots\times \left[ m_N \right]$. The open balls $U\left( x,2^{-N-1} \right)$ for each $x\in B_{i_0,\dots,i_N}^{(N)}$ cover the subset, so there are $m_{N;i_0,\dots,i_N}$ and $x_{1},\dots,x_{m_{N;i_0,\dots,i_N}}$ such that
+  \begin{align*}
+    B_{i_0,\dots,i_N}^{(N)} &\subseteq \bigcup_{i_{N+1}=1}^{m_{N;i_0,\dots,i_N}} U\left( x_{i_{N+1}},2^{-N-1} \right)
+  \end{align*}
+  For $i_{N+1}\in \left[ m_{N;i_0,\dots,i_N} \right]$, let
+  \begin{align*}
+    B^{(N+1)}_{i_0,\dots,i_N,i_{N+1}} &= B^{(N)}_{i_0,\dots,i_N}\cap B\left( x_{i_{N+1}},2^{-N-1} \right).\label{eq:def_subsets}\tag{$\ast\ast$}
+  \end{align*}
+  This is nonempty, compact, and has diameter at most $2^{-N}$ the criterion \eqref{eq:compatibility_condition}. Let
+  \begin{align*}
+    m_{N+1}&=\max\set{m_{N;i_0,\dots,i_N} : \left( i_0,\dots,i_N \right)\in \left[ m_0 \right]\times\cdots\times \left[ m_N \right]}
+  \end{align*}
+  In the case that $i_{N+1} > m_{N;i_0,\dots,i_N}$, we define $B^{(N+1)}_{i_0,\dots,i_{N+1}} = B^{(N+1)}_{i_0,\dots,i_N,1}$, and leave the definition as in \eqref{eq:def_subsets}.
+
+  Let $Y = \prod_{j=0}^{\infty}\left[ m_j \right]$, equipped with the discrete topology. Let $y = \left( i_0,i_1,\dots \right)\in Y$. Then, by the Cantor Intersection Theorem,
+  \begin{align*}
+    \Psi(y) &= \bigcap_{N\geq 0} B^{(N)}_{i_0,i_1,\dots,i_N}
+  \end{align*}
+  is well-defined since we are taking an intersection of nonempty nested subsets of a complete metric space with decreasing diameter.
+
+  Let $x\in X$. Then,
+  \begin{align*}
+    x &\in \bigcup_{i=0}^{m_0}B_{i_0}^{(0)},
+  \end{align*}
+  so we choose $i_0$ to be the smallest such that $x\in B_{i_0}$. Writing
+  \begin{align*}
+    B_{i_0}^{(0)} &= \bigcup_{i_1=1}^{m_1}B^{(1)}_{i_0,i_1},
+  \end{align*}
+  we choose the smallest $i_1$ such that $x\in B^{(1)}_{i_0,i_1}$, and continue along this process. Thus, we get $y = \left( i_0,i_1,\dots \right)$ such that $\Psi(y) = x$.
+
+  For continuity, if $y = \left( i_0,i_1,\dots \right)$ and $ z = \left( j_0,j_1,\dots \right) $ coincide until index $N$, then $d\left( \Psi(y),\Psi(z) \right) \leq 2^{-N+1}$. Recall that the subset of $Y$ consisting of all $z\in Y$ that agree with $y$ up to some index forms a neighborhood of $y$, so that $\Psi$ is continuous.
+
+  Finally, for each $N$, we pick $d_N$ to be the smallest integer at least $0$ such that $m_{N}\leq 2^{d_N}$, and pick 
+  \begin{align*}
+    \tau_N\colon \set{0,1}^{d_N}\to \left[ m_N \right]
+  \end{align*}
+  to be the binary representation. Then, the identification
+  \begin{align*}
+    \set{0,1}^{\N} &\cong \prod_{j=0}^{\infty} \set{0,1}^{d_j}
+  \end{align*}
+  yields a continuous surjection $\set{0,1}^{\N}\to Y$, whence $\Phi\colon \set{0,1}^{\N}\to X$ is our desired map.
+\end{proof}
+The following statements are going to be on homework assignments.
+\begin{proposition}
+  Let $f\colon X\to Y$.  
+  \begin{enumerate}[(i)]
+    \item If $ \mathcal{N} $ is a $\sigma$-algebra on $Y$, then
+      \begin{align*}
+        f^{\ast}\mathcal{N} &= \set{A\subseteq X : \text{ there exists $B\in \mathcal{N}$ such that $A = f^{-1}(B)$}}
+      \end{align*}
+      is a $\sigma$-algebra on $X$.
+    \item If $ \mathcal{M} $ is a $\sigma$-algebra on $X$, then
+      \begin{align*}
+        f_{\ast}\mathcal{M} &= \set{B\subseteq Y : f^{-1}\left( B \right)\in \mathcal{M}}
+      \end{align*}
+      is a $\sigma$-algebra on $Y$.
+  \end{enumerate}
+\end{proposition}
+\begin{proposition}
+  Suppose $\left( X,\mathcal{M} \right)$ and $\left( Y,\mathcal{N} \right)$ are measurable spaces, and $f\colon X\to Y$ is a map. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item $f$ is $\mathcal{M}$-$\mathcal{N}$-measurable;
+    \item $\mathcal{M}\supseteq f^{\ast}\mathcal{N}$;
+    \item $\mathcal{N}\subseteq f_{\ast}\mathcal{M}$.
+  \end{enumerate}
+  Now, suppose $\left( X,\mathcal{M},\mu \right)$ is a measure space and $\left( Y,\mathcal{N} \right)$ is a measurable space, and let $f\colon X\to Y$ be a $\mathcal{M}$-$\mathcal{N}$-measurable map. Then,
+  \begin{align*}
+    f_{\ast}\mu\left( B \right) \coloneq \mu\left( f^{-1}(B) \right)
+  \end{align*}
+  is a measure on $ \left( Y,\mathcal{N} \right) $.
+\end{proposition}
+\begin{theorem}[Abstract Change of Variables]
+  If $g\colon Y\to \C$ is a measurable function and $f\colon X\to Y$ is as above, then
+  \begin{align*}
+    \int_{Y}^{} g\:d\left( f_{\ast}\mu \right) &= \int_{X}^{} g\circ f\:d\mu.
+  \end{align*}
+\end{theorem}
+The proof is by bootstrapping.
+
+\begin{theorem}
+  Let $X$ be a compact metrizable space, and let $L$ be a positive linear form on $C\left( X,\R \right)$. Then, there is a positive Borel measure $\mu$ on $X$ such that
+  \begin{align*}
+    L(f) &= \int_{}^{} f\:d\mu.
+  \end{align*}
+\end{theorem}
+\begin{proof}
+  Since $X$ is compact metrizable, there is some continuous surjection $\Phi\colon \set{0,1}^{\N}\to X$. Let $\Gamma\colon C\left( X,\R \right)\to C\left( \set{0,1}^{\N},\R \right)\eqcolon V$ be given by
+  \begin{align*}
+    \Gamma(f) &= f\circ \Phi.
+  \end{align*}
+  Observe that for every $f\in C\left( X,\R \right)$, we have that $\norm{\Gamma(f)} = \norm{f}$. In particular, $\Gamma$ is injective (since it is an isometry).
+
+  Let $\Gamma\left( C\left( X,\R \right) \right)= W\subseteq V$. This is a separable subspace. Let
+  \begin{align*}
+    L_W\colon W &\to \R\\
+    g &\mapsto L\left( \Gamma^{-1}(g) \right).
+  \end{align*}
+  This is a well-defined linear form on $W$. If $W\ni g\neq 0$, then
+  \begin{align*}
+    \frac{\left\vert L_W(g) \right\vert}{\norm{g}} &= \frac{L\left( \Gamma^{-1}(g) \right)}{\norm{\Gamma^{-1}(g)}}\\
+                                                   &\leq \norm{L},
+  \end{align*}
+  so that $\norm{L_W} = \norm{L}$ So, $L_W$ is continuous on $W$. Moreover, $\norm{L} = L\left( \chi_X \right)$. Moreover,
+  \begin{align*}
+    \Gamma\left( \chi_{X} \right) &= \chi_{\set{0,1}^{\N}},
+  \end{align*}
+  so that $\chi_{\set{0,1}^{\N}}\in W$. Using the Hahn--Banach extension, we have some linear form $L_V\colon V\to \R$ with $L_V|_{W} = L_W$ and $\norm{L_V} = \norm{L_W}$. Since 
+  \begin{align*}
+    L_V\left( \chi_{\set{0,1}^{\N}} \right) &= L_W\left( \chi_{\set{0,1}^{\N}} \right)\\
+                                            &= \norm{L_W}\\
+                                            &= \norm{L_V},
+  \end{align*}
+  it follows that $L_V$ is a positive linear form. Thus, there is some Borel measure $\mu$ on $\set{0,1}^{\N}$ such that for all $g\in V$,
+  \begin{align*}
+    L_V(g) &= \int_{\set{0,1}^{\N}}^{} g\:d\mu.
+  \end{align*}
+
+\end{proof}
 \end{document}
