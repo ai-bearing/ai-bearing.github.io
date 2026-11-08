@@ -66,7 +66,13 @@ permalink: "/useful_resources.html"
     - [States and Representations](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/Operator%20Algebras%20and%20Functional%20Analysis/states_and_representations.pdf)
     - [Fixed-Point Theorems](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/Operator%20Algebras%20and%20Functional%20Analysis/fixed_point_theorems.pdf)
     - [Generalized Limits](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Operator%20Algebras%20and%20Functional%20Analysis/Other%20Notes/banach_limits.pdf)
+  - Groups and Dynamics:
+      - [Gromov's Theorem on Groups of Polynomial Growth](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/Groups%20and%20Dynamics/gromovs_theorem.pdf)
+      - [Measure-Preserving Actions and Ergodicity](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/Groups%20and%20Dynamics/ergodic_group_actions.pdf) (Incomplete)
+      - [Sofic Groups](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/Groups%20and%20Dynamics/sofic_groups.pdf) (Incomplete)
+      - [Amenable Equivalence Relations](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/Groups%20and%20Dynamics/amenable_equivalence_relations.pdf) (Incomplete)
   - Miscellaneous Analysis Notes:
+    - [Disintegration Theorem](https://ai-bearing.github.io/Classes_and_Homework/After%20College/Other%20Notes/Miscellaneous%20Analysis/disintegration_theorem.pdf) (Incomplete)
     - [Functional Analysis Exercises](https://ai-bearing.github.io/Classes_and_Homework/After College/Other Notes/Operator%20Algebras%20and%20Functional%20Analysis/conway_analysis_exercises.pdf)
     - [Folland Exercise Workthrough](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/folland_solutions.pdf)
     - [Quantum Theory for Mathematicians](https://ai-bearing.github.io/Classes_and_Homework/College/Y4/Summer Reading/quantum_theory_notes.pdf)

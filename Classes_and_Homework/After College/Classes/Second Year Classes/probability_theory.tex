@@ -641,7 +641,7 @@ is the negative part of the function $f$.
   \end{align*}
   Thus $P\left( X_{\infty} = \infty \right) = 0$.
 \end{proof}
-\subsection{Square-Integrable Martingales}%
+\subsection{Square-Integrable Martingales and the Strong Law of Large Numbers}%
 When we specialize to the case of martingales in $\mathcal{L}^2$, we may use a variety of useful properties of the geometry of $\mathcal{L}^2$ space. This enables, for instance, the proof of the three series theorem and the vaunted strong law of large numbers for i.i.d. random variables.
 
 We work with martingales $\left( M_n \right)_n$ that are bounded in $\mathcal{L}^2$, in the sense that
@@ -780,4 +780,230 @@ These above two characterizations of convergence for sums of square-integrable r
     \item $\ds\sum \operatorname{var}\left( X_n1_{\left\vert X_n \right\vert\leq K} \right)$.
   \end{enumerate}
 \end{theorem}
+\begin{proof}
+  Suppose for some $K$ that the series (i)--(iii) converge. Then,
+  \begin{align*}
+    \sum P\left( X_n\neq X_n^{K} \right) &= \sum P\left( \left\vert X_n \right\vert > K \right)\\
+                                         &< \infty,
+  \end{align*}
+  so by Borel--Cantelli, $P\left( X_n = X_n^{K}\text{ for all but finitely many }n \right) = 1$. Thus, it follows we only need to show that $\sum X_n^K$ converges a.s., but this means we only need to show that $\sum Y_n^K$ converges a.s., where
+  \begin{align*}
+    Y_n^K &= X_n^K - E\left[ X_n^K \right].
+  \end{align*}
+  Since this sequence is a sequence of mean zero independent random variables with $E\left[ \left( Y_n^K \right)^2 \right] = \operatorname{var}\left( X_n^K \right)$, and the sum of the variances converges, the result follows immediately.
+
+  Suppose now that $\sum X_n$ converges a.s., and that $0 < K < \infty$ is any constant. Since we have that $X_n\to 0$ almost surely, it follows that $\left\vert X_n \right\vert > K$ for only finitely many $n$. Thus, by Borel--Cantelli, the series in (i) converges.
+
+  Furthermore, since $X_n = X_n^K$ for all but finitely many $n$, it follows that $\sum X_n^K$ converges a.s., so we have a sequence of uniformly bounded independent random variables whose sums converge, so that $\sum E\left[ X_n \right]$ and $\sum \operatorname{var}\left[ X_n \right]$ converge as well.
+\end{proof}
+The next major result we will seek to prove is the strong law of large numbers.
+\begin{lemma}[Césaro's Lemma]
+  Let $\left( b_n \right)_n$ be a sequence of strictly positive real numbers increasing without bound, and $\left( v_n \right)_n$ convergent to $v_{\infty}\in \R$. Then,
+  \begin{align*}
+    \frac{1}{b_n}\sum_{k=1}^{n} \left( b_k-b_{k-1} \right)v_k &\to v_{\infty}.
+  \end{align*}
+\end{lemma}
+\begin{proof}
+  Let $\ve > 0$, and let $N$ be such that $v_k > v_{\infty}-\ve$ whenever $k\geq N$. Then,
+  \begin{align*}
+    \liminf_{n\to\infty} \frac{1}{b_n}\sum_{k=1}^{n} \left( b_k-b_{k-1} \right)v_k &\geq \liminf_{n\to\infty} \left( \frac{1}{b_n}\sum_{k=1}^{N}\left( b_k-b_{k-1} \right)v_k + \frac{b_n-b_N}{b_n}\left( v_{\infty}-\ve \right) \right)\\
+                                                                                   &\geq v_{\infty}-\ve,
+  \end{align*}
+  so that this liminf is greater than $v_{\infty}$. Since we can also show that the limsup is less than $v_{\infty}$, we get our desired result.
+\end{proof}
+\begin{lemma}[Kronecker's Lemma]
+  Let $\left( b_n \right)_n$ be a sequence of strictly positive real numbers increasing without bound, $\left( x_n \right)_n$ a sequence of real numbers, and let
+  \begin{align*}
+    s_n &= x_1 + \cdots + x_n.
+  \end{align*}
+  If $\sum \frac{x_n}{b_n}$ converges, then $\frac{s_n}{b_n}\to 0$.
+\end{lemma}
+\begin{proof}
+  Write
+  \begin{align*}
+    u_n &= \sum_{k=1}^{n}\frac{x_k}{b_k},
+  \end{align*}
+  so that $u_{\infty} = \lim_{n}u_n$ exists. Then, we have $\frac{x_n}{b_n} = u_n-u_{n-1}$. We have
+  \begin{align*}
+    s_n &= \sum_{k=1}^{n}b_k\left( u_k-u_{k-1} \right) &= b_nu_n-\sum_{k=1}^{n}\left( b_{k}-b_{k-1} \right)u_{k-1}.
+  \end{align*}
+  Thus, by Césaro's lemma, we have that $\frac{s_n}{b_n}\to u_{\infty}-u_{\infty} = 0$.
+\end{proof}
+\begin{lemma}
+  Let $\left( W_n \right)_n$ be a sequence of mean-zero independent random variables such that $\sum \frac{\operatorname{var}\left( W_n \right)}{n^2} < \infty$. Then,
+  \begin{align*}
+    \frac{1}{n}\sum_{k=1}^{n}W_k &\to 0
+  \end{align*}
+  almost surely.
+\end{lemma}
+\begin{proof}
+  By Kronecker's Lemma, it suffices to show that $\sum \frac{W_n}{n}$ converges almost surely, but this is immediate from above.
+\end{proof}
+\begin{lemma}[Truncation Lemma]
+  Let $\left( X_n \right)_n$ be i.i.d. random variables with identical distribution to an integrable random variable $X$. Let $\mu = E\left[ X \right]$. Set
+  \begin{align*}
+    Y_n &= X_n1_{\set{\left\vert X_n \right\vert\leq n}}.
+  \end{align*}
+  Then,
+  \begin{enumerate}[(i)]
+    \item $E\left[ Y_n \right]\to \mu$;
+    \item $P\left( Y_n = X_n\text{ eventually} \right) = 1$;
+    \item $\ds \sum \frac{1}{n^2}\operatorname{var}\left( Y_n \right) < \infty$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item Let $Z_n = X1_{\set{\left\vert X \right\vert\leq n}}$. Then, $Z_n$ has the same distribution as $Y_n$, so $E\left[ Z_n \right] = E\left[ Y_n \right]$. As $n\to\infty$, we have that $Z_n\to X$, and $\left\vert Z_n \right\vert\leq \left\vert X \right\vert$, so by dominated convergence, $E\left[ Z_n \right]\to E\left[ X \right] = \mu$.
+    \item We have that
+      \begin{align*}
+        \sum P\left( Y_n\neq X_n \right) &= \sum P\left( \left\vert X_n \right\vert > n \right)\\
+                                         &= \sum P\left( \left\vert X \right\vert > n \right)\\
+                                         &= E\left[ \sum_{n=1}^{\infty}1_{\set{\left\vert X \right\vert > n}} \right]\\
+                                         &= E\left[ \sum_{n=1}^{\left\vert X \right\vert}1 \right]\\
+                                         &\leq E\left[ \left\vert X \right\vert \right]\\
+                                         &< \infty.
+      \end{align*}
+      Thus, by Borel--Cantelli, we obtain (ii).
+    \item We have
+      \begin{align*}
+        \sum \frac{\operatorname{var}\left( Y_n \right)}{n^2} &\leq \sum \frac{E\left[ Y_n^2 \right]}{n^2}\\
+                                                              &= \sum \frac{E\left[ \left\vert X \right\vert 1_{\set{\left\vert X \right\vert\leq n}} \right]}{n^2}\\
+                                                              &= E\left[ \left\vert X \right\vert^2 f\left( \left\vert X \right\vert \right) \right],
+      \end{align*}
+      where
+      \begin{align*}
+        f(z) &= \sum_{n\geq \max\left( 1,z \right)} \frac{1}{n^2}\\
+             &\leq \frac{2}{\max\left( 1,z \right)}.
+      \end{align*}
+      Thus,
+      \begin{align*}
+        \sum \frac{1}{n^2}\operatorname{var}\left( Y_n \right) &\leq 2E\left[ \left\vert X \right\vert \right]\\
+                                                               &< \infty.
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+\begin{theorem}[Strong Law of Large Numbers]
+  Let $X_1,X_2,\dots$ be i.i.d. random variables with $E\left[ \left\vert X_k \right\vert \right] < \infty$. Let
+  \begin{align*}
+    S_n &= X_1 + \cdots + X_n.
+  \end{align*}
+  Then, if $\mu = E\left[ X_k \right]$ for all $k$, we have $\frac{1}{n}S_n \to \mu$ almost surely.
+\end{theorem}
+\begin{proof}
+  Let
+  \begin{align*}
+    Y_n &= X_n1_{\set{\left\vert X_n \right\vert\leq n}}.
+  \end{align*}
+  Then, it suffices to show that
+  \begin{align*}
+    \frac{1}{n}\sum_{k=1}^{n}Y_k &\to \mu
+  \end{align*}
+  almost surely. But, we have that
+  \begin{align*}
+    \frac{1}{n}\sum_{k=1}^{n}Y_k &= \frac{1}{n}\sum_{k=1}^{n}E\left[ Y_k \right] + \frac{1}{n}\sum_{k=1}^{n}W_k,
+  \end{align*}
+  where $W_k - Y_k-E\left[ Y_k \right]$. The first term converges to $\mu$ by the truncation lemma and the second term converges to zero almost surely, so we get our desired result.
+\end{proof}
+\subsection{The Doob Decomposition}%
+When we say ``$A$ is a predictable process null at zero,'' we mean that $A_0 = 0$ and $A_n$ is $\mathcal{F}_{n-1}$-measurable.
+\begin{theorem}[Doob Decomposition]
+  Let $\left( X_n \right)_{n}$ be any process adapted to a filtration $\left( \mathcal{F}_n \right)_n$ with $X_n\in \mathcal{L}^1$ for each $n$. Then, there is a decomposition
+  \begin{align*}
+    X &= X_0 + M + A,
+  \end{align*}
+  where $M$ is a martingale with $M_0 = 0$ and $A$ is a predictable process null at zero. This decomposition is essentially unique, in that if $X = X_0 + \widetilde{M} + \widetilde{A}$ is another decomposition, then $M_n = \widetilde{M}_n$ a.s. and $A_n = \widetilde{A}_n$ a.s.
+
+  Furthermore, $X$ is a submartingale if and only if $A$ is an increasing process.
+\end{theorem}
+\begin{proof}
+  Notice that if $X$ has a Doob decomposition, then since $M$ is a martingale and $A$ is predictable, we have that
+  \begin{align*}
+    E\left[ X_n-X_{n-1}|\mathcal{F}_{n-1} \right] &= E\left[ M_n-M_{n-1}|\mathcal{F}_{n-1} \right] + E\left[ A_n-A_{n-1}|\mathcal{F}_{n-1} \right]\\
+                                                  &= A_n-A_{n-1},
+  \end{align*}
+  hence
+  \begin{align*}
+    A_n &= \sum_{k=1}^{n}E\left[ X_k-X_{k-1}|\mathcal{F}_{k-1} \right]
+  \end{align*}
+  may be used to define $A$.
+\end{proof}
+Now, if $M$ is an $\mathcal{L}^2$ martingale with $M_0 = 0$, then $M^2$ is a submartingale, so we may find another martingale $N$ and an increasing predictable process $A$ such that $M^2 = N + A$. We will write $ A = \left\langle M \right\rangle $. Let $A_{\infty} = \lim_{n} A_n$.
+
+Notice that $E\left[ M_n^2 \right] = E\left[ A_n \right]$, so $M$ is $\mathcal{L}^2$-bounded if and only if $E\left[ A_{\infty} \right] < \infty$ by convergence for $\mathcal{L}^2$ martingales. Moreover,
+\begin{align*}
+  A_n-A_{n-1} &= E\left[ M_n^2 - M_{n-1}^2|\mathcal{F}_{n-1} \right]\\
+              &= E\left[ \left( M_n-M_{n-1} \right)^2|\mathcal{F}_{n-1} \right].
+\end{align*}
+\begin{theorem}
+  Let $M$ be an $\mathcal{L}^2$ martingale, $A = \left\langle M \right\rangle$. Then,
+  \begin{enumerate}[(i)]
+    \item $\lim M_n(\omega)$ exists for almost every $\omega$ for which $A_{\infty}(\omega) < \infty$;
+    \item if $M$ has uniformly bounded increments, then $A_{\infty}(\omega) < \infty$ for almost every $\omega$ for which $\lim M_n(\omega)$ exists.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item Since $A$ is predictable, one sees that for each $k\in \N$,
+      \begin{align*}
+        S(k) &\coloneq \inf\set{n\geq 0 : A_{n+1} > k}
+      \end{align*}
+      defines a stopping time. The stopped process $A^{S(k)}$ is predictable, since for any $B\in \mathcal{B}(\R)$ and any $n\in \N$, one has
+      \begin{align*}
+        \set{A_{n\wedge S(k)}\in B} &= \bigcup_{r=0}^{n-1}\left( \set{S(k) = r}\cap \set{A_r\in B} \right) \cup \left( \set{A_n\in B}\cap \set{S(k) \geq n} \right),
+      \end{align*}
+      which are all in $\mathcal{F}_{n-1}$.
+
+      Since
+      \begin{align*}
+        \left( M^{S(k)} \right)^2 - A^{S(k)} &= \left( M^2-A \right)^{S(k)}
+      \end{align*}
+      is a martingale, one sees that $ \left\langle M^{S(k)} \right\rangle = A^{S(k)} $. Since the process $A^{S(k)}$ is bounded by $k$, we have that $M^{S(k)}$ is bounded in $ \mathcal{L}^2 $ and $\lim_{n} M_{n\cap S(k)}$ exists almost surely. Since
+      \begin{align*}
+        \set{A{\infty} < \infty} &= \bigcup_{k}\set{S(k) = \infty},
+      \end{align*}
+      we obtain our desired result.
+    \item Suppose
+      \begin{align*}
+        P\left( \set{A_{\infty} = \infty}\cap \set{\sup_{n}\left\vert M_n \right\vert < \infty} \right) &> 0.
+      \end{align*}
+      Then, for some $c > 0$, one has that $P\left( \set{T(c) = \infty}\cap \set{A_{\infty} = \infty} \right) > 0$, where $T(c)$ is the stopping time
+      \begin{align*}
+        T(c) &= \inf\set{r : \left\vert M_r \right\vert > c}.
+      \end{align*}
+      One observes that
+      \begin{align*}
+        E\left[ M_{T(c)\wedge n}^2 - A_{T(c)\wedge n} \right] &= 0,
+      \end{align*}
+      and $M^{T(c)}$ is bounded by $c + K$. Thus,
+      \begin{align*}
+        E\left[ A_{T(c)\wedge n} \right] &\leq \left( c+ K \right)^2
+      \end{align*}
+      for all $n$. Yet, by monotone convergence, we have that 
+      \begin{align*}
+        P\left( \set{T(c) = \infty}\cap \set{A_{\infty} = \infty} \right) &= 0.
+      \end{align*}
+  \end{enumerate}
+\end{proof}
+\begin{theorem}[Lévy's Borel--Cantelli]
+  Let $n\in \N$ and $E_n\in \mathcal{F}_n$. Define
+  \begin{align*}
+    Z_n &= \sum_{k=1}^{n}1_{E_k}\\
+    \xi_k &= E\left[ 1_{E_k}|\mathcal{F}_{k-1} \right]\\
+    Y_n &= \sum_{k=1}^{n}\xi_k.
+  \end{align*}
+  Then, if $Y_{\infty} < \infty$, we have that $Z_{\infty} < \infty$ a.s., and if $Y_{\infty} = \infty$, then $\frac{Z_n}{Y_n}\to 1$ a.s.
+\end{theorem}
+\begin{proof}
+  Let $M$ be the martingale $Z-Y$, so that $Z = M + Y$ s the doob decomposition of the submartingale $Z$. Then, we have that
+  \begin{align*}
+    A_n &= \left\langle M_n \right\rangle\\
+        &= \sum_{k=1}^{n}\xi_k\left( 1-\xi_k \right)\\
+        &\leq Y_n.
+  \end{align*}
+  If $Y_{\infty} < \infty$, then $A_{\infty}$ and $\lim M_n$ exists, so $Z_{\infty}$ is finite.
+
+  If $Y_{\infty} = \infty$ and $A_{\infty} < \infty$, then $\lim M_n$ exists and we immediately see that $Z_n/Y_n\to 1$ upon dividing out by $Y_n$.
+
+  If $Y_{\infty} = A_{\infty}$, then $M_n/A_n\to 0$, so $M_n/Y_n\to 0$ and thus $Z_n/Y_n\to 1$.
+\end{proof}
 \end{document}
