@@ -2240,10 +2240,70 @@ The proof is by bootstrapping.
                                             &= \norm{L_W}\\
                                             &= \norm{L_V},
   \end{align*}
-  it follows that $L_V$ is a positive linear form. Thus, there is some Borel measure $\mu$ on $\set{0,1}^{\N}$ such that for all $g\in V$,
+  it follows that $L_V$ is a positive linear form. Thus, there is some Borel measure $\nu$ on $\set{0,1}^{\N}$ such that for all $g\in V$,
   \begin{align*}
-    L_V(g) &= \int_{\set{0,1}^{\N}}^{} g\:d\mu.
+    L_V(g) &= \int_{\set{0,1}^{\N}}^{} g\:d\nu.
   \end{align*}
+  Defining $\mu = \Phi_{\ast}\nu$ gives us our desired result.
 
+  Our goal now is to show that $ \mathcal{R}\left[ \mu \right] = L $. Let $f\in C\left( X,\R \right)$. Then,
+  \begin{align*}
+    L(f) &= L\left( \Gamma^{-1}\circ \Gamma(f) \right)\\
+         &= L_W\left( \Gamma(f) \right)\\
+         &= L_V\left( \Gamma(f) \right)\\
+         &= \int_{\set{0,1}^{\N}}^{} \Gamma(f)\:d\nu\\
+         &= \int_{\set{0,1}^{\N}}^{} f\circ\Phi\:d\nu\\
+         &= \int_{X}^{} f\:d\left( \Phi_{\ast}\mu \right)\\
+         &= \int_{X}^{} f\:d\mu\\
+         &= \mathcal{R}\left[ \mu \right](f)
+  \end{align*}
 \end{proof}
+%End of lecture
+\begin{remark}\hfill
+  \begin{enumerate}[(i)]
+    \item We recall that if $f$ is differentiable, then we may write
+      \begin{align*}
+        f(x) &= f(0) + \int_{0}^{x} f'(t)\:dt.
+      \end{align*}
+      Constructing measures, however, is quite difficult. Thanks to the Riesz Representation Theorem, we have an addition to the Carathéodory criterion to construct measures.
+    \item We now have a dictionary between measures and linear forms on continuous functions. In the previous proof, the Hahn--Banach theorem essentially allowed us to take a measure $\mu$ on $X$ and define a measure $\nu$ on $\set{0,1}^{\N}$ such that $\Phi_{\ast}\nu = \mu$. In a sense, this allowed us to define a pullback (or lift) of a measure on $X$ to a measure on $\set{0,1}^{\N}$. This is related to a variety of questions.
+      \begin{itemize}
+        \item The coarea formula in Riemannian geometry, which asks how we may define volume forms on e.g. $S^{d-1}$.
+        \item How we may extend integration to a Lie group $G$ from integration on $H$ and on the homogeneous space $G/H$.
+        \item Regular conditional probabilities, which ask how we may define probabilities $P\left( A|B \right)$ when $P(B) = 0$, such as trying to find $E\left[ f|X=x \right]$.
+        \item The disintegration theorem --- given some measure $\mu$ on $X$, and some map $f\colon X\to Y$, whether we may define measures $\mu^{y}$ on $Y$ that are supported on the fibers $f^{-1}\left( \set{y} \right)$.
+      \end{itemize}
+    \item Recall that $\left( X, \mathcal{T} \right)$ is a Polish space if $X$ is separable and there is a compatible complete metric on $X$. It's possible to show that for any Polish space $X$, there is a continuous surjection $\Phi\colon \N^{\N}\to X$, where $\N^{\N}$ is called the \textit{Baire space}. A space is called \textit{Souslin} if there exists any continuous surjection $\Phi\colon \N^{\N}\to X$, and we have shown that Polish spaces are Souslin.
+  \end{enumerate}
+\end{remark}
+\section{Bochner's Theorem}%
+\begin{definition}
+  Let $\psi\colon \R^d\to \C$. We say $\psi$ is a function of positive (definite) type if for every $n\geq 0$ and all $\xi_1,\dots,\xi_n\in \R^d$, and for all $z_1,\dots,z_n\in \C$,
+  \begin{align*}
+    \sum_{i,j=1}^{n} \overline{z_i} z_j \psi\left( \xi_i-\xi_j \right) &\in [0,\infty).
+  \end{align*}
+  Equivalently, for all $\xi_1,\dots,\xi_n\in \R^d$, the matrix $\left( \psi\left( \xi_i-\xi_j \right) \right)_{i,j}$ is positive.
+\end{definition}
+\begin{definition}
+  Let $\mu\in \operatorname{Prob}\left( \R^d \right)$ be a Borel probability measure. The characteristic function $\Phi_{\mu}\colon \R^d\to \C$ is given by
+  \begin{align*}
+    \xi &\mapsto \int_{\R^d}^{} e^{i \iprod{\xi}{x}}\:d\mu(x).
+  \end{align*}
+\end{definition}
+In the homework, it was shown that $\Phi_{\mu}$ is continuous at $0$ and $\Phi_{\mu}(0)= 1$, and $\Phi_{\mu}$ is of positive type. Bochner's Theorem shows the converse.
+\begin{theorem}[Bochner's Theorem]
+  If $\psi\colon \R^d\to \C$ is a function of positive type with $\psi(0) = 1$ and $\psi$ continuous at $0$, then there is a unique probability measure $\mu$ such that
+  \begin{align*}
+    \psi\left(\xi\right) &= \int_{\R^d}^{} e^{i \iprod{\xi}{x}}\:d\mu(x).
+  \end{align*}
+\end{theorem}
+\begin{definition}
+  We say a sequence of probability measures $\left( \mu_n \right)_n$ converges to a probability measure $\mu$ in the weak topology if for all $f\in C^b\left( X,\R \right)$, one has
+  \begin{align*}
+    \lim_{n\to\infty} \int_{}^{} f\:d\mu_n &= \int_{}^{} f\:d\mu.
+  \end{align*}
+\end{definition}
+In the homework, it was shown that if two functions $\Phi_{\mu}$ and $\Phi_{\nu}$ coincide, then $\mu = \nu$.
+
+Notice that if $\psi$ is a function of positive type, then for all $\eta\in \R^d$, one has $\psi\left( -\eta \right) = \overline{\psi(\eta)}$ and $\left\vert \psi\left( \eta \right) \right\vert\leq \psi(0)$.
 \end{document}
