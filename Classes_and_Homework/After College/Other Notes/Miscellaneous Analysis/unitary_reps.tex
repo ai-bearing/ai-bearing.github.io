@@ -1,0 +1,217 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage[uprightgreeks,noDcommand]{kpfonts}
+\renewcommand{\coloneq}{\coloneqq}
+\renewcommand{\eqcolon}{\eqqcolon}
+%\usepackage{dsfont}
+%\renewcommand{\mathbb}{\mathds}
+%\usepackage{homework}
+\usepackage{notes}
+
+\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+\addbibresource{../all_references.bib}
+
+\usepackage{parskip}
+\frenchspacing
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Kernels and GNS for Group Representations}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Kernels and Functions of Positive Type}%
+Let $X$ be a topological space
+\begin{definition}
+  A kernel of positive type on $X$ is a continuous function $\Phi\colon X\times X\to \C$ such that for any $n\in \N$, any elements $x_1,\dots,x_n\in X$, and any $c_1,\dots,c_n\in \C$,
+  \begin{align*}
+    \sum_{i=1}^{n} \sum_{j=1}^{n} c_i \overline{c_j}\Phi\left( x_i,x_j \right) &\geq 0.
+  \end{align*}
+  Equivalently, the matrix $\left( \Phi\left( x_i,x_j \right) \right)_{i,j}\in \M_n$ is positive.
+\end{definition}
+\begin{proposition}
+  If $\Phi$ is a kernel of positive type on $X$, then for all $x,y\in X$, one has
+  \begin{enumerate}[(i)]
+    \item $\Phi\left( y,x \right) = \overline{\Phi\left( x,y \right)}$;
+    \item $\left\vert \Phi\left( x,y \right) \right\vert^2 \leq \Phi\left( x,x \right)\Phi\left( y,y \right)$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  When $n=2$, $x_1 = x$, and $x_2 = y$, one observes that the matrix
+  \begin{align*}
+    A &= \begin{pmatrix}\Phi\left( x,x \right) & \Phi\left( x,y \right) \\ \Phi\left( y,x \right) & \Phi\left( y,y \right)\end{pmatrix}
+  \end{align*}
+  is positive, so it is hermitian with positive diagonal values satisfying $\Phi\left( x,x \right)\Phi\left( y,y \right) - \Phi\left( y,x \right)\Phi\left( x,y \right) \geq 0$.
+\end{proof}
+The canonical example is the following. If $f\colon X\to \mathscr{H}$ is a continuous map into a Hilbert space, then
+\begin{align*}
+  \Phi\left( x,y \right) &= \iprod{f(x)}{f(y)}
+\end{align*}
+is a kernel of positive type on $X$.
+\begin{theorem}[GNS for Kernels of Positive Type]
+  Let $\Phi$ be a kernel of positive type on a topological space $X$. Then, there exists a Hilbert space $\mathscr{H}$ and a continuous map $f\colon X\to \mathscr{H}$ such that
+  \begin{enumerate}[(i)]
+    \item $\Phi\left( x,y \right) = \iprod{f(x)}{f(y)}$;
+    \item $ \overline{\Span}\set{f(x) : x\in X} = \mathscr{H} $.
+  \end{enumerate}
+  This Hilbert space is unique up to isomorphism.
+\end{theorem}
+\begin{proof}
+  For every $x\in X$, we let $\Phi_x(y) = \Phi\left( x,y \right)$. These are each continuous functions. Let $V = \Span\set{\Phi_x : x\in X}\subseteq C(X)$. Given two elements of $V$
+  \begin{align*}
+    \varphi &= \sum_{i=1}^{m}a_i\Phi_{x_i}\\
+    \psi &= \sum_{j=1}^{n} b_j\Phi_{x_j},
+  \end{align*}
+  we write
+  \begin{align*}
+    \iprod{\varphi}{\psi} &= \sum_{i=1}^{m}\sum_{j=1}^{n} a_i \overline{b_j}\Phi\left( x_i,x_j \right)\\
+                          &= \sum_{j=1}^{n} \overline{b_j}\varphi\left( x_j \right)\\
+                          &= \sum_{i=1}^{m} a_i \overline{\psi\left( x_i \right)}.
+  \end{align*}
+  The form $ \iprod{\varphi}{\psi} $ is a positive sesquilinear form on $V$. We claim it is definite. Notice that $ \iprod{\varphi}{\Phi_x} = \varphi(x) $, and by Cauchy--Schwarz,
+  \begin{align*}
+    \left\vert \varphi(x) \right\vert^2 &\leq \Phi\left( x,x \right) \iprod{\varphi}{\varphi}.
+  \end{align*}
+  Completing $V$ with respect to the induced norm yields the Hilbert space $ \left( \mathscr{H}, \iprod{\cdot}{\cdot} \right) $.
+
+  If $f\colon X\to V$ takes $x\mapsto \Phi_x$, then $ \iprod{f(x)}{f(y)} = \Phi\left( x,y \right) $, and $f$ is continuous since
+  \begin{align*}
+    \norm{f(x)-f(y)}^2 &= \Phi\left( x,x \right) + \Phi\left( y,y \right) - 2\re\left( \Phi\left( x,y \right) \right)
+  \end{align*}
+  and $\Phi$ is continuous.
+
+  Now, suppose $\left( \mathscr{K},g \right)$ is another pair satisfying (i) and (ii). Then,
+  \begin{align*}
+    \norm{\sum_{i=1}^{n}\Phi_{x_i}}^2 &= \sum_{i=1}^{n}\sum_{j=1}^{n} a_i \overline{a_j}\Phi\left( x_i,x_j \right)\\
+                                      &= \sum_{i=1}^{n} \sum_{j=1}^{n} a_i \overline{a_j} \iprod{g\left( x_i \right)}{g\left( x_j \right)}\\
+                                      &= \norm{\sum_{i=1}^{n}a_ig\left( x_i \right)}^2.
+  \end{align*}
+  Thus, if we define the map $V\to \mathscr{K}$ by taking $\Phi_{x_i}\mapsto g\left( x_i \right)$ and extending linearly, we obtain an isometry $T\colon \mathscr{H}\to \mathscr{K}$. Since $T(V) = \Span\set{g(x) : x\in X}$, which is dense in $ \mathscr{K} $, we have that $T\circ f = g$.
+\end{proof}
+We note that, given any kernels of positive type $\Phi$ and $\Psi$, the following are also kernels of positive type:
+\begin{enumerate}[(i)]
+  \item $ \overline{\Phi} $;
+  \item $ t\Phi $ for all $t\geq 0$;
+  \item $\Phi + \Psi$;
+  \item $\Phi\Psi$;
+  \item the pointwise limit of a family of kernels of positive type, given that the limit is continuous.
+\end{enumerate}
+Thus, the kernels of positive type are a convex cone in the vector space of continuous kernels on $X$ that is closed under conjugation, pointwise product, and pointwise convergence.
+\begin{lemma}
+  Let $\Phi$ be a kernel of positive type on $X$ such that $\left\vert \Phi\left( x,y \right) \right\vert < 1$ for all $x,y\in X$. Then, $\left( 1-\Phi \right)^{-t}$ is a kernel of positive type for all $t\geq 0$.
+\end{lemma}
+\begin{proof}
+  The series
+  \begin{align*}
+    1 + \sum_{j=1}^{\infty}\frac{\prod_{k=0}^{j-1}\left( t+k \right)}{j!}\Phi\left( x,y \right)^{j}
+  \end{align*}
+  converges to $\left( 1-\Phi\left( x,y \right) \right)^{-t}$ for all $x,y\in X$ by the assumption that $\left\vert \Phi\left( x,y \right) \right\vert < 1$ for all $x,y\in X$.
+\end{proof}
+A sort of dual to the kernels of positive type is a kernel of conditionally negative type. They are related to each other by Schoenberg's Theorem.
+\begin{definition}
+  A real-valued kernel $\Psi\colon X\times X \to\R$ is said to be of \textit{conditionally negative type} if
+  \begin{enumerate}[(i)]
+    \item $\Psi\left( x,x \right) = 0$ for all $x\in X$;
+    \item $\Psi\left( x,y \right) = \Psi\left( y,x \right)$ for all $x,y\in X$;
+    \item for all elements $x_1,\dots,x_n$ and all real numbers $c_1,\dots,c_n$ with $\sum c_i = 0$, one has
+      \begin{align*}
+        \sum_{i=1}^{n}\sum_{j=1}^{n}c_ic_j\Psi\left( x_i,x_j \right) &\leq 0.
+      \end{align*}
+  \end{enumerate}
+\end{definition}
+The canonical example is that of the map on a real Hilbert space
+\begin{align*}
+  \Psi\colon \mathscr{H}\times \mathscr{H}&\to \R\\
+  \left( \xi,\eta \right) &\mapsto \norm{\xi-\eta}^2.
+\end{align*}
+One observes that for any $\xi_1,\dots,\xi_n\in \mathscr{H}$ and $c_1,\dots,c_n\in \R$ with $\sum c_i = 0$, we have
+\begin{align*}
+  \sum_{i=1}^{n}\sum_{j=1}^{n}c_ic_j\Psi\left( \xi_i,\xi_j \right) &= \sum_{i=1}^{n}\sum_{j=1}^{n} c_ic_j \norm{\xi_i-\xi_j}^2\\
+                                                                   &= -2\norm{\sum_{i=1}^{n}c_i\xi_i}^2.
+\end{align*}
+So, if $X$ is a topological space and $\mathscr{H}$ is a real Hilbert space, with $f\colon X\to \mathscr{H}$ a continuous mapping, then the kernel $\left( x,y \right)\mapsto \norm{f(x)-f(y)}^2$ is of conditionally negative type. Similar to how kernels of positive type arise, this is universal via a GNS construction.
+\begin{theorem}[GNS for Kernels of Conditionally Negative Type]
+  Let $\Psi$ be a kernel of conditionally negative type on $X$, and let $x_0\in X$. There exists a real Hilbert space $ \mathscr{H} $ and a continuous map $f\colon X\to \mathscr{H}$ such that
+  \begin{enumerate}[(i)]
+    \item $\Psi\left( x,y \right) = \norm{f(x)-f(y)}^2$;
+    \item $ \overline{\Span}\set{f(x) - f(x_0) : x\in X} = \mathscr{H}$.
+  \end{enumerate}
+  Moreover, this pair is unique up to affine isometry.
+\end{theorem}
+\begin{proof}
+  Let $V = \ker\left( \epsilon \right)$, where $\epsilon\colon \R[X]\to \R$ is the augmentation map
+  \begin{align*}
+    \sum_{i=1}^{m}c_i\delta_{x_i} &\mapsto \sum_{i=1}^{m}c_i.
+  \end{align*}
+  Let $\varphi = \sum_{i=1}^{m}a_i\delta_{x_i}$ and $\psi = \sum_{j=1}^{n}b_j\delta_{x_j}$ in $V$. Then, we let
+  \begin{align*}
+    \iprod{\varphi}{\psi} &= -\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}a_ib_j\Psi\left( x_i,x_j \right).
+  \end{align*}
+  This defines a positive symmetric form on $V$. Set
+  \begin{align*}
+    N_{\Psi} &= \set{\varphi\in V : \iprod{\varphi}{\varphi} = 0}.
+  \end{align*}
+  By the Cauchy--Schwarz inequality, this is a linear subspace of $V$. Define
+  \begin{align*}
+    \iprod{\left[ \varphi \right]}{\left[ \psi \right]} &= \iprod{\varphi}{\psi}
+  \end{align*}
+  on $V/N_{\Psi}$. Let $\left( \mathscr{H}, \iprod{\cdot}{\cdot} \right)$ be the Hilbert space completion of $V/N_{\Psi}$. Set $f\colon X\to H$ taking $x\mapsto \left[ \delta_x-\delta_{x_0} \right]$. Then,
+  \begin{align*}
+    \norm{f(x) - f(y)}^2 &= \{si\left( x,y \right),
+  \end{align*}
+  since $\Psi\left( x,x \right) = 0$ and $\Psi\left( y,y \right) = 0$ with $\Psi\left( y,x \right) = \Psi\left( x,y \right)$. Moreover, $f$ is continuous since $\Psi$ is continuous, so we obtain existence.
+
+  Let $\left( \mathscr{K},g \right)$ be another such pair. We claim that the map
+  \begin{align*}
+    \left[ \sum_{i=1}^{n}a_i\delta_{x_i} \right] &\mapsto \sum_{i=1}^{n} a_ig\left( x_i \right)
+  \end{align*}
+  extends to an affine isometry. Since $\sum_{i=1}^{n}a_i = 0$, it follows that
+  \begin{align*}
+    \norm{\left[ \sum_{i=1}^{n}a_i\delta_{x_i} \right]}^2 &= \norm{\left[ \sum_{i=1}^{n}a_i\left( \delta_{x_i}-\delta_{x_i} \right) \right]}^2\\
+                                                          &= -\frac{1}{2}\sum_{i,j=1}^{n} a_ia_i\left( \Psi\left( x_i,x_j \right)- \Psi\left( x_i,x_0 \right)-\Psi\left( x_j,x_0 \right) \right)\\
+                                                          &= -\frac{1}{2}\sum_{i,j=1}^{n} a_ia_j\left( \norm{g\left( x_i \right)-g\left( x_j \right)}^2 - \norm{g\left( x_i \right)-g\left( x_0 \right)}^2 - \norm{g\left( x_j \right)-g\left( x_0 \right)}^2 \right)\\
+                                                          &= \sum_{i,j=1}^{n} a_ia_j \iprod{g\left( x_i \right)-g\left( x_0 \right)}{g\left( x_j \right)-g\left( x_0 \right)}\\
+                                                          &= \norm{\sum_{i=1}^{n}a_i\left( g\left( x_i \right)-g\left( x_0 \right) \right)}^2\\
+                                                          &= \norm{\sum_{i=1}^{n}a_ig\left( x_i \right)}^2.
+  \end{align*}
+  Moreover, since $\Span\set{g(x)-g\left( x_0 \right) : x\in X}$ is dense in $ \mathscr{K} $, it follows that $T$ is surjective with $T\circ f = g$.
+\end{proof}
+Analogously to the case of kernels of positive type, there are certain inheritance properties for kernels of conditionally negative type (i.e., kernels of conditionally negative type form a convex cone and are closed in the topology of pointwise convergence on the space of continuous functions). Furthermore, if $\Phi$ is a real valued kernel of positive type, then $\Phi\left( x,x \right)-\Phi\left( x,y \right)$ is a kernel of conditionally negative type.
+\begin{lemma}
+  Let $X$ be a topological space, and let $\Psi\colon X\times X\to \R$ be a continuous kernel with $\Psi\left( x,x \right) = 0$ and $\Psi\left( y,x \right) = \Psi\left( x,y \right)$ for all $x,y\in X$. For a fixed $x_0\in X$, let $\Phi\colon X\times X\to \R$ be defined by
+  \begin{align*}
+    \Phi\left( x,y \right) &= \Psi\left( x,x_0 \right) + \Psi\left( y,x_0 \right) - \Psi\left( x,y \right).
+  \end{align*}
+  Then, $\Psi$ is a kernel of conditionally negative type if and only if $\Phi$ is a kernel of positive type.
+\end{lemma}
+\begin{proof}
+  Suppose $\Phi$ is a kernel of positive type. Then, for any $x_1,\dots,x_n\in X$ and $c_1,\dots,c_n\in \R$ with $\sum_{i=1}^{n}c_i = 0$, we have
+  \begin{align*}
+    0 &\leq \sum_{i=1}^{n}\sum_{j=1}^{n}c_ic_j\Phi\left( x_i,x_j \right)\\
+      &= -\sum_{i=1}^{n}\sum_{j=1}^{n}c_ic_j\Psi\left( x_i,x_j \right),
+  \end{align*}
+  showing that $\Psi$ is of conditionally negative type.
+
+  Suppose $\Psi$ is of conditionally negative type. Then, by the GNS for kernels of conditionally negative type, there is a real Hilbert space $\mathscr{H}$ and a continuous map $f\colon X\to \mathscr{H}$ such that $\Psi\left( x,y \right) = \norm{f(x)-f(y)}^2$ for all $x,y\in X$. Then, we have
+  \begin{align*}
+    \Phi\left( x,y \right) &= \Psi\left( x,x_0 \right) + \Psi\left( y,x_0 \right) - \Psi\left( x,y \right)\\
+                           &= 2 \iprod{f(x)-f\left( x_0 \right)}{f\left( y \right)-f\left( x_0 \right)}
+  \end{align*}
+  for all $x,y\in X$. Thus, for all $x_1,\dots,x_n\in X$ and $c_1,\dots,c_n\in \R$, we have
+  \begin{align*}
+    \sum_{i,j=1}^{n}c_ic_j\Phi\left( x_i,x_j \right) &= 2\norm{\sum_{i=1}^{n}c_i\left( f\left( x_i \right)-f\left( x_0 \right) \right)}^2\\
+                                                     &\geq 0.
+  \end{align*}
+  Thus, since $\Psi$ is symmetric the expression
+  \begin{align*}
+    \sum_{i,j=1}^{n} c_i \overline{c_j}\Phi\left( x_i,x_j \right) &\geq 0
+  \end{align*}
+  holds for all $x_1,\dots,x_n\in X$ and all complex $c_1,\dots,c_n$. Thus, $\Phi$ is of positive type.
+\end{proof}
+
+\nocite{kazhdan_property_t,conway_functional_analysis}
+\printbibliography
+\end{document}
