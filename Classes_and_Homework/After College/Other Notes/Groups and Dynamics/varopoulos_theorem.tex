@@ -23,7 +23,6 @@
 
 \begin{document}
 \RaggedRight
-\section{Markov Chains}%
 \begin{definition}
   The \textit{simple random walk} on $\Z^d$ is given by a walker starting at $\left( 0,\dots,0 \right)\in \Z^d$, then at time $t$, moves from position 
   \begin{align*}
@@ -36,6 +35,10 @@
   with probability $1/(2d)$ for all $1\leq i \leq d$ and every discrete time unit.
 \end{definition}
 Our question is somewhat simple: when, if ever, does the walker return to the origin? This is the substance of Polya's Theorem and its generalization, Varopoulos's Theorem.
+
+The first job is to formalize the setting for this question.
+\section{Markov Chains}%
+\subsection{Setup and Basic Definition}%
 \begin{definition}
   Let $X$ be a finite or countable set. Let $P = \left( p\left( x,y \right) \right)_{x,y\in X}$ be a \textit{stochastic matrix}, a matrix satisfying $p\left( x,y \right) \geq 0$ for all $x,y\in X$ and
   \begin{align*}
@@ -79,7 +82,148 @@ and determining $p$ as follows: if there exists $n\in \N$ such that $P\left( Z_n
 \end{align*}
 for all $x,y\in X$, where $\Phi\colon X\to [0,1]$ is a map such that $\sum_{y\in X}\Phi(y) = 1$. If $n(x) < \infty$ for all $x\in X$, then this Markov chain is unique.
 
-Note that $\Phi$ is, in a sense, an atomic probability measure. 
+Note that $\Phi$ is, in a sense, an atomic probability measure.
+\begin{definition}
+  Given a Markov chain $\left( X,P \right)$, we let $ \mathcal{G} = \mathcal{G}\left( X,P \right) = \left( X,E \right) $ be the directed graph associated with $\left( X,P \right)$ defined as follows. The vertex set is the state space of the Markov chain, and $E\subseteq X\times X$ is the set of pairs $\left( x,y \right)\in X\times X$ such that $p\left( x,y \right)\neq 0$.
+\end{definition}
+For any $n\in \N$, we set $P^0 = I = \left( \delta_{x,y} \right)_{x,y\in X}$, and letting
+\begin{align*}
+  P^n &= PP^{n-1}\\
+      &= \left( p^{(n)}\left( x,y \right) \right)_{x,y\in X}
+\end{align*}
+be the $n$th power of the transition matrix $P$. Notice that $p^{(1)}(x,y) = p(x,y)$, and
+\begin{align*}
+  p^{(n+1)}(x,y) &= \sum_{u\in X}p\left( x,u \right)p^{(n)}\left( u,y \right).
+\end{align*}
+Provided $\pi(x) > 0$, one has that $p^{(n)}(x,y) = \mathbb{P}\left( Z_n=y|Z_0=x \right)$. That is, $p^{(n)}(x,y)$ gives the probability that starting from state $x$ one arrives in state $y$ in $n$ random steps. In particular, we have that $ \mathbb{P}\left( Z_{k+n}=y|Z_k=x \right) = p^{(n)}(x,y) $.
+
+Suppose that $\pi = \delta_{x_0}$ is the initial configuration, specifically expressing the point mass at the starting point. Let $v_n^x(\omega) = \delta_x\left( Z_n(\omega) \right)$. Then, $v_n^x$ equals $1$ if at time $n$, the random walker with trajectory $\omega$ is exactly at $x$, and $0$ otherwise. Then,
+\begin{align*}
+  E\left[ v_n^x \right] &= \int_{}^{} v_n^x(\omega)\:d \mathbb{P}_{x_0}(\omega)\\
+                        &= \mathbb{P}_{x_0}\left( \bigcup\set{C\left( x_0,y_1,\dots,y_{n-1},x \right) : y_1,\dots,y_{n-1}\in X} \right)\\
+                        &= \sum_{y_1,\dots,y_{n-1}\in X} \mathbb{P}_{x_0}\left( C\left( x_0,y_1,\dots,y_{n-1},x \right) \right)\\
+                        &= \sum_{y_1,\dots,y_{n-1}\in X}p\left( x_0,y_1 \right)p\left( y_1,y_2 \right)\cdots p\left( y_{n-1},x \right)\tag{Definition of $ \mathbb{P}_{x_0} $.}\\
+                        &= p^{(n)}\left( x_0,x \right).
+\end{align*}
+Thus, we have that
+\begin{align*}
+  v^x &= \sum_{n=0}^{\infty}v_n^x
+\end{align*}
+represents the total number of times the random walker starting at $x_0$ visits $x$. The corresponding expected value is given by
+\begin{align*}
+  E\left[ v^x \right] &= \sum_{n=0}^{\infty}p^{(n)}\left( x_0,x \right).
+\end{align*}
+\subsection{Irreducibility}%
+\begin{definition}
+  A Markov chain $\left( X,P,\pi \right)$ is called \textit{irreducible} if for every $x,y\in X$, there exists some $n\in \N\setminus \set{0}$ such that $p^{(n)}\left( x,y \right) > 0$.
+\end{definition}
+Equivalently, the associated graph for the Markov chain is connected. We call the power series
+\begin{align*}
+  G\left( x,y|z \right) &= \sum_{n=0}^{\infty} p^{(n)}\left( x,y \right)z^{n}
+\end{align*}
+the \textit{Green's function} for the Markov chain.
+\begin{proposition}
+  Suppose $\left( X,P,\pi \right)$ is irreducible, and $0 < t < \infty$. Then, either $G\left( x,y|t \right)$ converges for every $x,y\in X$ or diverges for every $x,y\in X$.
+\end{proposition}
+\begin{proof}
+  Let $x,y,x',y'\in X$, and suppose that $G\left( x,y|t \right) < \infty$. We will show that $G\left( x',y'|t \right) < \infty$.
+
+  By irreducibility, we may find $h,k\in \N\setminus \set{0}$ such that $p^{(h)}\left( x,x' \right) > 0$ and $p^{(k)}\left( y',y \right) > 0$. Furthermore,
+  \begin{align*}
+    p^{(h + n + k)}\left( x,y \right) &\geq p^{(h)}\left( x,x' \right) p^{(n)}\left( x',y' \right) p^{(k)}\left( y',y \right)
+  \end{align*}
+  for all $n\in \N$. Thus,
+  \begin{align*}
+    G\left( x,y|t \right) &= \sum_{m=0}^{\infty}p^{(m)}\left( x,y \right)t^{m}\\
+                          &\geq \sum_{m=h+k}^{\infty}p^{(m)}\left( x,y \right)t^{m}\\
+                          &= \sum_{n=0}^{\infty} p^{(h + k + n)}\left( x,y \right)t^{h + k + n}\\
+                          &\geq \sum_{n=0}^{\infty} t^{h+k}t^{n}p^{(h)}\left( x,x' \right)p^{(n)}\left( x',y' \right)p^{(k)}\left( y',y \right)\\
+                          &= p^{(h)}\left( x,x' \right)p^{(k)}\left( y',y \right)t^{h+k}\sum_{n=0}^{\infty}p^{(n)}\left( x',y' \right)t^{n}\\
+                          &= p^{(h)}\left( x,x' \right)p^{(k)}\left( y',y \right)t^{h+k}G\left( x',y'|t \right),
+  \end{align*}
+  whence $G\left( x',y'|t \right) < \infty$.
+\end{proof}
+We will always assume that our Markov chains are irreducible. Set
+\begin{align*}
+  G\left( x,y \right) &= G\left( x,y|1 \right)\\
+                      &= \sum_{n=0}^{\infty}p^{(n)}\left( x,y \right)\\
+                      &\in [0,\infty].
+\end{align*}
+Given $x,y\in X$, the real random variable
+\begin{align*}
+  T^{x} &= \inf\set{n\geq 1 : Z_n = x}
+\end{align*}
+is called a hitting time. This is the first time that the random walker with trajectory $\omega$ visits the state $x$. The quantity
+\begin{align*}
+  f^{(n)}\left( x,y \right) &= \mathbb{P}_x\left( T^{y} = n \right)
+\end{align*}
+gives the probability that the random walker, after visiting $x$, arrives in $y$ for the first time in $n$ steps. This is called the hitting probability. Notice that $f^{(0)}\left( x,y \right) = 0$ for all $x,y\in X$. Denote by
+\begin{align*}
+  F\left( x,y|z \right) &= \sum_{n=1}^{\infty}f^{(n)}\left( x,y \right)z^{n}
+\end{align*}
+as the associated generating function.
+\begin{proposition}
+  Suppose the Markov chain $\left( X,P,\pi \right)$ is irreducible. Let $x,y\in X$ be distinct elements. Then, the following hold:
+  \begin{enumerate}[(i)]
+    \item $G\left( x,y|z \right) = G\left( y,y|z \right)F\left( x,y|z \right)$;
+    \item $G\left( x,x|z \right) = 1 + G\left( x,x|z \right)F\left( x,x|z \right)$;
+    \item if $0\leq t < \infty$ is such that $G\left( x,x|t \right) < \infty$ and $F\left( x,x|t \right) < 1$, then
+      \begin{align*}
+        G\left( x,x|t \right) &= \frac{1}{1-F\left( x,x|t \right)}.
+      \end{align*}
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Let $n\geq 1$, $Z_0 = x$, and suppose $Z_n = y$. Denote by $k$ the value such that $T^y = k$. We have the equality
+  \begin{align*}
+    \set{T^y = k} &= \set{Z_k=y}\cap \set{Z_j\neq y\text{ for all }j=1,2,\dots,k-1}.
+  \end{align*}
+  Using the Markov property, we may write
+  \begin{align*}
+    p^{(n)}\left( x,y \right) &= \mathbb{P}_x\left( Z_n=y \right)\\
+                              &= \sum_{k=1}^{n} \mathbb{P}_x\left( Z_n=y\cap T^y = k \right)\\
+                              &= \sum_{k=1}^{n} \mathbb{P}_x\left( Z_n=y|T^y=k \right) \mathbb{P}_x\left( T^y=k \right)\\
+                              &= \sum_{k=1}^{n} \mathbb{P}_x\left( Z_n=y|Z_k=y\cap Z_j\neq y\text{ for all }j=1,\dots,k-1 \right) \mathbb{P}_x\left( T^y=k \right)\\
+                              &= \sum_{k=1}^{n} \mathbb{P}_x\left( Z_n=y|Z_k=y \right) \mathbb{P}_x\left( T^y=k \right)\\
+                              &= \sum_{k=1}^{n} p^{(n-k)}\left( y,y \right) f^{(k)}\left( x,y \right).
+  \end{align*}
+  Thus, we have
+  \begin{align*}
+    p^{(n)}\left( x,y \right) &= \sum_{k=0}^{n}p^{(n-k)}\left( y,y \right)f^{(k)}\left( x,y \right),
+  \end{align*}
+  so that
+  \begin{align*}
+    G\left( x,y|z \right) &= \sum_{n=0}^{\infty}p^{(n)}\left( x,y \right)z^{n}\\
+                          &= p^{(0)}\left( x,y \right) + \sum_{n=1}^{\infty}p^{(n)}\left( x,y \right)z^{n}\\
+                          &= \delta_x(y) + \sum_{n=1}^{\infty}\sum_{k=0}^{n}p^{(n-k)}\left( y,y \right)f^{(k)}\left( x,y \right) z^{n}\\
+                          &= \delta_x(y) + G\left( y,y|z \right)F\left( x,y|z \right).
+  \end{align*}
+  Now, if $0\leq t < \infty$ is such that $G\left( x,x|t \right) < \infty$ and $F\left( x,x|t \right) < 1$, then by a theorem of Mertens, we have that the series $G\left( x,x|t \right)F\left( x,x|t \right)$ converges, so that we get our desired result upon dividing.
+\end{proof}
+\subsection{Recurrence and Transience}%
+\begin{definition}
+  Let $\left( X,P,\pi \right)$ be a Markov chain. A state $x\in X$ is said to be \textit{recurrent} if the probability that the Markov chain returns to $x$ is $1$. Else, we say it is transient.
+
+  In symbols, $ x $ is recurrent if and only if
+  \begin{align*}
+    \mathbb{P}_x\left( Z_n = x\text{ for some }n\in \N \right) = \mathbb{P}_x\left( \bigcup_{n\geq 1}\set{Z_n = x} \right) = 1.
+  \end{align*}
+  Equivalently, $x$ is recurrent if and only if $P\left( T^x < \infty \right) = 1$.
+\end{definition}
+For any $x,y\in X$, let
+\begin{align*}
+  F\left( x,y \right) &= \mathbb{P}_x\left( Z_n=y \text{ for some }n\in \N \right)\\
+                      &= \mathbb{P}_x \left( \bigcup_{n\geq 1}\set{Z_n = y} \right)\\
+  H\left( x,y \right) &= \mathbb{P}_x \left( Z_n=y\text{ infinitely often} \right)\\
+                      &= \mathbb{P}_x\left( \limsup_{n\to\infty}\set{Z_n = y} \right).
+\end{align*}
+A state $x\in X$ is recurrent if and only if $F\left( x,x \right) = 1$. Notice that
+\begin{align*}
+  F\left( x,y \right) &= \mathbb{P}_x\left( \bigcup_{n\geq 1}\set{Z_n = y} \right)\\
+                      &= \sum_{n=1}^{\infty} \mathbb{P}_x \left( T^y = n \right)\\
+                      &= \sum_{n=0}^{\infty}f^{(n)}\left( x,y \right)\\
+                      &= F\left( x,y|1 \right).
+\end{align*}
 \nocite{topics_in_groups_and_geometry}
 \printbibliography
 \end{document}
