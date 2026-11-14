@@ -224,6 +224,205 @@ A state $x\in X$ is recurrent if and only if $F\left( x,x \right) = 1$. Notice t
                       &= \sum_{n=0}^{\infty}f^{(n)}\left( x,y \right)\\
                       &= F\left( x,y|1 \right).
 \end{align*}
+\begin{theorem}[Zero-One Law for Markov Chains]
+  Let $\left( X,P,\pi \right)$ be an irreducible Markov chain. For any $x\in X$, the following are equivalent:
+  \begin{enumerate}[(a)]
+    \item $x$ is recurrent (that is, $F\left( x,x \right) = 1$);
+    \item $G\left( x,x \right) = \infty$;
+    \item $H\left( x,x \right) = 1$;
+    \item $H\left( x,x \right) > 0$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  We recall the definition of
+  \begin{align*}
+    G\left( x,x \right) &= \sum_{n=0}^{\infty} p^{(n)}\left( x,x \right)\\
+                        &= \sum_{n=0}^{\infty} \mathbb{P}_x\left( Z_n = x \right).
+  \end{align*}
+  By the Borel--Cantelli laws and independence of $\left( Z_n \right)_n$, we have that (b) implies (c), (c) implies (d), and (d) implies (b).
+
+  Now, we will show that (a) and (b) are equivalent. First, from Abel's theorem, we have that $F\left( x,x \right) = \lim_{t\nearrow 1}F\left( x,x|t \right)$. If $G\left( x,x \right) < \infty$, then by Abel's theorem yet again, we have that $\lim_{t\nearrow 1}G\left( x,x|t \right)$, so that
+  \begin{align*}
+    \lim_{t\nearrow 1}\frac{1}{1-F\left( x,x|t \right)} &= G\left( x,x \right)\\
+                                                        &< \infty,
+  \end{align*}
+  so that $F\left( x,x \right) < 1$. This gives that (a) implies (b). Conversely, if $F\left( x,x \right) < 1$, and $R$ is the radius of convergence of $G\left( x,x|z \right)$, then by Pringsheim's theorem, we have that $\lim_{t\nearrow R} G\left( x,x|t \right) = \infty$, so that
+  \begin{align*}
+    \lim_{t\nearrow R} G\left( x,x|t \right) &= \lim_{t\nearrow R} \frac{1}{1-F\left( x,x|t \right)}\\
+                                             &\leq \frac{1}{1-F\left( x,x \right)}\\
+                                             &< \infty,
+  \end{align*}
+  which is a contradiction. Thus, $R > 1$, so that $G\left( x,x \right) = G\left( x,x|1 \right) < \infty$.
+\end{proof}
+\section{Random Walks on Groups}%
+Throughout, we will let $G$ be a finitely generated group and $Y\subseteq G$ a finite symmetric generating set.
+\subsection{Basic Definitions}%
+\begin{definition}
+  Let $\left( G,P \right) = \left( G,P,\pi \right)$ an irreducible Markov chain on $G$. We say $\left( G,P \right)$ is a random walk on $G$ provided that the transition probabilities satisfy the following conditions:
+  \begin{enumerate}[(i)]
+    \item $p\left( g,h \right) = p\left( h,g \right)$ for all $g,h\in G$;
+    \item $p\left( g'g,g'h \right) = p\left( g,h \right)$ for all $g,g',h\in G$;
+    \item $\sum_{h\in G}d_Y\left( g,h \right)^2p\left( g,h \right) < \infty$ for all $g\in G$.
+  \end{enumerate}
+  A random walk on $\left( G,P,\pi \right)$ that satisfies $p\left( g,h \right) = 0$ whenever $g^{-1}h\notin Y$ is called a nearest neighbor walk.
+\end{definition}
+\begin{example}
+  The simple random walk on $G$ is the nearest neighbor random walk $\left( G,Q \right) = \left( G,Q,\delta_{e} \right)$ such that
+  \begin{align*}
+    q\left( g,h \right) &= \begin{cases}
+      \frac{1}{\left\vert Y \right\vert} & g^{-1}h\in Y\\
+      0 & \text{else}.
+    \end{cases}
+  \end{align*}
+\end{example}
+We may associate an atomic probability measure $\mu$ on $G$ to a random walk $\left( G,P,\pi \right)$ by taking
+\begin{align*}
+  \mu\left( g \right) &= p\left( e,g \right)
+\end{align*}
+for all $g\in G$. Notice that this satisfies
+\begin{enumerate}[(i)]
+  \item $\mu\left( g \right) = \mu\left( g^{-1} \right)$ for all $g\in G$;
+  \item $\operatorname{supp}\left( \mu \right)$ generates $G$;
+  \item $\sum_{h\in G}d_Y\left( e,g \right)^2\mu(g) = \sum_{h\in G} \ell_Y(g)^2\mu(g) < \infty$ for all $g\in G$.
+\end{enumerate}
+Moreover, (ii) can be reformulated as saying that
+\begin{align*}
+  G &= \bigcup_{n=0}^{\infty} \operatorname{supp}\left( \mu^{\ast n} \right),
+\end{align*}
+where $\mu^{\ast n}$ denotes the $n$th convolution of $\mu$, defined by setting
+\begin{align*}
+  \mu^{\ast n}(g) &= \sum_{h\in G}\mu^{\ast\left( n-1 \right)}\left( gh^{-1} \right)\mu\left( h \right)\\
+                  &= \sum_{h\in G}\mu^{\ast\left( n-1 \right)}\left( h \right)\mu\left( h^{-1}g \right).
+\end{align*}
+We notice that $p^{(n)}\left( e,g \right) = \mu^{(n)}(g)$.
+\subsection{Recurrence and Transience of Simple Random Walks on $\Z^d$}%
+\begin{proposition}
+  The simple random walks on $\Z$ and $\Z^2$ are recurrent.
+\end{proposition}
+\begin{proof}
+  A finite random path in $\Z$ is a sequence $\pi = \left( x_0,\dots,x_n \right)$ with $x_0 = 0$ and $\left\vert x_{i+1}-x_i \right\vert = 1$ for all $i$. If $x_n = 0$, then we call the path closed. The number of paths is $2^{n}$, and the number of closed paths is given by ${2m\choose m}$.
+
+  In particular, the probability $p_n = q^{(n)}\left( 0,0 \right)$ of returning to the origin after $n$ steps is given by
+  \begin{align*}
+    p_n &= \begin{cases}
+      \frac{1}{2^{2m}} {2m\choose m} & n = 2m\\
+      0  & \text{else}.
+    \end{cases}
+  \end{align*}
+  By Stirling's approximation, we have that
+  \begin{align*}
+    p_{2m} &\sim \frac{1}{2^{2m}} \frac{\left( 2m \right)^{2m}e^{-2m}\sqrt{4\pi m}}{m^{2m}e^{-2m}2\pi m}\\
+           &= \frac{C}{\sqrt{m}}
+  \end{align*}
+  for some constant $C$. Thus, in particular, we have
+  \begin{align*}
+    G\left( 0,0 \right) &= \sum_{n=0}^{\infty}p_n\\
+                        &= \sum_{m=0}^{\infty}p_{2m}\\
+                        &\sim \sum_{m=0}^{\infty} \frac{C}{\sqrt{m}}\\
+                        &= \infty,
+  \end{align*}
+  so that $0$ is recurrent. This gives the case of $\Z$.
+
+  For the case of $\Z^2$, we note that if we start from the origin, then the number of closed paths of length $m$ is given by
+  \begin{align*}
+    \sum_{k=0}^{m}\frac{\left( 2m \right)!}{k!k!\left( m-k \right)!\left( m-k \right)!} &= \sum_{k=0}^{m} \frac{\left( 2m \right)!}{m!m!} \frac{m!m!}{k!k!\left( m-k \right)!\left( m-k \right)!}\\
+                                          &= \sum_{k=0}^{m} {2m\choose m} {m\choose k}^2\\
+                                          &= {2m\choose m}^2.
+  \end{align*}
+  Thus, the probability $p_n'$ of $q^{(n)}\left( \left( 0,0 \right),\left( 0,0 \right) \right)$ returning to the origin after $n$ steps is
+  \begin{align*}
+    p_n' &= \begin{cases}
+      \left( \frac{1}{2^{2n}} {2m\choose m} \right)^2 & n=2m\\
+      0 & \text{else}.
+    \end{cases}
+  \end{align*}
+  Thus, $p_n'\sim \frac{1}{m}$, and
+  \begin{align*}
+    G\left( \left( 0,0 \right),\left( 0,0 \right) \right) &= \sum_{m=0}^{\infty}p_{2m}'\\
+                                                          &= \infty.
+  \end{align*}
+\end{proof}
+This pattern stops at $\Z^2$, as we will display now.
+\begin{theorem}
+  The simple random walk on $\Z^3$ is transient.
+\end{theorem}
+\begin{proof}
+  We write
+  \begin{align*}
+    p_{2m}'' &= q^{(2m)}\left( \left( 0,0,0 \right),\left( 0,0,0 \right) \right)\\
+             &= \frac{1}{6^{2m}} \sum_{\substack{j,k\geq 0\\ j+k\leq m}} \frac{\left( 2m \right)!}{j!j!k!k!\left( m-j-k \right)!\left( m-j-k \right)!}\\
+             &= \frac{1}{2^{2m}}{2m\choose m} \sum_{\substack{j,k\geq 0\\j+k\leq m}} \frac{1}{3^{2m}}\left( \frac{m!}{j!k!\left( m-j-k \right)!} \right)^2.
+  \end{align*}
+  Since $a!b! \geq \left( a+1 \right)!\left( b-1 \right)!$, we have that for all $j,k\geq 0$ with $j+k\leq m$ that
+  \begin{align*}
+    \frac{m!}{j!k!\left( m-j-k \right)!} &\leq \frac{m!}{\left\lfloor \frac{m}{3}\right\rfloor!\left\lfloor \frac{m}{3}\right\rfloor!\left\lfloor \frac{m}{3}\right\rfloor!}.
+  \end{align*}
+  Thus, since
+  \begin{align*}
+    \sum_{\substack{j,k\geq 0\\j+k\leq m}} \frac{m!}{j!k!\left( m-j-k \right)!} &= 3^{m},
+  \end{align*}
+  it follows (upon more tedious computation) that
+  \begin{align*}
+    p_{2m}'' &\leq \frac{1}{2^{2m}3^{m}} \frac{\left( 2m \right)!}{m!\left( \left\lfloor \frac{m}{3}\right\rfloor \right)^3}.
+  \end{align*}
+  Once again applying Stirling's approximation gives that
+  \begin{align*}
+    p_{2m}'' &\preceq \frac{C}{m^{3/2}},
+  \end{align*}
+  where $a_k\preceq b_k$ when $\lim_{k\to\infty}\frac{a_k}{b_k}\leq 1$. Thus, we have
+  \begin{align*}
+    G\left( \left( 0,0,0 \right),\left( 0,0,0 \right) \right) &= \sum_{m=0}^{\infty}p_{2m}''\\
+                                                              &< \infty,
+  \end{align*}
+  so the random walk is transient.
+\end{proof}
+\subsection{Proof Strategy for the Varopoulos Theorem}%
+Our goal is to prove the Varopoulos Theorem, which says the following.
+\begin{theorem}[Varopoulos]
+  Let $G$ be a finitely generated group, and suppose the simple random walk on $G$ with respect to some finite symmetric generating set is recurrent. Then, either
+  \begin{enumerate}[(i)]
+    \item $G$ is finite;
+    \item $G$ is virtually $\Z$;
+    \item $G$ is virtually $\Z^2$.
+  \end{enumerate}
+\end{theorem}
+The proof strategy will be as follows. We will develop the notion of the network associated to the Markov chain on $G$, and a special recurrence criterion to show that the simple random walk on any group whose growth is at most quadratic is recurrent. Meanwhile if the growth of $G$ is at least cubic, we will explicitly construct a transient (not necessarily simple) random walk on $G$. Upon showing that the recurrence of a generic random walk on $G$ is equivalent to the recurrence of the simple random walk, this will allow us to use \href{https://ai-bearing.github.io/Classes_and_Homework/After\%20College/Other\%20Notes/Groups\%20and\%20Dynamics/gromovs_theorem.pdf}{Gromov's Theorem} and the Bass--Guivarch formula to determine that the unique groups whose growth is at most quadratic are either finite, virtually $\Z$, or virtually $\Z^2$.
+\section{Recurrence Criteria}%
+\subsection{Network of a Markov Chain}%
+\begin{definition}
+  We say a Markov chain $\left( X,P,\pi \right)$ is reversible if there exists $m\colon X\to (0,\infty)$ such that
+  \begin{align*}
+    m\left( x \right)p\left( x,y \right) = m\left( y \right)p\left( y,x \right)
+  \end{align*}
+  for all $x,y\in X$. The quantity
+  \begin{align*}
+    a\left( x,y \right) &= m\left( x \right)p\left( x,y \right)
+  \end{align*}
+  is called the conductance between $x$ and $y$.
+\end{definition}
+\begin{example}
+  If $G$ is a finitely generated group, $Y$ a finite symmetric generating subset, and $\left( G,Q \right)$ the simple random walk on $G$ associated to $Y$, then $q\left( g,h \right) = q\left( h,g \right)$ for all $g,h\in G$, so $m(g) = 1$ for all $g\in G$ defines an invariant measure.
+\end{example}
+If $\left( X,E \right)$ is the directed graph associated with a reversible Markov chain $\left( X,P \right)$, then we may in fact consider it as an \textit{undirected} graph whose edges are the elements $\set{x,y}$ with $p\left( x,y \right)\neq 0$. Then,
+\begin{align*}
+  \sum_{y\in X}a\left( x,y \right) &= \sum_{y\in X}m(x)p\left( x,y \right)\\
+                                   &= m(x)\sum_{y\in X}p\left( x,y \right)\\
+                                   &= m(x),
+\end{align*}
+so that
+\begin{align*}
+  p\left( x,y \right) &= \frac{a\left( y,x \right)}{m(x)}\\
+                      &= \frac{a\left( y,x \right)}{\sum_{z\in X}a\left( x,z \right)}.
+\end{align*}
+In particular, the transition matrix of any reversible Markov chain is uniquely determined by its conductances. Given an undirected graph with reversible Markov chain, we will fix an orientation on the edge set, and write $e = \set{e^+,e^-}$, where $e^+$ is the initial vertex and $e^-$ is the terminal vertex.
+\begin{definition}
+  The function
+  \begin{align*}
+    r(e) &= \frac{1}{a\left( e^+,e^- \right)}
+  \end{align*}
+  is called the resistance. The triple $\mathcal{N} = \left( X,E,r \right)$ is called a network.
+\end{definition}
+
 \nocite{topics_in_groups_and_geometry}
 \printbibliography
 \end{document}
