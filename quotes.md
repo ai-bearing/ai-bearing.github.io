@@ -121,3 +121,5 @@ use_math: true
 - "Do you accept the higher power of Arzelà–Ascoli?"\
   *Ben Hayes*
 
+- "birational blah blah"\
+  *Darien Farnham*
