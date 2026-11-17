@@ -2332,7 +2332,7 @@ for all bounded measurable functions $f$. Using the Riesz theorem, it is satisfa
   Let
   \begin{align*}
     T\colon \mathcal{S}\left( \R^d \right)&\to \C\\
-    f &\mapsto \frac{1}{\left( 2\pi \right)^{d}}\int_{\R^d}^{} \hat{f}(\xi)\psi(\xi)\:d^{d}\xi.
+    f &\mapsto \frac{1}{\left( 2\pi \right)^{d}}\int_{\R^d}^{} \hat{f}(\xi)\psi(\xi)\:d^{d}\xi.\label{eq:transformed_positive_type}\tag{$\dag$}
   \end{align*}
   This is a well-defined linear map since $\hat{f}\in \mathcal{S}\left( \R^d \right)$ and $\psi$ is continuous and bounded. Moreover,
   \begin{align*}
@@ -2399,8 +2399,134 @@ for all bounded measurable functions $f$. Using the Riesz theorem, it is satisfa
   \end{align*}
   Given $y\in \R^d$, let $\tau_y\colon \mathcal{S}\left( \R^d \right)\to \mathcal{S}\left( \R^d \right)$ be given by $\tau_yf(x) = f\left( x-y \right)$. Then, $\tau_y$ is a continuous linear map. This emerges from the fact that
   \begin{align*}
-    \left\langle x \right\rangle^{k}\left\vert \partial^{\alpha}\left( \tau_y[f](x) \right) \right\vert &= \left\langle x \right\rangle^{k}\left\vert \partial^{\alpha}f\left( x-y \right) \right\vert\\
+    \left\langle x \right\rangle^{k}\left\vert \partial^{\alpha}\left( \tau_yf(x) \right) \right\vert &= \left\langle x \right\rangle^{k}\left\vert \partial^{\alpha}f\left( x-y \right) \right\vert\\
                                                                                                                      &\leq \norm{f}_{\alpha.k} 2^{k/2}\left\langle y \right\rangle^{k}.
   \end{align*}
+  Now, we claim that, for a fixed $f$, the map $\tau\colon \R^d\to \mathcal{S}\left( \R^d \right)$ given by $y\mapsto \tau_yf$ is continuous. This emerges from the fact that $\tau_{y + z} = \tau_y\tau_z$, so that it suffices to verify continuity at $y = 0$. Observe that
+  \begin{align*}
+    \partial^{\alpha}\left( \tau_yf - f \right) &= \partial^{\alpha}f\left( x-y \right) - \partial^{\alpha}f(x)\\
+                                                &= \int_{0}^{1} \frac{d}{dt}\partial^{\alpha}f\left( x-ty \right)\:dt\\
+                                                &= \int_{0}^{1} \sum_{j=1}^{d}\left( -y_j \right)\partial^{\alpha + e_j}f\left( x-ty \right)\:dt.
+  \end{align*}
+  So,
+  \begin{align*}
+    \left\langle x \right\rangle^{k} \left\vert \partial^{\alpha}\left( \tau_yf-f \right)(x) \right\vert &\leq d \left\vert y \right\vert\left( \max_{1\leq j \leq d} \int_{0}^{1} \norm{f}_{\alpha + e_j,k}\left\langle x \right\rangle^{k}\left\langle x-ty \right\rangle^{-k}\:dt \right)\\
+                               &\leq d\left\vert y \right\vert 2^{k/2}\left( \max_{1\leq j \leq d} \int_{}^{} \norm{f}_{\alpha + e_j,k} \left\langle x-ty \right\rangle^{k}\left\langle ty \right\rangle^{k}\left\langle x-ty \right\rangle^{-k}\:dt \right).
+                                 \intertext{Thus,}
+    \norm{\tau_yf - f}_{\alpha,k} &\leq 2^{k/2}d\left\vert y \right\vert \left\langle y \right\rangle^{k}\left( \max_{1\leq j \leq d}\norm{f}_{\alpha + e_j,k} \right)\\
+                               &\xrightarrow{y\to 0} 0.
+  \end{align*}
+  Now, let $f,g\in \mathcal{S}\left( \R^d \right)$. Then, we claim that the map $\R^d\to \mathcal{S}\left( \R^d \right)$ given by $y\mapsto g(y)\tau_yf$ is continuous with rapid decay. Continuity emerges from the fact that scalar multiplication is continuous and that $y\mapsto \tau_yf$ is continuous. Therefore, it suffices to show that this map has rapid decay. Observe that for any $\ell\in \N$, we have that
+  \begin{align*}
+    \left\langle y \right\rangle^{\ell} \norm{g(y)\tau_yf}_{\alpha,k} &= \left\langle y \right\rangle^{\ell} \left\vert g(y) \right\vert \norm{\tau_yf}_{\alpha,k}\\
+                                      &\leq \left\langle y \right\rangle^{\ell} \left\vert g(y) \right\vert 2^{k/2} \left\langle y \right\rangle^{k}\norm{f}_{\alpha,k}\\
+                                      &\leq 2^{k/2} \norm{g}_{0,k+\ell}\norm{f}_{\alpha,k}\\
+                                      &< \infty.
+  \end{align*}
+  We have, for any $f,g\in \mathcal{S}\left( \R^d \right)$, that
+  \begin{enumerate}[(i)]
+    \item 
+      \begin{align*}
+        \lim_{s\to\infty}\lim_{r\to-\infty} L^{rd}\sum_{y\in\Lambda_{r,s}}g(y)\tau_yf
+      \end{align*}
+      is well-defined, and
+    \item this iterated limit is precisely $f\ast g$.
+  \end{enumerate}
+  Part (i) emerges from the fact that $\mathcal{S}\left( \R^d \right)$ is a Fréchet space, and we may construct a Cauchy net using this sum.
+
+  Now, fix $x\in \R^d$. The map $\delta_x\colon \mathcal{S}\left( \R^d \right)\to \C$ taking $h\mapsto h(x)$ is a continuous linear map between Fréchet spaces. In particular, the map $y\mapsto \delta_x\left( g(y)\tau_y(x) \right)$ is continuous of rapid decay. Thus, we have that
+  \begin{align*}
+    \lim_{s\to\infty}\lim_{r\to -\infty} \sum_{y\in \Lambda_{r,s}}\delta_x\left( g(y)\tau_yf \right) &= \int_{}^{} \delta_x\left( g(y)\tau_yf \right)\:d^{d}y\\
+              &= \int_{}^{} g(y)f\left( x-y \right)\:d^{d}y\\
+              &= f\ast g(x).
+  \end{align*}
+  Yet, we also have
+  \begin{align*}
+    \lim_{s\to\infty}\lim_{r\to -\infty} \sum_{y\in \Lambda_{r,s}}\delta_x\left( g(y)\tau_yf \right) &= \delta_x\left( \lim_{s\to\infty}\lim_{r\to -\infty} \sum_{y\in \Lambda_{r,s}}\delta_x\left( g(y)\tau_yf \right) \right)
+  \end{align*}
+  by the existence of the limit and continuity of $\delta_x$. This gives us that
+  \begin{align*}
+    \lim_{s\to\infty}\lim_{r\to-\infty} \sum_{y\in \Lambda_{r,s}}g(y)\tau_yf &= f\ast g.
+  \end{align*}
+ Now, let $\varphi,g\in \mathcal{S}\left( \R^d \right)$ be such that
+ \begin{align*}
+   \int_{}^{} \varphi\:d^{d} &= 1.
+ \end{align*}
+ For any integer $n$, let $\varphi_n(x) = n^{d}\varphi\left( nx \right)$. Then, we claim that $\varphi_n\ast g \to g$ in $\mathcal{S}\left( \R^d \right)$. Observe that
+ \begin{align*}
+   \partial^{\alpha}\left( \varphi_n\ast g- g \right)(x) &= \int_{\R^d}^{} \varphi_n\left( x-y \right)\left( \partial^{\alpha}g(y)-\partial^{\alpha}g(x) \right)\:d^{d}y\\
+                                           &= \int_{\R^d}^{} \varphi_n\left( x-y \right)\left( \int_{0}^{1} \sum_{j=1}^{d}\left( y_j-x_j \right)\partial^{\alpha + e_j}g\left( x + t\left( y-x \right) \right)\:dt \right)\:d^{d}y.
+ \end{align*}
+ Bounding the expression in the inner integral, we have that
+ \begin{align*}
+   \left\vert \partial^{\alpha + e_j}g\left( x + t\left( y-x \right) \right) \right\vert &\leq \norm{g}_{\alpha + e_j,k} \left\langle x + t\left( y-x \right) \right\rangle^{-k}
+ \end{align*}
+ for any $k$. Since
+ \begin{align*}
+   \left\langle x \right\rangle &\leq \sqrt{2} \left\langle x + t\left( y-x \right) \right\rangle \left\langle -t\left( y-x \right) \right\rangle\\
+                                &\leq \sqrt{2} \left\langle x + t\left( y-x \right) \right\rangle \left\langle y-x \right\rangle,
+ \end{align*}
+ we have that
+ \begin{align*}
+   \left\vert \partial^{\alpha + e_j}g\left( x + t\left( y-x \right) \right)  \right\vert &\leq 2^{k-2} \norm{g}_{\alpha + e_j}\left\langle y-x \right\rangle^{k} \left\langle x \right\rangle^{-k},
+ \end{align*}
+ Thus, we get that
+ \begin{align*}
+   \left\langle x \right\rangle^{k} \left\vert \partial^{\alpha}\left( \varphi_n\ast g-g \right)(x) \right\vert &\leq 2^{k/2}d\int_{\R^d}^{} \left\vert \varphi_n\left( x-y \right) \right\vert \left\vert y-x \right\vert \left( \max_{1\leq j \leq d}\norm{g}_{\alpha + e_j,k} \right) \left\langle y-x \right\rangle^{k}\:d^{d}y.
+     \intertext{Using a change of variables $u = n\left( x-y \right)$ and taking the supremum over $x$, we get}
+   \norm{\varphi_n\ast g - g}_{\alpha,k}&\leq 2^{k/2}d\left( \max_{1\leq j \leq d}\norm{g}_{\alpha + e_j,k} \right) \frac{1}{n} \int_{\R^d}^{} \left\vert \varphi(u) \right\vert \left\vert u \right\vert \left\langle \frac{u}{n} \right\rangle^{k}\:d^{d}u\\
+                                        &\leq \frac{1}{n}2^{k/2}d\left( \max_{1\leq j \leq d}\norm{g}_{\alpha + e_j,k} \right) \int_{\R^d}^{} \left\vert \varphi(u) \right\vert \left\vert u \right\vert \left\langle u \right\rangle^{k}\:d^{d}u\\
+                                        &\leq \frac{2^{k/2}dC}{n}\\
+                                        &\xrightarrow{n\to\infty} 0.
+  \end{align*}
+  In particular, 
+  \begin{align*}
+    g &= \lim_{n\to\infty} \lim_{s\to\infty} \lim_{r\to-\infty} L^{dr} \sum_{y\in \Lambda_{r,s}} g(y)\tau_y\varphi_n
+  \end{align*}
+  We claim now that for any tempered distribution $p\in \mathcal{S}\left( \R^d \right)^{\ast}$, we have that for all $f\in \mathcal{S}$, if $p\left( \left\vert f \right\vert^2 \right) \geq 0$, then $p$ is a positive linear functional. We take as the mollifier the Gaussian
+  \begin{align*}
+    \phi(x) &= \left( 2\pi \right)^{-d/2} e^{-\left\vert x \right\vert^2/2},
+  \end{align*}
+  so that we may write
+  \begin{align*}
+    p(g) &= \lim_{n\to\infty}\lim_{r\to\infty}\lim_{r\to-\infty} \sum_{y\in \Lambda_{r,s}}g(y)p\left( \tau_y\phi_n \right).
+  \end{align*}
+  Notice that
+  \begin{align*}
+    \tau_y\phi_n(x) &= n^{d}\left( 2\pi \right)^{-d/2}e^{-\frac{n^2\left\vert x-y \right\vert^2}{2}}\\
+                    &= \left( n^{d/2}\left( 2\pi \right)^{-d/4}e^{-\frac{n^2\left\vert x-y \right\vert^2}{4}} \right)^2
+  \end{align*}
+  is the square of a Schwartz function. Thus, $p(g) \geq 0$ if $g\geq 0$. In particular, the map $T$ defined by \eqref{eq:transformed_positive_type} is a positive linear functional.
+
+  Observe that for any real-valued $f\in \mathcal{S}\left( \R^d \right)$, we have that
+  \begin{align*}
+    \overline{T\left( f \right)} &= T\left( \overline{f} \right)\\
+                                 &= T\left( f \right).
+  \end{align*}
+  Let
+  \begin{align*}
+    \mathbb{S}^d &= \set{\left( x_1,\dots,x_{d+1} \right)\in \R^{d+1} : x_1^2 + \cdots + x_{d+1}^2 = 1}\\
+                 &\subseteq \R^{d+1}
+  \end{align*}
+  be the sphere. We will let $e_{d+1}$ be the north pole, and define the stereographic projection
+  \begin{align*}
+    \sigma\colon \mathbb{S}^d\setminus \set{e_{d+1}} &\mapsto \R^d\\
+    \left( x_1,\dots,x_{d+1} \right) &\mapsto \left( \frac{x_1}{1-x_{d+1}},\dots,\frac{x_d}{1-x_{d+1}} \right).
+  \end{align*}
+  The stereographic projection is a diffeomorphism. Observe that
+  \begin{align*}
+    \left\langle \sigma(x) \right\rangle^2 &= 1 + \frac{x_1^2 + \cdots + x_d^2}{\left( 1-x_{d+1} \right)^2}\\
+                                           &= 1 + \frac{1 + x_{d+1}}{1 - x_{d+1}}\\
+                                           &= \frac{2}{1-x_{d+1}},
+  \end{align*}
+  so
+  \begin{align*}
+    \left\langle \sigma(x) \right\rangle &= \sqrt{\frac{2}{1-x_{d+1}}}.
+  \end{align*}
+  Given any real-valued $f\in \mathcal{S}\left( \R^d \right)$, we have that $f\circ\sigma\colon \mathbb{S}^d\setminus \set{e_{d+1}}\to \R$ satisfies
+  \begin{align*}
+    \left\vert \left( f\circ\sigma \right)(x) \right\vert &\leq \norm{f}_{0,k} 2^{-k/2} \left( 1-x_{d+1} \right)^{k/2}
+  \end{align*}
+  for all $k \geq 0$.
 \end{proof}
 \end{document}

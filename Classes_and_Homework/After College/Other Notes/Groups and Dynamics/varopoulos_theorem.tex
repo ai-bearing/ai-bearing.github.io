@@ -422,7 +422,80 @@ In particular, the transition matrix of any reversible Markov chain is uniquely 
   \end{align*}
   is called the resistance. The triple $\mathcal{N} = \left( X,E,r \right)$ is called a network.
 \end{definition}
+We observe that $a\left( e^+,e^- \right) = m\left( e^+ \right)p\left( e^+,e^- \right)\neq 0$ since $m\left( e^+ \right) > 0$ and $e = \set{e^+,e^{-}}\in E$ so that $p\left( e^+,e^- \right) > 0$.
 
+Analogously, the transition matrix of a reversible Markov chain uniquely determines its associated network and vice versa, since
+\begin{align*}
+  m\left( x \right) &= \sum_{\substack{e\in E \\ e^+ = x}}\frac{1}{r(e)}\\
+                    &= \sum_{\substack{e\in E \\ e^- = x}} \frac{1}{r(e)},
+\end{align*}
+and
+\begin{align*}
+  p\left( e^+,e^- \right) &= \frac{1}{m\left( e^+ \right)r(e)}.
+\end{align*}
+Equivalently, we have that
+\begin{align*}
+  p\left( x,y \right) &= \begin{cases}
+    \frac{1}{m(x)r\left( \set{x,y} \right)} & \set{x,y}\in E\\
+    0 & \text{else}.
+  \end{cases}
+\end{align*}
+We consider the real Hilbert spaces
+\begin{align*}
+  L^2\left( X,m \right) &= \set{f\in \R^X : \sum_{x\in X}m(x)f\left( x \right)^2 < \infty}\\
+  L^2\left( E,r \right) &= \set{u\in \R^{E} : \sum_{e\in E}r(e)u\left( e \right)^2 < \infty}
+\end{align*}
+with inner products
+\begin{align*}
+  \iprod{f}{g}_X &= \sum_{x\in X} m(x)f(x)g(x)\\
+  \iprod{u}{v}_E &= \sum_{e\in E} r(e)u(e)v(e)
+\end{align*}
+for all $f,g\in L^2\left( X,m \right)$ and $u,v\in L^2\left( E,r \right)$.
+\begin{definition}
+  The \textit{discrete gradient} $\nabla\colon \R^X\to \R^E$ is given by
+  \begin{align*}
+    \left( \nabla f \right)(e) &= \frac{f\left(e^+\right) - f\left( e^- \right)}{r(e)}.
+  \end{align*}
+\end{definition}
+Notice that
+\begin{align*}
+  \iprod{\nabla f}{\nabla f}_E &= \sum_{e\in E} \frac{\left( f\left( e \right)^+ - f\left( e^- \right) \right)^2}{r(e)}\\
+                               &= \frac{1}{2}\sum_{x,y\in X} m\left( x \right)p\left( x,y \right)\left( f(x)-f(y) \right)^2\\
+                               &\leq \sum_{x,y\in X}m(x)p\left( x,y \right)\left( f\left( x \right)^2 + f\left( y \right)^2 \right)\\
+                               &= 2\norm{f}_X^2.
+\end{align*}
+Thus, we have that $\nabla|_{L^2\left( X,m \right)}$ is a bounded operator.
+
+Consider the operator $\nabla^{\ast}\colon \R[E]\to \R[X]$ given by
+\begin{align*}
+  \left( \nabla^{\ast}u \right)(x) &= \frac{1}{m(x)} \left( \sum_{\substack{e\in E\\e^+ = x}}u(e) - \sum_{\substack{e\in E \\ e^- = x}}u(e) \right).
+\end{align*}
+We claim that when $u\in L^2\left( E,r \right)$, the sum is convergent and so we may extend to $L^2\left( E,r \right)$, and that this is the adjoint operator. This emerges from seeing that, upon defining
+\begin{align*}
+  \widetilde{\delta}_x\left( y \right) &= \begin{cases}
+    \frac{1}{m(x)} & y = x\\
+    0 & \text{else},
+  \end{cases}
+\end{align*}
+and that
+\begin{align*}
+  \iprod{u}{\nabla \widetilde{\delta}_x}_E &= \sum_{e\in E}r(e)u(e) \left( \nabla \widetilde{\delta}_x \right)(e)\\
+                                           &= \sum_{e\in E} r(e)u(e) \left( \frac{\widetilde{\delta}_x\left( e^+ \right) - \widetilde{\delta}_x\left( e^- \right)}{r(e)} \right)\\
+                                           &= \frac{1}{m(x)}\left( \sum_{\substack{e\in E\\e^+ = x}}u(e) - \sum_{\substack{e\in E \\ e^{-} = x}}u(e) \right).
+\end{align*}
+Moreover, for any $f\in L^2\left( X,m \right)$ and $u\in \R[E]$ with finite support, we have
+\begin{align*}
+  \iprod{\nabla f}{u}_E &= \sum_{e\in E} r(e) \left( \nabla f \right)(e)u(e)\\
+                        &= \sum_{e\in E} r(e)\frac{f\left( e^+ \right)-f\left( e^{-} \right)}{r(e)}u(e)\\
+                        &= \sum_{e\in E}u(e)\left( f\left( e^{+} \right)-f\left( e^{-} \right) \right)\\
+                        &= \sum_{e\in E}f\left( e^{+} \right)u(e) - \sum_{e\in E}f\left( e^{-} \right)u(e)\\
+                        &= \sum_{x\in X} f(x)\sum_{\substack{e\in E\\e^{+} = x}}u(e) - \left( \sum_{x\in X}f(x)\sum_{\substack{e\in E \\ e^{-}=x}}u(e) \right)\\
+                        &= \sum_{x\in X}f(x)\left( \sum_{\substack{e\in E \\ e^{+}=x}} - \sum_{\substack{e\in E \\ e^{-}=x}} \right)\\
+                        &= \sum_{x\in X}m(x)f(x)\frac{1}{m(x)}\left( \sum_{\substack{e\in E\\e^{+} = x}}u(e) - \sum_{\substack{e\in E \\ e^{-}=x}}u(e) \right)\\
+                        &= \sum_{x\in X}m(x)f(x)\left( \nabla^{\ast}u \right)(x)\\
+                        &= \iprod{f}{\nabla^{\ast}u}_X
+\end{align*}
+So, continuity gives us our desired result.
 \nocite{topics_in_groups_and_geometry}
 \printbibliography
 \end{document}
