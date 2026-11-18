@@ -16,14 +16,14 @@
 
 \fancyhf{}
 \fancyhead[R]{Avinash Iyer}
-\fancyhead[L]{Kernels and GNS for Group Representations}
+\fancyhead[L]{Representations of Locally Compact Groups}
 \fancyfoot[C]{\thepage}
 
 \setcounter{secnumdepth}{0}
 
 \begin{document}
 \RaggedRight
-\section{Unitary Representations}%
+\section{General Unitary Representations}%
 \subsection{Group Actions on Measure Spaces}%
 Let $G$ be a topological group. The action of $G$ on a measure space $\left( \Omega,\mathcal{M},\mu \right)$ is called measurable if the map $G\times\Omega\to \Omega$ taking $\left( g,\omega \right)\mapsto g.\omega$ is measurable when $G$ is equipped with the Borel $\sigma$-algebra.
 
@@ -73,7 +73,42 @@ for all $f\in L^2\left( \Omega,\mu \right)$ and $\omega\in \Omega$. Thus, the op
   \end{align*}
   is measurable by Fubini's theorem, hence SOT continuous.
 \end{proof}
-\section{Kernels and Functions of Positive Type}%
+\subsection{The Regular Representation}%
+Recall that every locally compact group has a unique up-to-scaling nonzero positive left-invariant Borel measure called the Haar measure. If $\mu$ is the Haar measure, then we observe that $\mu_g\left( B \right) = \mu\left( Bg \right)$ is then a nonzero regular positive Borel measure, so it has to be given by scaling against $\mu$. The \textit{modular function} is then defined by taking
+\begin{align*}
+  \mu_g &= \Delta_G\left( g \right)\mu.
+\end{align*}
+The modular function is a homomorphism and satisfies
+\begin{align*}
+  \int_{}^{} f\left( x^{-1} \right)\:d\mu(x) &= \int_{}^{} \Delta_G\left( x^{-1} \right)f(x)\:d\mu(x).
+\end{align*}
+If $\Delta\equiv 1$, then we say $G$ is \textit{unimodular}.
+
+Given a function $f\colon G\to \C$ on $G$ and an element $a\in G$, we define the translates
+\begin{align*}
+  L_af(x) &= f\left( ax \right)\\
+  R_af(x) &= f\left( xa \right)
+\end{align*}
+for all $x\in G$. Given $g\in G$, the operator $\lambda_g(g)\colon L^2\left( G \right)\to L^2\left( G \right)$ defined by
+\begin{align*}
+  \lambda_G(g)\xi(x) &= L_{g^{-1}}\xi(x)\\
+                     &= \xi\left( g^{-1}x \right)
+\end{align*}
+is a unitary with $\lambda_G\left( gh \right) = \lambda_G(g)\lambda_G(h)$, and for a fixed $\xi$, the map $g\mapsto \lambda_G(g)\xi$ is continuous. Thus, $\left( \lambda_G,L^2\left( G \right) \right)$ is a unitary representation known as the left regular representation.
+
+Analogously, the right regular representation of $G$ is the unitary representation $\rho_G$ defined by
+\begin{align*}
+  \rho_G(G)\xi(x) &= \Delta_G\left( g \right)^{1/2}R_g\xi(x)\\
+                  &= \Delta_G(g)^{1/2}\xi\left( xg \right).
+\end{align*}
+\begin{proposition}
+  The representations $\lambda_G$ and $\rho_G$ are equivalent.
+\end{proposition}
+\begin{proof}
+  The map $T$ defined by $T\xi(x) = \Delta_G(x)^{-1/2}\xi\left( x^{-1} \right)$ is a unitary that intertwines $\lambda_G$ and $\rho_G$.
+\end{proof}
+\section{Functions of Positive Type}%
+\subsection{Kernels of Positive Type}%
 Let $X$ be a topological space
 \begin{definition}
   A kernel of positive type on $X$ is a continuous function $\Phi\colon X\times X\to \C$ such that for any $n\in \N$, any elements $x_1,\dots,x_n\in X$, and any $c_1,\dots,c_n\in \C$,
@@ -290,7 +325,6 @@ Analogously to the case of kernels of positive type, there are certain inheritan
   \end{align*}
   for all $x_1,\dots,x_n\in X$ and complex numbers $c_1,\dots,c_n$. Thus, $\exp\left( -\Psi \right)$ is of positive type since it is the product of kernels of positive type.
 \end{proof}
-\section{Functions of Positive Type}%
 \subsection{The GNS Construction for Representations}%
 \begin{definition}
   A function of positive type on a locally compact group $G$ is a continuous function $\varphi\colon G\to \C$ such that the kernel $\left( g_1,g_2 \right)\mapsto \varphi\left( g_2^{-1}g_1 \right)$ is of positive type.
@@ -403,6 +437,343 @@ We let $\mathcal{P}(G)$ be the set of functions of positive type on the topologi
 
   Moreover, if $\pi_{\varphi}$ is irreducible, then $\varphi_1 = t\varphi$ for some $t\geq 0$.
 \end{proposition}
-\nocite{kazhdan_property_t,conway_functional_analysis}
+\begin{proof}
+  Since $\varphi - \varphi_1$ is of positive type, we have that
+  \begin{align*}
+    \norm{\sum_{i=1}^{n}c_i\pi_{\varphi_1}\left( g_i \right)\xi_{\varphi_1}}^2 &= \sum_{i,j=1}^{n}c_i \overline{c_j} \varphi_1\left( g_j^{-1}g_i \right)\\
+                                                                               &\leq \sum_{i,j=1}^{n} c_i \overline{c_j}\varphi\left( g_j^{-1}g_i \right)\\
+                                                                               &= \norm{\sum_{i=1}^{n}c_i \pi_{\varphi}\left( g_i \right)\xi_{\varphi}}
+  \end{align*}
+  for all $g_1,\dots,g_n$ in $G$. Thus, the map defined by $\pi_{\varphi}\left( g \right)\xi_{\varphi}\mapsto \pi_{\varphi_1}\left( g \right)\xi_{\varphi_1}$ is well-defined and extends to a continuous linear operator $T\colon \mathscr{H}_{\varphi}\to \mathscr{H}_{\varphi_1}$. This linear operator intertwines $\pi_{\varphi}$ and $\pi_{\varphi_1}$, and $T\left( \mathscr{H}_{\varphi} \right)$ is dense in $ \mathscr{H}_{\varphi_1} $. Thus, the restriction of $\pi_{\varphi}$ to $\ker\left( T \right)^{\perp}$ is equivalent to $\pi_{\varphi_1}$. If $\pi_{\varphi}$ is irreducible, then $T^{\ast}T$ intertwines $\pi_{\varphi}$ with itself, so $T^{\ast}T = tI$ for some $t\geq 0$ by Schur's Lemma. Thus,
+  \begin{align*}
+    \varphi_1(g) &= \iprod{T\pi_{\varphi}(g)\xi_{\varphi}}{T\xi_{\varphi}}\\
+                 &= \iprod{T^{\ast}T\pi_{\varphi}(g)\xi_{\varphi}}{\xi_{\varphi}}\\
+                 &= t\varphi(g).
+  \end{align*}
+\end{proof}
+We will let $\operatorname{ext}\left( \mathcal{P}_1(G) \right)$ be the set of extreme points of the convex set $\mathcal{P}_1(G)$. A function of positive type $\varphi$ is in $\mathcal{P}_1(G)$ if and only if $\varphi = t\varphi_1 + \left( 1-t \right)\varphi_2$ for some $\varphi_1,\varphi_2\in \mathcal{P}(G)$ and $0\leq t \leq 1$ implies $\varphi_1 = \varphi_2 = \varphi$. We call $ \operatorname{ext}\left( \mathcal{P}_1(G) \right) $ the \textit{pure} functions of positive type.
+\begin{theorem}
+  Let $\varphi\in \mathcal{P}_1\left( G \right)$. Then, $\varphi\in \operatorname{ext}\left( \mathcal{P}_1(G) \right)$ if and only if $\pi_{\varphi}$ is irreducible.
+\end{theorem}
+\begin{proof}
+  Suppose $\pi_{\varphi}$ is not irreducible. Write $ \mathscr{H}_{\varphi} = \mathscr{K} \oplus \mathscr{K}^{\perp} $ for some nontrivial closed invariant subspace $ \mathscr{K} $, and write $\xi_{\varphi} = \xi_1 + \xi_2$ as the corresponding orthogonal decomposition. Then, $\xi_{\varphi}\notin \mathscr{K},\mathscr{K}^{\perp}$ since $\xi_{\varphi}$ is cyclic for $ \mathscr{H}_{\varphi} $, and analogously, $\xi_1\neq 0$ and $\xi_2\neq 0$. If $s = \norm{\xi_1}^2$ and $t = \norm{\xi_2}^2$, then $s + t = 1$, and upon defining
+  \begin{align*}
+    \varphi_1(g) &= \iprod{\pi_{\varphi}(g)s^{-1/2}\xi_1}{s^{-1/2}\xi_1}\\
+    \varphi_2(g) &= \iprod{\pi_{\varphi}(g)t^{-1/2}\xi_2}{t^{-1/2}\xi_2},
+  \end{align*}
+  we have that $\varphi_1,\varphi_2\in \mathcal{P}_1(G)$ and
+  \begin{align*}
+    \varphi(g) &= \iprod{\pi_{\varphi}(g)\xi_{\varphi}}{\xi_{\varphi}}\\
+               &= s\varphi_1(g) + t\varphi_2(g).
+  \end{align*}
+  We claim that $\varphi\neq \varphi_1,\varphi_2$ since it would imply that $ \iprod{\pi_{\varphi}(g)\xi_{\varphi}}{\xi_{\varphi}} = s^{-1} \iprod{\pi_{\varphi}(g)\xi_1}{\xi_1} $, hence we would have that $ \iprod{\eta}{\xi_{\varphi}} = s^{-1} \iprod{\eta}{\xi_1} $ for all $\eta\in \mathscr{H}_{\varphi}$. In particular, we would have that $\xi_1 = s\xi_{\varphi}$, but $\xi_2\neq 0$, so that $\varphi$ is not pure.
+\end{proof}
+Notice that all $\varphi\in \mathcal{P}\left( G \right)$ is bounded, so we may consider them as elements of $L^{\infty}\left( G,\mu \right)$ when $G$ is locally compact with Haar measure $\mu$.
+\begin{definition}[Local Properties]\hfill
+  \begin{enumerate}[(i)]
+    \item A subset $A\subseteq G$ is called \textit{locally Borel} if $A\cap B$ is Borel for all finite measure Borel subsets of $G$. 
+    \item A set is called locally null if $\mu\left( A\cap B \right) = 0$ for all finite measure Borel subsets. 
+    \item A function $f\colon G\to \C$ is called \textit{locally measurable} if $f^{-1}\left( E \right)$ is locally Borel for all Borel $E\subseteq \C$.
+    \item A property is said to hold locally almost everywhere on $G$ if it is satisfied outside a locally null set.
+  \end{enumerate}
+\end{definition}
+We will let $L^{\infty}\left( G \right)$ be the set of locally measurable functions that are bounded locally almost everywhere. We may identify $L^{\infty}\left( G \right)$ with the dual of $L^{1}\left( G \right)$ with the duality pairing
+\begin{align*}
+  \iprod{f}{\varphi} &= \int_{G}^{} f(x)\varphi(x)\:d\mu(x).
+\end{align*}
+We may equip $L^1\left( G \right)$ with convolution and the involution
+\begin{align*}
+  f^{\ast}\left( x \right) &= \Delta\left( x^{-1} \right) \overline{f\left( x^{-1} \right)},
+\end{align*}
+where $\Delta$ is the modular function.
+\begin{lemma}
+  The set $\mathcal{P}_{\leq 1}\left( G \right)$ is compact in the weak* topology.
+\end{lemma}
+In particular, the convex hull of $\operatorname{ext}\left( \mathcal{P}_{\leq 1}\left( G \right) \right)$ is weak* dense in $\mathcal{P}_{\leq 1}\left( G \right)$.
+
+If $G$ is discrete, then $ \mathcal{P}_1\left( G \right) $ is weak* compact, but this is not necessarily true for general locally compact groups. However, the following holds.
+\begin{theorem}
+  Let $G$ be a locally compact group. With notation as above, we have
+  \begin{enumerate}[(i)]
+    \item $\operatorname{ext}\left( \mathcal{P}_{\leq 1}\left( G \right) \right) = \operatorname{ext}\left( \mathcal{P}_{1}\left( G \right) \right) \cup \set{0}$;
+    \item $ \overline{\operatorname{conv}}^{\operatorname{wk}^{\ast}}\left( \operatorname{ext}\left( \mathcal{P}_1\left( G \right) \right) \right) = \mathcal{P}_1\left( G \right) $.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item We claim that $0\in \operatorname{ext}\left( \mathcal{P}_{\leq 1}(G) \right)$. This follows from the fact that if $\varphi_1,\varphi_2\in \mathcal{P}_{\leq 1}(G)$ and $0\leq t \leq 1$ are such that $t\varphi_1 + \left( 1-t \right)\varphi_2 = 0$. Then, $\varphi_1(e) = 0$ or $\varphi_2(e) = 0$, so $\varphi_1 = 0$ or $\varphi_2 = 0$.
+
+      Next, we claim that $\operatorname{ext}\left( \mathcal{P}_1\left( G \right) \right)\subseteq \operatorname{ext}\left( \mathcal{P}_1\left( G \right) \right)$. Let $\varphi\in \operatorname{ext}\left( \mathcal{P}_1\left( G \right) \right)$ and $\varphi_1,\varphi_2\in \mathcal{P}_{\leq 1}\left( G \right)$ and $0 < t < 1$ such that $t\varphi_1 + \left( 1-t \right)\varphi_2 = \varphi$. Then, $t\varphi_1(e) + \left( 1-t \right)\varphi_2(e) = 1$, so $\varphi_1(e) = \varphi_2(e) = 1$, so $\varphi_1,\varphi_2\in \mathcal{P}_1\left( G \right)$. Thus, $\varphi\in \operatorname{ext}\left( \mathcal{P}_{\leq 1}\left( G \right) \right)$.
+
+      Finally, we claim that $\operatorname{ext}\left( \mathcal{P}_{\leq 1}(G) \right)\subseteq \operatorname{ext}\left( \mathcal{P}_1\left( G \right) \right)\cup\set{0}$.
+
+      Suppose $\varphi\in \mathcal{P}_{\leq 1}(G)\setminus \left( \mathcal{P}_1\left( G \right)\cup \set{0} \right)$, and set $t = \varphi(e)$, so that $0 < t < 1$, and $\frac{1}{t}\varphi\in \mathcal{P}_1\left( G \right)$. Then, we may write
+      \begin{align*}
+        \varphi &= t\left( \frac{1}{t}\varphi \right) + \left( 1-t \right)0,
+      \end{align*}
+      so that $\varphi\notin \operatorname{ext}\left( \mathcal{P}_{\leq 1}(G) \right)$, whence $\operatorname{ext}\left( \mathcal{P}_{\leq 1}(G) \right)\subseteq \operatorname{ext}\left( \mathcal{P}_{1}\left( G \right) \right)\cup \set{0}$.
+    \item Suppose $\varphi\in \mathcal{P}_1\left( G \right)$. Since the convex hull of $\operatorname{ext}\left( \mathcal{P}_{\leq 1}(G) \right) = \operatorname{ext}\left( \mathcal{P}_1\left( G \right) \right)\cup \set{0}$ is weak* dense in $\mathcal{P}_{\leq 1}(G  )$, there exists $\left( \psi_i \right)_i\in \mathcal{P}_{\leq 1}\left( G \right)$ converging to $\varphi$ in the weak* topology, where we may write
+      \begin{align*}
+        \psi_i &= t_1\varphi_1 + \cdots + t_n\varphi_n + t_{n+1}0
+      \end{align*}
+      with $\varphi_1,\dots,\varphi_n\in \operatorname{ext}\left( \mathcal{P}_1\left( G \right) \right)$ and $t_1,\dots,t_{n+1}\geq 0$ with $t_1 + \cdots + t_{n+1} = 1$. Since balls in $L^{\infty}\left( G \right)$ are weak* closed, and $\norm{\varphi}_{L^{\infty}} = 1$ with $\norm{\psi_i}_{L^{\infty}}\leq 1$, it follows that
+      \begin{align*}
+        \lim_{i} \norm{\psi_i}_{L^{\infty}} &= 1.
+      \end{align*}
+      If we set $\psi_i' = \psi_i/\psi_i(e)$, then $\lim_{i}\psi_i' = \varphi$, and
+      \begin{align*}
+        \psi_i' &= \frac{t_1}{\psi_i(e)}\varphi_1 + \cdots + \frac{t_n}{\psi_i(e)}\varphi_n,
+      \end{align*}
+      so $\varphi\in \overline{\operatorname{ext}}\left( \mathcal{P}_1\left( G \right) \right)$.
+  \end{enumerate}
+\end{proof}
+The following theorems we will take as a black box.
+\begin{theorem}[Raikov's Theorem]
+  The weak* topology and the topology of uniform convergence on compact subsets coincide on $\mathcal{P}_1\left( G \right)$.
+\end{theorem}
+\begin{theorem}[Gelfand--Raikov Theorem]
+  Let $G$ be a locally compact group. Then, for any $x,y\in G$ with $x\neq y$, there is an irreducible unitary representation $\pi$ of $G$ with $\pi(x)\neq \pi(y)$.
+\end{theorem}
+\section{Representations of Locally Compact Abelian Groups}%
+\subsection{The Gelfand Dual of a Locally Compact Abelian Group}%
+\begin{theorem}
+  Let $G$ be a locally compact abelian group, and let $\gamma\colon G\to S^1$ be a continuous homomorphism. Define
+  \begin{align*}
+    \hat{f}\left( \gamma \right) &= \int_{}^{} f(x)\gamma\left( x^{-1} \right)\:dx.
+  \end{align*}
+  Then, $f\mapsto \hat{f}\left( \gamma \right)$ is a nonzero homomorphism on $L^1\left( G \right)$. Moreover, if $h\colon L^1\left( G \right)\to \C$ is a nonzero homomorphism, there is a continuous homomorphism $\gamma\colon G\to S^1$ such that $h\left( f \right) = \hat{f}\left( \gamma \right)$.
+\end{theorem}
+\begin{proof}
+  We will show first that $f\mapsto \hat{f}\left( \gamma \right)$ is a homomorphism. Notice that if $f,g\in L^1\left( G \right)$, then
+  \begin{align*}
+    \widehat{f\ast g}(y) &= \int_{}^{} \left( f\ast g \right)\left( x \right)\gamma\left( x^{-1} \right)\:dx\\
+                         &= \int_{}^{} \gamma\left( x^{-1} \right)\int_{}^{} f\left( xy^{-1} \right)g(y)\:dy\:dx\\
+                         &= \int_{}^{} g\left( y \right)\gamma\left( y^{-1} \right)\left( \int_{}^{} f\left( xy^{-1} \right)\gamma\left( \left( xy^{-1} \right)^{-1} \right)\:dx \right)\:dy\\
+                         &= \int_{}^{} g\left( y \right)\gamma\left( y^{-1} \right)\left( \int_{}^{} f\left( x \right)\gamma\left( x^{-1} \right)\:dx \right)\:dy\\
+                         &= \hat{f}\left( \gamma \right)\hat{g}\left( \gamma \right),
+  \end{align*}
+  where we use the invariance of the Haar measure on the second-to-last equality. Since $\gamma$ is continuous and $\gamma\left( G \right)\subseteq S^1$, we have that $\gamma\in L^{\infty}\left( G \right)$ and $\norm{\gamma}_{L^{\infty}} = 1$, so $f\mapsto \hat{f}\left( \gamma \right)$ is not identically zero.
+
+  Assume that $h\colon L^1\left( G \right)\to \C$ is a nonzero homomorphism. Since $h$ is a bounded linear functional, there is some $\phi\in L^{\infty}\left( G \right)$ such that $h(f) = \int_{}^{} f(x)\phi(x)\:dx$ and $\norm{\phi}_{L^{\infty}} = \norm{h} = 1$. If $f,g\in L^1\left( G \right)$, then
+  \begin{align*}
+    h\left( f\ast g \right) &= \int_{}^{} \left( f\ast g \right)(x)\phi(x)\:dx\\
+                            &= \int_{}^{} g(y)\left( \int_{}^{} f\left( xy^{-1} \right)\phi(x)\:dx \right)\:dy\\
+                            &= \int_{}^{} g(y)h\left( \tau_yf \right)\:dy,
+  \end{align*}
+  where $\tau_yf(x) = f\left( xy^{-1} \right)$. Since $h\left( f\ast g \right) = h(f)h(g)$, it follows that
+  \begin{align*}
+    0 &= \int_{}^{} g(y)\left( h\left( \tau_yf \right) - h(f)\phi(y) \right)\:dy
+  \end{align*}
+  for all $g\in L^1\left( G \right)$. Since $y\mapsto h\left( \tau_yf \right)-h(f)\phi(y)$ is an element of $L^{\infty}\left( G \right)$, it follows that $h\left( \tau_yf \right) = h(f)\phi(y)$ for locally a.e. $y\in G$. Choosing $f\in L^1\left( G \right)$ such that $h(f) \neq 0$, it follows that $\phi(y) = \frac{h\left( \tau_yf \right)}{h(f)}$ almost everywhere. The right-hand side of this equation is continuous, so it follows that $h\left( \tau_yf \right) = h(f)\phi(y)$ everywhere.
+
+  Replacing $y$ by $xy$, we have that $h(f)\phi\left( xy \right) = h\left( \tau_{xy}f \right) = h\left( \tau_x\tau_yf \right)$. Replacing $f$ with $f_x$ in the expression $h\left( f_y \right) = h(f)\phi(y)$ yields 
+  \begin{align*}
+    h(f)\phi\left( xy \right) &= h\left( f_{xy} \right),
+  \end{align*}
+  so that
+  \begin{align*}
+    h(f)\phi\left( xy \right) &= h\left( f_x \right)\phi(y)\\
+                              &= \left( h(f)\phi(x) \right)\phi(y),
+  \end{align*}
+  so that $\phi(xy) = \phi(x)\phi(y)$ for all $x,y\in G$. In particular, $\phi\colon G\to \C$ is a homomorphism with $\left\vert \phi(x) \right\vert \leq 1$ for all $x$. Since
+  \begin{align*}
+    1 &= \phi(e)\\
+      &= \phi(x)\phi\left( x^{-1} \right)\\
+      &= \phi(x)\phi(x)^{-1},
+  \end{align*}
+  it follows that $\left\vert \phi(x) \right\vert = 1$ for all $x\in G$. Defining $\gamma(x) = \phi\left( x^{-1} \right)$, then $\gamma\colon G\to S^1$ is a continuous homomorphism with $h(f) = \hat{f}\left( \gamma \right)$.
+\end{proof}
+In particular, this means that we may identify the maximal ideal space $\Sigma\left( L^1\left( G \right) \right) \cong \hat{G}$, where 
+\begin{align*}
+  \hat{G} &= \set{\gamma\colon G\to S^1 : \gamma\text{ is continuous}}.
+\end{align*}
+We notice that the weak* closure of $\Sigma\left( L^1\left( G \right) \right)\subseteq \left( L^1\left( G \right) \right)^{\ast}$ is given by $\Sigma\left( L^1\left( G \right) \right)^{\ast}\cup \set{0}$, so that $\Sigma\left( L^1\left( G \right) \right)$ is a locally compact Hausdorff space. We give $\hat{G}$ the topology of pointwise convergence (corresponding to the weak* topology on the maximal ideal space).
+
+So, by Gelfand theory, there is an injective homomorphism of Banach $\ast$-algebras $L^1\left( G \right)\to C_0\left( \hat{G} \right)$ given by
+\begin{align*}
+  f &\mapsto \hat{f},
+\end{align*}
+where we see that
+\begin{align*}
+  \hat{f}\left( \gamma \right) &= \int_{G}^{} f(x) \overline{\gamma(x)}\:dx.
+\end{align*}
+\begin{example}
+  If $y\in \R$, then $\gamma_y(x) = e^{ixy}$ defines a character on $\R$, and every character on $\R$ has this form. The map $y\mapsto \gamma_y$ is a homeomorphism and isomorphism of $\R$ onto $\hat{\R}$. This emerges from the fact that for any $\gamma\in \hat{\R}$, we have that $\gamma(0) = 1$, meaning there is some $\delta > 0$ with
+  \begin{align*}
+    \int_{0}^{\delta} \gamma(x)\:dx &= a\\
+                                    &\neq 0.
+  \end{align*}
+  So,
+  \begin{align*}
+    a\gamma(x) &= \gamma(x)\int_{0}^{\delta} \gamma(t)\:dt\\
+               &= \int_{0}^{\delta} \gamma\left( x+t \right)\:dt\\
+               &= \int_{x}^{x+\delta} \gamma(t)\:dt,
+  \end{align*}
+  meaning that $\gamma(x) = \frac{1}{a} \int_{x}^{x+\delta} \gamma(t)\:dt$. Since $\gamma$ is continuous, the fundamental theorem of calculus implies that $\gamma$ is differentiable, and we have that
+  \begin{align*}
+    \frac{\gamma\left( x+h \right)-\gamma(x)}{h} &= \gamma(x)\left( \frac{\gamma(h)-1}{h} \right),
+  \end{align*}
+  so that $\gamma'(x) = \gamma'(0)\gamma(x)$. Since $\gamma(0) = 1$ and $\left\vert \gamma(x) \right\vert = 1$ for all $x$, we obtain that $\gamma(x) = e^{ixy}$ for some $y\in \R$.
+
+  Therefore, the Gelfand transform gives us that $\hat{f}$, given by
+  \begin{align*}
+    \hat{f}\left( \gamma_y \right) &= \hat{f}\left( y \right)\\
+                                   &= \int_{\R}^{} f(x)e^{-ixy}\:dx
+  \end{align*}
+  is an element of $C_0\left( \R \right)$. That is, we immediately obtain the celebrated Riemann--Lebesgue Lemma.
+\end{example}
+\subsection{The Fourier Transform of the Measure Algebra}%
+We will let $M(G)\cong C_0\left( G \right)^{\ast}$ be the algebra of all finite complex regular Borel measures on $G$ with involution $d\mu^{\ast}\left( x \right) = d \overline{\mu\left( x^{-1} \right)}$. We may view $L^1\left( G \right)$ as a subset of $M(G)$ by integration against such functions.
+\begin{definition}
+  Let $\mu\in M(G)$. Then, the \textit{Fourier transform} is the function $\hat{\mu}\colon \hat{G}\to \C$ given by
+  \begin{align*}
+    \hat{\mu}\left( \chi \right) &= \int_{G}^{} \overline{\chi(x)}\:d\mu(x).
+  \end{align*}
+\end{definition}
+The Fourier transform $\mathcal{F}\colon \mu\to \hat{\mu}$ is a norm-decreasing injective $\ast$-algebra homomorphism $M(G)\to C^b\left( \hat{G} \right)$. The Fourier transform of $L^1\left( G \right)$ is then given by restriction (i.e., the Gelfand transform)
+\begin{align*}
+  \mathcal{F}[f]\left( \chi \right) &= \hat{f}\left( \chi \right)\\
+                                                   &= \int_{}^{} f(x) \overline{\chi(x)}\:dx.
+\end{align*}
+We note that if $f\in L^1\left( G \right)$, then $\hat{f}\in C_0\left( \hat{G} \right)$, emerging from the fact that $L^1\left( G \right)\hookrightarrow C_0\left( \Sigma\left( L^1\left( G \right) \right) \right)$ by the properties of the Gelfand transform.
+\begin{theorem}[Plancherel's Theorem]
+  The Fourier transform $f\mapsto \hat{f}$ from $L^1\left( G \right)\cap L^2\left( G \right)\to L^2\left( \hat{G} \right)$ extends to an isometric isomorphism $L^2\left( G \right)\to L^2\left( \hat{G} \right)$.
+\end{theorem}
+\begin{theorem}[Fourier Inversion]
+  If $f\in L^1\left( G \right)$ and $\hat{f}\in L^1\left( \hat{G} \right)$, then for a.e. $x\in G$,
+  \begin{align*}
+    f(x) &= \int_{\hat{G}}^{} \hat{x}\left( x \right)\hat{f}\left( \hat{x} \right)\:d\hat{x}.
+  \end{align*}
+\end{theorem}
+\begin{theorem}[Pontryagin Duality]
+  The canonical group homomorphism $\operatorname{ev}\colon G\to \hat{\hat{G}}$ given by
+  \begin{align*}
+    \operatorname{ev}_x\left( \chi \right) &= \chi(x)
+  \end{align*}
+  is an isomorphism of topological groups.
+\end{theorem}
+We have that
+\begin{align*}
+  \mathcal{F}\left[ \lambda_xf \right]\left( \hat{x} \right) &= \overline{\hat{x}(x)} \mathcal{F}\left[ f \right]\left( \hat{x} \right),
+\end{align*}
+so by Plancherel's Theorem, there is a unitary equivalence between the left regular representation $\lambda$ on $L^2\left( G \right)$ and the unitary representation $\pi$ on $L^2\left( \hat{G} \right)$ given by
+\begin{align*}
+  \left( \pi(x)\xi \right)\left( \hat{x} \right) &= \overline{\hat{x}\left( x \right)}\xi\left( \hat{x} \right).
+\end{align*}
+\subsection{Bochner's Theorem}%
+Let $\mu$ be a finite positive Borel measure on $G$. The Fourier transform $\hat{\mu}$ is a continuous function of positive type on $\hat{G}$. That is, $\hat{\mu}\in \mathcal{P}\left( \hat{G} \right)$. For any $\xi_1,\dots,\xi_n\in \hat{G}$ and $c_1,\dots,c_n\in \C$, we have
+\begin{align*}
+  \sum_{i,j=1}^{n}c_i \overline{c_j}\hat{\mu}\left( \overline{\chi_j}\chi_i \right) &= \int_{G}^{} \left\vert \sum_{i=1}^{n}c_i \overline{\chi_i\left( x \right)} \right\vert^2\:d\mu(x)\\
+                                                                                    &\geq 0.
+\end{align*}
+\begin{example}
+  If $G = \R^n$, then $\hat{G} = \set{x\mapsto e^{2\pi i \iprod{x}{y}} : y\in \R^n}$. For fixed $t > 0$, we observe that
+  \begin{align*}
+    f(x) &= \left( 4\pi t \right)^{-n/2} \exp\left( \left\vert x \right\vert^2/4t \right)
+  \end{align*}
+  is such that 
+  \begin{align*}
+    \hat{f}(y) &= \int_{\R^d}^{} e^{-2\pi i \iprod{x}{y}}f(x)\:dx\\
+               &= \exp\left( -4\pi^2t\left\vert y \right\vert^2 \right),
+  \end{align*}
+  so the function $y\mapsto \exp\left( -t\left\vert y \right\vert^2 \right)$ is of positive type on $\R^n$.
+\end{example}
+\begin{theorem}
+  Let $\varphi$ be a continuous function of positive type on $\hat{G}$. Then, there exists a finite positive Borel measure $\mu$ on $G$ such that $\hat{\mu} = \varphi$.
+\end{theorem}
+\begin{proof}
+  Let $M_{\leq 1}(G)$ be the set of all positive Borel measures $\mu$ on $G$ with $\norm{\mu} = \mu(G)\leq 1$> This is a weak*-compact subset of $M(G)\cong C_0\left( G \right)^{\ast}$ of all finite complex regular Borel measures on $G$.
+
+  Analogously, $\mathcal{P}_{\leq 1}\left( \hat{G} \right)$ is a weak*-compact subset of $L^{\infty}\left( \hat{G} \right)$. We claim that the Fourier transform $\mathcal{F}\colon M_{\leq 1}\left( G \right)\to \mathcal{P}_{\leq 1}\left( \hat{G} \right)$ is continuous with respect to both spaces' weak* topologies. This follows from the fact that
+  \begin{align*}
+    \int_{\hat{G}}^{} f\left( \hat{x} \right)\hat{\mu}\left( \hat{x} \right)\:d\hat{x} &= \int_{\hat{G}}^{} \int_{G}^{} f\left( \hat{x} \right) \overline{\hat{x}\left( x \right)}\:d\mu(x)\:d\hat{x}\\
+                                                   &= \int_{G}^{} \hat{f}\left( x \right)\:d\mu(x)
+  \end{align*}
+  for all $f\in L^1\left( \hat{G} \right)$ by Fubini's Theorem.
+
+  The image $\mathcal{F}\left( M_{\leq 1}(G) \right)$ is a weak*-compact subset of $\mathcal{P}_{\leq 1}\left( \hat{G} \right)$ which contains $\hat{\hat{G}}$ since $\hat{\delta_x} = \operatorname{ev}_{x^{-1}}$. Moreover, $\operatorname{ext}\left( \mathcal{P}_{1}\left( \hat{G} \right) \right) = G$, and $\mathcal{F}\left( M_{\leq 1}(G) \right)$ is convex. Thus, $\mathcal{F}\left( M_{\leq 1}(G) \right)$ contains $ \mathcal{P}_{\leq 1}\left( \hat{G} \right) $.
+\end{proof}
+Notice that, given a unitary representation $\pi$ of a group $G$, the matrix coefficient $\varphi = \iprod{\pi(\cdot)\xi}{\eta}$ is a linear combination of diagonal matrix coefficients by the polarization identity.
+\begin{corollary}
+  Let $\left( \pi,\mathscr{H} \right)$ be a unitary representation of a locally compact abelian group $G$, and let $\varphi$ be a matrix coefficient of $\pi$. Then, there exists a finite complex regular Borel measure $\mu$ on $\hat{G}$ such that $\hat{\mu} = \varphi$.
+\end{corollary}
+\subsection{Spectral Theory for Unitary Representations}%
+Let $G$ be a locally compact abelian group. We will show that every unitary representation of $G$ can be described by a projection valued measure on $ \hat{G} $ equipped with the Borel $\sigma$-algebra $\mathcal{B}_{\hat{G}}$.
+\begin{theorem}[SNAG Theorem]\hfill
+  \begin{enumerate}[(i)]
+    \item Let $\left( \pi,\mathscr{H} \right)$ be a unitary representation of a locally compact abelian group $G$. Then, there exists a unique regular projection-valued measure $E_{\pi}\colon \mathcal{B}_{\hat{G}}\to \Proj\left( \mathscr{H} \right)$ such that
+      \begin{align*}
+        \pi(x) &= \int_{\hat{G}}^{} \overline{\hat{x}(x)}\:dE_{\pi}\left( \hat{x} \right)
+      \end{align*}
+      for all $x\in G$. Moreover, an operator $T\in \mathcal{B}\left( \mathscr{H} \right)$ commutes with $\pi(x)$ for all $x\in G$ if and only if $T$ commutes with $E(B)$ for all $B\in \mathcal{B}_{\hat{G}}$.
+    \item If $E\colon \mathcal{B}_{\hat{G}}\to \Proj\left( \mathscr{H} \right)$ is a regular projection-valued measure on $\hat{G}$, then
+      \begin{align*}
+        \pi(x) &= \int_{\hat{G}}^{} \overline{\hat{x}(x)}\:dE\left( \hat{x} \right)
+      \end{align*}
+      defines a unitary representation $\pi$ of $G$ on $ \mathscr{H} $.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(i)]
+    \item Let $\left( \pi,\mathscr{H} \right)$ be a unitary representation. Given $\xi,\eta\in \mathscr{H}$, let $\varphi_{\xi,\eta}$ be the corresponding matrix coefficient for $\pi$, given by
+      \begin{align*}
+        \varphi_{\xi,\eta}\left( x \right) = \iprod{\pi(x)\xi}{\eta}.
+      \end{align*}
+      By the corollary to Bochner's Theorem, there is a regular Borel measure $\mu_{\xi,\eta}$ on $\hat{G}$ such that
+      \begin{align*}
+        \varphi_{\xi,\eta}\left( x \right) &= \hat{\mu}_{\xi,\eta}\left( x \right)\\
+                                           &= \int_{\hat{G}}^{} \overline{\hat{x}\left( x \right)}\:d\mu_{\xi,\eta}\left( \hat{x} \right).
+      \end{align*}
+      The sesquilinear form $\left( \xi,\eta \right)\mapsto \mu_{\xi,\eta}\left( B \right)$ is bounded for every Borel subset $B\subseteq \hat{G}$. So, there is an operator $E_{\pi}\left( B \right)\in \mathcal{B}\left( \mathscr{H} \right)$ such that
+      \begin{align*}
+        \iprod{E_{\pi}(B)\xi}{\eta} &= \mu_{\xi,\eta}\left( B \right).
+      \end{align*}
+      Bootstrapping, we have for any $x\in G$ and $\xi,\eta\in \mathscr{H}$ that
+      \begin{align*}
+        \iprod{ \left( \int_{\hat{G}}^{} \overline{\hat{x}(x)}\:dE_{\pi}\left( \hat{x} \right) \right)\xi }{\eta} &= \int_{\hat{G}}^{} \overline{\hat{x}\left( x \right)}\:d\mu_{\xi,\eta}\left( \hat{x} \right)\\
+                             &= \hat{\mu}_{\xi,\eta}\left( x \right)\\
+                             &= \varphi_{\xi,\eta}\left( x \right)\\
+                             &= \iprod{\pi\left( x \right)\xi}{\eta}.
+      \end{align*}
+      Therefore, 
+      \begin{align*}
+        \pi(x) &= \int_{\hat{G}}^{} \overline{\hat{x}(x)}\:dE_{\pi}\left( \hat{x} \right).
+      \end{align*}
+      Now, suppose $T\in \mathcal{B}\left( \mathscr{H} \right)$. Then, if $T\pi(x) = \pi(x)T$ for all $x\in G$, one has that $\mu_{T\xi,\eta} = \mu_{\xi,T^{\ast}\eta}$, so that $TE_{\pi}(B) = E_{\pi}(B)T$ for all Borel $B\in \mathcal{B}_{\hat{G}}$ by the definition of $E_{\pi}$. Bootstrapping provides the converse.
+    \item By the way that projection-valued measures are defined, we see that
+      \begin{align*}
+        \norm{\left( \int_{}^{} \overline{\hat{x}(x)}\:dE\left( \hat{x} \right) \right)}^2 &= \int_{\hat{G}}^{} \left\vert \overline{\hat{x}(x)} \right\vert^2\:dE_{\xi,\xi}\left(\hat{x}\right)\\
+                                                                                           &= \norm{\xi}^2,
+      \end{align*}  
+      so that this is a unitary representation. Notice that
+      \begin{align*}
+        f &\mapsto \int_{\hat{G}}^{} f\left( \hat{x} \right)\:dE\left( \hat{x} \right)
+      \end{align*}
+      is a $\ast$-algebra homomorphism from the algebra of bounded Borel functions on $\hat{G}$ to $ \mathcal{B}\left( \mathscr{H} \right) $. Thus, it suffices to show that $\pi$ is SOT-continuous, which which is again satisfactory to do at the identity.
+
+      We have that
+      \begin{align*}
+        \norm{\pi(x)\xi-\xi}^2 &= \int_{\hat{G}}^{} \left\vert \overline{\hat{x}(x)}-1 \right\vert^2\:dE_{\xi,\xi}\left( \hat{x} \right).
+      \end{align*}
+      Let $\xi > 0$. Since $E_{\xi,\xi}$ is a regular measure, there is a compact subset $Q$ of $\hat{G}$ such that $E_{\xi,\xi}\left( \hat{G}\setminus Q \right) < \ve$. The set
+      \begin{align*}
+        V &= \set{x\in G : \sup_{\hat{x}\in Q}\left\vert \overline{\hat{x}(x)}-1 \right\vert < \ve}
+      \end{align*}
+      is a neighborhood of $e$ since the map $G\mapsto \hat{\hat{G}}$ is continuous. For any $x\in V$, we have that
+      \begin{align*}
+        \norm{\pi(x)\xi-\xi}^2 &\leq \ve^2 E_{\xi,\xi}\left( Q \right) + 4E_{\xi,\xi}\left( \hat{G}\setminus Q \right)\\
+                               &\leq \ve \norm{\xi}^2 + 4\ve.
+      \end{align*}
+      So, $x\mapsto \pi(x)\xi$ is continuous at $e$.
+  \end{enumerate}
+\end{proof}
+\section{The Unitary Dual}%
+If $G$ is a locally compact group that is not necessarily abelian, we will require a bit more nuance.
+\subsection{Weak Containment and the Fell Topology}%
+\subsection{Induced Representations}%
+\subsection{The $C^{\ast}$-Algebra of a Locally Compact Group}%
+\subsection{Direct Integrals}%
+
+\nocite{kazhdan_property_t,conway_functional_analysis,bekka_delaharpe}
 \printbibliography
 \end{document}
