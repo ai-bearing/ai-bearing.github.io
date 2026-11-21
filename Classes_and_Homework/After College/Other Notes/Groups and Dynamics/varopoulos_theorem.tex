@@ -593,7 +593,80 @@ In particular, the map $P$ above satisfies
                   &= \sum_{y\in X}m\left( y \right)f\left( y \right)^2\\
                   &= \norm{f}_{X}^2.
 \end{align*}
+We define $P\colon L^2\left( X,m \right)\to L^2\left( X,m \right)$ as
+\begin{align*}
+  Pf\left( x \right) &= \sum_{y\in X}p\left( x,y \right)f(y)
+\end{align*}
+to be the \textit{Markov operator} associated to the Markov chain $\left( X,P \right)$.
 
+Define the space $\mathcal{D}_0\left( \mathcal{N} \right)$ to be the closure of the space of functions of finite support in $ \mathcal{D}\left( \mathcal{N} \right) $. Notice that $L^2\left( X,m \right)\subseteq \mathcal{D}_0\left( \mathcal{N} \right)$, since we have that
+\begin{align*}
+  \norm{f}_{D}^2 &= \iprod{\nabla f}{\nabla f}_{E} + f\left( x_0 \right)^2\\
+                 &= f\left( x_0 \right)^2 + \frac{1}{2}\sum_{x,y\in X} m(x)p\left( x,y \right)\left( f\left( x \right)-f\left( y \right) \right)^2\\
+                 &\leq C\norm{f}_{X}^2.
+\end{align*}
+Given a subset $A\subseteq X$, let
+\begin{align*}
+  p_A\left( x,y \right) &= p\left( x,y \right)1_{A}(x)1_A(y).
+\end{align*}
+Then, $0\leq p_A\left( x,y \right)\leq p\left( x,y \right)$, and
+\begin{align*}
+  p^{(n)}_{X}\left( x,y \right) &= \sum_{z\in A} p_A\left( x,z \right)p_{A}^{n-1}\left( z,y \right)
+\end{align*}
+for all $x,y\in X$.
+
+Denote
+\begin{align*}
+  G_A\left( x,y|z \right) &= \sum_{n=0}^{\infty}p_A^{(n)}\left( x,y \right)z^{n}
+\end{align*}
+to be the restricted Green's function, and let $G_A\left( x,y \right) = G_A\left( x,y|1 \right)$.
+\begin{lemma}
+  Suppose $X$ is infinite and $A\subseteq X$ is finite. Then, $G_A\left( x,y \right) < \infty$ for all $x,y\in X$.
+\end{lemma}
+\begin{proof}
+  For any $n\geq 1$, set
+  \begin{align*}
+    p_A^{(n)}\left( x,A \right) &= \sum_{y\in A} p^{(n)}_A\left( x,y \right)
+  \end{align*}
+  for all $x\in X$. Set
+  \begin{align*}
+    M^{(n)}\left( A \right) &= \sup_{x\in A} p^{(n)}_A\left( x,A \right).
+  \end{align*}
+  Observe that
+  \begin{align*}
+    0 &\leq p_A^{(n)}\left( x,A \right)\\
+      &\leq \sum_{y\in A}p^{(n)}\left( x,y \right)\\
+      &\leq \sum_{y\in X}p^{(n)}\left( x,y \right)\\
+      &= 1
+  \end{align*}
+  for all $x\in A$, so $0\leq M^{(n)}(A) \leq 1$. For every $h,k\geq 1$, we have
+  \begin{align*}
+    p_A^{(h + k)}\left( x,A \right) &= \sum_{y,z\in A}p_A^{(h)}\left( x,z \right)p_A^{(k)}\left( z,y \right)\\
+                                    &\leq p_A^{(h)}\left( x,A \right)M^{(k)}\left( A \right).
+  \end{align*}
+  Since $X$ is infinite, $A$ is finite, and $P$ is irreducible, there is $x_0\in X\setminus A$ and for every $x\in A$, there is $n_x$ such that $p^{\left(n_x\right)}\left( x,x_0 \right) > 0$, so that $p^{\left( n_x \right)}\left( x,A \right) < 1$. For every $k\geq 1$, we have that $p^{\left( n_x+k \right)}\left( x,A \right) < M^{(k)}\left( A \right)$.
+
+  Setting $n_0 = \max\set{n_x : x\in A}$, we may set $\alpha\coloneq M^{\left( n_0 \right)}\left( A \right) < 1$. For any $n\geq n_0$, write $n = kn_0 + r$, so that
+  \begin{align*}
+    p^{(n)}\left( x,A \right) &= p^{\left( kn_0 + r \right)}\\
+                              &\leq p^{(\left( k-1 \right)n_0 + r)}\alpha\\
+                              &\vdots\\
+                              &\leq \alpha^{k},
+  \end{align*}
+  so that $\sum_{n=0}^{\infty}p^{(n)}_A\left( x,y \right)$ converges.
+\end{proof}
+Notice that the function $G_A\left( \cdot,x \right)$ is finitely supported for all $x\in A$ if $A$ is finite. For any $f\in \R^{X}$, we may set
+\begin{align*}
+  \left( G_Af \right)\left( x \right) &\coloneq \sum_{y\in X}G_A\left( x,y \right)f(y)\\
+                                      &= \sum_{y\in A}G_A\left( x,y \right)f(y).
+\end{align*}
+Since the above sum is finite, $\left( G_Af \right)(x)$ is well-defined, and $\left( G_Af \right)(x) = 0$ whenever $x\notin A$. If $f\in L^2\left( X,m \right)$, then so is $G_Af$, so that $G_A\colon L^2\left( X,m \right)\to L^2\left( X,m \right)$ is a linear map. Set
+\begin{align*}
+  \left( I_Af \right)(x) &\coloneq f(x)1_A(x).
+\end{align*}
+This is the projection operator onto the space of functions in $L^2\left( X,m \right)$ which are supported in $A$.
+
+Let $f$ be finitely supported with $\operatorname{supp}\left( f \right)\subseteq A$.
 \nocite{topics_in_groups_and_geometry}
 \printbibliography
 \end{document}
