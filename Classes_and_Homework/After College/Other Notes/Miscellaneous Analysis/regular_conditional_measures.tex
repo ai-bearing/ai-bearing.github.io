@@ -1,0 +1,165 @@
+\documentclass[10pt]{mypackage}
+
+\usepackage[uprightgreeks,noDcommand,nofligatures]{kpfonts}
+\renewcommand{\coloneq}{\coloneqq}
+\renewcommand{\eqcolon}{\eqqcolon}
+%\usepackage{dsfont}
+%\renewcommand{\mathbb}{\mathds}
+%\usepackage{homework}
+\usepackage{notes}
+
+\usepackage[ backend=bibtex, style = alphabetic, sorting=ynt ]{biblatex}
+\addbibresource{../all_references.bib}
+
+\usepackage{parskip}
+\frenchspacing
+
+\fancyhf{}
+\fancyhead[R]{Avinash Iyer}
+\fancyhead[L]{Regular Conditional Measures, Disintegration, and The Ergodic Decomposition}
+\fancyfoot[C]{\thepage}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\RaggedRight
+\section{Regular Conditional Measures}%
+\subsection{Definitions}%
+Suppose $\mu$ is a measure on $\left( X,\mathcal{A} \right)$. Let $\mathcal{B}$ be a sub-$\sigma$-algebra of $ \mathcal{A} $. We may view $B = \sigma\left( \pi \right)$ for some measurable map $\pi\colon \left( X,\mathcal{A} \right)\to \left( Y,\mathcal{E} \right)$.
+
+For a positive measure $\mu$, and every $A\in \mathcal{A}$, there exists a $\mathcal{B}$-measurable function $\mu\left( A,\cdot \right)$ such that
+\begin{align*}
+  \mu\left( A\cap B \right) &= \int_{B}^{} \mu\left( A,x \right)\:d\mu(x)
+\end{align*}
+for all $B\in \mathcal{B}$. Specifically, this is the Radon--Nikodym derivative of the measure $\mu\left( A\cap \cdot \right)\ll \mu$. Since the map $x\mapsto \mu\left( A,x \right)$ is $\mathcal{B}$-measurable, there exists some $ \mathcal{E} $-measurable function $y\mapsto \mu^y(A)$ such that $\mu\left( A,x \right) = \mu^{\pi(x)}\left( A \right)$. If we let $\nu = \pi_{\ast}\mu$, then
+\begin{align*}
+  \mu\left( A\cap \pi^{-1}\left( E \right) \right) &= \int_{E}^{} \mu^y(A)\:d\nu(y)
+\end{align*}
+for all $E\in \mathcal{E}$. In particular, we may let $E = Y$, and we have
+\begin{align*}
+  \mu(A) &= \int_{Y}^{} \mu^y(A)\:d\nu(y).
+\end{align*}
+We may view $\mu^y$ as a measure on $\pi^{-1}\left( \set{y} \right)$ for every $y\in Y$; if so, then we can view this as a generalized Fubini's Theorem. That is, to compute the measure of $A\in \mathcal{A}$, we compute the conditional measures of $A$ on the level sets $\pi^{-1}\left( \set{y} \right)$ and integrate in $y$ with respect to the measure $\nu$.
+
+This measure may not be countably additive; to find such measures that are, we will require some additional assumptions.
+\begin{definition}
+  Let $\mathcal{A}$ be a $\sigma$-algebra on $X$, $\mathcal{B}$ a sub-$\sigma$-algebra, and $\mu$ a measure on $ \mathcal{A} $. We say
+  \begin{align*}
+    \mu^{\mathcal{B}}\left( \cdot,\cdot \right) \colon A\times X &\to \R
+  \end{align*}
+  is a \textit{regular conditional measure} (or system of regular conditional measures) on $ \mathcal{A} $ with respect to $ \mathcal{B} $ if
+  \begin{enumerate}[(i)]
+    \item for every $x\in X$, the function $A\mapsto \mu^{\mathcal{B}}\left( A,x \right)$ is a measure on $ \mathcal{A} $;
+    \item for every $A\in \mathcal{A}$, the function $x\mapsto \mu^{\mathcal{B}}\left( A,x \right)$ is measurable with respect to $ \mathcal{B} $ and $ \left\vert \mu \right\vert $-integrable;
+    \item for all $A\in \mathcal{A}$ and $B\in \mathcal{B}$, we have
+      \begin{align*}
+        \mu\left( A\cap B \right) &= \int_{B}^{} \mu^{\mathcal{B}}\left( A,x \right)\:d\left\vert \mu \right\vert(x).
+      \end{align*}
+  \end{enumerate}
+\end{definition}
+\begin{definition}
+  If $\pi\colon X\to Y$ is a $\mathcal{A}$-$\mathcal{E}$-measurable map, then a system of regular conditional measures is a function $\left( A,y \right)\mapsto \mu^y(A)$ on $ \mathcal{A}\times Y $ such that for every fixed $y$, it is a measure on $ \mathcal{A} $, for every fixed $A\in \mathcal{A}$, it is measurable and $\pi_{\ast}\left\vert \mu \right\vert$-integrable, and satisfies for all $A\in \mathcal{A}$ and $E\in \mathcal{E}$ that
+  \begin{align*}
+    \mu\left( A\cap \pi^{-1}\left( E \right) \right) &= \int_{E}^{} \mu^y(A)\:d\pi_{\ast}\left\vert \mu \right\vert.
+  \end{align*}
+  If $\pi^{-1}\left( \set{y} \right)\in \mathcal{A}$ for $\pi_{\ast}\left\vert \mu \right\vert$-a.e. $y\in Y$, and $\mu^y$ is concentrated on $\pi^{-1}\left( \set{y} \right)$, then we call the family \textit{proper} conditional measures.
+\end{definition}
+We may generalize this further by considering a sub-$\sigma$-algebra $\mathcal{A}_0$ (that may not contain $\mathcal{B}$) and mandating the equality
+\begin{align*}
+  \mu\left( A\cap B \right) &= \int_{B}^{} \mu^{\mathcal{B}}_{\mathcal{A}_0}\left( A,x \right) \:d\left\vert \mu \right\vert(x)
+\end{align*}
+hold for all $A\in \mathcal{A}_0$ and $B\in \mathcal{B}$.
+\subsection{Existence and Uniqueness on a Single Space}%
+We note in the following statement that in most settings (i.e., standard probability spaces), we will be working with countable generation.
+\begin{proposition}[Uniqueness]
+  Suppose $\mathcal{A}$ is countably generated. Then, given any two regular conditional measures $\mu_1^{\mathcal{B}}$ and $\mu_2^{\mathcal{B}}$ on $ \mathcal{A} $, there is $Z\in \mathcal{B}$ with $\left\vert \mu \right\vert\left( Z \right) = 0$ such that $\mu_1^{\mathcal{B}}\left( A,x \right) = \mu_2^{\mathcal{B}}\left( A,x \right)$ for all $A\in \mathcal{A}$ and all $x\in X\setminus Z$.
+
+  Similarly, the measures $\mu^{\mathcal{B}}_{\mathcal{A}_0}\left( \cdot,x \right)$ on $ \mathcal{A}_0 $ are essentially unique if $\mathcal{A}_0$ is countably generated (even if $ \mathcal{A} $ may not be countably generated).
+
+  If $\mu$ is a probability measure, then $\mu^{\mathcal{B}}\left( \cdot,x \right)$ is a probability measure for $\mu$-a.e. $x$.
+\end{proposition}
+\begin{proof}
+  Let $ \mathcal{R} = \set{A_n : n\in \N} $ be a countable algebra generating $ \mathcal{A} $. Since for all $B\in \mathcal{B}$, we have that
+  \begin{align*}
+    \mu\left( A_n\cap B \right) &= \int_{B}^{} \mu_{1}^{\mathcal{B}}\left( A,x \right)\:d\left\vert \mu \right\vert(x)\\
+                                &= \int_{B}^{} \mu_2^{\mathcal{B}}\left( A,x \right)\:d\left\vert \mu \right\vert(x),
+  \end{align*}
+  it follows by the essential uniqueness of Radon--Nikodym derivatives that there is some $Z_n\in \mathcal{B}$ such that $\mu_1^{\mathcal{B}}\left( A_n,x \right) = \mu_2^{\mathcal{B}}\left( A_n,x \right)$ for all $x\in X\setminus Z_n$. If we take $Z = \bigcup_{n=1}^{\infty}Z_n$, then we obtain the desired result.
+
+  If $\mu$ is a probability measure, then for all $n\in \N$, the function $\mu^{\mathcal{B}}\left( A_n,x \right)$ is positive $\mu$-a.e. since its integral over every $B\in \mathcal{B}$ is positive. Similarly, $\mu^{\mathcal{B}}\left( X,x \right) = 1$ for $\mu$-a.e. $x$, so for $\mu$-a.e. $x$, the measure $\mu^{\mathcal{B}}\left( \cdot,x \right)$ is positive on $ \mathcal{R} $ and endows $X$ with measure $1$, so $\mu^{\mathcal{B}}\left( \cdot,x \right)$ is a probability measure for all such $x$.
+\end{proof}
+\begin{definition}
+  A family of subsets $\mathcal{K}$ is called a \textit{compact approximating class} for $ \mu $ if
+  \begin{itemize}
+    \item it is a compact class, in the sense that if $\bigcap_{n=1}^{\infty}K_n = \emptyset$ for some family of $K_n\in \mathcal{K}$, then there is some $N$ such that $\bigcap_{n=1}^{N}K_n = \emptyset$;
+    \item for every $A\in \mathcal{A}$ and every $\ve > 0$, there exists $K_{\ve}\in \mathcal{K}$ and $A_{\ve}\in \mathcal{A}$ such that $A_{\ve}\subseteq K_{\ve}\subseteq A$ and $\mu\left( A\setminus A_{\ve} \right) < \ve$
+  \end{itemize}
+\end{definition}
+\begin{theorem}[Existence]\hfill
+  \begin{enumerate}[(i)]
+    \item Suppose the $\sigma$-algebra $\mathcal{A}$ is countably generated and $\mu$ has a compact approximating class in $ \mathcal{A} $. Then, for every sub-$\sigma$-algebra $ \mathcal{B} $, there exists a regular conditional measure $\mu^{\mathcal{B}}$ for $ \mathcal{A} $.
+    \item Suppose $\mathcal{A}_0$ is a sub-$\sigma$-algebra of $ \mathcal{A} $ that is generated by a countable algebra $ \mathcal{U} $, and there is a compact class $\mathcal{K}\subseteq \mathcal{A}$ such that for all $A\in \mathcal{U}$ and for all $\ve > 0$, there exists $K_{\ve}\in \mathcal{K}$ and $A_{\ve}\in \mathcal{A}$ such that $A_{\ve}\subseteq K_{\ve}\subseteq A$ with $\left\vert \mu \right\vert\left( A\setminus A_{\ve} \right) < \ve$. Then, for every sub-$\sigma$-algebra $\mathcal{B}\subseteq \mathcal{A}$, there exists a regular conditional measure $\mu^{\mathcal{B}}_{\mathcal{A}_0}$ on $\mathcal{A}_0$.
+
+      Moreover, for every $\mathcal{A}_0$-measurable $\mu$-integrable function $f$, one has
+      \begin{align*}
+        \int_{X}^{} f\:d\mu &= \int_{X}^{} \int_{X}^{} f(y)\:d\mu^{\mathcal{B}}_{\mathcal{A}_0}\left( y,x \right)\:d\left\vert \mu \right\vert\left( x \right).
+      \end{align*}
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  We will prove the second assertion, and start by assuming that $\mu$ is a probability measure. Let $ \mathcal{U} = \set{A_n : n\in \N}$ be a countable generating family for $ \mathcal{A}_0 $. For every $n\in \N$, we find $C_{n,k}\in \mathcal{K}$ and $A_{n,k}\in \mathcal{A}$ such that $A_{n,k}\subseteq C_{n,k}\subseteq A_n$ and $\mu\left( A_n\setminus A_{n,k} \right) < 1/k$.
+
+  The sets $A_{n,k}$ along with $A_n$ generate a countable algebra $\mathcal{U}_0\subseteq \mathcal{A}$. For each $A\in \mathcal{U}_0$, we have $\mathcal{B}$-measurable Radon--Nikodym derivatives $x\mapsto p_0\left( A,x \right)$ with $p_0\left( X,x \right) = 1$, $p_0\left( \emptyset,x \right) = 0$ for all $x$, and
+  \begin{align*}
+    \mu\left( A\cap B \right) &= \int_{B}^{} p_0\left( A,x \right)\:d\mu(x).
+  \end{align*}
+  We claim that there exists a measure zero subset $N_0\in \mathcal{B}$ such that for all $x\in X\setminus N_0$, the function $A\mapsto p_0\left( A,x \right)$ is additive on $\mathcal{U}_0$. It follows by the integral expression for $\mu\left( A\cap B \right)$ that $p_0\left( A\cup B,x \right) = p_0\left( A,x \right) + p_0\left( B,x \right)$ $\mu$-a.e. whenever $A,B\in \mathcal{U}_0$ with $A\cap B = \emptyset$. Since the set of all such pairs $\left( A,B \right)$ in $\mathcal{U}_0$ is countable, the desired result follows.
+
+  Next, we show that
+  \begin{align*}
+    p_0\left( A_n,x \right) &= \sup_{k}p_0\left( A_{n,k},x \right).
+  \end{align*}
+  Denote the right-hand side as $q_n(x)$. The function $q_n(x)$ is $\mathcal{B}$-measurable. Since $A_{n,k}\subseteq A_n$, we have that there are measure zero subsets $N_{n,k}\in \mathcal{B}$ such that $p_0\left( A_{n,k},x \right)\leq p_0\left( A_n,x \right)$ for all $x\in N_{n,k}$, so that
+  \begin{align*}
+    q_n(x) &\leq p_0\left( A_n,x \right)
+  \end{align*}
+  for all $x\notin N_0\coloneq \bigcup_{n,k=1}^{\infty}N_{n,k}$. Yet, since $p_0\left( A_{n,k},x \right)\leq q_n(x)$, we have that
+  \begin{align*}
+    \mu\left( A_{n,k} \right) &= \int_{X}^{} p_0\left( A_{n,k},x \right)\:d\mu(x)\\
+                              &\leq \int_{X}^{} q_n(x)\:d\mu(x).
+  \end{align*}
+  Since $\mu\left( \bigcup_{n,k=1}^{\infty}N_{n,k} \right) = 0$, we have
+  \begin{align*}
+    \sup_{k}\mu\left( A_{n,k} \right) &\leq \int_{X}^{} q_n(x)\:d\mu(x)\\
+                                      &\leq \int_{X}^{} p_0\left( A_n,x \right)\:d\mu(x)\\
+                                      &= \mu\left( A_n \right).
+  \end{align*}
+  Since $\sup_{k}\mu\left( A_{n,k} \right) = \mu\left( A_n \right)$, we have that $ q_n(x) = p_0\left( A_n,x \right) $ everywhere except for some measure-zero $N_1\in \mathcal{B}$.
+
+  Thus, for all $x\notin N = N_0\cup N_1$, we have that $p_0\left( \cdot,x \right)$ is an additive set function on the algebra $\mathcal{U}_0$ such that the compact class $\mathcal{K}$ approximates $p_0\left( \cdot,x \right)$ on $\mathcal{U}$ with respect to $\mathcal{U}_0$. So, this set function is countably additive on $\mathcal{U}$, meaning it extends to a unique countably additive measure on $ \mathcal{A}_0 $ by the Carathéodory Extension Theorem, which we define as $\mu\left( \cdot,x \right)\coloneq \mu^{\mathcal{B}}_{\mathcal{A}_0}\left( \cdot,x \right)$.
+
+  We will seek to verify that this is our desired system of conditional measures. If $A = A_n$, then t he function $x\mapsto \mu\left( A,x \right)$ is measurable with respect to $\mathcal{B}$. Since the class of all sets $A\in \sigma\left( \mathcal{U} \right)$ for which this is true is monotone, it follows that it coincides with $\sigma\left( \mathcal{U} \right)$. If $B\in \mathcal{B}$ and $A = A_n$, then by construction one has
+  \begin{align*}
+    \mu\left( A\cap B \right) &= \int_{B}^{} \mu\left( A,x \right)\:d\mu(x).
+  \end{align*}
+  For a fixed $B\in \mathcal{B}$, the class $\mathcal{E}$ of all sets $A\in \sigma\left( \mathcal{U} \right)$ such that the above holds is also monotone, as if $E_j\nearrow E$, then $\lim_{j\to\infty}\mu\left( E_j,x \right) = \mu\left( E,x \right)$, whence by dominated convergence we have that $E\in \mathcal{E}$. Thus, $\mathcal{E} = \sigma\left( \mathcal{U} \right)$. Since $\sigma\left( \mathcal{U} \right) = \mathcal{A}_0$, it follows that
+  \begin{align*}
+    \mu\left( A\cap B \right) &= \int_{B}^{} \mu\left( A,x \right)\:d\mu(x)
+  \end{align*}
+  for all $A\in \mathcal{A}_0$ and all $B\in \mathcal{B}$. Bootstrapping then yields
+  \begin{align*}
+    \int_{X}^{} f\:d\mu &= \int_{X}^{} \int_{X}^{} f(y)\:d\mu(y,x)\:d\mu(x)
+  \end{align*}
+  for all $\mathcal{A}_0$-measurable $\mu$-integrable $f$.
+
+  Now, if $\mu$ is a positive (but non-probabilistic) measure on $X$, then the conditional measures for $\frac{\mu}{\norm{\mu}}$ are conditional measures for $\mu$ as well. Finally, if $\mu$ is a signed measure, then we construct them as the difference of conditional measures $\mu^{+}$ and $\mu^{-}$, where the conditional measures for $\mu^{+}$ are concentrated on $X^{+}$ and the conditional measures on $\mu^{-}$ are concentrated on $X^{-}$, extending by $0$ where necessary.
+\end{proof}
+\subsection{Existence and Uniqueness Generated by a Measurable Map}%
+
+\section{The Disintegration Theorem}%
+
+\section{The Ergodic Decomposition}%
+
+\nocite{measure_theory_bogachev,einsiedler_and_ward}
+\printbibliography
+\end{document}

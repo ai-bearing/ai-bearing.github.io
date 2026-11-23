@@ -1006,4 +1006,97 @@ Notice that $E\left[ M_n^2 \right] = E\left[ A_n \right]$, so $M$ is $\mathcal{L
 
   If $Y_{\infty} = A_{\infty}$, then $M_n/A_n\to 0$, so $M_n/Y_n\to 0$ and thus $Z_n/Y_n\to 1$.
 \end{proof}
+\subsection{Uniform Integrability}%
+\begin{lemma}
+  Suppose $X\in \mathcal{L}^1$. Then, given $\ve > 0$, there exists $\delta > 0$ such that for all $F\in \mathcal{F}$ with $P(F) < \delta$, one has that $ E\left[ \left\vert X \right\vert1_{F} \right] < \ve $.
+\end{lemma}
+\begin{proof}
+  Suppose not. Then, for some $\ve_0 > 0$, there is s $\left( F_n \right)_{n}\subseteq \mathcal{F}$ such that $P\left( F_n \right) < 2^{-n}$ and $E\left[ \left\vert X \right\vert1_{F_n} \right] \geq \ve_0$. Let $H = \limsup F_n$. Then, $P(H) = 0$, but the Reverse Fatou Lemma implies that $E\left[ \left\vert X \right\vert1_H \right]\geq \ve_0$, which yields the desired contradiction.
+\end{proof}
+\begin{definition}
+  A family $ \mathcal{C} $ of random variables is called \textit{uniformly integrable} (or UI) if for all $\ve > 0$, there exists $0 \leq K < \infty$ such that $E\left[ \left\vert X \right\vert1_{\set{\left\vert X \right\vert > K}} \right] < \ve$ for all $X\in \mathcal{C}$.
+\end{definition}
+\begin{theorem}[Two Sufficiency Conditions]\hfill
+  \begin{enumerate}[(a)]
+    \item If for some $ p > 1$, $ \mathcal{C} \subseteq \mathcal{L}^p$ is a uniformly $ \mathcal{L}^p $-bounded family of random variables, then $ \mathcal{C} $ is uniformly integrable.
+    \item If $\mathcal{C}$ is a family of random variables dominated by a positive integrable random variable $Y$, then $\mathcal{C}$ is UI.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}\hfill
+  \begin{enumerate}[(a)]
+    \item For some $v \geq K > 0$, we have that $v\leq K^{1-p}v^{p}$, so for any $K > 0$ and $X\in \mathcal{C}$, we have that
+      \begin{align*}
+        E\left[ \left\vert X \right\vert1_{\set{\left\vert X \right\vert > K}} \right] &\leq K^{1-p}E\left[ \left\vert X \right\vert^{p}1_{\set{\left\vert X \right\vert > K}} \right]\\
+                                                                                       &\leq K^{1-p}A,
+      \end{align*}
+      where $A$ is the $ \mathcal{L}^p $-bound.
+    \item We have that
+      \begin{align*}
+        E\left[ \left\vert X \right\vert1_{\set{\left\vert X \right\vert > K}} \right] &\leq E\left[ Y1_{\set{\left\vert Y \right\vert > K}} \right].
+      \end{align*}
+      Using Chebyshev's Inequality gives the desired result.
+  \end{enumerate}
+\end{proof}
+One of the main values of uniform integrability is that conditional expectations follow it.
+\begin{theorem}
+  Let $X\in \mathcal{L}^1$. Then, the family
+  \begin{align*}
+    \set{E\left[ X\vert\mathcal{G} \right] : \text{$\mathcal{G}$ is a sub-$\sigma$-algebra of $\mathcal{F}$}}
+  \end{align*}
+  is uniformly integrable.
+\end{theorem}
+\begin{proof}
+  Let $\ve > 0$. Then, choose $\delta > 0$, such that for any $F\in \mathcal{F}$ with $P(F) < \delta$, we have $E\left[ \left\vert X \right\vert1_{F} \right] < \ve$. We may choose $K$ such that $\frac{1}{K}E\left[ \left\vert X \right\vert \right] < \delta$.
+
+  Let $Y = E\left[ X|\mathcal{G} \right]$. By Jensen's Inequality, we have that $\left\vert Y \right\vert\leq E\left[ \left\vert X \right\vert|\mathcal{G} \right]$ almost surely. So, $E\left[ \left\vert Y \right\vert \right] \leq X$, so $KP\left( \left\vert Y \right\vert > K \right)\leq E\left[ \left\vert X \right\vert \right]$, so $P\left( \left\vert Y \right\vert > K \right) < \delta$. Since $\set{\left\vert Y \right\vert > K}\in \mathcal{G}$, we have that $E\left[ \left\vert Y \right\vert1_{\set{\left\vert Y \right\vert > K}} \right] < \ve$.
+\end{proof}
+\begin{theorem}
+  Let $\left( X_n \right)_{n}$ be a sequence in $ \mathcal{L}^1 $. Then, $X_n\to X$ in $\mathcal{L}^1$ if and only if
+  \begin{enumerate}[(i)]
+    \item $X_n\to X$ in probability;
+    \item $\left( X_n \right)_{n}$ is UI.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Suppose (i) and (ii) hold. Define $\varphi_K\colon \R\to [-K,K]$ by
+  \begin{align*}
+    \varphi_K(x) &= \begin{cases}
+      K & x > K\\
+      x & \left\vert x \right\vert \leq K\\
+      -K & x < -K.
+    \end{cases}
+  \end{align*}
+  Let $\ve > 0$. Since $\left( X_n \right)_{n}$ is UI, we may choose $K$ such that
+  \begin{align*}
+    E\left[ \left\vert \varphi_K\left( X_n \right) - X_n \right\vert \right] &< \ve/3\\
+    E\left[ \left\vert \varphi_K(X)-X \right\vert \right] &< \ve/3.
+  \end{align*}
+  Since $\left\vert \varphi_K(x)-\varphi_K(y) \right\vert \leq \left\vert x-y \right\vert$, it follows that $\varphi_K\left( X_n \right)\to \varphi_K\left( X \right)$ in probability, so by dominated convergence, there is some $n_0$ such that for all $n\geq n_0$, we have
+  \begin{align*}
+    E\left[ \left\vert \varphi_K\left( X_n \right) - X \right\vert \right] & < \ve/3.
+  \end{align*}
+  So, by the triangle inequality, we have that $E\left[ \left\vert X_n-X \right\vert \right] < \ve$ for all $n\geq n_0$.
+
+  In the reverse direction, suppose $\left( X_n \right)_n\to X$ in $\mathcal{L}^1$. Let $\ve > 0$. Then, we may choose $N$ such that $E\left[ \left\vert X_n-X \right\vert \right] < \ve/2$. Choose $\delta > 0$ such that if $P(F) < \delta$, we have
+  \begin{align*}
+    E\left[ \left\vert X_n \right\vert1_{\mathcal{F}} \right] < \ve\\
+    E\left[ \left\vert X \right\vert1_{F} \right] &< \ve/2.
+  \end{align*}
+  Since $\left( X_n \right)_n$ is $\mathcal{L}^1$-bounded, we choose $K$ such that
+  \begin{align*}
+    \frac{1}{K}\sup_{j}E\left[ \left\vert X_j \right\vert \right] < \delta.
+  \end{align*}
+  For any $n\geq N$, we have $P\left( \left\vert X_n \right\vert > K \right) < \delta$ and
+  \begin{align*}
+    E\left[ \left\vert X_n \right\vert1_{\set{\left\vert X_n \right\vert > K}} \right] &\leq E\left[ \left\vert X \right\vert1_{\set{\left\vert X_n \right\vert > K}} \right] + E\left[ \left\vert X-X_n \right\vert \right]\\
+                                                                                       &< \ve.
+  \end{align*}
+  For any $n\geq N$, we have $P\left( \left\vert X_n \right\vert > K \right) < \delta$, so that $E\left[ \left\vert X_n \right\vert1_{\set{\left\vert X_n \right\vert > K}} \right] < \ve$, so that $\left( X_n \right)_{n}$ is a UI family.
+
+  Now, since
+  \begin{align*}
+    \ve P\left( \left\vert X_n-X \right\vert > \ve \right) &\leq E\left[ \left\vert X_n \right\vert \right],
+  \end{align*}
+  we get that $\left( X_n \right)_n\to X$ in probability.
+\end{proof}
 \end{document}
