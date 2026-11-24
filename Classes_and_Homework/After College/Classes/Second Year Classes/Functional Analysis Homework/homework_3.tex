@@ -43,15 +43,78 @@ Let $\left( V,\norm{\cdot}_{V} \right)$ be a normed space over $\R$ which we ass
   and for all $n\in I$, we have that $v_n\notin \Span\set{v_m : m\in I\text{ with }m < n}$. Prove that $\left[ -1,1 \right]^{I}$ with the product topology is compact without Tychonoff.
 \end{problem}
 \begin{solution}
-  Since $\N\times I$ is countable as $I\subseteq \N$ is countable, it follows that $2^{\N\times I}$ is a compact metrizable space that is found by taking a bijection $\N\times I\leftrightarrow \N$ taking $\N\times I\ni y\mapsto y_n$, and defining
-  \begin{align*}
-    d\left( \left( a_y \right)_{y\in \N\times I}, \left( b_y \right)_{y\in \N\times I}\right) &= \sum_{n=1}^{\infty}2^{-n}\frac{\left\vert a_{y_n}-b_{y_n} \right\vert}{1 + \left\vert a_{y_n}-b_{y_n} \right\vert}.
-  \end{align*}
-  Convergence in this metric is equivalent to pointwise convergence, so that the product topology on $2^{\N\times I}$ is a compact metrizable space. Moreover, writing each element of $2^{\N\times I}$ as a sequence $\left( a_{n,i} \right)_{n\in \N,i\in I}$, then we may define a continuous surjection onto $[0,1]^{I}$ given by the binary expansion
-  \begin{align*}
-    \left( t_i \right)_{i\in I} &= \left( \sum_{n=1}^{\infty}2^{-n}a_{n,i} \right)_{i\in I}.
-  \end{align*}
-  Since convergence in $2^{\N\times I}$ is coordinatewise in both $\N$ and $I$, it follows that this map is continuous. Since $\left[ 0,1 \right]^{I}$ and $\left[ -1,1 \right]^{I}$ are homeomorphic since $\left[ 0,1 \right]$ and $\left[ -1,1 \right]$ are homeomorphic, it follows that there exists some continuous surjection $2^{\N}\rightarrow \left[ -1,1 \right]^{I}$, so $\left[ -1,1 \right]^{I}$ is compact.
+  Since $V \neq \set{0}$ and $\set{w_n : n \geq 0}$ is dense in $V$, there exists a nonzero vector $w_{n_0}$ in the sequence, and therefore $u_{n_0} = \frac{1}{\norm{w_{n_0}}_V} w_{n_0} \neq 0$. Thus $W_\infty = \operatorname{Span}\set{u_n : n \in \mathbb{N}} \neq \set{0}$, so there exists $n \in I$ with $v_n \neq 0$, which gives $|I| \ge 1$. Since $I$ is an initial segment of $\mathbb{N}$, $I$ is at most countable. Because $I$ is nonempty and at most countable, $|\mathbb{N} \times I| = |\mathbb{N}|$, and hence there exists a bijection
+\[
+\beta \colon \mathbb{N} \times I \longrightarrow \mathbb{N}.
+\]
+
+Since $[-1, 1]$ is a compact metric space, by the Hausdorff--Alexandroff Theorem there exists a continuous, surjective map $\Phi_0 \colon \set{0, 1}^{\mathbb{N}} \to [-1, 1]$. Define $\Phi_1 \colon \left(\set{0, 1}^{\mathbb{N}}\right)^I \to [-1, 1]^I$ by
+\[
+\Phi_1\bigl((x_i)_{i \in I}\bigr) = \bigl(\Phi_0(x_i)\bigr)_{i \in I},
+\]
+where $x_i \in \set{0, 1}^{\mathbb{N}}$. For each $j \in I$, let $\pi_j \colon [-1, 1]^I \to [-1, 1]$ and $p_j \colon \left(\set{0, 1}^{\mathbb{N}}\right)^I \to \set{0, 1}^{\mathbb{N}}$ denote the $j$-th coordinate projection maps, where $p_j\bigl((x_i)_{i \in I}\bigr) = x_j$. Then for all $(x_i)_{i \in I} \in \left(\set{0, 1}^{\mathbb{N}}\right)^I$, we have
+\begin{align*}
+  \left(\pi_j \circ \Phi_1\right)\bigl((x_i)_{i \in I}\bigr) &= \Phi_0(x_j)\\
+               &= (\Phi_0 \circ p_j)\bigl((x_i)_{i \in I}\bigr), 
+\end{align*}
+so the following diagram commutes:
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+  & {[-1,1]^I} \arrow[d, "\pi_j"] \\
+  \left(\set{0,1}^{\mathbb{N}}\right)^I \arrow[ur, "\Phi_1"] \arrow[r, "\Phi_0 \circ p_j"'] & {[-1,1]}
+\end{tikzcd}
+\]
+Since $\Phi_0$ and $p_j$ are continuous, $\Phi_0 \circ p_j$ is continuous for every $j \in I$. By the universal property of the product topology, $\Phi_1$ is continuous. Moreover, since $\Phi_0$ is surjective, for any $(\alpha_i)_{i \in I} \in [-1, 1]^I$ and each $i \in I$, there exists $x_i \in \set{0, 1}^{\mathbb{N}}$ such that $\Phi_0(x_i) = \alpha_i$, whence $\Phi_1\bigl((x_i)_{i \in I}\bigr) = (\alpha_i)_{i \in I}$. Thus $\Phi_1$ is a continuous, surjective map.
+
+Next, using the bijection $\beta \colon \mathbb{N} \times I \to \mathbb{N}$, define $\Psi \colon \set{0, 1}^{\mathbb{N}} \to \left(\set{0, 1}^{\mathbb{N}}\right)^I$ by
+\[
+\Psi(x)(i) = \bigl(x_{\beta(n, i)}\bigr)_{n \in \mathbb{N}}
+\]
+for any $x = \left(x_k\right)_{k \in \mathbb{N}} \in \set{0, 1}^{\mathbb{N}}$ and $i \in I$. For $y \in \left(\set{0, 1}^{\mathbb{N}}\right)^I$ with $y(i) = \bigl(y(i)_n\bigr)_{n \in \mathbb{N}}$, define the shorthand $y_{(n, i)} = y(i)_n$ for $(n, i) \in \mathbb{N} \times I$, and define $\Theta \colon \left(\set{0, 1}^{\mathbb{N}}\right)^I \to \set{0, 1}^{\mathbb{N}}$ by
+\[
+\Theta(y) = \bigl(y_{\beta^{-1}(k)}\bigr)_{k \in \mathbb{N}}.
+\]
+For any $x = (x_k)_{k \in \mathbb{N}} \in \set{0, 1}^{\mathbb{N}}$ and $m \in \mathbb{N}$, writing $\beta^{-1}(m) = (n, i)$, we have
+\[
+(\Theta \circ \Psi)(x)_m = \Psi(x)_{\beta^{-1}(m)} = \Psi(x)(i)_n = x_{\beta(n, i)} = x_m,
+\]
+so $\Theta \circ \Psi = \id_{\set{0,1}^{\mathbb{N}}}$. Similarly, for any $y \in \left(\set{0, 1}^{\mathbb{N}}\right)^I$ and $i \in I$,
+\begin{align*}
+  \left( \left( \Phi\circ\Theta \right)(y) \right)(i) &= \left( \Theta(y)_{\beta(n,i)} \right)_{n\in \N}\\
+                                                      &= \left( y_{\beta^{-1}\left( \beta(n,i) \right)} \right)\\
+                                                      &= \left( y_{(n,i)} \right)\\
+                                                      &= y(i).
+\end{align*}
+so $\Psi \circ \Theta = \id_{(\set{0,1}^{\mathbb{N}})^I}$. Therefore $\Theta$ and $\Psi$ are mutual inverses, and we write $\Theta = \Psi^{-1}$.
+
+To verify continuity of $\Psi$ and $\Psi^{-1}$, let $\pi_i \colon \left(\set{0, 1}^{\mathbb{N}}\right)^I \to \set{0, 1}^{\mathbb{N}}$ ($i \in I$) and $p_n \colon \set{0, 1}^{\mathbb{N}} \to \set{0, 1}$ ($n \in \mathbb{N}$) denote the canonical coordinate projections. For each $i \in I$, define $f_i \colon \set{0, 1}^{\mathbb{N}} \to \set{0, 1}^{\mathbb{N}}$ by $f_i(x) = \bigl(x_{\beta(n, i)}\bigr)_{n \in \mathbb{N}}$, so that $\pi_i \circ \Psi = f_i$ and $p_n \circ f_i = p_{\beta(n, i)}$ for every $n \in \mathbb{N}$:
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+  & \left(\set{0,1}^{\mathbb{N}}\right)^I \arrow[d, "\pi_i"] \\
+  \set{0,1}^{\mathbb{N}} \arrow[ur, "\Psi"] \arrow[r, "f_i"'] & \set{0,1}^{\mathbb{N}}
+\end{tikzcd}
+\qquad\qquad
+\begin{tikzcd}[row sep=large, column sep=large]
+  & \set{0,1}^{\mathbb{N}} \arrow[d, "p_n"] \\
+  \set{0,1}^{\mathbb{N}} \arrow[ur, "f_i"] \arrow[r, "p_{\beta(n,i)}"'] & \set{0,1}
+\end{tikzcd}
+\]
+Since each projection $p_{\beta(n, i)}$ is continuous, $f_i$ is continuous for every $i \in I$ by the universal property of the product topology. Applying the universal property of the product topology once more, $\Psi$ is continuous.
+
+For $\Psi^{-1}$, let $n \in \mathbb{N}$ and write $\beta^{-1}(n) = (m_n, i_n) \in \mathbb{N} \times I$. Then $p_n \circ \Psi^{-1} = p_{m_n} \circ \pi_{i_n}$, giving the commutative diagram
+\[
+\begin{tikzcd}[row sep=large, column sep=large]
+  & \set{0,1}^{\mathbb{N}} \arrow[d, "p_n"] \\
+  \left(\set{0,1}^{\mathbb{N}}\right)^I \arrow[ur, "\Psi^{-1}"] \arrow[r, "p_{m_n} \circ \pi_{i_n}"'] & \set{0,1}
+\end{tikzcd}
+\]
+Since $p_{m_n} \circ \pi_{i_n}$ is continuous for every $n \in \mathbb{N}$, $\Psi^{-1}$ is continuous by the universal property of the product topology. Hence $\left(\set{0, 1}^{\mathbb{N}}\right)^I \cong \set{0, 1}^{\mathbb{N}}$.
+
+Finally, since $\set{0, 1}^{\mathbb{N}}$ is compact and the composition
+\[
+\Phi_1 \circ \Psi \colon \set{0, 1}^{\mathbb{N}} \longrightarrow [-1, 1]^I
+\]
+is a continuous surjection, $[-1, 1]^I$ with the product topology is compact as the continuous image of a compact space.
 \end{solution}
 \begin{problem}[Problem I.3]
   By linear algebra, we may define a map from $\left[ -1,1 \right]^{I}$ into the set of all $\R$-linear forms on $W_{\infty}$ taking $\alpha\mapsto L_{\alpha}$ by taking $\alpha = \left( \alpha_n \right)_{n\in I}\in \left[ -1,1 \right]^{I}$ and defining
@@ -60,6 +123,33 @@ Let $\left( V,\norm{\cdot}_{V} \right)$ be a normed space over $\R$ which we ass
   \end{align*}
   for all finitely supported sequences. Verify that $L_{\alpha}$ is a well-defined $\R$-linear form on $W_{\infty}$.
 \end{problem}
+\begin{solution}
+Let $\alpha = \left(\alpha_n\right)_{n\in I} \in [-1,1]^I$. We first check that $L_\alpha$ is well-defined. For any finitely supported sequence $\lambda = \left(\lambda_n\right)_{n\in I}$ in $\mathbb{R}^I$, $\lambda_n = 0$ except for finitely many $n \in I$, so the sum $\sum_{n\in I}\alpha_n\lambda_n$ has only finitely many nonzero terms and defines a real number. To verify uniqueness of the representation, suppose that
+\[
+\sum_{n\in I}\lambda_n v_n = \sum_{n\in I}\gamma_n v_n \ ,
+\]
+where $\lambda = \left(\lambda_n\right)_{n\in I}$ and $\gamma = \left(\gamma_n\right)_{n\in I}$ are finitely supported sequences in $\mathbb{R}^I$, which is equivalent to  
+\[
+\sum_{n\in I}\left(\lambda_n - \gamma_n\right)v_n = 0 \ .
+\]
+There exist $m_1, m_2 \in I$ such that for all $n > m_1$, $\lambda_n = 0$ and for all $ n > m_2$, $\gamma_n = 0$ (note for the case that $I$ is finite, this is vacuously true). Set $m = \max\set{m_1, m_2}$. By the property that $ n \in I$, we have$ v_n \notin \Span\set{v_k \mid k \in I, k < n}$, we have $v_m \notin \Span\set{v_k \mid k \in I, k < m}$, and therefore $\lambda_m - \gamma_m = 0$, which gives $\lambda_m = \gamma_m$.
+
+We continue by reverse induction. Suppose $k \in I$ with $0 < k \le m$, and for all $i \in I$ with $k \le i \le m$, $\lambda_i = \gamma_i$. We show that for $n_0 = \max\set{n \in I \mid n < k}$, $\lambda_{n_0} = \gamma_{n_0}$. Since $v_{n_0} \notin \Span\set{v_\ell \mid \ell \in I, \ell < n_0}$ and for all $ i \in I$ with $n_0 < i \le m$, we have $\lambda_i = \gamma_i$, it follows that
+\[
+-\left(\lambda_{n_0} - \gamma_{n_0}\right)v_{n_0} = \sum_{\substack{n\in I \\ n < n_0}} \left(\lambda_n - \gamma_n\right)v_n,
+\]
+which implies $\lambda_{n_0} - \gamma_{n_0} = 0$, so $\lambda_{n_0} = \gamma_{n_0}$. Since $I$ is an initial segment, this process halts when we have no more elements in $I \cap [0,m]$. Thus $\lambda_n = \gamma_n$ for all $n \in I$, so $L_\alpha$ is well-defined.
+
+We now show that $L_\alpha$ is $\mathbb{R}$-linear. Let $u, w \in W_\infty$ and $a, b \in \mathbb{R}$. Then $u = \sum_{n\in I}\lambda_n v_n$ with $\lambda_n = 0$ except for finitely many $n \in I$, and $w = \sum_{n\in I}\gamma_n v_n$ with $\gamma_n = 0$ except for finitely many $n \in I$. Since $\lambda_n$ and $\gamma_n$ are only nonzero for finitely many $n \in I$, we compute
+\begin{align*}
+L_\alpha(au + bw) &= L_\alpha\left(\sum_{n\in I}(a\lambda_n + b\gamma_n)v_n\right) \\
+&= \sum_{n\in I}\alpha_n(a\lambda_n + b\gamma_n) \\
+&= \sum_{n\in I}\left(a\alpha_n\lambda_n + b\alpha_n\gamma_n\right) \\
+&= a\sum_{n\in I}\alpha_n\lambda_n + b\sum_{n\in I}\alpha_n\gamma_n \\
+&= aL_\alpha(u) + bL_\alpha(w) \ .
+\end{align*}
+Therefore $L_\alpha$ is linear.
+\end{solution}
 \begin{problem}[Problem I.4]
   Let $\mathcal{A}$ be the subset of $\left[ -1,1 \right]^{I}$ which consists of all $\alpha$ such that
   \begin{align*}
@@ -67,15 +157,115 @@ Let $\left( V,\norm{\cdot}_{V} \right)$ be a normed space over $\R$ which we ass
   \end{align*}
   for all finitely supported sequences $\lambda = \left( \lambda_n \right)_{n}\in \R^{I}$. Show that $\mathcal{A}$ is a compact subset of $\left[ -1,1 \right]^{I}$.
 \end{problem}
+\begin{solution}
+Since $[-1,1]^I$ is compact in the product topology, it suffices to show that $\mathcal{A}$ is closed in $[-1,1]^I$. Because $V$ is separable, the index set $I$ is at most countable. As a countable product of metric spaces, $[-1,1]^I$ is first countable, so $\mathcal{A}$ is closed in $[-1,1]^I$ if and only if it is sequentially closed.
+
+Let $\left( \alpha(k) \right) \subset \mathcal{A}$ be a sequence converging in the product topology to some $\alpha^\infty = \left(\alpha_{n}^\infty\right)_{n\in I} \in [-1,1]^I$, where $\alpha(k) = \left(\alpha_n(k)\right)_{n\in I}$ for each $k \ge 1$. Note that convergence in the product topology is equivalent to coordinatewise convergence.
+
+Now let $\lambda = \left(\lambda_n\right)_{n\in I} \in \mathbb{R}^I$ be an arbitrary finitely supported sequence. Since $\lambda_n = 0$ for all but finitely many $n \in I$, the sum over $n \in I$ has only finitely many nonzero terms, so the limit as $k \to \infty$ commutes with the sum. Using the fact that $\alpha(k) \in \mathcal{A}$ for every $k \ge 1$ and that non-strict inequalities are preserved under limits, we obtain
+\begin{align*}
+\left|\sum_{n\in I}\alpha_n^\infty\lambda_n\right|
+&= \left|\sum_{n\in I}\left(\lim_{k\to\infty}\alpha_n(k)\right)\lambda_n\right| \\
+&= \lim_{k\to\infty}\left|\sum_{n\in I}\alpha_n^k\lambda_n\right| \\
+&\le \left\|\sum_{n\in I}\lambda_n v_n\right\|_{V}.
+\end{align*}
+Since $\lambda$ was an arbitrary almost finite sequence in $\mathbb{R}^I$, it follows that $\alpha^\infty \in \mathcal{A}$. Hence $\mathcal{A}$ is sequentially closed, and therefore closed, in the compact space $[-1,1]^I$. We conclude that $\mathcal{A}$ is compact.
+\end{solution}
 \begin{problem}[Problem I.5]
   For any $\alpha\in \mathcal{A}$, show that there is a unique continuous linear form $\Phi_{\alpha}\in V^{\ast}$ such that $\Phi_{\alpha}|_{W_{\infty}} = L_{\alpha}$. Show that this provides us a well-defined map $\Phi\colon \mathcal{A}\to B_{V^{\ast}}\left( 0,1 \right)$ taking $\alpha\mapsto \Phi_{\alpha}$.
 \end{problem}
+\begin{solution}
+  Notice that $\overline{W_{\infty}} = V$. By part~4, $|L_{\alpha}(v)| \le \|v\|_{V}$ for all $v \in W_{\infty}$, which by linearity of $L_{\alpha}$ implies
+\[
+|L_{\alpha}(v) - L_{\alpha}(w)| \le \|v - w\|_{V} \qquad \forall v, w \in W_{\infty}.
+\]
+Let $v \in V$. Since $\overline{W_{\infty}} = V$, there exists a sequence $(v_{k})_{k \in \mathbb{N}}$ in $W_{\infty}$ such that $\lim_{k \to \infty} v_{k} = v$. Because $(v_{k})_{k \in \mathbb{N}}$ is Cauchy in $V$ and $L_{\alpha}$ is $1$-Lipschitz, $(L_{\alpha}(v_{k}))_{k \in \mathbb{N}}$ is Cauchy in $\mathbb{R}$, so its limit exists by completeness of $\mathbb{R}$. We define
+\[
+\Phi_{\alpha}(v) \coloneq \lim_{k \to \infty} L_{\alpha}(v_{k}).
+\]
+
+First, $\Phi_{\alpha}$ is well-defined. Indeed, if $(w_{k})_{k \in \mathbb{N}}$ is another sequence in $W_{\infty}$ with $\lim_{k \to \infty} w_{k} = v$, then
+\[
+|L_{\alpha}(v_{n}) - L_{\alpha}(w_{m})| \le \|v_{n} - w_{m}\|_{V}.
+\]
+Therefore, taking $n \to \infty$ and $m \to \infty$, we obtain $\lim_{k \to \infty} L_{\alpha}(v_{k}) = \lim_{k \to \infty} L_{\alpha}(w_{k})$. Moreover, if $v \in W_{\infty}$, taking the constant sequence $v_{k} = v$ gives $\Phi_{\alpha}(v) = L_{\alpha}(v)$ by well-definedness, so $\Phi_{\alpha}|_{W_{\infty}} = L_{\alpha}$.
+
+Next, $\Phi_{\alpha}$ is continuous. Using $\alpha \in \mathcal{A}$ and the continuity of the norm, for any $v \in V$ with $v = \lim_{k \to \infty} v_{k}$ ($v_{k} \in W_{\infty}$), we have
+\[
+|\Phi_{\alpha}(v)| = \left|\lim_{k \to \infty} L_{\alpha}(v_{k})\right| = \lim_{k \to \infty} |L_{\alpha}(v_{k})| \le \lim_{k \to \infty} \|v_{k}\|_{V} = \|v\|_{V}.
+\]
+
+Furthermore, $\Phi_{\alpha}$ is $\mathbb{R}$-linear. Let $v, w \in V$ with $v = \lim_{n \to \infty} v_{n}$ and $w = \lim_{n \to \infty} w_{n}$ for sequences $(v_{n})_{n \in \mathbb{N}}, (w_{n})_{n \in \mathbb{N}}$ in $W_{\infty}$, and let $a, b \in \mathbb{R}$. For every $n \in \mathbb{N}$, $a v_{n} + b w_{n} \in W_{\infty}$ and $\lim_{n \to \infty} (a v_{n} + b w_{n}) = a v + b w$. Therefore,
+\[
+L_{\alpha}(a v_{n} + b w_{n}) = a L_{\alpha}(v_{n}) + b L_{\alpha}(w_{n}).
+\]
+Taking $n \to \infty$, we obtain
+\[
+\Phi_{\alpha}(a v + b w) = a \Phi_{\alpha}(v) + b \Phi_{\alpha}(w).
+\]
+Hence $\Phi_{\alpha} \in V^{\ast}$.
+
+To show uniqueness, suppose $\Psi \in V^{\ast}$ satisfies $\Psi|_{W_{\infty}} = L_{\alpha}$. Let $v \in V$, and choose $(v_{k})_{k \in \mathbb{N}}$ in $W_{\infty}$ such that $\lim_{k \to \infty} v_{k} = v$. Then, by continuity of $\Psi$,
+\begin{align*}
+  \Phi_{\alpha}(v) &= \lim_{k \to \infty} L_{\alpha}\left(v_{k}\right)\\
+                   &= \lim_{k \to \infty} \Psi\left(v_{k}\right)\\
+                   &= \Psi(v). 
+\end{align*}
+Thus $\Phi_{\alpha} = \Psi$, so $\Phi_{\alpha}$ is unique.
+
+Finally, since $|\Phi_{\alpha}(v)| \le \|v\|_{V}$ for all $v \in V$, we have $\|\Phi_{\alpha}\|_{V^{\ast}} \le 1$ for all $\alpha \in \mathcal{A}$. Therefore, $\Phi : \mathcal{A} \to B_{V^{\ast}}(0,1)$, $\alpha \mapsto \Phi_{\alpha}$, is a well-defined map.
+\end{solution}
 \begin{problem}[Problem I.6]
   Show that $\Phi$ is surjective.
 \end{problem}
+\begin{solution}
+  Let $F \in B_{V^{\ast}}(0,1)$. Define $\alpha_{n} \coloneq F\left(v_{n}\right)$ for each $n \in I$. We have $\alpha_{n} \in [-1,1]$, as $\left\vert F\left(v_{n}\right) \right\vert \le \norm{F}_{V'} \le 1$.
+
+Define $\alpha \coloneq \left(\alpha_{n}\right)_{n \in I} \in [-1,1]^{I}$. Then $F|_{W_{\infty}} = L_{\alpha}$. Indeed, let $v = \sum_{n \in I} \lambda_{n} v_{n}$ for an arbitrary finitely supported sequence $\left(\lambda_{n}\right)_{n \in I}$ in $\mathbb{R}^{I}$. By linearity of $F$,
+\begin{align*}
+  F(v) &= F\left(\sum_{n \in I} \lambda_{n} v_{n}\right)\\
+       &= \sum_{n \in I} \lambda_{n} F(v_{n})\\
+       &= \sum_{n \in I} \lambda_{n} \alpha_{n} = L_{\alpha}(v). 
+\end{align*}
+Furthermore, $F|_{W_{\infty}} = L_{\alpha}$ and $\norm{F}_{V'} \le 1$ show that $\left\vert L_{\alpha}(v)\right\vert \le \norm{v}_{V}$ for all $v \in W_{\infty}$, which is equivalent to $\alpha \in \mathcal{A}$.
+
+Therefore, by I.5 and continuity, there exists a unique $\Phi_{\alpha} \in V'$ such that $\Phi_{\alpha}|_{W_{\infty}} = L_{\alpha}$, so $\Phi_{\alpha} = F$. Hence $\Phi$ is surjective.
+\end{solution}
 \begin{problem}[Problem I.7]
   Show that $\Phi$ is continuous if $B_{V^{\ast}}\left( 0,1 \right)$ is equipped with the induced weak* topology. Conclude the proof of Banach--Alaoglu in the real separable case.
 \end{problem}
+\begin{solution}
+  Let $\alpha \in \mathcal{A}$ and $x \in V$. Let $p_{x}$ be the seminorm $L \mapsto |L(x)|$, and let $\varepsilon > 0$. Since $W_{\infty}$ is dense in $V$ (and $V \neq \set{0}$), there exists $y \in W_{\infty}$ such that $\norm{x-y}_{V} < \frac{\varepsilon}{3}$, with $y = \sum_{n \in I} \lambda_{n} v_{n}$ and $y \neq 0$.
+
+Take $\delta > 0$ and $F \in \mathcal{P}_{\mathrm{fin}}(I)$ given by
+\[
+F \coloneq \set{n \in I \mid \lambda_{n} \neq 0},
+\]
+and 
+\begin{align*}
+  \delta \coloneq \frac{\varepsilon}{3 \left(\max_{m \in F} |\lambda_{m}|\right) |F|}
+\end{align*}
+
+Then, for all 
+\begin{align*}
+  \alpha' \in U_{F,\delta,\alpha} \coloneq \set{\alpha' \in \mathcal{A} : \text{for all $ n \in F$, we have $\left\vert \alpha'_{n} - \alpha_{n} \right\vert < \delta$}},
+\end{align*}
+and using $\|\Phi_{\alpha}\|_{V'}, \|\Phi_{\alpha'}\|_{V'} \le 1$ from I.5, we have
+\begin{align*}
+p_{x}\left( \Phi_{\alpha} - \Phi_{\alpha'} \right) &= |\Phi_{\alpha}(x) - \Phi_{\alpha'}(x)| \\
+&\le |\Phi_{\alpha}(x) - \Phi_{\alpha}(y)| + |\Phi_{\alpha}(y) - \Phi_{\alpha'}(y)| + |\Phi_{\alpha'}(y) - \Phi_{\alpha'}(x)| \\
+&< \frac{2\varepsilon}{3} + |\Phi_{\alpha}(y) - \Phi_{\alpha'}(y)|.
+\end{align*}
+Moreover,
+\begin{align*}
+|\Phi_{\alpha}(y) - \Phi_{\alpha'}(y)| &= \left|\sum_{n \in I} (\lambda_{n} \alpha_{n} - \lambda_{n} \alpha'_{n})\right| \\
+&\le \sum_{n \in I} |\lambda_{n}| |\alpha_{n} - \alpha'_{n}| \\
+&< \sum_{n \in I} \frac{|\lambda_{n}|}{\left(\max_{m \in F} |\lambda_{m}|\right) |F|} \cdot \frac{\varepsilon}{3} \le \frac{\varepsilon}{3}.
+\end{align*}
+Therefore, $p_{x}\left( \Phi_{\alpha} - \Phi_{\alpha'} \right) < \varepsilon$, so $\Phi$ is continuous.
+
+Now, since $\Phi$ is surjective, continuous, and $\mathcal{A}$ is compact by I.4, $B_{V^{\ast}}(0,1)$ is a continuous image of a compact space. Therefore, $B_{V^{\ast}}(0,1)$ is compact with respect to the weak* topology.
+\end{solution}
 \section{Problem II}%
 Fix an odd integer $L > 1$. We will work in $\R^d$ for some $d\geq 1$.
 \begin{problem}[Problem II.1]
