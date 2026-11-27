@@ -2649,7 +2649,63 @@ for all bounded measurable functions $f$. Using the Riesz theorem, it is satisfa
   but also
   \begin{align*}
     \int_{\R^d}^{} e^{i \iprod{\xi}{x}}\varphi_n(x)\:d\mu(x) &\xrightarrow{n\to\infty} \int_{\R^d}^{} e^{i \iprod{\xi}{x}}\:d\mu(x)\\
-                                                             &= \Phi_{\mu}(\xi).
+                                                             &= \Phi_{\mu}\left(\xi\right).
   \end{align*}
 \end{proof}
+\section{Spectral Theory}%
+Let $\mathscr{H}$ be a separable $\C$-Hilbert space. We will rebel against the mathematical physics notation by using the standard notation that $ \iprod{\cdot}{\cdot} $ is conjugate linear in the second coordinate and linear in the first coordinate. We will write $\mathcal{B}\left(\mathscr{H}\right)$ for the space of bounded linear operators on $\mathscr{H}$.
+
+Let $d\geq 1$ be fixed. Let $I$ be a nonempty subset with $\left\vert I \right\vert\leq \aleph_0$. Let $\mu = \left( \mu_n \right)_{n\in I}\subseteq \operatorname{Prob}\left( \R^d \right)$. From $I$ and $\mu$, define a model measure space on the set $I\times \R^d$ with Borel $\sigma$-algebra $\mathcal{B}_{I\times \R^d}$. Define the measure $\nu$ on $I\times \R^d$ by taking
+\begin{align*}
+  \nu\left( A \right) &= \sum_{n\in I} \mu_n\left( \set{x\in \R^d : \left( n,x \right)\in A} \right).
+\end{align*}
+We can observe that
+\begin{align*}
+  \int_{I\times \R^d}^{} f\left( n,x \right)\:d\nu\left( n,x \right) &= \sum_{n\in I} \int_{\R^d}^{} f\left( n,x \right)\:d\mu_n\left( x \right),
+\end{align*}
+which is proven via bootstrapping.
+\begin{theorem}[Spectral Theorem for Commuting Bounded Operators]
+  Let $\mathscr{H}$ be a separable Hilbert space over $\C$. Let $A_1,\dots,A_d$ be bounded operators that are pairwise commuting and self-adjoint. Then, there exists some nonempty initial segment $I\subseteq \N$, some collection $\mu = \left( \mu_n \right)_{n\in I}$, and a unitary $W\colon L^2\left( I\times R^d,\mathcal{B}_{I\times \R^d},\nu \right)\to \mathscr{H}$ such that for all $j\in [d]$ and all $f\in L^2\left( I\times \R^d \right)$, we have that 
+  \begin{align*}
+    W^{-1}A_jW(f) = \left( \left( n,x \right) \mapsto x_jf\left( n,x \right) \right)
+  \end{align*}
+\end{theorem}
+\begin{definition}
+  A strongly continuous multi-parameter group of unitaries on $\mathscr{H}$ is a map $U\colon \R^d\to \mathcal{B}\left( \mathscr{H} \right)$ such that
+  \begin{enumerate}[(i)]
+    \item for all $\xi\in \R^d$, $U(\xi)$ is unitary;
+    \item for all $\xi,\eta\in \R^d$, $U\left( \xi + \eta \right) = U(\xi)U(\eta)$;
+    \item $U$ is strongly continuous, in the sense that for all $v\in \mathscr{H}$, the map $\R^d\to \mathscr{H}$ taking $\xi\mapsto U(\xi)v$ is norm-continuous.
+  \end{enumerate}
+\end{definition}
+\begin{theorem}[Spectral Theorem for Strongly Continuous Multi-Parameter Groups of Unitaries]
+  If $ \mathscr{H} $ is a separable Hilbert space, and $U\colon \R^d\to \mathcal{B}\left( \mathscr{H} \right)$ is a strongly continuous multi-parameter group of unitaries, then there exists some initial segment $I$ of $\N$, a family $\left( \mu_n \right)_{n\in I}$ of probability measures on $\R^d$, and a unitary $W\colon L^2\left( I\times\R^d, \nu \right)\to \mathcal{B}\left( \mathscr{H} \right)$ such that for all $f\in L^2\left( I\times \R^d,\nu \right)$ and all $\xi\in \R^d$, we have
+  \begin{align*}
+    W^{-1}U(\xi)W(f) &= \left( \left( n,x \right) \mapsto e^{i \iprod{\xi}{x}}f(n,x) \right)
+  \end{align*}
+\end{theorem}
+Our goal is to deduce the first spectral theorem from the second. Given commuting bounded self-adjoint operators $A_1,\dots,A_d$, we may define
+\begin{align*}
+  U(\xi) &= e^{i \iprod{\xi}{A}}\\
+         &= e^{i \sum_{j=1}^{d}\xi_jA_j}
+\end{align*}
+is then a strongly continuous multi-parameter group of unitaries, where we note that
+\begin{align*}
+  e^{A} &= \sum_{j=0}^{\infty} \frac{1}{j!}A^{j}
+\end{align*}
+exists for any bounded operator $A$ since
+\begin{align*}
+  \sum_{j=0}^{\infty} \frac{\norm{A}^{j}}{j!} < \infty
+\end{align*}
+for all such operators. In fact, we recover
+\begin{align*}
+  A_j &= \lim_{t\to 0} \frac{1}{t} \left( U\left( te_j \right) - I \right)\\
+      &= \frac{\partial}{\partial \xi_j}U\left( \xi \right)\biggr\vert_{\xi = 0}
+\end{align*}
+\begin{remark}
+  Given some space $L^2(X)$ and some $f\in L^{\infty}$, then $M_f\colon L^2\to L^2$ given by $M_fg = fg$, then it can be shown that $\norm{M_f}_{\op}\leq \norm{f}_{L^{\infty}}$. If $\mu$ is a semifinite measure, then these norms are equal.
+\end{remark}
+\begin{proposition}
+  Let $\mu\in \operatorname{Prob}\left( \R^d \right)$, and let $U(\xi)$ denote multiplication by $e^{i \iprod{\xi}{x}}$ on $L^2\left( \R^d,\mu \right)$. Then, this map is operator norm-continuous if and only if $\mu$ is compactly supported.
+\end{proposition}
 \end{document}

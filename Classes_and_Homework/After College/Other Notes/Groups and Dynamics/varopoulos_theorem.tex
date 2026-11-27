@@ -666,7 +666,179 @@ Since the above sum is finite, $\left( G_Af \right)(x)$ is well-defined, and $\l
 \end{align*}
 This is the projection operator onto the space of functions in $L^2\left( X,m \right)$ which are supported in $A$.
 
-Let $f$ be finitely supported with $\operatorname{supp}\left( f \right)\subseteq A$.
+Let $f$ be finitely supported with $\operatorname{supp}\left( f \right)\subseteq A$. Then,
+\begin{align*}
+  \iprod{ \nabla f }{\nabla G_X\left( \cdot,x \right)}_E &= \iprod{f}{\left( I_A - P_A \right)G_A\left( \cdot,x \right)}\\
+                                                         &= m(x)f(x)
+\end{align*}
+for all $x\in \operatorname{supp}\left( f \right)$. This follows from the fact that for every $x,y\in X$, we have
+\begin{align*}
+  \left( I_A-P_A \right)G_A\left( x,y \right) &= \left( I_A-P_A \right)\sum_{n=0}^{\infty} p_A^{(n)}\left( x,y \right)\\
+                                              &= \sum_{n=0}^{\infty}p_A^{(n)}\left( x,y \right) - \sum_{n=0}^{\infty}p_A^{(n+1)}\left( x,y \right)\\
+                                              &= p_A^{(0)}\left( x,y \right)\\
+                                              &= \delta_{xy}.
+\end{align*}
+We observe that if $B\subseteq A$ are finite subsets of $X$, and $x\in A$, then
+\begin{align*}
+  D\left( G_B\left( \cdot,x \right) - G_A\left( \cdot,x \right) \right) &= \iprod{\nabla \left( G_B(\cdot ,x) - G_A\left( \cdot,x \right) \right)}{ \nabla\left( G_B\left( \cdot,x \right) - G_A\left( \cdot,x \right) \right) }_{E}\\
+                      & \iprod{\nabla G_B\left( \cdot,x \right)}{\nabla G_B\left( \cdot,x \right)}_{E} + \iprod{\nabla G_A(\cdot,x)}{\nabla G_A\left( \cdot,x \right)}_{E} - 2 \iprod{\nabla G_B\left( \cdot,x \right)}{\nabla G_A\left( \cdot,x \right)}_{E}\\
+                      &= m(x)G_B\left( x,x \right) + m(x)G_B\left( x,x \right) - 2m(x)G_B\left( x,x \right)\\
+                      &= m(x)\left( G_A\left( x,x \right) - G_B\left( x,x \right) \right).
+\end{align*}
+\begin{lemma}
+  Suppose $\left( X,P \right)$ is transient. Then, $G\left( \cdot,x \right)\in \mathcal{D}_0\left( \mathcal{N} \right)$ for all $x\in X$.
+\end{lemma}
+\begin{proof}
+  Suppose $\left( A_n \right)_{n}$ is an increasing sequence of finite subsets whose union is $X$. Observe that for every $k\in \N$, we have that $p_{A_n}^{(k)}\left( x,x \right)\to p^{(k)}\left( x,y \right)$ as $n\to\infty$. Since $G_{A_n}\left( x,y \right)\leq G\left( x,y \right)$ and the Markov chain is transient, it follows by the monotone convergence theorem that $G_{A_n}\left( x,y \right)\to G\left( x,y \right)$ as $n\to\infty$.
+
+  Since
+  \begin{align*}
+    D\left( G_{A_n}\left( \cdot,x \right) - G_{A_{n-1}}\left( \cdot,x \right) \right) &= m(x)\left( G_{A_n}\left( x,x \right) - G_{A_{n-1}}\left( x,x \right) \right),
+  \end{align*}
+  it follows that $G_{A_n}\left( \cdot,x \right)$ is a Cauchy sequence in $\mathcal{D}_0\left( \mathcal{N} \right)$. So, since convergence in $\mathcal{D}\left( \mathcal{N} \right)$ is given by pointwise convergence, its limit in $\mathcal{D}_0\left( \mathcal{N} \right)\subseteq \mathcal{D}\left( \mathcal{N} \right)$ equals $G\left( \cdot,x \right)$, so that $G\left( \cdot,x \right)\in \mathcal{D}_0\left( \mathcal{N} \right)$.
+\end{proof}
+From now on, we will assume that $\left( X,P \right)$ is an irreducible reversible Markov chain with invariant measure $m$ and $\mathcal{N} = \left( X,E,r \right)$ the associated network.
+\begin{definition}
+  Let $x_0\in X$ and $i_0\in \R$. We say $u\in \R^{E}$ is a \textit{flow} from $x_0$ with input $i_0$ if
+  \begin{align*}
+    \nabla^{\ast}u &= -\frac{i_0}{m\left( x_0 \right)}\delta_{x_0}.
+  \end{align*}
+  The associated energy is the quantity $\sum_{e\in E}r(e)u(e)^2$.
+
+  The \textit{capacity} of $x_0$ is given by
+  \begin{align*}
+    \operatorname{cap}\left( x_0 \right) &= \inf\set{D(f) : f\in \R[X],f\left( x_0 \right) = 1},
+  \end{align*}
+  where $\R[X]$ denotes the space of finitely supported functions on $X$.
+\end{definition}
+In particular, we have that $u\in \R^{E}$ has finite energy if $u\in L^2\left( E,r \right)$, and its energy is given by $\norm{u}_{E}^2$.
+
+The subset
+\begin{align*}
+  Y &= \set{f\in \mathcal{D}_0\left( \mathcal{N} \right) : f\left( x_0 \right) = 1}
+\end{align*}
+is convex and closed. By the Hilbert projection theorem, there is a unique function $f\in Y$ such that $\norm{f}_{D}$ is minimal, so that $D(\cdot) = \left( \norm{\cdot}_D^2 - 1 \right)^{1/2}$, and we have
+\begin{align*}
+  \operatorname{cap}\left( x_0 \right) &= \min\set{D(f) : f\in \mathcal{D}_0\left( \mathcal{N} \right), f\left( x_0 \right) = 1}.
+\end{align*}
+\begin{theorem}[Transience Criterion]
+  Suppose $\left( X,P \right)$ is an irreducible Markov chain. The following conditions are equivalent:
+  \begin{enumerate}[(i)]
+    \item $\left( X,P \right)$ is transient;
+    \item for every $x_0\in X$ and $i_0\neq 0$, there exists a finite energy flow $u\in L^2\left( E,r \right)$ from $x_0$ with input $i_0$;
+    \item for every $x_0\in X$, one has $\operatorname{cap}\left( x_0 \right) > 0$;
+    \item the function $1_X$ is not contained in $\mathcal{D}_0\left( \mathcal{N} \right)$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Suppose $\left( X,P \right)$ is transient. Let $x_0\in X$ and $i_0\neq 0$. Then, $G\left( \cdot,x \right)\in \mathcal{D}_0\left( \mathcal{N} \right)$, so that $\nabla G\left( \cdot,x \right)\in L^2\left( E,r \right)$.
+
+  We claim that
+  \begin{align*}
+    u \coloneq -\frac{i_0}{m\left( x_0 \right)}\nabla G\left( \cdot,x \right)
+  \end{align*}
+  is our desired flow. Since
+  \begin{align*}
+    \nabla^{\ast}u &= -\frac{i_0}{m\left( x_0 \right)}\nabla^{\ast}\nabla G\left( \cdot,x_0 \right)\\
+                   &= -\frac{i_0}{m\left( x_0 \right)}\left( I-P \right)G\left( \cdot,x_0 \right)\\
+                   &= -\frac{i_0}{m\left( x_0 \right)} \delta_{x_0}.
+  \end{align*}
+  Now, suppose the flow condition holds. Let $x_0\in X$, $i_0 = -1$, and $u\in L^2\left( E,r \right)$ a finite energy flow from $x_0$ with input $i_0$. Then, for any $f\in \R[X]$ with $f\left( x_0 \right) = 1$, we have
+  \begin{align*}
+    \iprod{\nabla f}{u}_{E} &= \iprod{f}{\nabla_{\ast}u}_X\\
+                            &= \iprod{f}{-\frac{i_0}{m\left( x_0 \right)}\delta_{x_0}}X\\
+                            &= -m\left( x_0 \right)f\left( x_0 \right)\frac{i_0}{m\left( x_0 \right)}\\
+                            &= -i_0\\
+                            &= 1.
+  \end{align*}
+  By Cauchy--Schwarz, we have that $1 = \iprod{\nabla f}{u}_{E}\leq D(f) \iprod{u}{u}_{E}$. Thus,
+  \begin{align*}
+    \operatorname{cap}\left( x_0 \right) &= \inf\set{D(f) : f\in \R[X],f\left( x_0 \right) = 1}\\
+                                         &\geq \frac{1}{\left\langle u,u \right\rangle_{E}}\\
+                                         &> 0.
+  \end{align*}
+  Now, we have that $\operatorname{cap}\left( x_0 \right) = 0$ if and only if there exists an $f\in \mathcal{D}_0\left( \mathcal{N} \right)$ such that $D(f) = 0$ and $f\left( x_0 \right) = 1$, or that $f = 1_X$, giving the equivalence between (iii) and (iv).
+
+  Finally, we show that if $\operatorname{cap}\left( x_0 \right) > 0$, then $\left( X,P \right)$ is transient. Let $A\subseteq X$ be finite, and let $x_0\in X$. Let
+  \begin{align*}
+    f &\coloneq \frac{G_A\left( \cdot,x_0 \right)}{G_A\left( x_0,x_0 \right)}.
+  \end{align*}
+  Then, $f\in \R[X]$ is finitely supported and $f\left( x_0 \right) = 1$. Since
+  \begin{align*}
+    \iprod{\nabla f}{G_A\left( \cdot,x_0 \right)}_{E} &= m\left( x_0 \right)f\left( x_0 \right),
+  \end{align*}
+  it follows that
+  \begin{align*}
+    \operatorname{cap}\left( X_0 \right) &\leq D(f)\\
+                                         &= \iprod{\nabla f}{\nabla f}_{E}\\
+                                         &= \frac{m\left( x_0 \right)}{G_A\left( x_0,x_0 \right)}.
+  \end{align*}
+  So, $G_A\left( x_0,x_0 \right)\leq \frac{m_0}{\operatorname{cap}\left( x_0 \right)}$ for every finite subset $A\subseteq X$ with $x_0\in A$.
+
+  So, taking an increasing sequence of finite subsets $\left( A_n \right)_{n}$ whose union is $X$, it follows that $G\left( x_0,x_0 \right)\leq \frac{m\left( x_0 \right)}{\operatorname{cap}\left( x_0 \right)} < \infty$ for arbitrary $x_0$, so that $\left( X,P \right)$ is transient.
+\end{proof}
+\begin{corollary}
+  Suppose $\left( X,P_1 \right)$ and $\left( X,P_2 \right)$ are irreducible reversible Markov chains, and there exists $\delta > 0$ such that $D_1(f)\geq \delta D_2(f)$, where $D_1$ and $D_2$ are the respective Dirichlet norms. Then, if $\left( X,P_1 \right)$ is recurrent, so is $\left( X,P_2 \right)$.
+\end{corollary}
+\begin{corollary}
+  Let $G$ be a finitely generated group, and let $\left( G,P_1 \right)$ and $\left( G,P_2 \right)$ be two irreducible random walks on $G$. Suppose there is $\delta > 0$ such that $p_1\left( g,h \right)\geq \delta p_2\left( g,h \right)$ for all $g,h\in G$. Then, if $\left( G,P_1 \right)$ is recurrent, so is $\left( G,P_2 \right)$.
+\end{corollary}
+\begin{example}
+  Consider an irreducible Markov chain $\left( \N,P \right)$ with $p\left( m,n \right) >  0$ if and only if $\left\vert m-n \right\vert = 1$. Then, $p\left( 0,1 \right) = 1$ and $p\left( n,n-1 \right) + p\left( n,n+1 \right) = 1$ for all $n\geq 1$.
+
+  We may define an invariant measure $m\colon \N\to \left( 0,\infty \right)$ by taking $m(0) = 1$ and
+  \begin{align*}
+    m(n) &\coloneq \frac{p\left( 0,1 \right)p\left( 1,2 \right)\cdots p\left( n-1,n \right)}{p\left( n,n-1 \right)p\left( n-1,n-2 \right)\cdots p\left( 1,0 \right)}.
+  \end{align*}
+  We have that $m\left( n+1 \right) = m(n)\frac{p\left( n,n+1 \right)}{p\left( n+1.n \right)}$ for all $n\geq 1$.
+
+  The network $\mathcal{N}\left( \N,E,r \right)$ with $E = \set{\set{n,n+1} : n\in \N}$ and
+  \begin{align*}
+    r\left( e_n \right) &= \frac{p\left( n,n-1 \right)p\left( n-1,n-2 \right)\cdots p\left( 1,0 \right)}{ p\left( 0,1 \right)p\left( 1,2 \right)\cdots p\left( n-1,n \right)p\left( n,n+1 \right) }.
+  \end{align*}
+  There is a unique flow from $0$ with input $i_0\neq 0$, which is the constant $u = i_01_{E}\in \R^{E}$, and has energy
+  \begin{align*}
+    \iprod{u}{u}_{E} &= i_0^2\sum_{n=1}^{\infty}r\left( e_n \right).
+  \end{align*}
+  It follows that the Markov chain $\left( \N,P \right)$ is recurrent if and only if the sum diverges.
+\end{example}
+\begin{definition}
+  Let $\left( X,P \right)$ be a reversible Markov chain with invariant measure $m$, and let $\mathcal{N} = \left( X,E,r \right)$ be the associated network.
+
+  Let $\left( X_k \right)_{k}$ be a partition of $X$ into finite subsets. The Shortened network $\mathcal{N}' = \left( \N,E,r' \right)$ is defined by taking
+  \begin{align*}
+    a'\left( i,j \right) &= \begin{cases}
+      \sum_{x\in X_i}\sum_{y\in X_j}a\left( x,y \right) & i\neq j\\
+      0 & \text{else}.
+    \end{cases}
+  \end{align*}
+  The corresponding shortened Markov chain $\left( \N,P' \right)$ has transition probabilities
+  \begin{align*}
+    p'\left( i,j \right) &= \frac{a'\left( i,j \right)}{m_i'}\\
+                         &= \frac{a'\left( i,j \right)}{\sum_{k\in \N}a'\left( i,k \right)},
+  \end{align*}
+  for all $i,j \in \N$.
+\end{definition}
+\begin{theorem}
+  Let $\left( X,P \right)$ be a reversible Markov chain. Suppose the shortened Markov chain $\left( \N,P' \right)$ with respect to some partition of $X$ into finite subsets is recurrent. Then, $\left( X,P \right)$ is recurrent as well.
+\end{theorem}
+
+\subsection{Growth Rates and Recurrence}%
+\begin{proposition}
+  Suppose $G$ is a finitely generated group of at most quadratic growth. Then, the simple random walk on $G$ is recurrent.
+\end{proposition}
+\begin{proof}
+  Let $Y$ be a finite symmetric generating subset of $G$. We may assume that $Y$ does not contain the identity element.
+
+  Since $G$ has sub-quadratic growth, it follows that there is some $n_0\in \N$ and $C > 0$ such that $\beta_{Y}\left( n \right)\leq Cn^2$ for all $n\geq n_0$. Let $X_n = \set{g\in G : \ell_Y(g) = n}$ be the sphere of radius $n$ centered at the identity element. Notice that $\left\vert X_n \right\vert = \beta_{Y}(n)-\beta_{Y}(n-1)$, and $G = \bigsqcup_{n\in \N}X_n$.
+
+  Let $\left( G,Q \right)$ be the simple random walk on $G$, with
+  \begin{align*}
+    a \left( x,xy \right) &= q\left( x,xy \right)\\
+                          &= \frac{1}{\left\vert Y \right\vert}
+  \end{align*}
+  for all $x\in G$ and all $y\in Y$. Let $\left( \N,Q' \right)$
+\end{proof}
 \nocite{topics_in_groups_and_geometry}
 \printbibliography
 \end{document}
