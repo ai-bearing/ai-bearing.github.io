@@ -822,7 +822,43 @@ is convex and closed. By the Hilbert projection theorem, there is a unique funct
 \begin{theorem}
   Let $\left( X,P \right)$ be a reversible Markov chain. Suppose the shortened Markov chain $\left( \N,P' \right)$ with respect to some partition of $X$ into finite subsets is recurrent. Then, $\left( X,P \right)$ is recurrent as well.
 \end{theorem}
+\begin{proof}
+  Let $f\colon \N\to \R$ be in $\mathcal{D}\left( \mathcal{N}' \right)$, and let $ \overline{f}\colon X\to \R $ be defined by $ \overline{f}(x) = f(i) $ if $x\in X_i$. So,
+  \begin{align*}
+    \overline{1_{\N}} &= 1_{X}.
+  \end{align*}
+  So, we have
+  \begin{align*}
+    D\left( \overline{f} \right) &= \frac{1}{2}\sum_{x,y\in X} \left( \overline{f}(x) - \overline{f}(y) \right)^2 a\left( x,y \right)\\
+                                 &= \frac{1}{2}\sum_{i,j\in \N}\sum_{\substack{x\in X_i\\y\in X_j}}\left( \overline{f}\left( x \right) - \overline{f}\left( y \right) \right)^2 a\left( x,y \right)\\
+                                 &= \frac{1}{2}\sum_{i,j\in \N} \left( f\left( i \right)-f\left( j \right) \right)^2 \sum_{\substack{x\in X_i\\y\in X_j}} a\left( x,y \right)\\
+                                 &= \frac{1}{2}\sum_{i,j\in \N} \left( f\left( i \right) - f\left( j \right) \right)^2 a'\left( i,j \right)\\
+                                 &= D'\left( f \right).
+  \end{align*}
+  So, $f\in \mathcal{D}\left( \mathcal{N}' \right)$ if and only if $ \overline{f}\in \mathcal{D}\left( \mathcal{N} \right) $, and they have equal Dirichlet norms.
 
+  Since $1_{X_i}\in \R[X]$, it follows that if $f\in \R[\N]$, then
+  \begin{align*}
+    \overline{f} &= \sum_{i\in \operatorname{supp}\left( f \right)} f(i)1_{X_i}
+  \end{align*}
+  is in $\R[X]$. If $\left( \N,P' \right)$ is recurrent, then $1_{\N}\in \mathcal{D}_0\left( \mathcal{N}' \right)$, and we may find a sequence $\left( f_n \right)_{n\in \N}$ of finitely supported functions on $\N$ such that $\lim_{n\to\infty} D'\left( f_n-1_{\N} \right) = 0$.
+
+  The sequence $\left( \overline{f}_n \right)_n$ in $\R[X]$ then has $\lim_{n\to\infty} D\left( \overline{f}_n - 1_X \right) = 0$. So, $1_X\in \mathcal{D}_0\left( \mathcal{N} \right)$, and thus $\left( X,P \right)$ is recurrent.
+\end{proof}
+\begin{corollary}[Nash-Williams Recurrence Criterion]
+  Let $\left( X,P \right)$ be a reversible Markov chain with $a'\left( i,j \right) = 0$ if $\left\vert i-j \right\vert \geq 2$. If
+  \begin{align*}
+    \sum_{i=0}^{\infty} \frac{1}{a'\left( i,i+1 \right)} &= \infty,
+  \end{align*}
+  then $\left( X,P \right)$ is recurrent.
+\end{corollary}
+\begin{proof}
+  We have that $\left( \N,P' \right)$ is a nearest neighbor Markov chain. Since
+  \begin{align*}
+    \sum_{i=0}^{\infty} \frac{1}{a'\left( i,i+1 \right)} &= \sum_{n=1}^{\infty}r\left( e_n \right),
+  \end{align*}
+  it follows that $\left( \N,P' \right)$ is recurrent, so $\left( X,P \right)$ is recurrent.
+\end{proof}
 \subsection{Growth Rates and Recurrence}%
 \begin{proposition}
   Suppose $G$ is a finitely generated group of at most quadratic growth. Then, the simple random walk on $G$ is recurrent.
@@ -837,8 +873,176 @@ is convex and closed. By the Hilbert projection theorem, there is a unique funct
     a \left( x,xy \right) &= q\left( x,xy \right)\\
                           &= \frac{1}{\left\vert Y \right\vert}
   \end{align*}
-  for all $x\in G$ and all $y\in Y$. Let $\left( \N,Q' \right)$
+  for all $x\in G$ and all $y\in Y$. Let $\left( \N,Q' \right)$ be the associated shortened Markov chain.
+
+  For any $k\in \N$, we have that
+  \begin{align*}
+    a'\left( k,k+1 \right) &= \sum_{\substack{x\in X_k\\x'\in X_{k+1}}} a\left( x,x' \right)\\
+                           &= \sum_{\substack{x\in X_k\\x'\in X_{k+1}}} p\left( x,x' \right)\\
+                           &\leq \sum_{\substack{x\in X_k\\y\in Y}}p\left( x,xy \right)\\
+                           &= \frac{1}{\left\vert Y \right\vert} \left\vert Y \right\vert \left\vert X_k \right\vert\\
+                           &= \beta_Y(k) - \beta_Y\left( k-1 \right).
+  \end{align*}
+  For any $n\geq n_0$, it follows that
+  \begin{align*}
+    \sum_{k=n+1}^{2n} \frac{1}{a'\left( k,k+1 \right)} &\geq \frac{n^2}{\sum_{k=n+1}^{2n}a'\left( k,k+1 \right)}\\
+                                                       &\geq \frac{n^2}{\beta_Y\left( 2n \right) - \beta_Y(n)}\\
+                                                       &\geq \frac{n^2}{\beta_Y\left( 2n \right)}\\
+                                                       &\geq \frac{1}{4C},
+  \end{align*}
+  where we used the convexity of $f(x) = 1/x$ for the first inequality.
+
+  Thus, the series
+  \begin{align*}
+    \sum_{k=0}^{\infty} \frac{1}{a'\left( k,k+1 \right)}
+  \end{align*}
+  diverges, so by the Nash-Williams criterion, we have that the simple random walk on $G$ is recurrent.
 \end{proof}
+Next, we will construct a transient random walk when $G$ has at least cubic growth.
+\begin{lemma}
+  Let $\mu$ be an atomic probability measure on a group $G$, and suppose that $\mu = \mu_1 + \mu_2$ for some positive atomic measures $\mu_1$ and $\mu_2$. Then,
+  \begin{align*}
+    \norm{\mu^{\ast n}}_{\infty} &\leq \mu_1(G)^{n} + n\norm{\mu_2}_{\infty},
+  \end{align*}
+  where $\norm{\cdot}_{\infty}$ is the standard supremum norm viewing these measures as maps on $G$.
+\end{lemma}
+\begin{proof}
+  For $n=1$, we have that
+  \begin{align*}
+    \mu(g) &= \mu_1(g) + \mu_2(g)\\
+           &\leq \mu_(G) + \norm{\mu_2}_{\infty}.
+  \end{align*}
+  Inductively, we have that
+  \begin{align*}
+    \mu^{\ast\left( n+1 \right)}(g) &= \sum_{h\in G} \left( \mu_1(h) + \mu_2(h) \right)\mu^{\ast n}\left( h^{-1}g \right)\\
+                                    &\leq \sum_{h\in G} \mu_1\left( h \right)\left( \mu_1\left( G \right)^{n} + n\norm{\mu_2}_{\infty} \right) + \sum_{h\in G}\mu_2(h)\mu^{\ast n}\left( h^{-1}g \right)\\
+                                    &\leq \mu_1(G)\mu_1(G)^{n} + n\mu_1(G)\norm{\mu_2}_{\infty} + \norm{\mu_2}_{\infty}\sum_{h\in G}\mu^{\ast n}\left( h^{-1}g \right)\\
+                                    &= \mu_1\left( G \right)^{n+1} + n\mu(G)\norm{\mu_2}_{\infty} + \norm{\mu_2}_{\infty}\mu^{\ast n}(G)\\
+                                    &= \mu_1\left( G \right)^{n+1} + \left( n+1 \right)\norm{\mu_2}_{\infty}.
+  \end{align*}
+\end{proof}
+For each $k\geq 2$, set
+\begin{align*}
+  \lambda_k &= \frac{1}{k^3 \left( \ln(k) \right)^2}.
+\end{align*}
+We observe that
+\begin{align*}
+  \sum_{k\geq 2}\lambda_k &< \sum_{k\geq 2} \frac{1}{k^3}\\
+                          &< \int_{1}^{\infty} \frac{1}{x^3}\:dx\\
+                          &= \frac{1}{2},
+\end{align*}
+so that $\lambda_1 \coloneq 1-\sum_{k\geq 2}\lambda_k > 1/2$. 
+
+Let $G$ be a finitely generated group with finite symmetric generating set $Y\subseteq G$. We will let $\beta(n)$ and $B(n)$ denote the growth function and the ball of radius $n$ about the identity respectively. Set
+\begin{align*}
+  \mu(g) &= \sum_{n=1}^{\infty} \frac{\lambda_n}{\beta(n)}1_{B(n)}(g).
+\end{align*}
+Then, we have 
+\begin{itemize}
+  \item $\operatorname{supp}\left( \mu \right) = G$;
+  \item $\mu(g) = \mu\left( g^{-1} \right)$;
+  \item $\mu(G) = 1$;
+  \item the second moment of $\mu$ satisfies
+    \begin{align*}
+      \sum_{g\in G} \ell(g)^2\mu(g) &= \sum_{n=1}^{\infty} \frac{\lambda_n}{\beta(n)}\sum_{g\in G} \ell(g)^21_{B(n)}(g)\\
+                                    &\leq \sum_{n=1}^{\infty} \frac{\lambda_n}{\beta(n)}n^2\beta(n)\\
+                                    &= \sum_{n=1}^{\infty}\lambda_nn^2\\
+                                    &= \lambda_1 + \sum_{n=2}^{\infty} \frac{1}{n\left( \ln(n) \right)^2}\\
+                                    &< \infty.
+    \end{align*}
+\end{itemize}
+\begin{proposition}
+  Suppose $G$ has at least cubic growth. Then, the random walk defined by the measure $\mu$ above is transient.
+\end{proposition}
+\begin{proof}
+  We have some $n_0\in \N$ and some $C > 0$ such that
+  \begin{align*}
+    \beta(n) &\geq Cn^3
+  \end{align*}
+  for all $n\geq n_0$. If we set $s_m = \sum_{k=1}^{\infty}\lambda_k$, then we have that $\lim_{m\to\infty}s_mm^2\left( \ln(n) \right)^2 = 1/2$. This emerges from the fact that
+  \begin{align*}
+    \int_{m}^{\infty} \frac{1}{x^3\left( \ln(x) \right)^2}\:dx &\leq s_m\\
+                                                               &= \sum_{k=m}^{\infty} \lambda_k\\
+                                                               &= \sum_{k=m}^{\infty}\frac{1}{k^3\left( \ln(k) \right)^2}\\
+                                                               &\leq \int_{m-1}^{} \frac{1}{x^3\left( \ln(x) \right)^2}\:dx,
+  \end{align*}
+  and integrating by parts yields
+  \begin{align*}
+    \int_{m}^{\infty} \frac{1}{x^3\left( \ln(x) \right)^2}\:dx &= - \int_{m}^{\infty} \frac{1}{x^3\left( \ln(x) \right)^3}\:dx + \frac{1}{2m^2\left( \ln(m) \right)^2}.
+  \end{align*}
+  Since
+  \begin{align*}
+    \int_{m}^{\infty} \frac{1}{x^3\left( \ln(x) \right)^3}\:dx &\leq \frac{1}{\left( \ln(m) \right)^3} \int_{m}^{\infty} \frac{1}{x^3}\:dx\\
+                                                               &= \frac{1}{2m^2\left( \ln(m) \right)^3},
+  \end{align*}
+  it follows that
+  \begin{align*}
+    \lim_{m\to\infty} m^2\left( \ln(m) \right)^2 \int_{m}^{\infty} \frac{1}{x^3\left( \ln(x) \right)^3}\:dx &= \lim_{m\to\infty} \frac{1}{2\ln(m)}\\
+                                                                                                                         &= 0,
+  \end{align*}
+  so that
+  \begin{align*}
+    \lim_{m\to\infty} s_mm^2\left( \ln(m) \right)^2 &\geq \lim_{m\to\infty} m^2\left( \ln(m) \right)^2 \int_{m}^{\infty} \frac{1}{x^3\left( \ln(x) \right)^2}\:dx\\
+                                                    &= \frac{1}{2}.
+  \end{align*}
+  Conversely, we may use the fact that
+  \begin{align*}
+    s_m &\leq \int_{m-1}^{\infty} \frac{1}{x^3\left( \ln(x) \right)^2}\:dx
+  \end{align*}
+  to establish the reverse inequality.
+
+  In particular, we have that
+  \begin{align*}
+    s_m &\sim \frac{m\lambda_m}{2}\\
+        &= \frac{1}{2m^2\left( \ln(m) \right)^2}.
+  \end{align*}
+  For any $m\geq 2$, we will set
+  \begin{align*}
+    \mu_{1,m} &= \sum_{k=1}^{m-1} \frac{\lambda_k}{\beta(k)}1_{B(k)}\\
+    \mu_{2,m} &= \mu-\mu_{1,m}\\
+              &= \sum_{k=m}^{\infty} \frac{\lambda_k}{\beta(k)}1_{B(k)}.
+  \end{align*}
+  Then, $\mu = \mu_{1,m} + \mu_{2,m}$, with
+  \begin{align*}
+    \mu_{1,m}(G) &= 1-s_m\\
+    \norm{\mu_{2,m}}_{\infty} &= \sum_{k=m}^{\infty} \frac{\lambda_k}{\beta(k)}\\
+                              &\leq \frac{s_m}{\beta(m)}.
+  \end{align*}
+  By the lemma, we have that
+  \begin{align*}
+    p^{(n)}\left( g,h \right) &= \mu^{\ast n}\left( g^{-1}h \right)\\
+                              &= \left( 1-s_m \right)^{n} + n\frac{s_m}{\beta(m)}
+  \end{align*}
+  for all $n,m\in \N$ with $m\geq 2$ and $g,h\in G$.
+
+  We may find constants $c_i$ such that
+  \begin{align*}
+    p^{(n)}\left( g,h \right) &\leq \left( 1-\frac{c_1}{m^2\left( \ln(m) \right)^2} \right)^{n} + \frac{c_2n}{\beta(m)m^2\left( \ln(m) \right)^2}\\
+                              &\leq \exp\left( -\frac{c_1n}{m^2\left( \ln(m) \right)^2} \right) + \frac{c_3n}{m^{5}\left( \ln(m) \right)^2}
+  \end{align*}
+  for all $n\geq n_0$, all $m\geq 2$, and all $g,h\in G$. If we let $m = \left\lfloor n^{2/5}\right\rfloor$, there are constants $d_1$ and $d_2$ such that
+  \begin{align*}
+    \frac{c_1n}{m^2\left( \ln(m) \right)^2} &\sim \frac{d_1 n^{2/5}}{\left( \ln(n) \right)^2}\\
+    \frac{c_3n}{m^{5}\left( \ln(m) \right)^2} &\sim \frac{d_2}{n \left( \ln(n) \right)^2}.
+  \end{align*}
+  Thus,
+  \begin{align*}
+    G\left( g,h \right) &= \sum_{n=0}^{\infty} p^{(n)}\left( g,h \right)\\
+                        &\preceq \sum_{n=0}^{\infty} \exp\left( -\frac{d_1 n^{2/5}}{\left( \ln(n) \right)^2} \right) + d_2 \sum_{n=1}^{\infty} \frac{1}{n\left( \ln(n) \right)^2}\\
+                        &< \infty,
+  \end{align*}
+  so the random walk on $G$ defined by $\mu$ is transient.
+\end{proof}
+\subsection{Random Walk Alternative}%
+\begin{theorem}
+  Let $G$ be a finitely generated group. The following are equivalent:
+  \begin{enumerate}[(i)]
+    \item there exists a recurrent random walk on $G$;
+    \item the simple random walk on $G$ with respect to every finite symmetric generating subset is recurrent;
+    \item the simple random walk on $G$ with respect to some finite symmetric generating subset is recurrent;
+    \item every random walk on $G$ is recurrent.
+  \end{enumerate}
+\end{theorem}
 \nocite{topics_in_groups_and_geometry}
 \printbibliography
 \end{document}
